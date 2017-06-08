@@ -2,6 +2,143 @@
   "comments": [
     {
       "key": {
+        "uuid": "754de846_a7926fab",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Add a meta comment about how this impl works (re-uses LazyInstance\u0027s internals)",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ae93b6_b2888801",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Remove this comment and add message below\n\n\u003c\u003c \"Race: all threads should be unwound in unittests before resetting TaskRunners.\"",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a07ca0c7_2c468325",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "!state",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b43efcb_a3359ce0",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Isn\u0027t this LazyTaskRunner\u003cTaskRunnerType, com_sta\u003e ?",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb25a6ff_f65761ce",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Pointer() in a lazy_instance.h does a bit more than this (i.e. has a fast path and the last load for the return value is NoBarrier). Can we unify the two?\n\nOr even better, can LazyTaskRunner use a LazyInstance member and avoid duplication altogether?",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3c8162c_c78f27d4",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Add: \"Even for simple use cases, it is important to use this class over a global variable initialized once so that the TaskRunners do not outlive the scope of the TaskScheduler in unit tests (otherwise the next test in the same process will die in use-after-frees).\"",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5200e254_32b27923",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "// IMPORTANT: Only use this API as a last resort. Prefer storing a (Sequenced|SingleThread)TaskRunner returned by\n// base::Create(Sequenced|SingleThread|COMSTA)TaskRunnerWithTraits() on an\n// object accessible by all PostTask() call sites.\n\n(i.e. but the important part of \"don\u0027t use this\" upfront.",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "df824d0e_7f7ef8ec",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 6
@@ -42,6 +179,162 @@
         "startChar": 0,
         "endLine": 36,
         "endChar": 73
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "585469c4_dcdd8755",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "I think this one is fine because it works like LazyInstance. The class can be instantiated statically as a POD (ref. comments below from Francois about things he had to do to keep it static -- not sure what verifies this is enforced though)",
+      "parentUuid": "1854d1ee_04b047ea",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d19efeb3_2cf44eca",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "I\u0027d make all example SequencedTaskRunners to enforce that this is the prefered type, people will switch if it doesn\u0027t work at runtime.",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d26f2227_f432ecc4",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Add: \"A new instance will be lazily created if it is obtained again in the scope of another base::test::ScopedTaskEnvironment later in the same process (i.e. in unit tests).\"",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7713358d_ac42d54e",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Thread-safe.",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c617638_289a7c64",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "No need for internal:: here and above, already in internal::",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2b4c856_c3262e1c",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "This can\u0027t use the {} bag syntax?",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1340d1d1_c0eeaacf",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T17:11:05Z",
+      "side": 1,
+      "message": "Use Rob\u0027s AssertCOMInitialized? (or was that reverted?)",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 5
       },
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
