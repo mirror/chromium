@@ -121,6 +121,9 @@ var AnchorAlignment = {
     /** @private {boolean} */
     hasMousemoveListener_: false,
 
+    /** @private {?MutationObserver} */
+    mutationObserver_: null,
+
     hostAttributes: {
       tabindex: 0,
     },
@@ -133,12 +136,20 @@ var AnchorAlignment = {
 
     /** override */
     attached: function() {
-      this.options_ = this.querySelectorAll('.dropdown-item');
+      var childrenChangedCallback = function() {
+        this.options_ = this.querySelectorAll('.dropdown-item');
+      }.bind(this);
+
+      this.mutationObserver_ = new MutationObserver(childrenChangedCallback);
+      this.mutationObserver_.observe(this, {childList: true});
+      childrenChangedCallback();
     },
 
     /** override */
     detached: function() {
       this.removeListeners_();
+      this.mutationObserver_.disconnect();
+      this.mutationObserver_ = null;
     },
 
     /** @private */
