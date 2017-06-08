@@ -799,6 +799,7 @@ void RenderWidget::OnWasShown(bool needs_repainting,
         compositor_->CreateLatencyInfoSwapPromiseMonitor(&swap_latency_info);
     // Force this SwapPromiseMonitor to trigger and insert a SwapPromise.
     compositor_->SetNeedsBeginFrame();
+    compositor_->SetNeedsDisplayOnAllLayers();
   }
 }
 
