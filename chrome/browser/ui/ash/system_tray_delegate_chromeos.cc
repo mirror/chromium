@@ -69,15 +69,15 @@ namespace chromeos {
 
 namespace {
 
-void ExtractIMEInfo(const input_method::InputMethodDescriptor& ime,
-                    const input_method::InputMethodUtil& util,
-                    ash::IMEInfo* info) {
-  info->id = ime.id();
-  info->name = util.GetInputMethodLongName(ime);
-  info->medium_name = util.GetInputMethodMediumName(ime);
-  info->short_name = util.GetInputMethodShortName(ime);
-  info->third_party = extension_ime_util::IsExtensionIME(ime.id());
-}
+// void ExtractIMEInfo(const input_method::InputMethodDescriptor& ime,
+//                     const input_method::InputMethodUtil& util,
+//                     ash::IMEInfo* info) {
+//   info->id = ime.id();
+//   info->name = util.GetInputMethodLongName(ime);
+//   info->medium_name = util.GetInputMethodMediumName(ime);
+//   info->short_name = util.GetInputMethodShortName(ime);
+//   info->third_party = extension_ime_util::IsExtensionIME(ime.id());
+// }
 
 void OnAcceptMultiprofilesIntro(bool no_show_again) {
   PrefService* prefs = ProfileManager::GetActiveUserProfile()->GetPrefs();
@@ -181,53 +181,53 @@ void SystemTrayDelegateChromeOS::ShowUserLogin() {
   }
 }
 
-void SystemTrayDelegateChromeOS::GetCurrentIME(ash::IMEInfo* info) {
-  input_method::InputMethodManager* manager =
-      input_method::InputMethodManager::Get();
-  input_method::InputMethodUtil* util = manager->GetInputMethodUtil();
-  input_method::InputMethodDescriptor ime =
-      manager->GetActiveIMEState()->GetCurrentInputMethod();
-  ExtractIMEInfo(ime, *util, info);
-  info->selected = true;
-}
+// void SystemTrayDelegateChromeOS::GetCurrentIME(ash::IMEInfo* info) {
+//   input_method::InputMethodManager* manager =
+//       input_method::InputMethodManager::Get();
+//   input_method::InputMethodUtil* util = manager->GetInputMethodUtil();
+//   input_method::InputMethodDescriptor ime =
+//       manager->GetActiveIMEState()->GetCurrentInputMethod();
+//   ExtractIMEInfo(ime, *util, info);
+//   info->selected = true;
+// }
 
-void SystemTrayDelegateChromeOS::GetAvailableIMEList(ash::IMEInfoList* list) {
-  input_method::InputMethodManager* manager =
-      input_method::InputMethodManager::Get();
-  input_method::InputMethodUtil* util = manager->GetInputMethodUtil();
-  std::unique_ptr<input_method::InputMethodDescriptors> ime_descriptors(
-      manager->GetActiveIMEState()->GetActiveInputMethods());
-  std::string current =
-      manager->GetActiveIMEState()->GetCurrentInputMethod().id();
-  for (size_t i = 0; i < ime_descriptors->size(); i++) {
-    input_method::InputMethodDescriptor& ime = ime_descriptors->at(i);
-    ash::IMEInfo info;
-    ExtractIMEInfo(ime, *util, &info);
-    info.selected = ime.id() == current;
-    list->push_back(info);
-  }
-}
+// void SystemTrayDelegateChromeOS::GetAvailableIMEList(ash::IMEInfoList* list) {
+//   input_method::InputMethodManager* manager =
+//       input_method::InputMethodManager::Get();
+//   input_method::InputMethodUtil* util = manager->GetInputMethodUtil();
+//   std::unique_ptr<input_method::InputMethodDescriptors> ime_descriptors(
+//       manager->GetActiveIMEState()->GetActiveInputMethods());
+//   std::string current =
+//       manager->GetActiveIMEState()->GetCurrentInputMethod().id();
+//   for (size_t i = 0; i < ime_descriptors->size(); i++) {
+//     input_method::InputMethodDescriptor& ime = ime_descriptors->at(i);
+//     ash::IMEInfo info;
+//     ExtractIMEInfo(ime, *util, &info);
+//     info.selected = ime.id() == current;
+//     list->push_back(info);
+//   }
+// }
 
-void SystemTrayDelegateChromeOS::GetCurrentIMEProperties(
-    ash::IMEPropertyInfoList* list) {
-  ui::ime::InputMethodMenuItemList menu_list =
-      ui::ime::InputMethodMenuManager::GetInstance()->
-      GetCurrentInputMethodMenuItemList();
-  for (size_t i = 0; i < menu_list.size(); ++i) {
-    ash::IMEPropertyInfo property;
-    property.key = menu_list[i].key;
-    property.name = base::UTF8ToUTF16(menu_list[i].label);
-    property.selected = menu_list[i].is_selection_item_checked;
-    list->push_back(property);
-  }
-}
+// void SystemTrayDelegateChromeOS::GetCurrentIMEProperties(
+//     ash::IMEPropertyInfoList* list) {
+//   ui::ime::InputMethodMenuItemList menu_list =
+//       ui::ime::InputMethodMenuManager::GetInstance()->
+//       GetCurrentInputMethodMenuItemList();
+//   for (size_t i = 0; i < menu_list.size(); ++i) {
+//     ash::IMEPropertyInfo property;
+//     property.key = menu_list[i].key;
+//     property.name = base::UTF8ToUTF16(menu_list[i].label);
+//     property.selected = menu_list[i].is_selection_item_checked;
+//     list->push_back(property);
+//   }
+// }
 
-base::string16 SystemTrayDelegateChromeOS::GetIMEManagedMessage() {
-  auto ime_state = input_method::InputMethodManager::Get()->GetActiveIMEState();
-  return ime_state->GetAllowedInputMethods().empty()
-             ? base::string16()
-             : l10n_util::GetStringUTF16(IDS_OPTIONS_CONTROLLED_SETTING_POLICY);
-}
+// base::string16 SystemTrayDelegateChromeOS::GetIMEManagedMessage() {
+//   auto ime_state = input_method::InputMethodManager::Get()->GetActiveIMEState();
+//   return ime_state->GetAllowedInputMethods().empty()
+//              ? base::string16()
+//              : l10n_util::GetStringUTF16(IDS_OPTIONS_CONTROLLED_SETTING_POLICY);
+// }
 
 ash::NetworkingConfigDelegate*
 SystemTrayDelegateChromeOS::GetNetworkingConfigDelegate() const {

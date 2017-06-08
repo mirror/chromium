@@ -38,17 +38,17 @@ class ASH_EXPORT SystemTrayDelegate {
   // Shows login UI to add other users to this session.
   virtual void ShowUserLogin();
 
-  // Returns the currently selected IME.
-  virtual void GetCurrentIME(IMEInfo* info);
+  // // Returns the currently selected IME.
+  // virtual void GetCurrentIME(IMEInfo* info);
 
-  // Returns a list of availble IMEs.
-  virtual void GetAvailableIMEList(IMEInfoList* list);
+  // // Returns a list of availble IMEs.
+  // virtual void GetAvailableIMEList(IMEInfoList* list);
 
-  // Returns a list of properties for the currently selected IME.
-  virtual void GetCurrentIMEProperties(IMEPropertyInfoList* list);
+  // // Returns a list of properties for the currently selected IME.
+  // virtual void GetCurrentIMEProperties(IMEPropertyInfoList* list);
 
-  // Returns a non-empty string if IMEs are managed by policy.
-  virtual base::string16 GetIMEManagedMessage();
+  // // Returns a non-empty string if IMEs are managed by policy.
+  // virtual base::string16 GetIMEManagedMessage();
 
   // Returns NetworkingConfigDelegate. May return nullptr.
   virtual NetworkingConfigDelegate* GetNetworkingConfigDelegate() const;
