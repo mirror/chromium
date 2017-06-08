@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "5515cd1c_72ec4992",
+        "filename": "components/cdm/browser/cdm_message_filter_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-06-08T03:33:01Z",
+      "side": 1,
+      "message": "I meant the render can\u0027t decide that it would like to only expose L3. Thinking further, this doesn\u0027t make much sense since it can\u0027t know what some unsupported effects will be applied to the video.",
+      "parentUuid": "0c64eea5_e8de433e",
+      "range": {
+        "startLine": 137,
+        "startChar": 14,
+        "endLine": 137,
+        "endChar": 20
+      },
+      "revId": "31f2a784c5c742041b9a13cdc8b1596ff5f52be1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e02b501a_a2160625",
         "filename": "components/cdm/browser/cdm_message_filter_android.h",
         "patchSetId": 6
