@@ -11,6 +11,7 @@
 #include "base/path_service.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "media/base/cdm_factory.h"
+#include "media/base/key_system_names.h"
 #include "media/base/key_systems.h"
 #include "media/cdm/cdm_adapter.h"
 #include "media/cdm/cdm_paths.h"
@@ -49,6 +50,8 @@ void CdmAdapterFactory::Create(
     return;
   }
 
+  // TODO(xhwang): We should have the CDM path forwarded from the browser
+  // already. See http://crbug.com/510604
   base::FilePath cdm_path;
 
 #if defined(WIDEVINE_CDM_AVAILABLE)
@@ -56,8 +59,6 @@ void CdmAdapterFactory::Create(
   // CDM path forwarded from the browser already. See http://crbug.com/510604
   if (key_system == kWidevineKeySystem) {
     // Build the library path for Widevine CDM.
-    // TODO(xhwang): We should have the CDM path forwarded from the browser
-    // already. See http://crbug.com/510604
     base::FilePath cdm_base_path;
 
 #if defined(OS_MACOSX)
@@ -74,6 +75,15 @@ void CdmAdapterFactory::Create(
     DVLOG(1) << "CDM path: " << cdm_path.value();
   }
 #endif  // defined(WIDEVINE_CDM_AVAILABLE)
+
+  if (cdm_path.empty() && IsExternalClearKey(key_system)) {
+    const char kClearKeyCdmBaseDirectory[] = "ClearKeyCdm";
+    base::FilePath cdm_base_path;
+    base::PathService::Get(base::DIR_MODULE, &cdm_base_path);
+    cdm_base_path = cdm_base_path.Append(
+        GetPlatformSpecificDirectory(kClearKeyCdmBaseDirectory));
+    cdm_path = cdm_base_path.AppendASCII(kClearKeyCdmAdapterFileName);
+  }
 
   if (cdm_path.empty()) {
     base::ThreadTaskRunnerHandle::Get()->PostTask(
