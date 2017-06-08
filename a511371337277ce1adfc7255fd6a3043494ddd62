@@ -570,6 +570,30 @@
     },
     {
       "key": {
+        "uuid": "6d67dadb_7c5f6c74",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T06:24:28Z",
+      "side": 1,
+      "message": "My opinion would be it\u0027s fine to use BUILDFLAG in core/. core/ already uses a lot of platform-specific knowledge via Platform::xxx() APIs. BUILDFLAG seems like a similar thing to me.",
+      "parentUuid": "0c5de409_9bdd2108",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
