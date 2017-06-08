@@ -66,7 +66,7 @@ SuboriginEventSourceTest.prototype.execute = function() {
 new SuboriginEventSourceTest(
   false,
   'anonymous, ACAO: ' + server,
-  xorigin_anon_event_source(),
+  xorigin_anon_event_source('true'),
   'anonymous').execute();
 
 new SuboriginEventSourceTest(
@@ -78,7 +78,7 @@ new SuboriginEventSourceTest(
 new SuboriginEventSourceTest(
   false,
   'use-credentials, ACAO: ' + server,
-  xorigin_creds_event_source(),
+  xorigin_creds_event_source('true'),
   'use-credentials').execute();
 
 new SuboriginEventSourceTest(

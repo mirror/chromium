@@ -44,7 +44,7 @@ window.result = false;
 new SuboriginScriptTest(
   false,
   '<crossorigin=\'anonymous\'>, ACAO: ' + server,
-  xoriginAnonScript(),
+  xoriginAnonScript('true'),
   'anonymous').execute();
 
 new SuboriginScriptTest(
@@ -56,7 +56,7 @@ new SuboriginScriptTest(
 new SuboriginScriptTest(
   false,
   '<crossorigin=\'use-credentials\'>, ACAO: ' + server,
-  xoriginCredsScript(),
+  xoriginCredsScript('true'),
   'use-credentials').execute();
 
 new SuboriginScriptTest(
