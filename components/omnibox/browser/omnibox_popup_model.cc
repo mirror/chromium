@@ -104,25 +104,38 @@ bool OmniboxPopupModel::IsOpen() const {
   return view_->IsOpen();
 }
 
-void OmniboxPopupModel::SetHoveredLine(size_t line) {
+void OmniboxPopupModel::SetHoveredLine(size_t line, Action action) {
   const bool is_disabling = (line == kNoMatch);
   DCHECK(is_disabling || (line < result().size()));
 
-  if (line == hovered_line_)
+  if (line == hovered_line_ && pending_action_ == action)
     return;  // Nothing to do
 
   // We need to update |hovered_line_| before calling InvalidateLine(), since it
   // will check it to determine how to draw.
   const size_t prev_hovered_line = hovered_line_;
+  const Action previous_action = pending_action_;
   hovered_line_ = line;
+
+  // If we're already in a keyword state, ignore hovering the keyword view.
+  if (action == Action::KEYWORD && selected_line_state() == KEYWORD &&
+      line == selected_line_) {
+    pending_action_ = Action::NORMAL;
+  } else {
+    pending_action_ = action;
+  }
 
   // Make sure the old hovered line is redrawn.  No need to redraw the selected
   // line since selection overrides hover so the appearance won't change.
-  if ((prev_hovered_line != kNoMatch) && (prev_hovered_line != selected_line_))
+  if ((prev_hovered_line != kNoMatch) && (prev_hovered_line != selected_line_ ||
+                                          previous_action != Action::NORMAL)) {
     view_->InvalidateLine(prev_hovered_line);
+  }
 
-  if (!is_disabling && (hovered_line_ != selected_line_))
+  if (!is_disabling &&
+      (hovered_line_ != selected_line_ || previous_action != action)) {
     view_->InvalidateLine(hovered_line_);
+  }
 }
 
 void OmniboxPopupModel::SetSelectedLine(size_t line,
@@ -219,6 +232,8 @@ void OmniboxPopupModel::SetSelectedLineState(LineState state) {
   const AutocompleteMatch& match = result().match_at(selected_line_);
   DCHECK(match.associated_keyword.get());
 
+  // Rest the pending action when the line state changes.
+  pending_action_ = Action::NORMAL;
   selected_line_state_ = state;
   view_->InvalidateLine(selected_line_);
 }
