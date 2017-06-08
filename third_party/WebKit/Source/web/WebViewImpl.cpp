@@ -1807,8 +1807,7 @@ void WebViewImpl::UpdateICBAndResizeViewport() {
   // controls hide so that the ICB will always be the same size as the
   // viewport with the browser controls shown.
   IntSize icb_size = size_;
-  if (RuntimeEnabledFeatures::InertTopControlsEnabled() &&
-      GetBrowserControls().PermittedState() == kWebBrowserControlsBoth &&
+  if (GetBrowserControls().PermittedState() == kWebBrowserControlsBoth &&
       !GetBrowserControls().ShrinkViewport())
     icb_size.Expand(0, -GetBrowserControls().Height());
 

@@ -523,10 +523,6 @@
       status: "experimental",
     },
     {
-      name: "InertTopControls",
-      status: "stable",
-    },
-    {
       name: "InputEvent",
       status: "stable",
     },
