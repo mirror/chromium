@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3c08216b_f1309b6f",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-08T18:18:58Z",
+      "side": 1,
+      "message": "git cl lint requests it:\ncontent/browser/devtools/protocol/storage_handler.h:35:  Add #include \u003cmemory\u003e for unique_ptr\u003c\u003e  [build/include_what_you_use] [4]\ncontent/browser/devtools/protocol/storage_handler.h:32:  Add #include \u003cstring\u003e for string  [build/include_what_you_use] [4]",
+      "parentUuid": "859a8de6_5c13e8f3",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c1287db0_3c899a77",
         "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T17:30:24Z",
       "side": 1,
       "message": "So this breaks an update loop. Should we then resume it once the origin is updated in _updateOrigin()?",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2208b8cb_6b75ac7a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-08T18:18:58Z",
+      "side": 1,
+      "message": "Great catch! fixed.",
+      "parentUuid": "c1287db0_3c899a77",
       "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "70d583d8_b50149f0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-08T18:18:58Z",
+      "side": 1,
+      "message": "Apparently not... Fixed.",
+      "parentUuid": "c4d00b51_4fb14cfa",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94bd0388_931f46dc",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ThrottledWidget.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6374b75d_840dcbd3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/ui/ThrottledWidget.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-08T18:18:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94bd0388_931f46dc",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
