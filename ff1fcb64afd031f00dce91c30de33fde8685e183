@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7203766_e22549ca",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T00:07:16Z",
+      "side": 1,
+      "message": "No, there is one per storage partition, not one per renderer. But probably a cleaner solution is to just pass in mojo_task_runner_ to the mojo_state_ constructor so it can register itself on the appropriate thread directly.",
+      "parentUuid": "beab06b1_84443cfd",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60b5a9c2_06c5856c",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-07T23:46:13Z",
       "side": 1,
       "message": "Is there any reason why you aren\u0027t doing the registration at the constructor?",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b44605_dad189d6",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T00:07:16Z",
+      "side": 1,
+      "message": "The constructor runs on the wrong thread. The constructor is called on the UI thread, but everything else in this class expects to be called on (currently) the IO thread (hopefully future an arbitrary sequenced task runner). But yeah, passing in the task runner to the constructor and registering there probably makes more sense.",
+      "parentUuid": "60b5a9c2_06c5856c",
       "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "02f0f99c_02044c20",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T00:07:16Z",
+      "side": 1,
+      "message": "Oops, left over from while writing this code. Should have removed (and will remove) the TODO.",
+      "parentUuid": "670a4a8b_048032e0",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26902f8a_39238f2b",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -64,6 +118,30 @@
       "writtenOn": "2017-06-07T23:46:13Z",
       "side": 1,
       "message": "Is it possible to have both implementations in the same instance? Ie, will the old code also create dumps with name \"dom_storage/...\"",
+      "range": {
+        "startLine": 373,
+        "startChar": 28,
+        "endLine": 373,
+        "endChar": 39
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0277247e_5f918eeb",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T00:07:16Z",
+      "side": 1,
+      "message": "Yes, the old code is still around and being used for session storage. Of course the pointer in the name should make sure there are no conflicts, if I understand how things work correctly?",
+      "parentUuid": "26902f8a_39238f2b",
       "range": {
         "startLine": 373,
         "startChar": 28,
