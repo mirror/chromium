@@ -724,11 +724,6 @@ blink::WebPushProvider* BlinkPlatformImpl::PushProvider() {
   return PushProvider::ThreadSpecificInstance(main_thread_task_runner_);
 }
 
-blink::WebMediaCapabilitiesClient*
-BlinkPlatformImpl::MediaCapabilitiesClient() {
-  return &media_capabilities_client_;
-}
-
 WebThemeEngine* BlinkPlatformImpl::ThemeEngine() {
   return &native_theme_engine_;
 }
