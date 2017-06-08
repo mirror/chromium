@@ -63,7 +63,6 @@ source_set("lib") {
     "//services/ui/clipboard:lib",
     "//services/ui/ime:lib",
     "//services/ui/input_devices",
-    "//services/ui/public/cpp/input_devices:input_device_controller",
     "//services/ui/public/interfaces",
     "//services/ui/ws:lib",
     "//services/ui/ws:test_interface",
@@ -80,7 +79,10 @@ source_set("lib") {
   }
 
   if (use_ozone) {
-    deps += [ "//ui/ozone:ozone" ]
+    deps += [
+      "//services/ui/public/cpp/input_devices:input_device_controller",
+      "//ui/ozone:ozone",
+    ]
   }
 }
 

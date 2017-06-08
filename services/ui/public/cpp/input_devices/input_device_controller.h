@@ -19,6 +19,8 @@ namespace ui {
 
 class InputController;
 
+// Implementation of mojom::InputDeviceController that forwards to
+// ui::InputController.
 class InputDeviceController : public mojom::InputDeviceController {
  public:
   InputDeviceController();

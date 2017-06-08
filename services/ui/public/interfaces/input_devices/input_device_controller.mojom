@@ -13,6 +13,7 @@ struct KeyboardDeviceState {
   bool is_auto_repeat_enabled;
 };
 
+// Notified when ever keyboard device state changes.
 interface KeyboardDeviceObserver {
   // Called once when added, and subsequently any time the state changes.
   OnKeyboardStateChanged(KeyboardDeviceState state);

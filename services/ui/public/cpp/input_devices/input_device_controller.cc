@@ -57,7 +57,7 @@ void InputDeviceController::SetAutoRepeatEnabled(bool enabled) {
 void InputDeviceController::SetAutoRepeatRate(
     base::TimeDelta auto_repeat_delay,
     base::TimeDelta auto_repeat_interval) {
-  GetInputController()->SetAutoRepeatRate(auto_repeat_interval,
+  GetInputController()->SetAutoRepeatRate(auto_repeat_delay,
                                           auto_repeat_interval);
 }
 
@@ -112,12 +112,12 @@ void InputDeviceController::SetInternalTouchpadEnabled(
     bool enabled,
     SetInternalTouchpadEnabledCallback callback) {
   InputController* input_controller = GetInputController();
-  const bool should_set =
+  const bool value_changed =
       input_controller->HasTouchpad() &&
       (input_controller->IsInternalTouchpadEnabled() != enabled);
-  if (should_set)
+  if (value_changed)
     input_controller->SetInternalTouchpadEnabled(enabled);
-  std::move(callback).Run(should_set);
+  std::move(callback).Run(value_changed);
 }
 
 void InputDeviceController::SetTouchscreensEnabled(bool enabled) {
