@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3592e1c8_476b0a27",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/common/css-paint-tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-08T14:47:07Z",
+      "side": 1,
+      "message": "Add a comment on what the double requestAnimationFrame is for, i.e. to ensure that we have painted a frame. Although now that I think about it it\u0027s probably only necessary to do one requestAnimationFrame since takeScreenshot will let it produce the next frame before snapshotting since it\u0027s not immediate.",
+      "revId": "4bf8a436ac6d516af4773da19f63cd7ecd1fa760",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
