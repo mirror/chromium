@@ -11,6 +11,7 @@
 
 #include "base/macros.h"
 #include "components/omnibox/browser/autocomplete_match.h"
+#include "components/omnibox/browser/omnibox_popup_model.h"
 #include "components/omnibox/browser/suggestion_answer.h"
 #include "third_party/skia/include/core/SkColor.h"
 #include "ui/gfx/animation/animation_delegate.h"
@@ -82,6 +83,8 @@ class OmniboxResultView : public views::View,
 
   // Stores the image in a local data member and schedules a repaint.
   void SetAnswerImage(const gfx::ImageSkia& image);
+
+  OmniboxPopupModel::Action GetActionForView(const views::View* view);
 
  protected:
   enum RenderTextType {

@@ -279,6 +279,19 @@ void OmniboxResultView::Invalidate() {
         base::MakeUnique<BackgroundWith1PxBorder>(bg_color, bg_color));
   }
 
+NOTIMPLEMENTED() << " ?? ";
+  if (model_->IsHoveredIndex(model_index_)) {
+NOTIMPLEMENTED() << " ^^ ";
+    if (model_->GetHoveredLineAction() == OmniboxPopupModel::Action::KEYWORD) {
+      const SkColor bg_color = SK_ColorGREEN;// GetColor(HOVERED, BACKGROUND);
+      keyword_icon_->SetBackground(
+          base::MakeUnique<BackgroundWith1PxBorder>(bg_color, bg_color));
+    } else {
+NOTIMPLEMENTED() << " !! ";
+      keyword_icon_->SetBackground(nullptr);
+    }
+  }
+
   // While the text in the RenderTexts may not have changed, the styling
   // (color/bold) may need to change. So we reset them to cause them to be
   // recomputed in OnPaint().
@@ -554,6 +567,16 @@ int OmniboxResultView::GetMatchContentsWidth() const {
 void OmniboxResultView::SetAnswerImage(const gfx::ImageSkia& image) {
   answer_image_ = image;
   SchedulePaint();
+}
+
+OmniboxPopupModel::Action OmniboxResultView::GetActionForView(
+    const views::View* view) {
+  NOTIMPLEMENTED() << " view " << view << " // " << this << " // "
+                   << keyword_icon_.get();
+  if (view == keyword_icon_.get())
+    return OmniboxPopupModel::Action::KEYWORD;
+
+  return OmniboxPopupModel::Action::NORMAL;
 }
 
 // TODO(skanuj): This is probably identical across all OmniboxResultView rows in

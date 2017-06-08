@@ -29,6 +29,11 @@ class OmniboxPopupModel {
     KEYWORD
   };
 
+  enum class Action {
+    NORMAL = 0,
+    KEYWORD,
+  };
+
   OmniboxPopupModel(OmniboxPopupView* popup_view, OmniboxEditModel* edit_model);
   ~OmniboxPopupModel();
 
@@ -72,7 +77,9 @@ class OmniboxPopupModel {
 
   // Call to change the hovered line.  |line| should be within the range of
   // valid lines (to enable hover) or kNoMatch (to disable hover).
-  void SetHoveredLine(size_t line);
+  void SetHoveredLine(size_t line, Action action = Action::NORMAL);
+
+  Action hovered_line_action() const { return hovered_line_action_; }
 
   size_t selected_line() const { return selected_line_; }
 
@@ -88,7 +95,9 @@ class OmniboxPopupModel {
   // line.
   // NOTE: This assumes the popup is open, and thus both old and new values for
   // the selected line should not be kNoMatch.
-  void SetSelectedLine(size_t line, bool reset_to_default, bool force);
+  void SetSelectedLine(size_t line,
+                       bool reset_to_default,
+                       bool force);
 
   // Called when the user hits escape after arrowing around the popup.  This
   // will change the selected line back to the default match and redraw.
@@ -163,6 +172,9 @@ class OmniboxPopupModel {
   // determines whether the normal match (if NORMAL) or the keyword match
   // (if KEYWORD) is selected.
   LineState selected_line_state_;
+
+  // FIXME
+  Action hovered_line_action_ = Action::NORMAL;
 
   // The match the user has manually chosen, if any.
   AutocompleteResult::Selection manually_selected_match_;
