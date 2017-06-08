@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1d4e88b1_88d052b5",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-08T17:26:16Z",
+      "side": 0,
+      "message": "This incorrectly removed keep-alive status of display items in the cached subsequence. We should not remove the status as long as the subsequence is valid. This change makes PaintController report the correct short-lived display item when it is removed without invalidating the containing subsequence.",
+      "revId": "882d8c0d29354c71d2612590faccdbde64af41b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
