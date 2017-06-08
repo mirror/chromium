@@ -1,0 +1,45 @@
+<!doctype html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<style>
+#container {
+  position: relative;
+  border: 1px solid black;
+  width: 200px;
+  height: 100px;
+}
+#target {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 255, 0, 0.3);
+}
+</style>
+<p>Overflow test, percent sizing</p>
+<div id="container">
+  <div id="target"></div>
+</div>
+<script>
+
+var container = document.querySelector('#container');
+var target = document.querySelector('#target');
+
+test(function() {
+  container.style.overflow = "hidden";
+  container.style.direction = "ltr";
+  assert_equals(container.clientWidth, target.offsetWidth, "width");
+  assert_equals(container.clientHeight, target.offsetHeight, "height");
+}, "basic percent sizing");
+
+test(function() {
+  container.style.overflow = "scroll";
+  container.style.direction = "ltr";
+  assert_equals(container.clientWidth, target.offsetWidth, "width");
+  assert_equals(container.clientHeight, target.offsetHeight, "height");
+}, "basic percent sizing, after scrollbars");
+
+test(function() {
+  container.style.overflow = "scroll";
+  container.style.direction = "rtl";
+  assert_equals(target.offsetLeft, container.offsetWidth - container.clientWidth - 2, "target position is offset by rhs scroller");
+}, "basic percent sizing, offset by rhs scroller");
+</script>
