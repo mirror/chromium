@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "725b3b77_f7cd44d3",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-08T15:14:40Z",
+      "side": 1,
+      "message": "I looked at isAutoplayingMuted(). It\u0027s tricky to make true for tests though: the element has to be locked and autoplay muted needs to be enabled. I didn\u0027t find any existing Internals to set for the former (the latter seems to be in RuntimeEnabledFeatures)? It would also be the only non-private WebMediaPlayerClient implementation method (which is probably fine); unless we expose something like MediaElement().WebMediaPlayerClient().isAutoplayingMuted();",
+      "parentUuid": "e8db2d71_90562f31",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a9858e39_778d2c4a",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
         "patchSetId": 2
@@ -81,6 +99,24 @@
       "writtenOn": "2017-06-08T11:32:58Z",
       "side": 1,
       "message": "::OnPlaying() was added by johnme@ for the timeline metrics. Happy we can re-use it :)",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c28b31_72b06e1f",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-08T15:14:40Z",
+      "side": 1,
+      "message": "I wonder if the rest of the ui code in OnPlay should also move to OnPlaying, though it seems like it shouldn\u0027t - I\u0027d expect the time and position to be set immediately on play, just that controls should fade only when playback is actually happening.\n\nThe alternative would be for the test to attach a handler to the onplay instead of onplaying :)",
+      "parentUuid": "a9858e39_778d2c4a",
       "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
