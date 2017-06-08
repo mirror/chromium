@@ -15,7 +15,6 @@
 - (void)deleteEntry:(ReadingListCollectionViewItem*)entry;
 - (void)openEntryInNewTab:(ReadingListCollectionViewItem*)entry;
 - (void)openEntryInNewIncognitoTab:(ReadingListCollectionViewItem*)entry;
-- (void)copyEntryURL:(ReadingListCollectionViewItem*)entry;
 - (void)openEntryOffline:(ReadingListCollectionViewItem*)entry;
 - (void)markEntryRead:(ReadingListCollectionViewItem*)entry;
 - (void)markEntryUnread:(ReadingListCollectionViewItem*)entry;
