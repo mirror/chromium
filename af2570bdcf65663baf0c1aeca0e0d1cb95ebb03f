@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e566e5bf_aa62d66d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1434,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-08T04:00:59Z",
+      "side": 1,
+      "message": "this looks totally odd, null check one thing, but then use something else\n\njust null check the method return value instead",
+      "revId": "af2570bdcf65663baf0c1aeca0e0d1cb95ebb03f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
