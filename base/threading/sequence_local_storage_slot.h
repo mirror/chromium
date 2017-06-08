@@ -18,39 +18,8 @@ BASE_EXPORT int GetNextSequenceLocalStorageSlotNumber();
 }
 
 // SequenceLocalStorageSlot allows arbitrary values to be stored and retrieved
-// from a sequence. Values are deleted when the sequence is deleted.
-//
-// Example usage:
-//
-// namespace {
-// base::LazyInstance<SequenceLocalStorageSlot<int>> sls_value;
-// }
-//
-// void Read() {
-//   int value = sls_value.Get().Get();
-//   ...
-// }
-//
-// void Write() {
-//   sls_value.Get().Set(42);
-// }
-//
-// void PostTasks() {
-//   // Since Read() runs on the same sequence as Write(), it
-//   // will read the value "42". A Read() running on a different
-//   // sequence would not see that value.
-//   scoped_refptr<base::SequencedTaskRunner> task_runner = ...;
-//   task_runner->PostTask(FROM_HERE, base::BindOnce(&Write));
-//   task_runner->PostTask(FROM_HERE, base::BindOnce(&Read));
-// }
-//
-// SequenceLocalStorageSlot must be used within the scope of a
-// ScopedSetSequenceLocalStorageMapForCurrentThread object.
-//
-// TODO(jeffreyhe): Mention that TaskScheduler and MessageLoop run
-// tasks within the scope of a
-// ScopedSetSequenceLocalStorageMapForCurrentThread object once this
-// is true.
+// from a sequence. SequenceLocalStorageSlot must be used within the scope of
+// a ScopedSetSequenceLocalStorageMapForCurrentThread object.
 template <typename T, typename Deleter = std::default_delete<T>>
 class SequenceLocalStorageSlot {
  public:
@@ -76,8 +45,7 @@ class SequenceLocalStorageSlot {
     // Since SequenceLocalStorageMap needs to store values of various types
     // within the same map, the type of value_destructor_pair.value is void*
     // (std::unique_ptr<void> is invalid). Memory is freed by calling
-    // |value_destructor_pair.destructor| in the destructor of
-    // ValueDestructorPair which is invoked when the value is overwritten by
+    // |value_destructor_pair.destructor| when the value is overwritten by
     // another call to SequenceLocalStorageMap::Set or when the
     // SequenceLocalStorageMap is deleted.
     T* value_ptr = new T(std::move(value));
@@ -94,7 +62,7 @@ class SequenceLocalStorageSlot {
   }
 
  private:
-  // |slot_id_| is used as a key in SequenceLocalStorageMap
+  // |slot_id_| is used as a key in the current SequenceLocalStorageMap
   const int slot_id_;
   DISALLOW_COPY_AND_ASSIGN(SequenceLocalStorageSlot);
 };

@@ -84,6 +84,10 @@ SequenceSortKey Sequence::GetSortKey() const {
   return SequenceSortKey(priority, next_task_sequenced_time);
 }
 
+SequenceLocalStorageMap* Sequence::GetSequenceLocalStorageMapPtr() {
+  return &sequence_local_storage_;
+}
+
 Sequence::~Sequence() = default;
 
 }  // namespace internal
