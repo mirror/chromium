@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6f46e9d_ba676e38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ContentProviderBasedProject.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-08T17:58:49Z",
+      "side": 1,
+      "message": "Let\u0027s have a flag for better understanding:\n\nvar allMatchesFound \u003d true;\n...\nif (!searchMatches.length) {\n  allMatchesFound \u003d false;\n  break;\n}\n...\nprogress.worked(1);\nif (allMatchesFound)\n  result.push(path);",
+      "range": {
+        "startLine": 232,
+        "startChar": 17,
+        "endLine": 232,
+        "endChar": 26
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a1d94c6_3263b8a5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-08T17:58:49Z",
+      "side": 1,
+      "message": "This drops the receiver. We generally do not do that.",
+      "range": {
+        "startLine": 560,
+        "startChar": 43,
+        "endLine": 560,
+        "endChar": 60
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "477e5720_4741d6ca",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-08T17:58:49Z",
+      "side": 1,
+      "message": "First advance progress, then resolve?",
+      "range": {
+        "startLine": 561,
+        "startChar": 17,
+        "endLine": 561,
+        "endChar": 23
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab938c10_cbf736c9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-08T17:58:49Z",
+      "side": 1,
+      "message": "Did you change the callsites? I missed those.",
+      "range": {
+        "startLine": 504,
+        "startChar": 2,
+        "endLine": 504,
+        "endChar": 17
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "774640c3_27d81ef7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-08T17:58:49Z",
+      "side": 1,
+      "message": "So you changed UISourceCode and all inner search functions to promises, but left Project\u0027s one with callback? Let\u0027s change that as well.",
+      "range": {
+        "startLine": 507,
+        "startChar": 50,
+        "endLine": 507,
+        "endChar": 69
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
