@@ -14,6 +14,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_util.h"
+#include "base/threading/sequenced_worker_pool.h"
 #include "build/build_config.h"
 #include "chrome/browser/background/background_contents_service_factory.h"
 #include "chrome/browser/background_sync/background_sync_controller_factory.h"
@@ -33,6 +34,7 @@
 #include "chrome/browser/permissions/permission_manager_factory.h"
 #include "chrome/browser/plugins/chrome_plugin_service_filter.h"
 #include "chrome/browser/plugins/plugin_prefs.h"
+#include "chrome/browser/prefs/browser_prefs.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/prefs/pref_service_syncable_util.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -41,6 +43,7 @@
 #include "chrome/browser/themes/theme_service.h"
 #include "chrome/browser/ui/webui/extensions/extension_icon_source.h"
 #include "chrome/common/chrome_constants.h"
+#include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_paths.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/features.h"
@@ -59,6 +62,9 @@
 #include "net/http/http_server_properties.h"
 #include "net/http/transport_security_state.h"
 #include "ppapi/features/features.h"
+#include "services/preferences/public/cpp/pref_service_main.h"
+#include "services/preferences/public/interfaces/preferences.mojom.h"
+#include "services/service_manager/public/cpp/service.h"
 #include "storage/browser/database/database_tracker.h"
 
 #if defined(OS_ANDROID)
@@ -120,9 +126,14 @@ void NotifyOTRProfileDestroyedOnIOThread(void* original_profile,
 
 OffTheRecordProfileImpl::OffTheRecordProfileImpl(Profile* real_profile)
     : profile_(real_profile),
-      prefs_(PrefServiceSyncableIncognitoFromProfile(real_profile)),
       start_time_(Time::Now()) {
+  // Must happen before we ask for prefs as prefs needs the connection to the
+  // service manager, which is set up in Initialize.
   BrowserContext::Initialize(this, profile_->GetPath());
+  service_manager::Connector* otr_connector = nullptr;
+  if (features::PrefServiceEnabled())
+    otr_connector = content::BrowserContext::GetConnectorFor(this);
+  prefs_ = PrefServiceSyncableIncognitoFromProfile(real_profile, otr_connector);
   // Register on BrowserContext.
   user_prefs::UserPrefs::Set(this, prefs_);
 }
@@ -346,6 +357,19 @@ OffTheRecordProfileImpl::CreateMediaRequestContextForStoragePartition(
     bool in_memory) {
   return io_data_->GetIsolatedAppRequestContextGetter(partition_path, in_memory)
       .get();
+}
+
+void OffTheRecordProfileImpl::RegisterInProcessServices(
+    StaticServiceMap* services) {
+  if (features::PrefServiceEnabled()) {
+    content::ServiceInfo info;
+    info.factory = base::Bind(
+        &prefs::CreatePrefService, chrome::ExpectedPrefStores(),
+        make_scoped_refptr(content::BrowserThread::GetBlockingPool()));
+    info.task_runner = content::BrowserThread::GetTaskRunnerForThread(
+        content::BrowserThread::IO);
+    services->insert(std::make_pair(prefs::mojom::kServiceName, info));
+  }
 }
 
 net::URLRequestContextGetter* OffTheRecordProfileImpl::GetRequestContext() {
