@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95469354_c40aa71a",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "Remove empty line between class comment and class definition.",
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b760bb8a_71a8ac95",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "// SequenceLocalStorageSlot allows arbitrary values to be stored and retrieved\n// from a sequence. Values are deleted when the sequence is deleted.\n//\n// Example usage:\n//\n// namespace {\n// base::LazyInstance\u003cSequenceLocalStorageSlot\u003cint\u003e\u003e sls_value;\n// }\n//\n// void Read() {\n//   int value \u003d sls_value.Get().Get();\n//   ...\n// } \n//\n// void Write() {\n//   sls_value.Get().Set(42);\n// }\n//\n// void PostTasks() {\n//   // Since Read() runs on the same sequence as Write(), it\n//   // will read the value \"42\". A Read() running on a different\n//   // sequence would not see that value.\n//   scoped_refptr\u003cbase::SequencedTaskRunner\u003e task_runner \u003d ...;\n//   task_runner-\u003ePostTask(FROM_HERE, base::BindOnce(\u0026Write));\n//   task_runner-\u003ePostTask(FROM_HERE, base::BindOnce(\u0026Read));\n// }\n//\n// SequenceLocalStorageSlot must be used within the scope of a \n// ScopedSetSequenceLocalStorageMapForCurrentThread object.\n//\n// TODO(jeffreyhe): Mention that TaskScheduler and MessageLoop run\n// tasks within the scope of a\n// ScopedSetSequenceLocalStorageMapForCurrentThread object once this\n// is true.",
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f8dfd7f_885686ea",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "by calling |value_destructor_pair.destructor| when the value is ... -\u003e by calling |value_destructor_pair.destructor| in the destructor of ValueDestructorPair.",
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f723b076_3116b029",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "remove \"current\"\n\n(|slot_id_| is used as a key in every SequenceLocalStorageMap that has a value for this slot)",
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82b89c9c_777fb2ae",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "sequence_local_storage_",
+      "range": {
+        "startLine": 23,
+        "startChar": 36,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7918c417_ea371400",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:36:33Z",
+      "side": 1,
+      "message": "scoped_sequence_local_storage_",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "7bb4a190f6f30f66832c2dba2019ac4798b5ae9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
