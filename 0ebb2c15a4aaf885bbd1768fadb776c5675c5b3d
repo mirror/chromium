@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f90ed403_3a9bec81",
+        "filename": "third_party/WebKit/Source/core/style/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-08T01:51:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe18d18_2aece927",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d2df56a_aa4263fa",
         "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "7fe3d762_ced02787",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-08T01:51:10Z",
+      "side": 1,
+      "message": "I tried forward declaring String but that broke a bunch of other files for some reason.",
+      "parentUuid": "7d2df56a_aa4263fa",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4fb8dd6e_78c271d3",
         "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
         "patchSetId": 1
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-08T01:05:19Z",
       "side": 1,
       "message": "a whole new .h for a single line seems a bit much, is there a good reason not to combine the type defs?",
+      "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d0c3395_610a2930",
+        "filename": "third_party/WebKit/Source/core/style/NamedGridLinesMap.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-08T01:51:10Z",
+      "side": 1,
+      "message": "No good reason apart from what to call the file.",
+      "parentUuid": "4fb8dd6e_78c271d3",
       "revId": "0ebb2c15a4aaf885bbd1768fadb776c5675c5b3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
