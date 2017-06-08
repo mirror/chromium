@@ -1,0 +1,205 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bead5062_f47b4d50",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "nit: introduces",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "485b2c7c_050721ea",
+        "filename": "chrome/browser/chrome_browser_main_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "nit: forwards, ditto below",
+      "range": {
+        "startLine": 80,
+        "startChar": 36,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e9c05fd_11809b61",
+        "filename": "chrome/browser/conflicts/module_info_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "intentional WS?",
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efb8c7b_6ccb9047",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "A bit set for what ...",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 77,
+        "endChar": 8
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb210f51_3654875b",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "nit: bound-\u003ebounds",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8894c740_ea78a97a",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "nit: address-\u003eoffset, also below?",
+      "range": {
+        "startLine": 142,
+        "startChar": 19,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b3bdb62_59c8f589",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "Outdated comment, it no longer returns them.\n\nThis function and the one below are exposed only for testing?\n\nConsider making these protected, and testing them with a Testing* subclass in the unittest.",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7effb4c7_bb7f7c9d",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "That\u0027s cute :).\nAnother possibility to consider is to e.g. write the first 128 bytes of your own executable to this file.\nThis has fewer runtime dependencies.",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15a03848_8c44dc53",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 77035,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-08T19:31:39Z",
+      "side": 1,
+      "message": "Are these histograms recorded once per program lifetime? If you\u0027re only looking to communicate a closed set of counts, then blowing a histogram on each is pretty wasteful.\nMoar better is to use a single enum histogram. This then stores and communicates all the counts as a single histogram instance, avoiding the setup and storage and crap to communicate distributions.",
+      "range": {
+        "startLine": 77035,
+        "startChar": 17,
+        "endLine": 77035,
+        "endChar": 34
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
