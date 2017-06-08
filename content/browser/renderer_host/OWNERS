@@ -38,4 +38,5 @@ per-file offscreen_canvas*.*=xlai@chromium.org
 per-file offscreen_canvas*.*=xidachen@chromium.org
 per-file offscreen_canvas*.*=junov@chromium.org
 
+# TEAM: layout-dev@chromium.org
 # COMPONENT: Internals>Core

@@ -9,4 +9,5 @@ per-file chrome_elf_init*=robertshield@chromium.org
 
 per-file enumerate_modules_model*=finnur@chromium.org
 
+# TEAM: layout-dev@chromium.org
 # COMPONENT: Internals>Core
