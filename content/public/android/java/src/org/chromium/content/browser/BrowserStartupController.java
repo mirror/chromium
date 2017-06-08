@@ -176,7 +176,7 @@ public class BrowserStartupController {
                 @Override
                 public void run() {
                     ThreadUtils.assertOnUiThread();
-                    if (contentStart() > 0) {
+                    if (!sBrowserMayStartAsynchronously || contentStart() > 0) {
                         // Failed. The callbacks may not have run, so run them.
                         enqueueCallbackExecution(STARTUP_FAILURE, NOT_ALREADY_STARTED);
                     }
