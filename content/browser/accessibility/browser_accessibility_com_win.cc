@@ -5102,8 +5102,14 @@ void BrowserAccessibilityComWin::InitRoleAndState() {
       ia_state |= STATE_SYSTEM_HOTTRACKED;
   }
 
-  if (owner()->HasState(ui::AX_STATE_EDITABLE))
+  if (owner()->HasState(ui::AX_STATE_EDITABLE)) {
     ia2_state |= IA2_STATE_EDITABLE;
+    if (owner()->HasState(ui::AX_STATE_MULTILINE)) {
+      ia2_state |= IA2_STATE_MULTI_LINE;
+    } else {
+      ia2_state |= IA2_STATE_SINGLE_LINE;
+    }
+  }
 
   if (!owner()->GetStringAttribute(ui::AX_ATTR_AUTO_COMPLETE).empty())
     ia2_state |= IA2_STATE_SUPPORTS_AUTOCOMPLETION;
@@ -5501,11 +5507,6 @@ void BrowserAccessibilityComWin::InitRoleAndState() {
     case ui::AX_ROLE_TEXT_FIELD:
     case ui::AX_ROLE_SEARCH_BOX:
       ia_role = ROLE_SYSTEM_TEXT;
-      if (owner()->HasState(ui::AX_STATE_MULTILINE)) {
-        ia2_state |= IA2_STATE_MULTI_LINE;
-      } else {
-        ia2_state |= IA2_STATE_SINGLE_LINE;
-      }
       if (owner()->HasState(ui::AX_STATE_READ_ONLY))
         ia_state |= STATE_SYSTEM_READONLY;
       ia2_state |= IA2_STATE_SELECTABLE_TEXT;

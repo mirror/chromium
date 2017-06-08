@@ -1,0 +1,34 @@
+rootWebArea
+++genericContainer editable multiline
+++++paragraph editable
+++++++staticText editable name='A contenteditable with a '
+++++++++inlineTextBox name='A contenteditable with a '
+++++++link editable linked name='link'
+++++++++staticText editable linked name='link'
+++++++++++inlineTextBox name='link'
+++++++staticText editable name=' and an '
+++++++++inlineTextBox name=' and an '
+++++++image editable name='Image'
+++++++staticText editable name=' and a '
+++++++++inlineTextBox name=' and a '
+++++++button editable name='Button'
+++++++staticText editable name='.'
+++++++++inlineTextBox name='.'
+++++table editable
+++++++row editable
+++++++++cell editable name='Always expose editable tables as tables.'
+++++++++++staticText editable name='Always expose editable tables as tables.'
+++++++++++++inlineTextBox name='Always expose editable tables as tables.'
+++++++column
+++++++tableHeaderContainer
+++++list editable
+++++++listItem editable
+++++++++listMarker name='1'
+++++++++staticText editable name='Editable list item.'
+++++++++++inlineTextBox name='Editable list item.'
+++paragraph
+++++staticText name='Non-editable paragraph.'
+++++++inlineTextBox name='Non-editable paragraph.'
+++paragraph editable multiline
+++++staticText editable name='Should keep the role but change the state.'
+++++++inlineTextBox name='Should keep the role but change the state.'

@@ -738,6 +738,23 @@ void AXNodeObject::AccessibilityChildrenFromAttribute(
   }
 }
 
+bool AXNodeObject::IsMultiline() const {
+  Node* node = this->GetNode();
+  if (!node)
+    return false;
+
+  if (isHTMLTextAreaElement(*node))
+    return true;
+
+  if (HasContentEditableAttributeSet())
+    return true;
+
+  if (!IsNativeTextControl() && !IsNonNativeTextControl())
+    return false;
+
+  return AOMPropertyOrARIAAttributeIsTrue(AOMBooleanProperty::kMultiline);
+}
+
 // This only returns true if this is the element that actually has the
 // contentEditable attribute set, unlike node->hasEditableStyle() which will
 // also return true if an ancestor is editable.
