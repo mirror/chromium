@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "46f4e9db_bc89b7e2",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-08T20:52:18Z",
+      "side": 1,
+      "message": "Nothing complained on git cl upload, so I assume it\u0027s ok?",
+      "parentUuid": "938b9a99_74f6b2a3",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03e7a4da_9a40c97e",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 4
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "Makes sense--but for internal stuff, it\u0027s often more useful to return the derived class to avoid downcasts elsewhere. Just one data point to consider.",
       "parentUuid": "4681526c_e04c4a2f",
+      "range": {
+        "startLine": 173,
+        "startChar": 10,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a867f1a_bf3bce69",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-08T20:52:18Z",
+      "side": 1,
+      "message": "Yeh I changed it, as it means I can remove WebViewBase::FromPage that was implemented in WebViewImpl.cpp. Removed WebViewImpl::FromPage as well as there are no longer any callers.",
+      "parentUuid": "b4cc5949_2a1c9a05",
       "range": {
         "startLine": 173,
         "startChar": 10,
