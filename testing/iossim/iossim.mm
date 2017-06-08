@@ -47,6 +47,38 @@ void LogError(NSString* format, ...) {
 
 }
 
+// Wrapper around NSTimer to execute a simple block.
+@interface NSTimer (Block)
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats;
+@end
+
+@implementation NSTimer (Block)
+
++ (id)scheduledTimerWithTimeInterval:(NSTimeInterval)timeInterval
+                               block:(void (^)())block
+                             repeats:(BOOL)repeats {
+  void (^blockCopy)() = [block copy];
+  NSTimer* timer =
+      [self scheduledTimerWithTimeInterval:timeInterval
+                                    target:self
+                                  selector:@selector(timerFireMethod:)
+                                  userInfo:blockCopy
+                                   repeats:repeats];
+  [blockCopy release];
+  return timer;
+}
+
++ (void)timerFireMethod:(NSTimer*)timer {
+  if ([timer userInfo]) {
+    void (^block)() = (void (^)())[timer userInfo];
+    block();
+  }
+}
+
+@end
+
 // Wrap boiler plate calls to xcrun NSTasks.
 @interface XCRunTask : NSObject {
   NSTask* _task;
@@ -177,6 +209,19 @@ NSString* ResolvePath(NSString* path) {
   return [NSString stringWithCString:abs_path encoding:NSUTF8StringEncoding];
 }
 
+NSString* GetDeviceStateByUDID(NSDictionary* simctl_list, NSString* udid) {
+  for (NSString* sdk in simctl_list[@"devices"]) {
+    NSArray* devices = [simctl_list[@"devices"] objectForKey:sdk];
+    for (NSDictionary* device in devices) {
+      if ([device[@"udid"] isEqualToString:udid]) {
+        return device[@"state"];
+      }
+    }
+  }
+
+  return nil;
+}
+
 // Search |simctl_list| for a udid matching |device_name| and |sdk_version|.
 NSString* GetDeviceBySDKAndName(NSDictionary* simctl_list,
                                 NSString* device_name,
@@ -289,28 +334,29 @@ void RunApplication(NSString* app_path,
     @"test-without-building"
   ]] autorelease];
 
-  if (!xctest_path) {
-    // The following stderr messages are meaningless on iossim when not running
-    // xctests and can be safely stripped.
-    NSArray* ignore_strings = @[
-      @"IDETestOperationsObserverErrorDomain", @"** TEST EXECUTE FAILED **"
-    ];
-    NSPipe* stderr_pipe = [NSPipe pipe];
-    stderr_pipe.fileHandleForReading.readabilityHandler =
-        ^(NSFileHandle* handle) {
-          NSString* log = [[[NSString alloc] initWithData:handle.availableData
-                                                 encoding:NSUTF8StringEncoding]
-              autorelease];
-          for (NSString* ignore_string in ignore_strings) {
-            if ([log rangeOfString:ignore_string].location != NSNotFound) {
-              return;
-            }
-          }
-          printf("%s", [log UTF8String]);
-        };
-    [task setStandardError:stderr_pipe];
-  }
+  NSTimer* timer = nil;
+
+  // The longest unit test suite take about 200 seconds, however, if a test
+  // suite hangs, it won't be killed until 1200 senconds. So setting up a timer
+  // that fires a task after 600s since starting the tests running task to query
+  // and log the state of the simulator to understand whether the simulator is
+  // booted or not.
+  float timeout = 600.0;
+  void (^block)() = ^void() {
+    NSLog(@"The timer is fired.");
+    NSDictionary* simctl_list = GetSimulatorList();
+    NSString* deviceState = GetDeviceStateByUDID(simctl_list, udid);
+    NSLog(@"The state of the device is %@.\n", deviceState);
+  };
+
+  timer =
+      [NSTimer scheduledTimerWithTimeInterval:timeout block:block repeats:NO];
+
   [task run];
+
+  NSLog(@"The main task finished running!");
+  [timer invalidate];
+  timer = nil;
 }
 
 int main(int argc, char* const argv[]) {
