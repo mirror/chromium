@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c822df1_b5ca35b0",
+        "filename": "docs/memory/key_concepts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002691
+      },
+      "writtenOn": "2017-06-08T22:10:28Z",
+      "side": 1,
+      "message": "I personally would skip most of the top section. Just put each of these questions in as a section below where you discuss the answer.\n\nThe current structuring makes the document seem more scary and discourages skimming.I think it\u0027s sufficient to just open with \"Memory use is much more complicated than malloc/free!\" and then go into why.",
+      "range": {
+        "startLine": 8,
+        "startChar": 34,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
