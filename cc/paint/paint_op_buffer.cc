@@ -759,6 +759,12 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
     ++iter;
   while (const PaintOp* op =
              NextOp(range_starts, range_indices, &stack, &iter, &range_index)) {
+    // Check if we should abort. This should happen at the start of loop since
+    // there are a couple of raster branches below, and we need to ensure that
+    // we do this check after every one of them.
+    if (callback && callback->abort())
+      return;
+
     // Optimize out save/restores or save/draw/restore that can be a single
     // draw.  See also: similar code in SkRecordOpts.
     // TODO(enne): consider making this recursive?
@@ -799,8 +805,6 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
     // are so we can skip them correctly.
 
     op->Raster(canvas, original);
-    if (callback && callback->abort())
-      return;
   }
 }
 
