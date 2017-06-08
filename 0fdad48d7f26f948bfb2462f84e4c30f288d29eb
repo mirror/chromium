@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb044a06_40077272",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "Check specifically for OnDeviceList::kEventName here.",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afb25fff_45225bdc",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05cfa559_68707bec",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "This can be DVLOG(2) (here and below).",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a83b31dc_fff3023c",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "If base::Value takes a copy of the ctor argument, you don\u0027t need |network_id| above.",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cf0663d_6b282bcc",
+        "filename": "chrome/browser/extensions/api/dial/dial_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "Using static state in tests isn\u0027t great (it\u0027s easy to forget to clear it when the test finishes).  I suppose it\u0027s a consequence of taking a function pointer in SetNetworkInfoFunctionForTest.\n\nCan you add a TearDown() to ensure this is cleared after each test case?",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "935a9168_857c082f",
+        "filename": "chrome/browser/extensions/api/dial/dial_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "Can\u0027t have a ctor for a non-POD type with static linkage.\n\nYou\u0027ll need to construct this on first access.",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2309b65f_c1b19caf",
+        "filename": "chrome/common/extensions/api/dial.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-08T20:55:28Z",
+      "side": 1,
+      "message": "In general the entire DialError API can be replaced with onNetworkChanged, since they essentially serve the same purpose from the client\u0027s point of view.",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
