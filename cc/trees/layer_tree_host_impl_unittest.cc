@@ -8711,7 +8711,7 @@ TEST_F(LayerTreeHostImplTest, MemoryLimits) {
   }
 }
 
-TEST_F(LayerTreeHostImplTest, RequireHighResWhenVisible) {
+TEST_F(LayerTreeHostImplTest, RequireHighResAndRedrawWhenVisible) {
   ASSERT_TRUE(host_impl_->active_tree());
 
   // RequiresHighResToDraw is set when new output surface is used.
@@ -8721,16 +8721,20 @@ TEST_F(LayerTreeHostImplTest, RequireHighResWhenVisible) {
 
   host_impl_->SetVisible(false);
   EXPECT_FALSE(host_impl_->RequiresHighResToDraw());
+  did_request_redraw_ = false;
   host_impl_->SetVisible(true);
   EXPECT_TRUE(host_impl_->RequiresHighResToDraw());
+  EXPECT_TRUE(did_request_redraw_);
   host_impl_->SetVisible(false);
   EXPECT_TRUE(host_impl_->RequiresHighResToDraw());
 
   host_impl_->ResetRequiresHighResToDraw();
 
   EXPECT_FALSE(host_impl_->RequiresHighResToDraw());
+  did_request_redraw_ = false;
   host_impl_->SetVisible(true);
   EXPECT_TRUE(host_impl_->RequiresHighResToDraw());
+  EXPECT_TRUE(did_request_redraw_);
 }
 
 TEST_F(LayerTreeHostImplTest, RequireHighResAfterGpuRasterizationToggles) {

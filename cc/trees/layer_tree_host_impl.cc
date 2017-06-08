@@ -2192,6 +2192,9 @@ void LayerTreeHostImpl::SetVisible(bool visible) {
   if (visible_) {
     // TODO(crbug.com/469175): Replace with RequiresHighResToDraw.
     SetRequiresHighResToDraw();
+    // Prior CompositorFrame may have been discarded, so ensure that we create a
+    // new one, even if there are no tiles.
+    SetNeedsRedraw();
   } else {
     EvictAllUIResources();
     // Call PrepareTiles to evict tiles when we become invisible.
