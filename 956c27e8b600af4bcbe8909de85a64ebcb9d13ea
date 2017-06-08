@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9069af96_0b62ca8e",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "Nit: base::MakeUnique.",
+      "range": {
+        "startLine": 24,
+        "startChar": 16,
+        "endLine": 24,
+        "endChar": 19
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49cc96de_21ea792f",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "Optional nit: I would get rid of the |scrub_data_| member and just use:\n  if (anonymizer_)\n    anonymizer_-\u003e...",
+      "range": {
+        "startLine": 26,
+        "startChar": 6,
+        "endLine": 26,
+        "endChar": 17
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5121a3f_5f8a8223",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "Nit: emplace_back",
+      "range": {
+        "startLine": 32,
+        "startChar": 16,
+        "endLine": 32,
+        "endChar": 25
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8340acd6_e4d8ee61",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "Nit: Can you please use a range-for instead?",
+      "range": {
+        "startLine": 69,
+        "startChar": 2,
+        "endLine": 70,
+        "endChar": 35
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd32b32_54da6892",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "Nit: emplace instead of insert.",
+      "range": {
+        "startLine": 72,
+        "startChar": 25,
+        "endLine": 72,
+        "endChar": 31
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a006020_019b6ed2",
+        "filename": "chrome/browser/feedback/system_logs/system_logs_fetcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125479
+      },
+      "writtenOn": "2017-06-08T19:07:43Z",
+      "side": 1,
+      "message": "We can use this refactor as an opportunity to change this to a WeakPtrFactory member instead.",
+      "range": {
+        "startLine": 64,
+        "startChar": 39,
+        "endLine": 64,
+        "endChar": 54
+      },
+      "revId": "956c27e8b600af4bcbe8909de85a64ebcb9d13ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
