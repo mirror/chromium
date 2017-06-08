@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2624febb_742e8a16",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-06-08T18:37:53Z",
+      "side": 1,
+      "message": "Do we care? There were Chrome teams using LH for perf tracking, and it still works fine on most chrome:// URLs from within DevTools (just not extension).",
+      "parentUuid": "3556a1f2_bf15363f",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "66f0306e_29988895",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "042a632c_4f3b3f4f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-06-08T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66f0306e_29988895",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "444dd275_aad5b18d",
         "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2fdc756_07dd404a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1176943
+      },
+      "writtenOn": "2017-06-08T18:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "444dd275_aad5b18d",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
