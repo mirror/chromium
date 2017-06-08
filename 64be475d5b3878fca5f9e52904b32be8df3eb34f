@@ -16,6 +16,24 @@
       "revId": "64be475d5b3878fca5f9e52904b32be8df3eb34f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "947694a0_e0dce508",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunk.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-08T23:58:56Z",
+      "side": 1,
+      "message": "The cost of a Vector is slightly bigger than that of a unique_ptr:\n- static size: 16 bytes (vs 8 bytes)\n- default constructor: initializes 16 bytes (vs 8 bytes)\nbut the code handling it is simpler.\n\nDo you think this is a reasonable trace-off?",
+      "parentUuid": "890992ba_b54b8542",
+      "revId": "64be475d5b3878fca5f9e52904b32be8df3eb34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
