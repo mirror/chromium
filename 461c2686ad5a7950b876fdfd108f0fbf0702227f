@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cdf98f6e_ac08873a",
+        "filename": "base/trace_event/trace_log.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T08:52:39Z",
+      "side": 1,
+      "message": "It seems like a layering violation to have service workers in Chrome\u0027s base library.",
+      "range": {
+        "startLine": 311,
+        "startChar": 0,
+        "endLine": 314,
+        "endChar": 59
+      },
+      "revId": "461c2686ad5a7950b876fdfd108f0fbf0702227f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7adf80d3_5642a7b3",
+        "filename": "third_party/WebKit/Source/web/WebEmbeddedWorkerImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T08:52:39Z",
+      "side": 1,
+      "message": "And we should be trying to avoid std::string in Blink as well.",
+      "range": {
+        "startLine": 487,
+        "startChar": 2,
+        "endLine": 488,
+        "endChar": 39
+      },
+      "revId": "461c2686ad5a7950b876fdfd108f0fbf0702227f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
