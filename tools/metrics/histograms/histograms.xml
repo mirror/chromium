@@ -32295,6 +32295,23 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="MojoLevelDBEnv.RetryRecoveredFromErrorIn"
+    enum="PlatformFileError">
+  <owner>mek@chromium.org</owner>
+  <summary>
+    When Mojo LevelDBEnv successfully retries an operation that had failed,
+    record the error from the most recent failed attempt.
+  </summary>
+</histogram>
+
+<histogram name="MojoLevelDBEnv.TimeUntilSuccessFor" units="ms">
+  <owner>mek@chromium.org</owner>
+  <summary>
+    Time Mojo LevelDBEnv slept before successfully completing this operation. 0
+    means success on the first try.
+  </summary>
+</histogram>
+
 <histogram name="Mouse.PointerSensitivity.Changed" enum="PointerSensitivity">
   <owner>Please list the metric's owners. Add more owner tags as needed.</owner>
   <summary>
@@ -88974,6 +88991,8 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       name="LevelDBEnv.ServiceWorker.RetryRecoveredFromErrorIn"/>
   <affected-histogram name="LevelDBEnv.ServiceWorker.TimeUntilSuccessFor"/>
   <affected-histogram name="LevelDBEnv.TimeUntilSuccessFor"/>
+  <affected-histogram name="MojoLevelDBEnv.RetryRecoveredFromErrorIn"/>
+  <affected-histogram name="MojoLevelDBEnv.TimeUntilSuccessFor"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="LevelDBEnvRetryTimes" separator="">
