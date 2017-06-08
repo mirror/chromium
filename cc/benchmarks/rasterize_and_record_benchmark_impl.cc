@@ -28,7 +28,7 @@ const int kDefaultRasterizeRepeatCount = 100;
 
 void RunBenchmark(RasterSource* raster_source,
                   const gfx::Rect& content_rect,
-                  float contents_scale,
+                  const gfx::AxisTransform2d& raster_transform,
                   size_t repeat_count,
                   base::TimeDelta* min_time,
                   bool* is_solid_color) {
@@ -46,7 +46,7 @@ void RunBenchmark(RasterSource* raster_source,
                    kTimeCheckInterval);
     SkColor color = SK_ColorTRANSPARENT;
     *is_solid_color = raster_source->PerformSolidColorAnalysis(
-        content_rect, contents_scale, &color);
+        content_rect, raster_transform, &color);
 
     do {
       SkBitmap bitmap;
@@ -55,7 +55,7 @@ void RunBenchmark(RasterSource* raster_source,
       SkCanvas canvas(bitmap);
       raster_source->PlaybackToCanvas(
           &canvas, gfx::ColorSpace(), content_rect, content_rect,
-          gfx::AxisTransform2d(contents_scale, gfx::Vector2dF()),
+          gfx::AxisTransform2d(raster_transform.scale(), gfx::Vector2dF()),
           RasterSource::PlaybackSettings());
 
       timer.NextLap();
@@ -189,11 +189,10 @@ void RasterizeAndRecordBenchmarkImpl::RunOnLayer(PictureLayerImpl* layer) {
     DCHECK(*it);
 
     gfx::Rect content_rect = (*it)->content_rect();
-    float contents_scale = (*it)->raster_transform().scale();
 
     base::TimeDelta min_time;
     bool is_solid_color = false;
-    RunBenchmark(raster_source, content_rect, contents_scale,
+    RunBenchmark(raster_source, content_rect, (*it)->raster_transform(),
                  rasterize_repeat_count_, &min_time, &is_solid_color);
 
     int tile_size = content_rect.width() * content_rect.height();

@@ -28,6 +28,10 @@ const char kUIShowPaintRects[] = "ui-show-paint-rects";
 
 const char kUISlowAnimations[] = "ui-slow-animations";
 
+// If enabled, all drawing commnads recorded on canvas are done in pixel aligned
+// measurements.
+const char kEnablePixelCanvasRecording[] = "enable-pixel-canvas-recording";
+
 }  // namespace switches
 
 namespace ui {

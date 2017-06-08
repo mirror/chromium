@@ -234,7 +234,7 @@ const ui::LayerTreeOwner* DragWindowController::GetDragLayerOwnerForTest(
 }
 
 void DragWindowController::RequestLayerPaintForTest() {
-  ui::PaintContext context(nullptr, 1.0f, gfx::Rect());
+  ui::PaintContext context(nullptr, 1.0f, gfx::Rect(), gfx::Size());
   for (auto& details : drag_windows_) {
     std::vector<ui::Layer*> layers;
     layers.push_back(details->drag_window_->layer());

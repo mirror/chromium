@@ -1044,6 +1044,10 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   void RemoveObserver(ViewObserver* observer);
   bool HasObserver(const ViewObserver* observer) const;
 
+  // Returns the type of scaling for the Paintcontext. Values should be from
+  // ui::PaintContext::ScaleType.
+  virtual int GetContextScaleType() const;
+
  protected:
   // Used to track a drag. RootView passes this into
   // ProcessMousePressed/Dragged.
@@ -1314,12 +1318,13 @@ class VIEWS_EXPORT View : public ui::LayerDelegate,
   // during painting.
   bool ShouldPaint() const;
 
-  // Returns the offset that should be used when constructing the paint context
+  // Returns the bounds that should be used when constructing the paint context
   // for this view.
-  gfx::Vector2d GetPaintContextOffset() const;
+  gfx::Rect GetPaintContextBounds() const;
 
   // Adjusts the transform of |recorder| in advance of painting.
-  void SetupTransformRecorderForPainting(ui::TransformRecorder* recorder) const;
+  void SetupTransformRecorderForPainting(ui::TransformRecorder* recorder,
+                                         const ui::PaintContext& context) const;
 
   // Recursively calls the painting method |func| on all non-layered children,
   // in Z order.

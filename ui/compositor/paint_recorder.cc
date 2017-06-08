@@ -20,28 +20,37 @@ namespace ui {
 // directly, then appends that to the |context|. If not, then this records
 // to the |context|'s PaintOpBuffer.
 PaintRecorder::PaintRecorder(const PaintContext& context,
-                             const gfx::Size& recording_size,
+                             const gfx::Size& effective_recording_size,
                              PaintCache* cache)
     : context_(context),
       record_canvas_(cache ? cache->ResetCache() : context_.list_->StartPaint(),
-                     gfx::RectToSkRect(gfx::Rect(recording_size))),
+                     gfx::RectToSkRect(gfx::Rect(effective_recording_size))),
       canvas_(&record_canvas_, context.device_scale_factor_),
       cache_(cache),
-      recording_size_(recording_size) {
+      recording_size_(effective_recording_size) {
 #if DCHECK_IS_ON()
   DCHECK(!context.inside_paint_recorder_);
   context.inside_paint_recorder_ = true;
 #endif
+  if (context_.IsPixelCanvas()) {
+    canvas()->Save();
+    canvas()->Scale(context.effective_scale_factor_x(),
+                    context.effective_scale_factor_y());
+  }
 }
 
 PaintRecorder::PaintRecorder(const PaintContext& context,
                              const gfx::Size& recording_size)
-    : PaintRecorder(context, recording_size, nullptr) {}
+    : PaintRecorder(context,
+                    context.ScaleToEffectivePixelSize(recording_size),
+                    nullptr) {}
 
 PaintRecorder::~PaintRecorder() {
 #if DCHECK_IS_ON()
   context_.inside_paint_recorder_ = false;
 #endif
+  if (context_.IsPixelCanvas())
+    canvas()->Restore();
   // If using cache, append what we've saved there to the PaintContext.
   // Otherwise, the content is already stored in the PaintContext, and we can
   // just close it.

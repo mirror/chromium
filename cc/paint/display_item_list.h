@@ -125,6 +125,9 @@ class CC_PAINT_EXPORT DisplayItemList
     return paint_op_buffer_.HasDiscardableImages();
   }
 
+  bool pixel_canvas_enabled() const { return pixel_canvas_enabled_; }
+  void set_pixel_canvas_enabled(bool value) { pixel_canvas_enabled_ = value; }
+
  private:
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithNoOps);
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, AsValueWithOps);
@@ -168,6 +171,11 @@ class CC_PAINT_EXPORT DisplayItemList
   // For testing purposes only. Whether to keep visual rects across calls to
   // Finalize().
   bool retain_visual_rects_ = false;
+
+  // Set true if we are using scalable views and canvas. This mode records all
+  // canvas draw commands in pixel aligned measurements. Use the compositor
+  // switch --enable-pixel-canvas-recording to enable this mode.
+  bool pixel_canvas_enabled_ = false;
 
   friend class base::RefCountedThreadSafe<DisplayItemList>;
   FRIEND_TEST_ALL_PREFIXES(DisplayItemListTest, BytesUsed);

@@ -58,6 +58,8 @@ class ASH_EXPORT FrameCaptionButton : public views::CustomButton {
 
   CaptionButtonIcon icon() const { return icon_; }
 
+  int GetContextScaleType() const override;
+
  protected:
   // views::CustomButton override:
   void PaintButtonContents(gfx::Canvas* canvas) override;
