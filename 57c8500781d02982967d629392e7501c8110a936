@@ -94,6 +94,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ed3d01_21d578e2",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T23:58:18Z",
+      "side": 1,
+      "message": "Ah, yeah. Some of the workers will expect to see themselves in workers_created_. That might be fixable enough by turning workers_created_ into a WaitableEvent and then signaling it when all is ready to go for reals.",
+      "parentUuid": "de4515e0_a8346c61",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
