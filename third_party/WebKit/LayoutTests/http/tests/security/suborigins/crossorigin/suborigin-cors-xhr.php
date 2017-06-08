@@ -43,7 +43,7 @@ SuboriginXHRTest.prototype.execute = function() {
 new SuboriginXHRTest(
   false,
   '<crossorigin=\'anonymous\'>, ACAO: ' + server,
-  xoriginAnonScript(),
+  xoriginAnonScript('true'),
   'anonymous').execute();
 
 new SuboriginXHRTest(
@@ -55,7 +55,7 @@ new SuboriginXHRTest(
 new SuboriginXHRTest(
   false,
   '<crossorigin=\'use-credentials\'>, ACAO: ' + server,
-  xoriginCredsScript(),
+  xoriginCredsScript('true'),
   'use-credentials').execute();
 
 new SuboriginXHRTest(
