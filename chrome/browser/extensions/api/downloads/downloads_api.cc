@@ -1042,7 +1042,36 @@ bool DownloadsDownloadFunction::RunAsync() {
 
   DownloadManager* manager = BrowserContext::GetDownloadManager(
       current_profile);
-  manager->DownloadUrl(std::move(download_params), NO_TRAFFIC_ANNOTATION_YET);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("downloads_api_run_async", R"(
+        semantics {
+          sender: "Downloads API"
+          description:
+            "This request is made when an extension makes an API call to "
+            "download a file."
+          trigger:
+            "An API call from an extension, can be in response to user input "
+            "or autonomously."
+          data:
+            "The extension may provide any data that it has permission to "
+            "access, or is provided to it by the user."
+          destination: OTHER
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting:
+            "This feature cannot be disabled in settings, but disabling all "
+            "extensions will prevent it."
+          chrome_policy {
+            ExtensionInstallBlacklist {
+              ExtensionInstallBlacklist: {
+                entries: '*'
+              }
+            }
+          }
+        })");
+  manager->DownloadUrl(std::move(download_params), traffic_annotation);
   RecordDownloadSource(DOWNLOAD_INITIATED_BY_EXTENSION);
   RecordApiFunctions(DOWNLOADS_FUNCTION_DOWNLOAD);
   return true;
