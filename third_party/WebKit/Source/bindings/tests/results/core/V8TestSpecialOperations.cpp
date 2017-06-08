@@ -86,6 +86,7 @@ static void namedItemMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
 
   NodeOrNodeList result;
   impl->getItem(name, result);
+
   V8SetReturnValue(info, result);
 }
 

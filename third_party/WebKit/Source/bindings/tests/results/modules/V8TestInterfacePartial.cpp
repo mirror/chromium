@@ -363,6 +363,7 @@ static void unionWithTypedefMethodMethod(const v8::FunctionCallbackInfo<v8::Valu
 
   UnsignedLongLongOrBooleanOrTestCallbackInterface result;
   TestInterfacePartial3Implementation::unionWithTypedefMethod(*impl, result);
+
   V8SetReturnValue(info, result);
 }
 

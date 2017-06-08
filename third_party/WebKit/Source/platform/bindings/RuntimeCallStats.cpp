@@ -41,6 +41,10 @@ RuntimeCallStats::RuntimeCallStats() {
 #define COUNTER_NAME_ENTRY(name) #name,
       FOR_EACH_COUNTER(COUNTER_NAME_ENTRY)
 #undef COUNTER_NAME_ENTRY
+
+#define COUNTER_NAME_ENTRY_BINDINGS(name) #name,
+          FOR_EACH_BINDINGS_COUNTER(COUNTER_NAME_ENTRY_BINDINGS)
+#undef COUNTER_NAME_ENTRY_BINDINGS
   };
 
   for (int i = 0; i < number_of_counters_; i++) {
