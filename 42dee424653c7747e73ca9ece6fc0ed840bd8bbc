@@ -22,6 +22,30 @@
       "revId": "42dee424653c7747e73ca9ece6fc0ed840bd8bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adf904b6_9ce5c171",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-08T20:04:50Z",
+      "side": 1,
+      "message": "Yes, it\u0027s possible. And that would be my next experiment to run, we can do: \"sample task-\u003e_task.processIdentifier\" to get the state of the NSTask when it hangs, but right now, I want to start with something simple and less risky.",
+      "parentUuid": "2e36b770_e565085a",
+      "range": {
+        "startLine": 84,
+        "startChar": 2,
+        "endLine": 84,
+        "endChar": 8
+      },
+      "revId": "42dee424653c7747e73ca9ece6fc0ed840bd8bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
