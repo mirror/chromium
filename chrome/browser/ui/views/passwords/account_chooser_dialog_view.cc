@@ -41,20 +41,19 @@ enum ColumnSetType {
 // Construct a |type| ColumnSet and add it to |layout|.
 void BuildColumnSet(ColumnSetType type, views::GridLayout* layout) {
   views::ColumnSet* column_set = layout->AddColumnSet(type);
-  const int horizontal_padding =
+  const gfx::Insets padding =
       type == SINGLE_VIEW_COLUMN_SET
-          ? ChromeLayoutProvider::Get()
-                ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
-                .left()
-          : 0;
-  column_set->AddPaddingColumn(0, horizontal_padding);
+          ? ChromeLayoutProvider::Get()->GetInsetsMetric(
+                views::INSETS_DIALOG_CONTENTS)
+          : gfx::Insets();
+  column_set->AddPaddingColumn(0, padding.left());
   column_set->AddColumn(views::GridLayout::FILL,
                         views::GridLayout::FILL,
                         1,
                         views::GridLayout::USE_PREF,
                         0,
                         0);
-  column_set->AddPaddingColumn(0, horizontal_padding);
+  column_set->AddPaddingColumn(0, padding.right());
 }
 
 views::StyledLabel::RangeStyleInfo GetLinkStyle() {
