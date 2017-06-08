@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb047e1e_21d15cc6",
+        "filename": "third_party/WebKit/Source/platform/SharedBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T23:43:35Z",
+      "side": 1,
+      "message": "Shall we add a comment that this will copy the segmented data to a new contiguous buffer and thus heavy? We should use getSomeData() whenever possible.",
+      "revId": "8b11eef20379954897bd350d9c19b0f1887c730f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
