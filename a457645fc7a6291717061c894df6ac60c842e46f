@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad9c0bfb_a6d4facd",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-08T14:43:10Z",
+      "side": 1,
+      "message": "If your ASCII art was correct (and looking at the class myself, I think I agree), then I don\u0027t think we\u0027d want INSETS_DIALOG_CONTENTS at all.  I think we could just set title_label_ to take the full width, ensuring its contents are centered no matter how wide the button is, and rely on preferred/minimum sizing to ensure there\u0027s no overlap between label and back button.\n\nIf we did want to do things the current way, I\u0027d replace INSETS_DIALOG_CONTENTS.left() with UNRELATED_CONTROL_HORIZONTAL (or whatever its name is), and add a comment about what this is doing (avoid overlap with the back button on the left, subtract the same amount on the other side just to keep the label bounds centered).",
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
