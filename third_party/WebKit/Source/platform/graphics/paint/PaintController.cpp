@@ -584,13 +584,9 @@ void PaintController::CommitNewDisplayItems() {
   new_cached_subsequences_.swap(current_cached_subsequences_);
   new_cached_subsequences_.clear();
   last_cached_subsequence_end_ = 0;
-  for (auto& item : current_cached_subsequences_) {
+  DCHECK(current_subsequence_clients_.IsEmpty());
+  for (auto& item : current_cached_subsequences_)
     item.key->SetDisplayItemsCached(current_cache_generation_);
-#if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
-    DisplayItemClient::EndShouldKeepAliveAllClients(item.key);
-    DCHECK(current_subsequence_clients_.IsEmpty());
-#endif
-  }
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
