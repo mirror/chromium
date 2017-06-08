@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "dfc82ebf_a74d5bf2",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-08T19:40:32Z",
+      "side": 1,
+      "message": "Shouldn\u0027t be called if not necessary. I think I took care of it on the call site. DCHECK added.",
+      "parentUuid": "3f791439_30473095",
+      "range": {
+        "startLine": 242,
+        "startChar": 22,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "12bd26e4_58209226",
         "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ce25bd9_cf3e4275",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-08T19:40:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "12bd26e4_58209226",
+      "range": {
+        "startLine": 250,
+        "startChar": 13,
+        "endLine": 250,
+        "endChar": 26
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b1479246_7b5d8b99",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-08T19:40:32Z",
+      "side": 1,
+      "message": "Yes (skia:6021). Reference added to the comments. There is a new API (SkImage::makeColorSpace) but it suffers from the same problem as it uses the same internal API as readPixels. Using makeColorSpace() makes the code cleaner but it seems that there is something wrong with the transfer function behavior parameter. When it is fixed, we can replace some calls to readPixels()  with makeColorSpace().",
+      "parentUuid": "d8a114b3_0e5e8c2b",
+      "range": {
+        "startLine": 290,
+        "startChar": 7,
+        "endLine": 290,
+        "endChar": 15
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15d3bebe_d1167d1c",
         "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-08T17:52:07Z",
       "side": 1,
       "message": "This function seems pointless with needs_swizzle forced to false.",
+      "range": {
+        "startLine": 693,
+        "startChar": 2,
+        "endLine": 693,
+        "endChar": 15
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64c1f792_e601ce32",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-08T19:40:32Z",
+      "side": 1,
+      "message": "Interestingly, it seems that we don\u0027t need the swizzle anymore. The required conversion seems to be taken care of by calls to Skia API in different code paths. Considering that in my system kN32 is kBGRA_8888 and everything works fine, I guess we should have no issues on the systems with kN32 equal to kRGBA_8888. I removed the function and its call sites.",
+      "parentUuid": "15d3bebe_d1167d1c",
       "range": {
         "startLine": 693,
         "startChar": 2,
