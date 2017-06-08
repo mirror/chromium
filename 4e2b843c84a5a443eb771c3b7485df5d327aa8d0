@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9608f854_a44580e9",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "375d6b18_63d9f916",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b6bcfdd0_2adc790e",
         "filename": "ash/shelf/app_list_button.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-08T14:28:33Z",
       "side": 1,
       "message": "same here. be consistent with checks.",
+      "range": {
+        "startLine": 232,
+        "startChar": 26,
+        "endLine": 232,
+        "endChar": 51
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae2c0383_0355d790",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "What do you mean?  Are you saying checking \"if (voice_interaction_overlay_)\"?  That would be an indirect check which is not reliable.  Consider if the UX wants to remove the animation but keep the button style.",
+      "parentUuid": "b6bcfdd0_2adc790e",
       "range": {
         "startLine": 232,
         "startChar": 26,
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "fa1f60b7_f0c27919",
+        "filename": "ash/shelf/app_list_button.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "see previous comment.",
+      "parentUuid": "fd598dfa_7e919835",
+      "range": {
+        "startLine": 251,
+        "startChar": 18,
+        "endLine": 251,
+        "endChar": 26
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "54cc96c9_22c8c68b",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 2
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "a0510f06_45971002",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "54cc96c9_22c8c68b",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5fe849f_84f982ae",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 2
@@ -96,6 +180,24 @@
       "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddc26c3e_c91adf36",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5fe849f_84f982ae",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -122,6 +224,30 @@
     },
     {
       "key": {
+        "uuid": "5b247ff6_73e20ff5",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9139c631_89cf71b2",
+      "range": {
+        "startLine": 154,
+        "startChar": 47,
+        "endLine": 154,
+        "endChar": 49
+      },
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "04df3d03_362f02cc",
         "filename": "ash/shelf/voice_interaction_overlay.h",
         "patchSetId": 2
@@ -136,6 +262,24 @@
       "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2137ffbc_12347aa3",
+        "filename": "ash/shelf/voice_interaction_overlay.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-08T19:45:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04df3d03_362f02cc",
+      "revId": "4e2b843c84a5a443eb771c3b7485df5d327aa8d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
