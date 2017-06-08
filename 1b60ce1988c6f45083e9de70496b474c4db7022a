@@ -70,6 +70,30 @@
       "revId": "1b60ce1988c6f45083e9de70496b474c4db7022a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e794c93_23b1a578",
+        "filename": "third_party/WebKit/Source/core/loader/EmptyClients.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 363,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-08T16:46:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a33b2da_3c1f524b",
+      "range": {
+        "startLine": 363,
+        "startChar": 11,
+        "endLine": 363,
+        "endChar": 12
+      },
+      "revId": "1b60ce1988c6f45083e9de70496b474c4db7022a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

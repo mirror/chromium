@@ -618,6 +618,30 @@
     },
     {
       "key": {
+        "uuid": "bf0bed4e_d0834496",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-08T16:46:53Z",
+      "side": 1,
+      "message": "\u003e dcheng@ mentioned:\n\u003e I commented on the Onion Soup 2.0 doc as well, but I think see #ifdefs in core as being fundamentally bad.\n\nThat wasn\u0027t quite a complete sentence.  Not sure if you see them as bad or not.  I provided references to the blink-dev@ threads where we (blink-team) decided they were bad, and went ahead and removed them all, and replaced them with Runtime Enabled Features.\n\n\u003e It\u0027s already used in core in a number of places (for example see https://cs.chromium.org/search/?q\u003d%22OS(%22+file:WebKit/Source/core+package:%5Echromium$\u0026type\u003dcs), and it makes a simple rule for how platform-specific things should be guarded.\n\nGood examples, we\u0027d prefer that there were not there, right?  You make an argument that because they are, it\u0027s maybe ok to follow as a guide, but did you think to question why they\u0027re there in the first place?\n\nFonts and keyboards is the dominant theme in the examples you provided: turns out that they are platform-specific (maybe not news to anybody) and in core/. So, IE invented event.keyCode, before WHATWG was a even thing.  Browser vendors had no option but to try to match IE for compat reasons.  Apple came out with a keyboard with fancy keys no one else had (the Command key for one), specs started (core DOM level 1). The compat madness that resulted for web developers during that period was best documented in:\n\n  http://unixpapa.com/js/key.html\n\nIt has taken ~16 years for us to produce the core DOM level 3 spec (in development now), which finally has gotten around to defining key events / codes in a general, cross-platform way.\n\nThe platform specific #ifdef you quoted are there to deal with compat issues. It\u0027s legacy code, I\u0027m not sure we can delete it, but I wouldn\u0027t use them to argue the case that we should do more of the same in core/ using them as guide.  Their presence in core/ is for compat reasons.\n\nOne exception: the OS(ANDOID) cases in these examples were interesting, possible examples of the \"broadening\" effect I mentioned elsewhere, but each would be better handled by putting them in platform/.\n\n\u003e It will also make platforms that care heavily about size happier: admittedly, this object is pretty small, but if we can omit it, that\u0027s still strictly better.\n\nYes this object is pretty small (assume you are talking about the no-op class), and I expect the compiler might optimize it out.  Agree it\u0027s not a great example of a code-size issue, we have better examples of that fish to fry.\n\nThat no-op class does seems like a reasonable choice given that the spelling panel code added on https://trac.webkit.org/changeset/21318/webkit/trunk/WebCore/editing/Editor.cpp 10 years ago was not guarded by an ENABLE flag sadly.\n\n\u003e For this particular BUILDFLAG, I talked to brettw@, and he mentioned that there\u0027s already a features target for buildflags that in both browser and renderer: third_party/WebKit/public:public_features\n\nGlad to see this list is mostly empty.  Did he mention that that file derives from old features.gypi where all the ENBALE flags for webkit/blink were listed, until we removed them all per the blink-dev@ threads I mentioned earlier?  Those threads should remind us #ifdef in core/ -\u003e bad.  Is there a way to do it without #ifdef?  A no-op class is one way (seems sane to me), but there are probably others.",
+      "parentUuid": "3b3a90d1_f905a14e",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
