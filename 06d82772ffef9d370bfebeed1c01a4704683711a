@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "938b9a99_74f6b2a3",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T20:29:53Z",
+      "side": 1,
+      "message": "There\u0027s no hard-rule anymore in Blink, hence nit. If you prefer it, I\u0027m OK with leaving it (though I thought that check-webkit-style warned about this. Maybe not)",
+      "parentUuid": "02454989_7fae9db6",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03e7a4da_9a40c97e",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "Where possible i always want to use the least derived type ... so ideally this would always be WebView unless we switch everything over to WebViewImpl once the move is complete (assuming we also delete WebViewBase at that time).",
       "parentUuid": "03e7a4da_9a40c97e",
+      "range": {
+        "startLine": 173,
+        "startChar": 10,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4cc5949_2a1c9a05",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T20:29:53Z",
+      "side": 1,
+      "message": "Makes sense--but for internal stuff, it\u0027s often more useful to return the derived class to avoid downcasts elsewhere. Just one data point to consider.",
+      "parentUuid": "4681526c_e04c4a2f",
       "range": {
         "startLine": 173,
         "startChar": 10,
