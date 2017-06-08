@@ -192,6 +192,24 @@
       "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9310876_53625ec2",
+        "filename": "content/browser/service_worker/service_worker_provider_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 620,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-08T07:57:02Z",
+      "side": 1,
+      "message": "Actually it\u0027s set before calling CrossCrossSiteTransfer. The provider host which is transferred will keep the |document_url_| even after it\u0027s transferred.",
+      "parentUuid": "7485c6dc_cf4e61c7",
+      "revId": "2c67e529a908c248d958c807d4f529c2d2667362",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
