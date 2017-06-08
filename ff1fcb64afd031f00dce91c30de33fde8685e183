@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "12b7e285_fa329b58",
+        "filename": "content/browser/dom_storage/dom_storage_context_wrapper.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T16:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5ca1648_7675019d",
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60b5a9c2_06c5856c",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -232,6 +250,30 @@
     },
     {
       "key": {
+        "uuid": "976da0c8_9992c7aa",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T16:58:00Z",
+      "side": 1,
+      "message": "Yeah, I don\u0027t know The numbers are definitely going to be different between old and new version (the old version included memory used by sqlite, while the new version currently doesn\u0027t include memory used by leveldb, and there also isn\u0027t really a good way to make it include leveldb memory usage), but then it is measuring memory usage of the same feature, so some continuity might make sense. You probably have a better idea of what makes sense though.",
+      "parentUuid": "306794a4_cebf8a5a",
+      "range": {
+        "startLine": 373,
+        "startChar": 28,
+        "endLine": 373,
+        "endChar": 39
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "64a3745a_44fd48ce",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 2
@@ -243,6 +285,30 @@
       "writtenOn": "2017-06-08T00:18:31Z",
       "side": 1,
       "message": "just checking. Does anything change wrt old and new implementation?\nWill we see a difference in the benchmarks once this CL lands?",
+      "range": {
+        "startLine": 377,
+        "startChar": 19,
+        "endLine": 377,
+        "endChar": 35
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143bb3f3_aad1345a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T16:58:00Z",
+      "side": 1,
+      "message": "well, for one in the old implementation there would have been one cache_size for combined usage of session and local storage. With the new implementation only doing localstorage that means there will be separate dom_Stoarge/pointer/cache_size entries for session and local storage.\n\nAnd for the detailed memory dumps, the old implementation included sqlite memory usage, while the new implementation doesn\u0027t include leveldb memory usage at all.",
+      "parentUuid": "64a3745a_44fd48ce",
       "range": {
         "startLine": 377,
         "startChar": 19,
@@ -275,6 +341,30 @@
       "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9309de15_74e1dae3",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T16:58:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "201ac850_4a54b62a",
+      "range": {
+        "startLine": 17,
+        "startChar": 27,
+        "endLine": 17,
+        "endChar": 47
+      },
+      "revId": "ff1fcb64afd031f00dce91c30de33fde8685e183",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
