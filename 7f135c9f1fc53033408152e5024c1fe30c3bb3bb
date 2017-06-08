@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be928383_8b42b19b",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-08T14:00:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebca2c50_9b3bb4da",
+      "revId": "7f135c9f1fc53033408152e5024c1fe30c3bb3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a6d8c08_aa44e3cd",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T05:31:04Z",
       "side": 1,
       "message": "I don\u0027t think we should have done this change.  It\u0027s functionally equivalent to the old code for now, but it doesn\u0027t seem to make semantic sense to me.  Why is this code structured like it is?  Why is label_width below subtracting 2x all this stuff?  How do I know this shouldn\u0027t have been\n\n  label_width \u003d width() - back_button_width() - insets.width();\n\nWe\u0027ve moved from code that didn\u0027t allow non-symmetrical insets to code that allows but ignores them, which is kind of worse.",
+      "revId": "7f135c9f1fc53033408152e5024c1fe30c3bb3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fbb8ef5_78d10cd9",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-08T14:00:01Z",
+      "side": 1,
+      "message": "The \"2 * label_padding\" sub-expression did seem odd.\n\nThere is a slight hint in the comment on the TitleCard class:\n\n\"// A title card with one back button right aligned and one label center aligned.\"\n\nAlthough it doesn\u0027t match what the code is doing. The button is left-aligned and the label is centered in the dialog.\n\n    +-----------------------------------------------+\n    +---------------+               + - - - - - - - +\n    |  Back Button  |  Title Label  | Phantom button|\n    +---------------+               + - - - - - - - +\n    +-----------------------------------------------+\n\nThe \"Phantom button\" is just the logical space that is the same size as the back_button_ + inset.left(). This expression seems better:\n\n    label_width \u003d width() - 2 * back_button_width - insets.width();\n\nHowever, if insets.left() !\u003d insets.right(), that expression would not visually center the label in the dialog.\n\nAnother point is that the use of INSETS_DIALOG_CONTENTS or even DISTANCE_DIALOG_CONTENTS_HORIZONTAL_MARGIN seems wrong because it is being used, not as the padding around the inside of the dialog (or view), but the padding between the button and the label.",
+      "parentUuid": "3a6d8c08_aa44e3cd",
       "revId": "7f135c9f1fc53033408152e5024c1fe30c3bb3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
