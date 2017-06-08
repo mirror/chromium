@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "411f69d0_e014da45",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T17:30:24Z",
+      "side": 1,
+      "message": "The C++ preprocessor doesn\u0027t know about namespaces, so anyone who includes this file will pick up these private macros.\n\nThe only way I can think of is to unroll these #defines and use the actual statements or better yet, directly place them in kIPHDemoModeChoiceVariations set up like a table. Sync up with Tommy to see if this is okay with him.",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "bd345d56cfd04fe16b24eaed72104b8c4bc487c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c587624_7c707c11",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T17:30:24Z",
+      "side": 1,
+      "message": "This supporting structure is no longer necessary now there\u0027s no extern const anymore. You can remove all instances of Len and it should work.",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 53,
+        "endChar": 53
+      },
+      "revId": "bd345d56cfd04fe16b24eaed72104b8c4bc487c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
