@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbf1f36f_5aa93244",
+        "filename": "third_party/WebKit/public/web/WebElement.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T20:57:57Z",
+      "side": 1,
+      "message": "Nit: delete bLocalFr \u003d)",
+      "range": {
+        "startLine": 27,
+        "startChar": 72,
+        "endLine": 27,
+        "endChar": 80
+      },
+      "revId": "4e4cd2a9a03e73e6f85d9ec7812e73bb79a089dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
