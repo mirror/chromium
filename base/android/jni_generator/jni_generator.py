@@ -184,6 +184,14 @@ class JniParams(object):
   _implicit_imports = []
 
   @staticmethod
+  def ResetStates():
+    JniParams._imports = []
+    JniParams._fully_qualified_class = ''
+    JniParams._package = ''
+    JniParams._inner_classes = []
+    JniParams._implicit_imports = []
+
+  @staticmethod
   def SetFullyQualifiedClass(fully_qualified_class):
     JniParams._fully_qualified_class = 'L' + fully_qualified_class
     JniParams._package = '/'.join(fully_qualified_class.split('/')[:-1])
