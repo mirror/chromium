@@ -363,6 +363,18 @@ TEST_F(MediaControlsImplTest, CastOverlayDefault) {
   ASSERT_TRUE(IsElementVisible(*cast_overlay_button));
 }
 
+TEST_F(MediaControlsImplTest, CastOverlayAutoplayMuted) {
+  Element* cast_overlay_button = GetElementByShadowPseudoId(
+      MediaControls(), "-internal-media-controls-overlay-cast-button");
+  ASSERT_NE(nullptr, cast_overlay_button);
+
+  MediaControls().MediaElement().SetBooleanAttribute(HTMLNames::autoplayAttr,
+                                                     true);
+  MediaControls().MediaElement().setMuted(true);
+  SimulateRouteAvailable();
+  ASSERT_FALSE(IsElementVisible(*cast_overlay_button));
+}
+
 TEST_F(MediaControlsImplTest, CastOverlayDisabled) {
   RuntimeEnabledFeatures::SetMediaCastOverlayButtonEnabled(false);
 
