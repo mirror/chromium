@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "6ee5995b_fd78b41f",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T16:53:53Z",
+      "side": 1,
+      "message": "Correct. In that case, we\u0027ll show the arc_support/main.html error page to indicate that auth did not succeed, but the Play Store is not opened.",
+      "parentUuid": "8c102db0_1fb20839",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
@@ -222,6 +240,30 @@
       "side": 1,
       "message": "Re Why? What should we do instead? Should we just disable ARC altogether? (It\u0027s probably fine since it only affects Eve afaik, which is scheduled for M61 and we should have the OOBE version by then).\n\nWe *must* make ToS agreement with user before starting ARC.\nSo, as Yury mentioned, it is not allowed to start ARC silently.\nCurrent code (PS6) is fine for me.",
       "parentUuid": "75bdec92_6a126c5d",
+      "range": {
+        "startLine": 701,
+        "startChar": 6,
+        "endLine": 701,
+        "endChar": 33
+      },
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f312efa_8432bace",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T16:53:53Z",
+      "side": 1,
+      "message": "\u003e\u003e Re Why? What should we do instead? Should we just disable ARC altogether?\nWith the latest PS the a screen is opened (arc_support/main.html, id ad-auth-notification) as soon as the user logs in. This happens in OOBE as well as non-OOBE. It\u0027s not a ToS screen, it just has some text, a cancel and a next button.\n\nThere is no ToS agreement for AD users since it does not apply to them.",
+      "parentUuid": "bb372647_5bc86872",
       "range": {
         "startLine": 701,
         "startChar": 6,
