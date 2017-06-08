@@ -11,6 +11,11 @@
 constexpr base::TimeDelta
     MediaEngagementContentsObserver::kSignificantMediaPlaybackTime;
 
+// This is the minimum size (in px) that a media element has to be in
+// order to be determined significant.
+const int kSignificantSizeWidth = 200;
+const int kSignificantSizeHeight = 200;
+
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
     MediaEngagementService* service)
@@ -64,12 +69,16 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
     const MediaPlayerInfo& media_player_info,
     const MediaPlayerId& media_player_id) {
   // TODO(mlamouri): check if:
-  // - the playback has the minimum size requirements;
   // - the playback has an audio track;
   // - the playback isn't muted.
   DCHECK(significant_players_.find(media_player_id) ==
          significant_players_.end());
   significant_players_.insert(media_player_id);
+  UpdateTimer();
+}
+
+void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
+                                                   const MediaPlayerId& id) {
   UpdateTimer();
 }
 
@@ -98,7 +107,18 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
 }
 
 bool MediaEngagementContentsObserver::AreConditionsMet() const {
-  if (significant_players_.empty() || !is_visible_)
+  std::set<MediaPlayerId> all_players;
+  std::copy(significant_players_.begin(), significant_players_.end(),
+            std::inserter(all_players, all_players.end()));
+
+  // Remove all small players.
+  for (auto const& kv : web_contents()->GetCurrentlyPlayingVideoSizes()) {
+    if (kv.second.width() < kSignificantSizeWidth ||
+        kv.second.height() < kSignificantSizeHeight)
+      all_players.erase(kv.first);
+  }
+
+  if (all_players.empty() || !is_visible_)
     return false;
 
   return !web_contents()->IsAudioMuted();

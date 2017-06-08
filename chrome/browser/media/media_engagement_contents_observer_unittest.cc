@@ -12,6 +12,9 @@
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/browser/web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
+#include "ui/gfx/geometry/size.h"
+
+const int kSignificantSize = 200;
 
 class MediaEngagementContentsObserverTest
     : public ChromeRenderViewHostTestHarness {
@@ -66,6 +69,12 @@ class MediaEngagementContentsObserverTest
     contents_observer_->significant_playback_recorded_ = true;
   }
 
+  void SimulateResizeEvent(int id, int size) {
+    content::WebContentsObserver::MediaPlayerId player_id =
+        std::make_pair(nullptr /* RenderFrameHost */, id);
+    web_contents()->MediaResized(gfx::Size(size, size), player_id);
+  }
+
   void SimulatePlaybackTimerFired() { playback_timer_->Fire(); }
 
  private:
@@ -107,6 +116,7 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulatePlaybackStarted(0);
   SimulateIsVisible();
+  SimulateResizeEvent(0, kSignificantSize);
   web_contents()->SetAudioMuted(false);
   EXPECT_TRUE(AreConditionsMet());
 
@@ -123,6 +133,9 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(AreConditionsMet());
+
+  SimulateResizeEvent(0, 0);
+  EXPECT_FALSE(AreConditionsMet());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
@@ -130,6 +143,7 @@ TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
 
   SimulatePlaybackStarted(0);
   SimulateIsVisible();
+  SimulateResizeEvent(0, kSignificantSize);
   web_contents()->SetAudioMuted(false);
   EXPECT_TRUE(IsTimerRunning());
 
@@ -146,12 +160,16 @@ TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
 
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(IsTimerRunning());
+
+  SimulateResizeEvent(0, 0);
+  EXPECT_FALSE(IsTimerRunning());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
   SimulateSignificantPlaybackRecorded();
 
   SimulatePlaybackStarted(0);
+  SimulateResizeEvent(0, kSignificantSize);
   SimulateIsVisible();
   web_contents()->SetAudioMuted(false);
 
@@ -161,6 +179,7 @@ TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
 TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
   SimulatePlaybackStarted(0);
+  SimulateResizeEvent(0, kSignificantSize);
   SimulateIsVisible();
   web_contents()->SetAudioMuted(false);
   EXPECT_TRUE(IsTimerRunning());

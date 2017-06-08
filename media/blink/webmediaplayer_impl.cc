@@ -2032,6 +2032,8 @@ void WebMediaPlayerImpl::SetDelegateState(DelegateState new_state,
       delegate_->DidPlay(
           delegate_id_, HasVideo(), has_audio,
           media::DurationToMediaContentType(GetPipelineMediaDuration()));
+      if (HasVideo())
+        delegate_->DidPlayerSizeChange(delegate_id_, NaturalSize());
       break;
     }
     case DelegateState::PAUSED:

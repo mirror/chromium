@@ -821,7 +821,7 @@ class CONTENT_EXPORT WebContentsImpl
       const WebContentsObserver::MediaPlayerInfo& media_info,
       const WebContentsObserver::MediaPlayerId& id);
   void MediaResized(const gfx::Size& size,
-                    const WebContentsObserver::MediaPlayerId& id);
+                    const WebContentsObserver::MediaPlayerId& id) override;
 
   int GetCurrentlyPlayingVideoCount() override;
   const VideoSizeMap& GetCurrentlyPlayingVideoSizes() override;
