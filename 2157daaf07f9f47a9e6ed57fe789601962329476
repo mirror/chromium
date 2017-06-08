@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "94e17399_2406f0e5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-08T03:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3d27e188_78a16c9a",
+      "range": {
+        "startLine": 9,
+        "startChar": 5,
+        "endLine": 9,
+        "endChar": 11
+      },
+      "revId": "2157daaf07f9f47a9e6ed57fe789601962329476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d304455_70b6b64e",
         "filename": "chrome/browser/ui/cocoa/browser/zoom_bubble_controller.mm",
         "patchSetId": 1
@@ -39,6 +63,24 @@
       "revId": "2157daaf07f9f47a9e6ed57fe789601962329476",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a433ded_4e51c362",
+        "filename": "chrome/browser/ui/cocoa/browser/zoom_bubble_controller.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-08T03:32:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d304455_70b6b64e",
+      "revId": "2157daaf07f9f47a9e6ed57fe789601962329476",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
