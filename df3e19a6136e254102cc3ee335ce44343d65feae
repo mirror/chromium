@@ -16,6 +16,24 @@
       "revId": "df3e19a6136e254102cc3ee335ce44343d65feae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c344027f_9688ef50",
+        "filename": "content/test/gpu/gpu_tests/gpu_process_integration_test.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-06-08T02:10:39Z",
+      "side": 1,
+      "message": "Done. FWIW it ensures that it remains a tuple when commenting out the other tests, which I found convenient. Anyway, it\u0027s no big deal to add a comma again locally if I need to run this test individually again.",
+      "parentUuid": "e0b912c3_8de1fa2b",
+      "revId": "df3e19a6136e254102cc3ee335ce44343d65feae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
