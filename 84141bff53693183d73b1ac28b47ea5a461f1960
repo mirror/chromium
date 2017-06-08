@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c99bcff6_5082f31d",
+        "filename": "content/public/renderer/content_renderer_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-08T08:36:30Z",
+      "side": 1,
+      "message": "By the way this could be (or should be) moved under public/platform as WebContentSettingsClient is there too.\n\nAnother question-- could we remove this class but just use WebContentSettingsClient for both frame and worker?  We can ignore AllowIndexedDB\u0027s second parameter in worker cases.",
+      "revId": "84141bff53693183d73b1ac28b47ea5a461f1960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f3266f_dd7d7caa",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-08T08:36:30Z",
+      "side": 1,
+      "message": "This setting slightly bothers me, these are specific methods for content settings and adding these here feels less cleaner to me.\n\nCould this expose a method like GetContentSettings() instead?",
+      "revId": "84141bff53693183d73b1ac28b47ea5a461f1960",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
