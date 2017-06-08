@@ -2396,7 +2396,7 @@ void Internals::mediaPlayerRemoteRouteAvailabilityChanged(
   DCHECK(media_element);
   media_element->RemoteRouteAvailabilityChanged(
       available ? WebRemotePlaybackAvailability::kDeviceAvailable
-                : WebRemotePlaybackAvailability::kSourceNotSupported);
+                : WebRemotePlaybackAvailability::kDeviceNotAvailable);
 }
 
 void Internals::mediaPlayerPlayingRemotelyChanged(

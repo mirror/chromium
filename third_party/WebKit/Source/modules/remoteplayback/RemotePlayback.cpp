@@ -175,8 +175,7 @@ ScriptPromise RemotePlayback::prompt(ScriptState* script_state) {
     return promise;
   }
 
-  if (availability_ == WebRemotePlaybackAvailability::kSourceNotSupported ||
-      availability_ == WebRemotePlaybackAvailability::kSourceNotCompatible) {
+  if (availability_ == WebRemotePlaybackAvailability::kSourceNotCompatible) {
     resolver->Reject(DOMException::Create(
         kNotSupportedError,
         "The currentSrc is not compatible with remote playback"));
