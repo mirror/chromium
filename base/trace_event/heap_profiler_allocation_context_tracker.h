@@ -25,6 +25,7 @@ class BASE_EXPORT AllocationContextTracker {
  public:
   enum class CaptureMode: int32_t {
     DISABLED,       // Don't capture anything
+    NO_STACK,       // GetContextSnapshot() returns no stack context
     PSEUDO_STACK,   // GetContextSnapshot() returns pseudo stack trace
     NATIVE_STACK    // GetContextSnapshot() returns native (real) stack trace
   };

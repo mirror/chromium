@@ -236,7 +236,7 @@ bool MallocDumpProvider::OnMemoryDump(const MemoryDumpArgs& args,
       main_heap_info.committed_size + main_heap_info.uncommitted_size;
   // Resident size is approximated with committed heap size. Note that it is
   // possible to do this with better accuracy on windows by intersecting the
-  // working set with the virtual memory ranges occuipied by the heap. It's not
+  // working set with the virtual memory ranges occupied by the heap. It's not
   // clear that this is worth it, as it's fairly expensive to do.
   resident_size = main_heap_info.committed_size;
   allocated_objects_size = main_heap_info.allocated_size;
