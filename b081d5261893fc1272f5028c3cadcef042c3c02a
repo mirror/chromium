@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08d47da6_4b863d6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentInstrument.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-08T17:11:06Z",
+      "side": 1,
+      "message": "Added default implementation. I am trying to avoid adding a \"type\" flag, because OO languages usually have better ways of dealing with types.",
+      "parentUuid": "9a0ca5fa_c6688a64",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 48
+      },
+      "revId": "b081d5261893fc1272f5028c3cadcef042c3c02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c56f81ae_7b9e04a2",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "b081d5261893fc1272f5028c3cadcef042c3c02a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592c74a7_83bee576",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-08T17:11:06Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c56f81ae_7b9e04a2",
+      "range": {
+        "startLine": 321,
+        "startChar": 20,
+        "endLine": 321,
+        "endChar": 50
+      },
+      "revId": "b081d5261893fc1272f5028c3cadcef042c3c02a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
