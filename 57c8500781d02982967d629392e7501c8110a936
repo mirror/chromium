@@ -46,6 +46,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29b165d_fbfb0da0",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T23:16:36Z",
+      "side": 1,
+      "message": "Yep, that was the concurrent access I was discussing. I was thinking we could snapshot and get a lowerbound for this value so we don\u0027t have to hold the lock the entire time and then we fix up after we swap the workers into the member variable. \n\nOr maybe the fixup is unnecessary. As long as we create at least one (for StandbyThreadPolicy::ONE), it should be good to go. What\u0027s important is we wake up the right number of workers. The wakeup will create the threads on demand.\n\nThe subtlety here is that num_wake_ups_before_start_ stops getting updated once |workers_| has members. I will give you that that\u0027s super subtle.",
+      "parentUuid": "d8626dfa_15480032",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
