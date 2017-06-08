@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dc95176b_9a84b3f1",
+        "filename": "components/viz/display_compositor/host_shared_bitmap_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-08T10:13:50Z",
+      "side": 1,
+      "message": "we had a discussion offline. the summary is that the only thing that I don\u0027t like is the case when we know for sure that  the backing is NOT shared memory (i.e. the if(bitmap.second-\u003ememory) will NOT be hit). In that case we seem to still call CreateSharedMemoryOwnershipEdge even if we know that the backing is not shared memory, just to leverage an internal implementation detail (the fact that the function will have a fallback path when the passed guid is 0).\nIMHO we should just be explicit and have an explicit code path that creates an explicit non-shared-memory edge in the \"else\" part of that if.",
+      "parentUuid": "28139310_1c125618",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "57812add_0afd90e8",
         "filename": "gpu/command_buffer/client/mapped_memory.h",
         "patchSetId": 5
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It\u0027s because MappedMemoryManager::OnMemoryDump needs to access |shm_|.",
       "parentUuid": "57812add_0afd90e8",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d345de7c_e6e5c563",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-08T10:13:50Z",
+      "side": 1,
+      "message": "maybe you want to expose a getter to return  chunk-\u003eshm_-\u003ebacking()-\u003eshared_memory_handle() then? It seems the pattern used for the other fields",
+      "parentUuid": "b64135d4_150ddcbb",
       "range": {
         "startLine": 116,
         "startChar": 15,
