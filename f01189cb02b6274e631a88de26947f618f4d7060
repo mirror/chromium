@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b2b57c6_5237e701",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-08T15:25:09Z",
+      "side": 1,
+      "message": "From looking I don\u0027t see why this can\u0027t be a real object instead of just a bunch of static methods. You could do this in a separate change if you\u0027re feeling up to it, but this is probably fine for now :).",
+      "range": {
+        "startLine": 187,
+        "startChar": 6,
+        "endLine": 187,
+        "endChar": 17
+      },
+      "revId": "f01189cb02b6274e631a88de26947f618f4d7060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d36bc96_c3fd2426",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-08T15:25:09Z",
+      "side": 1,
+      "message": "Just fyi in case you haven\u0027t noticed (and I don\u0027t think we ever mentioned it), but jni registration is also used in tests so you\u0027ll need to add a generate_jni_registration target for each of those. \n\nAlso, I THINK you\u0027ll probably need to add a \"testonly\" option where you register all natives regardless of maindex-ness.",
+      "range": {
+        "startLine": 690,
+        "startChar": 0,
+        "endLine": 690,
+        "endChar": 25
+      },
+      "revId": "f01189cb02b6274e631a88de26947f618f4d7060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0ba590_c0443fea",
+        "filename": "chrome/browser/android/chrome_entry_point.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-08T15:25:09Z",
+      "side": 1,
+      "message": "Should return -1 if any registration functions fail.",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "f01189cb02b6274e631a88de26947f618f4d7060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
