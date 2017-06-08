@@ -16,6 +16,24 @@
       "revId": "d7d55610b730c3b9308657c48d555414c05005a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12969aac_30480457",
+        "filename": "chrome/test/data/android/capybara.jpg",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-08T21:00:55Z",
+      "side": 1,
+      "message": "That is an excellent capybara, but yeah 😐",
+      "parentUuid": "248afee6_41ffc44d",
+      "revId": "d7d55610b730c3b9308657c48d555414c05005a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
