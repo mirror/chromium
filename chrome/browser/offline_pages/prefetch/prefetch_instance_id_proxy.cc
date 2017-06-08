@@ -4,6 +4,8 @@
 
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
 
+#include <map>
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"

@@ -4,7 +4,11 @@
 
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
 
+#include <utility>
+
 #include "base/memory/ptr_util.h"
+#include "components/offline_pages/core/offline_event_logger.h"
+#include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 
 namespace offline_pages {
@@ -12,8 +16,9 @@ const char kPrefetchingOfflinePagesAppId[] =
     "com.google.chrome.OfflinePagePrefetch";
 
 PrefetchGCMAppHandler::PrefetchGCMAppHandler(
+    PrefetchDispatcher* dispatcher,
     std::unique_ptr<TokenFactory> token_factory)
-    : token_factory_(std::move(token_factory)) {}
+    : dispatcher_(dispatcher), token_factory_(std::move(token_factory)) {}
 
 PrefetchGCMAppHandler::~PrefetchGCMAppHandler() = default;
 
@@ -32,7 +37,20 @@ void PrefetchGCMAppHandler::OnStoreReset() {
 
 void PrefetchGCMAppHandler::OnMessage(const std::string& app_id,
                                       const gcm::IncomingMessage& message) {
-  NOTIMPLEMENTED();
+  std::string pageBundle;
+  auto iter = message.data.find("pageBundle");
+  if (iter != message.data.end()) {
+    pageBundle = iter->second;
+  } else {
+    dispatcher_->GetLogger()->RecordActivity(
+        "GCM Message without page bundle received!");
+    return;
+  }
+
+  dispatcher_->GCMReceivedForOperation(pageBundle);
+  dispatcher_->GetLogger()->RecordActivity(
+      "Received GCM message. App ID: " + app_id +
+      "; pageBundle data: " + pageBundle);
 }
 
 void PrefetchGCMAppHandler::OnMessagesDeleted(const std::string& app_id) {

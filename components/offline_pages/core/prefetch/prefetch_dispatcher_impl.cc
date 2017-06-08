@@ -4,6 +4,8 @@
 
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 
+#include <utility>
+
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "base/task_runner.h"
@@ -66,6 +68,15 @@ void PrefetchDispatcherImpl::DisposeTask() {
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
       base::Bind(&DeleteBackgroundTaskHelper, base::Passed(std::move(task_))));
+}
+
+void PrefetchDispatcherImpl::GCMReceivedForOperation(
+    const std::string& operation_name) {
+  NOTIMPLEMENTED();
+}
+
+OfflineEventLogger* PrefetchDispatcherImpl::GetLogger() {
+  return &event_logger_;
 }
 
 }  // namespace offline_pages
