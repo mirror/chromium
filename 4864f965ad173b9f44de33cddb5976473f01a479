@@ -339,6 +339,30 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc69626_c07dcd4c",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T17:32:46Z",
+      "side": 1,
+      "message": "It\u0027s still there, but it doesn\u0027t take an apartment type as an argument. Now there\u0027s a real use case for it! I\u0027ll add it in.",
+      "parentUuid": "1340d1d1_c0eeaacf",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 5
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
