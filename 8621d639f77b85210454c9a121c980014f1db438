@@ -46,6 +46,30 @@
       "revId": "8621d639f77b85210454c9a121c980014f1db438",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d7aaad57_e6664afd",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_mediator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-06-08T15:28:46Z",
+      "side": 1,
+      "message": "Yeah, the second paragraph is what I had understood. \"I will use this method from inside the mediator in a future CL\" justifies it so sounds good :)",
+      "parentUuid": "a5094cc2_9d235d1a",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "8621d639f77b85210454c9a121c980014f1db438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
