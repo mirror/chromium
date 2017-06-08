@@ -130,8 +130,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -154,8 +156,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -180,8 +184,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -206,8 +212,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -234,8 +242,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -262,8 +272,10 @@ class AudioOutputDelegateTest : public testing::Test {
 
     DummyAudioOutputStream stream;
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -289,8 +301,10 @@ class AudioOutputDelegateTest : public testing::Test {
 
     DummyAudioOutputStream stream;
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -319,8 +333,10 @@ class AudioOutputDelegateTest : public testing::Test {
 
     DummyAudioOutputStream stream;
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -347,8 +363,10 @@ class AudioOutputDelegateTest : public testing::Test {
                 AddDiverter(kRenderProcessId, kRenderFrameId, NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -373,8 +391,10 @@ class AudioOutputDelegateTest : public testing::Test {
     EXPECT_CALL(mirroring_manager_, RemoveDiverter(NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -394,8 +414,10 @@ class AudioOutputDelegateTest : public testing::Test {
     EXPECT_CALL(mirroring_manager_, RemoveDiverter(NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
@@ -419,8 +441,10 @@ class AudioOutputDelegateTest : public testing::Test {
     EXPECT_CALL(mirroring_manager_, RemoveDiverter(NotNull()));
 
     {
+      auto socket = base::MakeUnique<base::CancelableSyncSocket>();
+      auto reader = AudioSyncReader::Create(Params(), socket.get());
       AudioOutputDelegateImpl delegate(
-          AudioSyncReader::Create(Params()), &event_handler_,
+          std::move(reader), std::move(socket), &event_handler_,
           audio_manager_.get(),
           log_factory_.CreateAudioLog(
               media::AudioLogFactory::AUDIO_OUTPUT_CONTROLLER),
