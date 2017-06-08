@@ -7,6 +7,7 @@
 
 #include "public/platform/WebCommon.h"
 #include "public/platform/WebURL.h"
+#include "public/platform/modules/presentation/WebScreenAvailability.h"
 
 namespace blink {
 
@@ -21,7 +22,7 @@ class BLINK_PLATFORM_EXPORT WebPresentationAvailabilityObserver {
  public:
   virtual ~WebPresentationAvailabilityObserver() = default;
 
-  virtual void AvailabilityChanged(bool) = 0;
+  virtual void AvailabilityChanged(WebScreenAvailability) = 0;
 
   virtual const WebVector<WebURL>& Urls() const = 0;
 };

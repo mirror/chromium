@@ -18,6 +18,7 @@
 #include "public/platform/WebURL.h"
 #include "public/platform/WebVector.h"
 #include "public/platform/modules/presentation/WebPresentationAvailabilityObserver.h"
+#include "public/platform/modules/presentation/WebScreenAvailability.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
 #include "public/platform/modules/remoteplayback/WebRemotePlaybackState.h"
@@ -78,7 +79,7 @@ class MODULES_EXPORT RemotePlayback final
   WebRemotePlaybackState GetState() const { return state_; }
 
   // WebPresentationAvailabilityObserver implementation.
-  void AvailabilityChanged(bool) override;
+  void AvailabilityChanged(WebScreenAvailability) override;
   const WebVector<WebURL>& Urls() const override;
 
   // WebRemotePlaybackClient implementation.
