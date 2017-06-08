@@ -37,11 +37,12 @@ class GrContext;
 
 namespace gpu {
 struct Capabilities;
+class GpuMemoryBufferManager;
 
 namespace gles2 {
 class GLES2Interface;
-}
-}
+}  // gles2
+}  // gpu
 
 namespace blink {
 
@@ -53,6 +54,7 @@ class WebGraphicsContext3DProvider {
   virtual bool BindToCurrentThread() = 0;
   virtual GrContext* GetGrContext() = 0;
   virtual gpu::Capabilities GetCapabilities() = 0;
+  virtual gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const = 0;
 
   // Returns true if the context is driven by software emulation of GL. In
   // this scenario, the compositor would not be using GPU.
