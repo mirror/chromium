@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56d3f9b1_89ac857e",
+        "filename": "chrome/browser/flag_descriptions.h",
+        "patchSetId": 26
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-08T22:34:08Z",
+      "side": 1,
+      "message": "Please avoid acronyms.",
+      "range": {
+        "startLine": 410,
+        "startChar": 19,
+        "endLine": 410,
+        "endChar": 29
+      },
+      "revId": "121978983f402bb217d579556e4bf86fbb454b01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
