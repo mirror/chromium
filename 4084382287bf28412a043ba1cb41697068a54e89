@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f7007ca0_cd3ee710",
+        "filename": "components/sync/syncable/syncable_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-06-08T22:53:50Z",
+      "side": 1,
+      "message": "TestDirectory::ctor is private, MakeUnique doesn\u0027t have access to it.",
+      "parentUuid": "c3aa932b_236b9ea4",
+      "revId": "4084382287bf28412a043ba1cb41697068a54e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "77364fe5_c01c0a7c",
         "filename": "components/sync/syncable/syncable_unittest.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T20:56:27Z",
       "side": 1,
       "message": "What is the purpose of test_directory_? I don\u0027t see where it\u0027s used later on and I don\u0027t see why you would need a copy of the raw pointer when dir() gives you access to the unique_ptr.",
+      "revId": "4084382287bf28412a043ba1cb41697068a54e89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723008dc_96b17386",
+        "filename": "components/sync/syncable/syncable_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1115991
+      },
+      "writtenOn": "2017-06-08T22:53:50Z",
+      "side": 1,
+      "message": "Test directory allows to simulate SaveChanges failures. It is triggered from StartFailingSaveChanges. I guess this code stashes test_directory_ because dir() returns Directory reference, not TestDirectory.",
+      "parentUuid": "77364fe5_c01c0a7c",
       "revId": "4084382287bf28412a043ba1cb41697068a54e89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
