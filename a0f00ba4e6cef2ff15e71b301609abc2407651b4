@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "c8c1742b_e412229a",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-08T21:29:42Z",
+      "side": 1,
+      "message": "i guess retrier could be factored out, not sure its worth it?",
+      "parentUuid": "abca9c31_81763bba",
+      "range": {
+        "startLine": 260,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d35b2de6_26f60c89",
         "filename": "components/leveldb/env_mojo.cc",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "I think what the code is trying to do is have these methods sort of private in the Env implementation, while not needing friend declarations for the Retrier etc classes. But yeah, it\u0027s a bit of a weird pattern, so I\u0027m happy to change that if you want me to (and probably just make these methods and the similar ones in UMALogger public in MojoEnv).",
       "parentUuid": "f5ddd15f_e5bd6bfb",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bc8698d_0ad46e16",
+        "filename": "components/leveldb/env_mojo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-08T21:29:42Z",
+      "side": 1,
+      "message": "having the two impls look similar is a feature, a clearner pattern could be to use an inner class.\n\nclass MojoEnv::Retrier would have access to MojoEnv\u0027s internals, it could be forward declared in the .h file, no need to define the methods there",
+      "parentUuid": "b0beca84_1f83e6b7",
       "range": {
         "startLine": 15,
         "startChar": 6,
