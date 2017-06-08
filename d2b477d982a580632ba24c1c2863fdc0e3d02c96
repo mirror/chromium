@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "40b4bc52_a518ae95",
+        "filename": "components/viz/display_compositor/host_shared_bitmap_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-08T11:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc95176b_9a84b3f1",
+      "range": {
+        "startLine": 185,
+        "startChar": 4,
+        "endLine": 185,
+        "endChar": 40
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "57812add_0afd90e8",
         "filename": "gpu/command_buffer/client/mapped_memory.h",
         "patchSetId": 5
@@ -141,6 +165,30 @@
       "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c217f69_a7b14ea6",
+        "filename": "gpu/command_buffer/client/mapped_memory.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-08T11:02:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d345de7c_e6e5c563",
+      "range": {
+        "startLine": 116,
+        "startChar": 15,
+        "endLine": 116,
+        "endChar": 34
+      },
+      "revId": "d2b477d982a580632ba24c1c2863fdc0e3d02c96",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
