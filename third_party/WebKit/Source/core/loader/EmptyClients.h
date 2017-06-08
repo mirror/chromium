@@ -359,6 +359,10 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
 
   WebCookieJar* CookieJar() const override { return 0; }
 
+  WebSpellCheckPanelHostClient* SpellCheckPanelHostClient() const override {
+    return nullptr;
+  }
+
   std::unique_ptr<WebServiceWorkerProvider> CreateServiceWorkerProvider()
       override;
   ContentSettingsClient& GetContentSettingsClient() override;
@@ -399,9 +403,6 @@ class EmptySpellCheckerClient : public SpellCheckerClient {
 
   bool IsSpellCheckingEnabled() override { return false; }
   void ToggleSpellCheckingEnabled() override {}
-  void UpdateSpellingUIWithMisspelledWord(const String&) override {}
-  void ShowSpellingUI(bool) override {}
-  bool SpellingUIIsShowing() override { return false; }
 };
 
 class EmptyEditorClient final : public EditorClient {
