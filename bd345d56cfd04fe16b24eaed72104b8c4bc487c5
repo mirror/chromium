@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b6a0dbc_245b2cd2",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 21
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-08T17:35:37Z",
+      "side": 1,
+      "message": "I find the macros helpful. Would you be OK to #undef them at the bottom of this file?",
+      "parentUuid": "411f69d0_e014da45",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 48
+      },
+      "revId": "bd345d56cfd04fe16b24eaed72104b8c4bc487c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c587624_7c707c11",
         "filename": "components/feature_engagement_tracker/public/feature_list.h",
         "patchSetId": 21
