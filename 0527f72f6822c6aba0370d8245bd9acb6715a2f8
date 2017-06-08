@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f195cb8_cc5450a9",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T20:18:35Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "690f22d4_b9470f29",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260e394c_2466ca44",
         "filename": "extensions/browser/extension_icon_image.cc",
         "patchSetId": 1
@@ -42,6 +66,23 @@
         "endLine": 193,
         "endChar": 42
       },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c326f3fd_59fa9045",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T20:18:35Z",
+      "side": 0,
+      "message": "This seems wrong. |representation| should be returned if it is no null.\n\ne.g. when paiting at 1.25x reaches here, |representation| contains an already loaded 2x. If we don\u0027t |representation| here, 1.25 rep would be created based on |blank_image_|.",
       "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -106,6 +147,30 @@
       "writtenOn": "2017-06-08T19:51:59Z",
       "side": 0,
       "message": "This test looks bit strange for me.\nIt creates PNG Image Representation from ImageSkia.\nNext it accesses image and tests that PNG Image Representation is not changed. It does not change because image is not changed due no update from IconImage. Even if IconImage decides to reload something it does it asynchronously and in this case image would not be changed too.\nI updated the test as it sounds from the name.",
+      "range": {
+        "startLine": 516,
+        "startChar": 61,
+        "endLine": 516,
+        "endChar": 73
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abc7208_e2a426a6",
+        "filename": "extensions/browser/extension_icon_image_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T20:18:35Z",
+      "side": 0,
+      "message": "Not sure about the test either. If we really care exactly the same ImageSkia, we can use ImageSkia::BackedBySameObjectAs.\n\nI am okay with the changed test.",
+      "parentUuid": "1e240e79_22ced1bf",
       "range": {
         "startLine": 516,
         "startChar": 61,

@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "19dbd7bc_6e6423d5",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T20:18:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f2ca7b3_77a88692",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d20800d_3dcb1f32",
         "filename": "extensions/browser/extension_icon_image.cc",
         "patchSetId": 1
