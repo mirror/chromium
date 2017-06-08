@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0744fe98_ef17e6df",
+        "filename": "ios/chrome/browser/ui/payments/credit_card_edit_mediator.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-08T17:34:29Z",
+      "side": 1,
+      "message": "Sorry for not noticing this in the initial CL. You\u0027d have to make sure these methods are called for local credit cards only. Server cards don\u0027t have the expiration month and the year fields.",
+      "range": {
+        "startLine": 96,
+        "startChar": 20,
+        "endLine": 96,
+        "endChar": 0
+      },
+      "revId": "a780865c8facc0d448197f94c39974d4469f5731",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
