@@ -13,7 +13,6 @@
 #include "core/html/HTMLCanvasElement.h"
 #include "core/html/HTMLMediaElement.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
-#include "core/workers/WorkerContentSettingsClient.h"
 #include "modules/EventModulesFactory.h"
 #include "modules/EventModulesNames.h"
 #include "modules/EventTargetModulesNames.h"
@@ -39,7 +38,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
-#include "public/web/WebWorkerContentSettingsClientProxy.h"
 
 namespace blink {
 

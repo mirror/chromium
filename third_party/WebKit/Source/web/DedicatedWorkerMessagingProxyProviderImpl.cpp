@@ -37,7 +37,6 @@
 #include "core/workers/DedicatedWorkerMessagingProxy.h"
 #include "core/workers/Worker.h"
 #include "core/workers/WorkerClients.h"
-#include "core/workers/WorkerContentSettingsClient.h"
 #include "modules/filesystem/LocalFileSystemClient.h"
 #include "modules/indexeddb/IndexedDBClientImpl.h"
 #include "platform/wtf/PtrUtil.h"
@@ -60,15 +59,12 @@ DedicatedWorkerMessagingProxyProviderImpl::CreateWorkerMessagingProxy(
     Document* document = ToDocument(worker->GetExecutionContext());
     WebLocalFrameBase* web_frame =
         WebLocalFrameBase::FromFrame(document->GetFrame());
-    WorkerClients* worker_clients = WorkerClients::Create();
+    WorkerClients* worker_clients = new WorkerClients(
+        web_frame->Client()->CreateWorkerContentSettingsClientProxy());
     ProvideIndexedDBClientToWorker(
         worker_clients, IndexedDBClientImpl::Create(*worker_clients));
     ProvideLocalFileSystemToWorker(worker_clients,
                                    LocalFileSystemClient::Create());
-    ProvideContentSettingsClientToWorker(
-        worker_clients,
-        WTF::WrapUnique(
-            web_frame->Client()->CreateWorkerContentSettingsClientProxy()));
 
     // FIXME: call provideServiceWorkerContainerClientToWorker here when we
     // support ServiceWorker in dedicated workers (http://crbug.com/371690)

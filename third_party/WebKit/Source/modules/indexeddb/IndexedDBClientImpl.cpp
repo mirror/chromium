@@ -32,7 +32,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/ContentSettingsClient.h"
-#include "core/workers/WorkerContentSettingsClient.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "public/platform/WebSecurityOrigin.h"
@@ -70,8 +70,7 @@ bool IndexedDBClientImpl::AllowIndexedDB(ExecutionContext* context,
   }
 
   WorkerGlobalScope& worker_global_scope = *ToWorkerGlobalScope(context);
-  return WorkerContentSettingsClient::From(worker_global_scope)
-      ->AllowIndexedDB(name);
+  return worker_global_scope.Clients()->AllowIndexedDB(name);
 }
 
 }  // namespace blink

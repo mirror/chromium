@@ -48,6 +48,7 @@
 #include "WebNavigatorContentUtilsClient.h"
 #include "WebSandboxFlags.h"
 #include "WebTextDirection.h"
+#include "WebWorkerContentSettingsClientProxy.h"
 #include "public/platform/BlameContext.h"
 #include "public/platform/WebApplicationCacheHost.h"
 #include "public/platform/WebColor.h"
@@ -108,7 +109,6 @@ class WebString;
 class WebURL;
 class WebURLResponse;
 class WebUserMediaClient;
-class WebWorkerContentSettingsClientProxy;
 struct WebColorSuggestion;
 struct WebConsoleMessage;
 struct WebContextMenuData;
@@ -152,7 +152,7 @@ class BLINK_EXPORT WebFrameClient {
   }
 
   // May return null.
-  virtual WebWorkerContentSettingsClientProxy*
+  virtual std::unique_ptr<WebWorkerContentSettingsClientProxy>
   CreateWorkerContentSettingsClientProxy() {
     return nullptr;
   }

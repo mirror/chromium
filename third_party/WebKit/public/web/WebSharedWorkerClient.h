@@ -74,7 +74,7 @@ class WebSharedWorkerClient {
   // WebWorkerContentSettingsClientProxy should not retain the given
   // WebSecurityOrigin, as the proxy instance is passed to worker thread
   // while WebSecurityOrigin is not thread safe.
-  virtual WebWorkerContentSettingsClientProxy*
+  virtual std::unique_ptr<WebWorkerContentSettingsClientProxy>
   CreateWorkerContentSettingsClientProxy(const WebSecurityOrigin& origin) {
     return nullptr;
   }

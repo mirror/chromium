@@ -16,6 +16,7 @@
 #include "third_party/WebKit/public/platform/WebContentSecurityPolicy.h"
 #include "third_party/WebKit/public/platform/WebString.h"
 #include "third_party/WebKit/public/web/WebSharedWorkerClient.h"
+#include "third_party/WebKit/public/web/WebWorkerContentSettingsClientProxy.h"
 #include "url/gurl.h"
 
 namespace blink {
@@ -24,7 +25,6 @@ class WebApplicationCacheHostClient;
 class WebNotificationPresenter;
 class WebSecurityOrigin;
 class WebSharedWorker;
-class WebWorkerContentSettingsClientProxy;
 }
 
 namespace content {
@@ -71,7 +71,7 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   blink::WebNotificationPresenter* NotificationPresenter() override;
   std::unique_ptr<blink::WebApplicationCacheHost> CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient*) override;
-  blink::WebWorkerContentSettingsClientProxy*
+  std::unique_ptr<blink::WebWorkerContentSettingsClientProxy>
   CreateWorkerContentSettingsClientProxy(
       const blink::WebSecurityOrigin& origin) override;
   std::unique_ptr<blink::WebServiceWorkerNetworkProvider>

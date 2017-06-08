@@ -113,7 +113,7 @@ class CompositorWorkerThreadTest : public ::testing::Test {
   std::unique_ptr<CompositorWorkerThread> CreateCompositorWorker() {
     std::unique_ptr<CompositorWorkerThread> worker_thread =
         CompositorWorkerThread::Create(nullptr, *object_proxy_, 0);
-    WorkerClients* clients = WorkerClients::Create();
+    WorkerClients* clients = new WorkerClients(nullptr);
     ProvideCompositorWorkerProxyClientTo(clients,
                                          new TestCompositorWorkerProxyClient);
     worker_thread->Start(

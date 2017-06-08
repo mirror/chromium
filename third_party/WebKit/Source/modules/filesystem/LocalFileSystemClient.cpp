@@ -34,7 +34,7 @@
 #include "core/dom/Document.h"
 #include "core/frame/ContentSettingsClient.h"
 #include "core/frame/LocalFrame.h"
-#include "core/workers/WorkerContentSettingsClient.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "platform/ContentSettingCallbacks.h"
 #include "platform/weborigin/SecurityOrigin.h"
@@ -59,8 +59,7 @@ bool LocalFileSystemClient::RequestFileSystemAccessSync(
   }
 
   DCHECK(context->IsWorkerGlobalScope());
-  return WorkerContentSettingsClient::From(*ToWorkerGlobalScope(context))
-      ->RequestFileSystemAccessSync();
+  return ToWorkerGlobalScope(context)->Clients()->RequestFileSystemAccessSync();
 }
 
 void LocalFileSystemClient::RequestFileSystemAccessAsync(

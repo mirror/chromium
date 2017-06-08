@@ -48,7 +48,6 @@
 #include "core/workers/SharedWorkerGlobalScope.h"
 #include "core/workers/SharedWorkerThread.h"
 #include "core/workers/WorkerClients.h"
-#include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
@@ -337,17 +336,13 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   // via WebPreference by embedders. (crbug.com/254993)
   SecurityOrigin* starter_origin = loading_document_->GetSecurityOrigin();
 
-  WorkerClients* worker_clients = WorkerClients::Create();
+  WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
+  WorkerClients* worker_clients = new WorkerClients(
+      client_->CreateWorkerContentSettingsClientProxy(web_security_origin));
   DCHECK(!GetWorkerClientsCreatedCallbackVector().IsEmpty());
   for (auto& callback : GetWorkerClientsCreatedCallbackVector()) {
     callback(worker_clients);
   }
-
-  WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
-  ProvideContentSettingsClientToWorker(
-      worker_clients,
-      WTF::WrapUnique(client_->CreateWorkerContentSettingsClientProxy(
-          web_security_origin)));
 
   if (RuntimeEnabledFeatures::OffMainThreadFetchEnabled()) {
     std::unique_ptr<WebWorkerFetchContext> web_worker_fetch_context =

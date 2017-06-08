@@ -22,6 +22,7 @@
 #include "third_party/WebKit/public/platform/WebPageVisibilityState.h"
 #include "third_party/WebKit/public/web/WebNavigationPolicy.h"
 #include "third_party/WebKit/public/web/WebNavigationType.h"
+#include "third_party/WebKit/public/web/WebWorkerContentSettingsClientProxy.h"
 #include "ui/base/page_transition_types.h"
 #include "v8/include/v8.h"
 
@@ -52,7 +53,6 @@ class WebThemeEngine;
 class WebURL;
 class WebURLResponse;
 class WebURLRequest;
-class WebWorkerContentSettingsClientProxy;
 struct WebPluginParams;
 struct WebURLError;
 }  // namespace blink
@@ -291,9 +291,9 @@ class CONTENT_EXPORT ContentRendererClient {
   virtual bool ShouldGatherSiteIsolationStats() const;
 
   // Creates a permission client proxy for in-renderer worker.
-  virtual blink::WebWorkerContentSettingsClientProxy*
-      CreateWorkerContentSettingsClientProxy(RenderFrame* render_frame,
-                                             blink::WebFrame* frame);
+  virtual std::unique_ptr<blink::WebWorkerContentSettingsClientProxy>
+  CreateWorkerContentSettingsClientProxy(RenderFrame* render_frame,
+                                         blink::WebFrame* frame);
 
   // Returns true if the page at |url| can use Pepper CameraDevice APIs.
   virtual bool IsPluginAllowedToUseCameraDeviceAPI(const GURL& url);

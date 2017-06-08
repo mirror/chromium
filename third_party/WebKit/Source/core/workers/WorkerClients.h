@@ -34,6 +34,8 @@
 #include "core/CoreExport.h"
 #include "platform/Supplementable.h"
 #include "platform/wtf/Forward.h"
+#include "public/platform/WebString.h"
+#include "public/web/WebWorkerContentSettingsClientProxy.h"
 
 namespace blink {
 
@@ -43,20 +45,24 @@ class WorkerClients;
 // attached to WorkerOrWorkletGlobalScope when it is created.
 // This class can be used to provide "client" implementations to workers or
 // worklets.
-class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
-                                        public Supplementable<WorkerClients> {
+class CORE_EXPORT WorkerClients final
+    : public GarbageCollectedFinalized<WorkerClients>,
+      public Supplementable<WorkerClients> {
   USING_GARBAGE_COLLECTED_MIXIN(WorkerClients);
   WTF_MAKE_NONCOPYABLE(WorkerClients);
 
  public:
-  static WorkerClients* Create() { return new WorkerClients; }
+  explicit WorkerClients(std::unique_ptr<WebWorkerContentSettingsClientProxy>);
+
+  bool RequestFileSystemAccessSync();
+  bool AllowIndexedDB(const WebString& name);
 
   DEFINE_INLINE_VIRTUAL_TRACE() {
     Supplementable<WorkerClients>::Trace(visitor);
   }
 
  private:
-  WorkerClients() {}
+  std::unique_ptr<WebWorkerContentSettingsClientProxy> proxy_;
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<WorkerClients>;

@@ -2888,10 +2888,10 @@ RenderFrameImpl::CreateApplicationCacheHost(
       navigation_state->request_params().appcache_host_id);
 }
 
-blink::WebWorkerContentSettingsClientProxy*
+std::unique_ptr<blink::WebWorkerContentSettingsClientProxy>
 RenderFrameImpl::CreateWorkerContentSettingsClientProxy() {
   if (!frame_ || !frame_->View())
-    return NULL;
+    return nullptr;
   return GetContentClient()->renderer()->CreateWorkerContentSettingsClientProxy(
       this, frame_);
 }

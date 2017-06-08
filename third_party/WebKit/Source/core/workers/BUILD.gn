@@ -53,8 +53,6 @@ blink_core_sources("workers") {
     "WorkerBackingThread.h",
     "WorkerClients.cpp",
     "WorkerClients.h",
-    "WorkerContentSettingsClient.cpp",
-    "WorkerContentSettingsClient.h",
     "WorkerEventQueue.cpp",
     "WorkerEventQueue.h",
     "WorkerGlobalScope.cpp",

@@ -489,7 +489,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebString& sink_id) override;
   std::unique_ptr<blink::WebApplicationCacheHost> CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient* client) override;
-  blink::WebWorkerContentSettingsClientProxy*
+  std::unique_ptr<blink::WebWorkerContentSettingsClientProxy>
   CreateWorkerContentSettingsClientProxy() override;
   std::unique_ptr<blink::WebWorkerFetchContext> CreateWorkerFetchContext()
       override;

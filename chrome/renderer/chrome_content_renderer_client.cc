@@ -1363,11 +1363,12 @@ bool ChromeContentRendererClient::ShouldGatherSiteIsolationStats() const {
 #endif
 }
 
-blink::WebWorkerContentSettingsClientProxy*
+std::unique_ptr<blink::WebWorkerContentSettingsClientProxy>
 ChromeContentRendererClient::CreateWorkerContentSettingsClientProxy(
     content::RenderFrame* render_frame,
     WebFrame* frame) {
-  return new WorkerContentSettingsClientProxy(render_frame, frame);
+  return base::MakeUnique<WorkerContentSettingsClientProxy>(render_frame,
+                                                            frame);
 }
 
 bool ChromeContentRendererClient::IsPluginAllowedToUseDevChannelAPIs() {

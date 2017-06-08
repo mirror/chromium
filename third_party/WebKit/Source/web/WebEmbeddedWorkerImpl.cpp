@@ -45,7 +45,6 @@
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
 #include "core/workers/WorkerClients.h"
-#include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
@@ -406,9 +405,8 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   // (crbug.com/254993)
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
-  WorkerClients* worker_clients = WorkerClients::Create();
-  ProvideContentSettingsClientToWorker(worker_clients,
-                                       std::move(content_settings_client_));
+  WorkerClients* worker_clients =
+      new WorkerClients(std::move(content_settings_client_));
   ProvideIndexedDBClientToWorker(worker_clients,
                                  IndexedDBClientImpl::Create(*worker_clients));
   ProvideServiceWorkerGlobalScopeClientToWorker(

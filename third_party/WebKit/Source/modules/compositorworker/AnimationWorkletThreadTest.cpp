@@ -75,7 +75,7 @@ class AnimationWorkletThreadTest : public ::testing::Test {
   }
 
   std::unique_ptr<AnimationWorkletThread> CreateAnimationWorkletThread() {
-    WorkerClients* clients = WorkerClients::Create();
+    WorkerClients* clients = new WorkerClients(nullptr);
     ProvideAnimationWorkletProxyClientTo(clients,
                                          new TestAnimationWorkletProxyClient());
 

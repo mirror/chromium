@@ -54,7 +54,7 @@ InProcessWorkerMessagingProxy*
 CompositorWorker::CreateInProcessWorkerMessagingProxy(
     ExecutionContext* context) {
   Document* document = ToDocument(context);
-  WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClients* worker_clients = new WorkerClients(nullptr);
   CompositorWorkerProxyClient* client =
       document->GetFrame()->GetChromeClient().CreateCompositorWorkerProxyClient(
           document->GetFrame());

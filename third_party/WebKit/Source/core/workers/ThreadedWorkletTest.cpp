@@ -165,7 +165,7 @@ class ThreadedWorkletTest : public ::testing::Test {
   void SetUp() override {
     page_ = DummyPageHolder::Create();
     messaging_proxy_ = WTF::MakeUnique<ThreadedWorkletMessagingProxyForTest>(
-        &page_->GetDocument(), WorkerClients::Create());
+        &page_->GetDocument(), new WorkerClients(nullptr));
   }
 
   ThreadedWorkletMessagingProxyForTest* MessagingProxy() {

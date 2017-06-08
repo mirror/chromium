@@ -43,14 +43,13 @@ class AnimationWorkletGlobalScopeTest : public ::testing::Test {
     std::unique_ptr<AnimationWorkletThread> thread =
         AnimationWorkletThread::Create(nullptr, *reporting_proxy_);
 
-    WorkerClients* clients = WorkerClients::Create();
-
     thread->Start(
         WorkerThreadStartupData::Create(
             KURL(kParsedURLString, "http://fake.url/"), "fake user agent", "",
             nullptr, kDontPauseWorkerGlobalScopeOnStart, nullptr, "",
-            security_origin_.Get(), clients, kWebAddressSpaceLocal, nullptr,
-            nullptr, WorkerV8Settings::Default()),
+            security_origin_.Get(), new WorkerClients(nullptr),
+            kWebAddressSpaceLocal, nullptr, nullptr,
+            WorkerV8Settings::Default()),
         ParentFrameTaskRunners::Create(nullptr));
     return thread;
   }

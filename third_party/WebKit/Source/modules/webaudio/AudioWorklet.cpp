@@ -31,7 +31,7 @@ void AudioWorklet::Initialize() {
   DCHECK(!worklet_messaging_proxy_);
   DCHECK(GetExecutionContext());
 
-  WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClients* worker_clients = new WorkerClients(nullptr);
   worklet_messaging_proxy_ =
       new AudioWorkletMessagingProxy(GetExecutionContext(), worker_clients);
   worklet_messaging_proxy_->Initialize();
