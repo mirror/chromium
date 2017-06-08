@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "95499159_142a8885",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "613758a3_311cb292",
+      "range": {
+        "startLine": 305,
+        "startChar": 70,
+        "endLine": 305,
+        "endChar": 71
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b5cc7ba7_49ebb6db",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-07T16:23:16Z",
       "side": 1,
       "message": "This negative logic is getting out of hand. Can we make this positive?\n\nconst bool show_play_store_app \u003d\n    !IsArcOptInVerificationDisabled() \u0026\u0026 !IsArcKioskMode() \u0026\u0026\n    (!IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) ||\n     !AreArcAllOptInPreferencesManagedForProfile(profile_) ||\n     IsActiveDirectoryUserForProfile(profile_)));",
+      "range": {
+        "startLine": 311,
+        "startChar": 15,
+        "endLine": 311,
+        "endChar": 38
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8587cc90_448a6d98",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "TBH I find the original version easier to understand, especially since it fits the wording of the comment. Also, there are 4 negations compared to 2 before, so it arguably makes the negative logic problem worse.",
+      "parentUuid": "b5cc7ba7_49ebb6db",
       "range": {
         "startLine": 311,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4aedc04a_846d39c1",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 716,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Done. Don\u0027t search the code base for \"testing purpose.\", it\u0027ll make you sad ;-)",
+      "parentUuid": "c4bcf4ad_c79e3744",
+      "range": {
+        "startLine": 716,
+        "startChar": 71,
+        "endLine": 716,
+        "endChar": 78
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50d52399_8b16ee26",
         "filename": "chrome/browser/chromeos/arc/arc_util.h",
         "patchSetId": 5
@@ -91,6 +163,30 @@
       "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e402719_c438f1a4",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Reworded so iff makes sense.",
+      "parentUuid": "50d52399_8b16ee26",
+      "range": {
+        "startLine": 107,
+        "startChar": 16,
+        "endLine": 107,
+        "endChar": 19
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "5e3536b8_d05bd875",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e58aed8b_2108d00c",
+      "range": {
+        "startLine": 108,
+        "startChar": 19,
+        "endLine": 108,
+        "endChar": 73
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "277c14d0_d8db96da",
         "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a39325e9_12b02667",
+        "filename": "chrome/browser/chromeos/arc/extensions/fake_arc_support.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "277c14d0_d8db96da",
+      "range": {
+        "startLine": 56,
+        "startChar": 14,
+        "endLine": 56,
+        "endChar": 25
+      },
+      "revId": "e21ab74f054a5cbec5972a72c885432d2bf2ae8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "e8672188_02a7f64b",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-08T08:33:44Z",
+      "side": 1,
+      "message": "Reason is, we don\u0027t have an explicit confirmation that AD auth succeeded, so we open the Play Store instead as a way to communicate this.\n\nIn the long run, I think we should untie this screen from arc_auth_service and trigger it from ArcActiveDirectoryEnrollmentTokenFetcher. Then we could only show it if AD auth actually requires entering user credentials. If AD auth is set up to succeed automatically (Kerberos SSO, WIP), we don\u0027t have to pop up any window, it can all happen in the background. Whether SSO is enabled or not is a server setting, though, so we can\u0027t count on it.",
+      "parentUuid": "f966df08_e3dd95f4",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
