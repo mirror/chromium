@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b080bd97_bb04fd7e",
+        "filename": "base/win/com_init_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-08T20:42:59Z",
+      "side": 1,
+      "message": "Can we also have ANY (and perhaps make that the default value for |apartment_type|, I\u0027d prefer to only assert STA on code that truly requires the STA (and I\u0027d also assume most devs don\u0027t know whether what they call needs a specific mode or supports both)",
+      "range": {
+        "startLine": 16,
+        "startChar": 1,
+        "endLine": 21,
+        "endChar": 2
+      },
+      "revId": "8d5012a5598eb1c122793653fad6a005491fea14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
