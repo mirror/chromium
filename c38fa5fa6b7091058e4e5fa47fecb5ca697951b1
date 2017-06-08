@@ -1,0 +1,169 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd192b99_dd3f0847",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "gfx::Rect",
+      "range": {
+        "startLine": 116,
+        "startChar": 10,
+        "endLine": 116,
+        "endChar": 33
+      },
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c0cf536_da7d0719",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "can you initialize this in initializer list?",
+      "range": {
+        "startLine": 123,
+        "startChar": 51,
+        "endLine": 123,
+        "endChar": 52
+      },
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5198692a_d491c3a0",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "space between override and {\n\n(I wonder why presubmit didn\u0027t catch this)",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0a08479_1a53f442",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "just gfx::Transform",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f5c8456_01b8bd42",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "and use MakeIdentity",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42958ab0_1503ce02",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "SetPreemptionStrategy(ENQUEUE_NEW_ANIMATION) didn\u0027t work?",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddf5bb19_f474d37c",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f74ad5a_51d66ba9",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "Instead of aborting, will IMMEDIATELY_ANIMATE_TO_NEW_TARGET work?",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c72820b_ce63b5a4",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-08T22:48:23Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "c38fa5fa6b7091058e4e5fa47fecb5ca697951b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
