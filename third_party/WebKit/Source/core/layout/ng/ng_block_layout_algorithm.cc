@@ -185,6 +185,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   border_and_padding_ = ComputeBorders(ConstraintSpace(), Style()) +
                         ComputePadding(ConstraintSpace(), Style());
 
+  NGBoxStrut scrollers = GetScrollbarSizes(Node().GetLayoutObject());
+
   // TODO(layout-ng): For quirks mode, should we pass blockSize instead of -1?
   NGLogicalSize size(
       ComputeInlineSizeForFragment(ConstraintSpace(), Style(), min_max_size),
@@ -195,11 +197,17 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   // If so, just leave the size as NGSizeIndefinite instead of subtracting
   // borders and padding.
   NGLogicalSize adjusted_size(size);
-  if (size.block_size == NGSizeIndefinite)
-    adjusted_size.inline_size -= border_and_padding_.InlineSum();
-  else
-    adjusted_size -= border_and_padding_;
-
+  if (size.block_size == NGSizeIndefinite) {
+    adjusted_size.inline_size -=
+        border_and_padding_.InlineSum() + scrollers.inline_end;
+    adjusted_size.inline_size =
+        std::max(LayoutUnit(), adjusted_size.inline_size);
+  } else {
+    adjusted_size -= border_and_padding_ + scrollers;
+    adjusted_size.inline_size =
+        std::max(LayoutUnit(), adjusted_size.inline_size);
+    adjusted_size.block_size = std::max(LayoutUnit(), adjusted_size.block_size);
+  }
   child_available_size_ = adjusted_size;
   child_percentage_size_ = adjusted_size;
 
@@ -220,7 +228,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
   LayoutUnit input_bfc_block_offset =
-      ConstraintSpace().BfcOffset().block_offset;
+      ConstraintSpace().BfcOffset().block_offset +
+      scrollers.InlineBlockStartOffset().block_offset;
 
   // Margins collapsing:
   //   Do not collapse margins between parent and its child if there is
@@ -243,6 +252,7 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     MaybeUpdateFragmentBfcOffset(ConstraintSpace(), input_bfc_block_offset,
                                  &container_builder_);
     DCHECK_EQ(input_margin_strut, NGMarginStrut());
+    // This is no longer true with scrollbars
     DCHECK_EQ(container_builder_.BfcOffset().value(), NGLogicalOffset());
   }
 
