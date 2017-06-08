@@ -12,6 +12,7 @@
 #include "cc/surfaces/surface_manager.h"
 #include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/compositor/image_transport_factory.h"
+#include "ui/compositor/test/in_process_context_factory.h"
 
 namespace cc {
 class ContextProvider;
@@ -41,8 +42,11 @@ class NoTransportImageTransportFactory : public ImageTransportFactory {
 #endif
 
  private:
-  std::unique_ptr<viz::FrameSinkManagerHost> frame_sink_manager_host_;
-  std::unique_ptr<ui::InProcessContextFactory> context_factory_;
+  // The FrameSinkManager implementation lives in-process here for tests.
+  viz::MojoFrameSinkManager frame_sink_manager_;
+  viz::FrameSinkManagerHost frame_sink_manager_host_;
+  cc::SurfaceManager surface_manager_;
+  ui::InProcessContextFactory context_factory_;
   scoped_refptr<cc::ContextProvider> context_provider_;
   std::unique_ptr<viz::GLHelper> gl_helper_;
 
