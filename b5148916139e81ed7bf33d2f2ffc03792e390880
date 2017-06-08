@@ -16,6 +16,24 @@
       "revId": "b5148916139e81ed7bf33d2f2ffc03792e390880",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f83c4d83_4decbf9c",
+        "filename": "third_party/WebKit/LayoutTests/tables/mozilla/other/move_row.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-08T01:56:26Z",
+      "side": 1,
+      "message": "Fixed now",
+      "parentUuid": "da023b4b_5bba2875",
+      "revId": "b5148916139e81ed7bf33d2f2ffc03792e390880",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
