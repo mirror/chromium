@@ -48,9 +48,43 @@ class CHROMEOS_EXPORT FakeAuthPolicyClient : public AuthPolicyClient {
     auth_error_ = auth_error;
   }
 
+  void set_display_name(const std::string& display_name) {
+    display_name_ = display_name;
+  }
+
+  void set_given_name(const std::string& given_name) {
+    given_name_ = given_name;
+  }
+
+  void set_password_status(
+      authpolicy::ActiveDirectoryUserStatus_PasswordStatus password_status) {
+    password_status_ = password_status;
+  }
+
+  void set_tgt_status(
+      authpolicy::ActiveDirectoryUserStatus_TgtStatus tgt_status) {
+    tgt_status_ = tgt_status;
+  }
+
+  void set_closure(base::OnceClosure on_get_status) {
+    on_get_status_ = std::move(on_get_status);
+  }
+
+  void set_operation_delay(const base::TimeDelta operation_delay) {
+    operation_delay_ = operation_delay;
+  }
+
  private:
   bool started_ = false;
+  base::OnceClosure on_get_status_;
   authpolicy::ErrorType auth_error_ = authpolicy::ERROR_NONE;
+  std::string display_name_;
+  std::string given_name_;
+  authpolicy::ActiveDirectoryUserStatus_PasswordStatus password_status_ =
+      authpolicy::ActiveDirectoryUserStatus::PASSWORD_VALID;
+  authpolicy::ActiveDirectoryUserStatus_TgtStatus tgt_status_ =
+      authpolicy::ActiveDirectoryUserStatus::TGT_VALID;
+  base::TimeDelta operation_delay_;
   DISALLOW_COPY_AND_ASSIGN(FakeAuthPolicyClient);
 };
 
