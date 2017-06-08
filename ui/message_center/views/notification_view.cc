@@ -708,10 +708,7 @@ void NotificationView::CreateOrUpdateCloseButtonView(
 }
 
 void NotificationView::UpdateControlButtonsVisibility() {
-  const bool target_visibility =
-      IsMouseHovered() || HasFocus() ||
-      (close_button_ && close_button_->HasFocus()) ||
-      (settings_button_view_ && settings_button_view_->HasFocus());
+  const bool target_visibility = IsMouseHovered() || HasFocusedView();
 
   if (close_button_) {
     if (target_visibility != close_button_->visible())
@@ -763,6 +760,11 @@ int NotificationView::GetMessageLineLimit(int title_lines, int width) const {
 int NotificationView::GetMessageHeight(int width, int limit) const {
   return message_view_ ?
          message_view_->GetSizeForWidthAndLines(width, limit).height() : 0;
+}
+
+bool NotificationView::HasFocusedView() {
+  const views::FocusManager* focus_manager = GetFocusManager();
+  return focus_manager && Contains(focus_manager->GetFocusedView());
 }
 
 }  // namespace message_center

@@ -94,6 +94,9 @@ class MESSAGE_CENTER_EXPORT NotificationView
   int GetMessageLineLimit(int title_lines, int width) const;
   int GetMessageHeight(int width, int limit) const;
 
+  // True if this view or its descendant views have focus.
+  bool HasFocusedView();
+
   // Formats the context message to be displayed based on |context|
   // so it shows as much information as possible
   // given the space available in the ContextMessage section of the
