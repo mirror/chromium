@@ -4,8 +4,6 @@
 
 package org.chromium.chrome.browser.download.ui;
 
-import org.chromium.chrome.browser.download.ui.DownloadHistoryItemWrapper.DownloadItemWrapper;
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -17,8 +15,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * TODO(dfalcantara): Make this class unnecessary.
  */
 class DeletedFileTracker {
-    private final Set<String> mRegularItems = new HashSet<>();
-    private final Set<String> mIncognitoItems = new HashSet<>();
+    private final Set<String> mItems = new HashSet<>();
     private final AtomicInteger mNumInstances = new AtomicInteger();
 
     /** Called when a new {@link DownloadHistoryAdapter} is tracking deleted downloads. */
@@ -30,22 +27,17 @@ class DeletedFileTracker {
     void decrementInstanceCount() {
         if (mNumInstances.decrementAndGet() == 0) {
             // If there is no interest, clear out the maps so that they stop taking up space.
-            mRegularItems.clear();
-            mIncognitoItems.clear();
+            mItems.clear();
         }
     }
 
     /** Add a new item to the tracker. */
     void add(DownloadHistoryItemWrapper wrapper) {
-        if (!(wrapper instanceof DownloadItemWrapper)) return;
-        Set<String> items = wrapper.isOffTheRecord() ? mIncognitoItems : mRegularItems;
-        items.add(wrapper.getId());
+        mItems.add(wrapper.getId());
     }
 
     /** Checks if an item is in the tracker. */
     boolean contains(DownloadHistoryItemWrapper wrapper) {
-        if (!(wrapper instanceof DownloadItemWrapper)) return false;
-        Set<String> items = wrapper.isOffTheRecord() ? mIncognitoItems : mRegularItems;
-        return items.contains(wrapper.getId());
+        return mItems.contains(wrapper.getId());
     }
 }

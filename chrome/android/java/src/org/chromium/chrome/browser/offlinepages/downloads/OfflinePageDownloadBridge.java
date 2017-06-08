@@ -15,6 +15,7 @@ import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.download.DownloadItem;
 import org.chromium.chrome.browser.download.DownloadServiceDelegate;
+import org.chromium.chrome.browser.download.DownloadUtils;
 import org.chromium.chrome.browser.download.ui.BackendProvider.OfflinePageDelegate;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.profiles.Profile;
@@ -23,6 +24,7 @@ import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.document.AsyncTabCreationParams;
 import org.chromium.chrome.browser.tabmodel.document.TabDelegate;
 import org.chromium.components.offline_items_collection.ContentId;
+import org.chromium.components.offline_items_collection.OfflineItem;
 import org.chromium.content_public.browser.LoadUrlParams;
 
 import java.util.ArrayList;
@@ -49,7 +51,7 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
          * Event fired when an new item was added.
          * @param item A newly added download item.
          */
-        public void onItemAdded(OfflinePageDownloadItem item) {}
+        public void onItemAdded(OfflineItem item) {}
 
         /**
          * Event fired when an item was deleted
@@ -61,7 +63,7 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
          * Event fired when an new item was updated.
          * @param item A newly updated download item.
          */
-        public void onItemUpdated(OfflinePageDownloadItem item) {}
+        public void onItemUpdated(OfflineItem item) {}
     }
 
     private static boolean sIsTesting;
@@ -117,10 +119,14 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
 
     /** @return all of the download items related to offline pages. */
     @Override
-    public List<OfflinePageDownloadItem> getAllItems() {
+    public List<OfflineItem> getAllItems() {
         List<OfflinePageDownloadItem> items = new ArrayList<>();
         nativeGetAllItems(mNativeOfflinePageDownloadBridge, items);
-        return items;
+        List<OfflineItem> offlineItems = new ArrayList<>();
+        for (OfflinePageDownloadItem item : items) {
+            offlineItems.add(DownloadUtils.createOfflineItem(item));
+        }
+        return offlineItems;
     }
 
     /**
@@ -272,7 +278,7 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
         assert item != null;
 
         for (Observer observer : mObservers) {
-            observer.onItemAdded(item);
+            observer.onItemAdded(DownloadUtils.createOfflineItem(item));
         }
     }
 
@@ -288,7 +294,7 @@ public class OfflinePageDownloadBridge implements DownloadServiceDelegate, Offli
         assert item != null;
 
         for (Observer observer : mObservers) {
-            observer.onItemUpdated(item);
+            observer.onItemUpdated(DownloadUtils.createOfflineItem(item));
         }
     }
 
