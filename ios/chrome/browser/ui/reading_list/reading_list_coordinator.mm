@@ -133,16 +133,16 @@ enum UMAContextMenuAction {
 - (void)readingListCollectionViewController:
             (ReadingListCollectionViewController*)
                 readingListCollectionViewController
-                  displayContextMenuForItem:
-                      (ReadingListCollectionViewItem*)readingListItem
+                  displayContextMenuForItem:(CollectionViewItem*)item
                                     atPoint:(CGPoint)menuLocation {
   if (!self.containerViewController) {
     return;
   }
 
-  const ReadingListEntry* entry =
-      [readingListCollectionViewController.dataSource
-          entryWithURL:readingListItem.url];
+  ReadingListCollectionViewItem* readingListItem =
+      base::mac::ObjCCastStrict<ReadingListCollectionViewItem>(item);
+
+  const ReadingListEntry* entry = [self.mediator entryFromItem:item];
 
   if (!entry) {
     [readingListCollectionViewController reloadData];
@@ -232,11 +232,8 @@ enum UMAContextMenuAction {
 - (void)
 readingListCollectionViewController:
     (ReadingListCollectionViewController*)readingListCollectionViewController
-                           openItem:
-                               (ReadingListCollectionViewItem*)readingListItem {
-  const ReadingListEntry* entry =
-      [readingListCollectionViewController.dataSource
-          entryWithURL:readingListItem.url];
+                           openItem:(CollectionViewItem*)readingListItem {
+  const ReadingListEntry* entry = [self.mediator entryFromItem:readingListItem];
 
   if (!entry) {
     [readingListCollectionViewController reloadData];
