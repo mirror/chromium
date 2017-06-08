@@ -16,6 +16,23 @@
       "revId": "882d8c0d29354c71d2612590faccdbde64af41b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c67fb238_fa55bfcc",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 590,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-08T19:26:36Z",
+      "side": 0,
+      "message": "Why did you remove line 590?",
+      "revId": "882d8c0d29354c71d2612590faccdbde64af41b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
