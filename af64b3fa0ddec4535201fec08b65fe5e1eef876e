@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3850f31d_fbf96f70",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:39:45Z",
+      "side": 1,
+      "message": "With this CL, Sequence owns a SequenceLocalStorageMap and TaskTracker::PerformRunTask instantiates a ScopedSetSequenceLocalStorageMap with the SequenceLocalStorageMap of the running task\u0027s Sequence. This allows usage of the SequenceLocalStorageSlot API from tasks running in TaskScheduler.",
+      "revId": "af64b3fa0ddec4535201fec08b65fe5e1eef876e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2653e110_2b8c1eea",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:39:45Z",
+      "side": 1,
+      "message": "not used in this file",
+      "revId": "af64b3fa0ddec4535201fec08b65fe5e1eef876e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
