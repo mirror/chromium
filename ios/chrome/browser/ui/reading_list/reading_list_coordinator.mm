@@ -268,11 +268,7 @@ readingListCollectionViewController:
             (ReadingListCollectionViewController*)
                 readingListCollectionViewController
                     openItemOfflineInNewTab:(CollectionViewItem*)item {
-  ReadingListCollectionViewItem* readingListItem =
-      base::mac::ObjCCastStrict<ReadingListCollectionViewItem>(item);
-  const ReadingListEntry* entry =
-      [readingListCollectionViewController.dataSource
-          entryWithURL:readingListItem.url];
+  const ReadingListEntry* entry = [self.mediator entryFromItem:item];
 
   if (!entry) {
     return;
@@ -305,8 +301,7 @@ readingListCollectionViewController:
 
   UMA_HISTOGRAM_BOOLEAN("ReadingList.OfflineVersionDisplayed", true);
   const GURL updateURL = entryURL;
-  [readingListCollectionViewController.dataSource setReadStatus:YES
-                                                         forURL:updateURL];
+  [self.mediator markEntryRead:updateURL];
 }
 
 // Opens |URL| in a new tab |incognito| or not.
