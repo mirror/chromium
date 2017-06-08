@@ -45,6 +45,30 @@
       "revId": "cf391965e4138c30c1b59aa05e3909eb77669daa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3b8726d_c39a2fcc",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1117,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T18:02:34Z",
+      "side": 1,
+      "message": "This isn\u0027t the JsonPrefStore TaskRunner. It\u0027s the TaskRunner on which the preferences service lives. The TaskRunner used by the JsonPrefStore backing the preferences service hasn\u0027t changed.\n\nBut yes, we discussed using different sequences for the reads/writes in JsonPrefStore.",
+      "parentUuid": "81766f17_cf615467",
+      "range": {
+        "startLine": 1117,
+        "startChar": 25,
+        "endLine": 1117,
+        "endChar": 57
+      },
+      "revId": "cf391965e4138c30c1b59aa05e3909eb77669daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
