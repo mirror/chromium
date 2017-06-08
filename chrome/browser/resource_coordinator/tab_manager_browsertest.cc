@@ -581,6 +581,44 @@ IN_PROC_BROWSER_TEST_F(TabManagerTest, PurgeBackgroundRenderer) {
   tsm->CloseAllTabs();
 }
 
+IN_PROC_BROWSER_TEST_F(TabManagerTest, FastShutdownSingleTabProcess) {
+  TabManager* tab_manager = g_browser_process->GetTabManager();
+
+  // Disable the protection of recent tabs.
+  tab_manager->set_minimum_protection_time_for_tests(
+      base::TimeDelta::FromMinutes(0));
+
+  // Open two tabs. Wait for the foreground one to load but do not wait for the
+  // background one.
+  content::WindowedNotificationObserver load1(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
+  OpenURLParams open1(GURL(chrome::kChromeUIAboutURL), content::Referrer(),
+                      WindowOpenDisposition::CURRENT_TAB,
+                      ui::PAGE_TRANSITION_TYPED, false);
+  browser()->OpenURL(open1);
+  load1.Wait();
+
+  content::WindowedNotificationObserver load2(
+      content::NOTIFICATION_NAV_ENTRY_COMMITTED,
+      content::NotificationService::AllSources());
+  OpenURLParams open2(GURL(chrome::kChromeUICreditsURL), content::Referrer(),
+                      WindowOpenDisposition::NEW_BACKGROUND_TAB,
+                      ui::PAGE_TRANSITION_TYPED, false);
+  browser()->OpenURL(open2);
+  load2.Wait();
+
+  ASSERT_EQ(2, browser()->tab_strip_model()->count());
+
+  content::WindowedNotificationObserver observer(
+      content::NOTIFICATION_RENDERER_PROCESS_CLOSED,
+      content::NotificationService::AllSources());
+
+  EXPECT_TRUE(tab_manager->DiscardTabImpl());
+
+  observer.Wait();
+}
+
 }  // namespace resource_coordinator
 
 #endif  // OS_WIN || OS_MAXOSX || OS_LINUX
