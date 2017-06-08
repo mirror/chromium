@@ -70,6 +70,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de4515e0_a8346c61",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T23:50:21Z",
+      "side": 1,
+      "message": "OK, I tried that (ps2), but it sometimes dchecks at https://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_worker_pool_impl.cc?rcl\u003d1733d120eb79e2d8d49b18892e60ee1297f646f7\u0026l\u003d420 .\n\nI think workers_created_ is supposed to synonymous with !workers.empty(). So I\u0027m not sure that it makes sense to set it before workers_ has been swapped. But after Start() the thread proc reasonably expects to be able to assert that it\u0027s been created.",
+      "parentUuid": "f29b165d_fbfb0da0",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
