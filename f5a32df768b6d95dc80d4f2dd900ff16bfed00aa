@@ -16,6 +16,24 @@
       "revId": "f5a32df768b6d95dc80d4f2dd900ff16bfed00aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b737bad_d963d916",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/netinfo/netinfo-basics.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-08T21:23:38Z",
+      "side": 0,
+      "message": "These are lint errors that were caught, but as mentioned before this change is no longer necessary since we only lint affected files.",
+      "parentUuid": "038335f0_a59ebfcf",
+      "revId": "f5a32df768b6d95dc80d4f2dd900ff16bfed00aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
