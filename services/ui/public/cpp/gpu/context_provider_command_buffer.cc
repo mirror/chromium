@@ -392,6 +392,15 @@ class GrContext* ContextProviderCommandBuffer::GrContext() {
   return gr_context_->get();
 }
 
+gpu::GpuMemoryBufferManager*
+ContextProviderCommandBuffer::GetGpuMemoryBufferManager() const {
+  DCHECK(bind_succeeded_);
+  DCHECK(context_thread_checker_.CalledOnValidThread());
+  DCHECK(command_buffer_);
+
+  return command_buffer_->GetGpuMemoryBufferManager();
+}
+
 cc::ContextCacheController* ContextProviderCommandBuffer::CacheController() {
   DCHECK(context_thread_checker_.CalledOnValidThread());
   return cache_controller_.get();

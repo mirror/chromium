@@ -25,11 +25,14 @@ class WebGraphicsContext3DProviderSoftwareRenderingForTests
  public:
   WebGraphicsContext3DProviderSoftwareRenderingForTests(
       std::unique_ptr<gpu::gles2::GLES2Interface> gl)
-      : gl_(std::move(gl)) {}
+      : gl_(std::move(gl)),
+        test_gpu_memory_buffer_manager_(new cc::TestGpuMemoryBufferManager) {}
 
   gpu::gles2::GLES2Interface* ContextGL() override { return gl_.get(); }
   bool IsSoftwareRendering() const override { return true; }
-
+  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() const override {
+    return test_gpu_memory_buffer_manager_.get();
+  }
   // Not used by WebGL code.
   GrContext* GetGrContext() override { return nullptr; }
   bool BindToCurrentThread() override { return false; }
@@ -41,6 +44,8 @@ class WebGraphicsContext3DProviderSoftwareRenderingForTests
 
  private:
   std::unique_ptr<gpu::gles2::GLES2Interface> gl_;
+  std::unique_ptr<cc::TestGpuMemoryBufferManager>
+      test_gpu_memory_buffer_manager_;
 };
 
 class DrawingBufferSoftwareRenderingTest : public Test {
