@@ -25,16 +25,16 @@ class TestImeManager : public ImeManager {
   ~TestImeManager() override = default;
 
   // ImeManager:
-  std::vector<IMEPropertyInfo> GetCurrentImeProperties() const override {
+  std::vector<mojom::ImeProperty> GetCurrentImeProperties() const override {
     return current_ime_properties_;
   }
-  std::vector<IMEInfo> GetAvailableImes() const override {
+  std::vector<mojom::ImeInfo> GetAvailableImes() const override {
     return available_imes_;
   }
   bool IsImeManaged() const override { return is_ime_managed_; }
 
-  std::vector<IMEPropertyInfo> current_ime_properties_;
-  std::vector<IMEInfo> available_imes_;
+  std::vector<mojom::ImeProperty> current_ime_properties_;
+  std::vector<mojom::ImeInfo> available_imes_;
   bool is_ime_managed_ = false;
 
  private:
@@ -67,7 +67,7 @@ class TrayIMETest : public test::AshTestBase {
 
   views::View* GetImeManagedIcon();
 
-  void AddPropertyToCurrentIme(IMEPropertyInfo property);
+  void AddPropertyToCurrentIme(mojom::ImeProperty property);
 
   void SuppressKeyboard();
   void RestoreKeyboard();
@@ -100,7 +100,7 @@ void TrayIMETest::SetAccessibilityKeyboardEnabled(bool enabled) {
 
 void TrayIMETest::SetActiveImeCount(int length) {
   test_ime_manager_.available_imes_.clear();
-  IMEInfo ime;
+  mojom::ImeInfo ime;
   for (int i = 0; i < length; i++) {
     test_ime_manager_.available_imes_.push_back(ime);
   }
@@ -121,7 +121,7 @@ views::View* TrayIMETest::GetImeManagedIcon() {
   return tray_->GetControlledSettingIconForTesting();
 }
 
-void TrayIMETest::AddPropertyToCurrentIme(IMEPropertyInfo property) {
+void TrayIMETest::AddPropertyToCurrentIme(mojom::ImeProperty property) {
   test_ime_manager_.current_ime_properties_.push_back(property);
   tray_->OnIMERefresh();
 }
@@ -203,11 +203,11 @@ TEST_F(TrayIMETest, ShownWithSingleImeWithProperties) {
   SetActiveImeCount(1);
   EXPECT_FALSE(default_view()->visible());
 
-  IMEPropertyInfo property1;
+  mojom::ImeProperty property1;
   AddPropertyToCurrentIme(property1);
   EXPECT_FALSE(default_view()->visible());
 
-  IMEPropertyInfo property2;
+  mojom::ImeProperty property2;
   AddPropertyToCurrentIme(property2);
   EXPECT_TRUE(default_view()->visible());
 }

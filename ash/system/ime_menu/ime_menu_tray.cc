@@ -445,8 +445,9 @@ bool ImeMenuTray::PerformAction(const ui::Event& event) {
 void ImeMenuTray::OnIMERefresh() {
   UpdateTrayLabel();
   if (bubble_ && ime_list_view_) {
-    std::vector<IMEInfo> list = ime_manager_->GetAvailableImes();
-    IMEPropertyInfoList property_list = ime_manager_->GetCurrentImeProperties();
+    std::vector<mojom::ImeInfo> list = ime_manager_->GetAvailableImes();
+    std::vector<mojom::ImeProperty> property_list =
+        ime_manager_->GetCurrentImeProperties();
     ime_list_view_->Update(list, property_list, false,
                            ImeListView::SHOW_SINGLE_IME);
   }

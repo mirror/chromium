@@ -197,9 +197,9 @@ class InputMethodManagerImpl : public InputMethodManager,
   bool IsEmojiHandwritingVoiceOnImeMenuEnabled() override;
 
   // ash::ImeManager:
-  ash::IMEInfo GetCurrentIme() const override;
-  std::vector<ash::IMEPropertyInfo> GetCurrentImeProperties() const override;
-  std::vector<ash::IMEInfo> GetAvailableImes() const override;
+  ash::mojom::ImeInfo GetCurrentIme() const override;
+  std::vector<ash::mojom::ImeProperty> GetCurrentImeProperties() const override;
+  std::vector<ash::mojom::ImeInfo> GetAvailableImes() const override;
   bool IsImeManaged() const override;
 
   // chromeos::UserAddingScreen:

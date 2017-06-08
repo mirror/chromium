@@ -6,12 +6,12 @@
 
 #include "ash/ime/ime_manager.h"
 #include "ash/ime/ime_switch_type.h"
+#include "ash/public/interfaces/ime_info.mojom.h"
 #include "ash/resources/vector_icons/vector_icons.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/strings/grit/ash_strings.h"
 #include "ash/system/tray/actionable_view.h"
-#include "ash/system/tray/ime_info.h"
 #include "ash/system/tray/system_menu_button.h"
 #include "ash/system/tray/tray_constants.h"
 #include "ash/system/tray/tray_details_view.h"
@@ -196,13 +196,14 @@ ImeListView::~ImeListView() {}
 void ImeListView::Init(bool show_keyboard_toggle,
                        SingleImeBehavior single_ime_behavior) {
   ImeManager* ime_manager = Shell::Get()->ime_manager();
-  IMEInfoList list = ime_manager->GetAvailableImes();
-  IMEPropertyInfoList property_list = ime_manager->GetCurrentImeProperties();
+  std::vector<mojom::ImeInfo> list = ime_manager->GetAvailableImes();
+  std::vector<mojom::ImeProperty> property_list =
+      ime_manager->GetCurrentImeProperties();
   Update(list, property_list, show_keyboard_toggle, single_ime_behavior);
 }
 
-void ImeListView::Update(const IMEInfoList& list,
-                         const IMEPropertyInfoList& property_list,
+void ImeListView::Update(const std::vector<mojom::ImeInfo>& list,
+                         const std::vector<mojom::ImeProperty>& property_list,
                          bool show_keyboard_toggle,
                          SingleImeBehavior single_ime_behavior) {
   ResetImeListView();
@@ -247,8 +248,8 @@ void ImeListView::CloseImeListView() {
 }
 
 void ImeListView::AppendImeListAndProperties(
-    const IMEInfoList& list,
-    const IMEPropertyInfoList& property_list) {
+    const std::vector<mojom::ImeInfo>& list,
+    const std::vector<mojom::ImeProperty>& property_list) {
   DCHECK(ime_map_.empty());
   for (size_t i = 0; i < list.size(); i++) {
     views::View* ime_view =
