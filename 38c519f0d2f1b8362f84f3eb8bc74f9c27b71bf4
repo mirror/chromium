@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "4ad1db89_3741ebe8",
+        "filename": "third_party/WebKit/Source/modules/media_capabilities/MediaCapabilitiesController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T09:14:41Z",
+      "side": 1,
+      "message": "I misread the code. I thought ownership was being passed into Blink, but it\u0027s owned in the content layer. Sorry!",
+      "parentUuid": "3aef4771_69268c76",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8e2cbf46_0ee49e99",
         "filename": "third_party/WebKit/public/web/WebFrameClient.h",
         "patchSetId": 1
