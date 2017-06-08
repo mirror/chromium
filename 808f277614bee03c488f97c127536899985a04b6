@@ -34,6 +34,23 @@
       "revId": "808f277614bee03c488f97c127536899985a04b6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1849897b_d4da6108",
+        "filename": "media/gpu/avda_codec_allocator.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-08T16:44:07Z",
+      "side": 1,
+      "message": "i suggest having this fail rather than CreateVideoDecoder() if |sw \u0026\u0026 secure|, since you mentioned yesterday that MediaCodecBridge will favor \u0027secure\u0027 over \u0027sw\u0027.  that will hang the gpu process.",
+      "revId": "808f277614bee03c488f97c127536899985a04b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
