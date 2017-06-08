@@ -481,9 +481,9 @@ class TitleCard : public views::View {
     int back_button_width = back_button_->GetPreferredSize().width();
     back_button_->SetBounds(0, 0, back_button_width, height());
     int label_padding =
-        back_button_width + ChromeLayoutProvider::Get()
-                                ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
-                                .left();
+        back_button_width +
+        ChromeLayoutProvider::Get()->GetDistanceMetric(
+            ChromeDistanceMetric::DISTANCE_UNRELATED_CONTROL_HORIZONTAL);
     int label_width = width() - 2 * label_padding;
     DCHECK_GT(label_width, 0);
     title_label_->SetBounds(label_padding, 0, label_width, height());
