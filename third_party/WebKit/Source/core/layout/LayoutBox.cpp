@@ -2572,7 +2572,30 @@ void LayoutBox::InflateVisualRectForFilter(
       FloatQuad(FloatRect(Layer()->MapLayoutRectForFilter(rect))));
 }
 
+static void MarkMinMaxWidthsAffectedByAncestorAsDirty(LayoutBox* box) {
+  box->SetPreferredLogicalWidthsDirty(kMarkOnlyThis);
+  for (LayoutObject* child = box->SlowFirstChild(); child;
+       child = child->NextSibling()) {
+    if (!child->IsBox())
+      continue;
+    LayoutBox* child_box = ToLayoutBox(child);
+    if (child_box->NeedsPreferredWidthsRecalculation())
+      MarkMinMaxWidthsAffectedByAncestorAsDirty(child_box);
+  }
+}
+
 void LayoutBox::UpdateLogicalWidth() {
+  if (NeedsPreferredWidthsRecalculation()) {
+    // Laying out this object means that its containing block is also being laid
+    // out. This object is special, in that its min/max widths depend on the
+    // ancestry (min/max width calculation should really be strictly bottom-up),
+    // so since the containing block size has changed, we need to recalculate
+    // the min/max widths of this object, and every child that has the same
+    // issue, recursively.
+    MarkMinMaxWidthsAffectedByAncestorAsDirty(this);
+    ComputePreferredLogicalWidths();
+  }
+
   LogicalExtentComputedValues computed_values;
   ComputeLogicalWidth(computed_values);
 
