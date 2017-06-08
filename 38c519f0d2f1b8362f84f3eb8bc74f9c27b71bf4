@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a3bcd37a_d907f402",
+        "filename": "content/renderer/media/media_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T09:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3c21f77_81d7864f",
+      "range": {
+        "startLine": 275,
+        "startChar": 0,
+        "endLine": 275,
+        "endChar": 34
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9094180a_c6ce2725",
         "filename": "content/renderer/render_frame_impl.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-07T23:35:26Z",
       "side": 1,
       "message": "Though I\u0027m curious why we need to use unique_ptr at all--why can\u0027t it just be an inline member like it used to be?",
+      "range": {
+        "startLine": 6656,
+        "startChar": 0,
+        "endLine": 6658,
+        "endChar": 42
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26da2ead_d6db7d5f",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 6658,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T09:07:32Z",
+      "side": 1,
+      "message": "RFI does this for pretty much all clients. Just keeping things consist with the code around.",
+      "parentUuid": "9094180a_c6ce2725",
       "range": {
         "startLine": 6656,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8f5cc78f_534c0816",
+        "filename": "third_party/WebKit/Source/modules/media_capabilities/MediaCapabilities.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T09:07:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4a884e78_5bb43a93",
+      "range": {
+        "startLine": 33,
+        "startChar": 0,
+        "endLine": 34,
+        "endChar": 61
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f1e73d2_fa760814",
         "filename": "third_party/WebKit/Source/modules/media_capabilities/MediaCapabilitiesController.h",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-07T23:35:26Z",
       "side": 1,
       "message": "Because I think it\u0027s never deleted here.",
+      "range": {
+        "startLine": 39,
+        "startChar": 2,
+        "endLine": 39,
+        "endChar": 28
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aef4771_69268c76",
+        "filename": "third_party/WebKit/Source/modules/media_capabilities/MediaCapabilitiesController.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T09:07:32Z",
+      "side": 1,
+      "message": "I\u0027m missing the context here?",
+      "parentUuid": "5f1e73d2_fa760814",
       "range": {
         "startLine": 39,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d6de228_05076efb",
+        "filename": "third_party/WebKit/public/web/WebFrameClient.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 815,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T09:07:32Z",
+      "side": 1,
+      "message": "Done. Though, FTR, I find this unfortunate that Blink and Chromium do not share the same policy here.",
+      "parentUuid": "8e2cbf46_0ee49e99",
+      "range": {
+        "startLine": 815,
+        "startChar": 45,
+        "endLine": 815,
+        "endChar": 48
+      },
+      "revId": "38c519f0d2f1b8362f84f3eb8bc74f9c27b71bf4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
