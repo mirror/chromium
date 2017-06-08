@@ -34,6 +34,24 @@
       "revId": "3fcbd60991bd89721053284bbf798ffb26ea67b7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49dc6289_4b2f540a",
+        "filename": "cc/trees/layer_tree_host_unittest_animation.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 1401,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-08T02:13:34Z",
+      "side": 1,
+      "message": "\u003e Standard disclaimer re: maybe I am missing something. See also my previous comment:\n\u003e \n\u003e   The unit tests are written such that IMO, rather than our directly monkeying the\n\u003e   transform tree, we should do it implicitly through setting some config on the layer\n\u003e   so that PropertyTreeBuilder will end up creating one for us.\n\u003e \n\u003e   In some cases we could do this by forcing a render surface. In others doing so would\n\u003e   break the test itself, and so I\u0027ve semi-arbitrarily set a constraint on the layer\n\u003e   instead.\n\u003e \n\u003e With that as background:\n\u003e \n\u003e Yes, though (unless you mean, SetTransformTreeIndex on the LayerImpl, but then we\u0027d need to fiddle the impl property trees, and that seems a path fraught with peril vs. the way these tests appear to be structured) it would have to be a \"significant\" i.e. not-identity-or-2d-translation transform.\n\nI don\u0027t mean that. I mean setting it on the Layer/LayerImpl and letting it pick up the\nresult in the property tree builder. Layer::SetTransform or LayerImplTestProperties::transform\n\nhttps://cs.chromium.org/chromium/src/cc/layers/layer_impl_test_properties.h?type\u003dcs\u0026sq\u003dpackage:chromium\u0026l\u003d50\n\n\u003e \n\u003e The base test class is structured so that it runs a frame lifecycle, building property trees and so forth.\n\u003e \n\u003e So we need the output of cc::PropertyTreeBuilder to produce a LayerImpl with a transform node, which is then updated by animations and expected on in for example CommitCompleteOnThread().\n\u003e \n\u003e So, we really just need to set something on the layer so that cc::PropertyTreeBuilder::AddTransformNodeIfNeeded ends up concluding that requires_node \u003d true.\n\u003e \n\u003e There are other approaches, like, we could perhaps rework these tests so we run an animation on the root layer than a child layer. I\u0027m not sure if that\u0027s kosher.\n\u003e \n\u003e Code reference:\n\u003e \n\u003e https://cs.chromium.org/chromium/src/cc/trees/property_tree_builder.cc?q\u003dproperty_tree_Builder.cc\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d363\n\u003e \n\u003e I did find that this works, can switch to it if you prefer:\n\u003e \n\u003e   gfx::Transform rotation_about_z;\n\u003e   rotation_about_z.RotateAboutZAxis(90.0);\n\u003e   layer-\u003eSetTransform(rotation_about_z);\n\u003e \n\u003e The tests in question in this file are:\n\u003e \n\u003e     LayerTreeHostAnimationTestAnimationFinishesDuringCommit.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1665)\n\u003e     LayerTreeHostAnimationTestImplSideInvalidation.RunMultiThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1741)\n\u003e     LayerTreeHostAnimationTestRemoveAnimation.RunSingleThread_DelegatingRenderer (../../cc/trees/layer_tree_host_unittest_animation.cc:1514)\n\u003e \n\u003e They check the DrawTransform on the layer to make sure the translation is as expected for the animation.\n\u003e \n\u003e I was worried using a transform on the layer would muddy things and perhaps make tests fragile because the test logic matrix expectation could conflict with the transform we set, but I think maybe DrawTransform takes care of that so we only look at the delta produced by the animation.",
+      "parentUuid": "6e0b5e13_5fa66b55",
+      "revId": "3fcbd60991bd89721053284bbf798ffb26ea67b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
