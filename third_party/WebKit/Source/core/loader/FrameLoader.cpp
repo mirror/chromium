@@ -1452,6 +1452,17 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
                                             resource_request);
   DCHECK(provisional_document_loader_);
 
+  // Persist the user gesture state between frames.
+  if ((frame_->HasReceivedUserGesture() ||
+       frame_->HasReceivedUserGestureBeforeNavigation())) {
+    provisional_document_loader_->GetFrame()
+        ->SetDocumentHasReceivedUserGestureBeforeNavigation(
+            ShouldPersistUserGestureValue(resource_request.Url()));
+  } else {
+    provisional_document_loader_->GetFrame()
+        ->SetDocumentHasReceivedUserGestureBeforeNavigation(false);
+  }
+
   if (navigation_policy == kNavigationPolicyCurrentTab) {
     provisional_document_loader_->StartLoadingMainResource();
     // This should happen after the request is sent, so that the state
@@ -1470,6 +1481,23 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   }
 
   TakeObjectSnapshot();
+}
+
+// Check if we should persist the user gesture state between frames by checking
+// if the current frame URL matches the new frame URL by comparing the eTLD+1.
+bool FrameLoader::ShouldPersistUserGestureValue(const KURL& destKURL) {
+  String source_host = frame_->GetDocument()->Url().Host();
+  String dest_host = destKURL.Host();
+
+  if (source_host == dest_host)
+    return true;
+
+  String source_domain = NetworkUtils::GetDomainAndRegistry(
+      source_host, NetworkUtils::kIncludePrivateRegistries);
+  String dest_domain = NetworkUtils::GetDomainAndRegistry(
+      dest_host, NetworkUtils::kIncludePrivateRegistries);
+
+  return !source_domain.IsEmpty() && source_domain == dest_domain;
 }
 
 void FrameLoader::ApplyUserAgent(ResourceRequest& request) {
