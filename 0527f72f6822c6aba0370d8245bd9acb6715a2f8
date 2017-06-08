@@ -45,6 +45,30 @@
       "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3c780a7_edaa9188",
+        "filename": "extensions/browser/extension_icon_image.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T16:05:41Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "6395781a_4d0f909e",
+      "range": {
+        "startLine": 77,
+        "startChar": 13,
+        "endLine": 77,
+        "endChar": 18
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

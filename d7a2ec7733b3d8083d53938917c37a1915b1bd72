@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e06b97a7_e321c88c",
+        "filename": "chrome/browser/extensions/chrome_app_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T16:05:41Z",
+      "side": 1,
+      "message": "nit: gfx::ImageSkia\u0026 -\u003e gfx::ImageSkia\n\nCopying an ImageSkia is cheap. This is correct for now but would be a problem when GetDefaultAppIcon() etc returns an instance instead of ref later in the future.",
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e55d6303_feafe508",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T16:05:41Z",
+      "side": 1,
+      "message": "nit: How about just call icon_-\u003eimage_skia().EnsureRepsForSupportedScales() to load all?",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d20800d_3dcb1f32",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-08T16:05:41Z",
+      "side": 1,
+      "message": "Use base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(...) to post a task on the same thread.",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
