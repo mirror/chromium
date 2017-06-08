@@ -12,7 +12,9 @@
 #include "content/public/test/test_utils.h"
 #include "content/shell/browser/shell.h"
 #include "media/base/media_switches.h"
+#include "media/capture/video/fake_video_capture_device_factory.h"
 #include "net/test/embedded_test_server/embedded_test_server.h"
+#include "services/video_capture/public/cpp/constants.h"
 
 #if defined(OS_ANDROID)
 #include "base/android/build_info.h"
@@ -39,9 +41,17 @@ static const char kImageCaptureHtmlFile[] = "/media/image_capture_test.html";
 // platforms where the ImageCaptureCode is landed, https://crbug.com/656810
 static struct TargetCamera {
   bool use_fake;
-} const kTestParameters[] = {{true},
+  bool use_video_capture_service;
+} const kTestParameters[] = {{true, false},
+// Mojo video capture is currently not supported on Android
+// TODO(chfremer): Remove this as soon as https://crbug.com/720500 is
+// resolved.
+#if !defined(OS_ANDROID)
+                             {true, true},
+#endif
 #if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_ANDROID)
-                             {false}
+                             {false, false},
+                             {false, true}
 #endif
 };
 
@@ -50,24 +60,16 @@ static struct TargetCamera {
 // This class is the content_browsertests for Image Capture API, which allows
 // for capturing still images out of a MediaStreamTrack. Is a
 // WebRtcWebcamBrowserTest to be able to use a physical camera.
-class WebRtcImageCaptureBrowserTest
-    : public WebRtcWebcamBrowserTest,
-      public testing::WithParamInterface<struct TargetCamera> {
+class WebRtcImageCaptureBrowserTestBase : public WebRtcWebcamBrowserTest {
  public:
-  WebRtcImageCaptureBrowserTest() = default;
-  ~WebRtcImageCaptureBrowserTest() override = default;
+  WebRtcImageCaptureBrowserTestBase() = default;
+  ~WebRtcImageCaptureBrowserTestBase() override = default;
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     WebRtcWebcamBrowserTest::SetUpCommandLine(command_line);
 
     ASSERT_FALSE(base::CommandLine::ForCurrentProcess()->HasSwitch(
         switches::kUseFakeDeviceForMediaStream));
-    if (GetParam().use_fake) {
-      base::CommandLine::ForCurrentProcess()->AppendSwitch(
-          switches::kUseFakeDeviceForMediaStream);
-      ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kUseFakeDeviceForMediaStream));
-    }
 
     // "GetUserMedia": enables navigator.mediaDevices.getUserMedia();
     // TODO(mcasas): remove GetUserMedia after https://crbug.com/503227.
@@ -109,26 +111,168 @@ class WebRtcImageCaptureBrowserTest
   }
 
  private:
-  DISALLOW_COPY_AND_ASSIGN(WebRtcImageCaptureBrowserTest);
+  DISALLOW_COPY_AND_ASSIGN(WebRtcImageCaptureBrowserTestBase);
 };
 
-IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureBrowserTest, MAYBE_GetCapabilities) {
+// Test fixture for setting up a fake device that successfully serves all
+// image capture requests.
+class WebRtcImageCaptureSucceedsBrowserTest
+    : public WebRtcImageCaptureBrowserTestBase,
+      public testing::WithParamInterface<struct TargetCamera> {
+ public:
+  WebRtcImageCaptureSucceedsBrowserTest() = default;
+  ~WebRtcImageCaptureSucceedsBrowserTest() override = default;
+
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    WebRtcImageCaptureBrowserTestBase::SetUpCommandLine(command_line);
+
+    if (GetParam().use_fake) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kUseFakeDeviceForMediaStream);
+      ASSERT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kUseFakeDeviceForMediaStream));
+    }
+    if (GetParam().use_video_capture_service) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
+    }
+  }
+};
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureSucceedsBrowserTest,
+                       MAYBE_GetCapabilities) {
   embedded_test_server()->StartAcceptingConnections();
-  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGetCapabilities()"));
+  ASSERT_TRUE(
+      RunImageCaptureTestCase("testCreateAndGetCapabilitiesSucceeds()"));
 }
 
-IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureBrowserTest, MAYBE_TakePhoto) {
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureSucceedsBrowserTest, MAYBE_TakePhoto) {
   embedded_test_server()->StartAcceptingConnections();
-  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndTakePhoto()"));
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndTakePhotoSucceeds()"));
 }
 
-IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureBrowserTest, MAYBE_GrabFrame) {
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureSucceedsBrowserTest, MAYBE_GrabFrame) {
   embedded_test_server()->StartAcceptingConnections();
-  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGrabFrame()"));
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGrabFrameSucceeds()"));
 }
 
 INSTANTIATE_TEST_CASE_P(,
-                        WebRtcImageCaptureBrowserTest,
+                        WebRtcImageCaptureSucceedsBrowserTest,
                         testing::ValuesIn(kTestParameters));
+
+// Test fixture for setting up a fake device that responds to invocation of
+// GetPhotoCapabilities with a failure response.
+class WebRtcImageCaptureGetCapabilitiesFailsBrowserTest
+    : public WebRtcImageCaptureBrowserTestBase,
+      public testing::WithParamInterface<bool /*use video capture service*/> {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    WebRtcImageCaptureBrowserTestBase::SetUpCommandLine(command_line);
+
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kUseFakeDeviceForMediaStream,
+        std::string("config=") + media::FakeVideoCaptureDeviceFactory::
+                                     kDeviceConfigForGetPhotoCapabilitiesFails);
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
+    }
+  }
+};
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureGetCapabilitiesFailsBrowserTest,
+                       GetCapabilities) {
+  embedded_test_server()->StartAcceptingConnections();
+  // With the fake device reporting a failure, we expect an empty set of
+  // capabilities to reported back to JS.
+  ASSERT_TRUE(
+      RunImageCaptureTestCase("testCreateAndGetCapabilitiesSucceeds()"));
+}
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureGetCapabilitiesFailsBrowserTest,
+                       TakePhoto) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndTakePhotoSucceeds()"));
+}
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureGetCapabilitiesFailsBrowserTest,
+                       GrabFrame) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGrabFrameSucceeds()"));
+}
+
+INSTANTIATE_TEST_CASE_P(,
+                        WebRtcImageCaptureGetCapabilitiesFailsBrowserTest,
+                        testing::Bool());
+
+// Test fixture for setting up a fake device that responds to invocation of
+// SetPhotoOptions with a failure response.
+class WebRtcImageCaptureSetOptionsFailsBrowserTest
+    : public WebRtcImageCaptureBrowserTestBase,
+      public testing::WithParamInterface<bool /*use video capture service*/> {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    WebRtcImageCaptureBrowserTestBase::SetUpCommandLine(command_line);
+
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kUseFakeDeviceForMediaStream,
+        std::string("config=") + media::FakeVideoCaptureDeviceFactory::
+                                     kDeviceConfigForSetPhotoOptionsFails);
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
+    }
+  }
+};
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureSetOptionsFailsBrowserTest,
+                       TakePhoto) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndTakePhotoIsRejected()"));
+}
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureSetOptionsFailsBrowserTest,
+                       GrabFrame) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGrabFrameSucceeds()"));
+}
+
+INSTANTIATE_TEST_CASE_P(,
+                        WebRtcImageCaptureSetOptionsFailsBrowserTest,
+                        testing::Bool());
+
+// Test fixture for setting up a fake device that responds to invocation of
+// TakePhoto with a failure response.
+class WebRtcImageCaptureTakePhotoFailsBrowserTest
+    : public WebRtcImageCaptureBrowserTestBase,
+      public testing::WithParamInterface<bool /*use video capture service*/> {
+ public:
+  void SetUpCommandLine(base::CommandLine* command_line) override {
+    WebRtcImageCaptureBrowserTestBase::SetUpCommandLine(command_line);
+
+    base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+        switches::kUseFakeDeviceForMediaStream,
+        std::string("config=") + media::FakeVideoCaptureDeviceFactory::
+                                     kDeviceConfigForTakePhotoFails);
+    if (GetParam()) {
+      base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(
+          switches::kEnableFeatures, video_capture::kMojoVideoCapture.name);
+    }
+  }
+};
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureTakePhotoFailsBrowserTest, TakePhoto) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndTakePhotoIsRejected()"));
+}
+
+IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureTakePhotoFailsBrowserTest, GrabFrame) {
+  embedded_test_server()->StartAcceptingConnections();
+  ASSERT_TRUE(RunImageCaptureTestCase("testCreateAndGrabFrameSucceeds()"));
+}
+
+INSTANTIATE_TEST_CASE_P(,
+                        WebRtcImageCaptureTakePhotoFailsBrowserTest,
+                        testing::Bool());
 
 }  // namespace content
