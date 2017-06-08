@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5877de01_2258448f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillEditorBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T15:26:47Z",
+      "side": 1,
+      "message": "remove this variable since it is not used.",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "fe1eb67816a613adbc0559345dfb343584bc872f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
