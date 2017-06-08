@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e98e218c_cf824988",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-08T14:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f322a42c_d24cad87",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa6ee7c7_f569a522",
         "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-07T21:44:28Z",
       "side": 1,
       "message": "Not a huge fan of tying logic like this to a string value. Is there a clearer/more robust way to implement this?",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d755a4b_20af7765",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-08T14:35:07Z",
+      "side": 1,
+      "message": "The problem is that this function is static, so I can\u0027t use a state from the shipping address editor. I\u0027m looking at other possibilities.",
+      "parentUuid": "aa6ee7c7_f569a522",
       "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "1e6de5d1_3adc4eb6",
+        "filename": "components/autofill/core/browser/region_combobox_model.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-08T14:35:07Z",
+      "side": 1,
+      "message": "No it won\u0027t, because of line 61. Replaced by \"---\" for consistency. Thanks.",
+      "parentUuid": "6fa665eb_50530266",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0a278ff1_7d844421",
         "filename": "components/autofill/core/browser/test_region_data_loader.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "927015ce_3c0968c9",
+        "filename": "components/autofill/core/browser/test_region_data_loader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-08T14:35:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a278ff1_7d844421",
+      "revId": "655719e319efed1e2bc5378bdfe1b96536d38153",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
