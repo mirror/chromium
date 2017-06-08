@@ -1748,6 +1748,8 @@ public abstract class ChromeActivity extends AsyncInitializationActivity
                     MultiWindowUtils.getInstance().isInMultiWindowMode(this));
         }
 
+        VrShellDelegate.onMultiWindowModeChanged(isInMultiWindowMode);
+
         super.onMultiWindowModeChanged(isInMultiWindowMode);
     }
 

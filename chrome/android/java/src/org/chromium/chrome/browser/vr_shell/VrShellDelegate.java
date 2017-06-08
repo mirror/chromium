@@ -55,6 +55,7 @@ import org.chromium.chrome.browser.page_info.PageInfoPopup;
 import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
 import org.chromium.chrome.browser.util.IntentUtils;
+import org.chromium.chrome.browser.vr_shell.VrCoreVersionChecker.VrCoreCompatibility;
 import org.chromium.chrome.browser.webapps.WebappActivity;
 
 import java.lang.annotation.Retention;
@@ -342,6 +343,13 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         unregisterDaydreamIntent(api);
     }
 
+    public static void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
+        if (isInMultiWindowMode && isInVr()) {
+            sInstance.shutdownVr(
+                    true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
+        }
+    }
+
     @CalledByNative
     private static VrShellDelegate getInstance() {
         Activity activity = ApplicationStatus.getLastTrackedFocusedActivity();
@@ -480,12 +488,12 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                 if (activity == mActivity) destroy();
                 break;
             case ActivityState.PAUSED:
-                if (activity == mActivity) pauseVr();
+                if (activity == mActivity) onPause();
                 // Other activities should only pause while we're paused due to Android lifecycle.
                 assert mPaused;
                 break;
             case ActivityState.STOPPED:
-                if (activity == mActivity) cancelPendingVrEntry();
+                if (activity == mActivity) onStop();
                 break;
             case ActivityState.RESUMED:
                 if (mInVr && activity != mActivity) {
@@ -501,7 +509,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
                 }
                 if (!activitySupportsPresentation(activity)) return;
                 swapHostActivity((ChromeActivity) activity);
-                resumeVr();
+                onResume();
                 break;
             default:
                 break;
@@ -797,7 +805,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         return true;
     }
 
-    private void resumeVr() {
+    private void onResume() {
         mPaused = false;
 
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskWrites();
@@ -849,7 +857,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         }
     }
 
-    private void pauseVr() {
+    private void onPause() {
         mPaused = true;
         unregisterDaydreamIntent(mVrDaydreamApi);
         if (mVrSupportLevel == VR_NOT_AVAILABLE) return;
@@ -867,16 +875,19 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
 
         if (mNativeVrShellDelegate != 0) nativeOnPause(mNativeVrShellDelegate);
 
-        if (mShowingDaydreamDoff) {
-            mVrShell.pause();
-            return;
-        }
-
-        // TODO(mthiesse): When VR Shell lives in its own activity, and integrates with Daydream
-        // home, pause instead of exiting VR here. For now, because VR Apps shouldn't show up in the
-        // non-VR recents, and we don't want ChromeTabbedActivity disappearing, exit VR.
-        shutdownVr(true /* disableVrMode */, true /* canReenter */, false /* stayingInChrome */);
         mIsDaydreamCurrentViewer = null;
+    }
+
+    private void onStop() {
+        cancelPendingVrEntry();
+        // We defer pausing of VrShell until the app is stopped to keep head tracking working for
+        // as long as possible while going to daydream home.
+        if (mInVr) mVrShell.pause();
+        if (mShowingDaydreamDoff) return;
+
+        // TODO(mthiesse): When the user resumes Chrome in a 2D context, we don't want to tear down
+        // VR UI, so for now, exit VR.
+        shutdownVr(true /* disableVrMode */, true /* canReenter */, false /* stayingInChrome */);
     }
 
     private boolean onBackPressedInternal() {
