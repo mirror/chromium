@@ -83,6 +83,7 @@ class WebLayer;
 class WebLayerTreeView;
 class WebLocalFrameBase;
 class WebRemoteFrameBase;
+class WebView;
 
 struct CompositedSelection;
 struct DateTimeChooserParameters;
@@ -169,7 +170,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
                             String& result);
   virtual bool TabsToLinks() = 0;
 
-  virtual void* WebView() const = 0;
+  virtual WebView* GetWebView() const = 0;
 
   // Methods used by PlatformChromeClient.
   virtual WebScreenInfo GetScreenInfo() const = 0;

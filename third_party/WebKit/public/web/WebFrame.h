@@ -35,6 +35,7 @@
 #include "WebIconURL.h"
 #include "WebNode.h"
 #include "public/platform/WebCanvas.h"
+#include "public/platform/WebCommon.h"
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/web/WebFrameLoadType.h"
@@ -110,7 +111,7 @@ class WebFrame {
   // This method closes and deletes the WebFrame. This is typically called by
   // the embedder in response to a frame detached callback to the WebFrame
   // client.
-  virtual void Close();
+  BLINK_EXPORT virtual void Close();
 
   // Called by the embedder when it needs to detach the subtree rooted at this
   // frame.
@@ -385,34 +386,34 @@ class WebFrame {
 
 #if BLINK_IMPLEMENTATION
   // TODO(mustaq): Should be named FromCoreFrame instead.
-  static WebFrame* FromFrame(Frame*);
+  BLINK_EXPORT static WebFrame* FromFrame(Frame*);
   BLINK_EXPORT static Frame* ToCoreFrame(const WebFrame&);
 
   bool InShadowTree() const { return scope_ == WebTreeScopeType::kShadow; }
 
-  static void InitializeCoreFrame(WebFrame&, Page&);
-  static void TraceFrames(Visitor*, WebFrame*);
+  BLINK_EXPORT static void InitializeCoreFrame(WebFrame&, Page&);
+  BLINK_EXPORT static void TraceFrames(Visitor*, WebFrame*);
 
   // Detaches a frame from its parent frame if it has one.
-  void DetachFromParent();
+  BLINK_EXPORT void DetachFromParent();
 #endif
 
  protected:
-  explicit WebFrame(WebTreeScopeType);
-  virtual ~WebFrame();
+  BLINK_EXPORT explicit WebFrame(WebTreeScopeType);
+  BLINK_EXPORT virtual ~WebFrame();
 
   // Sets the parent WITHOUT fulling adding it to the frame tree.
   // Used to lie to a local frame that is replacing a remote frame,
   // so it can properly start a navigation but wait to swap until
   // commit-time.
-  void SetParent(WebFrame*);
+  BLINK_EXPORT void SetParent(WebFrame*);
 
   // Inserts the given frame as a child of this frame, so that it is the next
   // child after |previousSibling|, or first child if |previousSibling| is null.
   void InsertAfter(WebFrame* child, WebFrame* previous_sibling);
 
   // Adds the given frame as a child of this frame.
-  void AppendChild(WebFrame*);
+  BLINK_EXPORT void AppendChild(WebFrame*);
 
  private:
 #if BLINK_IMPLEMENTATION

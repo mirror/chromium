@@ -54,6 +54,7 @@
 #include "core/events/WheelEvent.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebPluginContainerBase.h"
+#include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/frame/BrowserControls.h"
 #include "core/frame/EventHandlerRegistry.h"
@@ -171,7 +172,6 @@
 #include "web/PrerendererClientImpl.h"
 #include "web/StorageQuotaClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
-#include "web/WebRemoteFrameImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"
@@ -1769,7 +1769,7 @@ WebViewBase* WebViewBase::FromPage(Page* page) {
 }
 
 WebViewBase* WebViewImpl::FromPage(Page* page) {
-  return page ? static_cast<WebViewBase*>(page->GetChromeClient().WebView())
+  return page ? static_cast<WebViewBase*>(page->GetChromeClient().GetWebView())
               : nullptr;
 }
 
