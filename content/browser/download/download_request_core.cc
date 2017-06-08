@@ -350,6 +350,8 @@ bool DownloadRequestCore::OnResponseStarted(
   // network error, so we'll just ignore them here.
   if (request()->initiator().has_value() &&
       !create_info->url_chain.back().SchemeIsBlob() &&
+      !create_info->url_chain.back().SchemeIs(url::kAboutScheme) &&
+      !create_info->url_chain.back().SchemeIs(url::kDataScheme) &&
       request()->initiator()->GetURL() !=
           create_info->url_chain.back().GetOrigin()) {
     create_info->save_info->suggested_name.clear();
