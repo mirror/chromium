@@ -660,6 +660,7 @@ void WebMediaPlayerImpl::SetVolume(double volume) {
   pipeline_controller_.SetVolume(volume_ * volume_multiplier_);
   if (watch_time_reporter_)
     watch_time_reporter_->OnVolumeChange(volume);
+  delegate_->DidPlayerVolumeChange(delegate_id_, volume);
 
   // The play state is updated because the player might have left the autoplay
   // muted state.

@@ -87,6 +87,9 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void OnMediaEffectivelyFullscreenChange(RenderFrameHost* render_frame_host,
                                           int delegate_id,
                                           bool is_fullscreen);
+  void OnMediaVolumeChanged(RenderFrameHost* render_frame_host,
+                            int delegate_id,
+                            double volume);
 
   // Clear |render_frame_host|'s tracking entry for its WakeLocks.
   void ClearWakeLocks(RenderFrameHost* render_frame_host);
@@ -114,6 +117,9 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
   void RemoveAllMediaPlayerEntries(RenderFrameHost* render_frame_host,
                                    ActiveMediaPlayerMap* player_map,
                                    std::set<MediaPlayerId>* removed_players);
+
+  // Convenience method that casts web_contents() to a WebContentsImpl*.
+  WebContentsImpl* web_contents_impl() const;
 
   // Tracking variables and associated wake locks for media playback.
   ActiveMediaPlayerMap active_audio_players_;
