@@ -69,6 +69,7 @@ class OmniboxPopupContentsView : public views::View,
 
   bool IsSelectedIndex(size_t index) const;
   bool IsHoveredIndex(size_t index) const;
+  OmniboxPopupModel::Action GetPendingAction() const;
   gfx::Image GetIconIfExtensionMatch(size_t index) const;
   bool IsStarredMatch(const AutocompleteMatch& match) const;
 
@@ -110,8 +111,10 @@ class OmniboxPopupContentsView : public views::View,
 
   // Find the index of the match under the given |point|, specified in window
   // coordinates. Returns OmniboxPopupModel::kNoMatch if there isn't a match at
-  // the specified point.
-  size_t GetIndexForPoint(const gfx::Point& point);
+  // the specified point. |action| is filled in with the specific action for the
+  // given point (e.g. accept keyword hint).
+  size_t GetRowInfoForPoint(const gfx::Point& point,
+                            OmniboxPopupModel::Action* action);
 
   // Processes a located event (e.g. mouse/gesture) and sets the selection/hover
   // state of a line in the list.
@@ -122,6 +125,9 @@ class OmniboxPopupContentsView : public views::View,
   // disposition.
   void OpenSelectedLine(const ui::LocatedEvent& event,
                         WindowOpenDisposition disposition);
+
+  // Processes a mouse movement event and sets the hover state of a line.
+  void ProcessMouseMovement(const ui::MouseEvent& event);
 
   OmniboxResultView* result_view_at(size_t i);
 
