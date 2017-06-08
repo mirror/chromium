@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4f9754b_da71c1ff",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_item.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-08T14:16:44Z",
+      "side": 1,
+      "message": "This file will be in the non UI layer target, is that correct?",
+      "revId": "a4ad3b5b17f8d56977f2eedd56eab86b50a07b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41f5d70_0a8e6166",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_collection_view_item_accessibility_delegate.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-08T14:16:44Z",
+      "side": 1,
+      "message": "This file will move be in the UI layer, is that correct?",
+      "revId": "a4ad3b5b17f8d56977f2eedd56eab86b50a07b40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
