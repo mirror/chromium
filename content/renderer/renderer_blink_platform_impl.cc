@@ -1079,14 +1079,6 @@ RendererBlinkPlatformImpl::CreateSharedOffscreenGraphicsContext3DProvider() {
 
 //------------------------------------------------------------------------------
 
-gpu::GpuMemoryBufferManager*
-RendererBlinkPlatformImpl::GetGpuMemoryBufferManager() {
-  RenderThreadImpl* thread = RenderThreadImpl::current();
-  return thread ? thread->GetGpuMemoryBufferManager() : nullptr;
-}
-
-//------------------------------------------------------------------------------
-
 std::unique_ptr<cc::SharedBitmap>
 RendererBlinkPlatformImpl::AllocateSharedBitmap(const blink::WebSize& size) {
   return shared_bitmap_manager_

@@ -32,6 +32,11 @@ gpu::Capabilities WebGraphicsContext3DProviderImpl::GetCapabilities() {
   return provider_->ContextCapabilities();
 }
 
+gpu::GpuMemoryBufferManager*
+WebGraphicsContext3DProviderImpl::GetGpuMemoryBufferManager() const {
+  return provider_->GetGpuMemoryBufferManager();
+}
+
 bool WebGraphicsContext3DProviderImpl::IsSoftwareRendering() const {
   return software_rendering_;
 }

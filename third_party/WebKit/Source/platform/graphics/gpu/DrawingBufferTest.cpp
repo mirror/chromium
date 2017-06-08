@@ -52,19 +52,6 @@ using testing::_;
 
 namespace blink {
 
-namespace {
-
-class FakePlatformSupport : public TestingPlatformSupport {
-  gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override {
-    return &test_gpu_memory_buffer_manager_;
-  }
-
- private:
-  cc::TestGpuMemoryBufferManager test_gpu_memory_buffer_manager_;
-};
-
-}  // anonymous namespace
-
 class DrawingBufferTest : public Test {
  protected:
   void SetUp() override { Init(kDisableMultisampling); }
@@ -392,8 +379,6 @@ TEST_F(DrawingBufferTest, verifyInsertAndWaitSyncTokenCorrectly) {
 class DrawingBufferImageChromiumTest : public DrawingBufferTest {
  protected:
   void SetUp() override {
-    platform_.reset(new ScopedTestingPlatformSupport<FakePlatformSupport>);
-
     IntSize initial_size(kInitialWidth, kInitialHeight);
     std::unique_ptr<GLES2InterfaceForTests> gl =
         WTF::WrapUnique(new GLES2InterfaceForTests);
@@ -415,11 +400,9 @@ class DrawingBufferImageChromiumTest : public DrawingBufferTest {
 
   void TearDown() override {
     RuntimeEnabledFeatures::SetWebGLImageChromiumEnabled(false);
-    platform_.reset();
   }
 
   GLuint image_id0_;
-  std::unique_ptr<ScopedTestingPlatformSupport<FakePlatformSupport>> platform_;
 };
 
 TEST_F(DrawingBufferImageChromiumTest, verifyResizingReallocatesImages) {
