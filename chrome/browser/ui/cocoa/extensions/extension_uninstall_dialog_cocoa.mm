@@ -27,7 +27,7 @@ namespace {
 class ExtensionUninstallDialogCocoa
     : public extensions::ExtensionUninstallDialog {
  public:
-  ExtensionUninstallDialogCocoa(Profile* profile, Delegate* delegate);
+  ExtensionUninstallDialogCocoa(Profile* profile, nullptr, Delegate* delegate);
   ~ExtensionUninstallDialogCocoa() override;
 
  private:
