@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16ca19a3_9b8de995",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T12:49:03Z",
+      "side": 1,
+      "message": "Maybe: \"Autoplay: make document user activation persist used across navigation.\"\n\nOr anything that is clear that it is when the new policy is used :)",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "663f4574_80f150c2",
+        "filename": "third_party/WebKit/LayoutTests/media/autoplay/document-user-activation-navigation-click.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T12:49:03Z",
+      "side": 1,
+      "message": "Tests in LayoutTests/ are running as file:// which are special with regards to origins. I\u0027m not sure what the rule is for domains but maybe we don\u0027t want to rely on this. What about moving the tests to LayoutTests/http/. Those tests run in an http server with a real origin.\n\nAlso, would it work to use `document.location.href` to navigate instead of using `testRunner`. In general, we try to stay away from using `testRunner` unless we really have.",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9dcbc0c_2512a463",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T12:49:03Z",
+      "side": 1,
+      "message": "AutoplayPolicy is used directly for HTMLMediaElement but BaseAudioContext also uses this policy. It would be nice to have a generic method for both. Maybe something like `static bool AutoplayPolicy::IsDocumentAllowedToPlay()` or whatever name sounds good :)",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
