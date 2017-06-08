@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8da63094_dae563ad",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-08T20:04:15Z",
+      "side": 1,
+      "message": "Or just do \nif (safe_browsing_mode \u003d\u003d 1)\n  desktop..\nelsif (safe_browsing_mode \u003d\u003d 2)\n  mobile..\n\n\nIf you want to get rid of safe_browsing_mode everywhere and switch to checking for desktop-vs-android, I think that\u0027d be reasonable (separate CL).  We\u0027d need to ensure iOS doesn\u0027t get affected",
+      "parentUuid": "fba3e74f_149f709e",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 17
+      },
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41f34429_f2fb0a85",
         "filename": "components/safe_browsing_db/BUILD.gn",
         "patchSetId": 2
