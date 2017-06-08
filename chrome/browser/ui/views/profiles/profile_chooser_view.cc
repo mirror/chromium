@@ -422,7 +422,7 @@ class EditableProfilePhoto : public views::LabelButton {
   DISALLOW_COPY_AND_ASSIGN(EditableProfilePhoto);
 };
 
-// A title card with one back button right aligned and one label center aligned.
+// A title card with one back button left aligned and one label center aligned.
 class TitleCard : public views::View {
  public:
   TitleCard(const base::string16& message, views::ButtonListener* listener,
@@ -481,9 +481,9 @@ class TitleCard : public views::View {
     int back_button_width = back_button_->GetPreferredSize().width();
     back_button_->SetBounds(0, 0, back_button_width, height());
     int label_padding =
-        back_button_width + ChromeLayoutProvider::Get()
-                                ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
-                                .left();
+        back_button_width +
+        ChromeLayoutProvider::Get()->GetDistanceMetric(
+            ChromeDistanceMetric::DISTANCE_UNRELATED_CONTROL_HORIZONTAL);
     int label_width = width() - 2 * label_padding;
     DCHECK_GT(label_width, 0);
     title_label_->SetBounds(label_padding, 0, label_width, height());
