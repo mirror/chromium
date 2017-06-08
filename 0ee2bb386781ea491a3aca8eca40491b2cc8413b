@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb9f5c23_beed942b",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:21:52Z",
+      "side": 1,
+      "message": "Move implementation of ValueDestructorPair methods to .cc file, except for value().",
+      "revId": "0ee2bb386781ea491a3aca8eca40491b2cc8413b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667a7298_fb68252f",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T19:21:52Z",
+      "side": 1,
+      "message": "sls_map_\n\n\"Data members of classes, both static and non-static, are named like ordinary nonmember variables, but with a trailing underscore.\"\nhttps://google.github.io/styleguide/cppguide.html#Variable_Names",
+      "revId": "0ee2bb386781ea491a3aca8eca40491b2cc8413b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
