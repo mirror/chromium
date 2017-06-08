@@ -22,6 +22,30 @@
       "revId": "e9197cf8ec376c1259f47abcaaf535d4500830fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b04f2312_6377115d",
+        "filename": "content/test/data/media/image_capture_test.html",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-08T00:04:55Z",
+      "side": 1,
+      "message": "Discussed it offline a bit: IIUC reillyg@ wants an XOR to\nexplicitly rule out the case when\n  WIDTH \u003d\u003d imageBitmap.width \u003d\u003d imageBitmap.height \nbut this could be, in principle, an OK situation, and it \ncould appear due to some cropping mechanism unrelated to this\nCL.",
+      "parentUuid": "e0c4bc41_40bb19b9",
+      "range": {
+        "startLine": 65,
+        "startChar": 46,
+        "endLine": 65,
+        "endChar": 48
+      },
+      "revId": "e9197cf8ec376c1259f47abcaaf535d4500830fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
