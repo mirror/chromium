@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "917f0da6_43666eff",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-08T18:13:10Z",
+      "side": 1,
+      "message": "Nit: Undefine them right after they\u0027re needed (right above GetAllFeatures).",
+      "range": {
+        "startLine": 65,
+        "startChar": 0,
+        "endLine": 66,
+        "endChar": 22
+      },
+      "revId": "79b259fec4ac6a300eb8fc871d8ff6b876204cf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
