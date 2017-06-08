@@ -594,6 +594,30 @@
     },
     {
       "key": {
+        "uuid": "3b3a90d1_f905a14e",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-08T14:36:24Z",
+      "side": 1,
+      "message": "\u003e My opinion would be it\u0027s fine to use BUILDFLAG in core/. core/ already uses a lot of platform-specific knowledge via Platform::xxx() APIs.\n\nPlatform API are meant to conceal platform difference from core/ so that core/ can\u0027t gain knowledge of the differences.  core/ implements the web platform: core DOM, core HTML, the specs that define the web platform, in a platform agnostic way.\n\nIf we are exposing platform differences explicitly to core/, well we already know that that leads to an unhappy place if allowed to continue more broadly [1] given our project\u0027s history.\n\n\u003e BUILDFLAG seems like a similar thing to me.\n\nAnd exactly the same as ENABLE flags since before the fork.  First order of business post-fork was to remove build and platform-dependent #ifdef from our code (aka ENABLE flags).  Adam\u0027s announcement of the Blink fork was short and sweet:\n\nhttps://groups.google.com/a/chromium.org/forum/#!searchin/blink-dev/Removing$20$23ifdefs./blink-dev/2DzxYVK0ixI/mfEq7jgNUyIJ\n\nbut the dozens of #ifdef that we could remove post-fork was mentioned.  Subsequent threads on blink-dev@ dealt with them, their problems, and their eventual replacement with Runtime Enabled Features:\n\nhttps://groups.google.com/a/chromium.org/forum/#!searchin/blink-dev/Removing$20$23ifdefs.\n\nto remove all the \"dependency spaghetti\", and that \"spraying our code with #ifdef\", quoting from those threads, which we deemed undesirable, with itemized reasons.\n\nSome wit said that those who don\u0027t understand history are bound to repeat it.  We should consider changes that add #ifdef to core/ with some skepticism.  Ideally, it should be rare, and for compat reasons only, unless we want to go back to that unhappy place we found ourselves in pre-fork.\n\n[1] Someone invokes a consistency argument, \"it\u0027s already there, so we are being consistent with that\", to justify adding more, and so the broadening begins.",
+      "parentUuid": "6d67dadb_7c5f6c74",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
