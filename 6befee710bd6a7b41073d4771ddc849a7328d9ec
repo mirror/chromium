@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c3251e7_4a5b1261",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-08T08:14:14Z",
+      "side": 1,
+      "message": "\"Observer\" might be confusing (e.g. with ImageResourceObserver).\nSomething like AsyncResourceClient (e.g. \"LinkLoader::Client\") will be better.",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 34
+      },
+      "revId": "6befee710bd6a7b41073d4771ddc849a7328d9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc6c843e_f0ec18e0",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-08T08:14:14Z",
+      "side": 1,
+      "message": "\"final\"?",
+      "revId": "6befee710bd6a7b41073d4771ddc849a7328d9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81c5fc5b_9df7d36d",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-08T08:14:14Z",
+      "side": 1,
+      "message": "ForTesting?",
+      "range": {
+        "startLine": 259,
+        "startChar": 22,
+        "endLine": 259,
+        "endChar": 33
+      },
+      "revId": "6befee710bd6a7b41073d4771ddc849a7328d9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acaeba2d_49737ee0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-08T08:14:14Z",
+      "side": 1,
+      "message": "How about adding more comments, like\n- AsyncResourceClient is removed automatically when loading is finished.\n- AsyncResourceClient should be quite simple, i.e. no notifications other than NotifyFinished(), and the client shouldn\u0027t inspect Resource and its subclasses too much inside NotifyFinished().",
+      "revId": "6befee710bd6a7b41073d4771ddc849a7328d9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bc425b4_b711513c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-08T08:14:14Z",
+      "side": 1,
+      "message": "From offline discussion:\nThis refer to the case like:\n1. Loading is finished and NotifyFinished() is scheduled.\n2. AsyncResourceClient calls RemoveAsyncClient() explicitly.\n3. The scheduled NotifyFinished() is called even after explicit RemoveAsyncClient().\nThis was not clear for me because I thought \"removing |this| client\" to be the automatic removal of the clients in TriggerNotificationForAsyncClients().",
+      "range": {
+        "startLine": 74,
+        "startChar": 5,
+        "endLine": 75,
+        "endChar": 13
+      },
+      "revId": "6befee710bd6a7b41073d4771ddc849a7328d9ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
