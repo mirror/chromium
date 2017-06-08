@@ -20,7 +20,6 @@
 #endif
 
 @interface ContentSuggestionsItem ()
-
 @property(nonatomic, copy) NSString* subtitle;
 // Used to check if the image has already been fetched. There is no way to
 // discriminate between failed image download and nonexitent image. The
@@ -79,6 +78,8 @@
   [cell setAdditionalInformationWithPublisherName:self.publisher
                                              date:[self relativeDate]
                               offlineAvailability:self.availableOffline];
+  cell.isAccessibilityElement = YES;
+  cell.accessibilityLabel = [self accessibilityLabel];
 }
 
 - (void)setImage:(UIImage*)image {
@@ -106,6 +107,22 @@
   }
 
   return relativeDate;
+}
+
+// Returns the accessibility label.
+- (NSString*)accessibilityLabel {
+  NSString* offlineAvailability = @"";
+  if (self.availableOffline)
+    offlineAvailability = l10n_util::GetNSString(
+        IDS_IOS_CONTENT_SUGGESTIONS_ACCESSIBILITY_AVAILABLE_OFFLINE);
+
+  return l10n_util::GetNSStringF(
+      IDS_IOS_CONTENT_SUGGESTIONS_ACCESSIBILITY_LABEL_SUGGESTION,
+      base::SysNSStringToUTF16(self.title),
+      base::SysNSStringToUTF16(self.publisher),
+      base::SysNSStringToUTF16([self relativeDate]),
+      base::SysNSStringToUTF16(offlineAvailability),
+      base::SysNSStringToUTF16(self.subtitle));
 }
 
 @end
