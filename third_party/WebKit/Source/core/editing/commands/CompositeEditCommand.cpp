@@ -718,13 +718,13 @@ void CompositeEditCommand::RebalanceWhitespaceOnTextSubstring(Text* text_node,
       text_node->nextSibling() && text_node->nextSibling()->IsTextNode() &&
       ToText(text_node->nextSibling())->data().length() &&
       !IsWhitespace(ToText(text_node->nextSibling())->data()[0]);
-  const bool should_emit_nbs_pbefore_end =
+  const bool should_emit_nbsp_before_end =
       (IsEndOfParagraph(visible_downstream_pos) ||
        (unsigned)downstream == text.length()) &&
       !next_sibling_is_text_node;
   String rebalanced_string = StringWithRebalancedWhitespace(
       string, IsStartOfParagraph(visible_upstream_pos) || !upstream,
-      should_emit_nbs_pbefore_end);
+      should_emit_nbsp_before_end);
 
   if (string != rebalanced_string)
     ReplaceTextInNode(text_node, upstream, length, rebalanced_string);
