@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97d69207_da11bd22",
+        "filename": "gpu/ipc/client/command_buffer_proxy_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 965,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-08T21:39:12Z",
+      "side": 1,
+      "message": "Is it safe to call and use this from multiple threads? (Does that happen?) I\u0027m not clear on whether the CommandBufferProxyImpl is more like a GPU channel or more like a command buffer.",
+      "range": {
+        "startLine": 965,
+        "startChar": 19,
+        "endLine": 965,
+        "endChar": 44
+      },
+      "revId": "5d9473a3232f4a1de84e6a3b9c6dc9bbea2f2bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e859c914_d571d7ef",
+        "filename": "third_party/WebKit/Source/platform/graphics/Canvas2DLayerBridgeTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-08T21:39:12Z",
+      "side": 1,
+      "message": "Please either delete or re-enable this commented-out code.",
+      "revId": "5d9473a3232f4a1de84e6a3b9c6dc9bbea2f2bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
