@@ -34,6 +34,24 @@
       "revId": "b474463cde11ecdd6cb4071ad28f4bcdfc9c18f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7375de_b70a370a",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-08T18:45:11Z",
+      "side": 1,
+      "message": "Dana suggested that we could damage the viewport rect instead. I\u0027ll try that tomorrow.",
+      "parentUuid": "5fcdbdcd_09e89fde",
+      "revId": "b474463cde11ecdd6cb4071ad28f4bcdfc9c18f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
