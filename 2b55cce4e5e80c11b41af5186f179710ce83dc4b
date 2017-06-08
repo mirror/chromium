@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb82d467_dd839a76",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T20:28:27Z",
+      "side": 1,
+      "message": "If we assume that people read the linked Chromium documentation guidelines, this point seems superfluous, so we can keep this document slightly leaner.",
+      "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1281c21_5c89a7eb",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T20:28:27Z",
+      "side": 1,
+      "message": "If we\u0027re going to mention this, maybe link to https://google.github.io/styleguide/cppguide.html#TODO_Comments to emphasis the \"the person named is not necessarily the person who must fix it\" aspect, which newcomers often don\u0027t realize.",
+      "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -334,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "28a1d28d_64f31b74",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-08T20:28:27Z",
+      "side": 1,
+      "message": "I\u0027d be okay with removing this, but I\u0027m not sure I spot a \"descriptive verbs\" rule in the Google style guide.",
+      "parentUuid": "772d8489_3fce5b28",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a17ea363_f71b6511",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
