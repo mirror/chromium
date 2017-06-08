@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f791439_30473095",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-08T17:52:07Z",
+      "side": 1,
+      "message": "shouldn\u0027t there be an early exit that just returns \u0027image\u0027 if it already has the right properties?  Or alternately, add some DCHECKs to ensure that this function is only invoked when a conversion through this path is indeed necessary.",
+      "range": {
+        "startLine": 242,
+        "startChar": 22,
+        "endLine": 242,
+        "endChar": 52
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bd26e4_58209226",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-08T17:52:07Z",
+      "side": 1,
+      "message": "use -\u003ecolorSpace() instead of -\u003erefColorSpace here, since you are doing nothing with the ref.",
+      "range": {
+        "startLine": 250,
+        "startChar": 13,
+        "endLine": 250,
+        "endChar": 26
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a114b3_0e5e8c2b",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-08T17:52:07Z",
+      "side": 1,
+      "message": "Is this due to a bug in skia?  If so, please reference it here. And file a chromium bug for removing this workaround.",
+      "range": {
+        "startLine": 290,
+        "startChar": 7,
+        "endLine": 290,
+        "endChar": 15
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d3bebe_d1167d1c",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-08T17:52:07Z",
+      "side": 1,
+      "message": "This function seems pointless with needs_swizzle forced to false.",
+      "range": {
+        "startLine": 693,
+        "startChar": 2,
+        "endLine": 693,
+        "endChar": 15
+      },
+      "revId": "3ae0fe01f1e5493288ac1f81c2c5b7cf79fdeac3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
