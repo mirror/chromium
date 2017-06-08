@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4c4a6bb5_78e1fb3c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T17:44:14Z",
+      "side": 1,
+      "message": "But only one utility process is existing at a time, right? Like here we only keep one native counterpart object?\nhttps://cs.chromium.org/chromium/src/components/payments/content/android/java/src/org/chromium/components/payments/PaymentManifestParser.java?rcl\u003d6808925b58485f44e8842003fcf3974ea43a6cb8\u0026l\u003d46",
+      "parentUuid": "c86708c1_fa63bbd1",
+      "range": {
+        "startLine": 306,
+        "startChar": 21,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "f083cec3e4e9d7ec48e942adcfcf2a2287c033c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4c8f383b_3333942c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
         "patchSetId": 1
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "There\u0027s no need for an assert, because this turns out to be a valid state. This can happen if, for example, there\u0027s memory pressure that causes the utility process to stop.",
       "parentUuid": "4c8f383b_3333942c",
+      "range": {
+        "startLine": 331,
+        "startChar": 21,
+        "endLine": 331,
+        "endChar": 44
+      },
+      "revId": "f083cec3e4e9d7ec48e942adcfcf2a2287c033c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b68bad4_e4eb473c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentManifestVerifier.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-08T17:44:14Z",
+      "side": 1,
+      "message": "But our check of isUtilityProcessRunning just checks whether the object is existing or not, but not whether the native process is running?\n\nhttps://cs.chromium.org/chromium/src/components/payments/content/android/java/src/org/chromium/components/payments/PaymentManifestParser.java?rcl\u003d6808925b58485f44e8842003fcf3974ea43a6cb8\u0026l\u003d59",
+      "parentUuid": "45d7863a_52e9b099",
       "range": {
         "startLine": 331,
         "startChar": 21,
