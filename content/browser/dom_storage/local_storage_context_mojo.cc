@@ -248,6 +248,8 @@ LocalStorageContextMojo::LocalStorageContextMojo(
     : connector_(connector ? connector->Clone() : nullptr),
       subdirectory_(subdirectory),
       special_storage_policy_(std::move(special_storage_policy)),
+      memory_dump_id_(base::StringPrintf("LocalStorage:0x%" PRIXPTR,
+                                         reinterpret_cast<uintptr_t>(this))),
       task_runner_(std::move(legacy_task_runner)),
       old_localstorage_path_(old_localstorage_path),
       weak_ptr_factory_(this) {
@@ -363,6 +365,10 @@ bool LocalStorageContextMojo::OnMemoryDump(
   if (connection_state_ != CONNECTION_FINISHED)
     return true;
   // TODO(mek): Somehow account for leveldb memory usage.
+  pmd->CreateAllocatorDump(
+      base::StringPrintf("dom_storage/0x%" PRIXPTR "/leveldb",
+                         reinterpret_cast<uintptr_t>(this)),
+      memory_dump_id_);
   if (args.level_of_detail ==
       base::trace_event::MemoryDumpLevelOfDetail::BACKGROUND) {
     size_t total_cache_size = 0;
@@ -387,7 +393,8 @@ bool LocalStorageContextMojo::OnMemoryDump(
         url[index] = '_';
     }
     std::string name = base::StringPrintf(
-        "dom_storage/%s/0x%" PRIXPTR, url.c_str(),
+        "dom_storage/0x%" PRIXPTR "/%s/0x%" PRIXPTR,
+        reinterpret_cast<uintptr_t>(this), url.c_str(),
         reinterpret_cast<uintptr_t>(it.second->level_db_wrapper()));
     it.second->level_db_wrapper()->OnMemoryDump(name, pmd);
   }
@@ -453,7 +460,7 @@ void LocalStorageContextMojo::InitiateConnection(bool in_memory_only) {
     // We were not given a subdirectory. Use a memory backed database.
     connector_->BindInterface(file::mojom::kServiceName, &leveldb_service_);
     leveldb_service_->OpenInMemory(
-        MakeRequest(&database_),
+        memory_dump_id_, MakeRequest(&database_),
         base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                    weak_ptr_factory_.GetWeakPtr(), true));
   }
@@ -487,7 +494,7 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   options->create_if_missing = true;
   leveldb_service_->OpenWithOptions(
       std::move(options), std::move(directory_clone), "leveldb",
-      MakeRequest(&database_),
+      memory_dump_id_, MakeRequest(&database_),
       base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                  weak_ptr_factory_.GetWeakPtr(), false));
 }
