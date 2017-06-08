@@ -38,6 +38,15 @@ class ServiceLaunchedVideoCaptureDevice : public LaunchedVideoCaptureDevice {
 
  private:
   void OnLostConnectionToDevice();
+  void OnGetPhotoCapabilitiesResponse(
+      media::VideoCaptureDevice::GetPhotoCapabilitiesCallback callback,
+      media::mojom::PhotoCapabilitiesPtr capabilities) const;
+  void OnSetPhotoOptionsResponse(
+      media::VideoCaptureDevice::SetPhotoOptionsCallback callback,
+      bool success);
+  void OnTakePhotoResponse(
+      media::VideoCaptureDevice::TakePhotoCallback callback,
+      media::mojom::BlobPtr blob);
 
   video_capture::mojom::DevicePtr device_;
   base::OnceClosure connection_lost_cb_;
