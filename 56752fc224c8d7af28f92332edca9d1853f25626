@@ -16,6 +16,24 @@
       "revId": "56752fc224c8d7af28f92332edca9d1853f25626",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b8b460e_fd621254",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-08T20:27:33Z",
+      "side": 0,
+      "message": "It was via @tansell but if the manifest fails we would implicitly know that\u0027s when the manifest stopped generating. Additionally the data point for a failed manifest generation shouldn\u0027t be counted with all the valid manifest generations, so I think you\u0027re good in taking it out.",
+      "parentUuid": "89f38a87_2d0d3e6e",
+      "revId": "56752fc224c8d7af28f92332edca9d1853f25626",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
