@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b12f10fe_edee1fde",
+        "filename": "ios/chrome/app/strings/ios_strings.grd",
+        "patchSetId": 4
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-08T09:31:05Z",
+      "side": 1,
+      "message": "Optional nit: *organization.",
+      "range": {
+        "startLine": 547,
+        "startChar": 130,
+        "endLine": 547,
+        "endChar": 142
+      },
+      "revId": "b34f2ca33551bbb812cf1613647c117a3b48b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f4e47d_c3927ad1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_item.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-08T09:31:05Z",
+      "side": 1,
+      "message": "Add curly braces.",
+      "range": {
+        "startLine": 116,
+        "startChar": 28,
+        "endLine": 116,
+        "endChar": 0
+      },
+      "revId": "b34f2ca33551bbb812cf1613647c117a3b48b293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
