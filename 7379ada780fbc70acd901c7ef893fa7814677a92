@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "acca0435_e953706d",
+        "filename": "chrome/browser/extensions/chrome_app_icon.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T21:01:22Z",
+      "side": 1,
+      "message": "Sorry, accidentally reverted the change",
+      "parentUuid": "3efe0d39_7d4aca30",
+      "range": {
+        "startLine": 92,
+        "startChar": 8,
+        "endLine": 92,
+        "endChar": 23
+      },
+      "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "69da6ac0_2fe201c0",
         "filename": "chrome/browser/extensions/chrome_app_icon_service.cc",
         "patchSetId": 2

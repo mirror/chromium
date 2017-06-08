@@ -89,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4d92c700_ed344a2a",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T21:01:22Z",
+      "side": 0,
+      "message": "This was only used to return default icon inline. We change loading default icon async here and host always return gfx::ImageSkiaRep();\nSource::GetImageForScale is called only to request new, un-cached reprs.\nI changed the code to do it more obvious.",
+      "parentUuid": "c326f3fd_59fa9045",
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6395781a_4d0f909e",
         "filename": "extensions/browser/extension_icon_image.h",
         "patchSetId": 1
