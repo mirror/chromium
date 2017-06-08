@@ -10,6 +10,7 @@
 
 #include <algorithm>
 #include "base/logging.h"
+#include "base/memory/shared_memory_tracker.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
@@ -388,12 +389,13 @@ bool CommandBufferHelper::OnMemoryDump(
     dump->AddScalar(
         "free_size", MemoryAllocatorDump::kUnitsBytes,
         GetTotalFreeEntriesNoWaiting() * sizeof(CommandBufferEntry));
+    base::UnguessableToken shared_memory_guid =
+        ring_buffer_->backing()->shared_memory_handle().GetGUID();
     auto guid = GetBufferGUIDForTracing(tracing_process_id, ring_buffer_id_);
     const int kImportance = 2;
-    pmd->CreateSharedGlobalAllocatorDump(guid);
-    pmd->AddOwnershipEdge(dump->guid(), guid, kImportance);
+    pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), guid, shared_memory_guid,
+                                         kImportance);
   }
-
   return true;
 }
 

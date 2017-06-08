@@ -90,8 +90,9 @@ void GLImageSharedMemory::OnMemoryDump(
 
   auto guid =
       gfx::GetSharedMemoryGUIDForTracing(process_tracing_id, shared_memory_id_);
-  pmd->CreateSharedGlobalAllocatorDump(guid);
-  pmd->AddOwnershipEdge(dump->guid(), guid);
+  auto shared_memory_guid = shared_memory_->handle().GetGUID();
+  pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), guid, shared_memory_guid,
+                                       0 /* importance */);
 }
 
 }  // namespace gl
