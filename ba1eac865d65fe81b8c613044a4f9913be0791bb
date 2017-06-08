@@ -22,6 +22,30 @@
       "revId": "ba1eac865d65fe81b8c613044a4f9913be0791bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "978618cb_b4ba6467",
+        "filename": "ios/chrome/browser/browser_state/browser_state_keyed_service_factories.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-08T09:29:43Z",
+      "side": 1,
+      "message": "Fixed by patchset #2 :-)",
+      "parentUuid": "4065a3a3_160de0c3",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 63
+      },
+      "revId": "ba1eac865d65fe81b8c613044a4f9913be0791bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
