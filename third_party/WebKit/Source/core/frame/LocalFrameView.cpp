@@ -1049,38 +1049,28 @@ void LocalFrameView::PerformLayout(bool in_subtree_layout) {
   // functions so that a single human could understand what layout() is actually
   // doing.
 
-  // FIXME: ForceLayoutParentViewIfNeeded can cause this document's lifecycle
-  // to change, which should not happen.
-  ForceLayoutParentViewIfNeeded();
-  CHECK(IsInPerformLayout() ||
-        Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
-
-  if (IsInPerformLayout()) {
-    if (in_subtree_layout) {
-      if (analyzer_) {
-        analyzer_->Increment(LayoutAnalyzer::kPerformLayoutRootLayoutObjects,
-                             layout_subtree_root_list_.size());
-      }
-      for (auto& root : layout_subtree_root_list_.Ordered()) {
-        if (!root->NeedsLayout())
-          continue;
-        LayoutFromRootObject(*root);
-
-        // We need to ensure that we mark up all layoutObjects up to the
-        // LayoutView for paint invalidation. This simplifies our code as we
-        // just always do a full tree walk.
-        if (LayoutItem container = LayoutItem(root->Container()))
-          container.SetMayNeedPaintInvalidation();
-      }
-      layout_subtree_root_list_.Clear();
-    } else {
-      if (HasOrthogonalWritingModeRoots() &&
-          !RuntimeEnabledFeatures::LayoutNGEnabled())
-        LayoutOrthogonalWritingModeRoots();
-      GetLayoutView()->UpdateLayout();
+  if (in_subtree_layout) {
+    if (analyzer_) {
+      analyzer_->Increment(LayoutAnalyzer::kPerformLayoutRootLayoutObjects,
+                           layout_subtree_root_list_.size());
     }
+    for (auto& root : layout_subtree_root_list_.Ordered()) {
+      if (!root->NeedsLayout())
+        continue;
+      LayoutFromRootObject(*root);
+
+      // We need to ensure that we mark up all layoutObjects up to the
+      // LayoutView for paint invalidation. This simplifies our code as we
+      // just always do a full tree walk.
+      if (LayoutItem container = LayoutItem(root->Container()))
+        container.SetMayNeedPaintInvalidation();
+    }
+    layout_subtree_root_list_.Clear();
   } else {
-    DCHECK(!NeedsLayout());
+    if (HasOrthogonalWritingModeRoots() &&
+        !RuntimeEnabledFeatures::LayoutNGEnabled())
+      LayoutOrthogonalWritingModeRoots();
+    GetLayoutView()->UpdateLayout();
   }
 
   frame_->GetDocument()->Fetcher()->UpdateAllImageResourcePriorities();
@@ -1142,8 +1132,6 @@ void LocalFrameView::UpdateLayout() {
     auto_size_info_->AutoSizeIfNeeded();
 
   has_pending_layout_ = false;
-  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
-                                           DocumentLifecycle::kLayoutClean);
 
   Document* document = frame_->GetDocument();
   TRACE_EVENT_BEGIN1("devtools.timeline", "Layout", "beginData",
@@ -1151,6 +1139,18 @@ void LocalFrameView::UpdateLayout() {
   probe::UpdateLayout probe(document);
 
   PerformPreLayoutTasks();
+
+  // ForceLayoutParentViewIfNeeded can cause this view to become detached.  If
+  // that happens, abandon layout.
+  bool was_attached = is_attached_;
+  ForceLayoutParentViewIfNeeded();
+  if (was_attached && !is_attached_) {
+    TRACE_EVENT_END0("devtools.timeline", "Layout");
+    return;
+  }
+
+  DocumentLifecycle::Scope lifecycle_scope(Lifecycle(),
+                                           DocumentLifecycle::kLayoutClean);
 
   // TODO(crbug.com/460956): The notion of a single root for layout is no longer
   // applicable. Remove or update this code.
