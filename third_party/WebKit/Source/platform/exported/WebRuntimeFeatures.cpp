@@ -414,4 +414,8 @@ void WebRuntimeFeatures::EnableMediaCastOverlayButton(bool enable) {
   RuntimeEnabledFeatures::SetMediaCastOverlayButtonEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableLazyInitializeMediaControls(bool enable) {
+  RuntimeEnabledFeatures::SetLazyInitializeMediaControlsEnabled(enable);
+}
+
 }  // namespace blink

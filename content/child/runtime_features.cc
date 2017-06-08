@@ -53,6 +53,7 @@ static void SetRuntimeFeatureDefaultsForPlatform() {
   WebRuntimeFeatures::EnableNavigatorContentUtils(true);
   // Tracking bug for the implementation: https://crbug.com/728609
   WebRuntimeFeatures::EnableRemotePlaybackBackend(false);
+  WebRuntimeFeatures::EnableLazyInitializeMediaControls(true);
 #endif  // defined(OS_ANDROID)
 
 #if defined(OS_ANDROID) || defined(USE_AURA)
