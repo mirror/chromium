@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dace720_2886922d",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-08T13:10:02Z",
+      "side": 1,
+      "message": "Hm, on second thought: We could only get here if a third-party NTP would send NTP logging events. I don\u0027t think any of them do, so right now this split is pointless. However, if they ever started sending these events, they could potentially mess up our metrics, so I\u0027m somewhat inclined to keep the split anyway. WDYT?",
+      "range": {
+        "startLine": 215,
+        "startChar": 74,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "4e75862f8ff2077a3e57769e3acb206eb7ac82d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
