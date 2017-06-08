@@ -374,8 +374,7 @@ class CONTENT_EXPORT ServiceWorkerProviderHost
   void Send(IPC::Message* message) const;
 
   // Finalizes cross-site transfers and navigation-initalized hosts.
-  void FinalizeInitialization(int process_id,
-                              ServiceWorkerDispatcherHost* dispatcher_host);
+  void NotifyControllerToAssociatedProvider();
 
   // Clears the information of the ServiceWorkerWorkerClient of dedicated (or
   // shared) worker, when the connection to the worker is disconnected.
