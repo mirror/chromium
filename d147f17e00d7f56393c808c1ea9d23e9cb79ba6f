@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "61ef168a_c700f882",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "Why does this need to be weak?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "879b1349_a97cd04f",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "Would you help me understand why we don\u0027t need to post the task to the main thread after this CL?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ecf02f8_92836658",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "I don\u0027t fully understand how this works.\n\nThe keep-alive handle keeps ThreadedMessagingProxyBase alive until WorkerThreadTerminated is called. However, WorkerThreadTerminated does not get called until the destructor of ThreadedMessagingProxyBase gets called (via ParentObjectDestroyed()).\n\nIf my reasoning is correct, won\u0027t it leak ThreadedMessagingProxyBase?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96edbb2d_53906d0b",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "Are you planning to move ThreadedObjectProxyBase to Oilpan\u0027s heap in a follow-up CL?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b88bca_a2ca3145",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "Why weak?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f905fa0c_7f8692a2",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "This is not needed, right?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d2161e_8c44cd77",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScopeProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "Why didn\u0027t you make WorkletGlobalScopeProxy GarbageCollected?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e674e1a_4890e329",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "I\u0027m just curious but would you help me understand why the destructor is the best timing to call ParentObjectDestroyed()? Would there be any explicit timing (before the destructor getting called) where we can call ParentObjectDestroyed()?\n\n(I don\u0027t see any practical issue in calling ParentObjectDestroyed() in the destructor. I\u0027m just curious.)",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0223dfad_edd16994",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-08T09:47:09Z",
+      "side": 1,
+      "message": "This wouldn\u0027t be needed.",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
