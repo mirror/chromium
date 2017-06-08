@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "96f82f09_a0cc32c8",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "This should be the name of this module, not the one calling it. So something like \"Downloads API\" would be good. What do you think?",
+      "parentUuid": "93210390_74499328",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9e2d234e_af9cad5c",
         "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e6e1acd_df1031a0",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e2d234e_af9cad5c",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4c703496_403ee45b",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4fd2e77_25f652d6",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9fd437a_0f8ab250",
         "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
         "patchSetId": 1
@@ -64,6 +118,47 @@
       "writtenOn": "2017-06-07T18:47:09Z",
       "side": 1,
       "message": "Request may contain data passed by the extension, which could be sensitive depending on the extension\u0027s permissions.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10128736_509baff2",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1051,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9fd437a_0f8ab250",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cc4ea6e6_283560fb",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1052,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "I chose \u0027OTHER\u0027 assuming that the extension is allowed to download from any site and not necessarily a specific website.",
+      "range": {
+        "startLine": 1052,
+        "startChar": 23,
+        "endLine": 1052,
+        "endChar": 30
+      },
       "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +182,24 @@
     },
     {
       "key": {
+        "uuid": "1cf4a00e_a421cad9",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1055,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "75ad4225_2c7ad812",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34738511_67fe2caa",
         "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
         "patchSetId": 1
@@ -101,6 +214,24 @@
       "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1749daef_f25ba210",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "34738511_67fe2caa",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +252,24 @@
     },
     {
       "key": {
+        "uuid": "03a3102c_284b825a",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1057,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0fcc9eb_5abffe95",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3360ff21_6e80b7f3",
         "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
         "patchSetId": 1
@@ -132,6 +281,24 @@
       "writtenOn": "2017-06-07T18:47:09Z",
       "side": 1,
       "message": "Sorry, I am unfamiliar with how enterprise policies interact with extensions.",
+      "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce283418_01894773",
+        "filename": "chrome/browser/extensions/api/downloads/downloads_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1058,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-08T07:17:03Z",
+      "side": 1,
+      "message": "I added the policy that prevents installation of extensions.",
+      "parentUuid": "3360ff21_6e80b7f3",
       "revId": "c2e23a1adae53478a8dfb6366f33e6433bb443a2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
