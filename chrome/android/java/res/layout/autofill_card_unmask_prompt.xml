@@ -66,6 +66,7 @@
                   android:layout_marginStart="16dp"
                   android:width="50sp"
                   android:maxLength="2"
+                  android:imeOptions="actionNext"
                   android:gravity="center_horizontal"
                   android:inputType="number"
                   android:hint="@string/card_unmask_month_hint" />
@@ -80,6 +81,7 @@
                   android:layout_width="wrap_content"
                   android:layout_height="wrap_content"
                   android:width="50sp"
+                  android:imeOptions="actionNext"
                   android:maxLength="2"
                   android:gravity="center_horizontal"
                   android:inputType="number"
@@ -92,6 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:layout_marginStart="16dp"
+                android:imeOptions="actionDone"
                 android:ems="5"
                 android:hint="@string/card_unmask_input_hint" />
 
