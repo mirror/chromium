@@ -11,6 +11,7 @@ import org.chromium.base.VisibleForTesting;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.components.offlinepages.DeletePageResult;
 import org.chromium.content_public.browser.WebContents;
 
@@ -158,6 +159,19 @@ public class OfflinePageBridge {
      */
     public void removeObserver(OfflinePageModelObserver observer) {
         mObservers.removeObserver(observer);
+    }
+
+    /**
+     * Starts download of the page currently open in the specified Tab.
+     * If tab's contents are not yet loaded completely, we'll wait for it
+     * to load enough for snapshot to be reasonable. If the Chrome is made
+     * background and killed, the background request remains that will
+     * eventually load the page in background and obtain its offline
+     * snapshot.
+     * @param tab a tab contents of which will be saved locally.
+     */
+    public void startDownload(Tab tab) {
+        nativeStartDownload(mNativeOfflinePageBridge, tab);
     }
 
     /**
@@ -598,6 +612,7 @@ public class OfflinePageBridge {
     @VisibleForTesting
     native void nativeGetAllPages(long nativeOfflinePageBridge, List<OfflinePageItem> offlinePages,
             final Callback<List<OfflinePageItem>> callback);
+    private native void nativeStartDownload(long nativeOfflinePageBridge, Tab tab);
     private native void nativeCheckPagesExistOffline(long nativeOfflinePageBridge, Object[] urls,
             CheckPagesExistOfflineCallbackInternal callback);
     private native void nativeRegisterRecentTab(long nativeOfflinePageBridge, int tabId);

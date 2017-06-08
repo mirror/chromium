@@ -4,15 +4,9 @@
 
 package org.chromium.chrome.browser.download.ui;
 
-import android.content.ComponentName;
-import android.support.annotation.Nullable;
-
 import org.chromium.chrome.browser.download.DownloadManagerService;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.widget.selection.SelectionDelegate;
 import org.chromium.components.offline_items_collection.OfflineItem;
-
-import java.util.List;
 
 /**
  * Provides classes that need to be interacted with by the {@link DownloadHistoryAdapter}.
@@ -46,41 +40,8 @@ public interface BackendProvider {
         void updateLastAccessTime(String downloadGuid, boolean isOffTheRecord);
     }
 
-    /** Interacts with the Offline Pages backend. */
-    public static interface OfflinePageDelegate {
-        /** See {@link OfflinePageDownloadBridge#addObserver}. */
-        void addObserver(OfflinePageDownloadBridge.Observer observer);
-
-        /** See {@link OfflinePageDownloadBridge#removeObserver}. */
-        void removeObserver(OfflinePageDownloadBridge.Observer observer);
-
-        /** See {@link OfflinePageDownloadBridge#getAllItems}. */
-        List<OfflineItem> getAllItems();
-
-        /** See {@link OfflinePageDownloadBridge#openItem}. */
-        void openItem(String guid, @Nullable ComponentName componentName);
-
-        /** See {@link OfflinePageDownloadBridge#pauseDownload} */
-        void pauseDownload(String guid);
-
-        /** See {@link OfflinePageDownloadBridge#resumeDownload} */
-        void resumeDownload(String guid);
-
-        /** See {@link OfflinePageDownloadBridge#cancelDownload} */
-        void cancelDownload(String guid);
-
-        /** See {@link OfflinePageDownloadBridge#deleteItem}. */
-        void deleteItem(String guid);
-
-        /** See {@link OfflinePageDownloadBridge#destroy}. */
-        void destroy();
-    }
-
     /** Returns the {@link DownloadDelegate} that works with the Downloads backend. */
     DownloadDelegate getDownloadDelegate();
-
-    /** Returns the {@link OfflinePageDelegate} that works with the Offline Pages backend. */
-    OfflinePageDelegate getOfflinePageBridge();
 
     /** Returns the {@link ThumbnailProvider} that gets thumbnails for files. */
     ThumbnailProvider getThumbnailProvider();

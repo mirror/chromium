@@ -45,7 +45,6 @@ import org.chromium.chrome.browser.feature_engagement_tracker.FeatureEngagementT
 import org.chromium.chrome.browser.offlinepages.DownloadUiActionFlags;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadItem;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.tab.Tab;
@@ -250,10 +249,8 @@ public class DownloadUtils {
                     tab.getUrl(), DownloadUiActionFlags.PROMPT_DUPLICATE);
         } else {
             // Otherwise, the download can be started immediately.
-            final OfflinePageDownloadBridge bridge =
-                    new OfflinePageDownloadBridge(tab.getProfile());
+            final OfflinePageBridge bridge = OfflinePageBridge.getForProfile(tab.getProfile());
             bridge.startDownload(tab);
-            bridge.destroy();
             DownloadUtils.recordDownloadPageMetrics(tab);
         }
 

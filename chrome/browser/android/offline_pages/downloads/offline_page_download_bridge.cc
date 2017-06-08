@@ -19,12 +19,13 @@
 #include "chrome/browser/android/offline_pages/recent_tab_helper.h"
 #include "chrome/browser/android/offline_pages/request_coordinator_factory.h"
 #include "chrome/browser/android/tab_android.h"
+#include "chrome/browser/offline_items_collection/offline_content_aggregator_factory.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_android.h"
+#include "components/offline_items_collection/core/offline_content_aggregator.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/client_policy_controller.h"
-#include "components/offline_pages/core/downloads/download_ui_item.h"
 #include "components/offline_pages/core/offline_page_feature.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "content/public/browser/browser_context.h"
@@ -175,33 +176,6 @@ void DuplicateCheckDone(const GURL& url,
       url, duplicate_request_exists, web_contents);
 }
 
-void ToJavaOfflinePageDownloadItemList(
-    JNIEnv* env,
-    jobject j_result_obj,
-    const std::vector<const DownloadUIItem*>& items) {
-  for (const auto* item : items) {
-    Java_OfflinePageDownloadBridge_createDownloadItemAndAddToList(
-        env, j_result_obj, ConvertUTF8ToJavaString(env, item->guid),
-        ConvertUTF8ToJavaString(env, item->url.spec()), item->download_state,
-        item->download_progress_bytes,
-        ConvertUTF16ToJavaString(env, item->title),
-        ConvertUTF8ToJavaString(env, item->target_path.value()),
-        item->start_time.ToJavaTime(), item->total_bytes);
-  }
-}
-
-ScopedJavaLocalRef<jobject> ToJavaOfflinePageDownloadItem(
-    JNIEnv* env,
-    const DownloadUIItem& item) {
-  return Java_OfflinePageDownloadBridge_createDownloadItem(
-      env, ConvertUTF8ToJavaString(env, item.guid),
-      ConvertUTF8ToJavaString(env, item.url.spec()), item.download_state,
-      item.download_progress_bytes,
-      ConvertUTF16ToJavaString(env, item.title),
-      ConvertUTF8ToJavaString(env, item.target_path.value()),
-      item.start_time.ToJavaTime(), item.total_bytes);
-}
-
 std::vector<int64_t> FilterRequestsByGuid(
     std::vector<std::unique_ptr<SavePageRequest>> requests,
     const std::string& guid,
@@ -273,11 +247,34 @@ OfflinePageDownloadBridge::OfflinePageDownloadBridge(
     : weak_java_ref_(env, obj),
       download_ui_adapter_(download_ui_adapter),
       browser_context_(browser_context) {
+  offline_items_collection::OfflineContentAggregator* aggregator =
+      offline_items_collection::OfflineContentAggregatorFactory::
+          GetForBrowserContext(browser_context_);
+  if (!aggregator)
+    return;
+
+  VLOG(0) << "shakti, RegisterProvider";
+  aggregator->RegisterProvider(kOfflinePageNamespace, this);
   DCHECK(download_ui_adapter_);
   download_ui_adapter_->AddObserver(this);
 }
 
 OfflinePageDownloadBridge::~OfflinePageDownloadBridge() {}
+
+void OfflinePageDownloadBridge::AddObserver(
+    OfflineContentProvider::Observer* observer) {
+  DCHECK(observer);
+  observers_.AddObserver(observer);
+  if (items_available_) {
+    observer->OnItemsAvailable(this);
+  }
+}
+
+void OfflinePageDownloadBridge::RemoveObserver(
+    OfflineContentProvider::Observer* observer) {
+  DCHECK(observer);
+  observers_.RemoveObserver(observer);
+}
 
 // static
 bool OfflinePageDownloadBridge::Register(JNIEnv* env) {
@@ -286,46 +283,48 @@ bool OfflinePageDownloadBridge::Register(JNIEnv* env) {
 
 void OfflinePageDownloadBridge::Destroy(JNIEnv* env,
                                         const JavaParamRef<jobject>&) {
+  items_available_ = false;
   download_ui_adapter_->RemoveObserver(this);
+  offline_items_collection::OfflineContentAggregator* aggregator =
+      offline_items_collection::OfflineContentAggregatorFactory::
+          GetForBrowserContext(browser_context_);
+  if (!aggregator)
+    return;
+
+  VLOG(0) << "shakti, UnegisterProvider";
+  aggregator->UnregisterProvider(kOfflinePageNamespace);
   delete this;
 }
 
-void OfflinePageDownloadBridge::GetAllItems(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jobject>& j_result_obj) {
-  DCHECK(j_result_obj);
+std::vector<OfflineItem> OfflinePageDownloadBridge::GetAllItems() {
+  std::vector<OfflineItem> items;
+  for (const OfflineItem* item : download_ui_adapter_->GetAllItems()) {
+    items.push_back(*item);
+  }
 
-  std::vector<const DownloadUIItem*> items =
-      download_ui_adapter_->GetAllItems();
-  ToJavaOfflinePageDownloadItemList(env, j_result_obj, items);
+  return items;
 }
 
-ScopedJavaLocalRef<jobject> OfflinePageDownloadBridge::GetItemByGuid(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
-  const DownloadUIItem* item = download_ui_adapter_->GetItem(guid);
-  if (item == nullptr)
-    return ScopedJavaLocalRef<jobject>();
-  return ToJavaOfflinePageDownloadItem(env, *item);
+const OfflineItem* OfflinePageDownloadBridge::GetItemById(const ContentId& id) {
+  return download_ui_adapter_->GetItem(id.id);
 }
 
-void OfflinePageDownloadBridge::DeleteItemByGuid(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
-  download_ui_adapter_->DeleteItem(guid);
+bool OfflinePageDownloadBridge::AreItemsAvailable() {
+  return items_available_;
 }
 
-jlong OfflinePageDownloadBridge::GetOfflineIdByGuid(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
-  return download_ui_adapter_->GetOfflineIdByGuid(guid);
+void OfflinePageDownloadBridge::OpenItem(const ContentId& id) {
+  JNIEnv* env = AttachCurrentThread();
+  ScopedJavaLocalRef<jobject> obj = weak_java_ref_.get(env);
+  const OfflineItem* item = download_ui_adapter_->GetItem(id.id);
+
+  Java_OfflinePageDownloadBridge_openItem(
+      env, obj, ConvertUTF8ToJavaString(env, item->page_url.spec()),
+      download_ui_adapter_->GetOfflineIdByGuid(id.id));
+}
+
+void OfflinePageDownloadBridge::RemoveItem(const ContentId& id) {
+  download_ui_adapter_->DeleteItem(id.id);
 }
 
 void OfflinePageDownloadBridge::StartDownload(
@@ -379,49 +378,37 @@ void OfflinePageDownloadBridge::StartDownload(
       base::Bind(&DuplicateCheckDone, url, original_url, j_tab_ref));
 }
 
-void OfflinePageDownloadBridge::CancelDownload(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
+void OfflinePageDownloadBridge::CancelDownload(const ContentId& id) {
   RequestCoordinator* coordinator =
       RequestCoordinatorFactory::GetForBrowserContext(browser_context_);
 
   if (coordinator) {
     coordinator->GetAllRequests(
-        base::Bind(&CancelRequestsContinuation, browser_context_, guid));
+        base::Bind(&CancelRequestsContinuation, browser_context_, id.id));
   } else {
     LOG(WARNING) << "CancelDownload has no valid coordinator.";
   }
 }
 
-void OfflinePageDownloadBridge::PauseDownload(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
+void OfflinePageDownloadBridge::PauseDownload(const ContentId& id) {
   RequestCoordinator* coordinator =
       RequestCoordinatorFactory::GetForBrowserContext(browser_context_);
 
   if (coordinator) {
     coordinator->GetAllRequests(
-        base::Bind(&PauseRequestsContinuation, browser_context_, guid));
+        base::Bind(&PauseRequestsContinuation, browser_context_, id.id));
   } else {
     LOG(WARNING) << "PauseDownload has no valid coordinator.";
   }
 }
 
-void OfflinePageDownloadBridge::ResumeDownload(
-    JNIEnv* env,
-    const JavaParamRef<jobject>& obj,
-    const JavaParamRef<jstring>& j_guid) {
-  std::string guid = ConvertJavaStringToUTF8(env, j_guid);
+void OfflinePageDownloadBridge::ResumeDownload(const ContentId& id) {
   RequestCoordinator* coordinator =
       RequestCoordinatorFactory::GetForBrowserContext(browser_context_);
 
   if (coordinator) {
     coordinator->GetAllRequests(
-        base::Bind(&ResumeRequestsContinuation, browser_context_, guid));
+        base::Bind(&ResumeRequestsContinuation, browser_context_, id.id));
   } else {
     LOG(WARNING) << "ResumeDownload has no valid coordinator.";
   }
@@ -439,38 +426,29 @@ void OfflinePageDownloadBridge::ResumePendingRequestImmediately(
 }
 
 void OfflinePageDownloadBridge::ItemsLoaded() {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = weak_java_ref_.get(env);
-  if (obj.is_null())
-    return;
-  Java_OfflinePageDownloadBridge_downloadItemsLoaded(env, obj);
+  items_available_ = true;
+  for (auto& observer : observers_) {
+    observer.OnItemsAvailable(this);
+  }
 }
 
-void OfflinePageDownloadBridge::ItemAdded(const DownloadUIItem& item) {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = weak_java_ref_.get(env);
-  if (obj.is_null())
-    return;
-  Java_OfflinePageDownloadBridge_downloadItemAdded(
-      env, obj, ToJavaOfflinePageDownloadItem(env, item));
+void OfflinePageDownloadBridge::ItemAdded(const OfflineItem& item) {
+  std::vector<OfflineItem> items(1, item);
+  for (auto& observer : observers_) {
+    observer.OnItemsAdded(items);
+  }
 }
 
 void OfflinePageDownloadBridge::ItemDeleted(const std::string& guid) {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = weak_java_ref_.get(env);
-  if (obj.is_null())
-    return;
-  Java_OfflinePageDownloadBridge_downloadItemDeleted(
-      env, obj, ConvertUTF8ToJavaString(env, guid));
+  for (auto& observer : observers_) {
+    observer.OnItemRemoved(ContentId(kOfflinePageNamespace, guid));
+  }
 }
 
-void OfflinePageDownloadBridge::ItemUpdated(const DownloadUIItem& item) {
-  JNIEnv* env = AttachCurrentThread();
-  ScopedJavaLocalRef<jobject> obj = weak_java_ref_.get(env);
-  if (obj.is_null())
-    return;
-  Java_OfflinePageDownloadBridge_downloadItemUpdated(
-      env, obj, ToJavaOfflinePageDownloadItem(env, item));
+void OfflinePageDownloadBridge::ItemUpdated(const OfflineItem& item) {
+  for (auto& observer : observers_) {
+    observer.OnItemUpdated(item);
+  }
 }
 
 static jlong Init(JNIEnv* env,
