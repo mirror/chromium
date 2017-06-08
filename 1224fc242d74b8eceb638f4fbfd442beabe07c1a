@@ -178,6 +178,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fba744fc_0d5bef3f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-08T10:47:15Z",
+      "side": 1,
+      "message": "\"why does the PendingScriptFinished task need to run at high-priority?\"\n\nIt doesn\u0027t. The code path that needs to be run at high-priority is:\nScriptStreamer::StreamingComplete\n  -\u003e ClassicPendingScript::StreamingFinished\n  -\u003e ScriptRunner::StreamingFinished  (this last bit is new)\n  -\u003e ScriptRunner::TryMoreStreaming   (also new)\n\nAll of those are very fast, and any \u0027real\u0027 work they trigger is PostTask-ed to the general task loading queue.\n\nThe way ClassicPendingScript::StreamingFinished is implemented, it may call also Client()-\u003ePendingScriptFinished() (vis ClassicPendingScript::AdvanceReadyState). This is, under some circumstances, slow. This is not the path that I *wanted* to be high priority; that was more an artifact of my implementation.\n\n\nGiven what I read here [both Kinuko\u0027s and Sami\u0027s feedback], I\u0027ll change this so that only the notification-type stuff gets run in the high priority task. Then we\u0027re down to mostly \u003c10µs, and always \u003c30µs, at least on my workstation. After all, those are truly \u0027control\u0027 tasks, which only trigger other work to be done, but don\u0027t do it themselves.\n\n\n(There might still be an issue that maybe parser blocking scripts should have somewhat higher priority than other loading tasks. But that\u0027s unrelated to what I\u0027m trying to do, and seems more like a genuine scheduling issue. Either way, it doesn\u0027t fit in my current set of CLs.)",
+      "parentUuid": "959af27d_04aaeec0",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
