@@ -3,6 +3,7 @@
 // found in the LICENSE file.
 
 #include "cc/paint/paint_op_buffer.h"
+#include "base/strings/stringprintf.h"
 #include "cc/paint/display_item_list.h"
 #include "cc/test/skia_common.h"
 #include "cc/test/test_skcanvas.h"
@@ -985,6 +986,176 @@ TEST(PaintOpBufferTest, UnmatchedSaveRestoreNoSideEffects) {
   // We will restore back to the original save count regardless with 2 restores.
   EXPECT_CALL(canvas, willRestore()).InSequence(s);
   buffer.PlaybackRanges({0}, {0}, &canvas);
+}
+
+SkRect test_rects[] = {
+    SkRect::MakeXYWH(1, 2, 3, 4), SkRect::MakeXYWH(0, 0, 0, 0),
+    SkRect::MakeLargest(),
+};
+
+// Writes as many ops in |buffer| as can fit in |output_size| to |output|.
+// Records the numbers of bytes written for each op.
+class SimpleSerializer {
+ public:
+  SimpleSerializer(void* output, size_t output_size)
+      : current_(static_cast<char*>(output)),
+        output_size_(output_size),
+        remaining_(output_size) {}
+
+  void Serialize(const PaintOpBuffer& buffer) {
+    bytes_written_.resize(buffer.size());
+    for (size_t i = 0; i < buffer.size(); ++i)
+      bytes_written_[i] = 0;
+
+    size_t op_idx = 0;
+    for (const auto* op : PaintOpBuffer::Iterator(&buffer)) {
+      size_t written = op->Serialize(current_, remaining_);
+      if (!written)
+        return;
+
+      bytes_written_[op_idx] = written;
+      op_idx++;
+      current_ += written;
+      remaining_ -= written;
+
+      // Number of bytes written must be a multiple of PaintOpAlign
+      // unless the buffer is filled entirely.
+      if (remaining_ != 0u)
+        DCHECK_EQ(0u, written % PaintOpBuffer::PaintOpAlign);
+    }
+  }
+
+  size_t BytesWritten(int op_idx) const { return bytes_written_[op_idx]; }
+  size_t TotalBytesWritten() const { return output_size_ - remaining_; }
+
+ private:
+  char* current_ = nullptr;
+  size_t output_size_ = 0u;
+  size_t remaining_ = 0u;
+  std::vector<size_t> bytes_written_;
+};
+
+class DeserializerIterator {
+ public:
+  DeserializerIterator(const void* input, size_t input_size)
+      : DeserializerIterator(input,
+                             static_cast<const char*>(input),
+                             input_size,
+                             input_size) {}
+
+  DeserializerIterator begin() {
+    return DeserializerIterator(input_, static_cast<const char*>(input_),
+                                input_size_, input_size_);
+  }
+  DeserializerIterator end() {
+    return DeserializerIterator(
+        input_, static_cast<const char*>(input_) + input_size_, input_size_, 0);
+  }
+  bool operator!=(const DeserializerIterator& other) {
+    return input_ != other.input_ || current_ != other.current_ ||
+           input_size_ != other.input_size_ || remaining_ != other.remaining_;
+  }
+  DeserializerIterator& operator++() {
+    const PaintOp* serialized = reinterpret_cast<const PaintOp*>(current_);
+
+    CHECK_GE(remaining_, serialized->skip);
+    current_ += serialized->skip;
+    remaining_ -= serialized->skip;
+
+    if (remaining_ > 0)
+      CHECK_GE(remaining_, 4u);
+
+    DeserializeCurrentOp();
+
+    return *this;
+  }
+
+  operator bool() const { return remaining_ == 0u; }
+  const PaintOp* operator->() const { return deserialized_op_; }
+  const PaintOp* operator*() const { return deserialized_op_; }
+
+ private:
+  DeserializerIterator(const void* input,
+                       const char* current,
+                       size_t input_size,
+                       size_t remaining)
+      : input_(input),
+        current_(current),
+        input_size_(input_size),
+        remaining_(remaining) {
+    DeserializeCurrentOp();
+  }
+
+  void DeserializeCurrentOp() {
+    deserialized_op_ = nullptr;
+    if (!remaining_)
+      return;
+
+    const PaintOp* serialized = reinterpret_cast<const PaintOp*>(current_);
+    size_t required = sizeof(LargestPaintOp) + serialized->skip;
+
+    if (data_size_ < required) {
+      data_.reset(static_cast<char*>(
+          base::AlignedAlloc(required, PaintOpBuffer::PaintOpAlign)));
+      data_size_ = required;
+    }
+    deserialized_op_ =
+        PaintOp::Deserialize(current_, remaining_, data_.get(), data_size_);
+  }
+
+  const void* input_ = nullptr;
+  const char* current_ = nullptr;
+  size_t input_size_ = 0u;
+  size_t remaining_ = 0u;
+  std::unique_ptr<char, base::AlignedFreeDeleter> data_;
+  size_t data_size_ = 0u;
+  const PaintOp* deserialized_op_ = nullptr;
+};
+
+TEST(PaintOpBufferTest, SerializeAnnotateOp) {
+  std::string test_strings[] = {"xyz", "abcdefg", "thingerdoo"};
+
+  PaintOpBuffer buffer;
+  for (size_t i = 0; i < 3; ++i) {
+    buffer.push<AnnotateOp>(static_cast<PaintCanvas::AnnotationType>(i),
+                            test_rects[i],
+                            SkData::MakeWithCString(test_strings[i].c_str()));
+  }
+
+  // An arbitrary size that should fit all these ops.
+  static constexpr size_t output_size = sizeof(LargestPaintOp) * 3 + 100;
+  base::AlignedMemory<output_size, PaintOpBuffer::PaintOpAlign> output;
+
+  SimpleSerializer serializer(output.void_data(), output_size);
+  serializer.Serialize(buffer);
+
+  // Expect all three ops to write more than 0 bytes, and all the same bytes.
+  EXPECT_GE(serializer.BytesWritten(0), 0u);
+  EXPECT_EQ(serializer.BytesWritten(0), serializer.BytesWritten(1));
+  EXPECT_EQ(serializer.BytesWritten(0), serializer.BytesWritten(2));
+
+  PaintOpBuffer::Iterator iter(&buffer);
+  for (auto* base_written : DeserializerIterator(
+           output.void_data(), serializer.TotalBytesWritten())) {
+    SCOPED_TRACE(base::StringPrintf("op: %ld", iter.op_idx()));
+    PaintOp* base_original = *iter;
+    ASSERT_TRUE(base_written);
+    ASSERT_TRUE(base_original);
+    ASSERT_EQ(PaintOpType::Annotate, base_original->GetType());
+    ASSERT_EQ(PaintOpType::Annotate, base_written->GetType());
+
+    AnnotateOp* original = static_cast<AnnotateOp*>(base_original);
+    const AnnotateOp* written = static_cast<const AnnotateOp*>(base_written);
+
+    EXPECT_EQ(original->annotation_type, written->annotation_type);
+    EXPECT_EQ(original->rect, written->rect);
+    EXPECT_EQ(original->data->size(), written->data->size());
+    EXPECT_EQ(0, memcmp(original->data->data(), written->data->data(),
+                        written->data->size()));
+    ++iter;
+  }
+
+  EXPECT_EQ(3u, iter.op_idx());
 }
 
 }  // namespace cc
