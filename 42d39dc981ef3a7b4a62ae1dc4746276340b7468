@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9ea4f752_4320ae4a",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-08T16:26:42Z",
+      "side": 1,
+      "message": "Marking as resolved.",
+      "parentUuid": "b63fc681_745f7faa",
+      "range": {
+        "startLine": 53,
+        "startChar": 1,
+        "endLine": 56,
+        "endChar": 3
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5ff12fe5_107fed16",
         "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
         "patchSetId": 4
@@ -120,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "b91adba4_b31b34d5",
+        "filename": "content/renderer/media/media_stream_constraints_util_audio.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-08T16:26:42Z",
+      "side": 1,
+      "message": "We can implement that in a follow-up CL (or set of CLs).\nNote that this functionality does not exist yet. \nThe old code does not support device constraints at all, and this version uses those constraints only for device selection, but not to initialize the devices using parameters different from the hardware parameters.\nFiled crbug.com/731170 to track this feature.",
+      "parentUuid": "a1b0e8a9_bab72d1d",
+      "range": {
+        "startLine": 49,
+        "startChar": 37,
+        "endLine": 51,
+        "endChar": 30
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74cad686_fdeb3fb2",
         "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
         "patchSetId": 4
@@ -188,6 +236,30 @@
       "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c964d65d_fa950a57",
+        "filename": "content/renderer/media/media_stream_constraints_util_sets.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-08T16:26:42Z",
+      "side": 1,
+      "message": "I\u0027ll leave it as DiscreSet in this CL since it was already there.\nAdded a comment suggesting a rename and a reference to a bug to track it.",
+      "parentUuid": "fee5a948_7e609fed",
+      "range": {
+        "startLine": 147,
+        "startChar": 0,
+        "endLine": 148,
+        "endChar": 34
+      },
+      "revId": "42d39dc981ef3a7b4a62ae1dc4746276340b7468",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

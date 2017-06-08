@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "4166458f_2e1a75a9",
+        "filename": "content/renderer/media/media_stream_constraints_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1143639
+      },
+      "writtenOn": "2017-06-08T16:26:42Z",
+      "side": 1,
+      "message": "Resolved.",
+      "parentUuid": "4d018495_ba53825e",
+      "revId": "96c9338b129911da1051c5869c9039389b8d7f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab97044b_f0dacc6d",
         "filename": "content/renderer/media/media_stream_constraints_util.h",
         "patchSetId": 1
