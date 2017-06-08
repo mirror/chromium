@@ -71,7 +71,6 @@ crbug.com/451577 [ Linux ] inspector/extensions/extensions-sidebar.html [ Slow ]
 # -----------------------------------------------------------------
 # Leaks in external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/*
 # -----------------------------------------------------------------
-crbug.com/594309 [ Linux ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-align-self-baseline-vert-001.html [ Failure Pass Leak ]
 crbug.com/594309 [ Linux ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-empty-001a.html [ Leak ]
 crbug.com/594309 [ Linux ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-empty-001b.html [ Leak ]
 crbug.com/594309 [ Linux ] external/wpt/css/vendor-imports/mozilla/mozilla-central-reftests/flexbox/flexbox-baseline-multi-item-vert-001.html [ Leak ]

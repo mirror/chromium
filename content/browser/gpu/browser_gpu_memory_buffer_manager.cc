@@ -181,8 +181,9 @@ bool BrowserGpuMemoryBufferManager::OnMemoryDump(
         shared_buffer_guid = gfx::GetGenericSharedGpuMemoryGUIDForTracing(
             client_tracing_process_id, buffer_id);
       }
-      pmd->CreateSharedGlobalAllocatorDump(shared_buffer_guid);
-      pmd->AddOwnershipEdge(dump->guid(), shared_buffer_guid);
+      pmd->CreateSharedMemoryOwnershipEdge(dump->guid(), shared_buffer_guid,
+                                           buffer.second.shared_memory_guid,
+                                           0 /* importance */);
     }
   }
 
