@@ -12,21 +12,26 @@
 
 #include "base/observer_list.h"
 #include "base/supports_user_data.h"
+#include "components/offline_items_collection/core/offline_item.h"
 #include "components/offline_pages/core/background/request_coordinator.h"
-#include "components/offline_pages/core/downloads/download_ui_item.h"
 #include "components/offline_pages/core/offline_page_model.h"
 #include "components/offline_pages/core/offline_page_types.h"
 #include "url/gurl.h"
+
+const char kOfflinePageNamespace[] = "LEGACY_OFFLINE_PAGE";
+
+using OfflineItem = offline_items_collection::OfflineItem;
+using ContentId = offline_items_collection::ContentId;
 
 namespace offline_pages {
 // C++ side of the UI Adapter. Mimics DownloadManager/Item/History (since we
 // share UI with Downloads).
 // An instance of this class is owned by OfflinePageModel and is shared between
-// UI components if needed. It manages the cache of DownloadUIItems, so after
+// UI components if needed. It manages the cache of OfflineItems, so after
 // initial load the UI components can synchronously pull the whole list or any
 // item by its guid.
 // The items are exposed to UI layer (consumer of this class) as an observable
-// collection of DownloadUIItems. The consumer is supposed to implement
+// collection of OfflineItems. The consumer is supposed to implement
 // the DownloadUIAdapter::Observer interface. The creator of the adapter
 // also passes in the Delegate that determines which items in the underlying
 // OfflinePage backend are to be included (visible) in the collection.
@@ -64,14 +69,14 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
     virtual void ItemsLoaded() = 0;
 
     // Invoked when the UI Item was added, usually as a request to download.
-    virtual void ItemAdded(const DownloadUIItem& item) = 0;
+    virtual void ItemAdded(const OfflineItem& item) = 0;
 
     // Invoked when the UI Item was updated. Only guid of the item is guaranteed
     // to survive the update, all other fields can change.
-    virtual void ItemUpdated(const DownloadUIItem& item) = 0;
+    virtual void ItemUpdated(const OfflineItem& item) = 0;
 
     // Invoked when the UI Item was deleted. At this point, only guid remains.
-    virtual void ItemDeleted(const std::string& guid) = 0;
+    virtual void ItemDeleted(const ContentId& id) = 0;
 
    protected:
     virtual ~Observer() = default;
@@ -96,9 +101,9 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
 
   // Returns all UI items. The list contains references to items in the cache
   // and has to be used synchronously.
-  std::vector<const DownloadUIItem*> GetAllItems() const;
+  std::vector<const OfflineItem*> GetAllItems() const;
   // May return nullptr if item with specified guid does not exist.
-  const DownloadUIItem* GetItem(const std::string& guid) const;
+  const OfflineItem* GetItem(const std::string& guid) const;
 
   // Commands from UI. Start async operations, result is observable
   // via Observer or directly by the user (as in 'open').
@@ -134,9 +139,9 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
     ItemInfo(const SavePageRequest& request, bool temporarily_hidden);
     ~ItemInfo();
 
-    std::unique_ptr<DownloadUIItem> ui_item;
+    std::unique_ptr<OfflineItem> ui_item;
 
-    // Additional cached data, not exposed to UI through DownloadUIItem.
+    // Additional cached data, not exposed to UI through OfflineItem.
     // Indicates if this item wraps the completed page or in-progress request.
     bool is_request;
 
@@ -158,7 +163,7 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
     DISALLOW_COPY_AND_ASSIGN(ItemInfo);
   };
 
-  typedef std::map<std::string, std::unique_ptr<ItemInfo>> DownloadUIItems;
+  typedef std::map<std::string, std::unique_ptr<ItemInfo>> OfflineItems;
 
   void LoadCache();
   void ClearCache();
@@ -187,8 +192,8 @@ class DownloadUIAdapter : public OfflinePageModel::Observer,
 
   State state_;
 
-  // The cache of UI items. The key is DownloadUIItem.guid.
-  DownloadUIItems items_;
+  // The cache of UI items. The key is OfflineItem.guid.
+  OfflineItems items_;
 
   std::unique_ptr<ItemInfo> deleting_item_;
 
