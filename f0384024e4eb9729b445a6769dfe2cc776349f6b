@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c9f340cd_d36e08f3",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-08T00:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "179f7347_a82360fb",
+      "revId": "f0384024e4eb9729b445a6769dfe2cc776349f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f8960f0_dabcf178",
         "filename": "testing/buildbot/gn_isolate_map.pyl",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "f0384024e4eb9729b445a6769dfe2cc776349f6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "512607b0_63142946",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1000307
+      },
+      "writtenOn": "2017-06-08T00:26:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0f8960f0_dabcf178",
+      "revId": "f0384024e4eb9729b445a6769dfe2cc776349f6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
