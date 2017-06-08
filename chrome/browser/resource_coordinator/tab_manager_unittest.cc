@@ -289,12 +289,6 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
 
-  // Don't discard active tab.
-  tab_manager.DiscardWebContentsAt(0, &tabstrip);
-  ASSERT_EQ(2, tabstrip.count());
-  EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
-  EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-
   tabstrip.CloseAllTabs();
   EXPECT_TRUE(tabstrip.empty());
 }
@@ -460,8 +454,14 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripDummyDelegate delegate;
   TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(&tab_manager);
-  tab_manager.test_tab_strip_models_.push_back(
-      TabManager::TestTabStripModel(&tabstrip, false /* !is_app */));
+
+  TabManager::BrowserInfo browser_info;
+  browser_info.tab_strip_model = &tabstrip;
+  browser_info.window_is_active = true;
+  browser_info.window_is_minimized = false;
+  browser_info.window_bounds = gfx::Rect();
+  browser_info.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info);
 
   base::SimpleTestTickClock test_clock;
   tab_manager.set_test_tick_clock(&test_clock);
@@ -490,6 +490,11 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   // Activate tab2. Tab2's PurgeAndSuspend state should be NOT_PURGED.
   tabstrip.ActivateTabAt(1, true /* user_gesture */);
   EXPECT_FALSE(tab_manager.GetWebContentsData(tab2)->is_purged());
+}
+
+TEST_F(TabManagerTest, GetTabStats) {
+  TabManager tab_manager;
+  // TODO
 }
 
 }  // namespace resource_coordinator
