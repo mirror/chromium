@@ -46,6 +46,30 @@
       "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be9e831d_b4dbb0ed",
+        "filename": "services/preferences/public/interfaces/preferences.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T17:40:32Z",
+      "side": 1,
+      "message": "Yes, that\u0027s correct.\n\n(The comment just feels out of place here, since it only helps out someone who happens to read this interface. IMO, it should be made clearer in the Mojo docs)",
+      "parentUuid": "6d2d49c5_0908df04",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 151,
+        "endChar": 14
+      },
+      "revId": "bc814c65244986dbba435e651d34cf9a6eb9f223",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
