@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3df9adea_5ac18401",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 939,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-08T17:40:33Z",
+      "side": 1,
+      "message": "haha oops yes.",
+      "parentUuid": "c6639dcc_ffcb64c4",
+      "revId": "bea318825de337fb39295192d8c80b348ea8bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "073f6cd0_7053f0e0",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T16:15:33Z",
       "side": 1,
       "message": "The code still runs on UI thread IIUC? Is there anything more critical to execute before showing the popup UI?\nAlso, looks like this is not trivial change given all the test files that you need to change. Is it possible to make a separate CL or at least mention this change in the CL description?",
+      "revId": "bea318825de337fb39295192d8c80b348ea8bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b790d68_9e23390b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShellDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 1125,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-08T17:40:33Z",
+      "side": 1,
+      "message": "I\u0027ll move the test fixes out to a separate CL.",
+      "parentUuid": "073f6cd0_7053f0e0",
       "revId": "bea318825de337fb39295192d8c80b348ea8bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "bea318825de337fb39295192d8c80b348ea8bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59d64b0f_c92bea7b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrUtils.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-08T17:40:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c481a7e3_e00d930d",
+      "revId": "bea318825de337fb39295192d8c80b348ea8bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
