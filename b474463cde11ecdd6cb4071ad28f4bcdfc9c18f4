@@ -16,6 +16,24 @@
       "revId": "b474463cde11ecdd6cb4071ad28f4bcdfc9c18f4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fcdbdcd_09e89fde",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1154,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-08T16:30:57Z",
+      "side": 1,
+      "message": "SG, but it turns out that SetNeedsRedraw alone is not enough, because the Draw will early-out with no damages. I\u0027m also not sure if we really will wait for the tiles if there are any, because tile preparation may only start after the redraw...\n\nWill fix/add tests once we know how to solve this :)",
+      "parentUuid": "43054717_71219af4",
+      "revId": "b474463cde11ecdd6cb4071ad28f4bcdfc9c18f4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
