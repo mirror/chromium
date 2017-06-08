@@ -151,6 +151,30 @@
       "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7067453c_dd62a694",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T21:50:31Z",
+      "side": 1,
+      "message": "Yes, already removed in next PS.",
+      "parentUuid": "74e7dcc6_47ef1446",
+      "range": {
+        "startLine": 166,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 17
+      },
+      "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
