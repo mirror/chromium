@@ -308,6 +308,12 @@ class BASE_EXPORT TraceLog : public MemoryDumpProvider {
   void UpdateProcessLabel(int label_id, const std::string& current_label);
   void RemoveProcessLabel(int label_id);
 
+  // Record URL of ServiceWorker script running on a ServiceWorker thread
+  // to clarify which workers belong to which sites.
+  void SetServiceWorkerURL(PlatformThreadId thread_id,
+                           const std::string& current_url);
+  void RemoveServiceWorkerURL(PlatformThreadId thread_id);
+
   // Thread sort indices, if set, override the order of a thread will appear
   // within its process in the trace viewer. Threads are sorted first on their
   // sort index, ascending, then by their name, and then tid.
@@ -456,6 +462,8 @@ class BASE_EXPORT TraceLog : public MemoryDumpProvider {
   int process_sort_index_;
   std::unordered_map<int, int> thread_sort_indices_;
   std::unordered_map<int, std::string> thread_names_;
+
+  std::unordered_map<int, std::string> service_worker_urls_;
 
   // The following two maps are used only when ECHO_TO_CONSOLE.
   std::unordered_map<int, std::stack<TimeTicks>> thread_event_start_times_;

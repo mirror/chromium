@@ -185,6 +185,10 @@ void WebEmbeddedWorkerImpl::TerminateWorkerContext() {
     worker_context_client_->WorkerContextFailedToStart();
     return;
   }
+
+  base::trace_event::TraceLog::GetInstance()->RemoveServiceWorkerURL(
+      worker_thread_->GetPlatformThreadId());
+
   worker_thread_->Terminate();
   worker_inspector_proxy_->WorkerThreadTerminated();
 }
@@ -473,6 +477,18 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
 
   worker_inspector_proxy_->WorkerThreadCreated(document, worker_thread_.get(),
                                                script_url);
+
+  // Record ServiceWorker thread metadata in tracing
+  PlatformThreadId thread_id =
+      static_cast<int>(worker_thread_->GetPlatformThreadId());
+
+  const String& url_string = script_url.GetString();
+  DCHECK(url_string.Is8Bit());
+  std::string url(reinterpret_cast<const char*>(url_string.Characters8()),
+                  url_string.length());
+
+  base::trace_event::TraceLog::GetInstance()->SetServiceWorkerURL(thread_id,
+                                                                  url);
 }
 
 }  // namespace blink

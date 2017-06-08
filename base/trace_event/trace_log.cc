@@ -1520,6 +1520,15 @@ void TraceLog::AddMetadataEventsWhileLocked() {
                             base::JoinString(labels, ","));
   }
 
+  // URLs for ServiceWorker threads
+  if (!service_worker_urls_.empty()) {
+    for (const auto& it : service_worker_urls_) {
+      InitializeMetadataEvent(
+          AddEventToThreadSharedChunkWhileLocked(NULL, false), it.first,
+          "service_worker_url", "url", it.second);
+    }
+  }
+
   // Thread sort indices.
   for (const auto& it : thread_sort_indices_) {
     if (it.second == 0)
@@ -1619,6 +1628,17 @@ void TraceLog::UpdateProcessLabel(int label_id,
 void TraceLog::RemoveProcessLabel(int label_id) {
   AutoLock lock(lock_);
   process_labels_.erase(label_id);
+}
+
+void TraceLog::SetServiceWorkerURL(PlatformThreadId thread_id,
+                                   const std::string& current_url) {
+  AutoLock lock(lock_);
+  service_worker_urls_[static_cast<int>(thread_id)] = current_url;
+}
+
+void TraceLog::RemoveServiceWorkerURL(PlatformThreadId thread_id) {
+  AutoLock lock(lock_);
+  service_worker_urls_.erase(static_cast<int>(thread_id));
 }
 
 void TraceLog::SetThreadSortIndex(PlatformThreadId thread_id, int sort_index) {
