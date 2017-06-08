@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3296c95b_a84bb7b6",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_mediator.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1139250
+      },
+      "writtenOn": "2017-06-08T15:11:55Z",
+      "side": 1,
+      "message": "I don\u0027t know the new architecture patterns, so maybe this is just how things are being done everywhere, but - I don\u0027t understand why this function doesn\u0027t take a ReadingListCollectionViewItem? As far as I can tell it\u0027s only called by the coordinator who does have the knowledge of this item type (and in fact does the cast itself in one of the two call sites)",
+      "range": {
+        "startLine": 32,
+        "startChar": 13,
+        "endLine": 32,
+        "endChar": 31
+      },
+      "revId": "8621d639f77b85210454c9a121c980014f1db438",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
