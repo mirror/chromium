@@ -155,13 +155,13 @@ IN_PROC_BROWSER_TEST_F(ContentSettingBubbleControllerTest,
   EXPECT_NSEQ([[filterController titleLabel] stringValue], label);
 
   EXPECT_TRUE([filterController messageLabel]);
-  label = base::SysUTF16ToNSString(l10n_util::GetStringUTF16(
-      IDS_FILTERED_DECEPTIVE_CONTENT_PROMPT_EXPLANATION));
+  label = base::SysUTF16ToNSString(
+      l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_EXPLANATION));
   EXPECT_NSEQ([[filterController messageLabel] stringValue], label);
 
   EXPECT_TRUE([filterController manageCheckbox]);
-  label = base::SysUTF16ToNSString(
-      l10n_util::GetStringUTF16(IDS_FILTERED_DECEPTIVE_CONTENT_PROMPT_RELOAD));
+  label =
+      base::SysUTF16ToNSString(l10n_util::GetStringUTF16(IDS_APP_MENU_RELOAD));
   EXPECT_NSEQ([[filterController manageCheckbox] title], label);
 
   EXPECT_TRUE([filterController doneButton]);

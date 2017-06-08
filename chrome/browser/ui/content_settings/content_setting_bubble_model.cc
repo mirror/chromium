@@ -1233,34 +1233,28 @@ ContentSettingSubresourceFilterBubbleModel::
   SetTitle();
   SetMessage();
   SetManageText();
+  set_done_button_text(l10n_util::GetStringUTF16(IDS_OK));
   ChromeSubresourceFilterClient::LogAction(kActionDetailsShown);
 }
 
 ContentSettingSubresourceFilterBubbleModel::
     ~ContentSettingSubresourceFilterBubbleModel() {}
 
-void ContentSettingSubresourceFilterBubbleModel::SetTitle() {
-  set_title(
-      l10n_util::GetStringUTF16(IDS_FILTERED_DECEPTIVE_CONTENT_PROMPT_TITLE));
-}
+void ContentSettingSubresourceFilterBubbleModel::SetTitle() {}
 
 void ContentSettingSubresourceFilterBubbleModel::SetManageText() {
-  set_manage_text(
-      l10n_util::GetStringUTF16(IDS_FILTERED_DECEPTIVE_CONTENT_PROMPT_RELOAD));
+  set_manage_text(l10n_util::GetStringUTF16(IDS_ALWAYS_SHOW_ADS));
   set_show_manage_text_as_checkbox(true);
 }
 
 void ContentSettingSubresourceFilterBubbleModel::SetMessage() {
-  set_message(l10n_util::GetStringUTF16(
-      IDS_FILTERED_DECEPTIVE_CONTENT_PROMPT_EXPLANATION));
+  set_message(l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_EXPLANATION));
 }
 
 void ContentSettingSubresourceFilterBubbleModel::OnManageCheckboxChecked(
     bool is_checked) {
-  if (is_checked)
-    set_done_button_text(l10n_util::GetStringUTF16(IDS_APP_MENU_RELOAD));
-  else
-    set_done_button_text(base::string16());
+  set_done_button_text(
+      l10n_util::GetStringUTF16(is_checked ? IDS_APP_MENU_RELOAD : IDS_OK));
   is_checked_ = is_checked;
 }
 

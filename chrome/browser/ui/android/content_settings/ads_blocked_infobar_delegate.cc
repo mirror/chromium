@@ -46,7 +46,7 @@ int AdsBlockedInfobarDelegate::GetIconId() const {
 }
 
 base::string16 AdsBlockedInfobarDelegate::GetMessageText() const {
-  return l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_TITLE);
+  return l10n_util::GetStringUTF16(IDS_BLOCKED_ADS_PROMPT_TITLE_PERIOD);
 }
 
 int AdsBlockedInfobarDelegate::GetButtons() const {
