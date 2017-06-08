@@ -672,6 +672,48 @@ IN_PROC_BROWSER_TEST_F(OmniboxViewTest, MAYBE_DesiredTLDWithTemporaryText) {
   EXPECT_EQ("/", url.path());
 }
 
+IN_PROC_BROWSER_TEST_F(OmniboxViewTest, PopupPendingAction) {
+  OmniboxView* omnibox_view = nullptr;
+  ASSERT_NO_FATAL_FAILURE(GetOmniboxView(&omnibox_view));
+  OmniboxPopupModel* popup_model = omnibox_view->model()->popup_model();
+  ASSERT_TRUE(popup_model);
+
+  ASSERT_NO_FATAL_FAILURE(SendKeySequence(kSearchKeywordKeys));
+  ASSERT_NO_FATAL_FAILURE(WaitForAutocompleteControllerDone());
+  ASSERT_TRUE(popup_model->IsOpen());
+
+  // Find the search entry in the popup.
+  size_t i = 0;
+  for (; i < popup_model->result().size(); ++i) {
+    if (popup_model->result().match_at(i).associated_keyword)
+      break;
+    EXPECT_NE(i + 1, popup_model->result().size());
+  }
+
+  popup_model->SetHoveredLine(OmniboxPopupModel::kNoMatch);
+  popup_model->SetHoveredLine(i, OmniboxPopupModel::Action::NORMAL);
+  EXPECT_EQ(OmniboxPopupModel::Action::NORMAL, popup_model->pending_action());
+  // Even if the hovered line doesn't change, respect the change to the pending
+  // action.
+  popup_model->SetHoveredLine(i, OmniboxPopupModel::Action::KEYWORD);
+  EXPECT_EQ(OmniboxPopupModel::Action::KEYWORD, popup_model->pending_action());
+
+  // Accept the keyword and the pending action returns to NORMAL.
+  popup_model->SetSelectedLine(i, false, true);
+  ASSERT_TRUE(omnibox_view->model()->is_keyword_hint());
+  ASSERT_FALSE(omnibox_view->model()->is_keyword_selected());
+  EXPECT_EQ(OmniboxPopupModel::NORMAL, popup_model->selected_line_state());
+  omnibox_view->model()->AcceptKeyword(KeywordModeEntryMethod::TAB);
+  EXPECT_EQ(OmniboxPopupModel::KEYWORD, popup_model->selected_line_state());
+  EXPECT_EQ(OmniboxPopupModel::Action::NORMAL, popup_model->pending_action());
+  // Further attempts to hover the keyword icon make no impact on the pending
+  // action.
+  popup_model->SetHoveredLine(i, OmniboxPopupModel::Action::KEYWORD);
+  EXPECT_EQ(OmniboxPopupModel::Action::NORMAL, popup_model->pending_action());
+  ASSERT_FALSE(omnibox_view->model()->is_keyword_hint());
+  ASSERT_TRUE(omnibox_view->model()->is_keyword_selected());
+}
+
 // See http://crbug.com/431575.
 IN_PROC_BROWSER_TEST_F(OmniboxViewTest, ClearUserTextAfterBackgroundCommit) {
   OmniboxView* omnibox_view = NULL;

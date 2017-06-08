@@ -29,6 +29,12 @@ class OmniboxPopupModel {
     KEYWORD
   };
 
+  // The action to be taken when the user accepts a row.
+  enum class Action {
+    NORMAL = 0,  // The row's suggestion is accepted.
+    KEYWORD,     // The keyword hint is accepted.
+  };
+
   OmniboxPopupModel(OmniboxPopupView* popup_view, OmniboxEditModel* edit_model);
   ~OmniboxPopupModel();
 
@@ -72,7 +78,9 @@ class OmniboxPopupModel {
 
   // Call to change the hovered line.  |line| should be within the range of
   // valid lines (to enable hover) or kNoMatch (to disable hover).
-  void SetHoveredLine(size_t line);
+  void SetHoveredLine(size_t line, Action action = Action::NORMAL);
+
+  Action pending_action() const { return pending_action_; }
 
   size_t selected_line() const { return selected_line_; }
 
@@ -163,6 +171,9 @@ class OmniboxPopupModel {
   // determines whether the normal match (if NORMAL) or the keyword match
   // (if KEYWORD) is selected.
   LineState selected_line_state_;
+
+  // See Action enum.
+  Action pending_action_ = Action::NORMAL;
 
   // The match the user has manually chosen, if any.
   AutocompleteResult::Selection manually_selected_match_;
