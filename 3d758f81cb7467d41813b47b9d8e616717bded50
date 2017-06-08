@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7186e69d_72a202f1",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T20:41:38Z",
+      "side": 1,
+      "message": "Please add a TODO here to add the leveldb database size. Previously we accounted for the database because it was sqlite and sqlite3 keeps track of all the memory usage. But that is no longer the case and must be accounted for here.\nThis TODO can be fixed once we have GetProprety implemented in the mojo interface.",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ee59410_0881b683",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T20:41:38Z",
+      "side": 1,
+      "message": "We should have a code that does leveldb computation similar to these:\nhttps://cs.chromium.org/search/?q\u003dleveldb.approximate-memory-usage\u0026type\u003dcs\n\nIdeally we shoul dbe able to do database_-\u003eGetProperty().\nBut, it looks like the mojo leveldb api does not have GetProperty implemented yet. Could you please add it. Maybe as next CL?",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9a769e_1bed49b4",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-08T20:41:38Z",
+      "side": 1,
+      "message": "Maybe a comment here to say dumps usage stats for memory infra.",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
