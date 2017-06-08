@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5331a3a2_a59f47de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T11:32:58Z",
+      "side": 1,
+      "message": "s/Fixed/Fix/?",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36c8a07b_e1df3a33",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-overlay-cast-button-autoplay-muted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T11:32:58Z",
+      "side": 1,
+      "message": "nit: 2 spaces indent?",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a671b37_cb749ace",
+        "filename": "third_party/WebKit/LayoutTests/media/controls/controls-overlay-cast-button-autoplay-muted.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T11:32:58Z",
+      "side": 1,
+      "message": "Maybe a nicer name: \"Test that the cast overlay does not show up for autoplay muted videos.\"",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8db2d71_90562f31",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 738,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T11:32:58Z",
+      "side": 1,
+      "message": "What about using IsAutoplayingMuted()? This is what we use for the audio focus rules for example. I think it would be slightly better than using `Autoplay()` as it only returns if there is an autoplay attribute.",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9858e39_778d2c4a",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 978,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T11:32:58Z",
+      "side": 1,
+      "message": "::OnPlaying() was added by johnme@ for the timeline metrics. Happy we can re-use it :)",
+      "revId": "46fc5e3f388ca75d497928e3cf34b34a1964d249",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
