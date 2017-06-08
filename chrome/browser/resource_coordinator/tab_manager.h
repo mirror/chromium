@@ -9,7 +9,6 @@
 
 #include <memory>
 #include <string>
-#include <utility>
 #include <vector>
 
 #include "base/callback.h"
@@ -26,6 +25,7 @@
 #include "chrome/browser/resource_coordinator/tab_stats.h"
 #include "chrome/browser/ui/browser_tab_strip_tracker.h"
 #include "chrome/browser/ui/tabs/tab_strip_model_observer.h"
+#include "ui/gfx/geometry/rect.h"
 
 class BrowserList;
 class GURL;
@@ -90,7 +90,7 @@ class TabManager : public TabStripModelObserver {
   // Goes through a list of checks to see if a tab is allowed to be discarded by
   // the automatic tab discarding mechanism. Note that this is not used when
   // discarding a particular tab from about:discards.
-  bool CanDiscardTab(int64_t target_web_contents_id) const;
+  bool CanDiscardTab(const TabStats& tab_stats) const;
 
   // Discards a tab to free the memory occupied by its renderer. The tab still
   // exists in the tab-strip; clicking on it will reload it.
@@ -174,6 +174,14 @@ class TabManager : public TabStripModelObserver {
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ReloadDiscardedTabContextMenu);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerBasics);
 
+  struct BrowserInfo {
+    TabStripModel* tab_strip_model;
+    bool window_is_active;
+    bool window_is_minimized;
+    gfx::Rect window_bounds;
+    bool browser_is_app;
+  };
+
   // The time of the first purging after a renderer is backgrounded.
   // The initial value was chosen because most of users activate backgrounded
   // tabs within 30 minutes. (c.f. Tabs.StateTransfer.Time_Inactive_Active)
@@ -224,14 +232,15 @@ class TabManager : public TabStripModelObserver {
   // Returns the number of tabs open in all browser instances.
   int GetTabCount() const;
 
-  // Adds all the stats of the tabs to |stats_list|.
-  void AddTabStats(TabStatsList* stats_list) const;
-
   // Adds all the stats of the tabs in |tab_strip_model| into |stats_list|.
-  // If |active_model| is true, consider its first tab as being active.
-  void AddTabStats(const TabStripModel* model,
-                   bool is_app,
-                   bool active_model,
+  // |window_is_visible| indicates whether |tab_strip_model| lives in a window
+  // which is visible to the user. |window_is_active| indicates whether
+  // |tab_strip_model| lives in the currently active window. |browser_is_app|
+  // indicates whether |tab_strip_model| is in a Browser running an app.
+  void AddTabStats(const TabStripModel* tab_strip_model,
+                   bool window_is_visible,
+                   bool window_is_active,
+                   bool browser_is_app,
                    TabStatsList* stats_list) const;
 
   // Callback for when |update_timer_| fires. Takes care of executing the tasks
@@ -352,15 +361,13 @@ class TabManager : public TabStripModelObserver {
   // this test clock. Otherwise it returns the system clock's value.
   base::TickClock* test_tick_clock_;
 
-  // Injected tab strip models. Allows this to be tested end-to-end without
-  // requiring a full browser environment. If specified these tab strips will be
-  // crawled as the authoritative source of tabs, otherwise the BrowserList and
-  // associated Browser objects are crawled. The first of these is considered to
-  // be the 'active' tab strip model.
+  // Injected BrowserInfo list. Allows this to be tested end-to-end without
+  // requiring a full browser environment. If specified these BrowserInfo will
+  // be crawled as the authoritative source of tabs, otherwise the BrowserList
+  // and associated Browser objects are crawled.
   // TODO(chrisha): Factor out tab-strip model enumeration to a helper class,
   //     and make a delegate that centralizes all testing seams.
-  using TestTabStripModel = std::pair<const TabStripModel*, bool>;
-  std::vector<TestTabStripModel> test_tab_strip_models_;
+  std::vector<BrowserInfo> test_browser_info_list_;
 
   // List of observers that will receive notifications on state changes.
   base::ObserverList<TabManagerObserver> observers_;
