@@ -25,6 +25,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   void MediaStoppedPlaying(const MediaPlayerInfo& media_player_info,
                            const MediaPlayerId& media_player_id) override;
   void DidUpdateAudioMutingState(bool muted) override;
+  void MediaVolumeChanged(const MediaPlayerId& id, double volume) override;
 
  private:
   // Only MediaEngagementService can create a MediaEngagementContentsObserver.
@@ -54,6 +55,14 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // words, whether this set is empty can be used to know if there is a
   // significant playback.
   std::set<MediaPlayerId> significant_players_;
+
+  // Set of active players that are currently playing a video and audio track.
+  std::set<MediaPlayerId> playing_players_;
+
+  // Inserts/removes players from significant_players_ based on their volume,
+  // play state and size.
+  void MaybeInsertSignificantPlayer(const MediaPlayerId& id);
+  void MaybeRemoveSignificantPlayer(const MediaPlayerId& id);
 
   bool is_visible_ = false;
   bool significant_playback_recorded_ = false;
