@@ -16,8 +16,13 @@
 #include "base/task_runner_util.h"
 #include "components/drive/service/drive_service_interface.h"
 #include "content/public/browser/browser_thread.h"
-#include "device/power_save_blocker/power_save_blocker.h"
+#include "content/public/common/service_manager_connection.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
+#include "device/wake_lock/public/interfaces/wake_lock_provider.mojom.h"
 #include "google_apis/drive/drive_api_parser.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/device/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 using google_apis::CancelCallback;
 using google_apis::FileResource;
@@ -99,16 +104,25 @@ struct DriveUploader::UploadFileInfo {
         progress_callback(progress_callback),
         content_length(0),
         next_start_position(-1),
-        power_save_blocker(new device::PowerSaveBlocker(
-            device::PowerSaveBlocker::kPowerSaveBlockPreventAppSuspension,
-            device::PowerSaveBlocker::kReasonOther,
-            "Upload in progress",
-            content::BrowserThread::GetTaskRunnerForThread(
-                content::BrowserThread::UI),
-            content::BrowserThread::GetTaskRunnerForThread(
-                content::BrowserThread::FILE))),
         cancelled(false),
-        weak_ptr_factory_(this) {}
+        weak_ptr_factory_(this) {
+    // Service manager connection might be not initialized in some testing
+    // contexts.
+    if (content::ServiceManagerConnection::GetForProcess()) {
+      service_manager::Connector* connector =
+          content::ServiceManagerConnection::GetForProcess()->GetConnector();
+      DCHECK(connector);
+
+      device::mojom::WakeLockProviderPtr wake_lock_provider;
+      connector->BindInterface(device::mojom::kServiceName,
+                               mojo::MakeRequest(&wake_lock_provider));
+      wake_lock_provider->GetWakeLockWithoutContext(
+          device::mojom::WakeLockType::PreventAppSuspension,
+          device::mojom::WakeLockReason::ReasonOther, "Upload in progress",
+          mojo::MakeRequest(&wake_lock));
+      wake_lock->RequestWakeLock();
+    }
+  }
 
   ~UploadFileInfo() {
   }
@@ -148,7 +162,7 @@ struct DriveUploader::UploadFileInfo {
   int64_t next_start_position;
 
   // Blocks system suspend while upload is in progress.
-  std::unique_ptr<device::PowerSaveBlocker> power_save_blocker;
+  device::mojom::WakeLockPtr wake_lock;
 
   // Fields for implementing cancellation. |cancel_callback| is non-null if
   // there is an in-flight HTTP request. In that case, |cancell_callback| will
