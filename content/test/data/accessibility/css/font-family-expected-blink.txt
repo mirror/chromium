@@ -1,4 +1,4 @@
-rootWebArea fontFamily='Times New Roman'
+rootWebArea focusable fontFamily='Times New Roman'
 ++navigation fontFamily='-webkit-serif'
 ++++paragraph fontFamily='-webkit-monospace'
 ++++++staticText name='Monospace'

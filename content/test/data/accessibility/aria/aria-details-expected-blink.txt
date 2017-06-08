@@ -1,6 +1,6 @@
-rootWebArea
+rootWebArea focusable
 ++genericContainer
-++++textField detailsIds=paragraph
+++++textField focusable detailsIds=paragraph
 ++paragraph
 ++++staticText name='Details'
 ++++++inlineTextBox name='Details'
