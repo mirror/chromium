@@ -1,4 +1,4 @@
-B<!DOCTYPE html>
+<!DOCTYPE html>
 <html>
 <head>
 <!-- Image Capture Browser Test -->
@@ -9,8 +9,8 @@ B<!DOCTYPE html>
 const WIDTH = 320;
 /** @const */ var CONSTRAINTS = { width: { max : WIDTH } };
 
-// Runs an ImageCapture.getPhotoCapabilities().
-function testCreateAndGetCapabilities() {
+// Runs an ImageCapture.getPhotoCapabilities() and expects it to succeed.
+function testCreateAndGetCapabilitiesSucceeds() {
   navigator.mediaDevices.getUserMedia({"video" : CONSTRAINTS})
       .then(stream => {
         assertEquals('video', stream.getVideoTracks()[0].kind);
@@ -28,8 +28,8 @@ function testCreateAndGetCapabilities() {
       });
 }
 
-// Runs an ImageCapture.takePhoto().
-function testCreateAndTakePhoto() {
+// Runs an ImageCapture.takePhoto() and expects it to succeed.
+function testCreateAndTakePhotoSucceeds() {
   navigator.mediaDevices.getUserMedia({"video" : CONSTRAINTS})
       .then(stream => {
         assertEquals('video', stream.getVideoTracks()[0].kind);
@@ -49,8 +49,28 @@ function testCreateAndTakePhoto() {
       });
 }
 
-// Runs an ImageCapture.grabFrame().
-function testCreateAndGrabFrame() {
+// Runs an ImageCapture.takePhoto() and expects it to get rejected.
+function testCreateAndTakePhotoIsRejected() {
+  navigator.mediaDevices.getUserMedia({"video" : CONSTRAINTS})
+      .then(stream => {
+        assertEquals('video', stream.getVideoTracks()[0].kind);
+        return new ImageCapture(stream.getVideoTracks()[0]);
+      })
+      .then(capturer => {
+        return capturer.takePhoto();
+      })
+      .then(blob => {
+        failTest('Expected promise to get rejected but it was fulfilled');
+      }, err => {
+        reportTestSuccess();
+      })
+      .catch(err => {
+        return failTest(err.toString());
+      });
+}
+
+// Runs an ImageCapture.grabFrame() and expects it to succeed.
+function testCreateAndGrabFrameSucceeds() {
   navigator.mediaDevices.getUserMedia({"video" : CONSTRAINTS})
       .then(stream => {
         assertEquals('video', stream.getVideoTracks()[0].kind);
