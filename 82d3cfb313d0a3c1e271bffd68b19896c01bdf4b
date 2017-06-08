@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3556a1f2_bf15363f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-08T18:29:31Z",
+      "side": 1,
+      "message": "You don\u0027t want chrome:// pages as well.",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f0306e_29988895",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-08T18:29:31Z",
+      "side": 1,
+      "message": "Wrap localizable string into Common.UIString in place.",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444dd275_aad5b18d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/audits2/Audits2Panel.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-08T18:29:31Z",
+      "side": 1,
+      "message": "... and drop Common.UIString() here.",
+      "revId": "82d3cfb313d0a3c1e271bffd68b19896c01bdf4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
