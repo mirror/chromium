@@ -48,8 +48,8 @@ SequenceLocalStorageMap& SequenceLocalStorageMap::GetForCurrentThread() {
 }
 
 void* SequenceLocalStorageMap::Get(int slot_id) {
-  const auto it = sls_map_.find(slot_id);
-  if (it == sls_map_.end())
+  const auto it = sls_map.find(slot_id);
+  if (it == sls_map.end())
     return nullptr;
   return it->second.value();
 }
@@ -57,43 +57,12 @@ void* SequenceLocalStorageMap::Get(int slot_id) {
 void SequenceLocalStorageMap::Set(
     int slot_id,
     SequenceLocalStorageMap::ValueDestructorPair value_destructor_pair) {
-  auto it = sls_map_.find(slot_id);
+  auto it = sls_map.find(slot_id);
 
-  if (it == sls_map_.end())
-    sls_map_.emplace(slot_id, std::move(value_destructor_pair));
+  if (it == sls_map.end())
+    sls_map.emplace(slot_id, std::move(value_destructor_pair));
   else
     it->second = std::move(value_destructor_pair);
-}
-
-SequenceLocalStorageMap::ValueDestructorPair::ValueDestructorPair(
-    void* value,
-    void (*destructor)(void*))
-    : value_{value}, destructor_{destructor} {}
-
-SequenceLocalStorageMap::ValueDestructorPair::~ValueDestructorPair() {
-  if (value_)
-    destructor_(value_);
-}
-
-SequenceLocalStorageMap::ValueDestructorPair::ValueDestructorPair(
-    ValueDestructorPair&& value_destructor_pair)
-    : value_{value_destructor_pair.value_},
-      destructor_{value_destructor_pair.destructor_} {
-  value_destructor_pair.value_ = nullptr;
-}
-
-SequenceLocalStorageMap::ValueDestructorPair&
-SequenceLocalStorageMap::ValueDestructorPair::operator=(
-    ValueDestructorPair&& value_destructor_pair) {
-  if (value_)
-    destructor_(value_);
-
-  value_ = value_destructor_pair.value_;
-  destructor_ = value_destructor_pair.destructor_;
-
-  value_destructor_pair.value_ = nullptr;
-
-  return *this;
 }
 
 }  // namespace internal

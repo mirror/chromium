@@ -18,6 +18,9 @@ namespace internal {
 // ScopedSetSequenceMapLocalStorageForCurrentThread. When a
 // SequenceLocalStorageMap is destroyed, it destroys the values that it holds
 // using the destructors associated with these values.
+// The Get() and Set() method should not be accessed directly.
+// Use SequenceLocalStorageSlot to Get() and Set() values in the current
+// sequence's SequenceLocalStorageMap.
 class BASE_EXPORT SequenceLocalStorageMap {
  public:
   SequenceLocalStorageMap();
@@ -30,14 +33,34 @@ class BASE_EXPORT SequenceLocalStorageMap {
 
   // Holds a pointer to a value alongside a destructor for this pointer.
   // Calls the destructor on the value upon destruction.
-  class BASE_EXPORT ValueDestructorPair {
+  class ValueDestructorPair {
    public:
-    ValueDestructorPair(void* value, void (*destructor)(void*));
-    ~ValueDestructorPair();
+    ValueDestructorPair(void* value, void (*destructor)(void*))
+        : value_{value}, destructor_{destructor} {}
 
-    ValueDestructorPair(ValueDestructorPair&& value_destructor_pair);
+    ~ValueDestructorPair() {
+      if (value_)
+        destructor_(value_);
+    }
 
-    ValueDestructorPair& operator=(ValueDestructorPair&& value_destructor_pair);
+    ValueDestructorPair(ValueDestructorPair&& value_destructor_pair)
+        : value_{value_destructor_pair.value_},
+          destructor_{value_destructor_pair.destructor_} {
+      value_destructor_pair.value_ = nullptr;
+    }
+
+    ValueDestructorPair& operator=(
+        ValueDestructorPair&& value_destructor_pair) {
+      if (value_)
+        destructor_(value_);
+
+      value_ = value_destructor_pair.value_;
+      destructor_ = value_destructor_pair.destructor_;
+
+      value_destructor_pair.value_ = nullptr;
+
+      return *this;
+    }
 
     void* value() const { return value_; }
 
@@ -56,7 +79,7 @@ class BASE_EXPORT SequenceLocalStorageMap {
 
  private:
   // Map from slot id to ValueDestructorPair.
-  base::flat_map<int, ValueDestructorPair> sls_map_;
+  base::flat_map<int, ValueDestructorPair> sls_map;
 
   DISALLOW_COPY_AND_ASSIGN(SequenceLocalStorageMap);
 };
