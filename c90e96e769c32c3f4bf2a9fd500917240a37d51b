@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4923244c_bd38c974",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "It\u0027s only used for logging. As there isn\u0027t even a UMA stat for it, it doesn\u0027t feel important to preserve. I\u0027ve removed the value from the enum.",
+      "parentUuid": "86ef5747_1eb2a394",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72bf5210_98efcb9f",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6f3f942_13811d7f",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "There isn\u0027t a meningful way to handle that here, but I added a check in Create.",
+      "parentUuid": "72bf5210_98efcb9f",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "c0274828_28678aad",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c1b31702_b3cc4714",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81a184b5_9c2ed4bb",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df77215a_e5fa1e3e",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "Sure, I changed it (and corresponding change on the output side).",
+      "parentUuid": "81a184b5_9c2ed4bb",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "bc5b0fd4_2143fd71",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "I\u0027ve removed this method now.",
+      "parentUuid": "6015d320_7ab5ace0",
+      "range": {
+        "startLine": 60,
+        "startChar": 46,
+        "endLine": 60,
+        "endChar": 63
+      },
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b4f7f36_ff00e4f9",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
         "patchSetId": 5
@@ -107,6 +203,24 @@
       "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b10751a_a1ea598c",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-08T11:57:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b4f7f36_ff00e4f9",
+      "revId": "c90e96e769c32c3f4bf2a9fd500917240a37d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
