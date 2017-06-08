@@ -321,6 +321,10 @@ bool OmniboxPopupContentsView::IsHoveredIndex(size_t index) const {
   return index == model_->hovered_line();
 }
 
+OmniboxPopupModel::Action OmniboxPopupContentsView::GetPendingAction() const {
+  return model_->pending_action();
+}
+
 gfx::Image OmniboxPopupContentsView::GetIconIfExtensionMatch(
     size_t index) const {
   if (!HasMatchAt(index))
@@ -393,19 +397,16 @@ void OmniboxPopupContentsView::OnMouseCaptureLost() {
   ignore_mouse_drag_ = false;
 }
 
-void OmniboxPopupContentsView::OnMouseMoved(
-    const ui::MouseEvent& event) {
-  model_->SetHoveredLine(GetIndexForPoint(event.location()));
+void OmniboxPopupContentsView::OnMouseMoved(const ui::MouseEvent& event) {
+  ProcessMouseMovement(event);
 }
 
-void OmniboxPopupContentsView::OnMouseEntered(
-    const ui::MouseEvent& event) {
-  model_->SetHoveredLine(GetIndexForPoint(event.location()));
+void OmniboxPopupContentsView::OnMouseEntered(const ui::MouseEvent& event) {
+  ProcessMouseMovement(event);
 }
 
-void OmniboxPopupContentsView::OnMouseExited(
-    const ui::MouseEvent& event) {
-  model_->SetHoveredLine(OmniboxPopupModel::kNoMatch);
+void OmniboxPopupContentsView::OnMouseExited(const ui::MouseEvent& event) {
+  ProcessMouseMovement(event);
 }
 
 void OmniboxPopupContentsView::OnGestureEvent(ui::GestureEvent* event) {
@@ -496,28 +497,39 @@ const AutocompleteMatch& OmniboxPopupContentsView::GetMatchAtIndex(
   return model_->result().match_at(index);
 }
 
-size_t OmniboxPopupContentsView::GetIndexForPoint(
-    const gfx::Point& point) {
-  if (!HitTestPoint(point))
+size_t OmniboxPopupContentsView::GetRowInfoForPoint(
+    const gfx::Point& point,
+    OmniboxPopupModel::Action* action) {
+  if (action)
+    *action = OmniboxPopupModel::Action::NORMAL;
+  views::View* target = views::ViewTargeterDelegate::TargetForRect(
+      this, gfx::Rect(point, gfx::Size(1, 1)));
+  if (!target || target == this)
     return OmniboxPopupModel::kNoMatch;
 
-  int nb_match = model_->result().size();
-  DCHECK(nb_match <= child_count());
-  for (int i = 0; i < nb_match; ++i) {
-    views::View* child = child_at(i);
-    gfx::Point point_in_child_coords(point);
-    View::ConvertPointToTarget(this, child, &point_in_child_coords);
-    if (child->visible() && child->HitTestPoint(point_in_child_coords))
-      return i;
+  views::View* row_view = target;
+  while (row_view->parent() != this) {
+    row_view = row_view->parent();
   }
-  return OmniboxPopupModel::kNoMatch;
+
+  // Events might come in after the model updates but before the view has had a
+  // chance to.
+  size_t index = GetIndexOf(row_view);
+  if (index >= model_->result().size())
+    return OmniboxPopupModel::kNoMatch;
+
+  if (action)
+    *action = result_view_at(index)->GetActionForView(target);
+
+  return index;
 }
 
 void OmniboxPopupContentsView::UpdateLineEvent(
     const ui::LocatedEvent& event,
     bool should_set_selected_line) {
-  size_t index = GetIndexForPoint(event.location());
-  model_->SetHoveredLine(index);
+  OmniboxPopupModel::Action action = OmniboxPopupModel::Action::NORMAL;
+  size_t index = GetRowInfoForPoint(event.location(), &action);
+  model_->SetHoveredLine(index, action);
   if (HasMatchAt(index) && should_set_selected_line)
     model_->SetSelectedLine(index, false, false);
 }
@@ -525,11 +537,22 @@ void OmniboxPopupContentsView::UpdateLineEvent(
 void OmniboxPopupContentsView::OpenSelectedLine(
     const ui::LocatedEvent& event,
     WindowOpenDisposition disposition) {
-  size_t index = GetIndexForPoint(event.location());
-  if (!HasMatchAt(index))
-    return;
-  omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
-                           GURL(), base::string16(), index);
+  if (model_->pending_action() == OmniboxPopupModel::Action::KEYWORD) {
+    omnibox_view_->model()->AcceptKeyword(KeywordModeEntryMethod::TAB);
+  } else {
+    size_t index = GetRowInfoForPoint(event.location(), nullptr);
+    if (!HasMatchAt(index))
+      return;
+    omnibox_view_->OpenMatch(model_->result().match_at(index), disposition,
+                             GURL(), base::string16(), index);
+  }
+}
+
+void OmniboxPopupContentsView::ProcessMouseMovement(
+    const ui::MouseEvent& event) {
+  OmniboxPopupModel::Action action = OmniboxPopupModel::Action::NORMAL;
+  size_t index = GetRowInfoForPoint(event.location(), &action);
+  model_->SetHoveredLine(index, action);
 }
 
 OmniboxResultView* OmniboxPopupContentsView::result_view_at(size_t i) {

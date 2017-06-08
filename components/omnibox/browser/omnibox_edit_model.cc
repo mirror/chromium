@@ -694,9 +694,9 @@ void OmniboxEditModel::OpenMatch(AutocompleteMatch match,
     client_->OnBookmarkLaunched();
 }
 
-bool OmniboxEditModel::AcceptKeyword(
-      KeywordModeEntryMethod entry_method) {
-  DCHECK(is_keyword_hint_ && !keyword_.empty());
+bool OmniboxEditModel::AcceptKeyword(KeywordModeEntryMethod entry_method) {
+  DCHECK(is_keyword_hint_);
+  DCHECK(!keyword_.empty());
 
   autocomplete_controller()->Stop(false);
 
@@ -765,7 +765,7 @@ void OmniboxEditModel::ClearKeyword() {
   // (usually because the user has typed a search string).  Keep track of the
   // difference, as we'll need it below.
   bool was_toggled_into_keyword_mode =
-    popup_model()->selected_line_state() == OmniboxPopupModel::KEYWORD;
+      popup_model()->selected_line_state() == OmniboxPopupModel::KEYWORD;
 
   omnibox_controller_->ClearPopupKeywordMode();
 
