@@ -49,6 +49,54 @@
     },
     {
       "key": {
+        "uuid": "1f3ee50a_18b50b6f",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-08T23:54:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8da63094_dae563ad",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 17
+      },
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b28468f3_d0292447",
+        "filename": "components/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-08T23:54:55Z",
+      "side": 1,
+      "message": "Good catch. I\u0027ll use that instead.",
+      "parentUuid": "fba3e74f_149f709e",
+      "range": {
+        "startLine": 319,
+        "startChar": 6,
+        "endLine": 319,
+        "endChar": 17
+      },
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "41f34429_f2fb0a85",
         "filename": "components/safe_browsing_db/BUILD.gn",
         "patchSetId": 2
@@ -60,6 +108,24 @@
       "writtenOn": "2017-06-06T19:37:29Z",
       "side": 1,
       "message": "the mobile target wasn\u0027t depending on this before - was that an error, or is this dep not really required?",
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be6bbef5_688766ad",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-08T23:54:55Z",
+      "side": 1,
+      "message": "I think that was in error and it should depend on those so that we can run the tests under unit_tests_shared on mobile platforms also.",
+      "parentUuid": "41f34429_f2fb0a85",
       "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
