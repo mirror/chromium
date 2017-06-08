@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aff2f77c_3c8e23c0",
+        "filename": "chrome/browser/conflicts/module_info_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Noted. Changing |module_type| to an integer made this not needed anymore.",
+      "parentUuid": "85ef1f8b_77ba89b8",
+      "range": {
+        "startLine": 86,
+        "startChar": 9,
+        "endLine": 86,
+        "endChar": 25
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7b21f09_e0da3831",
         "filename": "chrome/browser/conflicts/module_info_win.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85332599_8aa07fb8",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done. I should\u0027ve taken a hint from the above process_types.",
+      "parentUuid": "c7b21f09_e0da3831",
+      "range": {
+        "startLine": 101,
+        "startChar": 13,
+        "endLine": 101,
+        "endChar": 24
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b3032dcd_fe5b9eb1",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "It made the code simpler. Removed the intermediate storage.",
+      "parentUuid": "85ea2664_7406619d",
+      "range": {
+        "startLine": 45,
+        "startChar": 6,
+        "endLine": 45,
+        "endChar": 30
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0b8de09_40e877cf",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59e4306_9b05f1a3",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0b8de09_40e877cf",
+      "range": {
+        "startLine": 46,
+        "startChar": 17,
+        "endLine": 46,
+        "endChar": 18
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "1a9b92f6_badc8a09",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Under 10. They should be pretty rare but in theory it could be arbitrarily high. I\u0027ve added a metric just to make sure.",
+      "parentUuid": "86e8c8fa_8565ae73",
+      "range": {
+        "startLine": 52,
+        "startChar": 17,
+        "endLine": 52,
+        "endChar": 25
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e5ec0cb_4c5c14f3",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 8
@@ -137,6 +257,30 @@
       "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bd2d38f_b8d9ebbf",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e5ec0cb_4c5c14f3",
+      "range": {
+        "startLine": 103,
+        "startChar": 13,
+        "endLine": 103,
+        "endChar": 14
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "b6da0f67_14163a23",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba79e7f7_7ebbce58",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 19
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06fba151_17d312d8",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 8
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "56928025_cf6d9999",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "06fba151_17d312d8",
+      "range": {
+        "startLine": 114,
+        "startChar": 7,
+        "endLine": 114,
+        "endChar": 11
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "49312878_6cf17ec9",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win_unittest.cc",
         "patchSetId": 8
@@ -206,6 +398,30 @@
       "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8cbc843f_976a4048",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-08T18:33:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49312878_6cf17ec9",
+      "range": {
+        "startLine": 105,
+        "startChar": 7,
+        "endLine": 105,
+        "endChar": 35
+      },
+      "revId": "cba5eefddf9ec807c900a1063c02ac5ec99a945b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
