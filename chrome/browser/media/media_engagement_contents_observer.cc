@@ -65,22 +65,35 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
     const MediaPlayerId& media_player_id) {
   // TODO(mlamouri): check if:
   // - the playback has the minimum size requirements;
-  // - the playback isn't muted.
   if (!media_player_info.has_audio)
     return;
 
-  DCHECK(significant_players_.find(media_player_id) ==
-         significant_players_.end());
-  significant_players_.insert(media_player_id);
+  DCHECK(playing_players_.find(media_player_id) == playing_players_.end());
+  playing_players_.insert(media_player_id);
+
+  MaybeInsertSignificantPlayer(media_player_id);
+  UpdateTimer();
+}
+
+void MediaEngagementContentsObserver::MediaVolumeChanged(
+    const MediaPlayerId& id,
+    double volume) {
+  if (volume == 0.0) {
+    MaybeRemoveSignificantPlayer(id);
+  } else {
+    MaybeInsertSignificantPlayer(id);
+  }
+
   UpdateTimer();
 }
 
 void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerInfo& media_player_info,
     const MediaPlayerId& media_player_id) {
-  DCHECK(significant_players_.find(media_player_id) !=
-         significant_players_.end());
-  significant_players_.erase(media_player_id);
+  DCHECK(playing_players_.find(media_player_id) != playing_players_.end());
+  playing_players_.erase(media_player_id);
+
+  MaybeRemoveSignificantPlayer(media_player_id);
   UpdateTimer();
 }
 
@@ -97,6 +110,49 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
     return;
 
   // TODO(mlamouri): record the playback into content settings.
+}
+
+void MediaEngagementContentsObserver::MaybeInsertSignificantPlayer(
+    const MediaPlayerId& id) {
+  auto player = significant_players_.find(id);
+  if (player != significant_players_.end())
+    return;
+
+  // Check that the player is currently playing.
+  auto is_playing = playing_players_.find(id);
+  if (is_playing == playing_players_.end())
+    return;
+
+  // Check that the player is not muted.
+  auto volume = web_contents()->GetMediaVolumes().find(id);
+  if (volume == web_contents()->GetMediaVolumes().end() ||
+      volume->second == 0.0)
+    return;
+
+  significant_players_.insert(id);
+}
+
+void MediaEngagementContentsObserver::MaybeRemoveSignificantPlayer(
+    const MediaPlayerId& id) {
+  auto player = significant_players_.find(id);
+  if (player == significant_players_.end())
+    return;
+  bool significant = true;
+
+  // If the player is no longer playing, it should not be significant.
+  auto is_playing = playing_players_.find(id);
+  if (is_playing == playing_players_.end())
+    significant = false;
+
+  // If the player is muted, or we don't know the volume then the player can't
+  // be significant.
+  auto volume = web_contents()->GetMediaVolumes().find(id);
+  if (volume == web_contents()->GetMediaVolumes().end() ||
+      volume->second == 0.0)
+    significant = false;
+
+  if (!significant)
+    significant_players_.erase(id);
 }
 
 bool MediaEngagementContentsObserver::AreConditionsMet() const {
