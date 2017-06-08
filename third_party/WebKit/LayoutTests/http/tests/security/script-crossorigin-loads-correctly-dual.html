@@ -2,7 +2,7 @@
 <p>This test passes if a script resource is loaded twice if asked to fetch it with and without CORS enabled.</p>
 <pre></pre>
 <!-- Non-CORS enabled script load, supplying credentials. -->
-<script src="http://localhost:8000/security/resources/cors-script.php?cors=true&credentials=true&value=1&value_cors=2"></script>
+<script src="http://localhost:8000/security/resources/cors-script.php?ACAOrigin=true&credentials=true&value=1&value_cors=2"></script>
 <script>
 if (window.testRunner) {
     testRunner.dumpAsText();
@@ -15,7 +15,7 @@ var expected = "12";
 var outcome = result;
 </script>
 <!-- CORS enabled script load, supplying credentials. Should not re-use above cached script, as response will differ. -->
-<script crossorigin="use-credentials" src="http://localhost:8000/security/resources/cors-script.php?cors=true&credentials=true&value=1&value_cors=2"></script>
+<script crossorigin="use-credentials" src="http://localhost:8000/security/resources/cors-script.php?ACAOrigin=true&credentials=true&value=1&value_cors=2"></script>
 <script>
 outcome += result;
 document.querySelector("pre").innerHTML = outcome === expected ? "PASS" : "FAIL";
