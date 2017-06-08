@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1584ec1_3d72678a",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "#include \"base/base_export.h\"\nfor BASE_EXPORT",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3581fbf6_60cc548f",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "This could be a static private method of SequenceLocalStorageSlot, since it\u0027s not expected to be used by anyone else.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7200f288_6e0ccf06",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "Sequence -\u003e sequence\n\nWe use Sequence to refer to the TaskScheduler\u0027s Sequence and sequence to refer to the general concept of sequence. This API is supposed to be TaskScheduler agnostic.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b7673c_a54013c5",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "Allocate memory for |value| with new rather than MakeUnique. Since SequenceLocalStorageMap needs to store values of various types within the same map, the type of value_destructor_pair.value is void* (std::unique_ptr\u003cvoid\u003e is invalid). Memory is freed by calling value_destructor_pair.destructor when the value is overwritten by another call to SequenceLocalStorageMap::Set or when the SequenceLocalStorageMap is deleted.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36c2e0c_e3cf1139",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "Add comment explaining how |slot_id_| is used.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807ceee0_c48092a6",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "#endif  // BASE_THREADING_SEQUENCE_LOCAL_STORAGE_SLOT_H_",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea1a16fd_816683db",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "The constructor can be protected too. Each TEST_F macro creates a subclass of SequenceLocalStorageSlotTest. These subclasses are instantiated, but never the base class.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "770c6136_b1a3c88a",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "Add a test just to verify that changing the value returned by Get() actually changes the value in SLS.\n\nSequenceLocalStorageSlot\u003cbool\u003e slot;\nslot.Set(false);\nslot.Get() \u003d true;\nEXPECT_TRUE(slot.Get());",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73622496_74538d1e",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T14:12:47Z",
+      "side": 1,
+      "message": "Add a simple Get/Set test with a std::unique_ptr. The current tests can pass without the std::move in SequenceLocalStorageSlot::Get(). A test with std::unique_ptr wouldn\u0027t.",
+      "revId": "2aafb71b0985cab64a5c3ad1e9d3eef7926280b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
