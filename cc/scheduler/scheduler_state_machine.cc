@@ -1149,6 +1149,9 @@ void SchedulerStateMachine::SetVisible(bool visible) {
 
   did_prepare_tiles_ = false;
   wait_for_ready_to_draw_ = false;
+  // Prior CompositorFrame may have been discarded, so ensure that we create a
+  // new one, even if there are no tiles.
+  needs_redraw_ = true;
 }
 
 void SchedulerStateMachine::SetBeginFrameSourcePaused(bool paused) {
