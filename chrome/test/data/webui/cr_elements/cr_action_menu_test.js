@@ -101,6 +101,19 @@ suite('CrActionMenu', function() {
     assertEquals(items[items.length - 1], menu.root.activeElement);
   });
 
+  test('can navigate to dynamically added items', function() {
+    var item = document.createElement('button');
+    item.classList.add('dropdown-item');
+    menu.insertBefore(item, items[0]);
+
+    // MutationObserver callbacks fire with microtask timing.
+    return Promise.resolve().then(function() {
+      menu.showAt(document.querySelector('#dots'));
+      down();
+      assertEquals(item, menu.root.activeElement);
+    });
+  });
+
   test('close on resize', function() {
     menu.showAt(document.querySelector('#dots'));
     assertTrue(menu.open);
