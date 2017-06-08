@@ -87,8 +87,8 @@ class IMEDetailedView : public ImeListView {
     return controlled_setting_icon_;
   }
 
-  void Update(const IMEInfoList& list,
-              const IMEPropertyInfoList& property_list,
+  void Update(const std::vector<mojom::ImeInfo>& list,
+              const std::vector<mojom::ImeProperty>& property_list,
               bool show_keyboard_toggle,
               SingleImeBehavior single_ime_behavior) override {
     ImeListView::Update(list, property_list, show_keyboard_toggle,
@@ -193,7 +193,7 @@ void TrayIME::Update() {
   }
 }
 
-void TrayIME::UpdateTrayLabel(const IMEInfo& current, size_t count) {
+void TrayIME::UpdateTrayLabel(const mojom::ImeInfo& current, size_t count) {
   if (tray_label_) {
     bool visible = ShouldShowImeTrayItem(count) && is_visible_;
     tray_label_->SetVisible(visible);
