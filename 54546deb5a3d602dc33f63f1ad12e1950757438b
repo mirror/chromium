@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be5feba3_30141165",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-08T12:40:44Z",
+      "side": 1,
+      "message": "Don\u0027t name variables by restating their types. This can just be _toolbarModel.",
+      "range": {
+        "startLine": 144,
+        "startChar": 35,
+        "endLine": 144,
+        "endChar": 51
+      },
+      "revId": "54546deb5a3d602dc33f63f1ad12e1950757438b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e24cb37_b91210b4",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-08T12:40:44Z",
+      "side": 1,
+      "message": "It looks like _tabModel and _toolbarModelDelegate aren\u0027t needed outside of the init; only the toolbar model is needed. Rather than adding more dependencies to this class, I\u0027d rather that the initializing class get the toolbar model and webstate and pass them into the initializer (or set them via properties, as webstate was set prior to this change).",
+      "range": {
+        "startLine": 242,
+        "startChar": 4,
+        "endLine": 242,
+        "endChar": 20
+      },
+      "revId": "54546deb5a3d602dc33f63f1ad12e1950757438b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
