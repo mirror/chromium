@@ -124,6 +124,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7392f0ea_0ce7462a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1117099
+      },
+      "writtenOn": "2017-06-08T08:07:12Z",
+      "side": 1,
+      "message": "Bascially, nearly all of the \"slow\" time is spent in HTMLParserScriptRunner::PendingScriptFinished\n\nThis calls into other stuff, and at that point I lost track. I guess it will execute the script?",
+      "parentUuid": "d40add6e_90685337",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
