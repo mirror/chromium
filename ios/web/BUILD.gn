@@ -66,6 +66,8 @@ source_set("web_arc") {
     "navigation/navigation_manager_delegate.h",
     "navigation/navigation_manager_impl.h",
     "navigation/navigation_manager_impl.mm",
+    "navigation/navigation_manager_new_impl.h",
+    "navigation/navigation_manager_new_impl.mm",
     "navigation/nscoder_util.h",
     "navigation/nscoder_util.mm",
     "navigation/serializable_user_data_manager_impl.h",

@@ -15,7 +15,7 @@
 
 namespace web {
 
-class NavigationManagerImpl;
+class NavigationManagerNewImpl;
 class WebInterstitialDelegate;
 class WebInterstitialImpl;
 class WebStateImpl;
@@ -71,7 +71,7 @@ class WebInterstitialImpl : public WebInterstitial, public WebStateObserver {
  private:
   // The navigation manager corresponding to the WebState the interstiatial was
   // created for.
-  NavigationManagerImpl* navigation_manager_;
+  NavigationManagerNewImpl* navigation_manager_;
   // The URL corresponding to the page that resulted in this interstitial.
   GURL url_;
   // Whether or not to create a new transient entry on display.

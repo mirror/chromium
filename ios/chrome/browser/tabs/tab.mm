@@ -110,7 +110,7 @@
 #import "ios/public/provider/chrome/browser/native_app_launcher/native_app_whitelist_manager.h"
 #import "ios/web/navigation/crw_session_controller.h"
 #import "ios/web/navigation/navigation_item_impl.h"
-#import "ios/web/navigation/navigation_manager_impl.h"
+#import "ios/web/navigation/navigation_manager_new_impl.h"
 #include "ios/web/public/favicon_status.h"
 #include "ios/web/public/favicon_url.h"
 #include "ios/web/public/interstitials/web_interstitial.h"
@@ -592,8 +592,10 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (const GURL&)url {
   // See note in header; this method should be removed.
-  web::NavigationItem* item =
-      [self navigationManagerImpl]->GetSessionController().currentItem;
+  // TODO(danyao): replace this with VisibleURL
+  /*web::NavigationItem* item =
+      [self navigationManagerImpl]->GetSessionController().currentItem;*/
+  web::NavigationItem* item = [self navigationManagerImpl]->GetVisibleItem();
   return item ? item->GetVirtualURL() : GURL::EmptyGURL();
 }
 
@@ -708,7 +710,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   return self.webState ? self.webState->GetNavigationManager() : nullptr;
 }
 
-- (web::NavigationManagerImpl*)navigationManagerImpl {
+- (web::NavigationManagerNewImpl*)navigationManagerImpl {
   return self.webState ? &(_webStateImpl->GetNavigationManagerImpl()) : nullptr;
 }
 
@@ -719,6 +721,8 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 - (void)replaceHistoryWithNavigations:
             (const std::vector<sessions::SerializedNavigationEntry>&)navigations
                          currentIndex:(NSInteger)currentIndex {
+  // TODO(danyao): temporarily disable replaceHistory in Tab
+  /*
   std::vector<std::unique_ptr<web::NavigationItem>> items =
       sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations);
   [self navigationManagerImpl]->ReplaceSessionHistory(std::move(items),
@@ -726,6 +730,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   [self didReplaceSessionHistory];
 
   [self.webController loadCurrentURL];
+   */
 }
 
 - (void)didReplaceSessionHistory {
@@ -1086,6 +1091,11 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 }
 
 - (void)goToItem:(const web::NavigationItem*)item {
+  DCHECK(false) << "To be implemented.";
+
+  // TODO(danyao): This can be implemented, but requires moving indexOfItem to
+  // NavigationManager.
+  /*
   DCHECK(item);
 
   if (self.navigationManager) {
@@ -1094,7 +1104,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
     NSInteger itemIndex = [sessionController indexOfItem:item];
     DCHECK_NE(itemIndex, NSNotFound);
     self.navigationManager->GoToIndex(itemIndex);
-  }
+  }*/
 }
 
 - (BOOL)openExternalURL:(const GURL&)url
