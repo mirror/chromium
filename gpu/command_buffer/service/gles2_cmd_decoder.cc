@@ -639,13 +639,13 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void EnsureRenderbufferBound();
 
   // Helpers to facilitate calling into compatible extensions.
-  static void RenderbufferStorageMultisampleHelper(
-      const FeatureInfo* feature_info,
-      GLenum target,
-      GLsizei samples,
-      GLenum internal_format,
-      GLsizei width,
-      GLsizei height);
+  void RenderbufferStorageMultisampleHelper(const FeatureInfo* feature_info,
+                                            GLenum target,
+                                            GLsizei samples,
+                                            GLenum internal_format,
+                                            GLsizei width,
+                                            GLsizei height);
+  bool RegenerateRenderbufferIfNeeded(Renderbuffer* renderbuffer);
 
   void BlitFramebufferHelper(GLint srcX0,
                              GLint srcY0,
@@ -2944,12 +2944,9 @@ bool BackRenderbuffer::AllocateStorage(const FeatureInfo* feature_info,
                              size.width(),
                              size.height());
   } else {
-    GLES2DecoderImpl::RenderbufferStorageMultisampleHelper(feature_info,
-                                                           GL_RENDERBUFFER,
-                                                           samples,
-                                                           format,
-                                                           size.width(),
-                                                           size.height());
+    decoder_->RenderbufferStorageMultisampleHelper(
+        feature_info, GL_RENDERBUFFER, samples, format, size.width(),
+        size.height());
   }
 
   bool alpha_channel_needs_clear =
@@ -5778,6 +5775,7 @@ void GLES2DecoderImpl::DoBindFramebuffer(GLenum target, GLuint client_id) {
 }
 
 void GLES2DecoderImpl::DoBindRenderbuffer(GLenum target, GLuint client_id) {
+  DCHECK_EQ(target, (GLenum)GL_RENDERBUFFER);
   Renderbuffer* renderbuffer = NULL;
   GLuint service_id = 0;
   if (client_id != 0) {
@@ -8408,9 +8406,21 @@ void GLES2DecoderImpl::RenderbufferStorageMultisampleHelper(
     GLenum internal_format,
     GLsizei width,
     GLsizei height) {
+  RegenerateRenderbufferIfNeeded(state_.bound_renderbuffer.get());
+  EnsureRenderbufferBound();
+
+  if (samples == 0) {
+    glRenderbufferStorageEXT(target, internal_format, width, height);
+    return;
+  }
+
   // TODO(sievers): This could be resolved at the GL binding level, but the
   // binding process is currently a bit too 'brute force'.
-  if (feature_info->feature_flags().use_core_framebuffer_multisample) {
+  if (feature_info->feature_flags()
+          .use_img_for_multisampled_render_to_texture) {
+    glRenderbufferStorageMultisampleIMG(target, samples, internal_format, width,
+                                        height);
+  } else if (feature_info->feature_flags().use_core_framebuffer_multisample) {
     glRenderbufferStorageMultisample(
         target, samples, internal_format, width, height);
   } else if (feature_info->feature_flags().angle_framebuffer_multisample) {
@@ -8421,6 +8431,26 @@ void GLES2DecoderImpl::RenderbufferStorageMultisampleHelper(
     glRenderbufferStorageMultisampleEXT(
         target, samples, internal_format, width, height);
   }
+}
+
+bool GLES2DecoderImpl::RegenerateRenderbufferIfNeeded(
+    Renderbuffer* renderbuffer) {
+  if (!workarounds().multisample_renderbuffer_resize_emulation) {
+    return false;
+  }
+
+  if (!renderbuffer->RegenerateAndBindBackingObjectIfNeeded()) {
+    return false;
+  }
+
+  if (renderbuffer != state_.bound_renderbuffer.get()) {
+    // The renderbuffer bound in the driver has changed to the new
+    // renderbuffer->service_id(). If that isn't state_.bound_renderbuffer,
+    // then state_.bound_renderbuffer is no longer bound in the driver.
+    state_.bound_renderbuffer_valid = false;
+  }
+
+  return true;
 }
 
 void GLES2DecoderImpl::BlitFramebufferHelper(GLint srcX0,
@@ -8503,14 +8533,13 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleCHROMIUM(
     return;
   }
 
-  EnsureRenderbufferBound();
   GLenum impl_format =
       renderbuffer_manager()->InternalRenderbufferFormatToImplFormat(
           internalformat);
   LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER(
       "glRenderbufferStorageMultisampleCHROMIUM");
-  RenderbufferStorageMultisampleHelper(
-      feature_info_.get(), target, samples, impl_format, width, height);
+  RenderbufferStorageMultisampleHelper(feature_info_.get(), target, samples,
+                                       impl_format, width, height);
   GLenum error =
       LOCAL_PEEK_GL_ERROR("glRenderbufferStorageMultisampleCHROMIUM");
   if (error == GL_NO_ERROR) {
@@ -8546,18 +8575,12 @@ void GLES2DecoderImpl::DoRenderbufferStorageMultisampleEXT(
     return;
   }
 
-  EnsureRenderbufferBound();
   GLenum impl_format =
       renderbuffer_manager()->InternalRenderbufferFormatToImplFormat(
           internalformat);
   LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER("glRenderbufferStorageMultisampleEXT");
-  if (features().use_img_for_multisampled_render_to_texture) {
-    glRenderbufferStorageMultisampleIMG(
-        target, samples, impl_format, width, height);
-  } else {
-    glRenderbufferStorageMultisampleEXT(
-        target, samples, impl_format, width, height);
-  }
+  RenderbufferStorageMultisampleHelper(feature_info_.get(), target, samples,
+                                       impl_format, width, height);
   GLenum error = LOCAL_PEEK_GL_ERROR("glRenderbufferStorageMultisampleEXT");
   if (error == GL_NO_ERROR) {
     renderbuffer_manager()->SetInfoAndInvalidate(renderbuffer, samples,
@@ -8701,14 +8724,12 @@ void GLES2DecoderImpl::DoRenderbufferStorage(
     return;
   }
 
-  EnsureRenderbufferBound();
   LOCAL_COPY_REAL_GL_ERRORS_TO_WRAPPER("glRenderbufferStorage");
-  glRenderbufferStorageEXT(
-      target,
+  RenderbufferStorageMultisampleHelper(
+      feature_info_.get(), target, 0,
       renderbuffer_manager()->InternalRenderbufferFormatToImplFormat(
           internalformat),
-      width,
-      height);
+      width, height);
   GLenum error = LOCAL_PEEK_GL_ERROR("glRenderbufferStorage");
   if (error == GL_NO_ERROR) {
     renderbuffer_manager()->SetInfoAndInvalidate(renderbuffer, 0,
