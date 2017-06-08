@@ -432,6 +432,7 @@ public class VrShellImpl
 
     @Override
     public void onResume() {
+        mActivity.getFullscreenManager().setBrowserControlsPermamentlyHidden(true);
         super.onResume();
         if (mNativeVrShell != 0) {
             // Refreshing the viewer profile may accesses disk under some circumstances outside of
@@ -455,6 +456,7 @@ public class VrShellImpl
 
     @Override
     public void shutdown() {
+        mActivity.getFullscreenManager().setBrowserControlsPermamentlyHidden(false);
         if (mNativeVrShell != 0) {
             nativeDestroy(mNativeVrShell);
             mNativeVrShell = 0;
