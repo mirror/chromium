@@ -48,10 +48,9 @@ class SystemTrayDelegateChromeOS
   // Overridden from ash::SystemTrayDelegate:
   void Initialize() override;
   void ShowUserLogin() override;
-  void GetCurrentIME(ash::IMEInfo* info) override;
-  void GetAvailableIMEList(ash::IMEInfoList* list) override;
-  void GetCurrentIMEProperties(ash::IMEPropertyInfoList* list) override;
-  base::string16 GetIMEManagedMessage() override;
+  // void GetCurrentIME(ash::IMEInfo* info) override;
+  // void GetAvailableIMEList(ash::IMEInfoList* list) override;
+  // void GetCurrentIMEProperties(ash::IMEPropertyInfoList* list) override;
   ash::NetworkingConfigDelegate* GetNetworkingConfigDelegate() const override;
   void ActiveUserWasChanged() override;
   bool IsSearchKeyMappedToCapsLock() override;
