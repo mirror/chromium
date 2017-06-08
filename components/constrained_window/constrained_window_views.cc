@@ -174,6 +174,9 @@ views::Widget* ShowWebModalDialogViews(
   content::WebContents* web_contents =
       GetTopLevelWebContents(initiator_web_contents);
   views::Widget* widget = CreateWebModalDialogViews(dialog, web_contents);
+  if (!widget)
+    return nullptr;
+
   ShowModalDialog(widget->GetNativeWindow(), web_contents);
   return widget;
 }
@@ -202,12 +205,17 @@ views::Widget* ShowWebModalDialogWithOverlayViews(
 views::Widget* CreateWebModalDialogViews(views::WidgetDelegate* dialog,
                                          content::WebContents* web_contents) {
   DCHECK_EQ(ui::MODAL_TYPE_CHILD, dialog->GetModalType());
+
+  auto* manager =
+      web_modal::WebContentsModalDialogManager::FromWebContents(web_contents);
+  if (!manager) {
+    DVLOG(1) << "WebContentsModalDialogManager not registered for WebContents.";
+    return nullptr;
+  }
+
   return views::DialogDelegate::CreateDialogWidget(
       dialog, nullptr,
-      web_modal::WebContentsModalDialogManager::FromWebContents(web_contents)
-          ->delegate()
-          ->GetWebContentsModalDialogHost()
-          ->GetHostView());
+      manager->delegate()->GetWebContentsModalDialogHost()->GetHostView());
 }
 
 views::Widget* CreateBrowserModalDialogViews(views::DialogDelegate* dialog,
