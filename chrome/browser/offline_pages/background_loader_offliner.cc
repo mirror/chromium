@@ -303,13 +303,7 @@ void BackgroundLoaderOffliner::DidFinishNavigation(
   if (navigation_handle->IsErrorPage()) {
     RecordErrorCauseUMA(pending_request_->client_id(),
                         navigation_handle->GetNetErrorCode());
-    switch (navigation_handle->GetNetErrorCode()) {
-      case net::ERR_INTERNET_DISCONNECTED:
-        page_load_state_ = DELAY_RETRY;
-        break;
-      default:
-        page_load_state_ = RETRIABLE;
-    }
+    page_load_state_ = RETRIABLE;
   }
 }
 
@@ -344,9 +338,6 @@ void BackgroundLoaderOffliner::StartSnapshot() {
         break;
       case NONRETRIABLE:
         status = Offliner::RequestStatus::LOADING_FAILED_NO_RETRY;
-        break;
-      case DELAY_RETRY:
-        status = Offliner::RequestStatus::LOADING_FAILED_NO_NEXT;
         break;
       default:
         // We should've already checked for Success before entering here.

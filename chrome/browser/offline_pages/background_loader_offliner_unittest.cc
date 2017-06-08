@@ -546,7 +546,7 @@ TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnErrorPage) {
   EXPECT_EQ(Offliner::RequestStatus::LOADING_FAILED, request_status());
 }
 
-TEST_F(BackgroundLoaderOfflinerTest, MAYBE_NoNextOnInternetDisconnected) {
+TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnInternetDisconnected) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
                           kUserRequested);
@@ -567,7 +567,7 @@ TEST_F(BackgroundLoaderOfflinerTest, MAYBE_NoNextOnInternetDisconnected) {
   PumpLoop();
 
   EXPECT_TRUE(completion_callback_called());
-  EXPECT_EQ(Offliner::RequestStatus::LOADING_FAILED_NO_NEXT, request_status());
+  EXPECT_EQ(Offliner::RequestStatus::LOADING_FAILED, request_status());
 }
 
 TEST_F(BackgroundLoaderOfflinerTest, OnlySavesOnceOnMultipleLoads) {
