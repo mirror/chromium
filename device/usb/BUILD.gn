@@ -26,8 +26,6 @@ static_library("usb") {
     "usb_device.h",
     "usb_device_android.cc",
     "usb_device_android.h",
-    "usb_device_filter.cc",
-    "usb_device_filter.h",
     "usb_device_handle.cc",
     "usb_device_handle.h",
     "usb_device_handle_android.cc",
@@ -66,11 +64,6 @@ static_library("usb") {
   public_deps = [
     "//base",
     "//url",
-
-    # Depend on the header generation target only to avoid the circular
-    # dependency caused by both using enums defined in the mojom headers and
-    # typemappings linking against this target.
-    "public/interfaces:interfaces__generator",
   ]
 
   if (use_udev) {
