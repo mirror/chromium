@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4c30058f_94870eb6",
+        "filename": "chrome/browser/extensions/chrome_app_icon.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 1,
+      "message": "Thanks for explanation, done",
+      "parentUuid": "e06b97a7_e321c88c",
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e55d6303_feafe508",
         "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6f2ca7b3_77a88692",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 1,
+      "message": "Well, I had temptation to do like this. But I see following problems:\n1. Loading extra not-used icons may require png decoding which is not efficient.\n2. This dialog is designed to be shown once icon is decoded. this makes sense to prevent flickering. In case we load several images, unused scale may be loaded first and this would trigger dialog show while required icon is not loaded yet. Handling this case might be more expansive than current logic. \nThat is why I decided to preload only required scale.\nWDYT?",
+      "parentUuid": "e55d6303_feafe508",
+      "range": {
+        "startLine": 82,
+        "startChar": 0,
+        "endLine": 87,
+        "endChar": 62
+      },
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5d20800d_3dcb1f32",
         "filename": "extensions/browser/extension_icon_image.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-08T16:05:41Z",
       "side": 1,
       "message": "Use base::ThreadTaskRunnerHandle::Get()-\u003ePostTask(...) to post a task on the same thread.",
+      "range": {
+        "startLine": 201,
+        "startChar": 4,
+        "endLine": 201,
+        "endChar": 36
+      },
+      "revId": "d7a2ec7733b3d8083d53938917c37a1915b1bd72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dce9910a_6a29df43",
+        "filename": "extensions/browser/extension_icon_image.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 1,
+      "message": "Uhh, I remember we had this but did not find :)",
+      "parentUuid": "5d20800d_3dcb1f32",
       "range": {
         "startLine": 201,
         "startChar": 4,

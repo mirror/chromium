@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "690f22d4_b9470f29",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 0,
+      "message": "I think testing if extension was installed on image update is not very reliable. As it was implemented before this code did not handle the case when extension was uninstalled after dialog is shown. I added explicit observer for this.",
+      "range": {
+        "startLine": 117,
+        "startChar": 7,
+        "endLine": 117,
+        "endChar": 23
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "260e394c_2466ca44",
         "filename": "extensions/browser/extension_icon_image.cc",
         "patchSetId": 1
@@ -69,6 +92,29 @@
       "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1e240e79_22ced1bf",
+        "filename": "extensions/browser/extension_icon_image_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 0,
+      "message": "This test looks bit strange for me.\nIt creates PNG Image Representation from ImageSkia.\nNext it accesses image and tests that PNG Image Representation is not changed. It does not change because image is not changed due no update from IconImage. Even if IconImage decides to reload something it does it asynchronously and in this case image would not be changed too.\nI updated the test as it sounds from the name.",
+      "range": {
+        "startLine": 516,
+        "startChar": 61,
+        "endLine": 516,
+        "endChar": 73
+      },
+      "revId": "0527f72f6822c6aba0370d8245bd9acb6715a2f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

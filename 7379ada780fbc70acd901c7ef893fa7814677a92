@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69da6ac0_2fe201c0",
+        "filename": "chrome/browser/extensions/chrome_app_icon_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 1,
+      "message": "Found tricky case when icon was indirectly directly as result of handling UpdateIcon in unit tests.",
+      "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16f0434_090565d6",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T19:51:59Z",
+      "side": 1,
+      "message": "to prevent multiple calls for Show/OnDialogClosed due the image update, which can happens multiple time.",
+      "range": {
+        "startLine": 105,
+        "startChar": 16,
+        "endLine": 105,
+        "endChar": 29
+      },
+      "revId": "7379ada780fbc70acd901c7ef893fa7814677a92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
