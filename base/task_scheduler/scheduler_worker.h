@@ -109,6 +109,7 @@ class BASE_EXPORT SchedulerWorker
   SchedulerWorker(ThreadPriority priority_hint,
                   std::unique_ptr<Delegate> delegate,
                   TaskTracker* task_tracker,
+                  const SchedulerLock* predecessor_lock = nullptr,
                   SchedulerBackwardCompatibility backward_compatibility =
                       SchedulerBackwardCompatibility::DISABLED,
                   InitialState initial_state = InitialState::ALIVE);

@@ -764,7 +764,7 @@ TEST(TaskSchedulerWorkerTest, StartDetached) {
   scoped_refptr<ControllableDetachDelegate::Controls> controls =
       delegate->controls();
   auto worker = make_scoped_refptr(new SchedulerWorker(
-      ThreadPriority::NORMAL, WrapUnique(delegate), &task_tracker,
+      ThreadPriority::NORMAL, WrapUnique(delegate), &task_tracker, nullptr,
       SchedulerBackwardCompatibility::DISABLED,
       SchedulerWorker::InitialState::DETACHED));
   worker->Start();
@@ -864,7 +864,7 @@ TEST(TaskSchedulerWorkerTest, BumpPriorityOfDetachedThreadDuringShutdown) {
 
   // Create a DETACHED thread.
   auto worker = make_scoped_refptr(new SchedulerWorker(
-      ThreadPriority::BACKGROUND, std::move(delegate), &task_tracker,
+      ThreadPriority::BACKGROUND, std::move(delegate), &task_tracker, nullptr,
       SchedulerBackwardCompatibility::DISABLED,
       SchedulerWorker::InitialState::DETACHED));
   worker->Start();
