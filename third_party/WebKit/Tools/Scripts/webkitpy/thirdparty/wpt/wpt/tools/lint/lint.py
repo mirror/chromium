@@ -12,8 +12,8 @@ import sys
 
 from collections import defaultdict
 
+from .. import localpaths
 from . import fnmatch
-from ..localpaths import repo_root
 from ..gitignore.gitignore import PathFilter
 
 from manifest.sourcefile import SourceFile, js_meta_re, python_meta_re
@@ -679,6 +679,8 @@ def parse_args():
                         help="Output markdown")
     parser.add_argument("--css-mode", action="store_true",
                         help="Run CSS testsuite specific lints")
+    parser.add_argument("--repo-root", help="This is the root of the WPT directory tree. Use this"
+                        "option if the lint script exists outside the repository")
     return parser.parse_args()
 
 
@@ -686,6 +688,8 @@ def main(**kwargs):
     if kwargs.get("json") and kwargs.get("markdown"):
         logger.critical("Cannot specify --json and --markdown")
         sys.exit(2)
+
+    repo_root = kwargs.get('repo_root') or localpaths.repo_root
 
     output_format = {(True, False): "json",
                      (False, True): "markdown",
