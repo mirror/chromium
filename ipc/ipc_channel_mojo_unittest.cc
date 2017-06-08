@@ -548,18 +548,16 @@ class ListenerWithSimpleAssociatedInterface
     next_expected_value_ = value;
   }
 
-  void GetExpectedValue(const GetExpectedValueCallback& callback) override {
+  void GetExpectedValue(GetExpectedValueCallback callback) override {
     NOTREACHED();
   }
 
-  void RequestValue(const RequestValueCallback& callback) override {
-    NOTREACHED();
-  }
+  void RequestValue(RequestValueCallback callback) override { NOTREACHED(); }
 
-  void RequestQuit(const RequestQuitCallback& callback) override {
+  void RequestQuit(RequestQuitCallback callback) override {
     EXPECT_EQ(kNumMessages, num_messages_received_);
     received_quit_ = true;
-    callback.Run();
+    std::move(callback).Run();
     base::MessageLoop::current()->QuitWhenIdle();
   }
 
@@ -738,17 +736,15 @@ class ListenerWithSimpleProxyAssociatedInterface
     next_expected_value_ = value;
   }
 
-  void GetExpectedValue(const GetExpectedValueCallback& callback) override {
-    callback.Run(next_expected_value_);
+  void GetExpectedValue(GetExpectedValueCallback callback) override {
+    std::move(callback).Run(next_expected_value_);
   }
 
-  void RequestValue(const RequestValueCallback& callback) override {
-    NOTREACHED();
-  }
+  void RequestValue(RequestValueCallback callback) override { NOTREACHED(); }
 
-  void RequestQuit(const RequestQuitCallback& callback) override {
+  void RequestQuit(RequestQuitCallback callback) override {
     received_quit_ = true;
-    callback.Run();
+    std::move(callback).Run();
     binding_.Close();
     base::MessageLoop::current()->QuitWhenIdle();
   }
@@ -871,8 +867,8 @@ class ListenerWithIndirectProxyAssociatedInterface
   }
 
   // IPC::mojom::PingReceiver:
-  void Ping(const PingCallback& callback) override {
-    callback.Run();
+  void Ping(PingCallback callback) override {
+    std::move(callback).Run();
     ping_handler_.Run();
   }
 
@@ -953,17 +949,17 @@ class ListenerWithSyncAssociatedInterface
     next_expected_value_ = value;
   }
 
-  void GetExpectedValue(const GetExpectedValueCallback& callback) override {
-    callback.Run(next_expected_value_);
+  void GetExpectedValue(GetExpectedValueCallback callback) override {
+    std::move(callback).Run(next_expected_value_);
   }
 
-  void RequestValue(const RequestValueCallback& callback) override {
-    callback.Run(response_value_);
+  void RequestValue(RequestValueCallback callback) override {
+    std::move(callback).Run(response_value_);
   }
 
-  void RequestQuit(const RequestQuitCallback& callback) override {
+  void RequestQuit(RequestQuitCallback callback) override {
     quit_closure_.Run();
-    callback.Run();
+    std::move(callback).Run();
   }
 
   // IPC::Listener:
@@ -1080,7 +1076,7 @@ class SimpleTestClientImpl : public IPC::mojom::SimpleTestClient,
 
  private:
   // IPC::mojom::SimpleTestClient:
-  void RequestValue(const RequestValueCallback& callback) override {
+  void RequestValue(RequestValueCallback callback) override {
     int32_t response = 0;
     if (use_sync_sender_) {
       std::unique_ptr<IPC::SyncMessage> reply(new IPC::SyncMessage(
@@ -1091,7 +1087,7 @@ class SimpleTestClientImpl : public IPC::mojom::SimpleTestClient,
       EXPECT_TRUE(driver_->RequestValue(&response));
     }
 
-    callback.Run(response);
+    std::move(callback).Run(response);
 
     DCHECK(run_loop_);
     run_loop_->Quit();
