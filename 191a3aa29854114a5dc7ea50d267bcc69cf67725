@@ -36,6 +36,40 @@
     },
     {
       "key": {
+        "uuid": "1a5a6504_690d6c9b",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "I would maybe not write code that\u0027s unrelated in the examples, and just elide it with a ... or something?",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc27b010_a31a81a8",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "Did you mean to use a pointer here?",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b26ec201_b445d257",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -53,6 +87,74 @@
     },
     {
       "key": {
+        "uuid": "3051aa4c_6d6c3183",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "Can you make example comments proper sentences",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b70a579_387f4f09",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "same",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f045f46c_472b6170",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "I would make the common case the first example",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "971a2652_d98c25b0",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "I would start with the common example here also",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f1fff3ae_f19a5157",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -64,6 +166,23 @@
       "writtenOn": "2017-06-08T14:59:34Z",
       "side": 1,
       "message": "nit: While I like pointers, this example seems to break multiple other rules in this very document. For instance, if the first argument cannot be null (it would be slightly odd if it could), why is it not a reference? Also, what are the parameter names here?",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a17ea363_f71b6511",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-08T15:03:54Z",
+      "side": 1,
+      "message": "Can we use the common capitalization for examples unrelated to capitalizations",
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
