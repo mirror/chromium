@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79f63f19_dc39d2e9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T13:21:09Z",
+      "side": 1,
+      "message": "nit: prefix with \"Media Engagement: \"",
+      "revId": "f87a7a39e1f881ee82559d0950939899f82f174e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "565c4229_cbeb9057",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T13:21:09Z",
+      "side": 1,
+      "message": "Would it make sense to update the `significant_players_` instead of adding checks to `AreConditionsMet()`?\n\nSomething like:\n```\nif (volume \u003d\u003d 0.0)\n  MaybeRemoveSignificantPlayer();\nelse\n  MaybeInsertSignificantPlayer();\n```\n\n```\nvoid MaybeInsertSignificantPlayer() {\n  auto player \u003d significant_players_.find(id);\n  if (player !\u003d significant_players_.end())\n    return;\n  // Check conditions for significant player. Only \u0027volume\u0027 for now.\n  // If conditions are met, insert.\n}\n```\n\n```\nvoid MaybeRemoveSignificantPlayer() {\n  auto player \u003d significant_players_.find(id);\n  if (player \u003d\u003d significant_players_.end())\n    return;\n  // As above but other way around.\n}\n```",
+      "revId": "f87a7a39e1f881ee82559d0950939899f82f174e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94b3f15b_98d34c9d",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-08T13:21:09Z",
+      "side": 1,
+      "message": "I suggested another approach above. What worries me is that we are doing a copy of a set, then iterate trough a flat_map and erase entries in a set. Worse case, all of these operations are taking O(N) each. It will get worse when we will add the size.\n\nWe want `AreConditionsMet()` to be fast because it can be called often. I think it\u0027s okay to have more heavy computation but it should only happen when there is an event that requires it.",
+      "revId": "f87a7a39e1f881ee82559d0950939899f82f174e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
