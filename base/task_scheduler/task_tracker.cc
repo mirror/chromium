@@ -298,7 +298,6 @@ void TaskTracker::PerformRunTask(std::unique_ptr<Task> task,
         scoped_set_sequence_token_for_current_thread(sequence_token);
     ScopedSetTaskPriorityForCurrentThread
         scoped_set_task_priority_for_current_thread(task->traits.priority());
-
     // Set up TaskRunnerHandle as expected for the scope of the task.
     std::unique_ptr<SequencedTaskRunnerHandle> sequenced_task_runner_handle;
     std::unique_ptr<ThreadTaskRunnerHandle> single_thread_task_runner_handle;
