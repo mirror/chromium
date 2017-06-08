@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "74d6d322_e816f224",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ContentProviderBasedProject.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6f46e9d_ba676e38",
+      "range": {
+        "startLine": 232,
+        "startChar": 17,
+        "endLine": 232,
+        "endChar": 26
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a1d94c6_3263b8a5",
         "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "376697c5_d44e1496",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3a1d94c6_3263b8a5",
+      "range": {
+        "startLine": 560,
+        "startChar": 43,
+        "endLine": 560,
+        "endChar": 60
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "93249fb9_705c5f42",
+        "filename": "third_party/WebKit/Source/devtools/front_end/persistence/IsolatedFileSystem.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 561,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:14:17Z",
+      "side": 1,
+      "message": "resolve does not do a synchronous action.",
+      "parentUuid": "477e5720_4741d6ca",
+      "range": {
+        "startLine": 561,
+        "startChar": 17,
+        "endLine": 561,
+        "endChar": 23
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab938c10_cbf736c9",
         "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-08T17:58:49Z",
       "side": 1,
       "message": "Did you change the callsites? I missed those.",
+      "range": {
+        "startLine": 504,
+        "startChar": 2,
+        "endLine": 504,
+        "endChar": 17
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b74401_137ce420",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 504,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:14:17Z",
+      "side": 1,
+      "message": "I did. Do you know any particular callsite I missed?",
+      "parentUuid": "ab938c10_cbf736c9",
       "range": {
         "startLine": 504,
         "startChar": 2,
@@ -114,6 +210,30 @@
       "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d9c7774_0f356a14",
+        "filename": "third_party/WebKit/Source/devtools/front_end/workspace/UISourceCode.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:14:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "774640c3_27d81ef7",
+      "range": {
+        "startLine": 507,
+        "startChar": 50,
+        "endLine": 507,
+        "endChar": 69
+      },
+      "revId": "d5b5778bf30cef05d532f377b565dc1edcd5a526",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
