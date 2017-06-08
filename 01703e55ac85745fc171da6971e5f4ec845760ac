@@ -1,0 +1,384 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3178936d_d1195192",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "Do not mention Sequence in the description (see my comment on sequence.h about keeping the changes to Sequence for a separate CL).",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd6fd814_0591fd62",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "I would keep changes to this file for a separate CL.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1aa38cf9_a98db628",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "I would keep changes to this file for a separate CL.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cbeb0b5_a9e58650",
+        "filename": "base/threading/sequence_local_storage.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "I think you forgot to delete this file.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2d5efd7_d97412c2",
+        "filename": "base/threading/sequence_local_storage.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "I think you forgot to delete this file.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05fa9cde_1ecc51fe",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"\nfor DCHECK",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ba7c456_60b09cc7",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "auto\u0026\n\n\"Use auto to avoid type names that are noisy, obvious, or unimportant - cases where the type doesn\u0027t aid in clarity for the reader.\"\nhttps://google.github.io/styleguide/cppguide.html#auto",
+      "range": {
+        "startLine": 22,
+        "startChar": 4,
+        "endLine": 22,
+        "endChar": 48
+      },
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e15ba279_67d27444",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "The 2 spaces at the beginning of every line will show up in the error message. We usually do this https://cs.chromium.org/chromium/src/base/task_scheduler/scheduler_single_thread_task_runner_manager.cc?sq\u003dpackage:chromium\u0026dr\u003dCSs\u0026l\u003d419 to have the identation we want in code but not in the resulting string.\n\nTip: You can write your string on a single line and use git cl format to automatically wrap it.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a761fb2_90dd93c7",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "DCHECK_EQ(value_destructor_pair.destructor, current_entry.destructor);\n\nIt would be surprising if this wasn\u0027t true.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0db540c4_5c804030",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "#ifndef BASE_THREADING_SEQUENCE_LOCAL_STORAGE_MAP_H_\n#define BASE_THREADING_SEQUENCE_LOCAL_STORAGE_MAP_H_",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12438cb_8785a5f1",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "#include \"base/macros.h\"\nfor DISALLOW_COPY_AND_ASSIGN",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e75122_524769d0",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "WDYT of this?\n\nA SequenceLocalStorageMap holds (slot id) -\u003e (value, destructor) items for a sequence. When a task runs, it is expected that a pointer to its sequence\u0027s  SequenceLocalStorageMap is set in TLS using ScopedSetSequenceMapLocalStorageForCurrentThread. When a SequenceLocalStorageMap is destroyed, it destroys the values that it holds using the destructors associated with these values.\n\nAnd keep this for when you implement SequenceLocalStorageSlot:\n\nThe Get() and Set() method should not be accessed directly. Use SequenceLocalStorageSlot to Get() and Set() values in the current sequence\u0027s SequenceLocalStorageMap.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a5893e_e248e36c",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "\u003d nullptr;\nto be consistent with |value|",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9597450_cf8eadc4",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "Change to: \"There can only be one ScopedSetSequenceLocalStorageMapForCurrentThread instance per thread at a time.\"",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf53a65_9cf68fa1",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "#endif  // BASE_THREADING_SEQUENCE_LOCAL_STORAGE_MAP_H_",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80928d70_e75529c2",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "You move around a pointer to a SetOnDestroy instance, but not a SetOnDestroy instance. Do you really need this move constructor?",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65638d6_5e5f0ff2",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "CreateSetOnDestroyValueDestructorPair()\n\nWe use the word \"Factory\" for classes that generate multiple instances of a class.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca90361_265140ea",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "#include \u003cmemory\u003e\n\nhttp://en.cppreference.com/w/cpp/memory/default_delete",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12db45cf_73a3e657",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "It would be worth it to test a simple Get/Set.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f9d99a_51a14675",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "The { ... } is not useful here.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0cee72_f7a821c1",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "EXPECT_FALSE(set_on_destruction2);\n\nWe don\u0027t like to leave anything unverified in unit tests.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0956bc0b_c8fa4368",
+        "filename": "base/threading/sequence_local_storage_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T13:46:39Z",
+      "side": 1,
+      "message": "I think you forgot to delete this file.",
+      "revId": "01703e55ac85745fc171da6971e5f4ec845760ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
