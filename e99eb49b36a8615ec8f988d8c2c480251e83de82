@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f9989c9_2331a3e2",
+        "filename": "build/win/merge_pgc_files.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T19:00:42Z",
+      "side": 1,
+      "message": "\"each iteration,\"",
+      "range": {
+        "startLine": 26,
+        "startChar": 61,
+        "endLine": 26,
+        "endChar": 62
+      },
+      "revId": "e99eb49b36a8615ec8f988d8c2c480251e83de82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089781dd_7be7c3a4",
+        "filename": "build/win/merge_pgc_files.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T19:00:42Z",
+      "side": 1,
+      "message": "sometimes",
+      "range": {
+        "startLine": 125,
+        "startChar": 17,
+        "endLine": 125,
+        "endChar": 25
+      },
+      "revId": "e99eb49b36a8615ec8f988d8c2c480251e83de82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49097711_8b0f71f8",
+        "filename": "build/win/merge_pgc_files.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T19:00:42Z",
+      "side": 1,
+      "message": "complains",
+      "range": {
+        "startLine": 126,
+        "startChar": 14,
+        "endLine": 126,
+        "endChar": 22
+      },
+      "revId": "e99eb49b36a8615ec8f988d8c2c480251e83de82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2aa2da3_3f6672e4",
+        "filename": "build/win/merge_pgc_files.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T19:00:42Z",
+      "side": 1,
+      "message": "This is kind of a weird line break (the join arguments look like arguments to merge_pgc_files).",
+      "range": {
+        "startLine": 135,
+        "startChar": 43,
+        "endLine": 135,
+        "endChar": 44
+      },
+      "revId": "e99eb49b36a8615ec8f988d8c2c480251e83de82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec7c1b1f_3096fa42",
+        "filename": "build/win/merge_pgc_files.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-08T19:00:42Z",
+      "side": 1,
+      "message": "Are you sure you want to just keep going on failure now?",
+      "range": {
+        "startLine": 138,
+        "startChar": 49,
+        "endLine": 138,
+        "endChar": 59
+      },
+      "revId": "e99eb49b36a8615ec8f988d8c2c480251e83de82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
