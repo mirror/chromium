@@ -11,10 +11,11 @@
 #include <memory>
 
 namespace gpu {
+class GpuMemoryBufferManager;
 namespace gles2 {
 class GLES2Interface;
-}
-}
+}  // gles2
+}  // gpu
 class GrContext;
 
 namespace blink {
@@ -39,6 +40,8 @@ class PLATFORM_EXPORT SharedGpuContext {
   static bool IsValid();   // May re-create context if context was lost
   // May re-create context if context was lost
   static bool AllowSoftwareToAcceleratedCanvasUpgrade();
+  // May re-create context if context was lost
+  static gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager();
 
   static bool IsValidWithoutRestoring();
   typedef std::function<std::unique_ptr<WebGraphicsContext3DProvider>()>
