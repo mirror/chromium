@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "16be774a_cd693c77",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7186e69d_72a202f1",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ee59410_0881b683",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T20:41:38Z",
       "side": 1,
       "message": "We should have a code that does leveldb computation similar to these:\nhttps://cs.chromium.org/search/?q\u003dleveldb.approximate-memory-usage\u0026type\u003dcs\n\nIdeally we shoul dbe able to do database_-\u003eGetProperty().\nBut, it looks like the mojo leveldb api does not have GetProperty implemented yet. Could you please add it. Maybe as next CL?",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7008597_306a76ef",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:02:40Z",
+      "side": 1,
+      "message": "The problem I think might be that while currently the leveldb implementation lives in the same process as this code, that isn\u0027t guaranteed to always be the case. Will it cause problems if here we add memory to pmd when the memory might have been allocated in a different process? Either way, adding a GetProperty shouldn\u0027t be too hard, assuming the memory infra is happy to have asynchronous work being done in OnMemoryDump?",
+      "parentUuid": "2ee59410_0881b683",
       "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ba9f0ad_4b4f7f9d",
+        "filename": "content/browser/leveldb_wrapper_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-08T21:02:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cc9a769e_1bed49b4",
+      "revId": "3d758f81cb7467d41813b47b9d8e616717bded50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
