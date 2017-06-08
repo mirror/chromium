@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0dac42e6_dc525f9e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-08T16:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "16ca19a3_9b8de995",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "663f4574_80f150c2",
         "filename": "third_party/WebKit/LayoutTests/media/autoplay/document-user-activation-navigation-click.html",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "ac5d77cb_5b89066c",
+        "filename": "third_party/WebKit/LayoutTests/media/autoplay/document-user-activation-navigation-click.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-08T16:00:26Z",
+      "side": 1,
+      "message": "Okay, I have moved the tests into LayoutTests/http and removed queueLoad. We still need to use TestRunner a bit in order to make sure the test runner doesn\u0027t finish the test between navigation.",
+      "parentUuid": "663f4574_80f150c2",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9dcbc0c_2512a463",
         "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
         "patchSetId": 1
@@ -50,6 +86,24 @@
       "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8896f7eb_c4870479",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-08T16:00:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9dcbc0c_2512a463",
+      "revId": "225225ee8cd4c77036b1913b25776f799eecaa50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
