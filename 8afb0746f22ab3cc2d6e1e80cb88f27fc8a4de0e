@@ -85,6 +85,24 @@
       "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed7b63ce_ca1eaa48",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-08T21:00:28Z",
+      "side": 1,
+      "message": "Yes. The g_instance I added does not own this object. The object is actually owned by chromeos::input_method::InputMethodManager in ui/base/ime/chromeos.\n\n(Aside: That isn\u0027t a base::Singleton either. It could be changed, but that would require changing both production and test code that assumes it can call InputMethodManager::Initialize(my_input_method_manager) and InputMethodConfiguration::InitializeForTesting(my_input_method_manager). It might also require changes to tests that assume they can shut down the manager. Frankly, I wish something just owned these objects and there were not so many singletons, but that seems like a problem for another day.)\n\nWould you prefer I do the static_cast\u003c\u003e in the one place I need it? Keep this?",
+      "parentUuid": "2f3a190b_3b0d2580",
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
