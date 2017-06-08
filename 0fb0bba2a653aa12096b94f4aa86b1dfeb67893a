@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "14d4a298_fe950c98",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-08T18:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c368161a_1f580d56",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 80
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72bed888_ae58efff",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb712db1_5f5395fe",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-08T18:19:50Z",
+      "side": 1,
+      "message": "Good catch, thanks.",
+      "parentUuid": "72bed888_ae58efff",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
