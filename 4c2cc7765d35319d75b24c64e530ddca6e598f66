@@ -45,6 +45,30 @@
       "revId": "4c2cc7765d35319d75b24c64e530ddca6e598f66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d42e6941_2beb84e5",
+        "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-08T15:18:56Z",
+      "side": 1,
+      "message": "I plan to plumb this enum down to chrome/browser/media/router/ and then send it from the Android implementation of that (so it will be used in a couple of CLs). Adding it later when it\u0027s actually sent would mean another CL or CLs touching all these files through all the layers.",
+      "parentUuid": "638067d6_d9ca8fe1",
+      "range": {
+        "startLine": 16,
+        "startChar": 2,
+        "endLine": 16,
+        "endChar": 23
+      },
+      "revId": "4c2cc7765d35319d75b24c64e530ddca6e598f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
