@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "02454989_7fae9db6",
+        "filename": "third_party/WebKit/Source/core/exported/WebRemoteFrameImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-08T20:15:24Z",
+      "side": 1,
+      "message": "is there a rule for {}? I \u003c3 braces and would always use them given the option. Do you think it\u0027s ok to stay like this (i understand there\u0027s an argument for preserving existing style as well)?\n\n#gotofail",
+      "parentUuid": "46ef9bc3_e07b1240",
+      "range": {
+        "startLine": 128,
+        "startChar": 19,
+        "endLine": 128,
+        "endChar": 20
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "03e7a4da_9a40c97e",
         "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4681526c_e04c4a2f",
+        "filename": "third_party/WebKit/Source/core/page/ChromeClient.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-08T20:15:24Z",
+      "side": 1,
+      "message": "Where possible i always want to use the least derived type ... so ideally this would always be WebView unless we switch everything over to WebViewImpl once the move is complete (assuming we also delete WebViewBase at that time).",
+      "parentUuid": "03e7a4da_9a40c97e",
+      "range": {
+        "startLine": 173,
+        "startChar": 10,
+        "endLine": 173,
+        "endChar": 17
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "11057856_594fe10b",
         "filename": "third_party/WebKit/Source/web/WebViewImpl.cpp",
         "patchSetId": 4
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-08T19:58:21Z",
       "side": 1,
       "message": "Although this suggests that we should just be returning WebViewBase. WDYT?",
+      "range": {
+        "startLine": 1772,
+        "startChar": 16,
+        "endLine": 1772,
+        "endChar": 41
+      },
+      "revId": "06d82772ffef9d370bfebeed1c01a4704683711a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee38f3d0_67264259",
+        "filename": "third_party/WebKit/Source/web/WebViewImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1772,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-08T20:15:24Z",
+      "side": 1,
+      "message": "In this case the problem is ppl **want** the most derived type (cause not all the methods are defined in WebView) - so i don\u0027t quite think it\u0027s the same. \n\nI guess in an ideal world we\u0027d take everything that\u0027s defined in WebView(Base|Impl) and make it virtual in WebView and then clients would only worry about WebView (and never downcast).",
+      "parentUuid": "11057856_594fe10b",
       "range": {
         "startLine": 1772,
         "startChar": 16,
