@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "975a0f86_0cdd0d2e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "applications -\u003e components\nthat needed -\u003e that use",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7d5576b_0162322d",
+        "filename": "base/task_scheduler/task_tracker.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "This file should not change in this CL.",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1558cdc_89e4c763",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "// Holds a pointer to a value alongside with a destructor for this pointer.",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5990d56_e6165339",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "If ValueDestructorPair was a class with a destructor, you wouldn\u0027t need to duplicate calls to the destructor in ~SequenceLocalStorageMap and Set(). Destroying a ValueDestructorPair would automatically destroy the value.\n\nYou\u0027ll need to provide a move constructor + assignment operator to avoid copies of ValueDestructorPair (if there were copies, the same value could be deleted multiple times).",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8674e9fb_0ccd4c7d",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "kSlotId\nhttps://google.github.io/styleguide/cppguide.html#Constant_Names\n\nkSlotId instead of kSlotNum to be consistent with the |slot_id| variable name used in sequence_local_storage_map.h\n\nAlso, move this to the anonymous namespace so it can be reused by all tests below.",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49c042a1_537980f5",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-08T16:29:14Z",
+      "side": 1,
+      "message": "Move this test first.",
+      "revId": "5de4d9439486b8011d8e82c292bfe4346f780cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
