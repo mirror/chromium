@@ -46,6 +46,30 @@
       "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb1a850d_738302e3",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-08T18:45:14Z",
+      "side": 1,
+      "message": "If I understand correctly, the race condition you are referring to can happen if there are more calls from snapshot controller to the BLO. Not sure if that can happen in this scenario. We could probably add means to reset any activity pending on snapshot controller or tell it to no longer send updates, before we reset it.\n(* It does look like we guard from it by checks on pending_requests_ thou *)\n\nWhy \u0027delete soon\u0027 would (mostly) work? Because by calling release() you are resetting snapshot_controller_ to nullptr, without releasing the object that is still on the call stack, but ensuring that once the stack unwinds you will call delete on that object. (* I still like this approach. *)\n\nThe alternative you mention (to do nothing with the snapshot_controller_ in the ResetState() as it will be overwritten in LoadAndSave()), means it will be hanging in memory for a little longer if there are no new requests coming. This is not that big of a deal, unless it will still be capable to send signals to BLO, while it is there, which could lead to state updates. (* We do guard for that as mention in comment to paragraph 1, hence keeping stuff in memory is the only real problem. *)",
+      "parentUuid": "56296b5b_e79c5d5b",
+      "range": {
+        "startLine": 372,
+        "startChar": 10,
+        "endLine": 372,
+        "endChar": 32
+      },
+      "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
