@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84f0e5e4_0f1dcfa2",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 28372,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-08T15:42:42Z",
+      "side": 1,
+      "message": "Seems that MojoConnectionError should be re-used instead of adding \"Mojo Connection Terminated\" that\u0027s specific for desktop.",
+      "range": {
+        "startLine": 28372,
+        "startChar": 1,
+        "endLine": 28372,
+        "endChar": 54
+      },
+      "revId": "1dac4b6165ce1e230939e22bc228e70ba8072c9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
