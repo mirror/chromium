@@ -3682,17 +3682,22 @@ void HTMLMediaElement::UpdateControlsVisibility() {
     return;
   }
 
-  EnsureMediaControls();
-  // TODO(mlamouri): this doesn't sound needed but the following tests, on
-  // Android fails when removed:
-  // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
-  GetMediaControls()->Reset();
-
   bool native_controls = ShouldShowControls(RecordMetricsBehavior::kDoRecord);
-  if (native_controls)
+  if (!RuntimeEnabledFeatures::LazyInitializeMediaControlsEnabled() ||
+      native_controls) {
+    EnsureMediaControls();
+
+    // TODO(mlamouri): this doesn't sound needed but the following tests, on
+    // Android fails when removed:
+    // fullscreen/compositor-touch-hit-rects-fullscreen-video-controls.html
+    GetMediaControls()->Reset();
+  }
+
+  if (native_controls) {
     GetMediaControls()->MaybeShow();
-  else
+  } else if (GetMediaControls()) {
     GetMediaControls()->Hide();
+  }
 
   if (web_media_player_)
     web_media_player_->OnHasNativeControlsChanged(native_controls);
