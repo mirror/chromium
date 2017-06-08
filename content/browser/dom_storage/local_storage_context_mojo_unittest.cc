@@ -139,11 +139,7 @@ class LocalStorageContextMojoTest : public testing::Test {
           nullptr, task_runner_, temp_path_.GetPath(),
           base::FilePath(FILE_PATH_LITERAL("leveldb")),
           special_storage_policy());
-      leveldb::mojom::LevelDBDatabaseAssociatedPtr database_ptr;
-      leveldb::mojom::LevelDBDatabaseAssociatedRequest request =
-          MakeIsolatedRequest(&database_ptr);
-      context_->SetDatabaseForTesting(std::move(database_ptr));
-      db_binding_.Bind(std::move(request));
+      db_binding_.Bind(context_->DatabaseRequestForTesting());
     }
     return context_;
   }
