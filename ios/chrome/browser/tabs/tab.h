@@ -59,7 +59,7 @@ struct SessionTab;
 namespace web {
 class NavigationItem;
 class NavigationManager;
-class NavigationManagerImpl;
+class NavigationManagerNewImpl;
 class WebState;
 }
 
@@ -210,7 +210,7 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // TODO(crbug.com/620465): remove navigationManagerImpl once Tab no longer uses
 // nor exposes private ios/web/ API.
 - (web::NavigationManager*)navigationManager;
-- (web::NavigationManagerImpl*)navigationManagerImpl;
+- (web::NavigationManagerNewImpl*)navigationManagerImpl;
 
 // Update the tab's history by replacing all previous navigations with
 // |navigations|.

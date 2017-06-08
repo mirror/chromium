@@ -69,7 +69,7 @@ goog.require('__crWeb.message');
   /**
    * Intercept window.history methods to call back/forward natively.
    */
-  window.history.back = function() {
+  /*window.history.back = function() {
     __gCrWeb.message.invokeOnHost({'command': 'window.history.back'});
   };
 
@@ -125,6 +125,7 @@ goog.require('__crWeb.message');
 
     __gCrWeb.message.invokeOnHost({'command': 'window.hashchange'});
   });
+   */
 
   /** Flush the message queue. */
   if (__gCrWeb.message) {

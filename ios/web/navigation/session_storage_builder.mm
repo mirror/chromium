@@ -33,22 +33,24 @@ namespace web {
 CRWSessionStorage* SessionStorageBuilder::BuildStorage(
     WebStateImpl* web_state) const {
   DCHECK(web_state);
-  web::NavigationManagerImpl* navigation_manager =
+  web::NavigationManagerNewImpl* navigation_manager =
       web_state->navigation_manager_.get();
   DCHECK(navigation_manager);
   CRWSessionStorage* session_storage = [[CRWSessionStorage alloc] init];
-  session_storage.hasOpener = web_state->HasOpener();
-  CRWSessionController* session_controller =
-      navigation_manager->GetSessionController();
-  session_storage.lastCommittedItemIndex =
-      session_controller.lastCommittedItemIndex;
-  session_storage.previousItemIndex = session_controller.previousItemIndex;
+  // TODO(danyao): add session save / restore code.
+  /*session_storage.hasOpener = web_state->HasOpener();
+  // NOTE(danyao): we no longer need session controller
+  //CRWSessionController* session_controller =
+  //    navigation_manager->GetSessionController();
+  //session_storage.lastCommittedItemIndex =
+  //    session_controller.lastCommittedItemIndex;
+  //session_storage.previousItemIndex = session_controller.previousItemIndex;
   NSMutableArray* item_storages = [[NSMutableArray alloc] init];
-  NavigationItemStorageBuilder item_storage_builder;
-  for (size_t index = 0; index < session_controller.items.size(); ++index) {
-    web::NavigationItemImpl* item = session_controller.items[index].get();
-    [item_storages addObject:item_storage_builder.BuildStorage(item)];
-  }
+  //NavigationItemStorageBuilder item_storage_builder;
+  //for (size_t index = 0; index < session_controller.items.size(); ++index) {
+  //  web::NavigationItemImpl* item = session_controller.items[index].get();
+  //  [item_storages addObject:item_storage_builder.BuildStorage(item)];
+  //}
   session_storage.itemStorages = item_storages;
   SessionCertificatePolicyCacheStorageBuilder cert_builder;
   session_storage.certPolicyCacheStorage = cert_builder.BuildStorage(
@@ -57,6 +59,7 @@ CRWSessionStorage* SessionStorageBuilder::BuildStorage(
       web::SerializableUserDataManager::FromWebState(web_state);
   [session_storage
       setSerializableUserData:user_data_manager->CreateSerializableUserData()];
+   */
   return session_storage;
 }
 
@@ -81,8 +84,9 @@ void SessionStorageBuilder::ExtractSessionState(
                  navigationItems:std::move(items)
           lastCommittedItemIndex:last_committed_item_index]);
   [session_controller setPreviousItemIndex:storage.previousItemIndex];
-  web_state->navigation_manager_.reset(new NavigationManagerImpl());
-  web_state->navigation_manager_->SetSessionController(session_controller);
+  web_state->navigation_manager_.reset(new NavigationManagerNewImpl());
+  // NOTE(danyao): we don't need session controller anymore.
+  // web_state->navigation_manager_->SetSessionController(session_controller);
   SessionCertificatePolicyCacheStorageBuilder cert_builder;
   std::unique_ptr<SessionCertificatePolicyCacheImpl> cert_policy_cache =
       cert_builder.BuildSessionCertificatePolicyCache(

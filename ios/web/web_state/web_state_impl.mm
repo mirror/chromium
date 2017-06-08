@@ -80,7 +80,7 @@ WebStateImpl::WebStateImpl(const CreateParams& params,
     SessionStorageBuilder session_storage_builder;
     session_storage_builder.ExtractSessionState(this, session_storage);
   } else {
-    navigation_manager_ = base::MakeUnique<NavigationManagerImpl>();
+    navigation_manager_ = base::MakeUnique<NavigationManagerNewImpl>();
     certificate_policy_cache_ =
         base::MakeUnique<SessionCertificatePolicyCacheImpl>();
   }
@@ -260,11 +260,11 @@ void WebStateImpl::OnDocumentSubmitted(const std::string& form_name,
     observer.DocumentSubmitted(form_name, user_initiated);
 }
 
-NavigationManagerImpl& WebStateImpl::GetNavigationManagerImpl() {
+NavigationManagerNewImpl& WebStateImpl::GetNavigationManagerImpl() {
   return *navigation_manager_;
 }
 
-const NavigationManagerImpl& WebStateImpl::GetNavigationManagerImpl() const {
+const NavigationManagerNewImpl& WebStateImpl::GetNavigationManagerImpl() const {
   return *navigation_manager_;
 }
 
@@ -638,9 +638,17 @@ const GURL& WebStateImpl::GetLastCommittedURL() const {
 
 GURL WebStateImpl::GetCurrentURL(URLVerificationTrustLevel* trust_level) const {
   GURL URL = [web_controller_ currentURLWithTrustLevel:trust_level];
+  // NOTE(danyao): on page start, URL = about:blank (default value of
+  // CRWWebController |_documentURL| and GetLastCommittedURL() is nullptr, which
+  // is expected since no views have been loaded into the web view. We should
+  // consider loading about:blank into the web view to have this match up.
+  GURL lastCommittedURL = GetLastCommittedURL();
   bool equalURLs = web::GURLByRemovingRefFromGURL(URL) ==
-                   web::GURLByRemovingRefFromGURL(GetLastCommittedURL());
-  DCHECK(equalURLs);
+                   web::GURLByRemovingRefFromGURL(lastCommittedURL);
+  // TODO(danyao): remove temporary woark around to consider about:blank and
+  // null equal.
+  // DCHECK(equalURLs);
+  DCHECK(equalURLs || lastCommittedURL == GURL::EmptyGURL());
   UMA_HISTOGRAM_BOOLEAN("Web.CurrentURLEqualsLastCommittedURL", equalURLs);
   return URL;
 }
@@ -713,6 +721,12 @@ void WebStateImpl::OnNavigationItemCommitted(
 
 WebState* WebStateImpl::GetWebState() {
   return this;
+}
+
+// NOTE(danyao): temporary workaround
+WKWebView* WebStateImpl::GetWKWebView() {
+  WKWebView* web_view = [web_controller_ webView];
+  return web_view;
 }
 
 }  // namespace web

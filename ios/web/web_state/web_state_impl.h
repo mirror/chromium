@@ -5,6 +5,8 @@
 #ifndef IOS_WEB_WEB_STATE_WEB_STATE_IMPL_H_
 #define IOS_WEB_WEB_STATE_WEB_STATE_IMPL_H_
 
+#import <WebKit/WebKit.h>
+
 #include <stddef.h>
 #include <stdint.h>
 
@@ -18,7 +20,8 @@
 #include "base/observer_list.h"
 #include "base/values.h"
 #import "ios/web/navigation/navigation_manager_delegate.h"
-#import "ios/web/navigation/navigation_manager_impl.h"
+#import "ios/web/navigation/navigation_manager_new_impl.h"
+#import "ios/web/navigation/session_storage_builder.h"
 #import "ios/web/public/java_script_dialog_callback.h"
 #include "ios/web/public/java_script_dialog_type.h"
 #import "ios/web/public/web_state/web_state.h"
@@ -70,7 +73,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   ~WebStateImpl() override;
 
   // Gets/Sets the CRWWebController that backs this object.
-  CRWWebController* GetWebController();
+  CRWWebController* GetWebController() override;
   void SetWebController(CRWWebController* web_controller);
 
   // Notifies the observers that a navigation has started.
@@ -117,8 +120,8 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   void OnFaviconUrlUpdated(const std::vector<FaviconURL>& candidates);
 
   // Returns the NavigationManager for this WebState.
-  const NavigationManagerImpl& GetNavigationManagerImpl() const;
-  NavigationManagerImpl& GetNavigationManagerImpl();
+  const NavigationManagerNewImpl& GetNavigationManagerImpl() const;
+  NavigationManagerNewImpl& GetNavigationManagerImpl();
 
   // Returns the SessionCertificatePolicyCacheImpl for this WebStateImpl.
   const SessionCertificatePolicyCacheImpl&
@@ -260,6 +263,8 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   void OnNavigationItemChanged() override;
   void OnNavigationItemCommitted(
       const LoadCommittedDetails& load_details) override;
+  // NOTE(danyao): temporary workaround
+  WKWebView* GetWKWebView() override;
 
   // Updates the HTTP response headers for the main page using the headers
   // passed to the OnHttpResponseHeadersReceived() function below.
@@ -299,7 +304,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   base::scoped_nsobject<CRWWebController> web_controller_;
 
   // The NavigationManagerImpl that stores session info for this WebStateImpl.
-  std::unique_ptr<NavigationManagerImpl> navigation_manager_;
+  std::unique_ptr<NavigationManagerNewImpl> navigation_manager_;
 
   // The SessionCertificatePolicyCacheImpl that stores the certificate policy
   // information for this WebStateImpl.
