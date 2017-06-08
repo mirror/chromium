@@ -106,6 +106,24 @@
       "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d40add6e_90685337",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 354,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-08T04:59:03Z",
+      "side": 1,
+      "message": "70ms sounds like quite high to me too, while what you say kinda makes sense too. Could I take a look at which code piece you\u0027re referring to for the parser blocking case?",
+      "parentUuid": "9d660244_6b403b72",
+      "revId": "1224fc242d74b8eceb638f4fbfd442beabe07c1a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
