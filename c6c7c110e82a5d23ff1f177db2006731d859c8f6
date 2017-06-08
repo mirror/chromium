@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f2ea78cb_a7ff990c",
+        "filename": "chrome/app/main_dll_loader_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1169359
+      },
+      "writtenOn": "2017-06-08T20:10:26Z",
+      "side": 1,
+      "message": "Optional: This also affect UMA since I think we will upload some UMA logs (which I think is okay for UMA) but it may be useful to add a histogram that this client \u0027may\u0027 have an UMA record uploaded due to having a launch from --try-chrome-again.",
+      "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
