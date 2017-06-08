@@ -146,7 +146,7 @@ interface PersistentPrefStore {
   SetValues(array<PrefUpdate> updates);
 
   // These mirror the C++ PersistentPrefStore methods.
-  CommitPendingWrite();
+  CommitPendingWrite() => ();
   SchedulePendingLossyWrites();
   ClearMutableValues();
 };
