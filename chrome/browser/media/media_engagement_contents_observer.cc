@@ -66,10 +66,15 @@ void MediaEngagementContentsObserver::MediaStartedPlaying(
   // TODO(mlamouri): check if:
   // - the playback has the minimum size requirements;
   // - the playback has an audio track;
-  // - the playback isn't muted.
   DCHECK(significant_players_.find(media_player_id) ==
          significant_players_.end());
   significant_players_.insert(media_player_id);
+  UpdateTimer();
+}
+
+void MediaEngagementContentsObserver::MediaVolumeChanged(
+    const MediaPlayerId& id,
+    double volume) {
   UpdateTimer();
 }
 
@@ -98,7 +103,17 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
 }
 
 bool MediaEngagementContentsObserver::AreConditionsMet() const {
-  if (significant_players_.empty() || !is_visible_)
+  std::set<MediaPlayerId> all_players;
+  std::copy(significant_players_.begin(), significant_players_.end(),
+            std::inserter(all_players, all_players.end()));
+
+  // Remove all muted players.
+  for (auto const& kv : web_contents()->GetMediaVolumes()) {
+    if (kv.second == 0.0)
+      all_players.erase(kv.first);
+  }
+
+  if (all_players.empty() || !is_visible_)
     return false;
 
   return !web_contents()->IsAudioMuted();

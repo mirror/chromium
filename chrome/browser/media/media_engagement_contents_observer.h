@@ -25,6 +25,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   void MediaStoppedPlaying(const MediaPlayerInfo& media_player_info,
                            const MediaPlayerId& media_player_id) override;
   void DidUpdateAudioMutingState(bool muted) override;
+  void MediaVolumeChanged(const MediaPlayerId& id, double volume) override;
 
  private:
   // Only MediaEngagementService can create a MediaEngagementContentsObserver.
