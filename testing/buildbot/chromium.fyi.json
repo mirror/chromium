@@ -10531,6 +10531,9 @@
     ]
   },
   "Linux ARM": {
+    "additional_compile_targets": [
+      "chrome"
+    ],
     "gtest_tests": [
       {
         "swarming": {
