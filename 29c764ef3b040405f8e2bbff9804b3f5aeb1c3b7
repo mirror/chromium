@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "8c102db0_1fb20839",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-08T15:10:22Z",
+      "side": 1,
+      "message": "\u003e\u003e \"that AD auth succeeded\" \nIf AD auth is not succeeded that means we cannot do GMS sign in, right?\nPlayStore window is only shown once GMS sign in completed successfully.",
+      "parentUuid": "e8672188_02a7f64b",
+      "revId": "29c764ef3b040405f8e2bbff9804b3f5aeb1c3b7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ffd75ae_ab874637",
         "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
         "patchSetId": 2
