@@ -4,4 +4,5 @@ per-file *.mojom=file://ipc/SECURITY_OWNERS
 chrisha@chromium.org
 pmonette@chromium.org
 
+# TEAM: layout-dev@chromium.org
 # COMPONENT: Internals>Core

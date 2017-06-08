@@ -22,4 +22,5 @@ per-file content_nacl_nonsfi.gyp=*
 per-file *.sb=set noparent
 per-file *.sb=rsesek@chromium.org
 
+# TEAM: layout-dev@chromium.org
 # COMPONENT: Internals>Core

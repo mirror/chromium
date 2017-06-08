@@ -15,4 +15,5 @@ per-file *_param_traits*.*=file://ipc/SECURITY_OWNERS
 
 per-file SECURITY_OWNERS=file://ipc/SECURITY_OWNERS
 
+# TEAM: layout-dev@chromium.org
 # COMPONENT: Internals>Core
