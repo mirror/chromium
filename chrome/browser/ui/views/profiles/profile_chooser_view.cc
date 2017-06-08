@@ -480,11 +480,10 @@ class TitleCard : public views::View {
   void Layout() override {
     int back_button_width = back_button_->GetPreferredSize().width();
     back_button_->SetBounds(0, 0, back_button_width, height());
-    int label_padding =
-        back_button_width + ChromeLayoutProvider::Get()
-                                ->GetInsetsMetric(views::INSETS_DIALOG_CONTENTS)
-                                .left();
-    int label_width = width() - 2 * label_padding;
+    gfx::Insets padding = ChromeLayoutProvider::Get()->GetInsetsMetric(
+        views::INSETS_DIALOG_CONTENTS);
+    int label_padding = back_button_width + padding.right();
+    int label_width = width() - 2 * back_button_width - padding.width();
     DCHECK_GT(label_width, 0);
     title_label_->SetBounds(label_padding, 0, label_width, height());
   }
