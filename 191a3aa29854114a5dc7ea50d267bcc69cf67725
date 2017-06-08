@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "bf2e427f_6534d967",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "301e1c45_ad23c25c",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69168681_717f1ab5",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T14:59:34Z",
       "side": 1,
       "message": "The very first item is in contradiction to this; the Google style guide still forbids non-const reference arguments. (I realize the doc also has this wording, but...it\u0027s still a little confusing.)",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee7ece2a_2f3bd707",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "This sentence confused me a bit too, but I wanted to see how other people felt. I\u0027ve reworded it to note that this doc explicitly calls out differences from the Google style guide.",
+      "parentUuid": "69168681_717f1ab5",
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "34e73440_a7a5fcec",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a5a6504_690d6c9b",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cc27b010_a31a81a8",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -67,6 +121,24 @@
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f8f66b_8147e93d",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Oops, yes. Done.",
+      "parentUuid": "cc27b010_a31a81a8",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "ecc4e4ec_196387f8",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3051aa4c_6d6c3183",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b70a579_387f4f09",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -118,6 +208,24 @@
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "575b7b77_7f637862",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b70a579_387f4f09",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +246,24 @@
     },
     {
       "key": {
+        "uuid": "2a358ef5_9006da65",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f045f46c_472b6170",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "971a2652_d98c25b0",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "e28a89fb_2abe0b5f",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "971a2652_d98c25b0",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f1fff3ae_f19a5157",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -166,6 +310,24 @@
       "writtenOn": "2017-06-08T14:59:34Z",
       "side": 1,
       "message": "nit: While I like pointers, this example seems to break multiple other rules in this very document. For instance, if the first argument cannot be null (it would be slightly odd if it could), why is it not a reference? Also, what are the parameter names here?",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "772d8489_3fce5b28",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Hmm, I kind of want to just delete this section since this should be covered by the general naming principles in the Google style guide anyway. WDYT?",
+      "parentUuid": "f1fff3ae_f19a5157",
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "e5a47150_13b41f4c",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a17ea363_f71b6511",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d05b441c_49e2daa8",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -206,6 +386,24 @@
     },
     {
       "key": {
+        "uuid": "507deb88_94ca9549",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done (though I did this by changing the example entirely).",
+      "parentUuid": "d05b441c_49e2daa8",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5317f934_4a3c6cf9",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7
@@ -220,6 +418,24 @@
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59a9d901_4f9c67dc",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5317f934_4a3c6cf9",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -252,6 +468,24 @@
       "side": 1,
       "message": "Yes, this description is out-dated.\n\nThe latest description is in https://www.chromium.org/blink/coding-style#TOC-Documentation",
       "parentUuid": "d780f489_8c2180e4",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deda2b21_a917c3fb",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-08T18:49:11Z",
+      "side": 1,
+      "message": "I feel like most of what\u0027s in there is already in the Google style guide. I\u0027ve tried to highlight the explicit additions on top of the Google style guide, and how it contrasts with WebKit style.",
+      "parentUuid": "96ab3e1b_72dce4c7",
       "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
