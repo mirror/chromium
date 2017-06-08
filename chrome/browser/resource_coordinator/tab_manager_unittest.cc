@@ -461,7 +461,7 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(&tab_manager);
   tab_manager.test_tab_strip_models_.push_back(
-      TabManager::TestTabStripModel(&tabstrip, false /* !is_app */));
+      {&tabstrip, true /* is_visible */, false /* !is_app */});
 
   base::SimpleTestTickClock test_clock;
   tab_manager.set_test_tick_clock(&test_clock);
