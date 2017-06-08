@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07400b20_cac746e3",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-08T09:33:46Z",
+      "side": 1,
+      "message": "By the way... I wonder if we should rather capture this snapshot at the beginning and use that if the frame is detached?   (You might have already explained the reason to me? - sorry if that\u0027s the case)",
+      "revId": "625ff2e07baf39e867140f69a4086af65dd5374f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
