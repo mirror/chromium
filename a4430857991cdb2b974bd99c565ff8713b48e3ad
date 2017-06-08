@@ -34,6 +34,24 @@
       "revId": "a4430857991cdb2b974bd99c565ff8713b48e3ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0742d8ba_ac73b36a",
+        "filename": "content/browser/android/content_view_core_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-08T11:15:31Z",
+      "side": 0,
+      "message": "Thanks for the explanation and kind words. Would it be then okay to leave it as it is for now? I left a comment that summarizes your reply here for a reminder.",
+      "parentUuid": "773f1b79_12b0af6a",
+      "revId": "a4430857991cdb2b974bd99c565ff8713b48e3ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
