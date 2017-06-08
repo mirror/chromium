@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-<script src="../resources/run-after-layout-and-paint.js"></script>
-<script src="resources/test-runner-paint-worklet.js"></script>
+<html class="reftest-wait">
+<link rel="match" href="invalid-image-paint-error-ref.html">
 <style>
     #output {
         width: 100px;
@@ -11,7 +9,8 @@
         background-color: green;
     }
 </style>
-</head>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
 <body>
 <div id="output"></div>
 
