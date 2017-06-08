@@ -8,11 +8,14 @@
 #include <vector>
 
 #include "ash/ash_export.h"
-#include "ash/system/tray/ime_info.h"
 #include "base/macros.h"
 
 namespace ash {
-struct IMEInfo;
+
+namespace mojom {
+class ImeInfo;
+class ImeProperty;
+}  // namespace mojom
 
 // Connects ash IME users (e.g. the system tray) to the IME implementation,
 // which might live in Chrome browser or in a separate mojo service.
@@ -23,14 +26,14 @@ class ASH_EXPORT ImeManager {
   virtual ~ImeManager();
 
   // Returns the currently selected IME.
-  virtual IMEInfo GetCurrentIme() const;
+  virtual mojom::ImeInfo GetCurrentIme() const;
 
   // Returns a list of properties for the currently selected IME.
-  virtual std::vector<IMEPropertyInfo> GetCurrentImeProperties() const;
+  virtual std::vector<mojom::ImeProperty> GetCurrentImeProperties() const;
 
   // Returns a list of available IMEs. "Available" IMEs are both installed and
   // enabled by the user in settings.
-  virtual std::vector<IMEInfo> GetAvailableImes() const;
+  virtual std::vector<mojom::ImeInfo> GetAvailableImes() const;
 
   // Returns true if the available IMEs are managed by enterprise policy.
   virtual bool IsImeManaged() const;

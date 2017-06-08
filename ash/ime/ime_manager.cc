@@ -4,22 +4,24 @@
 
 #include "ash/ime/ime_manager.h"
 
+#include "ash/public/interfaces/ime.mojom.h"
+
 namespace ash {
 
 ImeManager::ImeManager() = default;
 
 ImeManager::~ImeManager() = default;
 
-IMEInfo ImeManager::GetCurrentIme() const {
-  return IMEInfo();
+mojom::ImeInfo ImeManager::GetCurrentIme() const {
+  return mojom::ImeInfo();
 }
 
-std::vector<IMEPropertyInfo> ImeManager::GetCurrentImeProperties() const {
-  return std::vector<IMEPropertyInfo>();
+std::vector<mojom::ImeProperty> ImeManager::GetCurrentImeProperties() const {
+  return std::vector<mojom::ImeProperty>();
 }
 
-std::vector<IMEInfo> ImeManager::GetAvailableImes() const {
-  return std::vector<IMEInfo>();
+std::vector<mojom::ImeInfo> ImeManager::GetAvailableImes() const {
+  return std::vector<mojom::ImeInfo>();
 }
 
 bool ImeManager::IsImeManaged() const {
