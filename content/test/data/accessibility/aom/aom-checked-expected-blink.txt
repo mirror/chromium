@@ -1,5 +1,5 @@
-rootWebArea
-++checkBox checkedState=1
-++checkBox checkedState=2
-++checkBox checkedState=1
-++checkBox checkedState=3
+rootWebArea focusable
+++checkBox focusable checkedState=1
+++checkBox focusable checkedState=2
+++checkBox focusable checkedState=1
+++checkBox focusable checkedState=3

@@ -235,7 +235,10 @@ void AccessibilityEventRecorderWin::OnWinEventHook(
       "%s on role=%s", event_str.c_str(), RoleVariantToString(role).c_str());
   if (name_bstr.Length() > 0)
     log += base::StringPrintf(" name=\"%s\"", BstrToUTF8(name_bstr).c_str());
-  if (value_bstr.Length() > 0)
+  // Don't show value if document url as port changes between tests.
+  // Providing the value in the url is a hack provided for compatibility with
+  // older MSAA clients.
+  if (value_bstr.Length() > 0 role != ROLE_SYSTEM_DOCUMENT)
     log += base::StringPrintf(" value=\"%s\"", BstrToUTF8(value_bstr).c_str());
   log += " ";
   log += base::UTF16ToUTF8(IAccessibleStateToString(ia_state));

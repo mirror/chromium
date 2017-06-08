@@ -1,4 +1,4 @@
-rootWebArea
+rootWebArea focusable
 ++staticText name='Before'
 ++++inlineTextBox name='Before' wordStarts=0 wordEnds=6
 ++paragraph
