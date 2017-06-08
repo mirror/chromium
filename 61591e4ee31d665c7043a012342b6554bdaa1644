@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "859a8de6_5c13e8f3",
+        "filename": "content/browser/devtools/protocol/storage_handler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-08T17:30:24Z",
+      "side": 1,
+      "message": "Are you sure you need this one?",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1287db0_3c899a77",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-08T17:30:24Z",
+      "side": 1,
+      "message": "So this breaks an update loop. Should we then resume it once the origin is updated in _updateOrigin()?",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d00b51_4fb14cfa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/resources/ClearStorageView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-08T17:30:24Z",
+      "side": 1,
+      "message": "are we using object shorthands already?",
+      "revId": "61591e4ee31d665c7043a012342b6554bdaa1644",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94bd0388_931f46dc",
         "filename": "third_party/WebKit/Source/devtools/front_end/ui/ThrottledWidget.js",
         "patchSetId": 1
