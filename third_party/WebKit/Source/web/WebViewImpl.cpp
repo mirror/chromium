@@ -322,10 +322,6 @@ void WebViewImpl::SetPrerendererClient(
       *page_, new PrerendererClientImpl(*page_, prerenderer_client));
 }
 
-void WebViewImpl::SetSpellCheckClient(WebSpellCheckClient* spell_check_client) {
-  spell_check_client_ = spell_check_client;
-}
-
 // static
 HashSet<WebViewBase*>& WebViewBase::AllInstances() {
   DEFINE_STATIC_LOCAL(HashSet<WebViewBase*>, all_instances, ());
@@ -335,7 +331,6 @@ HashSet<WebViewBase*>& WebViewBase::AllInstances() {
 WebViewImpl::WebViewImpl(WebViewClient* client,
                          WebPageVisibilityState visibility_state)
     : client_(client),
-      spell_check_client_(nullptr),
       chrome_client_(WebFactory::GetInstance().CreateChromeClient(this)),
       context_menu_client_impl_(this),
       editor_client_impl_(this),
