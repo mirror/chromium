@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbbee5f7_969dcff5",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/controllers/manager.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-08T19:32:22Z",
+      "side": 1,
+      "message": "This doesn\u0027t necessarily need to be true *only* when there are wpt tests to be run, but it should be true whenever there are wpt tests to be run; this is meant to be an optimization to avoid unnecessary work sometimes.",
+      "revId": "73a14407b36e7cb9cb937a6faeeb628a0bed8d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
