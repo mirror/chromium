@@ -44,6 +44,9 @@ constexpr gfx::Size kSizeJustRight = gfx::Size(201, 201);
 #define EXPECT_CONTROLS_WATCH_TIME_FINALIZED() \
   EXPECT_CALL(media_log_, OnControlsWatchTimeFinalized()).RetiresOnSaturation();
 
+#define EXPECT_DISPLAY_WATCH_TIME_FINALIZED() \
+  EXPECT_CALL(media_log_, OnDisplayWatchTimeFinalized()).RetiresOnSaturation();
+
 class WatchTimeReporterTest : public testing::TestWithParam<bool> {
  public:
   WatchTimeReporterTest() : has_video_(GetParam()) {}
@@ -253,6 +256,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
 
     EXPECT_WATCH_TIME(All, kWatchTime1);
     EXPECT_WATCH_TIME(Src, kWatchTime1);
+    EXPECT_WATCH_TIME(DisplayInline, kWatchTime1);
     if (TestFlags & kStartOnBattery)
       EXPECT_WATCH_TIME(Battery, kWatchTime1);
     else
@@ -272,6 +276,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
 
     EXPECT_WATCH_TIME(All, kExpectedWatchTime);
     EXPECT_WATCH_TIME(Src, kExpectedWatchTime);
+    EXPECT_WATCH_TIME(DisplayInline, kExpectedWatchTime);
     const base::TimeDelta kExpectedPowerWatchTime =
         TestFlags & kFinalizePowerWatchTime ? kWatchTime2 : kExpectedWatchTime;
     const base::TimeDelta kExpectedContolsWatchTime =
@@ -302,6 +307,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       // started on battery we'll now record one for ac and vice versa.
       EXPECT_WATCH_TIME(All, kWatchTime4);
       EXPECT_WATCH_TIME(Src, kWatchTime4);
+      EXPECT_WATCH_TIME(DisplayInline, kWatchTime4);
       EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime4);
       if (TestFlags & kStartOnBattery)
         EXPECT_WATCH_TIME(Ac, kWatchTime4 - kWatchTime2);
@@ -321,6 +327,7 @@ class WatchTimeReporterTest : public testing::TestWithParam<bool> {
       EXPECT_WATCH_TIME(All, kWatchTime4);
       EXPECT_WATCH_TIME(Src, kWatchTime4);
       EXPECT_WATCH_TIME(Ac, kWatchTime4);
+      EXPECT_WATCH_TIME(DisplayInline, kWatchTime4);
       if (TestFlags & kStartWithNativeControls)
         EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime4 - kWatchTime2);
       else
@@ -420,6 +427,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterBasic) {
   EXPECT_WATCH_TIME(Eme, kWatchTimeLate);
   EXPECT_WATCH_TIME(Mse, kWatchTimeLate);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTimeLate);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTimeLate);
   EXPECT_CALL(media_log_, OnUnderflowUpdate(2));
   CycleReportingTimer();
 
@@ -458,6 +466,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterUnderflow) {
   EXPECT_WATCH_TIME(Eme, kWatchTimeEarly);
   EXPECT_WATCH_TIME(Mse, kWatchTimeEarly);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTimeEarly);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTimeEarly);
   EXPECT_CALL(media_log_, OnUnderflowUpdate(1));
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
@@ -498,6 +507,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterShownHidden) {
   EXPECT_WATCH_TIME(Eme, kExpectedWatchTime);
   EXPECT_WATCH_TIME(Mse, kExpectedWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kExpectedWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kExpectedWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -742,6 +752,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterControlsPowerFinalize) {
   EXPECT_WATCH_TIME(Eme, kWatchTime1);
   EXPECT_WATCH_TIME(Mse, kWatchTime1);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime1);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime1);
   EXPECT_CONTROLS_WATCH_TIME_FINALIZED();
   EXPECT_POWER_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
@@ -752,6 +763,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterControlsPowerFinalize) {
   EXPECT_WATCH_TIME(All, kWatchTime2);
   EXPECT_WATCH_TIME(Eme, kWatchTime2);
   EXPECT_WATCH_TIME(Mse, kWatchTime2);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime2);
   EXPECT_WATCH_TIME_FINALIZED();
   CycleReportingTimer();
 
@@ -776,6 +788,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterNonZeroStart) {
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   CycleReportingTimer();
 
   EXPECT_WATCH_TIME_FINALIZED();
@@ -797,6 +810,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizes) {
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_->OnSeeking();
 }
@@ -817,6 +831,7 @@ TEST_P(WatchTimeReporterTest, SeekFinalizeDoesNotTramplePreviousFinalize) {
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_->OnPaused();
   wtr_->OnSeeking();
@@ -838,6 +853,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeReporterFinalizeOnDestruction) {
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }
@@ -857,6 +873,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
@@ -871,6 +888,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Mse, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
@@ -886,6 +904,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(Eme, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
@@ -901,6 +920,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(Battery, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOff, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 
@@ -916,6 +936,7 @@ TEST_P(WatchTimeReporterTest, WatchTimeCategoryMapping) {
   EXPECT_WATCH_TIME(All, kWatchTime);
   EXPECT_WATCH_TIME(Src, kWatchTime);
   EXPECT_WATCH_TIME(NativeControlsOn, kWatchTime);
+  EXPECT_WATCH_TIME(DisplayInline, kWatchTime);
   EXPECT_WATCH_TIME_FINALIZED();
   wtr_.reset();
 }

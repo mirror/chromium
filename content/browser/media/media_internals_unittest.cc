@@ -473,6 +473,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
   ExpectWatchTime({media::kWatchTimeAudioAll, media::kWatchTimeAudioMse,
                    media::kWatchTimeAudioEme, media::kWatchTimeAudioAc,
                    media::kWatchTimeAudioNativeControlsOff,
+                   media::kWatchTimeAudioDisplayInline,
                    media::kWatchTimeAudioEmbeddedExperience},
                   kWatchTimeLate);
   ExpectMtbrTime({media::kMeanTimeBetweenRebuffersAudioMse,
@@ -482,7 +483,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicAudio) {
       {media::kRebuffersCountAudioMse, media::kRebuffersCountAudioEme}, 2);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 6, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -510,6 +511,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
       {media::kWatchTimeAudioVideoAll, media::kWatchTimeAudioVideoSrc,
        media::kWatchTimeAudioVideoEme, media::kWatchTimeAudioVideoAc,
        media::kWatchTimeAudioVideoNativeControlsOff,
+       media::kWatchTimeAudioVideoDisplayInline,
        media::kWatchTimeAudioVideoEmbeddedExperience},
       kWatchTimeLate);
   ExpectMtbrTime({media::kMeanTimeBetweenRebuffersAudioVideoSrc,
@@ -520,7 +522,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicVideo) {
                   2);
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 6, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -556,9 +558,11 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
   wtr_.reset();
 
   std::vector<base::StringPiece> normal_keys = {
-      media::kWatchTimeAudioVideoAll, media::kWatchTimeAudioVideoSrc,
+      media::kWatchTimeAudioVideoAll,
+      media::kWatchTimeAudioVideoSrc,
       media::kWatchTimeAudioVideoEme,
       media::kWatchTimeAudioVideoNativeControlsOff,
+      media::kWatchTimeAudioVideoDisplayInline,
       media::kWatchTimeAudioVideoEmbeddedExperience};
 
   for (auto key : watch_time_keys_) {
@@ -592,7 +596,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicPower) {
   // Spot check one of the non-AC keys; this relies on the assumption that the
   // AC metric is not last.
   const auto& metrics_vector = test_recorder_->GetEntry(1)->metrics;
-  ASSERT_EQ(5U, metrics_vector.size());
+  ASSERT_EQ(6U, metrics_vector.size());
 }
 
 TEST_F(MediaInternalsWatchTimeTest, BasicControls) {
@@ -628,8 +632,11 @@ TEST_F(MediaInternalsWatchTimeTest, BasicControls) {
   wtr_.reset();
 
   std::vector<base::StringPiece> normal_keys = {
-      media::kWatchTimeAudioVideoAll, media::kWatchTimeAudioVideoSrc,
-      media::kWatchTimeAudioVideoEme, media::kWatchTimeAudioVideoAc,
+      media::kWatchTimeAudioVideoAll,
+      media::kWatchTimeAudioVideoSrc,
+      media::kWatchTimeAudioVideoEme,
+      media::kWatchTimeAudioVideoAc,
+      media::kWatchTimeAudioVideoDisplayInline,
       media::kWatchTimeAudioVideoEmbeddedExperience};
 
   for (auto key : watch_time_keys_) {
@@ -661,7 +668,7 @@ TEST_F(MediaInternalsWatchTimeTest, BasicControls) {
   // Spot check one of the non-AC keys; this relies on the assumption that the
   // AC metric is not last.
   const auto& metrics_vector = test_recorder_->GetEntry(1)->metrics;
-  ASSERT_EQ(5U, metrics_vector.size());
+  ASSERT_EQ(6U, metrics_vector.size());
   EXPECT_EQ(kWatchTime3.InMilliseconds(), metrics_vector.back()->value);
 }
 
@@ -770,13 +777,14 @@ TEST_F(MediaInternalsWatchTimeTest, PlayerDestructionFinalizes) {
       {media::kWatchTimeAudioVideoAll, media::kWatchTimeAudioVideoMse,
        media::kWatchTimeAudioVideoEme, media::kWatchTimeAudioVideoAc,
        media::kWatchTimeAudioVideoNativeControlsOff,
+       media::kWatchTimeAudioVideoDisplayInline,
        media::kWatchTimeAudioVideoEmbeddedExperience},
       kWatchTimeLate);
   ExpectZeroRebuffers({media::kRebuffersCountAudioVideoMse,
                        media::kRebuffersCountAudioVideoEme});
 
   ASSERT_EQ(1U, test_recorder_->sources_count());
-  ExpectUkmWatchTime(0, 5, kWatchTimeLate);
+  ExpectUkmWatchTime(0, 6, kWatchTimeLate);
   EXPECT_TRUE(test_recorder_->GetSourceForUrl(kTestOrigin));
 }
 
@@ -804,6 +812,7 @@ TEST_F(MediaInternalsWatchTimeTest, ProcessDestructionFinalizes) {
       {media::kWatchTimeAudioVideoAll, media::kWatchTimeAudioVideoSrc,
        media::kWatchTimeAudioVideoEme, media::kWatchTimeAudioVideoAc,
        media::kWatchTimeAudioVideoNativeControlsOff,
+       media::kWatchTimeAudioVideoDisplayInline,
        media::kWatchTimeAudioVideoEmbeddedExperience},
       kWatchTimeLate);
   ExpectZeroRebuffers({media::kRebuffersCountAudioVideoSrc,

@@ -210,6 +210,57 @@ void WatchTimeReporter::OnNativeControlsDisabled() {
                          &WatchTimeReporter::UpdateWatchTime);
 }
 
+void WatchTimeReporter::OnDisplayTypeInline() {
+  display_type_ = blink::WebMediaPlayer::DisplayType::kInline;
+
+  if (!reporting_timer_.IsRunning())
+    return;
+
+  if (end_timestamp_for_display_type_ != kNoTimestamp) {
+    end_timestamp_for_display_type_ = kNoTimestamp;
+    return;
+  }
+
+  display_type_for_recording_ = display_type_;
+  end_timestamp_for_display_type_ = get_media_time_cb_.Run();
+  reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
+                         &WatchTimeReporter::UpdateWatchTime);
+}
+
+void WatchTimeReporter::OnDisplayTypeFullscreen() {
+  display_type_ = blink::WebMediaPlayer::DisplayType::kFullscreen;
+
+  if (!reporting_timer_.IsRunning())
+    return;
+
+  if (end_timestamp_for_display_type_ != kNoTimestamp) {
+    end_timestamp_for_display_type_ = kNoTimestamp;
+    return;
+  }
+
+  display_type_for_recording_ = display_type_;
+  end_timestamp_for_display_type_ = get_media_time_cb_.Run();
+  reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
+                         &WatchTimeReporter::UpdateWatchTime);
+}
+
+void WatchTimeReporter::OnDisplayTypePictureInPicture() {
+  display_type_ = blink::WebMediaPlayer::DisplayType::kPictureInPicture;
+
+  if (!reporting_timer_.IsRunning())
+    return;
+
+  if (end_timestamp_for_display_type_ != kNoTimestamp) {
+    end_timestamp_for_display_type_ = kNoTimestamp;
+    return;
+  }
+
+  display_type_for_recording_ = display_type_;
+  end_timestamp_for_display_type_ = get_media_time_cb_.Run();
+  reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
+                         &WatchTimeReporter::UpdateWatchTime);
+}
+
 void WatchTimeReporter::OnPowerStateChange(bool on_battery_power) {
   if (!reporting_timer_.IsRunning())
     return;
@@ -261,10 +312,13 @@ void WatchTimeReporter::MaybeStartReportingTimer(
 
   underflow_count_ = 0;
   last_media_timestamp_ = last_media_power_timestamp_ =
-      last_media_controls_timestamp_ = end_timestamp_for_power_ = kNoTimestamp;
+      last_media_controls_timestamp_ = end_timestamp_for_power_ =
+          last_media_display_type_timestamp_ = end_timestamp_for_display_type_ =
+              kNoTimestamp;
   is_on_battery_power_ = IsOnBatteryPower();
   start_timestamp_ = start_timestamp_for_power_ =
-      start_timestamp_for_controls_ = start_timestamp;
+      start_timestamp_for_controls_ = start_timestamp_for_display_type_ =
+          start_timestamp;
   reporting_timer_.Start(FROM_HERE, reporting_interval_, this,
                          &WatchTimeReporter::UpdateWatchTime);
 }
@@ -297,6 +351,8 @@ void WatchTimeReporter::UpdateWatchTime() {
   const bool is_power_change_pending = end_timestamp_for_power_ != kNoTimestamp;
   const bool is_controls_change_pending =
       end_timestamp_for_controls_ != kNoTimestamp;
+  const bool is_display_type_change_pending =
+      end_timestamp_for_display_type_ != kNoTimestamp;
 
   // If we're finalizing the log, use the media time value at the time of
   // finalization.
@@ -316,7 +372,8 @@ void WatchTimeReporter::UpdateWatchTime() {
         value.InSecondsF());                                               \
   } while (0)
 
-#define RECORD_CONTROLS_WATCH_TIME(key, value)                         \
+// Similar to RECORD_WATCH_TIME but ignores background watch time.
+#define RECORD_FOREGROUND_WATCH_TIME(key, value)                       \
   do {                                                                 \
     if (is_background_)                                                \
       break;                                                           \
@@ -380,13 +437,39 @@ void WatchTimeReporter::UpdateWatchTime() {
 
     if (elapsed_controls >= kMinimumElapsedWatchTime) {
       if (has_native_controls_)
-        RECORD_CONTROLS_WATCH_TIME(NativeControlsOn, elapsed_controls);
+        RECORD_FOREGROUND_WATCH_TIME(NativeControlsOn, elapsed_controls);
       else
-        RECORD_CONTROLS_WATCH_TIME(NativeControlsOff, elapsed_controls);
+        RECORD_FOREGROUND_WATCH_TIME(NativeControlsOff, elapsed_controls);
     }
   }
+
+  // Similar to the block above for display type.
+  if (last_media_display_type_timestamp_ != current_timestamp) {
+    last_media_display_type_timestamp_ = is_display_type_change_pending
+                                             ? end_timestamp_for_display_type_
+                                             : current_timestamp;
+
+    const base::TimeDelta elapsed_display_type =
+        last_media_display_type_timestamp_ - start_timestamp_for_display_type_;
+
+    if (elapsed_display_type >= kMinimumElapsedWatchTime) {
+      switch (display_type_for_recording_) {
+        case blink::WebMediaPlayer::DisplayType::kInline:
+          RECORD_FOREGROUND_WATCH_TIME(DisplayInline, elapsed_display_type);
+          break;
+        case blink::WebMediaPlayer::DisplayType::kFullscreen:
+          RECORD_FOREGROUND_WATCH_TIME(DisplayFullscreen, elapsed_display_type);
+          break;
+        case blink::WebMediaPlayer::DisplayType::kPictureInPicture:
+          RECORD_FOREGROUND_WATCH_TIME(DisplayPictureInPicture,
+                                       elapsed_display_type);
+          break;
+      }
+    }
+  }
+
 #undef RECORD_WATCH_TIME
-#undef RECORD_CONTROLS_WATCH_TIME
+#undef RECORD_FOREGROUND_WATCH_TIME
 
   // Pass along any underflow events which have occurred since the last report.
   if (!pending_underflow_events_.empty()) {
@@ -414,6 +497,8 @@ void WatchTimeReporter::UpdateWatchTime() {
       log_event->params.SetBoolean(kWatchTimeFinalizePower, true);
     if (is_controls_change_pending)
       log_event->params.SetBoolean(kWatchTimeFinalizeControls, true);
+    if (is_display_type_change_pending)
+      log_event->params.SetBoolean(kWatchTimeFinalizeDisplay, true);
   }
 
   if (!log_event->params.empty())
@@ -433,6 +518,11 @@ void WatchTimeReporter::UpdateWatchTime() {
 
     start_timestamp_for_controls_ = end_timestamp_for_controls_;
     end_timestamp_for_controls_ = kNoTimestamp;
+  }
+
+  if (is_display_type_change_pending) {
+    start_timestamp_for_display_type_ = end_timestamp_for_display_type_;
+    end_timestamp_for_display_type_ = kNoTimestamp;
   }
 
   // Stop the timer if this is supposed to be our last tick.
