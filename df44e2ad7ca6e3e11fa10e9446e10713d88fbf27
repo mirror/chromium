@@ -22,6 +22,53 @@
       "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70bc90f9_76c07c3e",
+        "filename": "docs/memory/key_concepts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-08T23:32:15Z",
+      "side": 1,
+      "message": "I have been asked on more than one occasion \"why is memory so hard\", so I think it would be good to contain this information *somewhere*. There are subtleties expressed by these questions I think it\u0027s important for people trying to enter the memory space to understand.\n\nMaybe we could change the tone of lines 3-6 to make this seem less scary/discouraging? [I wasn\u0027t particularly scared or discouraged, but I\u0027m not the relevant audience]. brettw, wdyt?",
+      "parentUuid": "8c822df1_b5ca35b0",
+      "range": {
+        "startLine": 8,
+        "startChar": 34,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe984ea2_e630d07d",
+        "filename": "docs/memory/key_concepts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-08T23:32:15Z",
+      "side": 1,
+      "message": "Thank you for doing this! I think it will be very valuable for other people trying to enter the memory space.",
+      "range": {
+        "startLine": 74,
+        "startChar": 20,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
