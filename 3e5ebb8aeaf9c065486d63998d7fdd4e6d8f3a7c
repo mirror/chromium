@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5cf69869_785851f6",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-08T10:40:40Z",
+      "side": 1,
+      "message": "Ah, bad wording. I only meant that we apply bounds changes directly to the top level window, rather than some contained one.",
+      "parentUuid": "daedaadc_1d22c4ac",
+      "range": {
+        "startLine": 10,
+        "startChar": 11,
+        "endLine": 10,
+        "endChar": 19
+      },
+      "revId": "3e5ebb8aeaf9c065486d63998d7fdd4e6d8f3a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de311ab8_021fe6f2",
         "filename": "headless/lib/browser/headless_web_contents_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T10:11:35Z",
       "side": 1,
       "message": "Could you add a test that checks this works?",
+      "range": {
+        "startLine": 183,
+        "startChar": 5,
+        "endLine": 183,
+        "endChar": 9
+      },
+      "revId": "3e5ebb8aeaf9c065486d63998d7fdd4e6d8f3a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f05f7a29_6a1b8f0c",
+        "filename": "headless/lib/browser/headless_web_contents_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-08T10:40:40Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "de311ab8_021fe6f2",
       "range": {
         "startLine": 183,
         "startChar": 5,
