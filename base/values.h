@@ -49,7 +49,7 @@ class Value;
 class BASE_EXPORT Value {
  public:
   using BlobStorage = std::vector<char>;
-  using DictStorage = base::flat_map<std::string, std::unique_ptr<Value>>;
+  using DictStorage = base::flat_map<std::string, Value>;
   using ListStorage = std::vector<Value>;
 
   enum class Type {
@@ -96,6 +96,7 @@ class BASE_EXPORT Value {
   explicit Value(const BlobStorage& in_blob);
   explicit Value(BlobStorage&& in_blob) noexcept;
 
+  explicit Value(const DictStorage& in_dict);
   explicit Value(DictStorage&& in_dict) noexcept;
 
   explicit Value(const ListStorage& in_list);
@@ -227,6 +228,8 @@ class BASE_EXPORT DictionaryValue : public Value {
   static std::unique_ptr<DictionaryValue> From(std::unique_ptr<Value> value);
 
   DictionaryValue();
+  explicit DictionaryValue(const DictStorage& in_dict);
+  explicit DictionaryValue(DictStorage&& in_dict) noexcept;
 
   // Returns true if the current dictionary has a value for the given key.
   bool HasKey(StringPiece key) const;
@@ -373,7 +376,7 @@ class BASE_EXPORT DictionaryValue : public Value {
     void Advance() { ++it_; }
 
     const std::string& key() const { return it_->first; }
-    const Value& value() const { return *it_->second; }
+    const Value& value() const { return it_->second; }
 
    private:
     const DictionaryValue& target_;
