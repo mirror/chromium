@@ -11,10 +11,6 @@
 
 #import "ios/chrome/browser/ui/reading_list/reading_list_toolbar.h"
 
-namespace favicon {
-class LargeIconService;
-}
-
 class GURL;
 @class ReadingListCollectionViewController;
 @class ReadingListCollectionViewItem;
@@ -76,7 +72,6 @@ readingListCollectionViewController:
     : CollectionViewController<ReadingListToolbarActions>
 
 - (instancetype)initWithDataSource:(id<ReadingListDataSource>)dataSource
-                  largeIconService:(favicon::LargeIconService*)largeIconService
                            toolbar:(ReadingListToolbar*)toolbar
     NS_DESIGNATED_INITIALIZER;
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
@@ -87,9 +82,6 @@ readingListCollectionViewController:
 @property(nonatomic, weak) id<ReadingListCollectionViewControllerAudience>
     audience;
 @property(nonatomic, weak) id<ReadingListDataSource> dataSource;
-
-@property(nonatomic, assign, readonly)
-    favicon::LargeIconService* largeIconService;
 
 // Prepares this view controller to be dismissed.
 - (void)willBeDismissed;
