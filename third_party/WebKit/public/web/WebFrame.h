@@ -35,6 +35,7 @@
 #include "WebIconURL.h"
 #include "WebNode.h"
 #include "public/platform/WebCanvas.h"
+#include "public/platform/WebCommon.h"
 #include "public/platform/WebFeaturePolicy.h"
 #include "public/platform/WebInsecureRequestPolicy.h"
 #include "public/web/WebFrameLoadType.h"
@@ -83,7 +84,7 @@ class WebVector;
 // WebFrame is the base class for both WebLocalFrame and WebRemoteFrame and
 // contains methods that are valid on both local and remote frames, such as
 // getting a frame's parent or its opener.
-class WebFrame {
+class BLINK_EXPORT WebFrame {
  public:
   // FIXME: We already have blink::TextGranularity. For now we support only
   // a part of blink::TextGranularity.
