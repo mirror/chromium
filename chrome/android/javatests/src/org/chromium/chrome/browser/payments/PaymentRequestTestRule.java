@@ -5,10 +5,12 @@
 package org.chromium.chrome.browser.payments;
 
 import android.view.View;
+import android.widget.EditText;
 
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
 import org.chromium.chrome.browser.ChromeTabbedActivity;
 import org.chromium.chrome.browser.autofill.CardUnmaskPrompt;
@@ -388,6 +390,11 @@ public class PaymentRequestTestRule extends ChromeActivityTestRule<ChromeTabbedA
             final int[] resourceIds, final String[] values, CallbackHelper helper)
             throws InterruptedException, TimeoutException {
         mTestCommon.setTextInExpiredCardUnmaskDialogAndWait(resourceIds, values, helper);
+    }
+
+    /** Hits the "submit" button on the software keyboard. */
+    /* package */ void hitSoftwareKeyboardSubmitButtonAndWait(int resourceId, CallbackHelper helper) throws InterruptedException, TimeoutException {
+        mTestCommon.hitSoftwareKeyboardSubmitButtonAndWait(resourceId, helper);
     }
 
     /** Verifies the contents of the test webpage. */
