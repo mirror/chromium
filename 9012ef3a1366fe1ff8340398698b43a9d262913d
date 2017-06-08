@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f3c2eec_a4b43da6",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_aura_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "Nice cleanup of magic numbers :)\nIs there any reason this is +10 and not +1 though? Might as well be precise.",
+      "range": {
+        "startLine": 674,
+        "startChar": 63,
+        "endLine": 674,
+        "endChar": 65
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e218a020_379b620d",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "We don\u0027t have this now, but could you please add some comments to overscroll_configuration.h explaining what the various thresholds are relative to?",
+      "range": {
+        "startLine": 394,
+        "startChar": 12,
+        "endLine": 394,
+        "endChar": 63
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c94dc323_880871dc",
+        "filename": "content/browser/web_contents/aura/gesture_nav_simple.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "I\u0027ve just realized that with the touch screen you may not actually be able to complete the overscroll if the window is aligned to the right of the screen. It\u0027s probably not an issue now with 25% threshold, but if we increase the threshold to be over 50% - it will be. Perhaps we should make the threshold relative to the window width for touch screen? At least the completion threshold, but maybe also the start threshold. WDYT?",
+      "range": {
+        "startLine": 395,
+        "startChar": 2,
+        "endLine": 395,
+        "endChar": 23
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa715f32_387ca94b",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 31
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceb83098_5e42c4ea",
+        "filename": "content/browser/web_contents/aura/overscroll_window_animation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "Perhaps just GetWindowSize()? The new name sort of makes me wonder if the slide window may be of a different size.",
+      "range": {
+        "startLine": 42,
+        "startChar": 44,
+        "endLine": 42,
+        "endChar": 61
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcce222f_98b128ad",
+        "filename": "content/browser/web_contents/aura/overscroll_window_delegate_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "I\u0027d still call it \"Width\" - \"Size\" makes me think it is a gfx::Size. Something like \"Dimension\" would also be okay if you really want to make it clear we are using this for height as well.",
+      "range": {
+        "startLine": 19,
+        "startChar": 10,
+        "endLine": 19,
+        "endChar": 26
+      },
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c78b7d18_da32fd1c",
+        "filename": "content/browser/web_contents/web_contents_view_aura.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1115962
+      },
+      "writtenOn": "2017-06-08T15:09:02Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "9012ef3a1366fe1ff8340398698b43a9d262913d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
