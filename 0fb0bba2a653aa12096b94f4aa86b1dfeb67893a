@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c368161a_1f580d56",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-08T17:26:08Z",
+      "side": 1,
+      "message": "Comment needs to be updated?",
+      "range": {
+        "startLine": 192,
+        "startChar": 16,
+        "endLine": 192,
+        "endChar": 80
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bed888_ae58efff",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-08T17:26:08Z",
+      "side": 1,
+      "message": "Did you intend to leave this out before uploading? The comment suggests so.",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
