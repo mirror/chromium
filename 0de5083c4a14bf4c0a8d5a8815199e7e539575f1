@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7fbf8bd7_33df0f04",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/ContentProviderBasedProject.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:49:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76ba8507_d7a4c55b",
+      "range": {
+        "startLine": 216,
+        "startChar": 8,
+        "endLine": 216,
+        "endChar": 14
+      },
+      "revId": "0de5083c4a14bf4c0a8d5a8815199e7e539575f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d1a729b_0393eefd",
         "filename": "third_party/WebKit/Source/devtools/front_end/elements/ElementsPanel.js",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T21:22:33Z",
       "side": 1,
       "message": "Why this?",
+      "range": {
+        "startLine": 553,
+        "startChar": 4,
+        "endLine": 553,
+        "endChar": 39
+      },
+      "revId": "0de5083c4a14bf4c0a8d5a8815199e7e539575f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f20bff95_33f94c83",
+        "filename": "third_party/WebKit/Source/devtools/front_end/elements/ElementsPanel.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 553,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-08T21:49:49Z",
+      "side": 1,
+      "message": "I didn\u0027t touch it.",
+      "parentUuid": "5d1a729b_0393eefd",
       "range": {
         "startLine": 553,
         "startChar": 4,
