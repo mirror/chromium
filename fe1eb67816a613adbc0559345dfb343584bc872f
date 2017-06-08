@@ -22,6 +22,30 @@
       "revId": "fe1eb67816a613adbc0559345dfb343584bc872f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b529aac2_735f8cd4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/autofill/AutofillEditorBase.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-08T16:54:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5877de01_2258448f",
+      "range": {
+        "startLine": 43,
+        "startChar": 22,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "fe1eb67816a613adbc0559345dfb343584bc872f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
