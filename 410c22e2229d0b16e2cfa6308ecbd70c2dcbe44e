@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad10d116_cba0099f",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 614,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Seems the inner code of all 4 of these blocks can be refactored out now that we have so many of them. Something like:\n\nif (MaybeFinalize(player_info, media::kWatchTimeFinalize))\n  break;\n\nMaybeFinalize(player_info, media::kWatchTimeFinalizePower)\nMaybeFinalize(...)\n\netc.",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "beae7b17_6ec07f17",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Rest of this could be refactored into a helper function; possibly even the native controls ones. I.e. something like\n\nbool OnAttributeChanged(base::TimeDelta* end_timestamp) {\n  if (!reporting_timer_.IsRunning())\n    return false;\n\n  if (*end_timestamp !\u003d kNoTimestamp) {\n    *end_timestamp \u003d kNoTimestamp;\n    return false;\n  }\n\n  *end_timestamp \u003d get_media_time_cb_.Run();\n  reporting_timer_.Start(FROM_HERE, reporting_interval_, this,\n                         \u0026WatchTimeReporter::UpdateWatchTime);\n  return true;\n}\n\nif (OnAttributeChanged(...))\n  display_type_for_recording_ \u003d display_type_;\n\nif (!OnAttributeChanged(...))\n  has_native_controls_ \u003d ...;",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b6644f2_c767200e",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 375,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Could also just DCHECK(!is_background_) and short circuit the whole calculation set at the top level conditional based on this value.",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8500183c_eac35fd6",
+        "filename": "media/blink/watch_time_reporter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 407,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Again, these three are all roughly the same block so it could be factorized. This one might be too hard to generalize given the difference between bool / case, so up to you.\n\nCould just simplify the common parts though though:\n\nif (base::TimeDelta elapsed \u003d ShouldReport(current_timestamp, start_timestamp_for_power_, end_timestamp_for_power_, \u0026last_media_power_timestamp_)) {\n  if (is_on_battery_power_)\n    RECORD_WATCH_TIME(Battery, elapsed_power);\n  else\n    RECORD_WATCH_TIME(Ac, elapsed_power);\n}\n\nWhere ShouldReport() only returns a \u003e 0 value if last !\u003d current and elapsed \u003e min. Again I\u0027m not sure this is all that cleaner, so up to you.",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3fd8f58_ddb407ee",
+        "filename": "media/blink/watch_time_reporter_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Needs tests covering all values.",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d37dae_3fef26a6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3468,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Dunno if blink allows this syntax but:\n\nif (auto* mediaPlayer \u003d GetWebMediaPlayer()) { ... }",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c51f02_10895c1a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 3472,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Why not have this changed by EnteredFullscreen?",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0765d93_4eeac138",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 4073,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-08T21:54:00Z",
+      "side": 1,
+      "message": "Ternary if you want.",
+      "revId": "410c22e2229d0b16e2cfa6308ecbd70c2dcbe44e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
