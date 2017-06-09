@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8de08722_b8d1b1e7",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-09T21:17:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6ef4bd7_d4b1f402",
+      "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06390c42_796a6409",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-09T18:05:07Z",
       "side": 1,
       "message": "Do we have an idea on why this is async? My claim is that in case of large payloads, we spend more cycles marshalling the string into the worker and back. And we parse JSON in the end once again, right?",
+      "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2505c84a_af947748",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-09T21:17:58Z",
+      "side": 1,
+      "message": "added comment.",
+      "parentUuid": "06390c42_796a6409",
       "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
