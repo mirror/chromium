@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1dcc1d8_8451d52c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f495407d_7575d41f",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8361ba3_2cb7ba98",
         "filename": "/COMMIT_MSG",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-09T11:30:00Z",
       "side": 1,
       "message": "kudos on the descriptive and informative commit message :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ea644fa_99d465fe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "Thanks :)",
+      "parentUuid": "e8361ba3_2cb7ba98",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ba774e6a_1e4b7c47",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e514f738_caa3aa39",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c8f5957_93a60c24",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 4
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-09T11:30:00Z",
       "side": 1,
       "message": "explicitly set the page count to unknown? That\u0027s not required, but that would be a chance to document that we do that on purpose and explain why it\u0027s not useful for us to compute the number of pages at this point.",
+      "range": {
+        "startLine": 247,
+        "startChar": 29,
+        "endLine": 247,
+        "endChar": 43
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "196a3964_c704ec6b",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "8c8f5957_93a60c24",
       "range": {
         "startLine": 247,
         "startChar": 29,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "21e18dc4_e20d26cd",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "Replied in `onWrite`.",
+      "parentUuid": "9b7f6035_383a8015",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 39
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfb51f29_6fff420f",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 4
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "0b011365_3f8f64c2",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "bfb51f29_6fff420f",
+      "range": {
+        "startLine": 270,
+        "startChar": 71,
+        "endLine": 270,
+        "endChar": 76
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1609ac78_35534688",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 4
@@ -151,6 +295,24 @@
       "writtenOn": "2017-06-09T11:30:00Z",
       "side": 1,
       "message": "The method that does the opposite operation (`convertIntegerArrayToPageRanges`) does the ALL_PAGES check internally. Would it make sense to do the same in `normalize` too? (and then update the name to \"convertPageRangesToIntegerArray\" or something while we\u0027re at it.) Could be another CL or not done at all, I don\u0027t feel strongly about it.",
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc9540dd_5f285fe6",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "SGTM, will do it in another CL.",
+      "parentUuid": "1609ac78_35534688",
       "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "394fc617_0334ae8d",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "I was confused too.. I tried to look into this, but forgot later, let me check it again.",
+      "parentUuid": "d65ae54e_2d9ab3f2",
+      "range": {
+        "startLine": 350,
+        "startChar": 16,
+        "endLine": 350,
+        "endChar": 17
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "99a322a1_861cfab6",
         "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
         "patchSetId": 4
@@ -191,6 +377,24 @@
       "writtenOn": "2017-06-09T11:30:00Z",
       "side": 1,
       "message": "nit: `return pages.toArray(new int[pages.size()])` ? ¯\\_(ツ)_/¯",
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ed4dffa_22bfe6b7",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 1,
+      "message": "`ArrayList#toArray` need an Object type argument, so unfortunately the following cumbersome code is still need :(\n\nOnly until java 8 we can do something like `return pages.stream().mapToInt(i -\u003e i).toArray();` but that should be inefficient though..",
+      "parentUuid": "99a322a1_861cfab6",
       "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

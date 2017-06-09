@@ -22,6 +22,30 @@
       "revId": "9f09049c45755baeee9ffd7e22c4e430ca96c2d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e39ac101_56939814",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1186107
+      },
+      "writtenOn": "2017-06-09T17:43:16Z",
+      "side": 0,
+      "message": "`mPrintingContext` is not available here, after we start a print job, it will be set. We will have a valid one when `pageCountEstimationDone` called, so I moved this to `pageCountEstimationDone`, but at least that function name doesn\u0027t make sense now, I am planning to clean that in a later CL, because it seems we are still depends on that for supporting window.print().\n\n`mFileDescriptor` is from framework, and we are only using that after `onWrite` called, it should be fine.",
+      "parentUuid": "e4e86e39_d31b9b90",
+      "range": {
+        "startLine": 311,
+        "startChar": 67,
+        "endLine": 311,
+        "endChar": 72
+      },
+      "revId": "9f09049c45755baeee9ffd7e22c4e430ca96c2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
