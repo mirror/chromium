@@ -78,6 +78,7 @@ source_set("tests_fake_hook") {
 bundle_data("resources") {
   visibility = [ ":app" ]
   sources = [
+    "resources/RestoreSession.html",
     "resources/SafeModeCrashingModules.plist",
   ]
   outputs = [

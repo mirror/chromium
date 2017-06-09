@@ -1,0 +1,75 @@
+<html>
+  <head>
+  <script>
+    var base_url = [
+      window.location.protocol,
+      window.location.host,
+      window.location.pathname].join('');
+
+    function getRestoreURL(url) {
+      return base_url + '?targetUrl=' + encodeURIComponent(url);
+    }
+
+    function restoreSession(encodedSessionHistory) {
+      var sessionHistory = [];
+      try {
+        console.log(encodedSessionHistory);
+        sessionHistory = JSON.parse(decodeURIComponent(encodedSessionHistory));
+        console.log(sessionHistory);
+
+        if (sessionHistory.entries.length < 1) {
+          handleError("sessionHistory is empty");
+          return;
+        }
+
+        history.replaceState(sessionHistory.entries[0].state || null,
+                             sessionHistory.entries[0].title || "Blank",
+                             getRestoreURL(sessionHistory.entries[0].url || "about:blank"));
+
+        for (var i = 1; i < sessionHistory.entries.length; i++) {
+          history.pushState(sessionHistory.entries[i].state || null,
+                            sessionHistory.entries[i].title || "Blank",
+                            getRestoreURL(sessionHistory.entries[i].url || "about:blank"));
+        }
+
+        var currentItemOffset = parseInt(sessionHistory.currentItemOffset);
+        //alert("history.length = " + history.length + " offset=" + currentItemOffset);
+        history.go(currentItemOffset);
+
+        setTimeout(function() { location.reload(); }, 0);
+      } catch (e) {
+        handleError(e.name + ": " + e.message);
+      }
+    }
+
+    function redirect(encodedTargetUrl) {
+      var target = decodeURIComponent(encodedTargetUrl);
+      window.location.replace(target);
+    }
+
+    function handleError(message) {
+      console.log("Error: " + message);
+      //location.replace("about:blank");
+    }
+
+    // Main entry point
+    if (window.location.search == '') {
+      handleError("Search query is mandatory");
+    }
+
+    let params = new URLSearchParams(document.location.search.substring(1));
+    let sessionHistory = params.get("sessionHistory");
+    let targetUrl = params.get("targetUrl");
+    if (sessionHistory) {
+      restoreSession(sessionHistory);
+    } else if (targetUrl) {
+      redirect(targetUrl);
+    } else {
+      handleError("Missing both sessionHistory and targetUrl");
+    }
+  </script>
+  </head>
+  <body>
+    <p>This page injects history.</p>
+  </body>
+</html>

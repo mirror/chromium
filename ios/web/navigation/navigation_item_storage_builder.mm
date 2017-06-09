@@ -6,6 +6,7 @@
 
 #import "ios/web/navigation/navigation_item_impl.h"
 #import "ios/web/public/crw_navigation_item_storage.h"
+#import "ios/web/public/navigation_item.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
 #error "This file requires ARC support."
@@ -14,7 +15,7 @@
 namespace web {
 
 CRWNavigationItemStorage* NavigationItemStorageBuilder::BuildStorage(
-    NavigationItemImpl* navigation_item) const {
+    NavigationItem* navigation_item) const {
   DCHECK(navigation_item);
   CRWNavigationItemStorage* storage = [[CRWNavigationItemStorage alloc] init];
   storage.virtualURL = navigation_item->GetVirtualURL();
@@ -22,10 +23,12 @@ CRWNavigationItemStorage* NavigationItemStorageBuilder::BuildStorage(
   storage.timestamp = navigation_item->GetTimestamp();
   storage.title = navigation_item->GetTitle();
   storage.displayState = navigation_item->GetPageDisplayState();
-  storage.shouldSkipRepostFormConfirmation =
-      navigation_item->ShouldSkipRepostFormConfirmation();
+  // TODO(danyao): not supported through public interface
+  // storage.shouldSkipRepostFormConfirmation =
+  //    navigation_item->ShouldSkipRepostFormConfirmation();
+  // storage.POSTData = navigation_item->GetPostData();
   storage.userAgentType = navigation_item->GetUserAgentType();
-  storage.POSTData = navigation_item->GetPostData();
+
   storage.HTTPRequestHeaders = navigation_item->GetHttpRequestHeaders();
   return storage;
 }

@@ -411,7 +411,8 @@ class PrefetchDelegate : public net::URLFetcherDelegate {
 
   // Trigger the page to start loading.
   // TODO(crbug.com/705819): Remove this call.
-  [tab view];
+  // TODO(danyao): not needed after navigation refactoring
+  // [tab view];
 }
 
 - (const GURL)urlToPrefetchURL:(const GURL&)url {

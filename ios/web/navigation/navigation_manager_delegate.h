@@ -5,9 +5,11 @@
 #ifndef IOS_WEB_NAVIGATION_NAVIGATION_MANAGER_DELEGATE_H_
 #define IOS_WEB_NAVIGATION_NAVIGATION_MANAGER_DELEGATE_H_
 
+#import <WebKit/WebKit.h>
 #include <stddef.h>
 
 #import "ios/web/public/navigation_manager.h"
+#import "ios/web/web_state/ui/crw_web_controller.h"
 
 namespace web {
 
@@ -42,6 +44,12 @@ class NavigationManagerDelegate {
 
   // Returns the WebState associated with this delegate.
   virtual WebState* GetWebState() = 0;
+
+  // NOTE(danyao): temporary workaround to expose CRWWebController.
+  virtual CRWWebController* GetWebController() = 0;
+
+  // NOTE(danyao): temporary workaround to expose WKWebView.
+  virtual WKWebView* GetWKWebView() = 0;
 };
 
 }  // namespace web

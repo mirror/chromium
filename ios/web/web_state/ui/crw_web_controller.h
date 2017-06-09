@@ -6,6 +6,7 @@
 #define IOS_WEB_WEB_STATE_UI_CRW_WEB_CONTROLLER_H_
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 #import "ios/web/net/crw_request_tracker_delegate.h"
 #import "ios/web/public/navigation_manager.h"
@@ -107,6 +108,10 @@ class WebStateImpl;
 // Return an image to use as replacement of a missing snapshot.
 + (UIImage*)defaultSnapshotImage;
 
+// NOTE(danyao): temporary workaround to expose WKWebView for NavigationManager
+// to use Longer term, consider pushing this into NavigationManagerDelegate.
+- (WKWebView*)webView;
+
 // Replaces the currently displayed content with |contentView|.  The content
 // view will be dismissed for the next navigation.
 - (void)showTransientContentView:(CRWContentView*)contentView;
@@ -158,8 +163,11 @@ class WebStateImpl;
 // for transient items, if one needs to reload, call |-reload| explicitly.
 - (void)loadWithParams:(const web::NavigationManager::WebLoadParams&)params;
 
+// TODO(danyao): make this public now so NavigationManager can use it.
+- (void)ensureWebViewCreated;
+
 // Loads the URL indicated by current session state.
-- (void)loadCurrentURL;
+- (void)loadCurrentURL:(const GURL&)currentURL;
 
 // Loads HTML in the page and presents it as if it was originating from an
 // application specific URL. |HTML| must not be empty.

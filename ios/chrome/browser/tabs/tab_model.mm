@@ -489,12 +489,16 @@ std::unique_ptr<web::WebState> CreateWebState(
   if (!inBackground && _tabUsageRecorder)
     _tabUsageRecorder->TabCreatedForSelection(tab);
 
+  // TODO(danyao): avoid loading new URL when opening new tab while we test
+  // history restore. Ideally we should either load this NTP URL or load the
+  // restore URL.
   webStatePtr->GetNavigationManager()->LoadURLWithParams(loadParams);
 
   // Force the page to start loading even if it's in the background.
   // TODO(crbug.com/705819): Remove this call.
-  if (_webUsageEnabled)
-    webStatePtr->GetView();
+  // TODO(danyao): not needed after refactor
+  // if (_webUsageEnabled)
+  //  webStatePtr->GetView();
 
   NSDictionary* userInfo = @{
     kTabModelTabKey : tab,
