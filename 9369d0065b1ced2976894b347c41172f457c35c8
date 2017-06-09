@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9638c5f_c9b32912",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-09T10:54:18Z",
+      "side": 1,
+      "message": "Just FYI, I had used wording of \"data type\" and \"accessor type\", but the current ECMAScript spec says \"data property\" and \"accessor property\".  I\u0027m fine with either of them.",
+      "range": {
+        "startLine": 269,
+        "startChar": 9,
+        "endLine": 269,
+        "endChar": 36
+      },
+      "revId": "9369d0065b1ced2976894b347c41172f457c35c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1609bfc5_68f90b86",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-09T10:54:18Z",
+      "side": 1,
+      "message": "one space before |\n\nBy the way, can it be an option to use |selectattr|, |select| or its family?\nI\u0027m not sure if it can be an option especially when using \"for x, y in aList\".  If it\u0027s \"for attr in attrs\", then it must be easy.",
+      "range": {
+        "startLine": 658,
+        "startChar": 61,
+        "endLine": 658,
+        "endChar": 92
+      },
+      "revId": "9369d0065b1ced2976894b347c41172f457c35c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
