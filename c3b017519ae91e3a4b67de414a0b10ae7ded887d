@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ef4bd7_d4b1f402",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-09T18:05:07Z",
+      "side": 1,
+      "message": "Theoretically, you are creating the preview twice, you should store the promise instead.",
+      "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06390c42_796a6409",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-09T18:05:07Z",
+      "side": 1,
+      "message": "Do we have an idea on why this is async? My claim is that in case of large payloads, we spend more cycles marshalling the string into the worker and back. And we parse JSON in the end once again, right?",
+      "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f47ca1c_3e218961",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-09T18:05:07Z",
+      "side": 1,
+      "message": "I\u0027m not sure if async should be in the inherited part of the signature. I\u0027d rather annotate it as returning promise to undefined.",
+      "revId": "c3b017519ae91e3a4b67de414a0b10ae7ded887d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
