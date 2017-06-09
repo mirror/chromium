@@ -76,6 +76,7 @@
 #include "platform/network/ParsedContentType.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/AutoReset.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -235,7 +236,7 @@ XMLHttpRequest::XMLHttpRequest(
           std::move(isolated_world_security_origin)),
       event_dispatch_recursion_level_(0),
       async_(true),
-      with_credentials_(false),
+      include_credentials_(false),
       parsed_response_(false),
       error_(false),
       upload_events_allowed_(true),
@@ -559,7 +560,7 @@ void XMLHttpRequest::setWithCredentials(bool value,
     return;
   }
 
-  with_credentials_ = value;
+  include_credentials_ = value;
 }
 
 void XMLHttpRequest::open(const AtomicString& method,
@@ -970,8 +971,11 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   // 'unsafe-credentials' option is set, and the request's physical origin is
   // the same as the URL's.
   bool include_credentials =
-      GetSecurityOrigin()->HasSuboriginAndShouldAllowCredentialsFor(url_) ||
-      with_credentials_;
+      include_credentials_ ||
+      (GetSecurityOrigin()->HasSuborigin() &&
+       GetSecurityOrigin()->GetSuborigin()->PolicyContains(
+           Suborigin::SuboriginPolicyOptions::kUnsafeCredentials) &&
+       SecurityOrigin::Create(url_)->IsSameSchemeHostPort(GetSecurityOrigin()));
 
   if (!same_origin_request_ && include_credentials) {
     UseCounter::Count(&execution_context,
@@ -988,8 +992,8 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
   request.SetHTTPMethod(method_);
   request.SetRequestContext(WebURLRequest::kRequestContextXMLHttpRequest);
   request.SetFetchCredentialsMode(
-      with_credentials_ ? WebURLRequest::kFetchCredentialsModeInclude
-                        : WebURLRequest::kFetchCredentialsModeSameOrigin);
+      include_credentials ? WebURLRequest::kFetchCredentialsModeInclude
+                          : WebURLRequest::kFetchCredentialsModeSameOrigin);
   request.SetServiceWorkerMode(is_isolated_world_
                                    ? WebURLRequest::ServiceWorkerMode::kNone
                                    : WebURLRequest::ServiceWorkerMode::kAll);
@@ -998,7 +1002,7 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
 
   probe::willLoadXHR(&execution_context, this, this, method_, url_, async_,
                      http_body ? http_body->DeepCopy() : nullptr,
-                     request_headers_, with_credentials_);
+                     request_headers_, include_credentials);
 
   if (http_body) {
     DCHECK_NE(method_, HTTPNames::GET);
@@ -1024,8 +1028,8 @@ void XMLHttpRequest::CreateRequest(PassRefPtr<EncodedFormData> http_body,
           ? kAllowStoredCredentials
           : kDoNotAllowStoredCredentials;
   CredentialRequest credentials_requested =
-      with_credentials_ ? kClientRequestedCredentials
-                        : kClientDidNotRequestCredentials;
+      include_credentials ? kClientRequestedCredentials
+                          : kClientDidNotRequestCredentials;
   ResourceLoaderOptions resource_loader_options(allow_credentials,
                                                 credentials_requested);
   resource_loader_options.security_origin = GetSecurityOrigin();

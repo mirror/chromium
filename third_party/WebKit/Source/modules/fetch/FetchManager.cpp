@@ -41,6 +41,7 @@
 #include "platform/weborigin/SchemeRegistry.h"
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/weborigin/SecurityPolicy.h"
+#include "platform/weborigin/Suborigin.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/Vector.h"
 #include "platform/wtf/text/WTFString.h"
@@ -266,7 +267,7 @@ class FetchManager::Loader final
          FetchRequestData*,
          bool is_isolated_world);
 
-  void PerformSchemeFetch();
+  void PerformBasicFetch();
   void PerformNetworkError(const String& message);
   void PerformHTTPFetch(bool cors_flag, bool cors_preflight_flag);
   void PerformDataFetch();
@@ -338,7 +339,7 @@ void FetchManager::Loader::DidReceiveResponse(
 
   if (response.Url().ProtocolIs("blob") && response.HttpStatusCode() == 404) {
     // "If |blob| is null, return a network error."
-    // https://fetch.spec.whatwg.org/#concept-scheme-fetch
+    // https://fetch.spec.whatwg.org/#concept-basic-fetch
     PerformNetworkError("Blob not found.");
     return;
   }
@@ -481,7 +482,7 @@ void FetchManager::Loader::DidReceiveResponse(
     // An "Access-Control-Allow-Origin" header is added for data: URLs
     // but no headers except for "Content-Type" should exist,
     // according to the spec:
-    // https://fetch.spec.whatwg.org/#concept-scheme-fetch
+    // https://fetch.spec.whatwg.org/#concept-basic-fetch
     // "... return a response whose header list consist of a single header
     //  whose name is `Content-Type` and value is the MIME type and
     //  parameters returned from obtaining a resource"
@@ -603,8 +604,8 @@ void FetchManager::Loader::Start() {
       (request_->Url().ProtocolIsData() && request_->SameOriginDataURLFlag()) ||
       (request_->Url().ProtocolIsAbout()) ||
       (request_->Mode() == WebURLRequest::kFetchRequestModeNavigate)) {
-    // "The result of performing a scheme fetch using request."
-    PerformSchemeFetch();
+    // "The result of performing a basic fetch using request."
+    PerformBasicFetch();
     return;
   }
 
@@ -622,8 +623,8 @@ void FetchManager::Loader::Start() {
   if (request_->Mode() == WebURLRequest::kFetchRequestModeNoCORS) {
     // "Set |request|'s response tainting to |opaque|."
     request_->SetResponseTainting(FetchRequestData::kOpaqueTainting);
-    // "The result of performing a scheme fetch using |request|."
-    PerformSchemeFetch();
+    // "The result of performing a basic fetch using |request|."
+    PerformBasicFetch();
     return;
   }
 
@@ -675,8 +676,8 @@ void FetchManager::Loader::Dispose() {
   execution_context_ = nullptr;
 }
 
-void FetchManager::Loader::PerformSchemeFetch() {
-  // "To perform a scheme fetch using |request|, switch on |request|'s url's
+void FetchManager::Loader::PerformBasicFetch() {
+  // "To perform a basic fetch using |request|, switch on |request|'s url's
   // scheme, and run the associated steps:"
   if (SchemeRegistry::ShouldTreatURLSchemeAsSupportingFetchAPI(
           request_->Url().Protocol())) {
@@ -766,30 +767,34 @@ void FetchManager::Loader::PerformHTTPFetch(bool cors_flag,
 
   // "5. Let |credentials flag| be set if either |HTTPRequest|'s credentials
   // mode is |include|, or |HTTPRequest|'s credentials mode is |same-origin|
-  // and the |CORS flag| is unset, and unset otherwise."
-
-  // TODO(tyoshino): It's wrong to use |cors_flag| here, now. The credentials
-  // mode must work even with the no-cors. See the following issues:
-  // - https://github.com/whatwg/fetch/issues/130
-  // - https://github.com/whatwg/fetch/issues/169
+  // and the |CORS flag| is unset, and unset otherwise.
   //
+  // Also, for the last case,
   // https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs:
   // "request's credentials mode is "same-origin" and request's environment
   // settings object has the suborigin unsafe credentials flag set and the
   // request’s current url is same-physical-origin with request origin."
-  StoredCredentials allow_credentials = kDoNotAllowStoredCredentials;
-  if ((request_->Credentials() ==
+  bool suborigin_forces_credentials =
+      (request_->Credentials() ==
            WebURLRequest::kFetchCredentialsModeSameOrigin &&
-       (!cors_flag ||
-        request_->Origin()->HasSuboriginAndShouldAllowCredentialsFor(
-            request_->Url()))) ||
-      request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
-      request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword) {
+       request_->Origin()->HasSuborigin() &&
+       request_->Origin()->GetSuborigin()->PolicyContains(
+           Suborigin::SuboriginPolicyOptions::kUnsafeCredentials) &&
+       SecurityOrigin::Create(request_->Url())
+           ->IsSameSchemeHostPort(request_->Origin().Get()));
+  StoredCredentials allow_credentials = kDoNotAllowStoredCredentials;
+  if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
+      request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
+      (request_->Credentials() ==
+           WebURLRequest::kFetchCredentialsModeSameOrigin &&
+       !cors_flag) ||
+      suborigin_forces_credentials) {
     allow_credentials = kAllowStoredCredentials;
   }
   CredentialRequest credentials_requested = kClientDidNotRequestCredentials;
   if (request_->Credentials() == WebURLRequest::kFetchCredentialsModeInclude ||
-      request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword) {
+      request_->Credentials() == WebURLRequest::kFetchCredentialsModePassword ||
+      suborigin_forces_credentials) {
     credentials_requested = kClientRequestedCredentials;
   }
   ResourceLoaderOptions resource_loader_options(allow_credentials,

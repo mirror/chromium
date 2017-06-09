@@ -221,17 +221,6 @@ bool SecurityOrigin::IsSecure(const KURL& url) {
   return false;
 }
 
-bool SecurityOrigin::HasSameSuboriginAs(const SecurityOrigin* other) const {
-  if (HasSuborigin() != other->HasSuborigin())
-    return false;
-
-  if (HasSuborigin() &&
-      GetSuborigin()->GetName() != other->GetSuborigin()->GetName())
-    return false;
-
-  return true;
-}
-
 bool SecurityOrigin::CanAccess(const SecurityOrigin* other) const {
   if (universal_access_)
     return true;
@@ -242,7 +231,11 @@ bool SecurityOrigin::CanAccess(const SecurityOrigin* other) const {
   if (IsUnique() || other->IsUnique())
     return false;
 
-  if (!HasSameSuboriginAs(other))
+  if (HasSuborigin() != other->HasSuborigin())
+    return false;
+
+  if (HasSuborigin() &&
+      GetSuborigin()->GetName() != other->GetSuborigin()->GetName())
     return false;
 
   // document.domain handling, as per
@@ -569,23 +562,11 @@ bool SecurityOrigin::IsSameSchemeHostPort(const SecurityOrigin* other) const {
 
 bool SecurityOrigin::IsSameSchemeHostPortAndSuborigin(
     const SecurityOrigin* other) const {
-  if (!HasSameSuboriginAs(other))
-    return false;
-
-  return IsSameSchemeHostPort(other);
-}
-
-bool SecurityOrigin::HasSuboriginAndShouldAllowCredentialsFor(
-    const KURL& url) const {
-  if (!HasSuborigin())
-    return false;
-
-  if (!GetSuborigin()->PolicyContains(
-          Suborigin::SuboriginPolicyOptions::kUnsafeCredentials))
-    return false;
-
-  RefPtr<SecurityOrigin> other = SecurityOrigin::Create(url);
-  return IsSameSchemeHostPort(other.Get());
+  bool same_suborigins =
+      (HasSuborigin() == other->HasSuborigin()) &&
+      (!HasSuborigin() ||
+       (GetSuborigin()->GetName() == other->GetSuborigin()->GetName()));
+  return IsSameSchemeHostPort(other) && same_suborigins;
 }
 
 bool SecurityOrigin::AreSameSchemeHostPort(const KURL& a, const KURL& b) {
