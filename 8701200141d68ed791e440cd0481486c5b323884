@@ -39,6 +39,30 @@
       "revId": "8701200141d68ed791e440cd0481486c5b323884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "034600c3_663e16c7",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-09T20:37:42Z",
+      "side": 1,
+      "message": "There\u0027s actually no reason to use new at all here.  Just create it on the stack.",
+      "parentUuid": "aa6b912a_50395975",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 891,
+        "endChar": 80
+      },
+      "revId": "8701200141d68ed791e440cd0481486c5b323884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
