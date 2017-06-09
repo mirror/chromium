@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5b49b1_e07cb534",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-09T01:47:08Z",
+      "side": 1,
+      "message": "Any reason not to make this a unique_ptr?",
+      "range": {
+        "startLine": 308,
+        "startChar": 2,
+        "endLine": 308,
+        "endChar": 33
+      },
+      "revId": "b05eb77aac9a7bd456e832c1721fd7df6b07cfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f443c7b_a9e7d27f",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/ContentViewCore.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-09T01:47:08Z",
+      "side": 1,
+      "message": "It looks like mNativeAccessibilityEnabled \u003d\u003d (mWebContentsAccessibility !\u003d null). Do we still need this variable?",
+      "range": {
+        "startLine": 243,
+        "startChar": 20,
+        "endLine": 243,
+        "endChar": 47
+      },
+      "revId": "b05eb77aac9a7bd456e832c1721fd7df6b07cfaf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
