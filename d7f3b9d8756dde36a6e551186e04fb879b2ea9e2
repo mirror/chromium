@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3710eba3_45fabff7",
+        "filename": "third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2263,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-09T19:22:35Z",
+      "side": 0,
+      "message": "Seems like this comment is still relevant in that we still don\u0027t need to set the scrolling contents layer element id here.",
+      "revId": "d7f3b9d8756dde36a6e551186e04fb879b2ea9e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
