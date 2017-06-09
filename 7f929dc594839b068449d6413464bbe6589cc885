@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e73e3eb7_e40e0c4c",
+        "filename": "cc/scheduler/scheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T12:33:13Z",
+      "side": 1,
+      "message": "s/Notify/Set/ since this feels like the other similar settings?\n\nThis could also use a short documentation blurb about what this thing is about.",
+      "range": {
+        "startLine": 150,
+        "startChar": 7,
+        "endLine": 150,
+        "endChar": 53
+      },
+      "revId": "7f929dc594839b068449d6413464bbe6589cc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1b6d64b_ba7e7ef6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.cc",
+        "patchSetId": 14
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T12:33:13Z",
+      "side": 1,
+      "message": "Looks like we\u0027ll have some threading issues if someone posts an idle tasks from a non-main thread. I think it would be a fine compromise to not worry about requesting this for those tasks (as long as something else will trigger idle work eventually).",
+      "range": {
+        "startLine": 292,
+        "startChar": 13,
+        "endLine": 292,
+        "endChar": 35
+      },
+      "revId": "7f929dc594839b068449d6413464bbe6589cc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b7eb16f_852d491e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T12:33:13Z",
+      "side": 1,
+      "message": "OnHasPendingTasksChanged to make it clearer this is an event?",
+      "range": {
+        "startLine": 66,
+        "startChar": 17,
+        "endLine": 66,
+        "endChar": 39
+      },
+      "revId": "7f929dc594839b068449d6413464bbe6589cc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ceba3c6_66205572",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T12:33:13Z",
+      "side": 1,
+      "message": "This callback could use a test.",
+      "revId": "7f929dc594839b068449d6413464bbe6589cc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee68d5d_2c134de9",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T12:33:13Z",
+      "side": 1,
+      "message": "Going through settings for this is a little weird. Let\u0027s instead add a WebViewSchedulerDelegate with this method in it.",
+      "range": {
+        "startLine": 31,
+        "startChar": 17,
+        "endLine": 31,
+        "endChar": 49
+      },
+      "revId": "7f929dc594839b068449d6413464bbe6589cc885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
