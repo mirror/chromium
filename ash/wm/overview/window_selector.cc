@@ -20,10 +20,12 @@
 #include "ash/shell.h"
 #include "ash/shell_port.h"
 #include "ash/wm/mru_window_tracker.h"
+#include "ash/wm/overview/overview_window_drag_controller.h"
 #include "ash/wm/overview/window_grid.h"
 #include "ash/wm/overview/window_selector_delegate.h"
 #include "ash/wm/overview/window_selector_item.h"
 #include "ash/wm/panels/panel_layout_manager.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/switchable_windows.h"
 #include "ash/wm/window_state.h"
 #include "ash/wm/window_util.h"
@@ -138,13 +140,40 @@ void UpdateShelfVisibility() {
     Shelf::ForWindow(root)->UpdateVisibilityState();
 }
 
+// Returns the bounds for the overview window grids according to the split view
+// state.
+gfx::Rect GetGridsBoundsInScreen(aura::Window* root_window) {
+  gfx::Rect bounds_in_screen;
+  if (Shell::Get()->IsSplitViewModeActive()) {
+    SplitViewController::State state =
+        Shell::Get()->split_view_controller()->state();
+    DCHECK(state != SplitViewController::NOSNAP);
+    if (state == SplitViewController::RIGHT_SNAPPED) {
+      // Open overview in the left side of the screen.
+      bounds_in_screen =
+          Shell::Get()->split_view_controller()->GetLeftWindowBoundsInScreen(
+              root_window);
+    } else if (state == SplitViewController::LEFT_SNAPPED) {
+      // Open overview in the right side of the screen.
+      bounds_in_screen =
+          Shell::Get()->split_view_controller()->GetRightWindowBoundsInScreen(
+              root_window);
+    }
+  } else {
+    bounds_in_screen = ScreenUtil::GetDisplayWorkAreaBoundsInParent(
+        root_window->GetChildById(kShellWindowId_DefaultContainer));
+    ::wm::ConvertRectToScreen(root_window, &bounds_in_screen);
+  }
+
+  return bounds_in_screen;
+}
+
 gfx::Rect GetTextFilterPosition(aura::Window* root_window) {
-  gfx::Rect total_bounds = ScreenUtil::GetDisplayWorkAreaBoundsInParent(
-      root_window->GetChildById(kShellWindowId_DefaultContainer));
-  ::wm::ConvertRectToScreen(root_window, &total_bounds);
+  gfx::Rect total_bounds = GetGridsBoundsInScreen(root_window);
   return gfx::Rect(
       0.5 * (total_bounds.width() -
-             std::min(kTextFilterWidth, total_bounds.width())),
+             std::min(kTextFilterWidth, total_bounds.width())) +
+          total_bounds.x(),
       total_bounds.y() + total_bounds.height() * kTextFilterTopScreenProportion,
       std::min(kTextFilterWidth, total_bounds.width()), kTextFilterHeight);
 }
@@ -271,7 +300,8 @@ void WindowSelector::Init(const WindowList& windows) {
     // root windows that don't contain any panel windows.
     PanelLayoutManager::Get(root)->SetShowCalloutWidgets(false);
 
-    std::unique_ptr<WindowGrid> grid(new WindowGrid(root, windows, this));
+    std::unique_ptr<WindowGrid> grid(
+        new WindowGrid(root, windows, this, GetGridsBoundsInScreen(root)));
     if (grid->empty())
       continue;
     num_items_ += grid->size();
@@ -308,6 +338,7 @@ void WindowSelector::Init(const WindowList& windows) {
   UMA_HISTOGRAM_COUNTS_100("Ash.WindowSelector.Items", num_items_);
 
   Shell::Get()->activation_client()->AddObserver(this);
+  Shell::Get()->split_view_controller()->AddObserver(this);
 
   display::Screen::GetScreen()->AddObserver(this);
   ShellPort::Get()->RecordUserMetricsAction(UMA_WINDOW_OVERVIEW);
@@ -326,6 +357,11 @@ void WindowSelector::Shutdown() {
   // Stop observing screen metrics changes first to avoid auto-positioning
   // windows in response to work area changes from window activation.
   display::Screen::GetScreen()->RemoveObserver(this);
+
+  // Stop observing split view state changes before restoring window focus.
+  // Otherwise the activation of the window triggers OnSplitViewStateChanged()
+  // that will call into this function again.
+  Shell::Get()->split_view_controller()->RemoveObserver(this);
 
   size_t remaining_items = 0;
   for (std::unique_ptr<WindowGrid>& window_grid : grid_list_) {
@@ -446,6 +482,45 @@ void WindowSelector::WindowClosing(WindowSelectorItem* window) {
   grid_list_[selected_grid_index_]->WindowClosing(window);
 }
 
+void WindowSelector::SetBoundsForWindowGridsInScreen(const gfx::Rect bounds) {
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_)
+    grid->SetBoundsInScreen(bounds);
+}
+
+void WindowSelector::RemoveWindowSelectorItem(WindowSelectorItem* item) {
+  if (item->GetWindow()->HasObserver(this)) {
+    item->GetWindow()->RemoveObserver(this);
+    observed_windows_.erase(item->GetWindow());
+    if (item->GetWindow() == restore_focus_window_)
+      restore_focus_window_ = nullptr;
+  }
+
+  // Remove |item| from the corresponding grid.
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_) {
+    if (grid->Contains(item->GetWindow())) {
+      grid->RemoveItem(item);
+      break;
+    }
+  }
+}
+
+void WindowSelector::InitiateDrag(WindowSelectorItem* item,
+                                  const gfx::Point& location_in_screen) {
+  window_drag_controller_.reset(new OverviewWindowDragController(this));
+  window_drag_controller_->InitiateDrag(item, location_in_screen);
+}
+
+void WindowSelector::Drag(WindowSelectorItem* item,
+                          const gfx::Point& location_in_screen) {
+  DCHECK(window_drag_controller_.get());
+  window_drag_controller_->Drag(item, location_in_screen);
+}
+
+void WindowSelector::CompleteDrag(WindowSelectorItem* item) {
+  DCHECK(window_drag_controller_.get());
+  window_drag_controller_->CompleteDrag(item);
+}
+
 bool WindowSelector::HandleKeyEvent(views::Textfield* sender,
                                     const ui::KeyEvent& key_event) {
   if (key_event.type() != ui::ET_KEY_PRESSED)
@@ -512,6 +587,11 @@ void WindowSelector::OnDisplayRemoved(const display::Display& display) {
 
 void WindowSelector::OnDisplayMetricsChanged(const display::Display& display,
                                              uint32_t metrics) {
+  // Re-calculate the bounds for the window grids and position all the windows.
+  for (std::unique_ptr<WindowGrid>& grid : grid_list_) {
+    SetBoundsForWindowGridsInScreen(
+        GetGridsBoundsInScreen(const_cast<aura::Window*>(grid->root_window())));
+  }
   PositionWindows(/* animate */ false);
   RepositionTextFilterOnDisplayMetricsChange();
 }
@@ -574,6 +654,9 @@ void WindowSelector::OnWindowActivated(ActivationReason reason,
     return;
   }
 
+  if (Shell::Get()->IsSplitViewModeActive())
+    return;
+
   // Don't restore focus on exit if a window was just activated.
   ResetFocusRestoreWindow(false);
   CancelSelection();
@@ -624,13 +707,43 @@ void WindowSelector::ContentsChanged(views::Textfield* sender,
   Move(WindowSelector::RIGHT, false);
 }
 
-aura::Window* WindowSelector::GetTextFilterWidgetWindow() {
-  return text_filter_widget_->GetNativeWindow();
+void WindowSelector::OnSplitViewStateChanged(
+    SplitViewController::State previous_state,
+    SplitViewController::State state) {
+  if (state != SplitViewController::NOSNAP) {
+    // Do not restore focus if a window was just snapped and activated.
+    ResetFocusRestoreWindow(false);
+  }
+
+  if (state == SplitViewController::BOTH_SNAPPED) {
+    CancelSelection();
+  } else if (state == SplitViewController::LEFT_SNAPPED) {
+    aura::Window* snapped_window =
+        Shell::Get()->split_view_controller()->left_window();
+    gfx::Rect bounds_in_screen =
+        Shell::Get()->split_view_controller()->GetRightWindowBoundsInScreen(
+            snapped_window);
+    SetBoundsForWindowGridsInScreen(bounds_in_screen);
+  } else if (state == SplitViewController::RIGHT_SNAPPED) {
+    aura::Window* snapped_window =
+        Shell::Get()->split_view_controller()->right_window();
+    gfx::Rect bounds_in_screen =
+        Shell::Get()->split_view_controller()->GetLeftWindowBoundsInScreen(
+            snapped_window);
+    SetBoundsForWindowGridsInScreen(bounds_in_screen);
+  } else {
+    DCHECK(state == SplitViewController::NOSNAP);
+    // TODO(xdai): Decide what to do here.
+  }
 }
 
 void WindowSelector::PositionWindows(bool animate) {
   for (std::unique_ptr<WindowGrid>& grid : grid_list_)
     grid->PositionWindows(animate);
+}
+
+aura::Window* WindowSelector::GetTextFilterWidgetWindow() {
+  return text_filter_widget_->GetNativeWindow();
 }
 
 void WindowSelector::RepositionTextFilterOnDisplayMetricsChange() {
