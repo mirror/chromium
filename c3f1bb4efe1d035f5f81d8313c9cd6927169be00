@@ -271,6 +271,24 @@
       "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d1c80fd_361c4899",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-09T02:21:26Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "68079427_dcf31a8b",
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
