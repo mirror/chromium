@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cee300a7_0fa49856",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fca83cfd_58c730f9",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5784b87c_1aad40c9",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-09T16:13:28Z",
       "side": 1,
       "message": "first:\n\nDCHECK_EQ(this, tls_current_sequence_local_storage.Get().Get());",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b1bf126_abba32d7",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Unneeded I think.\n\nThat suggested DCHECK is to make sure that no one has two instances of ScopedSetSequenceLocalStorageMapForCurrentThread. But, this is already achieved by DCHECK(!tls_current_sequence_local_storage.Get().Get());\n\nIf someone tried to instantiate a second one (while already in the scope a ScopedSetSequenceLocalStorageMapForCurrentThread), tls_current_sequence_local_storage.Get().Get() will be non-null (pointing to the first SLS map) and the DCHECK in the constructor will fail.",
+      "parentUuid": "5784b87c_1aad40c9",
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -89,6 +131,30 @@
     },
     {
       "key": {
+        "uuid": "cc4bd0af_ec6c6d7a",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "The only (expected) users of SequenceLocalStorageMap is SequenceLocalStorageSlot. \n\nSince there\u0027ll definitely be a sequence associated if the task is ran through TaskTracker::PerformRunTask, Will there really be use cases for this?",
+      "parentUuid": "b9f4ad4f_7368c33a",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e11a290_ed72d8df",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -109,6 +175,30 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36e0ecc6_6bd61303",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e11a290_ed72d8df",
+      "range": {
+        "startLine": 71,
+        "startChar": 12,
+        "endLine": 71,
+        "endChar": 13
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -147,6 +237,24 @@
     },
     {
       "key": {
+        "uuid": "bee4ff1d_00ab3266",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Okay, so I\u0027m keeping the line to set to nullptr.",
+      "parentUuid": "8eae798e_17290a31",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d796fd6f_a04dfbe7",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -164,6 +272,24 @@
     },
     {
       "key": {
+        "uuid": "b5b59594_436225d5",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d796fd6f_a04dfbe7",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95debadb_fc92f742",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -178,6 +304,24 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e40b28da_aaae9539",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "it is needed, right?",
+      "parentUuid": "95debadb_fc92f742",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -204,6 +348,30 @@
     },
     {
       "key": {
+        "uuid": "ac119879_2a823e2f",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d7a0da3_256d6b80",
+      "range": {
+        "startLine": 15,
+        "startChar": 36,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "323bafaf_d1bbca49",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
@@ -224,6 +392,30 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c61930_b6fdf1dd",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "323bafaf_d1bbca49",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 54
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -274,6 +466,30 @@
     },
     {
       "key": {
+        "uuid": "f340648a_86db747f",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6691da82_0f2c513d",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "003cd264_226d7804",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
@@ -294,6 +510,30 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e4d0001_51edd88c",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "003cd264_226d7804",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -320,6 +560,30 @@
     },
     {
       "key": {
+        "uuid": "7b07d58f_f7fb913f",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86e3a75f_7bf5ca6d",
+      "range": {
+        "startLine": 50,
+        "startChar": 42,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "051dfc62_f94ab1cd",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
@@ -343,6 +607,30 @@
     },
     {
       "key": {
+        "uuid": "708b6ccd_478cb5b3",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "051dfc62_f94ab1cd",
+      "range": {
+        "startLine": 53,
+        "startChar": 65,
+        "endLine": 53,
+        "endChar": 74
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "306df712_cf7d398a",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
@@ -360,6 +648,24 @@
     },
     {
       "key": {
+        "uuid": "520bc1e1_57af68fa",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "306df712_cf7d398a",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6b26ac1_30fd8e7c",
         "filename": "base/threading/sequence_local_storage_map_unittest.cc",
         "patchSetId": 12
@@ -374,6 +680,24 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bed5933e_871c72e1",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f6b26ac1_30fd8e7c",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -400,6 +724,30 @@
     },
     {
       "key": {
+        "uuid": "70e98a66_842d412b",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05c5d692_381f1258",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f02a020a_abb05a2f",
         "filename": "base/threading/sequence_local_storage_map_unittest.cc",
         "patchSetId": 12
@@ -417,6 +765,24 @@
     },
     {
       "key": {
+        "uuid": "e09fe23c_fb17baa2",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f02a020a_abb05a2f",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f569840f_3ef7f780",
         "filename": "base/threading/sequence_local_storage_map_unittest.cc",
         "patchSetId": 12
@@ -431,6 +797,24 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a27918a_8de03582",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f569840f_3ef7f780",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -481,6 +865,30 @@
     },
     {
       "key": {
+        "uuid": "59e39c33_beca4671",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36ae8be2_01009d7a",
+      "range": {
+        "startLine": 56,
+        "startChar": 39,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "467b9f15_b992447e",
         "filename": "base/threading/sequence_local_storage_map_unittest.cc",
         "patchSetId": 12
@@ -492,6 +900,30 @@
       "writtenOn": "2017-06-09T16:13:28Z",
       "side": 1,
       "message": "Nice :), honestly hadn\u0027t thought of this use case until I read this test!",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7d95725_60ced522",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T18:44:25Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "467b9f15_b992447e",
       "range": {
         "startLine": 107,
         "startChar": 0,
