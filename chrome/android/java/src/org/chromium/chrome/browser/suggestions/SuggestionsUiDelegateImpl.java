@@ -30,14 +30,13 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     private final SuggestionsRanker mSuggestionsRanker;
     private final SuggestionsEventReporter mSuggestionsEventReporter;
     private final SuggestionsNavigationDelegate mSuggestionsNavigationDelegate;
+    private final ThumbnailProvider mThumbnailProvider;
 
     private final Profile mProfile;
 
     private final NativePageHost mHost;
 
     private final DiscardableReferencePool mReferencePool;
-
-    private final ThumbnailProvider mThumbnailProvider;
 
     private FaviconHelper mFaviconHelper;
     private LargeIconBridge mLargeIconBridge;
