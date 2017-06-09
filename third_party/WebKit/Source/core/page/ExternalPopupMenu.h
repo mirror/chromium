@@ -54,7 +54,7 @@ struct WebPopupMenuInfo;
 class CORE_EXPORT ExternalPopupMenu final : NON_EXPORTED_BASE(public PopupMenu),
                                             public WebExternalPopupMenuClient {
  public:
-  ExternalPopupMenu(LocalFrame&, HTMLSelectElement&, WebView&);
+  ExternalPopupMenu(ChromeClient*, LocalFrame&, HTMLSelectElement&, WebView&);
   ~ExternalPopupMenu() override;
 
   // Fills |info| with the popup menu information contained in the
@@ -84,7 +84,6 @@ class CORE_EXPORT ExternalPopupMenu final : NON_EXPORTED_BASE(public PopupMenu),
   void DispatchEvent(TimerBase*);
   void Update();
 
-  Member<HTMLSelectElement> owner_element_;
   Member<LocalFrame> local_frame_;
   WebView& web_view_;
   std::unique_ptr<WebMouseEvent> synthetic_event_;
