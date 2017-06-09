@@ -233,6 +233,9 @@ SchedulerWorkerPoolImpl::SchedulerWorkerPoolImpl(
 void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
   suggested_reclaim_time_ = params.suggested_reclaim_time();
 
+  // num_wake_ups_before_start_ is modified by WakeUpOneWorker until workers_ is
+  // filled in (or guarded by idle_workers_stack_lock_), make a local copy here.
+  int local_num_wake_ups_before_start;
   {
     AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
 
@@ -241,27 +244,46 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
 #endif
 
     DCHECK(workers_.empty());
-    workers_.resize(params.max_threads());
 
-    // The number of workers created alive is |num_wake_ups_before_start_|, plus
-    // one if the standby thread policy is ONE (in order to start with one alive
-    // idle worker).
-    const int num_alive_workers =
-        num_wake_ups_before_start_ +
-        (params.standby_thread_policy() ==
-                 SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
-             ? 1
-             : 0);
+    local_num_wake_ups_before_start = num_wake_ups_before_start_;
+  }
 
-    // Create workers in reverse order of index so that the worker with the
-    // highest index is at the bottom of the idle stack.
+  // The number of workers created alive is |num_wake_ups_before_start_|, plus
+  // one if the standby thread policy is ONE (in order to start with one alive
+  // idle worker).
+  const int num_alive_workers =
+      local_num_wake_ups_before_start +
+      (params.standby_thread_policy() ==
+               SchedulerWorkerPoolParams::StandbyThreadPolicy::ONE
+           ? 1
+           : 0);
+
+  std::vector<scoped_refptr<SchedulerWorker>> local_workers;
+  local_workers.resize(params.max_threads());
+
+  // Create workers in reverse order of index so that the worker with the
+  // highest index is at the bottom of the idle stack.
+  for (int index = params.max_threads() - 1; index >= 0; --index) {
+    local_workers[index] = make_scoped_refptr(new SchedulerWorker(
+        priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this, index),
+        task_tracker_, params.backward_compatibility(),
+        index < num_alive_workers ? SchedulerWorker::InitialState::ALIVE
+                                  : SchedulerWorker::InitialState::DETACHED));
+  }
+
+  // Start all workers. CHECK that the first worker can be started (assume
+  // that failure means that threads can't be created on this machine).
+  for (size_t index = 0; index < local_workers.size(); ++index) {
+    const bool start_success = local_workers[index]->Start();
+    CHECK(start_success || index > 0);
+  }
+
+  {
+    AutoSchedulerLock auto_lock(idle_workers_stack_lock_);
+
+    workers_ = std::move(local_workers);
+
     for (int index = params.max_threads() - 1; index >= 0; --index) {
-      workers_[index] = make_scoped_refptr(new SchedulerWorker(
-          priority_hint_, MakeUnique<SchedulerWorkerDelegateImpl>(this, index),
-          task_tracker_, params.backward_compatibility(),
-          index < num_alive_workers ? SchedulerWorker::InitialState::ALIVE
-                                    : SchedulerWorker::InitialState::DETACHED));
-
       // Put workers that won't be woken up at the end of this method on the
       // idle stack.
       if (index >= num_wake_ups_before_start_)
@@ -273,12 +295,10 @@ void SchedulerWorkerPoolImpl::Start(const SchedulerWorkerPoolParams& params) {
 #endif
   }
 
-  // Start all workers. CHECK that the first worker can be started (assume that
-  // failure means that threads can't be created on this machine). Wake up one
-  // worker for each wake up that occurred before Start().
+  // Wake up one worker for each wake up that occurred before Start(). Note that
+  // num_wake_ups_before_start_ is unguarded, but WakeUpOneWorker() is no longer
+  // mutating it because workers_ has been filled in.
   for (size_t index = 0; index < workers_.size(); ++index) {
-    const bool start_success = workers_[index]->Start();
-    CHECK(start_success || index > 0);
     if (static_cast<int>(index) < num_wake_ups_before_start_)
       workers_[index]->WakeUp();
   }
