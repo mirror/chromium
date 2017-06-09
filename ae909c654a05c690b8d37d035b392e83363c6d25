@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c258361c_caba41c6",
+        "filename": "chromeos/chromeos_switches.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-09T19:48:51Z",
+      "side": 0,
+      "message": "Is this still true? If it is, can you copy it over?",
+      "revId": "ae909c654a05c690b8d37d035b392e83363c6d25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
