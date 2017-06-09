@@ -42,6 +42,7 @@ class RemoteFrameView final : public GarbageCollectedFinalized<RemoteFrameView>,
   void SetFrameRect(const IntRect&) override;
   const IntRect& FrameRect() const override { return frame_rect_; }
   void Paint(GraphicsContext&, const CullRect&) const override {}
+  void UpdateGeometry() override;
   void Hide() override;
   void Show() override;
   void SetParentVisible(bool) override;
