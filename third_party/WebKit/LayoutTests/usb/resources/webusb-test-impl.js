@@ -367,28 +367,39 @@ class FakeDeviceManager {
 class FakeChooserService {
   constructor() {
     this.bindingSet_ = new mojo.BindingSet(device.mojom.UsbChooserService);
-    this.chosenDevice_ = null;
-    this.lastFilters_ = null;
   }
 
   addBinding(handle) {
     this.bindingSet_.addBinding(this, handle);
   }
 
-  setChosenDevice(fakeDevice) {
-    this.chosenDevice_ = fakeDevice;
-  }
-
   getPermission(deviceFilters) {
-    this.lastFilters_ = convertMojoDeviceFilters(deviceFilters);
-    let device = internal.deviceManager.devices_.get(this.chosenDevice_);
-    if (device) {
-      return Promise.resolve({
-        result: fakeDeviceInitToDeviceInfo(device.guid, device.info)
-      });
-    } else {
-      return Promise.resolve({ result: null });
-    }
+    return new Promise(resolve => {
+      class USBDeviceRequestEvent {
+        constructor() {
+          this.filters = convertMojoDeviceFilters(deviceFilters);
+        }
+
+        respondWith(value) {
+          Promise.resolve(value).then(fakeDevice => {
+            let device = internal.deviceManager.devices_.get(fakeDevice);
+            if (device) {
+              resolve({
+                result: fakeDeviceInitToDeviceInfo(device.guid, device.info)
+              });
+            } else {
+              resolve({ result: null });
+            }
+          });
+        }
+      }
+
+      if (navigator.usb.test.onrequestdevice) {
+        navigator.usb.test.onrequestdevice(new USBDeviceRequestEvent());
+      } else {
+        resolve({ result: null });
+      }
+    });
   }
 }
 
@@ -423,7 +434,9 @@ class CrossFrameHandleProxy {
 }
 
 class USBTest {
-  constructor() {}
+  constructor() {
+    this.onrequestdevice = undefined;
+  }
 
   initialize() {
     if (internal.initialized)
@@ -484,20 +497,6 @@ class USBTest {
     return fakeDevice;
   }
 
-  set chosenDevice(fakeDevice) {
-    if (!internal.initialized)
-      throw new Error('Call initialize() before setting chosenDevice.');
-
-    internal.chooser.setChosenDevice(fakeDevice);
-  }
-
-  get lastFilters() {
-    if (!internal.initialized)
-      throw new Error('Call initialize() before getting lastFilters.');
-
-    return internal.chooser.lastFilters_;
-  }
-
   reset() {
     if (!internal.initialized)
       throw new Error('Call initialize() before reset().');
@@ -507,7 +506,6 @@ class USBTest {
     return new Promise(resolve => {
       setTimeout(() => {
         internal.deviceManager.removeAllDevices();
-        internal.chooser.setChosenDevice(null);
         resolve();
       }, 0);
     });
