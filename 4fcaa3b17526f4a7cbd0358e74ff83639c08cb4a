@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6615e485_8f565869",
+        "filename": "content/renderer/shared_worker/embedded_shared_worker_content_settings_client_proxy.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-09T04:40:30Z",
+      "side": 1,
+      "message": "Question: Would it be better to add NOTREACHED() checks in other virtual functions from WebContentSettingsClient?",
+      "revId": "4fcaa3b17526f4a7cbd0358e74ff83639c08cb4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
