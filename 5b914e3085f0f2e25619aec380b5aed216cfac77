@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ec557cf3_e446bf64",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50a34df9_4efdfbe4",
+      "range": {
+        "startLine": 35,
+        "startChar": 62,
+        "endLine": 35,
+        "endChar": 63
+      },
+      "revId": "5b914e3085f0f2e25619aec380b5aed216cfac77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ee8f29c_477f5c60",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
         "patchSetId": 3
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "d346cead_0399dbb1",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ee8f29c_477f5c60",
+      "revId": "5b914e3085f0f2e25619aec380b5aed216cfac77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d0d91a83_a0c5a9b8",
         "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
         "patchSetId": 3
@@ -56,6 +98,24 @@
       "revId": "5b914e3085f0f2e25619aec380b5aed216cfac77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae15da0f_6b76d6f1",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:39:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d91a83_a0c5a9b8",
+      "revId": "5b914e3085f0f2e25619aec380b5aed216cfac77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
