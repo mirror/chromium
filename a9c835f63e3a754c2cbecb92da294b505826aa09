@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb7f7115_6d5fe847",
+        "filename": "google_apis/drive/drive_api_url_generator.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-09T05:54:17Z",
+      "side": 1,
+      "message": "If this hack is always needed when using Team Drives, we don\u0027t need a flag.\nJust do this always, and put a TODO to remove this later.",
+      "revId": "a9c835f63e3a754c2cbecb92da294b505826aa09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
