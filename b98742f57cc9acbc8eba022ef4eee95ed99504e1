@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "345e6656_214d947e",
+        "filename": "third_party/WebKit/Source/core/dom/TreeWalker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T04:37:34Z",
+      "side": 1,
+      "message": "Note: There are 140 occurrences of |while (true)|\nThere are 45 occurrences of |for (;;)|\nin file:webkit/",
+      "revId": "b98742f57cc9acbc8eba022ef4eee95ed99504e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
