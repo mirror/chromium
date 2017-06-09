@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c145c1_60831308",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/BrowserStartupController.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-09T00:03:19Z",
+      "side": 1,
+      "message": "I would add a comment how this could happen as that looks \"too\" easy to remove incorrectly.",
+      "range": {
+        "startLine": 179,
+        "startChar": 0,
+        "endLine": 179,
+        "endChar": 64
+      },
+      "revId": "8de5815185e168e2a66720a72a29794521f57e82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
