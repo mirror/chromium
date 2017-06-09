@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d708cc_3f63c69b",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/media/autoplay/resources/test-autoplay.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:39:03Z",
+      "side": 1,
+      "message": "Can you do \"/resources/test\" instead of passing the origin?",
+      "revId": "f4aba5081bd918bcfd34b2ef4f06f80a9b6f087e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d181bb16_10b37c3e",
+        "filename": "third_party/WebKit/Source/core/html/media/AutoplayPolicy.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:39:03Z",
+      "side": 1,
+      "message": "Can you use this in BaseAudioContext? I can review that change too so better to bundle it in the same CL :) At the moment, we mostly have unit tests for the Web Audio autoplay policy. Adding tests should be fairly quick I guess ;)",
+      "revId": "f4aba5081bd918bcfd34b2ef4f06f80a9b6f087e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
