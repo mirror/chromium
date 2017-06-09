@@ -16,6 +16,24 @@
       "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77079da1_ef1a0591",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T18:22:38Z",
+      "side": 1,
+      "message": "This check happens inside WTF::String.\n\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/platform/wtf/text/WTFString.h?q\u003doperator%5B%5D+package:%5Echromium$\u0026l\u003d149",
+      "parentUuid": "fef39416_a87e041c",
+      "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
