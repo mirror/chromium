@@ -303,6 +303,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   virtual void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                                 bool skip_boot_completed_broadcast,
                                 bool scan_vendor_priv_app,
+                                bool for_login_screen,
                                 const StartArcInstanceCallback& callback) = 0;
 
   // Asynchronously stops the ARC instance.  Upon completion, invokes
