@@ -232,7 +232,9 @@ class ProfileImpl : public Profile {
   // first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
-  std::unique_ptr<sync_preferences::PrefServiceSyncable> otr_prefs_;
+  // See comment in GetOffTheRecordPrefs. Field exists so something owns the
+  // dummy.
+  std::unique_ptr<sync_preferences::PrefServiceSyncable> dummy_otr_prefs_;
   ProfileImplIOData::Handle io_data_;
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   scoped_refptr<ExtensionSpecialStoragePolicy>
