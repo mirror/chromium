@@ -37,6 +37,20 @@ class PepperOutputProtectionMessageFilter
                                       PP_Instance instance);
 
  private:
+  // These static methods proxy calls to their similarly named methods on the IO
+  // thread. They are necessary for WeakPtr cleanliness, that |filter| is
+  // dereferenced and destroyed on the same thread.
+  static void OnQueryStatusComplete(
+      base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success,
+      uint32_t link_mask,
+      uint32_t protection_mask);
+  static void OnEnableProtectionComplete(
+      base::WeakPtr<PepperOutputProtectionMessageFilter> filter,
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success);
+
   // ppapi::host::ResourceMessageFilter overrides.
   scoped_refptr<base::TaskRunner> OverrideTaskRunnerForMessage(
       const IPC::Message& msg) override;
@@ -49,13 +63,13 @@ class PepperOutputProtectionMessageFilter
   int32_t OnQueryStatus(ppapi::host::HostMessageContext* context);
   int32_t OnEnableProtection(ppapi::host::HostMessageContext* context,
                              uint32_t desired_method_mask);
+  void OnQueryStatusCompleteOnIOThread(
+      ppapi::host::ReplyMessageContext reply_context,
+      bool success,
+      uint32_t link_mask,
+      uint32_t protection_mask);
 
-  void OnQueryStatusComplete(ppapi::host::ReplyMessageContext reply_context,
-                             bool success,
-                             uint32_t link_mask,
-                             uint32_t protection_mask);
-
-  void OnEnableProtectionComplete(
+  void OnEnableProtectionCompleteOnIOThread(
       ppapi::host::ReplyMessageContext reply_context,
       bool success);
 
