@@ -106,6 +106,24 @@
       "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "89fc51c3_de1deeb5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-09T21:51:36Z",
+      "side": 1,
+      "message": "Are you looking at the whole if-else-statement?  Maybe it is cut off from view in codereview.  5 lines after the if, there is an else and the remote frames and plugins also run UpdateGeometry.\n\nThe special filtering for LocalFrameView is just to run the debug CheckDoesNotNeedLayout after UpdateGeometry.\n\n\n if (LocalFrameView* frame_view \u003d part-\u003eChildFrameView()) {\n   bool did_need_layout \u003d frame_view-\u003eNeedsLayout();\n   part-\u003eUpdateGeometry();\n   if (!did_need_layout \u0026\u0026 !frame_view-\u003eShouldThrottleRendering())\n     frame_view-\u003eCheckDoesNotNeedLayout();\n } else {\n   part-\u003eUpdateGeometry();  // XXX plugins run here XXX\n }",
+      "parentUuid": "71502bc1_a2cad55a",
+      "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
