@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b1d8811_adacad2c",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:25:47Z",
+      "side": 1,
+      "message": "// TODO(chfremer): enable in Android, https://crbug.com/720500\n\nThe construction is a bit hard to parse so, instead, consider\nnot having |use_video_capture_service| in TargetCamera, and \nhave another thing here like:\n\nstatic struct TargetPlatform {\n  bool use_video_capture_service;\n} const kTestParameters2[] \u003d {\n    {false},\n#if !defined(OS_ANDROID)\n    // TODO(chfremer): enable in Android, https://crbug.com/720500\n    {true}\n#endif\n};\n\n(Obviously |kTestParameters2| is a bogus name) and then just \nuse them in l. 161:\n\n::testing::Combine(::testing::ValuesIn(kTestParameters),\n                   ::testing::ValuesIn(kTestParameters2) ... ));\n\nAnd then you can use |kTestParameters2| for, e.g. l. 206 and\nl.167 (and similars) become self-explanatory (which is the idea\nbehind having the struct TargetCamera anyway instead of just a\nboolean array).",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "69e51b7555a7c6139f0d6435b78f347d5750be5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f776663_e6e0350c",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:25:47Z",
+      "side": 1,
+      "message": "This family of WebRtcImageCaptureXXXFailsBrowserTest tests\nclasses look similar somehow, could they be further \nparameterized or templatized...?",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 50
+      },
+      "revId": "69e51b7555a7c6139f0d6435b78f347d5750be5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5162f283_46148cc6",
+        "filename": "media/capture/video/fake_video_capture_device_factory.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:25:47Z",
+      "side": 1,
+      "message": "No need to consider \"else\" after a returned \"if\".\nHere and in l.307.",
+      "range": {
+        "startLine": 303,
+        "startChar": 8,
+        "endLine": 303,
+        "endChar": 12
+      },
+      "revId": "69e51b7555a7c6139f0d6435b78f347d5750be5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
