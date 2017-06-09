@@ -69,6 +69,30 @@
       "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4be3e597_a67032f7",
+        "filename": "chrome/browser/ui/webui/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-09T03:26:00Z",
+      "side": 0,
+      "message": "having more specific owners is generally A Good Thing.",
+      "parentUuid": "b9801aa4_154b1e3a",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
