@@ -143,7 +143,7 @@ Node* TreeWalker::TraverseSiblings(ExceptionState& exception_state) {
         case NodeFilter::kFilterAccept:
           current_ = sibling;
           return current_.Get();
-        case NodeFilter::kFilterSkip:
+        default:
           if (sibling->hasChildren()) {
             sibling = type_next ? sibling->firstChild() : sibling->lastChild();
             node = sibling;
