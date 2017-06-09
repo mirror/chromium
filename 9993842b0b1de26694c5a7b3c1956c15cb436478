@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5aa89a8c_693d22ad",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T21:11:42Z",
+      "side": 0,
+      "message": "I forgot to rebase! This has been corrected in the next patch set for this CL.",
+      "parentUuid": "eeeacb62_1821d154",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 20
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de61e498_4e978779",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aacda697_85c96dae",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-09T21:11:42Z",
+      "side": 0,
+      "message": "I forgot to rebase! This has been corrected in the next patch set for this CL.",
+      "parentUuid": "de61e498_4e978779",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
