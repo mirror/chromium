@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c7a2acb_77dff1a1",
+        "filename": "components/ukm/ukm_interface.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T22:21:34Z",
+      "side": 1,
+      "message": "nit: empty newline before",
+      "revId": "dadcd29e3830a356bccc7b4fdab73fda2b973674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c4a36c7_77590705",
+        "filename": "components/ukm/ukm_interface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T22:21:34Z",
+      "side": 1,
+      "message": "nit: s/instance_id_/instance_id/\n\nAlso no need for \u0027explicit\u0027 anymore I think?",
+      "revId": "dadcd29e3830a356bccc7b4fdab73fda2b973674",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
