@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d79831c2_a6ba1db2",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-09T20:26:20Z",
+      "side": 1,
+      "message": "I wonder how long we\u0027ll resist from just having a backpointer to service into all objects :) It\u0027ll be a complicated web of dependencies soon, and having multiple raw pointers as members is very scary. Having one raw pointer to a service that has unique_ptr on that object is much less scary because it is more \u0027transparent\u0027.",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e42ab6a_c6f1aa89",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-09T20:26:20Z",
+      "side": 1,
+      "message": "We probably should avoid flag checks everywhere, since the service is lightweight and some subobjects of it (metrics collector) will work even if prefetch itself is disabled. I think it\u0027s better to check the flag in a key point of intake (Zine listener?) and nowhere else. This way we avoid surprises as we had with other flags when random parts of the feature would check or not check for the flag and get into inconsistent states.",
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef66663b_162e4ae3",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-09T20:26:20Z",
+      "side": 1,
+      "message": "GCMReceivedForOperation -\u003e GCMOperationCompletedMessageReceived?",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aeb8040_174c8016",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-09T20:26:20Z",
+      "side": 1,
+      "message": "I\u0027d make a case for this to be on PrefetchService, since the other subobjects like Store or Metrics might want to log to internal page as well.",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
