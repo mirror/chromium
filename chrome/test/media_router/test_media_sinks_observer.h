@@ -25,7 +25,8 @@ class TestMediaSinksObserver : public MediaSinksObserver {
   ~TestMediaSinksObserver() override;
 
   // MediaSinksObserver implementation.
-  void OnSinksReceived(const std::vector<MediaSink>& result) override;
+  void OnSinksReceived(blink::mojom::ScreenAvailability availability,
+                       const std::vector<MediaSink>& result) override;
 
   // Map of <sink_name, media_sink_object>
   std::map<std::string, const MediaSink> sink_map;

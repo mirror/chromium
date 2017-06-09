@@ -76,7 +76,8 @@ class CastDeviceCache : public media_router::MediaRoutesObserver,
 
  private:
   // media_router::MediaSinksObserver:
-  void OnSinksReceived(const MediaSinks& sinks) override;
+  void OnSinksReceived(blink::mojom::ScreenAvailability availability,
+                       const MediaSinks& sinks) override;
 
   // media_router::MediaRoutesObserver:
   void OnRoutesUpdated(const MediaRoutes& routes,
@@ -105,7 +106,9 @@ void CastDeviceCache::Init() {
   CHECK(MediaSinksObserver::Init());
 }
 
-void CastDeviceCache::OnSinksReceived(const MediaSinks& sinks) {
+void CastDeviceCache::OnSinksReceived(
+    blink::mojom::ScreenAvailability availability,
+    const MediaSinks& sinks) {
   sinks_.clear();
   for (const media_router::MediaSink& sink : sinks) {
     // The media router adds a MediaSink instance that doesn't have a name. Make

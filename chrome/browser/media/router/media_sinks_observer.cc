@@ -39,16 +39,21 @@ bool MediaSinksObserver::Init() {
 }
 
 void MediaSinksObserver::OnSinksUpdated(
+    blink::mojom::ScreenAvailability availability,
     const std::vector<MediaSink>& sinks,
     const std::vector<url::Origin>& origins) {
 #if DCHECK_IS_ON()
   base::AutoReset<bool> reset_in_on_sinks_updated(&in_on_sinks_updated_, true);
 #endif
 
-  if (origins.empty() || base::ContainsValue(origins, origin_))
-    OnSinksReceived(sinks);
-  else
-    OnSinksReceived(std::vector<MediaSink>());
+  if (availability == blink::mojom::ScreenAvailability::AVAILABLE &&
+      !origins.empty() && !base::ContainsValue(origins, origin_)) {
+    OnSinksReceived(blink::mojom::ScreenAvailability::SOURCE_NOT_SUPPORTED,
+                    std::vector<MediaSink>());
+    return;
+  }
+
+  OnSinksReceived(availability, sinks);
 }
 
 }  // namespace media_router

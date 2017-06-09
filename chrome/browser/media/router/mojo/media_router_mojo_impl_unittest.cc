@@ -725,9 +725,12 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaSinksObserver) {
   }
 
   base::RunLoop run_loop;
-  EXPECT_CALL(*sinks_observer, OnSinksReceived(SequenceEquals(expected_sinks)));
+  EXPECT_CALL(*sinks_observer,
+              OnSinksReceived(blink::mojom::ScreenAvailability::AVAILABLE,
+                              SequenceEquals(expected_sinks)));
   EXPECT_CALL(*extra_sinks_observer,
-              OnSinksReceived(SequenceEquals(expected_sinks)))
+              OnSinksReceived(blink::mojom::ScreenAvailability::AVAILABLE,
+                              SequenceEquals(expected_sinks)))
       .WillOnce(InvokeWithoutArgs([&run_loop]() { run_loop.Quit(); }));
   media_router_proxy_->OnSinksReceived(
       media_source.id(), sinks,
@@ -741,14 +744,18 @@ TEST_F(MediaRouterMojoImplTest, RegisterAndUnregisterMediaSinksObserver) {
       new MockMediaSinksObserver(router(), media_source,
                                  url::Origin(GURL(kOrigin))));
   EXPECT_CALL(*cached_sinks_observer,
-              OnSinksReceived(SequenceEquals(expected_sinks)));
+              OnSinksReceived(blink::mojom::ScreenAvailability::AVAILABLE,
+                              SequenceEquals(expected_sinks)));
   EXPECT_TRUE(cached_sinks_observer->Init());
 
   // Different origin from cached result. Empty list will be returned.
   std::unique_ptr<MockMediaSinksObserver> cached_sinks_observer2(
       new MockMediaSinksObserver(router(), media_source,
                                  url::Origin(GURL("https://youtube.com"))));
-  EXPECT_CALL(*cached_sinks_observer2, OnSinksReceived(IsEmpty()));
+  EXPECT_CALL(
+      *cached_sinks_observer2,
+      OnSinksReceived(blink::mojom::ScreenAvailability::SOURCE_NOT_SUPPORTED,
+                      IsEmpty()));
   EXPECT_TRUE(cached_sinks_observer2->Init());
 
   base::RunLoop run_loop2;
@@ -772,13 +779,17 @@ TEST_F(MediaRouterMojoImplTest,
   std::unique_ptr<MockMediaSinksObserver> sinks_observer(
       new MockMediaSinksObserver(router(), media_source,
                                  url::Origin(GURL(kOrigin))));
-  EXPECT_CALL(*sinks_observer, OnSinksReceived(IsEmpty()));
+  EXPECT_CALL(*sinks_observer,
+              OnSinksReceived(blink::mojom::ScreenAvailability::UNAVAILABLE,
+                              IsEmpty()));
   EXPECT_TRUE(sinks_observer->Init());
   MediaSource media_source2(kSource2);
   std::unique_ptr<MockMediaSinksObserver> sinks_observer2(
       new MockMediaSinksObserver(router(), media_source2,
                                  url::Origin(GURL(kOrigin))));
-  EXPECT_CALL(*sinks_observer2, OnSinksReceived(IsEmpty()));
+  EXPECT_CALL(*sinks_observer2,
+              OnSinksReceived(blink::mojom::ScreenAvailability::UNAVAILABLE,
+                              IsEmpty()));
   EXPECT_TRUE(sinks_observer2->Init());
   EXPECT_CALL(mock_media_route_provider_, StartObservingMediaSinks(kSource))
       .Times(0);
