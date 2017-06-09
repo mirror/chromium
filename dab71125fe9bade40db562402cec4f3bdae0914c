@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "26538ff1_e8df33bc",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-09T06:55:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0ccc062_3f56ad45",
+      "range": {
+        "startLine": 109,
+        "startChar": 22,
+        "endLine": 109,
+        "endChar": 32
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74b02835_a405b89c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
         "patchSetId": 4
@@ -69,6 +93,30 @@
       "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f5c132_b97beada",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-09T06:55:48Z",
+      "side": 1,
+      "message": "I take a look this a little.\n\nThe state change for the page_throttled_ seems to be delayed only on changing to Throttled, but change to the Unthrottled happens immediately. So, this won\u0027t be so serious problem even for Loading, and could be fine enough for the first implementation.\n\nIf the previous active page is making many requests, we could not stop it anyway, and such event delay would not make much difference. Also my expectation is when a user want to look another tab, at least one of the old tab and new tab should be already stable. So, this duration for delay would not be problem.\n\nLet me use the existing page_throttled_.",
+      "parentUuid": "006ec527_779854a4",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
