@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d44de307_f7ebd309",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-09T23:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de964af5_9cfd3fcd",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d2e7146_adfee35f",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35017e6e_e99c138f",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-09T23:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d2e7146_adfee35f",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "d53ea69e_dbbae946",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-09T23:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7333a753_f56b12e0",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e838d2c1_c7ce0a5d",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 6
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "0c538502_46550964",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-09T23:19:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e838d2c1_c7ce0a5d",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d911e64b_208d12f2",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 6
@@ -96,6 +180,24 @@
       "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81f0676d_267f73af",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-09T23:19:46Z",
+      "side": 1,
+      "message": "Discussed offline, keeping the raw pointer",
+      "parentUuid": "d911e64b_208d12f2",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
