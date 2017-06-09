@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68c5d994_c1858ee9",
+        "filename": "media/capture/video/scoped_result_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T14:29:50Z",
+      "side": 1,
+      "message": "Don\u0027t we need to update\nhttps://cs.chromium.org/chromium/src/media/capture/mojo/BUILD.gn?sq\u003dpackage:chromium\u0026type\u003dcs\u0026l\u003d25\nat the same time?",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc005b68_06eaba37",
+        "filename": "media/capture/video/scoped_result_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T14:29:50Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we do here\nstd::move(callback_).Run(std::forward\u003cArgs\u003e(args)...);\n?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8f1fe5f_a70e4585",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T14:29:50Z",
+      "side": 1,
+      "message": "Note that these classes under //services do not use ScopedResultCallback,\nyou might need to update the CL description or leave them unaltered.\nThese //services files implement mojom interfaces defined in \nhttps://cs.chromium.org/chromium/src/services/shape_detection/public/interfaces/BUILD.gn?sq\u003dpackage:chromium\u0026type\u003dcs\u0026l\u003d22",
+      "range": {
+        "startLine": 27,
+        "startChar": 61,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
