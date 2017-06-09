@@ -2191,6 +2191,14 @@ void LayerTreeHostImpl::SetVisible(bool visible) {
   if (visible_) {
     // TODO(crbug.com/469175): Replace with RequiresHighResToDraw.
     SetRequiresHighResToDraw();
+    // Prior CompositorFrame may have been discarded and thus we need to ensure
+    // that we submit a new one, even if there are no tiles. Therefore, force a
+    // full viewport redraw. However, this is unnecessary when we become visible
+    // for the first time and there's no valid active tree yet.
+    if (!active_tree_->LayerListIsEmpty()) {
+      SetFullViewportDamage();
+      SetNeedsRedraw();
+    }
   } else {
     EvictAllUIResources();
     // Call PrepareTiles to evict tiles when we become invisible.
