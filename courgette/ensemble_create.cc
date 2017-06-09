@@ -435,12 +435,13 @@ Status GenerateEnsemblePatch(SourceStream* base,
   //
   // Final output stream has a header followed by a StreamSet.
   //
-  if (!final_patch->WriteVarint32(CourgettePatchFile::kMagic) ||
+  if (!final_patch->Write(&CourgettePatchFile::kMagic,
+                          sizeof(CourgettePatchFile::kMagic)) ||
       !final_patch->WriteVarint32(CourgettePatchFile::kVersion) ||
-      !final_patch->WriteVarint32(CalculateCrc(old_region.start(),
-                                               old_region.length())) ||
-      !final_patch->WriteVarint32(CalculateCrc(new_region.start(),
-                                               new_region.length())) ||
+      !final_patch->WriteVarint32(
+          CalculateCrc(old_region.start(), old_region.length())) ||
+      !final_patch->WriteVarint32(
+          CalculateCrc(new_region.start(), new_region.length())) ||
       !final_patch->WriteSizeVarint32(final_patch_input_size) ||
       !patch_streams.CopyTo(final_patch)) {
     return C_STREAM_ERROR;

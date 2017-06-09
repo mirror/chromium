@@ -87,7 +87,7 @@ EnsemblePatchApplication::EnsemblePatchApplication()
 
 Status EnsemblePatchApplication::ReadHeader(SourceStream* header_stream) {
   uint32_t magic;
-  if (!header_stream->ReadVarint32(&magic))
+  if (!header_stream->Read(&magic, sizeof(uint32_t)))
     return C_BAD_ENSEMBLE_MAGIC;
 
   if (magic != CourgettePatchFile::kMagic)
