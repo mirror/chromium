@@ -124,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "bbd939d1_40d24b5b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T00:24:11Z",
+      "side": 1,
+      "message": "As it is, this file is overwritten/updated on import, which will be a problem if this *isn\u0027t* exported, and if we don\u0027t have some special logic for adding this line in here on import.\n\nThis is probably something that would be nicer to resolve before this CL is committed rather than after...\n\nI would propose first trying to make a PR to add this upstream, and then if that\u0027s not acceptable, modifying webkitpy/w3c/test_importer.py to write to this file after import.\n\nWhat do you think?",
+      "parentUuid": "3802f137_e17c34f6",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8c5c1f_914fe3c1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
         "patchSetId": 9
@@ -194,6 +212,24 @@
     },
     {
       "key": {
+        "uuid": "de01c7c5_cba6105c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/README.chromium",
+        "patchSetId": 9
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T00:24:11Z",
+      "side": 1,
+      "message": "Alright, excellent.",
+      "parentUuid": "c294a426_924bc1fe",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e32e91cf_5b907bdb",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/lint",
         "patchSetId": 9
@@ -226,6 +262,24 @@
       "revId": "f541d5dff87e279788649d63153bf18330ab819c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53e3b98a_c1885aff",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/lint",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T00:24:11Z",
+      "side": 1,
+      "message": "Hmm, this seems like a good change to make upstream as well :-)",
+      "parentUuid": "c0a2b052_bd875ff8",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
