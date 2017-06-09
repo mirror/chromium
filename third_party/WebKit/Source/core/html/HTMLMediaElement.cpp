@@ -893,6 +893,7 @@ void HTMLMediaElement::InvokeLoadAlgorithm() {
 
       // 4.6.2 - Take pending play promises and reject pending play promises
       // with the result and an "AbortError" DOMException.
+      RecordPlayPromiseRejected(PlayPromiseRejectReason::kInterruptedByLoad);
       RejectPlayPromises(
           kAbortError,
           "The play() request was interrupted by a new load request.");
@@ -2262,9 +2263,12 @@ ScriptPromise HTMLMediaElement::playForBindings(ScriptState* script_state) {
     switch (code.Get()) {
       case kNotAllowedError:
         message = "play() can only be initiated by a user gesture.";
+        RecordPlayPromiseRejected(
+            PlayPromiseRejectReason::kFailedAutoplayPolicy);
         break;
       case kNotSupportedError:
         message = "The element has no supported sources.";
+        RecordPlayPromiseRejected(PlayPromiseRejectReason::kNoSupportedSources);
         break;
       default:
         NOTREACHED();
@@ -3943,14 +3947,17 @@ void HTMLMediaElement::RejectScheduledPlayPromises() {
   // used by the object, the string isn't saved.
   DCHECK(play_promise_error_code_ == kAbortError ||
          play_promise_error_code_ == kNotSupportedError);
-  if (play_promise_error_code_ == kAbortError)
+  if (play_promise_error_code_ == kAbortError) {
+    RecordPlayPromiseRejected(PlayPromiseRejectReason::kInterruptedByPause);
     RejectPlayPromisesInternal(
         kAbortError,
         "The play() request was interrupted by a call to pause().");
-  else
+  } else {
+    RecordPlayPromiseRejected(PlayPromiseRejectReason::kNoSupportedSources);
     RejectPlayPromisesInternal(
         kNotSupportedError,
         "Failed to load because no supported source was found.");
+  }
 }
 
 void HTMLMediaElement::RejectPlayPromises(ExceptionCode code,
@@ -4095,6 +4102,16 @@ void HTMLMediaElement::ViewportFillDebouncerTimerFired(TimerBase*) {
   mostly_filling_viewport_ = true;
   if (web_media_player_)
     web_media_player_->BecameDominantVisibleContent(mostly_filling_viewport_);
+}
+
+void HTMLMediaElement::RecordPlayPromiseRejected(
+    PlayPromiseRejectReason reason) const {
+  DEFINE_STATIC_LOCAL(EnumerationHistogram, histogram,
+                      ("Media.MediaElement.PlayPromiseReject",
+                       static_cast<int>(PlayPromiseRejectReason::kMax)));
+  histogram.Count(static_cast<int>(reason));
+
+  UseCounter::Count(GetDocument(), WebFeature::kHTMLMediaElementPlayRejected);
 }
 
 }  // namespace blink
