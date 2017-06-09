@@ -80,5 +80,5 @@ class RuntimeFeatureWriter(json5_generator.Writer):
         return self._template_inputs()
 
 
-if __name__ == '__main__':
+def run():
     json5_generator.Maker(RuntimeFeatureWriter).main()
