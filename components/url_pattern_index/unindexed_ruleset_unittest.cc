@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "components/subresource_filter/core/common/unindexed_ruleset.h"
+#include "components/url_pattern_index/unindexed_ruleset.h"
 
 #include <memory>
 #include <string>
@@ -11,13 +11,13 @@
 #include "base/macros.h"
 #include "base/numerics/safe_conversions.h"
 #include "base/strings/string_number_conversions.h"
-#include "components/subresource_filter/core/common/url_pattern.h"
-#include "components/subresource_filter/core/common/url_rule_test_support.h"
+#include "components/url_pattern_index/url_pattern.h"
+#include "components/url_pattern_index/url_rule_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/protobuf/src/google/protobuf/io/zero_copy_stream.h"
 #include "third_party/protobuf/src/google/protobuf/io/zero_copy_stream_impl_lite.h"
 
-namespace subresource_filter {
+namespace url_pattern_index {
 
 namespace {
 
@@ -179,4 +179,4 @@ TEST(UnindexedRulesetTest, ReadCorruptedInput) {
   }
 }
 
-}  // namespace subresource_filter
+}  // namespace url_pattern_index
