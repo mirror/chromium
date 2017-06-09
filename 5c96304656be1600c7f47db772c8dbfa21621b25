@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "607b6a96_03550032",
+        "filename": "base/android/jni_generator/jni_generator_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-09T21:48:52Z",
+      "side": 1,
+      "message": "Since the test doesn\u0027t know about the details implementation of course... Should we add a few extra test cases while you\u0027re at it?\n- Multiple comma-separated implements.\n- Both extends and single implements.\n- Both extends and multiple comma-separated implements.\n- Using generics in extends.\n- Using generics in interface.\n- Putting the class-starting \u0027{\u0027 on a new line.\n\nI don\u0027t think the implementation has to change at all though. It seems to all work fine for those test-cases.",
+      "revId": "5c96304656be1600c7f47db772c8dbfa21621b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
