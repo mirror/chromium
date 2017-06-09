@@ -20,6 +20,7 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/web_contents.h"
+#include "crypto/sha2.h"
 
 using content::WebContents;
 
@@ -57,6 +58,10 @@ ReferrerChainEntry::URLType GetURLTypeAndAdjustAttributionResult(
     *out_result = SafeBrowsingNavigationObserverManager::SUCCESS_LANDING_PAGE;
     return ReferrerChainEntry::LANDING_PAGE;
   }
+}
+
+std::string GetOrigin(const std::string& url) {
+  return GURL(url).GetOrigin().spec();
 }
 
 }  // namespace
@@ -217,6 +222,44 @@ bool SafeBrowsingNavigationObserverManager::IsEnabledAndReady(
          g_browser_process->safe_browsing_service() &&
          g_browser_process->safe_browsing_service()
              ->navigation_observer_manager();
+}
+
+// static
+std::string SafeBrowsingNavigationObserverManager::ShortenURL(const GURL& url) {
+  std::string spec(url.spec());
+  if (url.SchemeIs(url::kDataScheme)) {
+    size_t comma_pos = spec.find(',');
+    if (comma_pos != std::string::npos && comma_pos != spec.size() - 1) {
+      std::string hash_value = crypto::SHA256HashString(spec);
+      spec.erase(comma_pos + 1);
+      spec += base::HexEncode(hash_value.data(), hash_value.size());
+    }
+  }
+  return spec;
+}
+
+// static
+void SafeBrowsingNavigationObserverManager::SanitizeReferrerChain(
+    ReferrerChain* referrer_chain) {
+  for (int i = 0; i < referrer_chain->size(); i++) {
+    ReferrerChainEntry* entry = referrer_chain->Mutable(i);
+    if (entry->has_url())
+      entry->set_url(GetOrigin(entry->url()));
+    if (entry->has_main_frame_url())
+      entry->set_main_frame_url(GetOrigin(entry->main_frame_url()));
+    if (entry->has_referrer_url())
+      entry->set_referrer_url(GetOrigin(entry->referrer_url()));
+    if (entry->has_referrer_main_frame_url())
+      entry->set_referrer_main_frame_url(
+          GetOrigin(entry->referrer_main_frame_url()));
+    for (int j = 0; j < entry->server_redirect_chain_size(); j++) {
+      ReferrerChainEntry::ServerRedirect* server_redirect_entry =
+          entry->mutable_server_redirect_chain(j);
+      if (server_redirect_entry->has_url()) {
+        server_redirect_entry->set_url(GetOrigin(server_redirect_entry->url()));
+      }
+    }
+  }
 }
 
 SafeBrowsingNavigationObserverManager::SafeBrowsingNavigationObserverManager()
@@ -486,10 +529,11 @@ void SafeBrowsingNavigationObserverManager::AddToReferrerChain(
   std::unique_ptr<ReferrerChainEntry> referrer_chain_entry =
       base::MakeUnique<ReferrerChainEntry>();
   const GURL destination_url = nav_event->GetDestinationUrl();
-  referrer_chain_entry->set_url(destination_url.spec());
+  referrer_chain_entry->set_url(ShortenURL(destination_url));
   if (destination_main_frame_url.is_valid() &&
       destination_url != destination_main_frame_url)
-    referrer_chain_entry->set_main_frame_url(destination_main_frame_url.spec());
+    referrer_chain_entry->set_main_frame_url(
+        ShortenURL(destination_main_frame_url));
   referrer_chain_entry->set_type(type);
   auto ip_it = host_to_ip_map_.find(destination_url.host());
   if (ip_it != host_to_ip_map_.end()) {
@@ -500,12 +544,12 @@ void SafeBrowsingNavigationObserverManager::AddToReferrerChain(
   // Since we only track navigation to landing referrer, we will not log the
   // referrer of the landing referrer page.
   if (type != ReferrerChainEntry::LANDING_REFERRER) {
-    referrer_chain_entry->set_referrer_url(nav_event->source_url.spec());
+    referrer_chain_entry->set_referrer_url(ShortenURL(nav_event->source_url));
     // Only set |referrer_main_frame_url| if it is diff from |referrer_url|.
     if (nav_event->source_main_frame_url.is_valid() &&
         nav_event->source_url != nav_event->source_main_frame_url) {
       referrer_chain_entry->set_referrer_main_frame_url(
-          nav_event->source_main_frame_url.spec());
+          ShortenURL(nav_event->source_main_frame_url));
     }
   }
   referrer_chain_entry->set_is_retargeting(nav_event->source_tab_id !=
@@ -517,10 +561,10 @@ void SafeBrowsingNavigationObserverManager::AddToReferrerChain(
     // url.
     ReferrerChainEntry::ServerRedirect* server_redirect =
         referrer_chain_entry->add_server_redirect_chain();
-    server_redirect->set_url(nav_event->original_request_url.spec());
+    server_redirect->set_url(ShortenURL(nav_event->original_request_url));
     for (const GURL& redirect : nav_event->server_redirect_urls) {
       server_redirect = referrer_chain_entry->add_server_redirect_chain();
-      server_redirect->set_url(redirect.spec());
+      server_redirect->set_url(ShortenURL(redirect));
     }
   }
   referrer_chain->Add()->Swap(referrer_chain_entry.get());
