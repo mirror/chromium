@@ -101,7 +101,8 @@ ManagedDisplayInfo::ManagedDisplayModeList CreateInternalManagedDisplayModeList(
     const scoped_refptr<ManagedDisplayMode>& native_mode) {
   ManagedDisplayInfo::ManagedDisplayModeList display_mode_list;
 
-  float native_ui_scale = (native_mode->device_scale_factor() == 1.25f)
+  float native_ui_scale = (native_mode->device_scale_factor() == 1.25f ||
+                           native_mode->device_scale_factor() == 1.5f)
                               ? 1.0f
                               : native_mode->device_scale_factor();
   const DisplayUIScales display_ui_scales = GetScalesForDisplay(native_mode);
