@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88bfefdf_194f4e8d",
+        "filename": "content/app/content_main_runner.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 240,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-09T14:18:40Z",
+      "side": 1,
+      "message": "This placement seems pretty arbitrary and unintuitive. Why in ContentclientInitializer::Set instead of some early and more obvious initialization codepath?",
+      "revId": "f80953542fcc3adbc56a694e7c2f3cc3da656f03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
