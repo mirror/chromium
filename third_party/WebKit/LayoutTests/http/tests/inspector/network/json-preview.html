@@ -3,7 +3,7 @@
 <script src="../inspector-test.js"></script>
 <script src="../network-test.js"></script>
 <script>
-function test()
+async function test()
 {
     function createNetworkRequestWithJSONMIMEType(type)
     {
@@ -14,34 +14,19 @@ function test()
         return request;
     }
 
-    function testPreviewer(request)
+    async function testPreviewer(request)
     {
-        return new Promise(function(done) {
-            var previewView = new Network.RequestPreviewView(request, null);
+        var previewView = new Network.RequestPreviewView(request, null);
+        var previewer = await previewView._createPreviewView();
 
-            previewView._createPreviewView(function(previewer) {
-                InspectorTest.addResult("Its previewer is searchable: " + (previewer && previewer instanceof UI.SearchableView));
-                InspectorTest.addResult("Its previewer is the JSON previewer: " + (previewer && previewer._searchProvider && previewer._searchProvider instanceof Network.JSONView));
-                done();
-            });
-        });
+        InspectorTest.addResult("Its previewer is searchable: " + (previewer && previewer instanceof UI.SearchableView));
+        InspectorTest.addResult("Its previewer is the JSON previewer: " + (previewer && previewer._searchProvider && previewer._searchProvider instanceof Network.JSONView));
     }
 
-    function testType(contentType, callback)
-    {
-        var request = createNetworkRequestWithJSONMIMEType(contentType);
-        testPreviewer(request).then(callback);
-    }
-    InspectorTest.runTestSuite([
-        function test1(next)
-        {
-            testType("application/json", next);
-        },
-        function test2(next)
-        {
-            testType("application/vnd.document+json", next);
-        },
-    ]);
+    await testPreviewer(createNetworkRequestWithJSONMIMEType("application/json"));
+    await testPreviewer(createNetworkRequestWithJSONMIMEType("application/vnd.document+json"));
+
+    InspectorTest.completeTest();
 }
 </script>
 </head>
