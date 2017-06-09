@@ -106,6 +106,24 @@
       "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a7b3de0_4feb9b6c",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-09T15:08:19Z",
+      "side": 1,
+      "message": "\u003e what if we become first visible after the first commit? Or is that impossible? :P\n\nThat\u0027s not possible cuz we don\u0027t commit while not visible.",
+      "parentUuid": "f53dd039_d8906bf2",
+      "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
