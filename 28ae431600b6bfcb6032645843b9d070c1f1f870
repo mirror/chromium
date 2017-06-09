@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c67c3060_9ae308a6",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-09T21:25:15Z",
+      "side": 1,
+      "message": "We should file a bug on lld to support this too.",
+      "revId": "28ae431600b6bfcb6032645843b9d070c1f1f870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77e400b6_88508175",
+        "filename": "chrome/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-09T21:25:15Z",
+      "side": 1,
+      "message": "Can you add a comment for why we need these ignores?",
+      "range": {
+        "startLine": 519,
+        "startChar": 12,
+        "endLine": 519,
+        "endChar": 18
+      },
+      "revId": "28ae431600b6bfcb6032645843b9d070c1f1f870",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
