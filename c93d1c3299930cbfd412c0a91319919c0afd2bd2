@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "6ec09612_b37edeee",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 953,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-09T16:07:22Z",
+      "side": 1,
+      "message": "Extraneous ... I\u0027ll remove this.",
+      "range": {
+        "startLine": 953,
+        "startChar": 4,
+        "endLine": 953,
+        "endChar": 66
+      },
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a0e09628_0a5a7fd4",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
         "patchSetId": 4
@@ -36,6 +59,24 @@
       "writtenOn": "2017-06-09T15:00:59Z",
       "side": 1,
       "message": "I\u0027m not sure I understand the question, but I think OnViewportChanged should only ever be called on the top-level TSC.",
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95cad12b_2674cf9c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-09T16:07:22Z",
+      "side": 1,
+      "message": "Yes, I think that\u0027s right. My testing so far suggests nothing more needs to be done here.",
+      "parentUuid": "a0e09628_0a5a7fd4",
       "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +97,24 @@
       "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22147090_35e648e0",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2013,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-09T16:07:22Z",
+      "side": 1,
+      "message": "This is implemented here so I don\u0027t have to include touch_selection_controller_manager_client_android.h in render_widget_host_view_android.h, just in the .cc file.",
+      "parentUuid": "018543df_20b3b4ca",
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
