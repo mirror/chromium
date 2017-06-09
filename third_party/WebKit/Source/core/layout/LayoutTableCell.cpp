@@ -537,61 +537,9 @@ void LayoutTableCell::StyleDidChange(StyleDifference diff,
   }
 }
 
-// The following rules apply for resolving conflicts and figuring out which
-// border to use.
-// (1) Borders with the 'border-style' of 'hidden' take precedence over all
-//     other conflicting borders. Any border with this value suppresses all
-//     borders at this location.
-// (2) Borders with a style of 'none' have the lowest priority. Only if the
-//     border properties of all the elements meeting at this edge are 'none'
-//     will the border be omitted (but note that 'none' is the default value for
-//     the border style.)
-// (3) If none of the styles are 'hidden' and at least one of them is not
-//     'none', then narrow borders are discarded in favor of wider ones. If
-//      several have the same 'border-width' then styles are preferred in this
-//      order: 'double', 'solid', 'dashed', 'dotted', 'ridge', 'outset',
-//     'groove', and the lowest: 'inset'.
-// (4) If border styles differ only in color, then a style set on a cell wins
-//     over one on a row, which wins over a row group, column, column group and,
-//     lastly, table. It is undefined which color is used when two elements of
-//     the same type disagree.
-static bool CompareBorders(const CollapsedBorderValue& border1,
-                           const CollapsedBorderValue& border2) {
-  // Sanity check the values passed in. The null border have lowest priority.
-  if (!border2.Exists())
-    return false;
-  if (!border1.Exists())
-    return true;
-
-  // Rule #1 above.
-  if (border1.Style() == EBorderStyle::kHidden)
-    return false;
-  if (border2.Style() == EBorderStyle::kHidden)
-    return true;
-
-  // Rule #2 above.  A style of 'none' has lowest priority and always loses to
-  // any other border.
-  if (border2.Style() == EBorderStyle::kNone)
-    return false;
-  if (border1.Style() == EBorderStyle::kNone)
-    return true;
-
-  // The first part of rule #3 above. Wider borders win.
-  if (border1.Width() != border2.Width())
-    return border1.Width() < border2.Width();
-
-  // The borders have equal width.  Sort by border style.
-  if (border1.Style() != border2.Style())
-    return border1.Style() < border2.Style();
-
-  // The border have the same width and style.  Rely on precedence (cell over
-  // row over row group, etc.)
-  return border1.Precedence() < border2.Precedence();
-}
-
 static CollapsedBorderValue ChooseBorder(const CollapsedBorderValue& border1,
                                          const CollapsedBorderValue& border2) {
-  return CompareBorders(border1, border2) ? border2 : border1;
+  return border1.Compare(border2) ? border2 : border1;
 }
 
 bool LayoutTableCell::IsInStartColumn() const {
@@ -1355,47 +1303,6 @@ void LayoutTableCell::UpdateCollapsedBorderValues() const {
   }
 }
 
-static void AddBorderStyle(LayoutTable::CollapsedBorderValues& border_values,
-                           CollapsedBorderValue border_value) {
-  if (!border_value.IsVisible())
-    return;
-  size_t count = border_values.size();
-  for (size_t i = 0; i < count; ++i) {
-    if (border_values[i].IsSameIgnoringColor(border_value))
-      return;
-  }
-  border_values.push_back(border_value);
-}
-
-void LayoutTableCell::CollectCollapsedBorderValues(
-    LayoutTable::CollapsedBorderValues& border_values) {
-  UpdateCollapsedBorderValues();
-
-  // If collapsed borders changed, invalidate the cell's display item client on
-  // the table's backing.
-  // TODO(crbug.com/451090#c5): Need a way to invalidate/repaint the borders
-  // only.
-  if (collapsed_borders_visually_changed_) {
-    ObjectPaintInvalidator(*Table())
-        .SlowSetPaintingLayerNeedsRepaintAndInvalidateDisplayItemClient(
-            *this, PaintInvalidationReason::kStyle);
-    collapsed_borders_visually_changed_ = false;
-  }
-
-  if (!collapsed_border_values_)
-    return;
-
-  AddBorderStyle(border_values, collapsed_border_values_->StartBorder());
-  AddBorderStyle(border_values, collapsed_border_values_->EndBorder());
-  AddBorderStyle(border_values, collapsed_border_values_->BeforeBorder());
-  AddBorderStyle(border_values, collapsed_border_values_->AfterBorder());
-}
-
-void LayoutTableCell::SortCollapsedBorderValues(
-    LayoutTable::CollapsedBorderValues& border_values) {
-  std::sort(border_values.begin(), border_values.end(), CompareBorders);
-}
-
 void LayoutTableCell::PaintBoxDecorationBackground(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) const {
@@ -1517,6 +1424,20 @@ bool LayoutTableCell::HasLineIfEmpty() const {
     return true;
 
   return LayoutBlock::HasLineIfEmpty();
+}
+
+void LayoutTableCell::EnsureIsReadyForPaintInvalidation() {
+  LayoutBlockFlow::EnsureIsReadyForPaintInvalidation();
+
+  UpdateCollapsedBorderValues();
+  // If collapsed borders changed, invalidate the cell's display item client on
+  // the table's backing.
+  if (collapsed_borders_visually_changed_) {
+    ObjectPaintInvalidator(*Table())
+        .SlowSetPaintingLayerNeedsRepaintAndInvalidateDisplayItemClient(
+            *this, PaintInvalidationReason::kStyle);
+    collapsed_borders_visually_changed_ = false;
+  }
 }
 
 PaintInvalidationReason LayoutTableCell::InvalidatePaint(
