@@ -363,6 +363,15 @@ void NavigationManagerImpl::Reload(ReloadType reload_type,
   delegate_->Reload();
 }
 
+void NavigationManagerImpl::Restore(
+    int selected_navigation,
+    std::vector<std::unique_ptr<NavigationItem>> items) {
+  DCHECK(GetItemCount() == 0 && !GetPendingItem());
+  DCHECK(selected_navigation >= 0 &&
+         selected_navigation < static_cast<int>(items.size()));
+  ReplaceSessionHistory(std::move(items), selected_navigation);
+}
+
 void NavigationManagerImpl::CopyStateFromAndPrune(
     const NavigationManager* manager) {
   DCHECK(manager);

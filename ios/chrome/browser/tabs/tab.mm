@@ -704,22 +704,6 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
   return self.webState ? &(_webStateImpl->GetNavigationManagerImpl()) : nullptr;
 }
 
-// Swap out the existing session history with a new list of navigations. Forces
-// the tab to reload to update the UI accordingly. This is ok because none of
-// the session history is stored in the tab; it's always fetched through the
-// navigation manager.
-- (void)replaceHistoryWithNavigations:
-            (const std::vector<sessions::SerializedNavigationEntry>&)navigations
-                         currentIndex:(NSInteger)currentIndex {
-  std::vector<std::unique_ptr<web::NavigationItem>> items =
-      sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations);
-  [self navigationManagerImpl]->ReplaceSessionHistory(std::move(items),
-                                                      currentIndex);
-  [self didReplaceSessionHistory];
-
-  [self.webController loadCurrentURL];
-}
-
 - (void)didReplaceSessionHistory {
   // Replace _fullScreenController with a new sessionID  when the navigation
   // manager changes.
@@ -973,8 +957,14 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 
 - (void)loadSessionTab:(const sessions::SessionTab*)sessionTab {
   DCHECK(sessionTab);
-  [self replaceHistoryWithNavigations:sessionTab->navigations
-                         currentIndex:sessionTab->current_navigation_index];
+
+  self.navigationManager->Restore(
+      sessionTab->current_navigation_index,
+      sessions::IOSSerializedNavigationBuilder::ToNavigationItems(
+          sessionTab->navigations));
+  [self didReplaceSessionHistory];
+
+  [self.webController loadCurrentURL];
 }
 
 // Halt the tab, which amounts to halting its webController.
