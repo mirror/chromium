@@ -45,6 +45,30 @@
       "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9801aa4_154b1e3a",
+        "filename": "chrome/browser/ui/webui/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-09T03:21:23Z",
+      "side": 0,
+      "message": "The reason we added it in the first place was so that Chris and I could review the changes without input from the US. At this stage, though, Chris is a WebUI owner and there\u0027s nothing especially unusual about the file, so I figured we could remove it.\n\nHappy to keep it around if you think we should, though.",
+      "parentUuid": "f3117d36_aa74fe79",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
