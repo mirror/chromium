@@ -16,6 +16,24 @@
       "revId": "5c96304656be1600c7f47db772c8dbfa21621b25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f4caef4_515feddc",
+        "filename": "base/android/jni_generator/jni_generator_tests.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 984,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-09T21:58:30Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "607b6a96_03550032",
+      "revId": "5c96304656be1600c7f47db772c8dbfa21621b25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
