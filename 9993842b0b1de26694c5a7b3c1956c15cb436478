@@ -162,6 +162,30 @@
     },
     {
       "key": {
+        "uuid": "6691da82_0f2c513d",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:26:09Z",
+      "side": 1,
+      "message": "Actually my bad DestructorFunc should be defined in ValueDestructorPair, not in SLSM.",
+      "parentUuid": "437bc9e0_1e94229a",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "306df712_cf7d398a",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
