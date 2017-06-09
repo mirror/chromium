@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "da5938b4_5c3f9421",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-09T07:14:36Z",
+      "side": 1,
+      "message": "Yeah, I\u0027ll make it in a separate CL.",
+      "parentUuid": "3317c99b_2a8f2f61",
+      "revId": "7e85413b1297f75dfbe46c86222a49dd7ae0ee2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "789cc319_c971c883",
         "filename": "third_party/WebKit/Source/core/workers/WorkerContentSettingsClient.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "7e85413b1297f75dfbe46c86222a49dd7ae0ee2c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c905ce9_016d124d",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerContentSettingsClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-09T07:14:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "789cc319_c971c883",
+      "revId": "7e85413b1297f75dfbe46c86222a49dd7ae0ee2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
