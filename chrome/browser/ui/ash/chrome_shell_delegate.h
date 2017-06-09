@@ -61,6 +61,7 @@ class ChromeShellDelegate : public ash::ShellDelegate,
   void UpdateTouchscreenStatusFromPrefs() override;
   void ToggleTouchpad() override;
   void SuspendMediaSessions() override;
+  ui::InputDeviceControllerClient* GetInputDeviceControllerClient() override;
 
   // content::NotificationObserver override:
   void Observe(int type,
