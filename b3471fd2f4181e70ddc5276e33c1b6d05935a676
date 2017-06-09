@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f03c46f_1c0b9b79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 1632,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-09T19:06:26Z",
+      "side": 1,
+      "message": "I guess we have no harm to pass empty methodName to merchant website, just let it check whether it is acceptable or not. \n\nIt might mess up our below metrics a little bit,",
+      "range": {
+        "startLine": 1632,
+        "startChar": 48,
+        "endLine": 1632,
+        "endChar": 58
+      },
+      "revId": "b3471fd2f4181e70ddc5276e33c1b6d05935a676",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
