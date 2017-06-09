@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "afd82a20_2dbe8b84",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T19:49:45Z",
+      "side": 1,
+      "message": "They all say BINDINGS_ in them, so it seems obvious to me. :P\n\nNot super critical.",
+      "parentUuid": "d8519f35_83bc7139",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c58920_2444ecc6",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
         "patchSetId": 4
