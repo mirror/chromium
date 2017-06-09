@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "d8b25d54_8eb9123b",
+        "filename": "chrome/browser/ui/app_list/arc/arc_default_app_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001620
+      },
+      "writtenOn": "2017-06-09T19:51:40Z",
+      "side": 1,
+      "message": "IIUC, we can\u0027t install default apps if Play Store is not there.  Instead of doing this check here, does it make sense to not initiate ArcDefaultAppList in the first place?",
+      "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9be1c5eb_f4ae3d4e",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1001620
+      },
+      "writtenOn": "2017-06-09T19:51:40Z",
+      "side": 1,
+      "message": "Just curious, why we don\u0027t want to show apps for AOSP, where developers should be able to still install apps via adb or maybe package installer as well?",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 55
+      },
+      "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c69020_b8e0e631",
         "filename": "components/arc/arc_util.cc",
         "patchSetId": 4
