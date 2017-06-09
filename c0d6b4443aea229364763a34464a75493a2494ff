@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "828d63ab_7827bf78",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-09T18:40:38Z",
+      "side": 1,
+      "message": "I get presubmit errors telling me I can\u0027t use the gfx namespace here. Should I ignore this? Is there something I\u0027m missing?",
+      "range": {
+        "startLine": 548,
+        "startChar": 18,
+        "endLine": 548,
+        "endChar": 23
+      },
+      "revId": "c0d6b4443aea229364763a34464a75493a2494ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
