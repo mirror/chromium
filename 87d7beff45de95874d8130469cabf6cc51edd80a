@@ -34,6 +34,24 @@
       "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ab56365_a9396d04",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-09T14:55:34Z",
+      "side": 1,
+      "message": "Maybe what you mean here is to do this when becoming visible but not on the first time cuz there is no prior frame then?",
+      "parentUuid": "3ac0336d_05230796",
+      "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
