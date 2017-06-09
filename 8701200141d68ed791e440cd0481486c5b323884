@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "947cbbe6_4f4aa505",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-09T03:07:20Z",
+      "side": 1,
+      "message": "This is too expensive an operation to be doing on every single resource request.\n\nGetStateAsValue() basically serializes all the metadata for the request, including every single URL in the redirect chain. All you really want is the status, so can\u0027t we just call that directly? I notice that status() says not to use it, maybe there is another way? Maybe the ResourceRequestInfo can be used here.",
+      "revId": "8701200141d68ed791e440cd0481486c5b323884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6b912a_50395975",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-09T03:07:20Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeUnique over raw \"new\"",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 891,
+        "endChar": 80
+      },
+      "revId": "8701200141d68ed791e440cd0481486c5b323884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
