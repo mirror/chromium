@@ -181,6 +181,7 @@ class CORE_EXPORT LocalFrameView final
   void SetNeedsLayout();
 
   void SetNeedsUpdateGeometries() { needs_update_geometries_ = true; }
+  void UpdateGeometry() override;
 
   // Methods for getting/setting the size Blink should use to layout the
   // contents.
@@ -280,11 +281,6 @@ class CORE_EXPORT LocalFrameView final
   void SetSafeToPropagateScrollToParent(bool is_safe) {
     safe_to_propagate_scroll_to_parent_ = is_safe;
   }
-
-  void AddPart(LayoutEmbeddedContent*);
-  void RemovePart(LayoutEmbeddedContent*);
-
-  void UpdateGeometries();
 
   void AddPartToUpdate(LayoutEmbeddedObject&);
 
@@ -970,6 +966,7 @@ class CORE_EXPORT LocalFrameView final
   void DidChangeGlobalRootScroller() override;
 
   void UpdateGeometriesIfNeeded();
+  void UpdateGeometries();
 
   bool WasViewportResized();
   void SendResizeEventIfNeeded();
@@ -1064,10 +1061,6 @@ class CORE_EXPORT LocalFrameView final
 
   typedef HashSet<RefPtr<LayoutEmbeddedObject>> EmbeddedObjectSet;
   EmbeddedObjectSet part_update_set_;
-
-  // FIXME: These are just "children" of the LocalFrameView and should be
-  // Member<LocalFrameView> instead.
-  HashSet<RefPtr<LayoutEmbeddedContent>> parts_;
 
   Member<LocalFrame> frame_;
 
