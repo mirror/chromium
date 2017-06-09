@@ -32,7 +32,7 @@ class CC_EXPORT RendererSettings {
 
   // TODO(staraz): Move |refresh_rate| out. It's only used by
   // TestCompositorFrameSink
-  double refresh_rate = 60.0;
+  // double refresh_rate = 60.0;
   int highp_threshold_min = 0;
 
   // Determines whether we disallow non-exact matches when finding resources
