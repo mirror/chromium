@@ -407,8 +407,7 @@ SDK.ChildTargetManager = class {
 
     parentTarget.registerTargetDispatcher(this);
     this._targetAgent.invoke_setAutoAttach({autoAttach: true, waitForDebuggerOnStart: true});
-    if (Runtime.experiments.isEnabled('autoAttachToCrossProcessSubframes'))
-      this._targetAgent.setAttachToFrames(true);
+    this._targetAgent.setAttachToFrames(true);
 
     if (!parentTarget.parentTarget())
       this._targetAgent.setDiscoverTargets(true);
@@ -522,7 +521,6 @@ SDK.ChildTargetManager = class {
     var target = this._targetManager.createTarget(
         targetInfo.targetId, targetName, this._capabilitiesForType(targetInfo.type),
         this._createChildConnection.bind(this, this._targetAgent, targetInfo.targetId), this._parentTarget);
-    target[SDK.TargetManager._isWorkerSymbol] = targetInfo.type === 'worker';
 
     // Only pause the new worker if debugging SW - we are going through the pause on start checkbox.
     if (!this._parentTarget.parentTarget() && Runtime.queryParam('isSharedWorker') && waitingForDebugger) {
@@ -609,8 +607,6 @@ SDK.TargetManager.Events = {
   SuspendStateChanged: Symbol('SuspendStateChanged'),
   AvailableNodeTargetsChanged: Symbol('AvailableNodeTargetsChanged')
 };
-
-SDK.TargetManager._isWorkerSymbol = Symbol('SDK.TargetManager.IsWorker');
 
 /**
  * @interface
