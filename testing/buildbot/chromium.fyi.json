@@ -10525,6 +10525,9 @@
     ]
   },
   "Linux ARM": {
+    "additional_compile_targets": [
+      "browser_tests"
+    ],
     "gtest_tests": [
       {
         "swarming": {
@@ -10550,6 +10553,9 @@
     ]
   },
   "Linux ARM (dbg)": {
+    "additional_compile_targets": [
+      "browser_tests"
+    ],
     "gtest_tests": [
       {
         "swarming": {
@@ -10575,6 +10581,9 @@
     ]
   },
   "Linux ARM64": {
+    "additional_compile_targets": [
+      "browser_tests"
+    ],
     "gtest_tests": [
       {
         "swarming": {
@@ -10600,6 +10609,9 @@
     ]
   },
   "Linux ARM64 (dbg)": {
+    "additional_compile_targets": [
+      "browser_tests"
+    ],
     "gtest_tests": [
       {
         "swarming": {
