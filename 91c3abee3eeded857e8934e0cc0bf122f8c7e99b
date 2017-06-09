@@ -22,6 +22,30 @@
       "revId": "91c3abee3eeded857e8934e0cc0bf122f8c7e99b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec12987a_3e4caf2f",
+        "filename": "services/ui/ws/window_server.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-09T18:35:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9091136_fdd9287b",
+      "range": {
+        "startLine": 82,
+        "startChar": 8,
+        "endLine": 82,
+        "endChar": 16
+      },
+      "revId": "91c3abee3eeded857e8934e0cc0bf122f8c7e99b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
