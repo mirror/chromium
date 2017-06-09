@@ -61,6 +61,19 @@ static_assert(arraysize(kBlacklistedCameraNames) == BLACKLISTED_CAMERA_MAX + 1,
               "kBlacklistedCameraNames should be same size as "
               "BlacklistedCameraNames enum");
 
+// Blacklisted devices are identified by a characteristic prefix of the name.
+// This prefix is used case-insensitively.
+static const char* const kBlacklistedForImageCaptureCameraNames[] = {
+    // Reported in https://crbug.com/722038
+    "Lenovo EasyCamera", "iSpy",
+    // TODO: logitech pro 900 (usb)
+    // TODO: logitich WEBCAM C200 (usb)
+    // TODO: Logitech C615
+
+    // Reported in 724068
+    // TODO: logitech pro9000
+};
+
 static bool LoadMediaFoundationDlls() {
   static const wchar_t* const kMfDLLs[] = {
       L"%WINDIR%\\system32\\mf.dll",
@@ -116,14 +129,23 @@ static bool EnumerateVideoDevicesMediaFoundation(IMFActivate*** devices,
 }
 
 static bool IsDeviceBlackListed(const std::string& name) {
-  DCHECK_EQ(BLACKLISTED_CAMERA_MAX + 1,
-            static_cast<int>(arraysize(kBlacklistedCameraNames)));
   for (size_t i = 0; i < arraysize(kBlacklistedCameraNames); ++i) {
     if (base::StartsWith(name, kBlacklistedCameraNames[i],
                          base::CompareCase::INSENSITIVE_ASCII)) {
       DVLOG(1) << "Enumerated blacklisted device: " << name;
       UMA_HISTOGRAM_ENUMERATION("Media.VideoCapture.BlacklistedDevice", i,
                                 BLACKLISTED_CAMERA_MAX + 1);
+      return true;
+    }
+  }
+  return false;
+}
+
+static bool IsDeviceBlackListedForImageCapture(const std::string& name) {
+  for (size_t i = 0; i < arraysize(kBlacklistedForImageCaptureCameraNames);
+       ++i) {
+    if (base::StartsWith(name, kBlacklistedForImageCaptureCameraNames[i],
+                         base::CompareCase::INSENSITIVE_ASCII)) {
       return true;
     }
   }
@@ -426,7 +448,9 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
       device.reset();
   } else if (device_descriptor.capture_api ==
              VideoCaptureApi::WIN_DIRECT_SHOW) {
-    device.reset(new VideoCaptureDeviceWin(device_descriptor));
+    device.reset(new VideoCaptureDeviceWin(
+        device_descriptor,
+        IsDeviceBlackListedForImageCapture(device_descriptor.display_name)));
     DVLOG(1) << " DirectShow Device: " << device_descriptor.display_name;
     if (!static_cast<VideoCaptureDeviceWin*>(device.get())->Init())
       device.reset();
