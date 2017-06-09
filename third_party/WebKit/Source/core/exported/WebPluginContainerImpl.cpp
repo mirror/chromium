@@ -431,9 +431,14 @@ void WebPluginContainerImpl::ScheduleAnimation() {
 }
 
 void WebPluginContainerImpl::ReportGeometry() {
-  // We cannot compute geometry without a layoutObject.
-  if (!element_ || !element_->GetLayoutObject() || !web_plugin_)
+  // Ignore when SetFrameRect/ReportGeometry is called from
+  // UpdateOnEmbeddedContentViewChange before plugin is attached.
+  if (!is_attached_)
     return;
+
+  DCHECK(element_);
+  DCHECK(element_->GetLayoutObject());
+  DCHECK(web_plugin_);
 
   IntRect window_rect, clip_rect, unobscured_rect;
   CalculateGeometry(window_rect, clip_rect, unobscured_rect);
