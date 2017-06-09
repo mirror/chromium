@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "de964af5_9cfd3fcd",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:29:55Z",
+      "side": 1,
+      "message": "GotUsageAndQuotaOnUI",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 30
+      },
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d2e7146_adfee35f",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:29:55Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO)",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7333a753_f56b12e0",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:29:55Z",
+      "side": 1,
+      "message": "This should be done on UI as well.",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 32
+      },
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e838d2c1_c7ce0a5d",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:29:55Z",
+      "side": 1,
+      "message": "DCHECK_CURRENTLY_ON(BrowserThread::IO)",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d911e64b_208d12f2",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:29:55Z",
+      "side": 1,
+      "message": "- Don\u0027t you have to base::Unretained(manager) ?\n- Can manager die between posting and calling on another thread? Passing raw pointers is usually unsafe, perhaps we should retrieve manager on IO?",
+      "revId": "1fbbbf6b013c6b3ea1519253de13a0c618a76943",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
