@@ -1,0 +1,278 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5784b87c_1aad40c9",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "first:\n\nDCHECK_EQ(this, tls_current_sequence_local_storage.Get().Get());",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01e8451a_4d71e9e8",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "Setting to nullptr is overkill, per |value_destructor_pair| being an r-value its state is undefined after this call anyways.\n\nAs such an \u003d default; impl here is preferable IMO.",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d796fd6f_a04dfbe7",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "I initially didn\u0027t understand why this was required until I read the tests, maybe add:\n\n// Destroy |value_| before overriding it with new assignment.\n\n?",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95debadb_fc92f742",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "ditto, remove this",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d7a0da3_256d6b80",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "slot_id\n\n(to make it clear it\u0027s a single value)",
+      "range": {
+        "startLine": 15,
+        "startChar": 36,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323bafaf_d1bbca49",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "\"it invokes the destructors associated with values stored within it.\"\n\n(i.e. there is no guarantee that the \"destructor\" will opt to destroy anything and that\u0027s okay)",
+      "range": {
+        "startLine": 19,
+        "startChar": 41,
+        "endLine": 20,
+        "endChar": 54
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "437bc9e0_1e94229a",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "Extract this into a type above, I think this would work:\n\nIn SequenceLocalStorageMap:\nusing DestructorFunc \u003d void(void*);\n\nHere:\nValueDestructorPair(void* value, DestructorFunc* destructor);\n\nthat\u0027s easier to read I find I otherwise find it ugly to have the variable* in the middle of the type decl (and allows re-uses below for member variable)",
+      "range": {
+        "startLine": 35,
+        "startChar": 37,
+        "endLine": 35,
+        "endChar": 62
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306df712_cf7d398a",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "Explain why you chose base::flat_map (e.g. \"the IDs are never reused and thus the main downside of flat_map (insert/remove) isn\u0027t an issue\")",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b26ac1_30fd8e7c",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "nit: empty line after namespace decl",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05c5d692_381f1258",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "s/bool_ptr/was_destroyed_ptr/ (or something more explicit than bool)",
+      "range": {
+        "startLine": 20,
+        "startChar": 21,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02a020a_abb05a2f",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "This if is redundant since you DCHECK(bool_ptr) in constructor. I\u0027d say:\n\nDCHECK(!(*bool_ptr_));\n*bool_ptr \u003d true;\n\n(i.e. not destroyed twice)",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f569840f_3ef7f780",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "bool* const bool_ptr;",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee63c89_3e2ac464",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "this compiles?! i\u0027d expect () here (ditto below)",
+      "range": {
+        "startLine": 56,
+        "startChar": 39,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "467b9f15_b992447e",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:13:28Z",
+      "side": 1,
+      "message": "Nice :), honestly hadn\u0027t thought of this use case until I read this test!",
+      "range": {
+        "startLine": 107,
+        "startChar": 0,
+        "endLine": 110,
+        "endChar": 38
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
