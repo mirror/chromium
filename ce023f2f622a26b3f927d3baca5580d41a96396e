@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72b0a064_192a07f4",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/security/resources/cors-script.php",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T03:50:48Z",
+      "side": 1,
+      "message": "trailing space?",
+      "range": {
+        "startLine": 22,
+        "startChar": 62,
+        "endLine": 22,
+        "endChar": 63
+      },
+      "revId": "ce023f2f622a26b3f927d3baca5580d41a96396e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
