@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9e19b003_78bd23ef",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-09T15:08:48Z",
+      "side": 1,
+      "message": "It works fine as is in debug with --enable-browser-side-navigation",
+      "parentUuid": "c4a50fe1_63a67a0b",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87acd4f8_aa80129e",
         "filename": "headless/test/headless_js_bindings_browsertest.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bfdc8f_f3c041cc",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-09T15:08:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87acd4f8_aa80129e",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
