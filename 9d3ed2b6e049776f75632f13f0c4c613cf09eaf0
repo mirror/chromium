@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7aa4f8f_775b9485",
+        "filename": "third_party/boringssl/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-09T17:16:26Z",
+      "side": 1,
+      "message": "I think this block can be removed altogether now, but I\u0027ll sort that out separately.",
+      "revId": "9d3ed2b6e049776f75632f13f0c4c613cf09eaf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
