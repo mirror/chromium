@@ -41,7 +41,7 @@
 #include "components/ntp_snippets/remote/persistent_scheduler.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
-#include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
+#include "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
 #include "components/ntp_snippets/remote/test_utils.h"
 #include "components/ntp_snippets/user_classifier.h"
@@ -444,7 +444,7 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
         new net::TestURLRequestContextGetter(task_runner.get());
 
     utils_.ResetSigninManager();
-    auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcher>(
+    auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
         utils_.fake_signin_manager(), /*token_service=*/nullptr,
         std::move(request_context_getter), utils_.pref_service(), nullptr,
         base::Bind(&ParseJson), GetFetchEndpoint(version_info::Channel::STABLE),

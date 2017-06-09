@@ -410,7 +410,6 @@ class RemoteSuggestionsProviderImpl final : public RemoteSuggestionsProvider {
   void RestoreCategoriesFromPrefs();
   void StoreCategoriesToPrefs();
 
-  // Absence of fetched category corresponds to fetching all categories.
   RequestParams BuildFetchParams(
       base::Optional<Category> fetched_category) const;
 

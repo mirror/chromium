@@ -50,7 +50,7 @@ const int kMaxArchivedSuggestionCount = 200;
 
 // Maximal number of dismissed suggestions to exclude when fetching new
 // suggestions from the server. This limit exists to decrease data usage.
-const int kMaxExcludedDismissedIds = 100;
+const int kMaxDismissedExcludedIds = 100;
 
 // Keys for storing CategoryContent info in prefs.
 const char kCategoryContentId[] = "id";
@@ -195,17 +195,6 @@ void CallWithEmptyResults(const FetchDoneCallback& callback,
     return;
   }
   callback.Run(status, std::vector<ContentSuggestion>());
-}
-
-void AddDismissedIdsToRequest(const RemoteSuggestion::PtrVector& dismissed,
-                              RequestParams* request_params) {
-  // The latest ids are added first, because they are more relevant.
-  for (auto it = dismissed.rbegin(); it != dismissed.rend(); ++it) {
-    if (request_params->excluded_ids.size() == kMaxExcludedDismissedIds) {
-      break;
-    }
-    request_params->excluded_ids.insert((*it)->id());
-  }
 }
 
 }  // namespace
@@ -503,14 +492,28 @@ RequestParams RemoteSuggestionsProviderImpl::BuildFetchParams(
   // added first to truncate them less.
   if (fetched_category.has_value()) {
     DCHECK(category_contents_.count(*fetched_category));
-    AddDismissedIdsToRequest(
-        category_contents_.find(*fetched_category)->second.dismissed, &result);
+    const RemoteSuggestion::PtrVector& dismissed =
+        category_contents_.find(*fetched_category)->second.dismissed;
+    // The latest ids are added first, because they are more relevant.
+    for (auto it = dismissed.rbegin(); it != dismissed.rend(); ++it) {
+      if (result.excluded_ids.size() == kMaxDismissedExcludedIds) {
+        break;
+      }
+      result.excluded_ids.insert((*it)->id());
+    }
   }
   for (const auto& map_entry : category_contents_) {
     if (fetched_category.has_value() && map_entry.first == *fetched_category) {
       continue;
     }
-    AddDismissedIdsToRequest(map_entry.second.dismissed, &result);
+    const RemoteSuggestion::PtrVector& dismissed = map_entry.second.dismissed;
+    // The latest ids are added first, because they are more relevant.
+    for (auto it = dismissed.rbegin(); it != dismissed.rend(); ++it) {
+      if (result.excluded_ids.size() == kMaxDismissedExcludedIds) {
+        break;
+      }
+      result.excluded_ids.insert((*it)->id());
+    }
   }
   return result;
 }
