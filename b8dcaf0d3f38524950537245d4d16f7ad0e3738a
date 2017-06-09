@@ -16,6 +16,24 @@
       "revId": "b8dcaf0d3f38524950537245d4d16f7ad0e3738a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2002fc9c_8afdb821",
+        "filename": "third_party/WebKit/Source/core/dom/TreeWalker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-09T03:58:17Z",
+      "side": 1,
+      "message": "Done. New patch set introduces NodeTraversalStrategy.h.",
+      "parentUuid": "69284479_6877d3ca",
+      "revId": "b8dcaf0d3f38524950537245d4d16f7ad0e3738a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
