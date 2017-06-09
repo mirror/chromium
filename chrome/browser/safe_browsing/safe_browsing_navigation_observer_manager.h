@@ -122,6 +122,9 @@ class SafeBrowsingNavigationObserverManager
   // initialized.
   static bool IsEnabledAndReady(Profile* profile);
 
+  // Shorten URL if it has data scheme.
+  static std::string ShortenURL(const GURL& url);
+
   SafeBrowsingNavigationObserverManager();
 
   // Adds |nav_event| to |navigation_event_list_|. Object pointed to by

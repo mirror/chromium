@@ -107,15 +107,6 @@ void RecordCountOfWhitelistedDownload(WhitelistType type) {
                             WHITELIST_TYPE_MAX);
 }
 
-}  // namespace
-
-const char DownloadProtectionService::kDownloadRequestUrl[] =
-    "https://sb-ssl.google.com/safebrowsing/clientreport/download";
-
-const void* const DownloadProtectionService::kDownloadPingTokenKey
-    = &kDownloadPingTokenKey;
-
-namespace {
 void RecordFileExtensionType(const std::string& metric_name,
                              const base::FilePath& file) {
   UMA_HISTOGRAM_SPARSE_SLOWLY(
@@ -164,7 +155,17 @@ enum SBStatsType {
   DOWNLOAD_CHECKS_MAX
 };
 
+std::string GetOrigin(const std::string& url) {
+  return GURL(url).GetOrigin().spec();
+}
+
 }  // namespace
+
+const char DownloadProtectionService::kDownloadRequestUrl[] =
+    "https://sb-ssl.google.com/safebrowsing/clientreport/download";
+
+const void* const DownloadProtectionService::kDownloadPingTokenKey =
+    &kDownloadPingTokenKey;
 
 // SafeBrowsing::Client class used to lookup the bad binary URL list.
 
@@ -954,16 +955,31 @@ class DownloadProtectionService::CheckClientDownloadRequest
     if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE)
       return url.GetOrigin().spec();
 
-    std::string spec = url.spec();
-    if (url.SchemeIs(url::kDataScheme)) {
-      size_t comma_pos = spec.find(',');
-      if (comma_pos != std::string::npos && comma_pos != spec.size() - 1) {
-        std::string hash_value = crypto::SHA256HashString(spec);
-        spec.erase(comma_pos + 1);
-        spec += base::HexEncode(hash_value.data(), hash_value.size());
+    return SafeBrowsingNavigationObserverManager::ShortenURL(url);
+  }
+
+  // Sanitize referrer chain by only keep origin information of all URLs.
+  void SanitizeReferrerChain(ReferrerChain* referrer_chain) {
+    for (int i = 0; i < referrer_chain->size(); i++) {
+      ReferrerChainEntry* entry = referrer_chain->Mutable(i);
+      if (entry->has_url())
+        entry->set_url(GetOrigin(entry->url()));
+      if (entry->has_main_frame_url())
+        entry->set_main_frame_url(GetOrigin(entry->main_frame_url()));
+      if (entry->has_referrer_url())
+        entry->set_referrer_url(GetOrigin(entry->referrer_url()));
+      if (entry->has_referrer_main_frame_url())
+        entry->set_referrer_main_frame_url(
+            GetOrigin(entry->referrer_main_frame_url()));
+      for (int j = 0; j < entry->server_redirect_chain_size(); j++) {
+        ReferrerChainEntry::ServerRedirect* server_redirect_entry =
+            entry->mutable_server_redirect_chain(j);
+        if (server_redirect_entry->has_url()) {
+          server_redirect_entry->set_url(
+              GetOrigin(server_redirect_entry->url()));
+        }
       }
     }
-    return spec;
   }
 
   void SendRequest() {
@@ -1034,6 +1050,8 @@ class DownloadProtectionService::CheckClientDownloadRequest
         !referrer_chain_data->GetReferrerChain()->empty()) {
       request.mutable_referrer_chain()->Swap(
           referrer_chain_data->GetReferrerChain());
+      if (type_ == ClientDownloadRequest::SAMPLED_UNSUPPORTED_FILE)
+        SanitizeReferrerChain(request.mutable_referrer_chain());
     }
 
     if (archive_is_valid_ != ArchiveValid::UNSET)

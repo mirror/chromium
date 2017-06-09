@@ -2351,4 +2351,7 @@ TEST_F(DownloadProtectionServiceFlagTest,
   EXPECT_TRUE(IsResult(DownloadProtectionService::DANGEROUS));
 }
 
+// TODO(jialiul): After crbug.com/721964 is fixed, add tests to verify referrer
+// chain is correctly sanitized in a sampled download ping.
+
 }  // namespace safe_browsing

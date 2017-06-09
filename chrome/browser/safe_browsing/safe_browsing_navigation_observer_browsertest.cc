@@ -49,6 +49,9 @@ const char kDownloadDataURL[] =
     "mFoZGtoYXNrZGhhc2tka2hrYXNkCjg3MzQ2ODEyNzQ2OGtqc2hka2FoZHNrZGhraApha3NqZGt"
     "hc2Roa3NkaGthc2hka2FzaGtkaAohISomXkAqJl4qYWhpZGFzeWRpeWlhc1xcb1wKa2Fqc2Roa"
     "2FzaGRrYXNoZGsKYWtzamRoc2tkaAplbmQK";
+const char kShortDataURL[] =
+    "data:application/octet-stream;base64,4A19A03B1EF9D2C3061C5B87BF7D0BE05998D"
+    "A5F6BA693B6759B47EEA211D246";
 const char kIframeDirectDownloadURL[] =
     "/safe_browsing/download_protection/navigation_observer/iframe.html";
 const char kIframeRetargetingURL[] =
@@ -1077,6 +1080,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   GURL initial_url = embedded_test_server()->GetURL(kSingleFrameTestURL);
   ClickTestLink("new_tab_download_with_data_url", 2, initial_url);
   GURL download_url = GURL(kDownloadDataURL);
+  GURL short_download_url = GURL(kShortDataURL);
   GURL blank_url = GURL(url::kAboutBlankURL);
   std::string test_server_ip(embedded_test_server()->host_port_pair().host());
   auto* nav_list = navigation_event_list();
@@ -1126,7 +1130,7 @@ IN_PROC_BROWSER_TEST_F(SBNavigationObserverBrowserTest,
   ReferrerChain referrer_chain;
   IdentifyReferrerChainForDownload(GetDownload(), &referrer_chain);
   ASSERT_EQ(3, referrer_chain.size());
-  VerifyReferrerChainEntry(download_url,                   // url
+  VerifyReferrerChainEntry(short_download_url,             // url
                            GURL(),                         // main_frame_url
                            ReferrerChainEntry::EVENT_URL,  // type
                            "",                             // ip_address
