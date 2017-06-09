@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ecf70d5e_6d79daee",
+        "filename": "chrome/browser/ui/webui/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-09T03:15:09Z",
+      "side": 0,
+      "message": "i get that we should remove this (especially the set noparent)",
+      "range": {
+        "startLine": 13,
+        "startChar": 29,
+        "endLine": 13,
+        "endChar": 37
+      },
+      "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3117d36_aa74fe79",
+        "filename": "chrome/browser/ui/webui/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-09T03:15:09Z",
+      "side": 0,
+      "message": "but why remove this?",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
