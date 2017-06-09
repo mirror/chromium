@@ -666,6 +666,30 @@
     },
     {
       "key": {
+        "uuid": "42ad7e54_af566f38",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-09T13:06:21Z",
+      "side": 1,
+      "message": "\u003e Sorry for the typo. The complete statement: I don\u0027t think I see #ifdefs in core as being fundamentally bad; it depends on the purpose.\n\nAgree, depends on the purpose. \n\n\u003e The idea here is quite different from the ENABLE() guards that WebKit had. ENABLE() was intended so different WebKit embedders could turn on a different subset of features, and I agree it\u0027s unmaintainble and doesn\u0027t lead to a better web.\n\nYes, messy and now removed.  compat issues are an example where core/ #ifdef are unavoidable whether we like it or not.  A bit messy too, so I think we should try to limit them to compat issues.\n\n\u003e However, I\u0027m not asking to guard the web-exposed features with #ifdefs: instead, I want to make it clear in the implementation when internal implementation details are platform-specific. So we shouldn\u0027t have EmptySpellCheckPanelHost: it\u0027s an internal implementation detail that we only have spell check panel on Mac, but it obfuscates that fact at the call site (since I have to go chase a bunch of interface calls to figure out what\u0027s going on).\n\nEmptySpellCheckPanelHost avoids the #ifdef, but yes, they do require digging into to find out what is going on.  In future we might guard them with a run time feature, or else replace them when we Onion Soup 2 and use mojo directly: platform/ would return a null MojoInterfacePtr* on unsupported ports, non null on supported ports, and call sites would need to check for null before trying to call methods on the\u003d mojo interface.  Just a sketch, but public/platform has something like that, GetEmptyInterfaceProvider().  I\u0027ve not used it, but it make help make things more obvious, we\u0027ll see.",
+      "parentUuid": "f1ff3fd6_120cc0ba",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 37
+      },
+      "revId": "a511371337277ce1adfc7255fd6a3043494ddd62",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3a3de4_b98a8194",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHost.h",
         "patchSetId": 18
