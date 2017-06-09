@@ -130,6 +130,11 @@ void RemoteFrameView::FrameRectsChanged() {
   remote_frame_->Client()->FrameRectsChanged(new_rect);
 }
 
+void RemoteFrameView::UpdateGeometry() {
+  if (LayoutEmbeddedContent* layout = remote_frame_->OwnerLayoutObject())
+    layout->UpdateGeometry(*this);
+}
+
 void RemoteFrameView::Hide() {
   self_visible_ = false;
   remote_frame_->Client()->VisibilityChanged(false);

@@ -183,16 +183,16 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
 void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
     HTMLFrameOwnerElement& frame_owner) const {
   LayoutEmbeddedContent* part = frame_owner.GetLayoutEmbeddedContent();
-  if (!part)
+  if (!part || !part->ChildFrameView())
     return;
 
-  part->UpdateGeometry();
+  part->ChildFrameView()->UpdateGeometry();
 
   if (!document_->GetFrame() || !document_->GetFrame()->View())
     return;
 
   LocalFrameView* frame_view = document_->GetFrame()->View();
-  if (part->ChildFrameView() && (&EffectiveRootScroller() == &frame_owner))
+  if (&EffectiveRootScroller() == &frame_owner)
     part->ChildFrameView()->SetLayoutSize(frame_view->GetLayoutSize());
 }
 
