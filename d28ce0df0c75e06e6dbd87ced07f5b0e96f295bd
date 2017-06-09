@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "516ec27c_3a07d9a2",
+        "filename": "chrome/browser/chromeos/arc/arc_util.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T10:06:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "70bc7646_17f67272",
+      "range": {
+        "startLine": 107,
+        "startChar": 3,
+        "endLine": 107,
+        "endChar": 74
+      },
+      "revId": "d28ce0df0c75e06e6dbd87ced07f5b0e96f295bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9af71391_b2f4e9ef",
         "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "d28ce0df0c75e06e6dbd87ced07f5b0e96f295bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46150095_6f2c9608",
+        "filename": "chrome/browser/chromeos/arc/optin/arc_active_directory_auth_default_negotiator.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T10:06:56Z",
+      "side": 1,
+      "message": "Nope.",
+      "parentUuid": "9af71391_b2f4e9ef",
+      "range": {
+        "startLine": 9,
+        "startChar": 22,
+        "endLine": 9,
+        "endChar": 30
+      },
+      "revId": "d28ce0df0c75e06e6dbd87ced07f5b0e96f295bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
