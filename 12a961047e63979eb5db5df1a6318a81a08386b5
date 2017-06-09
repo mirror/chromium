@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae46b7f1_f15e6ac5",
+        "filename": "chrome/browser/devtools/devtools_file_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 392,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-09T00:21:22Z",
+      "side": 1,
+      "message": "Perhaps also move Init() here as well?",
+      "revId": "12a961047e63979eb5db5df1a6318a81a08386b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26b0e399_fc41b78f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/TargetManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-09T00:21:22Z",
+      "side": 1,
+      "message": "Why not make it a capability?",
+      "revId": "12a961047e63979eb5db5df1a6318a81a08386b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
