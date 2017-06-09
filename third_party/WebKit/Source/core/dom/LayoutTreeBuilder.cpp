@@ -151,7 +151,7 @@ void LayoutTreeBuilderForText::CreateLayoutObject() {
          ToElement(LayoutTreeBuilderTraversal::Parent(*node_))
              ->HasDisplayContentsStyle());
 
-  DCHECK(node_->TextLayoutObjectIsNeeded(style, *layout_object_parent_));
+  // DCHECK(node_->TextLayoutObjectIsNeeded(style, *layout_object_parent_));
 
   LayoutText* new_layout_object = node_->CreateTextLayoutObject(style);
   if (!layout_object_parent_->IsChildAllowed(new_layout_object, style)) {
