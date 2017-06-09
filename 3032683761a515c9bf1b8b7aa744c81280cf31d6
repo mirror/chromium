@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1018059b_26cc5e9a",
+        "filename": "content/browser/manifest/manifest_manager_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-09T23:33:15Z",
+      "side": 1,
+      "message": "Can you help me understand why this doesn\u0027t apply to subframes?  I\u0027m not very familiar with this use of the word manifest (not sure how it relates to manifests in Mojo or extensions, for example).",
+      "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f8b22f8_512e13e9",
         "filename": "content/public/common/manifest_struct_traits.h",
         "patchSetId": 16
@@ -19,6 +36,23 @@
         "endLine": 33,
         "endChar": 44
       },
+      "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0027ee6f_a466b006",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 6579,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-09T23:33:15Z",
+      "side": 1,
+      "message": "Please explain why this is main frame only, as in the cases above.  (It\u0027s not obvious to me.)",
       "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
