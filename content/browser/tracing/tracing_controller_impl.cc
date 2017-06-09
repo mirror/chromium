@@ -428,9 +428,6 @@ void TracingControllerImpl::AddTraceMessageFilter(
     trace_message_filter->SendBeginTracing(
         TraceLog::GetInstance()->GetCurrentTraceConfig());
   }
-
-  for (auto& observer : trace_message_filter_observers_)
-    observer.OnTraceMessageFilterAdded(trace_message_filter);
 }
 
 void TracingControllerImpl::RemoveTraceMessageFilter(
@@ -922,24 +919,6 @@ TracingControllerImpl::GenerateTracingMetadataDict() const {
   metadata_dict->SetString("trace-capture-datetime", time_string);
 
   return metadata_dict;
-}
-
-void TracingControllerImpl::AddTraceMessageFilterObserver(
-    TraceMessageFilterObserver* observer) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  trace_message_filter_observers_.AddObserver(observer);
-
-  for (auto& filter : trace_message_filters_)
-    observer->OnTraceMessageFilterAdded(filter.get());
-}
-
-void TracingControllerImpl::RemoveTraceMessageFilterObserver(
-    TraceMessageFilterObserver* observer) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  trace_message_filter_observers_.RemoveObserver(observer);
-
-  for (auto& filter : trace_message_filters_)
-    observer->OnTraceMessageFilterRemoved(filter.get());
 }
 
 }  // namespace content

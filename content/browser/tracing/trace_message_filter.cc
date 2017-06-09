@@ -32,6 +32,7 @@ void TraceMessageFilter::OnChannelClosing() {
       OnTraceLogStatusReply(base::trace_event::TraceLogStatus());
 
     TracingControllerImpl::GetInstance()->RemoveTraceMessageFilter(this);
+    BackgroundTracingManagerImpl::GetInstance()->RemoveTraceMessageFilter(this);
   }
 }
 
@@ -85,6 +86,7 @@ void TraceMessageFilter::SendGetTraceLogStatus() {
 
 void TraceMessageFilter::OnChildSupportsTracing() {
   has_child_ = true;
+  BackgroundTracingManagerImpl::GetInstance()->AddTraceMessageFilter(this);
   TracingControllerImpl::GetInstance()->AddTraceMessageFilter(this);
 }
 
