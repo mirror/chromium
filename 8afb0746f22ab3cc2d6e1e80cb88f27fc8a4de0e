@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "007a4b92_c358adc8",
+        "filename": "ash/system/ime/tray_ime_chromeos.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-09T22:26:09Z",
+      "side": 1,
+      "message": "nit: use l10n_util::GetStringUTF16() here instead.",
+      "range": {
+        "startLine": 122,
+        "startChar": 13,
+        "endLine": 122,
+        "endChar": 31
+      },
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1341eaa_8b0bbf0f",
+        "filename": "ash/system/ime/tray_ime_chromeos_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-09T22:26:09Z",
+      "side": 1,
+      "message": "nit: the parameter is |length| but you call it |count| here.",
+      "range": {
+        "startLine": 59,
+        "startChar": 14,
+        "endLine": 59,
+        "endChar": 19
+      },
+      "revId": "8afb0746f22ab3cc2d6e1e80cb88f27fc8a4de0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8df96526_81eb2efe",
         "filename": "ash/system/ime_menu/ime_menu_tray_unittest.cc",
         "patchSetId": 5
