@@ -234,6 +234,30 @@
       "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e685ebec_fe5f50e1",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T21:23:46Z",
+      "side": 1,
+      "message": "It does feel slightly sketchy to pass paths over IPC, but without knowing more about this, it\u0027s hard for me to suggest something better. Maybe something to keep in mind as things evolve.",
+      "parentUuid": "cf86ba04_6bc6ea20",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
