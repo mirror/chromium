@@ -6,6 +6,7 @@
 
 #include <stddef.h>
 
+#include <algorithm>
 #include <string>
 #include <utility>
 #include <vector>
@@ -82,6 +83,7 @@
 #include "content/browser/webui/url_data_manager.h"
 #include "content/common/content_switches_internal.h"
 #include "content/common/service_manager/service_manager_connection_impl.h"
+#include "content/common/task_scheduler.h"
 #include "content/public/browser/browser_main_parts.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/gpu_data_manager_observer.h"
@@ -950,6 +952,23 @@ int BrowserMainLoop::CreateThreads() {
     if (!task_scheduler_init_params)
       task_scheduler_init_params = GetDefaultTaskSchedulerInitParams();
     DCHECK(task_scheduler_init_params);
+
+    // If a renderer lives in the browser process, adjust the number of threads
+    // in the foreground pool.
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kSingleProcess)) {
+      const base::SchedulerWorkerPoolParams&
+          current_foreground_worker_pool_params(
+              task_scheduler_init_params->foreground_worker_pool_params);
+      task_scheduler_init_params->foreground_worker_pool_params =
+          base::SchedulerWorkerPoolParams(
+              current_foreground_worker_pool_params.standby_thread_policy(),
+              std::max(GetMinThreadsInRendererTaskSchedulerForegroundPool(),
+                       current_foreground_worker_pool_params.max_threads()),
+              current_foreground_worker_pool_params.suggested_reclaim_time(),
+              current_foreground_worker_pool_params.backward_compatibility());
+    }
+
     base::TaskScheduler::GetInstance()->Start(
         *task_scheduler_init_params.get());
   }
