@@ -8,6 +8,7 @@
 #include "content/browser/tracing/background_tracing_manager_impl.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
 #include "content/common/child_process_host_impl.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace content {
 
@@ -31,7 +32,7 @@ void TraceMessageFilter::OnChannelClosing() {
     if (is_awaiting_buffer_percent_full_ack_)
       OnTraceLogStatusReply(base::trace_event::TraceLogStatus());
 
-    TracingControllerImpl::GetInstance()->RemoveTraceMessageFilter(this);
+    Unregister();
   }
 }
 
@@ -85,7 +86,7 @@ void TraceMessageFilter::SendGetTraceLogStatus() {
 
 void TraceMessageFilter::OnChildSupportsTracing() {
   has_child_ = true;
-  TracingControllerImpl::GetInstance()->AddTraceMessageFilter(this);
+  Register();
 }
 
 void TraceMessageFilter::OnEndTracingAck(
@@ -99,6 +100,30 @@ void TraceMessageFilter::OnEndTracingAck(
   } else {
     NOTREACHED();
   }
+}
+
+void TraceMessageFilter::Register() {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&TraceMessageFilter::Register, base::Unretained(this)));
+    return;
+  }
+
+  BackgroundTracingManagerImpl::GetInstance()->AddTraceMessageFilter(this);
+  TracingControllerImpl::GetInstance()->AddTraceMessageFilter(this);
+}
+
+void TraceMessageFilter::Unregister() {
+  if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(&TraceMessageFilter::Unregister, base::Unretained(this)));
+    return;
+  }
+
+  BackgroundTracingManagerImpl::GetInstance()->RemoveTraceMessageFilter(this);
+  TracingControllerImpl::GetInstance()->RemoveTraceMessageFilter(this);
 }
 
 void TraceMessageFilter::OnTraceDataCollected(const std::string& data) {

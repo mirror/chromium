@@ -87,14 +87,6 @@ class TracingControllerImpl
       const std::string& sync_id,
       const RecordClockSyncMarkerCallback& callback) override;
 
-  class TraceMessageFilterObserver {
-   public:
-    virtual void OnTraceMessageFilterAdded(TraceMessageFilter* filter) = 0;
-    virtual void OnTraceMessageFilterRemoved(TraceMessageFilter* filter) = 0;
-  };
-  void AddTraceMessageFilterObserver(TraceMessageFilterObserver* observer);
-  void RemoveTraceMessageFilterObserver(TraceMessageFilterObserver* observer);
-
  private:
   friend struct base::LazyInstanceTraitsBase<TracingControllerImpl>;
   friend class TraceMessageFilter;
@@ -199,9 +191,6 @@ class TracingControllerImpl
 
   GetCategoriesDoneCallback pending_get_categories_done_callback_;
   GetTraceBufferUsageCallback pending_trace_buffer_usage_callback_;
-
-  base::ObserverList<TraceMessageFilterObserver>
-      trace_message_filter_observers_;
 
   std::set<std::string> known_category_groups_;
   std::set<TracingUI*> tracing_uis_;
