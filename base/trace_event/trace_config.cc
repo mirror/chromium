@@ -455,6 +455,14 @@ void TraceConfig::SetMemoryDumpConfigFromConfigDict(
 void TraceConfig::SetDefaultMemoryDumpConfig() {
   memory_dump_config_.Clear();
   memory_dump_config_.allowed_dump_modes = GetDefaultAllowedMemoryDumpModes();
+#if defined(OS_ANDROID)
+  // TODO(ssid): Move this trigger setting to
+  // inspector_tracing_controller_client instead of setting it here.
+  // crbug.com/726393.
+  memory_dump_config_.triggers.push_back({5000 /* min_time_between_dumps_ms */,
+                                          MemoryDumpLevelOfDetail::DETAILED,
+                                          MemoryDumpType::PERIODIC_INTERVAL});
+#endif
 }
 
 void TraceConfig::SetEventFiltersFromConfigList(
