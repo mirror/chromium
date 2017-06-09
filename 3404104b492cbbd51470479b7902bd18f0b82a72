@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3e2b06_56260103",
+        "filename": "gpu/command_buffer/service/sync_point_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-09T23:16:21Z",
+      "side": 1,
+      "message": "Is this comment valid?",
+      "revId": "3404104b492cbbd51470479b7902bd18f0b82a72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
