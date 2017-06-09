@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a28f2768_f942766c",
+        "filename": "tools/accessibility/rebase_dump_accessibility_tree_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-09T20:38:36Z",
+      "side": 1,
+      "message": "Looks like this isn\u0027t used anymore",
+      "revId": "fa5b255478bc139aab5e4bbf363204a1a579a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46b3cbba_90c3c4ed",
+        "filename": "tools/accessibility/rebase_dump_accessibility_tree_test.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-09T20:38:36Z",
+      "side": 1,
+      "message": "this isn\u0027t being used anymore - but it looks like you can pass an\nissue number to \"git cl try-results\" with the -p option - could\nyou try that?\n\nIf you can\u0027t get that to work, maybe delete this code for now\nand we can add it back later. Right now it\u0027s confusing because\nit parses the command-line argument but doesn\u0027t use it",
+      "revId": "fa5b255478bc139aab5e4bbf363204a1a579a85e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
