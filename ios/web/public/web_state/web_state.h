@@ -118,6 +118,9 @@ class WebState : public base::SupportsUserData {
   // caller to size the view.
   virtual UIView* GetView() = 0;
 
+  // Returns whether the WebState's renderer is responsive or not.
+  virtual bool IsCrashed() = 0;
+
   // Gets the BrowserState associated with this WebState. Can never return null.
   virtual BrowserState* GetBrowserState() const = 0;
 
