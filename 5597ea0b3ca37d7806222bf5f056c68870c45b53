@@ -16,6 +16,24 @@
       "revId": "5597ea0b3ca37d7806222bf5f056c68870c45b53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5042cb3a_6b94bec0",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_updater_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-09T13:33:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eed4196_3b77bc95",
+      "revId": "5597ea0b3ca37d7806222bf5f056c68870c45b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
