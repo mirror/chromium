@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9b42cd2_b1915570",
+        "filename": "third_party/WebKit/Source/core/frame/UseCounter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-09T01:37:15Z",
+      "side": 1,
+      "message": "Did you mean to add this back?",
+      "revId": "31143ac4a5c85201406202e9460fb78733883c42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
