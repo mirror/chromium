@@ -33,6 +33,7 @@ class TestWebState : public WebState {
   bool ShouldSuppressDialogs() const override;
   void SetShouldSuppressDialogs(bool should_suppress) override;
   UIView* GetView() override;
+  bool IsCrashed() override;
   BrowserState* GetBrowserState() const override;
   void OpenURL(const OpenURLParams& params) override {}
   void Stop() override {}
@@ -87,6 +88,7 @@ class TestWebState : public WebState {
   void SetNavigationManager(
       std::unique_ptr<NavigationManager> navigation_manager);
   void SetView(UIView* view);
+  void SetIsCrashed(bool crashed);
 
   // Getters for test data.
   CRWContentView* GetTransientContentView();
@@ -100,6 +102,7 @@ class TestWebState : public WebState {
   BrowserState* browser_state_;
   bool web_usage_enabled_;
   bool is_loading_;
+  bool is_crashed_;
   CRWContentView* transient_content_view_;
   GURL url_;
   base::string16 title_;
