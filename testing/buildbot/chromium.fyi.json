@@ -10525,6 +10525,9 @@
     ]
   },
   "Linux ARM": {
+    "additional_compile_targets": [
+      "browser_tests"
+    ],
     "gtest_tests": [
       {
         "swarming": {
