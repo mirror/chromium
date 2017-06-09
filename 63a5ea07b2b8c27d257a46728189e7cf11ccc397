@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "792da541_3486ce95",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 490,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-09T19:44:01Z",
+      "side": 1,
+      "message": "Hmm, I dunno whether the picture is either necessary or sufficient, although I do like the use of ASCII art :)\n\nWhat about just breaking the code up a bit, improving the variable names, and adding a few smaller comments, like so?:\n\n    // Left-align the back button.\n    const int back_button_width \u003d back_button_-\u003eGetPreferredSize().width();\n    back_button_-\u003eSetBounds(0, 0, back_button_width, height());\n\n    // On the same row as the back button is a title.  We want to ensure some\n    // minimum spacing between the two.\n    const int button_to_title_min_spacing \u003d\n        ChromeLayoutProvider::Get()-\u003eGetDistanceMetric(\n            ChromeDistanceMetric::DISTANCE_UNRELATED_CONTROL_HORIZONTAL);\n    const int unavailable_leading_space \u003d\n        back_button_width + button_to_title_min_spacing;\n\n    // Since the title is centered, any unavailable space on the left is really\n    // unavailable on the right as well.\n    const int unavailable_space \u003d 2 * unavailable_leading_space;\n    const int label_width \u003d width() - unavailable_space;\n    DCHECK_GT(label_width, 0);\n    title_label_-\u003eSetBounds(unavailable_leading_space, 0, label_width,\n                            height());",
+      "revId": "63a5ea07b2b8c27d257a46728189e7cf11ccc397",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
