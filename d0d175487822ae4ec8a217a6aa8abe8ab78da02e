@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa85cf55_54ba679f",
+        "filename": "chrome/browser/ui/views/hung_renderer_view.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 360,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T15:25:28Z",
+      "side": 0,
+      "message": "How is this status code reported after your change?",
+      "range": {
+        "startLine": 360,
+        "startChar": 17,
+        "endLine": 360,
+        "endChar": 27
+      },
+      "revId": "d0d175487822ae4ec8a217a6aa8abe8ab78da02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
