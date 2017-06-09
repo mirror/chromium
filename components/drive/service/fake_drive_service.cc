@@ -689,6 +689,22 @@ CancelCallback FakeDriveService::GetAboutResource(
   return CancelCallback();
 }
 
+CancelCallback FakeDriveService::GetLargestChangeId(
+    const std::string& team_drive_id,
+    const ChangeListCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!callback.is_null());
+
+  // TODO: implement
+  GetChangeListInternal(0,              // start_change_stamp, dummy
+                        std::string(),  // empty search query
+                        std::string(),  // no directory resource id,
+                        0,              // start offset
+                        default_max_results_, &change_list_load_count_,
+                        callback);
+  return CancelCallback();
+}
+
 CancelCallback FakeDriveService::GetAppList(const AppListCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());

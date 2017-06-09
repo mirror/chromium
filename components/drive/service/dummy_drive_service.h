@@ -68,6 +68,9 @@ class DummyDriveService : public DriveServiceInterface {
       const google_apis::GetShareUrlCallback& callback) override;
   google_apis::CancelCallback GetAboutResource(
       const google_apis::AboutResourceCallback& callback) override;
+  google_apis::CancelCallback GetLargestChangeId(
+      const std::string& team_drive_id,
+      const google_apis::ChangeListCallback& callback) override;
   google_apis::CancelCallback GetAppList(
       const google_apis::AppListCallback& callback) override;
   google_apis::CancelCallback DeleteResource(

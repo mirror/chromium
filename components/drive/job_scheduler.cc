@@ -267,6 +267,22 @@ void JobScheduler::GetAboutResource(
   StartJob(new_job);
 }
 
+void JobScheduler::GetLargestChangeId(
+    const std::string& team_drive_id,
+    const google_apis::ChangeListCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!callback.is_null());
+
+  JobEntry* new_job = CreateNewJob(TYPE_GET_LARGEST_CHANGE_ID);
+  new_job->task = base::Bind(&DriveServiceInterface::GetLargestChangeId,
+                             base::Unretained(drive_service_), team_drive_id,
+                             base::Bind(&JobScheduler::OnGetChangeListJobDone,
+                                        weak_ptr_factory_.GetWeakPtr(),
+                                        new_job->job_info.job_id, callback));
+  new_job->abort_callback = CreateErrorRunCallback(callback);
+  StartJob(new_job);
+}
+
 void JobScheduler::GetAppList(const google_apis::AppListCallback& callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!callback.is_null());
@@ -1155,6 +1171,7 @@ void JobScheduler::OnConnectionTypeChanged(
 JobScheduler::QueueType JobScheduler::GetJobQueueType(JobType type) {
   switch (type) {
     case TYPE_GET_ABOUT_RESOURCE:
+    case TYPE_GET_LARGEST_CHANGE_ID:
     case TYPE_GET_APP_LIST:
     case TYPE_GET_ALL_TEAM_DRIVE_LIST:
     case TYPE_GET_ALL_RESOURCE_LIST:

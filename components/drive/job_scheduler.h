@@ -84,6 +84,11 @@ class JobScheduler
   // |callback| must not be null.
   void GetAboutResource(const google_apis::AboutResourceCallback& callback);
 
+  // Adds a GetLargestChangeId operation to the queue.
+  // |callback| must not be null.
+  void GetLargestChangeId(const std::string& team_drive_id,
+                          const google_apis::ChangeListCallback& callback);
+
   // Adds a GetAllTeamDriveList operation to the queue.
   // |callback| must not be null.
   void GetAllTeamDriveList(const google_apis::TeamDriveListCallback& callback);
