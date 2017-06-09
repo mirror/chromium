@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "286dca72_9eb73678",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-09T01:10:55Z",
+      "side": 1,
+      "message": "I\u0027m confused about this as well. If Exposed(Window Feature1, PaintWorklet Feature2) is inherited from CSSStyleValue, why do we need to add Exposed\u003d(Window,PaintWorklet) to CSSNumericValue?\n\n+bashi +yukishiino: You should be more familiar with this...?",
+      "parentUuid": "e20473ed_b9d08778",
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2faf96_8b6de447",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
         "patchSetId": 4
