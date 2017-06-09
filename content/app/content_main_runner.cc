@@ -237,6 +237,13 @@ class ContentClientInitializer {
  public:
   static void Set(const std::string& process_type,
                   ContentMainDelegate* delegate) {
+#if defined(OS_WIN)
+    // Route stdio to parent console (if any) or create one.
+    if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+            switches::kEnableLogging)) {
+      base::RouteStdioToConsole(true);
+    }
+#endif
     ContentClient* content_client = GetContentClient();
 #if !defined(CHROME_MULTIPLE_DLL_CHILD)
     if (process_type.empty()) {
