@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f9c2b1ff_d4d725c0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-09T21:35:53Z",
+      "side": 1,
+      "message": "What if there is no content? You used to show empty view before, but there is no code path for it now.",
+      "revId": "5419fd00ccc9a9f75ffbfcca76518430e78bda11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
