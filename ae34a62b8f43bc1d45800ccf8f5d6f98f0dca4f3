@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b72b9568_91afada6",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-09T18:02:50Z",
+      "side": 1,
+      "message": "That wasn\u0027t an option, because anonymous namespace functions aren\u0027t eligible for friend declarations.\n\nI rewrote the thread proxying as an anonymous namespaced function that only needs to work with Callbacks - it doesn\u0027t need to refer to class private members anymore. I think it\u0027s cleaner now.",
+      "parentUuid": "efccd0d9_43eb7c49",
+      "range": {
+        "startLine": 191,
+        "startChar": 5,
+        "endLine": 191,
+        "endChar": 38
+      },
+      "revId": "ae34a62b8f43bc1d45800ccf8f5d6f98f0dca4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5946692_24cfa248",
         "filename": "content/browser/shared_worker/shared_worker_host.cc",
         "patchSetId": 2
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-07T06:05:11Z",
       "side": 1,
       "message": "According to the try results, this seems to be called on the IO thread in some tests.\n\nI think this would be a bug of AllowWorkerFileSystem (not SharedWorkerHost::AllowFileSystem). If the function requires it\u0027s called from the IO thread[1], it should ensure the given callback is invoked on the original IO thread.\n\n[1] https://chromium.googlesource.com/chromium/src/+/6a40e94018f930fd154f12a309b0a211e9e5f915/content/public/browser/content_browser_client.h#363",
+      "revId": "ae34a62b8f43bc1d45800ccf8f5d6f98f0dca4f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63597baf_a646de1a",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-09T18:02:50Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "e5946692_24cfa248",
       "revId": "ae34a62b8f43bc1d45800ccf8f5d6f98f0dca4f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
