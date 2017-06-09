@@ -18,6 +18,7 @@
 #include "build/build_config.h"
 #include "cc/output/renderer_settings.h"
 #include "cc/surfaces/frame_sink_id_allocator.h"
+#include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "gpu/ipc/client/gpu_channel_host.h"
 #include "ui/compositor/compositor.h"
@@ -35,7 +36,7 @@ class ContextProviderCommandBuffer;
 }
 
 namespace viz {
-class FrameSinkManagerHost;
+class MojoFrameSinkManager;
 }
 
 namespace content {
@@ -111,7 +112,14 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   SharedVulkanContextProvider();
 
   // Manages creation and hierarchy of frame sinks.
-  std::unique_ptr<viz::FrameSinkManagerHost> frame_sink_manager_host_;
+  viz::FrameSinkManagerHost frame_sink_manager_host_;
+
+  // This is owned here so that SurfaceManager will be accessible in process
+  // when display is in the same process. Other than using SurfaceManager,
+  // access to |in_process_frame_sink_manager_| should happen via
+  // |frame_sink_manager_host_| instead which uses Mojo. See
+  // http://crbug.com/657959.
+  std::unique_ptr<viz::MojoFrameSinkManager> in_process_frame_sink_manager_;
 
   cc::FrameSinkIdAllocator frame_sink_id_allocator_;
 

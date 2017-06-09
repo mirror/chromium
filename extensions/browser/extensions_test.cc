@@ -34,6 +34,10 @@ namespace extensions {
 
 ExtensionsTest::ExtensionsTest() {}
 
+ExtensionsTest::ExtensionsTest(
+    std::unique_ptr<content::TestBrowserThreadBundle> thread_bundle)
+    : thread_bundle_(std::move(thread_bundle)) {}
+
 ExtensionsTest::~ExtensionsTest() {
   content::SetBrowserClientForTesting(nullptr);
   content::SetUtilityClientForTesting(nullptr);
