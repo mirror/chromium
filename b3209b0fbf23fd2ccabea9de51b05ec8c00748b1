@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b231f4f_97a50dde",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T17:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e540157b_d40348cd",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f552597_aae4c30b",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 10
@@ -33,6 +51,24 @@
       "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8597ea3_e217e3fc",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T17:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f552597_aae4c30b",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ebe3dc19_8a7c80b4",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T17:07:50Z",
+      "side": 1,
+      "message": "Done.  This was a good suggestion, it made the code much clearer.",
+      "parentUuid": "08835d0e_b732a8f7",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "40383f11_4de03db3",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 10
@@ -67,6 +121,24 @@
       "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e176741d_c8c6f83e",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T17:07:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "40383f11_4de03db3",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
