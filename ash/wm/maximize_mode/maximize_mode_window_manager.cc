@@ -86,6 +86,14 @@ void MaximizeModeWindowManager::OnOverviewModeEnded() {
   SetDeferBoundsUpdates(false);
 }
 
+void MaximizeModeWindowManager::OnSplitViewModeEnded() {
+  // Maximize All windows upon exit split view mode.
+  for (auto& pair : window_state_map_) {
+    wm::WMEvent event(wm::WM_EVENT_MAXIMIZE);
+    wm::GetWindowState(pair.first)->OnWMEvent(&event);
+  }
+}
+
 void MaximizeModeWindowManager::OnWindowDestroying(aura::Window* window) {
   if (IsContainerWindow(window)) {
     // container window can be removed on display destruction.

@@ -11,6 +11,7 @@
 #include "ash/shell.h"
 #include "ash/wm/maximize_mode/maximize_mode_window_manager.h"
 #include "ash/wm/screen_pinning_controller.h"
+#include "ash/wm/splitview/split_view_controller.h"
 #include "ash/wm/window_animation_types.h"
 #include "ash/wm/window_properties.h"
 #include "ash/wm/window_state_util.h"
@@ -71,6 +72,18 @@ gfx::Rect GetCenteredBounds(const gfx::Rect& bounds_in_parent,
 gfx::Rect GetBoundsInMaximizedMode(wm::WindowState* state_object) {
   if (state_object->IsFullscreen() || state_object->IsPinned())
     return ScreenUtil::GetDisplayBoundsInParent(state_object->window());
+
+  if (state_object->CanSnap() && SplitViewController::ShouldAllowSplitView() &&
+      state_object->GetStateType() == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED) {
+    return Shell::Get()->split_view_controller()->GetLeftWindowBoundsInParent(
+        state_object->window());
+  }
+
+  if (state_object->CanSnap() && SplitViewController::ShouldAllowSplitView() &&
+      state_object->GetStateType() == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
+    return Shell::Get()->split_view_controller()->GetRightWindowBoundsInParent(
+        state_object->window());
+  }
 
   gfx::Rect bounds_in_parent;
   // Make the window as big as possible.
@@ -169,12 +182,26 @@ void MaximizeModeWindowState::OnWMEvent(wm::WindowState* window_state,
     case wm::WM_EVENT_CYCLE_SNAP_LEFT:
     case wm::WM_EVENT_CYCLE_SNAP_RIGHT:
     case wm::WM_EVENT_CENTER:
-    case wm::WM_EVENT_SNAP_LEFT:
-    case wm::WM_EVENT_SNAP_RIGHT:
     case wm::WM_EVENT_NORMAL:
     case wm::WM_EVENT_MAXIMIZE:
       UpdateWindow(window_state, GetMaximizedOrCenteredWindowType(window_state),
                    true);
+      return;
+    case wm::WM_EVENT_SNAP_LEFT:
+      if (SplitViewController::ShouldAllowSplitView()) {
+        UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_LEFT_SNAPPED, true);
+      } else {
+        UpdateWindow(window_state,
+                     GetMaximizedOrCenteredWindowType(window_state), true);
+      }
+      return;
+    case wm::WM_EVENT_SNAP_RIGHT:
+      if (SplitViewController::ShouldAllowSplitView()) {
+        UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED, true);
+      } else {
+        UpdateWindow(window_state,
+                     GetMaximizedOrCenteredWindowType(window_state), true);
+      }
       return;
     case wm::WM_EVENT_MINIMIZE:
       UpdateWindow(window_state, wm::WINDOW_STATE_TYPE_MINIMIZED, true);
@@ -274,7 +301,9 @@ void MaximizeModeWindowState::UpdateWindow(wm::WindowState* window_state,
          target_state == wm::WINDOW_STATE_TYPE_TRUSTED_PINNED ||
          (target_state == wm::WINDOW_STATE_TYPE_NORMAL &&
           !window_state->CanMaximize()) ||
-         target_state == wm::WINDOW_STATE_TYPE_FULLSCREEN);
+         target_state == wm::WINDOW_STATE_TYPE_FULLSCREEN ||
+         target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+         target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED);
 
   if (current_state_type_ == target_state) {
     if (target_state == wm::WINDOW_STATE_TYPE_MINIMIZED)
@@ -295,6 +324,17 @@ void MaximizeModeWindowState::UpdateWindow(wm::WindowState* window_state,
     window_state->window()->Hide();
     if (window_state->IsActive())
       window_state->Deactivate();
+  } else if (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED ||
+             target_state == wm::WINDOW_STATE_TYPE_RIGHT_SNAPPED) {
+    gfx::Rect bounds =
+        (target_state == wm::WINDOW_STATE_TYPE_LEFT_SNAPPED)
+            ? Shell::Get()
+                  ->split_view_controller()
+                  ->GetLeftWindowBoundsInParent(window_state->window())
+            : Shell::Get()
+                  ->split_view_controller()
+                  ->GetRightWindowBoundsInParent(window_state->window());
+    window_state->SetBoundsDirectAnimated(bounds);
   } else {
     UpdateBounds(window_state, animated);
   }

@@ -99,6 +99,10 @@ static const int kExitFadeInMilliseconds = 30;
 // this fraction of size.
 static const float kPreCloseScale = 0.02f;
 
+// Before dragging an overview window, the window will scale up |kPreDragScale|
+// to indicate its selection.
+static const float kPreDragScale = 0.04f;
+
 // Convenience method to fade in a Window with predefined animation settings.
 // Note: The fade in animation will occur after a delay where the delay is how
 // long the lay out animations take.
@@ -111,8 +115,9 @@ void SetupFadeInAfterLayout(views::Widget* widget) {
   window->layer()->SetOpacity(1.0f);
 }
 
-// A Button that has a listener and listens to mouse clicks on the visible part
-// of an overview window.
+// A Button that has a listener and listens to mouse / gesture events on the
+// visible part of an overview window. Note the drag events are only handled in
+// maximized mode.
 class ShieldButton : public views::CustomButton {
  public:
   ShieldButton(views::ButtonListener* listener, const base::string16& name)
@@ -127,6 +132,66 @@ class ShieldButton : public views::CustomButton {
   // necessary to prevent a crash when a user clicks on the fading out widget
   // after the WindowSelectorItem has been destroyed.
   void ResetListener() { listener_ = nullptr; }
+
+  // views::CustomButton overrides:
+  bool OnMousePressed(const ui::MouseEvent& event) override {
+    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+      gfx::Point location(event.location());
+      views::View::ConvertPointToScreen(this, &location);
+      listener()->HandlePressEvent(location);
+      return true;
+    }
+    return views::CustomButton::OnMousePressed(event);
+  }
+
+  void OnMouseReleased(const ui::MouseEvent& event) override {
+    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+      gfx::Point location(event.location());
+      views::View::ConvertPointToScreen(this, &location);
+      listener()->HandleReleaseEvent(location);
+      return;
+    }
+    views::CustomButton::OnMouseReleased(event);
+  }
+
+  bool OnMouseDragged(const ui::MouseEvent& event) override {
+    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+      gfx::Point location(event.location());
+      views::View::ConvertPointToScreen(this, &location);
+      listener()->HandleDragEvent(location);
+      return true;
+    }
+    return views::CustomButton::OnMouseDragged(event);
+  }
+
+  void OnGestureEvent(ui::GestureEvent* event) override {
+    if (listener() && SplitViewController::ShouldAllowSplitView()) {
+      gfx::Point location(event->location());
+      views::View::ConvertPointToScreen(this, &location);
+      switch (event->type()) {
+        case ui::ET_GESTURE_SCROLL_BEGIN:
+        case ui::ET_GESTURE_TAP_DOWN: {
+          listener()->HandlePressEvent(location);
+          break;
+        }
+        case ui::ET_GESTURE_SCROLL_UPDATE:
+          listener()->HandleDragEvent(location);
+          break;
+        case ui::ET_GESTURE_END:
+          listener()->HandleReleaseEvent(location);
+          break;
+        default:
+          break;
+      }
+      event->SetHandled();
+      return;
+    }
+    views::CustomButton::OnGestureEvent(event);
+  }
+
+  WindowSelectorItem* listener() {
+    return static_cast<WindowSelectorItem*>(listener_);
+  }
 
  protected:
   // views::View:
@@ -398,7 +463,7 @@ WindowSelectorItem::WindowSelectorItem(aura::Window* window,
                                        WindowSelector* window_selector)
     : dimmed_(false),
       root_window_(window->GetRootWindow()),
-      transform_window_(window),
+      transform_window_(this, window),
       in_bounds_update_(false),
       selected_(false),
       caption_container_view_(nullptr),
@@ -534,7 +599,11 @@ void WindowSelectorItem::ButtonPressed(views::Button* sender,
     return;
   }
   CHECK(sender == caption_container_view_->listener_button());
-  window_selector_->SelectWindow(this);
+
+  // For other cases, the event is handled in OverviewWindowDragController.
+  if (!SplitViewController::ShouldAllowSplitView()) {
+    window_selector_->SelectWindow(this);
+  }
 }
 
 void WindowSelectorItem::OnWindowDestroying(aura::Window* window) {
@@ -555,6 +624,22 @@ float WindowSelectorItem::GetItemScale(const gfx::Size& size) {
       transform_window_.GetTargetBoundsInScreen().size(), inset_size,
       transform_window_.GetTopInset(),
       close_button_->GetPreferredSize().height());
+}
+
+void WindowSelectorItem::HandlePressEvent(
+    const gfx::Point& location_in_screen) {
+  PrepareDrag();
+  window_selector_->InitiateDrag(this, location_in_screen);
+}
+
+void WindowSelectorItem::HandleReleaseEvent(
+    const gfx::Point& location_in_screen) {
+  EndDrag();
+  window_selector_->CompleteDrag(this);
+}
+
+void WindowSelectorItem::HandleDragEvent(const gfx::Point& location_in_screen) {
+  window_selector_->Drag(this, location_in_screen);
 }
 
 gfx::Rect WindowSelectorItem::GetTargetBoundsInScreen() const {
@@ -745,6 +830,29 @@ gfx::SlideAnimation* WindowSelectorItem::GetBackgroundViewAnimation() {
 
 aura::Window* WindowSelectorItem::GetOverviewWindowForMinimizedStateForTest() {
   return transform_window_.GetOverviewWindowForMinimizedState();
+}
+
+void WindowSelectorItem::PrepareDrag() {
+  gfx::Rect scaled_bounds(target_bounds_);
+  scaled_bounds.Inset(-target_bounds_.width() * kPreDragScale,
+                      -target_bounds_.height() * kPreDragScale);
+  OverviewAnimationType animation_type =
+      OverviewAnimationType::OVERVIEW_ANIMATION_CLOSING_SELECTOR_ITEM;
+  SetBounds(scaled_bounds, animation_type);
+
+  aura::Window* widget_window = item_widget_->GetNativeWindow();
+  if (widget_window && widget_window->parent() == GetWindow()->parent()) {
+    widget_window->parent()->StackChildAtTop(widget_window);
+    widget_window->parent()->StackChildBelow(GetWindow(), widget_window);
+  }
+}
+
+void WindowSelectorItem::EndDrag() {
+  aura::Window* widget_window = item_widget_->GetNativeWindow();
+  if (widget_window && widget_window->parent() == GetWindow()->parent()) {
+    widget_window->parent()->StackChildAtBottom(widget_window);
+    widget_window->parent()->StackChildBelow(GetWindow(), widget_window);
+  }
 }
 
 }  // namespace ash
