@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c1b70cd_0c13030a",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T14:51:30Z",
+      "side": 1,
+      "message": "nit: combine with the previous if statement, which has the same condition?",
+      "revId": "8fc91efefe5f7a622e5f2b71d6fdfc42ce8f4fa7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
