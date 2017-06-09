@@ -174,6 +174,7 @@ class WebStateImpl : public WebState, public NavigationManagerDelegate {
   bool ShouldSuppressDialogs() const override;
   void SetShouldSuppressDialogs(bool should_suppress) override;
   UIView* GetView() override;
+  bool IsCrashed() override;
   BrowserState* GetBrowserState() const override;
   void OpenURL(const WebState::OpenURLParams& params) override;
   void Stop() override;

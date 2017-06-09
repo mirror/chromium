@@ -28,6 +28,7 @@ TestWebState::TestWebState()
     : browser_state_(nullptr),
       web_usage_enabled_(false),
       is_loading_(false),
+      is_crashed_(false),
       trust_level_(kAbsolute),
       content_is_html_(true) {}
 
@@ -66,6 +67,10 @@ UIView* TestWebState::GetView() {
   return view_;
 }
 
+bool TestWebState::IsCrashed() {
+  return is_crashed_;
+}
+
 const NavigationManager* TestWebState::GetNavigationManager() const {
   return navigation_manager_.get();
 }
@@ -95,6 +100,10 @@ void TestWebState::SetNavigationManager(
 
 void TestWebState::SetView(UIView* view) {
   view_ = view;
+}
+
+void TestWebState::SetIsCrashed(bool crashed) {
+  is_crashed_ = crashed;
 }
 
 CRWJSInjectionReceiver* TestWebState::GetJSInjectionReceiver() const {

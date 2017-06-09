@@ -551,6 +551,10 @@ UIView* WebStateImpl::GetView() {
   return [web_controller_ view];
 }
 
+bool WebStateImpl::IsCrashed() {
+  return ![web_controller_ isViewAlive];
+}
+
 BrowserState* WebStateImpl::GetBrowserState() const {
   return navigation_manager_->GetBrowserState();
 }
