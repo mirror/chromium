@@ -1,0 +1,141 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b565427c_d02a8002",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "IndexedDBInternalsHandler",
+      "range": {
+        "startLine": 303,
+        "startChar": 0,
+        "endLine": 303,
+        "endChar": 52
+      },
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0013cfe0_41da0ce2",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "IndexedDB storage system in the browser.",
+      "range": {
+        "startLine": 305,
+        "startChar": 21,
+        "endLine": 305,
+        "endChar": 22
+      },
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8ded199_dc8d1a89",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "This is an internal chrome webpage that displays debug information about IndexedDB usage and data. Used by developers.",
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45720dea_b2d2d6c8",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "When a user navigates to chrome://indexeddb-internals/.",
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5216cb99_33723362",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "HTML debug information about the IndexedDB storage system.",
+      "range": {
+        "startLine": 308,
+        "startChar": 18,
+        "endLine": 308,
+        "endChar": 19
+      },
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "457993f7_b5c802ac",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "LOCAL",
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84bdd523_c13db0b9",
+        "filename": "content/browser/indexed_db/indexed_db_internals_ui.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-09T23:01:37Z",
+      "side": 1,
+      "message": "false",
+      "revId": "883461528460676f2c121581c1dc61fe9216492d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
