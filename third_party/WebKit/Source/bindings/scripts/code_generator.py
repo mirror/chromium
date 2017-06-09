@@ -14,8 +14,8 @@ import sys
 from idl_types import set_ancestors, IdlType
 from v8_globals import includes
 from v8_interface import constant_filters
-from v8_types import set_component_dirs
 from v8_methods import method_filters
+from v8_types import set_component_dirs
 import v8_utilities
 from v8_utilities import capitalize, unique_by
 from utilities import (idl_filename_to_component, is_valid_component_dependency,
