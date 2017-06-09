@@ -220,6 +220,8 @@ NativeDesktopMediaList::NativeDesktopMediaList(
   capture_task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
       {base::MayBlock(), base::TaskPriority::USER_VISIBLE});
 
+  SetMediaListType(type);
+
   worker_.reset(
       new Worker(weak_factory_.GetWeakPtr(), type, std::move(capturer)));
 }

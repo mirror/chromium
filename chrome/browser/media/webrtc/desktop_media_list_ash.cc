@@ -32,6 +32,8 @@ DesktopMediaListAsh::DesktopMediaListAsh(content::DesktopMediaID::Type type)
       weak_factory_(this) {
   DCHECK(type == content::DesktopMediaID::TYPE_SCREEN ||
          type == content::DesktopMediaID::TYPE_WINDOW);
+
+  SetMediaListType(type);
 }
 
 DesktopMediaListAsh::~DesktopMediaListAsh() {}
