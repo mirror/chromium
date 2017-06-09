@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "660f8b27_79b9605c",
+        "filename": "content/browser/media/media_web_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-09T10:31:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "99cf5d8f_b033aac9",
+      "range": {
+        "startLine": 301,
+        "startChar": 0,
+        "endLine": 304,
+        "endChar": 1
+      },
+      "revId": "f13928001a5267aab8cd709263c9d8161a50153a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4bfbd3f4_3762d934",
         "filename": "content/common/media/media_player_delegate_messages.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T20:36:14Z",
       "side": 1,
       "message": "Is there a range on the volume?",
+      "range": {
+        "startLine": 61,
+        "startChar": 30,
+        "endLine": 61,
+        "endChar": 44
+      },
+      "revId": "f13928001a5267aab8cd709263c9d8161a50153a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce6afae5_650a1e0c",
+        "filename": "content/common/media/media_player_delegate_messages.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-09T10:31:27Z",
+      "side": 1,
+      "message": "Yes between 0.0 and 1.0",
+      "parentUuid": "4bfbd3f4_3762d934",
       "range": {
         "startLine": 61,
         "startChar": 30,
