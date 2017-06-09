@@ -8,6 +8,7 @@ any modification below this line.
 
 ======================================================================
 
+
 Let's make a story. Add zero+ sentences for every commit:
 
 CHÄPTER 1:
