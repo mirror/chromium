@@ -112,6 +112,30 @@
     },
     {
       "key": {
+        "uuid": "0863e3b8_0c0fdbdd",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-09T10:26:07Z",
+      "side": 1,
+      "message": "Thanks! Done.",
+      "parentUuid": "827c6c7f_23a00b97",
+      "range": {
+        "startLine": 36,
+        "startChar": 5,
+        "endLine": 36,
+        "endChar": 14
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab3d5e7c_004a2045",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
@@ -135,6 +159,30 @@
     },
     {
       "key": {
+        "uuid": "3aa27966_4b1e451c",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-09T10:26:07Z",
+      "side": 1,
+      "message": "I\u0027ll remove the FakePlatformSensor as well as the original unittest by Reilly\u0027s suggestion.",
+      "parentUuid": "ab3d5e7c_004a2045",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 28
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "725c1f72_cadf09b0",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 4
@@ -146,6 +194,30 @@
       "writtenOn": "2017-06-06T08:04:27Z",
       "side": 1,
       "message": "FakePlatformSensorProvider can be reused, easier to mock / test.",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 24
+      },
+      "revId": "9e716c9b16af5a528c11ea143ef674d68718c9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5f2b9f_4f3ad538",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-09T10:26:07Z",
+      "side": 1,
+      "message": "Similar as above, will remove the original FakePlatformSensorProvider.",
+      "parentUuid": "725c1f72_cadf09b0",
       "range": {
         "startLine": 79,
         "startChar": 6,
