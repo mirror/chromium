@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "116c6c37_855a22a1",
+        "filename": "chrome/browser/themes/theme_syncable_service_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 474,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-09T20:20:30Z",
+      "side": 1,
+      "message": "this test feels pretty lame to me but it\u0027s the best I could do. The end to end tests (such as TwoClientThemesSyncTest) don\u0027t actually use the ThemeSyncableService so they don\u0027t exercise the call to SetTheme in the same way. Instead, they fake it by installing extensions manually (e.g. in extensions_helper::InstallExtensionsPendingForSync), which would show an infobar.",
+      "range": {
+        "startLine": 474,
+        "startChar": 2,
+        "endLine": 474,
+        "endChar": 14
+      },
+      "revId": "433d182f74a442f4a3878c2397ec0b36b77f4784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
