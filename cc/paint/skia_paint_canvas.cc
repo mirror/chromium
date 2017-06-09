@@ -261,7 +261,7 @@ void SkiaPaintCanvas::drawDisplayItemList(
 }
 
 void SkiaPaintCanvas::drawPicture(sk_sp<const PaintRecord> record) {
-  record->playback(canvas_);
+  record->Playback(canvas_);
 }
 
 bool SkiaPaintCanvas::isClipEmpty() const {
