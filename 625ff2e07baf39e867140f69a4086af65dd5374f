@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "8baa41d9_40f92e13",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 813,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T03:51:10Z",
+      "side": 1,
+      "message": "By the way I\u0027m changing this part of code, I think either I or you will need a bit of rebase.",
+      "revId": "625ff2e07baf39e867140f69a4086af65dd5374f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07400b20_cac746e3",
         "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
         "patchSetId": 18
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "The information can be updated, I think.",
       "parentUuid": "07400b20_cac746e3",
+      "revId": "625ff2e07baf39e867140f69a4086af65dd5374f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a28676a_1655852a",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 18
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T03:51:10Z",
+      "side": 1,
+      "message": "I see so we might be sending obsolete info or dummy data like this.",
+      "parentUuid": "a79c9042_cf349aa5",
       "revId": "625ff2e07baf39e867140f69a4086af65dd5374f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
