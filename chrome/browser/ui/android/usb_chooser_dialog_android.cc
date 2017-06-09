@@ -26,15 +26,14 @@
 #include "content/public/browser/web_contents.h"
 #include "device/base/device_client.h"
 #include "device/usb/mojo/type_converters.h"
+#include "device/usb/public/cpp/filter_utils.h"
 #include "device/usb/usb_device.h"
-#include "device/usb/usb_device_filter.h"
 #include "device/usb/webusb_descriptors.h"
 #include "jni/UsbChooserDialog_jni.h"
 #include "ui/android/window_android.h"
 #include "url/gurl.h"
 
 using device::UsbDevice;
-using device::UsbDeviceFilter;
 
 namespace {
 
@@ -51,13 +50,13 @@ void OnDevicePermissionRequestComplete(
 }  // namespace
 
 UsbChooserDialogAndroid::UsbChooserDialogAndroid(
-    const std::vector<UsbDeviceFilter>& filters,
+    std::vector<device::mojom::UsbDeviceFilterPtr> filters,
     content::RenderFrameHost* render_frame_host,
     const device::mojom::UsbChooserService::GetPermissionCallback& callback)
     : render_frame_host_(render_frame_host),
       callback_(callback),
       usb_service_observer_(this),
-      filters_(filters),
+      filters_(std::move(filters)),
       weak_factory_(this) {
   device::UsbService* usb_service =
       device::DeviceClient::Get()->GetUsbService();
@@ -227,7 +226,7 @@ void UsbChooserDialogAndroid::OpenUrl(const std::string& url) {
 
 bool UsbChooserDialogAndroid::DisplayDevice(
     scoped_refptr<UsbDevice> device) const {
-  if (!UsbDeviceFilter::MatchesAny(*device, filters_))
+  if (!UsbDeviceFilterMatchesAny(filters_, *device))
     return false;
 
   if (UsbBlocklist::Get().IsExcluded(device))

@@ -290,6 +290,7 @@ if (enable_extensions) {
       "//components/url_matcher",
       "//crypto",
       "//device/bluetooth",
+      "//device/usb/public/cpp",
       "//device/usb",
       "//extensions:extensions_resources",
       "//extensions/common/api",
