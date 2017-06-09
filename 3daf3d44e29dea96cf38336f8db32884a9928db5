@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "27e0ba4d_0978e25e",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bfa413f_76c16d21",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1bcfee79_f56fc328",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-09T06:45:12Z",
       "side": 1,
       "message": "(nit: some spec text\u0027s quoted and others are not, feels a bit inconsistent)",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cbb215_aa04fec8",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T06:55:42Z",
+      "side": 1,
+      "message": "let me bulk-edit this in a separate CL",
+      "parentUuid": "1bcfee79_f56fc328",
       "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4ba6896_085efbed",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T06:55:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b191332a_c1f81a4f",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
