@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa0a6197_7af60f9a",
+        "filename": "services/shape_detection/android/java/src/org/chromium/shape_detection/FaceDetectionImpl.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T04:54:38Z",
+      "side": 1,
+      "message": "Mention here somewhere https://crbug.com/718329\nsince that\u0027s where we got the info that the odd\nwidth is bad.",
+      "range": {
+        "startLine": 43,
+        "startChar": 85,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "cb4d48c8b04a75abe84273e2ed89f5331fe49618",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
