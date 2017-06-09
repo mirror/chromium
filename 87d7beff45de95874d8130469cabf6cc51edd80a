@@ -16,6 +16,24 @@
       "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ac0336d_05230796",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-09T14:54:07Z",
+      "side": 1,
+      "message": "There are a number of unit tests that expect needs_redraw to be false until a commit happened. I figured it\u0027s not really necessary to request a redraw here if we need to wait for a commit anyway (which will then trigger the redraw). WDYT?",
+      "parentUuid": "d54a9e7a_e2d42912",
+      "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
