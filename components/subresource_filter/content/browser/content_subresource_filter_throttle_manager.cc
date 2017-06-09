@@ -66,11 +66,14 @@ void ContentSubresourceFilterThrottleManager::ReadyToCommitNavigation(
   if (throttle == ongoing_activation_throttles_.end())
     return;
 
-  // A filter with DISABLED activation indicates a corrupted ruleset.
   AsyncDocumentSubresourceFilter* filter = throttle->second->filter();
-  if (!filter || navigation_handle->GetNetErrorCode() != net::OK ||
-      filter->activation_state().activation_level ==
-          ActivationLevel::DISABLED) {
+  if (!filter)
+    return;
+
+  // A filter with DISABLED activation indicates a corrupted ruleset.
+  ActivationLevel level = filter->activation_state().activation_level;
+  if (navigation_handle->GetNetErrorCode() != net::OK ||
+      level == ActivationLevel::DISABLED) {
     return;
   }
 
@@ -124,9 +127,10 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
   // Make sure |activated_frame_hosts_| is updated or cleaned up depending on
   // this navigation's activation state.
   if (filter) {
-    filter->set_first_disallowed_load_callback(base::Bind(
+    base::OnceClosure disallowed_callback(base::BindOnce(
         &ContentSubresourceFilterThrottleManager::MaybeCallFirstDisallowedLoad,
         weak_ptr_factory_.GetWeakPtr()));
+    filter->set_first_disallowed_load_callback(std::move(disallowed_callback));
     activated_frame_hosts_[frame_host] = std::move(filter);
   } else {
     activated_frame_hosts_.erase(frame_host);
