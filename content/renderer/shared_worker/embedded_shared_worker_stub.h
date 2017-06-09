@@ -21,10 +21,10 @@
 namespace blink {
 class WebApplicationCacheHost;
 class WebApplicationCacheHostClient;
+class WebContentSettingsClient;
 class WebNotificationPresenter;
 class WebSecurityOrigin;
 class WebSharedWorker;
-class WebWorkerContentSettingsClientProxy;
 }
 
 namespace content {
@@ -71,8 +71,7 @@ class EmbeddedSharedWorkerStub : public IPC::Listener,
   blink::WebNotificationPresenter* NotificationPresenter() override;
   std::unique_ptr<blink::WebApplicationCacheHost> CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient*) override;
-  blink::WebWorkerContentSettingsClientProxy*
-  CreateWorkerContentSettingsClientProxy(
+  blink::WebContentSettingsClient* CreateWorkerContentSettingsClient(
       const blink::WebSecurityOrigin& origin) override;
   std::unique_ptr<blink::WebServiceWorkerNetworkProvider>
   CreateServiceWorkerNetworkProvider() override;
