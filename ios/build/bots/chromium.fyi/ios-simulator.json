@@ -75,6 +75,12 @@
       "device type": "iPad Retina",
       "os": "9.0",
       "xcode version": "8.0"
+    },
+    {
+      "include": "eg_tests.json",
+      "device type": "iPhone 6s",
+      "os": "10.0",
+      "xcode version": "8.0"
     }
   ]
 }
