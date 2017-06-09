@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29688457_d68ae2fd",
+        "filename": "components/feature_engagement_tracker/internal/once_condition_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:20:51Z",
+      "side": 1,
+      "message": "Remove?",
+      "range": {
+        "startLine": 13,
+        "startChar": 6,
+        "endLine": 13,
+        "endChar": 36
+      },
+      "revId": "e785856cf87632fe74b7d086f28a061f76c225f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aae911_04307cab",
+        "filename": "components/feature_engagement_tracker/internal/once_condition_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:20:51Z",
+      "side": 1,
+      "message": ".empty()?",
+      "range": {
+        "startLine": 26,
+        "startChar": 58,
+        "endLine": 26,
+        "endChar": 64
+      },
+      "revId": "e785856cf87632fe74b7d086f28a061f76c225f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0fc0ce4_10c33675",
+        "filename": "components/feature_engagement_tracker/internal/once_condition_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:20:51Z",
+      "side": 1,
+      "message": "DCHECK(currently_showing_feature_.empty());",
+      "range": {
+        "startLine": 37,
+        "startChar": 2,
+        "endLine": 37,
+        "endChar": 44
+      },
+      "revId": "e785856cf87632fe74b7d086f28a061f76c225f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abd5e0ef_88272787",
+        "filename": "components/feature_engagement_tracker/internal/once_condition_validator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:20:51Z",
+      "side": 1,
+      "message": ".clear()?",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "e785856cf87632fe74b7d086f28a061f76c225f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
