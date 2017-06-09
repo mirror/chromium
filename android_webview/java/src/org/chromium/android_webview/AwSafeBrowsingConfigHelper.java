@@ -4,13 +4,9 @@
 
 package org.chromium.android_webview;
 
-import android.annotation.SuppressLint;
-import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.os.AsyncTask;
-import android.provider.Settings;
 
 import org.chromium.base.CommandLine;
 import org.chromium.base.Log;
@@ -27,16 +23,10 @@ public class AwSafeBrowsingConfigHelper {
 
     public static void maybeInitSafeBrowsingFromSettings(final Context appContext) {
         if (AwSafeBrowsingConfigHelper.shouldEnableSafeBrowsingSupport(appContext)) {
-            // Assume safebrowsing on by default initially.
+            // Assume safebrowsing on by default initially. If GMS is available, we later use
+            // isVerifyAppsEnabled() to check if "Scan device for security threats" has been checked
+            // by the user.
             AwContentsStatics.setSafeBrowsingEnabled(true);
-            // Fetch Android settings related to safe-browsing in the background.
-            AsyncTask.THREAD_POOL_EXECUTOR.execute(new Runnable() {
-                @Override
-                public void run() {
-                    AwContentsStatics.setSafeBrowsingEnabled(
-                            isScanDeviceForSecurityThreatsEnabled(appContext));
-                }
-            });
         }
     }
 
@@ -61,14 +51,6 @@ public class AwSafeBrowsingConfigHelper {
             Log.e(TAG, "App could not find itself by package name!");
             return false;
         }
-    }
-
-    @SuppressLint("NewApi") // android.provider.Settings.Global#getInt requires API level 17
-    private static boolean isScanDeviceForSecurityThreatsEnabled(Context applicationContext) {
-        // Determine if the "Scan device for security threats" functionality is enabled in
-        // Android->System->Google->Security settings.
-        ContentResolver contentResolver = applicationContext.getContentResolver();
-        return Settings.Secure.getInt(contentResolver, "package_verifier_user_consent", 1) > 0;
     }
 
     // Not meant to be instantiated.
