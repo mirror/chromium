@@ -16,6 +16,24 @@
       "revId": "789fb8ff8c9c18a27c93678d78bd2ccd35a18b46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed98ec6_9f3e9871",
+        "filename": "base/task_scheduler/scheduler_worker.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-09T16:58:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "08c30f3a_f399d2a8",
+      "revId": "789fb8ff8c9c18a27c93678d78bd2ccd35a18b46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
