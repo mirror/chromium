@@ -446,6 +446,23 @@ if (is_win) {
     if (enable_package_mash_services) {
       deps += embedded_mash_service_deps
     }
+
+    if (is_clang && !is_debug && !is_component_build && !use_lld) {
+      # TODO(hans): Maybe only for official builds?
+      orderfile = "chrome.$target_cpu.orderfile"
+      rebased_orderfile = rebase_path(orderfile, root_build_dir)
+      inputs = [
+        orderfile,
+      ]
+      ldflags += [
+        "/order:@$rebased_orderfile",
+        "/ignore:4037",
+        "/ignore:4065",
+      ]
+      configs -=
+          [ "//build/config/win:default_large_module_incremental_linking" ]
+      configs += [ "//build/config/win:no_incremental_linking" ]
+    }
   }
 
   if (is_multi_dll_chrome) {
@@ -493,6 +510,22 @@ if (is_win) {
         "/DELAYLOAD:esent.dll",
         "/DELAYLOAD:wininet.dll",
       ]
+
+      if (is_clang && !is_debug && !is_component_build && !use_lld) {
+        # TODO(hans): Maybe only for official builds?
+        orderfile = "chrome_child.$target_cpu.orderfile"
+        rebased_orderfile = rebase_path(orderfile, root_build_dir)
+        inputs = [
+          orderfile,
+        ]
+        ldflags += [
+          "/order:@$rebased_orderfile",
+          "/ignore:4037",
+          "/ignore:4065",
+        ]
+        configs -= [ "//build/config/win:default_incremental_linking" ]
+        configs += [ "//build/config/win:no_incremental_linking" ]
+      }
 
       if (symbol_level == 2) {
         # Incremental linking doesn't work on this target in debug mode with
