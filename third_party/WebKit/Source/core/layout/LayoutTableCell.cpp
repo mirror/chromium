@@ -442,7 +442,7 @@ void LayoutTableCell::ComputeOverflow(LayoutUnit old_client_after_edge,
   // borders of adjacent cells. Expand visual overflow to cover the lengthened
   // parts.
   if ((left && !rtl) || (right && rtl)) {
-    if (LayoutTableCell* before = Table()->CellBefore(this)) {
+    if (LayoutTableCell* before = Table()->CellPriorTo(this)) {
       top = std::max(top, before->CollapsedBorderHalfTop(true));
       bottom = std::max(bottom, before->CollapsedBorderHalfBottom(true));
     }
@@ -627,7 +627,7 @@ CSSPropertyID LayoutTableCell::ResolveBorderProperty(
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
   LayoutTable* table = this->Table();
-  LayoutTableCell* cell_before = table->CellBefore(this);
+  LayoutTableCell* cell_before = table->CellPriorTo(this);
   // We can use the border shared with |cell_before| if it is valid.
   if (cell_before && cell_before->collapsed_border_values_valid_ &&
       cell_before->RowIndex() == RowIndex()) {

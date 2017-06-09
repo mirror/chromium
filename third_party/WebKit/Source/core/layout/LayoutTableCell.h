@@ -270,14 +270,14 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   }
 
   BorderValue BorderAdjoiningCellBefore(const LayoutTableCell* cell) {
-    DCHECK_EQ(Table()->CellAfter(cell), this);
+    DCHECK_EQ(Table()->CellFollowing(cell), this);
     // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
     // at the cell level.
     return Style()->BorderStart();
   }
 
   BorderValue BorderAdjoiningCellAfter(const LayoutTableCell* cell) {
-    DCHECK_EQ(Table()->CellBefore(cell), this);
+    DCHECK_EQ(Table()->CellProceeding(cell), this);
     // FIXME: https://webkit.org/b/79272 - Add support for mixed directionality
     // at the cell level.
     return Style()->BorderEnd();
@@ -285,7 +285,7 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
 #if DCHECK_IS_ON()
   bool IsFirstOrLastCellInRow() const {
-    return !Table()->CellAfter(this) || !Table()->CellBefore(this);
+    return !Table()->CellFollowing(this) || !Table()->CellProceeding(this);
   }
 #endif
 
