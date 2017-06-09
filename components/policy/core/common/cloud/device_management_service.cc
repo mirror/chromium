@@ -9,6 +9,7 @@
 #include "base/bind.h"
 #include "base/compiler_specific.h"
 #include "base/location.h"
+#include "base/logging.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
@@ -62,7 +63,7 @@ const int kArcDisabled = 904;
 // timeouts.
 long g_retry_delay_ms = 10000;
 
-bool IsProxyError(const net::URLRequestStatus status) {
+bool IsProxyError(const net::URLRequestStatus& status) {
   switch (status.error()) {
     case net::ERR_PROXY_CONNECTION_FAILED:
     case net::ERR_TUNNEL_CONNECTION_FAILED:
@@ -77,7 +78,7 @@ bool IsProxyError(const net::URLRequestStatus status) {
   return false;
 }
 
-bool IsConnectionError(const net::URLRequestStatus status) {
+bool IsConnectionError(const net::URLRequestStatus& status) {
   switch (status.error()) {
     case net::ERR_NETWORK_CHANGED:
     case net::ERR_NAME_NOT_RESOLVED:
@@ -222,10 +223,10 @@ class DeviceManagementRequestJobImpl : public DeviceManagementRequestJob {
   DeviceManagementService* service_;
 
   // Whether the BYPASS_PROXY flag should be set by ConfigureRequest().
-  bool bypass_proxy_;
+  bool bypass_proxy_ = false;
 
   // Number of times that this job has been retried due to connection errors.
-  int retries_count_;
+  int retries_count_ = 0;
 
   // The last error why we had to retry.
   int last_error_ = 0;
@@ -234,7 +235,7 @@ class DeviceManagementRequestJobImpl : public DeviceManagementRequestJob {
   scoped_refptr<net::URLRequestContextGetter> request_context_;
 
   // Used to get notified if the job has been canceled while waiting for retry.
-  base::WeakPtrFactory<DeviceManagementRequestJobImpl> weak_ptr_factory_;
+  base::WeakPtrFactory<DeviceManagementRequestJobImpl> weak_ptr_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(DeviceManagementRequestJobImpl);
 };
@@ -263,10 +264,7 @@ DeviceManagementRequestJobImpl::DeviceManagementRequestJobImpl(
     const scoped_refptr<net::URLRequestContextGetter>& request_context)
     : DeviceManagementRequestJob(type, agent_parameter, platform_parameter),
       service_(service),
-      bypass_proxy_(false),
-      retries_count_(0),
-      request_context_(request_context),
-      weak_ptr_factory_(this) {}
+      request_context_(request_context) {}
 
 DeviceManagementRequestJobImpl::~DeviceManagementRequestJobImpl() {
   service_->RemoveJob(this);
@@ -578,9 +576,7 @@ void DeviceManagementService::Shutdown() {
 DeviceManagementService::DeviceManagementService(
     std::unique_ptr<Configuration> configuration)
     : configuration_(std::move(configuration)),
-      initialized_(false),
-      task_runner_(base::ThreadTaskRunnerHandle::Get()),
-      weak_ptr_factory_(this) {
+      task_runner_(base::ThreadTaskRunnerHandle::Get()) {
   DCHECK(configuration_);
 }
 
@@ -671,8 +667,13 @@ void DeviceManagementService::OnURLFetchComplete(
   if (retry_method != DeviceManagementRequestJobImpl::RetryMethod::NO_RETRY) {
     job->PrepareRetry();
     int delay = job->GetRetryDelay(retry_method);
-    LOG(WARNING) << "Dmserver request failed, retrying in " << delay / 1000
-                 << "s.";
+    if (IsConnectionError(source->GetStatus())) {
+      VLOG(1) << "Dmserver request failed due to a network connection error, "
+              << "retrying in " << delay / 1000 << "s";
+    } else {
+      LOG(WARNING) << "Dmserver request failed, retrying in " << delay / 1000
+                   << "s";
+    }
     task_runner_->PostDelayedTask(
         FROM_HERE,
         base::Bind(&DeviceManagementService::StartJobAfterDelay,

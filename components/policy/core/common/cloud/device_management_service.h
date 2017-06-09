@@ -211,7 +211,7 @@ class POLICY_EXPORT DeviceManagementService : public net::URLFetcherDelegate {
 
   // If this service is initialized, incoming requests get fired instantly.
   // If it is not initialized, incoming requests are queued.
-  bool initialized_;
+  bool initialized_ = false;
 
   // TaskRunner used to schedule retry attempts.
   const scoped_refptr<base::SequencedTaskRunner> task_runner_;
@@ -219,7 +219,7 @@ class POLICY_EXPORT DeviceManagementService : public net::URLFetcherDelegate {
   base::ThreadChecker thread_checker_;
 
   // Used to create tasks which run delayed on the UI thread.
-  base::WeakPtrFactory<DeviceManagementService> weak_ptr_factory_;
+  base::WeakPtrFactory<DeviceManagementService> weak_ptr_factory_{this};
 
   DISALLOW_COPY_AND_ASSIGN(DeviceManagementService);
 };
