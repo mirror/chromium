@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e540157b_d40348cd",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1041,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 1,
+      "message": "Could you move assignment before function call?\nSide-effect in parameter seems to be wired.",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f552597_aae4c30b",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1045,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 1,
+      "message": "nit: s/bool/const bool/",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08835d0e_b732a8f7",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1046,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 1,
+      "message": "This expression is too complex. Could you introduce a function using early-return style and a comment, for better documentation of conditions?\n\nWe may want to return character, kNonBreakSpaceCharacter or U+0020, instead of bool.",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40383f11_4de03db3",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1049,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 1,
+      "message": "Could you move assignment before function call?\nSide-effect in parameter seems to be wired.",
+      "revId": "b3209b0fbf23fd2ccabea9de51b05ec8c00748b1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

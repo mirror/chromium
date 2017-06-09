@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f4c2715_3d075749",
+        "filename": "third_party/WebKit/LayoutTests/platform/linux/editing/inserting/edited-whitespace-1-expected.txt",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 0,
+      "message": "Could you rewrite tests using expected.txt and expected.png in other patches, to use assert_selection(), which uses w3c test harness, to see better understanding\nof test expectation and test changes?\n\nThese tests don\u0027t need to verify pixels and layout tree.",
+      "revId": "b877904be7dd60869488a48b722fbcf41986ea87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b442c072_d4de36b3",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 0,
+      "message": "Thanks for fixing typo. \nBecause of this change doesn\u0027t relate to fixing the issue, could you move this change in another patch to make patch smaller?\n\nIt is OK to have one patch to fix this typo in both CompositeEditCommand.cpp and EditingUtilities.h. It seems this typo is introduced by grate renaming.",
+      "revId": "b877904be7dd60869488a48b722fbcf41986ea87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a421ad0b_f525317d",
+        "filename": "third_party/WebKit/Source/core/editing/commands/CompositeEditCommand.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 721,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T07:18:24Z",
+      "side": 0,
+      "message": "Thanks for fixing typo. \nBecause of this change doesn\u0027t relate to fixing the issue, could you move this change in another patch to make patch smaller?",
+      "revId": "b877904be7dd60869488a48b722fbcf41986ea87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
