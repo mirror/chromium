@@ -120,8 +120,9 @@ class SharedWorkerHost {
   void SetConnectionRequestID(SharedWorkerMessageFilter* filter,
                               int route_id,
                               int connection_request_id);
-  void AllowFileSystemResponse(std::unique_ptr<IPC::Message> reply_msg,
-                               bool allowed);
+  void AllowFileSystemResponseOnIOThread(
+      std::unique_ptr<IPC::Message> reply_msg,
+      bool allowed);
 
   // Sends |message| to the SharedWorker.
   bool Send(IPC::Message* message);

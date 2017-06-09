@@ -45,6 +45,12 @@ void NotifyWorkerDestroyed(int worker_process_id, int worker_route_id) {
       worker_process_id, worker_route_id);
 }
 
+void ProxyCallbackResultToIOThread(base::Callback<void(bool)> target_cb,
+                                   bool result) {
+  content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
+                                   base::Bind(target_cb, result));
+}
+
 }  // namespace
 
 SharedWorkerHost::SharedWorkerHost(SharedWorkerInstance* instance,
@@ -190,18 +196,22 @@ void SharedWorkerHost::WorkerConnected(int connection_request_id) {
 void SharedWorkerHost::AllowFileSystem(
     const GURL& url,
     std::unique_ptr<IPC::Message> reply_msg) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
+  auto response_cb =
+      base::Bind(&SharedWorkerHost::AllowFileSystemResponseOnIOThread,
+                 weak_factory_.GetWeakPtr(), base::Passed(&reply_msg));
+
   GetContentClient()->browser()->AllowWorkerFileSystem(
-      url,
-      instance_->resource_context(),
-      GetRenderFrameIDsForWorker(),
-      base::Bind(&SharedWorkerHost::AllowFileSystemResponse,
-                 weak_factory_.GetWeakPtr(),
-                 base::Passed(&reply_msg)));
+      url, instance_->resource_context(), GetRenderFrameIDsForWorker(),
+      base::Bind(&ProxyCallbackResultToIOThread, std::move(response_cb)));
 }
 
-void SharedWorkerHost::AllowFileSystemResponse(
+void SharedWorkerHost::AllowFileSystemResponseOnIOThread(
     std::unique_ptr<IPC::Message> reply_msg,
     bool allowed) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
+
   WorkerProcessHostMsg_RequestFileSystemAccessSync::WriteReplyParams(
       reply_msg.get(),
       allowed);
