@@ -56,10 +56,10 @@ class BASE_EXPORT TaskScheduler {
             foreground_blocking_worker_pool_params_in);
     ~InitParams();
 
-    const SchedulerWorkerPoolParams background_worker_pool_params;
-    const SchedulerWorkerPoolParams background_blocking_worker_pool_params;
-    const SchedulerWorkerPoolParams foreground_worker_pool_params;
-    const SchedulerWorkerPoolParams foreground_blocking_worker_pool_params;
+    SchedulerWorkerPoolParams background_worker_pool_params;
+    SchedulerWorkerPoolParams background_blocking_worker_pool_params;
+    SchedulerWorkerPoolParams foreground_worker_pool_params;
+    SchedulerWorkerPoolParams foreground_blocking_worker_pool_params;
   };
 
   // Destroying a TaskScheduler is not allowed in production; it is always
