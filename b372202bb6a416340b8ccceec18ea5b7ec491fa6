@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ca18bca_70443f03",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T23:04:04Z",
+      "side": 1,
+      "message": "This feels unfortunate for long-term maintainability, but I guess it\u0027s unavoidable.\n\n(It seems annoying enough that I would almost recommend typemapping... but that comes with its own issues)",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec3ffd7b_fd160e81",
+        "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T23:04:04Z",
+      "side": 1,
+      "message": "Nit: #include \u003cutility\u003e",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13a6286e_e89a06f8",
+        "filename": "chrome/browser/usb/usb_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T23:04:04Z",
+      "side": 1,
+      "message": "Ditto: #include \u003cutility\u003e, here and anywhere else",
+      "range": {
+        "startLine": 81,
+        "startChar": 28,
+        "endLine": 81,
+        "endChar": 37
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cfe521d_8512294b",
+        "filename": "device/usb/mojo/device_manager_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T23:04:04Z",
+      "side": 1,
+      "message": "Reading this is a bit confusing!\n\nOh well.",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
