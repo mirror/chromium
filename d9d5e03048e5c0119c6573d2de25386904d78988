@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36ee9595_d7abafba",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T15:44:56Z",
+      "side": 1,
+      "message": "nit: probably clearer to write this like:\n\nif \u0027RuntimeStatsCounter\u0027 in extended_attributes:\n    rcs_counter \u003d \u0027k\u0027 + extended_attributes[\u0027RuntimeStatsCounter\u0027]\n    rcs_bindings_counter \u003d rcs_counter + \u0027_Bindings\u0027\n    includes.add(\u0027platform/bindings/RuntimeCallStats.h\u0027)\nelse:\n    rcs_counter \u003d \u0027\u0027\n    rcs_bindings_counter \u003d \u0027\u0027",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa9676c6_1e9e970e",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T15:44:56Z",
+      "side": 1,
+      "message": "super-nit: possible to use -%} syntax to avoid spurious newline diffs?",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77896fdf_502f3501",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T15:44:56Z",
+      "side": 1,
+      "message": "Any reason not to append this into the FOR_EACH_COUNTER macro (thus avoiding the need to say both in multiple places)?",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80c58920_2444ecc6",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T15:44:56Z",
+      "side": 1,
+      "message": "EXPECT_STREQ(\"BindingsMethodTestCounter\", blink_counter-\u003eGetName());\n\n(also use EXPECT_STREQ for other C string comparisons below)",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
