@@ -954,7 +954,7 @@ class CORE_EXPORT LocalFrameView final
   DocumentLifecycle& Lifecycle() const;
 
   void ContentsResized() override;
-  void ScrollbarExistenceDidChange();
+  void ScrollbarExistenceMaybeChanged();
 
   // Methods to do point conversion via layoutObjects, in order to take
   // transforms into account.
