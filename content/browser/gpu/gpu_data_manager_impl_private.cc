@@ -524,6 +524,13 @@ void GpuDataManagerImplPrivate::UnblockDomainFrom3DAPIs(const GURL& url) {
   //
   // These policies could be refined, but at a certain point the behavior
   // will become difficult to explain.
+
+  // Shortcut in the common case where no blocking has occurred. This
+  // is important to not regress navigation performance, since this is
+  // now called on every user-initiated navigation.
+  if (blocked_domains_.empty() && timestamps_of_gpu_resets_.empty())
+    return;
+
   std::string domain = GetDomainFromURL(url);
 
   blocked_domains_.erase(domain);
@@ -1133,19 +1140,8 @@ bool GpuDataManagerImplPrivate::Are3DAPIsBlocked(const GURL& top_origin_url,
                                                  int render_process_id,
                                                  int render_frame_id,
                                                  ThreeDAPIType requester) {
-  bool blocked = Are3DAPIsBlockedAtTime(top_origin_url, base::Time::Now()) !=
-      GpuDataManagerImpl::DOMAIN_BLOCK_STATUS_NOT_BLOCKED;
-  if (blocked) {
-    // Unretained is ok, because it's posted to UI thread, the thread
-    // where the singleton GpuDataManagerImpl lives until the end.
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        base::Bind(&GpuDataManagerImpl::Notify3DAPIBlocked,
-                   base::Unretained(owner_), top_origin_url, render_process_id,
-                   render_frame_id, requester));
-  }
-
-  return blocked;
+  return Are3DAPIsBlockedAtTime(top_origin_url, base::Time::Now()) !=
+         GpuDataManagerImpl::DOMAIN_BLOCK_STATUS_NOT_BLOCKED;
 }
 
 void GpuDataManagerImplPrivate::DisableDomainBlockingFor3DAPIsForTesting() {
@@ -1341,6 +1337,8 @@ void GpuDataManagerImplPrivate::BlockDomainFrom3DAPIsAtTime(
   DomainBlockEntry& entry = blocked_domains_[domain];
   entry.last_guilt = guilt;
   timestamps_of_gpu_resets_.push_back(at_time);
+
+  LOG(ERROR) << "Blocked domain from 3D APIs: " << domain;
 }
 
 GpuDataManagerImpl::DomainBlockStatus
@@ -1355,6 +1353,8 @@ GpuDataManagerImplPrivate::Are3DAPIsBlockedAtTime(
 
   DomainBlockMap::const_iterator iter = blocked_domains_.find(domain);
   if (iter != blocked_domains_.end()) {
+    LOG(ERROR) << "Found that domain " << domain << " was blocked";
+
     // Err on the side of caution, and assume that if a particular
     // domain shows up in the block map, it's there for a good
     // reason and don't let its presence there automatically expire.
@@ -1398,21 +1398,13 @@ GpuDataManagerImplPrivate::Are3DAPIsBlockedAtTime(
                             BLOCK_STATUS_NOT_BLOCKED,
                             BLOCK_STATUS_MAX);
 
+  LOG(ERROR) << "Found that domain " << domain << " was not blocked";
+
   return GpuDataManagerImpl::DOMAIN_BLOCK_STATUS_NOT_BLOCKED;
 }
 
 int64_t GpuDataManagerImplPrivate::GetBlockAllDomainsDurationInMs() const {
   return kBlockAllDomainsMs;
-}
-
-void GpuDataManagerImplPrivate::Notify3DAPIBlocked(const GURL& top_origin_url,
-                                                   int render_process_id,
-                                                   int render_frame_id,
-                                                   ThreeDAPIType requester) {
-  GpuDataManagerImpl::UnlockedSession session(owner_);
-  observer_list_->Notify(FROM_HERE, &GpuDataManagerObserver::DidBlock3DAPIs,
-                         top_origin_url, render_process_id, render_frame_id,
-                         requester);
 }
 
 void GpuDataManagerImplPrivate::OnGpuProcessInitFailure() {

@@ -86,7 +86,6 @@ class CONTENT_EXPORT GpuDataManagerImpl
   // callbacks, should probably be required to occur on the UI thread.
   void AddObserver(GpuDataManagerObserver* observer) override;
   void RemoveObserver(GpuDataManagerObserver* observer) override;
-  void UnblockDomainFrom3DAPIs(const GURL& url) override;
   void SetGLStrings(const std::string& gl_vendor,
                     const std::string& gl_renderer,
                     const std::string& gl_version) override;
@@ -161,22 +160,15 @@ class CONTENT_EXPORT GpuDataManagerImpl
   //
   // The given URL may be a partial URL (including at least the host)
   // or a full URL to a page.
-  //
-  // Note that the unblocking API must be part of the content API
-  // because it is called from Chrome side code.
   void BlockDomainFrom3DAPIs(const GURL& url, DomainGuilt guilt);
   bool Are3DAPIsBlocked(const GURL& top_origin_url,
                         int render_process_id,
                         int render_frame_id,
                         ThreeDAPIType requester);
+  void UnblockDomainFrom3DAPIs(const GURL& url);
 
   // Disables domain blocking for 3D APIs. For use only in tests.
   void DisableDomainBlockingFor3DAPIsForTesting();
-
-  void Notify3DAPIBlocked(const GURL& top_origin_url,
-                          int render_process_id,
-                          int render_frame_id,
-                          ThreeDAPIType requester);
 
   // Get number of features being blacklisted.
   size_t GetBlacklistedFeatureCount() const;

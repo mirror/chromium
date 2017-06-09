@@ -606,6 +606,8 @@ const DataResource kDataResources[] = {
     {"colorSuggestionPicker.css", IDR_COLOR_SUGGESTION_PICKER_CSS,
      ui::SCALE_FACTOR_NONE, true},
 #endif
+    {"brokenCanvas", IDR_BROKENCANVAS, ui::SCALE_FACTOR_100P, false},
+    {"brokenCanvas@2x", IDR_BROKENCANVAS, ui::SCALE_FACTOR_200P, false},
 };
 
 }  // namespace

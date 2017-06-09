@@ -84,6 +84,7 @@ class ScreenOrientationProvider;
 class SiteInstance;
 class TestWebContents;
 class TextInputManager;
+class ThreeDAPIUnblocker;
 class WebContentsAudioMuter;
 class WebContentsDelegate;
 class WebContentsImpl;
@@ -1584,6 +1585,10 @@ class CONTENT_EXPORT WebContentsImpl
 #endif  // !defined(OS_ANDROID)
 
   std::unique_ptr<RenderWidgetHostInputEventRouter> rwh_input_event_router_;
+
+  // Unblocks access to 3D APIs for a given domain, assuming that the
+  // navigation to that domain came from a user gesture.
+  std::unique_ptr<ThreeDAPIUnblocker> three_d_api_unblocker_;
 
   PageImportanceSignals page_importance_signals_;
 

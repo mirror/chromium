@@ -264,6 +264,9 @@ class CORE_EXPORT HTMLCanvasElement final
   }
 
   bool IsWebGLAllowed() const override;
+  void SetContextCreationWasBlocked() override {
+    context_creation_was_blocked_ = true;
+  }
 
  protected:
   void DidMoveToNewDocument(Document& old_document) override;
@@ -316,6 +319,8 @@ class CORE_EXPORT HTMLCanvasElement final
   IntSize size_;
 
   TraceWrapperMember<CanvasRenderingContext> context_;
+  // Used only for WebGL currently.
+  bool context_creation_was_blocked_;
 
   bool ignore_reset_;
   FloatRect dirty_rect_;

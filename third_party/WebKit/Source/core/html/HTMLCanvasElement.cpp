@@ -139,6 +139,7 @@ inline HTMLCanvasElement::HTMLCanvasElement(Document& document)
       PageVisibilityObserver(document.GetPage()),
       size_(kDefaultWidth, kDefaultHeight),
       context_(this, nullptr),
+      context_creation_was_blocked_(false),
       ignore_reset_(false),
       externally_allocated_memory_(0),
       origin_clean_(true),
@@ -273,6 +274,8 @@ CanvasRenderingContext* HTMLCanvasElement::GetCanvasRenderingContext(
   context_ = factory->Create(this, attributes);
   if (!context_)
     return nullptr;
+
+  context_creation_was_blocked_ = false;
 
   probe::didCreateCanvasContext(&GetDocument());
 
@@ -543,6 +546,25 @@ void HTMLCanvasElement::NotifyListenersCanvasChanged() {
 }
 
 void HTMLCanvasElement::Paint(GraphicsContext& context, const LayoutRect& r) {
+  if (context_creation_was_blocked_ ||
+      (context_ && context_->isContextLost())) {
+    float device_scale_factor =
+        blink::DeviceScaleFactorDeprecated(GetDocument().GetFrame());
+    std::pair<Image*, float> broken_canvas_and_image_scale_factor =
+        ImageResourceContent::BrokenCanvas(device_scale_factor);
+    Image* broken_canvas = broken_canvas_and_image_scale_factor.first;
+    context.Save();
+    context.FillRect(FloatRect(r), Color(), SkBlendMode::kClear);
+    // Place the icon near the upper left, like the missing image icon
+    // for image elements. Offset it a bit from the upper corner.
+    FloatSize icon_size(broken_canvas->Size());
+    FloatPoint upper_left =
+        FloatPoint(r.PixelSnappedLocation()) + icon_size.ScaledBy(0.5f);
+    context.DrawImage(broken_canvas, FloatRect(upper_left, icon_size));
+    context.Restore();
+    return;
+  }
+
   // FIXME: crbug.com/438240; there is a bug with the new CSS blending and
   // compositing feature.
   if (!context_ && !PlaceholderFrame())

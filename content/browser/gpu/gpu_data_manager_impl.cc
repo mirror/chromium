@@ -135,11 +135,6 @@ void GpuDataManagerImpl::RemoveObserver(
   private_->RemoveObserver(observer);
 }
 
-void GpuDataManagerImpl::UnblockDomainFrom3DAPIs(const GURL& url) {
-  base::AutoLock auto_lock(lock_);
-  private_->UnblockDomainFrom3DAPIs(url);
-}
-
 void GpuDataManagerImpl::SetGLStrings(const std::string& gl_vendor,
                                       const std::string& gl_renderer,
                                       const std::string& gl_version) {
@@ -274,6 +269,11 @@ bool GpuDataManagerImpl::Are3DAPIsBlocked(const GURL& top_origin_url,
       top_origin_url, render_process_id, render_frame_id, requester);
 }
 
+void GpuDataManagerImpl::UnblockDomainFrom3DAPIs(const GURL& url) {
+  base::AutoLock auto_lock(lock_);
+  private_->UnblockDomainFrom3DAPIs(url);
+}
+
 void GpuDataManagerImpl::DisableDomainBlockingFor3DAPIsForTesting() {
   base::AutoLock auto_lock(lock_);
   private_->DisableDomainBlockingFor3DAPIsForTesting();
@@ -288,15 +288,6 @@ bool GpuDataManagerImpl::UpdateActiveGpu(uint32_t vendor_id,
                                          uint32_t device_id) {
   base::AutoLock auto_lock(lock_);
   return private_->UpdateActiveGpu(vendor_id, device_id);
-}
-
-void GpuDataManagerImpl::Notify3DAPIBlocked(const GURL& top_origin_url,
-                                            int render_process_id,
-                                            int render_frame_id,
-                                            ThreeDAPIType requester) {
-  base::AutoLock auto_lock(lock_);
-  private_->Notify3DAPIBlocked(
-      top_origin_url, render_process_id, render_frame_id, requester);
 }
 
 void GpuDataManagerImpl::OnGpuProcessInitFailure() {
