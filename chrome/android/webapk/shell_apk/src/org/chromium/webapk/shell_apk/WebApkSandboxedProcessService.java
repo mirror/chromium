@@ -19,11 +19,12 @@ import java.lang.reflect.Method;
  * and creates the renderer.
  */
 public class WebApkSandboxedProcessService extends Service {
-    // Note: the {@link CHILD_PROCESS_SERVICE_IMPL_CLASS_NAME} must sync with the class name
-    // of Chrome's {@link ChildProcessServiceImpl}.
-    private static final String CHILD_PROCESS_SERVICE_IMPL_CLASS_NAME =
-            "org.chromium.content.app.ChildProcessServiceImpl";
     private static final String TAG = "cr_WebApkSandboxedProcessService";
+
+    // Note: the {@link CHILD_PROCESS_SERVICE_IMPL_CLASS_NAME} must sync with the class name
+    // of Chrome's {@link WebApkChildProcessServiceImpl}.
+    private static final String CHILD_PROCESS_SERVICE_IMPL_CLASS_NAME =
+            "org.chromium.chrome.browser.WebApkChildProcessServiceImpl";
 
     private Class<?> mChildProcessServiceImplClass;
     private Object mChildProcessServiceImplInstance;
@@ -45,7 +46,7 @@ public class WebApkSandboxedProcessService extends Service {
             createMethod.invoke(mChildProcessServiceImplInstance, getApplicationContext(),
                     hostBrowserContext);
         } catch (Exception e) {
-            Log.v(TAG, "Unable to create a ChildProcessServiceImpl for the WebAPK.", e);
+            Log.v(TAG, "Unable to create a WebApkChildProcessServiceImpl for the WebAPK.", e);
         }
     }
 
