@@ -6,6 +6,7 @@
 #define THIRD_PARTY_WEBKIT_SOURCE_PLATFORM_SCHEDULER_RENDERER_WEB_FRAME_SCHEDULER_IMPL_H_
 
 #include <memory>
+#include <set>
 
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -39,6 +40,8 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   ~WebFrameSchedulerImpl() override;
 
   // WebFrameScheduler implementation:
+  void AddThrottlingObserver(ObserverType, Observer*) override;
+  void RemoveThrottlingObserver(ObserverType, Observer*) override;
   void SetFrameVisible(bool frame_visible) override;
   void SetPageThrottled(bool page_throttled) override;
   void SetSuspended(bool frame_suspended) override;
@@ -101,6 +104,7 @@ class WebFrameSchedulerImpl : public WebFrameScheduler {
   RendererSchedulerImpl* renderer_scheduler_;        // NOT OWNED
   WebViewSchedulerImpl* parent_web_view_scheduler_;  // NOT OWNED
   base::trace_event::BlameContext* blame_context_;   // NOT OWNED
+  std::set<Observer*> loader_observers_;             // NOT OWNED
   bool frame_visible_;
   bool page_throttled_;
   bool frame_suspended_;
