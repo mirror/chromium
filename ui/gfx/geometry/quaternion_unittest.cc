@@ -36,6 +36,16 @@ TEST(QuatTest, AxisAngleCommon) {
   EXPECT_FLOAT_EQ(std::cos(radians / 2), q.w());
 }
 
+TEST(QuatTest, VectorToVectorRotation) {
+  Quaternion q(Vector3dF(1.0f, 0.0f, 0.0f), Vector3dF(0.0f, 1.0f, 0.0f));
+  Quaternion r(Vector3dF(0.0f, 0.0f, 1.0f), M_PI_2);
+
+  EXPECT_FLOAT_EQ(r.x(), q.x());
+  EXPECT_FLOAT_EQ(r.y(), q.y());
+  EXPECT_FLOAT_EQ(r.z(), q.z());
+  EXPECT_FLOAT_EQ(r.w(), q.w());
+}
+
 TEST(QuatTest, AxisAngleWithZeroLengthAxis) {
   Quaternion q(Vector3dF(0.0f, 0.0f, 0.0f), 0.5);
   // If the axis of zero length, we should assume the default values.
@@ -102,15 +112,15 @@ TEST(QuatTest, Scaling) {
 }
 
 TEST(QuatTest, Lerp) {
-  for (size_t i = 0; i < 100; ++i) {
+  for (size_t i = 1; i < 100; ++i) {
     Quaternion a(0, 0, 0, 0);
     Quaternion b(1, 2, 3, 4);
     float t = static_cast<float>(i) / 100.0f;
     Quaternion interpolated = a.Lerp(b, t);
-    EXPECT_FLOAT_EQ(1 * t, interpolated.x());
-    EXPECT_FLOAT_EQ(2 * t, interpolated.y());
-    EXPECT_FLOAT_EQ(3 * t, interpolated.z());
-    EXPECT_FLOAT_EQ(4 * t, interpolated.w());
+    EXPECT_FLOAT_EQ(1 / sqrt(30), interpolated.x());
+    EXPECT_FLOAT_EQ(2 / sqrt(30), interpolated.y());
+    EXPECT_FLOAT_EQ(3 / sqrt(30), interpolated.z());
+    EXPECT_FLOAT_EQ(4 / sqrt(30), interpolated.w());
   }
 }
 
