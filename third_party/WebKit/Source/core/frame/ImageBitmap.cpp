@@ -184,6 +184,7 @@ static PassRefPtr<Uint8Array> CopySkImageData(SkImage* input,
       ArrayBuffer::CreateOrNull(width * input->height(), info.bytesPerPixel());
   if (!dst_buffer)
     return nullptr;
+
   RefPtr<Uint8Array> dst_pixels =
       Uint8Array::Create(dst_buffer, 0, dst_buffer->ByteLength());
   input->readPixels(info, dst_pixels->Data(), width * info.bytesPerPixel(), 0,

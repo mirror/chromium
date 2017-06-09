@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<script src="../resources/run-after-layout-and-paint.js"></script>
-<script src="resources/test-runner-paint-worklet.js"></script>
+<html class="reftest-wait">
+<link rel="match" href="paint2d-image-ref.html">
 <style>
     #output {
         width: 300px;
@@ -9,6 +9,8 @@
         border-image: url("resources/html5.png");
     }
 </style>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
 <div id="output"></div>
 
 <script id="code" type="text/worklet">
@@ -23,3 +25,4 @@
 <script>
     importPaintWorkletAndTerminateTestAfterAsyncPaint(document.getElementById('code').textContent);
 </script>
+</html>

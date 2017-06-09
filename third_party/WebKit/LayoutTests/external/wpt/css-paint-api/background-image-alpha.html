@@ -1,8 +1,6 @@
 <!DOCTYPE html>
-<html>
-<head>
-<script src="../resources/run-after-layout-and-paint.js"></script>
-<script src="resources/test-runner-paint-worklet.js"></script>
+<html class="reftest-wait">
+<link rel="match" href="background-image-alpha-ref.html">
 <style>
 .container {
   width: 100px;
@@ -22,9 +20,9 @@
   display: inline-block;
 }
 </style>
-</head>
+<script src="/common/reftest-wait.js"></script>
+<script src="/common/css-paint-tests.js"></script>
 <body>
-
 <div id="background">
   <div id="canvas-opaque" class="container"></div>
   <div id="canvas-nonopaque" class="container"></div>
