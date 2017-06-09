@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be94bc23_0f3b1df2",
+        "filename": "content/browser/media/media_web_contents_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T17:31:02Z",
+      "side": 1,
+      "message": "This isn\u0027t needed anymore.",
+      "range": {
+        "startLine": 121,
+        "startChar": 0,
+        "endLine": 122,
+        "endChar": 45
+      },
+      "revId": "ac5a027db3ced4a5775b750d9504cc0ab9287082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
