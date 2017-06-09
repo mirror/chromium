@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9bddd595_62808ae1",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T17:15:55Z",
+      "side": 1,
+      "message": "That worked for the ozone code because of the singleton ui::OzonePlatform::GetInstance()-\u003eGetInputController(). As there is no longer a singleton someone needs to supply the InputDeviceControllerClient to ImeKeyboardMus. That\u0027s why this path doesn\u0027t and can\u0027t use the Create code path.\n\nOnce we no completely remove the X11 code path ImeKeyboard::Create() can be nuked entirely.",
+      "parentUuid": "0ae79a84_f0d453f3",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01c936c5_a4bc708e",
         "filename": "ui/base/ime/chromeos/ime_keyboard_mus.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10398dd3_3a12c2af",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T17:15:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01c936c5_a4bc708e",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "ac5551a2_c807bf40",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T17:15:55Z",
+      "side": 1,
+      "message": "The old code never did this, but that seems like a good idea. Done.",
+      "parentUuid": "ee21c992_b4a54a0b",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16b64109_7809b1dc",
         "filename": "ui/base/ime/chromeos/ime_keyboard_mus.h",
         "patchSetId": 2
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-09T16:45:14Z",
       "side": 1,
       "message": "// ImeKeyboard:",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687e839a_ffa65c86",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T17:15:55Z",
+      "side": 1,
+      "message": "Ya, sorry, I copied the ime_keyboard_ozone implementation and apparently that has issues...",
+      "parentUuid": "16b64109_7809b1dc",
       "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
