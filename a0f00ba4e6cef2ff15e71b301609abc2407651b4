@@ -120,6 +120,29 @@
     },
     {
       "key": {
+        "uuid": "7e70c453_fa338e39",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-09T19:27:24Z",
+      "side": 1,
+      "message": "1001 and 42 seems like odd choices...\nAny particularly reason you\u0027re not using the default parameters like 50 buckets.  As is 1 second definitely the top end of the range?  Even the shortest timing histograms normally used in UMA go up to 10 seconds.",
+      "range": {
+        "startLine": 559,
+        "startChar": 60,
+        "endLine": 559,
+        "endChar": 64
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f5ddd15f_e5bd6bfb",
         "filename": "components/leveldb/env_mojo.h",
         "patchSetId": 2
@@ -184,6 +207,29 @@
         "startChar": 6,
         "endLine": 15,
         "endChar": 26
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c71f0c1f_2719c7c7",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32311,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-09T19:27:24Z",
+      "side": 1,
+      "message": "Uh, that doesn\u0027t sound right.  Did you mean to write that\n\"0 means did not sleep.\"\n?\n\nPerhaps you meant that Mojo LevelDBEnv will only sleep if it needs to retry?\nIf so, just say that:\n0 means did not sleep, which also means the operation succeeded on the first try.  (Mojo LevelDBEnv only sleeps when retries are needed.)",
+      "range": {
+        "startLine": 32311,
+        "startChar": 20,
+        "endLine": 32311,
+        "endChar": 21
       },
       "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
