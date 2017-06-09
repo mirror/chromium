@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "32aa0800_b7dbe898",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-09T20:32:01Z",
+      "side": 1,
+      "message": "The InstanceID code changed that.  There was some concern that using instanceID accidentally on desktop was a VeryBadThing.  So, there is a DCHECK() in the InstanceIDProxy class that the feature is enabled. We cannot construct the prefetch service if the feature is off.  That could be changed, of course..\n\nAdditionally, I think that this page counts as a key point of intake, since we will have tools for initiating prefetch here.",
+      "parentUuid": "3e42ab6a_c6f1aa89",
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ef66663b_162e4ae3",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
         "patchSetId": 9
