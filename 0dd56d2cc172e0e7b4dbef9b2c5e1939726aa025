@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "53e2a7ce_3852b899",
+        "filename": "content/renderer/input/input_event_filter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T19:23:03Z",
+      "side": 1,
+      "message": "clang gives a warning if you don\u0027t do this with a OnceCallback. It is a common pattern.\n\nBecause the OnceCallback is only callable once... you need to make sure it is in a temporary that is immediately destroyed.",
+      "parentUuid": "a48e49e7_0c4d1bac",
+      "range": {
+        "startLine": 270,
+        "startChar": 9,
+        "endLine": 270,
+        "endChar": 13
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf8a9f0_700eee90",
         "filename": "content/renderer/input/main_thread_event_queue.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-09T19:14:53Z",
       "side": 1,
       "message": "Did this become non-const just so we could move its callback? If so, that\u0027s too bad...",
+      "range": {
+        "startLine": 68,
+        "startChar": 23,
+        "endLine": 68,
+        "endChar": 24
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ad60645_7a06ace7",
+        "filename": "content/renderer/input/main_thread_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T19:23:03Z",
+      "side": 1,
+      "message": "Yes a once callback isn\u0027t copyable. Only movable which requires non-const.",
+      "parentUuid": "8bf8a9f0_700eee90",
       "range": {
         "startLine": 68,
         "startChar": 23,
