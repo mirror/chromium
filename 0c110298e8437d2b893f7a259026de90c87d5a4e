@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b5edaab_e0512990",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-09T03:18:46Z",
+      "side": 1,
+      "message": "Code here was moved from either LocalFrameView::UpdateGeometries or EmbeddedContentView::UpdateGeometry and is specific to LocalFrameView only.",
+      "revId": "0c110298e8437d2b893f7a259026de90c87d5a4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "113e8364_ae459cc4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-09T03:18:46Z",
+      "side": 1,
+      "message": "Various DCHECKs in code to be removed once bots all pass.",
+      "revId": "0c110298e8437d2b893f7a259026de90c87d5a4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

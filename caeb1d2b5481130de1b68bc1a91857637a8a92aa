@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac9cfbe2_f843cb56",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-09T03:18:46Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure it isn\u0027t needed.\nIntroduced in 2006 by eseidel in https://chromium.googlesource.com/chromium/src/+blame/f087861de68a94371219333aee50c83bb8131567/third_party/WebKit/Source/core/rendering/RenderPart.cpp",
+      "revId": "caeb1d2b5481130de1b68bc1a91857637a8a92aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
