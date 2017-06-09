@@ -15,6 +15,8 @@ import android.util.Log;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.ipc.invalidation.ticl.android2.channel.GcmUpstreamSenderService;
 
+import org.chromium.base.ThreadUtils;
+import org.chromium.chrome.browser.init.ProcessInitializationHandler;
 import org.chromium.chrome.browser.signin.OAuth2TokenService;
 import org.chromium.components.signin.AccountManagerHelper;
 import org.chromium.components.signin.ChromeSigninController;
@@ -36,6 +38,13 @@ public class InvalidationGcmUpstreamSender extends GcmUpstreamSenderService {
 
     @Override
     public void deliverMessage(final String to, final Bundle data) {
+        ThreadUtils.runOnUiThreadBlocking(new Runnable() {
+            @Override
+            public void run() {
+                ProcessInitializationHandler.getInstance().initializePreNative();
+            }
+        });
+
         @Nullable
         Account account = ChromeSigninController.get().getSignedInUser();
         if (account == null) {
