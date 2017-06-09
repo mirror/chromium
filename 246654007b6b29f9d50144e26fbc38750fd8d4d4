@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb4a7c03_876e85e2",
+        "filename": "chrome/browser/android/download/service/download_background_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "Could we just do this in the Java layer since we already have a class there?  Do we need to keep a map of task type -\u003e count?",
+      "range": {
+        "startLine": 23,
+        "startChar": 4,
+        "endLine": 23,
+        "endChar": 25
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5776cf3_572663c4",
+        "filename": "chrome/browser/android/download/service/download_background_task.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "We would need to clear the task counter right?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 28
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5943ed21_89297749",
+        "filename": "chrome/browser/download/download_service_factory.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "Make an empty/dummy one for other platforms?",
+      "range": {
+        "startLine": 64,
+        "startChar": 43,
+        "endLine": 64,
+        "endChar": 57
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b73c55a3_f90aaf15",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "We probably want some UMA about tasks including things like:\n- We\u0027ve aborted due to a failed init.\n- We were told to stop before we were finished.\n- We finished ourselves and triggered the callback.\n- Etc?",
+      "range": {
+        "startLine": 136,
+        "startChar": 21,
+        "endLine": 136,
+        "endChar": 41
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed5af79_8ca8493e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "I would just always call this and let the function figure out if it wants to early-out.",
+      "range": {
+        "startLine": 245,
+        "startChar": 4,
+        "endLine": 245,
+        "endChar": 28
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8923d10a_b26c2ab2",
+        "filename": "components/download/internal/test/mock_controller.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "Thanks!",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 60
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36b8055f_2982f8ef",
+        "filename": "components/download/public/download_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "Should we mention that callbacks won\u0027t be called after this call?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 21
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2b3b542_bebafa3e",
+        "filename": "components/download/public/download_task_types.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "Add some comments about what each of these is.",
+      "range": {
+        "startLine": 12,
+        "startChar": 11,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8c1a36_9a785ef0",
+        "filename": "components/download/public/task_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-09T18:15:56Z",
+      "side": 1,
+      "message": "More documentation on the expected behavior of this.  What it\u0027s meant to be used for, etc.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 19
+      },
+      "revId": "246654007b6b29f9d50144e26fbc38750fd8d4d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
