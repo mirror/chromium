@@ -16,6 +16,24 @@
       "revId": "3bd360ea89c0a2d4f128e9973f7c87737c3d1044",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "292a9ac2_9a8e81f3",
+        "filename": "ui/accessibility/ax_tree.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-09T22:22:21Z",
+      "side": 1,
+      "message": "Thanks. Done, but added a comment due to the\nsubtle difference between a rect where both width\nand height are zero (uninitialized), and a rect\nwhere either width or height are zero (empty area,\nand IsEmpty() returns true, but may be the real bounds\nof an object).",
+      "parentUuid": "60757f06_1c179851",
+      "revId": "3bd360ea89c0a2d4f128e9973f7c87737c3d1044",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
