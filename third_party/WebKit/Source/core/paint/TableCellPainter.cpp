@@ -15,51 +15,99 @@
 
 namespace blink {
 
-static const CollapsedBorderValue& CollapsedLeftBorder(
-    const ComputedStyle& style_for_cell_flow,
-    const LayoutTableCell::CollapsedBorderValues& values) {
-  if (style_for_cell_flow.IsHorizontalWritingMode()) {
-    return style_for_cell_flow.IsLeftToRightDirection() ? values.StartBorder()
-                                                        : values.EndBorder();
+struct CollapsedBorderPaintInfo {
+  const CollapsedBorderValue* value;
+  int inner_width;
+  int outer_width;
+  // We may paint the border not in full length if the corner is covered by
+  // another higher priority border. The following are the outsets from the
+  // border box of the begin and end points of the painted segment.
+  int begin_outset;
+  int end_outset;
+};
+
+static void AdjustBorderSegments(CollapsedBorderPaintInfo& start,
+                                 CollapsedBorderPaintInfo& end,
+                                 CollapsedBorderPaintInfo& before,
+                                 CollapsedBorderPaintInfo& after) {
+  if (start.value->Compare(*before.value)) {
+    // All the graphs are examples of left-to-right and horizontal-tb mode.
+    //        _____
+    //       |_____ before
+    // start | |
+    start.begin_outset = -before.inner_width;
+    before.begin_outset = start.outer_width;
+  } else {
+    //        _____
+    //       | |___ before
+    // start | |
+    start.begin_outset = before.outer_width;
+    before.begin_outset = -start.inner_width;
   }
-  return style_for_cell_flow.IsFlippedBlocksWritingMode()
-             ? values.AfterBorder()
-             : values.BeforeBorder();
-}
 
-static const CollapsedBorderValue& CollapsedRightBorder(
-    const ComputedStyle& style_for_cell_flow,
-    const LayoutTableCell::CollapsedBorderValues& values) {
-  if (style_for_cell_flow.IsHorizontalWritingMode()) {
-    return style_for_cell_flow.IsLeftToRightDirection() ? values.EndBorder()
-                                                        : values.StartBorder();
+  if (end.value->Compare(*before.value)) {
+    //        _____
+    // before _____|
+    //           | | end
+    end.begin_outset = -before.inner_width;
+    before.end_outset = end.outer_width;
+  } else {
+    //        _____
+    // before ___| |
+    //           | | end
+    end.begin_outset = before.outer_width;
+    before.end_outset = -end.inner_width;
   }
-  return style_for_cell_flow.IsFlippedBlocksWritingMode()
-             ? values.BeforeBorder()
-             : values.AfterBorder();
+
+  if (start.value->Compare(*after.value)) {
+    // start |_|___
+    //       |_____ after
+    start.end_outset = -after.inner_width;
+    after.begin_outset = start.outer_width;
+  } else {
+    // start | |___
+    //       |_|___ after
+    start.end_outset = after.outer_width;
+    after.begin_outset = -start.inner_width;
+  }
+
+  if (end.value->Compare(*after.value)) {
+    //       ___|_| end
+    // after _____|
+    end.end_outset = -after.inner_width;
+    after.end_outset = end.outer_width;
+  } else {
+    //       ___| | end
+    // after ___|_|
+    end.end_outset = after.outer_width;
+    after.end_outset = -end.inner_width;
+  }
 }
 
-static const CollapsedBorderValue& CollapsedTopBorder(
-    const ComputedStyle& style_for_cell_flow,
-    const LayoutTableCell::CollapsedBorderValues& values) {
-  if (style_for_cell_flow.IsHorizontalWritingMode())
-    return values.BeforeBorder();
-  return style_for_cell_flow.IsLeftToRightDirection() ? values.StartBorder()
-                                                      : values.EndBorder();
-}
-
-static const CollapsedBorderValue& CollapsedBottomBorder(
-    const ComputedStyle& style_for_cell_flow,
-    const LayoutTableCell::CollapsedBorderValues& values) {
-  if (style_for_cell_flow.IsHorizontalWritingMode())
-    return values.AfterBorder();
-  return style_for_cell_flow.IsLeftToRightDirection() ? values.EndBorder()
-                                                      : values.StartBorder();
+static void AdjustForWritingModeAndDirection(const ComputedStyle& style,
+                                             CollapsedBorderPaintInfo& start,
+                                             CollapsedBorderPaintInfo& end,
+                                             CollapsedBorderPaintInfo& before,
+                                             CollapsedBorderPaintInfo& after) {
+  if (!style.IsLeftToRightDirection()) {
+    std::swap(start, end);
+    std::swap(before.begin_outset, before.end_outset);
+    std::swap(after.begin_outset, after.end_outset);
+  }
+  if (!style.IsHorizontalWritingMode()) {
+    std::swap(after, end);
+    std::swap(before, start);
+    if (style.IsFlippedBlocksWritingMode()) {
+      std::swap(start, end);
+      std::swap(before.begin_outset, before.end_outset);
+      std::swap(after.begin_outset, after.end_outset);
+    }
+  }
 }
 
 void TableCellPainter::Paint(const PaintInfo& paint_info,
                              const LayoutPoint& paint_offset) {
-  BlockPainter(layout_table_cell_).Paint(paint_info, paint_offset);
+  BlockPainter(cell_).Paint(paint_info, paint_offset);
 }
 
 static EBorderStyle CollapsedBorderStyle(EBorderStyle style) {
@@ -73,133 +121,108 @@ static EBorderStyle CollapsedBorderStyle(EBorderStyle style) {
 const DisplayItemClient& TableCellPainter::DisplayItemClientForBorders() const {
   // TODO(wkorman): We may need to handle PaintInvalidationDelayedFull.
   // http://crbug.com/657186
-  return layout_table_cell_.UsesCompositedCellDisplayItemClients()
+  return cell_.UsesCompositedCellDisplayItemClients()
              ? static_cast<const DisplayItemClient&>(
-                   *layout_table_cell_.GetCollapsedBorderValues())
-             : layout_table_cell_;
+                   *cell_.GetCollapsedBorderValues())
+             : cell_;
 }
 
-void TableCellPainter::PaintCollapsedBorders(
-    const PaintInfo& paint_info,
-    const LayoutPoint& paint_offset,
-    const CollapsedBorderValue& current_border_value) {
-  if (layout_table_cell_.Style()->Visibility() != EVisibility::kVisible)
+void TableCellPainter::PaintCollapsedBorders(const PaintInfo& paint_info,
+                                             const LayoutPoint& paint_offset) {
+  if (cell_.Style()->Visibility() != EVisibility::kVisible)
     return;
 
-  LayoutPoint adjusted_paint_offset =
-      paint_offset + layout_table_cell_.Location();
-  if (!BlockPainter(layout_table_cell_)
-           .IntersectsPaintRect(paint_info, adjusted_paint_offset))
+  LayoutPoint adjusted_paint_offset = paint_offset + cell_.Location();
+  if (!BlockPainter(cell_).IntersectsPaintRect(paint_info,
+                                               adjusted_paint_offset))
     return;
 
   const LayoutTableCell::CollapsedBorderValues* values =
-      layout_table_cell_.GetCollapsedBorderValues();
+      cell_.GetCollapsedBorderValues();
   if (!values)
     return;
 
-  const ComputedStyle& style_for_cell_flow =
-      layout_table_cell_.StyleForCellFlow();
-  const CollapsedBorderValue& left_border_value =
-      CollapsedLeftBorder(style_for_cell_flow, *values);
-  const CollapsedBorderValue& right_border_value =
-      CollapsedRightBorder(style_for_cell_flow, *values);
-  const CollapsedBorderValue& top_border_value =
-      CollapsedTopBorder(style_for_cell_flow, *values);
-  const CollapsedBorderValue& bottom_border_value =
-      CollapsedBottomBorder(style_for_cell_flow, *values);
-
-  int display_item_type = DisplayItem::kTableCollapsedBorderBase;
-  if (top_border_value.ShouldPaint(current_border_value))
-    display_item_type |= DisplayItem::kTableCollapsedBorderTop;
-  if (bottom_border_value.ShouldPaint(current_border_value))
-    display_item_type |= DisplayItem::kTableCollapsedBorderBottom;
-  if (left_border_value.ShouldPaint(current_border_value))
-    display_item_type |= DisplayItem::kTableCollapsedBorderLeft;
-  if (right_border_value.ShouldPaint(current_border_value))
-    display_item_type |= DisplayItem::kTableCollapsedBorderRight;
-  if (display_item_type == DisplayItem::kTableCollapsedBorderBase)
-    return;
-
-  int top_width = top_border_value.Width();
-  int bottom_width = bottom_border_value.Width();
-  int left_width = left_border_value.Width();
-  int right_width = right_border_value.Width();
-
-  // Adjust our x/y/width/height so that we paint the collapsed borders at the
-  // correct location.
-  LayoutRect paint_rect =
-      PaintRectNotIncludingVisualOverflow(adjusted_paint_offset);
-  IntRect border_rect = PixelSnappedIntRect(
-      paint_rect.X() - left_width / 2, paint_rect.Y() - top_width / 2,
-      paint_rect.Width() + left_width / 2 + (right_width + 1) / 2,
-      paint_rect.Height() + top_width / 2 + (bottom_width + 1) / 2);
-
-  GraphicsContext& graphics_context = paint_info.context;
+  GraphicsContext& context = paint_info.context;
   const DisplayItemClient& client = DisplayItemClientForBorders();
   if (DrawingRecorder::UseCachedDrawingIfPossible(
-          graphics_context, client,
-          static_cast<DisplayItem::Type>(display_item_type)))
+          context, client, DisplayItem::kTableCellCollapsedBorders))
     return;
 
-  DrawingRecorder recorder(graphics_context, client,
-                           static_cast<DisplayItem::Type>(display_item_type),
-                           border_rect);
+  CollapsedBorderPaintInfo start = {&values->StartBorder(),
+                                    cell_.CollapsedInnerBorderStart(),
+                                    cell_.CollapsedOuterBorderStart(), 0, 0};
+  CollapsedBorderPaintInfo end = {&values->EndBorder(),
+                                  cell_.CollapsedInnerBorderEnd(),
+                                  cell_.CollapsedOuterBorderEnd(), 0, 0};
+  CollapsedBorderPaintInfo before = {&values->BeforeBorder(),
+                                     cell_.CollapsedInnerBorderBefore(),
+                                     cell_.CollapsedOuterBorderBefore(), 0, 0};
+  CollapsedBorderPaintInfo after = {&values->AfterBorder(),
+                                    cell_.CollapsedInnerBorderAfter(),
+                                    cell_.CollapsedOuterBorderAfter(), 0, 0};
+
+  AdjustBorderSegments(start, end, before, after);
+  AdjustForWritingModeAndDirection(cell_.StyleForCellFlow(), start, end, before,
+                                   after);
+  // Now left=start, right=end, before=top, after=bottom.
+
+  // Collapsed borders are half inside and half outside of |rect|.
+  IntRect rect = PixelSnappedIntRect(
+      PaintRectNotIncludingVisualOverflow(adjusted_paint_offset));
+  // |paint_rect| covers the whole collapsed borders.
+  IntRect paint_rect = rect;
+  paint_rect.Expand(IntRectOutsets(before.outer_width, end.outer_width,
+                                   after.outer_width, start.outer_width));
+  DrawingRecorder recorder(context, client,
+                           DisplayItem::kTableCellCollapsedBorders, paint_rect);
 
   // We never paint diagonals at the joins.  We simply let the border with the
   // highest precedence paint on top of borders with lower precedence.
-  if (display_item_type & DisplayItem::kTableCollapsedBorderTop) {
-    ObjectPainter::DrawLineForBoxSide(
-        graphics_context, border_rect.X(), border_rect.Y(), border_rect.MaxX(),
-        border_rect.Y() + top_width, kBSTop, top_border_value.GetColor(),
-        CollapsedBorderStyle(top_border_value.Style()), 0, 0, true);
-  }
-  if (display_item_type & DisplayItem::kTableCollapsedBorderBottom) {
-    ObjectPainter::DrawLineForBoxSide(
-        graphics_context, border_rect.X(), border_rect.MaxY() - bottom_width,
-        border_rect.MaxX(), border_rect.MaxY(), kBSBottom,
-        bottom_border_value.GetColor(),
-        CollapsedBorderStyle(bottom_border_value.Style()), 0, 0, true);
-  }
-  if (display_item_type & DisplayItem::kTableCollapsedBorderLeft) {
-    ObjectPainter::DrawLineForBoxSide(
-        graphics_context, border_rect.X(), border_rect.Y(),
-        border_rect.X() + left_width, border_rect.MaxY(), kBSLeft,
-        left_border_value.GetColor(),
-        CollapsedBorderStyle(left_border_value.Style()), 0, 0, true);
-  }
-  if (display_item_type & DisplayItem::kTableCollapsedBorderRight) {
-    ObjectPainter::DrawLineForBoxSide(
-        graphics_context, border_rect.MaxX() - right_width, border_rect.Y(),
-        border_rect.MaxX(), border_rect.MaxY(), kBSRight,
-        right_border_value.GetColor(),
-        CollapsedBorderStyle(right_border_value.Style()), 0, 0, true);
-  }
+  ObjectPainter::DrawLineForBoxSide(
+      context, rect.X() - before.begin_outset, rect.Y() - before.outer_width,
+      rect.MaxX() + before.end_outset, rect.Y() + before.inner_width, kBSTop,
+      before.value->GetColor(), CollapsedBorderStyle(before.value->Style()), 0,
+      0, true);
+  ObjectPainter::DrawLineForBoxSide(
+      context, rect.X() - after.begin_outset, rect.MaxY() - after.inner_width,
+      rect.MaxX() + after.end_outset, rect.MaxY() + after.outer_width,
+      kBSBottom, after.value->GetColor(),
+      CollapsedBorderStyle(after.value->Style()), 0, 0, true);
+  ObjectPainter::DrawLineForBoxSide(
+      context, rect.X() - start.outer_width, rect.Y() - start.begin_outset,
+      rect.X() + start.inner_width, rect.MaxY() + start.end_outset, kBSLeft,
+      start.value->GetColor(), CollapsedBorderStyle(start.value->Style()), 0, 0,
+      true);
+  ObjectPainter::DrawLineForBoxSide(
+      context, rect.MaxX() - end.inner_width, rect.Y() - end.begin_outset,
+      rect.MaxX() + end.outer_width, rect.MaxY() + end.end_outset, kBSRight,
+      end.value->GetColor(), CollapsedBorderStyle(end.value->Style()), 0, 0,
+      true);
 }
 
 void TableCellPainter::PaintContainerBackgroundBehindCell(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset,
     const LayoutObject& background_object) {
-  DCHECK(background_object != layout_table_cell_);
+  DCHECK(background_object != cell_);
 
-  if (layout_table_cell_.Style()->Visibility() != EVisibility::kVisible)
+  if (cell_.Style()->Visibility() != EVisibility::kVisible)
     return;
 
-  LayoutTable* table = layout_table_cell_.Table();
+  LayoutTable* table = cell_.Table();
   if (!table->ShouldCollapseBorders() &&
-      layout_table_cell_.Style()->EmptyCells() == EEmptyCells::kHide &&
-      !layout_table_cell_.FirstChild())
+      cell_.Style()->EmptyCells() == EEmptyCells::kHide && !cell_.FirstChild())
     return;
 
-  LayoutRect paint_rect = PaintRectNotIncludingVisualOverflow(
-      paint_offset + layout_table_cell_.Location());
+  LayoutRect paint_rect =
+      PaintRectNotIncludingVisualOverflow(paint_offset + cell_.Location());
   PaintBackground(paint_info, paint_rect, background_object);
 }
 
 void TableCellPainter::PaintBackground(const PaintInfo& paint_info,
                                        const LayoutRect& paint_rect,
                                        const LayoutObject& background_object) {
-  if (layout_table_cell_.BackgroundStolenForBeingBody())
+  if (cell_.BackgroundStolenForBeingBody())
     return;
 
   Color c = background_object.ResolveColor(CSSPropertyBackgroundColor);
@@ -207,31 +230,29 @@ void TableCellPainter::PaintBackground(const PaintInfo& paint_info,
   if (bg_layer.HasImage() || c.Alpha()) {
     // We have to clip here because the background would paint
     // on top of the borders otherwise.  This only matters for cells and rows.
-    bool should_clip = background_object.HasLayer() &&
-                       (background_object == layout_table_cell_ ||
-                        background_object == layout_table_cell_.Parent()) &&
-                       layout_table_cell_.Table()->ShouldCollapseBorders();
+    bool should_clip =
+        background_object.HasLayer() &&
+        (background_object == cell_ || background_object == cell_.Parent()) &&
+        cell_.Table()->ShouldCollapseBorders();
     GraphicsContextStateSaver state_saver(paint_info.context, should_clip);
     if (should_clip) {
-      LayoutRect clip_rect(paint_rect.Location(), layout_table_cell_.Size());
-      clip_rect.Expand(layout_table_cell_.BorderInsets());
+      LayoutRect clip_rect(paint_rect.Location(), cell_.Size());
+      clip_rect.Expand(cell_.BorderInsets());
       paint_info.context.Clip(PixelSnappedIntRect(clip_rect));
     }
-    BoxPainter(layout_table_cell_)
-        .PaintFillLayers(paint_info, c, bg_layer, paint_rect,
-                         kBackgroundBleedNone, SkBlendMode::kSrcOver,
-                         &background_object);
+    BoxPainter(cell_).PaintFillLayers(
+        paint_info, c, bg_layer, paint_rect, kBackgroundBleedNone,
+        SkBlendMode::kSrcOver, &background_object);
   }
 }
 
 void TableCellPainter::PaintBoxDecorationBackground(
     const PaintInfo& paint_info,
     const LayoutPoint& paint_offset) {
-  LayoutTable* table = layout_table_cell_.Table();
-  const ComputedStyle& style = layout_table_cell_.StyleRef();
+  LayoutTable* table = cell_.Table();
+  const ComputedStyle& style = cell_.StyleRef();
   if (!table->ShouldCollapseBorders() &&
-      style.EmptyCells() == EEmptyCells::kHide &&
-      !layout_table_cell_.FirstChild())
+      style.EmptyCells() == EEmptyCells::kHide && !cell_.FirstChild())
     return;
 
   bool needs_to_paint_border =
@@ -240,22 +261,20 @@ void TableCellPainter::PaintBoxDecorationBackground(
     return;
 
   if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
-          paint_info.context, layout_table_cell_,
-          DisplayItem::kBoxDecorationBackground))
+          paint_info.context, cell_, DisplayItem::kBoxDecorationBackground))
     return;
 
-  LayoutRect visual_overflow_rect = layout_table_cell_.VisualOverflowRect();
+  LayoutRect visual_overflow_rect = cell_.VisualOverflowRect();
   visual_overflow_rect.MoveBy(paint_offset);
   // TODO(chrishtr): the pixel-snapping here is likely incorrect.
   LayoutObjectDrawingRecorder recorder(
-      paint_info.context, layout_table_cell_,
-      DisplayItem::kBoxDecorationBackground,
+      paint_info.context, cell_, DisplayItem::kBoxDecorationBackground,
       PixelSnappedIntRect(visual_overflow_rect));
 
   LayoutRect paint_rect = PaintRectNotIncludingVisualOverflow(paint_offset);
 
   BoxPainter::PaintNormalBoxShadow(paint_info, paint_rect, style);
-  PaintBackground(paint_info, paint_rect, layout_table_cell_);
+  PaintBackground(paint_info, paint_rect, cell_);
   // TODO(wangxianzhu): Calculate the inset shadow bounds by insetting paintRect
   // by half widths of collapsed borders.
   BoxPainter::PaintInsetBoxShadow(paint_info, paint_rect, style);
@@ -263,35 +282,33 @@ void TableCellPainter::PaintBoxDecorationBackground(
   if (!needs_to_paint_border)
     return;
 
-  BoxPainter::PaintBorder(layout_table_cell_, paint_info, paint_rect, style);
+  BoxPainter::PaintBorder(cell_, paint_info, paint_rect, style);
 }
 
 void TableCellPainter::PaintMask(const PaintInfo& paint_info,
                                  const LayoutPoint& paint_offset) {
-  if (layout_table_cell_.Style()->Visibility() != EVisibility::kVisible ||
+  if (cell_.Style()->Visibility() != EVisibility::kVisible ||
       paint_info.phase != kPaintPhaseMask)
     return;
 
-  LayoutTable* table_elt = layout_table_cell_.Table();
+  LayoutTable* table_elt = cell_.Table();
   if (!table_elt->ShouldCollapseBorders() &&
-      layout_table_cell_.Style()->EmptyCells() == EEmptyCells::kHide &&
-      !layout_table_cell_.FirstChild())
+      cell_.Style()->EmptyCells() == EEmptyCells::kHide && !cell_.FirstChild())
     return;
 
   if (LayoutObjectDrawingRecorder::UseCachedDrawingIfPossible(
-          paint_info.context, layout_table_cell_, paint_info.phase))
+          paint_info.context, cell_, paint_info.phase))
     return;
 
   LayoutRect paint_rect = PaintRectNotIncludingVisualOverflow(paint_offset);
-  LayoutObjectDrawingRecorder recorder(paint_info.context, layout_table_cell_,
+  LayoutObjectDrawingRecorder recorder(paint_info.context, cell_,
                                        paint_info.phase, paint_rect);
-  BoxPainter(layout_table_cell_).PaintMaskImages(paint_info, paint_rect);
+  BoxPainter(cell_).PaintMaskImages(paint_info, paint_rect);
 }
 
 LayoutRect TableCellPainter::PaintRectNotIncludingVisualOverflow(
     const LayoutPoint& paint_offset) {
-  return LayoutRect(paint_offset,
-                    LayoutSize(layout_table_cell_.PixelSnappedSize()));
+  return LayoutRect(paint_offset, LayoutSize(cell_.PixelSnappedSize()));
 }
 
 }  // namespace blink

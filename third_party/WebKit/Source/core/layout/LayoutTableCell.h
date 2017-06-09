@@ -185,9 +185,6 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   LayoutUnit BorderBefore() const override;
   LayoutUnit BorderAfter() const override;
 
-  void CollectCollapsedBorderValues(LayoutTable::CollapsedBorderValues&);
-  static void SortCollapsedBorderValues(LayoutTable::CollapsedBorderValues&);
-
   void UpdateLayout() override;
 
   void Paint(const PaintInfo&, const LayoutPoint&) const override;
@@ -293,6 +290,7 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
 
   bool BackgroundIsKnownToBeOpaqueInRect(const LayoutRect&) const override;
   void InvalidateDisplayItemClients(PaintInvalidationReason) const override;
+  void EnsureIsReadyForPaintInvalidation() override;
 
   // TODO(wkorman): Consider renaming to more clearly differentiate from
   // CollapsedBorderValue.
@@ -353,7 +351,6 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
     return cell1->RowIndex() < cell2->RowIndex();
   }
 
-  // For LayoutTable to compute its collapsed outer borders.
   unsigned CollapsedOuterBorderBefore() const {
     return CollapsedBorderHalfBefore(true);
   }
@@ -365,6 +362,18 @@ class CORE_EXPORT LayoutTableCell final : public LayoutBlockFlow {
   }
   unsigned CollapsedOuterBorderEnd() const {
     return CollapsedBorderHalfEnd(true);
+  }
+  unsigned CollapsedInnerBorderBefore() const {
+    return CollapsedBorderHalfBefore(false);
+  }
+  unsigned CollapsedInnerBorderAfter() const {
+    return CollapsedBorderHalfAfter(false);
+  }
+  unsigned CollapsedInnerBorderStart() const {
+    return CollapsedBorderHalfStart(false);
+  }
+  unsigned CollapsedInnerBorderEnd() const {
+    return CollapsedBorderHalfEnd(false);
   }
 
  protected:
