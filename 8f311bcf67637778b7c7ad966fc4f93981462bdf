@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd0e9a1_107130d1",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-09T22:55:07Z",
+      "side": 1,
+      "message": "Since |sensor_| is never accessed outside this function here I would do:\n\nauto sensor \u003d base::MakeUnique\u003cFakeAmbientLightSensor\u003e();\n\nthen below after callback.Run,\n\nmojo::MakeStrongBinding(std::move(sensor), std::move(sensor_request));",
+      "range": {
+        "startLine": 143,
+        "startChar": 8,
+        "endLine": 144,
+        "endChar": 80
+      },
+      "revId": "8f311bcf67637778b7c7ad966fc4f93981462bdf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
