@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87f29dc3_31e1f55d",
+        "filename": "gpu/command_buffer/client/mapped_memory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-09T21:41:38Z",
+      "side": 1,
+      "message": "This condition cannot be false at all in this case. Line 192 says backing()-\u003eshared_memory_handle() which is only for base::SharedMemory I guess?",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 38
+      },
+      "revId": "15190afd771c3ee8cd2386b723cff6a316dd3387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
