@@ -106,6 +106,12 @@ CancelCallback DummyDriveService::GetShareUrl(
 CancelCallback DummyDriveService::GetAboutResource(
     const AboutResourceCallback& callback) { return CancelCallback(); }
 
+CancelCallback DummyDriveService::GetLargestChangeId(
+    const std::string& team_drive_id,
+    const google_apis::ChangeListCallback& callback) {
+  return CancelCallback();
+}
+
 CancelCallback DummyDriveService::GetAppList(
     const AppListCallback& callback) { return CancelCallback(); }
 
