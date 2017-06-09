@@ -285,6 +285,10 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   // Asynchronously starts the ARC instance for the user whose cryptohome is
   // located by |cryptohome_id|.  Flag |disable_boot_completed_broadcast|
   // blocks Android ACTION_BOOT_COMPLETED broadcast for 3rd party applications.
+  // When |for_login_screen| is true, it starts a container for Chrome OS login
+  // with only a handful of ARC processes that. |cryptohome_id|,
+  // |skip_boot_completed_broadcast|, and |scan_vendor_priv_app| are ignored
+  // when |for_login_screen| is true.
   // Upon completion, invokes |callback| with the result.
   // Running ARC requires some amount of disk space. LOW_FREE_DISK_SPACE will
   // be returned when there is not enough free disk space for ARC.
@@ -303,6 +307,7 @@ class CHROMEOS_EXPORT SessionManagerClient : public DBusClient {
   virtual void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                                 bool skip_boot_completed_broadcast,
                                 bool scan_vendor_priv_app,
+                                bool for_login_screen,
                                 const StartArcInstanceCallback& callback) = 0;
 
   // Asynchronously stops the ARC instance.  Upon completion, invokes

@@ -244,6 +244,7 @@ void FakeSessionManagerClient::StartArcInstance(
     const cryptohome::Identification& cryptohome_id,
     bool disable_boot_completed_broadcast,
     bool enable_vendor_privileged,
+    bool for_login_screen,
     const StartArcInstanceCallback& callback) {
   StartArcInstanceResult result;
   std::string container_instance_id;
