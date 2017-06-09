@@ -1,0 +1,395 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3b14c4c_faa3f090",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "What is magic window?",
+      "range": {
+        "startLine": 7,
+        "startChar": 45,
+        "endLine": 7,
+        "endChar": 57
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b3c12c1_29eba07f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Omit .get()",
+      "range": {
+        "startLine": 220,
+        "startChar": 15,
+        "endLine": 220,
+        "endChar": 21
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ef2bf7_a181cea3",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Just nullptr is fine.",
+      "range": {
+        "startLine": 221,
+        "startChar": 28,
+        "endLine": 221,
+        "endChar": 52
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d71090f_72b7351a",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 1533,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Consider creating conversion helpers, or using a typemap, rather than manually converting.",
+      "range": {
+        "startLine": 1533,
+        "startChar": 13,
+        "endLine": 1533,
+        "endChar": 24
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f212686_250e9ff7",
+        "filename": "device/vr/android/gvr/gvr_delegate.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Or just nullptr by itself is fine as well.",
+      "range": {
+        "startLine": 216,
+        "startChar": 11,
+        "endLine": 216,
+        "endChar": 51
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72462277_7c8af37b",
+        "filename": "device/vr/android/gvr/gvr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Nit: just nullptr",
+      "range": {
+        "startLine": 68,
+        "startChar": 28,
+        "endLine": 68,
+        "endChar": 44
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "536aa6ec_58979e26",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "There are some naming violations in this file ()openVRFov, onPollingEvents, getPose(), please fix these in a followup.",
+      "range": {
+        "startLine": 20,
+        "startChar": 24,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "741e4e7f_e954a79d",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "FYI, most people usually use auto here.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 25
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d85e3a2_9b20c2b0",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Should be uppercase, so GetPose()",
+      "range": {
+        "startLine": 92,
+        "startChar": 19,
+        "endLine": 92,
+        "endChar": 20
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c475995d_50f25772",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Just nullptr",
+      "range": {
+        "startLine": 211,
+        "startChar": 26,
+        "endLine": 211,
+        "endChar": 51
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b9e9892_244bd8f9",
+        "filename": "device/vr/test/fake_vr_device.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Nit: just nullptr is fine",
+      "range": {
+        "startLine": 76,
+        "startChar": 26,
+        "endLine": 76,
+        "endChar": 42
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd407213_74636fe6",
+        "filename": "device/vr/vr_display_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Just writing nullptr is equivalent.",
+      "range": {
+        "startLine": 94,
+        "startChar": 28,
+        "endLine": 94,
+        "endChar": 53
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58fa934b_0031fccb",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Please add some interface-level comments for VRDisplay and VRPresentationProvider.",
+      "range": {
+        "startLine": 100,
+        "startChar": 10,
+        "endLine": 100,
+        "endChar": 32
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a555de8_c80b4d50",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Please use standard Google style naming and call this frame_id. Ditto for all the other parameters here.",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d444edb_47728658",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Is it possible to use gfx.mojom.RectF here to avoid the conversions that are currently needed?",
+      "range": {
+        "startLine": 109,
+        "startChar": 35,
+        "endLine": 109,
+        "endChar": 48
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ad6475_1eaa5dfd",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "Nit: vr_display_ and vr_display",
+      "range": {
+        "startLine": 56,
+        "startChar": 8,
+        "endLine": 56,
+        "endChar": 19
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f72f9f75_37581c92",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:57:52Z",
+      "side": 1,
+      "message": "high_res_time_ms",
+      "range": {
+        "startLine": 58,
+        "startChar": 26,
+        "endLine": 58,
+        "endChar": 39
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
