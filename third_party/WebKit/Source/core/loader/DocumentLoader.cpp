@@ -142,7 +142,7 @@ LocalFrameClient& DocumentLoader::GetLocalFrameClient() const {
 
 DocumentLoader::~DocumentLoader() {
   DCHECK(!frame_);
-  DCHECK(!main_resource_);
+  DCHECK(!resource_);
   DCHECK(!application_cache_host_);
   DCHECK_EQ(state_, kSentDidFinishLoad);
 }
@@ -150,7 +150,7 @@ DocumentLoader::~DocumentLoader() {
 DEFINE_TRACE(DocumentLoader) {
   visitor->Trace(frame_);
   visitor->Trace(fetcher_);
-  visitor->Trace(main_resource_);
+  visitor->Trace(resource_);
   visitor->Trace(history_item_);
   visitor->Trace(writer_);
   visitor->Trace(subresource_filter_);
@@ -161,7 +161,7 @@ DEFINE_TRACE(DocumentLoader) {
 }
 
 unsigned long DocumentLoader::MainResourceIdentifier() const {
-  return main_resource_ ? main_resource_->Identifier() : 0;
+  return resource_ ? resource_->Identifier() : 0;
 }
 
 ResourceTimingInfo* DocumentLoader::GetNavigationTimingInfo() const {
@@ -376,24 +376,24 @@ void DocumentLoader::SetHistoryItemStateForCommit(
 }
 
 void DocumentLoader::NotifyFinished(Resource* resource) {
-  DCHECK_EQ(main_resource_, resource);
-  DCHECK(main_resource_);
+  DCHECK_EQ(resource_, resource);
+  DCHECK(resource_);
 
-  if (!main_resource_->ErrorOccurred() && !main_resource_->WasCanceled()) {
-    FinishedLoading(main_resource_->LoadFinishTime());
+  if (!resource_->ErrorOccurred() && !resource_->WasCanceled()) {
+    FinishedLoading(resource_->LoadFinishTime());
     return;
   }
 
   if (application_cache_host_)
     application_cache_host_->FailedLoadingMainResource();
 
-  if (main_resource_->GetResourceError().WasBlockedByResponse()) {
+  if (resource_->GetResourceError().WasBlockedByResponse()) {
     probe::CanceledAfterReceivedResourceResponse(
         frame_, this, MainResourceIdentifier(), resource->GetResponse(),
-        main_resource_.Get());
+        resource_.Get());
   }
 
-  LoadFailed(main_resource_->GetResourceError());
+  LoadFailed(resource_->GetResourceError());
   ClearMainResourceHandle();
 }
 
@@ -464,7 +464,7 @@ bool DocumentLoader::RedirectReceived(
     const ResourceRequest& request,
     const ResourceResponse& redirect_response) {
   DCHECK(frame_);
-  DCHECK_EQ(resource, main_resource_);
+  DCHECK_EQ(resource, resource_);
   DCHECK(!redirect_response.IsNull());
   request_ = request;
 
@@ -536,7 +536,7 @@ bool DocumentLoader::ShouldContinueForResponse() const {
 void DocumentLoader::CancelLoadAfterCSPDenied(
     const ResourceResponse& response) {
   probe::CanceledAfterReceivedResourceResponse(
-      frame_, this, MainResourceIdentifier(), response, main_resource_.Get());
+      frame_, this, MainResourceIdentifier(), response, resource_.Get());
 
   SetWasBlockedAfterCSP();
 
@@ -562,7 +562,7 @@ void DocumentLoader::ResponseReceived(
     Resource* resource,
     const ResourceResponse& response,
     std::unique_ptr<WebDataConsumerHandle> handle) {
-  DCHECK_EQ(main_resource_, resource);
+  DCHECK_EQ(resource_, resource);
   DCHECK(!handle);
   DCHECK(frame_);
 
@@ -573,7 +573,7 @@ void DocumentLoader::ResponseReceived(
   // we don't save the result for future use. All responses loaded from appcache
   // will have a non-zero appCacheID().
   if (response.AppCacheID())
-    GetMemoryCache()->Remove(main_resource_.Get());
+    GetMemoryCache()->Remove(resource_.Get());
 
   content_security_policy_ = ContentSecurityPolicy::Create();
   content_security_policy_->SetOverrideURLForSelf(response.Url());
@@ -623,12 +623,12 @@ void DocumentLoader::ResponseReceived(
   response_ = response;
 
   if (IsArchiveMIMEType(response_.MimeType()) &&
-      main_resource_->GetDataBufferingPolicy() != kBufferData)
-    main_resource_->SetDataBufferingPolicy(kBufferData);
+      resource_->GetDataBufferingPolicy() != kBufferData)
+    resource_->SetDataBufferingPolicy(kBufferData);
 
   if (!ShouldContinueForResponse()) {
-    probe::ContinueWithPolicyIgnore(frame_, this, main_resource_->Identifier(),
-                                    response_, main_resource_.Get());
+    probe::ContinueWithPolicyIgnore(frame_, this, resource_->Identifier(),
+                                    response_, resource_.Get());
     fetcher_->StopFetching();
     return;
   }
@@ -709,7 +709,7 @@ void DocumentLoader::DataReceived(Resource* resource,
                                   size_t length) {
   DCHECK(data);
   DCHECK(length);
-  DCHECK_EQ(resource, main_resource_);
+  DCHECK_EQ(resource, resource_);
   DCHECK(!response_.IsNull());
   DCHECK(!frame_->GetPage()->Suspended());
 
@@ -787,10 +787,10 @@ void DocumentLoader::DetachFromFrame() {
 }
 
 void DocumentLoader::ClearMainResourceHandle() {
-  if (!main_resource_)
+  if (!resource_)
     return;
-  main_resource_->RemoveClient(this);
-  main_resource_ = nullptr;
+  resource_->RemoveClient(this);
+  resource_ = nullptr;
 }
 
 bool DocumentLoader::MaybeCreateArchive() {
@@ -799,9 +799,8 @@ bool DocumentLoader::MaybeCreateArchive() {
   if (!IsArchiveMIMEType(response_.MimeType()))
     return false;
 
-  DCHECK(main_resource_);
-  ArchiveResource* main_resource =
-      fetcher_->CreateArchive(main_resource_.Get());
+  DCHECK(resource_);
+  ArchiveResource* main_resource = fetcher_->CreateArchive(resource_.Get());
   if (!main_resource)
     return false;
   // The origin is the MHTML file, we need to set the base URL to the document
@@ -847,9 +846,9 @@ bool DocumentLoader::MaybeLoadEmpty() {
   return true;
 }
 
-void DocumentLoader::StartLoadingMainResource() {
+void DocumentLoader::StartLoading() {
   GetTiming().MarkNavigationStart();
-  DCHECK(!main_resource_);
+  DCHECK(!resource_);
   DCHECK_EQ(state_, kNotStarted);
   state_ = kProvisional;
 
@@ -870,16 +869,15 @@ void DocumentLoader::StartLoadingMainResource() {
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::document;
   FetchParameters fetch_params(request_, options);
-  main_resource_ =
+  resource_ =
       RawResource::FetchMainResource(fetch_params, Fetcher(), substitute_data_);
 
   // PlzNavigate:
   // The final access checks are still performed here, potentially rejecting
   // the "provisional" load, but the browser side already expects the renderer
   // to be able to unconditionally commit.
-  if (!main_resource_ ||
-      (frame_->GetSettings()->GetBrowserSideNavigationEnabled() &&
-       main_resource_->ErrorOccurred())) {
+  if (!resource_ || (frame_->GetSettings()->GetBrowserSideNavigationEnabled() &&
+                     resource_->ErrorOccurred())) {
     request_ = ResourceRequest(BlankURL());
     MaybeLoadEmpty();
     return;
@@ -887,9 +885,9 @@ void DocumentLoader::StartLoadingMainResource() {
   // A bunch of headers are set when the underlying resource load begins, and
   // m_request needs to include those. Even when using a cached resource, we may
   // make some modification to the request, e.g. adding the referer header.
-  request_ = main_resource_->IsLoading() ? main_resource_->GetResourceRequest()
-                                         : fetch_params.GetResourceRequest();
-  main_resource_->AddClient(this);
+  request_ = resource_->IsLoading() ? resource_->GetResourceRequest()
+                                    : fetch_params.GetResourceRequest();
+  resource_->AddClient(this);
 }
 
 void DocumentLoader::EndWriting() {

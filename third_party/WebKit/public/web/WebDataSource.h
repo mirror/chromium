@@ -48,6 +48,9 @@ class WebURLResponse;
 template <typename T>
 class WebVector;
 
+// An interface to expose the blink::DocumentLoader to the content layer
+// including SetExtraData() and GetExtraData() to allow the content layer to
+// store their private data.
 class BLINK_EXPORT WebDataSource {
  public:
   class ExtraData {
