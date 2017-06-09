@@ -144,6 +144,11 @@ IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureBrowserTest, MAYBE_GetTrackSettings) {
 }
 
 IN_PROC_BROWSER_TEST_P(WebRtcImageCaptureBrowserTest, MAYBE_ManipulateZoom) {
+#if defined(OS_ANDROID)
+  // TODO(mcasas): fails on Android devices: https://crbug.com/731904.
+  if (!GetParam().use_fake)
+    return;
+#endif
   embedded_test_server()->StartAcceptingConnections();
   ASSERT_TRUE(RunImageCaptureTestCase("testManipulateZoom()"));
 }
