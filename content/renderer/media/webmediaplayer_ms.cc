@@ -343,6 +343,7 @@ void WebMediaPlayerMS::SetVolume(double volume) {
   volume_ = volume;
   if (audio_renderer_.get())
     audio_renderer_->SetVolume(volume_ * volume_multiplier_);
+  delegate_->DidPlayerVolumeChange(delegate_id_, volume);
 }
 
 void WebMediaPlayerMS::SetSinkId(
