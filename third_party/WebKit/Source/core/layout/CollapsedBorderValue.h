@@ -97,9 +97,55 @@ class CollapsedBorderValue {
 
   bool IsVisible() const { return Width() && !IsTransparent(); }
 
-  bool ShouldPaint(
-      const CollapsedBorderValue& table_current_border_value) const {
-    return IsVisible() && IsSameIgnoringColor(table_current_border_value);
+  // The following rules apply for resolving conflicts and figuring out which
+  // border to use.
+  // (1) Borders with the 'border-style' of 'hidden' take precedence over all
+  //     other conflicting borders. Any border with this value suppresses all
+  //     borders at this location.
+  // (2) Borders with a style of 'none' have the lowest priority. Only if the
+  //     border properties of all the elements meeting at this edge are 'none'
+  //     will the border be omitted (but note that 'none' is the default value
+  //     for the border style.)
+  // (3) If none of the styles are 'hidden' and at least one of them is not
+  //     'none', then narrow borders are discarded in favor of wider ones. If
+  //      several have the same 'border-width' then styles are preferred in this
+  //      order: 'double', 'solid', 'dashed', 'dotted', 'ridge', 'outset',
+  //     'groove', and the lowest: 'inset'.
+  // (4) If border styles differ only in color, then a style set on a cell wins
+  //     over one on a row, which wins over a row group, column, column group
+  //     and, lastly, table. It is undefined which color is used when two
+  //     elements of the same type disagree.
+  bool Compare(const CollapsedBorderValue& other) const {
+    // Sanity check the values passed in. The null border have lowest priority.
+    if (!other.Exists())
+      return false;
+    if (!Exists())
+      return true;
+
+    // Rule #1 above.
+    if (Style() == EBorderStyle::kHidden)
+      return false;
+    if (other.Style() == EBorderStyle::kHidden)
+      return true;
+
+    // Rule #2 above.  A style of 'none' has lowest priority and always loses to
+    // any other border.
+    if (other.Style() == EBorderStyle::kNone)
+      return false;
+    if (Style() == EBorderStyle::kNone)
+      return true;
+
+    // The first part of rule #3 above. Wider borders win.
+    if (Width() != other.Width())
+      return Width() < other.Width();
+
+    // The borders have equal width.  Sort by border style.
+    if (Style() != other.Style())
+      return Style() < other.Style();
+
+    // The border have the same width and style.  Rely on precedence (cell over
+    // row over row group, etc.)
+    return Precedence() < other.Precedence();
   }
 
  private:

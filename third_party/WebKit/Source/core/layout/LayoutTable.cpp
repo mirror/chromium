@@ -771,7 +771,6 @@ void LayoutTable::UpdateLayout() {
 }
 
 void LayoutTable::InvalidateCollapsedBorders() {
-  collapsed_borders_.clear();
   collapsed_borders_valid_ = false;
   needs_invalidate_collapsed_borders_for_all_cells_ = true;
   collapsed_outer_borders_valid_ = false;
@@ -798,31 +797,6 @@ void LayoutTable::InvalidateCollapsedBordersForAllCellsIfNeeded() {
       }
     }
   }
-}
-
-// Collect all the unique border values that we want to paint in a sorted list.
-// During the collection, each cell saves its recalculated borders into the
-// cache of its containing section, and invalidates itself if any border
-// changes. This method doesn't affect layout.
-void LayoutTable::RecalcCollapsedBordersIfNeeded() {
-  if (collapsed_borders_valid_ || !ShouldCollapseBorders())
-    return;
-  collapsed_borders_valid_ = true;
-  collapsed_borders_.clear();
-  for (LayoutObject* section = FirstChild(); section;
-       section = section->NextSibling()) {
-    if (!section->IsTableSection())
-      continue;
-    for (LayoutTableRow* row = ToLayoutTableSection(section)->FirstRow(); row;
-         row = row->NextRow()) {
-      for (LayoutTableCell* cell = row->FirstCell(); cell;
-           cell = cell->NextCell()) {
-        DCHECK_EQ(cell->Table(), this);
-        cell->CollectCollapsedBorderValues(collapsed_borders_);
-      }
-    }
-  }
-  LayoutTableCell::SortCollapsedBorderValues(collapsed_borders_);
 }
 
 void LayoutTable::AddOverflowFromChildren() {
@@ -1487,14 +1461,33 @@ BorderValue LayoutTable::TableEndBorderAdjoiningCell(
 
 void LayoutTable::EnsureIsReadyForPaintInvalidation() {
   LayoutBlock::EnsureIsReadyForPaintInvalidation();
-  RecalcCollapsedBordersIfNeeded();
+
+  if (collapsed_borders_valid_)
+    return;
+
+  collapsed_borders_valid_ = true;
+  has_collapsed_borders_ = false;
+  if (!ShouldCollapseBorders())
+    return;
+
+  for (auto* section = TopSection(); section; section = SectionBelow(section)) {
+    for (auto* row = section->FirstRow(); row; row = row->NextRow()) {
+      for (auto* cell = row->FirstCell(); cell; cell = cell->NextCell()) {
+        DCHECK_EQ(cell->Table(), this);
+        cell->EnsureIsReadyForPaintInvalidation();
+        if (cell->GetCollapsedBorderValues())
+          has_collapsed_borders_ = true;
+      }
+    }
+  }
 }
 
 PaintInvalidationReason LayoutTable::DeprecatedInvalidatePaint(
     const PaintInvalidationState& paint_invalidation_state) {
-  if (ShouldCollapseBorders() && !collapsed_borders_.IsEmpty())
+  if (HasCollapsedBorders()) {
     paint_invalidation_state.PaintingLayer()
         .SetNeedsPaintPhaseDescendantBlockBackgrounds();
+  }
 
   return LayoutBlock::DeprecatedInvalidatePaint(paint_invalidation_state);
 }
