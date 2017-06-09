@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbb0412f_1a06c825",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-09T15:00:59Z",
+      "side": 1,
+      "message": "nit: // namespace",
+      "range": {
+        "startLine": 42,
+        "startChar": 1,
+        "endLine": 42,
+        "endChar": 0
+      },
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e09628_0a5a7fd4",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1455,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-09T15:00:59Z",
+      "side": 1,
+      "message": "I\u0027m not sure I understand the question, but I think OnViewportChanged should only ever be called on the top-level TSC.",
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "018543df_20b3b4ca",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 2013,
+      "author": {
+        "id": 1001433
+      },
+      "writtenOn": "2017-06-09T15:00:59Z",
+      "side": 1,
+      "message": "nit: This could just be in the header file.",
+      "revId": "c93d1c3299930cbfd412c0a91319919c0afd2bd2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
