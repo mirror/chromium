@@ -118,6 +118,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8505732_29040f0e",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-09T00:12:39Z",
+      "side": 1,
+      "message": "I could try that. Do you mean making workers_created_ a non-DCHECK-only thing then? Other functions currently dcheck that workers_created_ is set, but then use workers_.\n\n(Do you still like this approach better than the original attempt?)",
+      "parentUuid": "e3ed3d01_21d578e2",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
