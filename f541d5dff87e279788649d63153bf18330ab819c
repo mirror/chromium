@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "28659fc8_1fc897cc",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-09T22:16:14Z",
+      "side": 1,
+      "message": "Sounds good, looks like a PR has already been made for us by the exporter:\nhttps://github.com/w3c/web-platform-tests/pull/6192",
+      "parentUuid": "bbd939d1_40d24b5b",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc8c5c1f_914fe3c1",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/lint.whitelist",
         "patchSetId": 9
@@ -277,6 +295,24 @@
       "side": 1,
       "message": "Hmm, this seems like a good change to make upstream as well :-)",
       "parentUuid": "c0a2b052_bd875ff8",
+      "revId": "f541d5dff87e279788649d63153bf18330ab819c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b8ce93d5_e01a7dc7",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/lint",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-09T22:16:14Z",
+      "side": 1,
+      "message": "Will do.",
+      "parentUuid": "53e3b98a_c1885aff",
       "revId": "f541d5dff87e279788649d63153bf18330ab819c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
