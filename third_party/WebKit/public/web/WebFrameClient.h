@@ -85,6 +85,7 @@ class WebApplicationCacheHostClient;
 class WebColorChooser;
 class WebColorChooserClient;
 class WebContentDecryptionModule;
+class WebContentSettingsClient;
 class WebCookieJar;
 class WebDataSource;
 class WebEncryptedMediaClient;
@@ -108,7 +109,6 @@ class WebString;
 class WebURL;
 class WebURLResponse;
 class WebUserMediaClient;
-class WebWorkerContentSettingsClientProxy;
 struct WebColorSuggestion;
 struct WebConsoleMessage;
 struct WebContextMenuData;
@@ -152,8 +152,7 @@ class BLINK_EXPORT WebFrameClient {
   }
 
   // May return null.
-  virtual WebWorkerContentSettingsClientProxy*
-  CreateWorkerContentSettingsClientProxy() {
+  virtual WebContentSettingsClient* CreateWorkerContentSettingsClient() {
     return nullptr;
   }
 

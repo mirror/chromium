@@ -489,8 +489,7 @@ class CONTENT_EXPORT RenderFrameImpl
       const blink::WebString& sink_id) override;
   std::unique_ptr<blink::WebApplicationCacheHost> CreateApplicationCacheHost(
       blink::WebApplicationCacheHostClient* client) override;
-  blink::WebWorkerContentSettingsClientProxy*
-  CreateWorkerContentSettingsClientProxy() override;
+  blink::WebContentSettingsClient* CreateWorkerContentSettingsClient() override;
   std::unique_ptr<blink::WebWorkerFetchContext> CreateWorkerFetchContext()
       override;
   blink::WebExternalPopupMenu* CreateExternalPopupMenu(

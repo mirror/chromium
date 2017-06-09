@@ -213,9 +213,10 @@ bool ContentRendererClient::ShouldGatherSiteIsolationStats() const {
   return true;
 }
 
-blink::WebWorkerContentSettingsClientProxy*
-ContentRendererClient::CreateWorkerContentSettingsClientProxy(
-    RenderFrame* render_frame, blink::WebFrame* frame) {
+blink::WebContentSettingsClient*
+ContentRendererClient::CreateWorkerContentSettingsClient(
+    RenderFrame* render_frame,
+    blink::WebFrame* frame) {
   return nullptr;
 }
 
