@@ -52,7 +52,6 @@ class ChromeBrowserState;
 }
 
 namespace sessions {
-class SerializedNavigationEntry;
 struct SessionTab;
 }
 
@@ -206,12 +205,6 @@ extern NSString* const kProxyPassthroughHeaderValue;
 // nor exposes private ios/web/ API.
 - (web::NavigationManager*)navigationManager;
 - (web::NavigationManagerImpl*)navigationManagerImpl;
-
-// Update the tab's history by replacing all previous navigations with
-// |navigations|.
-- (void)replaceHistoryWithNavigations:
-            (const std::vector<sessions::SerializedNavigationEntry>&)navigations
-                         currentIndex:(NSInteger)currentIndex;
 
 // Navigate forwards or backwards to |item|.
 - (void)goToItem:(const web::NavigationItem*)item;
