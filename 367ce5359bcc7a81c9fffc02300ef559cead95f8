@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4a50fe1_63a67a0b",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T14:57:24Z",
+      "side": 1,
+      "message": "Do we need a nested run loop here to make this work with PlzNavigate?\n\n    devtools_client_-\u003eGetPage()-\u003eEnable(run_loop.QuitClosure());    \n    base::MessageLoop::ScopedNestableTaskAllower nest_loop(\n        base::MessageLoop::current());\n    run_loop.Run();",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87acd4f8_aa80129e",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T14:57:24Z",
+      "side": 1,
+      "message": "Typo: initial",
+      "range": {
+        "startLine": 64,
+        "startChar": 31,
+        "endLine": 64,
+        "endChar": 46
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
