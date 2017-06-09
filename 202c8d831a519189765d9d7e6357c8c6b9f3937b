@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "b86b7550_a6c22426",
+        "filename": "content/browser/indexed_db/indexed_db_transaction.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 398,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-09T19:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6db76e23_93e023f8",
+      "range": {
+        "startLine": 398,
+        "startChar": 44,
+        "endLine": 398,
+        "endChar": 49
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4ccfe40_e999b4d9",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -187,6 +211,30 @@
       "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ee3e7f4_0c7dba63",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 81841,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-09T19:56:45Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ead0bdb1_03d8dc41",
+      "range": {
+        "startLine": 81841,
+        "startChar": 35,
+        "endLine": 81841,
+        "endChar": 45
+      },
+      "revId": "202c8d831a519189765d9d7e6357c8c6b9f3937b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
