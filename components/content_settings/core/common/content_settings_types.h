@@ -69,6 +69,10 @@ enum ContentSettingsType {
 
   // WARNING: This enum is going to be removed soon. Do not depend on NUM_TYPES.
   CONTENT_SETTINGS_NUM_TYPES_DO_NOT_USE,
+
+  // Website setting which stores engagement data for media related to a
+  // specific origin.
+  CONTENT_SETTINGS_TYPE_MEDIA_ENGAGEMENT,
 };
 
 struct ContentSettingsTypeHash {
