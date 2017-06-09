@@ -55,7 +55,7 @@ public class VrFeedbackInfoBarTest {
     }
 
     private void clickInfoBarButton(final boolean primary) {
-        final List<InfoBar> infoBars = mVrTestRule.getInfoBars();
+        final List<InfoBar> infoBars = mVrTestRule.getRule().getInfoBars();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
@@ -66,24 +66,25 @@ public class VrFeedbackInfoBarTest {
                 }
             }
         });
-        InfoBarUtil.waitUntilNoInfoBarsExist(mVrTestRule.getInfoBars());
+        InfoBarUtil.waitUntilNoInfoBarsExist(mVrTestRule.getRule().getInfoBars());
     }
 
     private void clickInfobarCloseButton() {
-        final List<InfoBar> infoBars = mVrTestRule.getInfoBars();
+        final List<InfoBar> infoBars = mVrTestRule.getRule().getInfoBars();
         ThreadUtils.runOnUiThreadBlocking(new Runnable() {
             @Override
             public void run() {
                 InfoBarUtil.clickCloseButton(infoBars.get(0));
             }
         });
-        InfoBarUtil.waitUntilNoInfoBarsExist(mVrTestRule.getInfoBars());
+        InfoBarUtil.waitUntilNoInfoBarsExist(mVrTestRule.getRule().getInfoBars());
     }
 
     private void assertState(boolean isInVr, boolean isInfobarVisible) {
         Assert.assertEquals("Browser is in VR", isInVr, VrShellDelegate.isInVr());
         Assert.assertEquals("Infobar is visible", isInfobarVisible,
-                VrUtils.isInfoBarPresent(mVrTestRule.getActivity().getWindow().getDecorView()));
+                VrUtils.isInfoBarPresent(
+                        mVrTestRule.getRule().getActivity().getWindow().getDecorView()));
     }
 
     private void enterThenExitVr() {
@@ -180,7 +181,7 @@ public class VrFeedbackInfoBarTest {
 
         // Exit presentation mode by navigating to a different url.
         ChromeTabUtils.waitForTabPageLoaded(
-                mVrTestRule.getActivity().getActivityTab(), new Runnable() {
+                mVrTestRule.getRule().getActivity().getActivityTab(), new Runnable() {
                     @Override
                     public void run() {
                         mVrTestRule.runJavaScriptOrFail(

@@ -77,7 +77,7 @@ public class VrShellNavigationTest {
      */
     private void navigateTo(final Page to) throws InterruptedException {
         ChromeTabUtils.waitForTabPageLoaded(
-                mVrTestRule.getActivity().getActivityTab(), new Runnable() {
+                mVrTestRule.getRule().getActivity().getActivityTab(), new Runnable() {
                     @Override
                     public void run() {
                         mVrTestRule.runJavaScriptOrFail(
@@ -112,8 +112,8 @@ public class VrShellNavigationTest {
         Assert.assertEquals("Browser is in fullscreen",
                 fullscreenMode == FullscreenMode.FULLSCREENED, DOMUtils.isFullscreen(wc));
         // Feedback infobar should never show up during navigations.
-        Assert.assertFalse(
-                VrUtils.isInfoBarPresent(mVrTestRule.getActivity().getWindow().getDecorView()));
+        Assert.assertFalse(VrUtils.isInfoBarPresent(
+                mVrTestRule.getRule().getActivity().getWindow().getDecorView()));
     }
 
     /**
@@ -276,7 +276,7 @@ public class VrShellNavigationTest {
 
         // Validate our size is what we expect.
         DisplayAndroid primaryDisplay =
-                DisplayAndroid.getNonMultiDisplay(mVrTestRule.getActivity());
+                DisplayAndroid.getNonMultiDisplay(mVrTestRule.getRule().getActivity());
         float expectedWidth = primaryDisplay.getDisplayWidth();
         float expectedHeight = primaryDisplay.getDisplayHeight();
         Assert.assertTrue(mVrTestRule.pollJavaScriptBoolean(
