@@ -142,6 +142,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d60e9e6f_1393a27a",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T00:15:59Z",
+      "side": 1,
+      "message": "We\u0027ve been a little leery about including new SchedulerLock dependencies because that couples the components together, hence the exploration of an alternative.\n\nMy desire is to fix the issue while keeping the components relatively separated. Now that we understand the race and the changes are now beginning to get involved, feel free to send it over to us.\n\nThanks for the patch though! If this is blocking you right now, I think this is a fine workaround. I\u0027ll wait for fdoray@ to reply as he did a lot of the Start() infrastructure.",
+      "parentUuid": "c8505732_29040f0e",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
