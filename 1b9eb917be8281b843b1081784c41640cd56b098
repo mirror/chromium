@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4451d9d6_c762446e",
+        "filename": "services/resource_coordinator/tracing/agent_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "nit: DCHECK_EQ?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3051bfa5_b6a05b3a",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Doesn\u0027t look like this is initialized anywhere.",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80bf0369_c5d433e3",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Why is this needed when there can just be a single Coordinator?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3dd6cde_32d5bddf",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "\u003d nullptr?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe783ec_ed9f4ba6",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Would DCHECK(g_coordinator) make sense?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27718cbd_2d30cdfe",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "I guess this is in later CLs, but: wouldn\u0027t this make more sense as a leaky singleton?\n\nOr even lazily created as a local static in Coordinator::GetInstance() to simplify things a bit; no need for the global and the DCHECK(!g_coordinator) at that point with a private constructor etc.",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fed002c_6464aca9",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "What\u0027ll happen if the agent never invokes this closure? Maybe it\u0027s worth having a timeout here maybe, the way we already deal with pending flushes, rather than trusting the client to respond (or disconnect). A timeout logic could also just replace the agent disconnect handling with the closures and everything, I\u0027m guessing it\u0027s a rare enough case that an agent would disconnect before sending OnTracingStarted, that the delay that\u0027d cause in Flush() would be okay.",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "990c480d_1b78e3e0",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Wrapping agent_entry in the callback is a bit redundant when the callback is invoked by the agent entry itself, can it just call .Run(this) instead?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6e2dc2_94e9a0e1",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "When can this be false? Can it be a DCHECK instead?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd6506b_3dc85232",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "nit: .empty()",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e25138ea_f33b5ff9",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Maybe just \"while (streaming_label_.empty() || !StreamEventsForCurrentLabel())\"",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7e69ff6_d43ebe52",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Same comment as the other DisconnectClosure usage above. It feels\n1) A bit fragile given that we\u0027re still assuming the client calls our callback.\n2) A decent amount of boilerplate for each operation where we\u0027re requesting some kind of data from each client.\n\nIt feels like the behavior here should at least be encapsulated in some helper class that can be reused for each usage instance, with members for the pending callback counts, a timeout, etc. wdyt?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9abd551_e200e26b",
+        "filename": "services/resource_coordinator/tracing/coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-09T06:12:41Z",
+      "side": 1,
+      "message": "Missing constructor initialization for a bunch of the POD members.",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
