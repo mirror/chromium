@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59318c8e_65e89a88",
+        "filename": "android_webview/java/src/org/chromium/android_webview/AwSafeBrowsingConfigHelper.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116028
+      },
+      "writtenOn": "2017-06-09T19:45:49Z",
+      "side": 1,
+      "message": "also inline shouldenablesafebrowsingsupport here. It is super trivial and not called by any other entry point.",
+      "range": {
+        "startLine": 25,
+        "startChar": 39,
+        "endLine": 25,
+        "endChar": 70
+      },
+      "revId": "81d8ae885dac8a1cae53cb70f70f5a60e0c6bd82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
