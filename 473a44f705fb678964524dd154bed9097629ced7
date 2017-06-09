@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "656d523b_3027ed74",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-09T14:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c0447a5_7a2325d4",
+      "range": {
+        "startLine": 53,
+        "startChar": 10,
+        "endLine": 53,
+        "endChar": 34
+      },
+      "revId": "473a44f705fb678964524dd154bed9097629ced7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6c17165b_ff341012",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4469ba1d_863efdf4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 503,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-09T14:01:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c17165b_ff341012",
+      "range": {
+        "startLine": 497,
+        "startChar": 4,
+        "endLine": 503,
+        "endChar": 5
+      },
+      "revId": "473a44f705fb678964524dd154bed9097629ced7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ab02920d_4caf8401",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "473a44f705fb678964524dd154bed9097629ced7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90af7ce5_8d7a49d2",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-09T14:01:13Z",
+      "side": 1,
+      "message": "Done.\n\n\"Absence of fetched category corresponds to fetching all categories.\"",
+      "parentUuid": "ab02920d_4caf8401",
+      "range": {
+        "startLine": 413,
+        "startChar": 2,
+        "endLine": 413,
+        "endChar": 32
+      },
+      "revId": "473a44f705fb678964524dd154bed9097629ced7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
