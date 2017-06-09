@@ -11,14 +11,14 @@
 
 namespace web {
 
+class NavigationItem;
 class NavigationItemImpl;
 
 // Class that can serialize and deserialize NavigationItems.
 class NavigationItemStorageBuilder {
  public:
   // Creates a serialized NavigationItem from |navigation_Item|.
-  CRWNavigationItemStorage* BuildStorage(
-      NavigationItemImpl* navigation_item) const;
+  CRWNavigationItemStorage* BuildStorage(NavigationItem* navigation_item) const;
   // Creates a NavigationItem from |navigation_Item_storage|.
   std::unique_ptr<NavigationItemImpl> BuildNavigationItemImpl(
       CRWNavigationItemStorage* navigation_item_storage) const;

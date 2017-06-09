@@ -86,8 +86,10 @@ sessions::LiveTab* TabRestoreServiceDelegateImplIOS::AddRestoredTab(
   std::unique_ptr<web::WebStateImpl> web_state(new web::WebStateImpl(params));
   std::vector<std::unique_ptr<web::NavigationItem>> items =
       sessions::IOSSerializedNavigationBuilder::ToNavigationItems(navigations);
+  // TODO(danyao): temporarily disable session history restore
+  /*
   web_state->GetNavigationManagerImpl().ReplaceSessionHistory(
-      std::move(items), selected_navigation);
+      std::move(items), selected_navigation);*/
 
   WebStateList* web_state_list = [tab_model() webStateList];
   web_state_list->InsertWebState(tab_index, std::move(web_state));
