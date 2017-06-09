@@ -18,6 +18,8 @@ static ContentClient* g_client;
 class InternalTestInitializer {
  public:
   static ContentBrowserClient* SetBrowser(ContentBrowserClient* b) {
+    LOG(ERROR) << "SetBrowser " << b << "\n"
+               << base::debug::StackTrace().ToString();
     ContentBrowserClient* rv = g_client->browser_;
     g_client->browser_ = b;
     return rv;

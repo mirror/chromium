@@ -131,6 +131,8 @@ void ChromeBlobStorageContext::InitializeOnIOThread(
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   context_.reset(new BlobStorageContext(std::move(blob_storage_dir),
                                         std::move(file_task_runner)));
+  LOG(ERROR) << !!BrowserThread::GetTaskRunnerForThread(BrowserThread::IO);
+
   // Signal the BlobMemoryController when it's appropriate to calculate its
   // storage limits.
   BrowserThread::PostAfterStartupTask(

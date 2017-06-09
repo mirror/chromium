@@ -97,10 +97,17 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 
 struct CompositorDependencies {
   CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    frame_sink_manager_host.ConnectToFrameSinkManager();
+    // TODO(danakj): Don't make a MojoFrameSinkManager when display is in the
+    // Gpu process, instead get the mojo pointer from the Gpu process.
+    bool use_surface_sequences = false;
+    in_process_frame_sink_manager = base::MakeUnique<viz::MojoFrameSinkManager>(
+        use_surface_sequences, nullptr);
+    viz::FrameSinkManagerHost::ConnectWithInProcessFrameSinkManager(
+        &frame_sink_manager_host_, in_process_frame_sink_manager_.get());
   }
 
   SingleThreadTaskGraphRunner task_graph_runner;
+  std::unique_ptr<viz::MojoFrameSinkManager> in_process_frame_sink_manager;
   viz::FrameSinkManagerHost frame_sink_manager_host;
   cc::FrameSinkIdAllocator frame_sink_id_allocator;
 
@@ -403,7 +410,7 @@ void Compositor::CreateContextProvider(
 // static
 cc::SurfaceManager* CompositorImpl::GetSurfaceManager() {
   return g_compositor_dependencies.Get()
-      .frame_sink_manager_host.surface_manager();
+      .in_process_frame_sink_manager->surface_manager();
 }
 
 // static
