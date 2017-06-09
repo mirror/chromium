@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58d360d8_7411da88",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-09T11:30:34Z",
+      "side": 1,
+      "message": "Nit: truncate from the leading side, not the left.",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f8ac915_9f492108",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-09T11:30:34Z",
+      "side": 1,
+      "message": "You don\u0027t need to define a setter method; the presence of one is define by having a writable property.",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de27e3d6_70d00181",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-09T11:30:34Z",
+      "side": 1,
+      "message": "Why SchemeIs(url::kHttpsScheme) and not SchemeIsCryptographic()?",
+      "range": {
+        "startLine": 441,
+        "startChar": 45,
+        "endLine": 441,
+        "endChar": 53
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296fca3d_96d8f8ac",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-09T11:30:34Z",
+      "side": 1,
+      "message": "I would prefer to not nest conditions, and to directly return the boolean result of the security level checks. \n\nIt looks like after the IsOriginSecure() test, the only cases where the URL will have noncryptographic scheme are localhost and filesystem URLs. So I think it would be clearer to have, after line 620:\n\nif (![self webState]-\u003eGetLastCommittedURL().SchemeIsCryptographic()) {\n  // The URL has a secure origin, but is not https, so it must be local. \n  // Return YES at this point, because localhost and filesystem URLS are considered\n  // secure regardless of scheme.\n  return YES;\n}\n\nAnd then after fetching the securityLevel, just:\n\nreturn securityLevel \u003d\u003d security_state::EV_SECURE || \n       securityLevel \u003d\u003d security_state::SECURE ||\n       securityLevel \u003d\u003d security_state::SECURE_WITH_POLICY_INSTALLED_CERT;",
+      "range": {
+        "startLine": 625,
+        "startChar": 6,
+        "endLine": 625,
+        "endChar": 7
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
