@@ -6,7 +6,6 @@
 #define AnimationWorkletProxyClientImpl_h
 
 #include "core/animation/CompositorAnimator.h"
-#include "core/animation/CompositorProxyClientImpl.h"
 #include "core/dom/AnimationWorkletProxyClient.h"
 #include "modules/ModulesExport.h"
 #include "modules/compositorworker/AnimationWorkletGlobalScope.h"
@@ -25,7 +24,7 @@ class WorkletGlobalScope;
 // This is constructed on the main thread but it is used in the worklet backing
 // thread i.e., compositor thread.
 class MODULES_EXPORT AnimationWorkletProxyClientImpl final
-    : public GarbageCollectedFinalized<AnimationWorkletProxyClientImpl>,
+    : public GarbageCollectedFinalized<AnimationWorkletProxyClient>,
       public AnimationWorkletProxyClient,
       public CompositorAnimator {
   WTF_MAKE_NONCOPYABLE(AnimationWorkletProxyClientImpl);
@@ -41,17 +40,10 @@ class MODULES_EXPORT AnimationWorkletProxyClientImpl final
 
   // CompositorAnimator:
   // This method is invoked in compositor thread
-  bool Mutate(double monotonic_time_now,
-              CompositorMutableStateProvider*) override;
-
-  CompositorProxyClient* GetCompositorProxyClient() override {
-    return compositor_proxy_client_.Get();
-  }
+  bool Mutate(double monotonic_time_now) override;
 
  private:
   CrossThreadPersistent<CompositorMutatorImpl> mutator_;
-
-  CrossThreadPersistent<CompositorProxyClientImpl> compositor_proxy_client_;
 
   CrossThreadPersistent<AnimationWorkletGlobalScope> global_scope_;
 };
