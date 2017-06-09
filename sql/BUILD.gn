@@ -24,6 +24,8 @@ component("sql") {
     "statement.h",
     "transaction.cc",
     "transaction.h",
+    "utils.cc",
+    "utils.h",
     "vfs_wrapper.cc",
     "vfs_wrapper.h",
   ]
@@ -107,6 +109,7 @@ test("sql_unittests") {
     "test/sql_test_suite.cc",
     "test/sql_test_suite.h",
     "transaction_unittest.cc",
+    "utils_unittest.cc",
   ]
 
   data = [
