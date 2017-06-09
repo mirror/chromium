@@ -72,3 +72,23 @@
 }
 
 @end
+
+#ifndef NDEBUG
+
+@implementation DebuggingInformationOverlay
+
+- (BOOL)canRunInState:(ApplicationState*)state {
+  return state.phase == APPLICATION_FOREGROUNDED;
+}
+
+- (void)runInState:(ApplicationState*)state {
+#pragma clang diagnostic push
+#pragma clang diagnostic ignored "-Warc-performSelector-leaks"
+  [NSClassFromString(@"UIDebuggingInformationOverlay")
+      performSelector:NSSelectorFromString(@"prepareDebuggingOverlay")];
+#pragma clang diagnostic pop
+}
+
+@end
+
+#endif  // NDEBUG

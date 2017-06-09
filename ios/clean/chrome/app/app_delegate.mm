@@ -110,6 +110,9 @@
     [[PrepareForUI alloc] init],
     [[CompleteForegrounding alloc] init],
     [[RootCoordinator alloc] init],
+#ifndef NDEBUG
+    [[DebuggingInformationOverlay alloc] init],
+#endif  // NDEBUG
   ]];
 }
 
