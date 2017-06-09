@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2eac1c7e_fb68e111",
+        "filename": "third_party/WebKit/Source/core/paint/PaintPropertyTreeBuilder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-09T19:27:49Z",
+      "side": 1,
+      "message": "Didn\u0027t presubmit require to put \u0027{}\u0027 at the end of the previous line?",
+      "revId": "bacf416c8d1ae444be177b9cddb6b5edd3f59264",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
