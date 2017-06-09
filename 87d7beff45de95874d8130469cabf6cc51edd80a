@@ -70,6 +70,24 @@
       "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6cb5c32_79df31bf",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-09T14:57:30Z",
+      "side": 1,
+      "message": "So rather than check for whether a commit needs to happen, check for whether this is the first time we become visible?\n\nDunno, what if we become first visible after the first commit? Or is that impossible? :P",
+      "parentUuid": "6ab56365_a9396d04",
+      "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
