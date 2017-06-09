@@ -55,6 +55,7 @@
 #include "ui/platform_window/x11/x11_window.h"
 #elif defined(USE_OZONE)
 #include "services/ui/display/screen_manager_forwarding.h"
+#include "services/ui/public/cpp/input_devices/input_device_controller.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine.h"
 #include "ui/events/ozone/layout/keyboard_layout_engine_manager.h"
 #include "ui/ozone/public/ozone_platform.h"
@@ -98,6 +99,9 @@ Service::~Service() {
   window_server_.reset();
 
 #if defined(USE_OZONE)
+  // InputDeviceController uses ozone.
+  input_device_controller_.reset();
+
   OzonePlatform::Shutdown();
 #endif
 }
@@ -178,7 +182,7 @@ void Service::OnStart() {
   params.single_process = false;
   ui::OzonePlatform::InitializeForUI(params);
 
-  // TODO(kylechar): We might not always want a US keyboard layout.
+  // Assume a client will change the layout to an appropriate configuration.
   ui::KeyboardLayoutEngineManager::GetKeyboardLayoutEngine()
       ->SetCurrentLayoutByName("us");
   client_native_pixmap_factory_ = ui::CreateClientNativePixmapFactoryOzone();
@@ -186,6 +190,11 @@ void Service::OnStart() {
       client_native_pixmap_factory_.get());
 
   DCHECK(gfx::ClientNativePixmapFactory::GetInstance());
+
+#if defined(OS_CHROMEOS)
+  input_device_controller_ = base::MakeUnique<InputDeviceController>();
+  input_device_controller_->AddInterface(&registry_);
+#endif
 #endif
 
 // TODO(rjkroege): Enter sandbox here before we start threads in GpuState
