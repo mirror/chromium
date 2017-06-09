@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ae79a84_f0d453f3",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 936,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T16:45:14Z",
+      "side": 1,
+      "message": "Can this be made more consistent? Have ImeKeyboardMus implement ImeKeyboard::Create() and have change ImeKeyboard::Create() to return a unique_ptr? Otherwise delete ImeKeyboard::Create() and add #elif defined(USE_X11) here?",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c936c5_a4bc708e",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T16:45:14Z",
+      "side": 1,
+      "message": "Can you order functions the same in h/cc?",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee21c992_b4a54a0b",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T16:45:14Z",
+      "side": 1,
+      "message": "Not sure if this is an issue or if it\u0027s handled elsewhere, but does the initial caps lock state have to be synced with ImeKeyboard::caps_lock_is_enabled_ somehow so that ImeKeyboard::SetCapsLockEnabled() always works right?",
+      "range": {
+        "startLine": 31,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 33
+      },
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16b64109_7809b1dc",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T16:45:14Z",
+      "side": 1,
+      "message": "// ImeKeyboard:",
+      "revId": "9dfbac172f4c2a2f580e09e1788e8ad70d24d1d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
