@@ -133,7 +133,13 @@ class MediaFileValidatorTest : public InProcessBrowserTest {
         base, base::ThreadTaskRunnerHandle::Get().get()));
     file_system_context_ =
         content::CreateFileSystemContextWithAdditionalProvidersForTesting(
-            NULL, std::move(additional_providers), base);
+            NULL, std::move(additional_providers), base,
+            content::BrowserThread::GetTaskRunnerForThread(
+                content::BrowserThread::IO)
+                .get(),
+            content::BrowserThread::GetTaskRunnerForThread(
+                content::BrowserThread::FILE)
+                .get());
 
     move_src_ = file_system_context_->CreateCrackedFileSystemURL(
         GURL(kOrigin),

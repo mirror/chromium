@@ -22,14 +22,16 @@ storage::FileSystemContext* CreateFileSystemContextForTesting(
     storage::QuotaManagerProxy* quota_manager_proxy,
     const base::FilePath& base_path);
 
-// The caller is responsible for including TestFileSystemBackend in
-// |additional_providers| if needed.
+// The caller is responsible for providing TaskRunners and
+// TestFileSystemBackend in |additional_providers| (if needed.)
 storage::FileSystemContext*
 CreateFileSystemContextWithAdditionalProvidersForTesting(
     storage::QuotaManagerProxy* quota_manager_proxy,
     std::vector<std::unique_ptr<storage::FileSystemBackend>>
         additional_providers,
-    const base::FilePath& base_path);
+    const base::FilePath& base_path,
+    base::SingleThreadTaskRunner* io_task_runner,
+    base::SequencedTaskRunner* file_task_runner);
 
 storage::FileSystemContext* CreateFileSystemContextWithAutoMountersForTesting(
     storage::QuotaManagerProxy* quota_manager_proxy,
