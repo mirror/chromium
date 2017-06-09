@@ -1,0 +1,147 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0bfdabe4_d7b67c40",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "nit: constexpr",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 5
+      },
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66bab5ef_e6dce316",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 49,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 5
+      },
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1613a7f7_e5970b12",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 55,
+        "startChar": 5,
+        "endLine": 55,
+        "endChar": 6
+      },
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "545fdbe2_08442e59",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "won\u0027t this create static initializer?\n\nyou may want to make this a function and then  assign to static const inside the function.",
+      "range": {
+        "startLine": 60,
+        "startChar": 4,
+        "endLine": 60,
+        "endChar": 27
+      },
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "021b35ae_0f6cc262",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "remove default: and handle NOTREACHED outside of switch(){}\nthis way, if someone added new state but forgot to update this, this compiler will catch it.",
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce3f7f4f_8d9b44a2",
+        "filename": "ui/keyboard/keyboard_controller.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "nit:\n\nTODO(oka):",
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e8ee013_801a5194",
+        "filename": "ui/keyboard/keyboard_controller.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-09T13:29:59Z",
+      "side": 1,
+      "message": "nit: const",
+      "revId": "a0620c997fc900f5cfd0683e62aad0831a387f92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
