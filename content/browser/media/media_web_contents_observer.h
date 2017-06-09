@@ -25,6 +25,10 @@ namespace media {
 enum class MediaContentType;
 }  // namespace media
 
+namespace gfx {
+class Size;
+}  // namespace size
+
 namespace content {
 
 // This class manages all RenderFrame based media related managers at the
@@ -84,9 +88,12 @@ class CONTENT_EXPORT MediaWebContentsObserver : public WebContentsObserver {
                       bool has_audio,
                       bool is_remote,
                       media::MediaContentType media_content_type);
-  void OnMediaEffectivelyFullscreenChange(RenderFrameHost* render_frame_host,
-                                          int delegate_id,
-                                          bool is_fullscreen);
+  void OnMediaEffectivelyFullscreenChanged(RenderFrameHost* render_frame_host,
+                                           int delegate_id,
+                                           bool is_fullscreen);
+  void OnMediaSizeChanged(RenderFrameHost* render_frame_host,
+                          int delegate_id,
+                          const gfx::Size& size);
   void OnMediaVolumeChanged(RenderFrameHost* render_frame_host,
                             int delegate_id,
                             double volume);

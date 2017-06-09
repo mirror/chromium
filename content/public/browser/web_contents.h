@@ -774,6 +774,10 @@ class WebContents : public PageNavigator,
   // Sets whether the WebContents is for overlaying content on a page.
   virtual void SetIsOverlayContent(bool is_overlay_content) = 0;
 
+  // Returns a map containing the sizes of all currently playing videos.
+  using VideoSizeMap =
+      base::flat_map<WebContentsObserver::MediaPlayerId, gfx::Size>;
+  virtual const VideoSizeMap& GetCurrentlyPlayingVideoSizes() = 0;
   virtual int GetCurrentlyPlayingVideoCount() = 0;
   virtual bool IsFullscreen() = 0;
 
