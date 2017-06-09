@@ -541,6 +541,15 @@ class CORE_EXPORT HTMLMediaElement
 
   void ViewportFillDebouncerTimerFired(TimerBase*);
 
+  enum class PlayPromiseRejectReason {
+    kFailedAutoplayPolicy = 0,
+    kNoSupportedSources,
+    kInterruptedByPause,
+    kInterruptedByLoad,
+    kMax,
+  };
+  void RecordPlayPromiseRejected(PlayPromiseRejectReason) const;
+
   TaskRunnerTimer<HTMLMediaElement> load_timer_;
   TaskRunnerTimer<HTMLMediaElement> progress_event_timer_;
   TaskRunnerTimer<HTMLMediaElement> playback_progress_timer_;

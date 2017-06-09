@@ -28966,6 +28966,18 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Media.MediaElement.PlayPromiseReject"
+    enum="PlayPromiseRejectReason">
+  <owner>mlamouri@chromium.org</owner>
+  <owner>media-dev@chromium.org</owner>
+  <summary>
+    Recorded when an HTMLMediaElement play() promise is rejected (handled or
+    not) with the type of rejection. Another metric records if a given document
+    (see HTMLMediaElementPlayRejected in Blink.UseCounter.Features) allowing to
+    count the rejections per page load.
+  </summary>
+</histogram>
+
 <histogram name="Media.MicrophoneMuted" enum="MicrophoneMuteResult">
   <owner>henrika@chromium.org</owner>
   <summary>
