@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c78f6439_ee33be0b",
+        "filename": "ios/chrome/browser/ui/payments/cells/page_info_item.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-09T14:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58d360d8_7411da88",
+      "range": {
+        "startLine": 130,
+        "startChar": 35,
+        "endLine": 130,
+        "endChar": 39
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f8ac915_9f492108",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa3733e7_ac85a217",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-09T14:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f8ac915_9f492108",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 23
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3db9bcbd_a31fa44b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 441,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-09T14:21:21Z",
+      "side": 1,
+      "message": "The reason for this is because this boolean determines whether or not we should see the lock icon. In order to keep this the same as Android we only show the lock icon if the scheme is https. SchemeIsCryptographic includes other schemes besides just https.",
+      "parentUuid": "de27e3d6_70d00181",
+      "range": {
+        "startLine": 441,
+        "startChar": 45,
+        "endLine": 441,
+        "endChar": 53
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "296fca3d_96d8f8ac",
         "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
         "patchSetId": 8
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-09T11:30:34Z",
       "side": 1,
       "message": "I would prefer to not nest conditions, and to directly return the boolean result of the security level checks. \n\nIt looks like after the IsOriginSecure() test, the only cases where the URL will have noncryptographic scheme are localhost and filesystem URLs. So I think it would be clearer to have, after line 620:\n\nif (![self webState]-\u003eGetLastCommittedURL().SchemeIsCryptographic()) {\n  // The URL has a secure origin, but is not https, so it must be local. \n  // Return YES at this point, because localhost and filesystem URLS are considered\n  // secure regardless of scheme.\n  return YES;\n}\n\nAnd then after fetching the securityLevel, just:\n\nreturn securityLevel \u003d\u003d security_state::EV_SECURE || \n       securityLevel \u003d\u003d security_state::SECURE ||\n       securityLevel \u003d\u003d security_state::SECURE_WITH_POLICY_INSTALLED_CERT;",
+      "range": {
+        "startLine": 625,
+        "startChar": 6,
+        "endLine": 625,
+        "endChar": 7
+      },
+      "revId": "0445ee4529041be378fe3d2cd6cf79a08a3c7b92",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "175b70aa_167dda2b",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_manager.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-09T14:21:21Z",
+      "side": 1,
+      "message": "Makes sense to me! Fixed",
+      "parentUuid": "296fca3d_96d8f8ac",
       "range": {
         "startLine": 625,
         "startChar": 6,
