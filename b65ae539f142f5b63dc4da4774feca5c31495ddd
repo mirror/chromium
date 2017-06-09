@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8be99875_262897bd",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/parsing/offset-parsing-valid.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115751
+      },
+      "writtenOn": "2017-06-09T23:15:43Z",
+      "side": 1,
+      "message": "Why isn\u0027t the expected serialization just \"none 180deg\" (or \"none reverse\")? Where does the 0px and auto in the serialization come from?",
+      "revId": "b65ae539f142f5b63dc4da4774feca5c31495ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
