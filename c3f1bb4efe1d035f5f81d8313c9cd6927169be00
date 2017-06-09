@@ -126,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "6d2ef996_0cd8e08b",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-09T01:47:26Z",
+      "side": 1,
+      "message": "Either way we should follow what the Web IDL spec is saying, in the end state.\n\nhttps://heycam.github.io/webidl/#Exposed",
+      "parentUuid": "62381d7b_9016e23f",
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2faf96_8b6de447",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
         "patchSetId": 4
