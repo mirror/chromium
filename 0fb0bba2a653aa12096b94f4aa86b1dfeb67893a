@@ -117,6 +117,30 @@
       "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "377931f2_78e0d769",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-09T13:46:07Z",
+      "side": 1,
+      "message": "Nice, thanks for the tip",
+      "parentUuid": "4586be53_ad9e0976",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
