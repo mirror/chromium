@@ -61,6 +61,28 @@ class PLATFORM_EXPORT ResourceClient : public GarbageCollectedMixin {
  protected:
   ResourceClient() {}
 };
+
+// AsyncResourceClient is different from ResourceClient in several ways.
+//  - NotifyFinished is dispatched asynchronously.
+//  - AsyncResourceClients will be removed from Resource when the load finishes.
+//  - This class is not intended to be "subclassed" per each Resource subclass.
+//    There is no ImageAsyncResourceClient, for example.
+// AsyncResourceClient should be quite simple. All notifications must be
+// notified AFTER the loading finishes.
+class PLATFORM_EXPORT AsyncResourceClient : public GarbageCollectedMixin {
+ public:
+  virtual ~AsyncResourceClient() = default;
+
+  // Called asynchronously when loading finishes.
+  // Note that this can be dispatched after removing |this| client from a
+  // Resource, because of the asynchronicity.
+  virtual void NotifyFinished() = 0;
+  // Name for debugging
+  virtual String DebugName() const = 0;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() {}
+};
+
 }  // namespace blink
 
 #endif
