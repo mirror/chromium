@@ -1260,4 +1260,8 @@ void RenderWidgetCompositor::NotifySwapTime(ReportTimeCallback callback) {
       std::move(callback), base::ThreadTaskRunnerHandle::Get()));
 }
 
+void RenderWidgetCompositor::RequestBeginMainFrameNotExpected(bool new_state) {
+  layer_tree_host_->RequestBeginMainFrameNotExpected(new_state);
+}
+
 }  // namespace content
