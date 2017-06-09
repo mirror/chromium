@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f80185e_6ba0e6b8",
+        "filename": "docs/process/release_blockers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-09T19:53:44Z",
+      "side": 1,
+      "message": "Style nits: There is a Google style guide for markdown, if you haven\u0027t seen it: https://github.com/google/styleguide/blob/gh-pages/docguide/style.md\n\nThere should be blank lines between headers and paragraphs, and make sure that if your bullets are sentences, they have periods at the end.",
+      "revId": "50cf346a20c598a1cfe38afe941179337f60bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8b9642d_5bcb8d70",
+        "filename": "docs/process/release_blockers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-09T19:53:44Z",
+      "side": 1,
+      "message": "This doesn\u0027t actually work, Gitiles will strip the HTML. It does have support for tables, but probably not the background cell colors:\n\nhttps://gerrit.googlesource.com/gitiles/+/HEAD/Documentation/markdown.md#Tables\n\nYou can see what this looks like in Gitiles by clicking on the \"gitiles\" link at the top of the review UI for this file.",
+      "revId": "50cf346a20c598a1cfe38afe941179337f60bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60aa3b51_7430032c",
+        "filename": "docs/process/release_blockers.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-09T19:53:44Z",
+      "side": 1,
+      "message": "Nit: maybe \"You must explain your reason for doing so\" instead of \"It is mandatory to explain your rationale\"?",
+      "revId": "50cf346a20c598a1cfe38afe941179337f60bccb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
