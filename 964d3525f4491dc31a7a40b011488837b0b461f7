@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72573564_a51e2b16",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1166,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-09T18:25:25Z",
+      "side": 1,
+      "message": "This test is sharing a lot of code with the \"ScrollWithOverlappingNonScrollableLayer\". Please refactor a bit, for example, create a util function that is shared by both tests. In this case, we can avoid code duplication.",
+      "range": {
+        "startLine": 1165,
+        "startChar": 0,
+        "endLine": 1166,
+        "endChar": 60
+      },
+      "revId": "964d3525f4491dc31a7a40b011488837b0b461f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c703ef3b_6b8397b1",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1199,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-09T18:25:25Z",
+      "side": 1,
+      "message": "Please add comments here describing that this is a transparent layer that should participate hit testing.",
+      "range": {
+        "startLine": 1199,
+        "startChar": 45,
+        "endLine": 1199,
+        "endChar": 0
+      },
+      "revId": "964d3525f4491dc31a7a40b011488837b0b461f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
