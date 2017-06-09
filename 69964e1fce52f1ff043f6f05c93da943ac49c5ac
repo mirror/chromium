@@ -16,6 +16,24 @@
       "revId": "69964e1fce52f1ff043f6f05c93da943ac49c5ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "077a3d0a_0dd3e077",
+        "filename": "tools/vim/chromium.ycm_extra_conf.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-09T17:16:51Z",
+      "side": 1,
+      "message": "Done (I kept macOS, though, because that\u0027s what it\u0027s called these days).",
+      "parentUuid": "f3edd0d2_b66424ac",
+      "revId": "69964e1fce52f1ff043f6f05c93da943ac49c5ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
