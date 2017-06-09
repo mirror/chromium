@@ -19,6 +19,7 @@ TestMediaSinksObserver::~TestMediaSinksObserver() {
 }
 
 void TestMediaSinksObserver::OnSinksReceived(
+    blink::mojom::ScreenAvailability availability,
     const std::vector<MediaSink>& result) {
   sink_map.clear();
   for (const MediaSink& sink : result) {

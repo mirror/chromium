@@ -198,10 +198,13 @@ void MediaRouterMojoImpl::OnSinksReceived(
   auto* sinks_query = it->second.get();
   sinks_query->cached_sink_list = sinks;
   sinks_query->origins = origins;
+  blink::mojom::ScreenAvailability availability =
+      sinks.empty() ? blink::mojom::ScreenAvailability::UNAVAILABLE
+                    : blink::mojom::ScreenAvailability::AVAILABLE;
 
   if (sinks_query->observers.might_have_observers()) {
     for (auto& observer : sinks_query->observers) {
-      observer.OnSinksUpdated(*sinks_query->cached_sink_list,
+      observer.OnSinksUpdated(availability, *sinks_query->cached_sink_list,
                               sinks_query->origins);
     }
   } else {
@@ -464,7 +467,8 @@ bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
   // |observer| can be immediately notified with an empty list.
   sinks_query->observers.AddObserver(observer);
   if (availability_ == mojom::MediaRouter::SinkAvailability::UNAVAILABLE) {
-    observer->OnSinksUpdated(std::vector<MediaSink>(),
+    observer->OnSinksUpdated(blink::mojom::ScreenAvailability::UNAVAILABLE,
+                             std::vector<MediaSink>(),
                              std::vector<url::Origin>());
   } else {
     // Need to call MRPM to start observing sinks if the query is new.
@@ -474,7 +478,11 @@ bool MediaRouterMojoImpl::RegisterMediaSinksObserver(
           base::BindOnce(&MediaRouterMojoImpl::DoStartObservingMediaSinks,
                          base::Unretained(this), source_id));
     } else if (sinks_query->cached_sink_list) {
-      observer->OnSinksUpdated(*sinks_query->cached_sink_list,
+      blink::mojom::ScreenAvailability availability =
+          sinks_query->cached_sink_list->empty()
+              ? blink::mojom::ScreenAvailability::UNAVAILABLE
+              : blink::mojom::ScreenAvailability::AVAILABLE;
+      observer->OnSinksUpdated(availability, *sinks_query->cached_sink_list,
                                sinks_query->origins);
     }
   }

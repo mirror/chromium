@@ -138,7 +138,8 @@ class MediaRouterUITest : public ChromeRenderViewHostTestHarness {
   MediaSink CreateSinkCompatibleWithAllSources() {
     MediaSink sink("sinkId", "sinkName", MediaSink::GENERIC);
     for (auto* observer : media_sinks_observers_)
-      observer->OnSinksUpdated({sink}, std::vector<url::Origin>());
+      observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                               {sink}, std::vector<url::Origin>());
     return sink;
   }
 
@@ -587,7 +588,8 @@ TEST_F(MediaRouterUITest, NotFoundErrorOnCloseWithNoCompatibleSinks) {
   std::vector<url::Origin> origins;
   for (auto* observer : media_sinks_observers_) {
     if (observer->source().id() != presentation_url.spec()) {
-      observer->OnSinksUpdated(sinks, origins);
+      observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                               sinks, origins);
     }
   }
   // Destroying the UI should return the expected error from above to the error
@@ -620,7 +622,8 @@ TEST_F(MediaRouterUITest, AbortErrorOnClose) {
       MediaSourceForPresentationUrl(presentation_url).id();
   for (auto* observer : media_sinks_observers_) {
     if (observer->source().id() == presentation_source_id) {
-      observer->OnSinksUpdated(sinks, origins);
+      observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                               sinks, origins);
     }
   }
   // Destroying the UI should return the expected error from above to the error

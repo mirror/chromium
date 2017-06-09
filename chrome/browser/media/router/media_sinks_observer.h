@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "chrome/common/media_router/media_sink.h"
 #include "chrome/common/media_router/media_source.h"
+#include "third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h"
 #include "url/origin.h"
 
 namespace media_router {
@@ -36,22 +37,25 @@ class MediaSinksObserver {
   // initialized. This method is no-op if the observer is already initialized.
   bool Init();
 
-  // This function is invoked when the list of sinks compatible with |source_|
-  // has been updated. The result also contains the list of valid origins.
-  // If |origins| is empty or contains |origin_|, then |OnSinksReceived(sinks)|
-  // will be invoked with |sinks|. Otherwise, it will be invoked with an empty
-  // list.
-  void OnSinksUpdated(const std::vector<MediaSink>& sinks,
+  // This function is invoked when the screen availability changes for this
+  // observer. If the availability is AVAILABLE, |sinks| will contains the list
+  // of sinks compatible with |source_|. The result also contains the list of
+  // valid origins.
+  // If |origins| is empty or contains |origin_|, then the availability will
+  // change from AVAILABLE to SOURCE_NOT_SUPPORTED.
+  void OnSinksUpdated(blink::mojom::ScreenAvailability availability,
+                      const std::vector<MediaSink>& sinks,
                       const std::vector<url::Origin>& origins);
 
   const MediaSource& source() const { return source_; }
 
  protected:
-  // This function is invoked from |OnSinksUpdated(sinks, origins)|.
+  // This function is invoked from |OnSinksUpdated(...)|.
   // Implementations may not perform operations that modify the Media Router's
   // observer list. In particular, invoking this observer's destructor within
   // OnSinksReceived will result in undefined behavior.
-  virtual void OnSinksReceived(const std::vector<MediaSink>& sinks) = 0;
+  virtual void OnSinksReceived(blink::mojom::ScreenAvailability availability,
+                               const std::vector<MediaSink>& sinks) = 0;
 
  private:
   const MediaSource source_;

@@ -196,8 +196,9 @@ TEST_F(QueryResultManagerTest, MultipleQueries) {
   sinks_query_result.push_back(sink3);
   EXPECT_CALL(mock_observer_,
               OnResultsUpdated(VectorEquals(expected_sinks))).Times(1);
-  sinks_observer_it->second->OnSinksUpdated(sinks_query_result,
-                                            std::vector<url::Origin>());
+  sinks_observer_it->second->OnSinksUpdated(
+      blink::mojom::ScreenAvailability::AVAILABLE, sinks_query_result,
+      std::vector<url::Origin>());
 
   // Action: TAB_MIRROR -> [2, 3, 4]
   // Expected result:
@@ -225,8 +226,9 @@ TEST_F(QueryResultManagerTest, MultipleQueries) {
   ASSERT_TRUE(sinks_observer_it->second.get());
   EXPECT_CALL(mock_observer_,
               OnResultsUpdated(VectorEquals(expected_sinks))).Times(1);
-  sinks_observer_it->second->OnSinksUpdated(sinks_query_result,
-                                            {url::Origin(GURL(kOrigin))});
+  sinks_observer_it->second->OnSinksUpdated(
+      blink::mojom::ScreenAvailability::AVAILABLE, sinks_query_result,
+      {url::Origin(GURL(kOrigin))});
 
   // Action: Update presentation URL
   // Expected result:
@@ -261,7 +263,8 @@ TEST_F(QueryResultManagerTest, MultipleQueries) {
   EXPECT_CALL(mock_observer_, OnResultsUpdated(VectorEquals(expected_sinks)))
       .Times(1);
   sinks_observer_it->second->OnSinksUpdated(
-      sinks_query_result, {url::Origin(GURL("https://differentOrigin.com"))});
+      blink::mojom::ScreenAvailability::AVAILABLE, sinks_query_result,
+      {url::Origin(GURL("https://differentOrigin.com"))});
 
   // Action: Remove TAB_MIRROR observer
   // Expected result:
@@ -317,7 +320,8 @@ TEST_F(QueryResultManagerTest, MultipleUrls) {
   ASSERT_TRUE(sinks_observer_it->second.get());
 
   auto& source_b_observer = sinks_observer_it->second;
-  source_b_observer->OnSinksUpdated({sink2, sink4}, std::vector<url::Origin>());
+  source_b_observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                                    {sink2, sink4}, std::vector<url::Origin>());
   EXPECT_TRUE(IsDefaultSourceForSink(nullptr, sink1));
   EXPECT_TRUE(IsDefaultSourceForSink(&source_b, sink2));
   EXPECT_TRUE(IsDefaultSourceForSink(nullptr, sink3));
@@ -334,7 +338,8 @@ TEST_F(QueryResultManagerTest, MultipleUrls) {
   ASSERT_TRUE(sinks_observer_it->second.get());
 
   auto& source_c_observer = sinks_observer_it->second;
-  source_c_observer->OnSinksUpdated({sink1, sink2, sink3},
+  source_c_observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                                    {sink1, sink2, sink3},
                                     std::vector<url::Origin>());
   EXPECT_TRUE(IsDefaultSourceForSink(&source_c, sink1));
   EXPECT_TRUE(IsDefaultSourceForSink(&source_b, sink2));
@@ -352,7 +357,8 @@ TEST_F(QueryResultManagerTest, MultipleUrls) {
   ASSERT_TRUE(sinks_observer_it->second.get());
 
   auto& source_a_observer = sinks_observer_it->second;
-  source_a_observer->OnSinksUpdated({sink2, sink3, sink4},
+  source_a_observer->OnSinksUpdated(blink::mojom::ScreenAvailability::AVAILABLE,
+                                    {sink2, sink3, sink4},
                                     std::vector<url::Origin>());
   EXPECT_TRUE(IsDefaultSourceForSink(&source_c, sink1));
   EXPECT_TRUE(IsDefaultSourceForSink(&source_a, sink2));
@@ -370,8 +376,9 @@ TEST_F(QueryResultManagerTest, MultipleUrls) {
   ASSERT_TRUE(sinks_observer_it->second.get());
 
   auto& source_tab_observer = sinks_observer_it->second;
-  source_tab_observer->OnSinksUpdated({sink1, sink2},
-                                      std::vector<url::Origin>());
+  source_tab_observer->OnSinksUpdated(
+      blink::mojom::ScreenAvailability::AVAILABLE, {sink1, sink2},
+      std::vector<url::Origin>());
   EXPECT_TRUE(IsDefaultSourceForSink(&source_c, sink1));
   EXPECT_TRUE(IsDefaultSourceForSink(&source_a, sink2));
   EXPECT_TRUE(IsDefaultSourceForSink(&source_a, sink3));
