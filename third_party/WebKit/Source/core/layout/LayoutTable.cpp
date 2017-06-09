@@ -1311,7 +1311,8 @@ LayoutTableCell* LayoutTable::CellBelow(const LayoutTableCell* cell) const {
   return nullptr;
 }
 
-LayoutTableCell* LayoutTable::CellBefore(const LayoutTableCell* cell) const {
+LayoutTableCell* LayoutTable::CellProceeding(
+    const LayoutTableCell* cell) const {
   RecalcSectionsIfNeeded();
 
   LayoutTableSection* section = cell->Section();
@@ -1324,7 +1325,7 @@ LayoutTableCell* LayoutTable::CellBefore(const LayoutTableCell* cell) const {
   return section->PrimaryCellAt(cell->RowIndex(), eff_col - 1);
 }
 
-LayoutTableCell* LayoutTable::CellAfter(const LayoutTableCell* cell) const {
+LayoutTableCell* LayoutTable::CellFollowing(const LayoutTableCell* cell) const {
   RecalcSectionsIfNeeded();
 
   unsigned eff_col = AbsoluteColumnToEffectiveColumn(

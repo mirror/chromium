@@ -438,19 +438,20 @@ void LayoutTableCell::ComputeOverflow(LayoutUnit old_client_after_edge,
   unsigned top = CollapsedBorderHalfTop(true);
   unsigned bottom = CollapsedBorderHalfBottom(true);
 
+  // TODO(wangxianzhu): The following looks incorrect for vertical direction.
   // This cell's borders may be lengthened to match the widths of orthogonal
   // borders of adjacent cells. Expand visual overflow to cover the lengthened
   // parts.
   if ((left && !rtl) || (right && rtl)) {
-    if (LayoutTableCell* before = Table()->CellBefore(this)) {
-      top = std::max(top, before->CollapsedBorderHalfTop(true));
-      bottom = std::max(bottom, before->CollapsedBorderHalfBottom(true));
+    if (LayoutTableCell* proceeding = Table()->CellProceeding(this)) {
+      top = std::max(top, proceeding->CollapsedBorderHalfTop(true));
+      bottom = std::max(bottom, proceeding->CollapsedBorderHalfBottom(true));
     }
   }
   if ((left && rtl) || (right && !rtl)) {
-    if (LayoutTableCell* after = Table()->CellAfter(this)) {
-      top = std::max(top, after->CollapsedBorderHalfTop(true));
-      bottom = std::max(bottom, after->CollapsedBorderHalfBottom(true));
+    if (LayoutTableCell* following = Table()->CellFollowing(this)) {
+      top = std::max(top, following->CollapsedBorderHalfTop(true));
+      bottom = std::max(bottom, following->CollapsedBorderHalfBottom(true));
     }
   }
   if (top) {
@@ -627,12 +628,12 @@ CSSPropertyID LayoutTableCell::ResolveBorderProperty(
 
 CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
   LayoutTable* table = this->Table();
-  LayoutTableCell* cell_before = table->CellBefore(this);
+  LayoutTableCell* cell_proceeding = table->CellProceeding(this);
   // We can use the border shared with |cell_before| if it is valid.
-  if (cell_before && cell_before->collapsed_border_values_valid_ &&
-      cell_before->RowIndex() == RowIndex()) {
-    return cell_before->GetCollapsedBorderValues()
-               ? cell_before->GetCollapsedBorderValues()->EndBorder()
+  if (cell_proceeding && cell_proceeding->collapsed_border_values_valid_ &&
+      cell_proceeding->RowIndex() == RowIndex()) {
+    return cell_proceeding->GetCollapsedBorderValues()
+               ? cell_proceeding->GetCollapsedBorderValues()->EndBorder()
                : CollapsedBorderValue();
   }
 
@@ -647,10 +648,11 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
       ResolveColor(start_color_property), kBorderPrecedenceCell);
 
   // (2) The end border of the preceding cell.
-  if (cell_before) {
-    CollapsedBorderValue cell_before_adjoining_border = CollapsedBorderValue(
-        cell_before->BorderAdjoiningCellAfter(this),
-        cell_before->ResolveColor(end_color_property), kBorderPrecedenceCell);
+  if (cell_proceeding) {
+    CollapsedBorderValue cell_before_adjoining_border =
+        CollapsedBorderValue(cell_proceeding->BorderAdjoiningCellAfter(this),
+                             cell_proceeding->ResolveColor(end_color_property),
+                             kBorderPrecedenceCell);
     // |result| should be the 2nd argument as |cellBefore| should win in case of
     // equality per CSS 2.1 (Border conflict resolution, point 4).
     result = ChooseBorder(cell_before_adjoining_border, result);
@@ -709,7 +711,7 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedStartBorder() const {
   }
 
   // (6) The end border of the preceding column.
-  if (cell_before) {
+  if (cell_proceeding) {
     LayoutTable::ColAndColGroup col_and_col_group =
         table->ColElementAtAbsoluteColumn(AbsoluteColumnIndex() - 1);
     // Only apply the colgroup's border if this cell touches the colgroup edge.
@@ -759,13 +761,13 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedEndBorder() const {
   // have a cell after as a table doesn't have to be regular (any row can have
   // less cells than the total cell count).
   bool is_end_column = IsInEndColumn();
-  LayoutTableCell* cell_after =
-      is_end_column ? nullptr : table->CellAfter(this);
+  LayoutTableCell* cell_following =
+      is_end_column ? nullptr : table->CellFollowing(this);
   // We can use the border shared with |cell_after| if it is valid.
-  if (cell_after && cell_after->collapsed_border_values_valid_ &&
-      cell_after->RowIndex() == RowIndex()) {
-    return cell_after->GetCollapsedBorderValues()
-               ? cell_after->GetCollapsedBorderValues()->StartBorder()
+  if (cell_following && cell_following->collapsed_border_values_valid_ &&
+      cell_following->RowIndex() == RowIndex()) {
+    return cell_following->GetCollapsedBorderValues()
+               ? cell_following->GetCollapsedBorderValues()->StartBorder()
                : CollapsedBorderValue();
   }
 
@@ -780,10 +782,11 @@ CollapsedBorderValue LayoutTableCell::ComputeCollapsedEndBorder() const {
       ResolveColor(end_color_property), kBorderPrecedenceCell);
 
   // (2) The start border of the following cell.
-  if (cell_after) {
-    CollapsedBorderValue cell_after_adjoining_border = CollapsedBorderValue(
-        cell_after->BorderAdjoiningCellBefore(this),
-        cell_after->ResolveColor(start_color_property), kBorderPrecedenceCell);
+  if (cell_following) {
+    CollapsedBorderValue cell_after_adjoining_border =
+        CollapsedBorderValue(cell_following->BorderAdjoiningCellBefore(this),
+                             cell_following->ResolveColor(start_color_property),
+                             kBorderPrecedenceCell);
     result = ChooseBorder(result, cell_after_adjoining_border);
     if (!result.Exists())
       return result;

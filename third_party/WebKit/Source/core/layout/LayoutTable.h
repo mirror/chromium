@@ -365,10 +365,15 @@ class CORE_EXPORT LayoutTable final : public LayoutBlock {
       const LayoutTableSection*,
       SkipEmptySectionsValue = kDoNotSkipEmptySections) const;
 
+  // Returns the adjacent cell to the logical top, logical bottom, logical left
+  // and logical right of the given cell, in the table's direction. If there are
+  // multiple adjacent cells in the direction due to row or col spans, returns
+  // the primary LayoutTableCell of the first adjacent TableGridCell in the
+  // direction.
   LayoutTableCell* CellAbove(const LayoutTableCell*) const;
   LayoutTableCell* CellBelow(const LayoutTableCell*) const;
-  LayoutTableCell* CellBefore(const LayoutTableCell*) const;
-  LayoutTableCell* CellAfter(const LayoutTableCell*) const;
+  LayoutTableCell* CellProceeding(const LayoutTableCell*) const;
+  LayoutTableCell* CellFollowing(const LayoutTableCell*) const;
 
   using CollapsedBorderValues = Vector<CollapsedBorderValue>;
   const CollapsedBorderValues& CollapsedBorders() const {
