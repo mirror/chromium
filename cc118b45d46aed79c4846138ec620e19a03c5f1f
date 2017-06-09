@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "b9900dd8_cb991d81",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-09T03:13:54Z",
+      "side": 1,
+      "message": "Actually the lock is only needed for mBoundCallingPid I believe. mBindToCallerCheck is set only once before the binder is returned.",
+      "parentUuid": "3cf35911_380336a2",
+      "revId": "cc118b45d46aed79c4846138ec620e19a03c5f1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "61fe6239_41cc397a",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
         "patchSetId": 2
