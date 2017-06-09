@@ -447,6 +447,7 @@ void WebPluginContainerImpl::ScheduleAnimation() {
 
 void WebPluginContainerImpl::ReportGeometry() {
   LocalFrameView* parent = ParentFrameView();
+  VLOG(1) << "ReportGeometry=" << this << ", attached=" << is_attached_ << ", parent=" << parent;
   // We cannot compute geometry without a parent or layoutObject.
   if (!parent || !element_ || !element_->GetLayoutObject() || !web_plugin_)
     return;

@@ -96,6 +96,7 @@ class CORE_EXPORT WebPluginContainerImpl final : public WebPluginContainerBase {
   // EmbeddedContentView methods
   void SetFrameRect(const IntRect& frame_rect) override {
     frame_rect_ = frame_rect;
+    ReportGeometry();
   }
   const IntRect& FrameRect() const override { return frame_rect_; }
   void Paint(GraphicsContext&, const CullRect&) const override;
