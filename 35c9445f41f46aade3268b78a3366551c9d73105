@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "320a6851_d47305aa",
+        "filename": "third_party/WebKit/Source/core/page/ExternalPopupMenu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T06:51:35Z",
+      "side": 1,
+      "message": "Mind removing this comment? It looks stale.",
+      "range": {
+        "startLine": 196,
+        "startChar": 0,
+        "endLine": 198,
+        "endChar": 12
+      },
+      "revId": "35c9445f41f46aade3268b78a3366551c9d73105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24dcb414_879db291",
+        "filename": "third_party/WebKit/Source/core/page/ExternalPopupMenu.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T06:51:35Z",
+      "side": 1,
+      "message": "Mind removing this if () while things are changing? Line 199 assumes that this is not null, and it doesn\u0027t seem like DisconnectClient can be called from ToPopupMenbuItemIndex.",
+      "range": {
+        "startLine": 201,
+        "startChar": 6,
+        "endLine": 201,
+        "endChar": 20
+      },
+      "revId": "35c9445f41f46aade3268b78a3366551c9d73105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b875954_b50ad401",
+        "filename": "third_party/WebKit/Source/core/page/ExternalPopupMenu.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T06:51:35Z",
+      "side": 1,
+      "message": "Do you mind changing this to be passed as a mutable ref while it\u0027s changing? It looks like various things assume it\u0027s never null. Alternatively, just extract ChromeClient from the WebView or LocalFrame arguments.",
+      "range": {
+        "startLine": 57,
+        "startChar": 20,
+        "endLine": 57,
+        "endChar": 33
+      },
+      "revId": "35c9445f41f46aade3268b78a3366551c9d73105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec72185c_e02a3f5a",
         "filename": "third_party/WebKit/Source/core/page/ExternalPopupMenu.h",
         "patchSetId": 4
