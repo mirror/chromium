@@ -34,6 +34,24 @@
       "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aeb7ba3_89903699",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1144165
+      },
+      "writtenOn": "2017-06-09T18:31:17Z",
+      "side": 1,
+      "message": "Didn\u0027t know about that...\n\nSomewhat off-topic: is it really good to implicitly handle out-of-bound access to an array? I\u0027ve never written any code in this pattern...",
+      "parentUuid": "77079da1_ef1a0591",
+      "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
