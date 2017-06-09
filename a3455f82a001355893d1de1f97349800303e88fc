@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc8d1c06_ed7e929c",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-06-09T09:18:06Z",
+      "side": 1,
+      "message": "This method has side effects, so it does more than just returning a bool.\nCan you elaborate on them?",
+      "range": {
+        "startLine": 283,
+        "startChar": 1,
+        "endLine": 284,
+        "endChar": 48
+      },
+      "revId": "a3455f82a001355893d1de1f97349800303e88fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8be30928_a84adcc8",
+        "filename": "ios/chrome/browser/ui/reading_list/reading_list_mediator.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-06-09T09:18:06Z",
+      "side": 1,
+      "message": "I think you can remove this, as it is handled by lines 291-292",
+      "range": {
+        "startLine": 287,
+        "startChar": 2,
+        "endLine": 289,
+        "endChar": 3
+      },
+      "revId": "a3455f82a001355893d1de1f97349800303e88fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
