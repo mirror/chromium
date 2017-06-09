@@ -357,7 +357,7 @@ bool HungRendererDialogView::Cancel() {
     // Try to generate a crash report for the hung process.
     CrashDumpAndTerminateHungChildProcess(rph->GetHandle(), crash_keys);
 #else
-    rph->Shutdown(content::RESULT_CODE_HUNG, false);
+    rph->TerminateHungRenderProcess();
 #endif
   }
   return true;

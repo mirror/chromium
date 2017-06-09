@@ -722,6 +722,7 @@ test("content_browsertests") {
     "../child/site_isolation_stats_gatherer_browsertest.cc",
     "../renderer/accessibility/render_accessibility_impl_browsertest.cc",
     "../renderer/blink_platform_audio_hardware_browsertest.cc",
+    "../renderer/crasher_impl_browsertest.cc",
     "../renderer/gin_browsertest.cc",
     "../renderer/media/renderer_webmediaplayer_delegate_browsertest.cc",
     "../renderer/mouse_lock_dispatcher_browsertest.cc",

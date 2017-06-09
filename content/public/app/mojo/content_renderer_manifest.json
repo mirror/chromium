@@ -6,6 +6,7 @@
       "provides": {
         "browser": [
           "content::mojom::Child",
+          "content::mojom::Crasher",
           "content::mojom::EmbeddedWorkerInstanceClient",
           "content::mojom::EmbeddedWorkerSetup",
           "content::mojom::FrameFactory",
