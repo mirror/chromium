@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f87350c9_1d692281",
+        "filename": "chrome/browser/ui/omnibox/omnibox_view_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-09T02:51:35Z",
+      "side": 1,
+      "message": "I think it\u0027s equivalent, and clearer, to remove this line and instead do this below the loop:\n\n  ASSERT_NE(popup_model-\u003eresult().size(), i);\n\n(I changed from EXPECT to ASSERT since trying to set the hovered/selected line to |i| below in this case will trigger DCHECK failures.)",
+      "revId": "edf37fb77ad3cc80db0b7a75e33695353741db64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
