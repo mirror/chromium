@@ -466,36 +466,36 @@ class LayerTreeHostForTesting : public LayerTreeHost {
   bool test_started_;
 };
 
-class LayerTreeTestCompositorFrameSinkClient
-    : public TestCompositorFrameSinkClient {
- public:
-  explicit LayerTreeTestCompositorFrameSinkClient(TestHooks* hooks)
-      : hooks_(hooks) {}
+LayerTreeTestCompositorFrameSinkClient::LayerTreeTestCompositorFrameSinkClient(
+    TestHooks* hooks)
+    : hooks_(hooks) {}
 
-  // TestCompositorFrameSinkClient implementation.
-  std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
-      scoped_refptr<ContextProvider> compositor_context_provider) override {
-    return hooks_->CreateDisplayOutputSurfaceOnThread(
-        std::move(compositor_context_provider));
-  }
-  void DisplayReceivedLocalSurfaceId(
-      const LocalSurfaceId& local_surface_id) override {
-    hooks_->DisplayReceivedLocalSurfaceIdOnThread(local_surface_id);
-  }
-  void DisplayReceivedCompositorFrame(const CompositorFrame& frame) override {
-    hooks_->DisplayReceivedCompositorFrameOnThread(frame);
-  }
-  void DisplayWillDrawAndSwap(bool will_draw_and_swap,
-                              const RenderPassList& render_passes) override {
-    hooks_->DisplayWillDrawAndSwapOnThread(will_draw_and_swap, render_passes);
-  }
-  void DisplayDidDrawAndSwap() override {
-    hooks_->DisplayDidDrawAndSwapOnThread();
-  }
+std::unique_ptr<OutputSurface>
+LayerTreeTestCompositorFrameSinkClient::CreateDisplayOutputSurface(
+    scoped_refptr<ContextProvider> compositor_context_provider) {
+  return hooks_->CreateDisplayOutputSurfaceOnThread(
+      std::move(compositor_context_provider));
+}
 
- private:
-  TestHooks* hooks_;
-};
+void LayerTreeTestCompositorFrameSinkClient::DisplayReceivedLocalSurfaceId(
+    const LocalSurfaceId& local_surface_id) {
+  hooks_->DisplayReceivedLocalSurfaceIdOnThread(local_surface_id);
+}
+
+void LayerTreeTestCompositorFrameSinkClient::DisplayReceivedCompositorFrame(
+    const CompositorFrame& frame) {
+  hooks_->DisplayReceivedCompositorFrameOnThread(frame);
+}
+
+void LayerTreeTestCompositorFrameSinkClient::DisplayWillDrawAndSwap(
+    bool will_draw_and_swap,
+    const RenderPassList& render_passes) {
+  hooks_->DisplayWillDrawAndSwapOnThread(will_draw_and_swap, render_passes);
+}
+
+void LayerTreeTestCompositorFrameSinkClient::DisplayDidDrawAndSwap() {
+  hooks_->DisplayDidDrawAndSwapOnThread();
+}
 
 LayerTreeTest::LayerTreeTest()
     : compositor_frame_sink_client_(
@@ -864,11 +864,11 @@ void LayerTreeTest::RequestNewCompositorFrameSink() {
   RendererSettings renderer_settings;
   // Spend less time waiting for BeginFrame because the output is
   // mocked out.
-  renderer_settings.refresh_rate = 200.0;
+  constexpr double refresh_rate = 200.0;
   renderer_settings.resource_settings.buffer_to_texture_target_map =
       DefaultBufferToTextureTargetMapForTesting();
   auto compositor_frame_sink = CreateCompositorFrameSink(
-      renderer_settings, std::move(shared_context_provider),
+      renderer_settings, refresh_rate, std::move(shared_context_provider),
       std::move(worker_context_provider));
   compositor_frame_sink->SetClient(compositor_frame_sink_client_.get());
   layer_tree_host_->SetCompositorFrameSink(std::move(compositor_frame_sink));
@@ -877,6 +877,7 @@ void LayerTreeTest::RequestNewCompositorFrameSink() {
 std::unique_ptr<TestCompositorFrameSink>
 LayerTreeTest::CreateCompositorFrameSink(
     const RendererSettings& renderer_settings,
+    double refresh_rate,
     scoped_refptr<ContextProvider> compositor_context_provider,
     scoped_refptr<ContextProvider> worker_context_provider) {
   constexpr bool disable_display_vsync = false;
@@ -886,7 +887,8 @@ LayerTreeTest::CreateCompositorFrameSink(
   return base::MakeUnique<TestCompositorFrameSink>(
       compositor_context_provider, std::move(worker_context_provider),
       shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
-      impl_task_runner_, synchronous_composite, disable_display_vsync);
+      impl_task_runner_, synchronous_composite, disable_display_vsync,
+      refresh_rate);
 }
 
 std::unique_ptr<OutputSurface>
