@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b57765d2_2ee2e54f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-09T22:51:25Z",
+      "side": 1,
+      "message": "Oh man, ;) large patch\u0027s with a description that includes \"doing this\" and then \"Also... \" makes the reviewer groan. Split `em when there\u0027s more than one thing happening.",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "e3354b58ad89d0c3422000322063156460b25885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50a6f24_f570c2c0",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 472,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-09T22:51:25Z",
+      "side": 1,
+      "message": "Explain what this is. And point out that the impl uses an iframe to accomplish getting a device with services already discovered.",
+      "range": {
+        "startLine": 472,
+        "startChar": 9,
+        "endLine": 472,
+        "endChar": 57
+      },
+      "revId": "e3354b58ad89d0c3422000322063156460b25885",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
