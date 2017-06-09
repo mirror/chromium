@@ -22,6 +22,30 @@
       "revId": "ca2d37d4f62e1a290f60990e0c3804f8c510ec93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34cc8098_7f7dba5a",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-09T06:12:50Z",
+      "side": 1,
+      "message": "Yes, we post task to UI thread to \"clone\" a connector in this way we get a connector for current thread.\n\nI think the EncryptionMigrationScreenHandler runs in UI thread(I will double confirm with the file OWNER). so actually we don\u0027t need to post task, we can get the connector directly by \"content::ServiceManagerConnection::GetForProcess()-\u003eGetConnector()\".\n\nBut I didn\u0027t find any existed DCHECK_CURRENTLY_ON(content::BrowserThread::UI) in this class (and the its caller), that\u0027s why finally I still add the BindConnectorRequest and post it to UI thread.\n\nNow I feel it\u0027s better to add a \"DCHECK_CURRENTLY_ON(content::BrowserThread::UI)\" and get the connector directly. WDYT?",
+      "parentUuid": "e21864a1_b6df82a3",
+      "range": {
+        "startLine": 470,
+        "startChar": 47,
+        "endLine": 470,
+        "endChar": 64
+      },
+      "revId": "ca2d37d4f62e1a290f60990e0c3804f8c510ec93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
