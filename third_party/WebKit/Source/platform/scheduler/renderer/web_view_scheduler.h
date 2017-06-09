@@ -27,6 +27,8 @@ class PLATFORM_EXPORT WebViewScheduler {
     virtual float ExpensiveBackgroundThrottlingInitialBudget() = 0;
     virtual float ExpensiveBackgroundThrottlingMaxBudget() = 0;
     virtual float ExpensiveBackgroundThrottlingMaxDelay() = 0;
+
+    virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
   };
 
   virtual ~WebViewScheduler() {}
@@ -93,6 +95,8 @@ class PLATFORM_EXPORT WebViewScheduler {
   virtual void AudioStateChanged(bool is_audio_playing) = 0;
 
   virtual bool HasActiveConnectionForTest() const = 0;
+
+  virtual void RequestBeginMainFrameNotExpected(bool new_state) = 0;
 };
 
 }  // namespace blink
