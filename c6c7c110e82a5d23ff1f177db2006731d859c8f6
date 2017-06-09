@@ -16,6 +16,24 @@
       "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "508770bd_b8a150c8",
+        "filename": "chrome/app/main_dll_loader_win.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-09T20:29:32Z",
+      "side": 1,
+      "message": "Interesting. If the user chooses to Open Chrome, we\u0027ll see Launch.Modes\u003dLM_USER_EXPERIMENT. Otherwise, it\u0027s a bit random whether the toast is open long enough for the initial metrics upload to happen. Let me know if you think it\u0027s worth having a separate metric to cover this case. If so, I propose we do that in a separate CL. What do you think?",
+      "parentUuid": "f2ea78cb_a7ff990c",
+      "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
