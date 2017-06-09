@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "769c1976_f7cde389",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/services/gcm/InvalidationGcmUpstreamSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-09T14:37:01Z",
+      "side": 1,
+      "message": "AFAIK, this annotation isn\u0027t really enforced. I would do ThreadUtils.assertOnUiThread() to assert it, and IMO that would work as documentation too, which would make @MainThread superfluous. It doesn\u0027t really hurt either though, so up to you.",
+      "revId": "a53a9f2048bdb9f65f04a3e91256813174cfe2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
