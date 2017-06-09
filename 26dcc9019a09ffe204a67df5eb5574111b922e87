@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3a07be8_913821af",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-09T03:23:07Z",
+      "side": 1,
+      "message": "nit: grammar - should be \"Putting Exposed\u003dWindow...\"",
+      "revId": "26dcc9019a09ffe204a67df5eb5574111b922e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17896036_8ad32236",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleValue.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-09T03:23:07Z",
+      "side": 1,
+      "message": "nit: grammar - should be \"Putting Exposed\u003dWindow...\"",
+      "revId": "26dcc9019a09ffe204a67df5eb5574111b922e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
