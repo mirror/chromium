@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b012a6e_9265b64d",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-09T21:16:53Z",
+      "side": 1,
+      "message": "Other sqlite consumers take a different approach to recovery, they try to recover from corruption detected while opening and beyond, while processing sql statements\n\nI\u0027m honestly not too familiar with how the recovery mechanism is used by those consumers, but notice there is a difference in how its being used here. Question is, why is a different approach to recovery being take for this use case? The fact that is only kicks in at Open() time is a notable difference. Corruption can be detected long after the initial open, what happens in that case with the LoginDatabase?",
+      "range": {
+        "startLine": 538,
+        "startChar": 19,
+        "endLine": 538,
+        "endChar": 51
+      },
+      "revId": "71144ac9a15ace4731dd0ceb667cb632c049623e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32ec67fc_8fbf624f",
+        "filename": "sql/utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-09T21:16:53Z",
+      "side": 1,
+      "message": "it\u0027d be good to mention this requirement in the .h file",
+      "range": {
+        "startLine": 23,
+        "startChar": 2,
+        "endLine": 23,
+        "endChar": 8
+      },
+      "revId": "71144ac9a15ace4731dd0ceb667cb632c049623e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dfb8568_fd52835d",
+        "filename": "sql/utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-09T21:16:53Z",
+      "side": 1,
+      "message": "nit: maybe put recover somewhere in the name of this method, OpenAndRecoverDatabase()?",
+      "range": {
+        "startLine": 19,
+        "startChar": 16,
+        "endLine": 19,
+        "endChar": 33
+      },
+      "revId": "71144ac9a15ace4731dd0ceb667cb632c049623e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
