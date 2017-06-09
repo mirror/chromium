@@ -392,8 +392,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
       compositor_deps->IsGpuMemoryBufferCompositorResourcesEnabled();
   settings.enable_color_correct_rasterization =
       cmd.HasSwitch(switches::kEnableColorCorrectRendering);
-  settings.renderer_settings.enable_color_correct_rendering =
-      cmd.HasSwitch(switches::kEnableColorCorrectRendering);
   settings.resource_settings.buffer_to_texture_target_map =
       compositor_deps->GetBufferToTextureTargetMap();
 
@@ -402,8 +400,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.use_layer_lists = cmd.HasSwitch(cc::switches::kEnableLayerLists);
 
-  settings.renderer_settings.allow_antialiasing &=
-      !cmd.HasSwitch(cc::switches::kDisableCompositedAntialiasing);
   // The means the renderer compositor has 2 possible modes:
   // - Threaded compositing with a scheduler.
   // - Single threaded compositing without a scheduler (for layout tests only).
@@ -547,8 +543,6 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
 
   settings.disallow_non_exact_resource_reuse =
       cmd.HasSwitch(cc::switches::kDisallowNonExactResourceReuse);
-  settings.renderer_settings.disallow_non_exact_resource_reuse =
-      settings.disallow_non_exact_resource_reuse;
 
   return settings;
 }
