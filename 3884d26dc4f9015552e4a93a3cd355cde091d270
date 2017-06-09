@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6c50bc4_193ff60e",
+        "filename": "content/browser/compositor/test/no_transport_image_transport_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-09T20:54:21Z",
+      "side": 1,
+      "message": "Good thought. I think it\u0027s only 3 times so if I missed one lmk.",
+      "parentUuid": "a83c0c2b_7d397699",
+      "revId": "3884d26dc4f9015552e4a93a3cd355cde091d270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "21c9112f_9ceceac3",
         "filename": "content/browser/compositor/test/no_transport_image_transport_factory.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-09T17:01:02Z",
       "side": 1,
       "message": "Is there now two instances of SurfaceManagers? One in |frame_sink_manager_| and one here?",
+      "revId": "3884d26dc4f9015552e4a93a3cd355cde091d270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34350cc9_c0f10656",
+        "filename": "content/browser/compositor/test/no_transport_image_transport_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-09T20:54:21Z",
+      "side": 1,
+      "message": "Oops. I will use the one in frame_sink_manager_. Thanks!",
+      "parentUuid": "21c9112f_9ceceac3",
       "revId": "3884d26dc4f9015552e4a93a3cd355cde091d270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
