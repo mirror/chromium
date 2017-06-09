@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "25b884a2_d4e246aa",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-09T22:42:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f835a90_57d30a9d",
+      "range": {
+        "startLine": 64,
+        "startChar": 32,
+        "endLine": 64,
+        "endChar": 33
+      },
+      "revId": "2507e50aa5a5fa3c9e25c918c2f4f597a649d312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d544803_3724dcfe",
         "filename": "ash/shelf/voice_interaction_overlay.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-09T22:11:30Z",
       "side": 1,
       "message": "here. can you just check all places?",
+      "range": {
+        "startLine": 94,
+        "startChar": 44,
+        "endLine": 94,
+        "endChar": 51
+      },
+      "revId": "2507e50aa5a5fa3c9e25c918c2f4f597a649d312",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf205708_32081477",
+        "filename": "ash/shelf/voice_interaction_overlay.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123899
+      },
+      "writtenOn": "2017-06-09T22:42:18Z",
+      "side": 1,
+      "message": "missed this. hopefully get all places now.",
+      "parentUuid": "5d544803_3724dcfe",
       "range": {
         "startLine": 94,
         "startChar": 44,
