@@ -59,10 +59,11 @@
 
 namespace blink {
 
-ExternalPopupMenu::ExternalPopupMenu(LocalFrame& frame,
+ExternalPopupMenu::ExternalPopupMenu(ChromeClient* client,
+                                     LocalFrame& frame,
                                      HTMLSelectElement& owner_element,
                                      WebView& web_view)
-    : owner_element_(owner_element),
+    : PopupMenu(client, owner_element),
       local_frame_(frame),
       web_view_(web_view),
       dispatch_event_timer_(
@@ -74,7 +75,6 @@ ExternalPopupMenu::ExternalPopupMenu(LocalFrame& frame,
 ExternalPopupMenu::~ExternalPopupMenu() {}
 
 DEFINE_TRACE(ExternalPopupMenu) {
-  visitor->Trace(owner_element_);
   visitor->Trace(local_frame_);
   PopupMenu::Trace(visitor);
 }
@@ -88,7 +88,7 @@ bool ExternalPopupMenu::ShowInternal() {
   }
 
   WebPopupMenuInfo info;
-  GetPopupMenuInfo(info, *owner_element_);
+  GetPopupMenuInfo(info, *OwnerElement());
   if (info.items.empty())
     return false;
   WebLocalFrameBase* webframe =
@@ -96,7 +96,7 @@ bool ExternalPopupMenu::ShowInternal() {
   web_external_popup_menu_ =
       webframe->Client()->CreateExternalPopupMenu(info, this);
   if (web_external_popup_menu_) {
-    LayoutObject* layout_object = owner_element_->GetLayoutObject();
+    LayoutObject* layout_object = OwnerElement()->GetLayoutObject();
     if (!layout_object || !layout_object->IsBox())
       return false;
     FloatQuad quad(ToLayoutBox(layout_object)
@@ -141,8 +141,8 @@ void ExternalPopupMenu::DispatchEvent(TimerBase*) {
 }
 
 void ExternalPopupMenu::Hide() {
-  if (owner_element_)
-    owner_element_->PopupDidHide();
+  if (OwnerElement())
+    OwnerElement()->PopupDidHide();
   if (!web_external_popup_menu_)
     return;
   web_external_popup_menu_->Close();
@@ -157,7 +157,7 @@ void ExternalPopupMenu::UpdateFromElement(UpdateReason reason) {
         return;
       needs_update_ = true;
       TaskRunnerHelper::Get(TaskType::kUserInteraction,
-                            &owner_element_->GetDocument())
+                            &OwnerElement()->GetDocument())
           ->PostTask(BLINK_FROM_HERE, WTF::Bind(&ExternalPopupMenu::Update,
                                                 WrapPersistent(this)));
       break;
@@ -171,11 +171,11 @@ void ExternalPopupMenu::UpdateFromElement(UpdateReason reason) {
 }
 
 void ExternalPopupMenu::Update() {
-  if (!web_external_popup_menu_ || !owner_element_)
+  if (!web_external_popup_menu_ || !OwnerElement())
     return;
-  owner_element_->GetDocument().UpdateStyleAndLayoutTree();
+  OwnerElement()->GetDocument().UpdateStyleAndLayoutTree();
   // disconnectClient() might have been called.
-  if (!owner_element_)
+  if (!OwnerElement())
     return;
   needs_update_ = false;
 
@@ -187,7 +187,7 @@ void ExternalPopupMenu::Update() {
 
 void ExternalPopupMenu::DisconnectClient() {
   Hide();
-  owner_element_ = nullptr;
+  OwnerElement() = nullptr;
 }
 
 void ExternalPopupMenu::DidChangeSelection(int index) {}
@@ -196,23 +196,23 @@ void ExternalPopupMenu::DidAcceptIndex(int index) {
   // Calling methods on the HTMLSelectElement might lead to this object being
   // derefed. This ensures it does not get deleted while we are running this
   // method.
-  int popup_menu_item_index = ToPopupMenuItemIndex(index, *owner_element_);
+  int popup_menu_item_index = ToPopupMenuItemIndex(index, *OwnerElement());
 
-  if (owner_element_) {
-    owner_element_->PopupDidHide();
-    owner_element_->SelectOptionByPopup(popup_menu_item_index);
+  if (OwnerElement()) {
+    OwnerElement()->PopupDidHide();
+    OwnerElement()->SelectOptionByPopup(popup_menu_item_index);
   }
   web_external_popup_menu_ = 0;
 }
 
 // Android uses this function even for single SELECT.
 void ExternalPopupMenu::DidAcceptIndices(const WebVector<int>& indices) {
-  if (!owner_element_) {
+  if (!OwnerElement()) {
     web_external_popup_menu_ = 0;
     return;
   }
 
-  HTMLSelectElement* owner_element = owner_element_;
+  HTMLSelectElement* owner_element = OwnerElement();
   owner_element->PopupDidHide();
 
   if (indices.size() == 0) {
@@ -232,8 +232,8 @@ void ExternalPopupMenu::DidAcceptIndices(const WebVector<int>& indices) {
 }
 
 void ExternalPopupMenu::DidCancel() {
-  if (owner_element_)
-    owner_element_->PopupDidHide();
+  if (OwnerElement())
+    OwnerElement()->PopupDidHide();
   web_external_popup_menu_ = 0;
 }
 
