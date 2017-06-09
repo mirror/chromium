@@ -166,6 +166,30 @@
       "revId": "57c8500781d02982967d629392e7501c8110a936",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fef0b02_af68df26",
+        "filename": "base/task_scheduler/scheduler_worker_pool_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-09T00:31:34Z",
+      "side": 1,
+      "message": "OK, back to the first attempt for this CL (I didn\u0027t really come to anything sane with a WaitableEvent yet) and we can discuss tomorrow.",
+      "parentUuid": "d60e9e6f_1393a27a",
+      "range": {
+        "startLine": 276,
+        "startChar": 4,
+        "endLine": 284,
+        "endChar": 5
+      },
+      "revId": "57c8500781d02982967d629392e7501c8110a936",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
