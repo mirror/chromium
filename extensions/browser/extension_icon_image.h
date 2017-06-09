@@ -25,10 +25,6 @@ namespace extensions {
 class Extension;
 }
 
-namespace gfx {
-class Image;
-}
-
 namespace extensions {
 
 // A class that provides an ImageSkia for UI code to use. It handles extension
@@ -74,7 +70,6 @@ class IconImage : public content::NotificationObserver {
             Observer* observer);
   ~IconImage() override;
 
-  gfx::Image image() const { return image_; }
   const gfx::ImageSkia& image_skia() const { return image_skia_; }
 
   // Returns true if the icon is attached to an existing extension.
@@ -86,15 +81,12 @@ class IconImage : public content::NotificationObserver {
  private:
   class Source;
 
-  // Loads an image representation for the scale factor.
-  // If the representation gets loaded synchronously, it is returned by this
-  // method.
-  // If representation loading is asynchronous, an empty image
-  // representation is returned. When the representation gets loaded the
-  // observers' OnExtensionIconImageLoaded() will be called.
-  gfx::ImageSkiaRep LoadImageForScale(float scale);
+  // Loads an image representation for the scale factor asynchronously. Result
+  // is passed to OnImageRepLoaded.
+  void LoadImageForScaleAsync(float scale);
 
   void OnImageLoaded(float scale, const gfx::Image& image);
+  void OnImageRepLoaded(const gfx::ImageSkiaRep& rep);
 
   // content::NotificationObserver overrides:
   void Observe(int type,
@@ -113,10 +105,6 @@ class IconImage : public content::NotificationObserver {
   // The icon with whose representation |image_skia_| should be updated if
   // its own representation load fails.
   gfx::ImageSkia default_icon_;
-
-  // The image wrapper around |image_skia_|.
-  // Note: this is reset each time a new representation is loaded.
-  gfx::Image image_;
 
   content::NotificationRegistrar registrar_;
 
