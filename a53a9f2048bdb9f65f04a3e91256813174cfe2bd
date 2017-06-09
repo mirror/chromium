@@ -16,6 +16,24 @@
       "revId": "a53a9f2048bdb9f65f04a3e91256813174cfe2bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eac37b0_bb4cd079",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/services/gcm/InvalidationGcmUpstreamSender.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-09T15:01:31Z",
+      "side": 1,
+      "message": "Thanks. I\u0027ve added assertOnUiThread(). I think that MainThread annotation is helpful for static analysis, so I\u0027ll leave it, too.",
+      "parentUuid": "769c1976_f7cde389",
+      "revId": "a53a9f2048bdb9f65f04a3e91256813174cfe2bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
