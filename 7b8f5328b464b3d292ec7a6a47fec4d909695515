@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "593799a3_57f5d394",
+        "filename": "ios/showcase/core/app_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T12:30:10Z",
+      "side": 1,
+      "message": "Nit: s/showcase/Showcase",
+      "range": {
+        "startLine": 14,
+        "startChar": 48,
+        "endLine": 14,
+        "endChar": 56
+      },
+      "revId": "7b8f5328b464b3d292ec7a6a47fec4d909695515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30def988_1ffa8f77",
+        "filename": "ios/showcase/core/app_delegate.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T12:30:10Z",
+      "side": 1,
+      "message": "I\u0027d even just call it setUpUI. or resetUI.",
+      "range": {
+        "startLine": 15,
+        "startChar": 21,
+        "endLine": 15,
+        "endChar": 43
+      },
+      "revId": "7b8f5328b464b3d292ec7a6a47fec4d909695515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebe30c5_8a4b6c7b",
+        "filename": "ios/showcase/test/showcase_test_case.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T12:30:10Z",
+      "side": 1,
+      "message": "resetUI would be even more streamlined.",
+      "range": {
+        "startLine": 40,
+        "startChar": 18,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "7b8f5328b464b3d292ec7a6a47fec4d909695515",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
