@@ -109,6 +109,14 @@ GrContext* SharedGpuContext::Gr() {
   return nullptr;
 }
 
+gpu::GpuMemoryBufferManager* SharedGpuContext::GetGpuMemoryBufferManager() {
+  if (IsValid()) {
+    SharedGpuContext* this_ptr = GetInstanceForCurrentThread();
+    return this_ptr->context_provider_->GetGpuMemoryBufferManager();
+  }
+  return nullptr;
+}
+
 bool SharedGpuContext::IsValid() {
   SharedGpuContext* this_ptr = GetInstanceForCurrentThread();
   this_ptr->CreateContextProviderIfNeeded();

@@ -958,4 +958,11 @@ void CommandBufferProxyImpl::DisconnectChannel() {
     gpu_control_client_->OnGpuControlLostContext();
 }
 
+gpu::GpuMemoryBufferManager* CommandBufferProxyImpl::GetGpuMemoryBufferManager()
+    const {
+  if (!channel_)
+    return nullptr;
+  return channel_->gpu_memory_buffer_manager();
+}
+
 }  // namespace gpu

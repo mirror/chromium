@@ -63,10 +63,6 @@ namespace device {
 class Gamepads;
 }
 
-namespace gpu {
-class GpuMemoryBufferManager;
-}
-
 namespace service_manager {
 class Connector;
 }
@@ -504,10 +500,6 @@ class BLINK_PLATFORM_EXPORT Platform {
   // the context cannot be created or initialized.
   virtual std::unique_ptr<WebGraphicsContext3DProvider>
   CreateSharedOffscreenGraphicsContext3DProvider();
-
-  virtual gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() {
-    return nullptr;
-  }
 
   virtual std::unique_ptr<cc::SharedBitmap> AllocateSharedBitmap(
       const WebSize& size) {
