@@ -16,6 +16,24 @@
       "revId": "596ee99bcd4fa599b296814a07a13224aff8099d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9eedfe1b_60dd0196",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerScrollableArea.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 539,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-09T20:32:04Z",
+      "side": 1,
+      "message": "Yeah I was surprised as well.",
+      "parentUuid": "a2d088a2_cc4541be",
+      "revId": "596ee99bcd4fa599b296814a07a13224aff8099d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
