@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbc44524_6bee3d94",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_flash_browser_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-09T03:49:32Z",
+      "side": 1,
+      "message": "The GetWakeLock() runs in IO thread. See Line77 of \"chrome_browser_pepper_host_factory.cc\" and Line33 of \"browser_ppapi_host.h\".\nHere is a similar example that it wants to post task into UI threads.\n\nYes just like you said \"the existing connector is bound to the UI thread and we need to access this one on the IO thread\". So we have to post task to UI thread to \"clone\" a connector.",
+      "range": {
+        "startLine": 139,
+        "startChar": 19,
+        "endLine": 139,
+        "endChar": 45
+      },
+      "revId": "971a26111a28eeed50e22421c027eb96669f0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
