@@ -22,6 +22,76 @@
       "revId": "15190afd771c3ee8cd2386b723cff6a316dd3387",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07e582f2_ccc31670",
+        "filename": "gpu/command_buffer/client/mapped_memory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-09T23:13:37Z",
+      "side": 1,
+      "message": "The code above doesn\u0027t necessarily guarantee that this is shared memory based - if it\u0027s not, it just returns an invalid handle. So I think this is needed.",
+      "parentUuid": "87f29dc3_31e1f55d",
+      "range": {
+        "startLine": 194,
+        "startChar": 8,
+        "endLine": 194,
+        "endChar": 38
+      },
+      "revId": "15190afd771c3ee8cd2386b723cff6a316dd3387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8aa703b_f3a31cbc",
+        "filename": "ui/gl/gl_image_shared_memory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-09T23:13:37Z",
+      "side": 1,
+      "message": "nit: There used to be a way for this to be nullptr (there was a ::Destroy function which would leave us alive but invalid for a brief window). This is gone. Can you remove this case (code below would crash if this was ever false anyway).",
+      "range": {
+        "startLine": 80,
+        "startChar": 6,
+        "endLine": 80,
+        "endChar": 20
+      },
+      "revId": "15190afd771c3ee8cd2386b723cff6a316dd3387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f52f399_6215ee49",
+        "filename": "ui/gl/gl_image_shared_memory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-09T23:13:37Z",
+      "side": 1,
+      "message": "In this case, I don\u0027t believe this can ever be false. GLImageSharedMemory is always backed by real shared memory.",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 25
+      },
+      "revId": "15190afd771c3ee8cd2386b723cff6a316dd3387",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
