@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bfa88c70_759d0dfc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bead5062_f47b4d50",
+      "range": {
+        "startLine": 9,
+        "startChar": 13,
+        "endLine": 9,
+        "endChar": 23
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "485b2c7c_050721ea",
         "filename": "chrome/browser/chrome_browser_main_win.h",
         "patchSetId": 9
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b5b746b9_ddb0cfc0",
+        "filename": "chrome/browser/chrome_browser_main_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "485b2c7c_050721ea",
+      "range": {
+        "startLine": 80,
+        "startChar": 36,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e9c05fd_11809b61",
         "filename": "chrome/browser/conflicts/module_info_win.cc",
         "patchSetId": 9
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-08T19:31:39Z",
       "side": 1,
       "message": "intentional WS?",
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23009c2b_0496c5e7",
+        "filename": "chrome/browser/conflicts/module_info_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Yes. It does look weird since I don\u0027t have any changes in this file anymore.",
+      "parentUuid": "3e9c05fd_11809b61",
       "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "1581b129_4510408c",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3efb8c7b_6ccb9047",
+      "range": {
+        "startLine": 77,
+        "startChar": 3,
+        "endLine": 77,
+        "endChar": 8
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cb210f51_3654875b",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 9
@@ -108,6 +198,30 @@
       "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dfe8d9_0bf90c14",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb210f51_3654875b",
+      "range": {
+        "startLine": 69,
+        "startChar": 3,
+        "endLine": 69,
+        "endChar": 9
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "354619a6_b2130c4d",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8894c740_ea78a97a",
+      "range": {
+        "startLine": 142,
+        "startChar": 19,
+        "endLine": 142,
+        "endChar": 26
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0b3bdb62_59c8f589",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.h",
         "patchSetId": 9
@@ -154,6 +292,30 @@
       "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74826c58_b05b1309",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b3bdb62_59c8f589",
+      "range": {
+        "startLine": 27,
+        "startChar": 5,
+        "endLine": 27,
+        "endChar": 13
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -180,6 +342,30 @@
     },
     {
       "key": {
+        "uuid": "fc657997_5d7d40b7",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "7effb4c7_bb7f7c9d",
+      "range": {
+        "startLine": 89,
+        "startChar": 5,
+        "endLine": 89,
+        "endChar": 27
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15a03848_8c44dc53",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 9
@@ -191,6 +377,30 @@
       "writtenOn": "2017-06-08T19:31:39Z",
       "side": 1,
       "message": "Are these histograms recorded once per program lifetime? If you\u0027re only looking to communicate a closed set of counts, then blowing a histogram on each is pretty wasteful.\nMoar better is to use a single enum histogram. This then stores and communicates all the counts as a single histogram instance, avoiding the setup and storage and crap to communicate distributions.",
+      "range": {
+        "startLine": 77035,
+        "startChar": 17,
+        "endLine": 77035,
+        "endChar": 34
+      },
+      "revId": "5b1abeed7f5ad3b8d3adfcf1149805aac163f17e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab4ab9eb_f674ec47",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 9
+      },
+      "lineNbr": 77035,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-09T17:30:06Z",
+      "side": 1,
+      "message": "All the pre-existing ThirdPartyModules.Modules.* histograms will get removed when we get rid of enumerate_modules_model\n\nI\u0027ll make sure to consider your advice when I add more counts metrics",
+      "parentUuid": "15a03848_8c44dc53",
       "range": {
         "startLine": 77035,
         "startChar": 17,
