@@ -9,6 +9,7 @@
 #include <stdint.h>
 
 #include "base/mac/scoped_nsautorelease_pool.h"
+#include "base/message_loop/message_loop.h"
 #include "base/test/scoped_task_environment.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
@@ -107,10 +108,11 @@ class RenderWidgetHostViewMacEditCommandHelperTest : public PlatformTest {
  protected:
   void SetUp() override {
     ImageTransportFactory::InitializeForUnitTests(
-        std::unique_ptr<ImageTransportFactory>(
-            new NoTransportImageTransportFactory));
+        base::MakeUnique<NoTransportImageTransportFactory>());
   }
   void TearDown() override { ImageTransportFactory::Terminate(); }
+
+  base::MessageLoop message_loop_;
 };
 
 }  // namespace
