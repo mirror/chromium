@@ -44,6 +44,10 @@ class UkmEntryBuilder;
 class UkmInterface;
 class TestRecordingHelper;
 
+namespace internal {
+class UkmEntryBuilderBase;
+}
+
 // This feature controls whether UkmService should be created.
 UKM_EXPORT extern const base::Feature kUkmFeature;
 
@@ -80,6 +84,7 @@ class UKM_EXPORT UkmRecorder {
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
+  friend internal::UkmEntryBuilderBase;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
