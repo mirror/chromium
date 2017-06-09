@@ -13,4 +13,4 @@ layer at (0,0) size 800x600
       LayoutBlockFlow {DIV} at (0,80) size 871x100
         LayoutText {#text} at (0,0) size 748x15
           text run at (0,0) width 748: "and Anna, you can do your regular weekly report run, and I'll extract the key sections into this. Andrew and Mark, I'd like to include any new bits you have"
-caret: position 157 of child 0 {#text} of child 5 {DIV} of body
+caret: position 157 of child 0 {#text} of child 7 {DIV} of body

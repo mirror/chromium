@@ -417,7 +417,7 @@ inline bool IsAmbiguousBoundaryCharacter(UChar character) {
 
 String StringWithRebalancedWhitespace(const String&,
                                       bool start_is_start_of_paragraph,
-                                      bool should_emit_nbs_pbefore_end);
+                                      bool should_emit_nbsp_before_end);
 const String& NonBreakingSpaceString();
 
 // -------------------------------------------------------------------------
