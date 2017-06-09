@@ -122,6 +122,12 @@ class SafeBrowsingNavigationObserverManager
   // initialized.
   static bool IsEnabledAndReady(Profile* profile);
 
+  // Shorten URL if it has data scheme.
+  static std::string ShortenURL(const GURL& url);
+
+  // Sanitize referrer chain by only keeping origin information of all URLs.
+  static void SanitizeReferrerChain(ReferrerChain* referrer_chain);
+
   SafeBrowsingNavigationObserverManager();
 
   // Adds |nav_event| to |navigation_event_list_|. Object pointed to by
