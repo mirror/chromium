@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "32d0d25f_784ebd7e",
+        "filename": "content/browser/devtools/render_frame_devtools_agent_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-09T22:54:43Z",
+      "side": 1,
+      "message": "std::move() ?",
+      "range": {
+        "startLine": 162,
+        "startChar": 21,
+        "endLine": 162,
+        "endChar": 27
+      },
+      "revId": "25cf79dc4e573e84b19c12efa9aef3ef3c48853d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
