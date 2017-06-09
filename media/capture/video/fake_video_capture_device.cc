@@ -365,14 +365,19 @@ void PacmanFramePainter::DrawPacman(base::TimeDelta elapsed_time,
 
 FakePhotoDevice::FakePhotoDevice(
     std::unique_ptr<PacmanFramePainter> sk_n32_painter,
-    const FakeDeviceState* fake_device_state)
+    const FakeDeviceState* fake_device_state,
+    const FakePhotoDeviceConfig& config)
     : sk_n32_painter_(std::move(sk_n32_painter)),
-      fake_device_state_(fake_device_state) {}
+      fake_device_state_(fake_device_state),
+      config_(config) {}
 
 FakePhotoDevice::~FakePhotoDevice() = default;
 
 void FakePhotoDevice::TakePhoto(VideoCaptureDevice::TakePhotoCallback callback,
                                 base::TimeDelta elapsed_time) {
+  if (config_.should_fail_take_photo)
+    return;
+
   // Create a PNG-encoded frame and send it back to |callback|.
   auto required_sk_n32_buffer_size = VideoFrame::AllocationSize(
       PIXEL_FORMAT_ARGB, fake_device_state_->format.frame_size);
@@ -446,6 +451,9 @@ void FakeVideoCaptureDevice::GetPhotoCapabilities(
 
 void FakePhotoDevice::GetPhotoCapabilities(
     VideoCaptureDevice::GetPhotoCapabilitiesCallback callback) {
+  if (config_.should_fail_get_photo_capabilities)
+    return;
+
   mojom::PhotoCapabilitiesPtr photo_capabilities =
       mojom::PhotoCapabilities::New();
 
@@ -495,8 +503,19 @@ void FakePhotoDevice::GetPhotoCapabilities(
 void FakeVideoCaptureDevice::SetPhotoOptions(mojom::PhotoSettingsPtr settings,
                                              SetPhotoOptionsCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
+  photo_device_->SetPhotoOptions(std::move(settings), std::move(callback),
+                                 device_state_.get());
+}
+
+void FakePhotoDevice::SetPhotoOptions(
+    mojom::PhotoSettingsPtr settings,
+    VideoCaptureDevice::SetPhotoOptionsCallback callback,
+    FakeDeviceState* device_state_write_access) {
+  if (config_.should_fail_set_photo_options)
+    return;
+
   if (settings->has_zoom) {
-    device_state_->zoom =
+    device_state_write_access->zoom =
         std::max(kMinZoom, std::min(settings->zoom, kMaxZoom));
   }
 
