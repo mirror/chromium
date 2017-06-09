@@ -34,6 +34,7 @@
 #include "media/base/media.h"
 #include "media/base/timestamp_constants.h"
 #include "media/base/video_decoder_config.h"
+#include "media/gpu/android/device_info.h"
 #include "media/gpu/android_video_surface_chooser_impl.h"
 #include "media/gpu/avda_picture_buffer_manager.h"
 #include "media/gpu/content_video_view_overlay.h"
@@ -111,21 +112,17 @@ constexpr base::TimeDelta IdleTimerTimeOut = base::TimeDelta::FromSeconds(1);
 // On low end devices (< KitKat is always low-end due to buggy MediaCodec),
 // defer the surface creation until the codec is actually used if we know no
 // software fallback exists.
-bool ShouldDeferSurfaceCreation(
-    AVDACodecAllocator* codec_allocator,
-    const OverlayInfo& overlay_info,
-    VideoCodec codec,
-    const AndroidVideoDecodeAccelerator::PlatformConfig& platform_config) {
-  if (platform_config.force_deferred_surface_creation)
-    return true;
-
+bool ShouldDeferSurfaceCreation(AVDACodecAllocator* codec_allocator,
+                                const OverlayInfo& overlay_info,
+                                VideoCodec codec,
+                                DeviceInfo* device_info) {
   // TODO(liberato): We might still want to defer if we've got a routing
   // token.  It depends on whether we want to use it right away or not.
   if (overlay_info.HasValidSurfaceId() || overlay_info.HasValidRoutingToken())
     return false;
 
   return codec == kCodecH264 && codec_allocator->IsAnyRegisteredAVDA() &&
-         platform_config.sdk_int <= base::android::SDK_VERSION_JELLY_BEAN_MR2;
+         device_info->SdkVersion() <= base::android::SDK_VERSION_JELLY_BEAN_MR2;
 }
 
 std::unique_ptr<AndroidOverlay> CreateContentVideoViewOverlay(
@@ -221,16 +218,6 @@ static AVDAManager* GetManager() {
   return manager;
 }
 
-AndroidVideoDecodeAccelerator::PlatformConfig
-AndroidVideoDecodeAccelerator::PlatformConfig::CreateDefault() {
-  PlatformConfig config;
-
-  config.sdk_int = base::android::BuildInfo::GetInstance()->sdk_int();
-  config.allow_setsurface = MediaCodecUtil::IsSetOutputSurfaceSupported();
-
-  return config;
-}
-
 AndroidVideoDecodeAccelerator::BitstreamRecord::BitstreamRecord(
     const BitstreamBuffer& bitstream_buffer)
     : buffer(bitstream_buffer) {
@@ -250,7 +237,7 @@ AndroidVideoDecodeAccelerator::AndroidVideoDecodeAccelerator(
     const MakeGLContextCurrentCallback& make_context_current_cb,
     const GetGLES2DecoderCallback& get_gles2_decoder_cb,
     const AndroidOverlayMojoFactoryCB& overlay_factory_cb,
-    const PlatformConfig& platform_config)
+    DeviceInfo* device_info)
     : client_(nullptr),
       codec_allocator_(codec_allocator),
       make_context_current_cb_(make_context_current_cb),
@@ -266,7 +253,8 @@ AndroidVideoDecodeAccelerator::AndroidVideoDecodeAccelerator(
       codec_needs_reset_(false),
       defer_surface_creation_(false),
       surface_chooser_(std::move(surface_chooser)),
-      platform_config_(platform_config),
+      device_info_(device_info),
+      force_defer_surface_creation_for_testing_(false),
       overlay_factory_cb_(overlay_factory_cb),
       weak_this_factory_(this) {}
 
@@ -358,8 +346,9 @@ bool AndroidVideoDecodeAccelerator::Initialize(const Config& config,
 
   // If we're low on resources, we may decide to defer creation of the surface
   // until the codec is actually used.
-  if (ShouldDeferSurfaceCreation(codec_allocator_, config_.overlay_info,
-                                 codec_config_->codec, platform_config_)) {
+  if (force_defer_surface_creation_for_testing_ ||
+      ShouldDeferSurfaceCreation(codec_allocator_, config_.overlay_info,
+                                 codec_config_->codec, device_info_)) {
     // We should never be here if a SurfaceView is required.
     // TODO(liberato): This really isn't true with AndroidOverlay.
     DCHECK(!config_.overlay_info.HasValidSurfaceId());
@@ -468,7 +457,7 @@ void AndroidVideoDecodeAccelerator::OnSurfaceTransition(
   // change our output surface pre-M, ignore it.  For example, if the
   // compositor tells us that it can't use an overlay, well, there's not much
   // that we can do here unless we start falling forward to keyframes.
-  if (!platform_config_.allow_setsurface)
+  if (!device_info_->IsSetOutputSurfaceSupported())
     return;
 
   // If we're using a SurfaceTexture and are told to switch to one, then just
@@ -1388,7 +1377,7 @@ void AndroidVideoDecodeAccelerator::OnStopUsingOverlayImmediately(
   // If the API is available avoid having to restart the decoder in order to
   // leave fullscreen. If we don't clear the surface immediately during this
   // callback, the MediaCodec will throw an error as the surface is destroyed.
-  if (platform_config_.allow_setsurface) {
+  if (device_info_->IsSetOutputSurfaceSupported()) {
     // Since we can't wait for a transition, we must invalidate all outstanding
     // picture buffers to avoid putting the GL system in a broken state.
     picture_buffer_manager_.ReleaseCodecBuffers(output_picture_buffers_);
