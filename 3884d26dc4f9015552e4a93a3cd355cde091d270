@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a83c0c2b_7d397699",
+        "filename": "content/browser/compositor/test/no_transport_image_transport_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T17:01:02Z",
+      "side": 1,
+      "message": "Is it worth adding a helper function that connects FrameSinkManagerHost to MojoFrameSinkManager, this logic is repeated 4~ times in content.",
+      "revId": "3884d26dc4f9015552e4a93a3cd355cde091d270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21c9112f_9ceceac3",
+        "filename": "content/browser/compositor/test/no_transport_image_transport_factory.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T17:01:02Z",
+      "side": 1,
+      "message": "Is there now two instances of SurfaceManagers? One in |frame_sink_manager_| and one here?",
+      "revId": "3884d26dc4f9015552e4a93a3cd355cde091d270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
