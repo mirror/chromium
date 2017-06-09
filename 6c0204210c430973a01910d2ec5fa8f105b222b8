@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "867aed12_5987a2da",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T21:29:01Z",
+      "side": 1,
+      "message": "\"When the fake device fails\" ?",
+      "range": {
+        "startLine": 226,
+        "startChar": 4,
+        "endLine": 226,
+        "endChar": 45
+      },
+      "revId": "6c0204210c430973a01910d2ec5fa8f105b222b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
