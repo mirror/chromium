@@ -28,6 +28,8 @@ class FakeDesktopMediaList : public DesktopMediaList {
   void StartUpdating(DesktopMediaListObserver* observer) override;
   int GetSourceCount() const override;
   const Source& GetSource(int index) const override;
+  void SetMediaListType(content::DesktopMediaID::Type type) override;
+  content::DesktopMediaID::Type GetMediaListType() const override;
 
  private:
   std::vector<Source> sources_;
