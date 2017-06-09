@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "d5960aad_ae94c9ae",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-09T16:28:15Z",
+      "side": 1,
+      "message": "nit: add the needed //services/device dep too",
+      "revId": "971a26111a28eeed50e22421c027eb96669f0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbc44524_6bee3d94",
         "filename": "chrome/browser/renderer_host/pepper/pepper_flash_browser_host.cc",
         "patchSetId": 1
@@ -19,6 +36,23 @@
         "endLine": 139,
         "endChar": 45
       },
+      "revId": "971a26111a28eeed50e22421c027eb96669f0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "229dfa95_da06c655",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_flash_browser_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-09T16:28:15Z",
+      "side": 1,
+      "message": "nit: please document why we need to do this",
       "revId": "971a26111a28eeed50e22421c027eb96669f0323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
