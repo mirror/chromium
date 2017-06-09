@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a48fcabc_4cf06143",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001439
+      },
+      "writtenOn": "2017-06-09T07:56:36Z",
+      "side": 1,
+      "message": "Please use git cherry-pick -x to carry the \u0027cherry-picked\u0027 info segment:\n\n\nChange-Id: I864583b63f7978ad3161c61fca826a3d4cd9c586\nReviewed-on: https://chromium-review.googlesource.com/475132\nReviewed-by: Ned Nguyen \u003cnednguyen@google.com\u003e\nCommit-Queue: Ned Nguyen \u003cnednguyen@google.com\u003e\nCr-Commit-Position: refs/heads/master@{#464086}\n(cherry picked from commit 5f418b53fdc5b34cf7a1b8b2fa7dc99ff5d7624d)",
+      "revId": "ddfe84c87d3b3dbeb4f5bb13d2d9f00bebc8dcbd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
