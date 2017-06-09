@@ -184,6 +184,14 @@ class JniParams(object):
   _implicit_imports = []
 
   @staticmethod
+  def ResetStates():
+    JniParams._imports = []
+    JniParams._fully_qualified_class = ''
+    JniParams._package = ''
+    JniParams._inner_classes = []
+    JniParams._implicit_imports = []
+
+  @staticmethod
   def SetFullyQualifiedClass(fully_qualified_class):
     JniParams._fully_qualified_class = 'L' + fully_qualified_class
     JniParams._package = '/'.join(fully_qualified_class.split('/')[:-1])
@@ -773,6 +781,7 @@ $METHOD_STUBS
 
 // Step 3: RegisterNatives.
 $JNI_NATIVE_METHODS
+$REGISTER_NATIVES_EMPTY
 $REGISTER_NATIVES
 $CLOSE_NAMESPACE
 
@@ -786,7 +795,8 @@ $CLOSE_NAMESPACE
         'METHOD_STUBS': self.GetMethodStubsString(),
         'OPEN_NAMESPACE': self.GetOpenNamespaceString(),
         'JNI_NATIVE_METHODS': self.GetJNINativeMethodsString(),
-        'REGISTER_NATIVES': self.GetRegisterNativesString(),
+        'REGISTER_NATIVES_EMPTY': self.GetRegisterNativesString(True),
+        'REGISTER_NATIVES': self.GetRegisterNativesString(False),
         'CLOSE_NAMESPACE': self.GetCloseNamespaceString(),
         'HEADER_GUARD': self.header_guard,
         'INCLUDES': self.GetIncludesString(),
@@ -860,7 +870,7 @@ ${KMETHODS}
 """)
     return self.SubstituteNativeMethods(template)
 
-  def GetRegisterNativesString(self):
+  def GetRegisterNativesString(self, is_empty_register):
     """Returns the code for RegisterNatives."""
     natives = self.GetRegisterNativesImplString()
     if not natives:
@@ -873,7 +883,19 @@ ${NATIVES}
   return true;
 }
 """)
-    signature = 'static bool RegisterNativesImpl(JNIEnv* env)'
+    if is_empty_register:
+      signature = 'static bool RegisterNativesImpl(JNIEnv* env)'
+      values = {'REGISTER_NATIVES_SIGNATURE': signature,
+                'EARLY_EXIT': '',
+                'NATIVES': '',
+               }
+      return template.substitute(values)
+
+    java_name = self.fully_qualified_class.replace('_', '_1').title().replace(
+        '/', '')
+    signature = 'JNI_REGISTRATION_EXPORT bool RegisterNative' + java_name + \
+                '(JNIEnv* env)'
+
     early_exit = ''
     if self.options.native_exports_optional:
       early_exit = """\
