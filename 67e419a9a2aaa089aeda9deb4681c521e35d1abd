@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07fd7ee6_e9ec092b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "move this near the constant definition",
+      "range": {
+        "startLine": 454,
+        "startChar": 23,
+        "endLine": 454,
+        "endChar": 38
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70dc38a3_fcd9736d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 456,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "If cancellation is handled by the ImageFetcherRequest, this can be made a dumb anonymous callback rather than an explicit class here",
+      "range": {
+        "startLine": 456,
+        "startChar": 25,
+        "endLine": 456,
+        "endChar": 43
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07564daa_d599ee0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "remove this class? It is now defined ImageFetcher",
+      "range": {
+        "startLine": 481,
+        "startChar": 25,
+        "endLine": 481,
+        "endChar": 42
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c273dbc1_85117731",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "add javadoc to say that these are sizes in pixels?",
+      "range": {
+        "startLine": 44,
+        "startChar": 31,
+        "endLine": 44,
+        "endChar": 62
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c42196e4_34d89f74",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "log the error or at least add a comment in the public method to say that we don\u0027t call the callback if the url can\u0027t be parsed?",
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eee31e70_a30bc76c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "could you please move the histogram recording methods to SuggestionsMetrics.java? It can be static there.",
+      "range": {
+        "startLine": 192,
+        "startChar": 17,
+        "endLine": 192,
+        "endChar": 39
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a4dec40_7b46d897",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "This is a one liner used only in one place. Inline in `fetchFaviconFromLocalCache`?",
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9460cf84_19a60b14",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "s/articles/suggestions",
+      "range": {
+        "startLine": 324,
+        "startChar": 24,
+        "endLine": 324,
+        "endChar": 32
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a40c5e_d61871f9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 335,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "article as a variable name of a snippetArticle instance is not a good practice (not representative that it can be a download for example). use mSuggestion instead?",
+      "range": {
+        "startLine": 335,
+        "startChar": 31,
+        "endLine": 335,
+        "endChar": 39
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6615e498_00b91950",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 1,
+      "message": "this is never reached, right? It might be a nice idea to use the request for large icons too (and remove the existing methods), but then you would need to add a `forUrl()` method, because we don\u0027t have an article to provide from the site tiles.\n\nAt the point where you add `forUrl` and `intoLargeIconCallback` which only works with large icons, the pattern looks worse than using plain methods, having only cancellation over it.",
+      "range": {
+        "startLine": 447,
+        "startChar": 21,
+        "endLine": 447,
+        "endChar": 31
+      },
+      "revId": "67e419a9a2aaa089aeda9deb4681c521e35d1abd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

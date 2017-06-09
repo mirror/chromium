@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876cceba_ba932a9a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T10:27:15Z",
+      "side": 0,
+      "message": "Doesn\u0027t cancellation need to be handled with the image fetcher too? Maybe store the request instead of the ImageFetcherRequest instead of the callback and properly handle cancellation there?",
+      "range": {
+        "startLine": 413,
+        "startChar": 12,
+        "endLine": 413,
+        "endChar": 38
+      },
+      "revId": "b5c527dba88efb7eacc3a9bc7a565f937b988e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
