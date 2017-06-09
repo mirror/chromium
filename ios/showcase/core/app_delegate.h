@@ -11,6 +11,9 @@
 
 @property(strong, nonatomic) UIWindow* window;
 
+// Returns a new view controller displaying the showcase home.
++ (UIViewController*)showcaseViewController;
+
 @end
 
 #endif  // IOS_SHOWCASE_CORE_APP_DELEGATE_H_

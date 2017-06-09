@@ -7,6 +7,7 @@
 #import <EarlGrey/EarlGrey.h>
 
 #import "base/logging.h"
+#import "ios/showcase/core/app_delegate.h"
 #include "testing/coverage_util_ios.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -31,6 +32,12 @@
     return @[];
   }
   return [super testInvocations];
+}
+
+- (void)setUp {
+  id<UIApplicationDelegate> delegate =
+      [[UIApplication sharedApplication] delegate];
+  delegate.window.rootViewController = [AppDelegate showcaseViewController];
 }
 
 @end

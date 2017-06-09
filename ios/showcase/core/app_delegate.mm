@@ -18,17 +18,22 @@
 @implementation AppDelegate
 @synthesize window = _window;
 
++ (UIViewController*)showcaseViewController {
+  ShowcaseViewController* viewController =
+      [[ShowcaseViewController alloc] initWithRows:[self rowsToDisplay]];
+  UINavigationController* navigationController = [[UINavigationController alloc]
+      initWithRootViewController:viewController];
+}
+
+#pragma mark - UIApplicationDelegate
+
 - (BOOL)application:(UIApplication*)application
     didFinishLaunchingWithOptions:(NSDictionary*)launchOptions {
   base::MakeUnique<IOSChromeMain>();
   ResourceBundle::InitSharedInstanceWithLocale(
       std::string(), nullptr, ResourceBundle::LOAD_COMMON_RESOURCES);
   self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-  ShowcaseViewController* viewController =
-      [[ShowcaseViewController alloc] initWithRows:[self rowsToDisplay]];
-  UINavigationController* navigationController = [[UINavigationController alloc]
-      initWithRootViewController:viewController];
-  self.window.rootViewController = navigationController;
+  self.window.rootViewController = [[self class] showcaseViewController];
   [self.window makeKeyAndVisible];
 
   return YES;
