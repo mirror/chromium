@@ -70,6 +70,7 @@ class SerializedScriptValue;
 class WebServiceWorkerNetworkProvider;
 struct ViewportDescriptionWrapper;
 
+// The DocumentLoader fetches a main resource and handles the result.
 class CORE_EXPORT DocumentLoader
     : public GarbageCollectedFinalized<DocumentLoader>,
       private RawResourceClient {
@@ -163,7 +164,7 @@ class CORE_EXPORT DocumentLoader
   void SetItemForHistoryNavigation(HistoryItem* item) { history_item_ = item; }
   HistoryItem* GetHistoryItem() const { return history_item_; }
 
-  void StartLoadingMainResource();
+  void StartLoading();
 
   DocumentLoadTiming& GetTiming() { return document_load_timing_; }
   const DocumentLoadTiming& GetTiming() const { return document_load_timing_; }
@@ -291,7 +292,7 @@ class CORE_EXPORT DocumentLoader
   Member<LocalFrame> frame_;
   Member<ResourceFetcher> fetcher_;
 
-  Member<RawResource> main_resource_;
+  Member<RawResource> resource_;
   Member<HistoryItem> history_item_;
 
   Member<DocumentWriter> writer_;

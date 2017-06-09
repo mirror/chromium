@@ -86,7 +86,7 @@ class CORE_EXPORT FrameLoader final {
 
   ProgressTracker& Progress() const { return *progress_tracker_; }
 
-  // Starts a load. It will eventually call startLoad() or loadInSameDocument().
+  // Starts a load. It will eventually call StartLoad() or LoadInSameDocument().
   // For history navigations or reloads, an appropriate FrameLoadType should be
   // given. Otherwise, FrameLoadTypeStandard should be used (and the final
   // FrameLoadType will be computed). For history navigations, a history item
@@ -258,10 +258,10 @@ class CORE_EXPORT FrameLoader final {
   std::unique_ptr<TracedValue> ToTracedValue() const;
   void TakeObjectSnapshot() const;
 
-  DocumentLoader* CreateDocumentLoader(const ResourceRequest&,
-                                       const FrameLoadRequest&,
-                                       FrameLoadType,
-                                       NavigationType);
+  DocumentLoader* CreateDocumentLoaderForStartLoad(const ResourceRequest&,
+                                                   const FrameLoadRequest&,
+                                                   FrameLoadType,
+                                                   NavigationType);
 
   Member<LocalFrame> frame_;
   AtomicString required_csp_;
