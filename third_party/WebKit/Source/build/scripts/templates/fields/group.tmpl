@@ -1,5 +1,5 @@
-{% from 'fields/field.tmpl' import encode, declare_storage, compare %}
-{% from 'macros.tmpl' import print_if %}
+{% from 'templates/fields/field.tmpl' import encode, declare_storage, compare %}
+{% from 'templates/macros.tmpl' import print_if %}
 {% macro declare_field_group_class(group): -%}
 class {{group.type_name}} : public RefCounted<{{group.type_name}}> {
  public:
