@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c55b34ae_730cb184",
+        "filename": "third_party/WebKit/public/platform/WebContentLayer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-09T16:26:00Z",
+      "side": 1,
+      "message": "How about:\n\nSetAllowsTransformedRasterization()\n\nand\n\nAllowsTransformedRasterizationFor()\n\nSetAllow... and GetAllow... sound too confusing to me.",
+      "revId": "aa4794e4236d621319970ac17b566080e84ed20e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
