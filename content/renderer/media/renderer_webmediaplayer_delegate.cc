@@ -103,6 +103,12 @@ void RendererWebMediaPlayerDelegate::DidPlay(
   ScheduleUpdateTask();
 }
 
+void RendererWebMediaPlayerDelegate::DidPlayerVolumeChange(int delegate_id,
+                                                           double volume) {
+  Send(new MediaPlayerDelegateHostMsg_OnVolumeChanged(routing_id(), delegate_id,
+                                                      volume));
+}
+
 void RendererWebMediaPlayerDelegate::DidPause(int player_id) {
   DVLOG(2) << __func__ << "(" << player_id << ")";
   DCHECK(id_map_.Lookup(player_id));

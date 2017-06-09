@@ -153,6 +153,20 @@ TEST_F(RendererWebMediaPlayerDelegateTest, SendsMessagesCorrectly) {
         MediaPlayerDelegateHostMsg_OnMediaDestroyed::Read(msg, &result));
     EXPECT_EQ(delegate_id, std::get<0>(result));
   }
+
+  // Verify the volume message.
+  {
+    test_sink().ClearMessages();
+    delegate_manager_->DidPlayerVolumeChange(delegate_id, 0.63);
+    const IPC::Message* msg = test_sink().GetUniqueMessageMatching(
+        MediaPlayerDelegateHostMsg_OnVolumeChanged::ID);
+    ASSERT_TRUE(msg);
+
+    std::tuple<int, double> result;
+    ASSERT_TRUE(MediaPlayerDelegateHostMsg_OnVolumeChanged::Read(msg, &result));
+    EXPECT_EQ(delegate_id, std::get<0>(result));
+    EXPECT_EQ(0.63, std::get<1>(result));
+  }
 }
 
 TEST_F(RendererWebMediaPlayerDelegateTest, DeliversObserverNotifications) {

@@ -88,6 +88,9 @@ class WebMediaPlayerDelegate {
   // so that we can do the right thing with media that starts paused.
   virtual void DidPause(int player_id) = 0;
 
+  // Notify that the volume of the media player has changed.
+  virtual void DidPlayerVolumeChange(int delegate_id, double volume) = 0;
+
   // Notify that playback is stopped. This will drop wake locks and remove any
   // external controls.
   //
