@@ -247,6 +247,7 @@ bool OverlayCandidate::IsInvisibleQuad(const DrawQuad* quad) {
 bool OverlayCandidate::IsOccluded(const OverlayCandidate& candidate,
                                   QuadList::ConstIterator quad_list_begin,
                                   QuadList::ConstIterator quad_list_end) {
+  return false;  // Ignore occlusion.
   // Check that no visible quad overlaps the candidate.
   for (auto overlap_iter = quad_list_begin; overlap_iter != quad_list_end;
        ++overlap_iter) {
