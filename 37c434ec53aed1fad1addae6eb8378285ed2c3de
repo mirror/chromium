@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2f2ea2ca_567e2c5d",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-09T02:10:01Z",
+      "side": 1,
+      "message": "I wonder if this could be part of border_and_padding_, I there a place where we are using border_and_padding_ where we _wouldn\u0027t_ want to include the scrollbar size?",
+      "range": {
+        "startLine": 185,
+        "startChar": 24,
+        "endLine": 185,
+        "endChar": 38
+      },
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d2f5b6c_b380d978",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 3
@@ -47,6 +70,52 @@
       "writtenOn": "2017-06-08T21:21:57Z",
       "side": 1,
       "message": "why not just scrollbars.block_start?",
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b56fd39d_77130984",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-09T02:10:01Z",
+      "side": 1,
+      "message": "what is the reason for adding scrollbar_size.block_start here?",
+      "range": {
+        "startLine": 232,
+        "startChar": 38,
+        "endLine": 232,
+        "endChar": 39
+      },
+      "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "641174a3_b51f2759",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-09T02:10:01Z",
+      "side": 1,
+      "message": "are you sure?",
+      "range": {
+        "startLine": 255,
+        "startChar": 15,
+        "endLine": 255,
+        "endChar": 17
+      },
       "revId": "37c434ec53aed1fad1addae6eb8378285ed2c3de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
