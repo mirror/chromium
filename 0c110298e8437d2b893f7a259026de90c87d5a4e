@@ -33,6 +33,24 @@
       "revId": "0c110298e8437d2b893f7a259026de90c87d5a4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc03bb73_7f55f679",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-09T06:27:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "113e8364_ae459cc4",
+      "revId": "0c110298e8437d2b893f7a259026de90c87d5a4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
