@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "73d0aa36_0f910759",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-09T18:37:37Z",
+      "side": 1,
+      "message": "Done, here and in v8_attributes.py",
+      "parentUuid": "36ee9595_d7abafba",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa9676c6_1e9e970e",
         "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterface.cpp",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-09T15:44:56Z",
       "side": 1,
       "message": "super-nit: possible to use -%} syntax to avoid spurious newline diffs?",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6fd208e_5078acba",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8TestInterface.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-09T18:37:37Z",
+      "side": 1,
+      "message": "I think I\u0027ve reduced it by a fair bit. I have no idea what\u0027s causing the remaining ones now..",
+      "parentUuid": "fa9676c6_1e9e970e",
       "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d8519f35_83bc7139",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-09T18:37:37Z",
+      "side": 1,
+      "message": "I just did it to separate the counters in code really (to make it clear which counters are used in bindings). I can make a FOR_EACH macro to cover both, so we don\u0027t need to say both in multiple places.",
+      "parentUuid": "77896fdf_502f3501",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "80c58920_2444ecc6",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91041f4b_65523e76",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStatsTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-09T18:37:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "80c58920_2444ecc6",
+      "revId": "d9d5e03048e5c0119c6573d2de25386904d78988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
