@@ -198,6 +198,24 @@
       "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63ad1d07_defc26c3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-type.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T19:45:04Z",
+      "side": 1,
+      "message": "I was just wondering. Sounds probably ok for now.",
+      "parentUuid": "a4aef07e_3eb363a2",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
