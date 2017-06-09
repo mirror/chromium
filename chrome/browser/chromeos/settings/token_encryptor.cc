@@ -97,7 +97,7 @@ std::string CryptohomeTokenEncryptor::EncryptTokenWithKey(
 }
 
 std::string CryptohomeTokenEncryptor::DecryptTokenWithKey(
-    crypto::SymmetricKey* key,
+    const crypto::SymmetricKey* key,
     const std::string& salt,
     const std::string& encrypted_token_hex) {
   std::vector<uint8_t> encrypted_token_bytes;
