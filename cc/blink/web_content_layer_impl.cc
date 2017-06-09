@@ -64,6 +64,11 @@ void WebContentLayerImpl::SetAllowTransformedRasterization(bool allowed) {
       ->SetAllowTransformedRasterization(allowed);
 }
 
+bool WebContentLayerImpl::GetAllowTransformedRasterization() const {
+  return static_cast<PictureLayer*>(layer_->layer())
+      ->allow_transformed_rasterization();
+}
+
 gfx::Rect WebContentLayerImpl::PaintableRegion() {
   return client_->PaintableRegion();
 }
