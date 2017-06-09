@@ -66,6 +66,10 @@ UIView* TestWebState::GetView() {
   return view_;
 }
 
+bool TestWebState::IsCrashed() {
+  return false;
+}
+
 const NavigationManager* TestWebState::GetNavigationManager() const {
   return navigation_manager_.get();
 }
