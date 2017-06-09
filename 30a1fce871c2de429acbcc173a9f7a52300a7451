@@ -104,6 +104,24 @@
       "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5b1791_105d5d30",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T03:31:41Z",
+      "side": 1,
+      "message": "Sorry for being very unclear, I just was afraid if adding more state to ResourceFetcher is good because it already does a lot.  (I think Toyoshima-san and Hiroshige-san chatted a bit and came up with slightly different solution though)",
+      "parentUuid": "884dee81_64ade2c0",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
