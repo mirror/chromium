@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "8e69f5d2_50f8cf6e",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-09T16:17:57Z",
+      "side": 1,
+      "message": "Ok, I guess I don\u0027t know then why some tests need it and other don\u0027t. Any ideas? I think the guidance was that we should always wait for domain enables to complete, or am I misremembering?",
+      "parentUuid": "9e19b003_78bd23ef",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87acd4f8_aa80129e",
         "filename": "headless/test/headless_js_bindings_browsertest.cc",
         "patchSetId": 2
