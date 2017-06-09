@@ -431,8 +431,9 @@ void WebPluginContainerImpl::ScheduleAnimation() {
 }
 
 void WebPluginContainerImpl::ReportGeometry() {
-  // We cannot compute geometry without a layoutObject.
-  if (!element_ || !element_->GetLayoutObject() || !web_plugin_)
+  VLOG(1) << "ReportGeometry=" << this << ", attached=" << is_attached_ << ", parent=" << &ParentFrameView();
+  // We cannot compute geometry without being attached and having a layoutObject.
+  if (!is_attached_ || !element_ || !element_->GetLayoutObject() || !web_plugin_)
     return;
 
   IntRect window_rect, clip_rect, unobscured_rect;

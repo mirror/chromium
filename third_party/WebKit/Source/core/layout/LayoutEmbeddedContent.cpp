@@ -324,8 +324,11 @@ void LayoutEmbeddedContent::UpdateOnEmbeddedContentViewChange() {
   if (!Style())
     return;
 
-  if (!NeedsLayout())
+  if (!NeedsLayout()) {
+    VLOG(1) << "UpdateGeometryInternal=" << embedded_content_view;
+    DCHECK(!(embedded_content_view->IsPluginView() && embedded_content_view->IsAttached()));
     UpdateGeometryInternal(*embedded_content_view);
+  }
 
   if (Style()->Visibility() != EVisibility::kVisible) {
     embedded_content_view->Hide();
@@ -365,8 +368,8 @@ void LayoutEmbeddedContent::UpdateGeometry() {
       frame_view->GetFrame().GetPage())
     frame_view->UpdateLayout();
 
-  if (PluginView* plugin = Plugin())
-    plugin->GeometryMayHaveChanged();
+  //if (PluginView* plugin = Plugin())
+  //  plugin->GeometryMayHaveChanged();
 }
 
 void LayoutEmbeddedContent::UpdateGeometryInternal(
