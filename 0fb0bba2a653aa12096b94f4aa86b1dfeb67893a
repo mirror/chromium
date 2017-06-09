@@ -93,6 +93,30 @@
       "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4586be53_ad9e0976",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-09T00:01:11Z",
+      "side": 1,
+      "message": "For such changes, prefix with: \"DO NOT SUBMIT\"\nThat way, the presubmit checks catch it for you.",
+      "parentUuid": "fb712db1_5f5395fe",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "0fb0bba2a653aa12096b94f4aa86b1dfeb67893a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
