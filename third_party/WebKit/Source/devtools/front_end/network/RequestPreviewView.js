@@ -28,9 +28,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
 Network.RequestPreviewView = class extends Network.RequestContentView {
   /**
    * @param {!SDK.NetworkRequest} request
@@ -41,12 +38,14 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
     this._responseView = responseView;
     /** @type {?UI.Widget} */
     this._previewView = null;
+    /** @type {?UI.EmptyWidget} */
+    this._emptyWidget = null;
   }
 
   /**
    * @override
    */
-  contentLoaded() {
+  async contentLoaded() {
     if (!this.request.content && !this.request.contentError()) {
       if (!this._emptyWidget) {
         this._emptyWidget = this._createEmptyWidget();
@@ -57,29 +56,23 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
     }
     if (this._emptyWidget) {
       this._emptyWidget.detach();
-      delete this._emptyWidget;
+      this._emptyWidget = null;
       this._previewView = null;
     }
 
-    if (!this._previewView)
-      this._createPreviewView(handlePreviewView.bind(this));
-    else
+    if (this._previewView) {
       this._previewView.show(this.element);
-
-    /**
-     * @param {!UI.Widget} view
-     * @this {Network.RequestPreviewView}
-     */
-    function handlePreviewView(view) {
-      this._previewView = view;
-      view.show(this.element);
-      if (view instanceof UI.SimpleView) {
-        var toolbar = new UI.Toolbar('network-item-preview-toolbar', this.element);
-        for (var item of /** @type {!UI.SimpleView} */ (this._previewView).syncToolbarItems())
-          toolbar.appendToolbarItem(item);
-      }
-      this._previewViewHandledForTest(view);
+      return;
     }
+
+    this._previewView = await this._createPreviewView();
+    this._previewView.show(this.element);
+    if (this._previewView instanceof UI.SimpleView) {
+      var toolbar = new UI.Toolbar('network-item-preview-toolbar', this.element);
+      for (var item of this._previewView.syncToolbarItems())
+        toolbar.appendToolbarItem(item);
+    }
+    this._previewViewHandledForTest(this._previewView);
   }
 
   /**
@@ -145,47 +138,36 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
   }
 
   /**
-   * @param {function(!UI.Widget)} callback
+   * @return {!Promise<!UI.Widget>}
    */
-  _createPreviewView(callback) {
-    if (this.request.contentError()) {
-      callback(this._createMessageView(Common.UIString('Failed to load response data')));
-      return;
-    }
+  async _createPreviewView() {
+    if (this.request.contentError())
+      return this._createMessageView(Common.UIString('Failed to load response data'));
 
     var xmlView = this._xmlView();
-    if (xmlView) {
-      callback(xmlView);
-      return;
+    if (xmlView)
+      return xmlView;
+
+    var jsonData = await Network.JSONView.parseJSON(this._requestContent());
+
+    if (jsonData) {
+      var jsonView = this._jsonView(jsonData);
+      if (jsonView)
+        return jsonView;
     }
 
-    Network.JSONView.parseJSON(this._requestContent()).then(chooseView.bind(this)).then(callback);
-
-    /**
-     * @this {Network.RequestPreviewView}
-     * @param {?Network.ParsedJSON} jsonData
-     * @return {!UI.Widget}
-     */
-    function chooseView(jsonData) {
-      if (jsonData) {
-        var jsonView = this._jsonView(jsonData);
-        if (jsonView)
-          return jsonView;
-      }
-
-      if (this.request.hasErrorStatusCode() || this.request.resourceType() === Common.resourceTypes.XHR) {
-        var htmlErrorPreview = this._htmlErrorPreview();
-        if (htmlErrorPreview)
-          return htmlErrorPreview;
-      }
-
-      if (this._responseView.sourceView)
-        return this._responseView.sourceView;
-
-      if (this.request.resourceType() === Common.resourceTypes.Other)
-        return this._createEmptyWidget();
-
-      return Network.RequestView.nonSourceViewForRequest(this.request);
+    if (this.request.hasErrorStatusCode() || this.request.resourceType() === Common.resourceTypes.XHR) {
+      var htmlErrorPreview = this._htmlErrorPreview();
+      if (htmlErrorPreview)
+        return htmlErrorPreview;
     }
+
+    if (this._responseView.sourceView)
+      return this._responseView.sourceView;
+
+    if (this.request.resourceType() === Common.resourceTypes.Other)
+      return this._createEmptyWidget();
+
+    return Network.RequestView.nonSourceViewForRequest(this.request);
   }
 };

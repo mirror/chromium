@@ -104,15 +104,13 @@ Network.NetworkItemView = class extends UI.TabbedPane {
   }
 };
 
-/**
- * @unrestricted
- */
 Network.RequestContentView = class extends Network.RequestView {
   /**
    * @param {!SDK.NetworkRequest} request
    */
   constructor(request) {
     super(request);
+    this._innerViewShowRequested = false;
   }
 
   /**
@@ -139,7 +137,7 @@ Network.RequestContentView = class extends Network.RequestView {
     this.request.requestContent().then(callback.bind(this));
   }
 
-  contentLoaded() {
+  async contentLoaded() {
     // Should be implemented by subclasses.
   }
 };

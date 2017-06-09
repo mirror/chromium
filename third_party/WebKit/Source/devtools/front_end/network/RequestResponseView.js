@@ -28,17 +28,23 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
 Network.RequestResponseView = class extends Network.RequestContentView {
   /**
    * @param {!SDK.NetworkRequest} request
    */
   constructor(request) {
     super(request);
+    /** @type {?UI.EmptyWidget} */
+    this._emptyWidget = null;
+    /** @type {?UI.EmptyWidget} */
+    this._errorView = null;
+    /** @type {?UI.SearchableView} */
+    this._sourceView = null;
   }
 
+  /**
+   * @return {?UI.SearchableView}
+   */
   get sourceView() {
     if (this._sourceView || !Network.RequestView.hasTextContent(this.request))
       return this._sourceView;
@@ -60,7 +66,7 @@ Network.RequestResponseView = class extends Network.RequestContentView {
   /**
    * @override
    */
-  contentLoaded() {
+  async contentLoaded() {
     if ((!this.request.content || !this.sourceView) && !this.request.contentError()) {
       if (!this._emptyWidget) {
         this._emptyWidget = this._createMessageView(Common.UIString('This request has no response data available.'));
@@ -85,7 +91,6 @@ Network.RequestResponseView = class extends Network.RequestContentView {
 
 /**
  * @implements {Common.ContentProvider}
- * @unrestricted
  */
 Network.RequestResponseView.ContentProvider = class {
   /**

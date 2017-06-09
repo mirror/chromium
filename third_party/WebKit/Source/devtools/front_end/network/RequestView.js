@@ -28,9 +28,6 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
 Network.RequestView = class extends UI.VBox {
   /**
    * @param {!SDK.NetworkRequest} request
