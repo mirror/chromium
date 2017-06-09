@@ -516,9 +516,6 @@ void CompositorImpl::CreateLayerTreeHost() {
   DCHECK(!host_);
 
   cc::LayerTreeSettings settings;
-  settings.renderer_settings.refresh_rate = 60.0;
-  settings.renderer_settings.allow_antialiasing = false;
-  settings.renderer_settings.highp_threshold_min = 2048;
   settings.use_zero_copy = true;
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
@@ -777,12 +774,14 @@ void CompositorImpl::InitializeDisplay(
   std::unique_ptr<cc::DisplayScheduler> scheduler(new cc::DisplayScheduler(
       task_runner, display_output_surface->capabilities().max_frames_pending));
 
+  cc::RendererSettings renderer_settings;
+  renderer_settings.allow_antialiasing = false;
+  renderer_settings.highp_threshold_min = 2048;
   display_.reset(new cc::Display(
       viz::HostSharedBitmapManager::current(),
-      BrowserGpuMemoryBufferManager::current(),
-      host_->GetSettings().renderer_settings, frame_sink_id_,
-      root_window_->GetBeginFrameSource(), std::move(display_output_surface),
-      std::move(scheduler),
+      BrowserGpuMemoryBufferManager::current(), renderer_settings,
+      frame_sink_id_, root_window_->GetBeginFrameSource(),
+      std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(task_runner)));
 
   auto compositor_frame_sink =
