@@ -16,6 +16,23 @@
       "revId": "8b11eef20379954897bd350d9c19b0f1887c730f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "622b1120_8ad5b3d6",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoderTestHelpers.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-09T04:04:40Z",
+      "side": 1,
+      "message": "Use const for consistency (const is used only at ICOImageDecoderTest and FrameSerializerTest?).",
+      "revId": "8b11eef20379954897bd350d9c19b0f1887c730f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
