@@ -10,6 +10,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -831,7 +833,6 @@ Profile* ProfileImpl::GetOffTheRecordProfile() {
 
 void ProfileImpl::DestroyOffTheRecordProfile() {
   off_the_record_profile_.reset();
-  otr_prefs_->ClearMutableValues();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ExtensionPrefValueMapFactory::GetForBrowserContext(this)->
       ClearAllIncognitoSessionOnlyPreferences();
@@ -995,14 +996,10 @@ ChromeZoomLevelPrefs* ProfileImpl::GetZoomLevelPrefs() {
 #endif  // !defined(OS_ANDROID)
 
 PrefService* ProfileImpl::GetOffTheRecordPrefs() {
-  DCHECK(prefs_);
-  if (!otr_prefs_) {
-    // The new ExtensionPrefStore is ref_counted and the new PrefService
-    // stores a reference so that we do not leak memory here.
-    otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
-        prefs_.get(), CreateExtensionPrefStore(this, true)));
-  }
-  return otr_prefs_.get();
+  if (HasOffTheRecordProfile())
+    return GetOffTheRecordProfile()->GetPrefs();
+  // TODO(tibell): Construct and return dummy.
+  return nullptr;
 }
 
 content::ResourceContext* ProfileImpl::GetResourceContext() {
