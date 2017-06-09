@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4a5f82cc_90257d38",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-09T22:35:38Z",
+      "side": 1,
+      "message": "The call to GetSocketAddress fails in some instances when the request was canceled, which is why I went this route in checking the state, but my desired check is just to see whether the job_ pointer exists or not. \n\nAfter a discussion with mmenke@, I am using response_info() to make this check instead.",
+      "parentUuid": "947cbbe6_4f4aa505",
+      "revId": "8701200141d68ed791e440cd0481486c5b323884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa6b912a_50395975",
         "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
         "patchSetId": 4
@@ -63,6 +81,30 @@
       "revId": "8701200141d68ed791e440cd0481486c5b323884",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821dc207_cba39693",
+        "filename": "chrome/browser/loader/chrome_resource_dispatcher_host_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-09T22:35:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034600c3_663e16c7",
+      "range": {
+        "startLine": 891,
+        "startChar": 0,
+        "endLine": 891,
+        "endChar": 80
+      },
+      "revId": "8701200141d68ed791e440cd0481486c5b323884",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
