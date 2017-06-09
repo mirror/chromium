@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d54a9e7a_e2d42912",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 2197,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-09T14:42:01Z",
+      "side": 1,
+      "message": "Why did you condition it on this? This is part of CanDraw() which will prevent drawing until satisfied. There\u0027s a lot of other parts to it too tho.",
+      "revId": "87d7beff45de95874d8130469cabf6cc51edd80a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
