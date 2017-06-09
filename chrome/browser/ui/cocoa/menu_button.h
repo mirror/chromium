@@ -49,6 +49,9 @@
 // subclasses, returns -bounds by default.
 - (NSRect)menuRect;
 
+// Called when the menu is about to be shown. Implemented by subclasses.
+- (void)willShowMenu;
+
 @end  // @interface MenuButton
 
 // Available for subclasses.
