@@ -383,6 +383,7 @@ Browser::Browser(const CreateParams& params)
       window_has_shown_(false),
       chrome_updater_factory_(this),
       weak_factory_(this) {
+  created_dino_game_popup = false;
   // If this causes a crash then a window is being opened using a profile type
   // that is disallowed by policy. The crash prevents the disabled window type
   // from opening at all, but the path that triggered it should be fixed.
@@ -1523,6 +1524,10 @@ void Browser::VisibleSecurityStateChanged(WebContents* source) {
   helper->VisibleSecurityStateChanged();
 }
 
+void Browser::DisplayViewInTouchbar(content::WebContents* contents) {
+  command_controller_->DisplayViewInTouchbar(contents);
+}
+
 void Browser::AddNewContents(WebContents* source,
                              WebContents* new_contents,
                              WindowOpenDisposition disposition,
@@ -1537,6 +1542,10 @@ void Browser::ActivateContents(WebContents* contents) {
   tab_strip_model_->ActivateTabAt(
       tab_strip_model_->GetIndexOfWebContents(contents), false);
   window_->Activate();
+}
+
+void Browser::SetErrorPage(WebContents* source, bool is_error_page) {
+  command_controller_->SetErrorPage(is_error_page);
 }
 
 void Browser::LoadingStateChanged(WebContents* source,

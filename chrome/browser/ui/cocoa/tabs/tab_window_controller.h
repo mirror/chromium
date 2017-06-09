@@ -26,6 +26,7 @@
  @private
   // Wrapper view around web content, and the developer tools view.
   base::scoped_nsobject<FastResizeView> tabContentArea_;
+  base::scoped_nsobject<FastResizeView> touchbarTabContentArea_;
   base::scoped_nsobject<NSView> tabStripBackgroundView_;
 
   // Used to blur the titlebar. nil if window does not have titlebar.
@@ -54,6 +55,7 @@
 @property(readonly, nonatomic) NSView* tabStripBackgroundView;
 @property(readonly, nonatomic) TabStripView* tabStripView;
 @property(readonly, nonatomic) FastResizeView* tabContentArea;
+@property(readonly, nonatomic) FastResizeView* touchbarTabContentArea;
 @property(readonly, nonatomic) NSView* chromeContentView;
 
 // This is the designated initializer for this class.

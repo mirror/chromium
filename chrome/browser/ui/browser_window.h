@@ -178,6 +178,11 @@ class BrowserWindow : public ui::BaseWindow {
   // inconsistent state) if this fails.
   virtual void SetFocusToLocationBar(bool select_all) = 0;
 
+  virtual void DisplayViewInTouchbar(content::WebContents* view) = 0;
+
+  // Error Page.
+  virtual void UpdateErrorPageState(bool is_error_page) = 0;
+
   // Informs the view whether or not a load is in progress for the current tab.
   // The view can use this notification to update the reload/stop button.
   virtual void UpdateReloadStopState(bool is_loading, bool force) = 0;

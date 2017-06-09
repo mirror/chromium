@@ -109,9 +109,12 @@
 
     tabContentArea_.reset(
         [[FastResizeView alloc] initWithFrame:[chromeContentView_ bounds]]);
+    touchbarTabContentArea_.reset(
+        [[FastResizeView alloc] initWithFrame:[chromeContentView_ bounds]]);
     [tabContentArea_ setAutoresizingMask:NSViewWidthSizable |
                                          NSViewHeightSizable];
     [chromeContentView_ addSubview:tabContentArea_];
+    [chromeContentView_ addSubview:touchbarTabContentArea_];
 
     // tabStripBackgroundView_ draws the theme image behind the tab strip area.
     // When making a tab dragging window (setUseOverlay:), this view stays in
@@ -171,6 +174,10 @@
 
 - (FastResizeView*)tabContentArea {
   return tabContentArea_;
+}
+
+- (FastResizeView*)touchbarTabContentArea {
+  return touchbarTabContentArea_;
 }
 
 - (NSView*)chromeContentView {

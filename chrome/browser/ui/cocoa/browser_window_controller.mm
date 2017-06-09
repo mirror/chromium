@@ -563,6 +563,10 @@ bool IsTabDetachingInFullscreenEnabled() {
   return avatarButtonController_.get();
 }
 
+- (Browser*)browser {
+  return browser_.get();
+}
+
 - (void)destroyBrowser {
   [NSApp removeWindowsItem:[self window]];
 
@@ -1199,6 +1203,16 @@ bool IsTabDetachingInFullscreenEnabled() {
 - (void)setIsLoading:(BOOL)isLoading force:(BOOL)force {
   [toolbarController_ setIsLoading:isLoading force:force];
   [touchBar_ setIsPageLoading:isLoading];
+  [self invalidateTouchBar];
+}
+
+- (void)displayViewInTouchbar:(NSView*)view {
+  [touchBar_ displayViewInTouchbar:view];
+  [self invalidateTouchBar];
+}
+
+- (void)setIsErrorPage:(BOOL)isErrorPage {
+  [touchBar_ setIsErrorPage:isErrorPage];
   [self invalidateTouchBar];
 }
 
