@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bee6edb_b1b5fca0",
+        "filename": "content/test/gpu/gpu_tests/webgl_conformance_expectations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-06-09T17:25:25Z",
+      "side": 0,
+      "message": "Failing on FYI:\nhttps://build.chromium.org/p/chromium.gpu.fyi/builders/Linux%20Release%20%28AMD%20R7%20240%29/builds/2360",
+      "revId": "525c53f0d081a4533b6c55d9b2b991ecfc9d2bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72f57879_6a13fb92",
+        "filename": "content/test/gpu/gpu_tests/webgl_conformance_expectations.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1172235
+      },
+      "writtenOn": "2017-06-09T17:25:25Z",
+      "side": 0,
+      "message": "Failing on FYI:\nhttps://build.chromium.org/p/chromium.gpu.fyi/builders/Linux%20Release%20%28AMD%20R7%20240%29/builds/2360",
+      "revId": "525c53f0d081a4533b6c55d9b2b991ecfc9d2bec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
