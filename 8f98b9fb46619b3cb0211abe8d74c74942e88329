@@ -129,6 +129,24 @@
       "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "65f26a5a_b6441889",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-09T15:10:40Z",
+      "side": 1,
+      "message": "Cool",
+      "parentUuid": "be6bbef5_688766ad",
+      "revId": "8f98b9fb46619b3cb0211abe8d74c74942e88329",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
