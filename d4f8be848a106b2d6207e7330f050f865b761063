@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b99a68c7_4631bdbe",
+        "filename": "chrome/browser/chromeos/system/fake_input_device_settings.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T21:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "522324ef_9554083e",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 11
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f4f80a58_a40c3365",
         "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.cc",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eafec5b0_277fefd8",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T21:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f4f80a58_a40c3365",
+      "range": {
+        "startLine": 23,
+        "startChar": 54,
+        "endLine": 23,
+        "endChar": 63
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "cf1c8405_20436b44",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T21:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dabcb7a_d3fd1ea9",
+      "range": {
+        "startLine": 119,
+        "startChar": 3,
+        "endLine": 119,
+        "endChar": 24
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eb5e7bc4_9624f0ca",
         "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.h",
         "patchSetId": 7
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ab2f189b_9c034626",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T21:21:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb5e7bc4_9624f0ca",
+      "range": {
+        "startLine": 50,
+        "startChar": 25,
+        "endLine": 50,
+        "endChar": 47
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c388ffd0_0a481682",
         "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.h",
         "patchSetId": 7
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-09T20:08:04Z",
       "side": 1,
       "message": "I guess this has to be called by a privileged caller anyway, since the caller still needs to open these files?",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 58
+      },
+      "revId": "d4f8be848a106b2d6207e7330f050f865b761063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf86ba04_6bc6ea20",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller_client.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T21:21:21Z",
+      "side": 1,
+      "message": "I believe you are correct.",
+      "parentUuid": "c388ffd0_0a481682",
       "range": {
         "startLine": 67,
         "startChar": 7,
