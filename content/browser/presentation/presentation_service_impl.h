@@ -123,7 +123,6 @@ class CONTENT_EXPORT PresentationServiceImpl
     GURL GetAvailabilityUrl() const override;
     void OnScreenAvailabilityChanged(
         blink::mojom::ScreenAvailability availability) override;
-    void OnScreenAvailabilityNotSupported() override;
 
    private:
     const GURL availability_url_;

@@ -496,11 +496,6 @@ void PresentationServiceImpl::ScreenAvailabilityListenerImpl ::
                                                  availability);
 }
 
-void PresentationServiceImpl::ScreenAvailabilityListenerImpl
-::OnScreenAvailabilityNotSupported() {
-  service_->client_->OnScreenAvailabilityNotSupported(availability_url_);
-}
-
 PresentationServiceImpl::NewPresentationCallbackWrapper::
     NewPresentationCallbackWrapper(const NewPresentationCallback& callback)
     : callback_(callback) {}
