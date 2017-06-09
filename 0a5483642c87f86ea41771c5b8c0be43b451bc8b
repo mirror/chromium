@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ba9709b5_97c96ece",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Sorry, wrong bug. Updated to also answer your question about who uses this interface.",
+      "parentUuid": "1760602b_cbc23f36",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d88d7121_9cd0c7a3",
         "filename": "services/ui/BUILD.gn",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2feba834_a6ce4412",
+        "filename": "services/ui/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d88d7121_9cd0c7a3",
+      "range": {
+        "startLine": 81,
+        "startChar": 6,
+        "endLine": 81,
+        "endChar": 15
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6a46b208_5796829d",
+        "filename": "services/ui/public/cpp/input_devices/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "58a6993a_727cfcd7",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 13
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ba99865a_8ebe19d1",
         "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fb42ebd2_24823365",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba99865a_8ebe19d1",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11a0367f_dace4169",
         "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
         "patchSetId": 3
@@ -105,6 +201,30 @@
       "writtenOn": "2017-06-09T07:17:45Z",
       "side": 1,
       "message": "It\u0027s not clear from within this class why Unretained is safe, which is one disadvantage of putting it here. If this were in services/ui/service.cc, it would be more apparent (since registry_ is destroyed before the input device controller).\n\nMaybe some sort of comment would be nice, but I\u0027m not really sure what...",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d88b839_4fedd739",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "I added a comment.",
+      "parentUuid": "11a0367f_dace4169",
       "range": {
         "startLine": 26,
         "startChar": 17,
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "9e8f54a2_0143b55a",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Indeed. I copied this comment from other code. Fixed.",
+      "parentUuid": "3337a6e1_de880363",
+      "range": {
+        "startLine": 30,
+        "startChar": 45,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f006718e_d2bd2fe4",
         "filename": "services/ui/public/interfaces/input_devices/BUILD.gn",
         "patchSetId": 3
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "1941bf0a_3b3e7e19",
+        "filename": "services/ui/public/interfaces/input_devices/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f006718e_d2bd2fe4",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69707228_1609eb14",
         "filename": "services/ui/public/interfaces/input_devices/input_device_controller.mojom",
         "patchSetId": 3
@@ -174,6 +342,24 @@
       "writtenOn": "2017-06-09T13:29:29Z",
       "side": 1,
       "message": "Some get methods are here, eg. HasMouse(), but others are missing, eg. IsCapsLockEnabled(). Just curious how this will provide the ui::InputController interface eventually?",
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96cae690_9697b5d5",
+        "filename": "services/ui/public/interfaces/input_devices/input_device_controller.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "I believe this contains everything that is used by chrome, ash and ime code. IsCapsLockEnabled is cached in the client and handled by way of the client being a keyboardDeviceObserver. See https://chromium-review.googlesource.com/c/528064 for what I mean. My plan is that the only place that will directly talk to ui::InputController is the implementation of InputDeviceController in this patch. The rest of the code will talk to a class (it won\u0027t extend ui::InputController) that talks to the mojom.",
+      "parentUuid": "69707228_1609eb14",
       "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -194,6 +380,24 @@
       "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "850dcaee_6b6ca3d7",
+        "filename": "services/ui/service.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-09T14:38:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25780fcc_e742224f",
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
