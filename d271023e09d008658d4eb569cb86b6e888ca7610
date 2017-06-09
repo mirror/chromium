@@ -93,6 +93,30 @@
       "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de581732_229fe101",
+        "filename": "chrome/browser/ui/webui/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-09T03:30:11Z",
+      "side": 0,
+      "message": "Sure, added them back.",
+      "parentUuid": "4be3e597_a67032f7",
+      "range": {
+        "startLine": 16,
+        "startChar": 46,
+        "endLine": 16,
+        "endChar": 0
+      },
+      "revId": "d271023e09d008658d4eb569cb86b6e888ca7610",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
