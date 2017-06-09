@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bfa413f_76c16d21",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T06:45:12Z",
+      "side": 1,
+      "message": "nit: could we double-quote \u0027fetch the descendants of and instantiate a module script\u0027 part? It\u0027s hard to parse :)",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bcfee79_f56fc328",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T06:45:12Z",
+      "side": 1,
+      "message": "(nit: some spec text\u0027s quoted and others are not, feels a bit inconsistent)",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b191332a_c1f81a4f",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T06:45:12Z",
+      "side": 1,
+      "message": "nit: m_numIncompleteDescendants -\u003e num_incomplete_ ...",
+      "revId": "3daf3d44e29dea96cf38336f8db32884a9928db5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
