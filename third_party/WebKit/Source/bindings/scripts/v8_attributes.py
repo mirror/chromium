@@ -258,6 +258,19 @@ def filter_conditionally_enabled(attributes):
              not attribute['origin_trial_feature_name'])]
 
 
+def attribute_filters():
+    def filter_data_type_attributes(attributes):
+        return [attribute for attribute in attributes if attribute['is_data_type_property']]
+
+    def filter_accessor_type_attributes(attributes):
+        return [attribute for attribute in attributes if not attribute['is_data_type_property']]
+
+    return {
+        'filter_data_type_attributes': filter_data_type_attributes,
+        'filter_accessor_type_attributes': filter_accessor_type_attributes,
+    }
+
+
 ################################################################################
 # Getter
 ################################################################################
