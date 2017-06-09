@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cc5e6ee_420a671c",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1125535
+      },
+      "writtenOn": "2017-06-09T14:04:53Z",
+      "side": 1,
+      "message": "Does this early return (when webState is nil) change the RecordPageLoadStart() counting logic?",
+      "range": {
+        "startLine": 690,
+        "startChar": 15,
+        "endLine": 690,
+        "endChar": 0
+      },
+      "revId": "cdacd75560abcd103dd20faf14a04669ffb4c88d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
