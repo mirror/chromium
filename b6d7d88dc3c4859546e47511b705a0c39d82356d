@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93d903ac_018500ac",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:49:31Z",
+      "side": 1,
+      "message": "style: no { } for one-liners",
+      "revId": "b6d7d88dc3c4859546e47511b705a0c39d82356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59cc5867_72a1bc51",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:49:31Z",
+      "side": 1,
+      "message": "nit: maybe could be:\n`if (significant_players_.find(id) !\u003d ....end())`",
+      "revId": "b6d7d88dc3c4859546e47511b705a0c39d82356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2117e571_5c036a3b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:49:31Z",
+      "side": 1,
+      "message": "nit: ditto + the fact that it\u0027s a bit odd to compare `is_playing` that sounds like a bool with an iterator.",
+      "revId": "b6d7d88dc3c4859546e47511b705a0c39d82356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1144f86_aa72061b",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:49:31Z",
+      "side": 1,
+      "message": "style: use { } when the condition is in more than one line.",
+      "revId": "b6d7d88dc3c4859546e47511b705a0c39d82356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c97d83_c2e369f2",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-09T15:49:31Z",
+      "side": 1,
+      "message": "Actually, would it make sense to have: `bool IsSignificantPlayer(const MediaPlayerId\u0026 id)` and get MaybeInsert.. and MaybeRemove.. to call this? Sounds like you could re-use some code here.",
+      "revId": "b6d7d88dc3c4859546e47511b705a0c39d82356d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
