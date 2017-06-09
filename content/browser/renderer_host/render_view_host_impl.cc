@@ -577,20 +577,6 @@ WebPreferences RenderViewHostImpl::ComputeWebkitPrefs() {
           media::kMemoryPressureBasedSourceBufferGC,
           "enable_instant_source_buffer_gc", false);
 
-  std::map<std::string, std::string> expensive_background_throttling_prefs;
-  variations::GetVariationParamsByFeature(
-      features::kExpensiveBackgroundTimerThrottling,
-      &expensive_background_throttling_prefs);
-  SetFloatParameterFromMap(expensive_background_throttling_prefs, "cpu_budget",
-                           &prefs.expensive_background_throttling_cpu_budget);
-  SetFloatParameterFromMap(
-      expensive_background_throttling_prefs, "initial_budget",
-      &prefs.expensive_background_throttling_initial_budget);
-  SetFloatParameterFromMap(expensive_background_throttling_prefs, "max_budget",
-                           &prefs.expensive_background_throttling_max_budget);
-  SetFloatParameterFromMap(expensive_background_throttling_prefs, "max_delay",
-                           &prefs.expensive_background_throttling_max_delay);
-
   GetContentClient()->browser()->OverrideWebkitPrefs(this, &prefs);
   return prefs;
 }
