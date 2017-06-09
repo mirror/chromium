@@ -97,6 +97,7 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
       draws_content_(false),
       contents_visible_(true),
       is_root_for_isolated_group_(false),
+      should_hit_test_(false),
       has_scroll_parent_(false),
       has_clip_parent_(false),
       painted_(false),
@@ -635,6 +636,9 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
   if (is_root_for_isolated_group_)
     json->SetBoolean("isolate", is_root_for_isolated_group_);
 
+  if (should_hit_test_)
+    json->SetBoolean("shouldHitTest", should_hit_test_);
+
   if (contents_opaque_)
     json->SetBoolean("contentsOpaque", contents_opaque_);
 
@@ -994,6 +998,13 @@ void GraphicsLayer::SetIsRootForIsolatedGroup(bool isolated) {
     return;
   is_root_for_isolated_group_ = isolated;
   PlatformLayer()->SetIsRootForIsolatedGroup(isolated);
+}
+
+void GraphicsLayer::SetShouldHitTest(bool hit_test) {
+  if (should_hit_test_ == hit_test)
+    return;
+  should_hit_test_ = hit_test;
+  PlatformLayer()->SetShouldHitTest(hit_test);
 }
 
 void GraphicsLayer::SetContentsNeedsDisplay() {
