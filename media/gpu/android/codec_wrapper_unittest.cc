@@ -141,11 +141,18 @@ TEST_F(CodecWrapperTest, DeletingCodecOutputBuffersAfterTheCodecIsSafe) {
   codec_buffer = nullptr;
 }
 
-TEST_F(CodecWrapperTest, CodecOutputBufferReleaseDoesNotInvalidateOthers) {
+TEST_F(CodecWrapperTest, CodecOutputBufferReleaseDoesNotInvalidateFutureOnes) {
   auto codec_buffer1 = DequeueCodecOutputBuffer();
   auto codec_buffer2 = DequeueCodecOutputBuffer();
   codec_buffer1->ReleaseToSurface();
   ASSERT_TRUE(codec_buffer2->ReleaseToSurface());
+}
+
+TEST_F(CodecWrapperTest, CodecOutputBufferReleaseInvalidatesPastOnes) {
+  auto codec_buffer1 = DequeueCodecOutputBuffer();
+  auto codec_buffer2 = DequeueCodecOutputBuffer();
+  codec_buffer2->ReleaseToSurface();
+  ASSERT_TRUE(codec_buffer1->ReleaseToSurface());
 }
 
 TEST_F(CodecWrapperTest, FormatChangedStatusIsSwallowed) {
