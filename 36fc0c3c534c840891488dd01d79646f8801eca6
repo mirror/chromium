@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe81387c_6cea3b55",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3689,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-09T08:31:13Z",
+      "side": 1,
+      "message": "Looks like there isn\u0027t much overlap between successful crash and timeout. Probably drop |report_hung_renderer_stats_| and move logic for timed out to `if (termination_timer_.IsRunning())` block above?",
+      "range": {
+        "startLine": 3689,
+        "startChar": 43,
+        "endLine": 3689,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052a7e55_3819d32d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-09T08:31:13Z",
+      "side": 1,
+      "message": "Can we have descriptions for this enum?",
+      "range": {
+        "startLine": 507,
+        "startChar": 30,
+        "endLine": 507,
+        "endChar": 31
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aff98fff_89206542",
+        "filename": "content/common/crasher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-09T08:31:13Z",
+      "side": 1,
+      "message": "Can we have a struct level comment?",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "984f5cdb_560e7dc4",
+        "filename": "content/renderer/crasher_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-09T08:31:13Z",
+      "side": 1,
+      "message": "Is there a way to DCHECK to make sure this is called on IO thread?",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d182648_c4ccd493",
+        "filename": "content/renderer/crasher_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-09T08:31:13Z",
+      "side": 1,
+      "message": "Could you explain what happens on failure?",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
