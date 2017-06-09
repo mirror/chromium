@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a51201f_040487eb",
+        "filename": "ui/base/ime/chromeos/ime_keyboard_mus.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-09T18:29:23Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 16
+      },
+      "revId": "8d20b1bc4e61daa288041ddd90e93d05215eef4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
