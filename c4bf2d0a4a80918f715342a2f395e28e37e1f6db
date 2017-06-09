@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ce3d3c75_1d1da454",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T09:35:14Z",
+      "side": 1,
+      "message": "the syntax is `BUG\u003d99999`",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "c4bf2d0a4a80918f715342a2f395e28e37e1f6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bd7a758_e2195f02",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 9
@@ -47,6 +70,24 @@
       "writtenOn": "2017-06-08T20:20:20Z",
       "side": 1,
       "message": "nit: Could you define new classes to replace the Pairs?  Pair syntax is a little ugly.",
+      "revId": "c4bf2d0a4a80918f715342a2f395e28e37e1f6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0d28195_057b2ec0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T09:35:14Z",
+      "side": 1,
+      "message": "Or maybe just change the signature of getBitmapFromCache to take in String and int as separate args and create the pair internally? The new class won\u0027t really help making the `put` operation nicer, besides making a new method/class for that cache operation.",
+      "parentUuid": "e37c7df1_809c3c5d",
       "revId": "c4bf2d0a4a80918f715342a2f395e28e37e1f6db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
