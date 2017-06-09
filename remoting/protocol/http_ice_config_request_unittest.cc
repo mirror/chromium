@@ -98,7 +98,8 @@ TEST_F(HttpIceConfigRequestTest, Parse) {
       "}";
   url_request_factory_.SetResult(kTestUrl,
                                  UrlRequest::Result(200, kTestResponse));
-  request_.reset(new HttpIceConfigRequest(&url_request_factory_, kTestUrl));
+  request_.reset(
+      new HttpIceConfigRequest(&url_request_factory_, kTestUrl, nullptr));
   request_->Send(
       base::Bind(&HttpIceConfigRequestTest::OnResult, base::Unretained(this)));
   ASSERT_FALSE(received_config_->is_null());
@@ -110,7 +111,8 @@ TEST_F(HttpIceConfigRequestTest, Parse) {
 TEST_F(HttpIceConfigRequestTest, InvalidConfig) {
   url_request_factory_.SetResult(kTestUrl,
                                  UrlRequest::Result(200, "ERROR"));
-  request_.reset(new HttpIceConfigRequest(&url_request_factory_, kTestUrl));
+  request_.reset(
+      new HttpIceConfigRequest(&url_request_factory_, kTestUrl, nullptr));
   request_->Send(
       base::Bind(&HttpIceConfigRequestTest::OnResult, base::Unretained(this)));
   EXPECT_TRUE(received_config_->is_null());
@@ -118,7 +120,8 @@ TEST_F(HttpIceConfigRequestTest, InvalidConfig) {
 
 TEST_F(HttpIceConfigRequestTest, FailedRequest) {
   url_request_factory_.SetResult(kTestUrl, UrlRequest::Result::Failed());
-  request_.reset(new HttpIceConfigRequest(&url_request_factory_, kTestUrl));
+  request_.reset(
+      new HttpIceConfigRequest(&url_request_factory_, kTestUrl, nullptr));
   request_->Send(
       base::Bind(&HttpIceConfigRequestTest::OnResult, base::Unretained(this)));
   EXPECT_TRUE(received_config_->is_null());
