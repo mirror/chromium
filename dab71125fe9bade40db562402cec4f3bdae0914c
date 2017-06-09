@@ -45,6 +45,30 @@
       "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "006ec527_779854a4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T04:26:59Z",
+      "side": 1,
+      "message": "I think the issue is that currently scheduler doesn\u0027t flip throttling state until a certain period until kBackgroundThrottlingGracePeriod passes, while for loading we\u0027ll want to trigger this earlier (because loading throttling is less intrusive)?",
+      "parentUuid": "74b02835_a405b89c",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
