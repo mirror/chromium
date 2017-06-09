@@ -145,12 +145,7 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
   void SetUp() override {
 #if !defined(OS_ANDROID)
     ImageTransportFactory::InitializeForUnitTests(
-        std::unique_ptr<ImageTransportFactory>(
-            new NoTransportImageTransportFactory));
-    ImageTransportFactory::GetInstance()
-        ->GetContextFactoryPrivate()
-        ->GetFrameSinkManagerHost()
-        ->ConnectToFrameSinkManager();
+        base::MakeUnique<NoTransportImageTransportFactory>());
 #endif
     provider_ =
         base::MakeUnique<OffscreenCanvasProviderImpl>(kRendererClientId);
@@ -163,6 +158,8 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
   }
 
  private:
+  // A MessageLoop is required for mojo bindings which are used to
+  // connect to graphics services.
   base::MessageLoop message_loop_;
   std::unique_ptr<OffscreenCanvasProviderImpl> provider_;
 };
