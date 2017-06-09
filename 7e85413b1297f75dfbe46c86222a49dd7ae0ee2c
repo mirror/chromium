@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3317c99b_2a8f2f61",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T06:32:50Z",
+      "side": 1,
+      "message": "I think WorkerClients can just have a setter/getter for this without going through Supplement interface",
+      "revId": "7e85413b1297f75dfbe46c86222a49dd7ae0ee2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789cc319_c971c883",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerContentSettingsClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-09T06:32:50Z",
+      "side": 1,
+      "message": "nit: proxy_ -\u003e client_?",
+      "revId": "7e85413b1297f75dfbe46c86222a49dd7ae0ee2c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
