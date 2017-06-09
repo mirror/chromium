@@ -277,6 +277,7 @@ static void stringOrDoubleAttributeAttributeGetter(const v8::FunctionCallbackInf
   TestInterfaceImplementation* impl = V8TestInterface::toImpl(holder);
 
   StringOrDouble result;
+
   impl->stringOrDoubleAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1736,6 +1737,7 @@ static void implementsComplexMethodMethod(const v8::FunctionCallbackInfo<v8::Val
   }
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   TestInterfaceEmpty* result = impl->implementsComplexMethod(executionContext, strArg, testInterfaceEmptyArg, exceptionState);
   if (exceptionState.HadException()) {
     return;
@@ -1797,6 +1799,7 @@ static void partialCallWithExecutionContextRaisesExceptionVoidMethodMethod(const
   TestInterfaceImplementation* impl = V8TestInterface::toImpl(info.Holder());
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   TestInterfacePartial::partialCallWithExecutionContextRaisesExceptionVoidMethod(executionContext, *impl, exceptionState);
   if (exceptionState.HadException()) {
     return;

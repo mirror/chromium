@@ -111,6 +111,7 @@ static void domStringOrDoubleOrNullAttributeAttributeGetter(const v8::FunctionCa
   TestTypedefs* impl = V8TestTypedefs::toImpl(holder);
 
   StringOrDouble result;
+
   impl->domStringOrDoubleOrNullAttribute(result);
 
   V8SetReturnValue(info, result);

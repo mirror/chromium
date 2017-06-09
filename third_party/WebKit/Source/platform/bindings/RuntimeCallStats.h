@@ -98,7 +98,7 @@ class PLATFORM_EXPORT RuntimeCallStats {
   static RuntimeCallStats* From(v8::Isolate*);
 
 // Counters
-#define FOR_EACH_COUNTER(V)          \
+#define FOR_EACH_BLINK_COUNTER(V)    \
   V(UpdateStyle)                     \
   V(UpdateLayout)                    \
   V(CollectGarbage)                  \
@@ -108,6 +108,28 @@ class PLATFORM_EXPORT RuntimeCallStats {
   V(ProcessStyleSheet)               \
   V(TestCounter1)                    \
   V(TestCounter2)
+
+#define BINDINGS_METHOD(V, counter) \
+  V(counter)                        \
+  V(counter##_Bindings)
+
+#define BINDINGS_READ_ONLY_ATTRIBUTE(V, counter) \
+  V(counter##_Getter)                            \
+  V(counter##_Getter_Bindings)
+
+#define BINDINGS_ATTRIBUTE(V, counter)     \
+  BINDINGS_READ_ONLY_ATTRIBUTE(V, counter) \
+  V(counter##_Setter)                      \
+  V(counter##_Setter_Bindings)
+
+#define FOR_EACH_BINDINGS_COUNTER(V)                                    \
+  BINDINGS_METHOD(V, BindingsMethodTestCounter)                         \
+  BINDINGS_READ_ONLY_ATTRIBUTE(V, BindingsReadOnlyAttributeTestCounter) \
+  BINDINGS_ATTRIBUTE(V, BindingsAttributeTestCounter)
+
+#define FOR_EACH_COUNTER(V) \
+  FOR_EACH_BLINK_COUNTER(V) \
+  FOR_EACH_BINDINGS_COUNTER(V)
 
   enum class CounterId : uint16_t {
 #define ADD_ENUM_VALUE(counter) k##counter,

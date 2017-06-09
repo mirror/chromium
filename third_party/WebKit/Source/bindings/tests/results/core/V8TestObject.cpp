@@ -72,6 +72,7 @@
 #include "core/inspector/ScriptArguments.h"
 #include "core/origin_trials/OriginTrials.h"
 #include "platform/RuntimeEnabledFeatures.h"
+#include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/bindings/V8ObjectConstructor.h"
 #include "platform/bindings/V8PrivateProperty.h"
@@ -1465,6 +1466,7 @@ static void booleanOrNullAttributeAttributeSetter(v8::Local<v8::Value> v8Value, 
     return;
 
   bool isNull = IsUndefinedOrNull(v8Value);
+
   impl->setBooleanOrNullAttribute(cppValue, isNull);
 }
 
@@ -1527,6 +1529,7 @@ static void longOrNullAttributeAttributeSetter(v8::Local<v8::Value> v8Value, con
     return;
 
   bool isNull = IsUndefinedOrNull(v8Value);
+
   impl->setLongOrNullAttribute(cppValue, isNull);
 }
 
@@ -1714,6 +1717,7 @@ static void doubleOrStringAttributeAttributeGetter(const v8::FunctionCallbackInf
   TestObject* impl = V8TestObject::toImpl(holder);
 
   DoubleOrString result;
+
   impl->doubleOrStringAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1745,6 +1749,7 @@ static void doubleOrStringOrNullAttributeAttributeGetter(const v8::FunctionCallb
   TestObject* impl = V8TestObject::toImpl(holder);
 
   DoubleOrString result;
+
   impl->doubleOrStringOrNullAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1776,6 +1781,7 @@ static void doubleOrNullStringAttributeAttributeGetter(const v8::FunctionCallbac
   TestObject* impl = V8TestObject::toImpl(holder);
 
   DoubleOrString result;
+
   impl->doubleOrNullStringAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1807,6 +1813,7 @@ static void stringOrStringSequenceAttributeAttributeGetter(const v8::FunctionCal
   TestObject* impl = V8TestObject::toImpl(holder);
 
   StringOrStringSequence result;
+
   impl->stringOrStringSequenceAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1838,6 +1845,7 @@ static void testEnumOrDoubleAttributeAttributeGetter(const v8::FunctionCallbackI
   TestObject* impl = V8TestObject::toImpl(holder);
 
   TestEnumOrDouble result;
+
   impl->testEnumOrDoubleAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1869,6 +1877,7 @@ static void unrestrictedDoubleOrStringAttributeAttributeGetter(const v8::Functio
   TestObject* impl = V8TestObject::toImpl(holder);
 
   UnrestrictedDoubleOrString result;
+
   impl->unrestrictedDoubleOrStringAttribute(result);
 
   V8SetReturnValue(info, result);
@@ -1900,6 +1909,7 @@ static void nestedUnionAtributeAttributeGetter(const v8::FunctionCallbackInfo<v8
   TestObject* impl = V8TestObject::toImpl(holder);
 
   DoubleOrStringOrDoubleOrStringSequence result;
+
   impl->nestedUnionAtribute(result);
 
   V8SetReturnValue(info, result);
@@ -3774,6 +3784,65 @@ static void limitedWithEmptyMissingInvalidAttributeAttributeGetter(const v8::Fun
   V8SetReturnValueString(info, cppValue, info.GetIsolate());
 }
 
+static void runtimeStatsCounterAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
+  RuntimeCallTimerScope timer_scope(runtime_call_stats,
+                                    RuntimeCallStats::CounterId::kRuntimeStatsCounterAttribute_Getter_Bindings);
+
+  v8::Local<v8::Object> holder = info.Holder();
+
+  TestObject* impl = V8TestObject::toImpl(holder);
+
+  RuntimeCallTimer timer;
+  runtime_call_stats->Enter(&timer, RuntimeCallStats::CounterId::kRuntimeStatsCounterAttribute_Getter);
+  int32_t cppValue(impl->runtimeStatsCounterAttribute());
+  runtime_call_stats->Leave(&timer);
+
+  V8SetReturnValueInt(info, cppValue);
+}
+
+static void runtimeStatsCounterAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
+  RuntimeCallTimerScope timer_scope(runtime_call_stats,
+                                    RuntimeCallStats::CounterId::kRuntimeStatsCounterAttribute_Setter_Bindings);
+  v8::Isolate* isolate = info.GetIsolate();
+  ALLOW_UNUSED_LOCAL(isolate);
+
+  v8::Local<v8::Object> holder = info.Holder();
+  ALLOW_UNUSED_LOCAL(holder);
+
+  TestObject* impl = V8TestObject::toImpl(holder);
+
+  ExceptionState exceptionState(isolate, ExceptionState::kSetterContext, "TestObject", "runtimeStatsCounterAttribute");
+
+  // Prepare the value to be set.
+  int32_t cppValue = NativeValueTraits<IDLLong>::NativeValue(info.GetIsolate(), v8Value, exceptionState, kNormalConversion);
+  if (exceptionState.HadException())
+    return;
+
+  RuntimeCallTimer timer;
+  runtime_call_stats->Enter(&timer, RuntimeCallStats::CounterId::kRuntimeStatsCounterAttribute_Setter);
+  impl->setRuntimeStatsCounterAttribute(cppValue);
+  runtime_call_stats->Leave(&timer);
+}
+
+static void runtimeStatsCounterReadOnlyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
+  RuntimeCallTimerScope timer_scope(runtime_call_stats,
+                                    RuntimeCallStats::CounterId::kRuntimeStatsCounterReadOnlyAttribute_Getter_Bindings);
+
+  v8::Local<v8::Object> holder = info.Holder();
+
+  TestObject* impl = V8TestObject::toImpl(holder);
+
+  RuntimeCallTimer timer;
+  runtime_call_stats->Enter(&timer, RuntimeCallStats::CounterId::kRuntimeStatsCounterReadOnlyAttribute_Getter);
+  double cppValue(impl->runtimeStatsCounterReadOnlyAttribute());
+  runtime_call_stats->Leave(&timer);
+
+  V8SetReturnValue(info, cppValue);
+}
+
 static void replaceableReadonlyLongAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
@@ -3792,6 +3861,7 @@ static void replaceableReadonlyLongAttributeAttributeSetter(v8::Local<v8::Value>
   // Prepare the value to be set.
 
   v8::Local<v8::String> propertyName = V8AtomicString(isolate, "replaceableReadonlyLongAttribute");
+
   V8CallBoolean(info.Holder()->CreateDataProperty(info.GetIsolate()->GetCurrentContext(), propertyName, v8Value));
 }
 
@@ -8005,6 +8075,7 @@ static void callWithExecutionContextVoidMethodMethod(const v8::FunctionCallbackI
   TestObject* impl = V8TestObject::toImpl(info.Holder());
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   impl->callWithExecutionContextVoidMethod(executionContext);
 }
 
@@ -8031,6 +8102,7 @@ static void callWithScriptStateExecutionContextVoidMethodMethod(const v8::Functi
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   impl->callWithScriptStateExecutionContextVoidMethod(scriptState, executionContext);
 }
 
@@ -8040,6 +8112,7 @@ static void callWithScriptStateScriptArgumentsVoidMethodMethod(const v8::Functio
   ScriptState* scriptState = ScriptState::ForReceiverObject(info);
 
   ScriptArguments* scriptArguments(ScriptArguments::Create(scriptState, info, 0));
+
   impl->callWithScriptStateScriptArgumentsVoidMethod(scriptState, scriptArguments);
 }
 
@@ -8059,6 +8132,7 @@ static void callWithScriptStateScriptArgumentsVoidMethodOptionalBooleanArgMethod
   }
   if (UNLIKELY(numArgsPassed <= 0)) {
     ScriptArguments* scriptArguments(ScriptArguments::Create(scriptState, info, 1));
+
     impl->callWithScriptStateScriptArgumentsVoidMethodOptionalBooleanArg(scriptState, scriptArguments);
     return;
   }
@@ -8067,6 +8141,7 @@ static void callWithScriptStateScriptArgumentsVoidMethodOptionalBooleanArgMethod
     return;
 
   ScriptArguments* scriptArguments(ScriptArguments::Create(scriptState, info, 1));
+
   impl->callWithScriptStateScriptArgumentsVoidMethodOptionalBooleanArg(scriptState, scriptArguments, optionalBooleanArg);
 }
 
@@ -8106,6 +8181,7 @@ static void customCallPrologueVoidMethodMethod(const v8::FunctionCallbackInfo<v8
   TestObject* impl = V8TestObject::toImpl(info.Holder());
 
   V8TestObject::customCallPrologueVoidMethodMethodPrologueCustom(info, impl);
+
   impl->customCallPrologueVoidMethod();
 }
 
@@ -8816,6 +8892,7 @@ static void callWithExecutionContextRaisesExceptionVoidMethodLongArgMethod(const
     return;
 
   ExecutionContext* executionContext = CurrentExecutionContext(info.GetIsolate());
+
   impl->callWithExecutionContextRaisesExceptionVoidMethodLongArg(executionContext, longArg, exceptionState);
   if (exceptionState.HadException()) {
     return;
@@ -9201,6 +9278,19 @@ static void newObjectTestInterfaceMethodMethod(const v8::FunctionCallbackInfo<v8
   // does not exist yet.
   DCHECK(!result || DOMDataStore::GetWrapper(result, info.GetIsolate()).IsEmpty());
   V8SetReturnValue(info, result);
+}
+
+static void runtimeStatsCounterMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
+  RuntimeCallTimerScope timer_scope(runtime_call_stats,
+                                    RuntimeCallStats::CounterId::kRuntimeStatsCounterMethod_Bindings);
+
+  TestObject* impl = V8TestObject::toImpl(info.Holder());
+
+  RuntimeCallTimer timer;
+  runtime_call_stats->Enter(&timer, RuntimeCallStats::CounterId::kRuntimeStatsCounterMethod);
+  impl->runtimeStatsCounterMethod();
+  runtime_call_stats->Leave(&timer);
 }
 
 static void serializerMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
@@ -10893,6 +10983,20 @@ void V8TestObject::limitedWithEmptyMissingInvalidAttributeAttributeGetterCallbac
   TestObjectV8Internal::limitedWithEmptyMissingInvalidAttributeAttributeGetter(info);
 }
 
+void V8TestObject::runtimeStatsCounterAttributeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  TestObjectV8Internal::runtimeStatsCounterAttributeAttributeGetter(info);
+}
+
+void V8TestObject::runtimeStatsCounterAttributeAttributeSetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  v8::Local<v8::Value> v8Value = info[0];
+
+  TestObjectV8Internal::runtimeStatsCounterAttributeAttributeSetter(v8Value, info);
+}
+
+void V8TestObject::runtimeStatsCounterReadOnlyAttributeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  TestObjectV8Internal::runtimeStatsCounterReadOnlyAttributeAttributeGetter(info);
+}
+
 void V8TestObject::replaceableReadonlyLongAttributeAttributeGetterCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestObjectV8Internal::replaceableReadonlyLongAttributeAttributeGetter(info);
 }
@@ -12100,6 +12204,10 @@ void V8TestObject::newObjectTestInterfaceMethodMethodCallback(const v8::Function
   TestObjectV8Internal::newObjectTestInterfaceMethodMethod(info);
 }
 
+void V8TestObject::runtimeStatsCounterMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
+  TestObjectV8Internal::runtimeStatsCounterMethodMethod(info);
+}
+
 void V8TestObject::serializerMethodMethodCallback(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestObjectV8Internal::serializerMethodMethod(info);
 }
@@ -12615,6 +12723,12 @@ static const V8DOMConfiguration::AccessorConfiguration V8TestObjectAccessors[] =
       { "limitedWithEmptyMissingInvalidAttribute", V8TestObject::limitedWithEmptyMissingInvalidAttributeAttributeGetterCallback, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
     ,
 
+      { "runtimeStatsCounterAttribute", V8TestObject::runtimeStatsCounterAttributeAttributeGetterCallback, V8TestObject::runtimeStatsCounterAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
+    ,
+
+      { "runtimeStatsCounterReadOnlyAttribute", V8TestObject::runtimeStatsCounterReadOnlyAttributeAttributeGetterCallback, nullptr, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::ReadOnly), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
+    ,
+
       { "replaceableReadonlyLongAttribute", V8TestObject::replaceableReadonlyLongAttributeAttributeGetterCallback, V8TestObject::replaceableReadonlyLongAttributeAttributeSetterCallback, nullptr, nullptr, static_cast<v8::PropertyAttribute>(v8::None), V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kAllWorlds }
     ,
 
@@ -12909,6 +13023,7 @@ static const V8DOMConfiguration::MethodConfiguration V8TestObjectMethods[] = {
     {"voidMethodTestInterfaceGarbageCollectedSequenceArg", V8TestObject::voidMethodTestInterfaceGarbageCollectedSequenceArgMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"voidMethodTestInterfaceGarbageCollectedArrayArg", V8TestObject::voidMethodTestInterfaceGarbageCollectedArrayArgMethodCallback, 1, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"newObjectTestInterfaceMethod", V8TestObject::newObjectTestInterfaceMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
+    {"runtimeStatsCounterMethod", V8TestObject::runtimeStatsCounterMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"serializerMethod", V8TestObject::serializerMethodMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"keys", V8TestObject::keysMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
     {"values", V8TestObject::valuesMethodCallback, 0, v8::None, V8DOMConfiguration::kOnPrototype, V8DOMConfiguration::kCheckHolder, V8DOMConfiguration::kDoNotCheckAccess, V8DOMConfiguration::kAllWorlds},
