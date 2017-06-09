@@ -1202,7 +1202,7 @@ bool AXObjectImpl::SupportsActiveDescendant() const {
 bool AXObjectImpl::SupportsARIAAttributes() const {
   return IsLiveRegion() || SupportsARIADragging() || SupportsARIADropping() ||
          SupportsARIAFlowTo() || SupportsARIAOwns() ||
-         HasAttribute(aria_labelAttr);
+         HasAttribute(aria_labelAttr) || HasAttribute(aria_currentAttr);
 }
 
 bool AXObjectImpl::SupportsRangeValue() const {
