@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1760602b_cbc23f36",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:17:45Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me how this helps fix the issue of display prefs being restored.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba99865a_8ebe19d1",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:17:45Z",
+      "side": 1,
+      "message": "IWYU: base/bind.h for base::Bind/base::Unretained, \u003cutility\u003e for std::move",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 16
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a0367f_dace4169",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:17:45Z",
+      "side": 1,
+      "message": "It\u0027s not clear from within this class why Unretained is safe, which is one disadvantage of putting it here. If this were in services/ui/service.cc, it would be more apparent (since registry_ is destroyed before the input device controller).\n\nMaybe some sort of comment would be nice, but I\u0027m not really sure what...",
+      "range": {
+        "startLine": 26,
+        "startChar": 17,
+        "endLine": 26,
+        "endChar": 34
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3337a6e1_de880363",
+        "filename": "services/ui/public/cpp/input_devices/input_device_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:17:45Z",
+      "side": 1,
+      "message": "I\u0027m not entirely sure what method call this is referring to? I guess this is referring to InputDeviceServer, but I\u0027m not entirely sure how these two things are related.",
+      "range": {
+        "startLine": 30,
+        "startChar": 45,
+        "endLine": 30,
+        "endChar": 63
+      },
+      "revId": "0a5483642c87f86ea41771c5b8c0be43b451bc8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
