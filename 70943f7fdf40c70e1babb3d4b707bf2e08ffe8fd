@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1fe1141c_9fe57e99",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:59:05Z",
+      "side": 1,
+      "message": "I\u0027m a bit worried this may cause memory leak. Would you test locally with run-webkit-test --enable-leak-detection?",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40a8005c_a98ee5bc",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:59:05Z",
+      "side": 1,
+      "message": "Rename to TryStreamAnyIfAvailable()",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec1d0d6_e197e593",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:59:05Z",
+      "side": 1,
+      "message": "Rename to TryStreamIfAvailable()",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25bbb36b_4ac1eb90",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:59:05Z",
+      "side": 1,
+      "message": "Rename to TryStream",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd32d50_851b58f9",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-09T03:59:05Z",
+      "side": 1,
+      "message": "I think the func comment on L92 isn\u0027t helpful.",
+      "revId": "70943f7fdf40c70e1babb3d4b707bf2e08ffe8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
