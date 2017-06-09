@@ -124,6 +124,24 @@
       "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "858f3deb_00b99d18",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 1470,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-09T22:07:48Z",
+      "side": 1,
+      "message": "Oh, indeed, that is my mistake, sorry for taking so much time with it.\n\nThis version of the iteration lgtm.",
+      "parentUuid": "89fc51c3_de1deeb5",
+      "revId": "8342325d29b8724effe0ef5fbefcce14b72cb353",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
