@@ -213,6 +213,10 @@ class CONTENT_EXPORT ServiceWorkerRegistration
   base::WeakPtr<ServiceWorkerContextCore> context_;
   scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
 
+  base::RepeatingTimer activation_timer_;
+
+  base::WeakPtrFactory<ServiceWorkerRegistration> weak_factory_;
+
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerRegistration);
 };
 

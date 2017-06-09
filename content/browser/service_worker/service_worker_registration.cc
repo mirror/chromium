@@ -21,6 +21,14 @@ namespace content {
 
 namespace {
 
+// If an outgoing active worker has no controllees or the waiting worker called
+// skipWaiting(), it is given |kMaxLameDuckTime| time to finish its requests
+// before it is removed. If the waiting worker called skipWaiting() more than
+// this time ago, or the outgoing worker has had no controllees for a continuous
+// period of time exceeding this time, the outgoing worker will be removed even
+// if it has ongoing requests.
+constexpr base::TimeDelta kMaxLameDuckTime = base::TimeDelta::FromMinutes(5);
+
 ServiceWorkerVersionInfo GetVersionInfo(ServiceWorkerVersion* version) {
   if (!version)
     return ServiceWorkerVersionInfo();
@@ -185,8 +193,30 @@ void ServiceWorkerRegistration::UnsetVersionInternal(
 void ServiceWorkerRegistration::ActivateWaitingVersionWhenReady() {
   DCHECK(waiting_version());
   should_activate_when_ready_ = true;
-  if (IsReadyToActivate())
+  if (IsReadyToActivate()) {
     ActivateWaitingVersion(false /* delay */);
+    return;
+  }
+
+  if (!activation_timer_) {
+    activation_timer_ = base::MakeUnique<RepeatingTimer>(tick_clock_);
+  }
+  if (!activation_timer_->IsRunning()) {
+    activation_timer_.Start(
+        FROM_HERE, kMaxLameDuckTime / 2,
+        base::Bind(&ServiceWorkerRegistration::ActivateIfReady()));
+  }
+}
+
+void ServiceWorkerRegistration::ActivateIfReady() {
+  if (!should_activate_when_ready_) {
+    activation_timer_.Stop();
+    return;
+  }
+
+  if (IsReadyToActivate()) {
+    ActivateWaitingVersion(false /* delay */);
+  }
 }
 
 void ServiceWorkerRegistration::ClaimClients() {
@@ -275,6 +305,10 @@ bool ServiceWorkerRegistration::IsReadyToActivate() const {
     return true;
   if (!active->HasWork() &&
       (!active->HasControllee() || waiting_version()->skip_waiting())) {
+    return true;
+  }
+  if (waiting_version()->TimeSinceSkipWaiting() > kMaxLameDuckTime ||
+      active->TimeSinceNoControllees() > kMaxLameDuckTime) {
     return true;
   }
   return false;
