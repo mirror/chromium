@@ -10,16 +10,18 @@
 #include "base/macros.h"
 #include "base/strings/string_piece.h"
 #include "components/subresource_filter/core/common/first_party_origin.h"
-#include "components/subresource_filter/core/common/proto/rules.pb.h"
-#include "components/subresource_filter/core/common/url_pattern.h"
-#include "components/subresource_filter/core/common/url_rule_test_support.h"
+#include "components/url_pattern_index/proto/rules.pb.h"
+#include "components/url_pattern_index/url_pattern.h"
+#include "components/url_pattern_index/url_rule_test_support.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 #include "url/origin.h"
 
 namespace subresource_filter {
 
-using namespace testing;
+namespace proto = url_pattern_index::proto;
+using namespace url_pattern_index::testing;
+using url_pattern_index::UrlPattern;
 
 class SubresourceFilterIndexedRulesetTest : public ::testing::Test {
  public:
