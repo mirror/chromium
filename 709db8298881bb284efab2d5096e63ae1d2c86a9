@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4051950e_e2d6e554",
+        "filename": "content/browser/renderer_host/media/audio_input_renderer_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-09T12:07:26Z",
+      "side": 1,
+      "message": "I\u0027d rather keep it, it\u0027s similar to the other code in this file.",
+      "parentUuid": "cbdc387f_ef745406",
+      "range": {
+        "startLine": 173,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 8
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9f82545f_86bb5376",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
         "patchSetId": 9
@@ -45,6 +69,30 @@
       "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2c92612_e10eb7c0",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-09T12:07:26Z",
+      "side": 1,
+      "message": "I moved the CHECK up to the initializer list so that |shared_memory_segment_size_| can be const. Not sure what you think about it, PTAL.",
+      "parentUuid": "9f82545f_86bb5376",
+      "range": {
+        "startLine": 51,
+        "startChar": 2,
+        "endLine": 51,
+        "endChar": 10
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "648f9f71_46b78566",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-09T12:07:26Z",
+      "side": 1,
+      "message": "As far as I can tell, this might be passed through from the renderer. There may be some sanitation code that I\u0027m missing though. return nullptr seems like the safest thing to do here. Added comment.",
+      "parentUuid": "a51e0a62_2c832679",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 38
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e17a7369_2e2f4a87",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
         "patchSetId": 9
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cd327b06_174cf956",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-09T12:07:26Z",
+      "side": 1,
+      "message": "Hmm, the value in the IPC message is unsigned, so it makes sense to use unsigned thereafter. As for the IPC message, maybe the purpose was just to prevent the renderer from sending negative values? Will leave this as it is.",
+      "parentUuid": "e17a7369_2e2f4a87",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 31
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "018bb6f3_9da9023c",
         "filename": "content/browser/renderer_host/media/audio_sync_reader.h",
         "patchSetId": 9
@@ -114,6 +210,30 @@
       "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d535986_750f584d",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-09T12:07:26Z",
+      "side": 1,
+      "message": "So we can construct it directly from unit tests, and to make it compatible with MakeUnique. This is in line with go/totw/134",
+      "parentUuid": "018bb6f3_9da9023c",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
