@@ -22,6 +22,92 @@
       "revId": "573e6b179ad378d1b67d08c4406d6b9f09bb4531",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95086a4b_6d6e4bb1",
+        "filename": "base/threading/sequence_local_storage_slot.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:49:09Z",
+      "side": 1,
+      "message": "That would be an inssaaaaanneeeee amount of SLSS! And SLSM would be huggeeee!\n\nTLS currently caps at 256 slots https://cs.chromium.org/chromium/src/base/threading/thread_local_storage.cc?type\u003dcs\u0026q\u003dfile:thread_local_storage.cc+kThreadLocalStorageSize\n\nI think we should do the same even though we don\u0027t have a practical limit. Something like\n\n// There could theoretically be INT_MAX SequenceLocalStorageSlots but that would push far\n// beyond the limits of what the SequenceLocalStorageMap\u0027s impl was built to handle. Since\n// ThreadLocalStorage::Slots are capped at 256 as of this writing, use the same cap for\n// SequenceLocalStorage and assess if it is ever hit.\nconstexpr int kMaxSequenceLocalStorageSize \u003d 256;\nDCHECK_LT(slot_id, kMaxSequenceLocalStorageSize);\n\n\n\nhmmm thinking about this some more though, it won\u0027t work in unit tests (which run many times in the same process without resetting global state), TLS re-uses slots so doesn\u0027t have that issue. Food for thought, let\u0027s discuss offline.",
+      "range": {
+        "startLine": 21,
+        "startChar": 21,
+        "endLine": 21,
+        "endChar": 54
+      },
+      "revId": "573e6b179ad378d1b67d08c4406d6b9f09bb4531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5210f99_248b346a",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:49:09Z",
+      "side": 1,
+      "message": "Why not do this in initial commit? Feels SLSS is unusable without this.",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 64,
+        "endChar": 29
+      },
+      "revId": "573e6b179ad378d1b67d08c4406d6b9f09bb4531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b45e408_ae2b158f",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:49:09Z",
+      "side": 1,
+      "message": "Use SLSMap::ValueDestructorPair::DestructorFunc per previous CL\u0027s suggestion",
+      "range": {
+        "startLine": 85,
+        "startChar": 4,
+        "endLine": 85,
+        "endChar": 29
+      },
+      "revId": "573e6b179ad378d1b67d08c4406d6b9f09bb4531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7721e072_98b4257b",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-09T16:49:09Z",
+      "side": 1,
+      "message": "Add a test with one slot and multiple maps, iterate through each map being in context via Scoped...Map and ensure the slot has a value specific to that map each time (i.e. a multiple sequences test before Sequences themselves support SLSM).",
+      "revId": "573e6b179ad378d1b67d08c4406d6b9f09bb4531",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
