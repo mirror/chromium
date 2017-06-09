@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "09308a69_e8763f38",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-resize-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T14:49:09Z",
+      "side": 1,
+      "message": "Where is didResizeWindow used/checked?",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa55dfe7_cb247056",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scroll-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T14:49:09Z",
+      "side": 1,
+      "message": "s/agains/against",
+      "range": {
+        "startLine": 23,
+        "startChar": 72,
+        "endLine": 23,
+        "endChar": 78
+      },
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7c2c3b6_48bab270",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scroll-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T14:49:09Z",
+      "side": 1,
+      "message": "\\\u0027 ? instead of a \\t which is a tab",
+      "range": {
+        "startLine": 145,
+        "startChar": 54,
+        "endLine": 145,
+        "endChar": 55
+      },
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78d4fc4b_5b91fa8c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scrollbars-cause-resize.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T14:49:09Z",
+      "side": 1,
+      "message": "Where is t passed around? (looking for where t.done() gets called.",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa815620_f129d579",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-type.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-09T14:49:09Z",
+      "side": 1,
+      "message": "I\u0027m not sure every vendor will have the same toString() impl will they?",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
