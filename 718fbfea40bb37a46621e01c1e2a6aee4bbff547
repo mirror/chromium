@@ -16,6 +16,24 @@
       "revId": "718fbfea40bb37a46621e01c1e2a6aee4bbff547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876fde3c_17ef98e8",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTraversalStrategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-09T04:18:26Z",
+      "side": 1,
+      "message": "Typical usage would be:\n\nfor (Node* c \u003d Strategy::StartNode(p); c; c \u003d Strategy::NextNode(c)) ...\n\nI wanted to avoid |*c| by the |const Node*| argument.\n\nHowever, you\u0027re right. Consistency with NodeTraversal is important. So I changed it to |const Node\u0026|.",
+      "parentUuid": "7d1a76b1_5fab8f8b",
+      "revId": "718fbfea40bb37a46621e01c1e2a6aee4bbff547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
