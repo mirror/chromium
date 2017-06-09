@@ -129,6 +129,11 @@ void WebPluginContainerImpl::UpdateAllLifecyclePhases() {
   web_plugin_->UpdateAllLifecyclePhases();
 }
 
+void WebPluginContainerImpl::SetFrameRect(const IntRect& frame_rect) {
+  frame_rect_ = frame_rect;
+  ReportGeometry();
+}
+
 void WebPluginContainerImpl::Paint(GraphicsContext& context,
                                    const CullRect& cull_rect) const {
   // Don't paint anything if the plugin doesn't intersect.
@@ -165,6 +170,11 @@ void WebPluginContainerImpl::Paint(GraphicsContext& context,
   web_plugin_->Paint(canvas, window_rect);
 
   context.Restore();
+}
+
+void WebPluginContainerImpl::UpdateGeometry() {
+  if (LayoutEmbeddedContent* layout = element_->GetLayoutEmbeddedContent())
+    layout->UpdateGeometry(*this);
 }
 
 void WebPluginContainerImpl::InvalidateRect(const IntRect& rect) {
@@ -233,10 +243,6 @@ void WebPluginContainerImpl::HandleEvent(Event* event) {
 }
 
 void WebPluginContainerImpl::FrameRectsChanged() {
-  ReportGeometry();
-}
-
-void WebPluginContainerImpl::GeometryMayHaveChanged() {
   ReportGeometry();
 }
 
@@ -431,8 +437,9 @@ void WebPluginContainerImpl::ScheduleAnimation() {
 }
 
 void WebPluginContainerImpl::ReportGeometry() {
-  // We cannot compute geometry without a layoutObject.
-  if (!element_ || !element_->GetLayoutObject() || !web_plugin_)
+  // Ignore when SetFrameRect/ReportGeometry is called from
+  // UpdateOnEmbeddedContentViewChange before plugin is attached.
+  if (!is_attached_)
     return;
 
   IntRect window_rect, clip_rect, unobscured_rect;

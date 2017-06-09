@@ -182,11 +182,18 @@ void RootScrollerController::ApplyRootScrollerProperties(Node& node) const {
 
 void RootScrollerController::UpdateIFrameGeometryAndLayoutSize(
     HTMLFrameOwnerElement& frame_owner) const {
+  EmbeddedContentView* view = frame_owner.OwnedEmbeddedContentView();
+  // TODO: remove references to part
   LayoutEmbeddedContent* part = frame_owner.GetLayoutEmbeddedContent();
-  if (!part)
+  if (!view) {
+    DCHECK(!part);
     return;
+  }
 
-  part->UpdateGeometry();
+  DCHECK(part);
+  DCHECK(part->GetEmbeddedContentView() == view);
+
+  view->UpdateGeometry();
 
   if (!document_->GetFrame() || !document_->GetFrame()->View())
     return;
