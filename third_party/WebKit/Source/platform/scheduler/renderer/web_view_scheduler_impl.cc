@@ -5,6 +5,8 @@
 #include "platform/scheduler/renderer/web_view_scheduler_impl.h"
 
 #include "base/logging.h"
+#include "base/metrics/field_trial_params.h"
+#include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
 #include "platform/RuntimeEnabledFeatures.h"
 #include "platform/WebFrameScheduler.h"
@@ -21,75 +23,95 @@ namespace scheduler {
 
 namespace {
 
-const double kBackgroundBudgetAsCPUFraction = .01;
+const double kDefaultBackgroundBudgetAsCPUFraction = .01;
 // Given that we already align timers to 1Hz, do not report throttling if
 // it is under 3s.
 constexpr base::TimeDelta kMinimalBackgroundThrottlingDurationToReport =
     base::TimeDelta::FromSeconds(3);
 constexpr base::TimeDelta kDefaultMaxBackgroundBudgetLevel =
     base::TimeDelta::FromSeconds(3);
-constexpr base::TimeDelta kDefaultMaxBackgroundThrottlingDelay =
-    base::TimeDelta::FromMinutes(1);
+constexpr base::Optional<base::TimeDelta> kDefaultMaxBackgroundThrottlingDelay;
 constexpr base::TimeDelta kDefaultInitialBackgroundBudget =
     base::TimeDelta::FromSeconds(1);
 constexpr base::TimeDelta kBackgroundThrottlingGracePeriod =
     base::TimeDelta::FromSeconds(10);
 
-// Values coming from WebViewSchedulerSettings are interpreted as follows:
+// Values coming from the field trial config are interpreted as follows:
 //   -1 is "not set". Scheduler should use a reasonable default.
-//   0 is "none". base::nullopt will be used if value is optional.
-//   other values are left without changes.
+//   Other values are left without changes.
 
-double GetBackgroundBudgetRecoveryRate(
-    WebViewScheduler::WebViewSchedulerSettings* settings) {
-  if (!settings)
-    return kBackgroundBudgetAsCPUFraction;
-  double settings_budget = settings->ExpensiveBackgroundThrottlingCPUBudget();
-  if (settings_budget == -1.0)
-    return kBackgroundBudgetAsCPUFraction;
-  return settings_budget;
+struct BackgroundThrottlingSettings {
+  double budget_recovery_rate;
+  base::Optional<base::TimeDelta> max_budget_level;
+  base::Optional<base::TimeDelta> max_throttling_delay;
+  base::Optional<base::TimeDelta> initial_budget;
+};
+
+double GetDoubleParameterFromMap(
+    const std::map<std::string, std::string>& settings,
+    const std::string& setting_name) {
+  const auto& find_it = settings.find(setting_name);
+  if (find_it == settings.end())
+    return -1;
+  double parsed_value;
+  if (!base::StringToDouble(find_it->second, &parsed_value))
+    return -1;
+  return parsed_value;
 }
 
-base::Optional<base::TimeDelta> GetMaxBudgetLevel(
-    WebViewScheduler::WebViewSchedulerSettings* settings) {
-  if (!settings)
-    return base::nullopt;
-  double max_budget_level = settings->ExpensiveBackgroundThrottlingMaxBudget();
-  if (max_budget_level == -1.0)
-    return kDefaultMaxBackgroundBudgetLevel;
-  if (max_budget_level == 0.0)
-    return base::nullopt;
-  return base::TimeDelta::FromSecondsD(max_budget_level);
-}
+BackgroundThrottlingSettings GetBackgroundThrottlingSettings() {
+  std::map<std::string, std::string> background_throttling_settings;
+  base::GetFieldTrialParams("ExpensiveBackgroundTimerThrottling",
+                            &background_throttling_settings);
 
-base::Optional<base::TimeDelta> GetMaxThrottlingDelay(
-    WebViewScheduler::WebViewSchedulerSettings* settings) {
-  if (!settings)
-    return base::nullopt;
-  double max_delay = settings->ExpensiveBackgroundThrottlingMaxDelay();
-  if (max_delay == -1.0)
-    return kDefaultMaxBackgroundThrottlingDelay;
-  if (max_delay == 0.0)
-    return base::nullopt;
-  return base::TimeDelta::FromSecondsD(max_delay);
-}
+  BackgroundThrottlingSettings settings;
 
-base::TimeDelta GetInitialBudget(
-    WebViewSchedulerImpl::WebViewSchedulerSettings* settings) {
-  if (!settings)
-    return kDefaultInitialBackgroundBudget;
-  double initial_budget =
-      settings->ExpensiveBackgroundThrottlingInitialBudget();
-  if (initial_budget == -1.0)
-    return kDefaultMaxBackgroundBudgetLevel;
-  return base::TimeDelta::FromSecondsD(initial_budget);
+  double budget_recovery_rate =
+      GetDoubleParameterFromMap(background_throttling_settings, "cpu_budget");
+  if (budget_recovery_rate == -1) {
+    settings.budget_recovery_rate = kDefaultBackgroundBudgetAsCPUFraction;
+  } else {
+    settings.budget_recovery_rate = budget_recovery_rate;
+  }
+
+  double max_budget_level_in_seconds =
+      GetDoubleParameterFromMap(background_throttling_settings, "max_budget");
+  if (max_budget_level_in_seconds == -1) {
+    settings.max_budget_level = kDefaultMaxBackgroundBudgetLevel;
+  } else if (max_budget_level_in_seconds == 0) {
+    settings.max_budget_level = base::nullopt;
+  } else {
+    settings.max_budget_level =
+        base::TimeDelta::FromSecondsD(max_budget_level_in_seconds);
+  }
+
+  double max_throttling_delay_in_seconds =
+      GetDoubleParameterFromMap(background_throttling_settings, "max_delay");
+  if (max_throttling_delay_in_seconds == -1) {
+    settings.max_throttling_delay = kDefaultMaxBackgroundThrottlingDelay;
+  } else if (max_throttling_delay_in_seconds == 0) {
+    settings.max_throttling_delay = base::nullopt;
+  } else {
+    settings.max_throttling_delay =
+        base::TimeDelta::FromSecondsD(max_throttling_delay_in_seconds);
+  }
+
+  double initial_budget_in_seconds = GetDoubleParameterFromMap(
+      background_throttling_settings, "initial_budget");
+  if (initial_budget_in_seconds == -1) {
+    settings.initial_budget = kDefaultInitialBackgroundBudget;
+  } else {
+    settings.initial_budget =
+        base::TimeDelta::FromSecondsD(initial_budget_in_seconds);
+  }
+
+  return settings;
 }
 
 }  // namespace
 
 WebViewSchedulerImpl::WebViewSchedulerImpl(
     WebScheduler::InterventionReporter* intervention_reporter,
-    WebViewScheduler::WebViewSchedulerSettings* settings,
     RendererSchedulerImpl* renderer_scheduler,
     bool disable_background_timer_throttling)
     : intervention_reporter_(intervention_reporter),
@@ -106,8 +128,7 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       is_audio_playing_(false),
       reported_background_throttling_since_navigation_(false),
       has_active_connection_(false),
-      background_time_budget_pool_(nullptr),
-      settings_(settings) {
+      background_time_budget_pool_(nullptr) {
   renderer_scheduler->AddWebViewScheduler(this);
 
   delayed_background_throttling_enabler_.Reset(
@@ -350,18 +371,22 @@ void WebViewSchedulerImpl::MaybeInitializeBackgroundCPUTimeBudgetPool() {
           "background");
   LazyNow lazy_now(renderer_scheduler_->tick_clock());
 
+  BackgroundThrottlingSettings settings = GetBackgroundThrottlingSettings();
+
   background_time_budget_pool_->SetMaxBudgetLevel(lazy_now.Now(),
-                                                  GetMaxBudgetLevel(settings_));
+                                                  settings.max_budget_level);
   background_time_budget_pool_->SetMaxThrottlingDelay(
-      lazy_now.Now(), GetMaxThrottlingDelay(settings_));
+      lazy_now.Now(), settings.max_throttling_delay);
 
   UpdateBackgroundThrottlingState();
 
   background_time_budget_pool_->SetTimeBudgetRecoveryRate(
-      lazy_now.Now(), GetBackgroundBudgetRecoveryRate(settings_));
+      lazy_now.Now(), settings.budget_recovery_rate);
 
-  background_time_budget_pool_->GrantAdditionalBudget(
-      lazy_now.Now(), GetInitialBudget(settings_));
+  if (settings.initial_budget) {
+    background_time_budget_pool_->GrantAdditionalBudget(
+        lazy_now.Now(), settings.initial_budget.value());
+  }
 }
 
 void WebViewSchedulerImpl::OnThrottlingReported(
