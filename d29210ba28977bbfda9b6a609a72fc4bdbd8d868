@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff94d67d_4a7bb87e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-09T19:29:33Z",
+      "side": 1,
+      "message": "Maybe mention why this is being deprecated somewhere in the commit message.",
+      "range": {
+        "startLine": 7,
+        "startChar": 26,
+        "endLine": 7,
+        "endChar": 47
+      },
+      "revId": "d29210ba28977bbfda9b6a609a72fc4bdbd8d868",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
