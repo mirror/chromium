@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "d43214f0_54673237",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 4
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-09T08:01:14Z",
+      "side": 1,
+      "message": "Just FYI, IIUC, the spec is not saying that Exposed\u003d(G1,G2,...) must be inherited.  If a parent interface is exposed, it doesn\u0027t mean that all the child interfaces are exposed.  You need to write Exposed for every interface (even if it\u0027s annoying).\n\nThis CL seems good on this point as is.",
+      "parentUuid": "f1948994_d5f7328f",
+      "revId": "c3f1bb4efe1d035f5f81d8313c9cd6927169be00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd2faf96_8b6de447",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
         "patchSetId": 4

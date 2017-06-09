@@ -19,6 +19,52 @@
     },
     {
       "key": {
+        "uuid": "55a31e55_b62f0f3a",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-09T08:01:14Z",
+      "side": 1,
+      "message": "nit: s/parse/|parse|/",
+      "range": {
+        "startLine": 17,
+        "startChar": 47,
+        "endLine": 17,
+        "endChar": 52
+      },
+      "revId": "26dcc9019a09ffe204a67df5eb5574111b922e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0a2019c_b6c3b347",
+        "filename": "third_party/WebKit/Source/core/css/cssom/CSSNumericValue.idl",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-09T08:01:14Z",
+      "side": 1,
+      "message": "Do you intend to expose |parse| regardless of CSSTypedOM feature?\nOr, do you want to expose |parse| only when CSSTypedOM is enabled?",
+      "range": {
+        "startLine": 18,
+        "startChar": 39,
+        "endLine": 18,
+        "endChar": 45
+      },
+      "revId": "26dcc9019a09ffe204a67df5eb5574111b922e87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17896036_8ad32236",
         "filename": "third_party/WebKit/Source/core/css/cssom/CSSStyleValue.idl",
         "patchSetId": 6
