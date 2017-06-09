@@ -7,6 +7,10 @@
 
 #include "content/public/browser/web_contents_observer.h"
 
+namespace gfx {
+class Size;
+}  // namespace gfx
+
 class MediaEngagementContentsObserverTest;
 class MediaEngagementService;
 
@@ -26,6 +30,7 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
                            const MediaPlayerId& media_player_id) override;
   void DidUpdateAudioMutingState(bool muted) override;
   void MediaVolumeChanged(const MediaPlayerId& id, double volume) override;
+  void MediaResized(const gfx::Size& size, const MediaPlayerId& id) override;
 
  private:
   // Only MediaEngagementService can create a MediaEngagementContentsObserver.
@@ -63,6 +68,8 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
   // play state and size.
   void MaybeInsertSignificantPlayer(const MediaPlayerId& id);
   void MaybeRemoveSignificantPlayer(const MediaPlayerId& id);
+
+  bool IsVideoSignificantSize(const gfx::Size& size);
 
   bool is_visible_ = false;
   bool significant_playback_recorded_ = false;

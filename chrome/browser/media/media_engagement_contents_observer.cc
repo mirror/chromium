@@ -11,6 +11,11 @@
 constexpr base::TimeDelta
     MediaEngagementContentsObserver::kSignificantMediaPlaybackTime;
 
+// This is the minimum size (in px) that a media element has to be in
+// order to be determined significant.
+const int kSignificantSizeWidth = 200;
+const int kSignificantSizeHeight = 200;
+
 MediaEngagementContentsObserver::MediaEngagementContentsObserver(
     content::WebContents* web_contents,
     MediaEngagementService* service)
@@ -87,6 +92,23 @@ void MediaEngagementContentsObserver::MediaVolumeChanged(
   UpdateTimer();
 }
 
+void MediaEngagementContentsObserver::MediaResized(const gfx::Size& size,
+                                                   const MediaPlayerId& id) {
+  if (IsVideoSignificantSize(size)) {
+    MaybeInsertSignificantPlayer(id);
+  } else {
+    MaybeRemoveSignificantPlayer(id);
+  }
+
+  UpdateTimer();
+}
+
+bool MediaEngagementContentsObserver::IsVideoSignificantSize(
+    const gfx::Size& size) {
+  return size.width() >= kSignificantSizeWidth &&
+         size.height() >= kSignificantSizeHeight;
+}
+
 void MediaEngagementContentsObserver::MediaStoppedPlaying(
     const MediaPlayerInfo& media_player_info,
     const MediaPlayerId& media_player_id) {
@@ -123,6 +145,12 @@ void MediaEngagementContentsObserver::MaybeInsertSignificantPlayer(
   if (is_playing == playing_players_.end())
     return;
 
+  // Check the player is the right size.
+  auto size = web_contents()->GetCurrentlyPlayingVideoSizes().find(id);
+  if (size == web_contents()->GetCurrentlyPlayingVideoSizes().end() ||
+      !IsVideoSignificantSize(size->second))
+    return;
+
   // Check that the player is not muted.
   auto volume = web_contents()->GetMediaVolumes().find(id);
   if (volume == web_contents()->GetMediaVolumes().end() ||
@@ -142,6 +170,12 @@ void MediaEngagementContentsObserver::MaybeRemoveSignificantPlayer(
   // If the player is no longer playing, it should not be significant.
   auto is_playing = playing_players_.find(id);
   if (is_playing == playing_players_.end())
+    significant = false;
+
+  // Check the player is the right size.
+  auto size = web_contents()->GetCurrentlyPlayingVideoSizes().find(id);
+  if (size == web_contents()->GetCurrentlyPlayingVideoSizes().end() ||
+      !IsVideoSignificantSize(size->second))
     significant = false;
 
   // If the player is muted, or we don't know the volume then the player can't

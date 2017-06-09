@@ -778,6 +778,9 @@ class WebContents : public PageNavigator,
   using VideoSizeMap =
       base::flat_map<WebContentsObserver::MediaPlayerId, gfx::Size>;
   virtual const VideoSizeMap& GetCurrentlyPlayingVideoSizes() = 0;
+  virtual void MediaResized(const gfx::Size& size,
+                            const WebContentsObserver::MediaPlayerId& id) = 0;
+
   virtual int GetCurrentlyPlayingVideoCount() = 0;
   virtual bool IsFullscreen() = 0;
 

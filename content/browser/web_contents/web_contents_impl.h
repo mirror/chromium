@@ -830,7 +830,7 @@ class CONTENT_EXPORT WebContentsImpl
   // This will be called before playback is started, check
   // GetCurrentlyPlayingVideoCount if you need this when playback starts.
   void MediaResized(const gfx::Size& size,
-                    const WebContentsObserver::MediaPlayerId& id);
+                    const WebContentsObserver::MediaPlayerId& id) override;
 
   int GetCurrentlyPlayingVideoCount() override;
   const VideoSizeMap& GetCurrentlyPlayingVideoSizes() override;
