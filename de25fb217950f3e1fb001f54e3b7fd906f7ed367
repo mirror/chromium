@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e756ed7e_d2a468c8",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 618,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-09T17:33:13Z",
+      "side": 1,
+      "message": "nit: would be nicer to do:\n\nfor entry_id, entry in enumerate(entries):",
+      "range": {
+        "startLine": 618,
+        "startChar": 8,
+        "endLine": 618,
+        "endChar": 16
+      },
+      "revId": "de25fb217950f3e1fb001f54e3b7fd906f7ed367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22b82d1b_1dd3b9e3",
+        "filename": "tools/licenses.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-09T17:33:13Z",
+      "side": 1,
+      "message": "style: use ()s wrap lines rather than \\.",
+      "revId": "de25fb217950f3e1fb001f54e3b7fd906f7ed367",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
