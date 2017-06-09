@@ -101,8 +101,10 @@ void V8AbstractEventListener::HandleEvent(ScriptState* script_state,
       ToV8(event, script_state->GetContext()->Global(), GetIsolate());
   if (js_event.IsEmpty())
     return;
+  firing_events_.emplace_back(this, event);
   InvokeEventHandler(script_state, event,
                      v8::Local<v8::Value>::New(GetIsolate(), js_event));
+  firing_events_.pop_back();
 }
 
 void V8AbstractEventListener::SetListenerObject(
@@ -231,12 +233,15 @@ void V8AbstractEventListener::WrapperCleared(
 }
 
 DEFINE_TRACE(V8AbstractEventListener) {
+  visitor->Trace(firing_events_);
   visitor->Trace(worker_global_scope_);
   EventListener::Trace(visitor);
 }
 
 DEFINE_TRACE_WRAPPERS(V8AbstractEventListener) {
   visitor->TraceWrappers(listener_.Cast<v8::Value>());
+  for (auto event : firing_events_)
+    visitor->TraceWrappers(event);
 }
 
 }  // namespace blink

@@ -242,6 +242,7 @@ class CORE_EXPORT Event : public GarbageCollectedFinalized<Event>,
   }
 
   DECLARE_VIRTUAL_TRACE();
+  DECLARE_VIRTUAL_TRACE_WRAPPERS();
 
  protected:
   Event();

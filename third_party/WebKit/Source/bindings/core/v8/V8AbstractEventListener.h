@@ -35,6 +35,7 @@
 #include "core/events/EventListener.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScriptWrappable.h"
+#include "platform/bindings/TraceWrapperMember.h"
 #include "platform/bindings/TraceWrapperV8Reference.h"
 #include "platform/heap/SelfKeepAlive.h"
 #include "v8/include/v8.h"
@@ -142,6 +143,8 @@ class CORE_EXPORT V8AbstractEventListener : public EventListener,
       const v8::WeakCallbackInfo<V8AbstractEventListener>&);
 
   TraceWrapperV8Reference<v8::Object> listener_;
+
+  HeapVector<TraceWrapperMember<Event>, 1> firing_events_;
 
   // true if the listener is created through a DOM attribute.
   bool is_attribute_;

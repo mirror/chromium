@@ -368,4 +368,6 @@ DEFINE_TRACE(Event) {
   visitor->Trace(event_path_);
 }
 
+DEFINE_TRACE_WRAPPERS(Event) {}
+
 }  // namespace blink
