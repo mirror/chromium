@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "87178e7d_f1761dd8",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T18:52:23Z",
+      "side": 1,
+      "message": "by worst -\u003e from worst\n\nStrictly speaking, I think it may not always be correct to say that TEXT is \"worse\" than IMAGE, or that SLOW is \"worse\" than SKIP or vice versa.",
+      "revId": "d5e15e75c48c2c5b9eabb86e376b167b582feaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d89c47c_c9023dbe",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 449,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T18:52:23Z",
+      "side": 1,
+      "message": "What\u0027s the purpose of requestAnimationFrame here?",
+      "range": {
+        "startLine": 433,
+        "startChar": 0,
+        "endLine": 449,
+        "endChar": 8
+      },
+      "revId": "d5e15e75c48c2c5b9eabb86e376b167b582feaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b586285b_ea4db537",
+        "filename": "third_party/WebKit/LayoutTests/fast/harness/test-expectations.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-09T18:52:23Z",
+      "side": 1,
+      "message": "comparator",
+      "range": {
+        "startLine": 496,
+        "startChar": 31,
+        "endLine": 496,
+        "endChar": 40
+      },
+      "revId": "d5e15e75c48c2c5b9eabb86e376b167b582feaf5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
