@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "739fca25_5ce30136",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T23:12:00Z",
+      "side": 1,
+      "message": "Nit: I know this is pre-existing code, but it\u0027s pretty unusual. Usually we\u0027d just generate the error strings directly inside Blink and avoid this.",
+      "range": {
+        "startLine": 443,
+        "startChar": 0,
+        "endLine": 446,
+        "endChar": 63
+      },
+      "revId": "e21951b1d364e304fdd50062ee2e45b055650d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
