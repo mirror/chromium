@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c215c596_d29282ab",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T14:42:32Z",
+      "side": 1,
+      "message": "It would be better as an instance method. That way you won\u0027t have the dependency on the singleton here (but it will be pushed to the ShowcaseTestCase class though).",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11ce7495_8fb27da0",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T14:42:32Z",
+      "side": 1,
+      "message": "I wonder if this line should go inside too. In case there are lingering stuff in the window too.",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce8ba014_651b988e",
+        "filename": "ios/showcase/test/showcase_eg_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-09T14:42:32Z",
+      "side": 1,
+      "message": "I think there would be value to add ~grey_isInteractionable (not sure about the name). That way it would fail here instead of below. (But keep below, it\u0027s useful in its own right.)",
+      "range": {
+        "startLine": 50,
+        "startChar": 52,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
