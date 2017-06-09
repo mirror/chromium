@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4e86e39_d31b9b90",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 0,
+      "message": "why did you move this? Are we guaranteed the file descriptor will be right?",
+      "range": {
+        "startLine": 311,
+        "startChar": 67,
+        "endLine": 311,
+        "endChar": 72
+      },
+      "revId": "9f09049c45755baeee9ffd7e22c4e430ca96c2d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

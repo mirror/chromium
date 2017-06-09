@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f495407d_7575d41f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "nit: clank is not supposed to be used in public context, use [android] maybe?",
+      "range": {
+        "startLine": 7,
+        "startChar": 1,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8361ba3_2cb7ba98",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "kudos on the descriptive and informative commit message :)",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 4
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e514f738_caa3aa39",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "replace with simply \"printing\" please? Context: crbug.com/533072",
+      "range": {
+        "startLine": 34,
+        "startChar": 42,
+        "endLine": 34,
+        "endChar": 50
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8f5957_93a60c24",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "explicitly set the page count to unknown? That\u0027s not required, but that would be a chance to document that we do that on purpose and explain why it\u0027s not useful for us to compute the number of pages at this point.",
+      "range": {
+        "startLine": 247,
+        "startChar": 29,
+        "endLine": 247,
+        "endChar": 43
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b7f6035_383a8015",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "if we don\u0027t need the pageCoundEstimation, can we remove this method and code path entirely? Is that used for something else?",
+      "range": {
+        "startLine": 257,
+        "startChar": 16,
+        "endLine": 257,
+        "endChar": 39
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb51f29_6fff420f",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "nit: document argument: `, /* delete \u003d */ false);`",
+      "range": {
+        "startLine": 270,
+        "startChar": 71,
+        "endLine": 270,
+        "endChar": 76
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1609ac78_35534688",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "The method that does the opposite operation (`convertIntegerArrayToPageRanges`) does the ALL_PAGES check internally. Would it make sense to do the same in `normalize` too? (and then update the name to \"convertPageRangesToIntegerArray\" or something while we\u0027re at it.) Could be another CL or not done at all, I don\u0027t feel strongly about it.",
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d65ae54e_2d9ab3f2",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "doesn\u0027t that mean we never close the file descriptors?",
+      "range": {
+        "startLine": 350,
+        "startChar": 16,
+        "endLine": 350,
+        "endChar": 17
+      },
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99a322a1_861cfab6",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-09T11:30:00Z",
+      "side": 1,
+      "message": "nit: `return pages.toArray(new int[pages.size()])` ? ¯\\_(ツ)_/¯",
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
