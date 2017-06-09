@@ -52,6 +52,24 @@
       "revId": "09848dba3b8e83d127e53ea772f31ddc6bf67c44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7255c24b_952ca18c",
+        "filename": "third_party/WebKit/Source/core/frame/WindowInstallation.idl",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-09T01:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c7cce59_1049c2d6",
+      "revId": "09848dba3b8e83d127e53ea772f31ddc6bf67c44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
