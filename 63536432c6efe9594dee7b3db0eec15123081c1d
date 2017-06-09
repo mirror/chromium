@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d0c569a_ad117c66",
+        "filename": "tools/variations/fieldtrial_util.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-09T00:49:38Z",
+      "side": 1,
+      "message": "Nit: No need for ()\u0027s",
+      "range": {
+        "startLine": 118,
+        "startChar": 22,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "63536432c6efe9594dee7b3db0eec15123081c1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
