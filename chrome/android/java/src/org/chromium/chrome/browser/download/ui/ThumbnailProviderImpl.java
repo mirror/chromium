@@ -10,7 +10,6 @@ import android.os.Looper;
 import android.support.annotation.Nullable;
 import android.support.v4.util.LruCache;
 import android.text.TextUtils;
-import android.util.Pair;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.annotations.CalledByNative;
@@ -35,15 +34,16 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     /** 5 MB of thumbnails should be enough for everyone. */
     private static final int MAX_CACHE_BYTES = 5 * 1024 * 1024;
 
-    /** Weakly referenced cache containing thumbnails that can be deleted under memory pressure. */
-    private static WeakReference<LruCache<String, Pair<Bitmap, Integer>>> sBitmapCache =
+    /**
+     *  Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
+     *  Key in the cache is the filepath and the height/width (these are equal) of the thumbnail.
+     *  Value is the thumbnail bitmap and its byte size.
+     * */
+    private static WeakReference<LruCache<ThumbnailKey, ThumbnailValue>> sBitmapCache =
             new WeakReference<>(null);
 
     /** Enqueues requests. */
     private final Handler mHandler;
-
-    /** Maximum size in pixels of the smallest side of the thumbnail. */
-    private final int mIconSizePx;
 
     /** Queue of files to retrieve thumbnails for. */
     private final Deque<ThumbnailRequest> mRequestQueue;
@@ -54,8 +54,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     /** Request that is currently having its thumbnail retrieved. */
     private ThumbnailRequest mCurrentRequest;
 
-    public ThumbnailProviderImpl(int iconSizePx) {
-        mIconSizePx = iconSizePx;
+    public ThumbnailProviderImpl() {
         mHandler = new Handler(Looper.getMainLooper());
         mRequestQueue = new ArrayDeque<>();
         mNativeThumbnailProvider = nativeInit();
@@ -69,16 +68,18 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     }
 
     @Override
-    public Bitmap getThumbnail(ThumbnailRequest request) {
+    public void getThumbnail(ThumbnailRequest request) {
         String filePath = request.getFilePath();
-        if (TextUtils.isEmpty(filePath)) return null;
+        if (TextUtils.isEmpty(filePath)) return;
 
-        Bitmap cachedBitmap = getBitmapFromCache(filePath);
-        if (cachedBitmap != null) return cachedBitmap;
+        Bitmap cachedBitmap = getBitmapFromCache(new ThumbnailKey(filePath, request.getIconSize()));
+        if (cachedBitmap != null) {
+            request.onThumbnailRetrieved(filePath, cachedBitmap);
+            return;
+        }
 
         mRequestQueue.offer(request);
         processQueue();
-        return null;
     }
 
     /** Removes a particular file from the pending queue. */
@@ -96,10 +97,11 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         });
     }
 
-    private Bitmap getBitmapFromCache(String filePath) {
-        Pair<Bitmap, Integer> cachedBitmapPair = getBitmapCache().get(filePath);
-        if (cachedBitmapPair == null) return null;
-        Bitmap cachedBitmap = cachedBitmapPair.first;
+    private Bitmap getBitmapFromCache(ThumbnailKey thumbnailKey) {
+        ThumbnailValue cachedThumbnail = getBitmapCache().get(thumbnailKey);
+        if (cachedThumbnail == null) return null;
+        Bitmap cachedBitmap = cachedThumbnail.getBitmap();
+
         if (cachedBitmap == null) return null;
         assert !cachedBitmap.isRecycled();
         return cachedBitmap;
@@ -111,10 +113,14 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         mCurrentRequest = mRequestQueue.poll();
         String currentFilePath = mCurrentRequest.getFilePath();
 
-        Bitmap cachedBitmap = getBitmapFromCache(currentFilePath);
+        ThumbnailKey thumbnailKey =
+                new ThumbnailKey(currentFilePath, mCurrentRequest.getIconSize());
+
+        Bitmap cachedBitmap = getBitmapFromCache(thumbnailKey);
         if (cachedBitmap == null) {
             // Asynchronously process the file to make a thumbnail.
-            nativeRetrieveThumbnail(mNativeThumbnailProvider, currentFilePath, mIconSizePx);
+            nativeRetrieveThumbnail(
+                    mNativeThumbnailProvider, currentFilePath, mCurrentRequest.getIconSize());
         } else {
             // Send back the already-processed file.
             onThumbnailRetrieved(currentFilePath, cachedBitmap);
@@ -124,7 +130,12 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     @CalledByNative
     private void onThumbnailRetrieved(String filePath, @Nullable Bitmap bitmap) {
         if (bitmap != null) {
-            getBitmapCache().put(filePath, Pair.create(bitmap, bitmap.getByteCount()));
+            assert mCurrentRequest.getIconSize() == bitmap.getHeight();
+
+            ThumbnailKey thumbnailKey = new ThumbnailKey(filePath, bitmap.getHeight());
+            ThumbnailValue thumbnailValue = new ThumbnailValue(bitmap, bitmap.getByteCount());
+            getBitmapCache().put(thumbnailKey, thumbnailValue);
+
             mCurrentRequest.onThumbnailRetrieved(filePath, bitmap);
         }
 
@@ -136,22 +147,73 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         return mNativeThumbnailProvider != 0;
     }
 
-    private static LruCache<String, Pair<Bitmap, Integer>> getBitmapCache() {
+    private static LruCache<ThumbnailKey, ThumbnailValue> getBitmapCache() {
         ThreadUtils.assertOnUiThread();
 
-        LruCache<String, Pair<Bitmap, Integer>> cache =
+        LruCache<ThumbnailKey, ThumbnailValue> cache =
                 sBitmapCache == null ? null : sBitmapCache.get();
         if (cache != null) return cache;
 
         // Create a new weakly-referenced cache.
-        cache = new LruCache<String, Pair<Bitmap, Integer>>(MAX_CACHE_BYTES) {
+        cache = new LruCache<ThumbnailKey, ThumbnailValue>(MAX_CACHE_BYTES) {
             @Override
-            protected int sizeOf(String key, Pair<Bitmap, Integer> thumbnail) {
-                return thumbnail == null ? 0 : thumbnail.second;
+            protected int sizeOf(ThumbnailKey thumbnailKey, ThumbnailValue thumbnailValue) {
+                return thumbnailValue == null ? 0 : thumbnailValue.getSize();
             }
         };
         sBitmapCache = new WeakReference<>(cache);
         return cache;
+    }
+
+    /**
+     * Holds the key for the cached thumbnails. Consists of the filepath to the thumbnail and its
+     * size in height/width (these are equal).
+     */
+    private static class ThumbnailKey {
+        private final String mFilePath;
+        private final int mSizePx;
+
+        public ThumbnailKey(String filePath, int sizePx) {
+            mFilePath = filePath;
+            mSizePx = sizePx;
+        }
+
+        public String getFilePath() {
+            return mFilePath;
+        }
+
+        public int getSizePx() {
+            return mSizePx;
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            if (!(other instanceof ThumbnailKey)) return false;
+            ThumbnailKey otherKey = (ThumbnailKey) other;
+            return otherKey.getFilePath() == mFilePath && otherKey.getSizePx() == mSizePx;
+        }
+    }
+
+    /**
+     * Holds the value for the cached thumbnails. Consists of the {@link Bitmap} of the thumbnail
+     * and its size in byte count.
+     */
+    private static class ThumbnailValue {
+        private Bitmap mBitmap;
+        private int mByteCount;
+
+        public ThumbnailValue(Bitmap bitmap, int byteCount) {
+            mBitmap = bitmap;
+            mByteCount = byteCount;
+        }
+
+        public Bitmap getBitmap() {
+            return mBitmap;
+        }
+
+        public int getSize() {
+            return mByteCount;
+        }
     }
 
     private native long nativeInit();
