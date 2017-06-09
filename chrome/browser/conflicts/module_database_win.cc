@@ -24,6 +24,9 @@ ModuleDatabase* g_instance = nullptr;
 
 }  // namespace
 
+// static
+constexpr base::TimeDelta ModuleDatabase::kIdleTimeout;
+
 ModuleDatabase::ModuleDatabase(
     scoped_refptr<base::SequencedTaskRunner> task_runner)
     : task_runner_(std::move(task_runner)),
@@ -32,7 +35,16 @@ ModuleDatabase::ModuleDatabase(
       module_inspector_(base::Bind(&ModuleDatabase::OnModuleInspected,
                                    base::Unretained(this))),
       third_party_metrics_(this),
-      weak_ptr_factory_(this) {}
+      idle_timer_(
+          FROM_HERE,
+          kIdleTimeout,
+          base::Bind(&ModuleDatabase::OnBecomingIdle, base::Unretained(this)),
+          false),
+      weak_ptr_factory_(this) {
+  // Reset the timer now, so that observers that are added before any module
+  // events doesn't receive a OnModuleDatabaseIdle() call.
+  idle_timer_.Reset();
+}
 
 ModuleDatabase::~ModuleDatabase() {
   if (this == g_instance)
@@ -53,6 +65,10 @@ void ModuleDatabase::SetInstance(
   g_instance = module_database.release();
 }
 
+bool ModuleDatabase::IsIdle() {
+  return !idle_timer_.IsRunning() && module_inspector_.IsIdle();
+}
+
 void ModuleDatabase::OnProcessStarted(uint32_t process_id,
                                       uint64_t creation_time,
                                       content::ProcessType process_type) {
@@ -63,6 +79,8 @@ void ModuleDatabase::OnProcessStarted(uint32_t process_id,
 void ModuleDatabase::OnShellExtensionEnumerated(const base::FilePath& path,
                                                 uint32_t size_of_image,
                                                 uint32_t time_date_stamp) {
+  idle_timer_.Reset();
+
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
   auto* module_info =
       FindOrCreateModuleInfo(path, size_of_image, time_date_stamp);
@@ -85,6 +103,8 @@ void ModuleDatabase::OnModuleLoad(uint32_t process_id,
                               module_time_date_stamp, module_load_address));
     return;
   }
+
+  idle_timer_.Reset();
 
   // In theory this should always succeed. However, it is possible for a client
   // to misbehave and send out-of-order messages. It is easy to be tolerant of
@@ -123,6 +143,8 @@ void ModuleDatabase::OnModuleUnload(uint32_t process_id,
                               creation_time, module_load_address));
     return;
   }
+
+  idle_timer_.Reset();
 
   // See the long-winded comment in OnModuleLoad about reasons why this can
   // fail (but shouldn't normally).
@@ -171,6 +193,9 @@ void ModuleDatabase::AddObserver(ModuleDatabaseObserver* observer) {
     if (module.second.inspection_result)
       observer->OnNewModuleFound(module.first, module.second);
   }
+
+  if (IsIdle())
+    observer->OnModuleDatabaseIdle();
 }
 
 void ModuleDatabase::RemoveObserver(ModuleDatabaseObserver* observer) {
@@ -369,6 +394,17 @@ void ModuleDatabase::OnModuleInspected(
 
   for (auto& observer : observer_list_)
     observer.OnNewModuleFound(it->first, it->second);
+
+  if (IsIdle())
+    OnBecomingIdle();
+}
+
+void ModuleDatabase::OnBecomingIdle() {
+  if (!IsIdle())
+    return;
+
+  for (auto& observer : observer_list_)
+    observer.OnModuleDatabaseIdle();
 }
 
 // ModuleDatabase::ProcessInfoKey ----------------------------------------------

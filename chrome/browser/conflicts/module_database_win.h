@@ -15,6 +15,8 @@
 #include "base/memory/weak_ptr.h"
 #include "base/observer_list.h"
 #include "base/sequenced_task_runner.h"
+#include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "chrome/browser/conflicts/module_info_win.h"
 #include "chrome/browser/conflicts/module_inspector_win.h"
 #include "chrome/browser/conflicts/third_party_metrics_recorder_win.h"
@@ -44,6 +46,11 @@ class ModuleDatabase {
   using ProcessMap = std::map<ProcessInfoKey, ProcessInfoData>;
   using ProcessInfo = ProcessMap::value_type;
 
+  // The Module Database becomes idle after this timeout expires without any
+  // module events.
+  static constexpr base::TimeDelta kIdleTimeout =
+      base::TimeDelta::FromSeconds(10);
+
   // A ModuleDatabase is by default bound to a provided sequenced task runner.
   // All calls must be made in the context of this task runner, unless
   // otherwise noted. For calls from other contexts this task runner is used to
@@ -58,6 +65,11 @@ class ModuleDatabase {
   // global instance and deliberately leaked, unless manually cleaned up. This
   // has no locking and should be called when Chrome is single threaded.
   static void SetInstance(std::unique_ptr<ModuleDatabase> module_database);
+
+  // Returns true if the ModuleDatabase is idle. This means that no modules are
+  // currently being inspected, and no new module events happened in the last
+  // 10 seconds.
+  bool IsIdle();
 
   // Indicates that process with the given type has started. This must be called
   // before any calls to OnModuleEvent or OnModuleUnload. Must be called in the
@@ -167,6 +179,9 @@ class ModuleDatabase {
       const ModuleInfoKey& module_key,
       std::unique_ptr<ModuleInspectionResult> inspection_result);
 
+  // Notifies the observers if ModuleDatabase becomes idle.
+  void OnBecomingIdle();
+
   // The task runner to which this object is bound.
   scoped_refptr<base::SequencedTaskRunner> task_runner_;
 
@@ -183,6 +198,8 @@ class ModuleDatabase {
   base::ObserverList<ModuleDatabaseObserver> observer_list_;
 
   ThirdPartyMetricsRecorder third_party_metrics_;
+
+  base::Timer idle_timer_;
 
   // Weak pointer factory for this object. This is used when bouncing
   // incoming events to |task_runner_|.
