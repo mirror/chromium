@@ -732,10 +732,16 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
                                   kDirectionBackward, kCharacterGranularity);
 
       VisiblePosition visible_start(EndingSelection().VisibleStart());
-      if (PreviousPositionOf(visible_start, kCannotCrossEditingBoundary)
-              .IsNull()) {
-        // When the caret is at the start of the editable area in an empty list
-        // item, break out of the list item.
+      VisiblePosition previous_position =
+          PreviousPositionOf(visible_start, kCannotCrossEditingBoundary);
+      Node* enclosing_table_cell =
+          EnclosingNodeOfType(visible_start.DeepEquivalent(), &IsTableCell);
+      Node* enclosing_table_cell_for_previous_position =
+          EnclosingNodeOfType(previous_position.DeepEquivalent(), &IsTableCell);
+      if (previous_position.IsNull() ||
+          enclosing_table_cell != enclosing_table_cell_for_previous_position) {
+        // When the caret is at the start of the editable area, or cell, in an
+        // empty list item, break out of the list item.
         bool break_out_of_empty_list_item_result =
             BreakOutOfEmptyListItem(editing_state);
         if (editing_state->IsAborted())
@@ -744,6 +750,8 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
           TypingAddedToOpenCommand(kDeleteKey);
           return;
         }
+      }
+      if (previous_position.IsNull()) {
         // When there are no visible positions in the editing root, delete its
         // entire contents.
         if (NextPositionOf(visible_start, kCannotCrossEditingBoundary)
@@ -758,8 +766,6 @@ void TypingCommand::DeleteKeyPressed(TextGranularity granularity,
 
       // If we have a caret selection at the beginning of a cell, we have
       // nothing to do.
-      Node* enclosing_table_cell =
-          EnclosingNodeOfType(visible_start.DeepEquivalent(), &IsTableCell);
       if (enclosing_table_cell &&
           visible_start.DeepEquivalent() ==
               VisiblePosition::FirstPositionInNode(enclosing_table_cell)
