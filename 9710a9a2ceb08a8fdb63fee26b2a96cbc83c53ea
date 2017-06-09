@@ -1,0 +1,487 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f9882e_13b48ce8",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Please add comment: What is the lifetime of this object? Who deletes it? etc.",
+      "range": {
+        "startLine": 103,
+        "startChar": 9,
+        "endLine": 103,
+        "endChar": 23
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919f5755_d97bafad",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Can this be removed?",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4c155d1_b147976d",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "I think you can remove the reset() or pass the pointer as argument in reset().",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 71
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5e31a94_a2f6647a",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "You\u0027re interleaving expectations and calls to mock functions (one here, more in tests). Consider using VerifyAndClearExpectations().\n\n\"Important note: Google Mock requires expectations to be set before the mock functions are called, otherwise the behavior is undefined. In particular, you mustn\u0027t interleave EXPECT_CALL()s and calls to the mock functions.\"\n\nhttps://github.com/google/googletest/blob/master/googlemock/docs/ForDummies.md",
+      "range": {
+        "startLine": 80,
+        "startChar": 4,
+        "endLine": 80,
+        "endChar": 21
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5189bc03_7e84a881",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "This is dangerous since it can\u0027t be called from tests (this is a MockUserManager at that point).\nI\u0027d suggest to remove this function and keep the new FakeChromeUserManager() pointer in SetUp() as a local variable.",
+      "range": {
+        "startLine": 97,
+        "startChar": 8,
+        "endLine": 97,
+        "endChar": 40
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "011bce1c_ef8e94ca",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Suggestion: Expose GetNumberOfNotifications() and CancelNotificationById instead of ui_manager(). This keeps the code below easier to read. CancelNotificationById should take the IDS_ string.",
+      "range": {
+        "startLine": 103,
+        "startChar": 1,
+        "endLine": 105,
+        "endChar": 3
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17133bf4_dd8c3f25",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Does this have to be a member variable? It looks like all usages of run_loop could be handled with a local variable.",
+      "range": {
+        "startLine": 113,
+        "startChar": 2,
+        "endLine": 113,
+        "endChar": 43
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0d9421b_63fe3e98",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "ownership?",
+      "range": {
+        "startLine": 119,
+        "startChar": 2,
+        "endLine": 119,
+        "endChar": 65
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "def23040_a0cd27cd",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "// Not owned.",
+      "range": {
+        "startLine": 121,
+        "startChar": 1,
+        "endLine": 122,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb44f882_af7ec84a",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Split this up into separate tests.",
+      "range": {
+        "startLine": 128,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 47
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2f22a1_9627cf8e",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "EXPECT_TRUE(...empty())",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e17fa11_d51d3042",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Remove and add .Times(2) above or call VerifyAndClearExpectations. Note that expectations are checked only when the object is destroyed.",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 79
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02a817ae_f3fc4160",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Test that both notifications are shown if both errors occur.",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 1
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ef8f31b_be59cb23",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "I didn\u0027t find any guidelines on this, but IMHO it\u0027s a bad idea to add delays to tests deliberately unless the delays are \u003c100ms. If more people do it, the builds are going to take minutes longer for no good reason. Only add latency if you have a good reason to assume it\u0027s important to do so.",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "412a8edf_6295333e",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "See my comment above.",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e981f4_78a8b6b5",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "authpolicy::ActiveDirectoryAccountInfo* account_info \u003d user_status.mutable_account_info();",
+      "range": {
+        "startLine": 134,
+        "startChar": 2,
+        "endLine": 134,
+        "endChar": 36
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e66015f0_07cb4db6",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Unnecessary, the default string is empty.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a90f117d_e4f0cff3",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Unnecessary, the default string is empty.",
+      "range": {
+        "startLine": 137,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 27
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf410637_17058e57",
+        "filename": "chromeos/dbus/fake_auth_policy_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "I personally prefer ActiveDirectoryUserStatus::PasswordStatus since it is how hand-written code would look like.",
+      "range": {
+        "startLine": 60,
+        "startChar": 18,
+        "endLine": 60,
+        "endChar": 58
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b93314_29abd2fd",
+        "filename": "chromeos/dbus/fake_auth_policy_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Rename to set_on_get_status.",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 18
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca2eada_04cb9900",
+        "filename": "chromeos/dbus/fake_auth_policy_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-09T09:02:18Z",
+      "side": 1,
+      "message": "Maybe add a comment that this is called at the end of GetUserStatus after the callback.",
+      "range": {
+        "startLine": 79,
+        "startChar": 35,
+        "endLine": 79,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
