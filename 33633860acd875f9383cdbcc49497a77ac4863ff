@@ -22,6 +22,30 @@
       "revId": "33633860acd875f9383cdbcc49497a77ac4863ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82a4d0c_b01b78b8",
+        "filename": "chrome/test/data/banners/appinstalled_test_page.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-09T00:08:22Z",
+      "side": 1,
+      "message": "OK, fair enough. Done.\n\nI made it a bit nicer than you suggested, setting the title to show exactly which events fired.",
+      "parentUuid": "a6fc930d_057a122c",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 35
+      },
+      "revId": "33633860acd875f9383cdbcc49497a77ac4863ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
