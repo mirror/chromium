@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4aed3b5d_0f34323f",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-resize-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-09T19:22:32Z",
+      "side": 1,
+      "message": "Oops, this is a left over from an earlier version of this test. Good catch.",
+      "parentUuid": "09308a69_e8763f38",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa55dfe7_cb247056",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scroll-event-manual.html",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "113c57c0_a3e745f6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scroll-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-09T19:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa55dfe7_cb247056",
+      "range": {
+        "startLine": 23,
+        "startChar": 72,
+        "endLine": 23,
+        "endChar": 78
+      },
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "80410154_55a9194b",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scroll-event-manual.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-09T19:22:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7c2c3b6_48bab270",
+      "range": {
+        "startLine": 145,
+        "startChar": 54,
+        "endLine": 145,
+        "endChar": 55
+      },
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "78d4fc4b_5b91fa8c",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scrollbars-cause-resize.html",
         "patchSetId": 1
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "1a518f4e_a721cc29",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-scrollbars-cause-resize.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-09T19:22:32Z",
+      "side": 1,
+      "message": "the rAF below calls t.step_func_done which is equivalent to a step_func but automatically calls done after its called.",
+      "parentUuid": "78d4fc4b_5b91fa8c",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fa815620_f129d579",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-type.html",
         "patchSetId": 1
@@ -93,6 +177,24 @@
       "writtenOn": "2017-06-09T14:49:09Z",
       "side": 1,
       "message": "I\u0027m not sure every vendor will have the same toString() impl will they?",
+      "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4aef07e_3eb363a2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/viewport/viewport-type.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-09T19:22:32Z",
+      "side": 1,
+      "message": "Do you mean the format of the string can differ? The type \u0027VisualViewport\u0027 has to match I think since that comes from the IDL class name. Firefox seems to use \u0027[object |type|]\u0027 for toString and I assumed that was pretty standard, is it not? My (naive) reading of http://www.ecma-international.org/ecma-262/6.0/#sec-object.prototype.tostring is that that\u0027s a standard format for an Object.",
+      "parentUuid": "fa815620_f129d579",
       "revId": "2013ada73a0f369e809e40ec20af6138f19e0c46",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
