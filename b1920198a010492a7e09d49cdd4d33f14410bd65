@@ -1,0 +1,366 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a73ab98_b5eb179a",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "One-line bodies don\u0027t need curly brackets {}, remove them\nfrom this if-else please.",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 5
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1c92361_90aa8681",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This is a peculiar pattern, having a static method with a weak pointer.\nSince it touches no members, please remove it from here and make it \nfile-static in an anonymous namespace (inside content namespace) in the \n.cc file, and  rename |weak_this| to something more concrete, e.g. \n|decoder| or so.\n\nOh I see, it Bind()s to VideoCaptureGpuJpegDecoder::FinishInitialization\nso it needs to be part of the class.  Ok, then, instead of passing a\n|weak_this|, pass directly a Base::Callback to FinishInitialization():\n\n\nnamespace {\n  void ConnectToGpuJpegDecodeAcceleratorOnIOThread(\n      const scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e\u0026 task_runner,\n      base::Callback\u003cvoid(media::mojom::GpuJpegDecodeAcceleratorPtrInfo)\u003e\u003e\n          done_cb) {\n    // blabla\n\n    task_runner-\u003ePostTask(\n        FROM_HERE,\n        base::Bind(done_cb, base::Passed(remote_decoder.PassInterface())));\n  }\n}\n\nWhen you want to call it from Initialize(), Bind() the method:\n\n  BrowserThread::PostTask(\n      BrowserThread::IO, FROM_HERE,\n      base::Bind(\u0026ConnectToGpuJpegDecodeAcceleratorOnIOThread,\n                 current_task_runner,\n                 base::Bind(\u0026VideoCaptureGpuJpegDecoder::FinishInitialization,\n                            AsWeakPtr())));\n\n\nOr something like that, WDYT?",
+      "range": {
+        "startLine": 67,
+        "startChar": 14,
+        "endLine": 67,
+        "endChar": 57
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f49f7edd_3ba217ab",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "Prefer early return: return here, then you don\u0027t need the \"else\".",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 50
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ddaefc_3ba980f9",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This should be done with an enum_traits., but can be done afterwards.\n(Otherwise at least we should static_assert that they have the \nsame amount of entries).",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 72
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "346f54ae_effe8f0e",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This could potentially lead to UAF (l.125 as well), instead,\nadd a \n  base::WeakPtrFactory\u003cGpuJpegDecodeAcceleratorHost\u003e weak_ptr_factory_;\n\nand a method \n\nbase::WeakPtr\u003cGpuJpegDecodeAcceleratorHost\u003e\nGpuJpegDecodeAcceleratorHost::GetWeakPtrForIOThread() {\n  return weak_ptr_factory_.GetWeakPtr();\n}\n\nand use it instead of the base::Unretained().",
+      "range": {
+        "startLine": 70,
+        "startChar": 17,
+        "endLine": 70,
+        "endChar": 33
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0dd86b_75c55749",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This should be done using struct_traits between\nBitstreamBuffer and mojo:BitstreamBuffer, see e.g.\nhttps://chromium.googlesource.com/chromium/src/+/master/mojo/public/cpp/bindings/README.md#Type-Mapping\nbut this can be done afterwards. Please add a \n// TODO(c.padhi):\nwith a new bug.",
+      "range": {
+        "startLine": 105,
+        "startChar": 9,
+        "endLine": 105,
+        "endChar": 27
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e62bb241_3159745a",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This is a big change compared to asking the |gpu_info|, right?",
+      "range": {
+        "startLine": 129,
+        "startChar": 9,
+        "endLine": 129,
+        "endChar": 13
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9cb00198_ac7b8509",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "Specially when adding new methods, try and keep the definition\norder the same as the declaration order (OnDecodeAckOnIOThread()\nis define before OnDecodeAck()).",
+      "range": {
+        "startLine": 45,
+        "startChar": 7,
+        "endLine": 45,
+        "endChar": 28
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc2610e4_7d4869bf",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This class is supposed to run on the browser process [1] (confusingly\nenough, since it\u0027s called \"Host\").  Also it\u0027s bad to specify explicitly\nwhat it is (\u0027the\u0027 IO) -- as opposed to its characteristics, i.e. that\nbase::ThreadRestrictions::AssertIOAllowed();\nverifies. Note that mojo implementation is already thread affine, so\nit will DCHECK if the calling thread has changed. Since all this predates\nthis change, we can leave it all to a later CL.\n\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc?type\u003dcs\u0026q\u003dGpuJpegDecodeAcceleratorHost\u0026l\u003d257",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b718579_582b3dc7",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "|source_info| is unused.",
+      "range": {
+        "startLine": 135,
+        "startChar": 43,
+        "endLine": 135,
+        "endChar": 54
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdd7b08_b0d56cf0",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "|child_task_runner_| is only used here, so instead of caching it,\nconsider having a member variable e.g.\n\nbase::Callback\u003cvoid(int32_t, mojom::Error)\u003e notify_decode_status_cb_;\n\nand to initialize you can use sth like: \n  media::BindToCurrentLoop(\n      base::Bind(\u0026GpuJpegDecodeAccelerator::NotifyDecodeStatus, this));\n\nso you don\u0027t have to cache the construction thread, but instead hold\non to a callback object.  You might need to merge this somehow with\n|decode_cb_|.\n\nAlso |child_task_runner_| is redundant w.r.t. |thread_checker_|.",
+      "range": {
+        "startLine": 155,
+        "startChar": 4,
+        "endLine": 155,
+        "endChar": 22
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b60b99f_a3a5d8d8",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "Same comments as before: base::Unretained(this) is\nunsafe here. In the lhs, things were better because |filter_|\nwas a scoped_refptr, but now you could post a task to a pointer\nthat disappears. Use a WeakPtrFactory and please specify in the\ncomments which thread is it pegged to.",
+      "range": {
+        "startLine": 214,
+        "startChar": 17,
+        "endLine": 214,
+        "endChar": 39
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bb0372d_b91b1feb",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "This class is superfluous since is not used outside of this file.\nMove the methods to be file-static functions in the .cc file (an\nanonymous namespace inside namespace media{}); move the \nCreateAcceleratorCB definition to the public area of \n GpuJpegDecodeAccelerator, and adapt also the comment in l.59.",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8de4e18_da656686",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "explicit \nhttps://google.github.io/styleguide/cppguide.html#Implicit_Conversions",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 26
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d218c7_f91e804b",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "Can probably be made const.",
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "afef3f44_cec9c81d",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-09T17:01:38Z",
+      "side": 1,
+      "message": "const, and l. 83 too.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 15
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
