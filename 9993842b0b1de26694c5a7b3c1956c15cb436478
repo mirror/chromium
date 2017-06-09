@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "fca83cfd_58c730f9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 12
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "Nit: Use present tense for titles.\n\nExamples\nRevert [Some change]\nEnable [A Feature]",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5784b87c_1aad40c9",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -13,6 +36,29 @@
       "writtenOn": "2017-06-09T16:13:28Z",
       "side": 1,
       "message": "first:\n\nDCHECK_EQ(this, tls_current_sequence_local_storage.Get().Get());",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9f4ad4f_7368c33a",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "Use SequenceLocalStorageMap* here. There\u0027s no inherent guarantee that this map will be associated with this thread as the DCHECK below points out. Callers should be responsible for checking the non-nullness of this pointer as they may do something else if a sequence wasn\u0027t associated.",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 24
+      },
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +99,24 @@
       "writtenOn": "2017-06-09T16:13:28Z",
       "side": 1,
       "message": "Setting to nullptr is overkill, per |value_destructor_pair| being an r-value its state is undefined after this call anyways.\n\nAs such an \u003d default; impl here is preferable IMO.",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eae798e_17290a31",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "Actually for pointer based inputs, you do want to set this to nullptr. This way the outside container can clean up correctly.",
+      "parentUuid": "01e8451a_4d71e9e8",
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -186,6 +250,75 @@
     },
     {
       "key": {
+        "uuid": "003cd264_226d7804",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "Nit: Linebreak before DISALLOW_COPY_AND_ASSIGN.",
+      "range": {
+        "startLine": 47,
+        "startChar": 4,
+        "endLine": 47,
+        "endChar": 28
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e3a75f_7bf5ca6d",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "Nit: Remove comma",
+      "range": {
+        "startLine": 50,
+        "startChar": 42,
+        "endLine": 50,
+        "endChar": 44
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "051dfc62_f94ab1cd",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "s/destructs/destroys",
+      "range": {
+        "startLine": 53,
+        "startChar": 65,
+        "endLine": 53,
+        "endChar": 74
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "306df712_cf7d398a",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 12
@@ -288,6 +421,30 @@
       "writtenOn": "2017-06-09T16:13:28Z",
       "side": 1,
       "message": "this compiles?! i\u0027d expect () here (ditto below)",
+      "range": {
+        "startLine": 56,
+        "startChar": 39,
+        "endLine": 56,
+        "endChar": 40
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ae8be2_01009d7a",
+        "filename": "base/threading/sequence_local_storage_map_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-09T17:07:06Z",
+      "side": 1,
+      "message": "It probably does aggregate instantiation, which will end up calling the constructor. We should use ()\u0027s though for consistency.\n\nRef: https://google.github.io/styleguide/cppguide.html#Braced_Initializer_List",
+      "parentUuid": "8ee63c89_3e2ac464",
       "range": {
         "startLine": 56,
         "startChar": 39,
