@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "76e83355_d0702bf2",
+        "filename": "content/renderer/presentation/presentation_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-09T07:26:19Z",
+      "side": 1,
+      "message": "TypeConverters are deprecated but occasionally useful in the renderer process for things that haven\u0027t been onion souped.\n\nEnumTraits don\u0027t appear to have documentation (doh) but there\u0027s a simple example at https://cs.chromium.org/chromium/src/mojo/common/common_custom_types_struct_traits.cc?rcl\u003d9de3fa20ec0b7a98321b1cb045d7ba5414e8e0e9\u0026l\u003d76. The main thing to note is that mojo will validate the enum values it deserializes from the wire already, so you shouldn\u0027t need to do any extra checks for values that are outside the defined enumerator values.\n\nOf course, this code uses the mojo enum directly, and that\u0027s the most ideal solution.",
+      "parentUuid": "a977cc4f_678f04ee",
+      "range": {
+        "startLine": 38,
+        "startChar": 29,
+        "endLine": 38,
+        "endChar": 53
+      },
+      "revId": "4c2cc7765d35319d75b24c64e530ddca6e598f66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "638067d6_d9ca8fe1",
         "filename": "third_party/WebKit/public/platform/modules/presentation/presentation.mojom",
         "patchSetId": 2
