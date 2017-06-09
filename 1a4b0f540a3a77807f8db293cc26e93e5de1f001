@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db9c91b1_2ad3045f",
+        "filename": "third_party/WebKit/Source/core/events/EventTarget.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-09T15:48:14Z",
+      "side": 1,
+      "message": "nit I just caught: s/necessarily/necessary/. Thanks. :D",
+      "revId": "1a4b0f540a3a77807f8db293cc26e93e5de1f001",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
