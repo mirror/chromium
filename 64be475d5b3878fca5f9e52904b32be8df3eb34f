@@ -34,6 +34,24 @@
       "revId": "64be475d5b3878fca5f9e52904b32be8df3eb34f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92afbd8c_204ebd8d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunk.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-09T00:16:54Z",
+      "side": 1,
+      "message": "I agree. Seems ok then.",
+      "parentUuid": "947694a0_e0dce508",
+      "revId": "64be475d5b3878fca5f9e52904b32be8df3eb34f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
