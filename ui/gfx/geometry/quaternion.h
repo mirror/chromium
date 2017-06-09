@@ -20,6 +20,9 @@ class GFX_EXPORT Quaternion {
       : x_(x), y_(y), z_(z), w_(w) {}
   Quaternion(const Vector3dF& axis, double angle);
 
+  // Constructs a quaternion representing a rotation between |from| and |to|.
+  Quaternion(const Vector3dF& from, const Vector3dF& to);
+
   constexpr double x() const { return x_; }
   void set_x(double x) { x_ = x; }
 
@@ -55,6 +58,8 @@ class GFX_EXPORT Quaternion {
   // Values of |t| in the range [0, 1] will interpolate between |this| and |q|,
   // and values outside that range will extrapolate beyond in either direction.
   Quaternion Lerp(const Quaternion& q, double t) const;
+
+  Quaternion normalized() const;
 
   std::string ToString() const;
 

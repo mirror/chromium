@@ -36,6 +36,16 @@ TEST(QuatTest, AxisAngleCommon) {
   EXPECT_FLOAT_EQ(std::cos(radians / 2), q.w());
 }
 
+TEST(QuatTest, VectorToVectorRotation) {
+  Quaternion q(Vector3dF(1.0f, 0.0f, 0.0f), Vector3dF(0.0f, 1.0f, 0.0f));
+  Quaternion r(Vector3dF(0.0f, 0.0f, 1.0f), M_PI_2);
+
+  EXPECT_FLOAT_EQ(r.x(), q.x());
+  EXPECT_FLOAT_EQ(r.y(), q.y());
+  EXPECT_FLOAT_EQ(r.z(), q.z());
+  EXPECT_FLOAT_EQ(r.w(), q.w());
+}
+
 TEST(QuatTest, AxisAngleWithZeroLengthAxis) {
   Quaternion q(Vector3dF(0.0f, 0.0f, 0.0f), 0.5);
   // If the axis of zero length, we should assume the default values.
