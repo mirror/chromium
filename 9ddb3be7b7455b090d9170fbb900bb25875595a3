@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3954e7b4_0e3781b1",
+        "filename": "ios/chrome/browser/tabs/tab.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 720,
+      "author": {
+        "id": 1148810
+      },
+      "writtenOn": "2017-06-09T15:59:06Z",
+      "side": 0,
+      "message": "Can you verify that this logic will still be called (if needed)? Especially the loadCurrentURL call.",
+      "range": {
+        "startLine": 718,
+        "startChar": 1,
+        "endLine": 720,
+        "endChar": 38
+      },
+      "revId": "9ddb3be7b7455b090d9170fbb900bb25875595a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
