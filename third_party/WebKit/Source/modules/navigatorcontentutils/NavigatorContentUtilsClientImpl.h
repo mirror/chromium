@@ -5,6 +5,7 @@
 #ifndef NavigatorContentUtilsClientImpl_h
 #define NavigatorContentUtilsClientImpl_h
 
+#include "modules/ModulesExport.h"
 #include "modules/navigatorcontentutils/NavigatorContentUtilsClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/weborigin/KURL.h"
@@ -13,8 +14,9 @@ namespace blink {
 
 class WebLocalFrameBase;
 
-class NavigatorContentUtilsClientImpl final
-    : public NavigatorContentUtilsClient {
+// TODO(sashab): Merge this class with its parent (NavigatorContentUtilsClient).
+class MODULES_EXPORT NavigatorContentUtilsClientImpl final
+    : NON_EXPORTED_BASE(public NavigatorContentUtilsClient) {
  public:
   static NavigatorContentUtilsClientImpl* Create(WebLocalFrameBase*);
   ~NavigatorContentUtilsClientImpl() override {}
