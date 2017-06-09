@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "91f6e81d_5ac1b1ec",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-09T02:03:54Z",
+      "side": 1,
+      "message": "If you\u0027re going to leave this code working like this, then please do add comments about what\u0027s going on as I suggested, since it\u0027s not at all obvious why this is all structured the way it is.",
+      "revId": "86ad01689097d8dc9b3336d5be84d5b58449f9c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c729c4df_871aa0f7",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-09T02:03:54Z",
+      "side": 1,
+      "message": "Really?  Why?  Offhand this looked likely-correct to me, but I didn\u0027t inspect the class closely.",
+      "parentUuid": "0141bdc0_6753b37c",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9c0bfb_a6d4facd",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 3
@@ -54,6 +78,24 @@
       "side": 1,
       "message": "There probably should be some padding so that the label doesn\u0027t ever butt right up against the back_button_. UNRELATED_CONTROL_HORIZONTAL makes a little more sense given what the code is trying to do.",
       "parentUuid": "ad9c0bfb_a6d4facd",
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c79a5b9e_8686e387",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-09T02:03:54Z",
+      "side": 1,
+      "message": "It\u0027s really just a question of who\u0027s responsible for ensuring that padding is there.  The reason I suggested doing it in the preferred or minimum size calculation is that we need the dialog to do that anyway to be wide enough for the content.  We only run into padding problems if this isn\u0027t wide enough, but in that case the label gets clipped/elided, which is probably also bad.\n\nThe exception is if the label content may _need_ to be elided, in which case we might have to do this both places.",
+      "parentUuid": "c941b0e2_8cc3cfa2",
       "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
