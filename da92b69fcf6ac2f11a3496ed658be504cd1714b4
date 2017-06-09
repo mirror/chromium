@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "532b0a38_6d48b7e3",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-09T00:41:10Z",
+      "side": 1,
+      "message": "Note that Mojo still binds to threads, so a SequenceChecker is not strong enough to prove this correct.\n\nc.f. https://bugs.chromium.org/p/chromium/issues/detail?id\u003d678155",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 15
+      },
+      "revId": "da92b69fcf6ac2f11a3496ed658be504cd1714b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
