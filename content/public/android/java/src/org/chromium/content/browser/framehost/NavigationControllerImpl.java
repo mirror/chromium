@@ -250,13 +250,12 @@ import org.chromium.content_public.common.ResourceRequestBody;
     }
 
     @Override
-    public void copyStateFrom(NavigationController source) {
+    public void copyStateFrom(NavigationController source, boolean needsReload) {
         if (mNativeNavigationControllerAndroid == 0) return;
         NavigationControllerImpl sourceImpl = (NavigationControllerImpl) source;
         if (sourceImpl.mNativeNavigationControllerAndroid == 0) return;
-        nativeCopyStateFrom(
-                mNativeNavigationControllerAndroid,
-                sourceImpl.mNativeNavigationControllerAndroid);
+        nativeCopyStateFrom(mNativeNavigationControllerAndroid,
+                sourceImpl.mNativeNavigationControllerAndroid, needsReload);
     }
 
     @Override
