@@ -676,6 +676,8 @@ component("platform") {
     "fonts/FontFamily.h",
     "fonts/FontMetrics.h",
     "fonts/FontOrientation.h",
+    "fonts/FontPersistent.cpp",
+    "fonts/FontPersistent.h",
     "fonts/FontPlatformData.cpp",
     "fonts/FontPlatformData.h",
     "fonts/FontSmoothingMode.h",
