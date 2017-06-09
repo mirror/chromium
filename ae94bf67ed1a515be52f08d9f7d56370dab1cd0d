@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6773a6e7_4061b4a8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-09T07:14:46Z",
+      "side": 1,
+      "message": "Yeah, this was just an explanation for the current situation, and that CL was not committed yet at that time. Done.",
+      "parentUuid": "522dac1e_1b7ad1e2",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "ae94bf67ed1a515be52f08d9f7d56370dab1cd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ba881f5_cfface07",
         "filename": "cc/resources/resource_provider.cc",
         "patchSetId": 6
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-08T22:49:59Z",
       "side": 1,
       "message": "CreateSharedMemoryOwnershipEdge should only be used for memory backed by base::SharedMemory. Otherwise we should create the existing global dump edges.\n\nIf (!shared_memory_guid.is_null()) {\n  pmd-\u003eCreateSharedMemoryOwnershipEdge();\n} else {\n  // For the case of gl texture base::SharedMemory is not used.\n  pmd-\u003eCreateSharedGlobalAllocatorDump(guid);\n  pmd-\u003eAddOwnershipEdge(dump-\u003eguid(), guid, kImportance);\n}",
+      "range": {
+        "startLine": 2199,
+        "startChar": 9,
+        "endLine": 2199,
+        "endChar": 40
+      },
+      "revId": "ae94bf67ed1a515be52f08d9f7d56370dab1cd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19a1ad9_aa9bd241",
+        "filename": "cc/resources/resource_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 2199,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-09T07:14:46Z",
+      "side": 1,
+      "message": "Ah, yes. It looks like I was misunderstanding the function CreateSharedMemoryOwnershipEdge. Fixed all usages. Done.",
+      "parentUuid": "0ba881f5_cfface07",
       "range": {
         "startLine": 2199,
         "startChar": 9,
@@ -68,6 +116,30 @@
       "revId": "ae94bf67ed1a515be52f08d9f7d56370dab1cd0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6bab13f_871371b1",
+        "filename": "gpu/command_buffer/client/cmd_buffer_helper.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-09T07:14:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9ef5396_c48f452b",
+      "range": {
+        "startLine": 13,
+        "startChar": 22,
+        "endLine": 13,
+        "endChar": 43
+      },
+      "revId": "ae94bf67ed1a515be52f08d9f7d56370dab1cd0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
