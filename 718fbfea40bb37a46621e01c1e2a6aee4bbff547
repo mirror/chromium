@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d1a76b1_5fab8f8b",
+        "filename": "third_party/WebKit/Source/core/dom/NodeTraversalStrategy.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-09T04:05:59Z",
+      "side": 1,
+      "message": "s/const Node*/const Node\u0026/\nNot sure why this is |Node*|. For NodeTraveral members, we use |const Node\u0026|\nwhen parameter can\u0027t be nullptr.\n\nDo you attempt to avoid |*|?",
+      "revId": "718fbfea40bb37a46621e01c1e2a6aee4bbff547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
