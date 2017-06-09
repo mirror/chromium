@@ -405,6 +405,7 @@ class SessionManagerClientImpl : public SessionManagerClient {
   void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                         bool skip_boot_completed_broadcast,
                         bool scan_vendor_priv_app,
+                        bool for_login_screen,
                         const StartArcInstanceCallback& callback) override {
     dbus::MethodCall method_call(
         login_manager::kSessionManagerInterface,
@@ -412,9 +413,13 @@ class SessionManagerClientImpl : public SessionManagerClient {
     dbus::MessageWriter writer(&method_call);
 
     login_manager::StartArcInstanceRequest request;
-    request.set_account_id(cryptohome_id.id());
-    request.set_skip_boot_completed_broadcast(skip_boot_completed_broadcast);
-    request.set_scan_vendor_priv_app(scan_vendor_priv_app);
+    if (for_login_screen) {
+      request.set_for_login_screen(for_login_screen);
+    } else {
+      request.set_account_id(cryptohome_id.id());
+      request.set_skip_boot_completed_broadcast(skip_boot_completed_broadcast);
+      request.set_scan_vendor_priv_app(scan_vendor_priv_app);
+    }
     writer.AppendProtoAsArrayOfBytes(request);
 
     session_manager_proxy_->CallMethodWithErrorCallback(
@@ -1052,6 +1057,7 @@ class SessionManagerClientStubImpl : public SessionManagerClient {
   void StartArcInstance(const cryptohome::Identification& cryptohome_id,
                         bool disable_boot_completed_broadcast,
                         bool enable_vendor_privileged,
+                        bool for_login_screen,
                         const StartArcInstanceCallback& callback) override {
     callback.Run(StartArcInstanceResult::UNKNOWN_ERROR, std::string());
   }
