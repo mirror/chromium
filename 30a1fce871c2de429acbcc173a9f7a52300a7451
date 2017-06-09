@@ -86,6 +86,24 @@
       "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884dee81_64ade2c0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1397,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "Kinuko, can you share your concerns a bit more, please? What would \"the lower layer solution\" look like?",
+      "parentUuid": "ef0b5a4a_a9b4bbd4",
+      "revId": "30a1fce871c2de429acbcc173a9f7a52300a7451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

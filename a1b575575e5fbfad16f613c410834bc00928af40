@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0fbb9b4c_a9d4b1f2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "DCHECK(resource);",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "62969811_eb0fd1fe",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
         "patchSetId": 4
@@ -36,6 +53,29 @@
     },
     {
       "key": {
+        "uuid": "49508613_28566ba8",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "I\u0027m a bit uncomfortable that this Get function has a side-effect.",
+      "range": {
+        "startLine": 32,
+        "startChar": 12,
+        "endLine": 32,
+        "endChar": 36
+      },
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6f05edd_ffd66305",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
         "patchSetId": 4
@@ -47,6 +87,74 @@
       "writtenOn": "2017-06-07T10:25:46Z",
       "side": 1,
       "message": "mange -\u003e manage",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5642f68_2384aca1",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchDispatcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "[optional] I prefer initializing the field here.",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39eb6dce_c3095a3d",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1287,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "This kind of manual counting is hard to maintain.",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03a54fa_9f4bc63b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1288,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "|resource| is already used in the scope, and having another is a bit confusing.",
+      "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf0ba243_55ba6dd2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1394,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-09T02:09:04Z",
+      "side": 1,
+      "message": "Should there be any special handling for sync requests?",
       "revId": "a1b575575e5fbfad16f613c410834bc00928af40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
