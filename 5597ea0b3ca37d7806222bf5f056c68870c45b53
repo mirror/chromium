@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eed4196_3b77bc95",
+        "filename": "components/policy/core/common/cloud/component_cloud_policy_updater_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001384
+      },
+      "writtenOn": "2017-06-09T13:26:36Z",
+      "side": 1,
+      "message": "Nit: s/empty_bundle/kEmptyBundle/",
+      "revId": "5597ea0b3ca37d7806222bf5f056c68870c45b53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
