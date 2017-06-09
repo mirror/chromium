@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af276cce_54522d24",
+        "filename": "chrome/browser/ui/app_list/arc/arc_default_app_list.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-09T21:52:09Z",
+      "side": 1,
+      "message": "Yes and no. We cannot install default app if it is installed by PAI. However there is no limitation to use only PAI. Default app can exists on image too. Anyway default app is image customization and this should not affect anything.",
+      "parentUuid": "d8b25d54_8eb9123b",
+      "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9be1c5eb_f4ae3d4e",
         "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "646f1fd0_48e45700",
+        "filename": "chrome/browser/ui/webui/settings/md_settings_ui.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-09T21:52:09Z",
+      "side": 1,
+      "message": "This settings says Play Store. Probably we may want to add another option here (or just leave only Android settings link). This sounds as separate CL.",
+      "parentUuid": "9be1c5eb_f4ae3d4e",
+      "range": {
+        "startLine": 196,
+        "startChar": 35,
+        "endLine": 196,
+        "endChar": 55
+      },
+      "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8c69020_b8e0e631",
         "filename": "components/arc/arc_util.cc",
         "patchSetId": 4
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-09T19:48:51Z",
       "side": 1,
       "message": "Mind adding unit tests? I think the _unittest.cc file already has similar tests for checking command line.",
+      "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d895050c_301b5468",
+        "filename": "components/arc/arc_util.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-09T21:52:09Z",
+      "side": 1,
+      "message": "Good point, I missed that is already there.",
+      "parentUuid": "e8c69020_b8e0e631",
       "revId": "ee4f05f8b36520eebdffc73b66b40b571fd30d41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
