@@ -9,6 +9,7 @@
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/offline_pages/core/client_namespace_constants.h"
+#include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/prefetch/prefetch_in_memory_store.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -24,6 +25,7 @@ class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
   void TearDown() override;
 
   // PrefetchService implementation:
+  OfflineEventLogger* GetLogger() override;
   OfflineMetricsCollector* GetOfflineMetricsCollector() override;
   PrefetchDispatcher* GetPrefetchDispatcher() override;
   PrefetchGCMHandler* GetPrefetchGCMHandler() override;
@@ -38,6 +40,8 @@ class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
   TaskQueue* dispatcher_task_queue() { return &dispatcher_impl_->task_queue_; }
 
  private:
+  OfflineEventLogger logger_;
+
   std::unique_ptr<PrefetchInMemoryStore> in_memory_store_;
   std::unique_ptr<PrefetchDispatcherImpl> dispatcher_impl_;
 
@@ -59,6 +63,10 @@ void PrefetchDispatcherTest::SetUp() {
 
 void PrefetchDispatcherTest::TearDown() {
   task_runner_->ClearPendingTasks();
+}
+
+OfflineEventLogger* PrefetchDispatcherTest::GetLogger() {
+  return &logger_;
 }
 
 OfflineMetricsCollector* PrefetchDispatcherTest::GetOfflineMetricsCollector() {

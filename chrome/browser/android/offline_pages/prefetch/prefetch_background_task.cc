@@ -39,9 +39,6 @@ namespace prefetch {
 static jboolean StartPrefetchTask(JNIEnv* env,
                                   const JavaParamRef<jobject>& jcaller,
                                   const JavaParamRef<jobject>& jprofile) {
-  if (!IsPrefetchingOfflinePagesEnabled())
-    return false;
-
   Profile* profile = ProfileAndroid::FromProfileAndroid(jprofile);
   DCHECK(profile);
 
