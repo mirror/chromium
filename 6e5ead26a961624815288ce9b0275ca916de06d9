@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac12a152_ed108900",
+        "filename": "media/base/android/java/src/org/chromium/media/MediaCodecUtil.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-10T00:13:34Z",
+      "side": 1,
+      "message": "codecs*",
+      "range": {
+        "startLine": 299,
+        "startChar": 35,
+        "endLine": 299,
+        "endChar": 40
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f71bcd_f1324715",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-10T00:13:34Z",
+      "side": 1,
+      "message": "Style guide asks that new enums use constant style naming (kAny).",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a69b5d06_04f8da2c",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-10T00:13:34Z",
+      "side": 1,
+      "message": "\"any\" makes it sound like it might be a secure codec, i.e., any of the following values.\n\nWhat about INSECURE, SECURE, INSECURE_SOFTWARE_ONLY or DEFAULT, SECURE, SOFTWARE?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
