@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0c5532a_423ee3fb",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-10T00:43:35Z",
+      "side": 1,
+      "message": "I think it would be useful to add some python code as comments to describe how we get the kShortDataURL from kDownloadDataURL.\nAlso, if for some reason we need to change the kDownloadDataURL in future, it would be easy to verify that the new short URL is bring generated as expected.",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
