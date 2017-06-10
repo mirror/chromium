@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "cabc37fa_32d9c7ee",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-10T00:19:12Z",
+      "side": 1,
+      "message": "Good point. That\u0027s what I first had. However, this will be converted to Java enums which require UPPER_CASE style because it\u0027s following Android style guide...",
+      "parentUuid": "d5f71bcd_f1324715",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a69b5d06_04f8da2c",
         "filename": "media/base/android/media_codec_bridge_impl.h",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-10T00:13:34Z",
       "side": 1,
       "message": "\"any\" makes it sound like it might be a secure codec, i.e., any of the following values.\n\nWhat about INSECURE, SECURE, INSECURE_SOFTWARE_ONLY or DEFAULT, SECURE, SOFTWARE?",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0158503_f12c492d",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-10T00:19:12Z",
+      "side": 1,
+      "message": "Any means there\u0027s no restrictions. I don\u0027t see why you can\u0027t use a secure decoder on a non-encrypted stream, even though our implementation won\u0027t do that.",
+      "parentUuid": "a69b5d06_04f8da2c",
       "range": {
         "startLine": 27,
         "startChar": 2,
