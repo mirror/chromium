@@ -29,5 +29,9 @@ void LogModelOperationResult(ModelAction action, bool success) {
   // TODO(dtrainor): Log |action|.
 }
 
+void LogScheduledTaskStatus(ScheduledTaskStatus status) {
+  // TODO(shaktisahu): Log |status|.
+}
+
 }  // namespace stats
 }  // namespace download
