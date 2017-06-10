@@ -247,10 +247,14 @@ rtc::Optional<bool> ConstraintToOptional(
 std::string GetMediaStreamSource(
     const blink::WebMediaConstraints& constraints) {
   std::string source;
-  if (constraints.Basic().media_stream_source.HasIdeal())
-    source = constraints.Basic().media_stream_source.Ideal()[0].Ascii();
-  if (constraints.Basic().media_stream_source.HasExact())
-    source = constraints.Basic().media_stream_source.Exact()[0].Ascii();
+  if (constraints.Basic().media_stream_source.HasIdeal() &&
+      constraints.Basic().media_stream_source.Exact().size() > 0) {
+    source = constraints.Basic().media_stream_source.Ideal()[0].Utf8();
+  }
+  if (constraints.Basic().media_stream_source.HasExact() &&
+      constraints.Basic().media_stream_source.Exact().size() > 0) {
+    source = constraints.Basic().media_stream_source.Exact()[0].Utf8();
+  }
 
   return source;
 }
