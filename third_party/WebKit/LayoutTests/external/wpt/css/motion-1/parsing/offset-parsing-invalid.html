@@ -15,6 +15,10 @@
 test_invalid_value("offset", "path('m 0 0 h 100') 100px 0");
 test_invalid_value("offset", "ray(sides 0) 50% 90deg auto");
 test_invalid_value("offset", "100px 0deg path('m 0 0 h 100')");
+test_invalid_value("offset", "path('m 0 0 h 100') 100px 200px");
+test_invalid_value("offset", "path('m 0 0 h 100') 200% auto 100px");
+test_invalid_value("offset", "path('m 0 0 h 100') auto reverse");
+test_invalid_value("offset", "path('m 0 0 h 100') reverse 100px 30deg");
 </script>
 </body>
 </html>
