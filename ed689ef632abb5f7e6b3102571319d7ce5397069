@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed2a915c_33105855",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-10T05:12:07Z",
+      "side": 0,
+      "message": "Where did this go?",
+      "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407964c1_fc6cfba1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-10T05:12:07Z",
+      "side": 0,
+      "message": "Where did this go?",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 37
+      },
+      "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
