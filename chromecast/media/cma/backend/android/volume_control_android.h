@@ -8,6 +8,7 @@
 #include <map>
 #include <vector>
 
+#include "base/android/jni_android.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/synchronization/waitable_event.h"
@@ -46,6 +47,8 @@ class VolumeControlAndroid {
   VolumeControlAndroid();
   ~VolumeControlAndroid();
 
+  static bool RegisterJni(JNIEnv* env);
+
   void AddVolumeObserver(VolumeObserver* observer);
   void RemoveVolumeObserver(VolumeObserver* observer);
   float GetVolume(AudioContentType type);
@@ -54,10 +57,25 @@ class VolumeControlAndroid {
   void SetMuted(AudioContentType type, bool muted);
   void SetOutputLimit(AudioContentType type, float limit);
 
+  // Called from java to signal a change volume.
+  void OnVolumeChange(JNIEnv* env,
+                      const base::android::JavaParamRef<jobject>& obj,
+                      jint type,
+                      jfloat level);
+
+  void OnMuteChange(JNIEnv* env,
+                    const base::android::JavaParamRef<jobject>& obj,
+                    jint type,
+                    jboolean muted);
+
  private:
   void InitializeOnThread();
   void SetVolumeOnThread(AudioContentType type, float level);
   void SetMutedOnThread(AudioContentType type, bool muted);
+  void ReportVolumeChangeOnThread(AudioContentType type, float level);
+  void ReportMuteChangeOnThread(AudioContentType type, bool muted);
+
+  base::android::ScopedJavaGlobalRef<jobject> j_volume_control_;
 
   base::FilePath storage_path_;
   base::DictionaryValue stored_values_;
