@@ -1597,6 +1597,30 @@
       "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6f4c774b_8d26e56e",
+        "filename": "components/page_info_strings.grdp",
+        "patchSetId": 8
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1121739
+      },
+      "writtenOn": "2017-06-10T00:43:27Z",
+      "side": 1,
+      "message": "Ah, this looks to be why.\n\nThe permission names are not alphabetical, but I think we should add Ads at the end, just like the content settings enum.\n\nIn any case, that\u0027s a nit I can fix later. LGTM on the rest.",
+      "parentUuid": "d0a5690f_d4c60b2a",
+      "range": {
+        "startLine": 214,
+        "startChar": 14,
+        "endLine": 214,
+        "endChar": 0
+      },
+      "revId": "c41495cabcdb0292694df3812a379b49fe1a77d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
