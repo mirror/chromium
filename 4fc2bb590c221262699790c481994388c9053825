@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0612daa9_7bcd6e7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheet.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 430,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-10T00:27:30Z",
+      "side": 1,
+      "message": "Are the touch events relative to the parent view as well? If not, View#getLocationOnScreen() should work. A good test case is docking Chrome to the right side of the screen on device that supports multi window mode.",
+      "range": {
+        "startLine": 430,
+        "startChar": 22,
+        "endLine": 430,
+        "endChar": 47
+      },
+      "revId": "4fc2bb590c221262699790c481994388c9053825",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
