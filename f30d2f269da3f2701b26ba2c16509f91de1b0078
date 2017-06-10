@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "557e8a38_ac6bdc9b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotProxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-10T17:24:51Z",
+      "side": 0,
+      "message": "Previous version resolved here, not after updateStaticData finished.",
+      "revId": "f30d2f269da3f2701b26ba2c16509f91de1b0078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
