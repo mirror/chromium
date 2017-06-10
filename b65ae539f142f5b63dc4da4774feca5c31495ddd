@@ -16,6 +16,24 @@
       "revId": "b65ae539f142f5b63dc4da4774feca5c31495ddd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "388d4b2f_42225556",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/css/motion-1/parsing/offset-parsing-valid.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003011
+      },
+      "writtenOn": "2017-06-10T07:01:53Z",
+      "side": 1,
+      "message": "I was thinking about computed style.\n0px is the initial value for offset-distance.\nreverse becomes auto 180deg in computed style.\n\nFixed. All the cases are now passing, as we check the runtime flag and conditionally accept position and anchor.",
+      "parentUuid": "8be99875_262897bd",
+      "revId": "b65ae539f142f5b63dc4da4774feca5c31495ddd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
