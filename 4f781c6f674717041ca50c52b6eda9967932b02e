@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c382ea48_7c30d2bf",
+        "filename": "components/download/internal/model_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-10T00:38:40Z",
+      "side": 1,
+      "message": "This is the main fix.",
+      "range": {
+        "startLine": 46,
+        "startChar": 2,
+        "endLine": 46,
+        "endChar": 32
+      },
+      "revId": "4f781c6f674717041ca50c52b6eda9967932b02e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
