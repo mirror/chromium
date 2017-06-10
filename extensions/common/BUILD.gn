@@ -291,6 +291,7 @@ if (enable_extensions) {
       "//crypto",
       "//device/bluetooth",
       "//device/usb",
+      "//device/usb/public/cpp",
       "//extensions:extensions_resources",
       "//extensions/common/api",
       "//extensions/strings",
