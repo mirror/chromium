@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e192ee5a_83c720ef",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-10T00:23:59Z",
+      "side": 1,
+      "message": "I asked yzshen@ about why we don\u0027t support optional primitive types in mojom and he reminded me that the issue is that the serialized message layout for it would be difficult.",
+      "parentUuid": "8ca18bca_70443f03",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec3ffd7b_fd160e81",
         "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e98ca04_9ce32e42",
+        "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-10T00:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec3ffd7b_fd160e81",
+      "range": {
+        "startLine": 59,
+        "startChar": 15,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "16f1d727_85f64439",
+        "filename": "chrome/browser/usb/usb_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-10T00:23:59Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13a6286e_e89a06f8",
+      "range": {
+        "startLine": 81,
+        "startChar": 28,
+        "endLine": 81,
+        "endChar": 37
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cfe521d_8512294b",
         "filename": "device/usb/mojo/device_manager_impl_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342e98be_15046462",
+        "filename": "device/usb/mojo/device_manager_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-10T00:23:59Z",
+      "side": 1,
+      "message": "Hmm... now that we aren\u0027t using mojo::Array anymore (which treated null and empty separately) we could probably make UsbEnumerationOptions::filters non-nullable as the behavior for a null list and empty list are the same. I\u0027ll do that (and another mojom change I thought of) in a followup patch.",
+      "parentUuid": "2cfe521d_8512294b",
+      "range": {
+        "startLine": 129,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
