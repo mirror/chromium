@@ -11,6 +11,8 @@
 
 namespace ash {
 
+class TouchpadDisabler;
+
 // Disables the internal mouse and keyboard for the duration of the class'
 // lifetime.
 class ASH_EXPORT ScopedDisableInternalMouseAndKeyboardOzone
@@ -20,9 +22,8 @@ class ASH_EXPORT ScopedDisableInternalMouseAndKeyboardOzone
   ~ScopedDisableInternalMouseAndKeyboardOzone() override;
 
  private:
-  // If the touch pad is already disabled we ignore re-enabling it in the
-  // destructor.
-  bool should_ignore_touch_pad_ = false;
+  // See TouchpadDisabler for details on lifetime.
+  TouchpadDisabler* touchpad_disabler_;
 
   DISALLOW_COPY_AND_ASSIGN(ScopedDisableInternalMouseAndKeyboardOzone);
 };

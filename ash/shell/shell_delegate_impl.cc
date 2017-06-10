@@ -155,5 +155,10 @@ void ShellDelegateImpl::SetTouchscreenEnabledInPrefs(bool enabled,
 
 void ShellDelegateImpl::UpdateTouchscreenStatusFromPrefs() {}
 
+ui::InputDeviceControllerClient*
+ShellDelegateImpl::GetInputDeviceControllerClient() {
+  return nullptr;
+}
+
 }  // namespace shell
 }  // namespace ash

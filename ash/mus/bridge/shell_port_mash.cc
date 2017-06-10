@@ -335,24 +335,6 @@ ShellPortMash::CreateMaximizeModeEventHandler() {
   return nullptr;
 }
 
-std::unique_ptr<ScopedDisableInternalMouseAndKeyboard>
-ShellPortMash::CreateScopedDisableInternalMouseAndKeyboard() {
-  if (Shell::ShouldEnableSimplifiedDisplayManagement()) {
-#if defined(USE_OZONE)
-    return base::MakeUnique<ScopedDisableInternalMouseAndKeyboardOzone>();
-#else
-    // TODO: remove this conditional. Bots build this config, but it is never
-    // actually used. http://crbug.com/671355.
-    NOTREACHED();
-    return nullptr;
-#endif
-  }
-
-  // TODO: needs implementation for mus, http://crbug.com/624967.
-  NOTIMPLEMENTED();
-  return nullptr;
-}
-
 std::unique_ptr<WorkspaceEventHandler>
 ShellPortMash::CreateWorkspaceEventHandler(aura::Window* workspace_window) {
   if (GetAshConfig() == Config::MUS)
