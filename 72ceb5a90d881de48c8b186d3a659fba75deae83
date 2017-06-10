@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5220708f_95222b98",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 473,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-10T02:17:09Z",
+      "side": 1,
+      "message": "There\u0027s no condition anymore",
+      "revId": "72ceb5a90d881de48c8b186d3a659fba75deae83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
