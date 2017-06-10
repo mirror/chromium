@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b96987c9_7b7b6c8e",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T05:29:07Z",
+      "side": 1,
+      "message": "Consider using a range-based for loop here.\n\nfor (const auto\u0026 item : menu_list) {\n  // ...\n  property.label \u003d base::UTF8ToUTF16(item.label);\n  // ...\n}",
+      "range": {
+        "startLine": 1406,
+        "startChar": 7,
+        "endLine": 1406,
+        "endChar": 46
+      },
+      "revId": "72d8916455f588c7048de15c167389b909a19f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
