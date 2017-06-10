@@ -131,6 +131,10 @@ class DesktopMemorySystemHealth(_MemorySystemHealthBenchmark):
   """Desktop Chrome Memory System Health Benchmark."""
   PLATFORM = 'desktop'
 
+  def SetExtraBrowserOptions(self, options):
+    super(DesktopMemorySystemHealth, self).SetExtraBrowserOptions(options)
+    options.AppendExtraBrowserArgs(['--enable-heap-profiling=native'])
+
   @classmethod
   def ShouldDisable(cls, possible_browser):
     return possible_browser.platform.GetDeviceTypeName() != 'Desktop'
