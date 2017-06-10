@@ -14,6 +14,10 @@ namespace service_manager {
 class Connector;
 }
 
+namespace ui {
+class InputDeviceControllerClient;
+}
+
 namespace ash {
 
 class ShellDelegateMus : public ShellDelegate {
@@ -49,10 +53,14 @@ class ShellDelegateMus : public ShellDelegate {
   void SetTouchscreenEnabledInPrefs(bool enabled,
                                     bool use_local_state) override;
   void UpdateTouchscreenStatusFromPrefs() override;
+  ui::InputDeviceControllerClient* GetInputDeviceControllerClient() override;
 
  private:
   // |connector_| may be null in tests.
   service_manager::Connector* connector_;
+
+  std::unique_ptr<ui::InputDeviceControllerClient>
+      input_device_controller_client_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellDelegateMus);
 };

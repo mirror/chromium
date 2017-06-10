@@ -16,6 +16,7 @@
 #include "base/strings/string16.h"
 #include "base/strings/string_util.h"
 #include "components/user_manager/user_info_impl.h"
+#include "services/ui/public/cpp/input_devices/input_device_controller_client.h"
 #include "ui/gfx/image/image.h"
 
 namespace ash {
@@ -142,6 +143,18 @@ void ShellDelegateMus::SetTouchscreenEnabledInPrefs(bool enabled,
 
 void ShellDelegateMus::UpdateTouchscreenStatusFromPrefs() {
   NOTIMPLEMENTED();
+}
+
+ui::InputDeviceControllerClient*
+ShellDelegateMus::GetInputDeviceControllerClient() {
+  if (!connector_)
+    return nullptr;  // Happens in tests.
+
+  if (!input_device_controller_client_) {
+    input_device_controller_client_ =
+        base::MakeUnique<ui::InputDeviceControllerClient>(connector_);
+  }
+  return input_device_controller_client_.get();
 }
 
 }  // namespace ash
