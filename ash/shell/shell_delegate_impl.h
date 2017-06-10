@@ -51,6 +51,7 @@ class ShellDelegateImpl : public ShellDelegate {
   void SetTouchscreenEnabledInPrefs(bool enabled,
                                     bool use_local_state) override;
   void UpdateTouchscreenStatusFromPrefs() override;
+  ui::InputDeviceControllerClient* GetInputDeviceControllerClient() override;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ShellDelegateImpl);

@@ -32,6 +32,7 @@ class Connector;
 }
 
 namespace ui {
+class InputDeviceControllerClient;
 class MenuModel;
 }
 
@@ -141,6 +142,9 @@ class ASH_EXPORT ShellDelegate {
 
   // Suspends all WebContents-associated media sessions to stop managed players.
   virtual void SuspendMediaSessions() {}
+
+  // Creator of Shell owns this; it's assumed this outlives Shell.
+  virtual ui::InputDeviceControllerClient* GetInputDeviceControllerClient() = 0;
 };
 
 }  // namespace ash
