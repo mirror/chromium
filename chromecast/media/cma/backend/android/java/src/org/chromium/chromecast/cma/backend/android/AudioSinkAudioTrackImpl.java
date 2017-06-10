@@ -46,8 +46,11 @@ class AudioSinkAudioTrackImpl {
     private static final String TAG = "AudiotrackImpl";
     private static final int DEBUG_LEVEL = 0;
 
-    // hardcoded AudioTrack config parameters
-    private static final int STREAM_TYPE = AudioManager.STREAM_MUSIC;
+    // This list must match kContentTypes[] in audio_sink_android_audiotrack_impl.cc.
+    private static final int[] CONTENT_TYPES = {
+            AudioManager.STREAM_MUSIC, AudioManager.STREAM_ALARM, AudioManager.STREAM_SYSTEM};
+
+    // Hardcoded AudioTrack config parameters.
     private static final int CHANNEL_CONFIG = AudioFormat.CHANNEL_OUT_STEREO;
     private static final int AUDIO_FORMAT = AudioFormat.ENCODING_PCM_FLOAT;
     private static final int AUDIO_MODE = AudioTrack.MODE_STREAM;
@@ -114,7 +117,7 @@ class AudioSinkAudioTrackImpl {
      * the shared memory buffers.
      */
     @CalledByNative
-    private void init(int sampleRateInHz, int bytesPerBuffer) {
+    private void init(int contentTypeIndex, int sampleRateInHz, int bytesPerBuffer) {
         Log.i(TAG,
                 "Init:"
                         + " sampleRateInHz=" + sampleRateInHz
@@ -135,9 +138,10 @@ class AudioSinkAudioTrackImpl {
         // similar.
         int bufferSizeInBytes =
                 5 * AudioTrack.getMinBufferSize(mSampleRateInHz, CHANNEL_CONFIG, AUDIO_FORMAT);
-        Log.i(TAG, "Init: using an AudioTrack buffer_size=" + bufferSizeInBytes);
-
-        mAudioTrack = new AudioTrack(STREAM_TYPE, mSampleRateInHz, CHANNEL_CONFIG, AUDIO_FORMAT,
+        int stream_type = CONTENT_TYPES[contentTypeIndex];
+        Log.i(TAG,
+                "Init: create an AudioTrack of size=" + bufferSizeInBytes + " type=" + stream_type);
+        mAudioTrack = new AudioTrack(stream_type, mSampleRateInHz, CHANNEL_CONFIG, AUDIO_FORMAT,
                 bufferSizeInBytes, AUDIO_MODE);
         mLastPlayoutTStamp = new AudioTimestamp();
 

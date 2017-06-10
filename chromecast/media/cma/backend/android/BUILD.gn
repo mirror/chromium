@@ -39,13 +39,17 @@ source_set("cast_media_android") {
 generate_jni("audio_track_jni_headers") {
   sources = [
     "java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java",
+    "java/src/org/chromium/chromecast/cma/backend/android/VolumeControl.java",
   ]
 
   jni_package = "audio_track"
 }
 
 android_library("audio_track_java") {
-  java_files = [ "java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java" ]
+  java_files = [
+    "java/src/org/chromium/chromecast/cma/backend/android/AudioSinkAudioTrackImpl.java",
+    "java/src/org/chromium/chromecast/cma/backend/android/VolumeControl.java",
+  ]
 
   deps = [
     "//base:base_java",
