@@ -1117,6 +1117,11 @@ BASE_EXPORT std::ostream& operator<<(std::ostream& out, const wchar_t* wstr);
 inline std::ostream& operator<<(std::ostream& out, const std::wstring& wstr) {
   return out << wstr.c_str();
 }
+#if 0
+BASE_EXPORT std::ostream& operator<<(std::ostream& out, const char16_t* ustr);
+inline std::ostream& operator<<(std::ostream& out, const std::u16string& ustr) {
+  return out << ustr.c_str();
+#endif
 }  // namespace std
 
 // The NOTIMPLEMENTED() macro annotates codepaths which have

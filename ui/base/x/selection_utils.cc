@@ -210,7 +210,7 @@ base::string16 SelectionData::GetHtml() const {
     // UTF-16, otherwise assume UTF-8.
     if (size >= 2 &&
         reinterpret_cast<const uint16_t*>(data)[0] == 0xFEFF) {
-      markup.assign(reinterpret_cast<const uint16_t*>(data) + 1,
+      markup.assign(reinterpret_cast<const base::char16*>(data) + 1,
                     (size / 2) - 1);
     } else {
       base::UTF8ToUTF16(reinterpret_cast<const char*>(data), size, &markup);
