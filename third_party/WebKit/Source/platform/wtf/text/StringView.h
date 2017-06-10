@@ -83,8 +83,6 @@ class WTF_EXPORT StringView {
         characters16_(chars),
         length_(length) {}
   StringView(const UChar* chars);
-  StringView(const char16_t* chars)
-      : StringView(reinterpret_cast<const UChar*>(chars)) {}
 
 #if DCHECK_IS_ON()
   ~StringView();
