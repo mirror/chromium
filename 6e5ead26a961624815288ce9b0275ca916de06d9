@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f93b9124_59e3d851",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-10T00:33:11Z",
+      "side": 1,
+      "message": "Ah, that\u0027s ok, the enum generator does that translation. e.g., we\u0027re using it for media::VideoCodec where kCodecH264 translates to CODEC_H264 for java. (https://cs.chromium.org/chromium/src/media/base/android/java/src/org/chromium/media/CodecProfileLevelList.java?type\u003dcs\u0026l\u003d78)",
+      "parentUuid": "cabc37fa_32d9c7ee",
+      "range": {
+        "startLine": 26,
+        "startChar": 11,
+        "endLine": 26,
+        "endChar": 20
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a69b5d06_04f8da2c",
         "filename": "media/base/android/media_codec_bridge_impl.h",
         "patchSetId": 3
@@ -107,6 +131,30 @@
       "side": 1,
       "message": "Any means there\u0027s no restrictions. I don\u0027t see why you can\u0027t use a secure decoder on a non-encrypted stream, even though our implementation won\u0027t do that.",
       "parentUuid": "a69b5d06_04f8da2c",
+      "range": {
+        "startLine": 27,
+        "startChar": 2,
+        "endLine": 27,
+        "endChar": 5
+      },
+      "revId": "6e5ead26a961624815288ce9b0275ca916de06d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9789c1aa_06c4e59e",
+        "filename": "media/base/android/media_codec_bridge_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-10T00:33:11Z",
+      "side": 1,
+      "message": "I was thinking that we treat the codec differently if it\u0027s secure/insecure (unconscious bias, ha). But I can\u0027t think of a concrete example, so you must be right.",
+      "parentUuid": "f0158503_f12c492d",
       "range": {
         "startLine": 27,
         "startChar": 2,
