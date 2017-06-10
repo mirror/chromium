@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "86313510_edd8f74d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T00:06:48Z",
+      "side": 1,
+      "message": "+haraken@, did the meeting to figure out what to do with base/STL types in Blink happen yet? I think we\u0027ll need to resolve this question soon for things like the scheduler (which is now using std::string and std::map as well)",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f5ccaa3_7bb6505a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T00:06:48Z",
+      "side": 1,
+      "message": "I don\u0027t quite understand this, isn\u0027t this essentially the same as saying base::nullopt?",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f48dc0d5_b20d53a7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T00:06:48Z",
+      "side": 1,
+      "message": "I\u0027d suggest building the default handling into GetDoubleParamterFromMap, by providing a default argument and just having the function return it instead of -1.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d31920e_6882c46e",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 755,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T00:06:48Z",
+      "side": 1,
+      "message": "Per https://www.chromium.org/developers/coding-style/cpp-dos-and-donts#TOC-Variable-initialization, we should have a \"\u003d\" here between params and {.",
+      "range": {
+        "startLine": 755,
+        "startChar": 43,
+        "endLine": 755,
+        "endChar": 44
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af8b0f71_fdcde27b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-10T00:06:48Z",
+      "side": 1,
+      "message": "Prefer const char kParamName[]\n\n(Currently, kParam isn\u0027t actually const and can be assigned)",
+      "range": {
+        "startLine": 759,
+        "startChar": 2,
+        "endLine": 759,
+        "endChar": 24
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
