@@ -470,12 +470,12 @@ InspectorTest.waitForUISourceCode = function(urlSuffix, projectType)
             return Promise.resolve(uiSourceCode);
     }
 
-    return InspectorTest.waitForEvent(Workspace.Workspace.Events.UISourceCodeAdded, Workspace.workspace, matches);
+    return Workspace.workspace.once(Workspace.Workspace.Events.UISourceCodeAdded, matches);
 }
 
 InspectorTest.waitForUISourceCodeRemoved = function(callback)
 {
-    InspectorTest.waitForEvent(Workspace.Workspace.Events.UISourceCodeRemoved, Workspace.workspace).then(callback);
+    Workspace.workspace.once(Workspace.Workspace.Events.UISourceCodeRemoved).then(callback);
 }
 
 InspectorTest.waitForTarget = function(filter) {
@@ -503,7 +503,7 @@ InspectorTest.waitForTarget = function(filter) {
 InspectorTest.waitForExecutionContext = function(runtimeModel) {
     if (runtimeModel.executionContexts().length)
         return Promise.resolve(runtimeModel.executionContexts()[0]);
-    return InspectorTest.waitForEvent(SDK.RuntimeModel.Events.ExecutionContextCreated, runtimeModel);
+    return runtimeModel.once(SDK.RuntimeModel.Events.ExecutionContextCreated);
 }
 
 InspectorTest.waitForExecutionContextDestroyed = function(context) {
