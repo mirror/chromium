@@ -5,30 +5,28 @@
 #ifndef TableCellPainter_h
 #define TableCellPainter_h
 
+#include "core/layout/LayoutTable.h"
+#include "core/layout/LayoutTableCell.h"
 #include "platform/graphics/paint/DisplayItem.h"
 #include "platform/wtf/Allocator.h"
 
 namespace blink {
 
 struct PaintInfo;
-class CollapsedBorderValue;
+class LayoutObject;
 class LayoutPoint;
 class LayoutRect;
-class LayoutTableCell;
-class LayoutObject;
 
 class TableCellPainter {
   STACK_ALLOCATED();
 
  public:
-  TableCellPainter(const LayoutTableCell& layout_table_cell)
-      : layout_table_cell_(layout_table_cell) {}
+  TableCellPainter(const LayoutTableCell& cell)
+      : cell_(cell), table_(*cell.Table()) {}
 
   void Paint(const PaintInfo&, const LayoutPoint&);
 
-  void PaintCollapsedBorders(const PaintInfo&,
-                             const LayoutPoint&,
-                             const CollapsedBorderValue&);
+  void PaintCollapsedBorders(const PaintInfo&, const LayoutPoint&);
   void PaintContainerBackgroundBehindCell(
       const PaintInfo&,
       const LayoutPoint&,
@@ -45,7 +43,25 @@ class TableCellPainter {
                        const LayoutRect&,
                        const LayoutObject& background_object);
 
-  const LayoutTableCell& layout_table_cell_;
+  struct CollapsedBorderPaintInfo;
+  void AdjustBorderSegments(CollapsedBorderPaintInfo&,
+                            CollapsedBorderPaintInfo&,
+                            CollapsedBorderPaintInfo&,
+                            CollapsedBorderPaintInfo&);
+  void AdjustEndBorderWithCellFollowing(CollapsedBorderPaintInfo&);
+  void AdjustAfterBorderWithCellBelow(CollapsedBorderPaintInfo&);
+  void AdjustForWritingModeAndDirection(CollapsedBorderPaintInfo&,
+                                        CollapsedBorderPaintInfo&,
+                                        CollapsedBorderPaintInfo&,
+                                        CollapsedBorderPaintInfo&);
+
+  const LayoutTableCell* CellPreceding() { return table_.CellPreceding(cell_); }
+  const LayoutTableCell* CellFollowing() { return table_.CellFollowing(cell_); }
+  const LayoutTableCell* CellAbove() { return table_.CellAbove(cell_); }
+  const LayoutTableCell* CellBelow() { return table_.CellBelow(cell_); }
+
+  const LayoutTableCell& cell_;
+  const LayoutTable& table_;
 };
 
 }  // namespace blink
