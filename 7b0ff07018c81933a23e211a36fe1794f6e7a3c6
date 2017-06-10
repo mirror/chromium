@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5636fbb2_c0457fdc",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-10T00:10:51Z",
+      "side": 1,
+      "message": "I switched it around for the gcm app handler, can do the suggested articles observer in another patch.",
+      "parentUuid": "d79831c2_a6ba1db2",
+      "range": {
+        "startLine": 44,
+        "startChar": 6,
+        "endLine": 44,
+        "endChar": 25
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3e42ab6a_c6f1aa89",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 9
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "2fb3215f_b406915d",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-10T00:10:51Z",
+      "side": 1,
+      "message": "We talked about centralizing checks in the Dispatcher.  That will be done in another patch, but removing the check here.",
+      "parentUuid": "32aa0800_b7dbe898",
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef66663b_162e4ae3",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
         "patchSetId": 9
@@ -83,6 +125,30 @@
     },
     {
       "key": {
+        "uuid": "24d5eb18_b3af9e75",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-10T00:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef66663b_162e4ae3",
+      "range": {
+        "startLine": 74,
+        "startChar": 15,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5aeb8040_174c8016",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
         "patchSetId": 9
@@ -103,6 +169,30 @@
       "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b885b879_a79a85c7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-10T00:10:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5aeb8040_174c8016",
+      "range": {
+        "startLine": 77,
+        "startChar": 10,
+        "endLine": 77,
+        "endChar": 28
+      },
+      "revId": "7b0ff07018c81933a23e211a36fe1794f6e7a3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbe9c6a4_d070707d",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-10T00:10:51Z",
+      "side": 1,
+      "message": "It is necessary to put this here as PrefetchService constructs a proxy even if it will never be used.",
+      "range": {
+        "startLine": 44,
+        "startChar": 9,
+        "endLine": 44,
+        "endChar": 41
+      },
+      "revId": "3b6f0081a27b1fcac19280a651e827152e3e707d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
