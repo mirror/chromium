@@ -263,16 +263,21 @@ void OmniboxResultView::SetMatch(const AutocompleteMatch& match) {
 }
 
 void OmniboxResultView::ShowKeyword(bool show_keyword) {
+  if (keyword_icon_)
+    keyword_icon_->SetBackground(nullptr);
   if (show_keyword)
     animation_->Show();
   else
     animation_->Hide();
+  keyword_icon_->set_can_process_events_within_subtree(!show_keyword);
 }
 
 void OmniboxResultView::Invalidate() {
   const ResultViewState state = GetState();
   if (state == NORMAL) {
     SetBackground(nullptr);
+    if (keyword_icon_)
+      keyword_icon_->SetBackground(nullptr);
   } else {
     const SkColor bg_color = GetColor(state, BACKGROUND);
     SetBackground(
@@ -554,6 +559,31 @@ int OmniboxResultView::GetMatchContentsWidth() const {
 void OmniboxResultView::SetAnswerImage(const gfx::ImageSkia& image) {
   answer_image_ = image;
   SchedulePaint();
+}
+
+void OmniboxResultView::SetHoveredView(const views::View* view) {
+  if (view == keyword_icon_.get()) {
+    const SkColor bg_color = GetColor(HOVERED, BACKGROUND);
+    keyword_icon_->SetBackground(
+        base::MakeUnique<BackgroundWith1PxBorder>(bg_color, bg_color));
+  } else {
+    keyword_icon_->SetBackground(nullptr);
+  }
+  keyword_icon_->SchedulePaint();
+}
+
+void OmniboxResultView::OnViewClicked(const views::View* view,
+                                      WindowOpenDisposition disposition) {
+  if (view == keyword_icon_.get()) {
+    model_->omnibox_view()->model()->AcceptKeyword(KeywordModeEntryMethod::TAB);
+  } else {
+    DCHECK_EQ(this, view);
+    if (model_index_ >= model_->model()->result().size())
+      return;
+    model_->omnibox_view()->OpenMatch(
+        model_->model()->result().match_at(model_index_), disposition, GURL(),
+        base::string16(), model_index_);
+  }
 }
 
 // TODO(skanuj): This is probably identical across all OmniboxResultView rows in

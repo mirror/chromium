@@ -74,6 +74,9 @@ class OmniboxPopupContentsView : public views::View,
 
   int max_match_contents_width() const { return max_match_contents_width_; }
 
+  OmniboxView* omnibox_view() { return omnibox_view_; }
+  OmniboxPopupModel* model() { return model_.get(); }
+
  protected:
   OmniboxPopupContentsView(const gfx::FontList& font_list,
                            OmniboxView* omnibox_view,
@@ -110,8 +113,10 @@ class OmniboxPopupContentsView : public views::View,
 
   // Find the index of the match under the given |point|, specified in window
   // coordinates. Returns OmniboxPopupModel::kNoMatch if there isn't a match at
-  // the specified point.
-  size_t GetIndexForPoint(const gfx::Point& point);
+  // the specified point. |action| is filled in with the specific action for the
+  // given point (e.g. accept keyword hint).
+  size_t GetRowInfoForPoint(const gfx::Point& point,
+                            views::View** specific_target);
 
   // Processes a located event (e.g. mouse/gesture) and sets the selection/hover
   // state of a line in the list.
@@ -120,8 +125,14 @@ class OmniboxPopupContentsView : public views::View,
 
   // Opens an entry from the list depending on the event and the selected
   // disposition.
-  void OpenSelectedLine(const ui::LocatedEvent& event,
-                        WindowOpenDisposition disposition);
+  void ProcessClickEvent(const ui::LocatedEvent& event,
+                         WindowOpenDisposition disposition);
+
+  // Processes a mouse movement event and sets the hover state of a line.
+  void ProcessMouseMovement(const ui::MouseEvent& event);
+
+  void SetHoveredState(size_t hovered_row_index,
+                       const views::View* hovered_view);
 
   OmniboxResultView* result_view_at(size_t i);
 
