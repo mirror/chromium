@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8e31d45_6672f03d",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-10T15:26:24Z",
+      "side": 1,
+      "message": "DesktopMediaList is an interface is an interface, so it shouldn\u0027t have any fields, especially public.",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b7d77e3_b2dcae30",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-10T15:26:24Z",
+      "side": 1,
+      "message": "this can be replaced with type\u003dDesktopMediaID::TYPE_NONE in class definition",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7664e778_ab740b3a",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-10T15:26:24Z",
+      "side": 1,
+      "message": "This method should not be public. Actually I don\u0027t think you need it at all. make type_ protected, then child classes will be able to set it directly",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
