@@ -279,6 +279,8 @@ TEST_P(VisualViewportTest, TestResizeAtFullyScrolledPreservesViewportLocation) {
   IntPoint expected_location =
       frame_view.GetScrollableArea()->VisibleContentRect().Location();
 
+  WTF_CREATE_SCOPED_LOGGER(logger, "TEST");
+
   // Shrink the WebView, this should cause both viewports to shrink and
   // WebView should do whatever it needs to do to preserve the visible
   // location.

@@ -43,6 +43,7 @@ namespace blink {
 
 class PagePopup;
 class PagePopupClient;
+class ResizeViewportAnchor;
 class WebViewBase;
 struct WebCursorInfo;
 
@@ -112,6 +113,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   float ClampPageScaleFactorToLimits(float scale) const override;
   void MainFrameScrollOffsetChanged() const override;
   void ResizeAfterLayout() const override;
+  ResizeViewportAnchor* GetResizeViewportAnchor() override;
   void LayoutUpdated() const override;
   void ShowMouseOverURL(const HitTestResult&) override;
   void SetToolTip(LocalFrame&, const String&, TextDirection) override;

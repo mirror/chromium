@@ -273,6 +273,9 @@ bool VisualViewport::DidSetScaleOrLocation(float scale,
     return false;
 
   if (clamped_offset != offset_) {
+    WTF_CREATE_SCOPED_LOGGER(logger, "VV scroll %s -> %s",
+                             offset_.ToString().Latin1().data(),
+                             clamped_offset.ToString().Latin1().data());
     offset_ = clamped_offset;
     GetScrollAnimator().SetCurrentOffset(offset_);
 

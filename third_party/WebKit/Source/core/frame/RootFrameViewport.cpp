@@ -58,6 +58,7 @@ LayoutRect RootFrameViewport::RootContentsToLayoutViewportContents(
 }
 
 void RootFrameViewport::RestoreToAnchor(const ScrollOffset& target_offset) {
+  WTF_CREATE_SCOPED_LOGGER(logger, "RVA restore");
   // Clamp the scroll offset of each viewport now so that we force any invalid
   // offsets to become valid so we can compute the correct deltas.
   VisualViewport().SetScrollOffset(VisualViewport().GetScrollOffset(),

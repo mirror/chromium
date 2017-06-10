@@ -490,6 +490,10 @@ void ChromeClientImpl::ResizeAfterLayout() const {
   web_view_->ResizeAfterLayout();
 }
 
+ResizeViewportAnchor* ChromeClientImpl::GetResizeViewportAnchor() {
+  return web_view_->GetResizeViewportAnchor();
+}
+
 void ChromeClientImpl::LayoutUpdated() const {
   web_view_->LayoutUpdated();
 }
