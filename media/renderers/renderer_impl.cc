@@ -175,8 +175,19 @@ void RendererImpl::SetCdm(CdmContext* cdm_context,
 
   DCHECK(!init_cb_.is_null());
   state_ = STATE_INITIALIZING;
+
+#if defined(OS_CHROMEOS)
+  // On ChromeOS, audio/video renderer initialization may depend on the license
+  // exchange, e.g. decide how to setup the pipeline based on some information
+  // in the license. Hence, from EME's perspective, setMediaKeys() will depend
+  // on generateKeyRequest() and update(), which could cause JS player to hang
+  // if it waits for setMediaKeys() promise to be resolved before calling
+  // generateKeyRequest(). Hence, return the callback early to avoid this issue.
+  cdm_attached_cb.Run(true);
+#else
   // |cdm_attached_cb| will be fired after initialization finishes.
   pending_cdm_attached_cb_ = cdm_attached_cb;
+#endif
 
   InitializeAudioRenderer();
 }
