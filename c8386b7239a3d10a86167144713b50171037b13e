@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5dcd47d_cd51c6b3",
+        "filename": "ash/mus/bridge/shell_port_mash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c450a30a_707bf6e6",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "138f1671_984f6606",
         "filename": "ash/mus/bridge/shell_port_mash.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36a3eaa9_f46ecd55",
+        "filename": "ash/mus/bridge/shell_port_mash.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "138f1671_984f6606",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7082abf7_443a3f16",
+        "filename": "ash/mus/shell_delegate_mus.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "761bce3e_959be588",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "453b4ef9_95e4a84e",
         "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
         "patchSetId": 3
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b8b0060e_9108a26a",
+        "filename": "ash/wm/maximize_mode/maximize_mode_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "453b4ef9_95e4a84e",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c305cd32_f93be9fb",
         "filename": "ash/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard_ozone.cc",
         "patchSetId": 3
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-10T02:08:33Z",
       "side": 1,
       "message": "optional: it\u0027s not really necessary, since this is a destructor, but adding the line \"touchpad_disabler_ \u003d nullptr\" would help emphasize that it really went away in Destroy()",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b29e0d89_0fcef563",
+        "filename": "ash/wm/maximize_mode/scoped_disable_internal_mouse_and_keyboard_ozone.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "I\u0027m leaving this one as is.",
+      "parentUuid": "c305cd32_f93be9fb",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "a7797a44_2e4b98ae",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "I was trying to avoid such a long name, but you\u0027re right, it\u0027s more than just the touchpad. I went with TouchpadAndkeyboardDisabler.",
+      "parentUuid": "30939c3e_641b485a",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4cea5a4_b7c4144c",
         "filename": "ash/wm/maximize_mode/touchpad_disabler.cc",
         "patchSetId": 3
@@ -115,6 +223,24 @@
       "writtenOn": "2017-06-10T02:08:33Z",
       "side": 1,
       "message": "Since this code is synchronous, does this need to be here at all? Maybe it could still live in ScopedDisableInternalMouseAndKeyboardOzone, so this class would just do trackpad.",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deff4b45_3261a681",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Technically no, but the advantage of this way is that I can keep all access to InputDeviceControllerClient in this class. If I did as you suggest I would need more null checks as tests create TouchpadAndKeyboardDisabler without an InputDeviceControllerClient.",
+      "parentUuid": "a4cea5a4_b7c4144c",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "bf9ec5b8_4d2403b9",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c4982a17_a048f577",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "df56a2c7_93f9f012",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_delegate.h",
         "patchSetId": 3
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-10T02:08:33Z",
       "side": 1,
       "message": "I think this class should be an inner class like TouchpadDisabler::Delegate, rather than existing on its own. That keeps all the comments together, so that the comments in TouchpadDisabler about \"disableclosure\" make more sense.",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d3b103b_581d437c",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Chromium style recommends separate header for stuff like this, but since it\u0027s an implementation detail and just for tests I did as you suggest.",
+      "parentUuid": "df56a2c7_93f9f012",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "90884bc6_e44cd649",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "I was trying to keep the names generic, but you\u0027re right. Updated.",
+      "parentUuid": "9f411571_c071d9f9",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b69cff5d_798c2d94",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "34c8bfa8_11d077a9",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b69cff5d_798c2d94",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "291ed8b4_9a7589d8",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -200,6 +398,24 @@
       "writtenOn": "2017-06-10T02:08:33Z",
       "side": 1,
       "message": "optional: Count calls here. Then the test code can show that the number of disable touchpad and enable touchpad calls matches.",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab49cada_8f2c71ef",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "This is subtle. I actually started with the counts here but that doesn\u0027t work. The reason for that is that I need to calls made from the TouchpadAndKeyboardDisabler\u0027s destructor. As TouchpadAndKeyboardDisabler owns the delegate that means this class has been destroyed so that I couldn\u0027t measure call counts. For this reason I made the counts (and destroyed) as pointers that outlive this class.",
+      "parentUuid": "291ed8b4_9a7589d8",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "fc2321db_b5c3f0b3",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "See my earlier comment about counts having to live outside of TestDelegate for part of the rationale for going this route. I find this helper makes for more sharing between tests. To do otherwise would result in a *lot* of boilerplace for each test (basically replicating all this logic). I had also considered putting this in the test base class, but because I need to use AshTestBase and then testing::Test, that doesn\u0027t work.",
+      "parentUuid": "6750ef01_5af25c0d",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c5880d2f_f3934fdd",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "793430ff_65765c37",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5880d2f_f3934fdd",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b540f78_076cb43f",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -251,6 +503,24 @@
       "writtenOn": "2017-06-10T02:08:33Z",
       "side": 1,
       "message": "Nice test coverage, btw. It\u0027s good to see all paths exercised.",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b8ac4b_ff9eea17",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-10T04:52:11Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "5b540f78_076cb43f",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
