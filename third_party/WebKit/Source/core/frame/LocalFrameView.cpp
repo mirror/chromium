@@ -1132,6 +1132,7 @@ void LocalFrameView::ScheduleOrPerformPostLayoutTasks() {
 }
 
 void LocalFrameView::UpdateLayout() {
+  WTF_CREATE_SCOPED_LOGGER(logger, "Layout");
   // We should never layout a Document which is not in a LocalFrame.
   DCHECK(frame_);
   DCHECK_EQ(frame_->View(), this);
@@ -4101,6 +4102,9 @@ void LocalFrameView::UpdateScrollOffset(const ScrollOffset& offset,
     NOTREACHED();
   }
 
+  WTF_CREATE_SCOPED_LOGGER(logger, "LFV scroll %s -> %s",
+                           scroll_offset_.ToString().Latin1().data(),
+                           offset.ToString().Latin1().data());
   scroll_offset_ = offset;
 
   if (!ScrollbarsSuppressed())

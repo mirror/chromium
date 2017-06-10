@@ -8,6 +8,7 @@
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/VisualViewport.h"
 #include "core/page/Page.h"
+#include "core/paint/PaintLayerScrollableArea.h"
 #include "platform/geometry/DoubleRect.h"
 #include "platform/geometry/FloatSize.h"
 
@@ -18,15 +19,23 @@ void ResizeViewportAnchor::ResizeFrameView(const IntSize& size) {
   if (!frame_view)
     return;
 
+  WTF_CREATE_SCOPED_LOGGER(logger, "RVA-instrumented LFV::Resize");
+
   ScrollableArea* root_viewport = frame_view->GetScrollableArea();
   ScrollOffset offset = root_viewport->GetScrollOffset();
 
   frame_view->Resize(size);
+  if (RuntimeEnabledFeatures::rootLayerScrollingEnabled()) {
+    if (PaintLayerScrollableArea* layout_viewport = ToPaintLayerScrollableArea(
+            frame_view->LayoutViewportScrollableArea())) {
+      layout_viewport->ClampScrollOffsetAfterOverflowChange();
+    }
+  }
   drift_ += root_viewport->GetScrollOffset() - offset;
 }
 
-void ResizeViewportAnchor::EndScope() {
-  if (--scope_count_ > 0)
+void ResizeViewportAnchor::EndResizeScope() {
+  if (--resize_scope_count_ > 0)
     return;
 
   LocalFrameView* frame_view = RootFrameView();
@@ -48,6 +57,30 @@ void ResizeViewportAnchor::EndScope() {
       visual_viewport_in_document);
 
   drift_ = ScrollOffset();
+}
+
+void ResizeViewportAnchor::BeginClampingScope() {
+  if (clamping_scope_count_++ > 0)
+    return;
+  if (resize_scope_count_ == 0)
+    return;
+
+  if (LocalFrameView* frame_view = RootFrameView())
+    clamp_start_offset_ = frame_view->GetScrollableArea()->GetScrollOffset();
+}
+
+void ResizeViewportAnchor::EndClampingScope() {
+  if (--clamping_scope_count_ > 0)
+    return;
+  if (resize_scope_count_ == 0)
+    return;
+
+  if (LocalFrameView* frame_view = RootFrameView()) {
+    drift_ += frame_view->GetScrollableArea()->GetScrollOffset() -
+              clamp_start_offset_;
+  }
+
+  clamp_start_offset_ = ScrollOffset();
 }
 
 LocalFrameView* ResizeViewportAnchor::RootFrameView() {

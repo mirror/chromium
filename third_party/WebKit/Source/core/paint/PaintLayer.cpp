@@ -869,10 +869,15 @@ bool PaintLayer::UpdateSize() {
   } else if (LayoutBox* box = GetLayoutBox()) {
     size_ = PixelSnappedIntSize(box->Size(), box->Location());
   }
+  bool debug = IsRootLayer() && old_size != size_;
+  WTF_CREATE_SCOPED_LOGGER_IF(logger, debug, "root PL::UpdateSize %s -> %s",
+                              old_size.ToString().Latin1().data(),
+                              size_.ToString().Latin1().data());
   return old_size != size_;
 }
 
 void PaintLayer::UpdateSizeAndScrollingAfterLayout() {
+  WTF_CREATE_SCOPED_LOGGER(logger, "PL::UpdateSizeAndScrollingAfterLayout");
   bool did_resize = UpdateSize();
   if (GetLayoutObject().HasOverflowClip()) {
     scrollable_area_->UpdateAfterLayout();

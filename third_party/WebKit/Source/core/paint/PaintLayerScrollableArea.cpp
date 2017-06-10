@@ -55,6 +55,7 @@
 #include "core/frame/LocalFrameClient.h"
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/PageScaleConstraintsSet.h"
+#include "core/frame/ResizeViewportAnchor.h"
 #include "core/frame/RootFrameViewport.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
@@ -382,6 +383,10 @@ void PaintLayerScrollableArea::UpdateScrollOffset(
     ScrollType scroll_type) {
   if (GetScrollOffset() == new_offset)
     return;
+
+  WTF_CREATE_SCOPED_LOGGER(logger, "PLSA scroll %s -> %s",
+                           scroll_offset_.ToString().Latin1().data(),
+                           new_offset.ToString().Latin1().data());
 
   scroll_offset_ = new_offset;
 
@@ -887,6 +892,21 @@ void PaintLayerScrollableArea::UpdateAfterLayout() {
   PositionOverflowControls();
 }
 
+ResizeViewportAnchor* PaintLayerScrollableArea::GetResizeViewportAnchor() {
+  if (!layer_.IsRootLayer())
+    return nullptr;
+
+  LocalFrame* frame = Box().GetFrame();
+  if (!frame || !frame->IsMainFrame())
+    return nullptr;
+
+  Page* page = frame->GetPage();
+  if (!page)
+    return nullptr;
+
+  return page->GetChromeClient().GetResizeViewportAnchor();
+}
+
 void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
   // If a vertical scrollbar was removed, the min/max scroll offsets may have
   // changed, so the scroll offsets needs to be clamped.  If the scroll offset
@@ -897,6 +917,10 @@ void PaintLayerScrollableArea::ClampScrollOffsetAfterOverflowChange() {
     DelayScrollOffsetClampScope::SetNeedsClamp(this);
     return;
   }
+
+  Optional<ResizeViewportAnchor::ClampingScope> clampingScope;
+  if (ResizeViewportAnchor* anchor = GetResizeViewportAnchor())
+    clampingScope.emplace(*anchor);
 
   if (ScrollOriginChanged())
     SetScrollOffsetUnconditionally(ClampScrollOffset(GetScrollOffset()));

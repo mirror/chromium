@@ -1965,6 +1965,7 @@ void WebViewImpl::ResizeWithBrowserControls(
     ResizeViewWhileAnchored(browser_controls_height,
                             browser_controls_shrink_layout);
   } else {
+    WTF_CREATE_SCOPED_LOGGER(logger, "WVI resize scope");
     ResizeViewportAnchor::ResizeScope resize_scope(*resize_viewport_anchor_);
     ResizeViewWhileAnchored(browser_controls_height,
                             browser_controls_shrink_layout);

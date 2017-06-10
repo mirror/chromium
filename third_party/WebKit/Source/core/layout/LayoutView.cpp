@@ -786,6 +786,8 @@ float LayoutView::ZoomFactor() const {
 }
 
 void LayoutView::UpdateAfterLayout() {
+  WTF_CREATE_SCOPED_LOGGER(logger, "LV::UpdateAfterLayout");
+
   // Unlike every other layer, the root PaintLayer takes its size from the
   // layout viewport size.  The call to AdjustViewSize() will update the
   // frame's contents size, which will also update the page's minimum scale

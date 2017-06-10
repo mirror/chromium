@@ -63,6 +63,7 @@ class HitTestResult;
 class LayoutBox;
 class LayoutScrollbarPart;
 class PaintLayer;
+class ResizeViewportAnchor;
 class ScrollingCoordinator;
 class StickyPositionScrollingConstraints;
 class SubtreeLayoutScope;
@@ -541,6 +542,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
   void UpdateCompositingLayersAfterScroll();
 
   ScrollingCoordinator* GetScrollingCoordinator() const;
+
+  ResizeViewportAnchor* GetResizeViewportAnchor();
 
   PaintLayerScrollableAreaRareData* RareData() { return rare_data_.get(); }
 
