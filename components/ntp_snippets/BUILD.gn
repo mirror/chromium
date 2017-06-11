@@ -121,6 +121,7 @@ static_library("ntp_snippets") {
     "//components/offline_pages/core/recent_tabs",
     "//components/physical_web/data_source",
     "//components/reading_list/core",
+    "//components/safe_json:safe_json",
     "//components/sessions",
     "//components/strings",
     "//components/sync_sessions",
