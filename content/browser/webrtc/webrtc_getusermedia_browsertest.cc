@@ -106,8 +106,9 @@ namespace content {
 class WebRtcGetUserMediaBrowserTest : public WebRtcContentBrowserTestBase {
  public:
   WebRtcGetUserMediaBrowserTest() : trace_log_(NULL) {
-    scoped_feature_list_.InitAndDisableFeature(
-        features::kMediaStreamOldVideoConstraints);
+    scoped_feature_list_.InitWithFeatures(
+        {}, {features::kMediaStreamOldVideoConstraints,
+             features::kMediaStreamOldAudioConstraints});
     // Automatically grant device permission.
     AppendUseFakeUIForMediaStreamFlag();
   }
@@ -420,14 +421,12 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
   GURL url(embedded_test_server()->GetURL("/media/getusermedia.html"));
 
   // Test with invalid mandatory audio sourceID.
-  // TODO(guidou): Update error string when spec-compliant constraint resolution
-  // for audio is implemented. See http://crbug.com/657733.
   NavigateToURL(shell(), url);
-  EXPECT_EQ("DevicesNotFoundError", ExecuteJavascriptAndReturnResult(
-      GenerateGetUserMediaWithMandatorySourceID(
-          kGetUserMediaAndExpectFailure,
-          "something invalid",
-          video_ids[0])));
+  EXPECT_EQ("ConstraintNotSatisfiedError",
+            ExecuteJavascriptAndReturnResult(
+                GenerateGetUserMediaWithMandatorySourceID(
+                    kGetUserMediaAndExpectFailure, "something invalid",
+                    video_ids[0])));
 
   // Test with invalid mandatory video sourceID.
   EXPECT_EQ("ConstraintNotSatisfiedError",
@@ -437,13 +436,10 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
                     "something invalid")));
 
   // Test with empty mandatory audio sourceID.
-  // TODO(guidou): Update error string when spec-compliant constraint resolution
-  // for audio is implemented. See http://crbug.com/657733.
-  EXPECT_EQ("DevicesNotFoundError", ExecuteJavascriptAndReturnResult(
-      GenerateGetUserMediaWithMandatorySourceID(
-          kGetUserMediaAndExpectFailure,
-          "",
-          video_ids[0])));
+  EXPECT_EQ("ConstraintNotSatisfiedError",
+            ExecuteJavascriptAndReturnResult(
+                GenerateGetUserMediaWithMandatorySourceID(
+                    kGetUserMediaAndExpectFailure, "", video_ids[0])));
 }
 
 IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaBrowserTest,
@@ -798,8 +794,10 @@ class WebRtcGetUserMediaOldConstraintsBrowserTest
     : public WebRtcContentBrowserTestBase {
  public:
   WebRtcGetUserMediaOldConstraintsBrowserTest() : trace_log_(NULL) {
-    scoped_feature_list_.InitAndEnableFeature(
-        features::kMediaStreamOldVideoConstraints);
+    scoped_feature_list_.InitWithFeatures(
+        {features::kMediaStreamOldVideoConstraints,
+         features::kMediaStreamOldAudioConstraints},
+        {});
     // Automatically grant device permission.
     AppendUseFakeUIForMediaStreamFlag();
   }
@@ -1103,8 +1101,6 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaOldConstraintsBrowserTest,
   GURL url(embedded_test_server()->GetURL("/media/getusermedia.html"));
 
   // Test with invalid mandatory audio sourceID.
-  // TODO(guidou): Update error string when spec-compliant constraint resolution
-  // for audio is implemented. See http://crbug.com/657733.
   NavigateToURL(shell(), url);
   EXPECT_EQ("DevicesNotFoundError",
             ExecuteJavascriptAndReturnResult(
@@ -1120,8 +1116,6 @@ IN_PROC_BROWSER_TEST_F(WebRtcGetUserMediaOldConstraintsBrowserTest,
                     "something invalid")));
 
   // Test with empty mandatory audio sourceID.
-  // TODO(guidou): Update error string when spec-compliant constraint resolution
-  // for audio is implemented. See http://crbug.com/657733.
   EXPECT_EQ("DevicesNotFoundError",
             ExecuteJavascriptAndReturnResult(
                 GenerateGetUserMediaWithMandatorySourceID(
