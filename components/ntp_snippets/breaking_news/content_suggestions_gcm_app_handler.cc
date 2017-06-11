@@ -10,6 +10,7 @@
 #include "components/gcm_driver/instance_id/instance_id.h"
 #include "components/gcm_driver/instance_id/instance_id_driver.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/safe_json/safe_json_parser.h"
 
 using instance_id::InstanceID;
 
@@ -24,6 +25,9 @@ const char kContentSuggestionsGCMSenderId[] = "128223710667";
 // OAuth2 Scope passed to getToken to obtain GCM registration tokens.
 // Must match Java GoogleCloudMessaging.INSTANCE_ID_SCOPE.
 const char kGCMScope[] = "GCM";
+
+// Key of the suggestoin json in the data in the pushed content suggestion.
+const char kPushedSuggestionKey[] = "suggestion";
 
 ContentSuggestionsGCMAppHandler::ContentSuggestionsGCMAppHandler(
     gcm::GCMDriver* gcm_driver,
@@ -115,8 +119,26 @@ void ContentSuggestionsGCMAppHandler::OnStoreReset() {
 void ContentSuggestionsGCMAppHandler::OnMessage(
     const std::string& app_id,
     const gcm::IncomingMessage& message) {
-  // TODO(mamir): Build the message.
-  on_new_content_callback_.Run(base::Value());
+  DCHECK_EQ(app_id, kContentSuggestionsGCMAppID);
+
+  gcm::MessageData::const_iterator it = message.data.find(kPushedSuggestionKey);
+  if (it == message.data.end()) {
+    DVLOG(1)
+        << "Receiving pushed content failure: Content suggestion ID missing.";
+    return;
+  }
+
+  std::string suggestions = it->second;
+  if (suggestions.empty()) {
+    DVLOG(1)
+        << "Receiving pushed content failure: Content suggestion ID empty.";
+    return;
+  }
+
+  safe_json::SafeJsonParser::Parse(
+      suggestions, on_new_content_callback_,
+      base::Bind(&ContentSuggestionsGCMAppHandler::OnJsonError,
+                 weak_factory_.GetWeakPtr()));
 }
 
 void ContentSuggestionsGCMAppHandler::OnMessagesDeleted(
@@ -145,6 +167,10 @@ void ContentSuggestionsGCMAppHandler::RegisterProfilePrefs(
     PrefRegistrySimple* registry) {
   registry->RegisterStringPref(
       prefs::kContentSuggestionsGCMSubscriptionTokenCache, std::string());
+}
+
+void ContentSuggestionsGCMAppHandler::OnJsonError(const std::string& error) {
+  LOG(WARNING) << "Error parsing JSON:" << error;
 }
 
 }  // namespace ntp_snippets
