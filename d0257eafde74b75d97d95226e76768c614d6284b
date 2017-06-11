@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "787c60ed_3d13928c",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-11T16:27:56Z",
+      "side": 1,
+      "message": "maybe add a comment here to explain when it\u0027s valid that the filter can be null? on first glance it seemed odd to me that we could have an entry in ongoing_activation_throttles_ with a null filter.",
+      "revId": "d0257eafde74b75d97d95226e76768c614d6284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de27366e_ec473ae1",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-11T16:27:56Z",
+      "side": 1,
+      "message": "optional: since checking the error code is very cheap, does it make sense to pull that up to the top of the function, and do it before doing any map lookups etc?",
+      "revId": "d0257eafde74b75d97d95226e76768c614d6284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
