@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b3975da_62ef887a",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-11T19:04:35Z",
+      "side": 1,
+      "message": "Done. The filter can be null in the case where the navigation is main-frame and the page never received page-level activation. The filter is backed by the shared memory ruleset, so we don\u0027t want to initialize that without page activation.",
+      "parentUuid": "787c60ed_3d13928c",
+      "revId": "d0257eafde74b75d97d95226e76768c614d6284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "de27366e_ec473ae1",
         "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "d0257eafde74b75d97d95226e76768c614d6284b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6cd0175_e94a0a49",
+        "filename": "components/subresource_filter/content/browser/content_subresource_filter_throttle_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-11T19:04:35Z",
+      "side": 1,
+      "message": "Yep, done.",
+      "parentUuid": "de27366e_ec473ae1",
+      "revId": "d0257eafde74b75d97d95226e76768c614d6284b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
