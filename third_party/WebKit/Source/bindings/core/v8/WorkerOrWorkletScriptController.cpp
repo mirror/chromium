@@ -313,6 +313,7 @@ bool WorkerOrWorkletScriptController::Evaluate(
                                                    kNotSharableCrossOrigin)) {
         *error_event = ErrorEvent::CreateSanitizedError(world_.Get());
       } else {
+        ScriptState::Scope scope(script_state_.Get());
         *error_event =
             ErrorEvent::Create(state.error_message, state.location_->Clone(),
                                state.exception, world_.Get());
@@ -327,6 +328,7 @@ bool WorkerOrWorkletScriptController::Evaluate(
       if (state.error_event_from_imported_script_) {
         event = state.error_event_from_imported_script_.Release();
       } else {
+        ScriptState::Scope scope(script_state_.Get());
         event =
             ErrorEvent::Create(state.error_message, state.location_->Clone(),
                                state.exception, world_.Get());
