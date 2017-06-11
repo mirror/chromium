@@ -6,7 +6,6 @@ package org.chromium.content.app;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.SurfaceTexture;
 import android.os.Binder;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -14,33 +13,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
-import android.view.Surface;
 
 import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
 import org.chromium.base.ContextUtils;
-import org.chromium.base.JNIUtils;
 import org.chromium.base.Log;
-import org.chromium.base.UnguessableToken;
-import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.annotations.UsedByReflection;
-import org.chromium.base.library_loader.LibraryLoader;
-import org.chromium.base.library_loader.Linker;
-import org.chromium.base.library_loader.ProcessInitException;
-import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
 import org.chromium.base.process_launcher.ICallbackInt;
 import org.chromium.base.process_launcher.IChildProcessService;
 import org.chromium.content.browser.ChildProcessConstants;
-import org.chromium.content.common.ContentSwitches;
-import org.chromium.content.common.IGpuProcessCallback;
-import org.chromium.content.common.SurfaceWrapper;
-import org.chromium.content_public.common.ContentProcessInfo;
 
 import java.util.concurrent.Semaphore;
+
+import javax.annotation.concurrent.GuardedBy;
 
 /**
  * This class implements all of the functionality for {@link ChildProcessService} which owns an
@@ -50,7 +39,6 @@ import java.util.concurrent.Semaphore;
  * "--enable-improved-a2hs" flag is turned on.
  */
 @JNINamespace("content")
-@SuppressWarnings("SynchronizeOnNonFinalField")
 @MainDex
 @UsedByReflection("WebApkSandboxedProcessService")
 public class ChildProcessServiceImpl {
@@ -60,28 +48,39 @@ public class ChildProcessServiceImpl {
     // Only for a check that create is only called once.
     private static boolean sCreateCalled;
 
-    // Lock that protects the following members.
+    private final ChildProcessServiceDelegate mDelegate;
+
+    private final Object mConnectionInitializedLock = new Object();
+    private final Object mLibraryInitializedLock = new Object();
     private final Object mBinderLock = new Object();
-    private IGpuProcessCallback mGpuCallback;
+
+    // Whether we should enforce that bindToCaller() is called before setupConnection().
+    @GuardedBy("mBinderLock")
     private boolean mBindToCallerCheck;
+
     // PID of the client of this service, set in bindToCaller(), if mBindToCallerCheck is true.
+    @GuardedBy("mBinderLock")
     private int mBoundCallingPid;
 
     // This is the native "Main" thread for the renderer / utility process.
     private Thread mMainThread;
+
     // Parameters received via IPC, only accessed while holding the mMainThread monitor.
     private String[] mCommandLineParams;
-    private int mCpuCount;
-    private long mCpuFeatures;
+
     // File descriptors that should be registered natively.
     private FileDescriptorInfo[] mFdInfos;
-    // Linker-specific parameters for this child process service.
-    private ChromiumLinkerParams mLinkerParams;
-    // Child library process type.
-    private int mLibraryProcessType;
 
+    @GuardedBy("mLibraryInitializedLock")
     private boolean mLibraryInitialized;
 
+    // Called once the service is bound and all service related member variables have been set.
+    private boolean mServiceBound;
+
+    // Called once the connection has been setup (meaning the client has called setupConnection) and
+    // all connection related member variables have been set.
+    @GuardedBy("mConnectionInitializedLock")
+    private boolean mConnectionInitialized;
     /**
      * If >= 0 enables "validation of caller of {@link mBinder}'s methods". A RemoteException
      * is thrown when an application with a uid other than {@link mAuthorizedCallerUid} calls
@@ -92,21 +91,9 @@ public class ChildProcessServiceImpl {
     private final Semaphore mActivitySemaphore = new Semaphore(1);
 
     @UsedByReflection("WebApkSandboxedProcessService")
-    public ChildProcessServiceImpl() {
+    public ChildProcessServiceImpl(ChildProcessServiceDelegate delegate) {
         KillChildUncaughtExceptionHandler.maybeInstallHandler();
-    }
-
-    // Return a Linker instance. If testing, the Linker needs special setup.
-    private Linker getLinker() {
-        if (Linker.areTestsEnabled()) {
-            // For testing, set the Linker implementation and the test runner
-            // class name to match those used by the parent.
-            assert mLinkerParams != null;
-            Linker.setupForTesting(
-                    mLinkerParams.mLinkerImplementationForTesting,
-                    mLinkerParams.mTestRunnerClassNameForTesting);
-        }
-        return Linker.getInstance();
+        mDelegate = delegate;
     }
 
     // Binder object used by clients for this service.
@@ -114,8 +101,8 @@ public class ChildProcessServiceImpl {
         // NOTE: Implement any IChildProcessService methods here.
         @Override
         public boolean bindToCaller() {
-            assert mBindToCallerCheck;
             synchronized (mBinderLock) {
+                assert mBindToCallerCheck;
                 int callingPid = Binder.getCallingPid();
                 if (mBoundCallingPid == 0) {
                     mBoundCallingPid = callingPid;
@@ -124,12 +111,12 @@ public class ChildProcessServiceImpl {
                             mBoundCallingPid, callingPid);
                     return false;
                 }
+                return true;
             }
-            return true;
         }
 
         @Override
-        public void setupConnection(Bundle args, ICallbackInt pidCallback, IBinder gpuCallback)
+        public void setupConnection(Bundle args, ICallbackInt pidCallback, IBinder callback)
                 throws RemoteException {
             synchronized (mBinderLock) {
                 if (mBindToCallerCheck && mBoundCallingPid == 0) {
@@ -140,9 +127,12 @@ public class ChildProcessServiceImpl {
             }
 
             pidCallback.call(Process.myPid());
-            mGpuCallback =
-                    gpuCallback != null ? IGpuProcessCallback.Stub.asInterface(gpuCallback) : null;
-            getServiceInfo(args);
+            processConnectionBundle(args);
+            mDelegate.onConnectionSetup(args, callback);
+            synchronized (mConnectionInitializedLock) {
+                mConnectionInitialized = true;
+                mConnectionInitializedLock.notifyAll();
+            }
         }
 
         @Override
@@ -181,7 +171,8 @@ public class ChildProcessServiceImpl {
             throw new RuntimeException("Illegal child process reuse.");
         }
         sCreateCalled = true;
-        ContentProcessInfo.setInChildProcess(true);
+
+        mDelegate.onServiceCreated();
 
         // Initialize the context for the application that owns this ChildProcessServiceImpl object.
         ContextUtils.initApplicationContext(context);
@@ -191,75 +182,28 @@ public class ChildProcessServiceImpl {
             @SuppressFBWarnings("DM_EXIT")
             public void run()  {
                 try {
-                    // CommandLine must be initialized before everything else.
-                    synchronized (mMainThread) {
-                        while (mCommandLineParams == null) {
-                            mMainThread.wait();
+                    // Wait for the connection to be initialized so the command line, fds and others
+                    // are available.
+                    synchronized (mConnectionInitializedLock) {
+                        while (!mConnectionInitialized) {
+                            mConnectionInitializedLock.wait();
                         }
                     }
+                    assert mCommandLineParams != null;
+                    assert mFdInfos != null;
                     CommandLine.init(mCommandLineParams);
 
-                    if (ContentSwitches.SWITCH_RENDERER_PROCESS.equals(
-                            CommandLine.getInstance().getSwitchValue(
-                                    ContentSwitches.SWITCH_PROCESS_TYPE))) {
-                        JNIUtils.enableSelectiveJniRegistration();
-                    }
-
-                    Linker linker = null;
-                    boolean requestedSharedRelro = false;
-                    if (Linker.isUsed()) {
-                        assert mLinkerParams != null;
-                        linker = getLinker();
-                        if (mLinkerParams.mWaitForSharedRelro) {
-                            requestedSharedRelro = true;
-                            linker.initServiceProcess(mLinkerParams.mBaseLoadAddress);
-                        } else {
-                            linker.disableSharedRelros();
-                        }
-                    }
-                    boolean isLoaded = false;
                     if (CommandLine.getInstance().hasSwitch(
                             BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
                         android.os.Debug.waitForDebugger();
                     }
 
-                    boolean loadAtFixedAddressFailed = false;
-                    try {
-                        LibraryLoader.get(mLibraryProcessType)
-                                .loadNowOverrideApplicationContext(hostContext);
-                        isLoaded = true;
-                    } catch (ProcessInitException e) {
-                        if (requestedSharedRelro) {
-                            Log.w(TAG, "Failed to load native library with shared RELRO, "
-                                    + "retrying without");
-                            loadAtFixedAddressFailed = true;
-                        } else {
-                            Log.e(TAG, "Failed to load native library", e);
-                        }
-                    }
-                    if (!isLoaded && requestedSharedRelro) {
-                        linker.disableSharedRelros();
-                        try {
-                            LibraryLoader.get(mLibraryProcessType)
-                                    .loadNowOverrideApplicationContext(hostContext);
-                            isLoaded = true;
-                        } catch (ProcessInitException e) {
-                            Log.e(TAG, "Failed to load native library on retry", e);
-                        }
-                    }
-                    if (!isLoaded) {
+                    if (!mDelegate.loadNativeLibrary(hostContext)) {
                         System.exit(-1);
                     }
-                    LibraryLoader.get(mLibraryProcessType)
-                            .registerRendererProcessHistogram(requestedSharedRelro,
-                                    loadAtFixedAddressFailed);
-                    LibraryLoader.get(mLibraryProcessType).initialize();
-                    synchronized (mMainThread) {
+                    synchronized (mLibraryInitializedLock) {
                         mLibraryInitialized = true;
-                        mMainThread.notifyAll();
-                        while (mFdInfos == null) {
-                            mMainThread.wait();
-                        }
+                        mLibraryInitializedLock.notifyAll();
                     }
 
                     int[] fileIds = new int[mFdInfos.length];
@@ -274,15 +218,13 @@ public class ChildProcessServiceImpl {
                         regionSizes[i] = fdInfo.size;
                     }
                     nativeRegisterFileDescriptors(fileIds, fds, regionOffsets, regionSizes);
-                    nativeInitChildProcessImpl(ChildProcessServiceImpl.this, mCpuCount,
-                            mCpuFeatures);
+
+                    mDelegate.onBeforeMain();
                     if (mActivitySemaphore.tryAcquire()) {
-                        ContentMain.start();
+                        mDelegate.runMain();
                         nativeExitChildProcess();
                     }
                 } catch (InterruptedException e) {
-                    Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
-                } catch (ProcessInitException e) {
                     Log.w(TAG, "%s startup failed: %s", MAIN_THREAD_NAME, e);
                 }
             }
@@ -301,24 +243,25 @@ public class ChildProcessServiceImpl {
             System.exit(0);
             return;
         }
-        synchronized (mMainThread) {
+        synchronized (mLibraryInitializedLock) {
             try {
                 while (!mLibraryInitialized) {
                     // Avoid a potential race in calling through to native code before the library
                     // has loaded.
-                    mMainThread.wait();
+                    mLibraryInitializedLock.wait();
                 }
             } catch (InterruptedException e) {
                 // Ignore
             }
         }
-        // Try to shutdown the MainThread gracefully, but it might not
-        // have chance to exit normally.
-        nativeShutdownMainThread();
+        mDelegate.onDestroy();
     }
 
     /*
-     * Returns communication channel to service.
+     * Returns the communication channel to service. Note that if multiple clients were to connect
+     * should only get one call to this method. So there is no need to synchronize on any member
+     * variables initialized here and accessed from the binder returned here, as the binder can only
+     * be used after this method returns.
      * @param intent The intent that was used to bind to the service.
      * @param authorizedCallerUid If >= 0, enables "validation of service caller". A RemoteException
      *        is thrown when an application with a uid other than
@@ -326,92 +269,30 @@ public class ChildProcessServiceImpl {
      */
     @UsedByReflection("WebApkSandboxedProcessService")
     public IBinder bind(Intent intent, int authorizedCallerUid) {
+        assert !mServiceBound;
         mAuthorizedCallerUid = authorizedCallerUid;
-        initializeParams(intent);
-        return mBinder;
-    }
-
-    private void initializeParams(Intent intent) {
-        synchronized (mMainThread) {
-            // mLinkerParams is never used if Linker.isUsed() returns false.
-            // See onCreate().
-            mLinkerParams = (ChromiumLinkerParams) intent.getParcelableExtra(
-                    ChildProcessConstants.EXTRA_LINKER_PARAMS);
-            mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent);
-            mMainThread.notifyAll();
-        }
         synchronized (mBinderLock) {
             mBindToCallerCheck =
                     intent.getBooleanExtra(ChildProcessConstants.EXTRA_BIND_TO_CALLER, false);
         }
+        mServiceBound = true;
+        mDelegate.onServiceBound(intent);
+        return mBinder;
     }
 
-    private void getServiceInfo(Bundle bundle) {
+    private void processConnectionBundle(Bundle bundle) {
         // Required to unparcel FileDescriptorInfo.
         bundle.setClassLoader(mHostClassLoader);
-        synchronized (mMainThread) {
-            if (mCommandLineParams == null) {
-                mCommandLineParams =
-                        bundle.getStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE);
-                mMainThread.notifyAll();
-            }
-            // We must have received the command line by now
-            assert mCommandLineParams != null;
-            mCpuCount = bundle.getInt(ChildProcessConstants.EXTRA_CPU_COUNT);
-            mCpuFeatures = bundle.getLong(ChildProcessConstants.EXTRA_CPU_FEATURES);
-            assert mCpuCount > 0;
-            Parcelable[] fdInfosAsParcelable =
-                    bundle.getParcelableArray(ChildProcessConstants.EXTRA_FILES);
-            if (fdInfosAsParcelable != null) {
-                // For why this arraycopy is necessary:
-                // http://stackoverflow.com/questions/8745893/i-dont-get-why-this-classcastexception-occurs
-                mFdInfos = new FileDescriptorInfo[fdInfosAsParcelable.length];
-                System.arraycopy(fdInfosAsParcelable, 0, mFdInfos, 0, fdInfosAsParcelable.length);
-            }
-            Bundle sharedRelros = bundle.getBundle(Linker.EXTRA_LINKER_SHARED_RELROS);
-            if (sharedRelros != null) {
-                getLinker().useSharedRelros(sharedRelros);
-                sharedRelros = null;
-            }
-            mMainThread.notifyAll();
-        }
-    }
 
-    @SuppressWarnings("unused")
-    @CalledByNative
-    private void forwardSurfaceTextureForSurfaceRequest(
-            UnguessableToken requestToken, SurfaceTexture surfaceTexture) {
-        if (mGpuCallback == null) {
-            Log.e(TAG, "No callback interface has been provided.");
-            return;
-        }
-
-        Surface surface = new Surface(surfaceTexture);
-
-        try {
-            mGpuCallback.forwardSurfaceForSurfaceRequest(requestToken, surface);
-        } catch (RemoteException e) {
-            Log.e(TAG, "Unable to call forwardSurfaceForSurfaceRequest: %s", e);
-            return;
-        } finally {
-            surface.release();
-        }
-    }
-
-    @SuppressWarnings("unused")
-    @CalledByNative
-    private Surface getViewSurface(int surfaceId) {
-        if (mGpuCallback == null) {
-            Log.e(TAG, "No callback interface has been provided.");
-            return null;
-        }
-
-        try {
-            SurfaceWrapper wrapper = mGpuCallback.getViewSurface(surfaceId);
-            return wrapper != null ? wrapper.getSurface() : null;
-        } catch (RemoteException e) {
-            Log.e(TAG, "Unable to call getViewSurface: %s", e);
-            return null;
+        assert mCommandLineParams == null;
+        mCommandLineParams = bundle.getStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE);
+        Parcelable[] fdInfosAsParcelable =
+                bundle.getParcelableArray(ChildProcessConstants.EXTRA_FILES);
+        if (fdInfosAsParcelable != null) {
+            // For why this arraycopy is necessary:
+            // http://stackoverflow.com/questions/8745893/i-dont-get-why-this-classcastexception-occurs
+            mFdInfos = new FileDescriptorInfo[fdInfosAsParcelable.length];
+            System.arraycopy(fdInfosAsParcelable, 0, mFdInfos, 0, fdInfosAsParcelable.length);
         }
     }
 
@@ -425,19 +306,7 @@ public class ChildProcessServiceImpl {
             int[] id, int[] fd, long[] offset, long[] size);
 
     /**
-     * The main entry point for a child process. This should be called from a new thread since
-     * it will not return until the child process exits. See child_process_service.{h,cc}
-     *
-     * @param serviceImpl The current ChildProcessServiceImpl object.
-     * renderer.
-     */
-    private static native void nativeInitChildProcessImpl(
-            ChildProcessServiceImpl serviceImpl, int cpuCount, long cpuFeatures);
-
-    /**
      * Force the child process to exit.
      */
     private static native void nativeExitChildProcess();
-
-    private native void nativeShutdownMainThread();
 }
