@@ -1898,9 +1898,13 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
     Node* styled_node,
     bool allow_visited_style) {
   CSSValueList* list = CSSValueList::CreateSpaceSeparated();
-  CSSValue* position = ValueForPosition(style.OffsetPosition(), style);
-  if (!position->IsIdentifierValue())
-    list->Append(*position);
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* position = ValueForPosition(style.OffsetPosition(), style);
+    if (!position->IsIdentifierValue())
+      list->Append(*position);
+    else
+      DCHECK(ToCSSIdentifierValue(position)->GetValueID() == CSSValueAuto);
+  }
 
   CSSPropertyID longhands[] = {CSSPropertyOffsetPath, CSSPropertyOffsetDistance,
                                CSSPropertyOffsetRotate};
@@ -1911,15 +1915,19 @@ CSSValue* ComputedStyleCSSValueMapping::ValueForOffset(
     list->Append(*value);
   }
 
-  CSSValue* anchor = ValueForPosition(style.OffsetAnchor(), style);
-  if (anchor->IsIdentifierValue())
-    return list;
-
-  // Add a slash before anchor.
-  CSSValueList* result = CSSValueList::CreateSlashSeparated();
-  result->Append(*list);
-  result->Append(*anchor);
-  return result;
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    CSSValue* anchor = ValueForPosition(style.OffsetAnchor(), style);
+    if (!anchor->IsIdentifierValue()) {
+      // Add a slash before anchor.
+      CSSValueList* result = CSSValueList::CreateSlashSeparated();
+      result->Append(*list);
+      result->Append(*anchor);
+      return result;
+    } else {
+      DCHECK(ToCSSIdentifierValue(anchor)->GetValueID() == CSSValueAuto);
+    }
+  }
+  return list;
 }
 
 CSSValue* ComputedStyleCSSValueMapping::ValueForFont(

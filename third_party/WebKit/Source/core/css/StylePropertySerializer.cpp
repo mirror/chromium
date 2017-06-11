@@ -655,10 +655,12 @@ String StylePropertySerializer::FontVariantValue() const {
 
 String StylePropertySerializer::OffsetValue() const {
   StringBuilder result;
-  const CSSValue* position =
-      property_set_.GetPropertyCSSValue(CSSPropertyOffsetPosition);
-  if (!position->IsInitialValue()) {
-    result.Append(position->CssText());
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    const CSSValue* position =
+        property_set_.GetPropertyCSSValue(CSSPropertyOffsetPosition);
+    if (!position->IsInitialValue()) {
+      result.Append(position->CssText());
+    }
   }
   const CSSValue* path =
       property_set_.GetPropertyCSSValue(CSSPropertyOffsetPath);
@@ -679,11 +681,13 @@ String StylePropertySerializer::OffsetValue() const {
       result.Append(rotate->CssText());
     }
   }
-  const CSSValue* anchor =
-      property_set_.GetPropertyCSSValue(CSSPropertyOffsetAnchor);
-  if (!anchor->IsInitialValue()) {
-    result.Append(" / ");
-    result.Append(anchor->CssText());
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    const CSSValue* anchor =
+        property_set_.GetPropertyCSSValue(CSSPropertyOffsetAnchor);
+    if (!anchor->IsInitialValue()) {
+      result.Append(" / ");
+      result.Append(anchor->CssText());
+    }
   }
   return result.ToString();
 }

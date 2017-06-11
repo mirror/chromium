@@ -707,11 +707,12 @@ static CSSValue* ConsumeOffsetRotate(CSSParserTokenRange& range,
 }
 
 bool CSSPropertyParser::ConsumeOffsetShorthand(bool important) {
+  DCHECK(context_);
   const CSSValue* offset_position =
       CSSPropertyAPIOffsetPosition::parseSingleValue(range_, *context_,
                                                      CSSParserLocalContext());
   const CSSValue* offset_path =
-      CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, context_);
+      CSSPropertyOffsetPathUtils::ConsumeOffsetPath(range_, *context_);
   const CSSValue* offset_distance = nullptr;
   const CSSValue* offset_rotate = nullptr;
   if (offset_path) {
