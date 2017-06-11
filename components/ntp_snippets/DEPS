@@ -10,6 +10,7 @@ include_rules = [
   "+components/metrics",
   "+components/prefs",
   "+components/reading_list",
+  "+components/safe_json",
   "+components/signin",
   "+components/strings/grit/components_strings.h",
   "+components/sync/driver",
