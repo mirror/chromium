@@ -655,35 +655,42 @@ String StylePropertySerializer::FontVariantValue() const {
 
 String StylePropertySerializer::OffsetValue() const {
   StringBuilder result;
-  const CSSValue* position =
-      property_set_.GetPropertyCSSValue(CSSPropertyOffsetPosition);
-  if (!position->IsInitialValue()) {
-    result.Append(position->CssText());
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    const CSSValue* position =
+        property_set_.GetPropertyCSSValue(CSSPropertyOffsetPosition);
+    if (!position->IsInitialValue()) {
+      result.Append(position->CssText());
+    }
   }
   const CSSValue* path =
       property_set_.GetPropertyCSSValue(CSSPropertyOffsetPath);
+  const CSSValue* distance =
+      property_set_.GetPropertyCSSValue(CSSPropertyOffsetDistance);
+  const CSSValue* rotate =
+      property_set_.GetPropertyCSSValue(CSSPropertyOffsetRotate);
   if (!path->IsInitialValue()) {
     if (!result.IsEmpty())
       result.Append(" ");
     result.Append(path->CssText());
-    const CSSValue* distance =
-        property_set_.GetPropertyCSSValue(CSSPropertyOffsetDistance);
     if (!distance->IsInitialValue()) {
       result.Append(" ");
       result.Append(distance->CssText());
     }
-    const CSSValue* rotate =
-        property_set_.GetPropertyCSSValue(CSSPropertyOffsetRotate);
     if (!rotate->IsInitialValue()) {
       result.Append(" ");
       result.Append(rotate->CssText());
     }
+  } else {
+    DCHECK(distance->IsInitialValue());
+    DCHECK(rotate->IsInitialValue());
   }
-  const CSSValue* anchor =
-      property_set_.GetPropertyCSSValue(CSSPropertyOffsetAnchor);
-  if (!anchor->IsInitialValue()) {
-    result.Append(" / ");
-    result.Append(anchor->CssText());
+  if (RuntimeEnabledFeatures::CSSOffsetPositionAnchorEnabled()) {
+    const CSSValue* anchor =
+        property_set_.GetPropertyCSSValue(CSSPropertyOffsetAnchor);
+    if (!anchor->IsInitialValue()) {
+      result.Append(" / ");
+      result.Append(anchor->CssText());
+    }
   }
   return result.ToString();
 }
