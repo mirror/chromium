@@ -30,7 +30,8 @@ namespace ntp_snippets {
 class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
  public:
   // TODO(mamir): Check if a better paramater datatype makes more sense.
-  using OnNewContentCallback = base::Callback<void(const base::Value& content)>;
+  using OnNewContentCallback =
+      base::Callback<void(std::unique_ptr<base::Value> content)>;
 
   ContentSuggestionsGCMAppHandler(
       gcm::GCMDriver* gcm_driver,
@@ -72,6 +73,10 @@ class ContentSuggestionsGCMAppHandler : public gcm::GCMAppHandler {
   // Called after the subscription is obtained from the GCM server.
   void DidSubscribe(const std::string& subscription_id,
                     instance_id::InstanceID::Result result);
+
+  // Called in case the reeivied suggestion JSON inside the GCM has a parse
+  // error.
+  void OnJsonError(const std::string& error);
 
   gcm::GCMDriver* const gcm_driver_;
   instance_id::InstanceIDDriver* const instance_id_driver_;
