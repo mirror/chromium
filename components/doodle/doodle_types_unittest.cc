@@ -53,25 +53,19 @@ TEST(DoodleImageTest, ParsesMinimalImage) {
   EXPECT_THAT(image->url, Eq(GURL("https://www.doodle.com/doodle")));
   EXPECT_THAT(image->height, Eq(0));
   EXPECT_THAT(image->width, Eq(0));
-  EXPECT_THAT(image->is_animated_gif, Eq(false));
-  EXPECT_THAT(image->is_cta, Eq(false));
 }
 
 TEST(DoodleImageTest, ParsesFullImage) {
   std::string json = R"json({
         "url":"https://www.doodle.com/doodle",
         "height":100,
-        "width":50,
-        "is_animated_gif":true,
-        "is_cta":true
+        "width":50
       })json";
   base::Optional<DoodleImage> image = DoodleImageFromJson(json, base::nullopt);
   ASSERT_TRUE(image.has_value());
   EXPECT_THAT(image->url, Eq(GURL("https://www.doodle.com/doodle")));
   EXPECT_THAT(image->height, Eq(100));
   EXPECT_THAT(image->width, Eq(50));
-  EXPECT_THAT(image->is_animated_gif, Eq(true));
-  EXPECT_THAT(image->is_cta, Eq(true));
 }
 
 TEST(DoodleImageTest, ResolvesRelativeUrl) {
@@ -97,9 +91,7 @@ TEST(DoodleImageTest, DoesNotResolveAbsoluteUrl) {
 TEST(DoodleImageTest, RequiresUrl) {
   std::string json = R"json({
         "height":100,
-        "width":50,
-        "is_animated_gif":true,
-        "is_cta":true
+        "width":50
       })json";
   base::Optional<DoodleImage> image = DoodleImageFromJson(json, base::nullopt);
   EXPECT_FALSE(image.has_value());
@@ -119,8 +111,6 @@ TEST(DoodleImageTest, PreservesFieldsOverRoundtrip) {
   DoodleImage image(GURL("https://www.doodle.com/doodle"));
   image.height = 100;
   image.width = 50;
-  image.is_animated_gif = true;
-  image.is_cta = true;
 
   // Convert to a dictionary and back.
   base::Optional<DoodleImage> after_roundtrip =
@@ -140,46 +130,36 @@ TEST(DoodleConfigTest, ParsesMinimalConfig) {
   ASSERT_TRUE(config.has_value());
   EXPECT_THAT(config->doodle_type, Eq(DoodleType::UNKNOWN));
   EXPECT_THAT(config->alt_text, Eq(std::string()));
-  EXPECT_THAT(config->interactive_html, Eq(std::string()));
   EXPECT_THAT(config->target_url, Eq(GURL()));
   EXPECT_FALSE(config->large_cta_image.has_value());
-  EXPECT_FALSE(config->transparent_large_image.has_value());
 }
 
 TEST(DoodleConfigTest, ParsesFullConfig) {
   std::string json = R"json({
         "doodle_type":"SLIDESHOW",
         "alt_text":"some text",
-        "interactive_html":"<div id='dood'></div>",
         "target_url":"https://doodle.com/target",
         "large_image":{"url":"https://doodle.com/img.jpg"},
-        "large_cta_image":{"url":"https://doodle.com/cta.jpg"},
-        "transparent_large_image":{"url":"https://doodle.com/transparent.jpg"}
+        "large_cta_image":{"url":"https://doodle.com/cta.jpg"}
       })json";
   base::Optional<DoodleConfig> config =
       DoodleConfigFromJson(json, base::nullopt);
   ASSERT_TRUE(config.has_value());
   EXPECT_THAT(config->doodle_type, Eq(DoodleType::SLIDESHOW));
   EXPECT_THAT(config->alt_text, Eq("some text"));
-  EXPECT_THAT(config->interactive_html, Eq("<div id='dood'></div>"));
   EXPECT_THAT(config->target_url, Eq(GURL("https://doodle.com/target")));
   EXPECT_THAT(config->large_image.url, Eq(GURL("https://doodle.com/img.jpg")));
   ASSERT_TRUE(config->large_cta_image.has_value());
   EXPECT_THAT(config->large_cta_image->url,
               Eq(GURL("https://doodle.com/cta.jpg")));
-  ASSERT_TRUE(config->transparent_large_image.has_value());
-  EXPECT_THAT(config->transparent_large_image->url,
-              Eq(GURL("https://doodle.com/transparent.jpg")));
 }
 
 TEST(DoodleConfigTest, RequiresLargeImage) {
   std::string json = R"json({
         "doodle_type":"SLIDESHOW",
         "alt_text":"some text",
-        "interactive_html":"<div id='dood'></div>",
         "target_url":"https://doodle.com/target",
-        "large_cta_image":{"url":"https://doodle.com/cta.jpg"},
-        "transparent_large_image":{"url":"https://doodle.com/transparent.jpg"}
+        "large_cta_image":{"url":"https://doodle.com/cta.jpg"}
       })json";
   base::Optional<DoodleConfig> config =
       DoodleConfigFromJson(json, base::nullopt);
@@ -190,11 +170,9 @@ TEST(DoodleConfigTest, RequiresValidLargeImage) {
   std::string json = R"json({
         "doodle_type":"SLIDESHOW",
         "alt_text":"some text",
-        "interactive_html":"<div id='dood'></div>",
         "target_url":"https://doodle.com/target",
         "large_image":{"no_url":"asdf"},
-        "large_cta_image":{"url":"https://doodle.com/cta.jpg"},
-        "transparent_large_image":{"url":"https://doodle.com/transparent.jpg"}
+        "large_cta_image":{"url":"https://doodle.com/cta.jpg"}
       })json";
   base::Optional<DoodleConfig> config =
       DoodleConfigFromJson(json, base::nullopt);
@@ -205,8 +183,7 @@ TEST(DoodleConfigTest, ResolvesRelativeUrls) {
   std::string json = R"json({
         "target_url":"/target",
         "large_image":{"url":"/large.jpg"},
-        "large_cta_image":{"url":"/cta.jpg"},
-        "transparent_large_image":{"url":"/transparent.jpg"}
+        "large_cta_image":{"url":"/cta.jpg"}
       })json";
   base::Optional<DoodleConfig> config =
       DoodleConfigFromJson(json, GURL("https://doodle.com/"));
@@ -217,9 +194,6 @@ TEST(DoodleConfigTest, ResolvesRelativeUrls) {
   ASSERT_TRUE(config->large_cta_image.has_value());
   EXPECT_THAT(config->large_cta_image->url,
               Eq(GURL("https://doodle.com/cta.jpg")));
-  ASSERT_TRUE(config->transparent_large_image.has_value());
-  EXPECT_THAT(config->transparent_large_image->url,
-              Eq(GURL("https://doodle.com/transparent.jpg")));
 }
 
 TEST(DoodleConfigTest, HandlesInvalidUrls) {
@@ -239,11 +213,8 @@ TEST(DoodleConfigTest, PreservesFieldsOverRoundtrip) {
   DoodleConfig config(DoodleType::SLIDESHOW,
                       DoodleImage(GURL("https://www.doodle.com/img.jpg")));
   config.alt_text = "some text";
-  config.interactive_html = "<div id='dood'></div>";
   config.target_url = GURL("https://doodle.com/target");
   config.large_cta_image = DoodleImage(GURL("https://www.doodle.com/cta.jpg"));
-  config.transparent_large_image =
-      DoodleImage(GURL("https://www.doodle.com/transparent.jpg"));
 
   // Convert to a dictionary and back.
   // Note: The different |base_url| should make no difference, since all
