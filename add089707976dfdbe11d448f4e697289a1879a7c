@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "55567ad2_8cb9c941",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:28:33Z",
+      "side": 1,
+      "message": "I\u0027m trying to resolve it asap. Sorry about the delay.",
+      "parentUuid": "86313510_edd8f74d",
+      "range": {
+        "startLine": 29,
+        "startChar": 10,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2f5ccaa3_7bb6505a",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
         "patchSetId": 5
@@ -111,6 +135,23 @@
         "endLine": 759,
         "endChar": 24
       },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4452a740_dcdece0b",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 850,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:28:33Z",
+      "side": 1,
+      "message": "Not directly related to this CL, platform/scheduler/ is still using std::vector, std::map etc. We need to replace them with WTF equivalents.",
       "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
