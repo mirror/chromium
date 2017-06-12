@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a997c852_b510b8db",
+        "filename": "content/renderer/input/main_thread_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-12T21:17:55Z",
+      "side": 1,
+      "message": "Can\u0027t be as this is an override; requires same signature.",
+      "parentUuid": "2213b743_fde55815",
+      "range": {
+        "startLine": 28,
+        "startChar": 30,
+        "endLine": 28,
+        "endChar": 31
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bf8a9f0_700eee90",
         "filename": "content/renderer/input/main_thread_event_queue.cc",
         "patchSetId": 3
@@ -154,6 +178,30 @@
       "writtenOn": "2017-06-12T16:09:42Z",
       "side": 1,
       "message": "update comment",
+      "range": {
+        "startLine": 81,
+        "startChar": 39,
+        "endLine": 81,
+        "endChar": 70
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "35bea414_9fdbfea3",
+        "filename": "content/renderer/input/main_thread_event_queue.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-12T21:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1a326b3_3db54d71",
       "range": {
         "startLine": 81,
         "startChar": 39,
@@ -235,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "17f8ea6e_76d15f9b",
+        "filename": "content/renderer/input/main_thread_event_queue_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-12T21:17:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cfa5f4d2_db48bb7b",
+      "range": {
+        "startLine": 93,
+        "startChar": 6,
+        "endLine": 93,
+        "endChar": 33
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e73c7a3b_428ec767",
         "filename": "content/renderer/input/main_thread_event_queue_unittest.cc",
         "patchSetId": 3
@@ -246,6 +318,30 @@
       "writtenOn": "2017-06-12T16:09:42Z",
       "side": 1,
       "message": "Should we use the enum here too?",
+      "range": {
+        "startLine": 95,
+        "startChar": 55,
+        "endLine": 95,
+        "endChar": 59
+      },
+      "revId": "0dd56d2cc172e0e7b4dbef9b2c5e1939726aa025",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "cff29114_ba2d56e5",
+        "filename": "content/renderer/input/main_thread_event_queue_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-12T21:17:55Z",
+      "side": 1,
+      "message": "Removed",
+      "parentUuid": "e73c7a3b_428ec767",
       "range": {
         "startLine": 95,
         "startChar": 55,
