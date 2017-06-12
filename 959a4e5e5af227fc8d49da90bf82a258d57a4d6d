@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "45595873_e06cae63",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 7
+      },
+      "lineNbr": 501,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T02:48:19Z",
+      "side": 1,
+      "message": "BTW do you know why we need unique_by()?",
+      "range": {
+        "startLine": 501,
+        "startChar": 54,
+        "endLine": 501,
+        "endChar": 58
+      },
+      "revId": "959a4e5e5af227fc8d49da90bf82a258d57a4d6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
