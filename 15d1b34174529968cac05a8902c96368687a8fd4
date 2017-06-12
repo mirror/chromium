@@ -16,6 +16,24 @@
       "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f7e449_ce55f72a",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-12T16:35:25Z",
+      "side": 0,
+      "message": "It\u0027s set in CreateRendererSettings in ui/compositor/compositor_util.cc",
+      "parentUuid": "c682a857_92db6e6d",
+      "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

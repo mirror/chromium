@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "6bd9807e_3167f641",
+        "filename": "cc/trees/layer_tree_host_pixeltest_blending.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-12T16:35:25Z",
+      "side": 1,
+      "message": "I overrode this function because I thought you wanted to initialize RendererSettings here based\non your comment on this CL: https://codereview.chromium.org/2857363004\n\nWould you prefer settings |force_antialiasing| and |force_blending_with_shaders| in \nCreateCompositorFrameSink?",
+      "parentUuid": "247b9dbc_79bef298",
+      "revId": "df7212f12ea952464b6eb5922bfd87dcc23cfb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d086367_082be31c",
         "filename": "cc/trees/layer_tree_settings.h",
         "patchSetId": 9
