@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "682cd84c_4fa6232b",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 1275,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "RenderProcessHost has its own BindInterface with different signature, so content:: is needed to disambiguate it.",
+      "parentUuid": "ed218a47_ecede6db",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c6fc5f56_26754dce",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 11
@@ -59,6 +77,30 @@
     },
     {
       "key": {
+        "uuid": "0b86fc60_30fef701",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3689,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe81387c_6cea3b55",
+      "range": {
+        "startLine": 3689,
+        "startChar": 43,
+        "endLine": 3689,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9147106_60df9977",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 11
@@ -73,6 +115,24 @@
       "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d94fb63_30cc17de",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3692,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Hm, looks like the histogram macro does it too. Removed.",
+      "parentUuid": "b9147106_60df9977",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -93,6 +153,24 @@
     },
     {
       "key": {
+        "uuid": "2a38e320_6cc65b35",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3695,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "That\u0027s to see the timeout as a single slot on the histogram.\nAnyway, removed the timeout case from the histogram in favor to count it as a separate one.",
+      "parentUuid": "a0f5bfcb_40bebe7c",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "29dc1953_5ea1e512",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 11
@@ -107,6 +185,24 @@
       "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c300d1_bff24dba",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3699,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29dc1953_5ea1e512",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -133,6 +229,30 @@
     },
     {
       "key": {
+        "uuid": "cccd1a29_0fad5cea",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 507,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "052a7e55_3819d32d",
+      "range": {
+        "startLine": 507,
+        "startChar": 30,
+        "endLine": 507,
+        "endChar": 31
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "18e7098c_5df6d686",
         "filename": "content/browser/renderer_host/render_process_host_impl.h",
         "patchSetId": 11
@@ -147,6 +267,24 @@
       "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dedb4d16_b3041d6d",
+        "filename": "content/browser/renderer_host/render_process_host_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18e7098c_5df6d686",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -167,6 +305,24 @@
     },
     {
       "key": {
+        "uuid": "39778fd6_2e9809bd",
+        "filename": "content/common/crasher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aff98fff_89206542",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4c7dbf3a_88240470",
         "filename": "content/common/crasher.mojom",
         "patchSetId": 11
@@ -184,6 +340,24 @@
     },
     {
       "key": {
+        "uuid": "ca739891_fa586e95",
+        "filename": "content/common/crasher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c7dbf3a_88240470",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dfc58abe_f91147ff",
         "filename": "content/common/crasher.mojom",
         "patchSetId": 11
@@ -198,6 +372,24 @@
       "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54b9f618_446660d0",
+        "filename": "content/common/crasher.mojom",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc58abe_f91147ff",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -224,6 +416,30 @@
     },
     {
       "key": {
+        "uuid": "99198858_0ae095cc",
+        "filename": "content/renderer/crasher_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Updated. Though, it looks less cleaner..",
+      "parentUuid": "984f5cdb_560e7dc4",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "95b6f00a_50dad7da",
         "filename": "content/renderer/crasher_impl.h",
         "patchSetId": 11
@@ -241,6 +457,24 @@
     },
     {
       "key": {
+        "uuid": "648de909_1801c94b",
+        "filename": "content/renderer/crasher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "95b6f00a_50dad7da",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3d182648_c4ccd493",
         "filename": "content/renderer/crasher_impl_browsertest.cc",
         "patchSetId": 11
@@ -252,6 +486,30 @@
       "writtenOn": "2017-06-09T08:31:13Z",
       "side": 1,
       "message": "Could you explain what happens on failure?",
+      "range": {
+        "startLine": 29,
+        "startChar": 17,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70c76d8d_85bcfce7",
+        "filename": "content/renderer/crasher_impl_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T14:09:11Z",
+      "side": 1,
+      "message": "If anything went wrong, it simply blocks indefinitely and the test will fail by the timeout.",
+      "parentUuid": "3d182648_c4ccd493",
       "range": {
         "startLine": 29,
         "startChar": 17,
