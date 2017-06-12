@@ -108,8 +108,8 @@ void LayoutGeometryMap::MapToAncestor(
                                        accumulate);
       else
         transform_state.Move(current_step.offset_.Width(),
-                             current_step.offset_.Height(), accumulate);
-    }
+                             current_step.offset_.Height(), accumulate)
+;    }
 
     if (in_fixed && !current_step.offset_for_fixed_position_.IsZero()) {
       DCHECK(current_step.layout_object_->IsLayoutView());

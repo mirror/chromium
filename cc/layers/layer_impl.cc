@@ -62,7 +62,6 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
       masks_to_bounds_(false),
       contents_opaque_(false),
       use_parent_backface_visibility_(false),
-      use_local_transform_for_backface_visibility_(false),
       should_check_backface_visibility_(false),
       draws_content_(false),
       contributes_to_drawn_render_surface_(false),
@@ -318,8 +317,6 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer->contents_opaque_ = contents_opaque_;
   layer->may_contain_video_ = may_contain_video_;
   layer->use_parent_backface_visibility_ = use_parent_backface_visibility_;
-  layer->use_local_transform_for_backface_visibility_ =
-      use_local_transform_for_backface_visibility_;
   layer->should_check_backface_visibility_ = should_check_backface_visibility_;
   layer->draws_content_ = draws_content_;
   layer->non_fast_scrollable_region_ = non_fast_scrollable_region_;
