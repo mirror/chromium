@@ -52,6 +52,24 @@
       "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7c787fc6_9ff429ee",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-12T19:33:06Z",
+      "side": 0,
+      "message": "RenderWidgetCompositor is initializing the RendererSettings inside LTSettings. \nLTSettings::renderer_settings are not read anywhere so I thought it\u0027d be safe to just remove\nthese lines without adding them to CreateRendererSettings.\n\nI added the allow_antialiasing to CreateRendererSettings since it doesn\u0027t hurt to let \nCreateRendererSettings read one more switch. I left highp_threshold_min out because \nCompositorImpl (android class) and RenderWidgetCompositor are the only two callers using \nnon-default highp_threshold_min. They are both initializing LTSettings::RendererSettings, which \nmeans the non-default values are not read anywhere. Not setting highp_threshold_min in \nCreateRendererSettings saves us one parameter since the values are not read from command lind \nbut class-specific.",
+      "parentUuid": "5b50ff2e_c0861eac",
+      "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

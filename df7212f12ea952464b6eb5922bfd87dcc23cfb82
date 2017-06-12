@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "9baaee07_4e137479",
+        "filename": "cc/trees/layer_tree_host_pixeltest_blending.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-12T19:33:06Z",
+      "side": 1,
+      "message": "I overrode RequestNewCompositorFrameSink instead of CreateCompositorFrameSink originally because\nif I change the RendererSettings in CreateCompositorFrameSink, I\u0027m setting values in the \nRenderSettings that has already been initialized in the base RequestNewCompositorFrameSink. This changes the logic a little considering the InitializeSettings on the left didn\u0027t call the \nbase implementation.\n\nI changed the override to CreateCompositorFrameSink. Hopefully, it doesn\u0027t affect any tests.",
+      "parentUuid": "6202c609_84f6edbe",
+      "revId": "df7212f12ea952464b6eb5922bfd87dcc23cfb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d086367_082be31c",
         "filename": "cc/trees/layer_tree_settings.h",
         "patchSetId": 9
