@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7a6ad03_429eb22b",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPersistent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-12T18:19:43Z",
+      "side": 1,
+      "message": "\"FontPersistent\" is a bit of an odd name; to me it sounds like it is somehow related to blink::Persistent or v8::Persistent. What other objects will live in here? It\u0027d be nice to have a clearer name and/or class comment.",
+      "revId": "d0de918f636f387b3ec2ae83d4f3095364818135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fada6b24_a8057063",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontPersistent.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-12T18:19:43Z",
+      "side": 1,
+      "message": "nit: This and the below might as well return references?",
+      "revId": "d0de918f636f387b3ec2ae83d4f3095364818135",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
