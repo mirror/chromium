@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d785f7ed_96055eef",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 745,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:32:03Z",
+      "side": 0,
+      "message": "Shouldn\u0027t you make this a separate todo somewhere near Nuke?",
+      "range": {
+        "startLine": 744,
+        "startChar": 5,
+        "endLine": 745,
+        "endChar": 12
+      },
+      "revId": "f81a3b57195b0cfde497915d8297b760111420fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

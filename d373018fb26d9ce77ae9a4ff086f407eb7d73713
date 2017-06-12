@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d37a81b8_34a60d19",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:32:03Z",
+      "side": 1,
+      "message": "FYI, I was going to do the same in https://chromium-review.googlesource.com/c/521064/, but got distracted with the tests.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 51
+      },
+      "revId": "d373018fb26d9ce77ae9a4ff086f407eb7d73713",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
