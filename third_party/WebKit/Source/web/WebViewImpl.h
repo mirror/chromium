@@ -99,7 +99,8 @@ class WEB_EXPORT WebViewImpl final
       NON_EXPORTED_BASE(public WebGestureCurveTarget),
       public PageWidgetEventHandler,
       public WebScheduler::InterventionReporter,
-      public WebViewScheduler::WebViewSchedulerSettings {
+      public WebViewScheduler::WebViewSchedulerSettings,
+      public WebViewScheduler::WebViewSchedulerDelegate {
  public:
   static WebViewBase* Create(WebViewClient*, WebPageVisibilityState);
 
@@ -250,6 +251,8 @@ class WEB_EXPORT WebViewImpl final
   float ExpensiveBackgroundThrottlingInitialBudget() override;
   float ExpensiveBackgroundThrottlingMaxBudget() override;
   float ExpensiveBackgroundThrottlingMaxDelay() override;
+
+  void RequestBeginMainFrameNotExpected(bool new_state) override;
 
   void DidUpdateFullscreenSize() override;
 

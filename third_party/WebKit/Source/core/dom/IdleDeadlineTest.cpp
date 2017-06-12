@@ -28,7 +28,8 @@ class MockScheduler final : public WebScheduler {
                                WebThread::IdleTask*) override {}
   std::unique_ptr<WebViewScheduler> CreateWebViewScheduler(
       InterventionReporter*,
-      WebViewScheduler::WebViewSchedulerSettings*) override {
+      WebViewScheduler::WebViewSchedulerSettings*,
+      WebViewScheduler::WebViewSchedulerDelegate*) override {
     return nullptr;
   }
   WebTaskRunner* CompositorTaskRunner() override { return nullptr; }

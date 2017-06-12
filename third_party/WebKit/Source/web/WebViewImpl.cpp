@@ -380,7 +380,7 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
       scheduler_(WTF::WrapUnique(Platform::Current()
                                      ->CurrentThread()
                                      ->Scheduler()
-                                     ->CreateWebViewScheduler(this, this)
+                                     ->CreateWebViewScheduler(this, this, this)
                                      .release())),
       last_frame_time_monotonic_(0),
       override_compositor_visibility_(false) {
@@ -1126,6 +1126,12 @@ float WebViewImpl::ExpensiveBackgroundThrottlingMaxBudget() {
 
 float WebViewImpl::ExpensiveBackgroundThrottlingMaxDelay() {
   return SettingsImpl()->ExpensiveBackgroundThrottlingMaxDelay();
+}
+
+void WebViewImpl::RequestBeginMainFrameNotExpected(bool new_state) {
+  if (layer_tree_view_) {
+    layer_tree_view_->RequestBeginMainFrameNotExpected(new_state);
+  }
 }
 
 WebInputEventResult WebViewImpl::HandleKeyEvent(const WebKeyboardEvent& event) {

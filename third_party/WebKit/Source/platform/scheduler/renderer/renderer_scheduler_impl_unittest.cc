@@ -3114,7 +3114,7 @@ TEST_F(RendererSchedulerImplTest,
 class WebViewSchedulerImplForTest : public WebViewSchedulerImpl {
  public:
   WebViewSchedulerImplForTest(RendererSchedulerImpl* scheduler)
-      : WebViewSchedulerImpl(nullptr, nullptr, scheduler, false) {}
+      : WebViewSchedulerImpl(nullptr, nullptr, nullptr, scheduler, false) {}
   ~WebViewSchedulerImplForTest() override {}
 
   void ReportIntervention(const std::string& message) override {
@@ -3804,15 +3804,17 @@ TEST_F(RendererSchedulerImplTest, Tracing) {
   // (by posting tasks, creating child schedulers, etc) and converts it into a
   // traced value. This test checks that no internal checks fire during this.
 
-  std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler1 = base::WrapUnique(
-      new WebViewSchedulerImpl(nullptr, nullptr, scheduler_.get(), false));
+  std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler1 =
+      base::WrapUnique(new WebViewSchedulerImpl(nullptr, nullptr, nullptr,
+                                                scheduler_.get(), false));
   scheduler_->AddWebViewScheduler(web_view_scheduler1.get());
 
   std::unique_ptr<WebFrameSchedulerImpl> web_frame_scheduler =
       web_view_scheduler1->CreateWebFrameSchedulerImpl(nullptr);
 
-  std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler2 = base::WrapUnique(
-      new WebViewSchedulerImpl(nullptr, nullptr, scheduler_.get(), false));
+  std::unique_ptr<WebViewSchedulerImpl> web_view_scheduler2 =
+      base::WrapUnique(new WebViewSchedulerImpl(nullptr, nullptr, nullptr,
+                                                scheduler_.get(), false));
   scheduler_->AddWebViewScheduler(web_view_scheduler2.get());
 
   CPUTimeBudgetPool* time_budget_pool =

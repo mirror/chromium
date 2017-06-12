@@ -90,6 +90,7 @@ base::TimeDelta GetInitialBudget(
 WebViewSchedulerImpl::WebViewSchedulerImpl(
     WebScheduler::InterventionReporter* intervention_reporter,
     WebViewScheduler::WebViewSchedulerSettings* settings,
+    WebViewScheduler::WebViewSchedulerDelegate* delegate,
     RendererSchedulerImpl* renderer_scheduler,
     bool disable_background_timer_throttling)
     : intervention_reporter_(intervention_reporter),
@@ -107,7 +108,8 @@ WebViewSchedulerImpl::WebViewSchedulerImpl(
       reported_background_throttling_since_navigation_(false),
       has_active_connection_(false),
       background_time_budget_pool_(nullptr),
-      settings_(settings) {
+      settings_(settings),
+      delegate_(delegate) {
   renderer_scheduler->AddWebViewScheduler(this);
 
   delayed_background_throttling_enabler_.Reset(
@@ -295,6 +297,10 @@ void WebViewSchedulerImpl::AudioStateChanged(bool is_audio_playing) {
 
 bool WebViewSchedulerImpl::HasActiveConnectionForTest() const {
   return has_active_connection_;
+}
+
+void WebViewSchedulerImpl::RequestBeginMainFrameNotExpected(bool new_state) {
+  delegate_->RequestBeginMainFrameNotExpected(new_state);
 }
 
 void WebViewSchedulerImpl::ApplyVirtualTimePolicyForLoading() {
