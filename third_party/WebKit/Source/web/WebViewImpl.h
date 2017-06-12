@@ -345,6 +345,9 @@ class WEB_EXPORT WebViewImpl final
   // notification unless the view did not need a layout.
   void LayoutUpdated() override;
   void ResizeAfterLayout() override;
+  ResizeViewportAnchor* GetResizeViewportAnchor() override {
+    return resize_viewport_anchor_.Get();
+  }
 
   void DidChangeContentsSize() override;
   void PageScaleFactorChanged() override;

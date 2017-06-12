@@ -32,6 +32,7 @@ class PaintLayerCompositor;
 class PagePopup;
 class PagePopupClient;
 class PageScaleConstraintsSet;
+class ResizeViewportAnchor;
 class WebInputEvent;
 class WebInputMethodController;
 class WebKeyboardEvent;
@@ -145,6 +146,7 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
   // notification unless the view did not need a layout.
   virtual void LayoutUpdated() = 0;
   virtual void ResizeAfterLayout() = 0;
+  virtual ResizeViewportAnchor* GetResizeViewportAnchor() = 0;
 
   virtual void UpdatePageDefinedViewportConstraints(
       const ViewportDescription&) = 0;

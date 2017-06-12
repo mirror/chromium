@@ -113,6 +113,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
   void MainFrameScrollOffsetChanged() const override;
   void ResizeAfterLayout() const override;
   void LayoutUpdated() const override;
+  ResizeViewportAnchor* GetResizeViewportAnchor() override;
   void ShowMouseOverURL(const HitTestResult&) override;
   void SetToolTip(LocalFrame&, const String&, TextDirection) override;
   void DispatchViewportPropertiesDidChange(

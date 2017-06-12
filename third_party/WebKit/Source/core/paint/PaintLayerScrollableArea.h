@@ -63,6 +63,7 @@ class HitTestResult;
 class LayoutBox;
 class LayoutScrollbarPart;
 class PaintLayer;
+class ResizeViewportAnchor;
 class ScrollingCoordinator;
 class StickyPositionScrollingConstraints;
 class SubtreeLayoutScope;
@@ -551,6 +552,8 @@ class CORE_EXPORT PaintLayerScrollableArea final
   }
 
   bool ComputeNeedsCompositedScrolling(const LCDTextMode, const PaintLayer*);
+  ResizeViewportAnchor* GetResizeViewportAnchor();
+
   PaintLayer& layer_;
 
   PaintLayer* next_topmost_scroll_child_;
