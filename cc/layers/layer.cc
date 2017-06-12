@@ -87,7 +87,6 @@ Layer::Layer()
       property_tree_sequence_number_(-1),
       should_flatten_transform_from_property_tree_(false),
       draws_content_(false),
-      use_local_transform_for_backface_visibility_(false),
       should_check_backface_visibility_(false),
       force_render_surface_for_testing_(false),
       subtree_property_changed_(false),
@@ -1021,13 +1020,6 @@ void Layer::SetUseParentBackfaceVisibility(bool use) {
   SetNeedsPushProperties();
 }
 
-void Layer::SetUseLocalTransformForBackfaceVisibility(bool use_local) {
-  if (use_local_transform_for_backface_visibility_ == use_local)
-    return;
-  use_local_transform_for_backface_visibility_ = use_local;
-  SetNeedsPushProperties();
-}
-
 void Layer::SetShouldCheckBackfaceVisibility(
     bool should_check_backface_visibility) {
   if (should_check_backface_visibility_ == should_check_backface_visibility)
@@ -1193,8 +1185,6 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->set_should_flatten_transform_from_property_tree(
       should_flatten_transform_from_property_tree_);
   layer->SetUseParentBackfaceVisibility(inputs_.use_parent_backface_visibility);
-  layer->SetUseLocalTransformForBackfaceVisibility(
-      use_local_transform_for_backface_visibility_);
   layer->SetShouldCheckBackfaceVisibility(should_check_backface_visibility_);
 
   layer->SetScrollClipLayer(inputs_.scroll_clip_layer_id);
