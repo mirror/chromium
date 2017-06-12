@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8566105b_9ee266c3",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-12T20:58:53Z",
+      "side": 1,
+      "message": "I\u0027ll replace this matcher with the shared one when I rebase on\nhttps://chromium-review.googlesource.com/c/530088/\n\nThis will help with the formatting.",
+      "range": {
+        "startLine": 263,
+        "startChar": 6,
+        "endLine": 263,
+        "endChar": 41
+      },
+      "revId": "97aa8f976b3a0676812ac1ef4c336cf6fbb26f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
