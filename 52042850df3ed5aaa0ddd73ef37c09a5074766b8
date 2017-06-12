@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9443cf34_1c0e1074",
+        "filename": "cc/trees/layer_tree_host_pixeltest_blending.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T19:48:23Z",
+      "side": 1,
+      "message": "I don\u0027t get why you changed this to a pointer tho? I was expecting u receive a const RendererSettings\u0026, copy it and mutate it here, and pass that to the base class method. Why a pointer? This should work the same as the old InitializeSettings - it uses whatever the defaults were by copying them, and then adds its own overrides to it.",
+      "revId": "52042850df3ed5aaa0ddd73ef37c09a5074766b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

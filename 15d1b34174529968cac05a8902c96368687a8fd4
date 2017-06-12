@@ -70,6 +70,24 @@
       "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "acde06c6_d3f3fc8f",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T19:48:23Z",
+      "side": 0,
+      "message": "It looks like we lost support for the --disable-composited-antialiasing switch some point along the way to display compositor split, putting that back would be nice while the switch exists.\n\nI have no idea why we\u0027d want 0 highp_threshold_min for a browser-side DirectRenderer but 2048 for a renderer-side one. Maybe this is an oversight at some point, can you follow up with whomever added that setting to see what the right thing to do is?",
+      "parentUuid": "7c787fc6_9ff429ee",
+      "revId": "15d1b34174529968cac05a8902c96368687a8fd4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
