@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "93901213_55d1b1cc",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-12T20:50:53Z",
+      "side": 1,
+      "message": "When SetDrawsContent is set to false, should we also update this or no? If not, can you comment explaining why? Also this should probably just be \"true\"",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c3393ac_430a8b54",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 6
