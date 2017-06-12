@@ -74,18 +74,17 @@ struct ModuleInspectionResult {
   CertificateInfo certificate_info;
 };
 
-// A bit set for what type of module we are dealing with.
-enum ModuleType {
-  // These modules are or were loaded into one of chrome's process at some
-  // point.
-  LOADED_MODULE = 1 << 0,
-  // These modules are registered as a shell extension.
-  SHELL_EXTENSION = 1 << 1,
-};
-
 // Contains the inspection result of a module and additional information that is
 // useful to the ModuleDatabase.
 struct ModuleInfoData {
+  // The possible types of module we are dealing with. Used as bit set values.
+
+  // These modules are or were loaded into one of chrome's process at some
+  // point.
+  static constexpr uint32_t kTypeLoadedModule = 1 << 0;
+  // These modules are registered as a shell extension.
+  static constexpr uint32_t kTypeShellExtension = 1 << 1;
+
   ModuleInfoData();
   ~ModuleInfoData();
 

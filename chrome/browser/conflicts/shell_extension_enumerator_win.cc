@@ -157,6 +157,15 @@ void ShellExtensionEnumerator::OnShellExtensionEnumerated(
                                               time_date_stamp);
 }
 
+// static
+void ShellExtensionEnumerator::EnumerateShellExtensionsImpl(
+    scoped_refptr<base::SequencedTaskRunner> task_runner,
+    const OnShellExtensionEnumeratedCallback& callback) {
+  ShellExtensionEnumerator::EnumerateShellExtensionPaths(
+      base::Bind(&OnShellExtensionPathEnumerated, task_runner, callback));
+}
+
+// static
 void ShellExtensionEnumerator::OnShellExtensionPathEnumerated(
     scoped_refptr<base::SequencedTaskRunner> task_runner,
     const OnShellExtensionEnumeratedCallback& callback,
@@ -170,11 +179,4 @@ void ShellExtensionEnumerator::OnShellExtensionPathEnumerated(
 
   task_runner->PostTask(
       FROM_HERE, base::Bind(callback, path, size_of_image, time_date_stamp));
-}
-
-void ShellExtensionEnumerator::EnumerateShellExtensionsImpl(
-    scoped_refptr<base::SequencedTaskRunner> task_runner,
-    const OnShellExtensionEnumeratedCallback& callback) {
-  ShellExtensionEnumerator::EnumerateShellExtensionPaths(
-      base::Bind(&OnShellExtensionPathEnumerated, task_runner, callback));
 }

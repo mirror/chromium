@@ -31,6 +31,9 @@ class ShellExtensionEnumerator {
 
   // Enumerates registered shell extensions, and invokes |callback| once per
   // shell extension found. Must be called on a blocking sequence.
+  //
+  // TODO(pmonette): Move to protected when enumerate_modules_model.cc gets
+  //                 deleted.
   static void EnumerateShellExtensionPaths(
       const base::Callback<void(const base::FilePath&)>& callback);
 
