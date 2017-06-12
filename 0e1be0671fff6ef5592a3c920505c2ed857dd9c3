@@ -16,6 +16,24 @@
       "revId": "0e1be0671fff6ef5592a3c920505c2ed857dd9c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f3b129b_6ce43efe",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-12T13:10:28Z",
+      "side": 1,
+      "message": "I can\u0027t really think of a better pattern. We want to have a function called at at know point in time to be able to break references between Objective-C and C++ object. With ARC, -dealloc is no longer a method we can use, and we need something else.\n\nRegarding when to use it, it is not enough to say that this should only be for Objective-C objects with pointer to C++ object. For example, in https://chromium-review.googlesource.com/514065, SpotlightManager needs a -shutdown method because it has pointers to Objective-C objects that have pointers C++ objects.\n\nIf we settle on such a rule, I think it should be that any class must has a -shutdown method:\n1. if instance has a pointer to a C++ object (or register an observer, ...),\n2. if instance has a pointer to an Objective-C object with a -shutdown method.\n\nWDYT?",
+      "parentUuid": "ea902107_cd38ed26",
+      "revId": "0e1be0671fff6ef5592a3c920505c2ed857dd9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
