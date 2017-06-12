@@ -3313,6 +3313,10 @@ void PaintLayer::ClearNeedsRepaintRecursively() {
   needs_repaint_ = false;
 }
 
+bool PaintLayer::HandlesOwnScrolling() const {
+  return !IsRootLayer() || RuntimeEnabledFeatures::RootLayerScrollingEnabled();
+}
+
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
 void PaintLayer::EndShouldKeepAliveAllClientsRecursive() {
   for (PaintLayer* child = FirstChild(); child; child = child->NextSibling())

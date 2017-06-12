@@ -1021,6 +1021,12 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
     self_painting_status_changed_ = false;
   }
 
+  // If RootLayerScrolling is off, the root layer delegates scrolling to the
+  // PaintLayerCompositor's special scrolling layers for the frame. In that
+  // case this method will return false. For all other layers or if we're in
+  // RLS mode it returns true.
+  bool HandlesOwnScrolling() const;
+
 #if CHECK_DISPLAY_ITEM_CLIENT_ALIVENESS
   void EndShouldKeepAliveAllClientsRecursive();
 #endif
