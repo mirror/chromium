@@ -607,6 +607,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
   // provides an implementation, and directs events to |host_|.
   std::unique_ptr<RenderWidgetHostViewEventHandler> event_handler_;
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  bool has_mouse_pressed_;
+#endif
+
   cc::FrameSinkId frame_sink_id_;
   cc::LocalSurfaceId local_surface_id_;
 
