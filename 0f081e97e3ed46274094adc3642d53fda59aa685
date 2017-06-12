@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "66a39eba_6037e927",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4294,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-12T19:40:20Z",
+      "side": 1,
+      "message": "Do we need to worry about when scrollbars_suppressed_ is true?\n\nLooks like scrollbars are suppressed during first layouts. Are we expecting visual viewport resize events during that? (even though the scrollbar manager believes it has scrollers)...",
+      "range": {
+        "startLine": 4294,
+        "startChar": 6,
+        "endLine": 4294,
+        "endChar": 28
+      },
+      "revId": "0f081e97e3ed46274094adc3642d53fda59aa685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
