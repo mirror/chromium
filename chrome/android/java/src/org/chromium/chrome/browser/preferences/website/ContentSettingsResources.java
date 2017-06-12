@@ -148,8 +148,8 @@ public class ContentSettingsResources {
                                  org.chromium.chrome.R.string.protected_content,
                                  org.chromium.chrome.R.string.protected_content,
                                  ContentSetting.ASK, ContentSetting.BLOCK, 0, 0));
-            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_SUBRESOURCE_FILTER,
-                    new ResourceItem(R.drawable.ic_ad_240p_grey600, R.string.ads_permission_title,
+            localMap.put(ContentSettingsType.CONTENT_SETTINGS_TYPE_ADS,
+                    new ResourceItem(R.drawable.ic_ad_240_grey600, R.string.ads_permission_title,
                             R.string.ads_permission_title, ContentSetting.ALLOW,
                             ContentSetting.BLOCK, 0,
                             R.string.website_settings_category_ads_blocked));
