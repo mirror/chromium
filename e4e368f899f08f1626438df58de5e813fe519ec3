@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cc7e6527_28b9edd3",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-12T12:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c215c596_d29282ab",
+      "range": {
+        "startLine": 21,
+        "startChar": 8,
+        "endLine": 21,
+        "endChar": 15
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11ce7495_8fb27da0",
         "filename": "ios/showcase/core/app_delegate.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-09T14:42:32Z",
       "side": 1,
       "message": "I wonder if this line should go inside too. In case there are lingering stuff in the window too.",
+      "range": {
+        "startLine": 37,
+        "startChar": 18,
+        "endLine": 37,
+        "endChar": 26
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2263e0d9_4dca609a",
+        "filename": "ios/showcase/core/app_delegate.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-12T12:13:04Z",
+      "side": 1,
+      "message": "If I move the window allocation and -makeKeyAndVisible to the setupUI, the EG test found multiple elements with the same ID. I guess they are present multiple times in the view hierarchy.",
+      "parentUuid": "11ce7495_8fb27da0",
       "range": {
         "startLine": 37,
         "startChar": 18,
@@ -68,6 +116,30 @@
       "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ac0435c_b2edcf6c",
+        "filename": "ios/showcase/test/showcase_eg_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-12T12:13:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce8ba014_651b988e",
+      "range": {
+        "startLine": 50,
+        "startChar": 52,
+        "endLine": 50,
+        "endChar": 74
+      },
+      "revId": "e4e368f899f08f1626438df58de5e813fe519ec3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
