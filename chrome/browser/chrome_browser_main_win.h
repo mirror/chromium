@@ -7,12 +7,15 @@
 #ifndef CHROME_BROWSER_CHROME_BROWSER_MAIN_WIN_H_
 #define CHROME_BROWSER_CHROME_BROWSER_MAIN_WIN_H_
 
+#include <memory>
+
 #include "base/files/file_path_watcher.h"
 #include "base/macros.h"
 #include "chrome/browser/chrome_browser_main.h"
 
 class DidRunUpdater;
 class ModuleWatcher;
+class ShellExtensionEnumerator;
 
 namespace base {
 class CommandLine;
@@ -74,7 +77,12 @@ class ChromeBrowserMainPartsWin : public ChromeBrowserMainParts {
   std::unique_ptr<DidRunUpdater> did_run_updater_;
 #endif
 
+  // Watches module load events and forwards them to the ModuleDatabase.
   std::unique_ptr<ModuleWatcher> module_watcher_;
+
+  // Enumerates registered shell extensions and forwards them to the
+  // ModuleDatabase.
+  std::unique_ptr<ShellExtensionEnumerator> shell_extension_enumerator_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeBrowserMainPartsWin);
 };
