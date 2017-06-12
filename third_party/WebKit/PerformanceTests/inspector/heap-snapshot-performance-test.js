@@ -37,7 +37,7 @@ function test()
             transferTimerCookie = timer.start("transfer-snapshot");
             var profiles = type.getProfiles();
             InspectorTest.addSniffer(profiles[0]._transferHandler, "_updateProgress", onUpdateProgress, true);
-            InspectorTest.addSniffer(profiles[0], "_wasShown", step2);
+            InspectorTest.addSniffer(WebInspector.panels.profiles, "showProfile", step2);
         }
 
         function onUpdateProgress(saved, total)
@@ -48,8 +48,9 @@ function test()
             showTimerCookie = timer.start("show-snapshot");
         }
 
-        function step2()
+        async function step2(profile)
         {
+            await profile._loadPromise;
             timer.finish(showTimerCookie);
             changeViewTimerCookie = timer.start("switch-to-containment-view");
             InspectorTest.switchToView("Containment", cleanup);
