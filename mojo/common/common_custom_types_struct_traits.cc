@@ -105,4 +105,17 @@ bool EnumTraits<common::mojom::TextDirection, base::i18n::TextDirection>::
   return false;
 }
 
+// static
+bool StructTraits<common::mojom::MemoryAllocatorDumpGuidDataView,
+                  base::trace_event::MemoryAllocatorDumpGuid>::
+    Read(common::mojom::MemoryAllocatorDumpGuidDataView data,
+         base::trace_event::MemoryAllocatorDumpGuid* out) {
+  // Receiving a zeroed MemoryAllocatorDumpGuid is a bug.
+  if (data.value() == 0)
+    return false;
+
+  *out = base::trace_event::MemoryAllocatorDumpGuid(data.value());
+  return true;
+}
+
 }  // namespace mojo
