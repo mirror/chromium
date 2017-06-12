@@ -321,6 +321,11 @@ static const JNINativeMethod kMethodsTestJni[] = {
 };
 
 static bool RegisterNativesImpl(JNIEnv* env) {
+
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool RegisterNativeOrgChromiumTestjni(JNIEnv* env) {
   if (jni_generator::ShouldSkipJniRegistration(false))
     return true;
 
