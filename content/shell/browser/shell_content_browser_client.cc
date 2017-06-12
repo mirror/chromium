@@ -176,9 +176,10 @@ BrowserMainParts* ShellContentBrowserClient::CreateBrowserMainParts(
 bool ShellContentBrowserClient::DoesSiteRequireDedicatedProcess(
     BrowserContext* browser_context,
     const GURL& real_url) {
-  if (!require_dedicated_process_pattern_.empty() &&
-      base::MatchPattern(real_url.spec(), require_dedicated_process_pattern_))
-    return true;
+  for (const auto& pattern : require_dedicated_process_patterns_) {
+    if (base::MatchPattern(real_url.spec(), pattern))
+      return true;
+  }
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (!command_line->HasSwitch(switches::kIsolateSitesForTesting))

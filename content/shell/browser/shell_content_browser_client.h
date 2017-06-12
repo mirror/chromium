@@ -95,8 +95,8 @@ class ShellContentBrowserClient : public ContentBrowserClient {
     select_client_certificate_callback_ = select_client_certificate_callback;
   }
 
-  void set_require_dedicated_process_pattern(const std::string& pattern) {
-    require_dedicated_process_pattern_ = pattern;
+  void AddRequireDedicatedProcessURLPattern(const std::string& pattern) {
+    require_dedicated_process_patterns_.push_back(pattern);
   }
 
  protected:
@@ -114,7 +114,7 @@ class ShellContentBrowserClient : public ContentBrowserClient {
       resource_dispatcher_host_delegate_;
 
   base::Closure select_client_certificate_callback_;
-  std::string require_dedicated_process_pattern_;
+  std::vector<std::string> require_dedicated_process_patterns_;
 
   ShellBrowserMainParts* shell_browser_main_parts_;
 };

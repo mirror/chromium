@@ -30,6 +30,7 @@ class PortForwardingStatusSerializer;
 
 namespace content {
 class NavigationHandle;
+class RenderFrameHost;
 class WebContents;
 }
 
@@ -156,6 +157,8 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   void ClearPreferences() override;
   void Reattach(const DispatchCallback& callback) override;
   void ReadyForTest() override;
+  void RegisterExtensionsAPI(const std::string& origin,
+                             const std::string& script) override;
 
   // net::URLFetcherDelegate overrides.
   void OnURLFetchComplete(const net::URLFetcher* source) override;
@@ -172,6 +175,7 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   virtual void DevicesUpdated(const std::string& source,
                               const base::ListValue& targets);
 
+  void ReadyToCommitNavigation(content::NavigationHandle* navigation_handle);
   void DocumentAvailableInMainFrame();
   void DocumentOnLoadCompletedInMainFrame();
   void DidNavigateMainFrame();
@@ -208,10 +212,11 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   typedef base::Callback<void(bool)> InfoBarCallback;
   void ShowDevToolsConfirmInfoBar(const base::string16& message,
                                   const InfoBarCallback& callback);
-  void UpdateFrontendHost(content::NavigationHandle* navigation_handle);
 
   // Extensions support.
   void AddDevToolsExtensionsToClient();
+  void RegisterExtensionAPI(const std::string& origin,
+                            const std::string& script);
 
   class FrontendWebContentsObserver;
   std::unique_ptr<FrontendWebContentsObserver> frontend_contents_observer_;
@@ -241,6 +246,8 @@ class DevToolsUIBindings : public DevToolsEmbedderMessageDispatcher::Delegate,
   GURL url_;
   using PendingRequestsMap = std::map<const net::URLFetcher*, DispatchCallback>;
   PendingRequestsMap pending_requests_;
+  using ExtensionsAPIs = std::map<std::string, std::string>;
+  ExtensionsAPIs extensions_api_;
   base::WeakPtrFactory<DevToolsUIBindings> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(DevToolsUIBindings);

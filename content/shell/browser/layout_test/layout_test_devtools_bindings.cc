@@ -15,6 +15,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/shell/browser/layout_test/blink_test_controller.h"
 #include "content/shell/browser/shell.h"
+#include "content/shell/browser/shell_content_browser_client.h"
 #include "content/shell/common/layout_test/layout_test_switches.h"
 #include "net/base/filename_util.h"
 
@@ -108,7 +109,11 @@ LayoutTestDevToolsBindings::LayoutTestDevToolsBindings(
     WebContents* devtools_contents,
     WebContents* inspected_contents)
     : ShellDevToolsBindings(devtools_contents, inspected_contents, nullptr),
-      ready_for_test_(false) {}
+      ready_for_test_(false) {
+  // Make devtools extensions load out of process.
+  ShellContentBrowserClient::Get()->AddRequireDedicatedProcessURLPattern(
+      "*/inspector/resources/extension-*.html");
+}
 
 LayoutTestDevToolsBindings::~LayoutTestDevToolsBindings() {}
 
