@@ -43,9 +43,9 @@ function runImportTests(worklet, opt_path) {
         return worklet.addModule(path + 'non-existant-worklet-script.js').then(function() {
             assert_unreached('addModule should fail.');
         }).catch(function(error) {
-            assert_equals(error.name, 'NetworkError', 'error should be a NetworkError.');
+            assert_equals(error.name, 'AbortError', 'error should be an AbortError.');
         });
-    }, 'Importing a non-existant script rejects the given promise with a NetworkError.');
+    }, 'Importing a non-existant script rejects the given promise with an AbortError.');
 
     promise_test(function() {
         return worklet.addModule('http://invalid:123$').then(function() {
