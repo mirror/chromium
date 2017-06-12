@@ -46,6 +46,29 @@
       "revId": "396fc680aab44c0a0c8d7bfd5ace921d9c0c91ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "81e99993_ca0cd03e",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-12T12:28:11Z",
+      "side": 1,
+      "message": "Is the cost of this line and the if condition check equal (or less) than the old code when the string is empty? That\u0027s the typical case.",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "396fc680aab44c0a0c8d7bfd5ace921d9c0c91ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
