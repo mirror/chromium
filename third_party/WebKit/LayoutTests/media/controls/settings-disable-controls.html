@@ -14,12 +14,12 @@ orphanedVideo.controls = true;
 async_test(t => {
   var video = document.querySelector('video');
 
-  internals.mediaPlayerRemoteRouteAvailabilityChanged(video, true);
   t.add_cleanup(() => {
     internals.mediaPlayerRemoteRouteAvailabilityChanged(video, false);
   });
 
   video.addEventListener('canplaythrough', t.step_func(e => {
+    internals.mediaPlayerRemoteRouteAvailabilityChanged(video, true);
     assert_equals(overlayCastButton(video).style.display, "none");
     assert_not_equals(mediaControlsButton(video, "panel").style.display, "none");
 

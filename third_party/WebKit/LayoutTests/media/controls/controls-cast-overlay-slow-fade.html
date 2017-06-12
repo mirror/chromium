@@ -15,6 +15,7 @@ async_test(function(t) {
     video.src = findMediaFile("video", "../content/test");
 
     video.onplaying = t.step_func(function() {
+        internals.mediaPlayerRemoteRouteAvailabilityChanged(video, true);
         setTimeout(t.step_func(function() {
             // Cast button should be visible
             assert_true(isControlVisible(overlayCastButton(video)), "button should exist");
@@ -26,7 +27,6 @@ async_test(function(t) {
         }), video);
     });
 
-    internals.mediaPlayerRemoteRouteAvailabilityChanged(video, true);
     video.play();
 });
 </script>
