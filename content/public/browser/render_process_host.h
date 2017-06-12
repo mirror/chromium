@@ -154,6 +154,11 @@ class CONTENT_EXPORT RenderProcessHost : public IPC::Sender,
   // Returns true if it was able to do fast shutdown.
   virtual bool FastShutdownIfPossible() = 0;
 
+  // Considering the associated renderer is unresponsive to the user input,
+  // tries to crash it with a crash report. If failed to crash, terminates
+  // the renderer process forcibly without crash reports.
+  virtual void TerminateHungRenderProcess() = 0;
+
   // Returns true if fast shutdown was started for the renderer.
   virtual bool FastShutdownStarted() const = 0;
 
