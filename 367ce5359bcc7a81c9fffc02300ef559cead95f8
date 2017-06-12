@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "f0c1d71e_b3deece5",
+        "filename": "headless/test/headless_js_bindings_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-12T12:56:04Z",
+      "side": 1,
+      "message": "I know some changes were made on those lines by jam@ but they don\u0027t seem to be necessary here. I\u0027m not really sure why, lets should do it in case there\u0027s some sort of race without them.",
+      "parentUuid": "8e69f5d2_50f8cf6e",
+      "range": {
+        "startLine": 51,
+        "startChar": 4,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "367ce5359bcc7a81c9fffc02300ef559cead95f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87acd4f8_aa80129e",
         "filename": "headless/test/headless_js_bindings_browsertest.cc",
         "patchSetId": 2
