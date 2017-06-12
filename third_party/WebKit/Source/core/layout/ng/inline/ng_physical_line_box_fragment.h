@@ -26,6 +26,10 @@ class CORE_EXPORT NGPhysicalLineBoxFragment final : public NGPhysicalFragment {
 
   const NGLineHeightMetrics& Metrics() const { return metrics_; }
 
+  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const override {
+    return nullptr;
+  }
+
  private:
   Vector<RefPtr<NGPhysicalFragment>> children_;
 

@@ -35,6 +35,10 @@ class CORE_EXPORT NGPhysicalTextFragment final : public NGPhysicalFragment {
   unsigned StartOffset() const { return start_offset_; }
   unsigned EndOffset() const { return end_offset_; }
 
+  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const override {
+    return nullptr;
+  }
+
  private:
   // TODO(kojii): NGInlineNode is to access text content and NGLayoutInlineItem.
   // Review if it's better to point them.

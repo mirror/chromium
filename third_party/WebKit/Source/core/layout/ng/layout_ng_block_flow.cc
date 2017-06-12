@@ -55,4 +55,27 @@ void LayoutNGBlockFlow::ResetNGInlineNodeData() {
   ng_inline_node_data_ = WTF::MakeUnique<NGInlineNodeData>();
 }
 
+RefPtr<NGLayoutResult> LayoutNGBlockFlow::CachedLayoutResult(
+    NGConstraintSpace* constraint_space,
+    NGBreakToken* break_token) const {
+  if (!cached_result_ || break_token || NeedsLayout())
+    return nullptr;
+  if (*constraint_space != *cached_constraint_space_)
+    return nullptr;
+  return cached_result_->CloneWithoutOffset();
+}
+
+void LayoutNGBlockFlow::SetCachedLayoutResult(
+    NGConstraintSpace* constraint_space,
+    NGBreakToken* break_token,
+    RefPtr<NGLayoutResult> layout_result) {
+  if (break_token) {
+    // We can't cache these yet
+    return;
+  }
+
+  cached_constraint_space_ = constraint_space;
+  cached_result_ = layout_result;
+}
+
 }  // namespace blink
