@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf5e27bb_721c373a",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:41:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "056fc816_520de895",
+      "range": {
+        "startLine": 74,
+        "startChar": 67,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec553365_24388409",
         "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T10:20:48Z",
       "side": 1,
       "message": "I\u0027m going to trust that this is all copy-pasted from the old version",
+      "range": {
+        "startLine": 6,
+        "startChar": 73,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bc052bfb_962ba3de",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:41:00Z",
+      "side": 1,
+      "message": "Yeap, except that I moved out common things into the interface file.",
+      "parentUuid": "ec553365_24388409",
       "range": {
         "startLine": 6,
         "startChar": 73,
@@ -68,6 +116,54 @@
       "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21fdc881_2ad2cead",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:41:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87ec4c8b_3dbe5f67",
+      "range": {
+        "startLine": 35,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5909a35a_2149cf4b",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T12:41:00Z",
+      "side": 1,
+      "message": "Done.\n\nRemoved.",
+      "parentUuid": "87ec4c8b_3dbe5f67",
+      "range": {
+        "startLine": 35,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
