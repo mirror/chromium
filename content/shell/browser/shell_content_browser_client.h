@@ -34,7 +34,7 @@ class ShellContentBrowserClient : public ContentBrowserClient {
   BrowserMainParts* CreateBrowserMainParts(
       const MainFunctionParams& parameters) override;
   bool DoesSiteRequireDedicatedProcess(BrowserContext* browser_context,
-                                       const GURL& effective_site_url) override;
+                                       const GURL& real_url) override;
   bool IsHandledURL(const GURL& url) override;
   void ExposeInterfacesToFrame(service_manager::BinderRegistry* registry,
                                RenderFrameHost* frame_host) override;
@@ -95,6 +95,10 @@ class ShellContentBrowserClient : public ContentBrowserClient {
     select_client_certificate_callback_ = select_client_certificate_callback;
   }
 
+  void set_require_dedicated_process_pattern(const std::string& pattern) {
+    require_dedicated_process_pattern_ = pattern;
+  }
+
  protected:
   void set_resource_dispatcher_host_delegate(
       std::unique_ptr<ShellResourceDispatcherHostDelegate> delegate) {
@@ -110,6 +114,7 @@ class ShellContentBrowserClient : public ContentBrowserClient {
       resource_dispatcher_host_delegate_;
 
   base::Closure select_client_certificate_callback_;
+  std::string require_dedicated_process_pattern_;
 
   ShellBrowserMainParts* shell_browser_main_parts_;
 };
