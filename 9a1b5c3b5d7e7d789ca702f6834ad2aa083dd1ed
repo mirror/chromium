@@ -16,6 +16,24 @@
       "revId": "9a1b5c3b5d7e7d789ca702f6834ad2aa083dd1ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b6f7d4_38274db4",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T23:20:07Z",
+      "side": 1,
+      "message": "Per the docs:\n\nMultiple clients can connect to a service simultaneously. However, the system calls your service\u0027s onBind() method to retrieve the IBinder only when the first client binds. The system then delivers the same IBinder to any additional clients that bind, without calling onBind() again.\n\nhttps://developer.android.com/guide/components/bound-services.html",
+      "parentUuid": "81f90fe5_201bd0d9",
+      "revId": "9a1b5c3b5d7e7d789ca702f6834ad2aa083dd1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
