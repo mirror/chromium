@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82950276_b8e91ab3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T22:22:05Z",
+      "side": 1,
+      "message": "Put this into the enum in native?",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "967c54d9_9a3c7b11",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T22:22:05Z",
+      "side": 1,
+      "message": "Should we remove it after this?  Otherwise needsReschedule will never get cleared.",
+      "range": {
+        "startLine": 61,
+        "startChar": 42,
+        "endLine": 61,
+        "endChar": 92
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12c1262_e44d682e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T22:22:05Z",
+      "side": 1,
+      "message": "Should this call NotifyTaskFinished?",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 79
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c66c0ae_fb5deb47",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T22:22:05Z",
+      "side": 1,
+      "message": "NotifyTaskFinished(false, stats::ScheduledTaskStatus::COMPLETED_NORMALLY)?",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "706939f4_45999f48",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T22:22:05Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this only be for a particular task type?  Maybe,\n\nHandleTaskFinished(DownloadTaskType task_type, bool reschedule, stats::ScheduledTaskStatus result)?\n\nWe can infer whether or not we should notify the observer based on CANCELLED_ON_STOP?",
+      "range": {
+        "startLine": 171,
+        "startChar": 21,
+        "endLine": 172,
+        "endChar": 76
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
