@@ -48,6 +48,11 @@ static const JNINativeMethod kMethodsBar[] = {
 };
 
 static bool RegisterNativesImpl(JNIEnv* env) {
+
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool RegisterNativeOrgChromiumFooBar(JNIEnv* env) {
   if (jni_generator::ShouldSkipJniRegistration(false))
     return true;
 

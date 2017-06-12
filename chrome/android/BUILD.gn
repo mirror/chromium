@@ -668,6 +668,7 @@ shared_library("chrome") {
     "../browser/android/chrome_entry_point.cc",
   ]
   deps = [
+    ":chrome_jni_registration($default_toolchain)",
     "//build/config:exe_and_shlib_deps",
     "//chrome:chrome_android_core",
   ]
@@ -694,6 +695,11 @@ shared_library("chrome") {
 # Ensure that .pak files are built only once (build them in the default
 # toolchain).
 if (current_toolchain == default_toolchain) {
+  generate_jni_registration("chrome_jni_registration") {
+    target = ":chrome_public_apk"
+    output = "${target_gen_dir}/${target_name}/chrome_jni_registration.h"
+  }
+
   if (enable_resource_whitelist_generation) {
     generate_resource_whitelist("monochrome_resource_whitelist") {
       # Always use the 32-bit library's whitelist since the 64-bit one is
@@ -760,6 +766,7 @@ if (!android_64bit_target_cpu ||
       "../browser/android/monochrome_entry_point.cc",
     ]
     deps = [
+      ":chrome_jni_registration($default_toolchain)",
       "//android_webview:common",
       "//chrome:chrome_android_core",
     ]
@@ -795,6 +802,7 @@ shared_library("chrome_sync_shell") {
     "../browser/android/chrome_sync_shell_main_delegate_initializer.cc",
   ]
   deps = [
+    ":chrome_jni_registration($default_toolchain)",
     "//build/config:exe_and_shlib_deps",
     "//chrome:chrome_android_core",
     "//components/sync",
