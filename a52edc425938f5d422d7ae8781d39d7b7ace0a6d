@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8862d11c_996577e6",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T19:30:41Z",
+      "side": 1,
+      "message": "This doesn\u0027t feel very right... The command buffer logic is at a higher level than ui/gl, so this is a conceptual layering violation. Furthermore, I worry about the hidden dependencies - does this mean the passthrough decoder makes some assumptions about EGL_DISPLAY_ROBUST_RESOURCE_INITIALIZATION_ANGLE, do we have a way to test that it\u0027s correctly enabled with it?\n\nI realize that there may not be a good way of parametrizing the EGL initialization beyond command-line flags today (which is kinda problematic in test environments)... I guess 2 questions:\n1- is there a downside in always enabling it?\n2- could we enable it on a per-context basis, so that we can request the extension at context creation (via context creation parameters)?\n\n\nOther than that, maybe it would make sense to add an \"Options\" struct to gl::init::InitializeGLOneOff, so that the initialization code can request the right mode.",
+      "revId": "a52edc425938f5d422d7ae8781d39d7b7ace0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
