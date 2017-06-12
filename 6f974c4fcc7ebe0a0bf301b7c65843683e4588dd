@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25c220a3_bae879d8",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-12T13:43:28Z",
+      "side": 1,
+      "message": "You might want to make this only one constant if they are the same. It will help with sharing the value with the tests too (see below).",
+      "revId": "6f974c4fcc7ebe0a0bf301b7c65843683e4588dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be77474b_2c03f6dd",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-12T13:43:28Z",
+      "side": 1,
+      "message": "style: no need for { } here",
+      "revId": "6f974c4fcc7ebe0a0bf301b7c65843683e4588dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f88d4667_ac5b21e0",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-12T13:43:28Z",
+      "side": 1,
+      "message": "style: you need { } here",
+      "revId": "6f974c4fcc7ebe0a0bf301b7c65843683e4588dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2854013_919511e6",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-12T13:43:28Z",
+      "side": 1,
+      "message": "as above",
+      "revId": "6f974c4fcc7ebe0a0bf301b7c65843683e4588dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3278149_973d75d2",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-12T13:43:28Z",
+      "side": 1,
+      "message": "To avoid doing this, you can make the MediaEngagementObserver declare the constant as `static const` in its header as private. That way, the test class (which is a friend) can access it.",
+      "revId": "6f974c4fcc7ebe0a0bf301b7c65843683e4588dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
