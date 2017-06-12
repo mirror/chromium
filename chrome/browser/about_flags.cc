@@ -1796,7 +1796,7 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_WITH_PARAMS_VALUE_TYPE(
          feature_engagement_tracker::kIPHDemoMode,
          feature_engagement_tracker::kIPHDemoModeChoiceVariations,
-         feature_engagement_tracker::kIPHDemoMode.name)},
+         "IPH_DemoMode")},
     {"num-raster-threads", flag_descriptions::kNumRasterThreadsName,
      flag_descriptions::kNumRasterThreadsDescription, kOsAll,
      MULTI_VALUE_TYPE(kNumRasterThreadsChoices)},
