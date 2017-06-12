@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6f65ab2_4b30ee10",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-12T19:35:09Z",
+      "side": 1,
+      "message": "nit: s/succeed/succeeds/",
+      "range": {
+        "startLine": 35,
+        "startChar": 61,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c32f8f28_9292c2d8",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-12T19:35:09Z",
+      "side": 1,
+      "message": "We might need to set_connection_error_handler()\nsimilar to e.g. [1], to act upon the \"server\" side\ndisappearing from under our feet.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/service_launched_video_capture_device.cc?dr\u003dCSs\u0026l\u003d15",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "723c871a_1ae7f534",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-12T19:35:09Z",
+      "side": 1,
+      "message": "Hmm instead of having to do base::ResetAndReturn() every\ntime, we {c,sh}ould define |notify_decode_status_cb_| to\nbe a base::OnceCallback [1] using a BindOnce in l.202, and \nthen use std::move(notify_decode_status_cb_).Run() which\nis the currently established idiom.\n\nThat way is more evident (and it\u0027s enforce both at runtime\nand compile time) that this is a callback meant to be run\nonce.\n\n[1] https://chromium.googlesource.com/chromium/src/+/f9a943815c55bf468a284b474a0617c5c0e2f01d/docs/callback.md",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 22
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
