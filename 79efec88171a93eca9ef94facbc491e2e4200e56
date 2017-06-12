@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "0c4ab8de_6108b80f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-12T14:20:42Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c3fa0c29_a1d4c499",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ea8cc23_a9822ce2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -108,6 +126,24 @@
     },
     {
       "key": {
+        "uuid": "99937052_76702122",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-12T14:20:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4df3001_f71184b8",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b388a8f_f70e8988",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -155,6 +191,24 @@
       "side": 1,
       "message": "For me is clear that if we don\u0027t pass any axis information to the function then it applies to both axis. Anyway I think this is a matter of taste so what I think is just that, an opinion.",
       "parentUuid": "4cc4ac15_869fc396",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b2c2315_f1dbaf6f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115630
+      },
+      "writtenOn": "2017-06-12T14:20:42Z",
+      "side": 1,
+      "message": "As I said, I kind of agree with you. I still think such refactoring would add some noise. Specially because it doesn\u0027t make sense to not doing it for the self-alignment functions. We will need a similar refactoring patch for that. \n\nI think doing such refactoring for both, self-alignment and default-alignment would be safer, because this patch fixes a performance regression and I think it\u0027s useful to have isolated the precise changes that fixes it.",
+      "parentUuid": "9891a9f7_c3830c6f",
       "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
