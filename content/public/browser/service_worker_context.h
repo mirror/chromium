@@ -20,6 +20,15 @@ enum class ServiceWorkerCapability {
   SERVICE_WORKER_WITH_FETCH_HANDLER,
 };
 
+enum class StartServiceWorkerForNavigationHintResult {
+  STARTED,
+  ALREADY_RUNNING,
+  NO_SERVICE_WORKER_REGISTRATION,
+  NO_ACTIVE_SERVICE_WORKER_VERSION,
+  NO_FETCH_HANDLER,
+  FAILED,
+};
+
 // Represents the per-StoragePartition ServiceWorker data.
 class ServiceWorkerContext {
  public:
@@ -37,6 +46,9 @@ class ServiceWorkerContext {
 
   using CountExternalRequestsCallback =
       base::Callback<void(size_t external_request_count)>;
+
+  using StartServiceWorkerForNavigationHintCallback =
+      base::Callback<void(StartServiceWorkerForNavigationHintResult result)>;
 
   // Registers the header name which should not be passed to the ServiceWorker.
   // Must be called from the IO thread.
@@ -138,6 +150,13 @@ class ServiceWorkerContext {
   // This function can be called from any thread, but the callback will always
   // be called on the UI thread.
   virtual void ClearAllServiceWorkersForTest(const base::Closure& callback) = 0;
+
+  // Starts a Service Worker for a hint of a navigation to |document_url|. Must
+  // be called from the UI thread. The |callback| will always be called on the
+  // UI thread.
+  virtual void StartServiceWorkerForNavigationHint(
+      const GURL& document_url,
+      const StartServiceWorkerForNavigationHintCallback& callback) = 0;
 
  protected:
   ServiceWorkerContext() {}
