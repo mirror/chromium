@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "985fc7b6_c24cd464",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/port_testcase.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T16:23:27Z",
+      "side": 0,
+      "message": "This assertion was redundant in this case since we already check what we want about the contents of the logs above.",
+      "revId": "d2c30bb5110a526dc260951ae6e78b6d151f595a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b727b52_3347b794",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/port/port_testcase.py",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T16:23:27Z",
+      "side": 0,
+      "message": "This assertion is removed because this CL changes check_build to return early as soon as one condition is not met, so if the driver is not found then we don\u0027t even check for PrettyPatch.",
+      "revId": "d2c30bb5110a526dc260951ae6e78b6d151f595a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
