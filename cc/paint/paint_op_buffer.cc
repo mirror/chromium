@@ -623,57 +623,6 @@ void PaintOpBuffer::Reset() {
   num_slow_paths_ = 0;
 }
 
-static const PaintOp* NextOp(const std::vector<size_t>& range_starts,
-                             const std::vector<size_t>& range_indices,
-                             base::StackVector<const PaintOp*, 3>* stack_ptr,
-                             PaintOpBuffer::Iterator* iter,
-                             size_t* range_index) {
-  auto& stack = *stack_ptr;
-  if (stack->size()) {
-    const PaintOp* op = stack->front();
-    // Shift paintops forward
-    stack->erase(stack->begin());
-    return op;
-  }
-  if (!*iter)
-    return nullptr;
-
-  const size_t active_range = range_indices[*range_index];
-  DCHECK_GE(iter->op_idx(), range_starts[active_range]);
-
-  // This grabs the PaintOp from the current iterator position, and advances it
-  // to the next position immediately. We'll see we reached the end of the
-  // buffer on the next call to this method.
-  const PaintOp* op = **iter;
-  ++*iter;
-
-  if (active_range + 1 == range_starts.size()) {
-    // In the last possible range, so let the iter go right to the end of the
-    // buffer.
-    return op;
-  }
-
-  const size_t range_end = range_starts[active_range + 1];
-  DCHECK_LE(iter->op_idx(), range_end);
-  if (iter->op_idx() < range_end) {
-    // Still inside the range, so let the iter be.
-    return op;
-  }
-
-  if (*range_index + 1 == range_indices.size()) {
-    // We're now past the last range that we want to iterate.
-    *iter = iter->end();
-    return op;
-  }
-
-  // Move to the next range.
-  ++(*range_index);
-  size_t next_range_start = range_starts[range_indices[*range_index]];
-  while (iter->op_idx() < next_range_start)
-    ++(*iter);
-  return op;
-}
-
 // When |op| is a nested PaintOpBuffer, this returns the PaintOp inside
 // that buffer if the buffer contains a single drawing op, otherwise it
 // returns null. This searches recursively if the PaintOpBuffer contains only
@@ -752,11 +701,26 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
   // current offset into range_starts.
   size_t range_index = 0;
 
-  Iterator iter(this);
-  while (iter.op_idx() < range_starts[range_indices[range_index]])
+  RangeIterator iter(this, &range_starts, &range_indices);
+  auto next_op = [&iter, &stack, &range_index]() -> const PaintOp* {
+    if (stack->size()) {
+      const PaintOp* op = stack->front();
+      // Shift paintops forward.
+      stack->erase(stack->begin());
+      return op;
+    }
+    if (!iter)
+      return nullptr;
+
+    // This grabs the PaintOp from the current iterator position, and advances
+    // it to the next position immediately. We'll see we reached the end of the
+    // buffer on the next call to this method.
+    const PaintOp* op = *iter;
     ++iter;
-  while (const PaintOp* op =
-             NextOp(range_starts, range_indices, &stack, &iter, &range_index)) {
+    return op;
+  };
+
+  while (const PaintOp* op = next_op()) {
     // Check if we should abort. This should happen at the start of loop since
     // there are a couple of raster branches below, and we need to ensure that
     // we do this check after every one of them.
@@ -768,8 +732,7 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
     // TODO(enne): consider making this recursive?
     // TODO(enne): should we avoid this if the SaveLayerAlphaOp has bounds?
     if (op->GetType() == PaintOpType::SaveLayerAlpha) {
-      const PaintOp* second =
-          NextOp(range_starts, range_indices, &stack, &iter, &range_index);
+      const PaintOp* second = next_op();
       const PaintOp* third = nullptr;
       if (second) {
         if (second->GetType() == PaintOpType::Restore) {
@@ -782,8 +745,7 @@ void PaintOpBuffer::PlaybackRanges(const std::vector<size_t>& range_starts,
         const PaintOp* draw_op = GetNestedSingleDrawingOp(second);
 
         if (draw_op) {
-          third =
-              NextOp(range_starts, range_indices, &stack, &iter, &range_index);
+          third = next_op();
           if (third && third->GetType() == PaintOpType::Restore) {
             auto* save_op = static_cast<const SaveLayerAlphaOp*>(op);
             draw_op->RasterWithAlpha(canvas, save_op->bounds, save_op->alpha);

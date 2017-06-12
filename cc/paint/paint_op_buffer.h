@@ -930,6 +930,61 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     size_t op_idx_ = 0;
   };
 
+  class RangeIterator {
+   public:
+    RangeIterator(const PaintOpBuffer* buffer,
+                  const std::vector<size_t>* range_starts,
+                  const std::vector<size_t>* range_indices)
+        : iter_(buffer),
+          range_starts_(range_starts),
+          range_indices_(range_indices) {
+      while (iter_.op_idx() < (*range_starts_)[(*range_indices_)[range_index_]])
+        ++iter_;
+    }
+
+    PaintOp* operator->() const { return *iter_; }
+    PaintOp* operator*() const { return operator->(); }
+    bool operator!=(const RangeIterator& other) { return iter_ == other.iter_; }
+    RangeIterator& operator++() {
+      const size_t active_range = (*range_indices_)[range_index_];
+      DCHECK_GE(iter_.op_idx(), (*range_starts_)[active_range]);
+
+      ++iter_;
+      // In the last possible range, so let the iter go right to the end of the
+      // buffer.
+      if (active_range + 1 == range_starts_->size())
+        return *this;
+
+      const size_t range_end = (*range_starts_)[active_range + 1];
+      DCHECK_LE(iter_.op_idx(), range_end);
+      // Still inside the range, so let iter be.
+      if (iter_.op_idx() < range_end)
+        return *this;
+
+      // We're now past the last range that we want to iterate.
+      if (range_index_ + 1 == range_indices_->size()) {
+        iter_ = iter_.end();
+        return *this;
+      }
+
+      // Move to the next range.
+      ++range_index_;
+      size_t next_range_start =
+          (*range_starts_)[(*range_indices_)[range_index_]];
+      while (iter_.op_idx() < next_range_start)
+        ++iter_;
+      return *this;
+    }
+    operator bool() const { return iter_; }
+    size_t op_idx() const { return iter_.op_idx(); }
+
+   private:
+    Iterator iter_;
+    const std::vector<size_t>* range_starts_;
+    const std::vector<size_t>* range_indices_;
+    size_t range_index_ = 0;
+  };
+
  private:
   void ReallocBuffer(size_t new_size);
   // Returns the allocated op and the number of bytes to skip in |data_| to get
