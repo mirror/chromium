@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38e594a0_ca802589",
+        "filename": "remoting/webapp/crd/js/host_screen.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-06-12T20:10:00Z",
+      "side": 1,
+      "message": "s/returns/return/",
+      "range": {
+        "startLine": 108,
+        "startChar": 4,
+        "endLine": 108,
+        "endChar": 11
+      },
+      "revId": "d92d026789b1f34c5e2776413c773216b7fe3a90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
