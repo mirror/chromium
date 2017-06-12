@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e84d1116_46d8cdb3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-12T13:35:54Z",
+      "side": 1,
+      "message": "This coming in a later CL?",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f405110c_a802ef59",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-12T13:35:54Z",
+      "side": 1,
+      "message": "Nit: Needs to move up. (Hmm... I thought I had caught all of these, but I don\u0027t see it in my previous comments).",
+      "range": {
+        "startLine": 238,
+        "startChar": 34,
+        "endLine": 238,
+        "endChar": 50
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19a780a5_bc71febd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-12T13:35:54Z",
+      "side": 1,
+      "message": "Nit: Move up.",
+      "range": {
+        "startLine": 502,
+        "startChar": 16,
+        "endLine": 502,
+        "endChar": 33
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af2a71c6_6ec865bd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-12T13:35:54Z",
+      "side": 1,
+      "message": "Nit: Move up.",
+      "range": {
+        "startLine": 731,
+        "startChar": 33,
+        "endLine": 731,
+        "endChar": 43
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
