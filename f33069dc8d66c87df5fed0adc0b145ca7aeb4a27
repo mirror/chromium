@@ -1,0 +1,289 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6b841c0_dbc8f88f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Could you add BUG\u003d line here?",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "692778a7_009cf441",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 796,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Could we not have this here, and instead hide it inside the class instead?",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3cb99d2_bc2111af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Should this instead be before mUIInitialized?",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3545ed2_7d28ee72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2187,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Nit: Unnecessary final",
+      "range": {
+        "startLine": 2187,
+        "startChar": 8,
+        "endLine": 2187,
+        "endChar": 14
+      },
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ce8c81_a102f316",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "I don\u0027t think this was intentional?",
+      "range": {
+        "startLine": 2196,
+        "startChar": 8,
+        "endLine": 2196,
+        "endChar": 11
+      },
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e66ab8a_d63391b5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "This is supposed to be for test only code, so we shouldn\u0027t include this here. (Just use assert below)",
+      "range": {
+        "startLine": 10,
+        "startChar": 7,
+        "endLine": 10,
+        "endChar": 12
+      },
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bb445de_b2afe2f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Could you add a comment as to what this tracks, and also mention that it is only OK to access it on the UI thread?",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e6e0220_284bfe72",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Nit: This can be final, and then you can remove the \u0027s\u0027 prefix.",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 34
+      },
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b809205_9b6a2560",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Nit: This is unnecessary.",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc3457a5_d656c087",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Just use:\n\n  assert ThreadUtils.runningOnUiThread();",
+      "range": {
+        "startLine": 33,
+        "startChar": 8,
+        "endLine": 33,
+        "endChar": 26
+      },
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b6cbf9f_31c22aeb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Use assert as above",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3405a3a0_57758032",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "This is happening on a different thread than startMonitoring() and stopMonitoring() which means it\u0027s not thread safe.\nI think you just want to swap the content of onEvent() and postUnUi() basically (and rename the latter to onEventOnUiThread() ). Then in the run() method you\u0027d call onEventOnUiThread() and the last line or so would be mDelegate.onScreenshotTaken();",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e33b738_c6e7b815",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Use assert as above.",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108f546f_77a60991",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "Nit: Make final and remove s-prefix.",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe5f324d_455ba9f1",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-12T22:24:10Z",
+      "side": 1,
+      "message": "This is initialized to 0 by default. Same below.",
+      "revId": "f33069dc8d66c87df5fed0adc0b145ca7aeb4a27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
