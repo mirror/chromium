@@ -1584,7 +1584,6 @@ split_static_library("browser") {
     "//components/rappor:rappor_recorder",
     "//components/renderer_context_menu",
     "//components/resources",
-    "//components/safe_browsing_db",
     "//components/safe_json",
     "//components/search",
     "//components/search_engines",
@@ -2399,6 +2398,7 @@ split_static_library("browser") {
         "safe_browsing/two_phase_uploader.cc",
         "safe_browsing/two_phase_uploader.h",
       ]
+      deps += [ "//components/safe_browsing_db:safe_browsing_db" ]
       if (is_win) {
         deps += [ "//chrome/browser/safe_browsing/incident_reporting:state_store_data_proto" ]
       }
@@ -3276,7 +3276,6 @@ split_static_library("browser") {
       "//components/payments/content/android",
       "//components/precache/content",
       "//components/resources:components_resources",
-      "//components/safe_browsing_db",
       "//components/toolbar",
       "//components/web_contents_delegate_android",
       "//rlz:rlz_utils",
