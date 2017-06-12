@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "050d2cde_413642d4",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-12T08:54:28Z",
+      "side": 1,
+      "message": "It does seem odd that if max_throttling_delay_in_seconds is -1 we use this but we use base::nullopt if it\u0027s 0.  Why not constants for both? Or neither :)",
+      "parentUuid": "2f5ccaa3_7bb6505a",
+      "range": {
+        "startLine": 33,
+        "startChar": 42,
+        "endLine": 33,
+        "endChar": 78
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f48dc0d5_b20d53a7",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
         "patchSetId": 5
@@ -83,6 +107,30 @@
       "writtenOn": "2017-06-10T00:06:48Z",
       "side": 1,
       "message": "I\u0027d suggest building the default handling into GetDoubleParamterFromMap, by providing a default argument and just having the function return it instead of -1.",
+      "range": {
+        "startLine": 71,
+        "startChar": 6,
+        "endLine": 71,
+        "endChar": 32
+      },
+      "revId": "add089707976dfdbe11d448f4e697289a1879a7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfb1bdc4_b21df9ff",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_view_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-12T08:54:28Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "f48dc0d5_b20d53a7",
       "range": {
         "startLine": 71,
         "startChar": 6,
