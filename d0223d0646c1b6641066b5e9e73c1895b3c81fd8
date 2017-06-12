@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65b5da8b_80ed1ced",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "doesn\u0027t this create a race? it *seems* safe to assume that there will be some module events within the first 10 seconds of this object\u0027s lifetime, but why not be explicit and add a bool member that means \"freshly created, not yet processing\"? on the other hand, what would be the downside of sending an OnModuleDatabaseIdle() to observers when they\u0027re added during this initial phase?",
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7387e9d2_aac396c4",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "doesn\u0027t -\u003e don\u0027t",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e0eb935_c38263ea",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "a -\u003e an",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adacc399_61ddf893",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "this function name is a bit of a misnomer due to the way it\u0027s being called. it\u0027s called a) when the timer expires to check to see if the db is truly idle, and b) when the last module module inspection completes to notify observers. i think it\u0027d be a little more clear to split this into two:\n- OnDelayExpired: if (IsIdle()) EnterIdleState();\n- EnterIdleState: notify all observers\nand then line 399 becomes a call to EnterIdleState()\n\nthen, i think it\u0027d help to have a comment in OnDelayExpired that says something like:\n  // Notify the observers if there are no outstanding module inspections.\n\nand a comment up before line 398 that says:\n\n  // Notify the observers if this was the last outstanding module inspection and the delay has already expired.\n\nor something like that.",
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10b107f0_3c6b361f",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "nit: \"events have happened\" or maybe \"events have been observed\"",
+      "range": {
+        "startLine": 70,
+        "startChar": 50,
+        "endLine": 70,
+        "endChar": 65
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b372ec22_f55ac54c",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "please document that OnModuleDatabaseIdle will be called if relevant.",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fc39a1a_adbbd3ba",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "base::DelayTimer seems to fit the use here perfectly. what do you think?",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 13
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30b84a5b_5613fbfc",
+        "filename": "chrome/browser/conflicts/module_inspector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T09:08:16Z",
+      "side": 1,
+      "message": "an -\u003e a",
+      "range": {
+        "startLine": 75,
+        "startChar": 42,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
