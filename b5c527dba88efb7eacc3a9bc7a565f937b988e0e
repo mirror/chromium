@@ -22,6 +22,30 @@
       "revId": "b5c527dba88efb7eacc3a9bc7a565f937b988e0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8542fdbd_2dcab9b2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 413,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-12T11:59:49Z",
+      "side": 0,
+      "message": "I imagine the ImageFetcher will have a lot more requests to serve than a view holder and storing only one request at a time (in the image fetcher) will not have the right behaviour.It will cancel thumbnail requests every time a new request comes in, but the new request might be from a different view holder.\n\nI will store the requests per view holder and cancel them when there is a new article for the current view holder.",
+      "parentUuid": "876cceba_ba932a9a",
+      "range": {
+        "startLine": 413,
+        "startChar": 12,
+        "endLine": 413,
+        "endChar": 38
+      },
+      "revId": "b5c527dba88efb7eacc3a9bc7a565f937b988e0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
