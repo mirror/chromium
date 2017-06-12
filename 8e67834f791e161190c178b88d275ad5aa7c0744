@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "0acfb5b9_1b8c28cc",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:44:39Z",
+      "side": 1,
+      "message": "Removing the need for these headers would be great. However, we\u0027re not really improving anything unless we can pull those changes directly into third_party. I\u0027m not sure what the upstream/master branch split is about. Why do we have an upstream branch that is ahead of master? What\u0027s preventing master from being moved forward and track upstream? dbehr@?",
+      "parentUuid": "a24b22da_74a980c9",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb03974e_4a74d7da",
         "filename": "third_party/libsync/BUILD.gn",
         "patchSetId": 1
