@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d585485e_0d4ae249",
+        "filename": "third_party/WebKit/Source/bindings/IDLExtendedAttributes.md",
+        "patchSetId": 5
+      },
+      "lineNbr": 1469,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:47:28Z",
+      "side": 1,
+      "message": "method or attributes \u003d\u003e method or attribute",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f7d1c76_0ce385a2",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:47:28Z",
+      "side": 1,
+      "message": "RuntimeStatsCounter \u003d\u003e RuntimeCallStatusCounter",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee9f8560_40e75576",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:47:28Z",
+      "side": 1,
+      "message": "I\u0027d prefer not introducing the attribute/method counter until we\u0027re sure it\u0027s useful.\n\nThere are three kinds of overheads in bindings:\n\n1) The overhead to call V8 bindings from V8\n2) The overhead to call C++ bindings from V8 bindings\n3) The overhead to call C++ bindings\n\nThis CL is measuring 2) and 3) by the binding counter and 3) by the attribute/method counter.\n\nI\u0027d suggest starting with one counter that measures 2) and 3) and see how it goes before introducing too much counters to the code base.",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
