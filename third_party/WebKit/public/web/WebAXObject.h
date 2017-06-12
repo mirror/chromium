@@ -44,6 +44,7 @@ class SkMatrix44;
 namespace blink {
 
 class AXObjectImpl;
+class Node;
 class ScopedAXObjectCache;
 class WebAXObject;
 class WebNode;
@@ -94,6 +95,7 @@ class WebAXObject {
     return *this;
   }
 
+  BLINK_EXPORT static WebAXObject FromNode(const Node&);
   BLINK_EXPORT static WebAXObject FromWebNode(const WebNode&);
   BLINK_EXPORT static WebAXObject FromWebView(WebView&);
   BLINK_EXPORT static WebAXObject FromWebDocument(const WebDocument&);

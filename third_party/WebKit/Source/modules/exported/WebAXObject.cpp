@@ -1551,6 +1551,13 @@ WebAXObject::operator AXObjectImpl*() const {
 }
 
 // static
+WebAXObject WebAXObject::FromNode(const Node& node) {
+  const Document& doc = node.GetDocument();
+  AXObjectCacheBase* cache = ToAXObjectCacheBase(doc.ExistingAXObjectCache());
+  return cache ? WebAXObject(cache->Get(&node)) : WebAXObject();
+}
+
+// static
 WebAXObject WebAXObject::FromWebNode(const WebNode& web_node) {
   WebDocument web_document = web_node.GetDocument();
   const Document* doc = web_document.ConstUnwrap<Document>();
