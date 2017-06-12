@@ -2917,6 +2917,15 @@ group("telemetry_perf_tests") {
   ]
 }
 
+# Difference between this and telemetry_perf_tests is that this runs a devil
+# script before the build, to remove the system webview. See
+# //testing/buildbot/gn_isolate_map.pyl
+group("telemetry_perf_webview_tests") {
+  deps = [
+    "//chrome/test:telemetry_perf_tests",
+  ]
+}
+
 group("angle_perftests") {
   testonly = true
   if (is_win || is_linux) {
