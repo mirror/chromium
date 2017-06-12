@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e0cff6_698c90bb",
+        "filename": "base/task_scheduler/sequence.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T19:57:40Z",
+      "side": 1,
+      "message": "I think we can inline this as\n\nSequenceLocalStorageMap* sequence_local_storage() {\n  return \u0026sequence_local_storage_;\n}",
+      "revId": "1c5443871959dccb3d0ae42c5d0ef35b4e2db8e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
