@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce2ada4c_2ce5aa26",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-12T12:27:29Z",
+      "side": 1,
+      "message": "As discussed offline, I prefer to have the call that deletes |this| remain the last code executed in this method. The bindings layer ensures that this method will have finished executing before the consumer receives the client-side callback triggered by calling |consumer_callback_| here.",
+      "parentUuid": "c985f8c5_283c08dd",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "52ee9be335f18f01e4ec5b87bc9640c4440500ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b39b3c91_27320d80",
         "filename": "services/identity/identity_manager.h",
         "patchSetId": 10
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T11:06:06Z",
       "side": 1,
       "message": "It may be fine to pass the OAuth2TokenService instead of the PO2TS here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "52ee9be335f18f01e4ec5b87bc9640c4440500ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51599af9_1b6efd3e",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-12T12:27:29Z",
+      "side": 1,
+      "message": "I think that\u0027s technically correct at this point. I\u0027m going to leave it as PO2TS though as the Identity Service is really conceptually wrapping //components/signin, so I think this is more clear.",
+      "parentUuid": "b39b3c91_27320d80",
       "range": {
         "startLine": 36,
         "startChar": 23,
