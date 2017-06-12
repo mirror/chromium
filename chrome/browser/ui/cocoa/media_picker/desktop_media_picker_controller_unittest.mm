@@ -78,6 +78,9 @@ class DesktopMediaPickerControllerTest : public CocoaTest {
   void SetUp() override {
     CocoaTest::SetUp();
 
+    std::vector<DesktopMediaID::Type> source_types = {
+        DesktopMediaID::TYPE_SCREEN, DesktopMediaID::TYPE_WINDOW,
+        DesktopMediaID::TYPE_WEB_CONTENTS};
     screen_list_ = new FakeDesktopMediaList();
     window_list_ = new FakeDesktopMediaList();
     tab_list_ = new FakeDesktopMediaList();
@@ -94,6 +97,7 @@ class DesktopMediaPickerControllerTest : public CocoaTest {
                   callback:callback
                    appName:base::ASCIIToUTF16("Screenshare Test")
                 targetName:base::ASCIIToUTF16("https://foo.com")
+               sourceTypes:source_types
               requestAudio:true]);
   }
 

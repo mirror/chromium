@@ -29,6 +29,8 @@
 #include "third_party/webrtc/modules/desktop_capture/desktop_capturer.h"
 #include "ui/base/l10n/l10n_util.h"
 
+using content::DesktopMediaID;
+
 namespace extensions {
 
 namespace {
@@ -85,6 +87,8 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
   bool show_tabs = false;
   bool request_audio = false;
 
+  std::vector<DesktopMediaID::Type> source_types;
+
   for (auto source_type : sources) {
     switch (source_type) {
       case api::desktop_capture::DESKTOP_CAPTURE_SOURCE_TYPE_NONE:
@@ -92,16 +96,19 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
         return false;
 
       case api::desktop_capture::DESKTOP_CAPTURE_SOURCE_TYPE_SCREEN:
+        source_types.push_back(DesktopMediaID::TYPE_SCREEN);
         show_screens = true;
         break;
 
       case api::desktop_capture::DESKTOP_CAPTURE_SOURCE_TYPE_WINDOW:
+        source_types.push_back(DesktopMediaID::TYPE_WINDOW);
         show_windows = true;
         break;
 
       case api::desktop_capture::DESKTOP_CAPTURE_SOURCE_TYPE_TAB:
         if (!base::CommandLine::ForCurrentProcess()->HasSwitch(
             extensions::switches::kDisableTabForDesktopShare)) {
+          source_types.push_back(DesktopMediaID::TYPE_WEB_CONTENTS);
           show_tabs = true;
         }
         break;
@@ -174,6 +181,7 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
       tab_list = base::MakeUnique<TabDesktopMediaList>();
 
     DCHECK(screen_list || window_list || tab_list);
+    DCHECK(!source_types.empty());
 
     // DesktopMediaPicker is implemented only for Windows, OSX and
     // Aura Linux builds.
@@ -191,7 +199,7 @@ bool DesktopCaptureChooseDesktopMediaFunctionBase::Execute(
 
   picker_->Show(web_contents, parent_window, parent_window,
                 base::UTF8ToUTF16(GetCallerDisplayName()), target_name,
-                std::move(screen_list), std::move(window_list),
+                source_types, std::move(screen_list), std::move(window_list),
                 std::move(tab_list), request_audio, callback);
   origin_ = origin;
   return true;
