@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b0d5d822_8305068c",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T11:51:20Z",
+      "side": 1,
+      "message": "We might want to change this interface so that you can tell which frame sent you the message. For another patch in any case.",
+      "range": {
+        "startLine": 118,
+        "startChar": 7,
+        "endLine": 118,
+        "endChar": 23
+      },
+      "revId": "bf2c8e5b95de528615e387601b5f06ae564505a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
