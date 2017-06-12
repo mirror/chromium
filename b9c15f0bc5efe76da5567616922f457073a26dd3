@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc258f23_eb269ab5",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T01:54:40Z",
+      "side": 1,
+      "message": "Can we probably remove this class entirely (in a follow-up CL)?",
+      "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
