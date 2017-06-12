@@ -76,6 +76,11 @@ static const JNINativeMethod kMethodsFoo[] = {
 };
 
 static bool RegisterNativesImpl(JNIEnv* env) {
+
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool RegisterNativeOrgChromiumFooFoo(JNIEnv* env) {
   if (jni_generator::ShouldSkipJniRegistration(false))
     return true;
 
