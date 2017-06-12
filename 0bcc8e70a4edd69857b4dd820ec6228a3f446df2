@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f1289111_a2c66324",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "ChromeAnimation does this automatically. TransitionDrawable is part of the Android framework and doesn\u0027t, and it\u0027s not trivially possible to subclass it to achieve that behavior, so we would have to create a parallel implementation. I\u0027m aware that this is somewhat brittle, but there seems to be only one other use of TransitionDrawable so far, so I\u0027m not sure it would be worth the effort now. If that should change in the future, I could definitely see the balance shifting towards reimplementation though.\n\nOr as something halfway in the middle, I could add a convenience method that returns the right drawable (either a TransitionDrawable with the scaled duration or a BitmapDrawable)?",
+      "parentUuid": "1afd7036_e0f9b8be",
+      "range": {
+        "startLine": 446,
+        "startChar": 44,
+        "endLine": 446,
+        "endChar": 66
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8a2dbcb2_d240bd0b",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T15:03:35Z",
       "side": 1,
       "message": "Likewise, are we going to have to do this manually for every animation? It seems easy to forget. Will this not just work if the duration is set to 0?",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2dc3e8f7_442db8a2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Sadly, it looks like it would draw at least one frame with the initial drawable. There is also a division by zero if the duration is zero -- which might work out nevertheless (as the resulting value is only compared and the floating point standard can handle positive and negative infinity), but would still seem very... icky :)",
+      "parentUuid": "8a2dbcb2_d240bd0b",
       "range": {
         "startLine": 447,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "56f48d6f_6ac3297c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ec5df590_67db6369",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 61
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f115ac53_e70cf42e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-12T15:03:35Z",
       "side": 1,
       "message": "I think (especially with Anthony\u0027s changes) that it would be good to create a MockData class with things like the pictures and realistic data for snippets. But that\u0027s future work.",
+      "range": {
+        "startLine": 182,
+        "startChar": 67,
+        "endLine": 182,
+        "endChar": 74
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a63270_e012dea4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Yeah, I have some more cleanups planned for these tests (e.g. rendering cards fully individually). Stay tuned :)",
+      "parentUuid": "f115ac53_e70cf42e",
       "range": {
         "startLine": 182,
         "startChar": 67,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c729ef5c_3dabbc25",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Hm… OTOH, it\u0027s not that complicated to just create a ContextMenuManager here, and it means we don\u0027t need to add a code path only for tests. We can take a look in the next CL? :)",
+      "parentUuid": "c0a6ce08_b811c5aa",
+      "range": {
+        "startLine": 201,
+        "startChar": 46,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ac7b66_2edeb280",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
         "patchSetId": 5
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-12T15:03:35Z",
       "side": 1,
       "message": "Where did you come across this?\n\nAlso, what happens when you throw an exception on the UI thread? Especially when you throw it on the UI thread from \"ThreadUtils.runOnUiThreadBlockingNoException\"?",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 51
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3952bbe8_28defcf5",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "\u003e Where did you come across this?\n\nIf one tries to render a View that isn\u0027t attached to anything, its dimensions will be zero, and then we get a more confusing exception when trying to create a 0x0 Bitmap.\n\n\u003e Also, what happens when you throw an exception on the UI thread? Especially when you throw it on the UI thread from \"ThreadUtils.runOnUiThreadBlockingNoException\"?\n\nThe UI thread exception is turned into an ExecutionException, which runOnUiThreadBlockingNoException() turns into a RuntimeException that\u0027s thrown on the instrumentation test. (IOW, ...NoException doesn\u0027t mean it doesn\u0027t catch exceptions; it means it doesn\u0027t make clients handle exceptions, by only throwing unchecked exceptions.)",
+      "parentUuid": "17ac7b66_2edeb280",
       "range": {
         "startLine": 138,
         "startChar": 30,
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "e9d9f0d3_7e50c428",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5f2b235_220545fb",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0998b64f_9eebda34",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
         "patchSetId": 5
@@ -174,6 +342,30 @@
       "writtenOn": "2017-06-12T15:03:35Z",
       "side": 1,
       "message": "I\u0027m not sure of the utility of this being a separate method - it seems like it would be simpler if it\u0027s inline. But that could just be personal preference.",
+      "range": {
+        "startLine": 184,
+        "startChar": 19,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dc3b27c_d798b337",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-12T17:54:25Z",
+      "side": 1,
+      "message": "Yeah, it allowed me to extract the ID as a parameter and early-return a specific favicon.",
+      "parentUuid": "0998b64f_9eebda34",
       "range": {
         "startLine": 184,
         "startChar": 19,
