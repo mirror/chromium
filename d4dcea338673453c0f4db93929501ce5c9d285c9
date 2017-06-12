@@ -63,6 +63,24 @@
       "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95bca213_36016146",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-12T20:17:36Z",
+      "side": 1,
+      "message": "I was hoping we would not call it in case AreCrossProcessFramesPossible() returned false.\n\nIf we do, I can add AreCrossProcessFramesPossible() check before calling into Client::DoesSiteRequireDedicatedProcess.",
+      "parentUuid": "b70278d4_8d677a04",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
