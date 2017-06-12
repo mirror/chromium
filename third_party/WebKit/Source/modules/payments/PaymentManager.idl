@@ -4,10 +4,17 @@
 
 // https://w3c.github.io/webpayments-payment-apps-api/#idl-def-paymentappmanager
 
+enum PaymentHandlerPermission {
+    "default",
+    "denied",
+    "granted"
+};
+
 [
     RuntimeEnabled=PaymentApp,
     ConstructorCallWith=ExecutionContext,
     DependentLifetime,
 ] interface PaymentManager {
     readonly attribute PaymentInstruments instruments;
+    [CallWith=ScriptState] Promise<PaymentHandlerPermission> requestPermission();
 };

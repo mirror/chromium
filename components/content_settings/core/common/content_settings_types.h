@@ -67,6 +67,8 @@ enum ContentSettingsType {
   // verdicts of each origin.
   CONTENT_SETTINGS_TYPE_PASSWORD_PROTECTION,
 
+  CONTENT_SETTINGS_TYPE_PAYMENT_HANDLER,
+
   // WARNING: This enum is going to be removed soon. Do not depend on NUM_TYPES.
   CONTENT_SETTINGS_NUM_TYPES_DO_NOT_USE,
 };

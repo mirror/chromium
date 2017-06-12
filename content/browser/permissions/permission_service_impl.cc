@@ -54,6 +54,8 @@ PermissionType PermissionDescriptorToPermissionType(
       return PermissionType::VIDEO_CAPTURE;
     case PermissionName::BACKGROUND_SYNC:
       return PermissionType::BACKGROUND_SYNC;
+    case PermissionName::PAYMENT_HANDLER:
+      return PermissionType::PAYMENT_HANDLER;
   }
 
   NOTREACHED();
@@ -78,6 +80,7 @@ blink::WebFeaturePolicyFeature PermissionTypeToFeaturePolicyFeature(
     case PermissionType::NOTIFICATIONS:
     case PermissionType::DURABLE_STORAGE:
     case PermissionType::BACKGROUND_SYNC:
+    case PermissionType::PAYMENT_HANDLER:
     case PermissionType::FLASH:
     case PermissionType::NUM:
       // These aren't exposed by feature policy.

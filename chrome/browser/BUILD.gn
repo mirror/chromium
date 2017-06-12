@@ -893,6 +893,8 @@ split_static_library("browser") {
     "password_manager/password_store_mac.h",
     "password_manager/password_store_win.cc",
     "password_manager/password_store_win.h",
+    "payments/payment_handler_permission_context.cc",
+    "payments/payment_handler_permission_context.h",
     "payments/ssl_validity_checker.cc",
     "payments/ssl_validity_checker.h",
     "performance_monitor/performance_monitor.cc",

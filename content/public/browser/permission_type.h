@@ -24,6 +24,7 @@ enum class PermissionType {
   VIDEO_CAPTURE = 9,
   BACKGROUND_SYNC = 10,
   FLASH = 11,
+  PAYMENT_HANDLER = 12,
 
   // Always keep this at the end.
   NUM,
