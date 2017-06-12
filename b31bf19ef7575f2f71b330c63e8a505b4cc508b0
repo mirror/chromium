@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c4ce4bdc_bfe36298",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-12T20:47:20Z",
+      "side": 1,
+      "message": "Just iterate and clear",
+      "revId": "b31bf19ef7575f2f71b330c63e8a505b4cc508b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
