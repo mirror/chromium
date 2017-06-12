@@ -27,6 +27,7 @@ class PRESUBMITTest(unittest.TestCase):
     self.assertEqual(expected_files,
                      PRESUBMIT._CreateIntegrationTestArgs(input_files))
     expected_files.append(os.path.join('apps', 'fileSystem.html'))
+    # TODO: wtf?
     input_files.append(os.path.join(EXTENSIONS_PATH, 'api', 'file_system.idl'))
     self.assertEqual(expected_files,
                      PRESUBMIT._CreateIntegrationTestArgs(input_files))
