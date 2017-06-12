@@ -227,6 +227,9 @@ class LoggingTestCase(unittest.TestCase):
         """Return the current list of log messages."""
         return self._log.messages()
 
+    def assertInLogs(self):
+        return ''.join(self._log.messages())
+
     # FIXME: Add a clearMessages() method for cases where the caller
     #        deliberately doesn't want to assert every message.
 
