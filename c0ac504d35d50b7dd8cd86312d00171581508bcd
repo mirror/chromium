@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bba1a4a2_d4bebb10",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T00:58:41Z",
+      "side": 1,
+      "message": "Hmm. I\u0027m confused.\n\nBefore this CL, how are these Events kept alive by Oilpan? There should have been a path to keep alive the Events by Oilpan. Then we just need to wrapper-trace those Events using the path. (i.e., we won\u0027t need to introduce firing_events_.)",
+      "revId": "c0ac504d35d50b7dd8cd86312d00171581508bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
