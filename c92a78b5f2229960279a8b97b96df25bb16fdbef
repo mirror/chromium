@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ca6b794_dd056164",
+        "filename": "components/safe_browsing_db/database_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:18:59Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc115d42_ca7f7990",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:18:59Z",
+      "side": 1,
+      "message": "nit: This function doesn\u0027t know about Sequences, so it would be preferable not to include that in the name - just VerifyChecksums(...).",
+      "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa81524_2befca35",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:18:59Z",
+      "side": 1,
+      "message": "This is a very succinct explanation of an ugly construct - thanks for adding the comment. :)\n\nRe the construct: If the V4Stores are used on the DB thread then could we break them out to be owned by a V4Database::Core object that would \"live\" on the DB thread itself, so that VerifyChecksum() would simply delegate to that object, and all the work would occur there without this subtlety?",
+      "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
