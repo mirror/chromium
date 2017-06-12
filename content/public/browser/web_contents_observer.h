@@ -414,6 +414,7 @@ class CONTENT_EXPORT WebContentsObserver : public IPC::Listener,
                                    const MediaPlayerId& id) {}
   virtual void MediaStoppedPlaying(const MediaPlayerInfo& video_type,
                                    const MediaPlayerId& id) {}
+  virtual void MediaMutedChanged(const MediaPlayerId& id, bool muted) {}
 
   // Invoked when the renderer process changes the page scale factor.
   virtual void OnPageScaleFactorChanged(float page_scale_factor) {}

@@ -87,6 +87,8 @@ bool MediaWebContentsObserver::OnMessageReceived(
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMediaPaused, OnMediaPaused)
     IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMediaPlaying,
                         OnMediaPlaying)
+    IPC_MESSAGE_HANDLER(MediaPlayerDelegateHostMsg_OnMutedChanged,
+                        OnMediaMutedChanged)
     IPC_MESSAGE_HANDLER(
         MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChange,
         OnMediaEffectivelyFullscreenChange)
@@ -289,6 +291,14 @@ void MediaWebContentsObserver::MaybeCancelVideoLock() {
   // If there are no more video players, cancel the video wake lock.
   if (active_video_players_.empty())
     CancelVideoLock();
+}
+
+void MediaWebContentsObserver::OnMediaMutedChanged(
+    RenderFrameHost* render_frame_host,
+    int delegate_id,
+    bool muted) {
+  const MediaPlayerId id(render_frame_host, delegate_id);
+  web_contents()->MediaMutedChanged(id, muted);
 }
 
 void MediaWebContentsObserver::AddMediaPlayerEntry(

@@ -56,6 +56,10 @@ IPC_MESSAGE_ROUTED5(MediaPlayerDelegateHostMsg_OnMediaPlaying,
                     bool /* is_remote */,
                     media::MediaContentType /* media_content_type */)
 
+IPC_MESSAGE_ROUTED2(MediaPlayerDelegateHostMsg_OnMutedChanged,
+                    int /* delegate_id, distinguishes instances */,
+                    bool /* the new muted state */)
+
 IPC_MESSAGE_ROUTED2(
     MediaPlayerDelegateHostMsg_OnMediaEffectivelyFullscreenChange,
     int /* delegate_id */,

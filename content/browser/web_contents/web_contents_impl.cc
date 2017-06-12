@@ -5726,4 +5726,17 @@ void WebContentsImpl::SetOpenerForNewContents(FrameTreeNode* opener,
   }
 }
 
+void WebContentsImpl::MediaMutedChanged(
+    const WebContentsObserver::MediaPlayerId& id,
+    bool muted) {
+  cached_media_muted_[id] = muted;
+
+  for (auto& observer : observers_)
+    observer.MediaMutedChanged(id, muted);
+}
+
+const WebContents::MediaMutedMap& WebContentsImpl::GetMediaMuted() {
+  return cached_media_muted_;
+}
+
 }  // namespace content
