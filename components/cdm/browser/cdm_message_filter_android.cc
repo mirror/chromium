@@ -11,6 +11,8 @@
 
 #include "base/macros.h"
 #include "components/cdm/common/cdm_messages_android.h"
+#include "content/public/browser/android/android_overlay_provider.h"
+#include "content/public/browser/browser_thread.h"
 #include "ipc/ipc_message_macros.h"
 #include "media/base/android/media_codec_util.h"
 #include "media/base/android/media_drm_bridge.h"
@@ -91,7 +93,7 @@ static SupportedCodecs GetSupportedCodecs(
 
 CdmMessageFilterAndroid::CdmMessageFilterAndroid(bool can_use_secure_codecs)
     : BrowserMessageFilter(EncryptedMediaMsgStart),
-      can_use_secure_codecs_(can_use_secure_codecs) {}
+      force_to_support_secure_codecs_(can_use_secure_codecs) {}
 
 CdmMessageFilterAndroid::~CdmMessageFilterAndroid() {}
 
@@ -133,8 +135,12 @@ void CdmMessageFilterAndroid::OnQueryKeySystemSupport(
   DCHECK(request.codecs & media::EME_CODEC_ALL) << "unrecognized codec";
   response->key_system = request.key_system;
   response->non_secure_codecs = GetSupportedCodecs(request, false);
-  if (can_use_secure_codecs_)
+
+  if (force_to_support_secure_codecs_ ||
+      content::AndroidOverlayProvider::GetInstance()->AreOverlaysSupported()) {
+    DVLOG(1) << "Rendering the output of secure codecs is supported!";
     response->secure_codecs = GetSupportedCodecs(request, true);
+  }
 
   response->is_persistent_license_supported =
       MediaDrmBridge::IsPersistentLicenseTypeSupported(request.key_system);
