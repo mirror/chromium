@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c613ea0_feed1be8",
+        "filename": "testing/android/empty_apk/empty_apk.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-12T16:28:17Z",
+      "side": 1,
+      "message": "wait, why is this a template and not just a target called empty_apk that is an android_apk target.",
+      "revId": "41df81a7d6ca47ebdf071acb187d3eece48580d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
