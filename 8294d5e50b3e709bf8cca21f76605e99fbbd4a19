@@ -81,6 +81,24 @@
       "revId": "8294d5e50b3e709bf8cca21f76605e99fbbd4a19",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "60d65e71_5c773aed",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1180350
+      },
+      "writtenOn": "2017-06-12T15:46:51Z",
+      "side": 1,
+      "message": "Just like to express my +1 to Chris\u0027 comments. We should avoid \u0027helper\u0027 suffixes wherever possible, as they don\u0027t bring a lot of meaning and create problems with code discovery / organization.\nThat said, looks like a nice change!",
+      "parentUuid": "0d3ddc15_eb89fc4e",
+      "revId": "8294d5e50b3e709bf8cca21f76605e99fbbd4a19",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
