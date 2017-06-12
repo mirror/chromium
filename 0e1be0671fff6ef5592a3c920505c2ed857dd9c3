@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea902107_cd38ed26",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-12T12:51:47Z",
+      "side": 1,
+      "message": "Are we happy with this |shutdown| pattern?  Should we try to adopt across the codebase, including in the new architecture?\n\nShould every ObjC object have a shutdown method, if it contains (weak?) pointers to a C++ object?",
+      "revId": "0e1be0671fff6ef5592a3c920505c2ed857dd9c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
