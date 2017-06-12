@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e4e9987_618ad4c2",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "rm",
+      "range": {
+        "startLine": 29,
+        "startChar": 36,
+        "endLine": 29,
+        "endChar": 37
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35eb83c1_3fa8eb59",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "+ \"as a member \"",
+      "range": {
+        "startLine": 33,
+        "startChar": 68,
+        "endLine": 33,
+        "endChar": 69
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f0e3e8_4accb6d6",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "Turn this into an example? (or remove it since it\u0027s already hinted at the top?) i.e. this isn\u0027t a property of this API per se",
+      "range": {
+        "startLine": 62,
+        "startChar": 0,
+        "endLine": 65,
+        "endChar": 67
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a020e364_06c175a1",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "It\u0027s weird to have the definition come after its use in C++ (I\u0027m surprised this compiles in fact).\n\nMove 2 above 1 and move both above the 3 macros that use them.",
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe640ea_08bf9657",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "Are you sure you need 2 macros to do this? I\u0027ve seen this be required when you want to generate a string but to generate a variable name I think you could just\n\n#define LAZY_TASK_RUNNER_CONCATENATE(a, b) a##b\n\nThat\u0027s exactly what ## does IIRC.",
+      "range": {
+        "startLine": 125,
+        "startChar": 8,
+        "endLine": 125,
+        "endChar": 48
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48c39bc_6ab36695",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "above",
+      "range": {
+        "startLine": 130,
+        "startChar": 20,
+        "endLine": 130,
+        "endChar": 43
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ac6bf25_60eeb16c",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "I\u0027d say you should still keep the previous meta comment this method had (i.e. that thread_mode is ignored if not in SingleThread mode)",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 134,
+        "endChar": 50
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1dff8d_c609ed72",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "+ \"ScopedLazyTaskRunnerList must be instantiated before any LazyTaskRunner become active (invoke Get()).\"",
+      "range": {
+        "startLine": 174,
+        "startChar": 12,
+        "endLine": 174,
+        "endChar": 13
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cffdba0e_59fe5249",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "What causes this to be false? The test is happening on a single thread... not sure how it exercices this?",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 14
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4655c06c_735ce530",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:58:18Z",
+      "side": 1,
+      "message": "scoped_task_environment_",
+      "range": {
+        "startLine": 119,
+        "startChar": 30,
+        "endLine": 119,
+        "endChar": 53
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
