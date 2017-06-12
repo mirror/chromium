@@ -20,12 +20,15 @@
 #include "build/build_config.h"
 #include "third_party/icu/source/common/unicode/putil.h"
 #include "third_party/icu/source/common/unicode/udata.h"
-#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+#if (defined(OS_LINUX) && !defined(OS_CHROMEOS)) || defined(OS_ANDROID)
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 #endif
 
 #if defined(OS_ANDROID)
+#include <sys/system_properties.h>
+
 #include "base/android/apk_assets.h"
+#include "base/android/timezone_utils.h"
 #endif
 
 #if defined(OS_IOS)
@@ -188,6 +191,25 @@ bool InitializeICUWithFileDescriptorInternal(
     g_debug_icu_load = 3;  // To debug http://crbug.com/445616.
     g_debug_icu_last_error = err;
   }
+#if defined(OS_ANDROID)
+  else {
+// On Android, we can't leave it up to ICU to set the default timezone
+// because ICU's timezone detection does not work in many timezones (e.g.
+// Australia/Sydney, Asia/Seoul, Europe/Paris ). Use JNI to detect the host
+// timezone and set the ICU default timezone accordingly in advance of
+// actual use. See crbug.com/722821 and
+// https://ssl.icu-project.org/trac/ticket/13208 .
+#if 0
+    base::string16 timezone_id = base::android::GetDefaultTimeZoneId();
+#endif
+    char value[PROP_VALUE_MAX + 1];
+    int length = __system_property_get("persist.sys.timezone", value);
+    if (length != 0) {
+      icu::TimeZone::adoptDefault(icu::TimeZone::createTimeZone(
+          icu::UnicodeString(value, length, US_INV)));
+    }
+  }
+#endif
   return err == U_ZERO_ERROR;
 }
 #endif  // ICU_UTIL_DATA_IMPL == ICU_UTIL_DATA_FILE
