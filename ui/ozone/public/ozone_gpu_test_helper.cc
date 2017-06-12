@@ -120,6 +120,9 @@ bool OzoneGpuTestHelper::Initialize(
                             base::Unretained(fake_gpu_process_host_.get())));
   io_helper_thread_->FlushForTesting();
 
+  ui::OzonePlatform::GetInstance()
+    ->GetGpuPlatformSupportHost()
+    ->OnChannelEstablished();
   return true;
 }
 
