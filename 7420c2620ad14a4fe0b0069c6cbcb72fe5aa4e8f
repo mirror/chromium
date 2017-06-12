@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "55eef0a3_e758c425",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T19:20:06Z",
+      "side": 1,
+      "message": "I think I did what you asked? But better double check since all this stuff is still pretty magic to me, and I\u0027m not sure what the various edges actually mean...",
+      "parentUuid": "37088d6d_35d5ce39",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e14927dd_f5f0e5ea",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "4c5215c2_a6df03e4",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T19:20:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e14927dd_f5f0e5ea",
+      "range": {
+        "startLine": 251,
+        "startChar": 42,
+        "endLine": 251,
+        "endChar": 55
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1449b411_7f17000e",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "fa9eb4d3_52809c57",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T19:20:06Z",
+      "side": 1,
+      "message": "Done (I think? mad in the last line would be the value returned by pmd-\u003eCreateAllocatorDump I assume?)",
+      "parentUuid": "1449b411_7f17000e",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb188734_52017a70",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -70,6 +130,30 @@
       "writtenOn": "2017-06-08T23:52:49Z",
       "side": 1,
       "message": "It will be good to account this with URL instead of ptr. But the background case canont accept URLs. So, we should create different dumps for background case and normal case.\n\nCould you please refactor the code little bit and make this happen?",
+      "range": {
+        "startLine": 369,
+        "startChar": 43,
+        "endLine": 369,
+        "endChar": 50
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34b1cc88_d6f9721d",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T19:20:06Z",
+      "side": 1,
+      "message": "Not sure what you mean with this? There is no URL. There is one leveldb instance shared for all localstorage usage in the same storage partition. The best I could do would be to annotate it with the path of the storage partition (if there is a path, which isn\u0027t guaranteed for for example incognito storage partitions).",
+      "parentUuid": "fb188734_52017a70",
       "range": {
         "startLine": 369,
         "startChar": 43,
@@ -102,6 +186,30 @@
       "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dace8f1d_9abae301",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T19:20:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c7126faa_4ca994bc",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 21
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
