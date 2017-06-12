@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e58fa05_38291e49",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-12T13:11:02Z",
+      "side": 1,
+      "message": "Hmm, I wonder if the async triggering of the power save blocker could possibly be a problem here. Probably not, but worth asking an owner about explicitly.",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9926f18_e094ba55",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-12T13:11:02Z",
+      "side": 1,
+      "message": "As I commented on another CL, let\u0027s reverse the conditions in this method body to return early in the exceptional conditions and avoid indenting the normal condition.",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
