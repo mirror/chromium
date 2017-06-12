@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8733f4b_d4f0402e",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T01:31:56Z",
+      "side": 1,
+      "message": "Sorry, my previous comment wasn\u0027t clear.\n\nI think (Chrome)ContentBrowserClient::AllowWorkerFileSystem() should ensure that the given callback is invoked on the IO thread instead of its caller (i.e., SharedWorkerHost::AllowFileSystem) because ContentBrowserClient::AllowWorkerFileSystem() requires to be called on the IO thread and running its callback on the same IO thread would be clearer interface design.\n\nWe could post a task to run the callback to the IO thread in ChromeContentBrowserClient::FileSystemAccessed().",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 54
+      },
+      "revId": "524e9d54aebd40088f153db396612023025b98c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
