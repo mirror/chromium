@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad38c6ef_052589a5",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T17:09:05Z",
+      "side": 1,
+      "message": "At first glance it seems that those two buttons are mutually exclusive. Would this use case be better served by a radio button, or a \u003cselect\u003e instead? Does it make sense to click on \"Enable\" when already enabled (similar for disabled)?",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d11fb2c_b9af40ce",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T17:09:05Z",
+      "side": 1,
+      "message": "Nit: Try to avoid duplicate logic.\n\nvar getTextLabel \u003d function(bool) { return bool ? \u0027On\u0027 : \u0027Off\u0027; };\n$(\u0027model-status\u0027).textContent \u003d getTextLabel(logStatus.modelIsLogging);\n$(\u0027request-status\u0027).textContent \u003d getTextLabel(logStatus.queueIsLogging);\n$(\u0027prefetch-status\u0027).textContent \u003d getTextLabel(logStatus.prefetchIsLogging);",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cc30407_fc83f4bf",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T17:09:05Z",
+      "side": 1,
+      "message": "\"!\" is implied for primitive types.\n\nhttps://github.com/google/closure-compiler/wiki/Annotating-JavaScript-for-the-Closure-Compiler#nullable-type",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e20bfa3a_96847333",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T17:09:05Z",
+      "side": 1,
+      "message": "What about the else case? Is there a reason not to attempt to populate prefetch_service_ if not populated already, and then call SetIsLogging? Otherwise the docs in offline_internals_browser_proxy.js should at least mention that the call might be ignored, no?",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
