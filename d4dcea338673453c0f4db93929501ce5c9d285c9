@@ -66,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "0f6050d3_14fd7d52",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-12T22:27:30Z",
+      "side": 1,
+      "message": "That might work for me, let me ping you offline for details.",
+      "parentUuid": "83fa14b7_28dcbabc",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b70278d4_8d677a04",
         "filename": "content/shell/browser/shell_content_browser_client.cc",
         "patchSetId": 1
@@ -113,6 +131,24 @@
       "side": 1,
       "message": "That doesn\u0027t sound right. This CL has removed the mechanism by which AreCrossProcessFramesPossible asks ShellContentClient whether it\u0027s going to ever return true from DoesSiteRequireDedicatedProcess().",
       "parentUuid": "95bca213_36016146",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8deea6c3_f1d85c24",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-12T22:27:30Z",
+      "side": 1,
+      "message": "AreCrossProcessFramesPossible looks like a temporary optimization and it looked awkward to introduce a content client API method satellite to DoesSiteRequire for just that. But I\u0027ll revert it to avoid questions and reduce scope.",
+      "parentUuid": "d7e8fb08_fac4bebd",
       "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
