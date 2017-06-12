@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "14b39377_4d4664b0",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-12T22:02:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a963d9b8_21a62b7c",
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f1152f3_3437f2c6",
         "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
         "patchSetId": 1
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "fab15cc7_d9803b09",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-12T22:02:19Z",
+      "side": 1,
+      "message": "Test ordering assumptions. The interceptor belongs to CertificateReportingServiceTestHelper, which belongs to the test suite and is only torn down after the runloops have been processed for deletion tasks.\n\nActually, given that lifetime guarantees, it seems that WeakPtrs should never be necessary in the first place? I\u0027ll just removed the factory altogether and used Unretained() throughout. I also added a comment about the Interceptor needing to outlive its RequestJob objects.",
+      "parentUuid": "3f1152f3_3437f2c6",
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e395b435_4c8eb029",
         "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
         "patchSetId": 1
@@ -47,6 +83,30 @@
       "writtenOn": "2017-06-12T17:20:44Z",
       "side": 1,
       "message": "This doesn\u0027t look right; you\u0027ve lost any protection the WeakPtrFactory might have provided against concurrency \u0026 deletion, here - what stops the observer going away before this task reaches the UI thread?",
+      "range": {
+        "startLine": 309,
+        "startChar": 38,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02aab1e7_013e5cbe",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-12T22:02:19Z",
+      "side": 1,
+      "message": "The observer is probably not what you might think it is. It\u0027s essentially a reimplementation of WaitableEvent. Its lifetime is explicitly bound to the lifetime of |this|.",
+      "parentUuid": "e395b435_4c8eb029",
       "range": {
         "startLine": 309,
         "startChar": 38,
