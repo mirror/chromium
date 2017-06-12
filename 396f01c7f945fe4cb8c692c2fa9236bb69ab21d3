@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d938f46_daba6099",
+        "filename": "components/ntp_snippets/DEPS",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "Remove",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 26
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "847fdff0_cf6897a7",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "suggestion",
+      "range": {
+        "startLine": 28,
+        "startChar": 14,
+        "endLine": 28,
+        "endChar": 24
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "118c977d_e772d5ca",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "\"suggestion\" doesn\u0027t sound right, since it\u0027s actually a list of categories containing a list of suggestions (even if we might only handle one suggestion).\n\nI would go with something like \"payload\", because we\u0027re really expecting that anything relevant will be within it.",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 47
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16059b83_d9dd8cc4",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "These logging messages seem like they are LOG(WARNING) level.",
+      "range": {
+        "startLine": 127,
+        "startChar": 4,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "821b5ac4_691d1613",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "Do you need to explicitly handle this case? The empty string is not a valid JSON object.",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 25
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a23b147f_f509179d",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T14:12:13Z",
+      "side": 1,
+      "message": "Move inside the class below",
+      "range": {
+        "startLine": 26,
+        "startChar": 0,
+        "endLine": 33,
+        "endChar": 62
+      },
+      "revId": "396f01c7f945fe4cb8c692c2fa9236bb69ab21d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
