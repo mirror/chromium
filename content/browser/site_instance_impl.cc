@@ -379,27 +379,22 @@ GURL SiteInstanceImpl::GetEffectiveURL(BrowserContext* browser_context,
 // static
 bool SiteInstanceImpl::DoesSiteRequireDedicatedProcess(
     BrowserContext* browser_context,
-    const GURL& url) {
+    const GURL& real_url) {
   // If --site-per-process is enabled, site isolation is enabled everywhere.
   if (SiteIsolationPolicy::UseDedicatedProcessesForAllSites())
     return true;
 
   // Always require a dedicated process for isolated origins.
-  GURL site_url = GetSiteForURL(browser_context, url);
+  GURL site_url = GetSiteForURL(browser_context, real_url);
   auto* policy = ChildProcessSecurityPolicyImpl::GetInstance();
   if (policy->IsIsolatedOrigin(url::Origin(site_url)))
     return true;
 
   // Let the content embedder enable site isolation for specific URLs. Use the
-  // canonical site url for this check, so that schemes with nested origins
-  // (blob and filesystem) work properly.
-  if (GetContentClient()->IsSupplementarySiteIsolationModeEnabled() &&
-      GetContentClient()->browser()->DoesSiteRequireDedicatedProcess(
-          browser_context, site_url)) {
-    return true;
-  }
-
-  return false;
+  // real_url for this check, make embedder responsible for schemes with nested
+  // origins (blob and filesystem) to work properly.
+  return GetContentClient()->browser()->DoesSiteRequireDedicatedProcess(
+      browser_context, real_url);
 }
 
 void SiteInstanceImpl::RenderProcessHostDestroyed(RenderProcessHost* host) {

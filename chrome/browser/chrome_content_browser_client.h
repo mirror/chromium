@@ -89,7 +89,7 @@ class ChromeContentBrowserClient : public content::ContentBrowserClient {
   bool ShouldUseProcessPerSite(content::BrowserContext* browser_context,
                                const GURL& effective_url) override;
   bool DoesSiteRequireDedicatedProcess(content::BrowserContext* browser_context,
-                                       const GURL& effective_site_url) override;
+                                       const GURL& real_url) override;
   bool ShouldLockToOrigin(content::BrowserContext* browser_context,
                           const GURL& effective_site_url) override;
   void GetAdditionalWebUISchemes(

@@ -97,8 +97,6 @@ class ChromeContentClient : public content::ContentClient {
 
   bool AllowScriptExtensionForServiceWorker(const GURL& script_url) override;
 
-  bool IsSupplementarySiteIsolationModeEnabled() override;
-
   content::OriginTrialPolicy* GetOriginTrialPolicy() override;
 
 #if defined(OS_ANDROID)
