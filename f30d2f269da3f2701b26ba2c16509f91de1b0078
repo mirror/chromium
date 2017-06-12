@@ -16,6 +16,24 @@
       "revId": "f30d2f269da3f2701b26ba2c16509f91de1b0078",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d81917dd_8ac4440d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotProxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-12T22:23:59Z",
+      "side": 0,
+      "message": "It doesn\u0027t really matter, but I\u0027ll bring back the original logic.",
+      "parentUuid": "557e8a38_ac6bdc9b",
+      "revId": "f30d2f269da3f2701b26ba2c16509f91de1b0078",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -22,6 +22,30 @@
       "revId": "5db7d846e617c107c29189bcab09c7e4c060cd48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60e7604b_cfb60a60",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotProxy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 250,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-12T22:23:59Z",
+      "side": 1,
+      "message": "I think this the new once is more concise. Give it some time and you\u0027ll get used to it. :-)",
+      "parentUuid": "a3289344_5b3e7a91",
+      "range": {
+        "startLine": 250,
+        "startChar": 65,
+        "endLine": 250,
+        "endChar": 83
+      },
+      "revId": "5db7d846e617c107c29189bcab09c7e4c060cd48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
