@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "83608a49_1ec20aa1",
+        "filename": "chrome/browser/ui/webui/chromeos/DEPS",
+        "patchSetId": 3
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-12T06:43:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31209d5_6a8f49a7",
+      "range": {
+        "startLine": 6,
+        "startChar": 12,
+        "endLine": 6,
+        "endChar": 13
+      },
+      "revId": "ca2d37d4f62e1a290f60990e0c3804f8c510ec93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e21864a1_b6df82a3",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "It looks like this class does UI-related things, so I\u0027d be surprised if it\u0027s not running on the UI thread.",
       "parentUuid": "34cc8098_7f7dba5a",
+      "range": {
+        "startLine": 470,
+        "startChar": 47,
+        "endLine": 470,
+        "endChar": 64
+      },
+      "revId": "ca2d37d4f62e1a290f60990e0c3804f8c510ec93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6f5d5cf_7064f941",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 470,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-12T06:43:14Z",
+      "side": 1,
+      "message": "Thanks. Done.",
+      "parentUuid": "d2530da6_60fcab6d",
       "range": {
         "startLine": 470,
         "startChar": 47,
