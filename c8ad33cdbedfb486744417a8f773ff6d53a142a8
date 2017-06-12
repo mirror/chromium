@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb8927cf_8764b5e1",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-06-12T19:50:18Z",
+      "side": 1,
+      "message": "Is this what we\u0027re doing, moving enums like this out of .h files and into mojom? At the moment we have two identical enums in separate files, which seems dangerous.",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb2ea35_48714e42",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-06-12T19:50:18Z",
+      "side": 1,
+      "message": "This isn\u0027t currently used and I\u0027m not sure where it goes.",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e027d7e_f5c99bc2",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115988
+      },
+      "writtenOn": "2017-06-12T19:50:18Z",
+      "side": 1,
+      "message": "The original status codes (in storage/common/quota/quota_status_code.h) reference other constants like blink::kWebStorageQuotaErrorInvalidAccess. How do we do this in mojom?",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
