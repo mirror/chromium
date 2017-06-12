@@ -562,6 +562,10 @@
       name: "LayoutNG",
     },
     {
+      name: "LayoutNGFragmentCaching",
+      status: "experimental",
+    },
+    {
       name: "LazyParseCSS",
       status: "experimental",
     },
