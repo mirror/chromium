@@ -104,6 +104,32 @@ InputEvent::EventCancelable InputTypeIsCancelable(
   }
 }
 
+UChar WhitespaceRebalancingCharToAppend(const String& string,
+                                        bool start_is_start_of_paragraph,
+                                        bool should_emit_nbsp_before_end,
+                                        size_t i,
+                                        UChar previous) {
+  if (!IsWhitespace(string[i]))
+    return string[i];
+
+  if (!i && start_is_start_of_paragraph)
+    return kNoBreakSpaceCharacter;
+  if (i + 1 == string.length() && should_emit_nbsp_before_end)
+    return kNoBreakSpaceCharacter;
+
+  // Generally, alternate between space and no-break space.
+  if (previous == ' ')
+    return kNoBreakSpaceCharacter;
+  if (previous == kNoBreakSpaceCharacter)
+    return ' ';
+
+  // Run of two or more spaces starts with a no-break space (crbug.com/453042).
+  if (i + 1 < string.length() && IsWhitespace(string[i + 1]))
+    return kNoBreakSpaceCharacter;
+
+  return ' ';
+}
+
 }  // namespace
 
 bool NeedsLayoutTreeUpdate(const Node& node) {
@@ -1034,23 +1060,11 @@ String StringWithRebalancedWhitespace(const String& string,
   StringBuilder rebalanced_string;
   rebalanced_string.ReserveCapacity(length);
 
-  bool previous_character_was_space = false;
+  UChar c = 0;
   for (size_t i = 0; i < length; i++) {
-    UChar c = string[i];
-    if (!IsWhitespace(c)) {
-      rebalanced_string.Append(c);
-      previous_character_was_space = false;
-      continue;
-    }
-
-    if (previous_character_was_space || (!i && start_is_start_of_paragraph) ||
-        (i + 1 == length && should_emit_nbs_pbefore_end)) {
-      rebalanced_string.Append(kNoBreakSpaceCharacter);
-      previous_character_was_space = false;
-    } else {
-      rebalanced_string.Append(' ');
-      previous_character_was_space = true;
-    }
+    c = WhitespaceRebalancingCharToAppend(string, start_is_start_of_paragraph,
+                                          should_emit_nbs_pbefore_end, i, c);
+    rebalanced_string.Append(c);
   }
 
   DCHECK_EQ(rebalanced_string.length(), length);
