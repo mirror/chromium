@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1a4bc91_8319d52b",
+        "filename": "mojo/edk/system/core.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T20:30:18Z",
+      "side": 1,
+      "message": "Nit: s/Release/Releases/",
+      "range": {
+        "startLine": 127,
+        "startChar": 12,
+        "endLine": 127,
+        "endChar": 13
+      },
+      "revId": "030c244a647b28198474b73366ca61d70844f9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec8c476b_37a6ff8d",
+        "filename": "mojo/edk/system/user_message_impl.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T20:30:18Z",
+      "side": 1,
+      "message": "Extreme nit: missing ending period.",
+      "range": {
+        "startLine": 56,
+        "startChar": 46,
+        "endLine": 56,
+        "endChar": 0
+      },
+      "revId": "030c244a647b28198474b73366ca61d70844f9fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
