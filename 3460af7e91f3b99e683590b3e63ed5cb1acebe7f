@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "1b9353c0_6b75e3c9",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T17:56:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1f0a5abf_265a34e0",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 63
+      },
+      "revId": "3460af7e91f3b99e683590b3e63ed5cb1acebe7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c4c20c5_ce11f6ff",
         "filename": "base/lazy_instance.h",
         "patchSetId": 2
