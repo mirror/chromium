@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "531dd584_ae171554",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:17:13Z",
+      "side": 1,
+      "message": "Can\u0027t use void* (*creator_func)(void) because this is a lambda with capture. void* (*creator_func)(void) only works with captureless lambda.\n\nAlternatives:\n- Use std::function\u003cvoid* ()\u003e: Banned :(\n- Use base::Callback\u003cvoid*()\u003e: Heap allocation for every call to LazyInstance::Pointer :(",
+      "parentUuid": "40577a9e_d1b221ef",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 63
+      },
+      "revId": "3460af7e91f3b99e683590b3e63ed5cb1acebe7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c4c20c5_ce11f6ff",
         "filename": "base/lazy_instance.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T14:50:29Z",
       "side": 1,
       "message": "Isn\u0027t this supposed to return |value|?",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "3460af7e91f3b99e683590b3e63ed5cb1acebe7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dae7cc39_d1343cbd",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:17:13Z",
+      "side": 1,
+      "message": "No. If state \u003d\u003d kLazyInstanceStateCreating when this is called:\n\nline 156 reads kLazyInstanceStateCreating()\nline 157 NeedsLazyInstance() waits until the instance is created and returns false\nline 162 value \u003d\u003d kLazyInstanceStateCreating(). Can\u0027t return that. Need to read |state| again.",
+      "parentUuid": "9c4c20c5_ce11f6ff",
       "range": {
         "startLine": 162,
         "startChar": 9,
