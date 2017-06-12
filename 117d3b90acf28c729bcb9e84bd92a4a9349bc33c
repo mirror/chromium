@@ -33,6 +33,29 @@
       "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "151de606_fd60dd2d",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-12T16:47:27Z",
+      "side": 1,
+      "message": "This is never directly called in non-test code, right? So this should not need to be called in test code either.",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
