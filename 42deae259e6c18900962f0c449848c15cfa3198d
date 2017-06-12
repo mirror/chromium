@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "e82c11f5_c32550e7",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T21:38:37Z",
+      "side": 1,
+      "message": "I think you\u0027d need to add an API on GpuProcessHost (or, possibly GpuDataManager) to call you back (possibly immediately) once you have a known valid GPUInfo.",
+      "parentUuid": "0e9fbf0f_1ec441da",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d3271b_2ccba455",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 7
@@ -159,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "d9a8a819_15c46645",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T21:38:37Z",
+      "side": 1,
+      "message": "client_ expects to be called on the IO thread *because* we wanted to avoid the client thread. If we don\u0027t want to avoid it any more for some reason, we should remove the complexity associated with having to hop threads and guaranteeing thread safety. Alternatively, and especially if the concerns about avoiding the client thread are still valid, we can bind the interface on the IO thread to avoid the IO-\u003eclient-\u003eIO hops.",
+      "parentUuid": "4ab03970_ae4f48ba",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723c871a_1ae7f534",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 7
@@ -235,6 +271,24 @@
       "side": 1,
       "message": "This too for the same reason. accelerator_ i.e. underlying platform decoder(JpegDecodeAccelerator) expects its Decode(..) call to be made on IO thread.\nPlease see https://cs.chromium.org/chromium/src/media/gpu/vaapi_jpeg_decode_accelerator.cc?l\u003d288",
       "parentUuid": "9226e702_0c2a74a4",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc4602d_3e921a09",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T21:38:37Z",
+      "side": 1,
+      "message": "But that\u0027s the same thing. The VJDA was made to support being called on the IO thread *because* we want to avoid the main thread, which can block.",
+      "parentUuid": "c297db07_b8059103",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
