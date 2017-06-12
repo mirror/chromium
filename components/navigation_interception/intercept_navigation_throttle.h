@@ -29,6 +29,7 @@ class InterceptNavigationThrottle : public content::NavigationThrottle {
                               const NavigationParams& /* navigation_params */)>
       CheckCallback;
 
+  // TODO(crbug.com/732260): Remove asynchronous callback execution flow.
   InterceptNavigationThrottle(content::NavigationHandle* navigation_handle,
                               CheckCallback should_ignore_callback,
                               bool run_callback_synchronously);
