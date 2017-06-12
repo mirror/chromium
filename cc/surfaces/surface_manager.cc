@@ -12,9 +12,11 @@
 #include <utility>
 
 #include "base/logging.h"
+#include "base/threading/thread_task_runner_handle.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/direct_surface_reference_factory.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
+#include "cc/surfaces/stub_surface_reference_factory.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_info.h"
 
@@ -23,6 +25,12 @@
 #endif
 
 namespace cc {
+namespace {
+
+constexpr base::TimeDelta kDeleteDanglingReferencesDelay =
+    base::TimeDelta::FromSeconds(5);
+
+}  // namespace
 
 SurfaceManager::SurfaceReferenceInfo::SurfaceReferenceInfo() {}
 
@@ -34,8 +42,12 @@ SurfaceManager::SurfaceManager(LifetimeType lifetime_type)
                        LocalSurfaceId(1u, base::UnguessableToken::Create())),
       weak_factory_(this) {
   thread_checker_.DetachFromThread();
-  reference_factory_ =
-      new DirectSurfaceReferenceFactory(weak_factory_.GetWeakPtr());
+  if (using_surface_references()) {
+    reference_factory_ = new StubSurfaceReferenceFactory();
+  } else {
+    reference_factory_ =
+        new DirectSurfaceReferenceFactory(weak_factory_.GetWeakPtr());
+  }
 }
 
 SurfaceManager::~SurfaceManager() {
@@ -129,6 +141,7 @@ void SurfaceManager::DestroySurface(std::unique_ptr<Surface> surface) {
 
 void SurfaceManager::RequireSequence(const SurfaceId& surface_id,
                                      const SurfaceSequence& sequence) {
+  DCHECK(!using_surface_references());
   auto* surface = GetSurfaceForId(surface_id);
   if (!surface) {
     DLOG(ERROR) << "Attempting to require callback on nonexistent surface";
@@ -139,7 +152,7 @@ void SurfaceManager::RequireSequence(const SurfaceId& surface_id,
 
 void SurfaceManager::SatisfySequence(const SurfaceSequence& sequence) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  DCHECK_EQ(lifetime_type_, LifetimeType::SEQUENCES);
+  DCHECK(!using_surface_references());
   satisfied_sequences_.insert(sequence);
   GarbageCollectSurfaces();
 }
@@ -151,16 +164,30 @@ void SurfaceManager::RegisterFrameSinkId(const FrameSinkId& frame_sink_id) {
 void SurfaceManager::InvalidateFrameSinkId(const FrameSinkId& frame_sink_id) {
   framesink_manager_.InvalidateFrameSinkId(frame_sink_id);
 
-  // Remove any temporary references owned by |frame_sink_id|.
   std::vector<SurfaceId> temp_refs_to_clear;
+  bool temporary_reference_to_invalidated = false;
   for (auto& map_entry : temporary_references_) {
+    if (map_entry.first.frame_sink_id() == frame_sink_id)
+      temporary_reference_to_invalidated = true;
     base::Optional<FrameSinkId>& owner = map_entry.second;
     if (owner.has_value() && owner.value() == frame_sink_id)
       temp_refs_to_clear.push_back(map_entry.first);
   }
 
+  // Remove any temporary references owned by |frame_sink_id|.
   for (auto& surface_id : temp_refs_to_clear)
     RemoveTemporaryReference(surface_id, false);
+
+  // If there are temporary references to |frame_sink_id| post a delayed task
+  // to clean them up. This will give any parent processes a couple seconds to
+  // catch up if they still want to embed the surface.
+  if (temporary_reference_to_invalidated) {
+    base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+        FROM_HERE,
+        base::BindOnce(&SurfaceManager::DeleteDanglingTemporaryReferences,
+                       weak_factory_.GetWeakPtr(), frame_sink_id),
+        kDeleteDanglingReferencesDelay);
+  }
 
   GarbageCollectSurfaces();
 }
@@ -175,6 +202,9 @@ void SurfaceManager::AddSurfaceReferences(
 
   for (const auto& reference : references)
     AddSurfaceReferenceImpl(reference.parent_id(), reference.child_id());
+
+  // TODO(kylechar): Delete.
+  LOG(ERROR) << "AddSurfaceReferences\n" << SurfaceReferencesToString();
 }
 
 void SurfaceManager::RemoveSurfaceReferences(
@@ -185,12 +215,18 @@ void SurfaceManager::RemoveSurfaceReferences(
     RemoveSurfaceReferenceImpl(reference.parent_id(), reference.child_id());
 
   GarbageCollectSurfaces();
+
+  // TODO(kylechar): Delete.
+  LOG(ERROR) << "RemoveSurfaceReferences\n" << SurfaceReferencesToString();
 }
 
 void SurfaceManager::AssignTemporaryReference(const SurfaceId& surface_id,
                                               const FrameSinkId& owner) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(lifetime_type_, LifetimeType::REFERENCES);
+
+  // TODO(kylechar): Delete.
+  LOG(ERROR) << "AssignTemporaryReference " << surface_id << " to " << owner;
 
   if (!HasTemporaryReference(surface_id))
     return;
@@ -202,10 +238,28 @@ void SurfaceManager::DropTemporaryReference(const SurfaceId& surface_id) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(lifetime_type_, LifetimeType::REFERENCES);
 
+  // TODO(kylechar): Delete.
+  LOG(ERROR) << "DropTemporaryReference " << surface_id;
+
   if (!HasTemporaryReference(surface_id))
     return;
 
   RemoveTemporaryReference(surface_id, false);
+}
+
+void SurfaceManager::DeleteDanglingTemporaryReferences(
+    FrameSinkId frame_sink_id) {
+  auto iter = temporary_reference_ranges_.find(frame_sink_id);
+  if (iter == temporary_reference_ranges_.end())
+    return;
+
+  // There are still temporary references for |frame_sink_id| that haven't been
+  // cleaned up after our delay time. Something went wrong, delete the remaining
+  // temporary references to avoid leaking resources.
+  SurfaceId last_surface_id(frame_sink_id, iter->second.back());
+  RemoveTemporaryReference(last_surface_id, true);
+
+  // TODO(kylechar): Add a UMA stat with how often this happens.
 }
 
 const base::flat_set<SurfaceId>& SurfaceManager::GetSurfacesReferencedByParent(
@@ -485,6 +539,10 @@ void SurfaceManager::SurfaceCreated(const SurfaceInfo& surface_info) {
     // be deleted during surface GC. A temporary reference, removed when a
     // real reference is received, is added to prevent this from happening.
     AddTemporaryReference(surface_info.id());
+
+    // TODO(kylechar): Delete.
+    LOG(ERROR) << "SurfaceCreated " << surface_info.id() << "\n"
+               << SurfaceReferencesToString();
   }
 
   for (auto& observer : observer_list_)

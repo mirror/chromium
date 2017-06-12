@@ -248,6 +248,10 @@ class CC_SURFACES_EXPORT SurfaceManager {
 
   bool HasTemporaryReference(const SurfaceId& surface_id) const;
 
+  // Delete all temporary references to surfaces with |frame_sink_id|. Should be
+  // called after |frame_sink_id| has been invalidated.
+  void DeleteDanglingTemporaryReferences(FrameSinkId frame_sink_id);
+
   // Adds a temporary reference to |surface_id|. The reference will not have an
   // owner initially.
   void AddTemporaryReference(const SurfaceId& surface_id);

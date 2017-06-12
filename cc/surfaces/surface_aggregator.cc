@@ -208,8 +208,14 @@ void SurfaceAggregator::HandleSurfaceQuad(
                         damage_rect_in_quad_space_valid);
     } else if (!surface) {
       ++uma_stats_.missing_surface;
+
+      // TODO(kylechar): Delete.
+      LOG(DFATAL) << "FAILURE HandleSurfaceQuad missing surface " << surface_id;
     } else {
       ++uma_stats_.no_active_frame;
+
+      // TODO(kylechar): Delete.
+      LOG(DFATAL) << "FAILURE HandleSurfaceQuad no active frame " << surface_id;
     }
     return;
   }

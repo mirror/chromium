@@ -51,6 +51,11 @@ const char kEnableGpuBenchmarking[] = "enable-gpu-benchmarking";
 // the parent compositor.
 const char kEnableSurfaceSynchronization[] = "enable-surface-synchronization";
 
+// Enables surface lifetime management using surface references. This disables
+// adding SurfaceSequences everywhere and uses only the surface reference
+// graph.
+const char kEnableSurfaceReferences[] = "enable-surface-references";
+
 // Renders a border around compositor layers to help debug and study
 // layer compositing.
 const char kShowCompositedLayerBorders[] = "show-composited-layer-borders";
