@@ -66,6 +66,8 @@ static_library("ntp_snippets") {
     "remote/remote_suggestions_database.h",
     "remote/remote_suggestions_fetcher.cc",
     "remote/remote_suggestions_fetcher.h",
+    "remote/remote_suggestions_helper.cc",
+    "remote/remote_suggestions_helper.h",
     "remote/remote_suggestions_provider.cc",
     "remote/remote_suggestions_provider.h",
     "remote/remote_suggestions_provider_impl.cc",

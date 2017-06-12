@@ -19,6 +19,7 @@
 #include "components/ntp_snippets/category_info.h"
 #include "components/ntp_snippets/remote/json_request.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
+#include "components/ntp_snippets/remote/remote_suggestions_helper.h"
 #include "components/ntp_snippets/remote/request_params.h"
 #include "components/ntp_snippets/status.h"
 #include "components/translate/core/browser/language_model.h"
@@ -64,18 +65,8 @@ CategoryInfo BuildRemoteCategoryInfo(const base::string16& title,
 // too!)
 class RemoteSuggestionsFetcher {
  public:
-  struct FetchedCategory {
-    Category category;
-    CategoryInfo info;
-    RemoteSuggestion::PtrVector suggestions;
-
-    FetchedCategory(Category c, CategoryInfo&& info);
-    FetchedCategory(FetchedCategory&&);             // = default, in .cc
-    ~FetchedCategory();                             // = default, in .cc
-    FetchedCategory& operator=(FetchedCategory&&);  // = default, in .cc
-  };
-  using FetchedCategoriesVector = std::vector<FetchedCategory>;
-  using OptionalFetchedCategories = base::Optional<FetchedCategoriesVector>;
+  using OptionalFetchedCategories =
+      base::Optional<RemoteSuggestionsHelper::FetchedCategoriesVector>;
 
   using SnippetsAvailableCallback =
       base::OnceCallback<void(Status status,
@@ -155,10 +146,6 @@ class RemoteSuggestionsFetcher {
                      SnippetsAvailableCallback callback,
                      internal::FetchResult status_code,
                      const std::string& error_details);
-
-  bool JsonToSnippets(const base::Value& parsed,
-                      FetchedCategoriesVector* categories,
-                      const base::Time& fetch_time);
 
   // Authentication for signed-in users.
   SigninManagerBase* signin_manager_;

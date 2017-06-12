@@ -27,6 +27,7 @@
 #include "components/ntp_snippets/content_suggestions_provider.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher.h"
+#include "components/ntp_snippets/remote/remote_suggestions_helper.h"
 #include "components/ntp_snippets/remote/remote_suggestions_provider.h"
 #include "components/ntp_snippets/remote/remote_suggestions_status_service.h"
 #include "components/ntp_snippets/remote/request_params.h"
