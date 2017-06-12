@@ -927,7 +927,7 @@ void RenderThreadImpl::Init(
                                 mojo::MakeRequest(&storage_partition_service_));
 
 #if defined(OS_LINUX)
-  ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::DISPLAY);
+  ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::NORMAL);
   ChildThreadImpl::current()->SetThreadPriority(
       categorized_worker_pool_->background_worker_thread_id(),
       base::ThreadPriority::BACKGROUND);
@@ -1148,7 +1148,7 @@ void RenderThreadImpl::InitializeCompositorThread() {
       base::Bind(base::IgnoreResult(&ThreadRestrictions::SetIOAllowed), false));
 #if defined(OS_LINUX)
   ChildThreadImpl::current()->SetThreadPriority(compositor_thread_->ThreadId(),
-                                                base::ThreadPriority::DISPLAY);
+                                                base::ThreadPriority::NORMAL);
 #endif
 
   SynchronousInputHandlerProxyClient* synchronous_input_handler_proxy_client =

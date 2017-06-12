@@ -90,7 +90,7 @@ TaskQueue::TaskQueue(const char* queue_name,
   base::Thread::Options options;
   switch (priority) {
     case Priority::HIGH:
-      options.priority = base::ThreadPriority::REALTIME_AUDIO;
+      options.priority = base::ThreadPriority::NORMAL;
       break;
     case Priority::LOW:
       options.priority = base::ThreadPriority::BACKGROUND;
