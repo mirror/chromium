@@ -2917,6 +2917,12 @@ group("telemetry_perf_tests") {
   ]
 }
 
+group("telemetry_perf_webview_tests") {
+  deps = [
+    "//chrome/test:telemetry_perf_tests",
+  ]
+}
+
 group("angle_perftests") {
   testonly = true
   if (is_win || is_linux) {
