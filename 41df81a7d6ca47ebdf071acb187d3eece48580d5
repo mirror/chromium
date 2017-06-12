@@ -16,6 +16,24 @@
       "revId": "41df81a7d6ca47ebdf071acb187d3eece48580d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f9168b4_60466ebc",
+        "filename": "testing/android/empty_apk/empty_apk.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-12T19:15:45Z",
+      "side": 1,
+      "message": "hmm, suppose I should include the part of the CL that uses the template, too.\n\nIn general, though, the answer is that the empty APK needs a specific package name. In this case, devil needs a webview APK for device testing (see https://codereview.chromium.org/2923443002/), but other uses could need other packages.",
+      "parentUuid": "8c613ea0_feed1be8",
+      "revId": "41df81a7d6ca47ebdf071acb187d3eece48580d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
