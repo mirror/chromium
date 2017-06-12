@@ -34,6 +34,24 @@
       "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a15fe54f_cf331169",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-06-12T22:47:05Z",
+      "side": 1,
+      "message": "\u003e float native_ui_scale \u003d (native_mode-\u003edevice_scale_factor() \u003d\u003d 2.0f) ? 2.0f : 1.0f;\n\nI think that\u0027d also work.",
+      "parentUuid": "5e8b79fd_41e33665",
+      "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
