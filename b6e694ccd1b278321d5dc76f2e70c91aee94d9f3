@@ -16,6 +16,24 @@
       "revId": "b6e694ccd1b278321d5dc76f2e70c91aee94d9f3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1075d063_de0ae5dd",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-12T18:05:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63099449_4b3e11b8",
+      "revId": "b6e694ccd1b278321d5dc76f2e70c91aee94d9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
