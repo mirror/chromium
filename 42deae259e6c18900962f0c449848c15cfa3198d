@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "92d2b028_663f8c36",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T23:24:56Z",
+      "side": 1,
+      "message": "\u003e Can we use GpuDataManagerObserver for this purpose?\n\nNot really - GpuDataManagerObserver can tell you if GPUInfo changes (e.g. if we lose the GPU process and fallback to software), but it won\u0027t tell you if we already received the initial one.\n\n\u003e One question. Don\u0027t you think GPUInfo in GpuDataManager(GDM) must have been already updated by the time VideoCaptureGpuJpegDecoder(VCGJD) gets created?\n\nIt\u0027s not clear to me what ensures that would be the case.\n\n\u003e And lets say even if we add an API on GPH or GDM, VCGJD will not receive the callback, if GPUInfo has been updated before VCGJD was created.\n\nWell, for example on GpuProcessHost, I think you would want to do something where if DidInitialize (or DidFailInitialize) has already been called (and so you know the GPUInfo is set), you would call the callback right away, otherwise you would call the callback after DidInitialize/DidFailInitialize is called.",
+      "parentUuid": "8040336f_824009aa",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d3271b_2ccba455",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 7
