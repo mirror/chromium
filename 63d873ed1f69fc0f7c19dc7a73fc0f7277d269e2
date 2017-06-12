@@ -525,6 +525,270 @@
       "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb5461f0_906df4c3",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "This is the same string transformation that is used above. You should create a helper method for it.",
+      "range": {
+        "startLine": 150,
+        "startChar": 51,
+        "endLine": 150,
+        "endChar": 52
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bce5f1d_029f93f0",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "I don\u0027t see you writing a depfile anywhere, but you should be (use build_utils.WriteDepFile), and include all .java files in it.",
+      "range": {
+        "startLine": 165,
+        "startChar": 14,
+        "endLine": 165,
+        "endChar": 30
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028412ad_ed43a789",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "nit: looke like this will fit on the previous line. (and a couple others below)",
+      "range": {
+        "startLine": 174,
+        "startChar": 33,
+        "endLine": 174,
+        "endChar": 37
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "619525bf_615410c5",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "Unused. Remove. And seems the default should be \u0027long\u0027",
+      "range": {
+        "startLine": 175,
+        "startChar": 30,
+        "endLine": 175,
+        "endChar": 38
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0e94b9d_56f637eb",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 337,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "I\u0027d remove this note about where it\u0027s used.",
+      "range": {
+        "startLine": 337,
+        "startChar": 37,
+        "endLine": 337,
+        "endChar": 61
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62067b31_a1b61c6c",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "nit: this is stale. The variable is called \"target\", and \"output\"",
+      "range": {
+        "startLine": 347,
+        "startChar": 6,
+        "endLine": 347,
+        "endChar": 13
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f9eb712_ba5775bb",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "prefix local variables with _",
+      "range": {
+        "startLine": 355,
+        "startChar": 4,
+        "endLine": 355,
+        "endChar": 19
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcf9ddc5_a028db54",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 365,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "Don\u0027t hardcode these in the template, but rather have them passed in as a variable.",
+      "range": {
+        "startLine": 365,
+        "startChar": 6,
+        "endLine": 365,
+        "endChar": 27
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dd07cdb_658b069d",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "local variables should start with _ to follow conventions. I\u0027d just inline this below though.",
+      "range": {
+        "startLine": 370,
+        "startChar": 6,
+        "endLine": 370,
+        "endChar": 33
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd0757b_5d81041f",
+        "filename": "build/config/android/rules.gni",
+        "patchSetId": 8
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "I don\u0027t think there\u0027s value in adding an include dir for this. We should just have the .cc file include via:\n#include \"chrome/android/chrome_jni_registration.h\"\n\nThe root_gen_dir is already in the default include_dirs.\n\nWithout the config, you can also drop the need for a group() wrapper, and just have action(target_name) above.",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "48ef3f3e_aafa2c1d",
+        "filename": "chrome/android/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 694,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "nit: making this  \"${target_gen_dir}/${target_name}.h\" might make it a bit nicer.",
+      "range": {
+        "startLine": 694,
+        "startChar": 32,
+        "endLine": 694,
+        "endChar": 43
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d287ea14_7b2f0063",
+        "filename": "chrome/browser/android/chrome_entry_point.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:21:29Z",
+      "side": 1,
+      "message": "Add TODO(crbug/XXXX) to delete this part (and comment that it\u0027s a no-op now)",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
