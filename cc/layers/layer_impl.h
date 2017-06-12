@@ -208,13 +208,6 @@ class CC_EXPORT LayerImpl {
     return use_parent_backface_visibility_;
   }
 
-  void SetUseLocalTransformForBackfaceVisibility(bool use_local) {
-    use_local_transform_for_backface_visibility_ = use_local;
-  }
-  bool use_local_transform_for_backface_visibility() const {
-    return use_local_transform_for_backface_visibility_;
-  }
-
   void SetShouldCheckBackfaceVisibility(bool should_check_backface_visibility) {
     should_check_backface_visibility_ = should_check_backface_visibility;
   }
@@ -502,7 +495,6 @@ class CC_EXPORT LayerImpl {
   bool masks_to_bounds_ : 1;
   bool contents_opaque_ : 1;
   bool use_parent_backface_visibility_ : 1;
-  bool use_local_transform_for_backface_visibility_ : 1;
   bool should_check_backface_visibility_ : 1;
   bool draws_content_ : 1;
   bool contributes_to_drawn_render_surface_ : 1;
