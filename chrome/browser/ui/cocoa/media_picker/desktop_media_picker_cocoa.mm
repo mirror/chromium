@@ -20,6 +20,7 @@ void DesktopMediaPickerCocoa::Show(
     gfx::NativeWindow parent,
     const base::string16& app_name,
     const base::string16& target_name,
+    const std::vector<content::DesktopMediaID::Type>& source_types,
     std::unique_ptr<DesktopMediaList> screen_list,
     std::unique_ptr<DesktopMediaList> window_list,
     std::unique_ptr<DesktopMediaList> tab_list,
@@ -33,6 +34,7 @@ void DesktopMediaPickerCocoa::Show(
                 callback:done_callback
                  appName:app_name
               targetName:target_name
+             sourceTypes:source_types
             requestAudio:request_audio]);
   [controller_ showWindow:nil];
 }
