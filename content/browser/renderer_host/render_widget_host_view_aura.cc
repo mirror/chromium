@@ -402,6 +402,9 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
       is_guest_view_hack_(is_guest_view_hack),
       device_scale_factor_(0.0f),
       event_handler_(new RenderWidgetHostViewEventHandler(host_, this, this)),
+#if defined(OS_LINUX)
+      has_mouse_pressed_(false),
+#endif
       frame_sink_id_(host_->AllocateFrameSinkId(is_guest_view_hack_)),
       weak_ptr_factory_(this) {
   if (!is_guest_view_hack_)
@@ -431,8 +434,7 @@ RenderWidgetHostViewAura::RenderWidgetHostViewAura(RenderWidgetHost* host,
 ////////////////////////////////////////////////////////////////////////////////
 // RenderWidgetHostViewAura, RenderWidgetHostView implementation:
 
-void RenderWidgetHostViewAura::InitAsChild(
-    gfx::NativeView parent_view) {
+void RenderWidgetHostViewAura::InitAsChild(gfx::NativeView parent_view) {
   CreateDelegatedFrameHostClient();
 
   CreateAuraWindow(aura::client::WINDOW_TYPE_CONTROL);
@@ -463,7 +465,7 @@ void RenderWidgetHostViewAura::InitAsPopup(
     DCHECK(old_child->popup_parent_host_view_ == popup_parent_host_view_);
     if (transient_window_client) {
       transient_window_client->RemoveTransientChild(
-        popup_parent_host_view_->window_, old_child->window_);
+          popup_parent_host_view_->window_, old_child->window_);
     }
     old_child->popup_parent_host_view_ = NULL;
   }
@@ -1420,7 +1422,7 @@ void RenderWidgetHostViewAura::OnInputMethodChanged() {
 }
 
 bool RenderWidgetHostViewAura::ChangeTextDirectionAndLayoutAlignment(
-      base::i18n::TextDirection direction) {
+    base::i18n::TextDirection direction) {
   if (!GetTextInputManager() && !GetTextInputManager()->GetActiveWidget())
     return false;
 
@@ -1627,6 +1629,12 @@ void RenderWidgetHostViewAura::OnMouseEvent(ui::MouseEvent* event) {
     last_mouse_move_location_ = event->location();
   }
 #endif
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  if (event->type() == ui::ET_MOUSE_PRESSED && event->IsLeftMouseButton())
+    has_mouse_pressed_ = true;
+  if (event->type() == ui::ET_MOUSE_RELEASED && event->IsLeftMouseButton())
+    has_mouse_pressed_ = false;
+#endif
   event_handler_->OnMouseEvent(event);
 }
 
@@ -1796,6 +1804,17 @@ void RenderWidgetHostViewAura::OnWindowFocused(aura::Window* gained_focus,
     host_->Blur();
 
     DetachFromInputMethod();
+
+#if defined(OS_LINUX)
+    if (has_mouse_pressed_) {
+      blink::WebMouseEvent event(
+          blink::WebInputEvent::kMouseUp, WebInputEvent::kNoModifiers,
+          ui::EventTimeStampToSeconds(ui::EventTimeForNow()));
+      event.button = blink::WebMouseEvent::Button::kLeft;
+      host_->ForwardMouseEvent(event);
+      has_mouse_pressed_ = false;
+    }
+#endif
 
     // TODO(wjmaclean): Do we need to let TouchSelectionControllerClientAura
     // handle this, just in case it stomps on a new highlight in another view
@@ -1986,8 +2005,8 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 
 #if !defined(OS_CHROMEOS)
   // Ignore cursor update messages if the window under the cursor is not us.
-  aura::Window* window_at_screen_point = screen->GetWindowAtScreenPoint(
-      cursor_screen_point);
+  aura::Window* window_at_screen_point =
+      screen->GetWindowAtScreenPoint(cursor_screen_point);
 #if defined(OS_WIN)
   // On Windows we may fail to retrieve the aura Window at the current cursor
   // position. This is because the WindowFromPoint API may return the legacy
@@ -2001,8 +2020,7 @@ void RenderWidgetHostViewAura::UpdateCursorIfOverSelf() {
 
     display::win::ScreenWin* screen_win =
         static_cast<display::win::ScreenWin*>(screen);
-    window_at_screen_point = screen_win->GetNativeWindowFromHWND(
-        hwnd_at_point);
+    window_at_screen_point = screen_win->GetNativeWindowFromHWND(hwnd_at_point);
   }
 #endif  // defined(OS_WIN)
   if (!window_at_screen_point ||
