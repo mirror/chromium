@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "097a1a82_4e71b462",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1907,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T14:47:06Z",
+      "side": 1,
+      "message": "DCHECK_GE(end1, start1);\nDCHECK_GE(end2, start2);",
+      "range": {
+        "startLine": 1907,
+        "startChar": 2,
+        "endLine": 1907,
+        "endChar": 8
+      },
+      "revId": "9be02315abcbf62472c3e78392f3764878ff258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0bd9fd1_0f9bce9a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1943,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T14:47:06Z",
+      "side": 1,
+      "message": "Did you mean to add a minute here?",
+      "range": {
+        "startLine": 1943,
+        "startChar": 28,
+        "endLine": 1943,
+        "endChar": 56
+      },
+      "revId": "9be02315abcbf62472c3e78392f3764878ff258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f7e6b6_18fc3935",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1955,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T14:47:06Z",
+      "side": 1,
+      "message": "Should the end of the second segment just be end_time?",
+      "range": {
+        "startLine": 1955,
+        "startChar": 21,
+        "endLine": 1955,
+        "endChar": 51
+      },
+      "revId": "9be02315abcbf62472c3e78392f3764878ff258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd3f759a_908dde86",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 93730,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T14:47:06Z",
+      "side": 1,
+      "message": "uber naming nit: \"steady state\" is what I had in mind for this but long tail works too :)",
+      "range": {
+        "startLine": 93730,
+        "startChar": 27,
+        "endLine": 93730,
+        "endChar": 35
+      },
+      "revId": "9be02315abcbf62472c3e78392f3764878ff258e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
