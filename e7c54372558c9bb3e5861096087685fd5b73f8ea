@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e25398d3_d44a86cf",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-12T19:06:46Z",
+      "side": 0,
+      "message": "I\u0027m a bit fuzzy on this one, but I don\u0027t see code paths on Android that would trigger this one. Unless you are running content shell tests with site isolation on Android already.",
+      "revId": "e7c54372558c9bb3e5861096087685fd5b73f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
