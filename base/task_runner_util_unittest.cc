@@ -10,6 +10,8 @@
 #include "base/location.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
+#include "base/synchronization/waitable_event.h"
+#include "base/threading/thread.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace base {
@@ -66,6 +68,12 @@ void ExpectScopedFoo(std::unique_ptr<Foo, FooDeleter> foo) {
   EXPECT_FALSE(foo.get());
 }
 
+void AssertOnTaskRunner(scoped_refptr<SingleThreadTaskRunner> task_runner,
+                        WaitableEvent* event) {
+  ASSERT_TRUE(task_runner->BelongsToCurrentThread());
+  event->Signal();
+}
+
 }  // namespace
 
 TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResult) {
@@ -120,6 +128,27 @@ TEST(TaskRunnerHelpersTest, PostTaskAndReplyWithResultPassedFreeProc) {
 
   EXPECT_EQ(1, g_foo_destruct_count);
   EXPECT_EQ(1, g_foo_free_count);
+}
+
+TEST(TaskRunnerHelpersTest, AttachToTaskRunner) {
+  base::Thread another_thread("test");
+  ASSERT_TRUE(another_thread.Start());
+
+  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+
+  auto unbound_cb = AttachToTaskRunner(
+      another_thread.task_runner(),
+      base::Bind(&AssertOnTaskRunner, another_thread.task_runner()));
+  unbound_cb.Run(&event);
+  event.Wait();
+
+  event.Reset();
+  auto fully_bound_cb = AttachToTaskRunner(
+      another_thread.task_runner(),
+      base::Bind(&AssertOnTaskRunner, another_thread.task_runner(), &event));
+  fully_bound_cb.Run();
+  event.Wait();
 }
 
 }  // namespace base
