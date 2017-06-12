@@ -118,10 +118,6 @@ bool ContentClient::GetSandboxProfileForSandboxType(
 }
 #endif
 
-bool ContentClient::IsSupplementarySiteIsolationModeEnabled() {
-  return false;
-}
-
 OriginTrialPolicy* ContentClient::GetOriginTrialPolicy() {
   return nullptr;
 }
