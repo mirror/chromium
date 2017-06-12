@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81f90fe5_201bd0d9",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-12T22:41:29Z",
+      "side": 1,
+      "message": "hmm, does this hold? I think every binding from browser will result in a call to this?\n\nI don\u0027t know how this survived cq..",
+      "revId": "9a1b5c3b5d7e7d789ca702f6834ad2aa083dd1ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
