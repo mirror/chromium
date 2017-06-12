@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0139277_e09c56fb",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-12T13:01:23Z",
+      "side": 1,
+      "message": "This line is causing the layout tests to fail, it is printing an extra line in a lot of tests. Please remove this line.",
+      "range": {
+        "startLine": 391,
+        "startChar": 2,
+        "endLine": 391,
+        "endChar": 56
+      },
+      "revId": "9c91094a43a66334820eca85b94bd2b1766e1aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69df40a5_ef65a311",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-12T13:01:23Z",
+      "side": 1,
+      "message": "The coding style in this file is a bit confusing. But I believe this method should be \"should_hit_test()\".",
+      "range": {
+        "startLine": 167,
+        "startChar": 7,
+        "endLine": 167,
+        "endChar": 22
+      },
+      "revId": "9c91094a43a66334820eca85b94bd2b1766e1aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84102488_905e379b",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsLayer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 640,
+      "author": {
+        "id": 1148154
+      },
+      "writtenOn": "2017-06-12T13:01:23Z",
+      "side": 1,
+      "message": "Remove these two lines as well.",
+      "range": {
+        "startLine": 639,
+        "startChar": 2,
+        "endLine": 640,
+        "endChar": 56
+      },
+      "revId": "9c91094a43a66334820eca85b94bd2b1766e1aed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
