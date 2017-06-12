@@ -20,7 +20,6 @@ bool SiteIsolationPolicy::AreCrossProcessFramesPossible() {
 #if defined(OS_ANDROID)
   return UseDedicatedProcessesForAllSites() ||
          IsTopDocumentIsolationEnabled() || AreIsolatedOriginsEnabled() ||
-         GetContentClient()->IsSupplementarySiteIsolationModeEnabled() ||
          base::FeatureList::IsEnabled(::features::kGuestViewCrossProcessFrames);
 #else
   return true;
