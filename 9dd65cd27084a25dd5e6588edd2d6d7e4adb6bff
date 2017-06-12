@@ -2,6 +2,80 @@
   "comments": [
     {
       "key": {
+        "uuid": "3189b641_652e5b47",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-12T15:04:11Z",
+      "side": 1,
+      "message": "nit: Isn\u0027t this more BindClientAndSetManagerPtr() or something like that?",
+      "revId": "9dd65cd27084a25dd5e6588edd2d6d7e4adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a59161d_8808b8ee",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-12T15:04:11Z",
+      "side": 1,
+      "message": "// A request to bind to each of the above interfaces.",
+      "range": {
+        "startLine": 77,
+        "startChar": 18,
+        "endLine": 77,
+        "endChar": 48
+      },
+      "revId": "9dd65cd27084a25dd5e6588edd2d6d7e4adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f09d1247_df52d0eb",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac_editcommand_helper_unittest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-12T15:04:11Z",
+      "side": 1,
+      "message": "Can this be private?",
+      "revId": "9dd65cd27084a25dd5e6588edd2d6d7e4adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aed4bb0_6628b384",
+        "filename": "content/browser/renderer_host/render_widget_host_view_mac_editcommand_helper_unittest.mm",
+        "patchSetId": 17
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-12T15:04:11Z",
+      "side": 1,
+      "message": "Can this also be private?",
+      "revId": "9dd65cd27084a25dd5e6588edd2d6d7e4adb6bff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7428f9e_ea6ee6bb",
         "filename": "ui/compositor/test/in_process_context_factory.h",
         "patchSetId": 17
