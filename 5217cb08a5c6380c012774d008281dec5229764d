@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a963d9b8_21a62b7c",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T17:20:44Z",
+      "side": 1,
+      "message": "nit: Consider DCHECKing the creation \u0026 destruction threads, if this impl has expectations on them.",
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f1152f3_3437f2c6",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T17:20:44Z",
+      "side": 1,
+      "message": "Seems strange that RequestCreated binds to a WeakPtr but RequestDestructed does not - was this an oversight in the original CL, or is there some subtle ordering constraint that makes this safe?",
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e395b435_4c8eb029",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T17:20:44Z",
+      "side": 1,
+      "message": "This doesn\u0027t look right; you\u0027ve lost any protection the WeakPtrFactory might have provided against concurrency \u0026 deletion, here - what stops the observer going away before this task reaches the UI thread?",
+      "range": {
+        "startLine": 309,
+        "startChar": 38,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
