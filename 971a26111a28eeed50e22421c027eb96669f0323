@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "59255be3_2d3e3a7f",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 2143,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-12T06:06:13Z",
+      "side": 1,
+      "message": "Add //services/device/public/interfaces:constants for now. Will change the \"//device/wake_lock/...\" into \"//services/device/wake_lock/...\" after wake_lock servicification finishes.\n\nDone",
+      "parentUuid": "d5960aad_ae94c9ae",
+      "revId": "971a26111a28eeed50e22421c027eb96669f0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbc44524_6bee3d94",
         "filename": "chrome/browser/renderer_host/pepper/pepper_flash_browser_host.cc",
         "patchSetId": 1
@@ -56,6 +74,24 @@
       "revId": "971a26111a28eeed50e22421c027eb96669f0323",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45211bab_a0b5e70b",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_flash_browser_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-12T06:06:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "229dfa95_da06c655",
+      "revId": "971a26111a28eeed50e22421c027eb96669f0323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
