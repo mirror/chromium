@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f198441_29d65044",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-12T04:06:11Z",
+      "side": 1,
+      "message": "nit: s/VisiblePosition/const VisiblePosition\u0026/",
+      "revId": "a1f93a31220c6bd0200cd3117272e7a5c81095f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96fc3209_b9b46db6",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-12T04:06:11Z",
+      "side": 1,
+      "message": "It seems usages of |previous_position| is |IsNull()| and |DeepEquivalenet()|.\nCan we use |const Position\u0026| for |prevous_position|?",
+      "revId": "a1f93a31220c6bd0200cd3117272e7a5c81095f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ab5cf0_37884712",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 737,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-12T04:06:11Z",
+      "side": 1,
+      "message": "nit: s/Node*/Node* const/",
+      "revId": "a1f93a31220c6bd0200cd3117272e7a5c81095f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "003f8a55_bc2fe6ba",
+        "filename": "third_party/WebKit/Source/core/editing/commands/TypingCommand.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-12T04:06:11Z",
+      "side": 1,
+      "message": "nit: s/Node*/Node* const/",
+      "revId": "a1f93a31220c6bd0200cd3117272e7a5c81095f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
