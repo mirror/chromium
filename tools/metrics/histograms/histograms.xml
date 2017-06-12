@@ -23374,6 +23374,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="GPU.SwiftShaderLifetimeEvents" enum="GPUProcessLifetimeEvent">
+  <owner>capn@chromium.org</owner>
+  <summary>
+    Counts of the number of process launches and crashes (when running on s/w).
+  </summary>
+</histogram>
+
 <histogram name="GPU.GPUProcessSoftwareRendering" enum="GPUProcessType">
   <owner>vmiura@chromium.org</owner>
   <summary>
