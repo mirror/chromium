@@ -280,6 +280,11 @@ void LayerImpl::SetScrollClipLayer(int scroll_clip_layer_id) {
 
   bool scrollable = scroll_clip_layer_id_ != Layer::INVALID_ID;
   SetScrollable(scrollable);
+
+  // TODO(pdr): This is temporary.
+  if (LayerImpl* scroll_clip = scroll_clip_layer()) {
+    SetScrollContainerBounds(scroll_clip->bounds());
+  }
 }
 
 LayerImpl* LayerImpl::scroll_clip_layer() const {
@@ -294,6 +299,17 @@ void LayerImpl::SetScrollable(bool scrollable) {
                         LayerTreeSettings::AURA_OVERLAY) {
     set_needs_show_scrollbars(true);
   }
+}
+
+void LayerImpl::SetScrollContainerBounds(const gfx::Size& bounds) {
+  if (scroll_container_bounds_ == bounds)
+    return;
+  scroll_container_bounds_ = bounds;
+
+  // Scrollbar positions depend on the bounds.
+  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
+
+  NoteLayerPropertyChanged();
 }
 
 std::unique_ptr<LayerImpl> LayerImpl::CreateLayerImpl(
@@ -345,6 +361,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer->SetBounds(bounds_);
   layer->SetScrollClipLayer(scroll_clip_layer_id_);
   layer->SetScrollable(scrollable_);
+  layer->SetScrollContainerBounds(scroll_container_bounds_);
   layer->SetMutableProperties(mutable_properties_);
 
   // If the main thread commits multiple times before the impl thread actually
@@ -510,6 +527,8 @@ void LayerImpl::SetBounds(const gfx::Size& bounds) {
   bounds_ = bounds;
 
   // Scrollbar positions depend on scrolling bounds and scroll clip bounds.
+  // TODO(pdr): Update this comment when the scroll clip bounds are no longer
+  // used and instead scroll_container_bounds_ is.
   layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
 
   NoteLayerPropertyChanged();

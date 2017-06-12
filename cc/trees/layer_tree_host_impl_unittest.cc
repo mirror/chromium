@@ -416,6 +416,8 @@ class LayerTreeHostImplTest : public testing::Test,
                                    ->children.back();
     content_layer->SetBounds(content_size);
     host_impl_->OuterViewportScrollLayer()->SetBounds(content_size);
+    host_impl_->OuterViewportScrollLayer()->SetScrollContainerBounds(
+        viewport_size);
 
     LayerImpl* outer_clip =
         host_impl_->OuterViewportScrollLayer()->test_properties()->parent;
@@ -427,6 +429,8 @@ class LayerTreeHostImplTest : public testing::Test,
                                       ->parent;
     inner_clip_layer->SetBounds(viewport_size);
     host_impl_->InnerViewportScrollLayer()->SetBounds(viewport_size);
+    host_impl_->InnerViewportScrollLayer()->SetScrollContainerBounds(
+        viewport_size);
 
     host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
@@ -447,7 +451,10 @@ class LayerTreeHostImplTest : public testing::Test,
     layer->SetElementId(LayerIdToElementIdForTesting(layer->id()));
     layer->SetDrawsContent(true);
     layer->SetBounds(size);
-    clip_layer->SetBounds(gfx::Size(size.width() / 2, size.height() / 2));
+    gfx::Size scroll_container_bounds =
+        gfx::Size(size.width() / 2, size.height() / 2);
+    layer->SetScrollContainerBounds(scroll_container_bounds);
+    clip_layer->SetBounds(scroll_container_bounds);
     return layer;
   }
 
@@ -1751,6 +1758,8 @@ TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
 
   // The impl-based pinch zoom should adjust the max scroll position.
   {
+    LOG(INFO) << "in test";
+
     host_impl_->active_tree()->PushPageScaleFromMainThread(
         page_scale_factor, min_page_scale, max_page_scale);
     host_impl_->active_tree()->SetPageScaleOnActiveTree(page_scale_factor);
@@ -1772,6 +1781,14 @@ TEST_F(LayerTreeHostImplTest, ImplPinchZoom) {
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
         host_impl_->ProcessScrollDeltas();
     EXPECT_EQ(scroll_info->page_scale_delta, page_scale_delta);
+
+    LOG(INFO) << "container_layer->bounds(): "
+              << container_layer->bounds().ToString();
+    LOG(INFO) << "page_scale_delta: " << page_scale_delta;
+    LOG(INFO) << "page scale on transform tree: "
+              << host_impl_->active_tree()
+                     ->property_trees()
+                     ->transform_tree.page_scale_factor();
 
     EXPECT_EQ(gfx::ScrollOffset(75.0, 75.0).ToString(),
               scroll_layer->MaxScrollOffset().ToString());
@@ -5997,6 +6014,7 @@ TEST_F(LayerTreeHostImplTest, ScrollEventBubbling) {
       kViewportScrollLayerId, content_size, root_scroll.get());
   child->test_properties()->is_container_for_fixed_position_layers = true;
   root_scroll->SetBounds(content_size);
+  child->SetScrollContainerBounds(content_size);
 
   ElementId root_scroll_id = root_scroll->element_id();
   root_scroll->test_properties()->AddChild(std::move(child));
@@ -6412,6 +6430,7 @@ TEST_F(LayerTreeHostImplTest, RootLayerScrollOffsetDelegation) {
   LayerImpl* clip_layer =
       scroll_layer->test_properties()->parent->test_properties()->parent;
   clip_layer->SetBounds(gfx::Size(10, 20));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(10, 20));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->BindToClient(&scroll_watcher, false);
@@ -6826,6 +6845,7 @@ TEST_F(LayerTreeHostImplTest, OverscrollAlways) {
       scroll_layer->test_properties()->parent->test_properties()->parent;
 
   clip_layer->SetBounds(gfx::Size(50, 50));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(50, 50));
   host_impl_->active_tree()->BuildPropertyTreesForTesting();
 
   host_impl_->SetViewportSize(gfx::Size(50, 50));

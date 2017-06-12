@@ -493,12 +493,12 @@ class LayerImplScrollTest : public testing::Test {
         ->root_layer_for_testing()
         ->test_properties()
         ->AddChild(LayerImpl::Create(host_impl_.active_tree(), root_id_ + 1));
-    layer()->SetScrollClipLayer(root_id_);
     // Set the max scroll offset by noting that the root layer has bounds (1,1),
     // thus whatever bounds are set for the layer will be the max scroll
     // offset plus 1 in each direction.
     host_impl_.active_tree()->root_layer_for_testing()->SetBounds(
         gfx::Size(1, 1));
+    layer()->SetScrollClipLayer(root_id_);
     gfx::Vector2d max_scroll_offset(51, 81);
     layer()->SetBounds(gfx::Size(max_scroll_offset.x(), max_scroll_offset.y()));
     host_impl_.active_tree()->BuildLayerListAndPropertyTreesForTesting();

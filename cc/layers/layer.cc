@@ -829,6 +829,25 @@ void Layer::SetScrollable(bool scrollable) {
   SetNeedsCommit();
 }
 
+void Layer::SetScrollContainerBounds(const gfx::Size& bounds) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.scroll_container_bounds == bounds)
+    return;
+  inputs_.scroll_container_bounds = bounds;
+
+  // TODO(pdr): Update SetBounds() to work like this since the bounds are no
+  // longer set from the scroll clip layer.
+  auto* scroll_node =
+      layer_tree_host_->property_trees()->scroll_tree.Node(scroll_tree_index_);
+  if (scroll_node)
+    scroll_node->scroll_clip_layer_bounds = inputs_.scroll_container_bounds;
+  else
+    SetPropertyTreesNeedRebuild();
+
+  SetScrollable();
+  SetNeedsCommit();
+}
+
 void Layer::SetUserScrollable(bool horizontal, bool vertical) {
   DCHECK(IsPropertyChangeAllowed());
   if (inputs_.user_scrollable_horizontal == horizontal &&
@@ -1199,6 +1218,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
 
   layer->SetScrollClipLayer(inputs_.scroll_clip_layer_id);
   layer->SetScrollable(inputs_.scrollable);
+  layer->SetScrollContainerBounds(inputs_.scroll_container_bounds);
   layer->SetMutableProperties(inputs_.mutable_properties);
 
   // The property trees must be safe to access because they will be used below
