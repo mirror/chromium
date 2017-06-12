@@ -90,6 +90,8 @@
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_tree_owner.h"
 #include "ui/compositor/test/draw_waiter_for_test.h"
+#include "ui/display/display.h"
+#include "ui/display/screen.h"
 #include "ui/events/blink/blink_event_util.h"
 #include "ui/events/blink/web_input_event_traits.h"
 #include "ui/events/event.h"
@@ -156,8 +158,14 @@ class TestOverscrollDelegate : public OverscrollControllerDelegate {
 
  private:
   // Overridden from OverscrollControllerDelegate:
-  gfx::Rect GetVisibleBounds() const override {
-    return view_->IsShowing() ? view_->GetViewBounds() : gfx::Rect();
+  gfx::Size GetVisibleSize() const override {
+    return view_->IsShowing() ? view_->GetViewBounds().size() : gfx::Size();
+  }
+
+  gfx::Size GetDisplaySize() const override {
+    return display::Screen::GetScreen()
+        ->GetDisplayNearestView(view_->GetNativeView())
+        .size();
   }
 
   bool OnOverscrollUpdate(float delta_x, float delta_y) override {
