@@ -97,6 +97,12 @@ const int kTopSitesImageQuality = 100;
 // visited thumbnails.
 const char kMostVisitedURLsBlacklist[] = "ntp.most_visited_blacklist";
 
+enum ThumbnailTypeForUMA {
+  THUMBNAIL_TEMP = 0,
+  THUMBNAIL_REGULAR = 1,
+  THUMBNAIL_TYPE_COUNT = 2
+};
+
 }  // namespace
 
 // Initially, histogram is not recorded.
@@ -158,6 +164,11 @@ bool TopSitesImpl::SetPageThumbnail(const GURL& url,
   scoped_refptr<base::RefCountedBytes> thumbnail_data;
   if (!EncodeBitmap(thumbnail, &thumbnail_data))
     return false;
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "Thumbnails.AddedToTopSites",
+      add_temp_thumbnail ? THUMBNAIL_TEMP : THUMBNAIL_REGULAR,
+      THUMBNAIL_TYPE_COUNT);
 
   if (add_temp_thumbnail) {
     // Always remove the existing entry and then add it back. That way if we end

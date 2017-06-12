@@ -35816,6 +35816,11 @@ from previous Chrome versions.
   <int value="3" label="Infobar dismissed"/>
 </enum>
 
+<enum name="ThumbnailTopSitesType" type="int">
+  <int value="0" label="Temp thumbnail"/>
+  <int value="1" label="Regular thumbnail"/>
+</enum>
+
 <enum name="TileMemoryBudget" type="int">
   <int value="0" label="Within memory budget"/>
   <int value="1" label="Exceeded memory budget"/>

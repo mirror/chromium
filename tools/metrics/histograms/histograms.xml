@@ -77451,6 +77451,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="Thumbnails.AddedToTopSites" enum="ThumbnailTopSitesType">
+  <owner>treib@chromium.org</owner>
+  <summary>
+    A page thumbnail (for use on the New Tab page) was added to TopSites.
+  </summary>
+</histogram>
+
 <histogram name="Thumbnails.CopyFromSurfaceTime" units="ms">
   <owner>treib@chromium.org</owner>
   <summary>
