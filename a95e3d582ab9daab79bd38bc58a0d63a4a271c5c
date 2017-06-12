@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82639412_8b267b83",
+        "filename": "ios/build/bots/chromium.mac/ios-simulator.json",
+        "patchSetId": 6
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-12T16:34:54Z",
+      "side": 1,
+      "message": "why is this here?",
+      "revId": "a95e3d582ab9daab79bd38bc58a0d63a4a271c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bdd7102_c0f50bdf",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-12T16:34:54Z",
+      "side": 1,
+      "message": "no newline.",
+      "revId": "a95e3d582ab9daab79bd38bc58a0d63a4a271c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26dd2873_90187975",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-12T16:34:54Z",
+      "side": 1,
+      "message": "What NSPipe usage are we removing?  I only see the NSTimer added below to check device state.",
+      "revId": "a95e3d582ab9daab79bd38bc58a0d63a4a271c5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
