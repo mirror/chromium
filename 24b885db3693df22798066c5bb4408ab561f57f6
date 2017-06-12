@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8d964ed3_dd295458",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T20:20:02Z",
+      "side": 1,
+      "message": "I don\u0027t have any preferences here. Done.",
+      "parentUuid": "51679e26_e4a657b7",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 4
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "45f5e1ce_b7932dd6",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 11
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T19:04:15Z",
       "side": 1,
       "message": "I\u0027d really like some UMA folks to pass judgement on this use of a histogram, as this is, as far as I can see, recording a single count per program run. It does seem to me that this would be better done with an Enum, even for a single bucket, plus that\u0027s extensible to recording other counts.",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da531f8d_884dc107",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T20:20:02Z",
+      "side": 1,
+      "message": "+rkaplow Your expertise is needed.",
+      "parentUuid": "45f5e1ce_b7932dd6",
       "range": {
         "startLine": 96,
         "startChar": 2,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e51f224d_2e054c78",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T20:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60d695c9_4bd0b04d",
+      "range": {
+        "startLine": 160,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 5
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d052f565_748a78a3",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 11
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "ceabdf5a_6b7a3702",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T20:20:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d052f565_748a78a3",
+      "range": {
+        "startLine": 175,
+        "startChar": 0,
+        "endLine": 175,
+        "endChar": 5
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3a183ec7_58a271f2",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.h",
         "patchSetId": 11
@@ -114,6 +210,30 @@
       "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "799d9633_d9256e70",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T20:20:02Z",
+      "side": 1,
+      "message": "This is used in enumerate_modules_model.cc. I will move it to protected when I get rid of it.",
+      "parentUuid": "3a183ec7_58a271f2",
+      "range": {
+        "startLine": 34,
+        "startChar": 14,
+        "endLine": 34,
+        "endChar": 42
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
