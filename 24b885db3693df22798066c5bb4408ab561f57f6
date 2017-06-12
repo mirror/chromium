@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51679e26_e4a657b7",
+        "filename": "chrome/browser/conflicts/module_info_win.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T08:38:17Z",
+      "side": 1,
+      "message": "nit: these values aren\u0027t being used as an enum, and are actually signed ints at the moment, which is not so good to use for bitwise ops. you could make them unsigned with \" : uint32_t\" here, but i somewhat prefer just defining some constexp uint32_t values (as statics in ModuleInfoData, perhaps) with names like kTypeLoadedModule or something.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 4
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
