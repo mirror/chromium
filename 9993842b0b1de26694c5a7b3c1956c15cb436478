@@ -251,6 +251,30 @@
     },
     {
       "key": {
+        "uuid": "02b15b74_a3bf5927",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:25:48Z",
+      "side": 1,
+      "message": "I like the reference because it tells the callers they won\u0027t get a null value. This is the contract, otherwise every caller will DCHECK !null anyways. So long as the contract in the header is clear (and it is) that GetForCurrentThread() is invalid outside of a ScopedSetSequenceLocalStorageMapForCurrentThread.",
+      "parentUuid": "9bf85cde_d626856d",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e11a290_ed72d8df",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
@@ -345,6 +369,24 @@
       "side": 1,
       "message": "Okay, so I\u0027m keeping the line to set to nullptr.",
       "parentUuid": "8eae798e_17290a31",
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2ee2687b_e17b6769",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:25:48Z",
+      "side": 1,
+      "message": "Ah right because ~ValueDestructorPair() will run after this and incorrectly destroy |value_| if we leave it in, my bad.",
+      "parentUuid": "bee4ff1d_00ab3266",
       "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

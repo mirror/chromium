@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7aeb890e_6e414c4b",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:25:48Z",
+      "side": 1,
+      "message": "256U\n\n(decltype is overkill for this)",
+      "range": {
+        "startLine": 69,
+        "startChar": 29,
+        "endLine": 69,
+        "endChar": 59
+      },
+      "revId": "3c81d76fa5d261b38f80a63aba0509e092b99494",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
