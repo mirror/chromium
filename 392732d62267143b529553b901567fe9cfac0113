@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5709ec02_2a792d9b",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-12T01:58:11Z",
+      "side": 1,
+      "message": "Would you help me understand why we need to add the Scope now?\n\nIf we need the Scope, it would be better to add it to line 305.",
+      "revId": "392732d62267143b529553b901567fe9cfac0113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
