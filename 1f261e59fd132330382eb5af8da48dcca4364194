@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dbae0f6_a0d7d29b",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-12T23:43:59Z",
+      "side": 1,
+      "message": "Just curious: why all the whitespace changes?",
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96f38b37_de806d5d",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-12T23:43:59Z",
+      "side": 1,
+      "message": "I have mixed feelings on this rename: On the one hand, yes, it does create a DocumentLoader as part of load start. On the other hand, the only other time we create a DocumentLoader is for frame initialization, which is a bizarre implementation detail. So I\u0027m not sure \"ForStartLoad\" adds anything, but I won\u0027t fight it :)",
+      "range": {
+        "startLine": 261,
+        "startChar": 18,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e209ca89_4de8f779",
+        "filename": "third_party/WebKit/public/web/WebDataSource.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-12T23:43:59Z",
+      "side": 1,
+      "message": "Nit: comma at the end of the line.",
+      "range": {
+        "startLine": 51,
+        "startChar": 72,
+        "endLine": 51,
+        "endChar": 0
+      },
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7ea3753_f8ada292",
+        "filename": "third_party/WebKit/public/web/WebDataSource.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-12T23:43:59Z",
+      "side": 1,
+      "message": "...\"store data that isn\u0027t relevant to blink\" might be clearer.",
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

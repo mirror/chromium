@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60da12fe_6131a49b",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-12T23:43:59Z",
+      "side": 0,
+      "message": "I think I prefer the main_resource_ name, but I\u0027m willing to hear your argument for why \"main\" isn\u0027t adding anything :)",
+      "revId": "2ffea18a09d72a6cfdc68445f3fd0174de2dbc40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
