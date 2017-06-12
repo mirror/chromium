@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "1527042e_0c1c7fa9",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-06-12T19:43:07Z",
+      "side": 0,
+      "message": "I don\u0027t think we can remove this call, as it returns different values on extension enabled platforms (desktop) and non-extension ones (Android).",
+      "range": {
+        "startLine": 396,
+        "startChar": 26,
+        "endLine": 396,
+        "endChar": 65
+      },
+      "revId": "e7c54372558c9bb3e5861096087685fd5b73f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e25398d3_d44a86cf",
         "filename": "content/common/site_isolation_policy.cc",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-06-12T19:06:46Z",
       "side": 0,
       "message": "I\u0027m a bit fuzzy on this one, but I don\u0027t see code paths on Android that would trigger this one. Unless you are running content shell tests with site isolation on Android already.",
+      "revId": "e7c54372558c9bb3e5861096087685fd5b73f8ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "584272db_e7d7f974",
+        "filename": "content/common/site_isolation_policy.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-06-12T19:43:07Z",
+      "side": 0,
+      "message": "Looks like CSP related code is gated on result of AreCrossProcessFramesPossible(), which can return false on Android. We\u0027d like AreCrossProcessFramesPossible to always return true, but last I recall we aren\u0027t quite there yet.\n\nIsSupplementarySiteIsolationModeEnabled() will return false on Android.",
+      "parentUuid": "e25398d3_d44a86cf",
       "revId": "e7c54372558c9bb3e5861096087685fd5b73f8ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

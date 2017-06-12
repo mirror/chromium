@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30b0c366_f12499f8",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-06-12T19:43:07Z",
+      "side": 1,
+      "message": "Can you explain a bit more on why this change is needed? This fundamentally changes how this API works, so we need to understand better what doesn\u0027t work today. There may be other solution that doesn\u0027t involve changing the semantics of the API.",
+      "range": {
+        "startLine": 397,
+        "startChar": 23,
+        "endLine": 397,
+        "endChar": 31
+      },
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
