@@ -49,6 +49,23 @@
     },
     {
       "key": {
+        "uuid": "83fa14b7_28dcbabc",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 178,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-06-12T22:06:33Z",
+      "side": 1,
+      "message": "It looks like what you want is for some documents to basically be placed into a mode where they are kept segregated from all other documents, even if same-site -- and even, I guess, if same-URL? The problem is that our implementation of isolation is a per-site (even coarser than an origin) concept. You will encounter code that bakes in the assumption that \"google.com/foo\" and \"google.com/bar\" must be kept in the same process, since those resources are supposed to be able to synchronously script each other. Doing a code search for RenderFrameHostManager::IsCurrentlySameSite will reveal some examples.\n\nIf this is for testing, why not just use multiple hostnames? I know that layouttests assume port 8000, but AFAIK nothing stops us from adding a rule like:\n\n  host_resolver()-\u003eAddRule(\"*.is\", \"127.0.0.1\");\n\nThen we have infinitely many hostnames that are isolateable (all mapped to the localhost testserver), and we can express the isolateable groups that the tests need, in terms of the hostnames?",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b70278d4_8d677a04",
         "filename": "content/shell/browser/shell_content_browser_client.cc",
         "patchSetId": 1
@@ -78,6 +95,24 @@
       "side": 1,
       "message": "I was hoping we would not call it in case AreCrossProcessFramesPossible() returned false.\n\nIf we do, I can add AreCrossProcessFramesPossible() check before calling into Client::DoesSiteRequireDedicatedProcess.",
       "parentUuid": "b70278d4_8d677a04",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7e8fb08_fac4bebd",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-06-12T22:06:33Z",
+      "side": 1,
+      "message": "That doesn\u0027t sound right. This CL has removed the mechanism by which AreCrossProcessFramesPossible asks ShellContentClient whether it\u0027s going to ever return true from DoesSiteRequireDedicatedProcess().",
+      "parentUuid": "95bca213_36016146",
       "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
