@@ -6504,6 +6504,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionSubpixelScroll) {
 
   root->SetBounds(gfx::Size(100, 100));
   container->SetBounds(gfx::Size(100, 100));
+  scroller->SetScrollContainerBounds(gfx::Size(100, 100));
   scroller->SetBounds(gfx::Size(100, 1000));
   sticky_pos->SetBounds(gfx::Size(10, 10));
   sticky_pos->SetPosition(gfx::PointF(0, 200));
@@ -6550,6 +6551,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottom) {
 
   root->SetBounds(gfx::Size(100, 100));
   container->SetBounds(gfx::Size(100, 100));
+  scroller->SetScrollContainerBounds(gfx::Size(100, 100));
   scroller->SetBounds(gfx::Size(1000, 1000));
   sticky_pos->SetBounds(gfx::Size(10, 10));
   sticky_pos->SetPosition(gfx::PointF(0, 150));
@@ -6622,6 +6624,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomInnerViewportDelta) {
   sticky_pos->SetStickyPositionConstraint(sticky_position);
 
   root->SetBounds(gfx::Size(100, 100));
+  scroller->SetScrollContainerBounds(gfx::Size(100, 100));
   scroller->SetBounds(gfx::Size(100, 1000));
   sticky_pos->SetBounds(gfx::Size(10, 10));
   sticky_pos->SetPosition(gfx::PointF(0, 70));
@@ -6701,8 +6704,10 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionBottomOuterViewportDelta) {
   sticky_pos->SetStickyPositionConstraint(sticky_position);
 
   root->SetBounds(gfx::Size(100, 100));
+  scroller->SetScrollContainerBounds(gfx::Size(100, 100));
   scroller->SetBounds(gfx::Size(100, 1000));
   outer_clip->SetBounds(gfx::Size(100, 100));
+  outer_viewport->SetScrollContainerBounds(gfx::Size(100, 100));
   sticky_pos->SetBounds(gfx::Size(10, 10));
   sticky_pos->SetPosition(gfx::PointF(0, 70));
 
@@ -6779,6 +6784,7 @@ TEST_F(LayerTreeHostCommonTest, StickyPositionLeftRight) {
 
   root->SetBounds(gfx::Size(100, 100));
   container->SetBounds(gfx::Size(100, 100));
+  scroller->SetScrollContainerBounds(gfx::Size(100, 100));
   scroller->SetBounds(gfx::Size(1000, 1000));
   sticky_pos->SetBounds(gfx::Size(10, 10));
   sticky_pos->SetPosition(gfx::PointF(145, 0));
