@@ -4,7 +4,10 @@
 
 #import "ios/web/webui/mojo_facade.h"
 
+#include <stdint.h>
+
 #include <utility>
+#include <vector>
 
 #import <Foundation/Foundation.h>
 
@@ -213,22 +216,16 @@ std::unique_ptr<base::Value> MojoFacade::HandleCoreReadMessage(
     flags = MOJO_READ_MESSAGE_FLAG_NONE;
   }
 
-  uint32_t num_bytes = 0;
-  uint32_t num_handles = 0;
+  std::vector<uint8_t> bytes;
+  std::vector<mojo::ScopedHandle> handles;
   mojo::MessagePipeHandle handle(static_cast<MojoHandle>(handle_as_int));
-  MojoResult mojo_result = mojo::ReadMessageRaw(handle, nullptr, &num_bytes,
-                                                nullptr, &num_handles, flags);
+  MojoResult read_result =
+      mojo::ReadMessageRaw(handle, &bytes, &handles, flags);
   std::unique_ptr<base::DictionaryValue> result(new base::DictionaryValue);
-
-  if (mojo_result == MOJO_RESULT_RESOURCE_EXHAUSTED) {
-    std::vector<uint8_t> bytes(num_bytes);
-    std::vector<MojoHandle> handles(num_handles);
-    mojo_result = mojo::ReadMessageRaw(handle, bytes.data(), &num_bytes,
-                                       handles.data(), &num_handles, flags);
-
+  if (read_result == MOJO_RESULT_OK) {
     base::ListValue* handles_list = new base::ListValue;
     for (uint32_t i = 0; i < num_handles; i++) {
-      handles_list->AppendInteger(handles[i]);
+      handles_list->AppendInteger(handles[i].release().value());
     }
     result->Set("handles", std::unique_ptr<base::Value>(handles_list));
 
