@@ -92,7 +92,7 @@ class PLATFORM_EXPORT PluginData final
 
   const HeapVector<Member<PluginInfo>>& Plugins() const { return plugins_; }
   const HeapVector<Member<MimeClassInfo>>& Mimes() const { return mimes_; }
-  const SecurityOrigin* Origin() const { return main_frame_origin_.Get(); }
+  SecurityOrigin* Origin() const { return main_frame_origin_.Get(); }
   void UpdatePluginList(SecurityOrigin* main_frame_origin);
   void ResetPluginData();
 
