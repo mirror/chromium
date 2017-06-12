@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c703c1c_973685a1",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1211592
+      },
+      "writtenOn": "2017-06-12T18:40:14Z",
+      "side": 1,
+      "message": "HW_SECURE_CODECS_REQUIRED can be set for the other cast platforms. I think you can remove the guard.",
+      "revId": "0b67d6b8651fcfa00f45a3790e0c47315c82e593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
