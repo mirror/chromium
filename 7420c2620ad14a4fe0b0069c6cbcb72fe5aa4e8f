@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6777afa3_656a2e55",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Yes this is what I asked for. Sorry for not being clear. Summary of what the dumps and edges mean:\n\nAddOwnershipEdge and AddSuballocation method are used to annotate when multiple dump providers creating dumps for the same memory allocated. These functions avoid double counting.\nThese only work if the dumps are in same process. ProcessMemoryDump does some mangling with PID of process in order to make the dump names unique in each process.\n\nFor the dumps in different processes, it does not work because of the mangling of the ids. So, it is not easy to get the id of the dumps created by other process to be able to add edges.\nTo solve this issue we have a concept of a \"virtual\" dump which each process creates in place of the dump that the other process has and add an edge to that virtual dump. This virtual dump has a special logic that does not have PID mangling. That dump is called global dump.\n\nWe also have some extra magic on top of the virtual dump where if one process does not know the size of the dump, the other process can add size to the global dump and the UI processing will automatically take size for both dumps from the virutal dump.\n\nMore details can be found in process_memory_dump.h.",
+      "parentUuid": "55eef0a3_e758c425",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e14927dd_f5f0e5ea",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -119,6 +137,24 @@
     },
     {
       "key": {
+        "uuid": "0d7ef287_381f0fa1",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Yes.",
+      "parentUuid": "fa9eb4d3_52809c57",
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb188734_52017a70",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 1
@@ -163,6 +199,30 @@
       "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "746f7657_19e0f5e1",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Ohhhh I did not see there is a loop below that does add multiple dumps for each URL. I thought context is unique for an URL. forget about this comment.",
+      "parentUuid": "34b1cc88_d6f9721d",
+      "range": {
+        "startLine": 369,
+        "startChar": 43,
+        "endLine": 369,
+        "endChar": 50
+      },
+      "revId": "7420c2620ad14a4fe0b0069c6cbcb72fe5aa4e8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {

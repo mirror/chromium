@@ -1,0 +1,199 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce624f97_aded4281",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Please confirm that the database is accessed only on one thread and not a sequenced task runner.",
+      "range": {
+        "startLine": 50,
+        "startChar": 28,
+        "endLine": 50,
+        "endChar": 62
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03b62442_c1a9327f",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Is it fair to write the name as \"MojoLevelDB\"? this file is in components/leveldb.",
+      "range": {
+        "startLine": 50,
+        "startChar": 13,
+        "endLine": 50,
+        "endChar": 24
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9f14ccb_baf002a1",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Can we have an extra child here too?\nIn case \"mojo\" is the right name, then \"leveldb/mojo/0x..\"\nIf mojo is not the right name, then maybe \"leveldb/component/0x...\".\n\nThis will help us in UI because there are other components that add \"leveldb/...\" databases.\nwhatever name of the child you choose, please keep the root name as \"leveldb\".",
+      "range": {
+        "startLine": 289,
+        "startChar": 7,
+        "endLine": 289,
+        "endChar": 14
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee16f8e4_518d1b03",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Sorry missed this point. This should be global_dump-\u003eguid() instead of memory_dump_id_.\nReason: ProcessMemoryDump does some internal mangling of the id to make it unique from other dumps. So, the guid will not match the given id.",
+      "range": {
+        "startLine": 310,
+        "startChar": 27,
+        "endLine": 310,
+        "endChar": 42
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8d2179a_de31fcfa",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "Please add a comment:\n// Add size to global dump to propagate the size to the database to the client\u0027s dump.",
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0862566b_cf734bf0",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "auto* global_dump \u003d ...\n\nand use this in the AddOwnershipEdge call below instead of memory_dump_id_.",
+      "range": {
+        "startLine": 369,
+        "startChar": 2,
+        "endLine": 369,
+        "endChar": 5
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b2ed1b8_02e64ee7",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "A comment here saying:\n// The size of the leveldb dump will be added by the leveldb service.",
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49aa01e6_35ee9020",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "This string is repeated multiple times here and below. Can you please factor it out as:\nstd::string context_name \u003d base::StringPrintf(\n    \"dom_storage/0x%\" PRIXPTR, reinterpret_cast\u003cuintptr_t\u003e(this));\nleveldb_mad \u003d Create(context_name + \"leveldb\");\n\nand similarly below. This will make sure that all the dumps created by the context will live under a common prefix.",
+      "range": {
+        "startLine": 371,
+        "startChar": 6,
+        "endLine": 371,
+        "endChar": 34
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2a13f8b_dafd9b16",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 399,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-12T20:41:20Z",
+      "side": 1,
+      "message": "nit: maybe wrapper_name.",
+      "range": {
+        "startLine": 399,
+        "startChar": 16,
+        "endLine": 399,
+        "endChar": 20
+      },
+      "revId": "b2fa0dbeadacaa3f86ee4e4d3898dd4931648020",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
