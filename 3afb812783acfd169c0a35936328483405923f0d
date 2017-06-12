@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "781bc508_b7c58313",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellCompositorViewHolderTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "This seems overly-specific and unlikely to have any other tests added to it in the future, but I\u0027d prefer that to an overly-generic class. Alternative name suggestions welcome.",
+      "range": {
+        "startLine": 38,
+        "startChar": 13,
+        "endLine": 38,
+        "endChar": 44
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a3f9185d_2e7c4130",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Previously \"testSimNfcSupported\"",
+      "range": {
+        "startLine": 86,
+        "startChar": 16,
+        "endLine": 86,
+        "endChar": 43
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2c8cf801_394db498",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Previously \"testSimNfcUnsupported\"",
+      "range": {
+        "startLine": 98,
+        "startChar": 16,
+        "endLine": 98,
+        "endChar": 45
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "350d8cc4_606e1bcd",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Previously \"testEnterExitVrSupported\"",
+      "range": {
+        "startLine": 110,
+        "startChar": 16,
+        "endLine": 110,
+        "endChar": 44
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a8e1dc8e_29bb27e4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTransitionTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Previously \"testEnterExitVrUnsupported\"",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 46
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3971addb_c3b55f42",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrDeviceTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Again, not sure if any other tests are going to be added to this in the future.",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 28
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60bbe91e_ee1f2e2a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTabTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 1,
+      "message": "Maybe too generic?",
+      "range": {
+        "startLine": 29,
+        "startChar": 13,
+        "endLine": 29,
+        "endChar": 25
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,372 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e7a5fdf_8d6bd1b2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellNavigationTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to VrShellTransitionTest.java",
+      "range": {
+        "startLine": 272,
+        "startChar": 16,
+        "endLine": 272,
+        "endChar": 50
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5755a49e_e51ff672",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to VrShellTransitionTest.java",
+      "range": {
+        "startLine": 109,
+        "startChar": 16,
+        "endLine": 109,
+        "endChar": 35
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "da1a5292_487ca268",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 120,
+        "startChar": 16,
+        "endLine": 120,
+        "endChar": 37
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "efe96e0a_bef1e713",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 131,
+        "startChar": 16,
+        "endLine": 131,
+        "endChar": 44
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b6d1aa93_fe56edb3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Ditto.",
+      "range": {
+        "startLine": 141,
+        "startChar": 16,
+        "endLine": 141,
+        "endChar": 46
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "554562e3_5de48873",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to VrShellControllerInputTest.java",
+      "range": {
+        "startLine": 152,
+        "startChar": 16,
+        "endLine": 152,
+        "endChar": 39
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "407c1311_4ee252f3",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to VrShellCompositorViewHolderTest.java",
+      "range": {
+        "startLine": 195,
+        "startChar": 16,
+        "endLine": 195,
+        "endChar": 58
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c85d158a_00f6d99a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrTransitionTest.java",
+      "range": {
+        "startLine": 65,
+        "startChar": 16,
+        "endLine": 65,
+        "endChar": 42
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c7056060_313ce722",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrTransitionTest.java",
+      "range": {
+        "startLine": 81,
+        "startChar": 16,
+        "endLine": 81,
+        "endChar": 45
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "471d3dde_679718c4",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrInputTest.java",
+      "range": {
+        "startLine": 96,
+        "startChar": 16,
+        "endLine": 96,
+        "endChar": 53
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1958c89e_c156be52",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrInputTest.java",
+      "range": {
+        "startLine": 130,
+        "startChar": 16,
+        "endLine": 130,
+        "endChar": 62
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "08595bd1_e6e82f8e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrInputTest.java",
+      "range": {
+        "startLine": 154,
+        "startChar": 16,
+        "endLine": 154,
+        "endChar": 51
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "15a55eea_b462640b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrTabTest.java",
+      "range": {
+        "startLine": 173,
+        "startChar": 16,
+        "endLine": 173,
+        "endChar": 40
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "278af5a0_e5f264d2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "This and the tests that call it moved to VrInstallUpdateInfoBarTest.java",
+      "range": {
+        "startLine": 192,
+        "startChar": 17,
+        "endLine": 192,
+        "endChar": 34
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "71f61c8c_881cc672",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrDeviceTest.java",
+      "range": {
+        "startLine": 279,
+        "startChar": 16,
+        "endLine": 279,
+        "endChar": 55
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3e93c2e1_26edfbd5",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/WebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-12T23:54:03Z",
+      "side": 0,
+      "message": "Moved to WebVrInputTest.java",
+      "range": {
+        "startLine": 293,
+        "startChar": 16,
+        "endLine": 293,
+        "endChar": 42
+      },
+      "revId": "f1e4c0cc3c76b155337800383e54537a88fcdfe7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
