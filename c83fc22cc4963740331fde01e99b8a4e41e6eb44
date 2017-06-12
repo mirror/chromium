@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b0e9adbb_8602ba7e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T22:54:31Z",
+      "side": 1,
+      "message": "hmm, I feel like the job of this constant is done here, so we do assert. Everywhere else we will refer to a valid task type.",
+      "parentUuid": "82950276_b8e91ab3",
+      "range": {
+        "startLine": 26,
+        "startChar": 29,
+        "endLine": 26,
+        "endChar": 46
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "967c54d9_9a3c7b11",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1519be8b_a9a18b86",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T22:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "967c54d9_9a3c7b11",
+      "range": {
+        "startLine": 61,
+        "startChar": 42,
+        "endLine": 61,
+        "endChar": 92
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "86e8dc41_aa0542ac",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T22:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12c1262_e44d682e",
+      "range": {
+        "startLine": 156,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 79
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5c66c0ae_fb5deb47",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 8
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "d39164c3_16749297",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T22:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c66c0ae_fb5deb47",
+      "range": {
+        "startLine": 165,
+        "startChar": 2,
+        "endLine": 168,
+        "endChar": 3
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "706939f4_45999f48",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 8
@@ -114,6 +210,30 @@
       "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab23d279_8824fc76",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T22:54:31Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "706939f4_45999f48",
+      "range": {
+        "startLine": 171,
+        "startChar": 21,
+        "endLine": 172,
+        "endChar": 76
+      },
+      "revId": "c83fc22cc4963740331fde01e99b8a4e41e6eb44",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
