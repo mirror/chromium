@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "ff7c8972_95eab2b5",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-12T22:05:43Z",
+      "side": 1,
+      "message": "nit: Maybe name this to describe how or why it shortens it (e.g. it doesn\u0027t make http://go/ links). Could be:\n\nShortUrlForReporting(..)\n\nAnd, could it get used for other reporting, outside of the Nav Observer? If so, it could be a bare function in safe_browsing namespace.",
+      "range": {
+        "startLine": 954,
+        "startChar": 50,
+        "endLine": 954,
+        "endChar": 60
+      },
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0c5532a_423ee3fb",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "patchSetId": 3
@@ -19,6 +42,40 @@
         "endLine": 53,
         "endChar": 79
       },
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db96d26a_2bcfe52f",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-12T22:05:43Z",
+      "side": 1,
+      "message": "There\u0027s a risk here that if we add a new field in the future, we\u0027ll forget to sanitize it.  We could have a \"whitelist\" approach where we copy it to a new proto, so we\u0027d end up with an empty field rather than an unsanitized one.\n\nIdeally we\u0027d have a test that would fail if there were some other URL field added. Not sure how to do that.  We could add comments to the .proto saying to update this function if fields are added.",
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db3f6cbd_0fa5f7fc",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-12T22:05:43Z",
+      "side": 1,
+      "message": "Describe how it shortens: Replaces contents with SHA256 of contents.",
       "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
