@@ -254,6 +254,7 @@ GURL DriveApiUrlGenerator::GetFilesTrashUrl(const std::string& file_id) const {
 }
 
 GURL DriveApiUrlGenerator::GetChangesListUrl(
+    bool only_largest_change_id,
     bool include_deleted,
     int max_results,
     const std::string& page_token,
@@ -271,6 +272,8 @@ GURL DriveApiUrlGenerator::GetChangesListUrl(
           net::AppendOrReplaceQueryParameter(url, kTeamDriveId, team_drive_id);
     }
   }
+  if (only_largest_change_id)
+    return url;
   // includeDeleted is "true" by default.
   if (!include_deleted)
     url = net::AppendOrReplaceQueryParameter(url, "includeDeleted", "false");

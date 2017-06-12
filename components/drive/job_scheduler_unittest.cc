@@ -211,6 +211,21 @@ TEST_F(JobSchedulerTest, GetAboutResource) {
   ASSERT_TRUE(about_resource);
 }
 
+TEST_F(JobSchedulerTest, GetLargestChangeId) {
+  ConnectToWifi();
+
+  google_apis::DriveApiErrorCode error = google_apis::DRIVE_OTHER_ERROR;
+  std::unique_ptr<google_apis::ChangeList> change_list;
+
+  scheduler_->GetLargestChangeId(
+      "TEAM_DRIVE_ID",
+      google_apis::test_util::CreateCopyResultCallback(&error, &change_list));
+  base::RunLoop().RunUntilIdle();
+
+  ASSERT_EQ(google_apis::HTTP_SUCCESS, error);
+  ASSERT_TRUE(change_list);
+}
+
 TEST_F(JobSchedulerTest, GetAppList) {
   ConnectToWifi();
 

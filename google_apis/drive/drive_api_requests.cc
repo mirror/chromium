@@ -665,6 +665,7 @@ ChangesListRequest::ChangesListRequest(
     const ChangeListCallback& callback)
     : DriveApiDataRequest<ChangeList>(sender, callback),
       url_generator_(url_generator),
+      only_largest_change_id_(false),
       include_deleted_(true),
       max_results_(100),
       start_change_id_(0) {
@@ -674,9 +675,9 @@ ChangesListRequest::ChangesListRequest(
 ChangesListRequest::~ChangesListRequest() {}
 
 GURL ChangesListRequest::GetURLInternal() const {
-  return url_generator_.GetChangesListUrl(include_deleted_, max_results_,
-                                          page_token_, start_change_id_,
-                                          team_drive_id_);
+  return url_generator_.GetChangesListUrl(
+      only_largest_change_id_, include_deleted_, max_results_, page_token_,
+      start_change_id_, team_drive_id_);
 }
 
 //======================== ChangesListNextPageRequest =========================
