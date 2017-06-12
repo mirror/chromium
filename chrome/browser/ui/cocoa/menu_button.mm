@@ -94,6 +94,10 @@
   return [self bounds];
 }
 
+- (void)willShowMenu {
+  // Subclasses should implement this, but it's not necessary.
+}
+
 @end  // @implementation MenuButton
 
 @implementation MenuButton (Private)
@@ -179,6 +183,7 @@
                                                    pullsDown:YES]);
   }
   DCHECK(popUpCell_.get());
+  [self willShowMenu];
   [popUpCell_ setMenu:[self attachedMenu]];
   [popUpCell_ selectItem:nil];
   [popUpCell_ attachPopUpWithFrame:frame inView:self];
