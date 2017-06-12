@@ -45,6 +45,54 @@
       "revId": "4b867b19de4b0af79bafe964b4a164285320c94f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9376ece4_24ff23f1",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T16:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "abf241b0_24f988c4",
+      "range": {
+        "startLine": 25,
+        "startChar": 12,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "4b867b19de4b0af79bafe964b4a164285320c94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "45bc5717_927bf594",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T16:41:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "930f7857_85fb2e94",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 8
+      },
+      "revId": "4b867b19de4b0af79bafe964b4a164285320c94f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
