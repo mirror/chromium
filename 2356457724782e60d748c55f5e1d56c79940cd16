@@ -398,6 +398,24 @@
       "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76291fe1_79b638c3",
+        "filename": "printing/android/java/src/org/chromium/printing/PrintingControllerImpl.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 388,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T09:50:12Z",
+      "side": 1,
+      "message": "Thanks, that\u0027s sad :/",
+      "parentUuid": "8ed4dffa_22bfe6b7",
+      "revId": "2356457724782e60d748c55f5e1d56c79940cd16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

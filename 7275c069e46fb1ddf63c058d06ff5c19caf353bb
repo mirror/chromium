@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef15206_7cdb444d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T09:50:12Z",
+      "side": 1,
+      "message": "maybe specify that we set it to unknown rather than \"remove\" the call here? Can stay as is in the title I guess.",
+      "range": {
+        "startLine": 11,
+        "startChar": 3,
+        "endLine": 11,
+        "endChar": 10
+      },
+      "revId": "7275c069e46fb1ddf63c058d06ff5c19caf353bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
