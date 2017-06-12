@@ -16,6 +16,24 @@
       "revId": "abbe5ae7efbc25b87d00e1ef800570993b70c2e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95a2c53_4cae9e41",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T21:31:15Z",
+      "side": 1,
+      "message": "I couldn\u0027t find anything about that in the style guide. My personal preference is to not split the initialization of the class in 2 different places.",
+      "parentUuid": "eb8f09ea_94c392de",
+      "revId": "abbe5ae7efbc25b87d00e1ef800570993b70c2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
