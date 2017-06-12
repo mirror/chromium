@@ -208,7 +208,7 @@ void GLES2DecoderTestBase::InitDecoderWithCommandLine(
   }
 
   group_ = scoped_refptr<ContextGroup>(new ContextGroup(
-      gpu_preferences_, nullptr /* mailbox_manager */, memory_tracker_,
+      gpu_preferences_, &mailbox_manager_, memory_tracker_,
       new ShaderTranslatorCache(gpu_preferences_),
       new FramebufferCompletenessCache, feature_info,
       normalized_init.bind_generates_resource, &image_manager_,

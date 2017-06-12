@@ -16,7 +16,8 @@ GpuInProcessThreadService::GpuInProcessThreadService(
     scoped_refptr<gl::GLShareGroup> share_group)
     : gpu::InProcessCommandBuffer::Service(mailbox_manager, share_group),
       task_runner_(task_runner),
-      sync_point_manager_(sync_point_manager) {}
+      sync_point_manager_(sync_point_manager),
+      shader_translator_cache_(gpu_preferences()) {}
 
 void GpuInProcessThreadService::ScheduleTask(const base::Closure& task) {
   task_runner_->PostTask(FROM_HERE, task);
@@ -30,22 +31,14 @@ bool GpuInProcessThreadService::UseVirtualizedGLContexts() {
   return true;
 }
 
-scoped_refptr<gpu::gles2::ShaderTranslatorCache>
+gpu::gles2::ShaderTranslatorCache*
 GpuInProcessThreadService::shader_translator_cache() {
-  if (!shader_translator_cache_) {
-    shader_translator_cache_ = make_scoped_refptr(
-        new gpu::gles2::ShaderTranslatorCache(gpu_preferences()));
-  }
-  return shader_translator_cache_;
+  return &shader_translator_cache_;
 }
 
-scoped_refptr<gpu::gles2::FramebufferCompletenessCache>
+gpu::gles2::FramebufferCompletenessCache*
 GpuInProcessThreadService::framebuffer_completeness_cache() {
-  if (!framebuffer_completeness_cache_.get()) {
-    framebuffer_completeness_cache_ =
-        make_scoped_refptr(new gpu::gles2::FramebufferCompletenessCache);
-  }
-  return framebuffer_completeness_cache_;
+  return &framebuffer_completeness_cache_;
 }
 
 gpu::SyncPointManager* GpuInProcessThreadService::sync_point_manager() {
