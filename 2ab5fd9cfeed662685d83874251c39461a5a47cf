@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63ddfa82_ce9e44f1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-12T08:58:39Z",
+      "side": 1,
+      "message": "They are only used in tests or snippets_internals_message_handler.cc\nIt\u0027s a little bit weird to have these three debug functions in the public interface.\n\nIt would be nice if we could somehow restrict access to them. \nFor now, Could you mark _all_ of these as \"for debugging\"? (Either as comment or suffix).",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "2ab5fd9cfeed662685d83874251c39461a5a47cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
