@@ -32,7 +32,6 @@ void ModelImpl::Add(const Entry& entry) {
   DCHECK(store_->IsInitialized());
   DCHECK(entries_.find(entry.guid) == entries_.end());
 
-  state_counts_[entry.state]++;
   entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
 
   store_->Update(entry, base::BindOnce(&ModelImpl::OnAddFinished,
@@ -42,11 +41,11 @@ void ModelImpl::Add(const Entry& entry) {
 
 void ModelImpl::Update(const Entry& entry) {
   DCHECK(store_->IsInitialized());
-  DCHECK(entries_.find(entry.guid) != entries_.end());
+  auto it = entries_.find(entry.guid);
+  DCHECK(it != entries_.end());
 
-  state_counts_[entries_[entry.guid]->state]--;
-  state_counts_[entry.state]++;
-  entries_[entry.guid] = base::MakeUnique<Entry>(entry);
+  *entries_[entry.guid] = entry;
+
   store_->Update(entry, base::BindOnce(&ModelImpl::OnUpdateFinished,
                                        weak_ptr_factory_.GetWeakPtr(),
                                        entry.client, entry.guid));
@@ -59,7 +58,6 @@ void ModelImpl::Remove(const std::string& guid) {
   DCHECK(it != entries_.end());
 
   DownloadClient client = it->second->client;
-  state_counts_[it->second->state]--;
   entries_.erase(it);
   store_->Remove(guid,
                  base::BindOnce(&ModelImpl::OnRemoveFinished,
@@ -69,10 +67,6 @@ void ModelImpl::Remove(const std::string& guid) {
 Entry* ModelImpl::Get(const std::string& guid) {
   const auto& it = entries_.find(guid);
   return it == entries_.end() ? nullptr : it->second.get();
-}
-
-uint32_t ModelImpl::StateCount(Entry::State state) {
-  return state_counts_[state];
 }
 
 Model::EntryList ModelImpl::PeekEntries() {
@@ -94,7 +88,6 @@ void ModelImpl::OnInitializedFinished(
   }
 
   for (const auto& entry : *entries) {
-    state_counts_[entry.state]++;
     entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
   }
 
@@ -113,7 +106,6 @@ void ModelImpl::OnAddFinished(DownloadClient client,
 
   // Remove the entry from the map if the add failed.
   if (!success) {
-    state_counts_[it->second->state]--;
     entries_.erase(it);
   }
 
