@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1782d64_c9ae2b24",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-12T18:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8e31d45_6672f03d",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 38
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6b7d77e3_b2dcae30",
         "filename": "chrome/browser/media/webrtc/desktop_media_list_base.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "20db9551_baea4e58",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_base.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-12T18:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b7d77e3_b2dcae30",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 18
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7664e778_ab740b3a",
         "filename": "chrome/browser/media/webrtc/desktop_media_list_base.h",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e3d202_cec0be3a",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_base.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-12T18:55:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7664e778_ab740b3a",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 24
+      },
+      "revId": "e2d5fe96c746b7ea5b882c13228384f12f320ca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
