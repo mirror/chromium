@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8a8606ff_1a1233f7",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-12T17:49:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fa9ec2f_ee27fe4c",
+      "revId": "99c4ff31ef067ec9f4a731a178d772014b8046a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64c40d14_f2111a78",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 7
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "6a44aff2_a7f2fdd0",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-12T17:49:35Z",
+      "side": 1,
+      "message": "Ack. Things you do to avoid curly brackets.",
+      "parentUuid": "64c40d14_f2111a78",
+      "revId": "99c4ff31ef067ec9f4a731a178d772014b8046a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c6f508a_aa6c1809",
         "filename": "content/browser/devtools/protocol/storage_handler.cc",
         "patchSetId": 7
@@ -50,6 +86,24 @@
       "revId": "99c4ff31ef067ec9f4a731a178d772014b8046a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12bea2fb_b22fbed9",
+        "filename": "content/browser/devtools/protocol/storage_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1211736
+      },
+      "writtenOn": "2017-06-12T17:49:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c6f508a_aa6c1809",
+      "revId": "99c4ff31ef067ec9f4a731a178d772014b8046a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
