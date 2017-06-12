@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc5c32e1_6713b33c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-12T17:52:19Z",
+      "side": 1,
+      "message": "These assumptions seem a bit worrisome! Can you maybe add some asserts to RegisterViewportLayers that the inner viewport has the page scale layer as an ancestor? (and that the outer viewport doesn\u0027t, I guess?) Also, maybe a comment on RegisterViewportLayers that this must now be the case?",
+      "revId": "323c0994d65f145d4d84d770bf8136adff9de43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
