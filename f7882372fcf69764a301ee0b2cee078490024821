@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8714d2d0_f70051d8",
+        "filename": "content/browser/speech/speech_recognition_manager_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:11:59Z",
+      "side": 1,
+      "message": "This is a bit strange; we\u0027re hiding the destructor, because it\u0027s an instance, but then making templatized delete helpers for the class visible, in effect, so a caller *can* accidentally delete it.\n\nWouldn\u0027t it be cleaner to have a static DeleteInstance() method on the class, which does the DeleteSoon()? You could potentially DCHECK in there that the browser is shutting down when it\u0027s called, for example.",
+      "revId": "f7882372fcf69764a301ee0b2cee078490024821",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
