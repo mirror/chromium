@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c38ec153_cbc1b28b",
+        "filename": "net/socket/websocket_endpoint_lock_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:06:26Z",
+      "side": 1,
+      "message": "This class is now leaky - should we NOTREACHED() here, instead?  Or does it still get torn down in tests?  If so then does the Unretained() work as intended, in tests..?",
+      "revId": "c635261bbaf63e2df7bcde19dc5aa72fab9bb5d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
