@@ -352,6 +352,24 @@
     },
     {
       "key": {
+        "uuid": "bd0ede4d_16acd28f",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 7
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-12T20:27:38Z",
+      "side": 1,
+      "message": "I guess my thoughts are: I\u0027m not really sure how necessary this rule is? Google C++ style seems to have done fine, and most method/functions seem to already include descriptive verbs.\n\nI\u0027ve just removed this for now; we can look at adding this back in if it turns out to be a useful clarification.",
+      "parentUuid": "28a1d28d_64f31b74",
+      "revId": "191a3aa29854114a5dc7ea50d267bcc69cf67725",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a17ea363_f71b6511",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 7

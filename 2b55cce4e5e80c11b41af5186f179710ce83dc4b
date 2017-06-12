@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "7598472f_342d60ea",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-12T20:27:38Z",
+      "side": 1,
+      "message": "I felt bad only having one bullet point under documentation. I\u0027ll happily accept alternatives. \u003d)\n\nAnother reason I specifically called this out is because it\u0027s what\u0027s currently on the sites page.",
+      "parentUuid": "cb82d467_dd839a76",
+      "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d1281c21_5c89a7eb",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 9
@@ -56,6 +74,24 @@
       "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b71094c_13cfc391",
+        "filename": "styleguide/c++/blink-c++.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-12T20:27:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1281c21_5c89a7eb",
+      "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
