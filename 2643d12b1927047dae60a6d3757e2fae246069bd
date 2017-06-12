@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3af065fc_554582a5",
+        "filename": "components/safe_browsing_db/remote_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T15:48:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f384e03c_476a3932",
+      "range": {
+        "startLine": 252,
+        "startChar": 42,
+        "endLine": 252,
+        "endChar": 69
+      },
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e87ba40d_7b437e21",
         "filename": "components/subresource_filter/content/browser/fake_safe_browsing_database_manager.cc",
         "patchSetId": 5
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "a69d0d3f_c185377b",
+        "filename": "components/subresource_filter/content/browser/fake_safe_browsing_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T15:48:09Z",
+      "side": 1,
+      "message": "Oh yeah those docs are wrong. Updated.",
+      "parentUuid": "e87ba40d_7b437e21",
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ebe2668b_f9359624",
         "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
         "patchSetId": 5
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-12T14:49:28Z",
       "side": 1,
       "message": "Also delete the SimulateTimeout function as this appears to be the only caller?",
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0065f4b1_526288c2",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T15:48:09Z",
+      "side": 1,
+      "message": "I\u0027m confused, I think it is already deleted?",
+      "parentUuid": "ebe2668b_f9359624",
       "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
