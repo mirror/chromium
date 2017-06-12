@@ -892,8 +892,13 @@ int MediaStreamAudioProcessor::ProcessData(const float* const* process_ptrs,
     base::subtle::Release_Store(&typing_detected_, detected);
   }
 
+  const base::TimeTicks before_post_task = base::TimeTicks::Now();
   main_thread_runner_->PostTask(
       FROM_HERE, base::Bind(&MediaStreamAudioProcessor::UpdateAecStats, this));
+  const int post_task_duration =
+      (base::TimeTicks::Now() - before_post_task).InMilliseconds();
+  if (post_task_duration > 500)
+    LOG(ERROR) << "Detected PostTask taking " << post_task_duration << "ms.";
 
   // Return 0 if the volume hasn't been changed, and otherwise the new volume.
   return (agc->stream_analog_level() == volume) ?
