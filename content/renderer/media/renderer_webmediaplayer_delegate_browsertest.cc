@@ -169,6 +169,20 @@ TEST_F(RendererWebMediaPlayerDelegateTest, SendsMessagesCorrectly) {
     EXPECT_EQ(16, std::get<1>(result).width());
     EXPECT_EQ(9, std::get<1>(result).height());
   }
+
+  // Verify the muted message.
+  {
+    test_sink().ClearMessages();
+    delegate_manager_->DidPlayerMutedChange(delegate_id, true);
+    const IPC::Message* msg = test_sink().GetUniqueMessageMatching(
+        MediaPlayerDelegateHostMsg_OnMutedChanged::ID);
+    ASSERT_TRUE(msg);
+
+    std::tuple<int, double> result;
+    ASSERT_TRUE(MediaPlayerDelegateHostMsg_OnMutedChanged::Read(msg, &result));
+    EXPECT_EQ(delegate_id, std::get<0>(result));
+    EXPECT_TRUE(std::get<1>(result));
+  }
 }
 
 TEST_F(RendererWebMediaPlayerDelegateTest, DeliversObserverNotifications) {

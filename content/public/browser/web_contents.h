@@ -782,6 +782,13 @@ class WebContents : public PageNavigator,
   virtual const VideoSizeMap& GetCurrentlyPlayingVideoSizes() = 0;
   virtual bool IsFullscreen() = 0;
 
+  // Returns a map containing the muted state of all media elements.
+  using MediaMutedMap =
+      base::flat_map<WebContentsObserver::MediaPlayerId, bool>;
+  virtual const MediaMutedMap& GetMediaMuted() = 0;
+  virtual void MediaMutedChanged(const WebContentsObserver::MediaPlayerId& id,
+                                 bool muted) = 0;
+
   // Tells the renderer to clear the focused element (if any).
   virtual void ClearFocusedElement() = 0;
 
