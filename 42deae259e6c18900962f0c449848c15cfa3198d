@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0e9fbf0f_1ec441da",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "AFAIK, GpuJpegDecodeAccelerator gets created lazily and only when we request for a connection in ConnectToGpuJpegDecodeAcceleratorOnIOThread. Please correct me if I am wrong.\nSince, we can no longer use a channel, please suggest if there\u0027s a better way of getting a valid GPUInfo. Thank you.",
+      "parentUuid": "26748439_94c52672",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d3271b_2ccba455",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 7
@@ -82,6 +100,30 @@
     },
     {
       "key": {
+        "uuid": "63b9afbb_abc61856",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "Sure. This can be done. Thanks.",
+      "parentUuid": "c32f8f28_9292c2d8",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbac6cf1_167de5b5",
         "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
         "patchSetId": 7
@@ -93,6 +135,24 @@
       "writtenOn": "2017-06-12T20:07:30Z",
       "side": 1,
       "message": "This thread hopping is very odd, and I think contrary to what the original design wanted. In the original design, the message was received on the IO thread on purpose, to avoid issues when the client thread is blocked. In this version, the message is first received on the client thread, then posted to the IO thread. Why? Is it that the concern about the client thread being gone is no longer valid (in which case why post to the IO thread at all?), or should we receive the message from the IO thread in the first place?",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ab03970_ae4f48ba",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "client_ here expects its callbacks to be called on IO thread. Please see https://cs.chromium.org/chromium/src/content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h?l\u003d63.\nTherefore, I had to add this change.",
+      "parentUuid": "cbac6cf1_167de5b5",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -122,6 +182,30 @@
     },
     {
       "key": {
+        "uuid": "7bb9103f_ac764103",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "sgtm. thanks for the suggestion.",
+      "parentUuid": "723c871a_1ae7f534",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 22
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9226e702_0c2a74a4",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 7
@@ -133,6 +217,24 @@
       "writtenOn": "2017-06-12T20:07:30Z",
       "side": 1,
       "message": "Again, the task posting is odd. It\u0027s definitely true that the GPU main thread can be busy for a long time, so I don\u0027t understand why you would want to hop to that thread first, and then to the IO thread.",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c297db07_b8059103",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "This too for the same reason. accelerator_ i.e. underlying platform decoder(JpegDecodeAccelerator) expects its Decode(..) call to be made on IO thread.\nPlease see https://cs.chromium.org/chromium/src/media/gpu/vaapi_jpeg_decode_accelerator.cc?l\u003d288",
+      "parentUuid": "9226e702_0c2a74a4",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

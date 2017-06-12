@@ -497,6 +497,30 @@
     },
     {
       "key": {
+        "uuid": "b594773a_fb4f34d8",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "92e14d00_1eebd4d5",
+      "range": {
+        "startLine": 47,
+        "startChar": 5,
+        "endLine": 47,
+        "endChar": 8
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b718579_582b3dc7",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 6
@@ -697,6 +721,30 @@
       "side": 1,
       "message": "OIC.  \nShouldn\u0027t we pull it out into a file on its own? (One class\nper file?)",
       "parentUuid": "24ce15a6_f38276f9",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "b1920198a010492a7e09d49cdd4d33f14410bd65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fe92ac_e43d63e9",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T21:15:20Z",
+      "side": 1,
+      "message": "Sure. Since this isn\u0027t related to what we are doing in this CL, can I add a TODO here for now and take up this later in a separate CL?",
+      "parentUuid": "1c97bba8_85658c5e",
       "range": {
         "startLine": 28,
         "startChar": 6,
