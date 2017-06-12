@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d982285b_ebf47c48",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-12T23:55:01Z",
+      "side": 1,
+      "message": "state_machine_ and TakeObjectSnapshot are for debugging, tracing that are important but not the main logic of FrameLoader. So, separating them makes the code readable to me. that\u0027s why i suggested them.\n\nif they don\u0027t look good to you, i\u0027m fine with reverting them.",
+      "parentUuid": "7dbae0f6_a0d7d29b",
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96f38b37_de806d5d",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-12T23:43:59Z",
       "side": 1,
       "message": "I have mixed feelings on this rename: On the one hand, yes, it does create a DocumentLoader as part of load start. On the other hand, the only other time we create a DocumentLoader is for frame initialization, which is a bizarre implementation detail. So I\u0027m not sure \"ForStartLoad\" adds anything, but I won\u0027t fight it :)",
+      "range": {
+        "startLine": 261,
+        "startChar": 18,
+        "endLine": 261,
+        "endChar": 50
+      },
+      "revId": "1f261e59fd132330382eb5af8da48dcca4364194",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57190103_afc2bc30",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 261,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-12T23:55:01Z",
+      "side": 1,
+      "message": "ok. i\u0027ll revert this.",
+      "parentUuid": "96f38b37_de806d5d",
       "range": {
         "startLine": 261,
         "startChar": 18,
