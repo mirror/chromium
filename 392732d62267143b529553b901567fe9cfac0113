@@ -16,6 +16,24 @@
       "revId": "392732d62267143b529553b901567fe9cfac0113",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "792ae595_4bee249a",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/WorkerOrWorkletScriptController.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T02:16:00Z",
+      "side": 1,
+      "message": "In ErrorEvent constructor we use ScriptValue.V8Value() which has DCHECK(GetIsolate()-\u003eInContext()). The assertion fails without this.\n\nI guess that it may be better to pass a v8 value directly to ErrorEvent::Create() but I wasn\u0027t sure that\u0027s reasonable so I used ScriptState::Scope() here. Moved to line 305.",
+      "parentUuid": "5709ec02_2a792d9b",
+      "revId": "392732d62267143b529553b901567fe9cfac0113",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
