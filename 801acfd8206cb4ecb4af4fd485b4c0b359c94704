@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "39ad276f_573b07b8",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:03:19Z",
+      "side": 1,
+      "message": "IIUC this completion callback gets invoked on the UI thread - but why? Is OnEnableProtection() running on the UI thread? If so then how does that work, given that the filter is apparently used \u0026 deleted on the IO thread?",
+      "revId": "801acfd8206cb4ecb4af4fd485b4c0b359c94704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c92514_d020acdc",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:03:19Z",
+      "side": 1,
+      "message": "This feels a sufficiently common pattern (basically we want to Bind() a Callback to call a method on a class, but on a specific thread) that we could have a helper for it - I believe there even was such a thing in //media.  (Not necessarily a change for this CL, though!)\n\nFor this CL, we should at least make clear why this hoop-jumping is necessary.",
+      "revId": "801acfd8206cb4ecb4af4fd485b4c0b359c94704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "693c8058_857929ed",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-12T18:03:19Z",
+      "side": 1,
+      "message": "If threading (and in particular, specific browser threads) is important to this class, can you clarify the threading expectations with a comment - at present it\u0027s not clear where this class expects to be called and/or deleted from.",
+      "revId": "801acfd8206cb4ecb4af4fd485b4c0b359c94704",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
