@@ -16,6 +16,24 @@
       "revId": "0b67d6b8651fcfa00f45a3790e0c47315c82e593",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "439cf1b6_633bbbae",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-12T18:55:02Z",
+      "side": 1,
+      "message": "Yes, but strictly speaking HW_SECURE_CODECS_REQUIRED should only be used on Android. See [1] and [2]. We can extend them to be used on non-Android systems, but I feel that should be in a different CL.\n\nActually, what does it mean on non Android systems, e.g. Cast on Linux? The meaning could be different on different systems, and we should document it.\n\n[1] https://cs.chromium.org/chromium/src/media/base/eme_constants.h?rcl\u003dc801f245e80080ae7e3ca6323ac43f8f793c32e1\u0026l\u003d154\n\n[2] https://cs.chromium.org/chromium/src/media/base/cdm_config.h?rcl\u003dc801f245e80080ae7e3ca6323ac43f8f793c32e1\u0026l\u003d20",
+      "parentUuid": "9c703c1c_973685a1",
+      "revId": "0b67d6b8651fcfa00f45a3790e0c47315c82e593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
