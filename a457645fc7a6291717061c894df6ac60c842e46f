@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "abf32d22_8f37c463",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-12T23:08:28Z",
+      "side": 1,
+      "message": "The zero-inset version is used because we\u0027re doing a full-width selection/hover-type effect on the credential view(s) hosted there.  The nonzero-inset version is used for what looks like the dialog title, so this should actually probably be INSETS_DIALOG_TITLE, but I think the .left()/right() mechanism is correct.  UNRELATED_CONTROL_HORIZONTAL definitely seems wrong for what\u0027s going on here.\n\nDoes this dialog have a browsertest that can be used to show it easily?  That way we can look at a screenshot and it should be obvious what it\u0027s trying to do.  (If one does not exist, can we add one?)",
+      "parentUuid": "dd43097b_0250ea43",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9c0bfb_a6d4facd",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 3
