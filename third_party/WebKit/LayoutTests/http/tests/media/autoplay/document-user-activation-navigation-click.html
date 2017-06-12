@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<title>Test document user gesture autoplay policy across navigation after clicking</title>
+<body>
+  <div id='target'>target</div>
+</body>
+<script>
+  window.internals.settings.setAutoplayPolicy('document-user-activation-required');
+  var bounds = document.querySelector('#target').getBoundingClientRect();
+  var x = bounds.left + bounds.width / 2;
+  var y = bounds.top + bounds.height / 2;
+  chrome.gpuBenchmarking.pointerActionSequence([{
+    'source': 'mouse',
+    'actions': [
+      { 'name': 'pointerDown', 'x': x, 'y': y },
+      { 'name': 'pointerUp' },
+    ],
+  }]);
+
+  if (window.testRunner) {
+    testRunner.clearBackForwardList();
+    testRunner.waitUntilDone();
+  }
+
+  document.location.href = 'resources/test-autoplay.html';
+</script>
