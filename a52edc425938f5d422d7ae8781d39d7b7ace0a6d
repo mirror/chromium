@@ -16,6 +16,24 @@
       "revId": "a52edc425938f5d422d7ae8781d39d7b7ace0a6d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc7b33fe_62e59707",
+        "filename": "ui/gl/gl_surface_egl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 706,
+      "author": {
+        "id": 1105284
+      },
+      "writtenOn": "2017-06-12T20:15:57Z",
+      "side": 1,
+      "message": "Agreed on the layering violation.  There are no tests/assertions in the command buffer that verify that robust resource initialization is enabled but there are WebGL tests that do not pass without this extension being enabled, I removed many expected failures when I landed the patch to enable this.\n\n1) For the current command buffer, it would be a performance regression.  Textures would be double-initialized with zeros.\n2) That was the original plan but the implementation was significantly easier as a per-display attribute.  That said, I don\u0027t think it would be too much effort to make it a context attribute with the requirement that all contexts within the same share group have the same attribute.\n\nEventually, all displays will be created with this flag when ANGLE is used everywhere but since that will take a while I think attempting to change this extension to a context creation flag is the most reasonable way to remove the layering issues.\n\nAre you ok with me landing this as is given that it\u0027s just a refactor and following up with a change to the extension?",
+      "parentUuid": "8862d11c_996577e6",
+      "revId": "a52edc425938f5d422d7ae8781d39d7b7ace0a6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
