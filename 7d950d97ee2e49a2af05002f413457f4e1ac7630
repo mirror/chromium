@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ef4628da_511429ea",
+        "filename": "components/download/internal/model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-12T17:50:47Z",
+      "side": 1,
+      "message": "nit: one line?\nDCHECK(entries_.find(entry.guid) !\u003d  entries_.end());",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "7d950d97ee2e49a2af05002f413457f4e1ac7630",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
