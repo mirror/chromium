@@ -528,6 +528,14 @@ PaintResult PaintLayerPainter::PaintLayerContents(
         should_create_subsequence ? ForceNewChunk : DontForceNewChunk);
   }
 
+  Optional<DisplayItemCacheSkipper> cache_skipper;
+  if (layer_fragments.size() > 1) {
+    // Skip cache because one object may be painted multiple times in different
+    // fragments.
+    cache_skipper.emplace(context);
+    paint_flags |= kPaintLayerPaintingMultipleFragments;
+  }
+
   bool selection_only =
       local_painting_info.GetGlobalPaintFlags() & kGlobalPaintSelectionOnly;
   {  // Begin block for the lifetime of any filter.
@@ -581,9 +589,10 @@ PaintResult PaintLayerPainter::PaintLayerContents(
         result = kMayBeClippedByPaintDirtyRect;
     }
 
-    if (should_paint_overlay_scrollbars)
+    if (should_paint_overlay_scrollbars) {
       PaintOverflowControlsForFragments(layer_fragments, context,
                                         local_painting_info, paint_flags);
+    }
   }  // FilterPainter block
 
   bool should_paint_mask =
@@ -761,8 +770,12 @@ PaintResult PaintLayerPainter::PaintLayerWithTransform(
   }
 
   Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
+  if (layer_fragments.size() > 1) {
+    // Skip cache because one object may be painted multiple times in different
+    // fragments.
     cache_skipper.emplace(context);
+    paint_flags |= kPaintLayerPaintingMultipleFragments;
+  }
 
   ClipRect ancestor_background_clip_rect;
   if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
@@ -939,10 +952,6 @@ void PaintLayerPainter::PaintOverflowControlsForFragments(
   if (!scrollable_area)
     return;
 
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
   for (auto& fragment : layer_fragments) {
     // We need to apply the same clips and transforms that
     // paintFragmentWithPhase would have.
@@ -1063,14 +1072,11 @@ void PaintLayerPainter::PaintBackgroundForFragments(
     const LayoutRect& transparency_paint_dirty_rect,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
-  for (auto& fragment : layer_fragments)
+  for (auto& fragment : layer_fragments) {
     PaintFragmentWithPhase(kPaintPhaseSelfBlockBackgroundOnly, fragment,
                            context, fragment.background_rect,
                            local_painting_info, paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintForegroundForFragments(
@@ -1167,10 +1173,6 @@ void PaintLayerPainter::PaintForegroundForFragmentsWithPhase(
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags,
     ClipState clip_state) {
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
   for (auto& fragment : layer_fragments) {
     if (!fragment.foreground_rect.IsEmpty())
       PaintFragmentWithPhase(phase, fragment, context, fragment.foreground_rect,
@@ -1183,10 +1185,6 @@ void PaintLayerPainter::PaintSelfOutlineForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
   for (auto& fragment : layer_fragments) {
     if (!fragment.background_rect.IsEmpty())
       PaintFragmentWithPhase(kPaintPhaseSelfOutlineOnly, fragment, context,
@@ -1200,10 +1198,6 @@ void PaintLayerPainter::PaintMaskForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
   Optional<ScopedPaintChunkProperties> scoped_paint_chunk_properties;
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     const auto* object_paint_properties =
@@ -1216,10 +1210,11 @@ void PaintLayerPainter::PaintMaskForFragments(
                                           paint_layer_, properties);
   }
 
-  for (auto& fragment : layer_fragments)
+  for (auto& fragment : layer_fragments) {
     PaintFragmentWithPhase(kPaintPhaseMask, fragment, context,
                            fragment.background_rect, local_painting_info,
                            paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintChildClippingMaskForFragments(
@@ -1227,14 +1222,11 @@ void PaintLayerPainter::PaintChildClippingMaskForFragments(
     GraphicsContext& context,
     const PaintLayerPaintingInfo& local_painting_info,
     PaintLayerFlags paint_flags) {
-  Optional<DisplayItemCacheSkipper> cache_skipper;
-  if (layer_fragments.size() > 1)
-    cache_skipper.emplace(context);
-
-  for (auto& fragment : layer_fragments)
+  for (auto& fragment : layer_fragments) {
     PaintFragmentWithPhase(kPaintPhaseClippingMask, fragment, context,
                            fragment.foreground_rect, local_painting_info,
                            paint_flags, kHasNotClipped);
+  }
 }
 
 void PaintLayerPainter::PaintOverlayScrollbars(

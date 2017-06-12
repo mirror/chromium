@@ -71,6 +71,7 @@ enum PaintLayerFlag {
   kPaintLayerPaintingRenderingClipPathAsMask = 1 << 13,
   kPaintLayerPaintingCompositingDecorationPhase = 1 << 14,
   kPaintLayerPaintingRenderingResourceSubtree = 1 << 15,
+  kPaintLayerPaintingMultipleFragments = 1 << 16,
   kPaintLayerPaintingCompositingAllPhases =
       (kPaintLayerPaintingCompositingBackgroundPhase |
        kPaintLayerPaintingCompositingForegroundPhase |
