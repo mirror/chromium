@@ -163,6 +163,10 @@ Value::Value(BlobStorage&& in_blob) noexcept : type_(Type::BINARY) {
   binary_value_.Init(std::move(in_blob));
 }
 
+Value::Value(const DictStorage& in_dict) : type_(Type::DICTIONARY) {
+  dict_.Init(in_dict);
+}
+
 Value::Value(DictStorage&& in_dict) noexcept : type_(Type::DICTIONARY) {
   dict_.Init(std::move(in_dict));
 }
@@ -361,18 +365,8 @@ bool operator==(const Value& lhs, const Value& rhs) {
       return *lhs.string_value_ == *rhs.string_value_;
     case Value::Type::BINARY:
       return *lhs.binary_value_ == *rhs.binary_value_;
-    // TODO(crbug.com/646113): Clean this up when DictionaryValue and ListValue
-    // are completely inlined.
     case Value::Type::DICTIONARY:
-      if (lhs.dict_->size() != rhs.dict_->size())
-        return false;
-      return std::equal(std::begin(*lhs.dict_), std::end(*lhs.dict_),
-                        std::begin(*rhs.dict_),
-                        [](const Value::DictStorage::value_type& u,
-                           const Value::DictStorage::value_type& v) {
-                          return std::tie(u.first, *u.second) ==
-                                 std::tie(v.first, *v.second);
-                        });
+      return *lhs.dict_ == *rhs.dict_;
     case Value::Type::LIST:
       return *lhs.list_ == *rhs.list_;
   }
@@ -402,16 +396,8 @@ bool operator<(const Value& lhs, const Value& rhs) {
       return *lhs.string_value_ < *rhs.string_value_;
     case Value::Type::BINARY:
       return *lhs.binary_value_ < *rhs.binary_value_;
-    // TODO(crbug.com/646113): Clean this up when DictionaryValue and ListValue
-    // are completely inlined.
     case Value::Type::DICTIONARY:
-      return std::lexicographical_compare(
-          std::begin(*lhs.dict_), std::end(*lhs.dict_), std::begin(*rhs.dict_),
-          std::end(*rhs.dict_),
-          [](const Value::DictStorage::value_type& u,
-             const Value::DictStorage::value_type& v) {
-            return std::tie(u.first, *u.second) < std::tie(v.first, *v.second);
-          });
+      return *lhs.dict_ < *rhs.dict_;
     case Value::Type::LIST:
       return *lhs.list_ < *rhs.list_;
   }
@@ -484,16 +470,8 @@ void Value::InternalCopyConstructFrom(const Value& that) {
     case Type::BINARY:
       binary_value_.Init(*that.binary_value_);
       return;
-    // DictStorage is a move-only type due to the presence of unique_ptrs. This
-    // is why the explicit copy of every element is necessary here.
-    // TODO(crbug.com/646113): Clean this up when DictStorage can be copied
-    // directly.
     case Type::DICTIONARY:
-      dict_.Init();
-      for (const auto& it : *that.dict_) {
-        dict_->emplace_hint(dict_->end(), it.first,
-                            MakeUnique<Value>(*it.second));
-      }
+      dict_.Init(*that.dict_);
       return;
     case Type::LIST:
       list_.Init(*that.list_);
@@ -546,15 +524,9 @@ void Value::InternalCopyAssignFromSameType(const Value& that) {
     case Type::BINARY:
       *binary_value_ = *that.binary_value_;
       return;
-    // DictStorage is a move-only type due to the presence of unique_ptrs. This
-    // is why the explicit call to the copy constructor is necessary here.
-    // TODO(crbug.com/646113): Clean this up when DictStorage can be copied
-    // directly.
-    case Type::DICTIONARY: {
-      Value copy = that;
-      *dict_ = std::move(*copy.dict_);
+    case Type::DICTIONARY:
+      *dict_ = *that.dict_;
       return;
-    }
     case Type::LIST:
       *list_ = *that.list_;
       return;
@@ -600,10 +572,14 @@ std::unique_ptr<DictionaryValue> DictionaryValue::From(
 
 DictionaryValue::DictionaryValue() : Value(Type::DICTIONARY) {}
 
+DictionaryValue::DictionaryValue(const DictStorage& in_dict) : Value(in_dict) {}
+
+DictionaryValue::DictionaryValue(DictStorage&& in_dict) noexcept
+    : Value(std::move(in_dict)) {}
+
 bool DictionaryValue::HasKey(StringPiece key) const {
   DCHECK(IsStringUTF8(key));
   auto current_entry = dict_->find(key.as_string());
-  DCHECK((current_entry == dict_->end()) || current_entry->second);
   return current_entry != dict_->end();
 }
 
@@ -670,7 +646,7 @@ ListValue* DictionaryValue::SetList(StringPiece path,
 Value* DictionaryValue::SetWithoutPathExpansion(
     StringPiece key,
     std::unique_ptr<Value> in_value) {
-  return ((*dict_)[key.as_string()] = std::move(in_value)).get();
+  return &((*dict_)[key.as_string()] = std::move(*in_value));
 }
 
 Value* DictionaryValue::SetBooleanWithoutPathExpansion(StringPiece path,
@@ -861,7 +837,7 @@ bool DictionaryValue::GetWithoutPathExpansion(StringPiece key,
     return false;
 
   if (out_value)
-    *out_value = entry_iterator->second.get();
+    *out_value = &entry_iterator->second;
   return true;
 }
 
@@ -990,7 +966,7 @@ bool DictionaryValue::RemoveWithoutPathExpansion(
     return false;
 
   if (out_value)
-    *out_value = std::move(entry_iterator->second);
+    *out_value = MakeUnique<Value>(std::move(entry_iterator->second));
   dict_->erase(entry_iterator);
   return true;
 }
