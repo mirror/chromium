@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "218ccf88_c7c2e27c",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Added comment above declaration of |state_| in .h file.",
+      "parentUuid": "754de846_a7926fab",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71ae93b6_b2888801",
         "filename": "base/task_scheduler/lazy_task_runner.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe6636e8_e8969626",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71ae93b6_b2888801",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "793898c0_03411a17",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a07ca0c7_2c468325",
+      "range": {
+        "startLine": 28,
+        "startChar": 6,
+        "endLine": 28,
+        "endChar": 16
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b43efcb_a3359ce0",
         "filename": "base/task_scheduler/lazy_task_runner.cc",
         "patchSetId": 6
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "288bde1a_bafa74d2",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1b43efcb_a3359ce0",
+      "range": {
+        "startLine": 78,
+        "startChar": 20,
+        "endLine": 78,
+        "endChar": 64
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb25a6ff_f65761ce",
         "filename": "base/task_scheduler/lazy_task_runner.cc",
         "patchSetId": 6
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "1436bf1d_9fca2678",
+        "filename": "base/task_scheduler/lazy_task_runner.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Reusing LazyInstance itself is not possible since it doesn\u0027t support non-default constructor nor resetting the value. But I extracted most of the code in LazyInstance::Pointer into a function that I reused here.",
+      "parentUuid": "bb25a6ff_f65761ce",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a3c8162c_c78f27d4",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 6
@@ -113,6 +215,24 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1648d65_7b5abd5d",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3c8162c_c78f27d4",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -136,6 +256,30 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21da1920_b8e9c150",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5200e254_32b27923",
+      "range": {
+        "startLine": 28,
+        "startChar": 0,
+        "endLine": 30,
+        "endChar": 68
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "acc7c364_310f82f0",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "In an expression such as:\n\nType var \u003d Expr;\n\nAs long as Type has no destructor and no virtual methods and Expr is constexpr, no static initializer is generated (as verified with dump-static-initializers.py). The new initialization macro will prevent Expr the CreateInternal() from receiving non-constexpr arguments.",
+      "parentUuid": "1854d1ee_04b047ea",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 73
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d19efeb3_2cf44eca",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 6
@@ -230,6 +398,30 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c653af9_2af2d2b9",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19efeb3_2cf44eca",
+      "range": {
+        "startLine": 54,
+        "startChar": 47,
+        "endLine": 54,
+        "endChar": 69
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -256,6 +448,30 @@
     },
     {
       "key": {
+        "uuid": "9770b2d4_8ffb8cc0",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d26f2227_f432ecc4",
+      "range": {
+        "startLine": 62,
+        "startChar": 26,
+        "endLine": 62,
+        "endChar": 0
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7713358d_ac42d54e",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 6
@@ -270,6 +486,24 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b1342e_325756ed",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7713358d_ac42d54e",
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -296,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "a2d20d6f_584b1397",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6c617638_289a7c64",
+      "range": {
+        "startLine": 127,
+        "startChar": 2,
+        "endLine": 127,
+        "endChar": 12
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2b4c856_c3262e1c",
         "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
         "patchSetId": 6
@@ -316,6 +574,30 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6e698f3_bb9ab6d4",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "It didn\u0027t compile with clang when I was invoking the constructor directly, but it compiles now that I invoke a static method.",
+      "parentUuid": "c2b4c856_c3262e1c",
+      "range": {
+        "startLine": 26,
+        "startChar": 28,
+        "endLine": 26,
+        "endChar": 66
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -387,6 +669,30 @@
       "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbc026ad_8ac6ce51",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T15:19:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18ca223_a8f25408",
+      "range": {
+        "startLine": 72,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 5
+      },
+      "revId": "4864f965ad173b9f44de33cddb5976473f01a479",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
