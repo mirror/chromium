@@ -16,6 +16,24 @@
       "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "278f37a7_150d021a",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-12T05:47:59Z",
+      "side": 1,
+      "message": "Which file would you move the Create method to?\n\nOr would you remove it and have https://cs.chromium.org/chromium/src/content/renderer/pepper/pepper_websocket_host.cc?l\u003d258\u0026rcl\u003d85c02b2c4d6c4a9fe3025ba70d98324be01b994e instantiate modules/websocket/WebPepperSocketImpl directly?",
+      "parentUuid": "fc258f23_eb269ab5",
+      "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
