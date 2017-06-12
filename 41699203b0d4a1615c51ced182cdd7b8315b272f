@@ -265,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "08952ff3_b36c7f4a",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 693,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-12T18:00:32Z",
+      "side": 1,
+      "message": "I would assume so, yes.",
+      "parentUuid": "01858bdc_4274a8f7",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4b226b39_430fc4b8",
         "filename": "chrome/browser/extensions/webstore_installer.cc",
         "patchSetId": 1
@@ -311,6 +329,24 @@
       "writtenOn": "2017-06-06T09:38:52Z",
       "side": 1,
       "message": "Can we use \"ExtensionInstallBlacklist\"?",
+      "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d414b87_11f98b40",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 697,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-12T18:00:32Z",
+      "side": 1,
+      "message": "Hmm... I believe so.  It\u0027s a bit tricky during installation, since we\u0027ll fetch certain bits to determine whether or not the extension is allowed, but I think this is sufficiently after that point.",
+      "parentUuid": "86e03d3e_244d8a73",
       "revId": "41699203b0d4a1615c51ced182cdd7b8315b272f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
