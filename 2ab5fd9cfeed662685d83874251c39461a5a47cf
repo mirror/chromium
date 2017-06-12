@@ -22,6 +22,30 @@
       "revId": "2ab5fd9cfeed662685d83874251c39461a5a47cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ebe1603_bba046c9",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T09:44:46Z",
+      "side": 1,
+      "message": "Done.\n\nI\u0027ve added a suffix.\n\nReasons:\n1) Since we have an interface, I prefer to expose the fetcher through this interface.\n2) RemoteSuggestionsProvider is done similarly (|suggestions_fetcher_for_debugging|).",
+      "parentUuid": "63ddfa82_ce9e44f1",
+      "range": {
+        "startLine": 73,
+        "startChar": 0,
+        "endLine": 80,
+        "endChar": 44
+      },
+      "revId": "2ab5fd9cfeed662685d83874251c39461a5a47cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
