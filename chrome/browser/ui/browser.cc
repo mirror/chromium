@@ -82,6 +82,7 @@
 #include "chrome/browser/sessions/session_tab_helper.h"
 #include "chrome/browser/sessions/tab_restore_service_factory.h"
 #include "chrome/browser/ssl/security_state_tab_helper.h"
+#include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/sync/profile_sync_service_factory.h"
 #include "chrome/browser/sync/sync_ui_util.h"
 #include "chrome/browser/tab_contents/tab_util.h"
@@ -1457,15 +1458,20 @@ WebContents* Browser::OpenURLFromTab(WebContents* source,
   nav_params.user_gesture = params.user_gesture;
 
   PopupBlockerTabHelper* popup_blocker_helper = NULL;
-  if (source)
+  bool consider_popup_blocking = !params.user_gesture;
+  if (source) {
     popup_blocker_helper = PopupBlockerTabHelper::FromWebContents(source);
+    // The subresource_filter triggers an extra aggressive popup blocker on
+    // pages where ads are being blocked.
+    consider_popup_blocking |=
+        ChromeSubresourceFilterClient::ShouldDisallowNewWindow(source);
+  }
 
-  if (popup_blocker_helper) {
+  if (popup_blocker_helper && consider_popup_blocking) {
     if ((params.disposition == WindowOpenDisposition::NEW_POPUP ||
          params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
          params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
          params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
-        !params.user_gesture &&
         !base::CommandLine::ForCurrentProcess()->HasSwitch(
             switches::kDisablePopupBlocking)) {
       if (popup_blocker_helper->MaybeBlockPopup(
