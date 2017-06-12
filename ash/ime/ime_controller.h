@@ -8,14 +8,10 @@
 #include <vector>
 
 #include "ash/ash_export.h"
+#include "ash/public/interfaces/ime_info.mojom.h"
 #include "base/macros.h"
 
 namespace ash {
-
-namespace mojom {
-class ImeInfo;
-class ImeMenuItem;
-}  // namespace mojom
 
 // Connects ash IME users (e.g. the system tray) to the IME implementation,
 // which might live in Chrome browser or in a separate mojo service.
@@ -23,22 +19,39 @@ class ImeMenuItem;
 class ASH_EXPORT ImeController {
  public:
   ImeController();
-  virtual ~ImeController();
+  ~ImeController();
+
+  //JAMES TODO const& ify everything
 
   // Returns the currently selected IME.
-  virtual mojom::ImeInfo GetCurrentIme() const;
+  mojom::ImeInfo GetCurrentIme() const;
 
   // Returns a list of available IMEs. "Available" IMEs are both installed and
   // enabled by the user in settings.
-  virtual std::vector<mojom::ImeInfo> GetAvailableImes() const;
+  std::vector<mojom::ImeInfo> GetAvailableImes() const;
 
   // Returns true if the available IMEs are managed by enterprise policy.
-  virtual bool IsImeManaged() const;
+  bool IsImeManaged() const;
 
   // Returns additional menu items for properties of the currently selected IME.
-  virtual std::vector<mojom::ImeMenuItem> GetCurrentImeMenuItems() const;
+  std::vector<mojom::ImeMenuItem> GetCurrentImeMenuItems() const;
+
+  void OnCurrentImeChanged(const mojom::ImeInfo& ime);
+
+  void OnAvailableImesChanged(const std::vector<mojom::ImeInfo>& imes,
+                              bool managed_by_policy);
+
+  void OnCurrentImeMenuItemsChanged(
+      const std::vector<mojom::ImeMenuItem>& items);
+
+  void ShowImeMenuOnShelf(bool show);
 
  private:
+  mojom::ImeInfo current_ime_;
+  std::vector<mojom::ImeInfo> available_imes_;
+  bool managed_by_policy_ = false;
+  std::vector<mojom::ImeMenuItem> current_ime_menu_items_;
+
   DISALLOW_COPY_AND_ASSIGN(ImeController);
 };
 

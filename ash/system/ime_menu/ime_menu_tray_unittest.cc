@@ -29,24 +29,6 @@ using base::UTF8ToUTF16;
 namespace ash {
 namespace {
 
-class TestImeController : public ImeController {
- public:
-  TestImeController() = default;
-  ~TestImeController() override = default;
-
-  // ImeController:
-  mojom::ImeInfo GetCurrentIme() const override { return current_ime_; }
-  std::vector<mojom::ImeInfo> GetAvailableImes() const override {
-    return available_imes_;
-  }
-
-  mojom::ImeInfo current_ime_;
-  std::vector<mojom::ImeInfo> available_imes_;
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(TestImeController);
-};
-
 ImeMenuTray* GetTray() {
   return StatusAreaWidgetTestHelper::GetStatusAreaWidget()->ime_menu_tray();
 }
@@ -57,12 +39,6 @@ class ImeMenuTrayTest : public test::AshTestBase {
  public:
   ImeMenuTrayTest() {}
   ~ImeMenuTrayTest() override {}
-
-  // test::AshTestBase:
-  void SetUp() override {
-    test::AshTestBase::SetUp();
-    GetTray()->ime_controller_ = &test_ime_controller_;
-  }
 
  protected:
   // Returns true if the IME menu tray is visible.
@@ -110,16 +86,15 @@ class ImeMenuTrayTest : public test::AshTestBase {
   }
 
   void SetCurrentIme(mojom::ImeInfo ime) {
-    test_ime_controller_.current_ime_ = ime;
+    //JAMES should this notify? remove the notifications below?
+    Shell::Get()->ime_controller()->OnCurrentImeChanged(ime);
   }
 
   void SetAvailableImes(const std::vector<mojom::ImeInfo>& imes) {
-    test_ime_controller_.available_imes_ = imes;
+    Shell::Get()->ime_controller()->OnAvailableImesChanged(imes, false);
   }
 
  private:
-  TestImeController test_ime_controller_;
-
   DISALLOW_COPY_AND_ASSIGN(ImeMenuTrayTest);
 };
 
