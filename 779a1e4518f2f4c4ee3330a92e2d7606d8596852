@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6019340f_5a8e4cbb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-12T21:28:02Z",
+      "side": 1,
+      "message": "Instead of adding a new method why not make the copy constructor unset the offset_ and the is_placed_ bit? That way the logic to unset the offset could be contained in a single place (the NGPhysicalFragment copy constructor) and the subclasses can call the parents copy constructor.",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "779a1e4518f2f4c4ee3330a92e2d7606d8596852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
