@@ -16,6 +16,24 @@
       "revId": "088bed2ed7c65fdacf9e50824c982bc2c2187f71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d844a6ee_4b5fde1c",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-12T20:03:14Z",
+      "side": 1,
+      "message": "Nope, or I meant to do both. Nice catch, I uploaded the change to chromium.mac in the next patch.",
+      "parentUuid": "0d6c5b2b_c84feee6",
+      "revId": "088bed2ed7c65fdacf9e50824c982bc2c2187f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
