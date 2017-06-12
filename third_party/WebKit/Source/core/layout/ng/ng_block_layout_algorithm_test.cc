@@ -391,6 +391,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsCase3) {
   auto run_test = [&](const Length& container_height) {
     Element* container = GetDocument().getElementById("container");
     container->MutableComputedStyle()->SetHeight(container_height);
+    container->GetLayoutObject()->SetNeedsLayout("");
     std::tie(fragment, std::ignore) = RunBlockLayoutAlgorithmForElement(
         GetDocument().getElementsByTagName("html")->item(0));
     ASSERT_EQ(1UL, fragment->Children().size());
@@ -445,6 +446,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, CollapsingMarginsCase4) {
   auto run_test = [&](const Length& container_padding_top) {
     Element* container = GetDocument().getElementById("container");
     container->MutableComputedStyle()->SetPaddingTop(container_padding_top);
+    container->GetLayoutObject()->SetNeedsLayout("");
     std::tie(fragment, std::ignore) = RunBlockLayoutAlgorithmForElement(
         GetDocument().getElementsByTagName("html")->item(0));
     ASSERT_EQ(1UL, fragment->Children().size());
@@ -1118,6 +1120,7 @@ TEST_F(NGBlockLayoutAlgorithmTest, PositionFragmentsWithClear) {
   auto run_with_clearance = [&](EClear clear_value) {
     Element* el_with_clear = GetDocument().getElementById("clearance");
     el_with_clear->MutableComputedStyle()->SetClear(clear_value);
+    el_with_clear->GetLayoutObject()->SetNeedsLayout("");
     std::tie(fragment, std::ignore) = RunBlockLayoutAlgorithmForElement(
         GetDocument().getElementsByTagName("html")->item(0));
     ASSERT_EQ(1UL, fragment->Children().size());
@@ -2450,6 +2453,7 @@ TEST_F(NGBlockLayoutAlgorithmTest,
   auto run_test = [&](const Length& block_width) {
     Element* new_fc_block = GetDocument().getElementById("new-fc");
     new_fc_block->MutableComputedStyle()->SetWidth(block_width);
+    new_fc_block->GetLayoutObject()->SetNeedsLayout("");
     std::tie(fragment, std::ignore) = RunBlockLayoutAlgorithmForElement(
         GetDocument().getElementsByTagName("html")->item(0));
     ASSERT_EQ(1UL, fragment->Children().size());
