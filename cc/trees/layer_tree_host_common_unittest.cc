@@ -5606,11 +5606,10 @@ TEST_F(LayerTreeHostCommonTest, DoNotIncludeBackfaceInvisibleLayers) {
   EXPECT_EQ(1u, render_surface_list_impl()->size());
   EXPECT_TRUE(grand_child->contributes_to_drawn_render_surface());
 
-  // As all layers have identity transform, we shouldn't check for backface
-  // visibility.
+  // All layers with invisible backfaces should be checked.
   EXPECT_FALSE(root->should_check_backface_visibility());
-  EXPECT_FALSE(child->should_check_backface_visibility());
-  EXPECT_FALSE(grand_child->should_check_backface_visibility());
+  EXPECT_TRUE(child->should_check_backface_visibility());
+  EXPECT_TRUE(grand_child->should_check_backface_visibility());
 
   gfx::Transform rotation_transform;
   rotation_transform.RotateAboutXAxis(180.0);

@@ -1099,16 +1099,12 @@ void AddScrollNodeIfNeeded(
 template <typename LayerType>
 void SetBackfaceVisibilityTransform(LayerType* layer,
                                     bool created_transform_node) {
-  const bool is_at_boundary_of_3d_rendering_context =
-      IsAtBoundaryOf3dRenderingContext(layer);
   if (layer->use_parent_backface_visibility()) {
-    DCHECK(!is_at_boundary_of_3d_rendering_context);
     DCHECK(Parent(layer));
     DCHECK(!Parent(layer)->use_parent_backface_visibility());
     layer->SetShouldCheckBackfaceVisibility(
         Parent(layer)->should_check_backface_visibility());
   } else {
-    // A double-sided layer's backface can been shown when its visible.
     layer->SetShouldCheckBackfaceVisibility(!DoubleSided(layer));
   }
 }
