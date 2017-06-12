@@ -35,6 +35,26 @@ Quaternion::Quaternion(const Vector3dF& axis, double theta) {
   w_ = cos(theta);
 }
 
+Quaternion::Quaternion(const Vector3dF& from, const Vector3dF& to) {
+  double dot = gfx::DotProduct(from, to);
+  double norm = sqrt(from.LengthSquared() * to.LengthSquared());
+  double real = norm + dot;
+  gfx::Vector3dF axis;
+  if (real < kEpsilon * norm) {
+    real = 0.0f;
+    axis = std::abs(from.x()) > std::abs(from.z())
+               ? gfx::Vector3dF{-from.y(), from.x(), 0.0}
+               : gfx::Vector3dF{0.0, -from.z(), from.y()};
+  } else {
+    axis = gfx::CrossProduct(from, to);
+  }
+  x_ = axis.x();
+  y_ = axis.y();
+  z_ = axis.z();
+  w_ = real;
+  *this = this->normalized();
+}
+
 // Taken from http://www.w3.org/TR/css3-transforms/.
 Quaternion Quaternion::Slerp(const Quaternion& q, double t) const {
   double dot = x_ * q.x_ + y_ * q.y_ + z_ * q.z_ + w_ * q.w_;
