@@ -246,9 +246,12 @@ void MediaRouterAndroid::OnSinksReceived(const std::string& source_urn,
                                          const std::vector<MediaSink>& sinks) {
   auto it = sinks_observers_.find(source_urn);
   if (it != sinks_observers_.end()) {
+    blink::mojom::ScreenAvailability availability =
+        sinks.empty() ? blink::mojom::ScreenAvailability::UNAVAILABLE
+                      : blink::mojom::ScreenAvailability::AVAILABLE;
     // TODO(imcheng): Pass origins to OnSinksUpdated (crbug.com/594858).
     for (auto& observer : *it->second)
-      observer.OnSinksUpdated(sinks, std::vector<url::Origin>());
+      observer.OnSinksUpdated(availability, sinks, std::vector<url::Origin>());
   }
 }
 

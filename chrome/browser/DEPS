@@ -122,6 +122,7 @@ include_rules = [
   "+third_party/WebKit/public/platform/modules/installedapp/installed_app_provider.mojom.h",
   "+third_party/WebKit/public/platform/modules/notifications/WebNotificationConstants.h",
   "+third_party/WebKit/public/platform/modules/permissions/permission_status.mojom.h",
+  "+third_party/WebKit/public/platform/modules/presentation/presentation.mojom.h",
   "+third_party/WebKit/public/platform/modules/push_messaging/WebPushPermissionStatus.h",
   "+third_party/WebKit/public/platform/modules/remoteplayback/WebRemotePlaybackAvailability.h",
   "+third_party/WebKit/public/platform/modules/screen_orientation/WebScreenOrientationLockType.h",

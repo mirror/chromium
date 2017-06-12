@@ -65,7 +65,9 @@ class MockMediaSinksObserver : public MediaSinksObserver {
                          const url::Origin& origin);
   ~MockMediaSinksObserver() override;
 
-  MOCK_METHOD1(OnSinksReceived, void(const std::vector<MediaSink>& sinks));
+  MOCK_METHOD2(OnSinksReceived,
+               void(blink::mojom::ScreenAvailability availability,
+                    const std::vector<MediaSink>& sinks));
 };
 
 class MockMediaRoutesObserver : public MediaRoutesObserver {

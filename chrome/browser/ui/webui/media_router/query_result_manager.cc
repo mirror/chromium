@@ -36,7 +36,8 @@ class QueryResultManager::MediaSourceMediaSinksObserver
   ~MediaSourceMediaSinksObserver() override {}
 
   // MediaSinksObserver
-  void OnSinksReceived(const std::vector<MediaSink>& result) override {
+  void OnSinksReceived(blink::mojom::ScreenAvailability availability,
+                       const std::vector<MediaSink>& result) override {
     latest_sink_ids_.clear();
     for (const MediaSink& sink : result) {
       latest_sink_ids_.push_back(sink.id());
