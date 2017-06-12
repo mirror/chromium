@@ -1955,13 +1955,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_VAR(rare_non_inherited_data_, has_inline_transform_, b);
   }
 
-  bool HasCompositorProxy() const {
-    return rare_non_inherited_data_->has_compositor_proxy_;
-  }
-  void SetHasCompositorProxy(bool b) {
-    SET_VAR(rare_non_inherited_data_, has_compositor_proxy_, b);
-  }
-
   bool RequiresAcceleratedCompositingForExternalReasons(bool b) {
     return rare_non_inherited_data_
         ->requires_accelerated_compositing_for_external_reasons_;

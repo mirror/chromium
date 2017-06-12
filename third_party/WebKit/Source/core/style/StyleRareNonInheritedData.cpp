@@ -128,7 +128,6 @@ StyleRareNonInheritedData::StyleRareNonInheritedData()
       requires_accelerated_compositing_for_external_reasons_(false),
       has_inline_transform_(false),
       resize_(ComputedStyle::InitialResize()),
-      has_compositor_proxy_(false),
       has_author_background_(false),
       has_author_border_(false) {}
 
@@ -222,7 +221,6 @@ StyleRareNonInheritedData::StyleRareNonInheritedData(
           o.requires_accelerated_compositing_for_external_reasons_),
       has_inline_transform_(o.has_inline_transform_),
       resize_(o.resize_),
-      has_compositor_proxy_(o.has_compositor_proxy_),
       has_author_background_(o.has_author_background_),
       has_author_border_(o.has_author_border_) {}
 
@@ -296,7 +294,6 @@ bool StyleRareNonInheritedData::operator==(
              o.requires_accelerated_compositing_for_external_reasons_ &&
          has_inline_transform_ == o.has_inline_transform_ &&
          resize_ == o.resize_ &&
-         has_compositor_proxy_ == o.has_compositor_proxy_ &&
          has_author_background_ == o.has_author_background_ &&
          has_author_border_ == o.has_author_border_;
 }
