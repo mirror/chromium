@@ -90,7 +90,6 @@ public interface MessagePipeHandle extends Handle {
      */
     public static class ReadFlags extends Flags<ReadFlags> {
         private static final int FLAG_NONE = 0;
-        private static final int FLAG_MAY_DISCARD = 1 << 0;
 
         /**
          * Immutable flag with no bit set.
@@ -107,18 +106,6 @@ public interface MessagePipeHandle extends Handle {
         }
 
         /**
-         * Change the may-discard bit of this flag. If set, if the message is unable to be read for
-         * whatever reason (e.g., the caller-supplied buffer is too small), discard the message
-         * (i.e., simply dequeue it).
-         *
-         * @param mayDiscard the new value of the may-discard bit.
-         * @return this.
-         */
-        public ReadFlags setMayDiscard(boolean mayDiscard) {
-            return setFlag(FLAG_MAY_DISCARD, mayDiscard);
-        }
-
-        /**
          * @return a flag with no bit set.
          */
         public static ReadFlags none() {
@@ -132,15 +119,13 @@ public interface MessagePipeHandle extends Handle {
      */
     public static class ReadMessageResult {
         /**
-         * If a message was read, the size in bytes of the message, otherwise the size in bytes of
-         * the next message.
+         * If a message was read, this contains the bytes of its data.
          */
-        private int mMessageSize;
+        private byte[] mData;
         /**
-         * If a message was read, the number of handles contained in the message, otherwise the
-         * number of handles contained in the next message.
+         * If a message was read, this contains the raw handle values.
          */
-        private int mHandlesCount;
+        private int[] mRawHandles;
         /**
          * If a message was read, the handles contained in the message, undefined otherwise.
          */
@@ -149,29 +134,15 @@ public interface MessagePipeHandle extends Handle {
         /**
          * @return the messageSize
          */
-        public int getMessageSize() {
-            return mMessageSize;
+        public byte[] getData() {
+            return mData;
         }
 
         /**
-         * @param messageSize the messageSize to set
+         * @return the raw handle values
          */
-        public void setMessageSize(int messageSize) {
-            mMessageSize = messageSize;
-        }
-
-        /**
-         * @return the handlesCount
-         */
-        public int getHandlesCount() {
-            return mHandlesCount;
-        }
-
-        /**
-         * @param handlesCount the handlesCount to set
-         */
-        public void setHandlesCount(int handlesCount) {
-            mHandlesCount = handlesCount;
+        public int[] getRawHandles() {
+            return mRawHandles;
         }
 
         /**
@@ -179,6 +150,20 @@ public interface MessagePipeHandle extends Handle {
          */
         public List<UntypedHandle> getHandles() {
             return mHandles;
+        }
+
+        /**
+         * @param data the payload data bytes
+         */
+        public void setData(byte[] data) {
+            mData = data;
+        }
+
+        /**
+         * @param data the raw handle values
+         */
+        public void setRawHandles(int[] values) {
+            mRawHandles = values;
         }
 
         /**
@@ -219,6 +204,5 @@ public interface MessagePipeHandle extends Handle {
      * will be true, or the read is NOT done and |wasMessageRead| will be false (if |mayDiscard| was
      * set, the message is also discarded in this case).
      */
-    ResultAnd<ReadMessageResult> readMessage(
-            ByteBuffer bytes, int maxNumberOfHandles, ReadFlags flags);
+    ResultAnd<ReadMessageResult> readMessage(ReadFlags flags);
 }
