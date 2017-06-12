@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0acc8397_83372629",
+        "filename": "chrome/test/data/webui/cr_elements/cr_action_menu_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T18:14:57Z",
+      "side": 1,
+      "message": "Can you extend this test to cover the case where an element is dynamically removed?",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f6c43d2_81f7c1c7",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T18:14:57Z",
+      "side": 1,
+      "message": "I believe that |options_| can only be used while the menu is showing. It was being initialized here, because it was cheap, but now that we need a MutationObserver, can we trigger this logic from within showAtPosition() instead? This way we don\u0027t unnecessarily register MutationObservers for all hidden action-menu instances on a page.",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9129f04_35cb7488",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-12T18:14:57Z",
+      "side": 1,
+      "message": "Does the observer have to be registered on |this|? Can it be registered on the item-wrapper div, at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.html?l\u003d58?",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
