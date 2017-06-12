@@ -672,6 +672,7 @@ void ChromeBrowserMainPartsChromeos::PreProfileInit() {
   g_browser_process->profile_manager();
 
   // AccessibilityManager and SystemKeyEventListener use InputMethodManager.
+  LOG(ERROR) << "JAMES input_method::Initialize";
   input_method::Initialize();
 
   // ProfileHelper has to be initialized after UserManager instance is created.
@@ -1112,6 +1113,7 @@ void ChromeBrowserMainPartsChromeos::PostMainMessageLoopRun() {
   if (!ash_util::IsRunningInMash())
     AccessibilityManager::Shutdown();
 
+  LOG(ERROR) << "JAMES input_method::Shutdown";
   input_method::Shutdown();
 
   // Stops all in-flight OAuth2 token fetchers before the IO thread stops.
