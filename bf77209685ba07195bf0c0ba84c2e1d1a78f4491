@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc8e73cc_286c8cc1",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:07:56Z",
+      "side": 0,
+      "message": "width and height are actually also not used. Not sure if we should keep them?",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2f28ee_1a8de82b",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:07:56Z",
+      "side": 0,
+      "message": "These seem pointless; they can be inferred from large_image vs large_cta_image.",
+      "range": {
+        "startLine": 55,
+        "startChar": 14,
+        "endLine": 55,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ec9db12f_6e765ea4",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:07:56Z",
+      "side": 0,
+      "message": "interactive_html will come back in some form once we add desktop support, but that\u0027ll require more changes anyway.",
+      "range": {
+        "startLine": 78,
+        "startChar": 31,
+        "endLine": 78,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5995d42d_5850a95c",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:07:56Z",
+      "side": 0,
+      "message": "Not sure where this came from. I think we *planned* to use this at some point, but never actually did?",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
