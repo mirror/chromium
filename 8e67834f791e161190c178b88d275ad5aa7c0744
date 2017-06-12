@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "71454256_213908e8",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:07:09Z",
+      "side": 1,
+      "message": "It\u0027s needed for the kernel headers",
+      "parentUuid": "553b6b87_8ea8f7c1",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 14
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2867c37f_3d8ae3f8",
         "filename": "third_party/libsync/BUILD.gn",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-12T13:50:47Z",
       "side": 1,
       "message": "Should we remove these?",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c429ba2_6397c3b6",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:07:09Z",
+      "side": 1,
+      "message": "and rely on the system providing these kernel headers? I don\u0027t think we can do that",
+      "parentUuid": "2867c37f_3d8ae3f8",
       "range": {
         "startLine": 15,
         "startChar": 4,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a567e061_01808f30",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb03974e_4a74d7da",
+      "range": {
+        "startLine": 17,
+        "startChar": 5,
+        "endLine": 17,
+        "endChar": 26
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8ca6326e_21800c1d",
         "filename": "third_party/libsync/BUILD.gn",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bdf40517_0eeef18b",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:07:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ca6326e_21800c1d",
+      "range": {
+        "startLine": 18,
+        "startChar": 5,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
