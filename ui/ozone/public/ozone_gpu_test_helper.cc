@@ -20,14 +20,14 @@ namespace {
 
 const int kGpuProcessHostId = 1;
 
-void DispatchToGpuPlatformSupportHostTask(IPC::Message* msg) {
+static void DispatchToGpuPlatformSupportHostTask(IPC::Message* msg) {
   ui::OzonePlatform::GetInstance()
       ->GetGpuPlatformSupportHost()
       ->OnMessageReceived(*msg);
   delete msg;
 }
 
-void DispatchToGpuPlatformSupportTaskOnIO(IPC::Message* msg) {
+static void DispatchToGpuPlatformSupportTaskOnIO(IPC::Message* msg) {
   IPC::MessageFilter* filter =
       ui::OzonePlatform::GetInstance()->GetGpuMessageFilter();
   if (filter)
@@ -120,6 +120,9 @@ bool OzoneGpuTestHelper::Initialize(
                             base::Unretained(fake_gpu_process_host_.get())));
   io_helper_thread_->FlushForTesting();
 
+  ui::OzonePlatform::GetInstance()
+    ->GetGpuPlatformSupportHost()
+    ->OnChannelEstablished();
   return true;
 }
 
