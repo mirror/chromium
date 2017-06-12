@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e720eb9a_655efe4c",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-12T13:18:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33306c7a_6c461644",
+      "range": {
+        "startLine": 45,
+        "startChar": 11,
+        "endLine": 45,
+        "endChar": 16
+      },
+      "revId": "396fc680aab44c0a0c8d7bfd5ace921d9c0c91ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81e99993_ca0cd03e",
         "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
         "patchSetId": 10
@@ -69,6 +93,30 @@
       "revId": "396fc680aab44c0a0c8d7bfd5ace921d9c0c91ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47d9bbfb_bfcd3035",
+        "filename": "content/browser/renderer_host/media/audio_input_sync_writer.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-12T13:18:21Z",
+      "side": 1,
+      "message": "Looking at https://godbolt.org/g/AY4pLO, putting the string in a variable seems to have small impact on generated assembly (though it depends on compiler/flags). Either way, I prefer writing code that makes sense over code that might save a single-digit number of cycles :).",
+      "parentUuid": "81e99993_ca0cd03e",
+      "range": {
+        "startLine": 237,
+        "startChar": 2,
+        "endLine": 237,
+        "endChar": 44
+      },
+      "revId": "396fc680aab44c0a0c8d7bfd5ace921d9c0c91ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

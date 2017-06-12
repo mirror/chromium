@@ -330,6 +330,30 @@
       "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d088d881_5e2d19b5",
+        "filename": "content/browser/renderer_host/media/audio_sync_reader.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-12T13:18:21Z",
+      "side": 1,
+      "message": "Done (and same for AudioInputSyncWriter).",
+      "parentUuid": "fb020abd_1bbe25f1",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 17
+      },
+      "revId": "709db8298881bb284efab2d5096e63ae1d2c86a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
