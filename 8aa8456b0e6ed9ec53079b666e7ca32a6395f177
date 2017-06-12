@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4836c0ee_826a3fa5",
+        "filename": "ui/gfx/geometry/quaternion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-12T14:05:48Z",
+      "side": 1,
+      "message": "nit: Maybe add a divide operator that re-uses the multiply operator?",
+      "range": {
+        "startLine": 96,
+        "startChar": 22,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "8aa8456b0e6ed9ec53079b666e7ca32a6395f177",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
