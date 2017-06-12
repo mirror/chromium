@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "26748439_94c52672",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T20:07:30Z",
+      "side": 1,
+      "message": "This looks racy. The GPUInfo in GpuDataManager is updated asynchronously after the GPU process is successfully created and has sent its initialization data - including the GPUInfo.\n\nBy the looks of it, this function is simply posted from the IO thread after the GpuJpegDecodeAccelerator interface is requested (but before it has been sucessfully created), so we don\u0027t know that we have received a valid GPUInfo. The previous code guaranteed we had it - since we only return a channel after we have received the GPUInfo.",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2d3271b_2ccba455",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T20:07:30Z",
+      "side": 1,
+      "message": "nit: you\u0027re not using the BrowserGpuChannelHostFactory any more, I suggest using BrowserThread::GetTaskRunnerForThread(BrowserThread::IO) instead, which is a more accurate description of what you\u0027re doing, and therefore reducing coupling.",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6f65ab2_4b30ee10",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h",
         "patchSetId": 7
@@ -48,6 +82,23 @@
     },
     {
       "key": {
+        "uuid": "cbac6cf1_167de5b5",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T20:07:30Z",
+      "side": 1,
+      "message": "This thread hopping is very odd, and I think contrary to what the original design wanted. In the original design, the message was received on the IO thread on purpose, to avoid issues when the client thread is blocked. In this version, the message is first received on the client thread, then posted to the IO thread. Why? Is it that the concern about the client thread being gone is no longer valid (in which case why post to the IO thread at all?), or should we receive the message from the IO thread in the first place?",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723c871a_1ae7f534",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 7
@@ -65,6 +116,40 @@
         "endLine": 154,
         "endChar": 22
       },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9226e702_0c2a74a4",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T20:07:30Z",
+      "side": 1,
+      "message": "Again, the task posting is odd. It\u0027s definitely true that the GPU main thread can be busy for a long time, so I don\u0027t understand why you would want to hop to that thread first, and then to the IO thread.",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a40c6cb_e336bc6c",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-12T20:07:30Z",
+      "side": 1,
+      "message": "weak_ptr_factory_ is reset on the main thread, so it\u0027s invalid to dereference it on the IO thread (where the callback is run).",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
