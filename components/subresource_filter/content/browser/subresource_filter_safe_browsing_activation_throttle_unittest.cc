@@ -313,8 +313,8 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
   void UsePassThroughThrottle() { fake_safe_browsing_database_ = nullptr; }
 
   void RunUntilIdle() {
-    test_io_task_runner_->RunUntilIdle();
     base::RunLoop().RunUntilIdle();
+    test_io_task_runner_->RunUntilIdle();
   }
 
   content::NavigationSimulator* navigation_simulator() {
