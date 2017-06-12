@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "a24b22da_74a980c9",
+        "filename": "third_party/libsync/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-12T15:20:15Z",
+      "side": 1,
+      "message": "Ah I see. You\u0027re pulling from the master branch instead of the upstream branch.\n\nThe upstream libsync does not require the linux/sw_sync.h and linux/sync.h to build anymore. dbehr@ has cherry-picked patches from upstream to the libsync repos on Chrome OS and ARC++ nyc branch to strip away dependencies on the linux headers. Should we do the same for Chrome?",
+      "parentUuid": "0c429ba2_6397c3b6",
+      "range": {
+        "startLine": 15,
+        "startChar": 4,
+        "endLine": 16,
+        "endChar": 27
+      },
+      "revId": "8e67834f791e161190c178b88d275ad5aa7c0744",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb03974e_4a74d7da",
         "filename": "third_party/libsync/BUILD.gn",
         "patchSetId": 1
