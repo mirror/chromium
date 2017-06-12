@@ -10,20 +10,39 @@
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
-#include "base/single_thread_task_runner.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/trace_event/trace_event.h"
 #include "build/build_config.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/gpu_data_manager.h"
+#include "content/public/browser/gpu_service_registry.h"
 #include "content/public/common/content_switches.h"
 #include "media/base/media_switches.h"
 #include "media/base/video_frame.h"
-#include "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.h"
 #include "mojo/public/cpp/system/platform_handle.h"
 
 namespace content {
+
+namespace {
+
+// Initialization helper, to connect to GpuJpegDecodeAccelerator in GPU process.
+void ConnectToGpuJpegDecodeAcceleratorOnIOThread(
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner,
+    const base::Callback<void(media::mojom::GpuJpegDecodeAcceleratorPtrInfo)>&
+        done_cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  media::mojom::GpuJpegDecodeAcceleratorPtr remote_decoder;
+  BindInterfaceInGpuProcess(mojo::MakeRequest(&remote_decoder));
+
+  task_runner->PostTask(
+      FROM_HERE,
+      base::Bind(done_cb, base::Passed(remote_decoder.PassInterface())));
+}
+
+}  // namespace
 
 VideoCaptureGpuJpegDecoder::VideoCaptureGpuJpegDecoder(
     DecodeDoneCB decode_done_cb,
@@ -33,7 +52,8 @@ VideoCaptureGpuJpegDecoder::VideoCaptureGpuJpegDecoder(
       has_received_decoded_frame_(false),
       next_bitstream_buffer_id_(0),
       in_buffer_id_(media::JpegDecodeAccelerator::kInvalidBitstreamBufferId),
-      decoder_status_(INIT_PENDING) {}
+      decoder_status_(INIT_PENDING),
+      weak_ptr_factory_(this) {}
 
 VideoCaptureGpuJpegDecoder::~VideoCaptureGpuJpegDecoder() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -41,10 +61,6 @@ VideoCaptureGpuJpegDecoder::~VideoCaptureGpuJpegDecoder() {
   // |decoder_| guarantees no more JpegDecodeAccelerator::Client callbacks
   // on IO thread after deletion.
   decoder_.reset();
-
-  // |gpu_channel_host_| should outlive |decoder_|, so |gpu_channel_host_|
-  // must be released after |decoder_| has been destroyed.
-  gpu_channel_host_ = nullptr;
 }
 
 void VideoCaptureGpuJpegDecoder::Initialize() {
@@ -68,11 +84,12 @@ void VideoCaptureGpuJpegDecoder::Initialize() {
     return;
   }
 
-  const scoped_refptr<base::SingleThreadTaskRunner> current_task_runner(
-      base::ThreadTaskRunnerHandle::Get());
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(&EstablishGpuChannelOnUIThread,
-                                     current_task_runner, AsWeakPtr()));
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(&ConnectToGpuJpegDecodeAcceleratorOnIOThread,
+                 base::ThreadTaskRunnerHandle::Get(),
+                 base::Bind(&VideoCaptureGpuJpegDecoder::FinishInitialization,
+                            weak_ptr_factory_.GetWeakPtr())));
 }
 
 VideoCaptureGpuJpegDecoder::STATUS VideoCaptureGpuJpegDecoder::GetStatus()
@@ -216,54 +233,24 @@ void VideoCaptureGpuJpegDecoder::NotifyError(
   decoder_status_ = FAILED;
 }
 
-// static
-void VideoCaptureGpuJpegDecoder::EstablishGpuChannelOnUIThread(
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(BrowserGpuChannelHostFactory::instance());
-
-  BrowserGpuChannelHostFactory::instance()->EstablishGpuChannel(
-      base::Bind(&VideoCaptureGpuJpegDecoder::GpuChannelEstablishedOnUIThread,
-                 task_runner, weak_this));
-}
-
-// static
-void VideoCaptureGpuJpegDecoder::GpuChannelEstablishedOnUIThread(
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner,
-    base::WeakPtr<VideoCaptureGpuJpegDecoder> weak_this,
-    scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  task_runner->PostTask(
-      FROM_HERE, base::Bind(&VideoCaptureGpuJpegDecoder::FinishInitialization,
-                            weak_this, std::move(gpu_channel_host)));
-}
-
 void VideoCaptureGpuJpegDecoder::FinishInitialization(
-    scoped_refptr<gpu::GpuChannelHost> gpu_channel_host) {
+    media::mojom::GpuJpegDecodeAcceleratorPtrInfo remote_decoder_info) {
   TRACE_EVENT0("gpu", "VideoCaptureGpuJpegDecoder::FinishInitialization");
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
   base::AutoLock lock(lock_);
-  if (!gpu_channel_host) {
-    LOG(ERROR) << "Failed to establish GPU channel for JPEG decoder";
-  } else if (gpu_channel_host->gpu_info().jpeg_decode_accelerator_supported) {
-    gpu_channel_host_ = std::move(gpu_channel_host);
-    scoped_refptr<base::SingleThreadTaskRunner> io_task_runner =
-        BrowserGpuChannelHostFactory::instance()->GetIOThreadTaskRunner();
 
-    int32_t route_id = gpu_channel_host_->GenerateRouteID();
-    std::unique_ptr<media::GpuJpegDecodeAcceleratorHost> decoder(
-        new media::GpuJpegDecodeAcceleratorHost(gpu_channel_host_.get(),
-                                                route_id, io_task_runner));
-    if (decoder->Initialize(this)) {
-      gpu_channel_host_->AddRouteWithTaskRunner(
-          route_id, decoder->GetReceiver(), io_task_runner);
+  if (GpuDataManager::GetInstance()
+          ->GetGPUInfo()
+          .jpeg_decode_accelerator_supported) {
+    auto decoder = base::MakeUnique<media::GpuJpegDecodeAcceleratorHost>(
+        BrowserGpuChannelHostFactory::instance()->GetIOThreadTaskRunner(),
+        std::move(remote_decoder_info));
+    if (decoder->Initialize(this))
       decoder_ = std::move(decoder);
-    } else {
+    else
       DLOG(ERROR) << "Failed to initialize JPEG decoder";
-    }
   }
+
   decoder_status_ = decoder_ ? INIT_PASSED : FAILED;
   RecordInitDecodeUMA_Locked();
 }
