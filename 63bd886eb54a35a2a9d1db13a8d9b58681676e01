@@ -69,6 +69,24 @@
       "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30bb9549_9268de79",
+        "filename": "third_party/libsync/sync.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-12T15:14:08Z",
+      "side": 1,
+      "message": "Patching upstream libsync so it doesn\u0027t depend on strlcpy would be nice. It\u0027s also possible to disable build flags for specific files. That\u0027s what \"configs +\u003d [ \"//build/config/compiler:no_chromium_code\" ]\" in BUILD.gn is about. Guess we just need to add some additional config change. You can probably find and example by looking at build configs for other third party libs.",
+      "parentUuid": "f5d82602_89635507",
+      "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
