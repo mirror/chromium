@@ -22,6 +22,30 @@
       "revId": "72d8916455f588c7048de15c167389b909a19f52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e66b185_a97ec234",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1406,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-12T16:30:32Z",
+      "side": 1,
+      "message": "Already done in the next CL in the chain (which also moves this function to a new file), so leaving as-is for this CL.",
+      "parentUuid": "b96987c9_7b7b6c8e",
+      "range": {
+        "startLine": 1406,
+        "startChar": 7,
+        "endLine": 1406,
+        "endChar": 46
+      },
+      "revId": "72d8916455f588c7048de15c167389b909a19f52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
