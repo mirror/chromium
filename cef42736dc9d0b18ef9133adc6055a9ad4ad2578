@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "084d10e7_e9da2c40",
+        "filename": "ui/gfx/geometry/quaternion.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-12T17:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dfc96f7c_88df74a6",
+      "revId": "cef42736dc9d0b18ef9133adc6055a9ad4ad2578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b86dc6df_62c0f2ca",
         "filename": "ui/gfx/geometry/quaternion.h",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "cef42736dc9d0b18ef9133adc6055a9ad4ad2578",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "919188b9_6e920bf5",
+        "filename": "ui/gfx/geometry/quaternion.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-12T17:17:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b86dc6df_62c0f2ca",
+      "range": {
+        "startLine": 86,
+        "startChar": 22,
+        "endLine": 86,
+        "endChar": 23
+      },
+      "revId": "cef42736dc9d0b18ef9133adc6055a9ad4ad2578",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
