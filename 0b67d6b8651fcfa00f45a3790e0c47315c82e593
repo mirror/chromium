@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "83ee3b75_eed3a94f",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-06-12T22:00:07Z",
+      "side": 1,
+      "message": "We might add a comment here to the effect that the Cast-specific PlayReady implementation does not [currently] use/recognize/support robustness strings.",
+      "revId": "0b67d6b8651fcfa00f45a3790e0c47315c82e593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a922863a_05712359",
+        "filename": "chromecast/renderer/media/key_systems_cast.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000158
+      },
+      "writtenOn": "2017-06-12T22:00:07Z",
+      "side": 1,
+      "message": "Empty _should_ be the special case. It might be more defensive (thinking about possible future changes) to handle empty then have NOT_SUPPORTED at the end with the suggested comment above.",
+      "revId": "0b67d6b8651fcfa00f45a3790e0c47315c82e593",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c703c1c_973685a1",
         "filename": "chromecast/renderer/media/key_systems_cast.cc",
         "patchSetId": 1
