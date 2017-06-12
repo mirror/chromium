@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2646d931_1ed7ec1e",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-06-12T20:58:39Z",
+      "side": 1,
+      "message": "Just to make sure - this syntax initializes the array to zero, right?",
+      "range": {
+        "startLine": 37,
+        "startChar": 10,
+        "endLine": 37,
+        "endChar": 14
+      },
+      "revId": "3dd4e71c60fc1a332fff0283018941b353f849e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57dec9fe_829be415",
+        "filename": "chrome/browser/media/router/discovery/discovery_network_list_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-06-12T20:58:39Z",
+      "side": 1,
+      "message": "Do we need to close the handle when this function goes out of scope?",
+      "range": {
+        "startLine": 112,
+        "startChar": 8,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "3dd4e71c60fc1a332fff0283018941b353f849e5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
