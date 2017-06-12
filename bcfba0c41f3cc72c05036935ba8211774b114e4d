@@ -1,0 +1,182 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ab46092e_666385af",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "so far, whether the suggestion is of type download determines if the thumbnail should be recycled, but lets avoid losing documentation on that change. I\u0027d add a member (`mRecycleThumbnail`, `mBitmapOwned` or similar) to the class and initialise it in the constructor to be used here. it gives more context about this condition.\n\nImagine you have to read that in 6 months, just checking isDownload() here is obscure, we actually care about where (which backend) the image is coming from. If we switch to a different backend for downloads, that code will be wrong.",
+      "range": {
+        "startLine": 446,
+        "startChar": 36,
+        "endLine": 446,
+        "endChar": 46
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c35e30df_38fdc328",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "also initialise this one lazily, like the other image providers?",
+      "range": {
+        "startLine": 67,
+        "startChar": 33,
+        "endLine": 67,
+        "endChar": 54
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61b9f5b_cbdb34c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "\"request for a thumbnail from a downloaded image\" (or media, if we extend it to videos)",
+      "range": {
+        "startLine": 72,
+        "startChar": 31,
+        "endLine": 72,
+        "endChar": 39
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f21970_2ed8c093",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "nit: full stop at the end, and same below",
+      "range": {
+        "startLine": 81,
+        "startChar": 92,
+        "endLine": 81,
+        "endChar": 97
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d12aefcf_c5f0ad35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "remove \u0027a\u0027",
+      "range": {
+        "startLine": 91,
+        "startChar": 29,
+        "endLine": 91,
+        "endChar": 30
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f8754c2_6d3bdea5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "The javadoc would already link to the return type in the signature, no need to include it here.",
+      "range": {
+        "startLine": 99,
+        "startChar": 15,
+        "endLine": 99,
+        "endChar": 46
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a1fcd5_30842913",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "double space",
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321e0145_d77e8149",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 8
+      },
+      "lineNbr": 410,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-12T13:55:22Z",
+      "side": 1,
+      "message": "that\u0027s a bit code smell IMO. I\u0027d  make ImageFetcherRequest an interface and set the fields in each implementation class. If there are optional fields then they should not be in the base abstract class, especially since it does nothing else.",
+      "range": {
+        "startLine": 410,
+        "startChar": 18,
+        "endLine": 410,
+        "endChar": 29
+      },
+      "revId": "bcfba0c41f3cc72c05036935ba8211774b114e4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
