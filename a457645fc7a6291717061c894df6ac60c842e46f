@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dd43097b_0250ea43",
+        "filename": "chrome/browser/ui/views/passwords/account_chooser_dialog_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-12T13:38:04Z",
+      "side": 1,
+      "message": "In InitWindow, BuildColumnSet is called with one of two values for ColumnSetType. One adds 0 padding and the other adds \u003e0 padding. InitWindow is playing fairly fast-and-loose with the INSETS_DIALOG_XXXX values.\n\nFrom looking at BuildColumnSet itself, it\u0027s not clear that the two padding columns are actually insets for the dialog. This is even less clear since it\u0027s not consistently applied.",
+      "parentUuid": "c729c4df_871aa0f7",
+      "range": {
+        "startLine": 47,
+        "startChar": 23,
+        "endLine": 47,
+        "endChar": 45
+      },
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ad9c0bfb_a6d4facd",
         "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
         "patchSetId": 3
@@ -99,6 +123,24 @@
       "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faea7a89_cc431902",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-12T13:38:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c79a5b9e_8686e387",
+      "revId": "a457645fc7a6291717061c894df6ac60c842e46f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
