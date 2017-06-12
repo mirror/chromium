@@ -16,6 +16,24 @@
       "revId": "3c6b72223e6f7ead7962254f15d3e0cc6b05eb53",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ace21201_70555f55",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 2604,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-12T08:42:07Z",
+      "side": 1,
+      "message": "Done - also renamed it to ShouldRecalculateMinMaxWidthsAffectedByAncestor() (since it\u0027s now more obvious than ever that this function doesn\u0027t recalculate anything) and added some more documentation.",
+      "parentUuid": "47b994fe_5dbbc2df",
+      "revId": "3c6b72223e6f7ead7962254f15d3e0cc6b05eb53",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
