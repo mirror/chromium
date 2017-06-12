@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a197db0_3957387a",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "No explicit.",
+      "range": {
+        "startLine": 26,
+        "startChar": 1,
+        "endLine": 26,
+        "endChar": 11
+      },
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2536f5c3_62bbeea7",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "Note that this requires a current Cocoa drawing context?",
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf9667ad_5acdb655",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "Is it safe to store this as a reference?",
+      "range": {
+        "startLine": 42,
+        "startChar": 23,
+        "endLine": 42,
+        "endChar": 24
+      },
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0650cb6_33cfb713",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "Can make this \"const\" maybe?",
+      "range": {
+        "startLine": 45,
+        "startChar": 9,
+        "endLine": 45,
+        "endChar": 10
+      },
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a2f4624_b13658c3",
+        "filename": "chrome/browser/ui/cocoa/menu_button.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "The NSMenuDelegate method should be used instead, rather than adding this here.\n\nhttps://developer.apple.com/documentation/appkit/nsmenudelegate/1518156-menuwillopen?language\u003dobjc",
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1040707b_4e542b48",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-12T16:48:35Z",
+      "side": 1,
+      "message": "Use a ternary operator to create an SkColor local, instead of two calls to animatedIcon_-\u003eset_color() ?",
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
