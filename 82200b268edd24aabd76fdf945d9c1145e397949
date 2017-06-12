@@ -19,6 +19,69 @@
     },
     {
       "key": {
+        "uuid": "ad696156_5271c0b0",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T23:56:11Z",
+      "side": 1,
+      "message": "Can we have a helper function that returns these variables as a dict? We can use the function in setter_context().\n\ndef runtime_stats_context(counter):\n  getter \u003d \u0027k%s_Getter\u0027 % counter\n  return {\n    \u0027getter_counter\u0027: getter,\n    \u0027setter_counter\u0027: \u0027k%s_Setter\u0027 % counter,\n    \u0027bindings_counter\u0027: getter + \u0027_Bindings\u0027,\n  }\n\nif \u0027RuntimeStatsCounter\u0027 in extended_attributes:\n  runtime_stats \u003d runtime_stats_context(extended_attributes[\u0027RuntimeStatsCounter\u0027])\n  includes.add(\u0027...\u0027)  # Not sure we want to move this to the above function.\nelse:\n  runtime_stats \u003d None",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0f53a2f_e680c97c",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T23:56:11Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "range": {
+        "startLine": 317,
+        "startChar": 9,
+        "endLine": 317,
+        "endChar": 27
+      },
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d89c8c1d_24a008bd",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_attributes.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 458,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T23:56:11Z",
+      "side": 1,
+      "message": "nit: alphabetical order",
+      "range": {
+        "startLine": 458,
+        "startChar": 9,
+        "endLine": 458,
+        "endChar": 27
+      },
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9f7d1c76_0ce385a2",
         "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
         "patchSetId": 5
