@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "19a21c31_98c3968f",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T20:57:46Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "985ff9fb_da66cd96",
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7387e9d2_aac396c4",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 1
@@ -295,6 +313,30 @@
       "side": 1,
       "message": "The use case fits but IsRunning() is not accessible from DelayTimer because of protected inheritance.\n\nI left base::Timer in place, but another solution would be to add IsRunning() to DelayTimer.",
       "parentUuid": "6fc39a1a_adbbd3ba",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 13
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5a9cf84b_648ad38e",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T20:57:46Z",
+      "side": 1,
+      "message": "meh. i don\u0027t feel strongly one way or the other, though DelayTimer\u0027s use of protected inheritance is counter to style (https://google.github.io/styleguide/cppguide.html#Inheritance).",
+      "parentUuid": "ea04859b_7a568c54",
       "range": {
         "startLine": 202,
         "startChar": 2,

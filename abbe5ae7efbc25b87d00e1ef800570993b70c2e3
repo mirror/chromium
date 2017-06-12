@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb8f09ea_94c392de",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-12T20:57:46Z",
+      "side": 1,
+      "message": "nit: prefer initializing members in the class declaration when possible.",
+      "revId": "abbe5ae7efbc25b87d00e1ef800570993b70c2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
