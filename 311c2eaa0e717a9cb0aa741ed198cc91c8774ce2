@@ -16,6 +16,24 @@
       "revId": "311c2eaa0e717a9cb0aa741ed198cc91c8774ce2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b2fb8ac_bb654fbe",
+        "filename": "cc/trees/layer_tree_host_pixeltest_blending.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-12T20:32:48Z",
+      "side": 1,
+      "message": "Yes, thanks for catching it.",
+      "parentUuid": "6e8aaf12_f93232cb",
+      "revId": "311c2eaa0e717a9cb0aa741ed198cc91c8774ce2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
