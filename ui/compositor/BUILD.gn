@@ -87,6 +87,7 @@ component("compositor") {
     "//cc/surfaces",
     "//cc/surfaces:surface_id",
     "//cc/surfaces:surfaces",
+    "//components/viz/host",
     "//gpu/command_buffer/common",
     "//skia",
     "//ui/display",
