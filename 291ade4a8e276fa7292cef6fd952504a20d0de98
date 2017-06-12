@@ -70,6 +70,24 @@
       "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b83b126_df94232f",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-12T02:30:42Z",
+      "side": 1,
+      "message": "I am not fan of index \u003d\u003d size() access, but the spec allows[1]... :-\u003c\n\nExcerpt:\nIf pos \u003d\u003d size(), a reference to the character with value CharT() (the null character) is returned.\n\nFor the first (non-const) version, the behavior is undefined if this character is modified to any value other than charT().\n\n\u003d\u003d\u003d\u003d\nIn this case, we use |const String\u0026|, it is OK to return null-character.\n\n\n[1] http://en.cppreference.com/w/cpp/string/basic_string/operator_at",
+      "parentUuid": "9a8cbbcf_f9cb9a2a",
+      "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
