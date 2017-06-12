@@ -1,0 +1,320 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff0517b_ac263c60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "@DownloadTaskType",
+      "range": {
+        "startLine": 38,
+        "startChar": 8,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "109797e1_a4d33f18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Should we have a default value for these?  Maybe an UNKNOWN or INVALID type?",
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6a47e3c_de417f5d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Actually maybe also pull the body of this out to a helper method (decrementPendingCallbackCount(taskType) and then return a bool for whether or not we should really stop).",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 18
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b1fde99_3f7ab730",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "This should always be \u003e 0 right?  Maybe add an assert above?",
+      "range": {
+        "startLine": 44,
+        "startChar": 16,
+        "endLine": 44,
+        "endChar": 66
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6786ae85_66537454",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Can we cap this at 0 so we never go negative?  That way if we have a bug we at least won\u0027t be bleeding it through to the next time we try to start a job.",
+      "range": {
+        "startLine": 45,
+        "startChar": 20,
+        "endLine": 45,
+        "endChar": 97
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf1f1f8_e0ff57b0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "We want to quit if it\u0027s \u003e 0 right?",
+      "range": {
+        "startLine": 46,
+        "startChar": 20,
+        "endLine": 46,
+        "endChar": 73
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8624990_80253f60",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Does this effectively drop the \"needsReschedule\" for all tasks except the last one?",
+      "range": {
+        "startLine": 49,
+        "startChar": 38,
+        "endLine": 49,
+        "endChar": 53
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef6b3fc4_6368cec5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "int and @DownloadTaskType",
+      "range": {
+        "startLine": 63,
+        "startChar": 47,
+        "endLine": 63,
+        "endChar": 54
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03541abc_5f18386a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "@DownloadTaskType?",
+      "range": {
+        "startLine": 78,
+        "startChar": 8,
+        "endLine": 78,
+        "endChar": 12
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004684d8_5f25db52",
+        "filename": "chrome/browser/download/download_task_scheduler_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Only do this for the watchdog task type.  The other one doesn\u0027t matter if we don\u0027t restart and the window will effectively be 0 so we\u0027ll just be pinging them immediately.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 35
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec0403f2_2116a911",
+        "filename": "chrome/browser/download/download_task_scheduler_impl.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Chrome is always running for us to post the task right?  Basically I think you want this to say, \"If Chrome is shut down, this implementation will not automatically restart it.\"",
+      "range": {
+        "startLine": 21,
+        "startChar": 16,
+        "endLine": 21,
+        "endChar": 47
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2f60a9_a8e9ae71",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Can we just bake this into NotifyTaskFinished?\n\nMaybe: NotifyTaskFinished(stats::ScheduledTaskStatus::XYZ)?  Although I don\u0027t know if I want us using \"stats::\" stuff as a parameter for normal methods in this class... wdyt?",
+      "range": {
+        "startLine": 144,
+        "startChar": 4,
+        "endLine": 145,
+        "endChar": 60
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e9b3c1d_f7c328da",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "stats::LogScheduledTaskStatus(...)?  Or at least put a TODO to add it.",
+      "range": {
+        "startLine": 159,
+        "startChar": 2,
+        "endLine": 159,
+        "endChar": 19
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b19935b_52acffc2",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-12T17:55:21Z",
+      "side": 1,
+      "message": "Do we want the task type as well?",
+      "range": {
+        "startLine": 91,
+        "startChar": 28,
+        "endLine": 91,
+        "endChar": 54
+      },
+      "revId": "4dd32cab75127de3230bf0e36f8103738eef07e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
