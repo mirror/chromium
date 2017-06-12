@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "dbed873f_834b87a9",
+        "filename": "chrome/browser/chromeos/printing/usb_printer_util.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-12T18:52:14Z",
+      "side": 1,
+      "message": "Yeah, but it feels like something that\u0027s probably worth solving: the proposed alternative that usb uses isn\u0027t /too/ bad when it\u0027s just one member, but it doesn\u0027t seem to scale up very well (and certainly seems prone to an accidental copy and paste error somewhere)\n\nEither way, https://crbug.com/657632 and track any improvements in this area.",
+      "parentUuid": "e192ee5a_83c720ef",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 39
+      },
+      "revId": "b372202bb6a416340b8ccceec18ea5b7ec491fa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec3ffd7b_fd160e81",
         "filename": "chrome/browser/ui/android/usb_chooser_dialog_android.cc",
         "patchSetId": 3
