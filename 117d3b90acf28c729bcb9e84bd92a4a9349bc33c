@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3fc96f5_baa582b3",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-12T13:19:03Z",
+      "side": 1,
+      "message": "static is redundant yes?",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "452cc049_50e210c6",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-12T13:19:03Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

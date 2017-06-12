@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3e4133e_1085b31c",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-12T13:19:03Z",
+      "side": 0,
+      "message": "with this removal, how does the host find out that the channel is setup?",
+      "revId": "fc9b71a6ce42cb2fbe0bc6e154a1051bc3e92011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
