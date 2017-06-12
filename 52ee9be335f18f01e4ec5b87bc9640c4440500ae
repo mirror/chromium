@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c985f8c5_283c08dd",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-12T11:06:06Z",
+      "side": 1,
+      "message": "From a design perspective, I think it would be good to have the callback call be the last thing that is done (call the callback after calling manager_-\u003eAccessTokenRequestCompleted(this)). This is good if the caller does something with the identity manager in the callback.\n\nWe have had a bunch of problems for not doing respecting a similar order of calls in the iOS sign-in code.",
+      "range": {
+        "startLine": 52,
+        "startChar": 10,
+        "endLine": 52,
+        "endChar": 32
+      },
+      "revId": "52ee9be335f18f01e4ec5b87bc9640c4440500ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b39b3c91_27320d80",
+        "filename": "services/identity/identity_manager.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-12T11:06:06Z",
+      "side": 1,
+      "message": "It may be fine to pass the OAuth2TokenService instead of the PO2TS here.",
+      "range": {
+        "startLine": 36,
+        "startChar": 23,
+        "endLine": 36,
+        "endChar": 48
+      },
+      "revId": "52ee9be335f18f01e4ec5b87bc9640c4440500ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
