@@ -49,6 +49,7 @@
 #include "components/viz/display_compositor/compositor_overlay_candidate_validator_android.h"
 #include "components/viz/display_compositor/gl_helper.h"
 #include "components/viz/display_compositor/host_shared_bitmap_manager.h"
+#include "components/viz/frame_sinks/mojo_frame_sink_manager.h"
 #include "components/viz/host/frame_sink_manager_host.h"
 #include "content/browser/gpu/browser_gpu_channel_host_factory.h"
 #include "content/browser/gpu/browser_gpu_memory_buffer_manager.h"
@@ -97,10 +98,17 @@ class SingleThreadTaskGraphRunner : public cc::SingleThreadTaskGraphRunner {
 
 struct CompositorDependencies {
   CompositorDependencies() : frame_sink_id_allocator(kDefaultClientId) {
-    frame_sink_manager_host.ConnectToFrameSinkManager();
+    // TODO(danakj): Don't make a MojoFrameSinkManager when display is in the
+    // Gpu process, instead get the mojo pointer from the Gpu process.
+    bool use_surface_sequences = false;
+    in_process_frame_sink_manager = base::MakeUnique<viz::MojoFrameSinkManager>(
+        use_surface_sequences, nullptr);
+    viz::FrameSinkManagerHost::ConnectWithInProcessFrameSinkManager(
+        &frame_sink_manager_host, in_process_frame_sink_manager.get());
   }
 
   SingleThreadTaskGraphRunner task_graph_runner;
+  std::unique_ptr<viz::MojoFrameSinkManager> in_process_frame_sink_manager;
   viz::FrameSinkManagerHost frame_sink_manager_host;
   cc::FrameSinkIdAllocator frame_sink_id_allocator;
 
@@ -403,7 +411,7 @@ void Compositor::CreateContextProvider(
 // static
 cc::SurfaceManager* CompositorImpl::GetSurfaceManager() {
   return g_compositor_dependencies.Get()
-      .frame_sink_manager_host.surface_manager();
+      .in_process_frame_sink_manager->surface_manager();
 }
 
 // static
