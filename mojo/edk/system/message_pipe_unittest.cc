@@ -43,8 +43,9 @@ class MessagePipeTest : public test::MojoTestBase {
   MojoResult WriteMessage(MojoHandle message_pipe_handle,
                           const void* bytes,
                           uint32_t num_bytes) {
-    return MojoWriteMessage(message_pipe_handle, bytes, num_bytes, nullptr, 0,
-                            MOJO_WRITE_MESSAGE_FLAG_NONE);
+    return mojo::WriteMessageRaw(MessagePipeHandle(message_pipe_handle), bytes,
+                                 num_bytes, nullptr, 0,
+                                 MOJO_WRITE_MESSAGE_FLAG_NONE);
   }
 
   MojoResult WriteMessageNew(MojoHandle message_pipe_handle,
@@ -57,9 +58,28 @@ class MessagePipeTest : public test::MojoTestBase {
                          void* bytes,
                          uint32_t* num_bytes,
                          bool may_discard = false) {
-    return MojoReadMessage(message_pipe_handle, bytes, num_bytes, nullptr, 0,
-                           may_discard ? MOJO_READ_MESSAGE_FLAG_MAY_DISCARD :
-                                         MOJO_READ_MESSAGE_FLAG_NONE);
+    MojoMessageHandle message_handle;
+    MojoResult rv = MojoReadMessageNew(message_pipe_handle, &message_handle,
+                                       MOJO_READ_MESSAGE_FLAG_NONE);
+    if (rv != MOJO_RESULT_OK)
+      return rv;
+
+    const uint32_t expected_num_bytes = *num_bytes;
+    void* buffer;
+    rv = MojoGetSerializedMessageContents(
+        message_handle, num_bytes, &buffer, nullptr, nullptr,
+        MOJO_GET_SERIALIZED_MESSAGE_CONTENTS_FLAG_NONE);
+
+    if (rv == MOJO_RESULT_RESOURCE_EXHAUSTED) {
+      CHECK(may_discard);
+    } else if (*num_bytes) {
+      CHECK_EQ(MOJO_RESULT_OK, rv);
+      CHECK_GE(expected_num_bytes, *num_bytes);
+      CHECK(bytes);
+      memcpy(bytes, buffer, *num_bytes);
+    }
+    CHECK_EQ(MOJO_RESULT_OK, MojoFreeMessage(message_handle));
+    return rv;
   }
 
   MojoResult ReadMessageNew(MojoHandle message_pipe_handle,
@@ -146,24 +166,6 @@ TEST_F(MessagePipeTest, Basic) {
   ASSERT_EQ(MOJO_RESULT_OK,
             WaitForSignals(pipe1_, MOJO_HANDLE_SIGNAL_READABLE, &state));
 
-  // Read from port 1 with buffer size 0 (should get the size of next message).
-  // Also test that giving a null buffer is okay when the buffer size is 0.
-  buffer_size = 0;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe1_, nullptr, &buffer_size));
-  ASSERT_EQ(static_cast<uint32_t>(sizeof(buffer[0])), buffer_size);
-
-  // Read from port 1 with buffer size 1 (too small; should get the size of next
-  // message).
-  buffer[0] = 123;
-  buffer[1] = 456;
-  buffer_size = 1;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe1_, buffer, &buffer_size));
-  ASSERT_EQ(static_cast<uint32_t>(sizeof(buffer[0])), buffer_size);
-  ASSERT_EQ(123, buffer[0]);
-  ASSERT_EQ(456, buffer[1]);
-
   // Read from port 1.
   buffer[0] = 123;
   buffer[1] = 456;
@@ -238,101 +240,14 @@ TEST_F(MessagePipeTest, CloseWithQueuedIncomingMessages) {
             WaitForSignals(pipe0_, MOJO_HANDLE_SIGNAL_READABLE, &state));
 
   // Port 0 shouldn't be empty.
-  buffer_size = 0;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe0_, nullptr, &buffer_size));
+  buffer_size = kBufferSize;
+  ASSERT_EQ(MOJO_RESULT_OK, ReadMessage(pipe0_, buffer, &buffer_size));
   ASSERT_EQ(kBufferSize, buffer_size);
 
   // Close port 0 first, which should have outstanding (incoming) messages.
   MojoClose(pipe0_);
   MojoClose(pipe1_);
   pipe0_ = pipe1_ = MOJO_HANDLE_INVALID;
-}
-
-TEST_F(MessagePipeTest, DiscardMode) {
-  int32_t buffer[2];
-  const uint32_t kBufferSize = static_cast<uint32_t>(sizeof(buffer));
-  uint32_t buffer_size;
-
-  // Write from port 1 (to port 0).
-  buffer[0] = 789012345;
-  buffer[1] = 0;
-  ASSERT_EQ(MOJO_RESULT_OK, WriteMessage(pipe1_, buffer, sizeof(buffer[0])));
-
-  MojoHandleSignalsState state;
-  ASSERT_EQ(MOJO_RESULT_OK,
-            WaitForSignals(pipe0_, MOJO_HANDLE_SIGNAL_READABLE, &state));
-
-  // Read/discard from port 0 (no buffer); get size.
-  buffer_size = 0;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe0_, nullptr, &buffer_size, true));
-  ASSERT_EQ(static_cast<uint32_t>(sizeof(buffer[0])), buffer_size);
-
-  // Read again from port 0 -- it should be empty.
-  buffer_size = kBufferSize;
-  ASSERT_EQ(MOJO_RESULT_SHOULD_WAIT,
-            ReadMessage(pipe0_, buffer, &buffer_size, true));
-
-  // Write from port 1 (to port 0).
-  buffer[0] = 890123456;
-  buffer[1] = 0;
-  ASSERT_EQ(MOJO_RESULT_OK,
-            WriteMessage(pipe1_, buffer, sizeof(buffer[0])));
-
-  ASSERT_EQ(MOJO_RESULT_OK,
-            WaitForSignals(pipe0_, MOJO_HANDLE_SIGNAL_READABLE, &state));
-
-  // Read from port 0 (buffer big enough).
-  buffer[0] = 123;
-  buffer[1] = 456;
-  buffer_size = kBufferSize;
-  ASSERT_EQ(MOJO_RESULT_OK, ReadMessage(pipe0_, buffer, &buffer_size, true));
-  ASSERT_EQ(static_cast<uint32_t>(sizeof(buffer[0])), buffer_size);
-  ASSERT_EQ(890123456, buffer[0]);
-  ASSERT_EQ(456, buffer[1]);
-
-  // Read again from port 0 -- it should be empty.
-  buffer_size = kBufferSize;
-  ASSERT_EQ(MOJO_RESULT_SHOULD_WAIT,
-            ReadMessage(pipe0_, buffer, &buffer_size, true));
-
-  // Write from port 1 (to port 0).
-  buffer[0] = 901234567;
-  buffer[1] = 0;
-  ASSERT_EQ(MOJO_RESULT_OK, WriteMessage(pipe1_, buffer, sizeof(buffer[0])));
-
-  ASSERT_EQ(MOJO_RESULT_OK,
-            WaitForSignals(pipe0_, MOJO_HANDLE_SIGNAL_READABLE, &state));
-
-  // Read/discard from port 0 (buffer too small); get size.
-  buffer_size = 1;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe0_, buffer, &buffer_size, true));
-  ASSERT_EQ(static_cast<uint32_t>(sizeof(buffer[0])), buffer_size);
-
-  // Read again from port 0 -- it should be empty.
-  buffer_size = kBufferSize;
-  ASSERT_EQ(MOJO_RESULT_SHOULD_WAIT,
-            ReadMessage(pipe0_, buffer, &buffer_size, true));
-
-  // Write from port 1 (to port 0).
-  buffer[0] = 123456789;
-  buffer[1] = 0;
-  ASSERT_EQ(MOJO_RESULT_OK, WriteMessage(pipe1_, buffer, sizeof(buffer[0])));
-
-  ASSERT_EQ(MOJO_RESULT_OK,
-            WaitForSignals(pipe0_, MOJO_HANDLE_SIGNAL_READABLE, &state));
-
-  // Discard from port 0.
-  buffer_size = 1;
-  ASSERT_EQ(MOJO_RESULT_RESOURCE_EXHAUSTED,
-            ReadMessage(pipe0_, nullptr, 0, true));
-
-  // Read again from port 0 -- it should be empty.
-  buffer_size = kBufferSize;
-  ASSERT_EQ(MOJO_RESULT_SHOULD_WAIT,
-            ReadMessage(pipe0_, buffer, &buffer_size, true));
 }
 
 TEST_F(MessagePipeTest, BasicWaiting) {
@@ -414,78 +329,22 @@ TEST_F(MessagePipeTest, BasicWaiting) {
 }
 
 TEST_F(MessagePipeTest, InvalidMessageObjects) {
-  // null message
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
             MojoFreeMessage(MOJO_MESSAGE_HANDLE_INVALID));
 
-  // null message
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
             MojoGetSerializedMessageContents(
                 MOJO_MESSAGE_HANDLE_INVALID, nullptr, nullptr, nullptr, nullptr,
                 MOJO_GET_SERIALIZED_MESSAGE_CONTENTS_FLAG_NONE));
 
-  // null message
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
             MojoSerializeMessage(MOJO_MESSAGE_HANDLE_INVALID));
 
-  // Non-zero num_handles with null handles array.
+  MojoMessageHandle message_handle = MOJO_MESSAGE_HANDLE_INVALID;
   ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
-            MojoAllocMessage(0, nullptr, 1, MOJO_ALLOC_MESSAGE_FLAG_NONE,
-                             nullptr));
-}
-
-TEST_F(MessagePipeTest, AllocAndFreeMessage) {
-  const std::string kMessage = "Hello, world.";
-  MojoMessageHandle message = MOJO_MESSAGE_HANDLE_INVALID;
-  ASSERT_EQ(MOJO_RESULT_OK,
-            MojoAllocMessage(static_cast<uint32_t>(kMessage.size()), nullptr, 0,
-                             MOJO_ALLOC_MESSAGE_FLAG_NONE, &message));
-  ASSERT_NE(MOJO_MESSAGE_HANDLE_INVALID, message);
-  ASSERT_EQ(MOJO_RESULT_OK, MojoFreeMessage(message));
-}
-
-TEST_F(MessagePipeTest, WriteAndReadMessageObject) {
-  const std::string kMessage = "Hello, world.";
-  MojoMessageHandle message = MOJO_MESSAGE_HANDLE_INVALID;
-  EXPECT_EQ(MOJO_RESULT_OK,
-            MojoAllocMessage(static_cast<uint32_t>(kMessage.size()), nullptr, 0,
-                             MOJO_ALLOC_MESSAGE_FLAG_NONE, &message));
-  ASSERT_NE(MOJO_MESSAGE_HANDLE_INVALID, message);
-
-  uint32_t num_bytes;
-  void* buffer = nullptr;
-  EXPECT_EQ(MOJO_RESULT_OK,
-            MojoGetSerializedMessageContents(
-                message, &num_bytes, &buffer, nullptr, nullptr,
-                MOJO_GET_SERIALIZED_MESSAGE_CONTENTS_FLAG_NONE));
-  ASSERT_TRUE(buffer);
-  EXPECT_EQ(kMessage.size(), num_bytes);
-  memcpy(buffer, kMessage.data(), kMessage.size());
-
-  MojoHandle a, b;
-  CreateMessagePipe(&a, &b);
-  EXPECT_EQ(MOJO_RESULT_OK,
-            MojoWriteMessageNew(a, message, MOJO_WRITE_MESSAGE_FLAG_NONE));
-
-  EXPECT_EQ(MOJO_RESULT_OK, WaitForSignals(b, MOJO_HANDLE_SIGNAL_READABLE));
-  uint32_t num_handles = 0;
-  EXPECT_EQ(MOJO_RESULT_OK,
-            MojoReadMessageNew(b, &message, MOJO_READ_MESSAGE_FLAG_NONE));
-  ASSERT_NE(MOJO_MESSAGE_HANDLE_INVALID, message);
-  EXPECT_EQ(MOJO_RESULT_OK,
-            MojoGetSerializedMessageContents(
-                message, &num_bytes, &buffer, &num_handles, nullptr,
-                MOJO_GET_SERIALIZED_MESSAGE_CONTENTS_FLAG_NONE));
-  EXPECT_EQ(static_cast<uint32_t>(kMessage.size()), num_bytes);
-  EXPECT_EQ(0u, num_handles);
-  ASSERT_TRUE(buffer);
-
-  EXPECT_EQ(0, strncmp(static_cast<const char*>(buffer), kMessage.data(),
-                       num_bytes));
-
-  EXPECT_EQ(MOJO_RESULT_OK, MojoFreeMessage(message));
-  EXPECT_EQ(MOJO_RESULT_OK, MojoClose(a));
-  EXPECT_EQ(MOJO_RESULT_OK, MojoClose(b));
+            MojoCreateMessage(1, nullptr, nullptr));
+  ASSERT_EQ(MOJO_RESULT_INVALID_ARGUMENT,
+            MojoCreateMessage(0, nullptr, &message_handle));
 }
 
 #if !defined(OS_IOS)
@@ -1033,21 +892,13 @@ TEST_F(MessagePipeTest, ReadMessageWithContextAsSerializedMessage) {
                 a, TestMessageBase::MakeMessageHandle(std::move(message))));
   EXPECT_EQ(MOJO_RESULT_OK, WaitForSignals(b, MOJO_HANDLE_SIGNAL_READABLE));
 
-  // Attempt to read an unserialized message into serialized buffers. The
-  // request should fail.
-  uint32_t num_bytes = 0;
-  EXPECT_EQ(MOJO_RESULT_NOT_FOUND,
-            MojoReadMessage(b, nullptr, &num_bytes, nullptr, nullptr,
-                            MOJO_READ_MESSAGE_FLAG_NONE));
-  EXPECT_FALSE(message_was_destroyed);
-
-  // Try again, this time reading into a message object.
   MojoMessageHandle message_handle;
   EXPECT_EQ(MOJO_RESULT_OK, MojoReadMessageNew(b, &message_handle,
                                                MOJO_READ_MESSAGE_FLAG_NONE));
   EXPECT_FALSE(message_was_destroyed);
 
   // Not a serialized message, so we can't get serialized contents.
+  uint32_t num_bytes;
   void* buffer;
   uint32_t num_handles = 0;
   EXPECT_EQ(MOJO_RESULT_FAILED_PRECONDITION,
