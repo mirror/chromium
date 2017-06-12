@@ -324,6 +324,7 @@ void AudioInputController::DoCreateForStream(
     bool enable_agc) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(!stream_);
+  handler_->OnLog(this, "AIC::DoCreateForStream");
 
   if (!stream_to_control) {
     LogCaptureStartupResult(CAPTURE_STARTUP_CREATE_STREAM_FAILED);
@@ -382,6 +383,9 @@ void AudioInputController::DoClose() {
   if (!stream_)
     return;
 
+  std::ostringstream oss;
+  oss << "AIC::DoClose: ";
+
   // Allow calling unconditionally and bail if we don't have a stream to close.
   if (audio_callback_) {
     stream_->Stop();
@@ -399,22 +403,26 @@ void AudioInputController::DoClose() {
                    : CAPTURE_STARTUP_NEVER_GOT_DATA);
     LogCaptureStartupResult(capture_startup_result);
     LogCallbackError();
-    if (type_ == LOW_LATENCY) {
-      if (audio_callback_->received_callback()) {
-        // Log the total duration (since DoCreate) and update the histogram.
+
+    // Log stream duration.
+    oss << "stream duration=" << duration.InSeconds() << " seconds";
+    if (audio_callback_->received_callback()) {
+      if (type_ == LOW_LATENCY)
         UMA_HISTOGRAM_LONG_TIMES("Media.InputStreamDuration", duration);
-        const std::string log_string = base::StringPrintf(
-            "AIC::DoClose: stream duration=%" PRId64 " seconds",
-            duration.InSeconds());
-        handler_->OnLog(this, log_string);
-      } else {
+    } else {
+      oss << " (no callbacks recevied)";
+      if (type_ == LOW_LATENCY) {
         UMA_HISTOGRAM_LONG_TIMES("Media.InputStreamDurationWithoutCallback",
                                  duration);
       }
     }
 
     audio_callback_.reset();
+  } else {
+    oss << "recording never started";
   }
+
+  handler_->OnLog(this, oss.str());
 
   stream_->Close();
   stream_ = nullptr;
