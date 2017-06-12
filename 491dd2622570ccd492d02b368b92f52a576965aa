@@ -16,6 +16,24 @@
       "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8b79fd_41e33665",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-12T20:19:20Z",
+      "side": 1,
+      "message": "Is the desired logic here something like the following?\n\nfloat native_ui_scale \u003d (native_mode-\u003edevice_scale_factor() \u003d\u003d 2.0f) ? 2.0f : 1.0f;",
+      "parentUuid": "68a458b1_06dd0983",
+      "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
