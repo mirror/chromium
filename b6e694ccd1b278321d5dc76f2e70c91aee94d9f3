@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "63099449_4b3e11b8",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T18:01:23Z",
+      "side": 1,
+      "message": "This comment is redundant (the code below is self-documenting), remove.",
+      "revId": "b6e694ccd1b278321d5dc76f2e70c91aee94d9f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
