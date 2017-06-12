@@ -16,6 +16,24 @@
       "revId": "fc9b71a6ce42cb2fbe0bc6e154a1051bc3e92011",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea95e23e_528d7bb5",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-12T23:56:18Z",
+      "side": 0,
+      "message": "OnChannelEstablished() is now called from ozone_gpu_test_helper.cc, restoring the behavior prior to the breakage introduced by 63c1e2603b28.",
+      "parentUuid": "b3e4133e_1085b31c",
+      "revId": "fc9b71a6ce42cb2fbe0bc6e154a1051bc3e92011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

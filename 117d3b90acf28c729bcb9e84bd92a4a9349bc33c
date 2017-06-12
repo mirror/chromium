@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "20373a22_fcb2384e",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-12T23:56:18Z",
+      "side": 1,
+      "message": "I don\u0027t think it is. This function is purely local to this compilation unit and is not declared anywhere (in particular, not in any .h). Also note that this is not a class method, just a function - so the use of static is just to prevent its symbol from being visible outside this .c file.\n\nThis could have been a separate commit though - it just got there by mistake in when I ran git cl upload.",
+      "parentUuid": "a3fc96f5_baa582b3",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452cc049_50e210c6",
         "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2d2d878_ebc00b5f",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-12T23:56:18Z",
+      "side": 1,
+      "message": "Same as above.",
+      "parentUuid": "452cc049_50e210c6",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -56,6 +92,30 @@
       "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d72e64_4de121c0",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-12T23:56:18Z",
+      "side": 1,
+      "message": "ozone_demo.cc seems to make use of this class as well, so that\u0027s another user. I am fine with having another bug opened to suppress rare code paths like this one, but the purpose of this patch is to revert a chunk of code that introduced a test regression that has been haunting us for more than a month. Let\u0027s do things in the right order.",
+      "parentUuid": "151de606_fd60dd2d",
+      "range": {
+        "startLine": 125,
+        "startChar": 6,
+        "endLine": 125,
+        "endChar": 29
+      },
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
