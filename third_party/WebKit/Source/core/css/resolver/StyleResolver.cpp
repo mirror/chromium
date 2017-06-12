@@ -1053,7 +1053,7 @@ PassRefPtr<ComputedStyle> StyleResolver::StyleForPage(int page_index) {
 
 PassRefPtr<ComputedStyle> StyleResolver::InitialStyleForElement() {
   RefPtr<ComputedStyle> style = ComputedStyle::Create();
-  FontBuilder font_builder(GetDocument());
+  FontBuilder font_builder(&GetDocument());
   font_builder.SetInitial(style->EffectiveZoom());
   font_builder.CreateFont(GetDocument().GetStyleEngine().FontSelector(),
                           *style);
@@ -1989,6 +1989,9 @@ void StyleResolver::ApplyCallbackSelectors(StyleResolverState& state) {
         rules->at(i)->SelectorList().SelectorsText());
 }
 
+// Font properties are also handled by FontStyleResolver outside the main
+// thread. If you add/remove properties here, make sure they are also properly
+// handled by FontStyleResolver.
 void StyleResolver::ComputeFont(ComputedStyle* style,
                                 const StylePropertySet& property_set) {
   CSSPropertyID properties[] = {
