@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "985ff9fb_da66cd96",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "There is one case where I want to avoid getting an empty OnModuleDatabaseIdle() call when adding an observer and that is when chrome://conflicts is opened, which really shoulnd\u0027t show an empty page for loaded modules.\n\nThis case could be handled in that observer\u0027s implementation but I think it\u0027s cleaner here.",
+      "parentUuid": "65b5da8b_80ed1ced",
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7387e9d2_aac396c4",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 1
@@ -65,6 +83,54 @@
     },
     {
       "key": {
+        "uuid": "87c47fbc_3bd64879",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7387e9d2_aac396c4",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 45,
+        "endChar": 20
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0d38363d_329e2855",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4e0eb935_c38263ea",
+      "range": {
+        "startLine": 45,
+        "startChar": 28,
+        "endLine": 45,
+        "endChar": 29
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adacc399_61ddf893",
         "filename": "chrome/browser/conflicts/module_database_win.cc",
         "patchSetId": 1
@@ -79,6 +145,24 @@
       "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b7f7a0_495f3df2",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Great suggestion(s). Done.",
+      "parentUuid": "adacc399_61ddf893",
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "8f81d66b_6689ee8b",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b107f0_3c6b361f",
+      "range": {
+        "startLine": 70,
+        "startChar": 50,
+        "endLine": 70,
+        "endChar": 65
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b372ec22_f55ac54c",
         "filename": "chrome/browser/conflicts/module_database_win.h",
         "patchSetId": 1
@@ -125,6 +233,30 @@
       "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc59184c_2e0d28bb",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b372ec22_f55ac54c",
+      "range": {
+        "startLine": 119,
+        "startChar": 7,
+        "endLine": 119,
+        "endChar": 18
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "ea04859b_7a568c54",
+        "filename": "chrome/browser/conflicts/module_database_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "The use case fits but IsRunning() is not accessible from DelayTimer because of protected inheritance.\n\nI left base::Timer in place, but another solution would be to add IsRunning() to DelayTimer.",
+      "parentUuid": "6fc39a1a_adbbd3ba",
+      "range": {
+        "startLine": 202,
+        "startChar": 2,
+        "endLine": 202,
+        "endChar": 13
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "30b84a5b_5613fbfc",
         "filename": "chrome/browser/conflicts/module_inspector_win.cc",
         "patchSetId": 1
@@ -171,6 +327,30 @@
       "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "241c34ba_62db685f",
+        "filename": "chrome/browser/conflicts/module_inspector_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-12T16:06:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "30b84a5b_5613fbfc",
+      "range": {
+        "startLine": 75,
+        "startChar": 42,
+        "endLine": 75,
+        "endChar": 44
+      },
+      "revId": "d0223d0646c1b6641066b5e9e73c1895b3c81fd8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
