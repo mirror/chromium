@@ -37,6 +37,9 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& address,
       uint16_t code,
       SetNextGATTDiscoveryResponseCallback callback) override;
+  void AddFakeService(const std::string& peripheral_address,
+                      const device::BluetoothUUID& service_uuid,
+                      AddFakeServiceCallback callback) override;
 
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;

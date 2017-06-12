@@ -12,6 +12,7 @@
 #include "base/optional.h"
 #include "device/bluetooth/bluetooth_device.h"
 #include "device/bluetooth/test/fake_central.h"
+#include "device/bluetooth/test/fake_remote_gatt_service.h"
 
 namespace bluetooth {
 
@@ -44,6 +45,8 @@ class FakePeripheral : public device::BluetoothDevice {
   // sets IsGattDiscoveryComplete to false. Both of these happen
   // after IsGattDiscoveryComplete is called.
   void SetNextGATTDiscoveryResponse(uint16_t code);
+
+  std::string AddFakeService(const device::BluetoothUUID& service_uuid);
 
   // BluetoothDevice overrides:
   uint32_t GetBluetoothClass() const override;
@@ -113,6 +116,12 @@ class FakePeripheral : public device::BluetoothDevice {
   bool system_connected_;
   // True when this Bluetooth interface is connected to the device.
   bool gatt_connected_;
+
+  using FakeRemoteGattServiceMap =
+      std::map<std::string, std::unique_ptr<FakeRemoteGattService>>;
+  FakeRemoteGattServiceMap fake_services_;
+
+  size_t last_service_id_;
 
   // Used to simulate a GATT Discovery procedure.
   // Mutable because IsGattServicesDiscoveryComplete needs to set this but
