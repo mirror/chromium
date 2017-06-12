@@ -1,0 +1,4 @@
+This is a testharness.js-based test.
+FAIL Test if Range.prototype.insertNode() should accept ShadowRoot input. Failed to execute 'insertNode' on 'Range': The node to be inserted is a '#document-fragment' node, which may not be inserted here.
+Harness: the test ran to completion.
+
