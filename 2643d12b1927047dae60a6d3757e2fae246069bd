@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f384e03c_476a3932",
+        "filename": "components/safe_browsing_db/remote_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-12T14:49:28Z",
+      "side": 1,
+      "message": "Add this change to the CL description",
+      "range": {
+        "startLine": 252,
+        "startChar": 42,
+        "endLine": 252,
+        "endChar": 69
+      },
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e87ba40d_7b437e21",
+        "filename": "components/subresource_filter/content/browser/fake_safe_browsing_database_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-12T14:49:28Z",
+      "side": 1,
+      "message": "According to database_manager.h, if the url doesn\u0027t belong to the list the check happens synchronously. Which apparently is not always the case?",
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ebe2668b_f9359624",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1116284
+      },
+      "writtenOn": "2017-06-12T14:49:28Z",
+      "side": 1,
+      "message": "Also delete the SimulateTimeout function as this appears to be the only caller?",
+      "revId": "2643d12b1927047dae60a6d3757e2fae246069bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
