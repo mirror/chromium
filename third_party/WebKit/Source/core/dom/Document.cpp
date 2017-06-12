@@ -2144,6 +2144,9 @@ void Document::UpdateStyle() {
   // the resolver by what appears to be a viewport size difference.
 
   if (change == kForce) {
+    if (!layout_view_)
+      layout_view_ = new LayoutView(this);
+    SetLayoutObject(layout_view_);
     has_nodes_with_placeholder_style_ = false;
     RefPtr<ComputedStyle> document_style =
         StyleResolver::StyleForDocument(*this);
@@ -2512,11 +2515,8 @@ void Document::Initialize() {
   SetLayoutObject(layout_view_);
 
   layout_view_->SetIsInWindow(true);
-  layout_view_->SetStyle(StyleResolver::StyleForDocument(*this));
-  layout_view_->Compositor()->SetNeedsCompositingUpdate(
-      kCompositingUpdateAfterCompositingInputChange);
 
-  ContainerNode::AttachLayoutTree();
+  SetNeedsStyleRecalc(kNeedsReattachStyleChange);
 
   // The TextAutosizer can't update layout view info while the Document is
   // detached, so update now in case anything changed.
