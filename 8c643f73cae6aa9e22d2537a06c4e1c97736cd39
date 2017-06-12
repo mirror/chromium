@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c29307da_f4363954",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:39:41Z",
+      "side": 1,
+      "message": "// Note that if T is expensive to copy, it may be more appropriate to instead store a std::unique_ptr\u003cT\u003e. This is enforced by the DISALLOW_COPY_AND_ASSIGN style rather than directly by this class however.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 47
+      },
+      "revId": "8c643f73cae6aa9e22d2537a06c4e1c97736cd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75b3f6a4_15b8e163",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:39:41Z",
+      "side": 1,
+      "message": "() initialization, this is calling a constructor (I\u0027m still surprised to see that this syntax compiles..!)",
+      "range": {
+        "startLine": 94,
+        "startChar": 29,
+        "endLine": 94,
+        "endChar": 30
+      },
+      "revId": "8c643f73cae6aa9e22d2537a06c4e1c97736cd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "808c94d5_26661178",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:39:41Z",
+      "side": 1,
+      "message": "Does this work with POD types? i.e. are pointers default initialized to nullptr for an SLSS\u003cvoid*\u003e? If so, explicitly test it, if not document it in API.",
+      "range": {
+        "startLine": 101,
+        "startChar": 37,
+        "endLine": 101,
+        "endChar": 67
+      },
+      "revId": "8c643f73cae6aa9e22d2537a06c4e1c97736cd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a52f004_b6b64bcf",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:39:41Z",
+      "side": 1,
+      "message": "Instead of a vector, use a basic \n\ninternal::SequenceLocalStorageMap sequence_local_storage_maps[5];\n\nand for size in the loops use arraysize(sequence_local_storage_maps) instead of a separate constant (get rid of kNumberMaps)",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 19
+      },
+      "revId": "8c643f73cae6aa9e22d2537a06c4e1c97736cd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f7de750_0f4b265a",
+        "filename": "base/threading/sequence_local_storage_slot_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T15:39:41Z",
+      "side": 1,
+      "message": "One last test now that we tweaked max sor SLSM after our last discussion:\n\nadd a test that tests you can have 256 active SLSS, then reset and have 256 again in same test.",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 1
+      },
+      "revId": "8c643f73cae6aa9e22d2537a06c4e1c97736cd39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
