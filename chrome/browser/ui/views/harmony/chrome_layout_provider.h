@@ -36,6 +36,9 @@ enum ChromeDistanceMetric {
   DISTANCE_UNRELATED_CONTROL_HORIZONTAL_LARGE,
   // Larger vertical spacing between unrelated controls.
   DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE,
+  // Spacing between the images on buttons and the associated text where the
+  // buttons are arranged horizontally, such as the bookmarks bar.
+  DISTANCE_IMAGE_TO_TEXT_HORIZONTAL_LIST,
 };
 
 class ChromeLayoutProvider : public views::LayoutProvider {

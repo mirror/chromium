@@ -46,6 +46,8 @@ int ChromeLayoutProvider::GetDistanceMetric(int metric) const {
       return views::kUnrelatedControlLargeHorizontalSpacing;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return views::kUnrelatedControlLargeVerticalSpacing;
+    case DISTANCE_IMAGE_TO_TEXT_HORIZONTAL_LIST:
+      return views::kRelatedControlHorizontalSpacing;
     default:
       return views::LayoutProvider::GetDistanceMetric(metric);
   }

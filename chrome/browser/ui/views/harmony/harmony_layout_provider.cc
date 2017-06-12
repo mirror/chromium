@@ -65,6 +65,8 @@ int HarmonyLayoutProvider::GetDistanceMetric(int metric) const {
       return kHarmonyLayoutUnit;
     case DISTANCE_UNRELATED_CONTROL_VERTICAL_LARGE:
       return kHarmonyLayoutUnit;
+    case DISTANCE_IMAGE_TO_TEXT_HORIZONTAL_LIST:
+      return kHarmonyLayoutUnit / 2;
   }
   NOTREACHED();
   return 0;
