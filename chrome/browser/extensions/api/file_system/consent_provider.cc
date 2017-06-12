@@ -17,12 +17,12 @@
 #include "chrome/browser/extensions/api/file_system/request_file_system_notification.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/views/extensions/request_file_system_dialog_view.h"
-#include "chrome/common/extensions/api/file_system.h"
 #include "components/user_manager/user_manager.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/browser/app_window/app_window.h"
 #include "extensions/browser/app_window/app_window_registry.h"
+#include "extensions/common/api/file_system.h"
 #include "extensions/common/manifest_handlers/kiosk_mode_info.h"
 
 namespace extensions {

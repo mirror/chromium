@@ -28,6 +28,8 @@ static_library("apps") {
       "metrics_names.h",
       "saved_files_service.cc",
       "saved_files_service.h",
+      "saved_files_service_delegate_impl.cc",
+      "saved_files_service_delegate_impl.h",
       "saved_files_service_factory.cc",
       "saved_files_service_factory.h",
       "switches.cc",
