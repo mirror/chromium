@@ -202,10 +202,13 @@ void CaretDisplayItemClient::InvalidatePaintInPreviousLayoutBlock(
 
   ObjectPaintInvalidatorWithContext object_invalidator(*previous_layout_block_,
                                                        context);
-  if (!IsImmediateFullPaintInvalidationReason(
-          previous_layout_block_->FullPaintInvalidationReason())) {
-    object_invalidator.InvalidatePaintRectangleWithContext(
-        visual_rect_in_previous_layout_block_, PaintInvalidationReason::kCaret);
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
+    if (!IsImmediateFullPaintInvalidationReason(
+            previous_layout_block_->FullPaintInvalidationReason())) {
+      object_invalidator.InvalidatePaintRectangleWithContext(
+          visual_rect_in_previous_layout_block_,
+          PaintInvalidationReason::kCaret);
+    }
   }
 
   context.painting_layer->SetNeedsRepaint();
@@ -264,7 +267,8 @@ void CaretDisplayItemClient::InvalidatePaintInCurrentLayoutBlock(
 
   needs_paint_invalidation_ = false;
 
-  if (!IsImmediateFullPaintInvalidationReason(
+  if (!RuntimeEnabledFeatures::SlimmingPaintV2Enabled() &&
+      IsImmediateFullPaintInvalidationReason(
           layout_block_->FullPaintInvalidationReason())) {
     object_invalidator.FullyInvalidatePaint(PaintInvalidationReason::kCaret,
                                             visual_rect_, new_visual_rect);
