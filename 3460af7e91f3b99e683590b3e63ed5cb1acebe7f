@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40577a9e_d1b221ef",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:50:29Z",
+      "side": 1,
+      "message": "This isn\u0027t a type nor a constructor, it\u0027s a lambda which returns a T*. I think this would be clearer as the following:\n\nvoid* (*creator_func)(void)\n\n(and it would also void requiring this to be templated at all since we don\u0027t actually need to know the storage type for this method)",
+      "range": {
+        "startLine": 142,
+        "startChar": 29,
+        "endLine": 142,
+        "endChar": 63
+      },
+      "revId": "3460af7e91f3b99e683590b3e63ed5cb1acebe7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4c20c5_ce11f6ff",
+        "filename": "base/lazy_instance.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T14:50:29Z",
+      "side": 1,
+      "message": "Isn\u0027t this supposed to return |value|?",
+      "range": {
+        "startLine": 162,
+        "startChar": 9,
+        "endLine": 162,
+        "endChar": 63
+      },
+      "revId": "3460af7e91f3b99e683590b3e63ed5cb1acebe7f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
