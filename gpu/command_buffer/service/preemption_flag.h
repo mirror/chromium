@@ -5,7 +5,6 @@
 #ifndef GPU_COMMAND_BUFFER_SERVICE_PREEMPTION_FLAG_H_
 #define GPU_COMMAND_BUFFER_SERVICE_PREEMPTION_FLAG_H_
 
-#include "base/atomic_ref_count.h"
 #include "base/atomicops.h"
 #include "base/memory/ref_counted.h"
 #include "gpu/gpu_export.h"
@@ -16,12 +15,12 @@ class PreemptionFlag : public base::RefCountedThreadSafe<PreemptionFlag> {
  public:
   PreemptionFlag() : flag_(0) {}
 
-  bool IsSet() { return !base::AtomicRefCountIsZero(&flag_); }
-  void Set() { base::AtomicRefCountInc(&flag_); }
+  bool IsSet() { return base::subtle::Acquire_Load(&flag_) != 0; }
+  void Set() { base::subtle::NoBarrier_Store(&flag_, 1); }
   void Reset() { base::subtle::NoBarrier_Store(&flag_, 0); }
 
  private:
-  base::AtomicRefCount flag_;
+  base::subtle::AtomicWord flag_;
 
   ~PreemptionFlag() {}
 
