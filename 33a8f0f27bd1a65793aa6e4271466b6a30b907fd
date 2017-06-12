@@ -16,6 +16,24 @@
       "revId": "33a8f0f27bd1a65793aa6e4271466b6a30b907fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2e57b5_374de7c0",
+        "filename": "third_party/WebKit/Source/platform/scheduler/child/idle_helper.cc",
+        "patchSetId": 15
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-06-12T08:26:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b31894c9_180f01aa",
+      "revId": "33a8f0f27bd1a65793aa6e4271466b6a30b907fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
