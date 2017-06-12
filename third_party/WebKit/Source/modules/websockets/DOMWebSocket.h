@@ -236,7 +236,6 @@ class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
   void RecordReceiveMessageSizeHistogram(WebSocketReceiveType, size_t);
 
   void SetBinaryTypeInternal(BinaryType);
-  void LogBinaryTypeChangesAfterOpen();
 
   Member<WebSocketChannel> channel_;
 
@@ -248,7 +247,6 @@ class MODULES_EXPORT DOMWebSocket : public EventTargetWithInlineData,
   uint64_t consumed_buffered_amount_;
   uint64_t buffered_amount_after_close_;
   BinaryType binary_type_;
-  int binary_type_changes_after_open_;
   // The subprotocol the server selected.
   String subprotocol_;
   String extensions_;

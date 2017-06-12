@@ -82912,6 +82912,9 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
 </histogram>
 
 <histogram name="WebCore.WebSocket.BinaryTypeChangesAfterOpen">
+  <obsolete>
+    Deprecate 2017-06, as we have obtained enough data to discuss the issue.
+  </obsolete>
   <owner>yhirano@chromium.org</owner>
   <owner>ricea@chromium.org</owner>
   <owner>tyoshino@chromium.org</owner>
