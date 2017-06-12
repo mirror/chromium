@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7284a40_f2a1567c",
+        "filename": "components/ntp_snippets/DEPS",
+        "patchSetId": 4
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-12T10:59:42Z",
+      "side": 1,
+      "message": "safe_json is deliberately missing, here, because iOS depends on this component but can\u0027t depend on safe_json. The way we do this is to have the factory pass a callback.",
+      "revId": "9dd2bbc0a7fb528d29f1965adf252d91028254b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
