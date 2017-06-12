@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f40a2a3_f67c9449",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T23:33:00Z",
+      "side": 1,
+      "message": "IMO, this would be more readable if unpacked onto several lines, e.g. something like:\n\n    paths_in_wpt \u003d []\n    for file in input_api.AffectedFiles():\n        abs_path \u003d file.AbsoluteLocalPath()\n        if not abs_path.startswith(wpt_path):\n            continue\n        paths_in_wpt.append(abs_path[len(wpt_path) + 1:])",
+      "revId": "f15ad48c2ff2460d2e954f74a1e87563b819cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fb37516_7f5714d5",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T23:33:00Z",
+      "side": 1,
+      "message": "- The first arg `args` also should go on its own line, indented four spaces, because the other args are indented four spaces.\n - `stdoutdata` could be renamed to `stdout_data`.",
+      "revId": "f15ad48c2ff2460d2e954f74a1e87563b819cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97852d91_4b83218a",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/thirdparty/wpt/wpt/tools/lint/lint.py",
+        "patchSetId": 12
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-12T23:33:00Z",
+      "side": 1,
+      "message": "This isn\u0027t something to change in this CL, but there\u0027s a little easy-to-make mistake here:\n\n    \"Use this\"\n    \"option ...\"\n\ngets concatenated to \"Use thisoption ...\"",
+      "revId": "f15ad48c2ff2460d2e954f74a1e87563b819cf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
