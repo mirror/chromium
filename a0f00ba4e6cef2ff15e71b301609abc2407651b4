@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "c8808688_0e84a14f",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T17:37:02Z",
+      "side": 1,
+      "message": "I think for now I\u0027ll keep it this way, but with a future ChromiumEnv cleanup it might indeed make sense to factor out Retrier.",
+      "parentUuid": "c8c1742b_e412229a",
+      "range": {
+        "startLine": 260,
+        "startChar": 6,
+        "endLine": 260,
+        "endChar": 13
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d35b2de6_26f60c89",
         "filename": "components/leveldb/env_mojo.cc",
         "patchSetId": 2
@@ -140,6 +164,30 @@
       "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c36d348_d0be4ff3",
+        "filename": "components/leveldb/env_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T17:37:02Z",
+      "side": 1,
+      "message": "Main reason to pick these is that it matches the LevelDBEnv.TimeUntilSuccessFor* histograms, so this should make it easier to compare data. For whatever reason that code uses 1000+1 and 1000 / 25 + 2. But yeah, they\u0027re not particularly well chosen values, especially since we always sleep in multiples if 10 milliseconds, so many of the low-end buckets aren\u0027t particularly meaningful. Either way, I\u0027d like to have this match the existing histograms to make comparing easier.",
+      "parentUuid": "7e70c453_fa338e39",
+      "range": {
+        "startLine": 559,
+        "startChar": 60,
+        "endLine": 559,
+        "endChar": 64
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +262,30 @@
     },
     {
       "key": {
+        "uuid": "ed73e72c_25d0eada",
+        "filename": "components/leveldb/env_mojo.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T17:37:02Z",
+      "side": 1,
+      "message": "Yeah, that makes sense... Retrier could either be an internal class, or some non-internal class shared between the two leveldb env implementations somewhere else, with a public RetrierProvider interface... I think for now I\u0027ll just keep it this way, and maybe later I\u0027ll refactor it to one or the other (there are some other cleanups that could make sense for the existing ChromiumEnv class anyway, such as using the Task Scheduler rather than managing its own threads etc, so this could be part of that larger cleanup).",
+      "parentUuid": "2bc8698d_0ad46e16",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 26
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c71f0c1f_2719c7c7",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -234,6 +306,30 @@
       "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd09e15b_c83a98bb",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 32311,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T17:37:02Z",
+      "side": 1,
+      "message": "I just copied the description from the existing LevelDBEnv.* histograms, since these are measuring exactly the same thing. Also not sure what you\u0027re trying to say? Yes, sleeping for 0 time means not sleeping, but that seems kind of tautological enough that it\u0027s not worth pointing out (and if anything, pointing it out would confuse me because I\u0027ll wonder why something seemingly tautological is pointed out...)\n\nAnyway, I added an explanation that it doesn\u0027t sleep when no retries are needed.",
+      "parentUuid": "c71f0c1f_2719c7c7",
+      "range": {
+        "startLine": 32311,
+        "startChar": 20,
+        "endLine": 32311,
+        "endChar": 21
+      },
+      "revId": "a0f00ba4e6cef2ff15e71b301609abc2407651b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
