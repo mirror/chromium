@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "056fc816_520de895",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T10:20:48Z",
+      "side": 1,
+      "message": "nit: Since these are now virtual, they probably shouldn\u0027t use hacker_style() but FunctionStyle(), i.e. GetLastStatusForDebugging etc",
+      "range": {
+        "startLine": 74,
+        "startChar": 67,
+        "endLine": 74,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec553365_24388409",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T10:20:48Z",
+      "side": 1,
+      "message": "I\u0027m going to trust that this is all copy-pasted from the old version",
+      "range": {
+        "startLine": 6,
+        "startChar": 73,
+        "endLine": 6,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87ec4c8b_3dbe5f67",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T10:20:48Z",
+      "side": 1,
+      "message": "nit: Update comment? Interface and Impl don\u0027t need to repeat the same comment.",
+      "range": {
+        "startLine": 35,
+        "startChar": 55,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01c5f8ce_f6321f50",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T10:20:48Z",
+      "side": 1,
+      "message": "nit: I think this should still be referenced without the \"Impl\", since that\u0027s where it\u0027s defined.",
+      "range": {
+        "startLine": 83,
+        "startChar": 32,
+        "endLine": 83,
+        "endChar": 57
+      },
+      "revId": "35ef9b790a39f5c7cf56bb429e9efcd100dcfac1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
