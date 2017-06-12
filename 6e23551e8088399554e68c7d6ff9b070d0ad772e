@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "670d33db_ef1034bc",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T20:46:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c654a452_03d61a63",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3ec6927_9c5eb053",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 16
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "8d385250_2414e449",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T20:46:08Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/524141/10/base/task_scheduler/lazy_task_runner.h#125",
+      "parentUuid": "b3ec6927_9c5eb053",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 57
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5c3cd5c_9d873a3f",
         "filename": "base/task_scheduler/lazy_task_runner.h",
         "patchSetId": 16
@@ -68,6 +116,30 @@
       "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2083af97_f311a0c3",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-12T20:46:08Z",
+      "side": 1,
+      "message": "Ideas I can think of:\n- anonymous namespace: doesn\u0027t hide anything\n- scope: only works within a function/method body",
+      "parentUuid": "e5c3cd5c_9d873a3f",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 62
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
