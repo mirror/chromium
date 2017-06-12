@@ -28,6 +28,7 @@ import tempfile
 
 
 XCTEST_PRODUCT_TYPE = 'com.apple.product-type.bundle.unit-test'
+XCUITEST_PRODUCT_TYPE = 'com.apple.product-type.bundle.ui-testing'
 
 
 class XcodeProject(object):
@@ -104,7 +105,14 @@ def UpdateProductsProject(file_input, file_output, configurations):
     if isa == 'PBXShellScriptBuildPhase':
       value['shellScript'] = value['shellScript'].replace(
           'ninja -C .',
-          'ninja -C "../${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}"')
+          'ninja -C "/Users/liaoyuke/bling/src/out/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}"')
+
+    if isa == 'PBXNativeTarget' and value['productType'] == XCUITEST_PRODUCT_TYPE:
+      configuration_list = project.objects[value['buildConfigurationList']]
+      for config_name in configuration_list['buildConfigurations']:
+        config = project.objects[config_name]
+        if not config['buildSettings'].get('TEST_TARGET_NAME'):
+          config['buildSettings']['TEST_TARGET_NAME'] = 'chrome'
 
     # Configure BUNDLE_LOADER and TEST_HOST for xctest targets (if not yet
     # configured by gn). Old convention was to name the test dynamic module
@@ -162,6 +170,7 @@ def ConvertGnXcodeProject(input_dir, output_dir, configurations):
       least one value.
   '''
   # Update products project.
+
   products = os.path.join('products.xcodeproj', 'project.pbxproj')
   product_input = os.path.join(input_dir, products)
   product_output = os.path.join(output_dir, products)
