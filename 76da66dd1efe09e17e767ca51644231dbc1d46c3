@@ -413,6 +413,30 @@
     },
     {
       "key": {
+        "uuid": "5397773e_b09a2aa1",
+        "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-12T16:06:46Z",
+      "side": 1,
+      "message": "Right I knew this, but in this case it\u0027s the same SequenceToken, what I hadn\u0027t realized is that SequenceToken.IsValid() \u0026\u0026 !ThreadTaskRunnerHandle::IsSet() also results in this being false which is what\u0027s happening here.",
+      "parentUuid": "31c032f0_823967c8",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 14
+      },
+      "revId": "76da66dd1efe09e17e767ca51644231dbc1d46c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4655c06c_735ce530",
         "filename": "base/task_scheduler/lazy_task_runner_unittest.cc",
         "patchSetId": 10
