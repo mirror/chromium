@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6cb8c5db_796fb367",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-12T20:47:44Z",
+      "side": 0,
+      "message": "It was used in a test only. I\u0027ve updated it to handle the event within the test.",
+      "parentUuid": "ed2a915c_33105855",
+      "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "407964c1_fc6cfba1",
         "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
         "patchSetId": 2
@@ -39,6 +57,30 @@
       "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4304fc89_7b2c1454",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 506,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-12T20:47:44Z",
+      "side": 0,
+      "message": "I believe this extra caution is not needed. Moreover it would never invoke the callback if the datagrids do not match.",
+      "parentUuid": "407964c1_fc6cfba1",
+      "range": {
+        "startLine": 506,
+        "startChar": 10,
+        "endLine": 506,
+        "endChar": 37
+      },
+      "revId": "ed689ef632abb5f7e6b3102571319d7ce5397069",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
