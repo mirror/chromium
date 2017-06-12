@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce783a7d_1618f9ec",
+        "filename": "chrome/browser/safe_browsing/download_protection_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 954,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-12T23:48:11Z",
+      "side": 1,
+      "message": "function renamed and moved to components/safe_browsing/common/safebrowsing_utils.h",
+      "parentUuid": "ff7c8972_95eab2b5",
+      "range": {
+        "startLine": 954,
+        "startChar": 50,
+        "endLine": 954,
+        "endChar": 60
+      },
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b0c5532a_423ee3fb",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eb141470_49f55a73",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-12T23:48:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0c5532a_423ee3fb",
+      "range": {
+        "startLine": 53,
+        "startChar": 35,
+        "endLine": 53,
+        "endChar": 79
+      },
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db96d26a_2bcfe52f",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
         "patchSetId": 3
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "05d71127_d45a901f",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-12T23:48:11Z",
+      "side": 1,
+      "message": "Done. Use whitelist approach instead. Also added comment in csd.proto.",
+      "parentUuid": "db96d26a_2bcfe52f",
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db3f6cbd_0fa5f7fc",
         "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.h",
         "patchSetId": 3
@@ -79,6 +145,24 @@
       "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56137c6_a97ab6bc",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_navigation_observer_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-12T23:48:11Z",
+      "side": 1,
+      "message": "Done. Function moved to components/safe_browsing/common/safebrowsing_utils.cc",
+      "parentUuid": "db3f6cbd_0fa5f7fc",
+      "revId": "26efe55ed86962b8523b8ce897e77eae22a8434a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
