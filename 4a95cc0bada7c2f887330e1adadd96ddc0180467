@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15719abf_82a93d0a",
+        "filename": "tools/perf/docs/apk_size_regressions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T17:59:43Z",
+      "side": 1,
+      "message": "We should at least still keep this under the title.",
+      "range": {
+        "startLine": 1,
+        "startChar": 4,
+        "endLine": 1,
+        "endChar": 5
+      },
+      "revId": "4a95cc0bada7c2f887330e1adadd96ddc0180467",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
