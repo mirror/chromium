@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2db9eb72_c44106cb",
+        "filename": "buildbucket.config",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002100
+      },
+      "writtenOn": "2017-06-12T20:18:52Z",
+      "side": 1,
+      "message": "This change should work as-is, but it would be better to use a tab here for consistency.",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 4
+      },
+      "revId": "9fc273795aba4d5ca320c5bb4b7d4ceb6fde0565",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
