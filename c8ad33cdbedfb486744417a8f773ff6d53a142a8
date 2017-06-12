@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e1a84366_736eb01e",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T20:11:36Z",
+      "side": 1,
+      "message": "Generally the mojom module should just be the c++ namespace the code lives in + .mojom (so in this case that would probably be storage.mojom). Unless the quota code will move from the storage:: namespace to a quota:: namespace of course.",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fea5ad2_2ccc0cb2",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T20:11:36Z",
+      "side": 1,
+      "message": "I don\u0027t think you\u0027ll need this. This interface will likely just be exposed on some InterfaceProvider keyed by the type of the interface, not as a separate mojo service.",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb8927cf_8764b5e1",
         "filename": "storage/public/interfaces/quota.mojom",
         "patchSetId": 2
@@ -13,6 +47,24 @@
       "writtenOn": "2017-06-12T19:50:18Z",
       "side": 1,
       "message": "Is this what we\u0027re doing, moving enums like this out of .h files and into mojom? At the moment we have two identical enums in separate files, which seems dangerous.",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b611a0e_d2929275",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T20:11:36Z",
+      "side": 1,
+      "message": "I think ideally there would be just the canonical enum definition in mojom, and all code should use that same enum (i.e. usage of the existing enums should eventually be ported to the mojom generated enums). But then I don\u0027t know this code very well, so no idea how/where the enums are used.\nI think there might be such a thing as a [Native] enum that would map (with the right typemap files) directly to some externally defined enum, but I think just having the mojom enum is preferred (and it seems like for example the filesystem service is happy to duplicate base::File::Error as a filesystem.mojom.FileError enum...)",
+      "parentUuid": "eb8927cf_8764b5e1",
       "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -47,6 +99,24 @@
       "writtenOn": "2017-06-12T19:50:18Z",
       "side": 1,
       "message": "The original status codes (in storage/common/quota/quota_status_code.h) reference other constants like blink::kWebStorageQuotaErrorInvalidAccess. How do we do this in mojom?",
+      "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8ba5d65_7c89438c",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-12T20:11:36Z",
+      "side": 1,
+      "message": "After onion-souping WebStorageQuotaError should go away anyway (as blink will directly be talking to mojo) so I don\u0027t think this is an issue?",
+      "parentUuid": "2e027d7e_f5c99bc2",
       "revId": "c8ad33cdbedfb486744417a8f773ff6d53a142a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
