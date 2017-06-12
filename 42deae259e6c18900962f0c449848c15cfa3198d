@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "8040336f_824009aa",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T22:52:11Z",
+      "side": 1,
+      "message": "Can we use GpuDataManagerObserver for this purpose?\nOne question. Don\u0027t you think GPUInfo in GpuDataManager(GDM) must have been already updated by the time VideoCaptureGpuJpegDecoder(VCGJD) gets created?\nAnd lets say even if we add an API on GPH or GDM, VCGJD will not receive the callback, if GPUInfo has been updated before VCGJD was created.",
+      "parentUuid": "e82c11f5_c32550e7",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d3271b_2ccba455",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 7
@@ -189,6 +207,24 @@
       "side": 1,
       "message": "client_ expects to be called on the IO thread *because* we wanted to avoid the client thread. If we don\u0027t want to avoid it any more for some reason, we should remove the complexity associated with having to hop threads and guaranteeing thread safety. Alternatively, and especially if the concerns about avoiding the client thread are still valid, we can bind the interface on the IO thread to avoid the IO-\u003eclient-\u003eIO hops.",
       "parentUuid": "4ab03970_ae4f48ba",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "917f5874_3362b891",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-12T22:52:11Z",
+      "side": 1,
+      "message": "Oh, I see. Sorry, I wasn\u0027t aware of the history behind this.\nIn that case, we can create GJDA interface on the IO thread itself.\nSomething like https://chromium-review.googlesource.com/c/525672/2/content/gpu/gpu_child_thread.cc",
+      "parentUuid": "d9a8a819_15c46645",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
