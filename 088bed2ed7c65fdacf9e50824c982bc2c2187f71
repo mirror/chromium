@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d6c5b2b_c84feee6",
+        "filename": "ios/build/bots/chromium.fyi/ios-simulator.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-12T19:28:31Z",
+      "side": 1,
+      "message": "Did you intend to edit the chromium.fyi version of this file?",
+      "revId": "088bed2ed7c65fdacf9e50824c982bc2c2187f71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
