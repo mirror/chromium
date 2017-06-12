@@ -157,6 +157,9 @@ static const int kAppsShortcutButtonTag = 2;
 static const int kButtonPaddingHorizontal = 6;
 static const int kButtonPaddingVertical = 5;
 
+// Spacing between the bookmark button image and its label.
+static const int kImageLabelSpacing = 5;
+
 static const gfx::ElideBehavior kElideBehavior = gfx::FADE_TAIL;
 
 namespace {
@@ -186,6 +189,7 @@ class BookmarkButtonBase : public views::LabelButton {
   BookmarkButtonBase(views::ButtonListener* listener,
                      const base::string16& title)
       : LabelButton(listener, title) {
+    SetImageLabelSpacing(kImageLabelSpacing);
     SetElideBehavior(kElideBehavior);
     SetInkDropMode(InkDropMode::ON);
     set_has_ink_drop_action_on_click(true);
@@ -347,6 +351,7 @@ class BookmarkMenuButtonBase : public views::MenuButton {
                          views::MenuButtonListener* menu_button_listener,
                          bool show_menu_marker)
       : MenuButton(title, menu_button_listener, show_menu_marker) {
+    SetImageLabelSpacing(kImageLabelSpacing);
     SetInkDropMode(InkDropMode::ON);
     SetFocusPainter(nullptr);
   }
