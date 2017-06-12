@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b86cd37_4b82aa79",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-12T21:51:36Z",
+      "side": 1,
+      "message": "I just realized that now RWHVA and WCAA each depend on each other.\nIt\u0027s not terrible, but generally it\u0027s cleaner to have dependencies\ngoing in just one direction and to use a delegate or client interface\nthe other way.\n\nRight now we mostly have renderer_host and frame_host depending on\naccessibility and not the other way around. BAM has a delegate\ninterface for communicating back with the RFH that owns it.\n\nMaybe consider doing the same thing, having WebContentsAccessibilityAndroid not directly reference RenderWidgetHostViewAndroid, but instead indirectly through a delegate interface.",
+      "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
