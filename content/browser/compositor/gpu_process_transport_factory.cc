@@ -33,7 +33,7 @@
 #include "components/viz/display_compositor/compositor_overlay_candidate_validator.h"
 #include "components/viz/display_compositor/gl_helper.h"
 #include "components/viz/display_compositor/host_shared_bitmap_manager.h"
-#include "components/viz/host/frame_sink_manager_host.h"
+#include "components/viz/frame_sinks/mojo_frame_sink_manager.h"
 #include "content/browser/compositor/browser_compositor_output_surface.h"
 #include "content/browser/compositor/gpu_browser_compositor_output_surface.h"
 #include "content/browser/compositor/gpu_surfaceless_browser_compositor_output_surface.h"
@@ -206,8 +206,13 @@ GpuProcessTransportFactory::GpuProcessTransportFactory()
       callback_factory_(this) {
   cc::SetClientNameForMetrics("Browser");
 
-  frame_sink_manager_host_ = base::MakeUnique<viz::FrameSinkManagerHost>();
-  frame_sink_manager_host_->ConnectToFrameSinkManager();
+  // TODO(danakj): Don't make a MojoFrameSinkManager when display is in the
+  // Gpu process, instead get the mojo pointer from the Gpu process.
+  bool use_surface_sequences = false;
+  in_process_frame_sink_manager_ = base::MakeUnique<viz::MojoFrameSinkManager>(
+      use_surface_sequences, nullptr);
+  viz::FrameSinkManagerHost::ConnectWithInProcessFrameSinkManager(
+      &frame_sink_manager_host_, in_process_frame_sink_manager_.get());
 
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
   if (command_line->HasSwitch(switches::kDisableGpuVsync)) {
@@ -714,12 +719,12 @@ cc::FrameSinkId GpuProcessTransportFactory::AllocateFrameSinkId() {
 }
 
 cc::SurfaceManager* GpuProcessTransportFactory::GetSurfaceManager() {
-  return frame_sink_manager_host_->surface_manager();
+  return in_process_frame_sink_manager_->surface_manager();
 }
 
 viz::FrameSinkManagerHost*
 GpuProcessTransportFactory::GetFrameSinkManagerHost() {
-  return frame_sink_manager_host_.get();
+  return &frame_sink_manager_host_;
 }
 
 void GpuProcessTransportFactory::SetDisplayVisible(ui::Compositor* compositor,
