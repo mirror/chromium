@@ -22,6 +22,30 @@
       "revId": "779a1e4518f2f4c4ee3330a92e2d7606d8596852",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e91de6e2_0d107224",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_physical_fragment.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-12T21:37:19Z",
+      "side": 1,
+      "message": "This is a refcounted class, I don\u0027t think I can add a copy constructor to it? (WTF::RefCounted uses DISALLOW_COPY_AND_ASSIGN)",
+      "parentUuid": "6019340f_5a8e4cbb",
+      "range": {
+        "startLine": 92,
+        "startChar": 29,
+        "endLine": 92,
+        "endChar": 47
+      },
+      "revId": "779a1e4518f2f4c4ee3330a92e2d7606d8596852",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
