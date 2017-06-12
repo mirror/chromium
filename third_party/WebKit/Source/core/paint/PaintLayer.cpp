@@ -3317,6 +3317,10 @@ void PaintLayer::ClearNeedsRepaintRecursively() {
   needs_repaint_ = false;
 }
 
+bool PaintLayer::HandlesOwnScrolling() const {
+  return !IsRootLayer() || RuntimeEnabledFeatures::RootLayerScrollingEnabled();
+}
+
 DisableCompositingQueryAsserts::DisableCompositingQueryAsserts()
     : disabler_(&g_compositing_query_mode, kCompositingQueriesAreAllowed) {}
 
