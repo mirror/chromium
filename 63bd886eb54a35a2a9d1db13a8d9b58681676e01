@@ -87,6 +87,24 @@
       "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be3827e9_2063e105",
+        "filename": "third_party/libsync/sync.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-12T16:27:39Z",
+      "side": 1,
+      "message": "Thanks for the tip. I\u0027ve found a way to suppress the warning with a private config.",
+      "parentUuid": "30bb9549_9268de79",
+      "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
