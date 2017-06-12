@@ -528,6 +528,24 @@
     },
     {
       "key": {
+        "uuid": "1fd2ecd0_bae0b5e3",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-12T17:51:00Z",
+      "side": 1,
+      "message": "Previously used a string since we never needed to test the value, we just threw it into the C++ template but it makes sense to make it a boolean now.",
+      "parentUuid": "15d6d576_4cf99b3a",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fb5461f0_906df4c3",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 8
