@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "195042ee_eeec7444",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-12T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb9f5c23_beed942b",
+      "revId": "0ee2bb386781ea491a3aca8eca40491b2cc8413b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667a7298_fb68252f",
         "filename": "base/threading/sequence_local_storage_map.h",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "0ee2bb386781ea491a3aca8eca40491b2cc8413b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3813f6_7605200a",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-12T14:20:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "667a7298_fb68252f",
+      "revId": "0ee2bb386781ea491a3aca8eca40491b2cc8413b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

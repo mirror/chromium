@@ -227,6 +227,30 @@
     },
     {
       "key": {
+        "uuid": "9bf85cde_d626856d",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-12T14:20:00Z",
+      "side": 1,
+      "message": "Gab, what do you think?",
+      "parentUuid": "60ffa107_ff95258c",
+      "range": {
+        "startLine": 37,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 24
+      },
+      "revId": "9993842b0b1de26694c5a7b3c1956c15cb436478",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3e11a290_ed72d8df",
         "filename": "base/threading/sequence_local_storage_map.cc",
         "patchSetId": 12
