@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b3587aa_144348da",
+        "filename": "components/safe_browsing_db/OWNERS",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-12T23:16:59Z",
+      "side": 1,
+      "message": "Should this be alphabetically ordered?\nI know google3/ prefers that.",
+      "range": {
+        "startLine": 2,
+        "startChar": 0,
+        "endLine": 2,
+        "endChar": 20
+      },
+      "revId": "d452a797c7ebb84e2645398f002659515a12d51b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
