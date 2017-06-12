@@ -494,6 +494,10 @@ void ChromeClientImpl::LayoutUpdated() const {
   web_view_->LayoutUpdated();
 }
 
+ResizeViewportAnchor* ChromeClientImpl::GetResizeViewportAnchor() {
+  return web_view_->GetResizeViewportAnchor();
+}
+
 void ChromeClientImpl::ShowMouseOverURL(const HitTestResult& result) {
   if (!web_view_->Client())
     return;

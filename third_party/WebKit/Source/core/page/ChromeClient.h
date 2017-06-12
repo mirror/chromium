@@ -76,6 +76,7 @@ class PagePopup;
 class PagePopupClient;
 class PopupOpeningObserver;
 class RemoteFrame;
+class ResizeViewportAnchor;
 class WebDragData;
 class WebFrameScheduler;
 class WebImage;
@@ -201,6 +202,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
   virtual void MainFrameScrollOffsetChanged() const {}
   virtual void ResizeAfterLayout() const {}
   virtual void LayoutUpdated() const {}
+  virtual ResizeViewportAnchor* GetResizeViewportAnchor() { return nullptr; }
 
   void MouseDidMoveOverElement(LocalFrame&, const HitTestResult&);
   virtual void SetToolTip(LocalFrame&, const String&, TextDirection) = 0;

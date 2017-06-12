@@ -25,16 +25,32 @@ class CORE_EXPORT ResizeViewportAnchor final
   WTF_MAKE_NONCOPYABLE(ResizeViewportAnchor);
 
  public:
-  ResizeViewportAnchor(Page& page) : page_(page), scope_count_(0) {}
+  ResizeViewportAnchor(Page& page)
+      : page_(page), resize_scope_count_(0), clamping_scope_count_(0) {}
 
   class ResizeScope {
     STACK_ALLOCATED();
 
    public:
     explicit ResizeScope(ResizeViewportAnchor& anchor) : anchor_(anchor) {
-      anchor_->BeginScope();
+      anchor_->BeginResizeScope();
     }
-    ~ResizeScope() { anchor_->EndScope(); }
+    ~ResizeScope() { anchor_->EndResizeScope(); }
+
+   private:
+    Member<ResizeViewportAnchor> anchor_;
+  };
+
+  class ClampingScope {
+    DISALLOW_NEW_EXCEPT_PLACEMENT_NEW();
+
+   public:
+    explicit ClampingScope(ResizeViewportAnchor& anchor) : anchor_(anchor) {
+      anchor_->BeginClampingScope();
+    }
+    ~ClampingScope() { anchor_->EndClampingScope(); }
+
+    DEFINE_INLINE_TRACE() { visitor->Trace(anchor_); }
 
    private:
     Member<ResizeViewportAnchor> anchor_;
@@ -45,16 +61,23 @@ class CORE_EXPORT ResizeViewportAnchor final
   DEFINE_INLINE_TRACE() { visitor->Trace(page_); }
 
  private:
-  void BeginScope() { scope_count_++; }
-  void EndScope();
+  void BeginResizeScope() { resize_scope_count_++; }
+  void EndResizeScope();
+  void BeginClampingScope();
+  void EndClampingScope();
   LocalFrameView* RootFrameView();
 
   // The amount of resize-induced clamping drift accumulated during the
   // ResizeScope.  Note that this should NOT include other kinds of scrolling
   // that may occur during layout, such as from ScrollAnchor.
   ScrollOffset drift_;
+
+  // RootFrameViewport scroll offset at start of outer ClampingScope.
+  ScrollOffset clamp_start_offset_;
+
   Member<Page> page_;
-  int scope_count_;
+  int resize_scope_count_;
+  int clamping_scope_count_;
 };
 
 }  // namespace blink
