@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_SUGGESTIONS_PROVIDER_H_
 #define COMPONENTS_NTP_SNIPPETS_BREAKING_NEWS_BREAKING_NEWS_SUGGESTIONS_PROVIDER_H_
 
+#include "base/time/clock.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/content_suggestions_provider.h"
 #include "components/prefs/pref_registry_simple.h"
@@ -55,6 +56,7 @@ class BreakingNewsSuggestionsProvider : public ContentSuggestionsProvider {
   std::unique_ptr<ContentSuggestionsGCMAppHandler> gcm_app_handler_;
   const Category provided_category_;
   CategoryStatus category_status_;
+  std::unique_ptr<base::Clock> clock_;
 
   DISALLOW_COPY_AND_ASSIGN(BreakingNewsSuggestionsProvider);
 };
