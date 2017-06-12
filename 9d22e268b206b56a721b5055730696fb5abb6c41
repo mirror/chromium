@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6714f59_6f18c1af",
+        "filename": "components/feature_engagement_tracker/public/feature_constants.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T23:27:00Z",
+      "side": 1,
+      "message": "Nit: These includes can be removed as feature_constants.h pulls them in.\n\nhttps://google.github.io/styleguide/cppguide.html#Names_and_Order_of_Includes\n[...] any includes present in the related header do not need to be included again in the related cc (i.e., foo.cc can rely on foo.h\u0027s includes).",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "9d22e268b206b56a721b5055730696fb5abb6c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21d5077f_39f10c1c",
+        "filename": "components/feature_engagement_tracker/public/feature_list.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T23:27:00Z",
+      "side": 1,
+      "message": "Remove these as well.",
+      "range": {
+        "startLine": 6,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 31
+      },
+      "revId": "9d22e268b206b56a721b5055730696fb5abb6c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba285ce8_dd372d5a",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T23:27:00Z",
+      "side": 1,
+      "message": "Does this dummy feature hurt stats? Maybe it should be an\n#if defined(OS_ANDROID)\n  Entries\n#else\n  VARIATION_ENTRY(kIPHDummyFeature)\n#endif\n?",
+      "range": {
+        "startLine": 61,
+        "startChar": 24,
+        "endLine": 61,
+        "endChar": 40
+      },
+      "revId": "9d22e268b206b56a721b5055730696fb5abb6c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
