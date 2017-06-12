@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "82fc3f92_a15d4d93",
+        "filename": "chrome/browser/extensions/api/file_system/chrome_file_system_delegate.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 256,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-12T21:21:58Z",
+      "side": 1,
+      "message": "TODO",
+      "revId": "31f87060d370f9fedc9c3ac94708d50065bc3192",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
