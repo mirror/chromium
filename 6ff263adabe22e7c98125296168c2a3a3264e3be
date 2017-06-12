@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a85257f6_7f45bb2c",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-12T23:04:08Z",
+      "side": 1,
+      "message": "Correct way is to define another base and add the flag in SetUpCommandLine.",
+      "revId": "6ff263adabe22e7c98125296168c2a3a3264e3be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
