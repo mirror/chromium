@@ -4,10 +4,13 @@
 
 #include "platform/graphics/CanvasSurfaceLayerBridge.h"
 
+#include "base/command_line.h"
+#include "cc/base/switches.h"
 #include "cc/layers/layer.h"
 #include "cc/layers/solid_color_layer.h"
 #include "cc/layers/surface_layer.h"
 #include "cc/surfaces/sequence_surface_reference_factory.h"
+#include "cc/surfaces/stub_surface_reference_factory.h"
 #include "cc/surfaces/surface_id.h"
 #include "cc/surfaces/surface_info.h"
 #include "cc/surfaces/surface_sequence.h"
@@ -64,8 +67,13 @@ CanvasSurfaceLayerBridge::CanvasSurfaceLayerBridge(
       frame_sink_id_(Platform::Current()->GenerateFrameSinkId()),
       parent_frame_sink_id_(layer_tree_view ? layer_tree_view->GetFrameSinkId()
                                             : cc::FrameSinkId()) {
-  ref_factory_ =
-      new OffscreenCanvasSurfaceReferenceFactory(weak_factory_.GetWeakPtr());
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableSurfaceReferences)) {
+    ref_factory_ = new cc::StubSurfaceReferenceFactory();
+  } else {
+    ref_factory_ =
+        new OffscreenCanvasSurfaceReferenceFactory(weak_factory_.GetWeakPtr());
+  }
 
   DCHECK(!service_.is_bound());
   mojom::blink::OffscreenCanvasProviderPtr provider;

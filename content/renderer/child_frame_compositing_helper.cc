@@ -6,6 +6,8 @@
 
 #include <utility>
 
+#include "base/command_line.h"
+#include "cc/base/switches.h"
 #include "cc/blink/web_layer_impl.h"
 #include "cc/layers/picture_image_layer.h"
 #include "cc/layers/solid_color_layer.h"
@@ -16,6 +18,7 @@
 #include "cc/paint/paint_image.h"
 #include "cc/resources/single_release_callback.h"
 #include "cc/surfaces/sequence_surface_reference_factory.h"
+#include "cc/surfaces/stub_surface_reference_factory.h"
 #include "content/child/thread_safe_sender.h"
 #include "content/common/browser_plugin/browser_plugin_messages.h"
 #include "content/common/content_switches_internal.h"
@@ -168,7 +171,10 @@ ChildFrameCompositingHelper::ChildFrameCompositingHelper(
       frame_(frame) {
   scoped_refptr<ThreadSafeSender> sender(
       RenderThreadImpl::current()->thread_safe_sender());
-  if (render_frame_proxy_) {
+  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+          cc::switches::kEnableSurfaceReferences)) {
+    surface_reference_factory_ = new cc::StubSurfaceReferenceFactory();
+  } else if (render_frame_proxy_) {
     surface_reference_factory_ =
         new IframeSurfaceReferenceFactory(sender, host_routing_id_);
   } else {

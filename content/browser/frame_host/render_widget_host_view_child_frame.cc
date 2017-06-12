@@ -449,7 +449,8 @@ void RenderWidgetHostViewChildFrame::SendSurfaceInfoToEmbedder() {
   cc::SurfaceId surface_id(frame_sink_id_, local_surface_id_);
   // The renderer process will satisfy this dependency when it creates a
   // SurfaceLayer.
-  manager->RequireSequence(surface_id, sequence);
+  if (!manager->using_surface_references())
+    manager->RequireSequence(surface_id, sequence);
   cc::SurfaceInfo surface_info(surface_id, current_surface_scale_factor_,
                                current_surface_size_);
   SendSurfaceInfoToEmbedderImpl(surface_info, sequence);
