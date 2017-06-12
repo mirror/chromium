@@ -16,6 +16,24 @@
       "revId": "c0ac504d35d50b7dd8cd86312d00171581508bcd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33bc0d4_8f7d61d1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8AbstractEventListener.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-12T01:54:49Z",
+      "side": 1,
+      "message": "Chatted offline. As described we don\u0027t need to introduce firing_events_. IIUC v8 wrapper objects are kept in the stack while executing an event handler and these wrapper objects keep corresponding Event objects.",
+      "parentUuid": "bba1a4a2_d4bebb10",
+      "revId": "c0ac504d35d50b7dd8cd86312d00171581508bcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
