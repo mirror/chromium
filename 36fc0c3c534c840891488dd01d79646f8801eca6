@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "045e7fd0_d92886f8",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 3681,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-12T17:45:35Z",
+      "side": 1,
+      "message": "Somebody recently fixed base::AmountOfAvailablePhysicalMemory() which should do the right thing when it comes to estimating avail memory. not sure what GetSystemMemoryInfo.available computes.",
+      "parentUuid": "c6fc5f56_26754dce",
+      "revId": "36fc0c3c534c840891488dd01d79646f8801eca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe81387c_6cea3b55",
         "filename": "content/browser/renderer_host/render_process_host_impl.cc",
         "patchSetId": 11
