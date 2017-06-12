@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dec0d89_f85ef944",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-12T21:53:50Z",
+      "side": 1,
+      "message": "DISTANCE_RELATED_LABEL_HORIZONTAL_LIST?  ...since this is basically a variant of DISTANCE_RELATED_LABEL_HORIZONTAL.\n\nMaybe with a comment like:\n\n  // Horizontal spacing between an item and related label, in the context of a horizontal row of such items.",
+      "revId": "637bc4f901ab30257c2226f0b177b2375456d0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
