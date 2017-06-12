@@ -47,8 +47,8 @@ AudioDeviceThread::AudioDeviceThread(Callback* callback,
                                      base::SyncSocket::Handle socket,
                                      const char* thread_name)
     : callback_(callback), thread_name_(thread_name), socket_(socket) {
-  CHECK(base::PlatformThread::CreateWithPriority(
-      0, this, &thread_handle_, base::ThreadPriority::REALTIME_AUDIO));
+  CHECK(base::PlatformThread::CreateWithPriority(0, this, &thread_handle_,
+                                                 base::ThreadPriority::NORMAL));
   DCHECK(!thread_handle_.is_null());
 }
 
