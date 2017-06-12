@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b8281156_a351870e",
+        "filename": "headless/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T11:36:53Z",
+      "side": 1,
+      "message": "Could you file/link a bug for turning this back on? I got the impression that closure will soon be used for building Chrome UI things -- presumably on most platforms.",
+      "range": {
+        "startLine": 518,
+        "startChar": 0,
+        "endLine": 518,
+        "endChar": 1
+      },
+      "revId": "3888f7de382bb8ec9fd7a6d52dceccba83d8ba63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
