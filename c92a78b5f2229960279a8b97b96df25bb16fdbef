@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "92a1b532_fa2c113c",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-12T21:01:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc115d42_ca7f7990",
+      "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9fa81524_2befca35",
         "filename": "components/safe_browsing_db/v4_database.cc",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-12T18:18:59Z",
       "side": 1,
       "message": "This is a very succinct explanation of an ugly construct - thanks for adding the comment. :)\n\nRe the construct: If the V4Stores are used on the DB thread then could we break them out to be owned by a V4Database::Core object that would \"live\" on the DB thread itself, so that VerifyChecksum() would simply delegate to that object, and all the work would occur there without this subtlety?",
+      "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a9eb5f5_80908cf2",
+        "filename": "components/safe_browsing_db/v4_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-12T21:01:36Z",
+      "side": 1,
+      "message": "That\u0027s not a bad idea, but the delicacy of the threading in the existing code would make the refactor pretty involved. \u003cdumb_and_dumber\u003eHow about a TODO? Those are as good as CLs. \u003c/dumb_and_dumber\u003e",
+      "parentUuid": "9fa81524_2befca35",
       "revId": "c92a78b5f2229960279a8b97b96df25bb16fdbef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
