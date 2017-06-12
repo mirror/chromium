@@ -9,6 +9,7 @@
 #include "cc/paint/paint_image.h"
 #include "cc/test/layer_tree_pixel_resource_test.h"
 #include "cc/test/pixel_comparator.h"
+#include "cc/test/test_compositor_frame_sink.h"
 #include "third_party/skia/include/core/SkImage.h"
 #include "third_party/skia/include/core/SkSurface.h"
 
@@ -67,13 +68,22 @@ class LayerTreeHostBlendingPixelTest : public LayerTreeHostPixelResourceTest {
     pixel_comparator_.reset(new FuzzyPixelOffByOneComparator(true));
   }
 
-  void InitializeSettings(LayerTreeSettings* settings) override {
-    settings->renderer_settings.force_antialiasing = force_antialiasing_;
-    settings->renderer_settings.force_blending_with_shaders =
+ protected:
+  std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
+      RendererSettings* renderer_settings,
+      double refresh_rate,
+      scoped_refptr<ContextProvider> compositor_context_provider,
+      scoped_refptr<ContextProvider> worker_context_provider) override {
+    renderer_settings->force_antialiasing = force_antialiasing_;
+    renderer_settings->force_blending_with_shaders =
         force_blending_with_shaders_;
+    renderer_settings->resource_settings.buffer_to_texture_target_map =
+        DefaultBufferToTextureTargetMapForTesting();
+    return LayerTreeHostPixelResourceTest::CreateCompositorFrameSink(
+        renderer_settings, refresh_rate, compositor_context_provider,
+        worker_context_provider);
   }
 
- protected:
   void RunBlendingWithRootPixelTestType(PixelResourceTestCase type) {
     const int kLaneWidth = 2;
     const int kLaneHeight = kLaneWidth;

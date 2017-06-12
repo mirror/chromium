@@ -442,7 +442,8 @@ SINGLE_THREAD_TEST_F(LayerTreeHostTestReadyToDrawVisibility);
 class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
  public:
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
-      const RendererSettings& renderer_settings,
+      RendererSettings* renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     // Create the main ContextProvider with a MockContextSupport.
@@ -466,7 +467,7 @@ class LayerTreeHostContextCacheTest : public LayerTreeHostTest {
                 SetAggressivelyFreeResources(false));
 
     return LayerTreeHostTest::CreateCompositorFrameSink(
-        renderer_settings, std::move(test_main_context_provider),
+        renderer_settings, refresh_rate, std::move(test_main_context_provider),
         std::move(test_worker_context_provider));
   }
 
@@ -3313,6 +3314,7 @@ class OnDrawCompositorFrameSink : public TestCompositorFrameSink {
       const RendererSettings& renderer_settings,
       base::SingleThreadTaskRunner* task_runner,
       bool synchronous_composite,
+      double refresh_rate,
       base::Closure invalidate_callback)
       : TestCompositorFrameSink(std::move(compositor_context_provider),
                                 std::move(worker_context_provider),
@@ -3321,7 +3323,8 @@ class OnDrawCompositorFrameSink : public TestCompositorFrameSink {
                                 renderer_settings,
                                 task_runner,
                                 synchronous_composite,
-                                false /* disable_display_vsync */),
+                                false /* disable_display_vsync */,
+                                refresh_rate),
         invalidate_callback_(std::move(invalidate_callback)) {}
 
   // TestCompositorFrameSink overrides.
@@ -3346,7 +3349,8 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
   }
 
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
-      const RendererSettings& renderer_settings,
+      RendererSettings* renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     auto on_draw_callback = base::Bind(
@@ -3355,8 +3359,9 @@ class LayerTreeHostTestAbortedCommitDoesntStallSynchronousCompositor
         base::Unretained(this));
     auto frame_sink = base::MakeUnique<OnDrawCompositorFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
-        shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
-        ImplThreadTaskRunner(), false /* synchronous_composite */,
+        shared_bitmap_manager(), gpu_memory_buffer_manager(),
+        *renderer_settings, ImplThreadTaskRunner(),
+        false /* synchronous_composite */, refresh_rate,
         std::move(on_draw_callback));
     compositor_frame_sink_ = frame_sink.get();
     return std::move(frame_sink);
@@ -5476,14 +5481,15 @@ MULTI_THREAD_TEST_F(LayerTreeHostTestEmptyLayerGpuRasterization);
 class LayerTreeHostWithGpuRasterizationTest : public LayerTreeHostTest {
  protected:
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
-      const RendererSettings& renderer_settings,
+      RendererSettings* renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     auto context = TestWebGraphicsContext3D::Create();
     context->set_gpu_rasterization(true);
     auto context_provider = TestContextProvider::Create(std::move(context));
     return LayerTreeHostTest::CreateCompositorFrameSink(
-        renderer_settings, std::move(context_provider),
+        renderer_settings, refresh_rate, std::move(context_provider),
         std::move(worker_context_provider));
   }
 };
@@ -5560,7 +5566,8 @@ class LayerTreeHostTestGpuRasterizationReenabled
   }
 
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
-      const RendererSettings& renderer_settings,
+      RendererSettings* renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     std::unique_ptr<TestWebGraphicsContext3D> context =
@@ -5569,9 +5576,9 @@ class LayerTreeHostTestGpuRasterizationReenabled
     context->set_gpu_rasterization(true);
     compositor_context_provider =
         TestContextProvider::Create(std::move(context));
-    return LayerTreeTest::CreateCompositorFrameSink(renderer_settings,
-                                                    compositor_context_provider,
-                                                    worker_context_provider);
+    return LayerTreeTest::CreateCompositorFrameSink(
+        renderer_settings, refresh_rate, compositor_context_provider,
+        worker_context_provider);
   }
 
   void SetupTree() override {
@@ -5975,7 +5982,8 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
   }
 
   std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
-      const RendererSettings& renderer_settings,
+      RendererSettings* renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider) override {
     constexpr bool disable_display_vsync = false;
@@ -5984,8 +5992,9 @@ class LayerTreeHostTestSynchronousCompositeSwapPromise
         !layer_tree_host()->GetSettings().single_thread_proxy_scheduler;
     return base::MakeUnique<TestCompositorFrameSink>(
         compositor_context_provider, std::move(worker_context_provider),
-        shared_bitmap_manager(), gpu_memory_buffer_manager(), renderer_settings,
-        ImplThreadTaskRunner(), synchronous_composite, disable_display_vsync);
+        shared_bitmap_manager(), gpu_memory_buffer_manager(),
+        *renderer_settings, ImplThreadTaskRunner(), synchronous_composite,
+        disable_display_vsync, refresh_rate);
   }
 
   void BeginTest() override {
