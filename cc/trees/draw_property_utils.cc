@@ -386,12 +386,8 @@ template <typename LayerType>
 static bool IsLayerBackFaceVisible(LayerType* layer,
                                    int transform_tree_index,
                                    const PropertyTrees* property_trees) {
-  const TransformNode* node =
-      property_trees->transform_tree.Node(transform_tree_index);
-  return layer->use_local_transform_for_backface_visibility()
-             ? node->local.IsBackFaceVisible()
-             : IsTargetSpaceTransformBackFaceVisible(
-                   layer, transform_tree_index, property_trees);
+  return IsTargetSpaceTransformBackFaceVisible(layer, transform_tree_index,
+                                               property_trees);
 }
 
 static inline bool TransformToScreenIsKnown(Layer* layer,
