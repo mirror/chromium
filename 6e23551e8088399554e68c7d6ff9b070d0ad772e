@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c654a452_03d61a63",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T20:11:18Z",
+      "side": 1,
+      "message": "Had trouble parsing this.\n\nMaybe\nIt is important to use this class instead of a self-managed global variable or LazyInstance?",
+      "range": {
+        "startLine": 26,
+        "startChar": 39,
+        "endLine": 27,
+        "endChar": 36
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ec6927_9c5eb053",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T20:11:18Z",
+      "side": 1,
+      "message": "What makes this necessary? Can LAZY_TASK_RUNNER_CONCATENATE_INTERNAL not just be a##b?",
+      "range": {
+        "startLine": 84,
+        "startChar": 0,
+        "endLine": 84,
+        "endChar": 57
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c3cd5c_9d873a3f",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T20:11:18Z",
+      "side": 1,
+      "message": "Is it possible to put these in a hidden namespace?",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 62
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
