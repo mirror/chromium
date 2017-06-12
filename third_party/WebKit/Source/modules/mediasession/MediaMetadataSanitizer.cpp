@@ -72,7 +72,7 @@ blink::mojom::blink::MediaImagePtr SanitizeMediaImageAndConvertToMojo(
   mojo_image->type = image.type().Left(kMaxImageTypeLength);
   for (const auto& web_size :
        WebIconSizesParser::ParseIconSizes(image.sizes())) {
-    mojo_image->sizes.push_back(web_size);
+    mojo_image->sizes.push_back(gfx::Size(web_size.width, web_size.height));
     if (mojo_image->sizes.size() == kMaxNumberOfImageSizes) {
       context->AddConsoleMessage(ConsoleMessage::Create(
           kJSMessageSource, kWarningMessageLevel,
