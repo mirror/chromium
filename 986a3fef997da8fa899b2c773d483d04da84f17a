@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0739d2f8_db086324",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-12T16:35:53Z",
+      "side": 1,
+      "message": "Let\u0027s call this .*_after_first_minute_.* for consistency.",
+      "range": {
+        "startLine": 234,
+        "startChar": 6,
+        "endLine": 234,
+        "endChar": 49
+      },
+      "revId": "986a3fef997da8fa899b2c773d483d04da84f17a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
