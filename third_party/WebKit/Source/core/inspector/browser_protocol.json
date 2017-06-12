@@ -1709,7 +1709,7 @@
                     { "name": "redirectStatusCode", "type": "integer", "optional": true, "description": "HTTP response code, only sent if a redirect was intercepted." },
                     { "name": "redirectUrl", "optional": true, "type": "string", "description": "Redirect location, only sent if a redirect was intercepted."}
                 ],
-                "experimental": true 
+                "experimental": true
             }
         ]
     },
@@ -4614,6 +4614,17 @@
                     { "name": "storageTypes", "type": "string", "description": "Comma separated origin names." }
                 ],
                 "description": "Clears storage for origin."
+            },
+            {
+                "name": "getUsageAndQuota",
+                "parameters": [
+                    { "name": "origin", "type": "string", "description": "Security origin." }
+                ],
+                "returns": [
+                    { "name": "usage", "type": "number", "description": "Storage usage (bytes)." },
+                    { "name": "quota", "type": "number", "description": "Storage quota (bytes)." }
+                ],
+                "description": "Returns usage and quota in bytes."
             }
         ]
     },
