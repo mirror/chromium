@@ -705,12 +705,18 @@ class ChangesListRequest : public DriveApiDataRequest<ChangeList> {
     team_drive_id_ = team_drive_id;
   }
 
+  bool only_largest_change_id() const { return only_largest_change_id_; }
+  void set_only_largest_change_id(bool only_largest_change_id) {
+    only_largest_change_id_ = only_largest_change_id;
+  }
+
  protected:
   // Overridden from DriveApiDataRequest.
   GURL GetURLInternal() const override;
 
  private:
   const DriveApiUrlGenerator url_generator_;
+  bool only_largest_change_id_;
   bool include_deleted_;
   int max_results_;
   std::string page_token_;

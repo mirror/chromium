@@ -135,6 +135,7 @@ const char kChangeListFields[] =
     "largestChangeId";
 const char kTeamDrivesListFields[] =
     "nextPageToken,kind,items(kind,id,name,capabilities)";
+const char kLargestChangeIdField[] = "largestChangeId";
 
 void ExtractOpenUrlAndRun(const std::string& app_id,
                           const AuthorizeAppCallback& callback,
@@ -533,6 +534,19 @@ CancelCallback DriveAPIService::GetAboutResource(
   std::unique_ptr<AboutGetRequest> request = base::MakeUnique<AboutGetRequest>(
       sender_.get(), url_generator_, callback);
   request->set_fields(kAboutResourceFields);
+  return sender_->StartRequestWithAuthRetry(std::move(request));
+}
+
+CancelCallback DriveAPIService::GetLargestChangeId(
+    const std::string& team_drive_id,
+    const ChangeListCallback& callback) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!callback.is_null());
+
+  std::unique_ptr<ChangesListRequest> request =
+      base::MakeUnique<ChangesListRequest>(sender_.get(), url_generator_,
+                                           callback);
+  request->set_fields(kLargestChangeIdField);
   return sender_->StartRequestWithAuthRetry(std::move(request));
 }
 
