@@ -240,6 +240,23 @@
     },
     {
       "key": {
+        "uuid": "4e948a86_61489d98",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:35:08Z",
+      "side": 1,
+      "message": "oh, one more similar question to WebLayerImpl. How often do we come here? would it make sense to keep the union instead of computing it each time?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "098ae398_223aeab1",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 16
