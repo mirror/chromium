@@ -175,23 +175,30 @@ BrowserMainParts* ShellContentBrowserClient::CreateBrowserMainParts(
 
 bool ShellContentBrowserClient::DoesSiteRequireDedicatedProcess(
     BrowserContext* browser_context,
-    const GURL& effective_site_url) {
+    const GURL& real_url) {
+  for (const auto& pattern : require_dedicated_process_patterns_) {
+    if (base::MatchPattern(real_url.spec(), pattern))
+      return true;
+  }
+
   base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
-  DCHECK(command_line->HasSwitch(switches::kIsolateSitesForTesting));
+  if (!command_line->HasSwitch(switches::kIsolateSitesForTesting))
+    return false;
+
   std::string pattern =
       command_line->GetSwitchValueASCII(switches::kIsolateSitesForTesting);
 
-  url::Origin origin(effective_site_url);
+  url::Origin origin(real_url);
 
   if (!origin.unique()) {
     // Schemes like blob or filesystem, which have an embedded origin, should
     // already have been canonicalized to the origin site.
-    CHECK_EQ(origin.scheme(), effective_site_url.scheme())
+    CHECK_EQ(origin.scheme(), real_url.scheme())
         << "a site url should have the same scheme as its origin.";
   }
 
   // Practically |origin.Serialize()| is the same as
-  // |effective_site_url.spec()|, except Origin serialization strips the
+  // |url.spec()|, except Origin serialization strips the
   // trailing "/", which makes for cleaner wildcard patterns.
   return base::MatchPattern(origin.Serialize(), pattern);
 }

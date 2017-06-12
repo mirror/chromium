@@ -1287,10 +1287,11 @@ bool ChromeContentBrowserClient::ShouldUseProcessPerSite(
 
 bool ChromeContentBrowserClient::DoesSiteRequireDedicatedProcess(
     content::BrowserContext* browser_context,
-    const GURL& effective_site_url) {
+    const GURL& real_url) {
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   if (ChromeContentBrowserClientExtensionsPart::DoesSiteRequireDedicatedProcess(
-          browser_context, effective_site_url)) {
+          browser_context,
+          SiteInstance::GetSiteForURL(browser_context, real_url))) {
     return true;
   }
 #endif
