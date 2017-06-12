@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb07802b_98ff797f",
+        "filename": "components/ukm/ukm_interface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1126726
+      },
+      "writtenOn": "2017-06-12T20:45:47Z",
+      "side": 1,
+      "message": "Would it make sense to CHECK that the discarded bits of |instance_id| are 0? I suppose that could only happen with with an insanely high process count, but having a CHECK here would help with readability as well.",
+      "range": {
+        "startLine": 21,
+        "startChar": 10,
+        "endLine": 21,
+        "endChar": 21
+      },
+      "revId": "3c858c26bd1a6b0c7154f9fa749e7bb13010864f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
