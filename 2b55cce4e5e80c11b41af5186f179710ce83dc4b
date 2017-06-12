@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "6b2647c9_c400c0a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-12T15:23:04Z",
+      "side": 1,
+      "message": "Can you say more here? E.g. \"Combines the rules from old blink guide (https://www.chromium.org/blink/coding-style) and the jyasskin doc (gdoc link).\"\n\n...oh, several others already said that. Try again, or use rietveld if gerrit won\u0027t let you do it.",
+      "range": {
+        "startLine": 7,
+        "startChar": 22,
+        "endLine": 7,
+        "endChar": 24
+      },
+      "revId": "2b55cce4e5e80c11b41af5186f179710ce83dc4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb82d467_dd839a76",
         "filename": "styleguide/c++/blink-c++.md",
         "patchSetId": 9
