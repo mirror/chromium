@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbdadb42_a50c9e55",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "Can you std::move() the region_map and pass it by value? Then we don\u0027t have to copy its internals.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c598a037_1e5c7201",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "How often is this function called? Would it make sense to keep the union around instead of computing it?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0554ce62_76658006",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "Can you do the Union operation once, save the result, and use it twice?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38056e9a_557da20f",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "As suggested in web_layer_impl, if you receive by value here..",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0e9355_5f58fac0",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "and std::move() when you assign here, we don\u0027t have to copy the map at all.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a30526fb_70b9bc77",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "You could receive it by value here also, and std::move() when you assign on the next line, which would be consistent with Layer and allow callers to pass by move, even tho cc::Layer can\u0027t do that since it\u0027s keeping a copy.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e7658df_559610ab",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "You could std::move() here too",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e373391c_d8cac568",
+        "filename": "cc/layers/region_map_utils.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "You can use a foreach type loop here, like follows.\n\nfor (const auto\u0026 pair : region_map)\n  region.Union(pair.second);",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b05aaa7e_0c9230c3",
+        "filename": "cc/layers/region_map_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "prefer \u0027using\u0027 instead of \u0027typedef\u0027.\n\nRegionMap is a very generic name, and I could see this confusing readers or colliding with future types. May I suggest TouchActionRegionMap?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d203680_8a8aa372",
+        "filename": "cc/test/layer_tree_json_parser.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "std::move() here to avoid a copy",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bbdc5d4_600d5d40",
+        "filename": "cc/test/layer_tree_json_parser_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "You could std::move() here also",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc0603b_f784302e",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "Maybe it would be nicer to add all the rects independently from each TouchAction instead of unioning them together? That way we don\u0027t lose data in the debugging visualization.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f6322ec_bd548378",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 9519,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "You could std::move() here.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6c6a2f1_84ef9e86",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "you could construct it as you pass it, like SetTouchEvent..Map(RegionMap()); That has the advantage of making it an rvalue so no copy is done (it\u0027s empty anyway so not a big deal, more about the principle here)",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098ae398_223aeab1",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "use {} for multi-line body",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10138732_9f0c1f89",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:32:32Z",
+      "side": 1,
+      "message": "And std::move() here",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
