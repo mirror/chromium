@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "701fa7e5_7cdd2555",
+        "filename": "media/capture/video/scoped_result_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T07:51:57Z",
+      "side": 1,
+      "message": "Since base::Callback is convertible to base::OnceCallback, we don\u0027t need that atm.\nAs that update requires a number of changes, I\u0027d split it up.",
+      "parentUuid": "68c5d994_c1858ee9",
+      "range": {
+        "startLine": 19,
+        "startChar": 26,
+        "endLine": 19,
+        "endChar": 45
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc005b68_06eaba37",
         "filename": "media/capture/video/scoped_result_callback.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "eb45e81b_df45a32f",
+        "filename": "media/capture/video/scoped_result_callback.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T07:51:57Z",
+      "side": 1,
+      "message": "Done. They are equivalent, but std::move() looks consistent here.",
+      "parentUuid": "dc005b68_06eaba37",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 35,
+        "endChar": 36
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c8f1fe5f_a70e4585",
         "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
         "patchSetId": 6
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-09T14:29:50Z",
       "side": 1,
       "message": "Note that these classes under //services do not use ScopedResultCallback,\nyou might need to update the CL description or leave them unaltered.\nThese //services files implement mojom interfaces defined in \nhttps://cs.chromium.org/chromium/src/services/shape_detection/public/interfaces/BUILD.gn?sq\u003dpackage:chromium\u0026type\u003dcs\u0026l\u003d22",
+      "range": {
+        "startLine": 27,
+        "startChar": 61,
+        "endLine": 27,
+        "endChar": 69
+      },
+      "revId": "1a72339e6c91ae80516c6d47897c84ff734f222c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a4ae26_0e207116",
+        "filename": "services/shape_detection/barcode_detection_impl_mac.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1211094
+      },
+      "writtenOn": "2017-06-12T07:51:57Z",
+      "side": 1,
+      "message": "These changes are required, since the implemintations use it at Detect() on each classes.\nI\u0027m updating shape_detection too, but it\u0027ll be probably after //media update.",
+      "parentUuid": "c8f1fe5f_a70e4585",
       "range": {
         "startLine": 27,
         "startChar": 61,
