@@ -10,6 +10,7 @@ import android.graphics.SurfaceTexture;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.os.RemoteException;
+import android.util.SparseArray;
 import android.view.Surface;
 
 import org.chromium.base.CommandLine;
@@ -23,7 +24,8 @@ import org.chromium.base.library_loader.LibraryLoader;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.library_loader.ProcessInitException;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
-import org.chromium.content.browser.ChildProcessConstants;
+import org.chromium.base.process_launcher.ChildProcessServiceDelegate;
+import org.chromium.content.browser.ContentChildProcessConstants;
 import org.chromium.content.common.ContentSwitches;
 import org.chromium.content.common.IGpuProcessCallback;
 import org.chromium.content.common.SurfaceWrapper;
@@ -49,6 +51,12 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
     private int mCpuCount;
     private long mCpuFeatures;
 
+    private SparseArray<String> mFdsIdsToKeys;
+
+    ContentChildProcessServiceDelegate() {
+        KillChildUncaughtExceptionHandler.maybeInstallHandler();
+    }
+
     @Override
     public void onServiceCreated() {
         ContentProcessInfo.setInChildProcess(true);
@@ -57,7 +65,7 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
     @Override
     public void onServiceBound(Intent intent) {
         mLinkerParams = (ChromiumLinkerParams) intent.getParcelableExtra(
-                ChildProcessConstants.EXTRA_LINKER_PARAMS);
+                ContentChildProcessConstants.EXTRA_LINKER_PARAMS);
         mLibraryProcessType = ChildProcessCreationParams.getLibraryProcessType(intent);
     }
 
@@ -65,8 +73,8 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
     public void onConnectionSetup(Bundle connectionBundle, IBinder callback) {
         mGpuCallback = callback != null ? IGpuProcessCallback.Stub.asInterface(callback) : null;
 
-        mCpuCount = connectionBundle.getInt(ChildProcessConstants.EXTRA_CPU_COUNT);
-        mCpuFeatures = connectionBundle.getLong(ChildProcessConstants.EXTRA_CPU_FEATURES);
+        mCpuCount = connectionBundle.getInt(ContentChildProcessConstants.EXTRA_CPU_COUNT);
+        mCpuFeatures = connectionBundle.getLong(ContentChildProcessConstants.EXTRA_CPU_FEATURES);
         assert mCpuCount > 0;
 
         Bundle sharedRelros = connectionBundle.getBundle(Linker.EXTRA_LINKER_SHARED_RELROS);
@@ -134,7 +142,17 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
             return false;
         }
 
+        // Now that the library is loaded, get the FD map,
+        // TODO(jcivelli): can this be done in onBeforeMain? We would have to mode onBeforeMain
+        // so it's called before FDs are registered.
+        nativeRetrieveFileDescriptorsIdsToKeys();
         return true;
+    }
+
+    @Override
+    public SparseArray<String> getFileDescriptorsIdsToKeys() {
+        assert mFdsIdsToKeys != null;
+        return mFdsIdsToKeys;
     }
 
     @Override
@@ -164,6 +182,16 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
                     mLinkerParams.mTestRunnerClassNameForTesting);
         }
         return Linker.getInstance();
+    }
+
+    @CalledByNative
+    private void setFileDescriptorsIdsToKeys(int[] ids, String[] keys) {
+        assert ids.length == keys.length;
+        assert mFdsIdsToKeys == null;
+        mFdsIdsToKeys = new SparseArray<>();
+        for (int i = 0; i < ids.length; ++i) {
+            mFdsIdsToKeys.put(ids[i], keys[i]);
+        }
     }
 
     @SuppressWarnings("unused")
@@ -214,4 +242,7 @@ class ContentChildProcessServiceDelegate implements ChildProcessServiceDelegate 
     private native void nativeInitChildProcess(int cpuCount, long cpuFeatures);
 
     private native void nativeShutdownMainThread();
+
+    // Retrieves the FD IDs to keys map and set it by calling setFileDescriptorsIdsToKeys().
+    private native void nativeRetrieveFileDescriptorsIdsToKeys();
 }
