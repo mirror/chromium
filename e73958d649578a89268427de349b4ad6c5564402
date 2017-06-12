@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b5acf573_8a0ef07f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/ContentSettingsResources.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T13:54:11Z",
+      "side": 1,
+      "message": "Yes, shivanisha@ is working on it here:\nhttps://codereview.chromium.org/2930753002/",
+      "parentUuid": "e84d1116_46d8cdb3",
+      "range": {
+        "startLine": 151,
+        "startChar": 38,
+        "endLine": 151,
+        "endChar": 41
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f405110c_a802ef59",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "e73958d649578a89268427de349b4ad6c5564402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b135285_aa10d91a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T13:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f405110c_a802ef59",
+      "range": {
+        "startLine": 238,
+        "startChar": 34,
+        "endLine": 238,
+        "endChar": 50
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4cc25e88_581de8e2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T13:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19a780a5_bc71febd",
+      "range": {
+        "startLine": 502,
+        "startChar": 16,
+        "endLine": 502,
+        "endChar": 33
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af2a71c6_6ec865bd",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
         "patchSetId": 10
@@ -91,6 +163,30 @@
       "revId": "e73958d649578a89268427de349b4ad6c5564402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d3f02b_2d3584f1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleCategoryPreferences.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 731,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-12T13:54:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af2a71c6_6ec865bd",
+      "range": {
+        "startLine": 731,
+        "startChar": 33,
+        "endLine": 731,
+        "endChar": 43
+      },
+      "revId": "e73958d649578a89268427de349b4ad6c5564402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
