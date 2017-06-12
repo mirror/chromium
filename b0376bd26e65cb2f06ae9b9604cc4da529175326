@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ef96f9a7_f05d6516",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1812,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-06-12T23:08:48Z",
+      "side": 1,
+      "message": "Perhaps you could help me understand what this would look like - I\u0027m still familiarising myself with the code, and don\u0027t really see a huge benefit at the moment.\n\nWe would only be unifying Linux and Mac (since we capture the mouse on Windows). We also need to know when the tab is switched, but the listener and the mechanism used is different on Linux compared to Mac.\n\nSince we need to listen for tab changes, RenderWidgetHostViewBase probably makes more sense than  RenderWidgetHostImpl or InputRouterImpl, right? But we still need code in these child classes that actually listen for the events.\n\nSo was your idea that we pull out the common code, basically these few lines, which we put in a function in a common class, such as RWHVB, and call that function from the separate implementations?",
+      "parentUuid": "c0fec7ec_f4f431f6",
+      "revId": "b0376bd26e65cb2f06ae9b9604cc4da529175326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "55a4e213_ac553c6f",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "b0376bd26e65cb2f06ae9b9604cc4da529175326",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "53bea738_e0cbbab8",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 610,
+      "author": {
+        "id": 1208920
+      },
+      "writtenOn": "2017-06-12T23:08:48Z",
+      "side": 1,
+      "message": "Done.\n\nBecause the other platforms don\u0027t have this problem (it was discovered that CrOS also has this bug, so I\u0027ve relaxed the guard a bit).\n\nWindows captures the mouse and so the scrollbar still receives the mouse up even when on a different tab (it looks like we chose not to do that on Linux: https://cs.chromium.org/chromium/src/ui/aura/window_tree_host_x11.cc?rcl\u003d8057b67871ac67f91e0600d01cd0517c61a6ac11\u0026l\u003d433). On Mac, a similar solution has already been implemented.",
+      "parentUuid": "55a4e213_ac553c6f",
+      "revId": "b0376bd26e65cb2f06ae9b9604cc4da529175326",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
