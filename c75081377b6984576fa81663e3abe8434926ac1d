@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "3a82d94b_a72a97d2",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-12T17:34:59Z",
+      "side": 1,
+      "message": "That is true.  Opened a crbug.com/732448 to track UI improvements in the offline internals page, but I\u0027d rather not mess with that too much in this change.",
+      "parentUuid": "ad38c6ef_052589a5",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d11fb2c_b9af40ce",
         "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
         "patchSetId": 12
@@ -33,6 +51,24 @@
       "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78ad1336_12e33487",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-12T17:34:59Z",
+      "side": 1,
+      "message": "Done, and ported the rest of the file.",
+      "parentUuid": "8d11fb2c_b9af40ce",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "4605ff92_17ee15fb",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals.js",
+        "patchSetId": 12
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-12T17:34:59Z",
+      "side": 1,
+      "message": "Done, and ported other occurrences.",
+      "parentUuid": "0cc30407_fc83f4bf",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e20bfa3a_96847333",
         "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
         "patchSetId": 12
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-12T17:09:05Z",
       "side": 1,
       "message": "What about the else case? Is there a reason not to attempt to populate prefetch_service_ if not populated already, and then call SetIsLogging? Otherwise the docs in offline_internals_browser_proxy.js should at least mention that the call might be ignored, no?",
+      "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de9e4e65_4c9129e1",
+        "filename": "chrome/browser/ui/webui/offline/offline_internals_ui_message_handler.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-12T17:34:59Z",
+      "side": 1,
+      "message": "The prefetch service should be initialized in RegisterMessages.  It may be unavailable in certain contexts (such as incognito) so we just ignore this if prefetch_service_ doesn\u0027t exist.\n\nThe html/js is suboptimal in that it won\u0027t tell you if this is the case, but we haven\u0027t prioritized polish on this internals page.",
+      "parentUuid": "e20bfa3a_96847333",
       "revId": "c75081377b6984576fa81663e3abe8434926ac1d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
