@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d89f58d_cc0e9cb7",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "InProcessWorkerBase has a strong reference to this proxy. If the proxy also has a strong reference to the worker object, it\u0027s needed to cut the reference when the worker object is no longer necessary in JS world, but IIUC there is no way to know the timing in Blink.",
+      "parentUuid": "61ef168a_c700f882",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879b1349_a97cd04f",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-08T09:47:09Z",
       "side": 1,
       "message": "Would you help me understand why we don\u0027t need to post the task to the main thread after this CL?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ed83efc_95eb48cc",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this was necessary even before this CL because thread termination happens asynchronously by nature. One possible reason I just came up with is to avoid a mutex lock in WorkerThread::Termination() during GC\u0027s finalization sequence, but I think conflict on the mutext doesn\u0027t frequently happen.\n\nkinuko@, any thoughts?",
+      "parentUuid": "879b1349_a97cd04f",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e1248161_e76d03fe",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "WorkerThreadTerminated() can be called from ParentObjectDestroyed() on the main thread (case 1) or ThreadedObjectProxyBase::DidTerminateWorkerThread() on the worker thread (case 2).\n\nCase 1: When the parent object is destroyed before worker thread termination is terminated, ParentObejctDestroyed() starts the thread termination (see line 127) and the messaging proxy is alive w/ this keep-alive handle until WorkerThreadTerminated() is called from ThreadedObjectProxyBase.\n\nCase 2: When the parent object is destroyed after \nthe worker thread is terminated, this keep-alive handle should already be cleared during the termination sequence and the parent object is the last owner, so the messaging proxy is destroyed at the end of the dtor of the parent object.",
+      "parentUuid": "5ecf02f8_92836658",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "96edbb2d_53906d0b",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h",
         "patchSetId": 3
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-08T09:47:09Z",
       "side": 1,
       "message": "Are you planning to move ThreadedObjectProxyBase to Oilpan\u0027s heap in a follow-up CL?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40345a40_bcf8bfcd",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedObjectProxyBase.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "I think we should do that, but I don\u0027t have a concrete plan for now. I\u0027ll take a look after this CL.",
+      "parentUuid": "96edbb2d_53906d0b",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "e7e34dd3_3ac2b6b8",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedWorkletMessagingProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "Weak is not necessary. Replaced this with Member.",
+      "parentUuid": "90b88bca_a2ca3145",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f905fa0c_7f8692a2",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletMessagingProxy.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-08T09:47:09Z",
       "side": 1,
       "message": "This is not needed, right?",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a533ee5_bea06fe0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "Yes. Instead, ThreadedWorkletMessagingProxy should have this macro for WorkletGlobalScopeProxy.",
+      "parentUuid": "f905fa0c_7f8692a2",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "eb200caa_fe067c64",
+        "filename": "third_party/WebKit/Source/modules/csspaint/PaintWorkletGlobalScopeProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "ThreadedWorkletMessagingProxy inherits both WorkletGlobalScopeProxy and ThreadMessagingProxyBase. In my understanding, a class cannot inherit multiple GarbageCollected classes except GarbageCollectedMixin (is this correct?).",
+      "parentUuid": "f1d2161e_8c44cd77",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e674e1a_4890e329",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
         "patchSetId": 3
@@ -132,6 +258,24 @@
       "writtenOn": "2017-06-08T09:47:09Z",
       "side": 1,
       "message": "I\u0027m just curious but would you help me understand why the destructor is the best timing to call ParentObjectDestroyed()? Would there be any explicit timing (before the destructor getting called) where we can call ParentObjectDestroyed()?\n\n(I don\u0027t see any practical issue in calling ParentObjectDestroyed() in the destructor. I\u0027m just curious.)",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8582eb00_ace93b07",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorklet.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "We\u0027d like to call it when the parent object is no longer used in JS world so that we can start closing the global scope and terminating the thread. IIUC, there is no way to know the timing other than the dtor (see also my review comment in InProcessWorkerMessagingProxy.h).",
+      "parentUuid": "7e674e1a_4890e329",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -152,6 +296,24 @@
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2029de11_c817975b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-12T02:13:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0223dfad_edd16994",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
