@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "78f97f09_e1e85052",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:30:33Z",
+      "side": 1,
+      "message": "Resolved then :)",
+      "parentUuid": "d5d8bbc3_7d8c83ee",
+      "range": {
+        "startLine": 215,
+        "startChar": 74,
+        "endLine": 215,
+        "endChar": 0
+      },
+      "revId": "4e75862f8ff2077a3e57769e3acb206eb7ac82d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e91e1b8_9235c151",
         "filename": "chrome/browser/ui/search/ntp_user_data_logger.h",
         "patchSetId": 1
@@ -69,6 +93,30 @@
       "revId": "4e75862f8ff2077a3e57769e3acb206eb7ac82d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d8fc5a_e3fbb697",
+        "filename": "chrome/browser/ui/search/ntp_user_data_logger.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-12T14:30:33Z",
+      "side": 1,
+      "message": "Yes, they call NavigatedFromURLToURL. I don\u0027t see a very nice way to get rid of that.",
+      "parentUuid": "6e91e1b8_9235c151",
+      "range": {
+        "startLine": 61,
+        "startChar": 0,
+        "endLine": 63,
+        "endChar": 69
+      },
+      "revId": "4e75862f8ff2077a3e57769e3acb206eb7ac82d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
