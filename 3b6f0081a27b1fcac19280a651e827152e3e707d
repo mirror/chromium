@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c1a3e196_53a2933a",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-12T08:42:40Z",
+      "side": 1,
+      "message": "nit: Move the comment before the registration itself at line 454.",
+      "range": {
+        "startLine": 172,
+        "startChar": 2,
+        "endLine": 173,
+        "endChar": 43
+      },
+      "revId": "3b6f0081a27b1fcac19280a651e827152e3e707d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbe9c6a4_d070707d",
         "filename": "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.cc",
         "patchSetId": 10
