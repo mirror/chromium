@@ -9,6 +9,7 @@ Modifications:
 - Added include/linux/sync.h
 - Added include/linux/sw_sync.h
 - Added strlcpy.c
+- Declared strlcpy in sync.c
 
 To import a new snapshot of libsync:
 - Clone the core repository and checkout new version:
