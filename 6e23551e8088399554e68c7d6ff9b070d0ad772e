@@ -140,6 +140,30 @@
       "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "28b44944_1ec983f8",
+        "filename": "base/task_scheduler/lazy_task_runner.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-12T21:21:41Z",
+      "side": 1,
+      "message": "Well, I was thinking not an anonymous namespace but a named namespace of our choosing so that it\u0027s harder to accidentally use or collide.",
+      "parentUuid": "2083af97_f311a0c3",
+      "range": {
+        "startLine": 95,
+        "startChar": 2,
+        "endLine": 97,
+        "endChar": 62
+      },
+      "revId": "6e23551e8088399554e68c7d6ff9b070d0ad772e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
