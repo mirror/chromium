@@ -65,8 +65,8 @@ class VideoCaptureDeviceWin : public VideoCaptureDevice,
   static VideoPixelFormat TranslateMediaSubtypeToPixelFormat(
       const GUID& sub_type);
 
-  explicit VideoCaptureDeviceWin(
-      const VideoCaptureDeviceDescriptor& device_descriptor);
+  VideoCaptureDeviceWin(const VideoCaptureDeviceDescriptor& device_descriptor,
+                        bool is_blacklisted_for_image_capture);
   ~VideoCaptureDeviceWin() override;
   // Opens the device driver for this device.
   bool Init();
@@ -89,6 +89,8 @@ class VideoCaptureDeviceWin : public VideoCaptureDevice,
                  // User needs to recover by destroying the object.
   };
 
+  void InitializeVideoAndCameraControls();
+
   // Implements SinkFilterObserver.
   void FrameReceived(const uint8_t* buffer,
                      int length,
@@ -102,6 +104,7 @@ class VideoCaptureDeviceWin : public VideoCaptureDevice,
                      HRESULT hr);
 
   const VideoCaptureDeviceDescriptor device_descriptor_;
+  const bool is_blacklisted_for_image_capture_;
   InternalState state_;
   std::unique_ptr<VideoCaptureDevice::Client> client_;
 

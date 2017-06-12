@@ -61,6 +61,13 @@ static_assert(arraysize(kBlacklistedCameraNames) == BLACKLISTED_CAMERA_MAX + 1,
               "kBlacklistedCameraNames should be same size as "
               "BlacklistedCameraNames enum");
 
+// Blacklisted devices are identified by a characteristic prefix of the name.
+// This prefix is used case-insensitively.
+static const char* const kBlacklistedForImageCaptureCameraNames[] = {
+    // Reported in https://crbug.com/722038
+    "Lenovo EasyCamera", "iSpy Virtual Devices", "Logitech QuickCam Pro 9000",
+    "Logitech Webcam 200", "Logitech HD Pro Webcam C920"};
+
 static bool LoadMediaFoundationDlls() {
   static const wchar_t* const kMfDLLs[] = {
       L"%WINDIR%\\system32\\mf.dll",
@@ -116,14 +123,24 @@ static bool EnumerateVideoDevicesMediaFoundation(IMFActivate*** devices,
 }
 
 static bool IsDeviceBlackListed(const std::string& name) {
-  DCHECK_EQ(BLACKLISTED_CAMERA_MAX + 1,
-            static_cast<int>(arraysize(kBlacklistedCameraNames)));
-  for (size_t i = 0; i < arraysize(kBlacklistedCameraNames); ++i) {
-    if (base::StartsWith(name, kBlacklistedCameraNames[i],
-                         base::CompareCase::INSENSITIVE_ASCII)) {
+  int entry_counter = 0;
+  for (const auto& entry : kBlacklistedCameraNames) {
+    const int entry_index = entry_counter++;
+    if (base::StartsWith(name, entry, base::CompareCase::INSENSITIVE_ASCII)) {
       DVLOG(1) << "Enumerated blacklisted device: " << name;
-      UMA_HISTOGRAM_ENUMERATION("Media.VideoCapture.BlacklistedDevice", i,
-                                BLACKLISTED_CAMERA_MAX + 1);
+      UMA_HISTOGRAM_ENUMERATION("Media.VideoCapture.BlacklistedDevice",
+                                entry_index, BLACKLISTED_CAMERA_MAX + 1);
+      return true;
+    }
+  }
+  return false;
+}
+
+static bool IsDeviceBlackListedForImageCapture(const std::string& name) {
+  for (const auto& entry : kBlacklistedForImageCaptureCameraNames) {
+    if (base::StartsWith(name, entry, base::CompareCase::INSENSITIVE_ASCII)) {
+      // TODO(chfremer): Add UMA_HISTOGRAM_ENUMERATION similar to the one used
+      // in IsDeviceBlackListed(). https://crbug.com/722038
       return true;
     }
   }
@@ -426,7 +443,9 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
       device.reset();
   } else if (device_descriptor.capture_api ==
              VideoCaptureApi::WIN_DIRECT_SHOW) {
-    device.reset(new VideoCaptureDeviceWin(device_descriptor));
+    device.reset(new VideoCaptureDeviceWin(
+        device_descriptor,
+        IsDeviceBlackListedForImageCapture(device_descriptor.display_name)));
     DVLOG(1) << " DirectShow Device: " << device_descriptor.display_name;
     if (!static_cast<VideoCaptureDeviceWin*>(device.get())->Init())
       device.reset();

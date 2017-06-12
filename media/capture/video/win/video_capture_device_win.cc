@@ -264,8 +264,10 @@ void VideoCaptureDeviceWin::ScopedMediaType::DeleteMediaType(
 }
 
 VideoCaptureDeviceWin::VideoCaptureDeviceWin(
-    const VideoCaptureDeviceDescriptor& device_descriptor)
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    bool is_blacklisted_for_image_capture)
     : device_descriptor_(device_descriptor),
+      is_blacklisted_for_image_capture_(is_blacklisted_for_image_capture),
       state_(kIdle),
       white_balance_mode_manual_(false),
       exposure_mode_manual_(false) {
@@ -466,8 +468,13 @@ void VideoCaptureDeviceWin::AllocateAndStart(
   client_->OnStarted();
   state_ = kCapturing;
 
+  if (!is_blacklisted_for_image_capture_)
+    InitializeVideoAndCameraControls();
+}
+
+void VideoCaptureDeviceWin::InitializeVideoAndCameraControls() {
   base::win::ScopedComPtr<IKsTopologyInfo> info;
-  hr = capture_filter_.CopyTo(info.GetAddressOf());
+  HRESULT hr = capture_filter_.CopyTo(info.GetAddressOf());
   if (FAILED(hr)) {
     SetErrorState(FROM_HERE, "Failed to obtain the topology info.", hr);
     return;
@@ -525,6 +532,10 @@ void VideoCaptureDeviceWin::StopAndDeAllocate() {
 
 void VideoCaptureDeviceWin::TakePhoto(TakePhotoCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (is_blacklisted_for_image_capture_)
+    return;
+
   // DirectShow has other means of capturing still pictures, e.g. connecting a
   // SampleGrabber filter to a PIN_CATEGORY_STILL of |capture_filter_|. This
   // way, however, is not widespread and proves too cumbersome, so we just grab
@@ -536,7 +547,7 @@ void VideoCaptureDeviceWin::GetPhotoCapabilities(
     GetPhotoCapabilitiesCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!camera_control_ || !video_control_)
+  if (!camera_control_ || !video_control_ || is_blacklisted_for_image_capture_)
     return;
 
   auto photo_capabilities = mojom::PhotoCapabilities::New();
@@ -628,7 +639,7 @@ void VideoCaptureDeviceWin::SetPhotoOptions(
     VideoCaptureDevice::SetPhotoOptionsCallback callback) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  if (!camera_control_ || !video_control_)
+  if (!camera_control_ || !video_control_ || is_blacklisted_for_image_capture_)
     return;
 
   HRESULT hr;
