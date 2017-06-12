@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a9a3b592_ee25292e",
+        "filename": "tools/perf/contrib/memory_extras/memory_extras.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-06-12T18:48:35Z",
+      "side": 1,
+      "message": "Based on your doc, it seems like you only want to run this locally for now with \"--use-live-sites\" flag.\n\nTo do that, you can expand the default options to :\n\noptions \u003d {\n  \u0027pageset_repeat\u0027: 30,\n  \u0027use_live_sites\u0027: True,\n  \u0027output_format\u0027: [\u0027json\u0027]}\n\nto save you a few typing :-)",
+      "range": {
+        "startLine": 70,
+        "startChar": 34,
+        "endLine": 70,
+        "endChar": 0
+      },
+      "revId": "623f756daf7c1897eebf150fa108d31c0a1566ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
