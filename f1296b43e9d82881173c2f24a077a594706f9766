@@ -1,0 +1,726 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6af0542_245c5964",
+        "filename": "tools/traffic_annotation/auditor/BUILD.gn",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "As discussed offline, this is probably not needed anymore?",
+      "range": {
+        "startLine": 58,
+        "startChar": 19,
+        "endLine": 58,
+        "endChar": 22
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10d9bdc7_9ad370ed",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "style: space before {}",
+      "range": {
+        "startLine": 42,
+        "startChar": 44,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5798bebb_6d29700f",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026 to avoid string copies? Or maybe let\u0027s just use predefined offsets as it was in the python code.",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3844bf69_4cebe7c6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "No need to repeat AnnotationInstance within the same class.\n\nHowever, consider converting the enum into \"enum class\" (which is more typesafe; in which case, you\u0027ll have to prefix AnnotationType).",
+      "range": {
+        "startLine": 66,
+        "startChar": 22,
+        "endLine": 66,
+        "endChar": 40
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef54f235_30a895af",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Where is the result used?",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c280c3b1_a991e1cf",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: const (here and below)",
+      "range": {
+        "startLine": 183,
+        "startChar": 9,
+        "endLine": 183,
+        "endChar": 13
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5b3456_8d1db089",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: unsigned int",
+      "range": {
+        "startLine": 214,
+        "startChar": 7,
+        "endLine": 214,
+        "endChar": 15
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d032997_7545f811",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Can we make this and \"NEW CALL\" constants shared between traffic_annotation_extractor and this file?",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c797c4_a5313253",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "This line does two things:\n\n1. Increments current +1, so that the Deserialize() call does not have to deal with the \"NEW ANNOTATION\" line.\n2. Sets end_line \u003d current, so that we can search for the \"ANNOTATION ENDS\" line.\n\nWhile it can be written this way in C++, I think it\u0027s more readable to split this into two operations, because really, two things are happenning here.\n\ncurrent++;\nend_line \u003d current;",
+      "range": {
+        "startLine": 228,
+        "startChar": 26,
+        "endLine": 228,
+        "endChar": 33
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03ce615c_26ccf3ec",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: the appropriate tag",
+      "range": {
+        "startLine": 235,
+        "startChar": 38,
+        "endLine": 235,
+        "endChar": 49
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "878c44a0_092d26fa",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "// traffic_annotation_auditor",
+      "range": {
+        "startLine": 262,
+        "startChar": 1,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b507cf1_d21399b8",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: TOOLS_TRAFFIC_ANNOTATION_AUDITOR_TRAFFIC_ANNOTATION_AUDITOR_H_\n\nThe tools/ directory is a bit inconsistent on this, but I\u0027d prefer a full path to make sure we don\u0027t shoot ourselves in the foot.",
+      "range": {
+        "startLine": 5,
+        "startChar": 8,
+        "endLine": 5,
+        "endChar": 37
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d18ddb_cb12173b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "What is the difference between NetworkAnnotationInstance and AnnotationInstance? This looks like a lot of duplication.\n\nI\u0027m fine for not doing it immediately in this CL, but I think we should reconcile the two; probably make the clang tool depend on this directory.",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ace516a_2d90c6b4",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "style: classes and enums before methods",
+      "range": {
+        "startLine": 31,
+        "startChar": 7,
+        "endLine": 31,
+        "endChar": 21
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a7c3d76_1e80f7c5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "typo: COMPLETING",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 25
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c4006df_5fe8eda5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: Consistency - you use \"1-\" here, but \"1:\"  in CallInstance.",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785e2017_8f336834",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "typo: further",
+      "range": {
+        "startLine": 52,
+        "startChar": 12,
+        "endLine": 52,
+        "endChar": 19
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73f611f0_372a2cfa",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: unsigned int to be more explicit",
+      "range": {
+        "startLine": 67,
+        "startChar": 2,
+        "endLine": 67,
+        "endChar": 10
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "785ea075_96a3221c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: const not needed, since this is passed by a copy",
+      "range": {
+        "startLine": 99,
+        "startChar": 25,
+        "endLine": 99,
+        "endChar": 30
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab91c22_b3751d43",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "typo: Parse",
+      "range": {
+        "startLine": 104,
+        "startChar": 5,
+        "endLine": 104,
+        "endChar": 27
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77cc8e18_122bb6d0",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "// traffic_annotation_auditor\n\nActually, do we need this namespace?",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 1
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "791543c0_291932d5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: const char*\n\nPlease let\u0027s not overuse auto.",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3563744_7a3b48f8",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "FilePath::kParentDirectory",
+      "range": {
+        "startLine": 75,
+        "startChar": 38,
+        "endLine": 75,
+        "endChar": 42
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af345ebe_2a7fea98",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Write the summary file.",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f93659f7_69f94f66",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026\n\nWhile auto is encouraged in range-based for-loops, it should generally be immediately clear from the surrounding lines what the type is. But |errors| is defined 14 lines above.",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fbb5c81_b67da53b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 127,
+        "startChar": 9,
+        "endLine": 127,
+        "endChar": 13
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50ad1f9_174a7ea0",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Why not just use std::map\u003cint, std::string\u003e? Is this significantly faster?",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ab071f6_a02b9c97",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Not needed, since we don\u0027t use RE2 below.",
+      "range": {
+        "startLine": 52,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 8
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06cfeb87_88ad246e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "\"#if defined(WIN32)\"\n\n(here and elsewhere)",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30f9b144_6593ab0e",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "As discussed offline - this can be replaced by a simple substring match.\n\nfile_path.substr()\n\nor maybe it\u0027s faster to do\n\nint length \u003d file_path.size()\n\nif (length \u003e\u003d 3 \u0026\u0026\n    (!strcmp(\".mm\", file_path.c_str()[len - 3]) ||\n     !strcmp(\".cc\", file_path.c_str()[len - 3])) {\n}",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ce041f7_7c303240",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "CHECK is used for security errors - this doesn\u0027t look like one. Fail gracefully with an error message instead?",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 7
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ff5f429_4a62dbf8",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "nit: size_t?",
+      "range": {
+        "startLine": 108,
+        "startChar": 2,
+        "endLine": 108,
+        "endChar": 10
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e3daf80_e3554102",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "strcmp() should work fine here, because |name_length| points to the \\0 in directory_name.",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 16
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "143774e8_2ee3213b",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-12T12:04:41Z",
+      "side": 1,
+      "message": "Forward declaration is sufficient here.",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
