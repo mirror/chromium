@@ -79,8 +79,9 @@ void FaceDetector::OnDetectFaces(
     }
 
     detected_faces.push_back(DetectedFace::Create(
-        DOMRect::Create(face->bounding_box->x, face->bounding_box->y,
-                        face->bounding_box->width, face->bounding_box->height),
+        DOMRect::Create(face->bounding_box.x(), face->bounding_box.y(),
+                        face->bounding_box.width(),
+                        face->bounding_box.height()),
         landmarks));
   }
 

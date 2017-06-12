@@ -3,7 +3,10 @@
 # found in the LICENSE file.
 
 mojom = "//ui/gfx/geometry/mojo/geometry.mojom"
-public_headers = [ "//third_party/WebKit/public/platform/WebSize.h" ]
+public_headers = [
+  "//ui/gfx/geometry/rect_f.h",
+  "//ui/gfx/geometry/size.h",
+]
 traits_headers = [
   "//third_party/WebKit/Source/platform/mojo/GeometryStructTraits.h",
   "//ui/gfx/geometry/mojo/geometry_struct_traits.h",
@@ -15,6 +18,7 @@ deps = [
   "//third_party/WebKit/Source/platform/mojo:geometry_struct_traits",
 ]
 
-# TODO(zqzhang): ideally, gfx.mojom.Size should be mapped into ::blink::IntSize.
-# However that introduces an link issue on Windows. See https://crbug.com/653323
-type_mappings = [ "gfx.mojom.Size=::blink::WebSize" ]
+type_mappings = [
+  "gfx.mojom.RectF=::gfx::RectF",
+  "gfx.mojom.Size=::gfx::Size",
+]
