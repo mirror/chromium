@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1afd7036_e0f9b8be",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 446,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "So are we going to have to check against the AnimationMultiplier manually for every animation?",
+      "range": {
+        "startLine": 446,
+        "startChar": 44,
+        "endLine": 446,
+        "endChar": 66
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a2dbcb2_d240bd0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "Likewise, are we going to have to do this manually for every animation? It seems easy to forget. Will this not just work if the duration is set to 0?",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec5df590_67db6369",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "Add a comment to explain the warning suppression?",
+      "range": {
+        "startLine": 82,
+        "startChar": 25,
+        "endLine": 82,
+        "endChar": 61
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f115ac53_e70cf42e",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "I think (especially with Anthony\u0027s changes) that it would be good to create a MockData class with things like the pictures and realistic data for snippets. But that\u0027s future work.",
+      "range": {
+        "startLine": 182,
+        "startChar": 67,
+        "endLine": 182,
+        "endChar": 74
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0a6ce08_b811c5aa",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "Again, out of the scope of this CL, but I\u0027d be half tempted to allow ContextMenuManager be null here - add a check for null in the one place it is used in SuggestionsRecyclerView. Or alternatively allow us to register an onConfigChanged listener on SuggestionsRecyclerView and call contextMenuManager.closeContextMenu() there.",
+      "range": {
+        "startLine": 201,
+        "startChar": 46,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17ac7b66_2edeb280",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "Where did you come across this?\n\nAlso, what happens when you throw an exception on the UI thread? Especially when you throw it on the UI thread from \"ThreadUtils.runOnUiThreadBlockingNoException\"?",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 51
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5f2b235_220545fb",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "javadoc to appease the presubmits.",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0998b64f_9eebda34",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-12T15:03:35Z",
+      "side": 1,
+      "message": "I\u0027m not sure of the utility of this being a separate method - it seems like it would be simpler if it\u0027s inline. But that could just be personal preference.",
+      "range": {
+        "startLine": 184,
+        "startChar": 19,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
