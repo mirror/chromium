@@ -36,10 +36,13 @@ class AppListButtonTest : public AshTestBase {
     app_list_button_->OnGestureEvent(event);
   }
 
+  void InitVoiceInteractionLayer() {
+    app_list_button_->InitVoiceInteractionLayer();
+  }
+
  private:
   AppListButton* app_list_button_;
 
- private:
   DISALLOW_COPY_AND_ASSIGN(AppListButtonTest);
 };
 
@@ -64,6 +67,9 @@ TEST_F(AppListButtonTest, LongPressGestureWithVoiceInteractionFlag) {
 
   EXPECT_TRUE(base::CommandLine::ForCurrentProcess()->HasSwitch(
       chromeos::switches::kEnableVoiceInteraction));
+
+  // Need to re-init voice interaction layer because of flag changes.
+  InitVoiceInteractionLayer();
 
   ui::GestureEvent long_press =
       CreateGestureEvent(ui::GestureEventDetails(ui::ET_GESTURE_LONG_PRESS));

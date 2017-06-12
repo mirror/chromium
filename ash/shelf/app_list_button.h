@@ -16,6 +16,11 @@ namespace ash {
 class InkDropButtonListener;
 class Shelf;
 class ShelfView;
+class VoiceInteractionOverlay;
+
+namespace test {
+class AppListButtonTest;
+}  // namespace test
 
 // Button used for the AppList icon on the shelf.
 class ASH_EXPORT AppListButton : public views::ImageButton {
@@ -36,6 +41,10 @@ class ASH_EXPORT AppListButton : public views::ImageButton {
   // views::ImageButton overrides:
   void OnGestureEvent(ui::GestureEvent* event) override;
 
+  // Get the center point of the app list button used to draw its background and
+  // ink drops.
+  gfx::Point GetCenterPoint() const;
+
  protected:
   // views::ImageButton overrides:
   bool OnMousePressed(const ui::MouseEvent& event) override;
@@ -51,9 +60,8 @@ class ASH_EXPORT AppListButton : public views::ImageButton {
   void PaintButtonContents(gfx::Canvas* canvas) override;
 
  private:
-  // Get the center point of the app list button used to draw its background and
-  // ink drops.
-  gfx::Point GetCenterPoint() const;
+  friend class test::AppListButtonTest;
+  void InitVoiceInteractionLayer();
 
   // True if the app list is currently showing for this display.
   // This is useful because other IsApplistVisible functions aren't per-display.
@@ -65,6 +73,8 @@ class ASH_EXPORT AppListButton : public views::ImageButton {
   InkDropButtonListener* listener_;
   ShelfView* shelf_view_;
   Shelf* shelf_;
+
+  VoiceInteractionOverlay* voice_interaction_overlay_;
 
   DISALLOW_COPY_AND_ASSIGN(AppListButton);
 };
