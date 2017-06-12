@@ -1,0 +1,530 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd2bdf7a_b8250623",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "suggestion for title: \"Android JNI: Generate calls to RegisterNatives()\"",
+      "range": {
+        "startLine": 7,
+        "startChar": 5,
+        "endLine": 7,
+        "endChar": 6
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71546eb2_c45ab6e4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Linking the design doc is a good idea, but you should move it to be hosted on chromium.org so that we don\u0027t have a googler-only link here. To do this, go to docs.google.com/a/chromium.org, create a new doc, copy \u0026 paste, add a red \"This document is public\" subtitle, then set sharing to public, and commenting to \"all@chromium.org\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 12,
+        "endLine": 12,
+        "endChar": 14
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37eb1e9e_df6ebf4a",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "nit: can you add in a // TODO(crbug/XXX) comment here about removing the empty functions",
+      "range": {
+        "startLine": 784,
+        "startChar": 1,
+        "endLine": 784,
+        "endChar": 23
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40553b83_196eebfd",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s worth reusing the template for this case since the arguments are just being nulled out. Just do:\n\nreturn \"\"\"static bool RegisterNativesImpl(JNIEnv* env) {\n  return true;\n}\n\"\"\"",
+      "range": {
+        "startLine": 892,
+        "startChar": 13,
+        "endLine": 892,
+        "endChar": 21
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5084b272_fa6fe133",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Why replace _ with _1?",
+      "range": {
+        "startLine": 894,
+        "startChar": 50,
+        "endLine": 894,
+        "endChar": 61
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d786408_8512da8d",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 896,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Dont\u0027 use \\ to escape a newline. Also preferred to use .format() over +:\n  signature \u003d \u0027JNI_REGISTRATION_EXPORT bool RegisterNative{}(JNIEnv* env)\u0027.format(\n      java_name)",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da9f659_b708fff3",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "drop the (c)",
+      "range": {
+        "startLine": 2,
+        "startChar": 12,
+        "endLine": 2,
+        "endChar": 15
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b9fea5_bbe792a9",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "nit: Similar to git commits, the first line should not wrap.\n\nsuggestion: \"\"\"Generate JNI registration entry points\n\nCreates a header file with two static functions: RegisterMaindexNatives() and\nRegisterNonmaindexNatives(). Together, these will use manual JNI registration\nto register all native methods that exist within an application.",
+      "range": {
+        "startLine": 6,
+        "startChar": 3,
+        "endLine": 6,
+        "endChar": 6
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d69a3ee_7202fc2c",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "optparse is deprecated. Use argparse instead (it\u0027s very similar)",
+      "range": {
+        "startLine": 11,
+        "startChar": 7,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "100b1724_bc29974f",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Against style guide to import a class from a module. Just import string and use \"string.Template\"",
+      "range": {
+        "startLine": 12,
+        "startChar": 19,
+        "endLine": 12,
+        "endChar": 27
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e80fff6f_ee1dd678",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 15,
+        "startChar": 26,
+        "endLine": 15,
+        "endChar": 48
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d4be85_e4415224",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Please add pydoc.",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2672910d_197679fd",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "nit: It\u0027s clearer to not accept |options| in helper functions. Instead, directly take in the options that you need.",
+      "range": {
+        "startLine": 19,
+        "startChar": 52,
+        "endLine": 19,
+        "endChar": 59
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5c5c6e8_eaf3c5a7",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Is this used? Seems like it\u0027s reassigned on line 41.",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aac266cb_fd9ae529",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "with open(path) as f:\n  contents \u003d f.read()",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cde47e64_641e273c",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "4 space indent",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6356ffbb_7b136031",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Here and everywhere: main dex should be two words. main_dex, MainDex",
+      "range": {
+        "startLine": 38,
+        "startChar": 6,
+        "endLine": 38,
+        "endChar": 13
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a5d057_0cae4ad3",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "\u0027#include \"{}\"\u0027.format(options.includes)",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "709b742c_19b61803",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "nit: Prefer to just not catch the exception rather than catching, printing \u0026 exiting.",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c8b9487_ac9ba912",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Looks like from here down is copy/pasted with logic from jni_generator.py. Would be better to make a shared function called WriteFileIfChanged()",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9437da0b_851e6a4a",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "nit: use a variable to store os.path.dirname(os.path.abspath(output_file))",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a916b734_2797e7a0",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Use open(), not file(). No need to specify \u0027r\u0027. It\u0027s the default.",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8088b93_23f6f257",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "non-main dex",
+      "range": {
+        "startLine": 81,
+        "startChar": 23,
+        "endLine": 81,
+        "endChar": 33
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78a846f8_60f4022a",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "use a regular if statement if the single-line one is going to cause wrapping",
+      "range": {
+        "startLine": 97,
+        "startChar": 54,
+        "endLine": 97,
+        "endChar": 55
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e22c634b_d4bab095",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "indent",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d6d576_4cf99b3a",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-12T16:59:55Z",
+      "side": 1,
+      "message": "Why not use a python boolean?",
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
