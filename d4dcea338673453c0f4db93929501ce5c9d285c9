@@ -22,6 +22,23 @@
       "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b70278d4_8d677a04",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002169
+      },
+      "writtenOn": "2017-06-12T20:00:30Z",
+      "side": 1,
+      "message": "What happens if require_dedicated_process_pattern_ is non-empty and we are on Android?\n\nBecause then we will potentially hit a case where DoesSiteRequireDedicatedProcess() returns true -- creating an OOPIF -- but AreCrossProcessFramesPossible() returns false. This is likely to cause CHECK failures in renderer processes, as well as correctness issues (e.g. because RenderFrameHostManager::OnDidAddContentSecurityPolicies is gated on AreCrossProcessFramesPossible())",
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
