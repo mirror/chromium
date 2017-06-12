@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "30713523_61d7c77d",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-12T20:24:20Z",
+      "side": 1,
+      "message": "Class comment please. Something like \"Non-thread-safe data used for font formatting.\"",
+      "revId": "873b0eccf637512d986489da6e99891b88e73f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47afb38d_b4eb951a",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-12T20:24:20Z",
+      "side": 1,
+      "message": "nit: I\u0027d define this function inline. All it is is a type-cast and possibly a bit of pointer math in the future.",
+      "revId": "873b0eccf637512d986489da6e99891b88e73f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5b409cf_f2ac4ddf",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-12T20:24:20Z",
+      "side": 1,
+      "message": "Have you audited to see if there are places that expect there to be only one font cache? (e.g. memory infra, cache invalidation, etc.)",
+      "revId": "873b0eccf637512d986489da6e99891b88e73f48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
