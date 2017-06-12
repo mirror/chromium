@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c3fa0c29_a1d4c499",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-06-12T14:04:39Z",
+      "side": 1,
+      "message": "Yeah I was mislead by some other thoughts while reviewing your patch. Anyway, as you mentioned this is a very specific fix for a particular case. Knowing that we always call this function with a valid pointer means that the argument should be a reference and that we don\u0027t need the null check at all.",
+      "parentUuid": "48ceb075_7740b81f",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ea8cc23_a9822ce2",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "b4df3001_f71184b8",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-06-12T14:04:39Z",
+      "side": 1,
+      "message": "Not sure why you\u0027d be OK with refactoring later and not now but shrug.",
+      "parentUuid": "8be3fe91_e95c8ade",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b388a8f_f70e8988",
         "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
         "patchSetId": 1
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Yes, if we apply the above mentioned refactoring we would just need a couple of calls. We would miss some expliciyl info about the multi-axis behavior. In any case, I agree but I think it\u0027s better to do it in a different patch, really.",
       "parentUuid": "9b388a8f_f70e8988",
+      "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9891a9f7_c3830c6f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutGrid.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115788
+      },
+      "writtenOn": "2017-06-12T14:04:39Z",
+      "side": 1,
+      "message": "For me is clear that if we don\u0027t pass any axis information to the function then it applies to both axis. Anyway I think this is a matter of taste so what I think is just that, an opinion.",
+      "parentUuid": "4cc4ac15_869fc396",
       "revId": "79efec88171a93eca9ef94facbc491e2e4200e56",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
