@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9c3393ac_430a8b54",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-12T17:28:38Z",
+      "side": 1,
+      "message": "Does this need to be updated too?",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5627ec5c_a07af3ee",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-12T17:28:38Z",
+      "side": 1,
+      "message": "WDYT of setting should_hit_test when a layer is set to be scrollable or the touch event handler region is non-empty? Maybe we could do that as a followup.",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
