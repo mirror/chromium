@@ -35,8 +35,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     /** 5 MB of thumbnails should be enough for everyone. */
     private static final int MAX_CACHE_BYTES = 5 * 1024 * 1024;
 
-    /**
-     *  Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
+    /** Weakly referenced cache containing thumbnails that can be deleted under memory pressure.
      *  Key in the cache is a pair of the filepath and the height/width of the thumbnail. Value is
      *  a pair of the thumbnail and its byte size.
      * */
@@ -73,7 +72,7 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         String filePath = request.getFilePath();
         if (TextUtils.isEmpty(filePath)) return;
 
-        Bitmap cachedBitmap = getBitmapFromCache(filePath, request.getIconSize());
+        Bitmap cachedBitmap = getBitmapFromCache(Pair.create(filePath, request.getIconSize()));
         if (cachedBitmap != null) {
             request.onThumbnailRetrieved(filePath, cachedBitmap);
             return;
@@ -98,9 +97,8 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         });
     }
 
-    private Bitmap getBitmapFromCache(String filepath, int bitmapSizePx) {
-        Pair<Bitmap, Integer> cachedBitmapPair =
-                getBitmapCache().get(Pair.create(filepath, bitmapSizePx));
+    private Bitmap getBitmapFromCache(Pair<String, Integer> thumbnailIdPair) {
+        Pair<Bitmap, Integer> cachedBitmapPair = getBitmapCache().get(thumbnailIdPair);
         if (cachedBitmapPair == null) return null;
         Bitmap cachedBitmap = cachedBitmapPair.first;
 
@@ -115,7 +113,9 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
         mCurrentRequest = mRequestQueue.poll();
         String currentFilePath = mCurrentRequest.getFilePath();
 
-        Bitmap cachedBitmap = getBitmapFromCache(currentFilePath, mCurrentRequest.getIconSize());
+        Pair<String, Integer> thumbnailIdPair =
+                Pair.create(currentFilePath, mCurrentRequest.getIconSize());
+        Bitmap cachedBitmap = getBitmapFromCache(thumbnailIdPair);
         if (cachedBitmap == null) {
             // Asynchronously process the file to make a thumbnail.
             nativeRetrieveThumbnail(
