@@ -210,9 +210,8 @@ void Peer::SendBlob(PassRefPtr<BlobDataHandle> blob_data) {
 
 void Peer::Close(int code, const String& reason) {
   DCHECK(IsMainThread());
-  if (!main_web_socket_channel_)
-    return;
-  main_web_socket_channel_->Close(code, reason);
+  if (main_web_socket_channel_)
+    main_web_socket_channel_->Close(code, reason);
 }
 
 void Peer::Fail(const String& reason,
@@ -220,16 +219,13 @@ void Peer::Fail(const String& reason,
                 std::unique_ptr<SourceLocation> location) {
   DCHECK(IsMainThread());
   if (!main_web_socket_channel_)
-    return;
-  main_web_socket_channel_->Fail(reason, level, std::move(location));
+    main_web_socket_channel_->Fail(reason, level, std::move(location));
 }
 
 void Peer::Disconnect() {
   DCHECK(IsMainThread());
-  if (!main_web_socket_channel_)
-    return;
-  main_web_socket_channel_->Disconnect();
-  main_web_socket_channel_ = nullptr;
+
+  ReleaseMainWebSocketChannel();
 }
 
 static void WorkerGlobalScopeDidConnect(Bridge* bridge,
@@ -310,15 +306,22 @@ static void WorkerGlobalScopeDidClose(
     bridge->Client()->DidClose(closing_handshake_completion, code, reason);
 }
 
+void Peer::ReleaseMainWebSocketChannel() {
+  if (!main_web_socket_channel_)
+    return;
+
+  main_web_socket_channel_->Disconnect();
+  main_web_socket_channel_ = nullptr;
+}
+
 void Peer::DidClose(
     ClosingHandshakeCompletionStatus closing_handshake_completion,
     unsigned short code,
     const String& reason) {
   DCHECK(IsMainThread());
-  if (main_web_socket_channel_) {
-    main_web_socket_channel_->Disconnect();
-    main_web_socket_channel_ = nullptr;
-  }
+
+  ReleaseMainWebSocketChannel();
+
   worker_networking_task_runner_->PostTask(
       BLINK_FROM_HERE,
       CrossThreadBind(&WorkerGlobalScopeDidClose, bridge_,
@@ -338,10 +341,9 @@ void Peer::DidError() {
 
 void Peer::ContextDestroyed(WorkerThreadLifecycleContext*) {
   DCHECK(IsMainThread());
-  if (main_web_socket_channel_) {
-    main_web_socket_channel_->Disconnect();
-    main_web_socket_channel_ = nullptr;
-  }
+
+  ReleaseMainWebSocketChannel();
+
   bridge_ = nullptr;
 }
 
