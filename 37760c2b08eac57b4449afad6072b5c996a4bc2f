@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "441d3181_d203cc79",
+        "filename": "ios/web/public/navigation_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-12T03:29:21Z",
+      "side": 1,
+      "message": "Could you please add a test for this method to NavigationManagerTest.",
+      "range": {
+        "startLine": 180,
+        "startChar": 15,
+        "endLine": 180,
+        "endChar": 22
+      },
+      "revId": "37760c2b08eac57b4449afad6072b5c996a4bc2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
