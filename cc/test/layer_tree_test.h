@@ -8,6 +8,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/threading/thread.h"
 #include "cc/animation/animation_delegate.h"
+#include "cc/test/test_compositor_frame_sink.h"
 #include "cc/test/test_gpu_memory_buffer_manager.h"
 #include "cc/test/test_hooks.h"
 #include "cc/test/test_task_graph_runner.h"
@@ -26,7 +27,6 @@ class LayerTreeHostForTesting;
 class LayerTreeTestCompositorFrameSinkClient;
 class Proxy;
 class TestContextProvider;
-class TestCompositorFrameSink;
 class TestTaskGraphRunner;
 
 // Creates the virtual viewport layer hierarchy under the given root_layer.
@@ -47,6 +47,25 @@ void CreateVirtualViewportLayers(Layer* root_layer,
                                  LayerTreeHost* host);
 
 class LayerTreeHostClientForTesting;
+
+class LayerTreeTestCompositorFrameSinkClient
+    : public TestCompositorFrameSinkClient {
+ public:
+  explicit LayerTreeTestCompositorFrameSinkClient(TestHooks* hooks);
+
+  // TestCompositorFrameSinkClient implementation.
+  std::unique_ptr<OutputSurface> CreateDisplayOutputSurface(
+      scoped_refptr<ContextProvider> compositor_context_provider) override;
+  void DisplayReceivedLocalSurfaceId(
+      const LocalSurfaceId& local_surface_id) override;
+  void DisplayReceivedCompositorFrame(const CompositorFrame& frame) override;
+  void DisplayWillDrawAndSwap(bool will_draw_and_swap,
+                              const RenderPassList& render_passes) override;
+  void DisplayDidDrawAndSwap() override;
+
+ private:
+  TestHooks* hooks_;
+};
 
 // The LayerTreeTests runs with the main loop running. It instantiates a single
 // LayerTreeHostForTesting and associated LayerTreeHostImplForTesting and
@@ -140,6 +159,7 @@ class LayerTreeTest : public testing::Test, public TestHooks {
   // TestCompositorFrameSink to control how it is created.
   virtual std::unique_ptr<TestCompositorFrameSink> CreateCompositorFrameSink(
       const RendererSettings& renderer_settings,
+      double refresh_rate,
       scoped_refptr<ContextProvider> compositor_context_provider,
       scoped_refptr<ContextProvider> worker_context_provider);
   // Override this and call the base class to change what ContextProvider will
@@ -154,6 +174,9 @@ class LayerTreeTest : public testing::Test, public TestHooks {
 
   base::SingleThreadTaskRunner* image_worker_task_runner() const {
     return image_worker_->task_runner().get();
+  }
+  TestCompositorFrameSinkClient* compositor_frame_sink_client() {
+    return compositor_frame_sink_client_.get();
   }
 
  private:
