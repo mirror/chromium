@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "37a0a7d7_bb27ee38",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fcf25e72_49eb62fd",
+      "range": {
+        "startLine": 26,
+        "startChar": 32,
+        "endLine": 26,
+        "endChar": 69
+      },
+      "revId": "518d5587c9e6f312f7afe19b98477449bb79bbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55bb7886_d285bcf8",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "b1372dee_66e88fe9",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55bb7886_d285bcf8",
+      "range": {
+        "startLine": 29,
+        "startChar": 21,
+        "endLine": 29,
+        "endChar": 50
+      },
+      "revId": "518d5587c9e6f312f7afe19b98477449bb79bbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1656ff9d_3f743095",
         "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
         "patchSetId": 2
@@ -68,6 +116,30 @@
       "revId": "518d5587c9e6f312f7afe19b98477449bb79bbda",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bda1375_88b4b722",
+        "filename": "chrome/android/webapk/shell_apk/src/org/chromium/webapk/shell_apk/WebApkSandboxedProcessService.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-12T18:46:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1656ff9d_3f743095",
+      "range": {
+        "startLine": 30,
+        "startChar": 19,
+        "endLine": 30,
+        "endChar": 51
+      },
+      "revId": "518d5587c9e6f312f7afe19b98477449bb79bbda",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
