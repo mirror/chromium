@@ -29,6 +29,18 @@ The following resources can provide background on how Git works:
     understand Git, here's a cheat sheet to quickly remind you of all the
     commands you need.
 
+## Configuring the output of "git log"
+
+By default, the date that "git log" displays is the "author date." In Chromium,
+this generally corresponds to the date that the committed patch was last
+uploaded. In most cases, however, the date that is of interest is the date that
+the patch was committed in the tree. To configure "git log" to instead display
+this date, execute the following command:
+
+```shell
+git config --global format.pretty "format:%C(yellow)commit %H%nAuthor:    %an <%ae>%nCommitted: %cd%n%n%w(0,4,4)%B%n"
+```
+
 ## Committing changes
 
 For a simple workflow (always commit all changed files, don't keep local
