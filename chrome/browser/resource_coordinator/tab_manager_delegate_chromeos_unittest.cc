@@ -156,8 +156,8 @@ class MockTabManagerDelegate : public TabManagerDelegate {
     return true;
   }
 
-  bool KillTab(int64_t tab_id) override {
-    killed_tabs_.push_back(tab_id);
+  bool KillTab(const TabStats& tab_stats) override {
+    killed_tabs_.push_back(tab_stats.tab_contents_id);
     return true;
   }
 
