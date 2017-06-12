@@ -61,6 +61,7 @@ namespace blink {
 
 class FontCacheClient;
 class FontFaceCreationParams;
+class FontPersistent;
 class FontPlatformData;
 class FontDescription;
 class OpenTypeVerticalData;
@@ -221,8 +222,8 @@ class PLATFORM_EXPORT FontCache {
   void DumpShapeResultCache(base::trace_event::ProcessMemoryDump*);
 
  private:
+  friend class FontPersistent;
   FontCache();
-  ~FontCache();
 
   void Purge(PurgeSeverity = kPurgeIfNeeded);
 
