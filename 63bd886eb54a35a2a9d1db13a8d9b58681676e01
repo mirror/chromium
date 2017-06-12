@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "68c30cdd_d0e34b89",
+        "filename": "third_party/libsync/README.chromium",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-12T14:49:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2d7f2da1_560ee6ea",
+      "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e3206491_92bd6cb0",
         "filename": "third_party/libsync/sync.c",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-12T13:40:00Z",
       "side": 1,
       "message": "we need to figure out a different way to solve this as it doesn\u0027t work when importing sources using git",
+      "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d82602_89635507",
+        "filename": "third_party/libsync/sync.c",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-12T14:49:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure about the best way to do here. The builder uses the default treat_warnings_as_errors gn variable value which is true and as a result \"-Werror\" is set in cflags. Some ideas:\n\n- Set treat_warnings_as_errors to false on the linux_chromium_chromeos_rel_ng and linux_chromium_chromeos_ozone_rel_ng builders. We probably shouldn\u0027t do this on release builders.\n- Stick to using a local copy of libsync.\n- Patch upstream Android libsync. We don\u0027t have a good reason to do this since it\u0027s a problem specific to Chrome OS.\n\nNone of the approaches I can think of is ideal. I\u0027m not sure if there\u0027s a way to disable a build flag on specific files / repo in chromium though.\n\nCan we merge this CL first to unblock my CL which adds video capture service for ARC++?",
+      "parentUuid": "e3206491_92bd6cb0",
       "revId": "63bd886eb54a35a2a9d1db13a8d9b58681676e01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
