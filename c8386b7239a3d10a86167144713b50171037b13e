@@ -422,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "1e7df16c_f2e36352",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-12T16:56:53Z",
+      "side": 1,
+      "message": "Yes, I meant (*disable_touchpad_call_count_)++ just like you do below. Then the tests can say:\n\nEXPECT_EQ(1, disable_count);\nEXPECT_EQ(1, enable_count);\n\nand it\u0027s super clear that things were disabled and came back enabled.",
+      "parentUuid": "ab49cada_8f2c71ef",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6750ef01_5af25c0d",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -451,6 +469,24 @@
       "side": 1,
       "message": "See my earlier comment about counts having to live outside of TestDelegate for part of the rationale for going this route. I find this helper makes for more sharing between tests. To do otherwise would result in a *lot* of boilerplace for each test (basically replicating all this logic). I had also considered putting this in the test base class, but because I need to use AshTestBase and then testing::Test, that doesn\u0027t work.",
       "parentUuid": "6750ef01_5af25c0d",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ee103d8_e3cadf31",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-12T16:56:53Z",
+      "side": 1,
+      "message": "You would keep the exiting TestDelegate and have two test classes:\n\nclass TouchpadDisablerTest : public test::AshTestBase() {\n  ...setup...\n\n protected:\n  \n  int enable_count_ \u003d 0;\n  int disable_count_ \u003d 0;\n  bool delegate_destroyed_ \u003d false;\n}\n\nand class TouchpadDisablerTest2 : public testing::Test {\n  ...setup...\n\n int enable_count_ \u003d 0;\n int disable_count_ \u003d 0;\n bool delegate_destroyed_ \u003d false;\n}\n\nwhich would result in one copy/paste between Test1 and Test2.\n\nAlternately, how about:\n\nTestHelper helper;\nTouchpadDisabler* disabled \u003d new TouchpadDisabled(helper.MakeDelegate());\n\nor\n\nTestHelper helper;\nhelper.CreateTouchpadDisabler();\n\nHaving a struct that does that much work in the constructor just feels weird.",
+      "parentUuid": "fc2321db_b5c3f0b3",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
