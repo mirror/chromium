@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "467a7af4_f948b8d3",
+        "filename": "content/browser/site_instance_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-12T20:08:26Z",
+      "side": 1,
+      "message": "I figured that since you pass real url here anyways, there is no point in hiding it from the embedder. In my case, I\u0027d like to trigger site isolation for a particular group of URLs, say \"http://localhost:8000/inspector/extensions/resources/*.html\".\n\nOnly after that I discovered that SiteInstanceImpl::RequiresDedicatedProcess() passes site_ url there anyways, so it does not help me. Is this as designed? Do you have a recommendation for me provided the use case?",
+      "parentUuid": "30b0c366_f12499f8",
+      "range": {
+        "startLine": 397,
+        "startChar": 23,
+        "endLine": 397,
+        "endChar": 31
+      },
+      "revId": "d4dcea338673453c0f4db93929501ce5c9d285c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b70278d4_8d677a04",
         "filename": "content/shell/browser/shell_content_browser_client.cc",
         "patchSetId": 1
