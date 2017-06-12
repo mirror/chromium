@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "6202c609_84f6edbe",
+        "filename": "cc/trees/layer_tree_host_pixeltest_blending.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-12T17:41:41Z",
+      "side": 1,
+      "message": "If you override CreateCompositorFrameSink(), you receive a RendererSettings, which you can copy and change and then pass to the base class\u0027 CreateCompositorFrameSink(), rather than reimplementing RequestNewCompositorFrameSink. Would that work? I\u0027m not sure if that\u0027s what you mean by your last question there, or is that something different?",
+      "parentUuid": "6bd9807e_3167f641",
+      "revId": "df7212f12ea952464b6eb5922bfd87dcc23cfb82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2d086367_082be31c",
         "filename": "cc/trees/layer_tree_settings.h",
         "patchSetId": 9
