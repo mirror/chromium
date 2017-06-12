@@ -253,6 +253,39 @@ bool IsCertificateCleared() {
 
 @implementation SettingsTestCase
 
+- (void)tearDown {
+  // Is it possible for a test to fail with a menu visible, which can cause
+  // future tests to fail.
+
+  // Check if a sub-menu is still displayed. If so, close it.
+  NSError* error = nil;
+  [[EarlGrey
+      selectElementWithMatcher:grey_allOf(
+                                   grey_accessibilityID(@"ic_arrow_back"),
+                                   grey_accessibilityTrait(
+                                       UIAccessibilityTraitButton),
+                                   nil)] assertWithMatcher:grey_notNil()
+                                                     error:&error];
+  if (!error) {
+    [[EarlGrey
+        selectElementWithMatcher:grey_allOf(
+                                     grey_accessibilityID(@"ic_arrow_back"),
+                                     grey_accessibilityTrait(
+                                         UIAccessibilityTraitButton),
+                                     nil)] performAction:grey_tap()];
+  }
+
+  // Check if the Settings menu is displayed. If so, close it.
+  error = nil;
+  [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+      assertWithMatcher:grey_notNil()
+                  error:&error];
+  if (!error) {
+    [[EarlGrey selectElementWithMatcher:NavigationBarDoneButton()]
+        performAction:grey_tap()];
+  }
+}
+
 // Closes a sub-settings menu, and then the general Settings menu.
 - (void)closeSubSettingsMenu {
   [[EarlGrey
