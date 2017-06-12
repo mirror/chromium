@@ -804,6 +804,38 @@ TEST_F(DriveApiRequestsTest, ChangesListRequest) {
   EXPECT_TRUE(result);
 }
 
+TEST_F(DriveApiRequestsTest, ChangesListRequest_LargestChangeId) {
+  EnableTeamDrivesIntegration();
+  // Set an expected data file containing valid result.
+  expected_data_file_path_ =
+      test_util::GetTestFilePath("drive/changelist_largest_change_id.json");
+
+  DriveApiErrorCode error = DRIVE_OTHER_ERROR;
+  std::unique_ptr<ChangeList> result;
+
+  {
+    base::RunLoop run_loop;
+    std::unique_ptr<drive::ChangesListRequest> request =
+        base::MakeUnique<drive::ChangesListRequest>(
+            request_sender_.get(), *url_generator_,
+            test_util::CreateQuitCallback(
+                &run_loop,
+                test_util::CreateCopyResultCallback(&error, &result)));
+    request->set_only_largest_change_id(true);
+    request->set_team_drive_id("TEAM_DRIVE_ID");
+    request_sender_->StartRequestWithAuthRetry(std::move(request));
+    run_loop.Run();
+  }
+
+  EXPECT_EQ(HTTP_SUCCESS, error);
+  EXPECT_EQ(net::test_server::METHOD_GET, http_request_.method);
+  EXPECT_EQ(
+      "/drive/v2/changes?supportsTeamDrives=true&"
+      "includeTeamDriveItems=true&teamDriveId=TEAM_DRIVE_ID",
+      http_request_.relative_url);
+  EXPECT_TRUE(result);
+}
+
 TEST_F(DriveApiRequestsTest, ChangesListNextPageRequest) {
   // Set an expected data file containing valid result.
   expected_data_file_path_ = test_util::GetTestFilePath(

@@ -97,6 +97,21 @@ google_apis::CancelCallback DriveServiceOnWorker::GetAboutResource(
   return google_apis::CancelCallback();
 }
 
+google_apis::CancelCallback DriveServiceOnWorker::GetLargestChangeId(
+    const std::string& team_drive_id,
+    const google_apis::ChangeListCallback& callback) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+
+  ui_task_runner_->PostTask(
+      FROM_HERE,
+      base::BindOnce(&DriveServiceWrapper::GetLargestChangeId, wrapper_,
+                     team_drive_id,
+                     RelayCallbackToTaskRunner(worker_task_runner_.get(),
+                                               FROM_HERE, callback)));
+
+  return google_apis::CancelCallback();
+}
+
 google_apis::CancelCallback DriveServiceOnWorker::GetChangeList(
     int64_t start_changestamp,
     const google_apis::ChangeListCallback& callback) {

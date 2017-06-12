@@ -348,7 +348,7 @@ TEST_F(DriveApiUrlGeneratorTest, GetChangesListUrl) {
                   kTestPatterns[i].expected_query,
               url_generator_
                   .GetChangesListUrl(
-                      kTestPatterns[i].include_deleted,
+                      false, kTestPatterns[i].include_deleted,
                       kTestPatterns[i].max_results, kTestPatterns[i].page_token,
                       kTestPatterns[i].start_change_id, "" /* team_drive_id */)
                   .spec());
@@ -357,7 +357,7 @@ TEST_F(DriveApiUrlGeneratorTest, GetChangesListUrl) {
                   kTestPatterns[i].expected_query,
               team_drives_url_generator_
                   .GetChangesListUrl(
-                      kTestPatterns[i].include_deleted,
+                      false, kTestPatterns[i].include_deleted,
                       kTestPatterns[i].max_results, kTestPatterns[i].page_token,
                       kTestPatterns[i].start_change_id, "" /* team_drive_id */)
                   .spec());
@@ -365,7 +365,12 @@ TEST_F(DriveApiUrlGeneratorTest, GetChangesListUrl) {
 
   EXPECT_EQ(kV2ChangesUrlPrefixWithTeamDrives + "&teamDriveId=TEAM_DRIVE_ID",
             team_drives_url_generator_
-                .GetChangesListUrl(true, 100, "", 0, "TEAM_DRIVE_ID")
+                .GetChangesListUrl(false, true, 100, "", 0, "TEAM_DRIVE_ID")
+                .spec());
+
+  EXPECT_EQ(kV2ChangesUrlPrefixWithTeamDrives + "&teamDriveId=TEAM_DRIVE_ID",
+            team_drives_url_generator_
+                .GetChangesListUrl(true, true, 100, "", 0, "TEAM_DRIVE_ID")
                 .spec());
 }
 

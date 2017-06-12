@@ -14,6 +14,8 @@ std::string JobTypeToString(JobType type) {
   switch (type){
     case TYPE_GET_ABOUT_RESOURCE:
       return "TYPE_GET_ABOUT_RESOURCE";
+    case TYPE_GET_LARGEST_CHANGE_ID:
+      return "TYPE_GET_LARGEST_CHANGE_ID";
     case TYPE_GET_APP_LIST:
       return "TYPE_GET_APP_LIST";
     case TYPE_GET_ALL_TEAM_DRIVE_LIST:
@@ -104,6 +106,7 @@ bool IsActiveFileTransferJobInfo(const JobInfo& job_info) {
   // are added.
   switch (job_info.job_type) {
     case TYPE_GET_ABOUT_RESOURCE:
+    case TYPE_GET_LARGEST_CHANGE_ID:
     case TYPE_GET_APP_LIST:
     case TYPE_GET_ALL_TEAM_DRIVE_LIST:
     case TYPE_GET_ALL_RESOURCE_LIST:
