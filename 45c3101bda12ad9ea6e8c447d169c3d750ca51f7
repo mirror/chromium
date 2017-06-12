@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c4e744_36b942ff",
+        "filename": "base/process/process_iterator_fuchsia.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-12T18:49:55Z",
+      "side": 1,
+      "message": "Out of curiosity, is there a bug to track things that we still need for Fuschia? Or is the plan just to grep for TODO(fuschia) and slowly burn those down?",
+      "range": {
+        "startLine": 10,
+        "startChar": 2,
+        "endLine": 10,
+        "endChar": 74
+      },
+      "revId": "45c3101bda12ad9ea6e8c447d169c3d750ca51f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
