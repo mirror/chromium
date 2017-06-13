@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "7c5e3579_d35edadd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-13T15:17:06Z",
+      "side": 1,
+      "message": "The new name (ResourceFinishObserver) looks fine with me.",
+      "parentUuid": "899b51b8_c405e60e",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ae51ddf_41c6d6bb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 6
