@@ -129,6 +129,11 @@ class OverscrollController {
   // gestures.
   ScrollState scroll_state_;
 
+  // The value that the absolute value of overscroll delta sent to delegate
+  // would be capped to. Depending on the current overscroll mode, it would cap
+  // vertical or horizontal delta. Value of 0.f means no cap.
+  float delegate_overscroll_cap_ = 0.f;
+
   // The amount of overscroll in progress. These values are invalid when
   // |overscroll_mode_| is set to OVERSCROLL_NONE.
   float overscroll_delta_x_;
