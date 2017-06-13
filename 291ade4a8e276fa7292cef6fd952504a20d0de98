@@ -88,6 +88,24 @@
       "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "070187ba_856d670c",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-13T00:02:57Z",
+      "side": 1,
+      "message": "Added length check for the sake of being explicit.",
+      "parentUuid": "0b83b126_df94232f",
+      "revId": "291ade4a8e276fa7292cef6fd952504a20d0de98",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
