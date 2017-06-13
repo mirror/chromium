@@ -22,6 +22,30 @@
       "revId": "54f2111752ed4f40df598c3fe90bbb541156f449",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ea3edbf_cfc7dc22",
+        "filename": "docs/README.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-13T19:36:04Z",
+      "side": 1,
+      "message": "You can use https://bugs.chromium.org/p/gerrit/issues/entry to file issues with Gerrit\u0027s rendering. We don\u0027t have a separate template for bugs in MD browser at the moment, so the normal developer template would be fine; component\u003dBuild (really I should get that changed to Tools\u003eMarkdown Browser or something).",
+      "parentUuid": "5c97a186_d713c4f7",
+      "range": {
+        "startLine": 36,
+        "startChar": 0,
+        "endLine": 37,
+        "endChar": 41
+      },
+      "revId": "54f2111752ed4f40df598c3fe90bbb541156f449",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
