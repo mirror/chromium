@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80c7398e_287a8440",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-13T01:32:45Z",
+      "side": 1,
+      "message": "Can we handle out-of-bounds |i| in explicitly?\n|i| should be |index| or another.\n\ne.g.\nDCHECK_LE(i + 1, string.length());\n\nif (i \u003d\u003d string.length()) {\n  ...\n}\n\nif (i + 1 \u003d\u003d string.length()) {\n  ...\n}\n\nBTW, why doe we call this function with |i + 1 \u003d\u003d string.length()|?",
+      "revId": "dc9ab077136b426fb1ed2cb1713980fb849b76f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ff9444_ccea04d3",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1002258
+      },
+      "writtenOn": "2017-06-13T01:32:45Z",
+      "side": 1,
+      "message": "Please avoid to use one character variable name.\nHow about |prvious_char| or |last_char|?",
+      "revId": "dc9ab077136b426fb1ed2cb1713980fb849b76f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
