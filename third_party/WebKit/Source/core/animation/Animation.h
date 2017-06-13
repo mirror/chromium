@@ -159,9 +159,7 @@ class CORE_EXPORT Animation final : public EventTargetWithInlineData,
 
   bool CanStartAnimationOnCompositor(
       const Optional<CompositorElementIdSet>& composited_element_ids) const;
-  bool IsCandidateForAnimationOnCompositor(
-      const Optional<CompositorElementIdSet>& composited_element_ids) const;
-  bool MaybeStartAnimationOnCompositor(
+  void StartAnimationOnCompositor(
       const Optional<CompositorElementIdSet>& composited_element_ids);
   void CancelAnimationOnCompositor();
   void RestartAnimationOnCompositor();
