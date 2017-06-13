@@ -16,6 +16,24 @@
       "revId": "2b04928b33aaf7f25db1d7aebd6471663b5dfc25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60f90c12_6c6fd541",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-13T23:13:52Z",
+      "side": 1,
+      "message": "Huh, that\u0027s a good point.\n\nTechnically the Chromium and Blink Python style guides (https://chromium.googlesource.com/chromium/src/+/master/styleguide/styleguide.md, https://www.chromium.org/blink/coding-style) just say \"use pep8, with one or two exceptions\" and neither mention docstrings. And PEP8 recommends adhering to PEP257 for docstrings.\n\nBUT, all of the examples in the Google style guide (https://google.github.io/styleguide/pyguide.html#Comments) use third-person singular form (e.g. Returns, checks, constructs...), and that\u0027s what I\u0027ve been using.\n\n\nAnyway, so I think the overall rule should be: just keep the verbs consistent within a file.",
+      "parentUuid": "bdaa0bf8_d8e60a76",
+      "revId": "2b04928b33aaf7f25db1d7aebd6471663b5dfc25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
