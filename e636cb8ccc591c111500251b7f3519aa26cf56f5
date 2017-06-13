@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ac36da09_cdb1631e",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-13T20:30:36Z",
+      "side": 1,
+      "message": "Maybe this will be renamed in future. But can we get a better name here?\nProcessMemoryDumpInternal doesn\u0027t sounds like it should contain extra_process_dumps.\nIt is also confusing with ProcessMemoryDump for now, which is not a summary but a full dump.\nI am not getting better names, but how about ProcessMemorySummaryMap?",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "e636cb8ccc591c111500251b7f3519aa26cf56f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e411cd2c_60676e00",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-13T20:30:36Z",
+      "side": 1,
+      "message": "dumps?",
+      "range": {
+        "startLine": 71,
+        "startChar": 62,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "e636cb8ccc591c111500251b7f3519aa26cf56f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
