@@ -507,6 +507,9 @@ void VideoCaptureController::OnDeviceLaunchFailed() {
     device_launch_observer_->OnDeviceLaunchFailed(this);
     device_launch_observer_ = nullptr;
   }
+  if (!release_device_done_cb_.is_null()) {
+    base::ResetAndReturn(&release_device_done_cb_).Run();
+  }
 }
 
 void VideoCaptureController::OnDeviceLaunchAborted() {
@@ -515,6 +518,9 @@ void VideoCaptureController::OnDeviceLaunchAborted() {
     device_launch_observer_->OnDeviceLaunchAborted();
     device_launch_observer_ = nullptr;
   }
+  if (!release_device_done_cb_.is_null()) {
+    base::ResetAndReturn(&release_device_done_cb_).Run();
+  }
 }
 
 void VideoCaptureController::OnDeviceConnectionLost() {
@@ -522,6 +528,9 @@ void VideoCaptureController::OnDeviceConnectionLost() {
   if (device_launch_observer_) {
     device_launch_observer_->OnDeviceConnectionLost(this);
     device_launch_observer_ = nullptr;
+  }
+  if (!release_device_done_cb_.is_null()) {
+    base::ResetAndReturn(&release_device_done_cb_).Run();
   }
 }
 
@@ -541,9 +550,11 @@ void VideoCaptureController::CreateAndStartDeviceAsync(
 void VideoCaptureController::ReleaseDeviceAsync(base::OnceClosure done_cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (!launched_device_) {
+    release_device_done_cb_ = std::move(done_cb);
     device_launcher_->AbortLaunch();
     return;
   }
+  launched_device_->ShutdownAsync(std::move(done_cb));
   launched_device_.reset();
 }
 

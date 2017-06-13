@@ -266,12 +266,12 @@ void ScreenCaptureMachineAndroid::Start(
     callback.Run(ret);
 }
 
-void ScreenCaptureMachineAndroid::Stop(const base::Closure& callback) {
+void ScreenCaptureMachineAndroid::Stop(base::OnceClosure done_cb) {
   if (j_capture_.obj() != nullptr) {
     Java_ScreenCapture_stopCapture(AttachCurrentThread(), j_capture_);
   }
 
-  callback.Run();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 // ScreenCapture on Android works in a passive way and there are no captured

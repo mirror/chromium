@@ -31,7 +31,7 @@ class CONTENT_EXPORT DesktopCaptureDeviceAura
   void AllocateAndStart(const media::VideoCaptureParams& params,
                         std::unique_ptr<Client> client) override;
   void RequestRefreshFrame() override;
-  void StopAndDeAllocate() override;
+  void StopAndDeAllocate(base::OnceClosure done_cb) override;
   void OnUtilizationReport(int frame_feedback_id, double utilization) override;
 
  private:

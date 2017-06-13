@@ -167,7 +167,7 @@ class WebContentsCaptureMachine : public media::VideoCaptureMachine {
              const base::Callback<void(bool)> callback) override;
   void Suspend() override;
   void Resume() override;
-  void Stop(const base::Closure& callback) override;
+  void Stop(base::OnceClosure done_cb) override;
   bool IsAutoThrottlingEnabled() const override {
     return auto_throttling_enabled_;
   }
@@ -189,7 +189,7 @@ class WebContentsCaptureMachine : public media::VideoCaptureMachine {
                      const media::VideoCaptureParams& params);
   void InternalSuspend();
   void InternalResume();
-  void InternalStop(const base::Closure& callback);
+  void InternalStop(base::OnceClosure done_cb);
   void InternalMaybeCaptureForRefresh();
   bool IsStarted() const;
 
@@ -499,19 +499,20 @@ void WebContentsCaptureMachine::InternalResume() {
     RenewFrameSubscription(tracker_->is_still_tracking());
 }
 
-void WebContentsCaptureMachine::Stop(const base::Closure& callback) {
-  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
-                          base::Bind(&WebContentsCaptureMachine::InternalStop,
-                                     base::Unretained(this), callback));
+void WebContentsCaptureMachine::Stop(base::OnceClosure done_cb) {
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&WebContentsCaptureMachine::InternalStop,
+                 base::Unretained(this), base::Passed(&done_cb)));
 }
 
-void WebContentsCaptureMachine::InternalStop(const base::Closure& callback) {
+void WebContentsCaptureMachine::InternalStop(base::OnceClosure done_cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  base::ScopedClosureRunner done_runner(callback);
-
-  if (!IsStarted())
+  if (!IsStarted()) {
+    base::ResetAndReturn(&done_cb).Run();
     return;
+  }
 
   // The following cancels any outstanding callbacks and causes IsStarted() to
   // return false from here onward.
@@ -521,6 +522,7 @@ void WebContentsCaptureMachine::InternalStop(const base::Closure& callback) {
   if (WebContents* contents = tracker_->web_contents())
     contents->DecrementCapturerCount();
   tracker_->Stop();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void WebContentsCaptureMachine::MaybeCaptureForRefresh() {
@@ -745,8 +747,9 @@ void WebContentsVideoCaptureDevice::Resume() {
   core_->Resume();
 }
 
-void WebContentsVideoCaptureDevice::StopAndDeAllocate() {
-  core_->StopAndDeAllocate();
+void WebContentsVideoCaptureDevice::StopAndDeAllocate(
+    base::OnceClosure done_cb) {
+  core_->StopAndDeAllocate(std::move(done_cb));
 }
 
 void WebContentsVideoCaptureDevice::OnUtilizationReport(int frame_feedback_id,

@@ -46,7 +46,7 @@ class CONTENT_EXPORT WebContentsVideoCaptureDevice
   void RequestRefreshFrame() override;
   void MaybeSuspend() override;
   void Resume() override;
-  void StopAndDeAllocate() override;
+  void StopAndDeAllocate(base::OnceClosure done_cb) override;
   void OnUtilizationReport(int frame_feedback_id, double utilization) override;
 
  private:

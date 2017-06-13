@@ -193,11 +193,21 @@ void InProcessVideoCaptureDeviceLauncher::OnDeviceStarted(
       callbacks->OnDeviceLaunched(std::move(launched_device));
       base::ResetAndReturn(&done_cb).Run();
       return;
-    case State::DEVICE_START_ABORTING:
-      launched_device.reset();
-      callbacks->OnDeviceLaunchAborted();
-      base::ResetAndReturn(&done_cb).Run();
+    case State::DEVICE_START_ABORTING: {
+      InProcessLaunchedVideoCaptureDevice* launched_device_ptr =
+          launched_device.get();
+      launched_device_ptr->ShutdownAsync(media::BindToCurrentLoop(base::Bind(
+          [](Callbacks* callbacks, base::OnceClosure done_cb,
+             std::unique_ptr<InProcessLaunchedVideoCaptureDevice>
+                 launched_device) {
+            launched_device.reset();
+            callbacks->OnDeviceLaunchAborted();
+            base::ResetAndReturn(&done_cb).Run();
+
+          },
+          callbacks, base::Passed(&done_cb), base::Passed(&launched_device))));
       return;
+    }
     case State::READY_TO_LAUNCH:
       NOTREACHED();
       return;

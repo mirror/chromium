@@ -321,7 +321,7 @@ void FileVideoCaptureDevice::AllocateAndStart(
                  base::Unretained(this), params, base::Passed(&client)));
 }
 
-void FileVideoCaptureDevice::StopAndDeAllocate() {
+void FileVideoCaptureDevice::StopAndDeAllocate(base::OnceClosure done_cb) {
   DCHECK(thread_checker_.CalledOnValidThread());
   CHECK(capture_thread_.IsRunning());
 
@@ -329,6 +329,7 @@ void FileVideoCaptureDevice::StopAndDeAllocate() {
       FROM_HERE, base::Bind(&FileVideoCaptureDevice::OnStopAndDeAllocate,
                             base::Unretained(this)));
   capture_thread_.Stop();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void FileVideoCaptureDevice::OnAllocateAndStart(

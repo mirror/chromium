@@ -59,7 +59,7 @@ class CAPTURE_EXPORT ScreenCaptureMachineAndroid : public VideoCaptureMachine {
   void Start(const scoped_refptr<media::ThreadSafeCaptureOracle>& oracle_proxy,
              const media::VideoCaptureParams& params,
              const base::Callback<void(bool)> callback) override;
-  void Stop(const base::Closure& callback) override;
+  void Stop(base::OnceClosure done_cb) override;
   void MaybeCaptureForRefresh() override;
 
  private:

@@ -430,12 +430,13 @@ void FakeVideoCaptureDevice::AllocateAndStart(
   BeepAndScheduleNextCapture(base::TimeTicks::Now());
 }
 
-void FakeVideoCaptureDevice::StopAndDeAllocate() {
+void FakeVideoCaptureDevice::StopAndDeAllocate(base::OnceClosure done_cb) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   // Invalidate WeakPtr to stop the perpetual scheduling of tasks.
   weak_factory_.InvalidateWeakPtrs();
   frame_deliverer_.reset();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void FakeVideoCaptureDevice::GetPhotoCapabilities(

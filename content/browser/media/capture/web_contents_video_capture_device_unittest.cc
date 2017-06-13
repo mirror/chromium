@@ -496,7 +496,7 @@ class WebContentsVideoCaptureDeviceTest : public testing::Test {
     // Tear down in opposite order of set-up.
 
     if (device_) {
-      device_->StopAndDeAllocate();
+      device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
       device_.reset();
     }
 
@@ -652,7 +652,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
   EXPECT_CALL(*client, OnStarted());
   device()->AllocateAndStart(DefaultCaptureParams(), std::move(client));
   ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForError());
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Tests that WebContentsVideoCaptureDevice starts, captures a frame, and then
@@ -681,7 +681,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
       base::Bind(&WebContentsVideoCaptureDeviceTest::ResetWebContents,
                  base::Unretained(this)));
   ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForError());
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Sanity-check that starting/stopping the WebContentsVideoCaptureDevice, but
@@ -692,7 +692,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
                              client_observer()->PassClient());
 
   // Make a point of not running the UI messageloop here.
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
   DestroyVideoCaptureDevice();
 
   // Currently, there should be CreateCaptureMachineOnUIThread() and
@@ -720,7 +720,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
   SimulateDrawEvent();
   ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForNextColor(SK_ColorGREEN));
   SimulateDrawEvent();
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 
   base::RunLoop().RunUntilIdle();
 
@@ -743,7 +743,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
   test_view()->SetSolidColor(SK_ColorYELLOW);
   SimulateDrawEvent();
   ASSERT_NO_FATAL_FAILURE(observer2.WaitForNextColor(SK_ColorYELLOW));
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // The "happy case" test.  No scaling is needed, so we should be able to change
@@ -779,7 +779,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, GoesThroughAllTheMotions) {
     ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForNextColor(SK_ColorBLACK));
   }
 
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Tests that, when configured with the FIXED_ASPECT_RATIO resolution change
@@ -827,7 +827,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, VariableResolution_FixedAspectRatio) {
   SimulateDrawsUntilNewFrameSizeArrives(
       SK_ColorBLACK, gfx::Size(kTestWidth, kTestHeight));
 
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Tests that, when configured with the ANY_WITHIN_LIMIT resolution change
@@ -879,7 +879,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, VariableResolution_AnyWithinLimits) {
                                kTestWidth * arbitrary_source_size.height() /
                                    arbitrary_source_size.width()));
 
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 TEST_F(WebContentsVideoCaptureDeviceTest,
@@ -920,7 +920,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest,
     EXPECT_EQ(capture_preferred_size, web_contents()->GetPreferredSize());
 
     // Stop the WebContentsVideoCaptureDevice.
-    device()->StopAndDeAllocate();
+    device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
     base::RunLoop().RunUntilIdle();
   };
 
@@ -1008,7 +1008,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, SuspendsAndResumes) {
     ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForNextColor(SK_ColorBLUE));
   }
 
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Tests the RequestRefreshFrame() functionality.
@@ -1037,7 +1037,7 @@ TEST_F(WebContentsVideoCaptureDeviceTest, ProvidesRefreshFrames) {
     ASSERT_NO_FATAL_FAILURE(client_observer()->WaitForNextColor(SK_ColorGREEN));
   }
 
-  device()->StopAndDeAllocate();
+  device()->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 }  // namespace

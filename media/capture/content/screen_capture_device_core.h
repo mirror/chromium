@@ -42,8 +42,8 @@ class CAPTURE_EXPORT VideoCaptureMachine {
   virtual void Resume() {}
 
   // Stops capturing.
-  // |callback| is invoked after the capturing has stopped.
-  virtual void Stop(const base::Closure& callback) = 0;
+  // |done_cb| is invoked after the capturing has stopped.
+  virtual void Stop(base::OnceClosure done_cb) = 0;
 
   // Returns true if the video capture is configured to monitor end-to-end
   // system utilization, and alter frame sizes and/or frame rates to mitigate
@@ -88,7 +88,7 @@ class CAPTURE_EXPORT ScreenCaptureDeviceCore
   void RequestRefreshFrame();
   void Suspend();
   void Resume();
-  void StopAndDeAllocate();
+  void StopAndDeAllocate(base::OnceClosure done_cb);
   void OnConsumerReportingUtilization(int frame_feedback_id,
                                       double utilization);
 

@@ -269,7 +269,7 @@ class CAPTURE_EXPORT VideoCaptureDevice
   // ensure that a subsequent AllocateAndStart() operation targeting the same ID
   // would be sequenced through the same task runner, so that deallocation
   // happens first.
-  virtual void StopAndDeAllocate() = 0;
+  virtual void StopAndDeAllocate(base::OnceClosure done_cb) = 0;
 
   // Retrieve the photo capabilities of the device (e.g. zoom levels etc).
   using GetPhotoCapabilitiesCallback =

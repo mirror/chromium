@@ -34,7 +34,7 @@ DeviceMediaToMojoAdapter::DeviceMediaToMojoAdapter(
 DeviceMediaToMojoAdapter::~DeviceMediaToMojoAdapter() {
   DCHECK(thread_checker_.CalledOnValidThread());
   if (device_started_)
-    device_->StopAndDeAllocate();
+    device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 void DeviceMediaToMojoAdapter::Start(
@@ -86,7 +86,7 @@ void DeviceMediaToMojoAdapter::Stop() {
   // Unsubscribe from connection error callbacks.
   receiver_adapter_ptr_->ResetConnectionErrorHandler();
   receiver_adapter_ptr_ = nullptr;
-  device_->StopAndDeAllocate();
+  device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 void DeviceMediaToMojoAdapter::OnClientConnectionErrorOrClose() {

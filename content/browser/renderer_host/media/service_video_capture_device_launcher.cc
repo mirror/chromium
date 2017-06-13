@@ -35,12 +35,12 @@ void ConcludeLaunchDeviceWithSuccess(
               std::move(receiver),
               BrowserThread::GetTaskRunnerForThread(BrowserThread::IO)));
   video_capture::mojom::ReceiverPtr receiver_proxy;
-  mojo::MakeStrongBinding<video_capture::mojom::Receiver>(
-      std::move(receiver_adapter), mojo::MakeRequest(&receiver_proxy));
+  auto receiver_request = mojo::MakeRequest(&receiver_proxy);
   device->Start(params, std::move(receiver_proxy));
   callbacks->OnDeviceLaunched(
       base::MakeUnique<ServiceLaunchedVideoCaptureDevice>(
-          std::move(device), std::move(connection_lost_cb)));
+          std::move(device), std::move(receiver_adapter),
+          std::move(receiver_request), std::move(connection_lost_cb)));
   base::ResetAndReturn(&done_cb).Run();
 }
 

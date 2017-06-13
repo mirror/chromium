@@ -110,7 +110,7 @@ void ScreenCaptureDeviceCore::Resume() {
   capture_machine_->Resume();
 }
 
-void ScreenCaptureDeviceCore::StopAndDeAllocate() {
+void ScreenCaptureDeviceCore::StopAndDeAllocate(base::OnceClosure done_cb) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
   if (state_ != kCapturing && state_ != kSuspended)
@@ -121,7 +121,7 @@ void ScreenCaptureDeviceCore::StopAndDeAllocate() {
 
   TransitionStateTo(kIdle);
 
-  capture_machine_->Stop(base::Bind(&base::DoNothing));
+  capture_machine_->Stop(std::move(done_cb));
 }
 
 void ScreenCaptureDeviceCore::OnConsumerReportingUtilization(
@@ -183,7 +183,7 @@ void ScreenCaptureDeviceCore::Error(const tracked_objects::Location& from_here,
   if (oracle_proxy_)
     oracle_proxy_->ReportError(from_here, reason);
 
-  StopAndDeAllocate();
+  StopAndDeAllocate(base::Bind(&base::DoNothing));
   TransitionStateTo(kError);
 }
 
