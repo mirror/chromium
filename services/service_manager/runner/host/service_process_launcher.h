@@ -79,7 +79,9 @@ class ServiceProcessLauncher {
   bool start_sandboxed_ = false;
   Identity target_;
   base::FilePath service_path_;
+#if !defined(OS_IOS)
   base::Process child_process_;
+#endif
 
   // Used to initialize the Mojo IPC channel between parent and child.
   std::unique_ptr<mojo::edk::PlatformChannelPair> mojo_ipc_channel_;
