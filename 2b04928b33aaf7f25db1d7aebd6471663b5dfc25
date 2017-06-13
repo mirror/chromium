@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdaa0bf8_d8e60a76",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-13T22:46:27Z",
+      "side": 1,
+      "message": "The phrasing of this was striking me as a little weird and I think it\u0027s because I\u0027m used to using the imperative tense (or mood? is imperative a mood?) in docstrings and it looks like based on PEP257 that\u0027s what\u0027s recommended:\n\nhttps://www.python.org/dev/peps/pep-0257/\n\n\"The docstring is a phrase ending in a period. It prescribes the function or method\u0027s effect as a command (\"Do this\", \"Return that\"), not as a description; e.g. don\u0027t write \"Returns the pathname ...\".\"",
+      "revId": "2b04928b33aaf7f25db1d7aebd6471663b5dfc25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
