@@ -52,10 +52,17 @@ class PLATFORM_EXPORT RawResource final : public Resource {
   static RawResource* FetchManifest(FetchParameters&, ResourceFetcher*);
 
   // Exposed for testing
-  static RawResource* Create(const ResourceRequest& request, Type type) {
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
+  static RawResource* Create(ResourceRequest request, Type type) {
+    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
+    ResourceLoaderOptions options;
     return new RawResource(request, type, options);
+  }
+  static RawResource* Create(const KURL& url, Type type) {
+    ResourceRequest request(url);
+    return Create(request, type);
+  }
+  static RawResource* Create(const char* url, Type type) {
+    return Create(KURL(kParsedURLString, url), type);
   }
 
   // FIXME: AssociatedURLLoader shouldn't be a DocumentThreadableLoader and
