@@ -46,7 +46,6 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   const HeapVector<Member<Node>>& AssignedNodes();
   const HeapVector<Member<Node>>& GetDistributedNodes();
-  const HeapVector<Member<Node>> GetDistributedNodesForBinding();
   const HeapVector<Member<Node>> assignedNodesForBinding(
       const AssignedNodesOptions&);
 
@@ -94,6 +93,8 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   bool SupportsDistribution() const { return IsInV1ShadowTree(); }
   void DidSlotChange(SlotChangeType);
+  void DidSlotChangeAfterSlotRemovedFromShadowTree();
+  void DidSlotChangeAfterRenaming();
   void DispatchSlotChangeEvent();
   void ClearSlotChangeEventEnqueued() { slotchange_event_enqueued_ = false; }
 
