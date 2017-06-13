@@ -54,12 +54,39 @@ class CORE_EXPORT CompositorAnimations {
   static bool IsCompositableProperty(CSSPropertyID);
   static const CSSPropertyID kCompositableProperties[7];
 
-  static bool CanStartAnimationOnCompositor(const Timing&,
-                                            const Element&,
-                                            const Animation*,
-                                            const EffectModel&,
-                                            double animation_playback_rate);
-  static bool CanStartElementAnimationsOnCompositor(const Element&);
+  struct FailureCode {
+    bool can_composite = true;
+    bool web_developer_actionable = false;
+    String reason;
+
+    operator bool() const { return can_composite; }
+
+    static FailureCode None() { return FailureCode(); }
+    static FailureCode Actionable(const String& reason) {
+      FailureCode code;
+      code.can_composite = false;
+      code.web_developer_actionable = true;
+      code.reason = reason;
+      return code;
+    }
+    static FailureCode NonActionable(const String& reason) {
+      FailureCode code;
+      code.can_composite = false;
+      code.reason = reason;
+      return code;
+    }
+
+   private:
+    FailureCode() = default;
+  };
+  static FailureCode CanStartAnimationOnCompositor(
+      const Timing&,
+      const Element&,
+      const Animation*,
+      const EffectModel&,
+      double animation_playback_rate);
+  static FailureCode CanStartElementAnimationsOnCompositor(const Element&);
+
   static void CancelIncompatibleAnimationsOnCompositor(const Element&,
                                                        const Animation&,
                                                        const EffectModel&);

@@ -8,7 +8,6 @@
 #include "bindings/core/v8/ExceptionState.h"
 #include "bindings/core/v8/UnrestrictedDoubleOrKeyframeEffectOptions.h"
 #include "core/animation/Animation.h"
-#include "core/animation/CompositorAnimations.h"
 #include "core/animation/EffectInput.h"
 #include "core/animation/ElementAnimations.h"
 #include "core/animation/Interpolation.h"
@@ -261,15 +260,30 @@ void KeyframeEffectReadOnly::NotifySampledEffectRemovedFromEffectStack() {
   sampled_effect_ = nullptr;
 }
 
-bool KeyframeEffectReadOnly::CanStartAnimationOnCompositor(
+CompositorAnimations::FailureCode
+KeyframeEffectReadOnly::CanStartAnimationOnCompositor(
     double animation_playback_rate) const {
+  if (!Model()) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation effect has no keyframes");
+  }
+
+  if (!target_) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation effect has no target element");
+  }
+
+  if (target_->GetComputedStyle() && target_->GetComputedStyle()->HasOffset()) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Compositor animations do not support elements with offset-position or "
+        "offset-path CSS properties");
+  }
+
   // Do not put transforms on compositor if more than one of them are defined
   // in computed style because they need to be explicitly ordered
-  if (!Model() || !target_ ||
-      (target_->GetComputedStyle() &&
-       target_->GetComputedStyle()->HasOffset()) ||
-      HasMultipleTransformProperties()) {
-    return false;
+  if (HasMultipleTransformProperties()) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation effect applies to multiple transform related properties");
   }
 
   return CompositorAnimations::CanStartAnimationOnCompositor(

@@ -755,18 +755,47 @@ void Animation::ForceServiceOnNextFrame() {
   timeline_->Wake();
 }
 
-bool Animation::CanStartAnimationOnCompositor(
+CompositorAnimations::FailureCode Animation::CanStartAnimationOnCompositor(
     const Optional<CompositorElementIdSet>& composited_element_ids) const {
-  if (is_composited_animation_disabled_for_testing_ || EffectSuppressed())
-    return false;
+  if (is_composited_animation_disabled_for_testing_) {
+    return CompositorAnimations::FailureCode::NonActionable(
+        "Compositor animations disabled for testing");
+  }
+  if (EffectSuppressed()) {
+    return CompositorAnimations::FailureCode::NonActionable(
+        "Animation effect suppressed by DevTools");
+  }
+
+  if (playback_rate_ == 0) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation is not playing");
+  }
+
+  if (std::isinf(EffectEnd()) && playback_rate_ < 0) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Compositor animations do not support reversed infinite duration "
+        "animations");
+  }
 
   // FIXME: Timeline playback rates should be compositable
-  if (playback_rate_ == 0 || (std::isinf(EffectEnd()) && playback_rate_ < 0) ||
-      (timeline() && timeline()->PlaybackRate() != 1))
-    return false;
+  if (timeline() && timeline()->PlaybackRate() != 1) {
+    return CompositorAnimations::FailureCode::NonActionable(
+        "Compositor animations do not support timelines with non-one playback "
+        "rates");
+  }
 
-  if (!timeline_ || !content_ || !content_->IsKeyframeEffectReadOnly())
-    return false;
+  if (!timeline_) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation is not attached to a timeline");
+  }
+  if (!content_) {
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation has no effect");
+  }
+  if (!content_->IsKeyframeEffectReadOnly()) {
+    return CompositorAnimations::FailureCode::NonActionable(
+        "Animation effect is not keyframe based");
+  }
 
   // If the optional element id set has no value we must be in SPv1 mode in
   // which case we trust the compositing logic will create a layer if needed.
@@ -774,9 +803,12 @@ bool Animation::CanStartAnimationOnCompositor(
     DCHECK(RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
     Element* target_element =
         ToKeyframeEffectReadOnly(content_.Get())->Target();
-    if (!target_element)
-      return false;
+    if (!target_element) {
+      return CompositorAnimations::FailureCode::Actionable(
+          "Animation is not attached to an element");
+    }
 
+    bool has_own_layer_id = false;
     if (target_element->GetLayoutObject() &&
         target_element->GetLayoutObject()->IsBoxModelObject() &&
         target_element->GetLayoutObject()->HasLayer()) {
@@ -784,15 +816,19 @@ bool Animation::CanStartAnimationOnCompositor(
           CompositorElementIdFromLayoutObjectId(
               target_element->GetLayoutObject()->UniqueId(),
               CompositorElementIdNamespace::kPrimary);
-      if (!composited_element_ids->Contains(target_element_id))
-        return false;
-    } else {
-      return false;
+      if (composited_element_ids->Contains(target_element_id)) {
+        has_own_layer_id = true;
+      }
+    }
+    if (!has_own_layer_id) {
+      return CompositorAnimations::FailureCode::NonActionable(
+          "Target element does not have its own compositing layer");
     }
   }
 
   if (!Playing()) {
-    return false;
+    return CompositorAnimations::FailureCode::Actionable(
+        "Animation is not playing");
   }
 
   return ToKeyframeEffectReadOnly(content_.Get())

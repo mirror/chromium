@@ -223,7 +223,8 @@ bool CompositorAnimations::GetAnimatedBoundingBox(FloatBox& box,
   return true;
 }
 
-bool CompositorAnimations::CanStartAnimationOnCompositor(
+CompositorAnimations::FailureCode
+CompositorAnimations::CanStartAnimationOnCompositor(
     const Timing& timing,
     const Element& target_element,
     const Animation* animation_to_add,
@@ -233,18 +234,21 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
       ToKeyframeEffectModelBase(effect);
 
   PropertyHandleSet properties = keyframe_effect.Properties();
-  if (properties.IsEmpty())
-    return false;
+  if (properties.IsEmpty()) {
+    return FailureCode::Actionable("Animation does not affect any properties");
+  }
 
   unsigned transform_property_count = 0;
   for (const auto& property : properties) {
-    if (!property.IsCSSProperty())
-      return false;
+    if (!property.IsCSSProperty()) {
+      return FailureCode::Actionable("Animation affects non-CSS properties");
+    }
 
     if (IsTransformRelatedCSSProperty(property)) {
       if (target_element.GetLayoutObject() &&
           !target_element.GetLayoutObject()->IsTransformApplicable()) {
-        return false;
+        return FailureCode::Actionable(
+            "Transform related property does not apply on compositor");
       }
       transform_property_count++;
     }
@@ -261,8 +265,10 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
           keyframe->Composite() == EffectModel::kCompositeAdd;
       if ((keyframe->Composite() != EffectModel::kCompositeReplace &&
            !is_neutral_keyframe) ||
-          !keyframe->GetAnimatableValue())
-        return false;
+          !keyframe->GetAnimatableValue()) {
+        return FailureCode::NonActionable(
+            "Compositor keyframe value could not be computed");
+      }
 
       switch (property.CssProperty()) {
         case CSSPropertyOpacity:
@@ -273,36 +279,51 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
         case CSSPropertyTransform:
           if (ToAnimatableTransform(keyframe->GetAnimatableValue().Get())
                   ->GetTransformOperations()
-                  .DependsOnBoxSize())
-            return false;
+                  .DependsOnBoxSize()) {
+            return FailureCode::Actionable(
+                "Transform related property value depends on layout box "
+                "size");
+          }
           break;
         case CSSPropertyFilter:
         case CSSPropertyBackdropFilter: {
           const FilterOperations& operations =
               ToAnimatableFilterOperations(keyframe->GetAnimatableValue().Get())
                   ->Operations();
-          if (operations.HasFilterThatMovesPixels())
-            return false;
+          if (operations.HasFilterThatMovesPixels()) {
+            return FailureCode::Actionable(
+                "Filter related property may affect surrounding pixels");
+          }
           break;
         }
         default:
           // any other types are not allowed to run on compositor.
-          return false;
+          return FailureCode::Actionable(
+              String("CSS property not supported: ") +
+              getPropertyName(property.CssProperty()));
       }
     }
   }
 
   // TODO: Support multiple transform property animations on the compositor
-  if (transform_property_count > 1)
-    return false;
+  if (transform_property_count > 1) {
+    return FailureCode::Actionable(
+        "Compositor animations do not support multiple transform related "
+        "properties in a single animation");
+  }
 
   if (animation_to_add &&
-      HasIncompatibleAnimations(target_element, *animation_to_add, effect))
-    return false;
+      HasIncompatibleAnimations(target_element, *animation_to_add, effect)) {
+    return FailureCode::Actionable(
+        "Animation not compatible for compositing with other animations on "
+        "element");
+  }
 
   CompositorTiming out;
-  if (!ConvertTimingForCompositor(timing, 0, out, animation_playback_rate))
-    return false;
+  if (!ConvertTimingForCompositor(timing, 0, out, animation_playback_rate)) {
+    return FailureCode::NonActionable(
+        "Timing parameters not supported compositor animations");
+  }
 
   return CanStartElementAnimationsOnCompositor(target_element);
 }
@@ -343,10 +364,12 @@ void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
   }
 }
 
-bool CompositorAnimations::CanStartElementAnimationsOnCompositor(
+CompositorAnimations::FailureCode
+CompositorAnimations::CanStartElementAnimationsOnCompositor(
     const Element& target_element) {
-  if (!Platform::Current()->IsThreadedAnimationEnabled())
-    return false;
+  if (!Platform::Current()->IsThreadedAnimationEnabled()) {
+    return FailureCode::NonActionable("Compositor animations are disabled");
+  }
 
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     // We query paint property tree state below to determine whether the
@@ -362,13 +385,25 @@ bool CompositorAnimations::CanStartElementAnimationsOnCompositor(
     const TransformPaintPropertyNode* transform_node =
         paint_properties->Transform();
     const EffectPaintPropertyNode* effect_node = paint_properties->Effect();
-    return (transform_node && transform_node->HasDirectCompositingReasons()) ||
-           (effect_node && effect_node->HasDirectCompositingReasons());
+    bool has_direct_compositing_reasons =
+        (transform_node && transform_node->HasDirectCompositingReasons()) ||
+        (effect_node && effect_node->HasDirectCompositingReasons());
+    if (!has_direct_compositing_reasons) {
+      return FailureCode::NonActionable(
+          "Element has no direct compositing reasons");
+    }
+  } else {
+    bool paints_into_own_backing =
+        target_element.GetLayoutObject() &&
+        target_element.GetLayoutObject()->GetCompositingState() ==
+            kPaintsIntoOwnBacking;
+    if (!paints_into_own_backing) {
+      return FailureCode::NonActionable(
+          "Element does not paint into own backing");
+    }
   }
 
-  return target_element.GetLayoutObject() &&
-         target_element.GetLayoutObject()->GetCompositingState() ==
-             kPaintsIntoOwnBacking;
+  return FailureCode::None();
 }
 
 void CompositorAnimations::StartAnimationOnCompositor(
