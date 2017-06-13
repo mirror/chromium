@@ -8,8 +8,6 @@ import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 
-import org.chromium.base.annotations.JNINamespace;
-
 /**
  * This is the base class for child services; the [Sandboxed|Privileged]ProcessService0, 1.. etc
  * subclasses provide the concrete service entry points, to enable the browser to connect
@@ -23,16 +21,19 @@ import org.chromium.base.annotations.JNINamespace;
  * and then N entries of the form:
  *     <service android:name="org.chromium.content.app.[Sandboxed|Privileged]ProcessServiceX"
  *              android:process=":[sandboxed|privileged]_processX" />
+ *
+ * Subclasses must also provide a delegate that is responsible for loading any native libraries
+ * required and run the main entry point of the service.
  */
-@JNINamespace("content")
-public class ChildProcessService extends Service {
-    private final ChildProcessServiceImpl mChildProcessServiceImpl = new ChildProcessServiceImpl();
+public abstract class ChildProcessService extends Service {
+    private ChildProcessServiceImpl mChildProcessServiceImpl;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mChildProcessServiceImpl.create(getApplicationContext(),
-                getApplicationContext());
+        assert mChildProcessServiceImpl == null;
+        mChildProcessServiceImpl = new ChildProcessServiceImpl(createDelegate());
+        mChildProcessServiceImpl.create(getApplicationContext(), getApplicationContext());
     }
 
     @Override
@@ -50,4 +51,6 @@ public class ChildProcessService extends Service {
         stopSelf();
         return mChildProcessServiceImpl.bind(intent, -1);
     }
+
+    protected abstract ChildProcessServiceDelegate createDelegate();
 }
