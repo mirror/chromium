@@ -18,6 +18,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
+import org.chromium.base.Callback;
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CommandLineFlags;
@@ -26,17 +27,15 @@ import org.chromium.base.test.util.RetryOnFailure;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.ChromeSwitches;
-import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
-import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
-import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
-import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
-import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
+import org.chromium.chrome.browser.NativePageHost;
+import org.chromium.chrome.browser.favicon.LargeIconBridge;
 import org.chromium.chrome.browser.ntp.cards.NewTabPageAdapter;
 import org.chromium.chrome.browser.ntp.cards.SuggestionsCategoryInfo;
 import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.suggestions.ContentSuggestionsAdditionalAction;
 import org.chromium.chrome.browser.suggestions.DestructionObserver;
+import org.chromium.chrome.browser.suggestions.ImageFetcher;
 import org.chromium.chrome.browser.suggestions.SuggestionsEventReporter;
 import org.chromium.chrome.browser.suggestions.SuggestionsNavigationDelegate;
 import org.chromium.chrome.browser.suggestions.SuggestionsRanker;
@@ -214,35 +213,7 @@ public class ArticleSnippetsTest {
                 new DummySuggestionsEventReporter();
         private SuggestionsRanker mSuggestionsRanker = new SuggestionsRanker();
         private final DiscardableReferencePool mReferencePool = new DiscardableReferencePool();
-        private final ThumbnailProvider mThumbnailProvider = new ThumbnailProviderImpl();
-
-        @Override
-        public void getLocalFaviconImageForURL(
-                final String url, int size, final FaviconImageCallback faviconCallback) {
-            // Run the callback asynchronously incase the caller made that assumption.
-            ThreadUtils.postOnUiThread(new Runnable(){
-                @Override
-                public void run() {
-                    // Return an arbitrary drawable.
-                    faviconCallback.onFaviconAvailable(
-                            BitmapFactory.decodeResource(
-                                    mActivityTestRule.getActivity().getResources(),
-                                    R.drawable.star_green),
-                            url);
-                }
-            });
-        }
-
-        @Override
-        public void getLargeIconForUrl(String url, int size, LargeIconCallback callback) {
-            throw new UnsupportedOperationException();
-        }
-
-        @Override
-        public void ensureIconIsAvailable(String pageUrl, String iconUrl, boolean isLargeIcon,
-                boolean isTemporary, IconAvailabilityCallback callback) {
-            throw new UnsupportedOperationException();
-        }
+        private final ImageFetcher mImageFetcher = new MockImageFetcher();
 
         @Override
         public SuggestionsSource getSuggestionsSource() {
@@ -278,8 +249,77 @@ public class ArticleSnippetsTest {
         }
 
         @Override
-        public ThumbnailProvider getThumbnailProvider() {
-            return mThumbnailProvider;
+        public NativePageHost getHost() {
+            return null;
+        }
+
+        @Override
+        public ImageFetcher getImageFetcher() {
+            return mImageFetcher;
+        }
+
+        private class MockImageFetcher extends ImageFetcher {
+            public MockImageFetcher() {
+                super(MockUiDelegate.this, null);
+            }
+
+            @Override
+            public DownloadThumbnailRequest makeDownloadThumbnailRequest(
+                    SnippetArticle suggestion, int thumbnailSizePx, Callback<Bitmap> callback) {
+                callback.onResult(BitmapFactory.decodeResource(
+                        mActivityTestRule.getActivity().getResources(), R.drawable.star_green));
+                return null;
+            }
+
+            @Override
+            public ArticleThumbnailRequest makeArticleThumbnailRequest(
+                    SnippetArticle suggestion, final Callback<Bitmap> callback) {
+                // Run the callback asynchronously incase the caller made that assumption.
+                ThreadUtils.postOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Return an arbitrary drawable.
+                        callback.onResult(BitmapFactory.decodeResource(
+                                mActivityTestRule.getActivity().getResources(),
+                                R.drawable.star_green));
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            public FaviconRequest makeFaviconRequest(SnippetArticle suggestion,
+                    final int faviconSizePx, final Callback<Bitmap> faviconCallback) {
+                // Run the callback asynchronously incase the caller made that assumption.
+                ThreadUtils.postOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Return an arbitrary drawable.
+                        faviconCallback.onResult(BitmapFactory.decodeResource(
+                                mActivityTestRule.getActivity().getResources(),
+                                R.drawable.star_green));
+                    }
+                });
+                return null;
+            }
+
+            @Override
+            public LargeIconRequest makeLargeIconRequest(final String url,
+                    final int largeIconSizePx, final LargeIconBridge.LargeIconCallback callback) {
+                // Run the callback asynchronously incase the caller made that assumption.
+                ThreadUtils.postOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        // Return an arbitrary drawable.
+                        callback.onLargeIconAvailable(
+                                BitmapFactory.decodeResource(
+                                        mActivityTestRule.getActivity().getResources(),
+                                        R.drawable.star_green),
+                                largeIconSizePx, true);
+                    }
+                });
+                return null;
+            }
         }
     }
 

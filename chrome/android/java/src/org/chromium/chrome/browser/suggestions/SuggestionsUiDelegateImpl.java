@@ -8,13 +8,8 @@ import android.support.annotation.Nullable;
 
 import org.chromium.base.DiscardableReferencePool;
 import org.chromium.chrome.browser.NativePageHost;
-import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
-import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
 import org.chromium.chrome.browser.favicon.FaviconHelper;
-import org.chromium.chrome.browser.favicon.FaviconHelper.FaviconImageCallback;
-import org.chromium.chrome.browser.favicon.FaviconHelper.IconAvailabilityCallback;
 import org.chromium.chrome.browser.favicon.LargeIconBridge;
-import org.chromium.chrome.browser.favicon.LargeIconBridge.LargeIconCallback;
 import org.chromium.chrome.browser.ntp.snippets.SuggestionsSource;
 import org.chromium.chrome.browser.profiles.Profile;
 
@@ -30,14 +25,11 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     private final SuggestionsRanker mSuggestionsRanker;
     private final SuggestionsEventReporter mSuggestionsEventReporter;
     private final SuggestionsNavigationDelegate mSuggestionsNavigationDelegate;
-
-    private final Profile mProfile;
+    private final ImageFetcher mImageFetcher;
 
     private final NativePageHost mHost;
 
     private final DiscardableReferencePool mReferencePool;
-
-    private final ThumbnailProvider mThumbnailProvider;
 
     private FaviconHelper mFaviconHelper;
     private LargeIconBridge mLargeIconBridge;
@@ -52,35 +44,10 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
         mSuggestionsRanker = new SuggestionsRanker();
         mSuggestionsEventReporter = eventReporter;
         mSuggestionsNavigationDelegate = navigationDelegate;
-        mThumbnailProvider = new ThumbnailProviderImpl();
+        mImageFetcher = new ImageFetcher(this, profile);
 
-        mProfile = profile;
         mHost = host;
         mReferencePool = referencePool;
-    }
-
-    @Override
-    public void getLocalFaviconImageForURL(
-            String url, int size, FaviconImageCallback faviconCallback) {
-        if (mIsDestroyed) return;
-        getFaviconHelper().getLocalFaviconImageForURL(mProfile, url, size, faviconCallback);
-    }
-
-    @Override
-    public void getLargeIconForUrl(String url, int size, LargeIconCallback callback) {
-        if (mIsDestroyed) return;
-        getLargeIconBridge().getLargeIconForUrl(url, size, callback);
-    }
-
-    @Override
-    public void ensureIconIsAvailable(String pageUrl, String iconUrl, boolean isLargeIcon,
-            boolean isTemporary, IconAvailabilityCallback callback) {
-        if (mIsDestroyed) return;
-        if (mHost.getActiveTab() != null) {
-            getFaviconHelper().ensureIconIsAvailable(mProfile,
-                    mHost.getActiveTab().getWebContents(), pageUrl, iconUrl, isLargeIcon,
-                    isTemporary, callback);
-        }
     }
 
     @Override
@@ -106,8 +73,13 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     }
 
     @Override
-    public ThumbnailProvider getThumbnailProvider() {
-        return mThumbnailProvider;
+    public NativePageHost getHost() {
+        return mHost;
+    }
+
+    @Override
+    public ImageFetcher getImageFetcher() {
+        return mImageFetcher;
     }
 
     @Override
@@ -142,23 +114,4 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
         mIsDestroyed = true;
     }
 
-    /**
-     * Utility method to lazily create the {@link FaviconHelper}, and avoid unnecessary native
-     * calls in tests.
-     */
-    private FaviconHelper getFaviconHelper() {
-        assert !mIsDestroyed;
-        if (mFaviconHelper == null) mFaviconHelper = new FaviconHelper();
-        return mFaviconHelper;
-    }
-
-    /**
-     * Utility method to lazily create the {@link LargeIconBridge}, and avoid unnecessary native
-     * calls in tests.
-     */
-    private LargeIconBridge getLargeIconBridge() {
-        assert !mIsDestroyed;
-        if (mLargeIconBridge == null) mLargeIconBridge = new LargeIconBridge(mProfile);
-        return mLargeIconBridge;
-    }
 }
