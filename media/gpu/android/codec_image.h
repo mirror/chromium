@@ -55,7 +55,7 @@ class MEDIA_GPU_EXPORT CodecImage : public gpu::gles2::GLStreamTextureImage {
     return phase_ == Phase::kInFrontBuffer;
   }
 
-  // Whether this image is be backed by a surface texture.
+  // Whether this image is backed by a surface texture.
   bool is_surface_texture_backed() const { return !!surface_texture_; }
 
   // Renders this image to the front buffer of its backing surface.
