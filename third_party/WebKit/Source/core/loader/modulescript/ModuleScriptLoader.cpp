@@ -91,8 +91,7 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // -> FetchResourceType is specified by ScriptResource::fetch
 
   // parser metadata is parser state,
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  ResourceLoaderOptions options;
   options.parser_disposition = module_request.ParserState();
   // As initiator for module script fetch is not specified in HTML spec,
   // we specity "" as initiator per:

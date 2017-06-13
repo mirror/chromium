@@ -582,8 +582,23 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  resource_request.SetAllowStoredCredentials(
-      params.Options().allow_credentials == kAllowStoredCredentials);
+  params.Options().cors_flag = params.Options().security_origin->C
+
+                               bool allow_stored_credentials = false;
+  switch (resource_request.GetFetchCredentialsMode()) {
+    case WebURLRequest::kFetchCredentialsModeOmit:
+      allow_stored_credentials = false;
+      break;
+    case WebURLRequest::kFetchCredentialsModeSameOrigin:
+      allow_stored_credentials = !params.Options().cors_flag;
+      break;
+    case WebURLRequest::kFetchCredentialsModeInclude:
+    case WebURLRequest::kFetchCredentialsModePassword:
+      allow_stored_credentials = true;
+      break;
+  }
+  resource_request.SetAllowStoredCredentials(allow_stored_credentials);
+
   return kContinue;
 }
 

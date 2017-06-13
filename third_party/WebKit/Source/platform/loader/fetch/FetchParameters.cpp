@@ -58,15 +58,6 @@ void FetchParameters::SetCrossOriginAccessControl(
     CrossOriginAttributeValue cross_origin) {
   DCHECK_NE(cross_origin, kCrossOriginAttributeNotSet);
 
-  // Per https://w3c.github.io/webappsec-suborigins/#security-model-opt-outs,
-  // credentials are forced when credentials mode is "same-origin", the
-  // 'unsafe-credentials' option is set, and the request's physical origin is
-  // the same as the URL's.
-
-  const bool is_same_origin_request =
-      origin && (origin->CanRequestNoSuborigin(resource_request_.Url()) ||
-                 origin->HasSuboriginAndShouldAllowCredentialsFor(Url()));
-
   // Currently FetchParametersMode and FetchCredentialsMode are only used when
   // the request goes to Service Worker.
   resource_request_.SetFetchRequestMode(WebURLRequest::kFetchRequestModeCORS);
@@ -75,20 +66,8 @@ void FetchParameters::SetCrossOriginAccessControl(
           ? WebURLRequest::kFetchCredentialsModeInclude
           : WebURLRequest::kFetchCredentialsModeSameOrigin);
 
-  if (is_same_origin_request ||
-      cross_origin == kCrossOriginAttributeUseCredentials) {
-    options_.allow_credentials = kAllowStoredCredentials;
-    resource_request_.SetAllowStoredCredentials(true);
-  } else {
-    options_.allow_credentials = kDoNotAllowStoredCredentials;
-    resource_request_.SetAllowStoredCredentials(false);
-  }
   options_.cors_enabled = kIsCORSEnabled;
   options_.security_origin = origin;
-  options_.credentials_requested =
-      cross_origin == kCrossOriginAttributeUseCredentials
-          ? kClientRequestedCredentials
-          : kClientDidNotRequestCredentials;
 
   // TODO: Credentials should be removed only when the request is cross origin.
   resource_request_.RemoveUserAndPassFromURL();
