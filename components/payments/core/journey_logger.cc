@@ -145,6 +145,8 @@ void JourneyLogger::SetRequestedInformation(bool requested_shipping,
                                             bool requested_email,
                                             bool requested_phone,
                                             bool requested_name) {
+  LOG(ERROR) << requested_shipping << " " << requested_email << " "
+             << requested_phone << " " << requested_name;
   // This method should only be called once per Payment Request.
   DCHECK(requested_information_ == REQUESTED_INFORMATION_MAX);
 
