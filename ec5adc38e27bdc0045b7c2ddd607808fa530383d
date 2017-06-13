@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "adc8f952_ae87b7f4",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1200319
+      },
+      "writtenOn": "2017-06-13T08:24:43Z",
+      "side": 1,
+      "message": "[For the record] If we don\u0027t need more information (which is possible considering the inlining stuff) this struct encapsulating one single URL should disappear in the next refactoring CL.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "ec5adc38e27bdc0045b7c2ddd607808fa530383d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
