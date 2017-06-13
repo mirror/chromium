@@ -2,6 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "base/path_service.h"
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_commands_mac.h"
 #import "chrome/browser/ui/cocoa/permission_bubble/permission_bubble_cocoa.h"
@@ -10,9 +11,67 @@
 #include "chrome/browser/ui/permission_bubble/permission_bubble_browser_test_util.h"
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/common/pref_names.h"
+#include "chrome/test/base/ui_test_utils.h"
 #include "components/prefs/pref_service.h"
+#include "content/public/test/browser_test_utils.h"
+#include "net/base/filename_util.h"
 #import "testing/gtest_mac.h"
+#import "ui/base/cocoa/fullscreen_window_manager.h"
 #include "ui/base/test/scoped_fake_nswindow_fullscreen.h"
+#include "url/gurl.h"
+
+namespace {
+class MockPermissionBubbleCocoa : public PermissionBubbleCocoa {
+ public:
+  MockPermissionBubbleCocoa(NSWindow* parent_window)
+      : PermissionBubbleCocoa(parent_window) {}
+
+  MOCK_METHOD0(HasLocationBar, bool());
+
+ private:
+  DISALLOW_COPY_AND_ASSIGN(MockPermissionBubbleCocoa);
+};
+
+class ImmersiveFullscreenMacBrowserTest : public PermissionBubbleBrowserTest {
+ public:
+  void SetUpOnMainThread() override {
+    ui_test_utils::NavigateToURL(browser(), GetFullscreenTestPageURL());
+    PermissionBubbleBrowserTest::SetUpOnMainThread();
+  }
+
+ protected:
+  void EnterFullscreen() { Transition(base::ASCIIToUTF16("fullscreen")); }
+
+  void ExitFullscreen() { Transition(base::ASCIIToUTF16("not-fullscreen")); }
+
+ private:
+  void Transition(const base::string16& expected_title) {
+    auto web_contents = browser()->tab_strip_model()->GetActiveWebContents();
+    content::TitleWatcher watcher(web_contents, expected_title);
+    MouseClick(web_contents);
+    ASSERT_EQ(watcher.WaitAndGetTitle(), expected_title);
+  }
+
+  // "fullscreen_test.html" will toggle fullscreen when clicked.
+  void MouseClick(content::WebContents* web_contents) {
+    content::SimulateMouseClick(
+        browser()->tab_strip_model()->GetActiveWebContents(), 0,
+        blink::WebMouseEvent::ButtonLeft);
+  }
+
+  GURL GetFullscreenTestPageURL() {
+    base::FilePath path;
+
+    PathService::Get(base::DIR_SOURCE_ROOT, &path);
+    path = path.AppendASCII("chrome");
+    path = path.Append(FILE_PATH_LITERAL("test"));
+    path = path.Append(FILE_PATH_LITERAL("data"));
+    path = path.Append(FILE_PATH_LITERAL("fullscreen_test.html"));
+
+    return net::FilePathToFileURL(path);
+  }
+};
+}
 
 IN_PROC_BROWSER_TEST_F(PermissionBubbleBrowserTest, HasLocationBarByDefault) {
   PermissionBubbleCocoa bubble(browser());
@@ -53,6 +112,11 @@ IN_PROC_BROWSER_TEST_F(PermissionBubbleBrowserTest,
 
   EXPECT_TRUE([bubble.bubbleController_ hasVisibleLocationBar]);
   bubble.Hide();
+}
+
+IN_PROC_BROWSER_TEST_F(ImmersiveFullscreenMacBrowserTest, Bug) {
+  EnterFullscreen();
+  ExitFullscreen();
 }
 
 IN_PROC_BROWSER_TEST_F(PermissionBubbleBrowserTest,

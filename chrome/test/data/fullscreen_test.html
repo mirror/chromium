@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<!--
+Copyright 2015 The Chromium Authors. All rights reserved.
+Use of this source code is governed by a BSD-style license that can be
+found in the LICENSE file.
+-->
+<title>not-fullscreen</title>
+<style>
+* {
+  width: 100%;
+  height: 100%;
+  background-color: #ccc;
+  text-align: center;
+}
+</style>
+<script>
+window.addEventListener('load', function() {
+  document.body.onclick = function toggleBodyFullscreen() {
+    if (document.webkitFullscreenElement)
+      document.webkitExitFullscreen();
+    else
+      document.body.webkitRequestFullscreen();
+  };
+
+  document.addEventListener('webkitfullscreenchange', function(e) {
+    if (document.webkitFullscreenElement)
+      document.title = 'fullscreen';
+    else
+      document.title = 'not-fullscreen';
+  });
+});
+</script>
+<div>Click anywhere to toggle fullscreen.</div>
+</html>
