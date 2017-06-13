@@ -17,6 +17,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/resource_type.h"
 #include "net/base/host_port_pair.h"
+#include "third_party/WebKit/public/platform/WebFeature.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "url/gurl.h"
 
@@ -407,6 +408,9 @@ class PageLoadMetricsObserver {
   // subframe_metadata's loading behavior_flags.
   virtual void OnLoadingBehaviorObserved(
       const page_load_metrics::PageLoadExtraInfo& extra_info) {}
+
+  virtual void OnFeatureUsageObserved(
+      const std::vector<blink::WebFeature>& features) {}
 
   // Invoked when a media element starts playing.
   virtual void MediaStartedPlaying(
