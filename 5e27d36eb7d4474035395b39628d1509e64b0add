@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ed144133_0a29289c",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-13T15:17:00Z",
+      "side": 1,
+      "message": "/facepalm, sorry, that\u0027s an overlook on my side\n\nHow about:\n\nClosure task \u003d base::BindOnce(...)\nClosure reply \u003d base::BindOnce(...)\nBrowserThread::PostTaskAndReply(BrowserThread::DB, FROM_HERE, task, reply)\n\n?",
+      "parentUuid": "6a1e06fd_ac5e82e5",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 56
+      },
+      "revId": "5e27d36eb7d4474035395b39628d1509e64b0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c3557c0_6507d7d3",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
         "patchSetId": 1
