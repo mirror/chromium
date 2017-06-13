@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5e219fd2_7db209e6",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "There are cases where there will be multiple rects for one touch action which we will union.",
+      "parentUuid": "66387630_8a0afb65",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bbdadb42_a50c9e55",
         "filename": "cc/blink/web_layer_impl.cc",
         "patchSetId": 16
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "299eeff7_93cf7107",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bbdadb42_a50c9e55",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c598a037_1e5c7201",
         "filename": "cc/blink/web_layer_impl.cc",
         "patchSetId": 16
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-12T17:32:32Z",
       "side": 1,
       "message": "How often is this function called? Would it make sense to keep the union around instead of computing it?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c3182f4_9f8cc322",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "We decided to keep the union.",
+      "parentUuid": "c598a037_1e5c7201",
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "f1da317e_e8a45c43",
+        "filename": "cc/blink/web_layer_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "No longer necessary.",
+      "parentUuid": "0554ce62_76658006",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38056e9a_557da20f",
         "filename": "cc/layers/layer.cc",
         "patchSetId": 16
@@ -84,6 +156,24 @@
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27d189e7_21a1dfae",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 886,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38056e9a_557da20f",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "f44b68df_0c4a87e2",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 890,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "be0e9355_5f58fac0",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a30526fb_70b9bc77",
         "filename": "cc/layers/layer_impl.h",
         "patchSetId": 16
@@ -118,6 +226,24 @@
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02fe0762_34249a83",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a30526fb_70b9bc77",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "6277e004_a656a3ce",
+        "filename": "cc/layers/layer_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e7658df_559610ab",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e373391c_d8cac568",
         "filename": "cc/layers/region_map_utils.cc",
         "patchSetId": 16
@@ -152,6 +296,24 @@
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e641e190_e3f26742",
+        "filename": "cc/layers/region_map_utils.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Function removed. No longer needed.",
+      "parentUuid": "e373391c_d8cac568",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "6efebe98_bb51c42d",
+        "filename": "cc/layers/region_map_utils.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done. Moved to layer.h",
+      "parentUuid": "b05aaa7e_0c9230c3",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2d203680_8a8aa372",
         "filename": "cc/test/layer_tree_json_parser.cc",
         "patchSetId": 16
@@ -186,6 +366,24 @@
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4834fdf_89f24bf3",
+        "filename": "cc/test/layer_tree_json_parser.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done. Also added it to touch_region_map[kTouchActionNone] \u003d touch_region. Please let me know if this should be changed.",
+      "parentUuid": "2d203680_8a8aa372",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "ea02744f_5971bb8a",
+        "filename": "cc/test/layer_tree_json_parser_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0bbdc5d4_600d5d40",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cbc0603b_f784302e",
         "filename": "cc/trees/debug_rect_history.cc",
         "patchSetId": 16
@@ -217,6 +433,24 @@
       "writtenOn": "2017-06-12T17:32:32Z",
       "side": 1,
       "message": "Maybe it would be nicer to add all the rects independently from each TouchAction instead of unioning them together? That way we don\u0027t lose data in the debugging visualization.",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1118ec3_79450806",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Reverted back to original implementation.",
+      "parentUuid": "cbc0603b_f784302e",
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +474,24 @@
     },
     {
       "key": {
+        "uuid": "6fd861a8_41220b77",
+        "filename": "cc/trees/layer_tree_host_common_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 9519,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4f6322ec_bd548378",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e6c6a2f1_84ef9e86",
         "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
         "patchSetId": 16
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "c6ea9373_66d463bf",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 988,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e6c6a2f1_84ef9e86",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e948a86_61489d98",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 16
@@ -268,6 +538,24 @@
       "writtenOn": "2017-06-12T17:35:08Z",
       "side": 1,
       "message": "oh, one more similar question to WebLayerImpl. How often do we come here? would it make sense to keep the union instead of computing it each time?",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762a90e0_f698741d",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 1973,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Decided to keep the union.",
+      "parentUuid": "4e948a86_61489d98",
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -291,6 +579,24 @@
     },
     {
       "key": {
+        "uuid": "37dcee68_51ebd929",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "098ae398_223aeab1",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10138732_9f0c1f89",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 16
@@ -305,6 +611,24 @@
       "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "629ecc2a_cf9ae530",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T14:33:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10138732_9f0c1f89",
+      "revId": "57c52ad3d6746ee7cff913dd6e884ad4bf7838bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
