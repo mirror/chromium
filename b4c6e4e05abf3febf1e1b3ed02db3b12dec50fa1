@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "359bd5ae_b9b4739e",
+        "filename": "third_party/WebKit/Source/core/editing/CaretDisplayItemClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T00:35:41Z",
+      "side": 1,
+      "message": "The SPv2 raster invalidation works for this case.",
+      "parentUuid": "da52dba9_2ce8d684",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "82446a1c_961cbd9b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
         "patchSetId": 7
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-12T23:34:13Z",
       "side": 1,
       "message": "ditto",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c23415_0b3507a0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T00:35:41Z",
+      "side": 1,
+      "message": "This is to deal with change of paint invalidation container for SPv1 which doesn\u0027t apply for SPv2.",
+      "parentUuid": "82446a1c_961cbd9b",
       "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "122f829a_71af27b6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectChildList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T00:35:41Z",
+      "side": 1,
+      "message": "Yes. The SPv2 raster invalidation can handle the case.",
+      "parentUuid": "ad3c144f_4c2c3eb2",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc5894bc_df8d5917",
         "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
         "patchSetId": 7
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-12T23:34:13Z",
       "side": 1,
       "message": "ditto on filing a bug. Maybe one tracking bug?",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71212dba_e44e6740",
+        "filename": "third_party/WebKit/Source/core/paint/BoxPaintInvalidator.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T00:35:41Z",
+      "side": 1,
+      "message": "Done. Tracking bug: crbug.com/732609. For this case: crbug.com/732611.",
+      "parentUuid": "dc5894bc_df8d5917",
       "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
