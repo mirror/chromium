@@ -158,6 +158,9 @@ static void VerifyUserControlsAreSetToDefaultValues(int device_fd) {
         break;
       range.id |= V4L2_CTRL_FLAG_NEXT_CTRL;
 
+      if (IsSpecialOrBlacklistedControl(range.id & ~V4L2_CTRL_FLAG_NEXT_CTRL))
+        continue;
+
       DVLOG(1) << __func__ << " " << range.name << ": " << range.minimum << "-"
                << range.maximum << ", default: " << range.default_value;
 
