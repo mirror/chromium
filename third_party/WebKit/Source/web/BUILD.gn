@@ -41,8 +41,6 @@ component("web") {
     "ChromeClientImpl.h",
     "ContextMenuClientImpl.cpp",
     "ContextMenuClientImpl.h",
-    "DedicatedWorkerMessagingProxyProviderImpl.cpp",
-    "DedicatedWorkerMessagingProxyProviderImpl.h",
     "EditorClientImpl.cpp",
     "EditorClientImpl.h",
     "ExternalDateTimeChooser.cpp",

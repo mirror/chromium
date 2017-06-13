@@ -8,10 +8,18 @@
 #include "core/dom/Document.h"
 #include "core/dom/ExceptionCode.h"
 #include "core/frame/UseCounter.h"
-#include "core/workers/DedicatedWorkerMessagingProxyProvider.h"
-#include "core/workers/InProcessWorkerMessagingProxy.h"
+#include "core/frame/WebLocalFrameBase.h"
+#include "core/workers/DedicatedWorkerMessagingProxy.h"
+#include "core/workers/WorkerClients.h"
+#include "core/workers/WorkerContentSettingsClient.h"
+#include "public/platform/WebContentSettingsClient.h"
+#include "public/web/WebFrameClient.h"
 
 namespace blink {
+
+template <>
+CORE_EXPORT WorkerClientsInitializer<Worker>*
+    WorkerClientsInitializer<Worker>::instance_ = nullptr;
 
 Worker::Worker(ExecutionContext* context) : InProcessWorkerBase(context) {}
 
@@ -43,10 +51,14 @@ const AtomicString& Worker::InterfaceName() const {
 InProcessWorkerMessagingProxy* Worker::CreateInProcessWorkerMessagingProxy(
     ExecutionContext* context) {
   Document* document = ToDocument(context);
-  DedicatedWorkerMessagingProxyProvider* proxy_provider =
-      DedicatedWorkerMessagingProxyProvider::From(*document->GetPage());
-  DCHECK(proxy_provider);
-  return proxy_provider->CreateWorkerMessagingProxy(this);
+  WebLocalFrameBase* web_frame =
+      WebLocalFrameBase::FromFrame(document->GetFrame());
+
+  WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClientsInitializer<Worker>::Run(worker_clients);
+  ProvideContentSettingsClientToWorker(
+      worker_clients, web_frame->Client()->CreateWorkerContentSettingsClient());
+  return new DedicatedWorkerMessagingProxy(this, worker_clients);
 }
 
 }  // namespace blink
