@@ -1152,6 +1152,10 @@ void LocalFrameView::UpdateLayout() {
 
   PerformPreLayoutTasks();
 
+  VisualViewport& visual_viewport = frame_->GetPage()->GetVisualViewport();
+  DoubleSize viewport_size(visual_viewport.VisibleWidthCSSPx(),
+                           visual_viewport.VisibleHeightCSSPx());
+
   // TODO(crbug.com/460956): The notion of a single root for layout is no longer
   // applicable. Remove or update this code.
   LayoutObject* root_for_this_layout = GetLayoutView();
@@ -1319,6 +1323,15 @@ void LocalFrameView::UpdateLayout() {
   // layout.
   GetLayoutView()->AssertSubtreeIsLaidOut();
 #endif
+
+  if (frame_->IsMainFrame() &&
+      RuntimeEnabledFeatures::VisualViewportAPIEnabled()) {
+    // Scrollbars changing state can cause a visual viewport size change.
+    DoubleSize new_viewport_size(visual_viewport.VisibleWidthCSSPx(),
+                                 visual_viewport.VisibleHeightCSSPx());
+    if (new_viewport_size != viewport_size)
+      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
+  }
 
   GetFrame().GetDocument()->LayoutUpdated();
   CheckDoesNotNeedLayout();
@@ -2156,7 +2169,7 @@ void LocalFrameView::ContentsResized() {
   SetNeedsLayout();
 }
 
-void LocalFrameView::ScrollbarExistenceDidChange() {
+void LocalFrameView::ScrollbarExistenceMaybeChanged() {
   // We check to make sure the view is attached to a frame() as this method can
   // be triggered before the view is attached by LocalFrame::createView(...)
   // setting various values such as setScrollBarModes(...) for example.  An
@@ -2171,14 +2184,8 @@ void LocalFrameView::ScrollbarExistenceDidChange() {
       ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
-  if (!uses_overlay_scrollbars) {
-    if (NeedsLayout())
-      UpdateLayout();
-
-    if (frame_->IsMainFrame() &&
-        RuntimeEnabledFeatures::VisualViewportAPIEnabled())
-      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
-  }
+  if (!uses_overlay_scrollbars && NeedsLayout())
+    UpdateLayout();
 
   if (!GetLayoutViewItem().IsNull() && GetLayoutViewItem().UsesCompositing()) {
     GetLayoutViewItem().Compositor()->FrameViewScrollbarsExistenceDidChange();
@@ -2952,7 +2959,7 @@ void LocalFrameView::VisualViewportScrollbarsChanged() {
 
   if (has_horizontal_scrollbar != should_have_horizontal_scrollbar ||
       has_vertical_scrollbar != should_have_vertical_scrollbar) {
-    ScrollbarExistenceDidChange();
+    ScrollbarExistenceMaybeChanged();
 
     if (!VisualViewportSuppliesScrollbars())
       UpdateScrollbarGeometry();
@@ -4291,7 +4298,7 @@ bool LocalFrameView::AdjustScrollbarExistence(
   // changes due to window resizing for example).  This layout will not re-enter
   // updateScrollbars and does not count towards our max layout pass total.
   if (!scrollbars_suppressed_)
-    ScrollbarExistenceDidChange();
+    ScrollbarExistenceMaybeChanged();
 
   bool has_horizontal_scrollbar = HorizontalScrollbar();
   bool has_vertical_scrollbar = VerticalScrollbar();
@@ -4313,9 +4320,15 @@ bool LocalFrameView::AdjustScrollbarExistence(
   if (scrollbars_suppressed_)
     return true;
 
-  if (!HasOverlayScrollbars())
+  Element* custom_scrollbar_element = nullptr;
+  bool uses_overlay_scrollbars =
+      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
+      !ShouldUseCustomScrollbars(custom_scrollbar_element);
+
+  if (!uses_overlay_scrollbars)
     SetNeedsLayout();
-  ScrollbarExistenceDidChange();
+
+  ScrollbarExistenceMaybeChanged();
   return true;
 }
 
