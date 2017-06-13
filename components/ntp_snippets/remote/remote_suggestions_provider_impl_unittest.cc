@@ -38,7 +38,9 @@
 #include "components/ntp_snippets/features.h"
 #include "components/ntp_snippets/ntp_snippets_constants.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/ntp_snippets/remote/json_to_categories.h"
 #include "components/ntp_snippets/remote/persistent_scheduler.h"
+#include "components/ntp_snippets/remote/proto/ntp_snippets.pb.h"
 #include "components/ntp_snippets/remote/remote_suggestion.h"
 #include "components/ntp_snippets/remote/remote_suggestions_database.h"
 #include "components/ntp_snippets/remote/remote_suggestions_fetcher_impl.h"
@@ -62,9 +64,11 @@
 using image_fetcher::ImageFetcher;
 using image_fetcher::ImageFetcherDelegate;
 using testing::_;
+using testing::Contains;
 using testing::CreateFunctor;
 using testing::ElementsAre;
 using testing::Eq;
+using testing::Field;
 using testing::InSequence;
 using testing::Invoke;
 using testing::IsEmpty;
@@ -94,6 +98,8 @@ MATCHER_P(IdWithinCategoryEq, expected_id, "") {
 MATCHER_P(HasCode, code, "") {
   return arg.code == code;
 }
+
+const int kMaxExcludedDismissedIds = 100;
 
 const base::Time::Exploded kDefaultCreationTime = {2015, 11, 4, 25, 13, 46, 45};
 const char kTestContentSuggestionsServerEndpoint[] =
@@ -394,6 +400,37 @@ class MockScheduler : public RemoteSuggestionsScheduler {
   MOCK_METHOD0(RescheduleFetching, void());
 };
 
+class MockRemoteSuggestionsFetcher : public RemoteSuggestionsFetcher {
+ public:
+  MockRemoteSuggestionsFetcher()
+      : next_status_(StatusCode::PERMANENT_ERROR, "error message") {}
+
+  MOCK_METHOD1(FetchSnippets, void(const RequestParams& params));
+  // GMock does not support movable-only types (SnippetsAvailableCallback is
+  // OnceCallback), therefore, the call is redirected to a mock method without
+  // the callback.
+  void FetchSnippets(const RequestParams& params,
+                     SnippetsAvailableCallback callback) override {
+    FetchSnippets(params);
+    std::move(callback).Run(next_status_, std::move(next_categories_));
+    next_status_ = Status(StatusCode::PERMANENT_ERROR, "error message");
+    next_categories_ = base::nullopt;
+  }
+  MOCK_CONST_METHOD0(GetLastStatusForDebugging, const std::string&());
+  MOCK_CONST_METHOD0(GetLastJsonForDebugging, const std::string&());
+  MOCK_CONST_METHOD0(GetFetchUrlForDebugging, const GURL&());
+
+  void SetNextFetchResult(Status next_status,
+                          OptionalFetchedCategories next_categories) {
+    next_status_ = next_status;
+    next_categories_ = std::move(next_categories);
+  }
+
+ private:
+  Status next_status_;
+  OptionalFetchedCategories next_categories_;
+};
+
 }  // namespace
 
 class RemoteSuggestionsProviderImplTest : public ::testing::Test {
@@ -431,24 +468,34 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   // instead of creating a new service.
   std::unique_ptr<RemoteSuggestionsProviderImpl> MakeSuggestionsProvider(
       bool set_empty_response = true) {
-    auto service = MakeSuggestionsProviderWithoutInitialization();
+    auto service = MakeSuggestionsProviderWithoutInitialization(
+        /*use_mock_suggestions_fetcher=*/false);
     WaitForSuggestionsProviderInitialization(service.get(), set_empty_response);
     return service;
   }
 
+  // TODO(vitaliii): Rewrite tests and always use mock suggestions fetcher.
   std::unique_ptr<RemoteSuggestionsProviderImpl>
-  MakeSuggestionsProviderWithoutInitialization() {
+  MakeSuggestionsProviderWithoutInitialization(
+      bool use_mock_suggestions_fetcher) {
     scoped_refptr<base::SingleThreadTaskRunner> task_runner(
         base::ThreadTaskRunnerHandle::Get());
     scoped_refptr<net::TestURLRequestContextGetter> request_context_getter =
         new net::TestURLRequestContextGetter(task_runner.get());
 
     utils_.ResetSigninManager();
-    auto suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
-        utils_.fake_signin_manager(), /*token_service=*/nullptr,
-        std::move(request_context_getter), utils_.pref_service(), nullptr,
-        base::Bind(&ParseJson), GetFetchEndpoint(version_info::Channel::STABLE),
-        kAPIKey, &user_classifier_);
+    std::unique_ptr<RemoteSuggestionsFetcher> suggestions_fetcher;
+    if (use_mock_suggestions_fetcher) {
+      suggestions_fetcher =
+          base::MakeUnique<StrictMock<MockRemoteSuggestionsFetcher>>();
+    } else {
+      suggestions_fetcher = base::MakeUnique<RemoteSuggestionsFetcherImpl>(
+          utils_.fake_signin_manager(), /*token_service=*/nullptr,
+          std::move(request_context_getter), utils_.pref_service(), nullptr,
+          base::Bind(&ParseJson),
+          GetFetchEndpoint(version_info::Channel::STABLE), kAPIKey,
+          &user_classifier_);
+    }
     suggestions_fetcher_ = suggestions_fetcher.get();
 
     auto image_fetcher = base::MakeUnique<NiceMock<MockImageFetcher>>();
@@ -474,7 +521,8 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
   std::unique_ptr<RemoteSuggestionsProviderImpl>
   MakeSuggestionsProviderWithoutInitializationWithStrictScheduler() {
     scheduler_ = base::MakeUnique<StrictMock<MockScheduler>>();
-    return MakeSuggestionsProviderWithoutInitialization();
+    return MakeSuggestionsProviderWithoutInitialization(
+        /*use_mock_suggestions_fetcher=*/false);
   }
 
   void WaitForSuggestionsProviderInitialization(
@@ -552,6 +600,13 @@ class RemoteSuggestionsProviderImplTest : public ::testing::Test {
     fake_url_fetcher_factory_.SetFakeResponse(test_url_, /*json=*/std::string(),
                                               net::HTTP_NOT_FOUND,
                                               net::URLRequestStatus::SUCCESS);
+  }
+
+  void FetchSuggestions(
+      RemoteSuggestionsProviderImpl* provider,
+      bool interactive_request,
+      const RemoteSuggestionsProvider::FetchStatusCallback& callback) {
+    provider->FetchSuggestions(interactive_request, callback);
   }
 
   void LoadFromJSONString(RemoteSuggestionsProviderImpl* service,
@@ -1255,7 +1310,8 @@ void SuggestionsLoaded(
 }  // namespace
 
 TEST_F(RemoteSuggestionsProviderImplTest, ReturnFetchRequestEmptyBeforeInit) {
-  auto service = MakeSuggestionsProviderWithoutInitialization();
+  auto service = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/false);
   MockFunction<void(Status, const std::vector<ContentSuggestion>&)> loaded;
   EXPECT_CALL(loaded, Call(HasCode(StatusCode::TEMPORARY_ERROR), IsEmpty()));
   service->Fetch(articles_category(), std::set<std::string>(),
@@ -1810,7 +1866,8 @@ TEST_F(RemoteSuggestionsProviderImplTest,
   // On initialization of the RemoteSuggestionsProviderImpl a background fetch
   // is triggered since the suggestions DB is empty. Therefore the service must
   // not be initialized until the test clock is set.
-  auto service = MakeSuggestionsProviderWithoutInitialization();
+  auto service = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/false);
 
   auto simple_test_clock = base::MakeUnique<base::SimpleTestClock>();
   base::SimpleTestClock* simple_test_clock_ptr = simple_test_clock.get();
@@ -1915,6 +1972,399 @@ TEST_F(RemoteSuggestionsProviderImplTest, CallsSchedulerWhenSignedOut) {
   EXPECT_CALL(*scheduler(), OnSuggestionsCleared());
   service->OnStatusChanged(RemoteSuggestionsStatus::ENABLED_AND_SIGNED_OUT,
                            RemoteSuggestionsStatus::ENABLED_AND_SIGNED_IN);
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldExcludeKnownSuggestionsWithoutTruncatingWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  std::set<std::string> known_ids;
+  for (int i = 0; i < 200; ++i) {
+    known_ids.insert(base::IntToString(i));
+  }
+
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*mock_fetcher,
+              FetchSnippets(Field(&RequestParams::excluded_ids, known_ids)));
+  provider->Fetch(
+      articles_category(), known_ids,
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldExcludeDismissedSuggestionsWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+
+  // Initialize fetcher to return a given suggestion.
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(FetchedCategory(
+      articles_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+
+  SnippetProto snippet_proto;
+  snippet_proto.add_ids("http://abc.com/");
+  snippet_proto.set_title("title");
+  snippet_proto.set_snippet("snippet");
+  snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+  snippet_proto.set_publish_date(1476095492);
+  snippet_proto.set_expiry_date(1476354691);
+  snippet_proto.set_remote_category_id(1);
+  auto* source = snippet_proto.add_sources();
+  source->set_url("http://abc.com/");
+  source->set_publisher_name("Publisher");
+  source->set_amp_url("http://amp.abc.com/");
+
+  fetched_categories[0].suggestions.push_back(
+      RemoteSuggestion::CreateFromProto(snippet_proto));
+  ASSERT_TRUE(fetched_categories[0].suggestions[0]->is_complete());
+  mock_fetcher->SetNextFetchResult(Status(StatusCode::SUCCESS, "message"),
+                                   std::move(fetched_categories));
+
+  // Fetch the suggestion.
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(_));
+  FetchSuggestions(provider.get(), /*interactive_request=*/true,
+                   RemoteSuggestionsProvider::FetchStatusCallback());
+  Mock::VerifyAndClearExpectations(mock_fetcher);
+
+  provider->DismissSuggestion(MakeArticleID("http://abc.com/"));
+
+  std::set<std::string> expected_excluded_ids({"http://abc.com/"});
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(Field(&RequestParams::excluded_ids,
+                                                 expected_excluded_ids)));
+  provider->Fetch(
+      articles_category(), std::set<std::string>(),
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldTruncateExcludedDismissedSuggestionsWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+
+  // Initialize fetcher to return given suggestions.
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(FetchedCategory(
+      articles_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+
+  const int kSuggestionsCount = kMaxExcludedDismissedIds + 1;
+  for (int i = 0; i < kSuggestionsCount; ++i) {
+    SnippetProto snippet_proto;
+    snippet_proto.add_ids("http://abc.com/" + base::IntToString(i));
+    snippet_proto.set_title("title");
+    snippet_proto.set_snippet("snippet");
+    snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+    snippet_proto.set_publish_date(1476095492);
+    snippet_proto.set_expiry_date(1476354691);
+    snippet_proto.set_remote_category_id(1);
+    auto* source = snippet_proto.add_sources();
+    source->set_url("http://abc.com/");
+    source->set_publisher_name("Publisher");
+    source->set_amp_url("http://amp.abc.com/");
+
+    fetched_categories[0].suggestions.push_back(
+        RemoteSuggestion::CreateFromProto(snippet_proto));
+  }
+  mock_fetcher->SetNextFetchResult(Status(StatusCode::SUCCESS, "message"),
+                                   std::move(fetched_categories));
+
+  // Fetch the suggestions.
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(_));
+  FetchSuggestions(provider.get(), /*interactive_request=*/true,
+                   RemoteSuggestionsProvider::FetchStatusCallback());
+  Mock::VerifyAndClearExpectations(mock_fetcher);
+
+  // Dismiss them.
+  for (int i = 0; i < kSuggestionsCount; ++i) {
+    provider->DismissSuggestion(
+        MakeArticleID("http://abc.com/" + base::IntToString(i)));
+  }
+
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  EXPECT_CALL(*mock_fetcher,
+              FetchSnippets(Field(&RequestParams::excluded_ids,
+                                  SizeIs(kMaxExcludedDismissedIds))));
+  provider->Fetch(
+      articles_category(), std::set<std::string>(),
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldPreferLatestExcludedDismissedSuggestionsWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+
+  // Initialize fetcher to return given suggestions.
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(FetchedCategory(
+      articles_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+
+  const int kSuggestionsCount = kMaxExcludedDismissedIds + 1;
+  for (int i = 0; i < kSuggestionsCount; ++i) {
+    SnippetProto snippet_proto;
+    snippet_proto.add_ids("http://abc.com/" + base::IntToString(i));
+    snippet_proto.set_title("title");
+    snippet_proto.set_snippet("snippet");
+    snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+    snippet_proto.set_publish_date(1476095492);
+    snippet_proto.set_expiry_date(1476354691);
+    snippet_proto.set_remote_category_id(1);
+    auto* source = snippet_proto.add_sources();
+    source->set_url("http://abc.com/");
+    source->set_publisher_name("Publisher");
+    source->set_amp_url("http://amp.abc.com/");
+
+    fetched_categories[0].suggestions.push_back(
+        RemoteSuggestion::CreateFromProto(snippet_proto));
+  }
+  mock_fetcher->SetNextFetchResult(Status(StatusCode::SUCCESS, "message"),
+                                   std::move(fetched_categories));
+
+  // Fetch the suggestions.
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(_));
+  FetchSuggestions(provider.get(), /*interactive_request=*/true,
+                   RemoteSuggestionsProvider::FetchStatusCallback());
+  Mock::VerifyAndClearExpectations(mock_fetcher);
+
+  // Dismiss them in reverse order.
+  std::string first_dismissed_suggestion_id;
+  for (int i = kSuggestionsCount - 1; i >= 0; --i) {
+    const std::string id = "http://abc.com/" + base::IntToString(i);
+    provider->DismissSuggestion(MakeArticleID(id));
+    if (first_dismissed_suggestion_id.empty()) {
+      first_dismissed_suggestion_id = id;
+    }
+  }
+
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  // The oldest dismissed suggestion should be absent, because there are
+  // |kMaxExcludedDismissedIds| newer dismissed suggestions.
+  EXPECT_CALL(
+      *mock_fetcher,
+      FetchSnippets(Field(&RequestParams::excluded_ids,
+                          Not(Contains(first_dismissed_suggestion_id)))));
+  provider->Fetch(
+      articles_category(), std::set<std::string>(),
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldExcludeDismissedSuggestionsFromAllCategoriesWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+
+  // Initialize fetcher to return given suggestions.
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  // Add article suggestions.
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(FetchedCategory(
+      articles_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+
+  const int kSuggestionsPerCategory = 2;
+  for (int i = 0; i < kSuggestionsPerCategory; ++i) {
+    SnippetProto snippet_proto;
+    snippet_proto.add_ids("http://abc.com/" + base::IntToString(i));
+    snippet_proto.set_title("title");
+    snippet_proto.set_snippet("snippet");
+    snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+    snippet_proto.set_publish_date(1476095492);
+    snippet_proto.set_expiry_date(1476354691);
+    snippet_proto.set_remote_category_id(1);
+    auto* source = snippet_proto.add_sources();
+    source->set_url("http://abc.com/");
+    source->set_publisher_name("Publisher");
+    source->set_amp_url("http://amp.abc.com/");
+
+    fetched_categories[0].suggestions.push_back(
+        RemoteSuggestion::CreateFromProto(snippet_proto));
+  }
+  // Add other category suggestions.
+  fetched_categories.push_back(FetchedCategory(
+      other_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+  for (int i = 0; i < kSuggestionsPerCategory; ++i) {
+    SnippetProto snippet_proto;
+    snippet_proto.add_ids("http://other.com/" + base::IntToString(i));
+    snippet_proto.set_title("title");
+    snippet_proto.set_snippet("snippet");
+    snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+    snippet_proto.set_publish_date(1476095492);
+    snippet_proto.set_expiry_date(1476354691);
+    snippet_proto.set_remote_category_id(1);
+    auto* source = snippet_proto.add_sources();
+    source->set_url("http://other.com/");
+    source->set_publisher_name("Publisher");
+    source->set_amp_url("http://amp.other.com/");
+
+    fetched_categories[1].suggestions.push_back(
+        RemoteSuggestion::CreateFromProto(snippet_proto));
+  }
+
+  mock_fetcher->SetNextFetchResult(Status(StatusCode::SUCCESS, "message"),
+                                   std::move(fetched_categories));
+
+  // Fetch the suggestions.
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(_));
+  FetchSuggestions(provider.get(), /*interactive_request=*/true,
+                   RemoteSuggestionsProvider::FetchStatusCallback());
+  Mock::VerifyAndClearExpectations(mock_fetcher);
+
+  // Dismiss all suggestions.
+  std::set<std::string> expected_excluded_ids;
+  for (int i = 0; i < kSuggestionsPerCategory; ++i) {
+    const std::string article_id = "http://abc.com/" + base::IntToString(i);
+    provider->DismissSuggestion(MakeArticleID(article_id));
+    expected_excluded_ids.insert(article_id);
+    const std::string other_id = "http://other.com/" + base::IntToString(i);
+    provider->DismissSuggestion(MakeOtherID(other_id));
+    expected_excluded_ids.insert(other_id);
+  }
+
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  // Dismissed suggestions from all categories must be excluded (but not only
+  // target category).
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(Field(&RequestParams::excluded_ids,
+                                                 expected_excluded_ids)));
+  provider->Fetch(
+      articles_category(), std::set<std::string>(),
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
+}
+
+TEST_F(RemoteSuggestionsProviderImplTest,
+       ShouldPreferTargetCategoryExcludedDismissedSuggestionsWhenFetchingMore) {
+  auto provider = MakeSuggestionsProviderWithoutInitialization(
+      /*use_mock_suggestions_fetcher=*/true);
+  WaitForSuggestionsProviderInitialization(provider.get(),
+                                           /*set_empty_response=*/true);
+
+  // Initialize fetcher to return given suggestions.
+  auto* mock_fetcher = static_cast<StrictMock<MockRemoteSuggestionsFetcher>*>(
+      suggestions_fetcher());
+
+  // Add article suggestions.
+  std::vector<FetchedCategory> fetched_categories;
+  fetched_categories.push_back(FetchedCategory(
+      articles_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+
+  for (int i = 0; i < kMaxExcludedDismissedIds; ++i) {
+    SnippetProto snippet_proto;
+    snippet_proto.add_ids("http://abc.com/" + base::IntToString(i));
+    snippet_proto.set_title("title");
+    snippet_proto.set_snippet("snippet");
+    snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+    snippet_proto.set_publish_date(1476095492);
+    snippet_proto.set_expiry_date(1476354691);
+    snippet_proto.set_remote_category_id(1);
+    auto* source = snippet_proto.add_sources();
+    source->set_url("http://abc.com/");
+    source->set_publisher_name("Publisher");
+    source->set_amp_url("http://amp.abc.com/");
+
+    fetched_categories[0].suggestions.push_back(
+        RemoteSuggestion::CreateFromProto(snippet_proto));
+  }
+  // Add other category suggestion.
+  fetched_categories.push_back(FetchedCategory(
+      other_category(),
+      BuildRemoteCategoryInfo(base::UTF8ToUTF16("title"),
+                              /*allow_fetching_more_results=*/true)));
+  SnippetProto snippet_proto;
+  snippet_proto.add_ids("http://other.com/");
+  snippet_proto.set_title("title");
+  snippet_proto.set_snippet("snippet");
+  snippet_proto.set_salient_image_url("http://abc.com/p.jpg");
+  snippet_proto.set_publish_date(1476095492);
+  snippet_proto.set_expiry_date(1476354691);
+  snippet_proto.set_remote_category_id(1);
+  auto* source = snippet_proto.add_sources();
+  source->set_url("http://other.com/");
+  source->set_publisher_name("Publisher");
+  source->set_amp_url("http://amp.other.com/");
+
+  fetched_categories[1].suggestions.push_back(
+      RemoteSuggestion::CreateFromProto(snippet_proto));
+
+  mock_fetcher->SetNextFetchResult(Status(StatusCode::SUCCESS, "message"),
+                                   std::move(fetched_categories));
+
+  // Fetch the suggestions.
+  EXPECT_CALL(*mock_fetcher, FetchSnippets(_));
+  FetchSuggestions(provider.get(), /*interactive_request=*/true,
+                   RemoteSuggestionsProvider::FetchStatusCallback());
+  Mock::VerifyAndClearExpectations(mock_fetcher);
+
+  // Dismiss article suggestions first.
+  for (int i = 0; i < kMaxExcludedDismissedIds; ++i) {
+    provider->DismissSuggestion(
+        MakeArticleID("http://abc.com/" + base::IntToString(i)));
+  }
+
+  // Then dismiss other category suggestion.
+  provider->DismissSuggestion(MakeOtherID("http://other.com/"));
+
+  EXPECT_CALL(*scheduler(), AcquireQuotaForInteractiveFetch())
+      .WillOnce(Return(true))
+      .RetiresOnSaturation();
+  // The other category dismissed suggestion should be absent, because the fetch
+  // is for articles and there are |kMaxExcludedDismissedIds| dismissed
+  // suggestions there.
+  EXPECT_CALL(*mock_fetcher,
+              FetchSnippets(Field(&RequestParams::excluded_ids,
+                                  Not(Contains("http://other.com/")))));
+  provider->Fetch(
+      articles_category(), std::set<std::string>(),
+      base::Bind([](Status status_code,
+                    std::vector<ContentSuggestion> suggestions) {}));
 }
 
 }  // namespace ntp_snippets
