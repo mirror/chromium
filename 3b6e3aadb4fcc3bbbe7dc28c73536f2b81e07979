@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7641f21_68fa63cc",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-13T11:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4ce4382_382941a3",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d905e47_3f577a1b",
         "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "12e99762_94bebc18",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-13T11:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7d905e47_3f577a1b",
+      "range": {
+        "startLine": 26,
+        "startChar": 48,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6e8768e5_8ea0a727",
         "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14683193_632e3f65",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-13T11:08:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e8768e5_8ea0a727",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 8
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
