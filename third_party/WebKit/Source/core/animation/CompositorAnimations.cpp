@@ -223,7 +223,7 @@ bool CompositorAnimations::GetAnimatedBoundingBox(FloatBox& box,
   return true;
 }
 
-bool CompositorAnimations::IsCandidateForAnimationOnCompositor(
+bool CompositorAnimations::CanStartAnimationOnCompositor(
     const Timing& timing,
     const Element& target_element,
     const Animation* animation_to_add,
@@ -304,7 +304,7 @@ bool CompositorAnimations::IsCandidateForAnimationOnCompositor(
   if (!ConvertTimingForCompositor(timing, 0, out, animation_playback_rate))
     return false;
 
-  return true;
+  return CanStartAnimationOnCompositor(target_element);
 }
 
 void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
@@ -344,7 +344,7 @@ void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
 }
 
 bool CompositorAnimations::CanStartAnimationOnCompositor(
-    const Element& element) {
+    const Element& target_element) {
   if (!Platform::Current()->IsThreadedAnimationEnabled())
     return false;
 
@@ -358,7 +358,7 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
     // DCHECK(document().lifecycle().state() >=
     // DocumentLifecycle::PrePaintClean);
     const ObjectPaintProperties* paint_properties =
-        element.GetLayoutObject()->PaintProperties();
+        target_element.GetLayoutObject()->PaintProperties();
     const TransformPaintPropertyNode* transform_node =
         paint_properties->Transform();
     const EffectPaintPropertyNode* effect_node = paint_properties->Effect();
@@ -366,8 +366,8 @@ bool CompositorAnimations::CanStartAnimationOnCompositor(
            (effect_node && effect_node->HasDirectCompositingReasons());
   }
 
-  return element.GetLayoutObject() &&
-         element.GetLayoutObject()->GetCompositingState() ==
+  return target_element.GetLayoutObject() &&
+         target_element.GetLayoutObject()->GetCompositingState() ==
              kPaintsIntoOwnBacking;
 }
 
@@ -382,9 +382,8 @@ void CompositorAnimations::StartAnimationOnCompositor(
     Vector<int>& started_animation_ids,
     double animation_playback_rate) {
   DCHECK(started_animation_ids.IsEmpty());
-  DCHECK(IsCandidateForAnimationOnCompositor(timing, element, &animation,
-                                             effect, animation_playback_rate));
-  DCHECK(CanStartAnimationOnCompositor(element));
+  DCHECK(CanStartAnimationOnCompositor(timing, element, &animation, effect,
+                                       animation_playback_rate));
 
   const KeyframeEffectModelBase& keyframe_effect =
       ToKeyframeEffectModelBase(effect);
