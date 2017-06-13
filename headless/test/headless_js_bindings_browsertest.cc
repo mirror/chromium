@@ -8,7 +8,10 @@
 
 #include "base/base64.h"
 #include "base/json/json_reader.h"
+#include "base/optional.h"
 #include "base/path_service.h"
+#include "base/strings/string_split.h"
+#include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
 #include "content/public/test/browser_test.h"
 #include "headless/grit/headless_browsertest_resources.h"
@@ -27,7 +30,8 @@ namespace headless {
 class HeadlessJsBindingsTest
     : public HeadlessAsyncDevTooledBrowserTest,
       public HeadlessTabSocket::Listener,
-      public HeadlessDevToolsClient::RawProtocolListener {
+      public HeadlessDevToolsClient::RawProtocolListener,
+      public page::Observer {
  public:
   void SetUp() override {
     options()->mojo_service_names.insert("headless::TabSocket");
@@ -44,27 +48,55 @@ class HeadlessJsBindingsTest
   }
 
   void RunDevTooledTest() override {
+    devtools_client_->SetRawProtocolListener(this);
+    base::RunLoop run_loop;
+    devtools_client_->GetPage()->AddObserver(this);
+    devtools_client_->GetPage()->Enable(run_loop.QuitClosure());
+    base::MessageLoop::ScopedNestableTaskAllower nest_loop(
+        base::MessageLoop::current());
+    run_loop.Run();
     headless_tab_socket_ = web_contents_->GetHeadlessTabSocket();
     DCHECK(headless_tab_socket_);
     headless_tab_socket_->SetListener(this);
-    devtools_client_->SetRawProtocolListener(this);
+    base::Optional<GURL> initial_url = GetInitialUrl();
+    if (initial_url) {
+      devtools_client_->GetPage()->Navigate(initial_url->spec());
+    } else {
+      PrepareToRunJsBindingsTest();
+    }
+  }
+
+  virtual base::Optional<GURL> GetInitialUrl() { return base::nullopt; }
+
+  void OnLoadEventFired(const page::LoadEventFiredParams& params) override {
+    PrepareToRunJsBindingsTest();
+  }
+
+  void PrepareToRunJsBindingsTest() {
     devtools_client_->GetRuntime()->Evaluate(
         ResourceBundle::GetSharedInstance()
             .GetRawDataResource(DEVTOOLS_BINDINGS_TEST)
             .as_string(),
-        base::Bind(&HeadlessJsBindingsTest::FailOnJsEvaluateException,
+        base::Bind(&HeadlessJsBindingsTest::OnEvaluateResult,
                    base::Unretained(this)));
-    RunJsBindingsTest();
   }
 
   virtual void RunJsBindingsTest() = 0;
   virtual std::string GetExpectedResult() = 0;
 
+  void OnEvaluateResult(std::unique_ptr<runtime::EvaluateResult> result) {
+    if (!result->HasExceptionDetails()) {
+      RunJsBindingsTest();
+    } else {
+      FailOnJsEvaluateException(std::move(result));
+    }
+  }
+
   void FailOnJsEvaluateException(
       std::unique_ptr<runtime::EvaluateResult> result) {
-    if (!result->HasExceptionDetails())
+    if (!result->HasExceptionDetails()) {
       return;
-
+    }
     FinishAsynchronousTest();
 
     const runtime::ExceptionDetails* exception_details =
@@ -118,10 +150,22 @@ class HeadlessJsBindingsTest
       // via HeadlessDevToolsClientImpl::SendRawDevToolsMessage.
       if ((id % 2) == 0)
         return false;
+
+      headless_tab_socket_->SendMessageToTab(json_message);
+      return true;
     }
 
+    std::string method;
+    if (!parsed_message.GetString("method", &method))
+      return false;
+
     headless_tab_socket_->SendMessageToTab(json_message);
-    return true;
+
+    // Check which domain the event belongs to, if it's the DOM domain then
+    // assume js handled it.
+    std::vector<base::StringPiece> sections = SplitStringPiece(
+        method, ".", base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
+    return sections[0] == "DOM" || sections[0] == "Runtime";
   }
 
  private:
@@ -142,6 +186,22 @@ class SimpleCommandJsBindingsTest : public HeadlessJsBindingsTest {
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(SimpleCommandJsBindingsTest);
 
+class ExperimentalCommandJsBindingsTest : public HeadlessJsBindingsTest {
+ public:
+  void RunJsBindingsTest() override {
+    devtools_client_->GetRuntime()->Evaluate(
+        "new chromium.BindingsTest().getIsolatedWorldName();",
+        base::Bind(&HeadlessJsBindingsTest::FailOnJsEvaluateException,
+                   base::Unretained(this)));
+  }
+
+  std::string GetExpectedResult() override {
+    return "Created Test Isolated World";
+  }
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(ExperimentalCommandJsBindingsTest);
+
 class SimpleEventJsBindingsTest : public HeadlessJsBindingsTest {
  public:
   void RunJsBindingsTest() override {
@@ -157,4 +217,5 @@ class SimpleEventJsBindingsTest : public HeadlessJsBindingsTest {
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(SimpleEventJsBindingsTest);
+
 }  // namespace headless
