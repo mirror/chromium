@@ -660,6 +660,30 @@
     },
     {
       "key": {
+        "uuid": "d40aea3c_1da2b505",
+        "filename": "device/vr/vr_service.mojom",
+        "patchSetId": 12
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "They should be in Google/Chrome style (see https://chromium-review.googlesource.com/c/527686/ which is a belated update)",
+      "parentUuid": "cb77b202_9938f145",
+      "range": {
+        "startLine": 108,
+        "startChar": 20,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "26ac9b5fdbb652dc87bc33aab7b8669b78c2f345",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d444edb_47728658",
         "filename": "device/vr/vr_service.mojom",
         "patchSetId": 12

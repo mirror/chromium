@@ -22,6 +22,30 @@
       "revId": "c0d6b4443aea229364763a34464a75493a2494ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681722da_c219e454",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 548,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "The best approach is probably to typemap them to FloatRect on the Blink side for now. Let\u0027s do that in a followup though (assuming the errors are not blocking)",
+      "parentUuid": "828d63ab_7827bf78",
+      "range": {
+        "startLine": 548,
+        "startChar": 18,
+        "endLine": 548,
+        "endChar": 23
+      },
+      "revId": "c0d6b4443aea229364763a34464a75493a2494ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

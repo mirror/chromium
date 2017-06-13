@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c2c5e7d5_38c7cacd",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "Doesn\u0027t this have to be #defined before #including math.h to have an effect?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 38
+      },
+      "revId": "644a1c7999b54f6cdacd458d64815590af65563b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "659296de_bd6b9d14",
+        "filename": "device/vr/openvr/openvr_device.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "I\u0027m not sure why this isn\u0027t using the typemap; maybe there\u0027s a missing dependency somewhere? Would be nice to be consistent.",
+      "range": {
+        "startLine": 350,
+        "startChar": 41,
+        "endLine": 350,
+        "endChar": 64
+      },
+      "revId": "644a1c7999b54f6cdacd458d64815590af65563b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec1869f2_bb2147b5",
+        "filename": "third_party/WebKit/Source/modules/vr/VRDisplay.cpp",
+        "patchSetId": 16
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "Nit: needs explicit",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 31
+      },
+      "revId": "644a1c7999b54f6cdacd458d64815590af65563b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51c7b92_1b4fcb67",
+        "filename": "third_party/WebKit/Source/platform/mojo/Geometry.typemap",
+        "patchSetId": 16
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T11:02:16Z",
+      "side": 1,
+      "message": "As mentioned, I think the Blink-side should be mapping to FloatRect, but perhaps that\u0027s non-trivial due to the aforementioned linking issue. Perhaps WebFloatRect would be Good Enough?\n\nAlso I don\u0027t see the new struct traits in this patchset.\n\n(Never mind I see there\u0027s a separate CL uploaded in Rietveld for this)",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 22,
+        "endChar": 31
+      },
+      "revId": "644a1c7999b54f6cdacd458d64815590af65563b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
