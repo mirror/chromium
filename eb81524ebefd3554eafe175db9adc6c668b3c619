@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0a2e087_5efedc67",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-13T10:28:47Z",
+      "side": 1,
+      "message": "Deleted.",
+      "parentUuid": "d8570f45_b39a71d5",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4bf0d60_31a4e1c3",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "899b51b8_c405e60e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-13T10:28:47Z",
+      "side": 1,
+      "message": "I chatted with kinuko@ and agreed to rename to ResourceFinishWatcher, but I changed my mind because ResourceFinishObserver is more aligned with some functions in Resource such as Resource::HasClientsOrObservers. I was worried about the possible conflict with some observers such as ImageResourceObserver, but hopefully the relationship between ResourceFinishObserver and ImageResourceObserver is not as confusing as the relationship between ResourceClient and AsyncResourceClient.\n\nWDYT?",
+      "parentUuid": "a4bf0d60_31a4e1c3",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ae51ddf_41c6d6bb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-13T03:35:11Z",
       "side": 1,
       "message": "s/can be/is/?\n\nLooks like NofityFinished is always dispatched after removing this from async_clients_",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade72a5a_b48cd082",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-13T10:28:47Z",
+      "side": 1,
+      "message": "What I wanted to say was, even if you call resource-\u003eRemoveAsyncClient(client), |client| can be notified after that, when NotifyFinished is scheduled.",
+      "parentUuid": "9ae51ddf_41c6d6bb",
       "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
