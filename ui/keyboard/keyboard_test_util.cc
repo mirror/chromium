@@ -35,6 +35,34 @@ class WindowVisibilityChangeWaiter : public aura::WindowObserver {
   DISALLOW_COPY_AND_ASSIGN(WindowVisibilityChangeWaiter);
 };
 
+class ControllerStateChangeWaiter
+    : public keyboard::KeyboardControllerObserver {
+ public:
+  explicit ControllerStateChangeWaiter(keyboard::KeyboardControllerState state)
+      : controller_(keyboard::KeyboardController::GetInstance()),
+        state_(state) {
+    controller_->AddObserver(this);
+  }
+  ~ControllerStateChangeWaiter() override { controller_->RemoveObserver(this); }
+
+  void Wait() { run_loop_.Run(); }
+
+ private:
+  void OnKeyboardBoundsChanging(const gfx::Rect& new_bounds) override {}
+  void OnKeyboardClosed() override {}
+  void OnStateChanged(const keyboard::KeyboardControllerState state) override {
+    if (state == state_) {
+      run_loop_.QuitWhenIdle();
+    }
+  }
+
+  base::RunLoop run_loop_;
+  keyboard::KeyboardController* controller_;
+  keyboard::KeyboardControllerState state_;
+
+  DISALLOW_COPY_AND_ASSIGN(ControllerStateChangeWaiter);
+};
+
 bool WaitVisibilityChangesTo(bool visibility) {
   aura::Window* keyboard_window =
       keyboard::KeyboardController::GetInstance()
