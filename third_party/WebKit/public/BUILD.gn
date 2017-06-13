@@ -701,8 +701,12 @@ grit("image_resources") {
 }
 
 mojom("mojo_bindings") {
-  visibility = [ "//content/*" ]
+  visibility = [
+    "//components/payments/*",
+    "//content/*",
+  ]
   visibility_blink = [
+    "//components/payments/mojom:mojom_payment_app_blink",
     "//content/common:mojo_bindings_blink",
     "//third_party/WebKit/Source/platform",
   ]
@@ -771,10 +775,10 @@ mojom("android_mojo_bindings") {
     "platform/modules/installedapp/installed_app_provider.mojom",
     "platform/modules/installedapp/related_application.mojom",
     "platform/modules/mediasession/media_session.mojom",
+    "platform/modules/payments/payment_request.mojom",
     "platform/modules/webshare/webshare.mojom",
   ]
   public_deps = [
-    "//components/payments/mojom",
     "//mojo/common:common_custom_types",
     "//ui/gfx/geometry/mojo",
     "//url/mojo:url_mojom_gurl",
