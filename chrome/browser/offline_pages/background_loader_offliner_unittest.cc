@@ -265,15 +265,6 @@ void BackgroundLoaderOfflinerTest::OnCancel(const SavePageRequest& request) {
   cancel_callback_called_ = true;
 }
 
-// Two tests crash roughly 20% of runs on Android.  http://crbug.com/722556.
-#if defined(OS_ANDROID)
-#define MAYBE_FailsOnErrorPage DISABLED_FailsOnErrorPage
-#define MAYBE_NoNextOnInternetDisconnected DISABLED_NoNextOnInternetDisconnected
-#else
-#define MAYBE_FailsOnErrorPage FailsOnErrorPage
-#define MAYBE_NoNextOnInternetDisconnected NoNextOnInternetDisconnected
-#endif
-
 TEST_F(BackgroundLoaderOfflinerTest, LoadTerminationListenerSetup) {
   // Verify that back pointer to offliner is set up in the listener.
   Offliner* base_offliner = offliner();
@@ -522,7 +513,7 @@ TEST_F(BackgroundLoaderOfflinerTest, ReturnsOnWebContentsDestroyed) {
   EXPECT_EQ(Offliner::RequestStatus::LOADING_FAILED, request_status());
 }
 
-TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnErrorPage) {
+TEST_F(BackgroundLoaderOfflinerTest, FailsOnErrorPage) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
                           kUserRequested);
@@ -537,8 +528,8 @@ TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnErrorPage) {
   // NavigationHandle destruction will trigger DidFinishNavigation code.
   handle.reset();
   histograms().ExpectBucketCount(
-      "OfflinePages.Background.BackgroundLoadingFailedCode.async_loading",
-      105,  // ERR_NAME_NOT_RESOLVED
+      "OfflinePages.Background.LoadingErrorStatusCode.async_loading",
+      -105,  // ERR_NAME_NOT_RESOLVED
       1);
   CompleteLoading();
   PumpLoop();
@@ -547,7 +538,7 @@ TEST_F(BackgroundLoaderOfflinerTest, MAYBE_FailsOnErrorPage) {
   EXPECT_EQ(Offliner::RequestStatus::LOADING_FAILED, request_status());
 }
 
-TEST_F(BackgroundLoaderOfflinerTest, MAYBE_NoNextOnInternetDisconnected) {
+TEST_F(BackgroundLoaderOfflinerTest, NoNextOnInternetDisconnected) {
   base::Time creation_time = base::Time::Now();
   SavePageRequest request(kRequestId, kHttpUrl, kClientId, creation_time,
                           kUserRequested);
