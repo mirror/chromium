@@ -21,14 +21,13 @@ document.execCommand("InsertText", false, " ");
 document.execCommand("InsertText", false, " ");
 document.execCommand("InsertText", false, " ");
 document.execCommand("InsertText", false, " ");
-document.execCommand("InsertText", false, " ");
 document.execCommand("InsertText", false, "World");
 document.execCommand("InsertText", false, " ");
 
 var innerText = div.innerHTML;
 
 // Check the pattern produced.  This might change in the future.
-var expected = "&nbsp;Hello &nbsp; &nbsp; World&nbsp;";
+var expected = "&nbsp;Hello&nbsp; &nbsp; World&nbsp;";
 var nbsp = false;
 for (var i = 0; i < innerText.length; i++) {
     if(innerText[i] != expected[i])
