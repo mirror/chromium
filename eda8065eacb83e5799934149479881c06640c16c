@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20a3216a_073412fd",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "nit: fold the line at 80 columns?",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50ad9ee5_b0910d7f",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "nit: at line 44 variable name is \"shadowRoot\", while \"sr\" here. consistent is better.\n(ditto for \u0027div\u0027 vs \u0027x\u0027)",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b03cbb4_8dcfd01f",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "nit question: why not passing two parameters directly but two parameters in a object?",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8f2d3e_8971663c",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "This div isn\u0027t used.",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe33eeef_e54601b4",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "This div isn\u0027t used.",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4877f8c_beb3089f",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-distribution-disconnected-and-reconnected.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-13T05:03:58Z",
+      "side": 1,
+      "message": "nit: type\u003d attribute is not strongly necessary.",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
