@@ -71,6 +71,7 @@ void WorkerScriptLoader::LoadSynchronously(
   execution_context_ = &execution_context;
 
   ResourceRequest request(CreateResourceRequest(creation_address_space));
+
   SECURITY_DCHECK(execution_context.IsWorkerGlobalScope());
 
   ThreadableLoaderOptions options;
@@ -79,8 +80,7 @@ void WorkerScriptLoader::LoadSynchronously(
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options(
-      kAllowStoredCredentials, kClientDidNotRequestCredentials);
+  ResourceLoaderOptions resource_loader_options;
 
   WorkerThreadableLoader::LoadResourceSynchronously(
       ToWorkerGlobalScope(execution_context), request, *this, options,
@@ -104,8 +104,7 @@ void WorkerScriptLoader::LoadAsynchronously(
   ThreadableLoaderOptions options;
   options.fetch_request_mode = fetch_request_mode;
 
-  ResourceLoaderOptions resource_loader_options(
-      kAllowStoredCredentials, kClientDidNotRequestCredentials);
+  ResourceLoaderOptions resource_loader_options;
 
   // During create, callbacks may happen which could remove the last reference
   // to this object, while some of the callchain assumes that the client and
@@ -130,6 +129,8 @@ ResourceRequest WorkerScriptLoader::CreateResourceRequest(
   ResourceRequest request(url_);
   request.SetHTTPMethod(HTTPNames::GET);
   request.SetRequestContext(request_context_);
+  request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeSameOrigin);
   request.SetExternalRequestStateFromRequestorAddressSpace(
       creation_address_space);
   return request;

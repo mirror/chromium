@@ -34,6 +34,7 @@
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/AtomicString.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 class SecurityOrigin;

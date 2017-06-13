@@ -101,6 +101,8 @@ ResourceRequest CreateAccessControlPreflightRequest(
                                        AtomicString(request.HttpMethod()));
   preflight_request.SetPriority(request.Priority());
   preflight_request.SetRequestContext(request.GetRequestContext());
+  preflight_request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeOmit);
   preflight_request.SetServiceWorkerMode(
       WebURLRequest::ServiceWorkerMode::kNone);
 
@@ -149,7 +151,7 @@ static void AppendNoCORSInformationalMessage(
 
 CrossOriginAccessControl::AccessStatus CrossOriginAccessControl::CheckAccess(
     const ResourceResponse& response,
-    StoredCredentials include_credentials,
+    WebURLRequest::FetchCredentialsMode credentials_mode,
     const SecurityOrigin* security_origin) {
   static const char allow_origin_header_name[] = "access-control-allow-origin";
   static const char allow_credentials_header_name[] =
@@ -180,7 +182,7 @@ CrossOriginAccessControl::AccessStatus CrossOriginAccessControl::CheckAccess(
   if (allow_origin_header_value == "*") {
     // A wildcard Access-Control-Allow-Origin can not be used if credentials are
     // to be sent, even with Access-Control-Allow-Credentials set to true.
-    if (include_credentials == kDoNotAllowStoredCredentials)
+    if (credentials_mode == WebURLRequest::kFetchCredentialsModeInclude)
       return kAccessAllowed;
     if (response.IsHTTP()) {
       return kWildcardOriginNotAllowed;
@@ -199,7 +201,7 @@ CrossOriginAccessControl::AccessStatus CrossOriginAccessControl::CheckAccess(
     return kAllowOriginMismatch;
   }
 
-  if (include_credentials == kAllowStoredCredentials) {
+  if (fetch_credentials_mode == WebURLRequest::kFetchCredentialsModeInclude) {
     const AtomicString& allow_credentials_header_value =
         response.HttpHeaderField(allow_credentials_header_name);
     if (allow_credentials_header_value != "true") {
@@ -540,7 +542,7 @@ bool CrossOriginAccessControl::HandleRedirect(
     RefPtr<SecurityOrigin> current_security_origin,
     ResourceRequest& new_request,
     const ResourceResponse& redirect_response,
-    StoredCredentials with_credentials,
+    WebURLRequest::FetchCredentialsMode fetch_credentials_mode,
     ResourceLoaderOptions& options,
     String& error_message) {
   // http://www.w3.org/TR/cors/#redirect-steps terminology:
@@ -568,8 +570,9 @@ bool CrossOriginAccessControl::HandleRedirect(
 
     // Step 5: perform resource sharing access check.
     CrossOriginAccessControl::AccessStatus cors_status =
-        CrossOriginAccessControl::CheckAccess(
-            redirect_response, with_credentials, current_security_origin.Get());
+        CrossOriginAccessControl::CheckAccess(redirect_response,
+                                              fetch_credentials_mode,
+                                              current_security_origin.Get());
     if (cors_status != kAccessAllowed) {
       StringBuilder builder;
       builder.Append("Redirect from '");
@@ -595,13 +598,7 @@ bool CrossOriginAccessControl::HandleRedirect(
     new_request.ClearHTTPOrigin();
     new_request.SetHTTPOrigin(new_security_origin.Get());
 
-    // Unset credentials flag if request's credentials mode is "same-origin" as
-    // request's response tainting becomes "cors".
-    //
-    // This is equivalent to the step 2 in
-    // https://fetch.spec.whatwg.org/#http-network-or-cache-fetch
-    if (options.credentials_requested == kClientDidNotRequestCredentials)
-      options.allow_credentials = kDoNotAllowStoredCredentials;
+    options.cors_flag = true;
   }
   return true;
 }
