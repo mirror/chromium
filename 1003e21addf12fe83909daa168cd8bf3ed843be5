@@ -16,6 +16,24 @@
       "revId": "1003e21addf12fe83909daa168cd8bf3ed843be5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb4e14ed_26c85ec7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-13T13:47:07Z",
+      "side": 1,
+      "message": "In the context of this CL, the problem occurs when the Internals method is called before HTMLMediaElement calls RemotePlaybackClient()-\u003eSourceChanged() (https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/html/HTMLMediaElement.cpp?l\u003d1136) as the latter will ask PresentationDispatcher for availability and it will return false - as it does on each request before the real availability is known - thus overriding the values set by test.\n\nPerhaps, loadedmetadata is not required, one just has to call the Internals method after src is set (seems like setSrc will eventually and synchronously lead to SourceChanged() called).\n\nIn the context of the metadata, we have to require that as we won\u0027t be able to check the audio/video codec support without it. We don\u0027t want user to try casting a video and fail because the codec is not supported.",
+      "parentUuid": "100e7928_bf7d0337",
+      "revId": "1003e21addf12fe83909daa168cd8bf3ed843be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
