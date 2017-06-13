@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8bd02882_68406cec",
+        "filename": "components/url_pattern_index/README",
+        "patchSetId": 8
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-13T14:19:26Z",
+      "side": 1,
+      "message": "s/build/built",
+      "range": {
+        "startLine": 11,
+        "startChar": 22,
+        "endLine": 11,
+        "endChar": 27
+      },
+      "revId": "c3e70086524596106e3188ac9210c0e336372ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
