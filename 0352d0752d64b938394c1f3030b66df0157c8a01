@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "075d5af6_b4ea8940",
+        "filename": "chrome/browser/chromeos/input_method/input_method_manager_impl_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1576,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-13T20:34:11Z",
+      "side": 1,
+      "message": "I put this here because it needs all the InputMethodManagerImpl initialization and InitComponentExtension() implementation.",
+      "revId": "0352d0752d64b938394c1f3030b66df0157c8a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdfc8425_29f08f36",
+        "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-13T20:34:11Z",
+      "side": 1,
+      "message": "I plan to introduce an ash::mojom::ImeController interface in the next CL. I\u0027ll use that for sensing in additional tests.",
+      "revId": "0352d0752d64b938394c1f3030b66df0157c8a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
