@@ -116,6 +116,7 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  self.collectionView.accessibilityIdentifier = @"toto";
 
   _collectionUpdater.collectionViewController = self;
 
