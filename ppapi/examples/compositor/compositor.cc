@@ -2,15 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Needed on Windows to get |M_PI| from math.h.
-#ifdef _WIN32
-#define _USE_MATH_DEFINES
-#endif
-
-#include <math.h>
-
 #include <vector>
 
+#include "base/numerics/math_util.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/c/pp_input_event.h"
 #include "ppapi/cpp/compositor.h"
@@ -287,8 +281,8 @@ void DemoInstance::Paint(int32_t result, int32_t frame) {
 
 void DemoInstance::PrepareLayers(int32_t frame) {
   int32_t rv;
-  float factor_sin = sin(static_cast<float>(M_PI) / 180 * frame);
-  float factor_cos = cos(static_cast<float>(M_PI) / 180 * frame);
+  float factor_sin = sinf(base::DegToRad(static_cast<float>(frame)));
+  float factor_cos = cosf(base::DegToRad(static_cast<float>(frame)));
   {
     // Set the background color layer.
     if (color_layer_.is_null()) {
