@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "e36fa0e6_bdc1863f",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-13T08:17:33Z",
+      "side": 1,
+      "message": "Should this be \"It is\"?",
+      "range": {
+        "startLine": 257,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 10
+      },
+      "revId": "97aa8f976b3a0676812ac1ef4c336cf6fbb26f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebeaffc_68c72fa5",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-13T08:17:33Z",
+      "side": 1,
+      "message": "Should this be a while loop if we are deep in the hierarchy? Maybe not worth the added complexity, if this case never happens?",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 25
+      },
+      "revId": "97aa8f976b3a0676812ac1ef4c336cf6fbb26f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8566105b_9ee266c3",
         "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
         "patchSetId": 1
