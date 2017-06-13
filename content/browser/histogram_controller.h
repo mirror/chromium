@@ -10,6 +10,8 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "content/common/histogram.mojom.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 
 namespace content {
 
@@ -55,6 +57,10 @@ class HistogramController {
       int sequence_number,
       const std::vector<std::string>& pickled_histograms);
 
+  // Takes ownership of |client|. |client| will be queried for histogram data
+  // when GetHistogramData() is called.
+  void RegisterClient(mojom::HistogramControllerClientPtr client);
+
  private:
   friend struct base::DefaultSingletonTraits<HistogramController>;
 
@@ -63,6 +69,7 @@ class HistogramController {
   // PPAPI and NACL.
   void GetHistogramDataFromChildProcesses(int sequence_number);
 
+  mojo::InterfacePtrSet<mojom::HistogramControllerClient> clients_;
   HistogramSubscriber* subscriber_;
 
   DISALLOW_COPY_AND_ASSIGN(HistogramController);

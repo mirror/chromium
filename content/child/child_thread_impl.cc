@@ -549,6 +549,8 @@ void ChildThreadImpl::Init(const Options& options) {
     StartServiceManagerConnection();
   }
 
+  // Register with histogram
+
   int connection_timeout = kConnectionTimeoutS;
   std::string connection_override =
       base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(

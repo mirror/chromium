@@ -73,6 +73,7 @@
 #include "content/browser/child_process_security_policy_impl.h"
 #include "content/browser/dom_storage/dom_storage_context_wrapper.h"
 #include "content/browser/dom_storage/dom_storage_message_filter.h"
+#include "content/browser/histogram_controller.h"
 #include "content/browser/field_trial_recorder.h"
 #include "content/browser/fileapi/fileapi_message_filter.h"
 #include "content/browser/frame_host/render_frame_message_filter.h"
@@ -183,6 +184,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
@@ -950,6 +952,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
 #endif
       renderer_host_binding_(this),
+      histogram_controller_binding_(this),
       instance_weak_factory_(
           new base::WeakPtrFactory<RenderProcessHostImpl>(this)),
       frame_sink_provider_(id_),
@@ -1568,6 +1571,9 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   AddUIThreadInterface(registry.get(),
                        base::Bind(&RenderProcessHostImpl::CreateRendererHost,
                                   base::Unretained(this)));
+  AddUIThreadInterface(registry.get(),
+                       base::Bind(&RenderProcessHostImpl::CreateHistogramController,
+                                  base::Unretained(this)));
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableNetworkService)) {
@@ -1664,6 +1670,12 @@ void RenderProcessHostImpl::CreateRendererHost(
     const service_manager::BindSourceInfo& source_info,
     mojom::RendererHostRequest request) {
   renderer_host_binding_.Bind(std::move(request));
+}
+
+void RenderProcessHostImpl::CreateHistogramController(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::HistogramControllerRequest request) {
+  histogram_controller_binding_.Bind(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
@@ -3154,11 +3166,23 @@ void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
     metrics_allocator_.reset(new base::SharedPersistentMemoryAllocator(
         std::move(shm), GetID(), "RendererMetrics", /*readonly=*/false));
   }
+}
 
-  base::SharedMemoryHandle shm_handle =
-      metrics_allocator_->shared_memory()->handle().Duplicate();
-  Send(new ChildProcessMsg_SetHistogramMemory(
-      shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
+void RenderProcessHostImpl::RegisterClient(
+    mojom::HistogramControllerClientPtr client,
+    mojom::HistogramController::RegisterClientCallback cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // Call the callback before registering this client with the
+  // HistogramController.
+  CreateSharedRendererHistogramAllocator();
+  std::move(cb).Run(metrics_allocator_ ?
+      mojo::WrapSharedMemoryHandle(
+          metrics_allocator_->shared_memory()->handle().Duplicate(),
+          metrics_allocator_->shared_memory()->mapped_size(),
+          false /* read_only */) :
+      mojo::ScopedSharedBufferHandle());
+  ::content::HistogramController::GetInstance()->RegisterClient(std::move(client));
 }
 
 void RenderProcessHostImpl::ProcessDied(bool already_dead,
