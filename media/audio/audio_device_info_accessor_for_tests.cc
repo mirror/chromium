@@ -40,7 +40,8 @@ void AudioDeviceInfoAccessorForTests::GetAudioOutputDeviceDescriptions(
 AudioParameters
 AudioDeviceInfoAccessorForTests::GetDefaultOutputStreamParameters() {
   DCHECK(audio_manager_->GetTaskRunner()->BelongsToCurrentThread());
-  return audio_manager_->GetDefaultOutputStreamParameters();
+  return audio_manager_->GetOutputStreamParameters(
+      AudioDeviceDescription::kDefaultDeviceId);
 }
 
 AudioParameters AudioDeviceInfoAccessorForTests::GetOutputStreamParameters(
