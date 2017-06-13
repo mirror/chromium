@@ -1007,6 +1007,9 @@ RendererBlinkPlatformImpl::CreateOffscreenGraphicsContext3DProvider(
     share_context = share_provider_impl->context_provider();
   }
 
+  GetGpuMemoryBufferManager();  // Called to initialize internal static pointer
+                                // on the main thread.
+
   bool is_software_rendering = gpu_channel_host->gpu_info().software_rendering;
 
   // This is an offscreen context. Generally it won't use the default
@@ -1079,10 +1082,23 @@ RendererBlinkPlatformImpl::CreateSharedOffscreenGraphicsContext3DProvider() {
 
 //------------------------------------------------------------------------------
 
+static gpu::GpuMemoryBufferManager* InitGpuMemoryBufferManager() {
+  // If this check fires, it means that the first call to
+  // Platform::GetGpuMemoryBufferManager was not made on the main thread.
+  // This should never happen if a WebGraphicsContext3DProvider is created
+  // first.
+  CHECK(RenderThreadImpl::current());
+  return RenderThreadImpl::current()->GetGpuMemoryBufferManager();
+}
+
 gpu::GpuMemoryBufferManager*
 RendererBlinkPlatformImpl::GetGpuMemoryBufferManager() {
-  RenderThreadImpl* thread = RenderThreadImpl::current();
-  return thread ? thread->GetGpuMemoryBufferManager() : nullptr;
+  // RenderThreadImpl::GetGpuMemoryBufferManager can only be called on the main
+  // thread. To make this method callable from any thread, we cache the pointer
+  // in a static local
+  static gpu::GpuMemoryBufferManager* gpu_memory_buffer_manager =
+      InitGpuMemoryBufferManager();
+  return gpu_memory_buffer_manager;
 }
 
 //------------------------------------------------------------------------------
