@@ -15,6 +15,7 @@
 #include "media/base/video_decoder.h"
 #include "media/gpu/android/codec_wrapper.h"
 #include "media/gpu/android/device_info.h"
+#include "media/gpu/android/video_frame_factory.h"
 #include "media/gpu/android_video_surface_chooser.h"
 #include "media/gpu/avda_codec_allocator.h"
 #include "media/gpu/media_gpu_export.h"
@@ -102,6 +103,8 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
 
   // Finishes initialization.
   void StartLazyInit();
+  void VideoFrameFactoryInitialized(
+      scoped_refptr<SurfaceTextureGLOwner> surface_texture);
 
   // Initializes |surface_chooser_|.
   void InitializeSurfaceChooser();
@@ -158,7 +161,14 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
 
   // A SurfaceTexture that is kept for the lifetime of MCVD so that if we have
   // to synchronously switch surfaces we always have one available.
+  // We can remove this once onSurfaceDestroyed() callbacks are not delivered
+  // via the gpu thread, because then we can post a task to the gpu thread to
+  // create a SurfaceTexture inside the onSurfaceDestroyed() handler without
+  // deadlocking.
   scoped_refptr<SurfaceTextureGLOwner> surface_texture_;
+
+  // The factory for creating VideoFrames from CodecOutputBuffers.
+  std::unique_ptr<VideoFrameFactory> video_frame_factory_;
 
   // The current overlay info, which possibly specifies an overlay to render to.
   OverlayInfo overlay_info_;

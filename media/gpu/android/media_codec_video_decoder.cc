@@ -157,8 +157,21 @@ void MediaCodecVideoDecoder::Initialize(const VideoDecoderConfig& config,
 void MediaCodecVideoDecoder::StartLazyInit() {
   DVLOG(2) << __func__;
   lazy_init_pending_ = false;
-  // TODO(watk): Initialize surface_texture_ properly.
-  surface_texture_ = SurfaceTextureGLOwnerImpl::Create();
+  video_frame_factory_.reset(new VideoFrameFactoryImpl(gpu_task_runner_));
+  video_frame_factory_->Initialize(
+      get_stub_cb_,
+      base::Bind(&MediaCodecVideoDecoder::VideoFrameFactoryInitialized,
+                 weak_factory_.GetWeakPtr()));
+}
+
+void MediaCodecVideoDecoder::VideoFrameFactoryInitialized(
+    scoped_refptr<SurfaceTextureGLOwner> surface_texture) {
+  DVLOG(2) << __func__;
+  if (!surface_texture) {
+    HandleError();
+    return;
+  }
+  surface_texture_ = std::move(surface_texture);
   InitializeSurfaceChooser();
 }
 
