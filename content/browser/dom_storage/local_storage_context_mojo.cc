@@ -51,6 +51,10 @@ const uint8_t kMetaPrefix[] = {'M', 'E', 'T', 'A', ':'};
 const int64_t kMinSchemaVersion = 1;
 const int64_t kCurrentSchemaVersion = 1;
 
+// After this many consecutive commit errors we'll throw away the entire
+// database.
+const int kCommitErrorThreshold = 8;
+
 const char kStorageOpenHistogramName[] = "LocalStorageContext.OpenError";
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
@@ -197,6 +201,8 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
           base::Bind(base::IgnoreResult(&sql::Connection::Delete),
                      sql_db_path()));
     }
+
+    context_->OnCommitResult(error);
   }
 
   void MigrateData(LevelDBWrapperImpl::ValueMapCallback callback) override {
@@ -570,12 +576,13 @@ void LocalStorageContextMojo::OnGotDatabaseVersion(
 void LocalStorageContextMojo::OnConnectionFinished() {
   DCHECK_EQ(connection_state_, CONNECTION_IN_PROGRESS);
 
-  // We no longer need the file service; we've either transferred |directory_|
-  // to the leveldb service, or we got a file error and no more is possible.
-  directory_.reset();
-  file_system_.reset();
   if (!database_)
     leveldb_service_.reset();
+
+  // If connection was opened successfully, reset tried_to_recreate_ to enable
+  // recreating the database on future errors.
+  if (database_)
+    tried_to_recreate_ = false;
 
   // |database_| should be known to either be valid or invalid by now. Run our
   // delayed bindings.
@@ -736,6 +743,47 @@ void LocalStorageContextMojo::OnGotStorageUsageForShutdown(
 void LocalStorageContextMojo::OnShutdownComplete(
     leveldb::mojom::DatabaseError error) {
   delete this;
+}
+
+void LocalStorageContextMojo::OnCommitResult(
+    leveldb::mojom::DatabaseError error) {
+  DCHECK_EQ(connection_state_, CONNECTION_FINISHED);
+
+  if (error == leveldb::mojom::DatabaseError::OK) {
+    commit_error_count_ = 0;
+    return;
+  }
+
+  commit_error_count_++;
+  if (commit_error_count_ > kCommitErrorThreshold) {
+    // Detach all existing leveldb wrappers from the database.
+    for (const auto& it : level_db_wrappers_)
+      it.second->level_db_wrapper()->SetDatabase(nullptr);
+
+    // Schedule a task to connect the wrappers back up to the new database.
+    DCHECK(on_database_opened_callbacks_.empty());
+    on_database_opened_callbacks_.push_back(base::BindOnce(
+        &LocalStorageContextMojo::OnReconnectedToDB, base::Unretained(this)));
+
+    connection_state_ = CONNECTION_IN_PROGRESS;
+    DeleteAndRecreateDatabase();
+  }
+}
+
+void LocalStorageContextMojo::OnReconnectedToDB() {
+  if (!database_)
+    return;
+  // Don't attempt to persist to disk data still around in in-memory structures,
+  // instead just clear out all LevelDBWrappers and start fresh with the new
+  // database.
+  // TODO(mek): Decide if we should try to recover some of the existing data
+  // rather than just blowing everything away.
+  for (const auto& it : level_db_wrappers_) {
+    // Notify renderers data was cleared. Renderer process expects |source| to
+    // always be two newline separated strings.
+    it.second->level_db_wrapper()->DeleteAll("\n", base::Bind(&NoOpSuccess));
+    it.second->level_db_wrapper()->SetDatabase(database_.get());
+  }
 }
 
 }  // namespace content
