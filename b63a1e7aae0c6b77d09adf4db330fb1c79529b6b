@@ -22,6 +22,30 @@
       "revId": "b63a1e7aae0c6b77d09adf4db330fb1c79529b6b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d37a2817_c978eeca",
+        "filename": "third_party/WebKit/Source/modules/ModulesInitializer.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-13T15:16:56Z",
+      "side": 1,
+      "message": "Hmm i did - not sure how that change got lost - perhaps when i rebased.\n\nFixed.",
+      "parentUuid": "060bbd41_9df2d3a9",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 64
+      },
+      "revId": "b63a1e7aae0c6b77d09adf4db330fb1c79529b6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
