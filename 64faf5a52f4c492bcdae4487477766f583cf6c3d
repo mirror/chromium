@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ce4b68df_7ae0c769",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-13T20:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3205c03_8b870a89",
+      "range": {
+        "startLine": 488,
+        "startChar": 72,
+        "endLine": 488,
+        "endChar": 73
+      },
+      "revId": "64faf5a52f4c492bcdae4487477766f583cf6c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50e42100_ae32e42d",
         "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller_unittest.mm",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "64faf5a52f4c492bcdae4487477766f583cf6c3d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56bab2e4_b40f05e0",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-13T20:24:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50e42100_ae32e42d",
+      "range": {
+        "startLine": 492,
+        "startChar": 22,
+        "endLine": 492,
+        "endChar": 37
+      },
+      "revId": "64faf5a52f4c492bcdae4487477766f583cf6c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
