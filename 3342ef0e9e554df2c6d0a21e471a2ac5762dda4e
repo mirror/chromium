@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9190d5b1_7fbc28fc",
+        "filename": "chrome/test/data/webui/cr_elements/cr_action_menu_test.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-13T04:12:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0acc8397_83372629",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f6c43d2_81f7c1c7",
         "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "28eec5d6_d893b46c",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-13T04:12:00Z",
+      "side": 1,
+      "message": "Done. The observer initializes the first time the menu is shown, and remains active until the menu is detached.",
+      "parentUuid": "8f6c43d2_81f7c1c7",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9129f04_35cb7488",
         "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-12T18:14:57Z",
       "side": 1,
       "message": "Does the observer have to be registered on |this|? Can it be registered on the item-wrapper div, at https://cs.chromium.org/chromium/src/ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.html?l\u003d58?",
+      "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "883288b9_7d943e4a",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-13T04:12:00Z",
+      "side": 1,
+      "message": "I think that MutationObservers never cross shadow root boundaries, so yes, it does have to be registered on |this|. That\u0027s not necessarily a bad thing, though, because it means the observer will only ever see changes to the light dom children (the menu items) without seeing changes to the shadow dom.",
+      "parentUuid": "e9129f04_35cb7488",
       "revId": "3342ef0e9e554df2c6d0a21e471a2ac5762dda4e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
