@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d7a33751_8393a3de",
+        "filename": "content/browser/manifest/manifest_manager_host.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-13T03:35:01Z",
+      "side": 1,
+      "message": "In this context, it\u0027s referring to web manifests.\n\nIt\u0027s main-frame only because this was only ever called for main frames and only supporting main frames allowed the code to be simpler.",
+      "parentUuid": "1018059b_26cc5e9a",
+      "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f8b22f8_512e13e9",
         "filename": "content/public/common/manifest_struct_traits.h",
         "patchSetId": 16
@@ -56,6 +74,24 @@
       "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce456fa7_468307be",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 6579,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-13T03:35:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0027ee6f_a466b006",
+      "revId": "3032683761a515c9bf1b8b7aa744c81280cf31d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
