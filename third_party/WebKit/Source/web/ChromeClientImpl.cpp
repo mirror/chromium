@@ -34,7 +34,6 @@
 #include <memory>
 #include "bindings/core/v8/ScriptController.h"
 #include "core/HTMLNames.h"
-#include "core/dom/AXObjectCache.h"
 #include "core/dom/Document.h"
 #include "core/dom/Fullscreen.h"
 #include "core/dom/Node.h"
@@ -65,7 +64,6 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
 #include "core/page/PopupOpeningObserver.h"
-#include "modules/accessibility/AXObjectImpl.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClient.h"
 #include "modules/audio_output_devices/AudioOutputDeviceClientImpl.h"
 #include "modules/filesystem/LocalFileSystemClient.h"
@@ -100,7 +98,6 @@
 #include "public/platform/WebFloatRect.h"
 #include "public/platform/WebRect.h"
 #include "public/platform/WebURLRequest.h"
-#include "public/web/WebAXObject.h"
 #include "public/web/WebAutofillClient.h"
 #include "public/web/WebColorChooser.h"
 #include "public/web/WebColorSuggestion.h"
@@ -167,11 +164,6 @@ const char* DismissalTypeToString(Document::PageDismissalType dismissal_type) {
 
 class CompositorAnimationTimeline;
 
-// Converts a AXObjectCache::AXNotification to a WebAXEvent
-static WebAXEvent ToWebAXEvent(AXObjectCache::AXNotification notification) {
-  // These enums have the same values; enforced in AssertMatchingEnums.cpp.
-  return static_cast<WebAXEvent>(notification);
-}
 
 ChromeClientImpl::ChromeClientImpl(WebViewBase* web_view)
     : web_view_(web_view),
@@ -666,22 +658,6 @@ void ChromeClientImpl::SetCursorForPlugin(const WebCursorInfo& cursor,
 
 void ChromeClientImpl::SetCursorOverridden(bool overridden) {
   cursor_overridden_ = overridden;
-}
-
-void ChromeClientImpl::PostAccessibilityNotification(
-    AXObject* axObject,
-    AXObjectCache::AXNotification notification) {
-  AXObjectImpl* obj = ToAXObjectImpl(axObject);
-
-  // Alert assistive technology about the accessibility object notification.
-  if (!obj || !obj->GetDocument())
-    return;
-
-  WebLocalFrameImpl* webframe = WebLocalFrameImpl::FromFrame(
-      obj->GetDocument()->AxObjectCacheOwner().GetFrame());
-  if (webframe && webframe->Client())
-    webframe->Client()->PostAccessibilityEvent(WebAXObject(obj),
-                                               ToWebAXEvent(notification));
 }
 
 String ChromeClientImpl::AcceptLanguages() {

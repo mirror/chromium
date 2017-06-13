@@ -218,18 +218,6 @@ class PagePopupChromeClient final : public EmptyChromeClient {
     popup_->SetRootGraphicsLayer(graphics_layer);
   }
 
-  void PostAccessibilityNotification(
-      AXObject* obj,
-      AXObjectCache::AXNotification notification) override {
-    WebLocalFrameImpl* frame = WebLocalFrameImpl::FromFrame(
-        popup_->popup_client_->OwnerElement().GetDocument().GetFrame());
-    if (obj && frame && frame->Client()) {
-      frame->Client()->PostAccessibilityEvent(
-          WebAXObject(ToAXObjectImpl(obj)),
-          static_cast<WebAXEvent>(notification));
-    }
-  }
-
   void SetToolTip(LocalFrame&,
                   const String& tooltip_text,
                   TextDirection dir) override {
