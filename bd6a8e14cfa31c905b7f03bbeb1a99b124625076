@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44a9ba40_03467c77",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-13T20:09:59Z",
+      "side": 1,
+      "message": "what about setting reuse_logs too, i see this in session_storage_database...\noptions.reuse_logs \u003d leveldb_env::kDefaultLogReuseOptionValue;",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 491,
+        "endChar": 29
+      },
+      "revId": "bd6a8e14cfa31c905b7f03bbeb1a99b124625076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
