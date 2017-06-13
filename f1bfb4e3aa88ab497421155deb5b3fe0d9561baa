@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d68b84f0_4eb4b379",
+        "filename": "base/win/com_init_check_hook.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-13T17:38:27Z",
+      "side": 1,
+      "message": "We have threadsafe static init on all platforms https://bugs.chromium.org/p/chromium/issues/detail?id\u003d686866, so\n\nstatic HookManager* GetInstance() {\n  static auto* hook_manager \u003d new HookManager();\n  return hook_manager;\n}\n\nis atomic and doesn\u0027t require any extra goopy code.",
+      "parentUuid": "f29e2f83_14ad6769",
+      "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ed9ca6c6_ed3623c6",
         "filename": "base/win/com_init_check_hook.h",
         "patchSetId": 2
