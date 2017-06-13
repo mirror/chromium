@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6b95c4d_77bf79f6",
+        "filename": "cr-buildbucket.cfg",
+        "patchSetId": 1
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-13T21:59:03Z",
+      "side": 1,
+      "message": "Nit: I strongly suggest you keep the builders sorted ...",
+      "revId": "d618c9c7eb2c44d52157fae899dccb604a1c1e5b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
