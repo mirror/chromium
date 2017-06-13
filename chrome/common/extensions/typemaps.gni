@@ -4,5 +4,6 @@
 
 typemaps = [
   "//chrome/common/extensions/media_parser.typemap",
+  "//chrome/common/extensions/mojom/accessibility.typemap",
   "//chrome/common/extensions/mojom/inline_install.typemap",
 ]
