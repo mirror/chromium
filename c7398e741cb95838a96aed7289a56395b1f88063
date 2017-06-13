@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dabe9b87_cdb2a3ee",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-13T20:31:03Z",
+      "side": 1,
+      "message": "A bit clearer maybe: \"wake_lock_ is lazy bound and reused, even after a connection error.\"",
+      "revId": "c7398e741cb95838a96aed7289a56395b1f88063",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

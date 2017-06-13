@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0594d091_848b1cf9",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-13T20:31:03Z",
+      "side": 1,
+      "message": "What would be the problem? (It doesn\u0027t look like GetWakeLock() uses any callbacks into this class.)",
+      "parentUuid": "ed5dbed6_8a196e54",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9926f18_e094ba55",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 4
