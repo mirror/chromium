@@ -1865,12 +1865,6 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
     'extra_browser_args': [
       '--use-angle=d3d11',
       '--use-passthrough-cmd-decoder',
-      # TODO(geofflang): Remove --disable-es3-apis once crbug.com/671217 is
-      # complete.
-      '--disable-es3-apis',
-      # TODO(geofflang): --disable-es3-gl-context is required because of
-      # crbug.com/680522
-      '--disable-es3-gl-context',
     ],
     'asan_args': ['--is-asan'],
   },
@@ -1988,7 +1982,7 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
       'shards': 15,
     },
   },
-  'webgl2_conformance_gl_tests': {
+  'webgl2_conformance_d3d11_passthrough_tests': {
     'tester_configs': [
       {
          # The WebGL 2.0 conformance tests take over an hour to run on
@@ -2005,16 +1999,10 @@ TELEMETRY_GPU_INTEGRATION_TESTS = {
         'disabled_instrumentation_types': ['tsan'],
       },
     ],
-    'disabled_tester_configs': [
-      {
-        'names': [
-          'Linux ChromiumOS Ozone (Intel)',
-        ],
-      },
-    ],
     'target_name': 'webgl_conformance',
     'extra_browser_args': [
-      '--use-angle=gl',
+      '--use-angle=d3d11',
+      '--use-passthrough-cmd-decoder',
     ],
     'args': [
       '--webgl-conformance-version=2.0.1',
