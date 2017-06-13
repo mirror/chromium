@@ -7,13 +7,9 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
-#include "third_party/skia/include/core/SkRefCnt.h"
+#include "cc/paint/drawing_display_item.h"
 #include "ui/compositor/compositor_export.h"
 #include "ui/gfx/geometry/rect.h"
-
-namespace cc {
-class PaintOpBuffer;
-}
 
 namespace ui {
 class PaintContext;
@@ -36,16 +32,9 @@ class COMPOSITOR_EXPORT PaintCache {
   // Only PaintRecorder can modify these.
   friend PaintRecorder;
 
-  // Resets the cache to be empty, and returns a PaintOpBuffer that is the new
-  // empty cache. Adding PaintOps to the buffer will put them in the cache.
-  cc::PaintOpBuffer* ResetCache();
+  void SetCache(const cc::DrawingDisplayItem& item);
 
-  // Call when done recording into the cache's PaintOpBuffer.
-  void FinalizeCache();
-
-  // Stored in an sk_sp because PaintOpBuffer requires this to append the cached
-  // items into it.
-  sk_sp<cc::PaintOpBuffer> paint_op_buffer_;
+  base::Optional<cc::DrawingDisplayItem> display_item_;
 
   DISALLOW_COPY_AND_ASSIGN(PaintCache);
 };
