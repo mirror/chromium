@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e908e2c3_f7c3200a",
+        "filename": "chrome/browser/plugins/flash_download_interception.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:09:29Z",
+      "side": 0,
+      "message": "This is nice just from a style POV -- what did the \"true\" argument use to mean?",
+      "range": {
+        "startLine": 162,
+        "startChar": 60,
+        "endLine": 162,
+        "endChar": 64
+      },
+      "revId": "4cd8966bc2b20f69b9b23d2538eb25452775134e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
