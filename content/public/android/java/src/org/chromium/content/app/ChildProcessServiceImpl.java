@@ -154,7 +154,7 @@ public class ChildProcessServiceImpl {
             pidCallback.call(Process.myPid());
             mGpuCallback =
                     gpuCallback != null ? IGpuProcessCallback.Stub.asInterface(gpuCallback) : null;
-            getServiceInfo(args);
+            processConnectionBundle(args);
         }
 
         @Override
@@ -228,16 +228,17 @@ public class ChildProcessServiceImpl {
                             linker.disableSharedRelros();
                         }
                     }
-                    boolean isLoaded = false;
                     if (CommandLine.getInstance().hasSwitch(
                             BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
                         android.os.Debug.waitForDebugger();
                     }
 
+                    LibraryLoader libraryLoader = null;
                     boolean loadAtFixedAddressFailed = false;
+                    boolean isLoaded = false;
                     try {
-                        LibraryLoader.get(mLibraryProcessType)
-                                .loadNowOverrideApplicationContext(hostContext);
+                        libraryLoader = LibraryLoader.get(mLibraryProcessType);
+                        libraryLoader.loadNowOverrideApplicationContext(hostContext);
                         isLoaded = true;
                     } catch (ProcessInitException e) {
                         if (requestedSharedRelro) {
@@ -248,11 +249,10 @@ public class ChildProcessServiceImpl {
                             Log.e(TAG, "Failed to load native library", e);
                         }
                     }
-                    if (!isLoaded && requestedSharedRelro) {
+                    if (!isLoaded && libraryLoader != null && requestedSharedRelro) {
                         linker.disableSharedRelros();
                         try {
-                            LibraryLoader.get(mLibraryProcessType)
-                                    .loadNowOverrideApplicationContext(hostContext);
+                            libraryLoader.loadNowOverrideApplicationContext(hostContext);
                             isLoaded = true;
                         } catch (ProcessInitException e) {
                             Log.e(TAG, "Failed to load native library on retry", e);
@@ -261,10 +261,9 @@ public class ChildProcessServiceImpl {
                     if (!isLoaded) {
                         System.exit(-1);
                     }
-                    LibraryLoader.get(mLibraryProcessType)
-                            .registerRendererProcessHistogram(requestedSharedRelro,
-                                    loadAtFixedAddressFailed);
-                    LibraryLoader.get(mLibraryProcessType).initialize();
+                    libraryLoader.registerRendererProcessHistogram(
+                            requestedSharedRelro, loadAtFixedAddressFailed);
+                    libraryLoader.initialize();
                     synchronized (mLibraryInitializedLock) {
                         mLibraryInitialized = true;
                         mLibraryInitializedLock.notifyAll();
@@ -355,7 +354,7 @@ public class ChildProcessServiceImpl {
         return mBinder;
     }
 
-    private void getServiceInfo(Bundle bundle) {
+    private void processConnectionBundle(Bundle bundle) {
         // Required to unparcel FileDescriptorInfo.
         bundle.setClassLoader(mHostClassLoader);
         synchronized (mMainThread) {
