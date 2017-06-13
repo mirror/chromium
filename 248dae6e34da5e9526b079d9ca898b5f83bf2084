@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbecd123_cf50a24e",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-13T16:10:50Z",
+      "side": 0,
+      "message": "Would it make more sense to update ImageLoader to return the proper image?",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
