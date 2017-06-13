@@ -4,6 +4,9 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.support.annotation.Nullable;
+
+import org.chromium.base.Callback;
 import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.browser.ChromeActivity;
 import org.chromium.chrome.browser.NativePageHost;
@@ -19,6 +22,7 @@ import org.chromium.chrome.browser.offlinepages.OfflinePageBridge;
 import org.chromium.chrome.browser.offlinepages.OfflinePageUtils;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.profiles.Profile;
+import org.chromium.chrome.browser.tab.Tab;
 import org.chromium.chrome.browser.tabmodel.TabModel;
 import org.chromium.chrome.browser.tabmodel.TabModel.TabLaunchType;
 import org.chromium.chrome.browser.tabmodel.TabModelSelector;
@@ -133,22 +137,26 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
                     CHROME_CONTENT_SUGGESTIONS_REFERRER, Referrer.REFERRER_POLICY_ALWAYS));
         }
 
-        openUrl(windowOpenDisposition, loadUrlParams);
-
-        // TODO(treib): Also track other dispositions. crbug.com/665915
-        if (windowOpenDisposition == WindowOpenDisposition.CURRENT_TAB) {
-            NewTabPageUma.monitorContentSuggestionVisit(mHost.getActiveTab(), article.mCategory);
-        }
+        openUrl(windowOpenDisposition, loadUrlParams,
+                new SuggestionsMetrics.ContentSuggestionVisitCallback(article.mCategory));
     }
 
     @Override
     public void openUrl(int windowOpenDisposition, LoadUrlParams loadUrlParams) {
+        openUrl(windowOpenDisposition, loadUrlParams, null);
+    }
+
+    private void openUrl(int windowOpenDisposition, LoadUrlParams loadUrlParams,
+            @Nullable Callback<NavigationRecorder.VisitData> recordingEndCallback) {
+        Tab loadingTab = null;
+
         switch (windowOpenDisposition) {
             case WindowOpenDisposition.CURRENT_TAB:
                 mHost.loadUrl(loadUrlParams, mTabModelSelector.isIncognitoSelected());
+                loadingTab = mHost.getActiveTab();
                 break;
             case WindowOpenDisposition.NEW_BACKGROUND_TAB:
-                openUrlInNewTab(loadUrlParams);
+                loadingTab = openUrlInNewTab(loadUrlParams);
                 break;
             case WindowOpenDisposition.OFF_THE_RECORD:
                 mHost.loadUrl(loadUrlParams, true);
@@ -161,6 +169,10 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
                 break;
             default:
                 assert false;
+        }
+
+        if (loadingTab != null && recordingEndCallback != null) {
+            NavigationRecorder.record(loadingTab, recordingEndCallback);
         }
     }
 
@@ -178,8 +190,8 @@ public class SuggestionsNavigationDelegateImpl implements SuggestionsNavigationD
         tabDelegate.createTabInOtherWindow(loadUrlParams, mActivity, mHost.getParentId());
     }
 
-    private void openUrlInNewTab(LoadUrlParams loadUrlParams) {
-        mTabModelSelector.openNewTab(loadUrlParams, TabLaunchType.FROM_LONGPRESS_BACKGROUND,
+    private Tab openUrlInNewTab(LoadUrlParams loadUrlParams) {
+        return mTabModelSelector.openNewTab(loadUrlParams, TabLaunchType.FROM_LONGPRESS_BACKGROUND,
                 mHost.getActiveTab(), /* incognito = */ false);
     }
 

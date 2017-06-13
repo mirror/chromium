@@ -6,7 +6,9 @@ package org.chromium.chrome.browser.suggestions;
 
 import android.support.v7.widget.RecyclerView;
 
+import org.chromium.base.Callback;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.ntp.NewTabPage;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 
 /**
@@ -77,6 +79,32 @@ public abstract class SuggestionsMetrics {
 
         public void reset() {
             mFired = false;
+        }
+    }
+
+    /**
+     * Callback to be used with {@link NavigationRecorder}. Records stats related to content
+     * suggestion visits, such as the time spent on the website, or if the user comes back to the
+     * starting point.
+     */
+    public static class ContentSuggestionVisitCallback
+            extends Callback<NavigationRecorder.VisitData> {
+        private final int mCategory;
+
+        /**
+         * @param mCategory the category of the suggestion for which we are recording the visit.
+         */
+        public ContentSuggestionVisitCallback(int mCategory) {
+            this.mCategory = mCategory;
+        }
+
+        @Override
+        public void onResult(NavigationRecorder.VisitData visit) {
+            if (NewTabPage.isNTPUrl(visit.endUrl)) {
+                RecordUserAction.record("MobileNTP.Snippets.VisitEndBackInNTP");
+            }
+            RecordUserAction.record("MobileNTP.Snippets.VisitEnd");
+            SuggestionsEventReporterBridge.onSuggestionTargetVisited(mCategory, visit.duration);
         }
     }
 }
