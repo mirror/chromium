@@ -123,6 +123,13 @@ source_set("unit_tests") {
   }
 }
 
+executable("tracing_profiling") {
+    deps = [ "//base:base" ]
+    sources = [
+      "test/tracing_profiling.cc",
+    ]
+}
+
 test("tracing_perftests") {
   sources = [
     "test/perf_test_helpers.cc",
