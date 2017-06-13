@@ -118,6 +118,9 @@ class OfflinePageModelImplTest
   // Fast-forwards virtual time by |delta|, causing tasks with a remaining
   // delay less than or equal to |delta| to be executed.
   void FastForwardBy(base::TimeDelta delta);
+  // Runs tasks and moves time forward until no tasks remain in the queue.
+  void FastForwardUntilNoTasksRemain();
+
   void ResetResults();
 
   OfflinePageTestStore* GetStore();
@@ -320,6 +323,10 @@ void OfflinePageModelImplTest::PumpLoop() {
 
 void OfflinePageModelImplTest::FastForwardBy(base::TimeDelta delta) {
   task_runner_->FastForwardBy(delta);
+}
+
+void OfflinePageModelImplTest::FastForwardUntilNoTasksRemain() {
+  task_runner_->FastForwardUntilNoTasksRemain();
 }
 
 void OfflinePageModelImplTest::ResetResults() {
@@ -1230,38 +1237,25 @@ TEST_F(OfflinePageModelImplTest, NewTabPageNamespace) {
                                   static_cast<int>(SavePageResult::SUCCESS), 1);
 }
 
-TEST_F(OfflinePageModelImplTest, StoreResetSuccessful) {
+TEST_F(OfflinePageModelImplTest, StoreLoadFailurePersists) {
   GetStore()->set_test_scenario(
       OfflinePageTestStore::TestScenario::LOAD_FAILED_RESET_SUCCESS);
   ResetModel();
+  // This executes delayed tasks that try to re-load the DB on failure.
+  FastForwardUntilNoTasksRemain();
 
   const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
 
+  // Model will 'load' but the store underneath it is not functional and
+  // will silently fail all sql operations.
   EXPECT_TRUE(model()->is_loaded());
-  EXPECT_EQ(StoreState::LOADED, GetStore()->state());
+  EXPECT_EQ(StoreState::FAILED_LOADING, GetStore()->state());
   EXPECT_EQ(0UL, offline_pages.size());
 
+  // The pages can still be saved, they will not be persisted to disk.
+  // Verify no crashes and error code returned.
   std::pair<SavePageResult, int64_t> result =
       SavePage(kTestUrl, ClientId(kDownloadNamespace, "123"));
-
-  EXPECT_EQ(SavePageResult::SUCCESS, result.first);
-}
-
-TEST_F(OfflinePageModelImplTest, StoreResetFailed) {
-  GetStore()->set_test_scenario(
-      OfflinePageTestStore::TestScenario::LOAD_FAILED_RESET_FAILED);
-  ResetModel();
-
-  const std::vector<OfflinePageItem>& offline_pages = GetAllPages();
-
-  EXPECT_TRUE(model()->is_loaded());
-  EXPECT_EQ(StoreState::FAILED_RESET, GetStore()->state());
-  EXPECT_EQ(0UL, offline_pages.size());
-
-  ResetResults();
-  std::pair<SavePageResult, int64_t> result =
-      SavePage(kTestUrl, ClientId(kDownloadNamespace, "123"));
-
   EXPECT_EQ(SavePageResult::STORE_FAILURE, result.first);
 }
 
