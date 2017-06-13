@@ -197,6 +197,8 @@ component("base") {
     "android/throw_uncaught_exception.h",
     "android/time_utils.cc",
     "android/time_utils.h",
+    "android/timezone_utils.cc",
+    "android/timezone_utils.h",
     "android/trace_event_binding.cc",
     "android/trace_event_binding.h",
     "android/unguessable_token_android.cc",
