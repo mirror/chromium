@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "63600501_a05ddd7b",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-13T11:25:38Z",
+      "side": 1,
+      "message": "Ah, I did too much C... \u003e_\u003c\n\nI stand corrected then, thanks for the precision. Let me submit a new version without these (which should not have been here to begin with).",
+      "parentUuid": "2237a01c_29fe918f",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "452cc049_50e210c6",
         "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
         "patchSetId": 4
