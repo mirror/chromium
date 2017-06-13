@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1ec8e203_d33ccffa",
+        "filename": "chrome/test/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 3474,
+      "author": {
+        "id": 1002222
+      },
+      "writtenOn": "2017-06-13T18:31:58Z",
+      "side": 1,
+      "message": "Does this need to be removed too?",
+      "revId": "d8db56cf9cc3280ed1ce7e1611d86f2bfbede25d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
