@@ -172,10 +172,10 @@ class CORE_EXPORT ContentSecurityPolicy
   // exception in the event of a violation. When the caller will throw
   // an exception, ContentSecurityPolicy does not log a violation
   // message to the console because it would be redundant.
-  bool AllowEval(ScriptState* = nullptr,
-                 SecurityViolationReportingPolicy =
-                     SecurityViolationReportingPolicy::kReport,
-                 ExceptionStatus = kWillNotThrowException) const;
+  bool AllowEval(ScriptState*,
+                 SecurityViolationReportingPolicy,
+                 ExceptionStatus,
+                 const String& script_content) const;
   bool AllowPluginType(const String& type,
                        const String& type_attribute,
                        const KURL&,
