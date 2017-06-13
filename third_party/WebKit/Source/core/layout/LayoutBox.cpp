@@ -674,7 +674,7 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
                    (scroll_behavior == kScrollBehaviorAuto &&
                     Style()->GetScrollBehavior() == kScrollBehaviorSmooth);
 
-  if (HasOverflowClip() && !restricted_by_line_clamp) {
+  if (!IsLayoutView() && HasOverflowClip() && !restricted_by_line_clamp) {
     // Don't scroll to reveal an overflow layer that is restricted by the
     // -webkit-line-clamp property. This will prevent us from revealing text
     // hidden by the slider in Safari RSS.
@@ -688,6 +688,11 @@ void LayoutBox::ScrollRectToVisible(const LayoutRect& rect,
     if (LocalFrameView* frame_view = this->GetFrameView()) {
       HTMLFrameOwnerElement* owner_element = GetDocument().LocalOwner();
       if (!IsDisallowedAutoscroll(owner_element, frame_view)) {
+        if (IsLayoutView() &&
+            RuntimeEnabledFeatures::RootLayerScrollingEnabled()) {
+          rect_to_scroll.Move(
+              LayoutSize(GetScrollableArea()->GetScrollOffset()));
+        }
         if (make_visible_in_visual_viewport) {
           frame_view->GetScrollableArea()->ScrollIntoView(
               rect_to_scroll, align_x, align_y, is_smooth, scroll_type);
