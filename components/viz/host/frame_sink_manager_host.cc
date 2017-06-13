@@ -12,6 +12,10 @@
 
 namespace viz {
 
+FrameSinkManagerHost::FrameSinkData::FrameSinkData() = default;
+
+FrameSinkManagerHost::FrameSinkData::~FrameSinkData() = default;
+
 FrameSinkManagerHost::FrameSinkManagerHost() : binding_(this) {}
 
 FrameSinkManagerHost::~FrameSinkManagerHost() = default;
@@ -46,6 +50,8 @@ void FrameSinkManagerHost::CreateCompositorFrameSink(
 void FrameSinkManagerHost::RegisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
+  frame_sink_data_map_[child_frame_sink_id].parent = parent_frame_sink_id;
+
   DCHECK(frame_sink_manager_ptr_.is_bound());
   frame_sink_manager_ptr_->RegisterFrameSinkHierarchy(parent_frame_sink_id,
                                                       child_frame_sink_id);
@@ -54,6 +60,15 @@ void FrameSinkManagerHost::RegisterFrameSinkHierarchy(
 void FrameSinkManagerHost::UnregisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
+  auto iter = frame_sink_data_map_.find(child_frame_sink_id);
+  if (iter == frame_sink_data_map_.end())
+    return;
+
+  // TODO(kylechar): When more members are added to FrameSinkData we can't
+  // necessarily destroy it here.
+  DCHECK_EQ(iter->second.parent, parent_frame_sink_id);
+  frame_sink_data_map_.erase(iter);
+
   DCHECK(frame_sink_manager_ptr_.is_bound());
   frame_sink_manager_ptr_->UnregisterFrameSinkHierarchy(parent_frame_sink_id,
                                                         child_frame_sink_id);
