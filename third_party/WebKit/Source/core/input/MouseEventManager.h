@@ -213,6 +213,7 @@ class CORE_EXPORT MouseEventManager final
   // coordinates.
   IntPoint last_known_mouse_position_;
   IntPoint last_known_mouse_global_position_;
+  WebFloatPoint fake_mouse_move_position_;
 
   unsigned is_mouse_position_unknown_ : 1;
   // Current button-press state for mouse/mouse-like-stylus.
