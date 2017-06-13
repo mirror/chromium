@@ -73,7 +73,7 @@ TabUsageRecorder::TabUsageRecorder(id<TabUsageRecorderDelegate> delegate)
 TabUsageRecorder::~TabUsageRecorder() {}
 
 void TabUsageRecorder::InitialRestoredTabs(Tab* active_tab, NSArray* tabs) {
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   // Debugging check to ensure this is called at most once per run.
   // Specifically, this function is called in either of two cases:
   // 1. For a normal (not post-crash launch), during the tab model's creation.

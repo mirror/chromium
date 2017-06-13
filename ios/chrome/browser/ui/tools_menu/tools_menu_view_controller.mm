@@ -254,14 +254,14 @@ NS_INLINE void AnimateInViews(NSArray* views,
                                          command:item.command_id]];
   }
 
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   NSUserDefaults* standardDefaults = [NSUserDefaults standardUserDefaults];
   if ((_toolbarType & ToolbarTypeWebAll) &&
       [standardDefaults boolForKey:@"DevViewSource"]) {
     // Debug menu, not localized, only visible if turned on by a default.
     [menu addObject:[self createViewSourceItem]];
   }
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
 
   [self setMenuItems:menu];
 
@@ -292,13 +292,13 @@ NS_INLINE void AnimateInViews(NSArray* views,
   }
 }
 
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
 - (ToolsMenuViewItem*)createViewSourceItem {
   return [ToolsMenuViewItem menuItemWithTitle:@"View Source"
                       accessibilityIdentifier:@"View Source"
                                       command:IDC_VIEW_SOURCE];
 }
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
 
 #pragma mark - Data handling utilities
 

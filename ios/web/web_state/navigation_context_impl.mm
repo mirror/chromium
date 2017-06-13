@@ -26,7 +26,7 @@ NavigationContextImpl::CreateNavigationContext(
   return result;
 }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 NSString* NavigationContextImpl::GetDescription() const {
   return [NSString
       stringWithFormat:@"web::WebState: %ld, url: %s, "
@@ -34,7 +34,7 @@ NSString* NavigationContextImpl::GetDescription() const {
                        reinterpret_cast<long>(web_state_), url_.spec().c_str(),
                        is_same_document_ ? @"true" : @"false", error_.get()];
 }
-#endif  // NDEBUG
+#endif  // DCHECK_IS_ON()
 
 WebState* NavigationContextImpl::GetWebState() {
   return web_state_;

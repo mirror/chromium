@@ -43,13 +43,13 @@
 @synthesize state = _state;
 @synthesize index = _index;
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 - (NSString*)description {
   return [NSString stringWithFormat:@"state: %d, index: %ld, context: %@",
                                     _state, static_cast<long>(_index),
                                     _context->GetDescription()];
 }
-#endif  // NDEBUG
+#endif  // DCHECK_IS_ON()
 
 - (instancetype)initWithState:(web::WKNavigationState)state
                         index:(NSUInteger)index {

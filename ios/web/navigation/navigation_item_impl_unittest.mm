@@ -45,7 +45,7 @@ TEST_F(NavigationItemTest, Dummy) {
   EXPECT_TRUE(item_->GetURL().is_valid());
 }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 // Tests that the debug description is as expected.
 TEST_F(NavigationItemTest, Description) {
   item_->SetTitle(base::UTF8ToUTF16("Title"));

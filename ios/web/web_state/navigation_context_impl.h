@@ -25,10 +25,10 @@ class NavigationContextImpl : public NavigationContext {
       const GURL& url,
       ui::PageTransition page_transition);
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   // Returns human readable description of this object.
   NSString* GetDescription() const;
-#endif  // NDEBUG
+#endif  // DCHECK_IS_ON()
 
   // NavigationContext overrides:
   WebState* GetWebState() override;

@@ -209,7 +209,7 @@ NSString* CreateSessionIdentifierFromTask(NSURLSessionTask* task) {
   NSURL* fileURL = [NSURL fileURLWithPath:tmpFile];
   [nextReport setValue:[fileURL absoluteString] forKey:@BREAKPAD_URL];
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   NSString* BreakpadMinidumpLocation = [NSHomeDirectory()
       stringByAppendingPathComponent:@"Library/Caches/Breakpad"];
   [nextReport setValue:BreakpadMinidumpLocation

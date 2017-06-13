@@ -233,11 +233,11 @@
 }
 
 - (void)setShowTapAreas:(BOOL)showTapAreas {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   for (TransparentLinkButton* button in _linkButtons) {
     button.debug = showTapAreas;
   }
-#endif  // NDEBUG
+#endif  // DCHECK_IS_ON()
   _showTapAreas = showTapAreas;
 }
 
@@ -377,9 +377,9 @@
                                                   URL:URL
                                    accessibilityLabel:accessibilityLabel];
       for (TransparentLinkButton* button in buttons) {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
         button.debug = self.showTapAreas;
-#endif  // NDEBUG
+#endif  // DCHECK_IS_ON()
         [button addTarget:self
                       action:@selector(linkButtonTapped:)
             forControlEvents:UIControlEventTouchUpInside];

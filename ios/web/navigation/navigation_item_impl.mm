@@ -306,7 +306,7 @@ base::string16 NavigationItemImpl::GetDisplayTitleForURL(const GURL& url) {
   return title;
 }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
 NSString* NavigationItemImpl::GetDescription() const {
   return [NSString
       stringWithFormat:

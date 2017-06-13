@@ -865,7 +865,7 @@ void TabInfoBarObserver::OnInfoBarReplaced(infobars::InfoBar* old_infobar,
 // but prevents us from dumping huge view-source urls into the history
 // database.  Since view-source is only activated in Debug builds, this check
 // can be Debug-only as well.
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   if (url.scheme() == url::kDataScheme)
     return;
 #endif

@@ -125,11 +125,11 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeCellCatalog,
 };
 
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
 NSString* kDevViewSourceKey = @"DevViewSource";
 NSString* kLogJavascriptKey = @"LogJavascript";
 NSString* kShowAutofillTypePredictionsKey = @"ShowAutofillTypePredictions";
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
 
 #pragma mark - SigninObserverBridge Class
 
@@ -406,7 +406,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         toSectionWithIdentifier:SectionIdentifierDebug];
   }
 
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
   [model addItem:[self viewSourceSwitchItem]
       toSectionWithIdentifier:SectionIdentifierDebug];
   [model addItem:[self logJavascriptConsoleSwitchItem]
@@ -415,7 +415,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       toSectionWithIdentifier:SectionIdentifierDebug];
   [model addItem:[self materialCatalogDetailItem]
       toSectionWithIdentifier:SectionIdentifierDebug];
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
 }
 
 #pragma mark - Model Items
@@ -556,7 +556,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
   return showMemoryDebugSwitchItem;
 }
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
 
 - (CollectionViewSwitchItem*)viewSourceSwitchItem {
   return [self switchItemWithType:ItemTypeViewSource
@@ -581,7 +581,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                              text:@"Cell Catalog"
                        detailText:nil];
 }
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
 
 #pragma mark Item Updaters
 
@@ -674,7 +674,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       break;
     }
     case ItemTypeViewSource: {
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
       CollectionViewSwitchCell* switchCell =
           base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
       [switchCell.switchView addTarget:self
@@ -682,11 +682,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                       forControlEvents:UIControlEventValueChanged];
 #else
       NOTREACHED();
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
       break;
     }
     case ItemTypeLogJavascript: {
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
       CollectionViewSwitchCell* switchCell =
           base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
       [switchCell.switchView addTarget:self
@@ -694,11 +694,11 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                       forControlEvents:UIControlEventValueChanged];
 #else
       NOTREACHED();
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
       break;
     }
     case ItemTypeShowAutofillTypePredictions: {
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
       CollectionViewSwitchCell* switchCell =
           base::mac::ObjCCastStrict<CollectionViewSwitchCell>(cell);
       [switchCell.switchView addTarget:self
@@ -706,7 +706,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                       forControlEvents:UIControlEventValueChanged];
 #else
       NOTREACHED();
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
       break;
     }
     default:
@@ -856,7 +856,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [_showMemoryDebugToolsEnabled setValue:newSwitchValue];
 }
 
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
 - (void)viewSourceSwitchToggled:(UISwitch*)sender {
   NSIndexPath* switchPath =
       [self.collectionViewModel indexPathForItemType:ItemTypeViewSource
@@ -899,7 +899,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   [self setBooleanNSUserDefaultsValue:newSwitchValue
                                forKey:kShowAutofillTypePredictionsKey];
 }
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
 
 #pragma mark Private methods
 
@@ -914,14 +914,14 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 // Chromium builds, but for official builds it is gated by an experimental flag
 // because the "Debug" section should never be showing in stable channel.
 - (BOOL)hasDebugSection {
-#if CHROMIUM_BUILD && !defined(NDEBUG)
+#if CHROMIUM_BUILD && DCHECK_IS_ON()
   return YES;
 #else
   if (experimental_flags::IsMemoryDebuggingEnabled()) {
     return YES;
   }
   return NO;
-#endif  // CHROMIUM_BUILD && !defined(NDEBUG)
+#endif  // CHROMIUM_BUILD && DCHECK_IS_ON()
 }
 
 // Updates the identity cell.

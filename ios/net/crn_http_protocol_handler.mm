@@ -329,12 +329,12 @@ void HttpProtocolHandlerCore::OnReceivedRedirect(
   }
 
   NSURLResponse* response = GetNSURLResponseForRequest(request);
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   DVLOG(2) << "Redirect, to client:";
   LogNSURLResponse(response);
   DVLOG(2) << "Redirect, to client:";
   LogNSURLRequest(request_);
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
   if (tracker_)
     tracker_->StopRedirectedRequest(request);
 
@@ -482,10 +482,10 @@ void HttpProtocolHandlerCore::StartReading() {
     return;
 
   NSURLResponse* response = GetNSURLResponseForRequest(net_request_);
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   DVLOG(2) << "To client:";
   LogNSURLResponse(response);
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
 
   if (tracker_) {
     tracker_->CaptureHeaders(net_request_);
@@ -656,10 +656,10 @@ void HttpProtocolHandlerCore::Start(id<CRNNetworkClientProtocol> base_client) {
   net_request_->set_first_party_for_cookies(
       GURLWithNSURL([request_ mainDocumentURL]));
 
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   DVLOG(2) << "From client:";
   LogNSURLRequest(request_);
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
 
   CopyHttpHeaders(request_, net_request_);
 

@@ -239,7 +239,7 @@ initiationType:(web::NavigationInitiationType)initiationType;
 - (NSString*)description {
   // Create description for |items|.
   NSMutableString* itemsDescription = [NSMutableString stringWithString:@"[\n"];
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   for (const auto& item : self.items)
     [itemsDescription appendFormat:@"%@\n", item->GetDescription()];
 #endif
@@ -247,7 +247,7 @@ initiationType:(web::NavigationInitiationType)initiationType;
   // Create description for |pendingItem| and |transientItem|.
   NSString* pendingItemDescription = @"(null)";
   NSString* transientItemDescription = @"(null)";
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   if (self.pendingItem)
     pendingItemDescription = self.pendingItem->GetDescription();
   if (self.transientItem)

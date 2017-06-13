@@ -664,7 +664,7 @@ NSString* const kNativeControllerTemporaryKey = @"NativeControllerTemporaryKey";
 - (void)showRateThisAppDialog;
 // Dismisses the "rate this app" dialog.
 - (void)dismissRateThisAppDialog;
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
 // Shows the source of the current page.
 - (void)viewSource;
 #endif
@@ -4135,7 +4135,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
     case IDC_STOP:
       [_model currentTab].webState->Stop();
       break;
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
     case IDC_VIEW_SOURCE:
       [self viewSource];
       break;
@@ -4497,7 +4497,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   }
 }
 
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
 - (void)viewSource {
   Tab* tab = [_model currentTab];
   DCHECK(tab);
@@ -4529,7 +4529,7 @@ class BrowserBookmarkModelBridge : public bookmarks::BookmarkModelObserver {
   [webController executeJavaScript:script
                  completionHandler:completionHandlerBlock];
 }
-#endif  // !defined(NDEBUG)
+#endif  // DCHECK_IS_ON()
 
 - (void)startVoiceSearch {
   // Delay Voice Search until new tab animations have finished.

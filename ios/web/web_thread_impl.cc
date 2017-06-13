@@ -279,7 +279,7 @@ WebThreadImpl::~WebThreadImpl() {
   WebThreadGlobals& globals = g_globals.Get();
   base::AutoLock lock(globals.lock);
   globals.threads[identifier_] = nullptr;
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   // Double check that the threads are ordered correctly in the enumeration.
   for (int i = identifier_ + 1; i < ID_COUNT; ++i) {
     DCHECK(!globals.threads[i])

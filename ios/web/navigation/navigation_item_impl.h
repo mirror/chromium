@@ -114,7 +114,7 @@ class NavigationItemImpl : public web::NavigationItem {
   // doesn't specify a title.
   static base::string16 GetDisplayTitleForURL(const GURL& url);
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   // Returns a human-readable description of the state for debugging purposes.
   NSString* GetDescription() const;
 #endif

@@ -308,7 +308,7 @@ class TabTest : public BlockCleanupTest {
                        base::SysUTF16ToNSString(item->GetTitle()));
   }
 
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   // Method useful when debugging.
   void LogHistoryQueryResult(const history::QueryResults* results) {
     for (const auto& result : *results) {

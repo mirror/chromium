@@ -27,7 +27,7 @@ IOSChromeMain::IOSChromeMain() {
   web::WebMainParams main_params = web::WebMainParams(&main_delegate_);
 // Copy NSProcessInfo arguments into WebMainParams in debug only, since
 // command line should be meaningless outside of developer builds.
-#if !defined(NDEBUG)
+#if DCHECK_IS_ON()
   NSArray* arguments = [[NSProcessInfo processInfo] arguments];
   main_params.argc = [arguments count];
   const char* argv[main_params.argc];
