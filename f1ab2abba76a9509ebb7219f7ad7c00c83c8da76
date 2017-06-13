@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "d6b5fa10_9153f194",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T20:14:06Z",
+      "side": 1,
+      "message": "We passed |this| to be the GpuJpegDecodeAcceleratorHost\u0027s client. When we get to the destructor here, we need to guarantee the GpuJpegDecodeAcceleratorHost\u0027s won\u0027t be calling back into its client before the destructor returns.\n\nSo BrowserThread::DeleteSoon is not enough. Either we need to atomically reset the client, or we need to synchronize with the IO thread.",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ebdaee2_f239080b",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T20:14:06Z",
+      "side": 1,
+      "message": "nit: please document why Unretained is safe here.",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fda2cc_7b1374de",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T20:14:06Z",
+      "side": 1,
+      "message": "nit: ditto.",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc4238e1_bcd82939",
         "filename": "content/gpu/gpu_child_thread.cc",
         "patchSetId": 9
