@@ -33,6 +33,47 @@
       "revId": "8b63b8aa1b23f7d77d91756d566181dad6dc9c39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3f9ef2f_80bc19f0",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-13T09:44:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51fc77c4_d40baa77",
+      "revId": "8b63b8aa1b23f7d77d91756d566181dad6dc9c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "05acb224_a5c06726",
+        "filename": "third_party/WebKit/Source/modules/serviceworkers/ServiceWorker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-13T09:44:34Z",
+      "side": 1,
+      "message": "Hmm... this causes a link error on win bots. I\u0027m now trying to fix it...\n\nFAILED: obj/third_party/WebKit/Source/modules/serviceworkers/serviceworkers/ServiceWorker.obj \nninja -t msvc -e environment.x86 -- E:\\b\\c\\goma_client/gomacc.exe \"e:\\b\\c\\win_toolchain\\vs_files\\d3cb0e37bdd120ad0ac4650b674b09e81be45616\\vc\\bin\\amd64_x86/cl.exe\" /nologo /showIncludes /FC @obj/third_party/WebKit/Source/modules/serviceworkers/serviceworkers/ServiceWorker.obj.rsp /c ../../third_party/WebKit/Source/modules/serviceworkers/ServiceWorker.cpp /Foobj/third_party/WebKit/Source/modules/serviceworkers/serviceworkers/ServiceWorker.obj /Fd\"obj/third_party/WebKit/Source/modules/serviceworkers/serviceworkers_cc.pdb\"\ne:\\b\\c\\b\\win\\src\\third_party\\webkit\\source\\modules\\serviceworkers\\serviceworker.cpp(53): error C2220: warning treated as error - no \u0027object\u0027 file generated\ne:\\b\\c\\b\\win\\src\\third_party\\webkit\\source\\modules\\serviceworkers\\serviceworker.cpp(53): warning C4273: \u0027instance_\u0027: inconsistent dll linkage\ne:\\b\\c\\b\\win\\src\\third_party\\webkit\\source\\core\\workers\\workerclients.h(104): note: see previous definition of \u0027private: static blink::WorkerClientsInitializer\u003cblink::ServiceWorker\u003e * blink::WorkerClientsInitializer\u003cblink::ServiceWorker\u003e::instance_\u0027\ne:\\b\\c\\b\\win\\src\\third_party\\webkit\\source\\modules\\serviceworkers\\serviceworker.cpp(53): error C2491: \u0027blink::WorkerClientsInitializer\u003cblink::ServiceWorker\u003e::instance_\u0027: definition of dllimport static data member not allowed",
+      "range": {
+        "startLine": 52,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 14
+      },
+      "revId": "8b63b8aa1b23f7d77d91756d566181dad6dc9c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
