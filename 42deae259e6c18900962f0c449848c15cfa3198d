@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "d62cd2be_c3ec70af",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "Thanks. I am working on this.",
+      "parentUuid": "92d2b028_663f8c36",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e2d3271b_2ccba455",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 7
@@ -105,6 +123,24 @@
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd55d565_0d5674e2",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2d3271b_2ccba455",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +164,30 @@
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d01c22_e7fd96f1",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6f65ab2_4b30ee10",
+      "range": {
+        "startLine": 35,
+        "startChar": 61,
+        "endLine": 35,
+        "endChar": 68
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -175,6 +235,30 @@
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f5baea0_f4667021",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63b9afbb_abc61856",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 15
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -249,6 +333,24 @@
     },
     {
       "key": {
+        "uuid": "de04a753_0b978af5",
+        "filename": "media/gpu/ipc/client/gpu_jpeg_decode_accelerator_host.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "I have made some changes in ps8 to avoid this thread hop. GJDAH gets created in client thread but operates only on IO thread.",
+      "parentUuid": "917f5874_3362b891",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "723c871a_1ae7f534",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 7
@@ -284,6 +386,30 @@
       "side": 1,
       "message": "sgtm. thanks for the suggestion.",
       "parentUuid": "723c871a_1ae7f534",
+      "range": {
+        "startLine": 154,
+        "startChar": 2,
+        "endLine": 154,
+        "endChar": 22
+      },
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25228b4_7a524f03",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "In ps8, thread hoping has been removed. This is no longer relevant.",
+      "parentUuid": "7bb9103f_ac764103",
       "range": {
         "startLine": 154,
         "startChar": 2,
@@ -349,6 +475,24 @@
     },
     {
       "key": {
+        "uuid": "bcf36c53_de6f85a0",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "In ps8, GJDA now gets created in IO thread itself. So, thread hopping is not required here.",
+      "parentUuid": "6bc4602d_3e921a09",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3a40c6cb_e336bc6c",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 7
@@ -360,6 +504,24 @@
       "writtenOn": "2017-06-12T20:07:30Z",
       "side": 1,
       "message": "weak_ptr_factory_ is reset on the main thread, so it\u0027s invalid to dereference it on the IO thread (where the callback is run).",
+      "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3d07ed_3cc00919",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-13T14:33:09Z",
+      "side": 1,
+      "message": "Removed weak_ptr_factory_ as we no longer post tasks to IO thread.",
+      "parentUuid": "3a40c6cb_e336bc6c",
       "revId": "42deae259e6c18900962f0c449848c15cfa3198d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
