@@ -16,6 +16,23 @@
       "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a77b404_9e25910b",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-13T19:29:24Z",
+      "side": 1,
+      "message": "Should we instead put this behind a command line flag and only enable it on platforms and devices that we know this will work on? Keeps the logic simply and makes it easier to detect problems.",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
