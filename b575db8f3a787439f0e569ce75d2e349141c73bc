@@ -104,6 +104,24 @@
     },
     {
       "key": {
+        "uuid": "8bf8394a_85117ad3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-13T16:11:06Z",
+      "side": 1,
+      "message": "The goal is to have them be cancellable. Then they would hold sufficient data for the caller to be able to just call `request.cancel()`",
+      "parentUuid": "a6c401f4_a1a10bc6",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08583842_a8de458a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
