@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "75b0e57b_e4d947a2",
+        "filename": "ppapi/c/private/ppb_platform_verification_private.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-13T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc43e37d_7191f495",
+      "range": {
+        "startLine": 102,
+        "startChar": 18,
+        "endLine": 102,
+        "endChar": 28
+      },
+      "revId": "c7d663cafce45d2c187b5b3a45d75fc07b9cc3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b73b65af_fb0641b6",
         "filename": "ppapi/c/private/ppb_platform_verification_private.h",
         "patchSetId": 2
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-13T00:25:56Z",
       "side": 1,
       "message": "\"Platform challenge\" should be updated.",
+      "range": {
+        "startLine": 108,
+        "startChar": 9,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "c7d663cafce45d2c187b5b3a45d75fc07b9cc3d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3900782b_c4f3dfca",
+        "filename": "ppapi/c/private/ppb_platform_verification_private.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-13T23:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b73b65af_fb0641b6",
       "range": {
         "startLine": 108,
         "startChar": 9,
