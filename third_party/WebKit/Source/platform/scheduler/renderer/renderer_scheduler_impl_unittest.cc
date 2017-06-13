@@ -285,6 +285,8 @@ class RendererSchedulerImplTest : public testing::Test {
     default_task_runner_ = scheduler_->DefaultTaskQueue();
     compositor_task_runner_ = scheduler_->CompositorTaskQueue();
     loading_task_runner_ = scheduler_->LoadingTaskQueue();
+    loading_control_task_runner_ = scheduler_->NewLoadingControlTaskQueue(
+        TaskQueue::QueueType::DEFAULT_LOADING);
     idle_task_runner_ = scheduler_->IdleTaskRunner();
     timer_task_runner_ = scheduler_->TimerTaskQueue();
   }
@@ -587,6 +589,7 @@ class RendererSchedulerImplTest : public testing::Test {
   // - 'D': Default task
   // - 'C': Compositor task
   // - 'L': Loading task
+  // - 'M': Loading Control task
   // - 'I': Idle task
   // - 'T': Timer task
   void PostTestTasks(std::vector<std::string>* run_order,
@@ -606,6 +609,10 @@ class RendererSchedulerImplTest : public testing::Test {
           break;
         case 'L':
           loading_task_runner_->PostTask(
+              FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
+          break;
+        case 'M':
+          loading_control_task_runner_->PostTask(
               FROM_HERE, base::Bind(&AppendToVectorTestTask, run_order, task));
           break;
         case 'I':
@@ -685,6 +692,7 @@ class RendererSchedulerImplTest : public testing::Test {
   scoped_refptr<base::SingleThreadTaskRunner> default_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> compositor_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> loading_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> loading_control_task_runner_;
   scoped_refptr<SingleThreadIdleTaskRunner> idle_task_runner_;
   scoped_refptr<base::SingleThreadTaskRunner> timer_task_runner_;
   bool simulate_timer_task_ran_;
@@ -3741,6 +3749,8 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
 
   scoped_refptr<TaskQueue> loading_tq =
       scheduler_->NewLoadingTaskQueue(TaskQueue::QueueType::TEST);
+  scoped_refptr<TaskQueue> loading_control_tq =
+      scheduler_->NewLoadingControlTaskQueue(TaskQueue::QueueType::TEST);
   scoped_refptr<TaskQueue> timer_tq =
       scheduler_->NewTimerTaskQueue(TaskQueue::QueueType::TEST);
   scoped_refptr<TaskQueue> unthrottled_tq =
@@ -3762,6 +3772,8 @@ TEST_F(RendererSchedulerImplTest, EnableVirtualTime) {
             scheduler_->real_time_domain());
 
   EXPECT_EQ(loading_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
+  EXPECT_EQ(loading_control_tq->GetTimeDomain(),
+            scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(timer_tq->GetTimeDomain(), scheduler_->GetVirtualTimeDomain());
   EXPECT_EQ(unthrottled_tq->GetTimeDomain(),
             scheduler_->GetVirtualTimeDomain());
@@ -3997,5 +4009,19 @@ TEST_F(RendererSchedulerImplTest, MaxQueueingTimeMetricRecordTheMax) {
   scheduler_->DidCommitProvisionalLoad(false, false, false);
   tester.ExpectUniqueSample("RendererScheduler.MaxQueueingTime", 500, 1);
 }
+
+TEST_F(RendererSchedulerImplTest, LoadingControlTasks) {
+  // Expect control loading tasks (M) to jump ahead of any regular loading
+  // tasks (L).
+  std::vector<std::string> run_order;
+  PostTestTasks(&run_order, "L1 L2 M1 L3 L4 M2 L5 L6");
+  RunUntilIdle();
+  EXPECT_THAT(run_order,
+              testing::ElementsAre(std::string("M1"), std::string("M2"),
+                                   std::string("L1"), std::string("L2"),
+                                   std::string("L3"), std::string("L4"),
+                                   std::string("L5"), std::string("L6")));
+}
+
 }  // namespace scheduler
 }  // namespace blink

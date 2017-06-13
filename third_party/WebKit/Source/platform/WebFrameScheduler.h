@@ -60,6 +60,11 @@ class WebFrameScheduler {
   //   suspended or blocked. Should be used only when necessary after
   //   consulting scheduler-dev@.
 
+  // Return a WebTaskRunner for very short control messages between
+  // loading tasks.
+  // WebFrameScheduler owns the returned WebTaskRunner.
+  virtual RefPtr<WebTaskRunner> LoadingControlTaskRunner() = 0;
+
   // Returns the WebTaskRunner for timer tasks.
   // WebFrameScheduler owns the returned WebTaskRunner.
   virtual RefPtr<WebTaskRunner> TimerTaskRunner() = 0;
