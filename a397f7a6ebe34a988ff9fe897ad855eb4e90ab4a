@@ -155,6 +155,24 @@
       "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711717b4_e9d8a994",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-13T20:33:45Z",
+      "side": 1,
+      "message": "--disable-2d-canvas-image-chromium was likely added for macos after we started using GMBs for canvas by default there.\n\nI think we should avoid having too much run time logic that depends on if certain buffer configurations are supported or not. In some cases a configuration is supported by might not be fast. HW overlays and other GMB specific optimizations are enabled on a per-board basis for ChromeOS today and we like that as we know exactly what boards those features are used on and we fail hard when something is wrong instead of suddenly using a less optimized path without anyone noticing.",
+      "parentUuid": "8d56b915_33bb52ec",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
