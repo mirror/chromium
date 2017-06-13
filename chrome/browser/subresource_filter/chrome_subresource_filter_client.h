@@ -91,6 +91,8 @@ class ChromeSubresourceFilterClient
   explicit ChromeSubresourceFilterClient(content::WebContents* web_contents);
   ~ChromeSubresourceFilterClient() override;
 
+  static bool ShouldDisallowNewWindow(content::WebContents* web_contents);
+
   void MaybeAppendNavigationThrottles(
       content::NavigationHandle* navigation_handle,
       std::vector<std::unique_ptr<content::NavigationThrottle>>* throttles);
