@@ -274,12 +274,17 @@ bool InitDatabase(sql::Connection* db, base::FilePath path) {
   db->set_histogram_tag("OfflinePageMetadata");
   db->set_exclusive_locking();
 
-  base::File::Error err;
-  if (!base::CreateDirectoryAndGetError(path.DirName(), &err)) {
-    LOG(ERROR) << "Failed to create offline pages db directory: "
-               << base::File::ErrorToString(err);
-    return false;
+  if (!base::DirectoryExists(path.DirName())) {
+    base::File::Error err;
+    if (!base::CreateDirectoryAndGetError(path.DirName(), &err)) {
+      UMA_HISTOGRAM_ENUMERATION("OfflinePages.SQLStorage.CreateDirectoryResult",
+                                -err, -base::File::FILE_ERROR_MAX);
+      LOG(ERROR) << "Failed to create offline pages db directory: "
+                 << base::File::ErrorToString(err);
+      return false;
+    }
   }
+
   if (!db->Open(path)) {
     LOG(ERROR) << "Failed to open database";
     return false;
@@ -461,20 +466,6 @@ void RemoveOfflinePagesSync(
   runner->PostTask(FROM_HERE, base::Bind(callback, base::Passed(&result)));
 }
 
-void ResetSync(sql::Connection* db,
-               const base::FilePath& db_file_path,
-               scoped_refptr<base::SingleThreadTaskRunner> runner,
-               const base::Callback<void(bool)>& callback) {
-  // This method deletes the content of the whole store and reinitializes it.
-  bool success = true;
-  if (db) {
-    success = db->Raze();
-    db->Close();
-  }
-  success = base::DeleteFile(db_file_path, true /*recursive*/) && success;
-  runner->PostTask(FROM_HERE, base::Bind(callback, success));
-}
-
 }  // anonymous namespace
 
 OfflinePageMetadataStoreSQL::OfflinePageMetadataStoreSQL(
@@ -571,13 +562,14 @@ void OfflinePageMetadataStoreSQL::RemoveOfflinePages(
                             base::ThreadTaskRunnerHandle::Get(), callback));
 }
 
+// No-op implementation. This database does not reset.
+// TODO(dimich): Observe UMA and decide if this database has to be erased.
+// Note is potentially contains user-saved data.
 void OfflinePageMetadataStoreSQL::Reset(const ResetCallback& callback) {
-  background_task_runner_->PostTask(
-      FROM_HERE,
-      base::Bind(&ResetSync, db_.get(), db_file_path_,
-                 base::ThreadTaskRunnerHandle::Get(),
-                 base::Bind(&OfflinePageMetadataStoreSQL::OnResetDone,
-                            weak_ptr_factory_.GetWeakPtr(), callback)));
+  bool success = true;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
+                                                base::Bind(callback, success));
+  return;
 }
 
 StoreState OfflinePageMetadataStoreSQL::state() const {
@@ -597,14 +589,6 @@ void OfflinePageMetadataStoreSQL::OnOpenConnectionDone(
   DCHECK(db_.get());
   state_ = success ? StoreState::LOADED : StoreState::FAILED_LOADING;
   callback.Run(success);
-}
-
-void OfflinePageMetadataStoreSQL::OnResetDone(const ResetCallback& callback,
-                                              bool success) {
-  state_ = success ? StoreState::NOT_LOADED : StoreState::FAILED_RESET;
-  db_.reset();
-  base::ThreadTaskRunnerHandle::Get()->PostTask(FROM_HERE,
-                                                base::Bind(callback, success));
 }
 
 bool OfflinePageMetadataStoreSQL::CheckDb() const {
