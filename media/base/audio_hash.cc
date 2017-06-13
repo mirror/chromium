@@ -2,14 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to be set before any other includes to get M_PI.
-#define _USE_MATH_DEFINES
-#include <cmath>
 #include <sstream>
 
 #include "media/base/audio_hash.h"
 
 #include "base/macros.h"
+#include "base/numerics/math_util.h"
 #include "base/strings/stringprintf.h"
 #include "media/base/audio_bus.h"
 
@@ -36,7 +34,8 @@ void AudioHash::Update(const AudioBus* audio_bus, int frames) {
       // buffers don't result in an empty hash.
       if (ch == 0) {
         audio_hash_[kHashIndex] +=
-            channel[i] + sin(2.0 * M_PI * M_PI * kSampleIndex);
+            channel[i] +
+            sin(2.0 * base::kPiDouble * base::kPiDouble * kSampleIndex);
       } else {
         audio_hash_[kHashIndex] += channel[i];
       }

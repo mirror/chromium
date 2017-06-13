@@ -22,11 +22,10 @@
 
 #include <algorithm>
 
+#include "base/numerics/math_util.h"
 #include "ppapi/lib/gl/include/GLES2/gl2.h"
 
 namespace {
-
-const float kPi = 3.14159265359f;
 
 int GenerateCube(GLuint *vbo_vertices,
                  GLuint *vbo_indices) {
@@ -230,7 +229,7 @@ class ESMatrix {
   }
 
   void Perspective(float fov_y, float aspect, float near_z, float far_z) {
-    GLfloat frustum_h = tanf(fov_y / 360.0f * kPi) * near_z;
+    GLfloat frustum_h = tanf(fov_y / 360.0f * base::kPiFloat) * near_z;
     GLfloat frustum_w = frustum_h * aspect;
     Frustum(-frustum_w, frustum_w, -frustum_h, frustum_h, near_z, far_z);
   }
@@ -245,8 +244,8 @@ class ESMatrix {
   void Rotate(GLfloat angle, GLfloat x, GLfloat y, GLfloat z) {
     GLfloat mag = sqrtf(x * x + y * y + z * z);
 
-    GLfloat sin_angle = sinf(angle * kPi / 180.0f);
-    GLfloat cos_angle = cosf(angle * kPi / 180.0f);
+    GLfloat sin_angle = sinf(angle * base::kPiFloat / 180.0f);
+    GLfloat cos_angle = cosf(angle * base::kPiFloat / 180.0f);
     if (mag > 0.0f) {
       GLfloat xx, yy, zz, xy, yz, zx, xs, ys, zs;
       GLfloat one_minus_cos;

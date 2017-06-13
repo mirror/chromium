@@ -11,6 +11,7 @@
 #include <xmmintrin.h>
 #endif
 
+#include "base/numerics/math_util.h"
 #include "base/trace_event/trace_event_argument.h"
 #include "base/values.h"
 #include "ui/gfx/geometry/quad_f.h"
@@ -22,9 +23,6 @@
 #include "ui/gfx/transform.h"
 
 namespace cc {
-
-const double MathUtil::kPiDouble = 3.14159265358979323846;
-const float MathUtil::kPiFloat = 3.14159265358979323846f;
 
 static HomogeneousCoordinate ProjectHomogeneousPoint(
     const gfx::Transform& transform,
@@ -599,7 +597,7 @@ float MathUtil::SmallestAngleBetweenVectors(const gfx::Vector2dF& v1,
   double dot_product = gfx::DotProduct(v1, v2) / v1.Length() / v2.Length();
   // Clamp to compensate for rounding errors.
   dot_product = std::max(-1.0, std::min(1.0, dot_product));
-  return static_cast<float>(Rad2Deg(std::acos(dot_product)));
+  return static_cast<float>(base::RadToDeg(std::acos(dot_product)));
 }
 
 gfx::Vector2dF MathUtil::ProjectVector(const gfx::Vector2dF& source,
