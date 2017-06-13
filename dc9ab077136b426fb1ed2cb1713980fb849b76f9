@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eba3eba2_90fb48db",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-13T02:41:03Z",
+      "side": 1,
+      "message": "Added DCHECK for valid length, and renamed i to index.\n\nThis function is called for every character in the string.",
+      "parentUuid": "80c7398e_287a8440",
+      "revId": "dc9ab077136b426fb1ed2cb1713980fb849b76f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6ff9444_ccea04d3",
         "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
         "patchSetId": 12
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-13T01:32:45Z",
       "side": 1,
       "message": "Please avoid to use one character variable name.\nHow about |prvious_char| or |last_char|?",
+      "revId": "dc9ab077136b426fb1ed2cb1713980fb849b76f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0662cbb3_d8807ceb",
+        "filename": "third_party/WebKit/Source/core/editing/EditingUtilities.cpp",
+        "patchSetId": 12
+      },
+      "lineNbr": 1063,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-13T02:41:03Z",
+      "side": 1,
+      "message": "Renamed to char_to_append, matching the function name.",
+      "parentUuid": "e6ff9444_ccea04d3",
       "revId": "dc9ab077136b426fb1ed2cb1713980fb849b76f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
