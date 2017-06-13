@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5614c185_c894902f",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-13T15:39:38Z",
+      "side": 1,
+      "message": "I think it\u0027d be nice to have one setter for the Region and the Map together, to make it clear they are connected.\n\nIt would also be possible to do this as a data structure like:\n\nclass TouchActionRegion {\n  base::flat_map\u003cTouchAction, Region\u003e map_;\n  Region region_;\n}\n\nAnd when you Union(TouchAction, Region), it adds it to both structures. It would make it harder to have bugs where the two don\u0027t match, and you\u0027d only need to compare one thing with operator\u003d\u003d in some places. Not sure what you think about doing something like that instead of having them both explicitly on Layer with 2 getters.",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d4f438c_2d649eea",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-13T15:39:38Z",
+      "side": 1,
+      "message": "A single setter here would be nice too.",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a7dd0c_2906759e",
+        "filename": "cc/test/layer_tree_json_parser.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-13T15:39:38Z",
+      "side": 1,
+      "message": "cc::Region (nor the SkRegion inside it) does not define an RValue constructor/operator\u003d, so the move() here, casting to an rvalue, won\u0027t have any effect. But in the future it could be added so I don\u0027t mind it, and it would make sense to have on Region since it contains basically some vectors which can be moved efficiently.",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13f4d003_795e6021",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-13T15:39:38Z",
+      "side": 1,
+      "message": "nit: I would write this as  \u003d touch_handler_region, as that\u0027s less to read and also gives the intent.",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
