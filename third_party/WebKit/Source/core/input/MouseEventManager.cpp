@@ -93,6 +93,7 @@ void MouseEventManager::Clear() {
   is_mouse_position_unknown_ = true;
   last_known_mouse_position_ = IntPoint();
   last_known_mouse_global_position_ = IntPoint();
+  fake_mouse_move_position_ = IntPoint();
   mouse_pressed_ = false;
   click_count_ = 0;
   click_element_ = nullptr;
@@ -198,6 +199,12 @@ WebInputEventResult MouseEventManager::DispatchMouseEvent(
     const String& canvas_region_id,
     EventTarget* related_target,
     bool check_for_listener) {
+  // Do not send the fake mouse move event to the DOM.
+  if (mouse_event_type == EventTypeNames::mousemove &&
+      fake_mouse_move_position_ == mouse_event.PositionInRootFrame()) {
+    return WebInputEventResult::kNotHandled;
+  }
+
   if (target && target->ToNode() &&
       (!check_for_listener || target->HasEventListeners(mouse_event_type))) {
     Node* target_node = target->ToNode();
@@ -334,6 +341,7 @@ void MouseEventManager::FakeMouseMoveEventTimerFired(TimerBase* timer) {
       WebPointerProperties::Button::kNoButton, 0,
       KeyboardEventManager::GetCurrentModifierState(),
       TimeTicks::Now().InSeconds());
+  fake_mouse_move_position_ = last_known_mouse_position_;
   // TODO(dtapuska): Update m_lastKnowMousePosition to be viewport coordinates.
   fake_mouse_move_event.SetFrameScale(1);
   Vector<WebMouseEvent> coalesced_events;

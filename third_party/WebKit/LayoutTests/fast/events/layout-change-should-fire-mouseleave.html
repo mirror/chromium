@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<script src='../../resources/testharness.js'></script>
+<script src='../../resources/testharnessreport.js'></script>
+<style type="text/css">
+#red {
+    background-color: red;
+    position: absolute;
+    left: 50px;
+    top: 50px;
+    height: 100px;
+    width: 100px;
+}
+#red:hover::after {
+    content: "Hovered. Click or press esc to add the blue div to the DOM.";
+}
+
+#blue {
+    background-color: blue;
+    position: absolute;
+    left: 75px;
+    top: 75px;
+    height: 100px;
+    width: 100px;
+}
+#blue:hover::after {
+    content: "Blue div: Hovered.";
+}
+</style>
+
+<body onload="loaded();">
+<div id="messages">Hover mouse at (100,100) and then click or press esc to make blue div appear.</div>
+
+<script type="text/javascript">
+var mouseover = false;
+
+var offset = 50;
+var x = 0;
+var y = 0;
+
+function addBlue() {
+    document.body.innerHTML += '<div id="blue"></div>';
+    var blue = document.getElementById("blue");
+    blue.addEventListener('mouseover', validMouseOvereResult);
+    var targetRect = blue.getBoundingClientRect();
+    x = targetRect.left + offset;
+    y = targetRect.top + offset;
+}
+
+function loaded() {
+    document.addEventListener('click', addBlue);
+}
+
+function validMouseOvereResult(event) {
+    mouseover = true;
+    testMouseLeave.step(function () {
+        assert_equals(event.target.id, "blue");
+    });
+}
+
+function callbackValidMoveCount() {
+    testMouseLeave.step(function () {
+        assert_equals(mouseover, true);
+    });
+    testMouseLeave.done();
+}
+
+function testMouseOverAddElement() {
+    if (window.chrome && chrome.gpuBenchmarking) {
+        var pointerActions =
+            [{source: "mouse",
+              actions: [  
+                { name: "pointerMove", x: x, y: y },
+                { name: "pointerDown", x: x, y: y },
+                { name: "pointerUp" }]}];
+        chrome.gpuBenchmarking.pointerActionSequence(pointerActions, callbackValidMoveCount);
+    }
+}
+
+var testMouseLeave = async_test('Tests that mouse leave events are fired when the layout changes.');
+testMouseOverAddElement();
+
+</script>
+</body>
+
+
