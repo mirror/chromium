@@ -3487,11 +3487,6 @@ ChromeContentBrowserClient::GetTaskSchedulerInitParams() {
   return task_scheduler_util::GetBrowserTaskSchedulerInitParamsFromVariations();
 }
 
-void ChromeContentBrowserClient::
-    PerformExperimentalTaskSchedulerRedirections() {
-  task_scheduler_util::MaybePerformBrowserTaskSchedulerRedirection();
-}
-
 // static
 void ChromeContentBrowserClient::SetDefaultQuotaSettingsForTesting(
     const storage::QuotaSettings* settings) {
