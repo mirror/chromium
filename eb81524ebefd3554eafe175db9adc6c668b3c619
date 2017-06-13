@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d8570f45_b39a71d5",
+        "filename": "third_party/WebKit/Source/core/loader/LinkLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-13T03:35:11Z",
+      "side": 1,
+      "message": "The comment looks obsolete?",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ae51ddf_41c6d6bb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-13T03:35:11Z",
+      "side": 1,
+      "message": "s/can be/is/?\n\nLooks like NofityFinished is always dispatched after removing this from async_clients_",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
