@@ -37,6 +37,7 @@
 #include "sql/connection.h"
 #include "sql/statement.h"
 #include "sql/transaction.h"
+#include "sql/utils.h"
 #include "third_party/re2/src/re2/re2.h"
 #include "url/origin.h"
 #include "url/url_constants.h"
@@ -534,7 +535,7 @@ bool LoginDatabase::Init() {
   db_.set_restrict_to_user();
   db_.set_histogram_tag("Passwords");
 
-  if (!db_.Open(db_path_)) {
+  if (!sql::utils::OpenAndRecoverDatabaseWithMetaVersion(&db_, db_path_)) {
     LogDatabaseInitError(OPEN_FILE_ERROR);
     LOG(ERROR) << "Unable to open the password store database.";
     return false;

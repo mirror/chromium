@@ -180,6 +180,7 @@ class SQL_EXPORT Connection {
   // Set this to enable additional per-connection histogramming.  Must be called
   // before Open().
   void set_histogram_tag(const std::string& tag);
+  const std::string& get_histogram_tag() const { return histogram_tag_; }
 
   // Record a sparse UMA histogram sample under
   // |name|+"."+|histogram_tag_|.  If |histogram_tag_| is empty, no
