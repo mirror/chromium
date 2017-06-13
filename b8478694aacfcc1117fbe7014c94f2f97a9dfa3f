@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5db96f_17a44b53",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T07:14:01Z",
+      "side": 1,
+      "message": "The life-time guarantee that breaking_news_suggestions_provider.cc:31 assumes, gets broken here.\nProvider correctly gives Handler an Unretained callback because the Handler instance is a member of the Provider instance. Handler, however, passes this callback directly to a static function. Thus, the callback can get called when neither Handler nor Provider exist any more.\n\nProposal: Add a wrapper function ContentSuggestionsGCMAppHandler::OnJsonSuccess that calls |on_new_content_callback_| and bind it using weak_factory_ here.",
+      "range": {
+        "startLine": 135,
+        "startChar": 19,
+        "endLine": 135,
+        "endChar": 43
+      },
+      "revId": "b8478694aacfcc1117fbe7014c94f2f97a9dfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0af82e7_bdbc6329",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T07:14:01Z",
+      "side": 1,
+      "message": "Why do you redefine these 2 callbacks when they are provided in safe_json::SafeJsonParser?",
+      "range": {
+        "startLine": 33,
+        "startChar": 1,
+        "endLine": 35,
+        "endChar": 71
+      },
+      "revId": "b8478694aacfcc1117fbe7014c94f2f97a9dfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d326e32f_3b51992e",
+        "filename": "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T07:14:01Z",
+      "side": 1,
+      "message": "nit: retrieved?",
+      "range": {
+        "startLine": 86,
+        "startChar": 24,
+        "endLine": 86,
+        "endChar": 32
+      },
+      "revId": "b8478694aacfcc1117fbe7014c94f2f97a9dfa3f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
