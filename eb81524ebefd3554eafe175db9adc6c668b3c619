@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "a4bf0d60_31a4e1c3",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-13T05:50:02Z",
+      "side": 1,
+      "message": "Does it make sense to name this differently from ResourceClient, like AsyncResourceFinishNotifier or something, if they\u0027re different things? (AsyncResourceClient really sounds like a subclass of ResourceClient)",
+      "revId": "eb81524ebefd3554eafe175db9adc6c668b3c619",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9ae51ddf_41c6d6bb",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceClient.h",
         "patchSetId": 6
