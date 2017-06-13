@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4ce4382_382941a3",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-13T07:47:24Z",
+      "side": 1,
+      "message": "*TextBeginsWith?",
+      "range": {
+        "startLine": 20,
+        "startChar": 16,
+        "endLine": 20,
+        "endChar": 29
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d905e47_3f577a1b",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-13T07:47:24Z",
+      "side": 1,
+      "message": "*beginsWithText?",
+      "range": {
+        "startLine": 26,
+        "startChar": 48,
+        "endLine": 26,
+        "endChar": 61
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e8768e5_8ea0a727",
+        "filename": "ios/showcase/content_suggestions/sc_content_suggestions_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-13T07:47:24Z",
+      "side": 1,
+      "message": "Either \"Tests (the) opening (of) a suggestion…\" or \"Test to open…\".\nIdem for some of the comments below.",
+      "range": {
+        "startLine": 66,
+        "startChar": 3,
+        "endLine": 66,
+        "endChar": 8
+      },
+      "revId": "3b6e3aadb4fcc3bbbe7dc28c73536f2b81e07979",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
