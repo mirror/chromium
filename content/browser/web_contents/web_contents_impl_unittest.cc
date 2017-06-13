@@ -3326,6 +3326,21 @@ TEST_F(WebContentsImplTest, MediaWakeLock) {
   EXPECT_FALSE(has_audio_wake_lock());
 }
 
+TEST_F(WebContentsImplTest, MediaResized) {
+  WebContentsObserver::MediaPlayerInfo info =
+      WebContentsObserver::MediaPlayerInfo(true, true);
+  WebContentsObserver::MediaPlayerId id =
+      std::make_pair(nullptr /* RenderFrameHost */, 1);
+  contents()->MediaStartedPlaying(info, id);
+
+  EXPECT_EQ(0u, contents()->GetMediaMutedStatus().size());
+  contents()->MediaMutedStatusChanged(id, true);
+  EXPECT_EQ(1u, contents()->GetMediaMutedStatus().size());
+
+  contents()->MediaStoppedPlaying(info, id);
+  EXPECT_EQ(0u, contents()->GetMediaMutedStatus().size());
+}
+
 TEST_F(WebContentsImplTest, ThemeColorChangeDependingOnFirstVisiblePaint) {
   TestWebContentsObserver observer(contents());
   TestRenderFrameHost* rfh = main_test_rfh();

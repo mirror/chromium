@@ -798,6 +798,10 @@ class CONTENT_EXPORT WebContentsImpl
   // No interstitial page should already be attached.
   void AttachInterstitialPage(InterstitialPageImpl* interstitial_page) override;
 
+  void MediaMutedStatusChanged(const WebContentsObserver::MediaPlayerId& id,
+                               bool muted) override;
+  const MediaMutedStatusMap& GetMediaMutedStatus() override;
+
   // Unsets the currently showing interstitial.
   void DetachInterstitialPage() override;
 
@@ -1619,6 +1623,7 @@ class CONTENT_EXPORT WebContentsImpl
 
   int currently_playing_video_count_ = 0;
   VideoSizeMap cached_video_sizes_;
+  MediaMutedStatusMap cached_media_muted_status_;
 
   bool has_persistent_video_ = false;
 

@@ -5584,6 +5584,8 @@ void WebContentsImpl::MediaStoppedPlaying(
 
   for (auto& observer : observers_)
     observer.MediaStoppedPlaying(media_info, id);
+
+  cached_media_muted_status_.erase(id);
 }
 
 void WebContentsImpl::MediaResized(
@@ -5738,6 +5740,19 @@ void WebContentsImpl::SetOpenerForNewContents(FrameTreeNode* opener,
       created_with_opener_ = true;
     }
   }
+}
+
+void WebContentsImpl::MediaMutedStatusChanged(
+    const WebContentsObserver::MediaPlayerId& id,
+    bool muted) {
+  cached_media_muted_status_[id] = muted;
+
+  for (auto& observer : observers_)
+    observer.MediaMutedStatusChanged(id, muted);
+}
+
+const WebContents::MediaMutedStatusMap& WebContentsImpl::GetMediaMutedStatus() {
+  return cached_media_muted_status_;
 }
 
 }  // namespace content
