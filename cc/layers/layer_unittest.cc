@@ -927,6 +927,10 @@ TEST_F(LayerTest, CheckPropertyChangeCausesCorrectBehavior) {
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetDoubleSided(false));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetTouchEventHandlerRegion(
       gfx::Rect(10, 10)));
+  TouchActionRegionMap touch_action_region_map;
+  touch_action_region_map[kTouchActionNone] = gfx::Rect(10, 10);
+  EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetTouchEventHandlerRegionMap(
+                                 std::move(touch_action_region_map)));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetForceRenderSurfaceForTesting(true));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetHideLayerAndSubtree(true));
   EXPECT_SET_NEEDS_COMMIT(1, test_layer->SetElementId(ElementId(2)));

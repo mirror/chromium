@@ -22,6 +22,7 @@
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/cc_export.h"
 #include "cc/input/input_handler.h"
+#include "cc/input/touch_action.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_position_constraint.h"
 #include "cc/paint/paint_record.h"
@@ -43,6 +44,8 @@ class ConvertableToTraceFormat;
 }
 
 namespace cc {
+
+using TouchActionRegionMap = base::flat_map<TouchAction, Region>;
 
 class CopyOutputRequest;
 class LayerClient;
@@ -242,6 +245,12 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   void SetTouchEventHandlerRegion(const Region& touch_event_handler_region);
   const Region& touch_event_handler_region() const {
     return inputs_.touch_event_handler_region;
+  }
+
+  void SetTouchEventHandlerRegionMap(
+      TouchActionRegionMap touch_event_handler_region_map);
+  const TouchActionRegionMap& touch_event_handler_region_map() const {
+    return inputs_.touch_event_handler_region_map;
   }
 
   void set_did_scroll_callback(
@@ -572,6 +581,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     Region non_fast_scrollable_region;
 
     Region touch_event_handler_region;
+    TouchActionRegionMap touch_event_handler_region_map;
 
     bool is_container_for_fixed_position_layers : 1;
     LayerPositionConstraint position_constraint;

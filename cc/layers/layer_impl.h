@@ -24,6 +24,7 @@
 #include "cc/debug/layer_tree_debug_state.h"
 #include "cc/input/input_handler.h"
 #include "cc/layers/draw_properties.h"
+#include "cc/layers/layer.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_impl_test_properties.h"
 #include "cc/layers/layer_position_constraint.h"
@@ -329,6 +330,13 @@ class CC_EXPORT LayerImpl {
     return touch_event_handler_region_;
   }
 
+  void SetTouchEventHandlerRegionMap(TouchActionRegionMap region_map) {
+    touch_event_handler_region_map_ = std::move(region_map);
+  }
+  const TouchActionRegionMap& touch_event_handler_region_map() const {
+    return touch_event_handler_region_map_;
+  }
+
   bool HasPotentiallyRunningTransformAnimation() const;
 
   bool HasFilterAnimationThatInflatesBounds() const;
@@ -504,6 +512,7 @@ class CC_EXPORT LayerImpl {
 
   Region non_fast_scrollable_region_;
   Region touch_event_handler_region_;
+  TouchActionRegionMap touch_event_handler_region_map_;
   SkColor background_color_;
   SkColor safe_opaque_background_color_;
 
