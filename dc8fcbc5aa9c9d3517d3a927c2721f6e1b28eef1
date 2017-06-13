@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d61b18e_651db864",
+        "filename": "sql/utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-13T19:40:17Z",
+      "side": 1,
+      "message": "label s/b .OpenAndRecoverDatabase, ditto for other labels",
+      "range": {
+        "startLine": 53,
+        "startChar": 18,
+        "endLine": 53,
+        "endChar": 35
+      },
+      "revId": "dc8fcbc5aa9c9d3517d3a927c2721f6e1b28eef1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
