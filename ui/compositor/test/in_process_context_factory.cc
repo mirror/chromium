@@ -242,15 +242,15 @@ void InProcessContextFactory::CreateCompositorFrameSink(
       std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
-  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source.get(),
-                                                compositor->frame_sink_id());
+  GetFrameSinkManager()->RegisterBeginFrameSource(begin_frame_source.get(),
+                                                  compositor->frame_sink_id());
   // Note that we are careful not to destroy a prior |data->begin_frame_source|
   // until we have reset |data->display|.
   data->begin_frame_source = std::move(begin_frame_source);
 
   auto* display = per_compositor_data_[compositor.get()]->display.get();
   auto compositor_frame_sink = base::MakeUnique<cc::DirectCompositorFrameSink>(
-      compositor->frame_sink_id(), GetSurfaceManager(), display,
+      compositor->frame_sink_id(), GetFrameSinkManager(), display,
       context_provider, shared_worker_context_provider_,
       &gpu_memory_buffer_manager_, &shared_bitmap_manager_);
   compositor->SetCompositorFrameSink(std::move(compositor_frame_sink));
@@ -288,7 +288,7 @@ void InProcessContextFactory::RemoveCompositor(Compositor* compositor) {
   if (it == per_compositor_data_.end())
     return;
   PerCompositorData* data = it->second.get();
-  GetSurfaceManager()->UnregisterBeginFrameSource(
+  GetFrameSinkManager()->UnregisterBeginFrameSource(
       data->begin_frame_source.get());
   DCHECK(data);
 #if !defined(GPU_SURFACE_HANDLE_IS_ACCELERATED_WINDOW)
@@ -313,10 +313,6 @@ cc::TaskGraphRunner* InProcessContextFactory::GetTaskGraphRunner() {
 
 cc::FrameSinkId InProcessContextFactory::AllocateFrameSinkId() {
   return frame_sink_id_allocator_.NextFrameSinkId();
-}
-
-cc::SurfaceManager* InProcessContextFactory::GetSurfaceManager() {
-  return frame_sink_manager_->surface_manager();
 }
 
 viz::FrameSinkManagerHost* InProcessContextFactory::GetFrameSinkManagerHost() {
@@ -348,6 +344,10 @@ void InProcessContextFactory::AddObserver(ContextFactoryObserver* observer) {
 
 void InProcessContextFactory::RemoveObserver(ContextFactoryObserver* observer) {
   observer_list_.RemoveObserver(observer);
+}
+
+cc::FrameSinkManager* InProcessContextFactory::GetFrameSinkManager() {
+  return frame_sink_manager_->frame_sink_manager();
 }
 
 InProcessContextFactory::PerCompositorData*
