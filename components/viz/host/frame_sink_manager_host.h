@@ -17,7 +17,6 @@
 
 namespace cc {
 class SurfaceInfo;
-class SurfaceManager;
 }
 
 namespace viz {
@@ -30,7 +29,9 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
   FrameSinkManagerHost();
   ~FrameSinkManagerHost() override;
 
-  cc::SurfaceManager* surface_manager();
+  cc::FrameSinkManager* frame_sink_manager() {
+    return frame_sink_manager_.frame_sink_manager();
+  }
 
   // Start Mojo connection to FrameSinkManager. Most tests won't need this.
   void ConnectToFrameSinkManager();

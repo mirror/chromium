@@ -20,7 +20,6 @@
 
 namespace cc {
 class ResourceSettings;
-class SurfaceManager;
 }
 
 namespace viz {
@@ -65,7 +64,6 @@ class InProcessContextFactory : public ContextFactory,
   gpu::GpuMemoryBufferManager* GetGpuMemoryBufferManager() override;
   cc::TaskGraphRunner* GetTaskGraphRunner() override;
   cc::FrameSinkId AllocateFrameSinkId() override;
-  cc::SurfaceManager* GetSurfaceManager() override;
   viz::FrameSinkManagerHost* GetFrameSinkManagerHost() override;
   void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
@@ -83,6 +81,7 @@ class InProcessContextFactory : public ContextFactory,
   const cc::ResourceSettings& GetResourceSettings() const override;
   void AddObserver(ContextFactoryObserver* observer) override;
   void RemoveObserver(ContextFactoryObserver* observer) override;
+  cc::FrameSinkManager* GetFrameSinkManager() override;
 
  private:
   struct PerCompositorData;
