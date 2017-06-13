@@ -8,6 +8,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/math_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/time/time.h"
 #include "base/win/iunknown_impl.h"
@@ -123,9 +124,9 @@ std::unique_ptr<ReaderInitParams> CreateGyroscopeReaderInitParams() {
     // Windows uses coordinate system where Z axis points down from device
     // screen, therefore, using right hand notation, we have to reverse
     // sign for each axis. Values are converted from deg to rad.
-    reading.values[0] = -x * kRadiansInDegrees;
-    reading.values[1] = -y * kRadiansInDegrees;
-    reading.values[2] = -z * kRadiansInDegrees;
+    reading.values[0] = base::DegToRad(-x);
+    reading.values[1] = base::DegToRad(-y);
+    reading.values[2] = base::DegToRad(-z);
     return S_OK;
   });
   return params;

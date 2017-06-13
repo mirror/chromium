@@ -2,13 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to be set before any other includes to get M_PI.
-#define _USE_MATH_DEFINES
-
 #include <stddef.h>
 
-#include <cmath>
-
+#include "base/numerics/math_util.h"
 #include "content/browser/renderer_host/input/motion_event_web.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/events/blink/blink_event_util.h"
@@ -22,7 +18,7 @@ using ui::PointerProperties;
 namespace content {
 
 TEST(MotionEventWebTest, Constructor) {
-  const float pi = static_cast<float>(M_PI);
+  const float pi = base::kPiFloat;
   const float orientations[] = {
       -pi, -2.f * pi / 3, -pi / 2, -pi / 3, 0.f, pi / 3, pi / 2, 2.f * pi / 3};
   const float tilts[] = {0.f, pi / 4, pi / 3};
@@ -53,7 +49,7 @@ TEST(MotionEventWebTest, Constructor) {
           // Web touch event touch point tilt plane angles are stored as ints,
           // thus the tilt precision is 1 degree and the error should not be
           // greater than 0.5 degrees.
-          EXPECT_NEAR(tilt, event.GetTilt(pointer_index), 0.5f * M_PI / 180.f)
+          EXPECT_NEAR(tilt, event.GetTilt(pointer_index), base::DegToRad(0.5f))
               << " orientation=" << orientation;
         } else {
           EXPECT_EQ(0.f, event.GetTilt(pointer_index));
@@ -67,8 +63,10 @@ TEST(MotionEventWebTest, Constructor) {
         } else {
           // For non-stylus pointers and for styluses with a zero tilt angle,
           // orientation quadrant information is lost.
-          EXPECT_NEAR(fmod(orientation + M_PI + 1e-4, M_PI_2) - 1e-4,
-                      event.GetOrientation(pointer_index), 1e-4);
+          EXPECT_NEAR(
+              fmod(orientation + base::kPiFloat + 1e-4, base::kPiFloat / 2) -
+                  1e-4,
+              event.GetOrientation(pointer_index), 1e-4);
         }
 
         generic_event.RemovePointerAt(pointer_index);
