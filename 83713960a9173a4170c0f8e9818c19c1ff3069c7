@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "69b8246d_1d0d8b26",
+        "filename": "third_party/WebKit/Source/modules/websockets/WorkerWebSocketChannel.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-13T15:17:42Z",
+      "side": 1,
+      "message": "I forgot to separate this change. I\u0027ll send another review request for this.",
+      "revId": "83713960a9173a4170c0f8e9818c19c1ff3069c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
