@@ -8,7 +8,7 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "cc/base/math_util.h"
+#include "base/numerics/math_util.h"
 
 namespace cc {
 
@@ -109,7 +109,7 @@ float StepsTimingFunction::Velocity(double x) const {
 
 double StepsTimingFunction::GetPreciseValue(double t) const {
   const double steps = static_cast<double>(steps_);
-  return MathUtil::ClampToRange(
+  return base::ClampToRange(
       std::floor((steps * t) + GetStepsStartOffset()) / steps, 0.0, 1.0);
 }
 

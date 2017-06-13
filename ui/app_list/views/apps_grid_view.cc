@@ -10,6 +10,7 @@
 
 #include "base/guid.h"
 #include "base/macros.h"
+#include "base/numerics/math_util.h"
 #include "build/build_config.h"
 #include "ui/app_list/app_list_constants.h"
 #include "ui/app_list/app_list_folder_item.h"
@@ -194,10 +195,6 @@ bool IsOEMFolderItem(AppListItem* item) {
   return IsFolderItem(item) &&
          (static_cast<AppListFolderItem*>(item))->folder_type() ==
              AppListFolderItem::FOLDER_TYPE_OEM;
-}
-
-int ClampToRange(int value, int min, int max) {
-  return std::min(std::max(value, min), max);
 }
 
 }  // namespace
@@ -1204,7 +1201,7 @@ void AppsGridView::CalculateReorderDropTarget(const gfx::Point& point,
   int x_offset = x_offset_direction *
                  (total_tile_size.width() - kFolderDroppingCircleRadius) / 2;
   int col = (point.x() - bounds.x() + x_offset) / total_tile_size.width();
-  col = ClampToRange(col, 0, cols_ - 1);
+  col = base::ClampToRange(col, 0, cols_ - 1);
   *drop_target =
       std::min(Index(pagination_model_.selected_page(), row * cols_ + col),
                GetLastViewIndex());
@@ -1866,10 +1863,10 @@ AppsGridView::Index AppsGridView::GetNearestTileIndexForPoint(
     const gfx::Point& point) const {
   gfx::Rect bounds = GetContentsBounds();
   gfx::Size total_tile_size = GetTotalTileSize();
-  int col = ClampToRange(
+  int col = base::ClampToRange(
       (point.x() - bounds.x()) / total_tile_size.width(), 0, cols_ - 1);
-  int row = ClampToRange((point.y() - bounds.y()) / total_tile_size.height(),
-                         0,
+  int row =
+      base::ClampToRange((point.y() - bounds.y()) / total_tile_size.height(), 0,
                          rows_per_page_ - 1);
   return Index(pagination_model_.selected_page(), row * cols_ + col);
 }

@@ -18,11 +18,6 @@
 namespace wallpaper {
 namespace {
 
-// For our scaling ratios we need to round positive numbers.
-int RoundPositive(double x) {
-  return static_cast<int>(floor(x + 0.5));
-}
-
 // Resizes |orig_bitmap| to |target_size| using |layout| and stores the
 // resulting bitmap at |resized_bitmap_out|.
 void Resize(SkBitmap orig_bitmap,
@@ -69,12 +64,10 @@ void Resize(SkBitmap orig_bitmap,
 
           if (vertical_ratio > horizontal_ratio) {
             cropped_size = gfx::Size(
-                RoundPositive(static_cast<double>(new_width) / vertical_ratio),
-                orig_height);
+                gfx::ToRoundedInt(new_width / vertical_ratio), orig_height);
           } else {
             cropped_size = gfx::Size(
-                orig_width, RoundPositive(static_cast<double>(new_height) /
-                                          horizontal_ratio));
+                orig_width, gfx::ToRoundedInt(new_height / horizontal_ratio));
           }
           wallpaper_rect.ClampToCenteredSize(cropped_size);
           SkBitmap sub_image;

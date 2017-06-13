@@ -11,6 +11,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/math_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/mailbox_to_surface_bridge.h"
 #include "chrome/browser/android/vr_shell/ui_elements.h"
@@ -1059,7 +1060,8 @@ void VrShellGl::DrawCursor(const gvr::Mat4f& render_matrix) {
   ScaleM(mat, mat, kLaserWidth, laser_length, 1);
 
   // Tip back 90 degrees to flat, pointing at the scene.
-  const gvr::Quatf q = QuatFromAxisAngle({1.0f, 0.0f, 0.0f}, -M_PI / 2);
+  const gvr::Quatf q =
+      QuatFromAxisAngle({1.0f, 0.0f, 0.0f}, -base::kPiFloat / 2);
   mat = MatrixMul(QuatToMatrix(q), mat);
 
   const gvr::Vec3f beam_direction = {target_point_.x - kHandPosition.x,
@@ -1072,7 +1074,7 @@ void VrShellGl::DrawCursor(const gvr::Mat4f& render_matrix) {
   const int faces = 4;
   for (int i = 0; i < faces; i++) {
     // Rotate around Z.
-    const float angle = M_PI * 2 * i / faces;
+    const float angle = base::kPiFloat * 2 * i / faces;
     const gvr::Quatf rot = QuatFromAxisAngle({0.0f, 0.0f, 1.0f}, angle);
     gvr::Mat4f face_transform = MatrixMul(QuatToMatrix(rot), mat);
 

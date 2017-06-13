@@ -68,7 +68,7 @@ struct AutofillUpdate {
 // Rounds a positive floating point number to the nearest integer.
 int Round(float f) {
   DCHECK_GE(f, 0.f);
-  return base::checked_cast<int>(std::floor(f + 0.5f));
+  return base::checked_cast<int>(std::round(f));
 }
 
 // Returns the |data_model|'s value corresponding to the |type|, trimmed to the

@@ -8,7 +8,6 @@
 #include <stdint.h>
 
 #include <algorithm>
-#include <cmath>
 #include <cstdlib>
 #include <functional>
 #include <limits>
@@ -16,6 +15,7 @@
 #include <numeric>
 #include <vector>
 
+#include "base/numerics/math_util.h"
 #include "skia/ext/platform_canvas.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -28,10 +28,6 @@
 #include "ui/gfx/image/image.h"
 
 namespace {
-
-#ifndef M_PI
-#define M_PI 3.14159265358979323846
-#endif
 
 unsigned long ImagePixelSum(const SkBitmap& bitmap, const gfx::Rect& rect) {
   // Get the sum of pixel values in the rectangle. Applicable only to
@@ -449,7 +445,7 @@ TEST_F(ThumbnailContentAnalysisTest, AutoSegmentPeaks) {
   EXPECT_LT(above_count, 550);
 
   for (unsigned i = 0; i < profile_info.size(); ++i) {
-    float y = std::sin(M_PI * i / 250.0f);
+    float y = std::sin(base::kPiDouble * i / 250.0f);
     profile_info[i] = y > 0 ? y : 0;
   }
   threshold = AutoSegmentPeaks(profile_info);
