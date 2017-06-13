@@ -1,0 +1,30 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+mojom = "//chrome/common/extensions/mojom/accessibility.mojom"
+public_headers = [
+  "//ui/accessibility/ax_enums.h",
+  "//ui/accessibility/ax_node_data.h",
+  "//ui/accessibility/ax_relative_bounds.h",
+  "//ui/accessibility/ax_tree_data.h",
+  "//ui/accessibility/ax_tree_update.h",
+]
+traits_headers = [ "//chrome/common/extensions/mojom/accessibility_traits.h" ]
+sources = [
+  "//chrome/common/extensions/mojom/accessibility_traits.cc",
+]
+type_mappings = [
+  "extensions.mojom.AXBoolAttribute=::ui::AXBoolAttribute",
+  "extensions.mojom.AXEvents=::ui::AXEvent",
+  "extensions.mojom.AXEventsFrom=::ui::AXEventFrom",
+  "extensions.mojom.AXFloatAttribute=::ui::AXFloatAttribute",
+  "extensions.mojom.AXIntAttribute=::ui::AXIntAttribute",
+  "extensions.mojom.AXIntListAttribute=::ui::AXIntListAttribute",
+  "extensions.mojom.AXNodeData=::ui::AXNodeData",
+  "extensions.mojom.AXStringAttribute=::ui::AXStringAttribute",
+  "extensions.mojom.AXRelativeBounds=::ui::AXRelativeBounds",
+  "extensions.mojom.AXRole=::ui::AXRole",
+  "extensions.mojom.AXTextAffinity=::ui::AXTextAffinity",
+  "extensions.mojom.AXTreeData=::ui::AXTreeData",
+]
