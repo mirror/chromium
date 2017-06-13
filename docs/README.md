@@ -31,6 +31,11 @@ git cl patch <CL number or URL>
 ./tools/md_browser/md_browser.py
 ```
 
+## Bugs
+
+Use this [bug template](https://example.com) to report issues with Markdown
+rendering in both MD browser and Gitiles.
+
 ## Document Index
 
 ### Checking Out and Building
