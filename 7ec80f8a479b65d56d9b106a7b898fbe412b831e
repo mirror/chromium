@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7ad771d0_2ab69962",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-13T23:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6689e998_e466aa4d",
+      "range": {
+        "startLine": 258,
+        "startChar": 70,
+        "endLine": 258,
+        "endChar": 76
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2a153cb1_3f5a80ca",
         "filename": "extensions/common/api/bluetooth_low_energy.idl",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "4f4fc631_a6371e57",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-13T23:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a153cb1_3f5a80ca",
+      "range": {
+        "startLine": 259,
+        "startChar": 28,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e19a97de_bc29464b",
         "filename": "extensions/common/api/bluetooth_low_energy.idl",
         "patchSetId": 1
@@ -68,6 +116,30 @@
       "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d82d686c_8b3ec513",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-13T23:36:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e19a97de_bc29464b",
+      "range": {
+        "startLine": 260,
+        "startChar": 36,
+        "endLine": 260,
+        "endChar": 42
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
