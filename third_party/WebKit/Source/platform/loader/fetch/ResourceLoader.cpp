@@ -190,12 +190,9 @@ bool ResourceLoader::WillFollowRedirect(
         source_origin = Context().GetSecurityOrigin();
 
       String error_message;
-      StoredCredentials with_credentials =
-          resource_->LastResourceRequest().AllowStoredCredentials()
-              ? kAllowStoredCredentials
-              : kDoNotAllowStoredCredentials;
       if (!CrossOriginAccessControl::HandleRedirect(
-              source_origin, new_request, redirect_response, with_credentials,
+              source_origin, new_request, redirect_response,
+              resource_->GetResourceRequest().GetFetchCredentialsMode(),
               resource_->MutableOptions(), error_message)) {
         resource_->SetCORSFailed();
         Context().AddConsoleMessage(error_message);
@@ -217,8 +214,23 @@ bool ResourceLoader::WillFollowRedirect(
   fetcher_->RecordResourceTimingOnRedirect(resource_.Get(), redirect_response,
                                            cross_origin);
 
-  new_request.SetAllowStoredCredentials(
-      resource_->Options().allow_credentials == kAllowStoredCredentials);
+  if (resource_->Options().cors_enabled == kIsCORSEnabled) {
+    bool allow_stored_credentials = false;
+    switch (new_request.GetFetchCredentialsMode()) {
+      case WebURLRequest::kFetchCredentialsModeOmit:
+        allow_stored_credentials = false;
+        break;
+      case WebURLRequest::kFetchCredentialsModeSameOrigin:
+        allow_stored_credentials = !resource_->Options().cors_flag;
+        break;
+      case WebURLRequest::kFetchCredentialsModeInclude:
+      case WebURLRequest::kFetchCredentialsModePassword:
+        allow_stored_credentials = true;
+        break;
+    }
+    new_request.SetAllowStoredCredentials(allow_stored_credentials);
+  }
+
   Context().PrepareRequest(new_request,
                            FetchContext::RedirectType::kForRedirect);
   Context().DispatchWillSendRequest(resource_->Identifier(), new_request,
@@ -290,7 +302,8 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
 
   CrossOriginAccessControl::AccessStatus cors_status =
       CrossOriginAccessControl::CheckAccess(
-          response_for_access_control, resource->Options().allow_credentials,
+          response_for_access_control,
+          resource->GetResourceRequest().GetFetchCredentialsMode(),
           source_origin);
   if (cors_status != CrossOriginAccessControl::kAccessAllowed) {
     resource->SetCORSFailed();
