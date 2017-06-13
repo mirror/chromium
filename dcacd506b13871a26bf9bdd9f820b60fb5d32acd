@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "300bf808_2f8eb8ef",
+        "filename": "media/gpu/android/codec_wrapper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-13T01:08:06Z",
+      "side": 1,
+      "message": "Will add a test for this behavior.",
+      "range": {
+        "startLine": 30,
+        "startChar": 37,
+        "endLine": 30,
+        "endChar": 41
+      },
+      "revId": "dcacd506b13871a26bf9bdd9f820b60fb5d32acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c5296f2_06dd59b4",
+        "filename": "media/gpu/android/video_frame_factory_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-13T01:08:06Z",
+      "side": 1,
+      "message": "I don\u0027t really think VFF has any other testable logic.",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 26
+      },
+      "revId": "dcacd506b13871a26bf9bdd9f820b60fb5d32acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ea5f460_a210b567",
+        "filename": "media/gpu/surface_texture_gl_owner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-13T01:08:06Z",
+      "side": 1,
+      "message": "Hm, I just realized that AVDASurfaceBundle will call ReleaseBackBuffers() from the MCVD thread. So do you think I should add similar thing to Bundle (i.e., if it\u0027s released on MCVD thread, post ReleaseBackBuffer to gpu thread), or do you think it\u0027s safe to call ReleaseBackBuffers from the mcvd thread?",
+      "range": {
+        "startLine": 34,
+        "startChar": 19,
+        "endLine": 34,
+        "endChar": 45
+      },
+      "revId": "dcacd506b13871a26bf9bdd9f820b60fb5d32acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be486fdf_d5ce0970",
+        "filename": "media/gpu/surface_texture_gl_owner.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-13T01:08:06Z",
+      "side": 1,
+      "message": "Oops, didn\u0027t mean to change this to task_runner. Will change back to thread checker.",
+      "range": {
+        "startLine": 118,
+        "startChar": 46,
+        "endLine": 118,
+        "endChar": 58
+      },
+      "revId": "dcacd506b13871a26bf9bdd9f820b60fb5d32acd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
