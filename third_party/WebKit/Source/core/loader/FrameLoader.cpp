@@ -1013,14 +1013,23 @@ bool FrameLoader::PrepareForCommit() {
 void FrameLoader::CommitProvisionalLoad() {
   DCHECK(Client()->HasWebView());
 
-  // Check if the destination page is allowed to access the previous page's
-  // timing information.
   if (frame_->GetDocument()) {
+    // Check if the destination page is allowed to access the previous page's
+    // timing information.
     RefPtr<SecurityOrigin> security_origin = SecurityOrigin::Create(
         provisional_document_loader_->GetRequest().Url());
     provisional_document_loader_->GetTiming()
         .SetHasSameOriginAsPreviousDocument(
             security_origin->CanRequest(frame_->GetDocument()->Url()));
+
+    // Persist the user gesture state between frames.
+    if (frame_->HasReceivedUserGesture() ||
+        frame_->HasReceivedUserGestureBeforeNavigation()) {
+      frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
+          ShouldPersistUserGestureValue(security_origin->Host()));
+    } else {
+      frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(false);
+    }
   }
 
   if (!PrepareForCommit())
@@ -1467,6 +1476,21 @@ void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
   }
 
   TakeObjectSnapshot();
+}
+
+// Check if we should persist the user gesture state between frames by checking
+// if the current frame URL matches the new frame URL by comparing the eTLD+1.
+bool FrameLoader::ShouldPersistUserGestureValue(String dest_host) {
+  String source_host = frame_->GetDocument()->Url().Host();
+  if (source_host == dest_host)
+    return true;
+
+  String source_domain = NetworkUtils::GetDomainAndRegistry(
+      source_host, NetworkUtils::kIncludePrivateRegistries);
+  String dest_domain = NetworkUtils::GetDomainAndRegistry(
+      dest_host, NetworkUtils::kIncludePrivateRegistries);
+
+  return !source_domain.IsEmpty() && source_domain == dest_domain;
 }
 
 bool FrameLoader::ShouldTreatURLAsSameAsCurrent(const KURL& url) const {
