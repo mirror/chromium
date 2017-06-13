@@ -16,6 +16,24 @@
       "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93912adc_ebf68e29",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-13T16:39:06Z",
+      "side": 0,
+      "message": "We have nice logic in IconImage that can select correct icon from the set and we can reuse. So it would be nice just reuse (in context of ChromeAppIcon). There is no benefit to LoadImagesAsync. We potentially may use IconImage but there is a mismatch what user see in app launcher and in uninstall dialog.",
+      "parentUuid": "bbecd123_cf50a24e",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "759db9aa_0b2a8123",
+        "filename": "chrome/browser/extensions/chrome_app_icon_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-13T16:39:06Z",
+      "side": 1,
+      "message": "That is to support case when icon is deleted during the UpdateIcon call.\n\nicons_to_update \u003d it-\u003esecond; - makes local copy that would not change.\nif (it-\u003esecond.count(icon)) - check if icon still exists in the list. (it may be deleted in OnIconDestroyed while calling UpdateIcon).",
+      "parentUuid": "2a05f109_e6d589f2",
+      "range": {
+        "startLine": 82,
+        "startChar": 4,
+        "endLine": 82,
+        "endChar": 31
+      },
+      "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1be6c38c_bba07026",
         "filename": "chrome/browser/extensions/chrome_app_icon_service.cc",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-13T16:10:50Z",
       "side": 1,
       "message": "Why do we defer the cleanup?",
+      "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f0aad8b_0eeb8d48",
+        "filename": "chrome/browser/extensions/chrome_app_icon_service.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-13T16:39:06Z",
+      "side": 1,
+      "message": "This follows from the description above to let \"if (it-\u003esecond.count(icon))\" be called without extra check. If we have inline deletion here we have to call something like:\n\nif (icon_map_.find(icon-\u003eapp_id()) !\u003d icon_map_.end() \u0026\u0026 icon_map_[icon-\u003eapp_id()]-\u003esecond.count(icon)) ...",
+      "parentUuid": "1be6c38c_bba07026",
       "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
