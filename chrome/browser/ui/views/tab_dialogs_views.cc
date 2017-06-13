@@ -5,8 +5,11 @@
 #include "chrome/browser/ui/views/tab_dialogs_views.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/passwords/manage_passwords_bubble_model.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
+#include "chrome/browser/ui/views/first_run_bubble.h"
+#include "chrome/browser/ui/views/frame/browser_view.h"
 #include "chrome/browser/ui/views/hung_renderer_view.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/validation_message_bubble_view.h"
@@ -40,6 +43,17 @@ gfx::NativeView TabDialogsViews::GetDialogParentView() const {
 void TabDialogsViews::ShowCollectedCookies() {
   // Deletes itself on close.
   new CollectedCookiesViews(web_contents_);
+}
+
+void TabDialogsViews::ShowFirstRunBubble() {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  views::View* anchor_view = static_cast<BrowserView*>(browser->window())
+                                 ->browser_view()
+                                 ->toolbar()
+                                 ->location_bar()
+                                 ->GetSecurityBubbleAnchorView();
+  FirstRunBubble::ShowBubble(browser, anchor_view, gfx::Point(),
+                             anchor_view->GetWidget()->GetNativeWindow());
 }
 
 void TabDialogsViews::ShowHungRendererDialog(

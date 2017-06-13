@@ -49,6 +49,9 @@ class TabDialogs : public base::SupportsUserData::Data {
   // Shows the collected cookies dialog box.
   virtual void ShowCollectedCookies() = 0;
 
+  // Shows the first run bubble.
+  virtual void ShowFirstRunBubble() = 0;
+
   // Shows or hides the hung renderer dialog.
   virtual void ShowHungRendererDialog(
       const content::WebContentsUnresponsiveState& unresponsive_state) = 0;

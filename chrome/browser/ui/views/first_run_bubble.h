@@ -21,8 +21,13 @@ class Browser;
 class FirstRunBubble : public views::BubbleDialogDelegateView,
                        public views::LinkListener {
  public:
-  // |browser| is the opening browser and is NULL in unittests.
-  static FirstRunBubble* ShowBubble(Browser* browser, views::View* anchor_view);
+  // |browser| is the opening browser and is NULL in unittests. The supplied
+  // |window| will be observed for key presses, which will auto-close the
+  // bubble.
+  static FirstRunBubble* ShowBubble(Browser* browser,
+                                    views::View* anchor_view,
+                                    const gfx::Point& anchor_point,
+                                    gfx::NativeWindow window);
 
  protected:
   // views::BubbleDialogDelegateView overrides:
@@ -30,15 +35,18 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   int GetDialogButtons() const override;
 
  private:
-  FirstRunBubble(Browser* browser, views::View* anchor_view);
+  FirstRunBubble(Browser* browser,
+                 views::View* anchor_view,
+                 const gfx::Point& anchor_point,
+                 gfx::NativeWindow window);
   ~FirstRunBubble() override;
 
   // This class observes keyboard events, mouse clicks and touch down events
-  // targeted towards the anchor widget and dismisses the first run bubble
+  // targeted towards the window and dismisses the first run bubble
   // accordingly.
   class FirstRunBubbleCloser : public ui::EventHandler {
    public:
-    FirstRunBubbleCloser(FirstRunBubble* bubble, views::View* anchor_view);
+    FirstRunBubbleCloser(FirstRunBubble* bubble, gfx::NativeWindow window);
     ~FirstRunBubbleCloser() override;
 
     // ui::EventHandler overrides.
