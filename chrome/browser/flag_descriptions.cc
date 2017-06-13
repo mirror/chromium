@@ -2805,8 +2805,7 @@ const char kEnableCustomFeedbackUiDescription[] =
 
 #endif  // defined(OS_ANDROID)
 
-#if defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) || \
-    defined(OS_WIN)
+#if defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
 
 const char kOmniboxEntitySuggestionsName[] = "Omnibox entity suggestions";
 const char kOmniboxEntitySuggestionsDescription[] =
@@ -2826,8 +2825,7 @@ const char kEnableNewAppMenuIconName[] = "Enable the New App Menu Icon";
 const char kEnableNewAppMenuIconDescription[] =
     "Use the new app menu icon with update notification animations.";
 
-#endif  // defined(OS_CHROMEOS) || defined(OS_LINUX) || defined(OS_MACOSX) ||
-        // defined(OS_WIN)
+#endif  // defined(OS_LINUX) || defined(OS_MACOSX) || defined(OS_WIN)
 
 #if defined(OS_CHROMEOS)
 
