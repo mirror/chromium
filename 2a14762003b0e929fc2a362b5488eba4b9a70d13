@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ed5dbed6_8a196e54",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-13T09:43:46Z",
+      "side": 1,
+      "message": "Michael, as Colin pointed out, do you think the async triggering is a problem? Thanks!",
+      "parentUuid": "2e58fa05_38291e49",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9926f18_e094ba55",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 4
