@@ -83,22 +83,6 @@ void WebDevToolsFrontendImpl::DidClearWindowObject(WebLocalFrameBase* frame) {
     DCHECK(!devtools_host_obj.IsEmpty());
     global->Set(V8AtomicString(isolate, "DevToolsHost"), devtools_host_obj);
   }
-
-  if (injected_script_for_origin_.IsEmpty())
-    return;
-
-  String origin = frame->GetSecurityOrigin().ToString();
-  String script = injected_script_for_origin_.at(origin);
-  if (script.IsEmpty())
-    return;
-  static int last_script_id = 0;
-  StringBuilder script_with_id;
-  script_with_id.Append(script);
-  script_with_id.Append('(');
-  script_with_id.AppendNumber(++last_script_id);
-  script_with_id.Append(')');
-  frame->GetFrame()->GetScriptController().ExecuteScriptInMainWorld(
-      script_with_id.ToString());
 }
 
 void WebDevToolsFrontendImpl::SendMessageToEmbedder(const String& message) {
@@ -118,11 +102,6 @@ void WebDevToolsFrontendImpl::ShowContextMenu(
   WebLocalFrameBase::FromFrame(target_frame)
       ->ViewImpl()
       ->ShowContextMenuAtPoint(x, y, menu_provider);
-}
-
-void WebDevToolsFrontendImpl::SetInjectedScriptForOrigin(const String& origin,
-                                                         const String& source) {
-  injected_script_for_origin_.Set(origin, source);
 }
 
 }  // namespace blink

@@ -630,6 +630,7 @@ bool ChromeContentBrowserClientExtensionsPart::ShouldAllowOpenURL(
   // which already disallow navigations from chrome URLs to blob/filesystem
   // URLs.
   if (site_url.SchemeIs(content::kChromeUIScheme) ||
+      site_url.SchemeIs(content::kChromeDevToolsScheme) ||
       site_url.SchemeIs(chrome::kChromeSearchScheme)) {
     *result = true;
     return true;
