@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4626a11f_05407259",
+        "filename": "chrome/browser/media/router/media_sinks_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T19:11:53Z",
+      "side": 1,
+      "message": "Why is this SOURCE_NOT_SUPPORTED?  The origin whitelist is to hide DIAL compatibility from Web exposure, and this should return UNAVAILABLE for the Presentation API.\n\nDoes the Remote Playback API require an origin whitelist as well?  Is this for CORS compatiblity checks?",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "93a69913_50f6ed38",
+        "filename": "chrome/browser/media/router/media_sinks_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T19:11:53Z",
+      "side": 1,
+      "message": "We don\u0027t use Blink types in the MR code base.",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
