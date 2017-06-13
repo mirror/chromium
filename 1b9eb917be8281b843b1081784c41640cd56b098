@@ -404,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "45306e50_e7f392e7",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T20:02:08Z",
+      "side": 1,
+      "message": "I got rid of pending_??? counters and saved a few lines in the coordinator. I\u0027m not sure if we can reuse other parts since callback types(parameters) are different in each use case.\n\nAs for using timeouts, please see my previous comment. If we decide to assume that agents can misbehave, I think I can add the timeout logic in one place (AgentEntry.AddDisconnectClosure) and there won\u0027t be code repetition.",
+      "parentUuid": "c7e69ff6_d43ebe52",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9abd551_e200e26b",
         "filename": "services/resource_coordinator/tracing/coordinator.h",
         "patchSetId": 3
