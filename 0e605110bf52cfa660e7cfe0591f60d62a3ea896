@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8e67b47f_7c49afa1",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-13T09:24:29Z",
+      "side": 1,
+      "message": "That\u0027s something mustaq@ and I decided to do so consumers can decide whether or not they want there feature to accept user gesture after navigation. This is something we can easily change but at the moment, we don\u0027t want to force all the other features to use the persisting bit because auotplay needs it. If it happens that everyone checks both bits, we could merge them.",
+      "parentUuid": "6c05ec97_5ab8016c",
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5b773d7_771d1b2c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 4
