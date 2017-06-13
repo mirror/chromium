@@ -71,6 +71,8 @@ class GFX_EXPORT Vector3dF {
   // Take the cross product of this vector with |other| and become the result.
   void Cross(const Vector3dF& other);
 
+  bool GetNormalized(Vector3dF* out) const;
+
   std::string ToString() const;
 
  private:
@@ -115,6 +117,10 @@ GFX_EXPORT Vector3dF ScaleVector3d(const Vector3dF& v,
                                    float x_scale,
                                    float y_scale,
                                    float z_scale);
+
+inline Vector3dF ScaleVector3d(const Vector3dF& v, const Vector3dF& s) {
+  return ScaleVector3d(v, s.x(), s.y(), s.z());
+}
 
 // Return a vector that is |v| scaled by the given scale factor.
 inline Vector3dF ScaleVector3d(const Vector3dF& v, float scale) {

@@ -38,13 +38,9 @@ TEST(QuatTest, AxisAngleCommon) {
 }
 
 TEST(QuatTest, VectorToVectorRotation) {
-  Quaternion q(Vector3dF(1.0f, 0.0f, 0.0f), Vector3dF(0.0f, 1.0f, 0.0f));
-  Quaternion r(Vector3dF(0.0f, 0.0f, 1.0f), M_PI_2);
-
-  EXPECT_FLOAT_EQ(r.x(), q.x());
-  EXPECT_FLOAT_EQ(r.y(), q.y());
-  EXPECT_FLOAT_EQ(r.z(), q.z());
-  EXPECT_FLOAT_EQ(r.w(), q.w());
+  Quaternion q(Vector3dF(1, 0, 0), Vector3dF(0, 1, 0));
+  Quaternion r(Vector3dF(0, 0, 1), M_PI_2);
+  CompareQuaternions(r, q);
 }
 
 TEST(QuatTest, AxisAngleWithZeroLengthAxis) {

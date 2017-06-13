@@ -9,6 +9,7 @@
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
 #include "chrome/browser/android/vr_shell/ui_element_renderer.h"
 #include "third_party/skia/include/core/SkSurface.h"
+#include "ui/gfx/geometry/rect_f.h"
 
 namespace vr_shell {
 
@@ -40,7 +41,7 @@ void TexturedElement::UpdateTexture() {
 }
 
 void TexturedElement::Render(UiElementRenderer* renderer,
-                             vr::Mat4f view_proj_matrix) const {
+                             gfx::Transform view_proj_matrix) const {
   if (!initialized_)
     return;
   gfx::SizeF drawn_size = GetTexture()->GetDrawnSize();

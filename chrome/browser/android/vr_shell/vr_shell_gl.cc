@@ -29,7 +29,6 @@
 #include "device/vr/android/gvr/gvr_delegate.h"
 #include "device/vr/android/gvr/gvr_device.h"
 #include "device/vr/android/gvr/gvr_gamepad_data_provider.h"
-#include "device/vr/vr_math.h"
 #include "third_party/WebKit/public/platform/WebGestureEvent.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseEvent.h"
@@ -103,33 +102,37 @@ static constexpr gfx::PointF kInvalidTargetPoint =
     gfx::PointF(std::numeric_limits<float>::max(),
                 std::numeric_limits<float>::max());
 
+static constexpr float kEpsilon = 1e-6f;
+
+gfx::Point3F GetRayPoint(const gfx::Point3F& rayOrigin,
+                         const gfx::Vector3dF& rayVector,
+                         float scale) {
+  return rayOrigin + gfx::ScaleVector3d(rayVector, scale);
+}
+
 // Generate a quaternion representing the rotation from the negative Z axis
 // (0, 0, -1) to a specified vector. This is an optimized version of a more
 // general vector-to-vector calculation.
-vr::Quatf GetRotationFromZAxis(gfx::Vector3dF vec) {
-  vr::NormalizeVector(&vec);
-  vr::Quatf quat;
-  quat.qw = 1.0f - vec.z();
-  if (quat.qw < 1e-6f) {
+gfx::Quaternion GetRotationFromZAxis(gfx::Vector3dF vec) {
+  vec.GetNormalized(&vec);
+  gfx::Quaternion quat;
+  quat.set_w(1.0f - vec.z());
+  if (quat.w() < kEpsilon) {
     // Degenerate case: vectors are exactly opposite. Replace by an
     // arbitrary 180 degree rotation to avoid invalid normalization.
-    quat.qx = 1.0f;
-    quat.qy = 0.0f;
-    quat.qz = 0.0f;
-    quat.qw = 0.0f;
-  } else {
-    quat.qx = vec.y();
-    quat.qy = -vec.x();
-    quat.qz = 0.0f;
-    vr::NormalizeQuat(&quat);
+    return gfx::Quaternion(1, 0, 0, 0);
   }
-  return quat;
+
+  quat.set_x(vec.y());
+  quat.set_y(-vec.x());
+  quat.set_z(0.0);
+  return quat.Normalized();
 }
 
-gvr::Mat4f PerspectiveMatrixFromView(const gvr::Rectf& fov,
-                                     float z_near,
-                                     float z_far) {
-  gvr::Mat4f result;
+gfx::Transform PerspectiveMatrixFromView(const gvr::Rectf& fov,
+                                         float z_near,
+                                         float z_far) {
+  gfx::Transform result;
   const float x_left = -std::tan(fov.left * M_PI / 180.0f) * z_near;
   const float x_right = std::tan(fov.right * M_PI / 180.0f) * z_near;
   const float y_bottom = -std::tan(fov.bottom * M_PI / 180.0f) * z_near;
@@ -144,18 +147,14 @@ gvr::Mat4f PerspectiveMatrixFromView(const gvr::Rectf& fov,
   const float C = (z_near + z_far) / (z_near - z_far);
   const float D = (2 * z_near * z_far) / (z_near - z_far);
 
-  for (int i = 0; i < 4; ++i) {
-    for (int j = 0; j < 4; ++j) {
-      result.m[i][j] = 0.0f;
-    }
-  }
-  result.m[0][0] = X;
-  result.m[0][2] = A;
-  result.m[1][1] = Y;
-  result.m[1][2] = B;
-  result.m[2][2] = C;
-  result.m[2][3] = D;
-  result.m[3][2] = -1;
+  result.matrix().set(0, 0, X);
+  result.matrix().set(0, 2, A);
+  result.matrix().set(1, 1, Y);
+  result.matrix().set(1, 2, B);
+  result.matrix().set(2, 2, C);
+  result.matrix().set(2, 3, D);
+  result.matrix().set(3, 2, -1);
+  result.matrix().set(3, 3, 0);
 
   return result;
 }
@@ -173,21 +172,20 @@ std::unique_ptr<blink::WebMouseEvent> MakeMouseEvent(
   return mouse_event;
 }
 
-
-void MatfToGvrMat(const vr::Mat4f& in, gvr::Mat4f* out) {
-  // If our std::array implementation doesn't have any non-data members, we can
-  // just cast the gvr matrix to an std::array.
-  static_assert(sizeof(in) == sizeof(*out),
-                "Cannot reinterpret gvr::Mat4f as vr::Matf");
-  *out = *reinterpret_cast<gvr::Mat4f*>(const_cast<vr::Mat4f*>(&in));
+void TransformToGvrMat(const gfx::Transform& in, gvr::Mat4f* out) {
+  for (int i = 0; i < 4; ++i) {
+    for (int j = 0; j < 4; ++j) {
+      out->m[i][j] = in.matrix().get(i, j);
+    }
+  }
 }
 
-void GvrMatToMatf(const gvr::Mat4f& in, vr::Mat4f* out) {
-  // If our std::array implementation doesn't have any non-data members, we can
-  // just cast the gvr matrix to an std::array.
-  static_assert(sizeof(in) == sizeof(*out),
-                "Cannot reinterpret gvr::Mat4f as vr::Matf");
-  *out = *reinterpret_cast<vr::Mat4f*>(const_cast<gvr::Mat4f*>(&in));
+void GvrMatToTransform(const gvr::Mat4f& in, gfx::Transform* out) {
+  for (int i = 0; i < 4; ++i) {
+    for (int j = 0; j < 4; ++j) {
+      out->matrix().set(i, j, in.m[i][j]);
+    }
+  }
 }
 
 gvr::Rectf UVFromGfxRect(gfx::RectF rect) {
@@ -442,7 +440,7 @@ void VrShellGl::GvrInit(gvr_context* gvr_api) {
 
 void VrShellGl::InitializeRenderer() {
   gvr_api_->InitializeGl();
-  vr::Mat4f head_pose;
+  gfx::Transform head_pose;
   device::GvrDelegate::GetGvrPoseWithNeckModel(gvr_api_.get(), &head_pose);
   webvr_head_pose_.assign(kPoseRingBufferSize, head_pose);
 
@@ -547,10 +545,9 @@ void VrShellGl::HandleControllerInput(const gfx::Vector3dF& head_direction) {
     controller_quat_ = controller_->Orientation();
   }
 
-  vr::Mat4f mat;
-  QuatToMatrix(controller_quat_, &mat);
-  gfx::Vector3dF controller_direction =
-      vr::MatrixVectorMul(mat, ergo_neutral_pose);
+  gfx::Transform mat(controller_quat_);
+  gfx::Vector3dF controller_direction = ergo_neutral_pose;
+  mat.TransformVector(&controller_direction);
 
   HandleControllerAppButtonActivity(controller_direction);
 
@@ -831,10 +828,9 @@ void VrShellGl::GetVisualTargetElement(
   // that the sphere is centered at the controller, rather than the eye, for
   // simplicity.
   float distance = scene_->GetBackgroundDistance();
-  target_point =
-      vr::GetRayPoint(pointer_start_, controller_direction, distance);
+  target_point = GetRayPoint(pointer_start_, controller_direction, distance);
   eye_to_target = target_point - kOrigin;
-  vr::NormalizeVector(&eye_to_target);
+  eye_to_target.GetNormalized(&eye_to_target);
 
   // Determine which UI element (if any) intersects the line between the eyes
   // and the controller target position.
@@ -872,7 +868,7 @@ bool VrShellGl::GetTargetLocalPoint(const gfx::Vector3dF& eye_to_target,
   if (distance_to_plane < 0 || distance_to_plane >= max_distance_to_plane)
     return false;
 
-  target_point = vr::GetRayPoint(kOrigin, eye_to_target, distance_to_plane);
+  target_point = GetRayPoint(kOrigin, eye_to_target, distance_to_plane);
   gfx::PointF unit_xy_point = element.GetUnitRectangleCoordinates(target_point);
 
   target_local_point.set_x(0.5f + unit_xy_point.x());
@@ -896,9 +892,13 @@ void VrShellGl::HandleControllerAppButtonActivity(
     // TODO(asimjour1): We need to refactor the gesture recognition outside of
     // VrShellGl.
     UiInterface::Direction direction = UiInterface::NONE;
-    float gesture_xz_angle;
-    if (vr::XZAngle(controller_start_direction_, controller_direction,
-                    &gesture_xz_angle)) {
+    gfx::Vector3dF a = controller_start_direction_;
+    gfx::Vector3dF b = controller_direction;
+    a.set_y(0);
+    b.set_y(0);
+    if (a.LengthSquared() * b.LengthSquared() > 0.0) {
+      float gesture_xz_angle =
+          acos(gfx::DotProduct(a, b) / a.Length() / b.Length());
       if (fabs(gesture_xz_angle) > kMinAppButtonGestureAngleRad) {
         direction =
             gesture_xz_angle < 0 ? UiInterface::LEFT : UiInterface::RIGHT;
@@ -998,7 +998,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     DrawWebVr();
   }
 
-  vr::Mat4f head_pose;
+  gfx::Transform head_pose;
 
   // When using async reprojection, we need to know which pose was
   // used in the WebVR app for drawing this frame and supply it when
@@ -1020,7 +1020,9 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
     // TODO(crbug.com/704690): Acquire controller state in a way that's timely
     // for both the gamepad API and UI input handling.
     TRACE_EVENT0("gpu", "VrShellGl::UpdateController");
-    auto head_direction = vr::GetForwardVector(head_pose);
+    gfx::Vector3dF head_direction(-head_pose.matrix().get(2, 0),
+                                  -head_pose.matrix().get(2, 1),
+                                  -head_pose.matrix().get(2, 2));
     UpdateController(head_direction);
     HandleControllerInput(head_direction);
   }
@@ -1055,7 +1057,7 @@ void VrShellGl::DrawFrame(int16_t frame_index) {
 
 void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
                                          gvr_frame* frame_ptr,
-                                         const vr::Mat4f& head_pose,
+                                         const gfx::Transform& head_pose,
                                          std::unique_ptr<gl::GLFence> fence) {
   if (fence && !fence->HasCompleted()) {
     task_runner_->PostDelayedTask(
@@ -1072,7 +1074,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
 
   gvr::Frame frame(frame_ptr);
   gvr::Mat4f mat;
-  MatfToGvrMat(head_pose, &mat);
+  TransformToGvrMat(head_pose, &mat);
   frame.Submit(*buffer_viewport_list_, mat);
 
   // No need to swap buffers for surfaceless rendering.
@@ -1097,7 +1099,7 @@ void VrShellGl::DrawFrameSubmitWhenReady(int16_t frame_index,
   TRACE_COUNTER1("gpu", "WebVR FPS", fps_meter_->GetFPS());
 }
 
-void VrShellGl::DrawWorldElements(const vr::Mat4f& head_pose) {
+void VrShellGl::DrawWorldElements(const gfx::Transform& head_pose) {
   TRACE_EVENT0("gpu", "VrShellGl::DrawWorldElements");
 
   if (ShouldDrawWebVr()) {
@@ -1127,7 +1129,7 @@ void VrShellGl::DrawWorldElements(const vr::Mat4f& head_pose) {
              kViewportListPrimaryOffset, draw_reticle);
 }
 
-void VrShellGl::DrawOverlayElements(const vr::Mat4f& head_pose) {
+void VrShellGl::DrawOverlayElements(const gfx::Transform& head_pose) {
   std::vector<const UiElement*> elements = scene_->GetOverlayElements();
   if (elements.empty())
     return;
@@ -1159,13 +1161,12 @@ void VrShellGl::DrawHeadLockedElements() {
 
   glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
   glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-  vr::Mat4f identity_matrix;
-  vr::SetIdentityM(&identity_matrix);
+  gfx::Transform identity_matrix;
   DrawUiView(identity_matrix, elements, render_size_headlocked_,
              kViewportListHeadlockedOffset, false);
 }
 
-void VrShellGl::DrawUiView(const vr::Mat4f& head_pose,
+void VrShellGl::DrawUiView(const gfx::Transform& head_pose,
                            const std::vector<const UiElement*>& elements,
                            const gfx::Size& render_size,
                            int viewport_offset,
@@ -1178,23 +1179,18 @@ void VrShellGl::DrawUiView(const vr::Mat4f& head_pose,
     buffer_viewport_list_->GetBufferViewport(eye + viewport_offset,
                                              buffer_viewport_.get());
 
-    vr::Mat4f eye_view_matrix;
-    vr::Mat4f eye_matrix;
-    GvrMatToMatf(gvr_api_->GetEyeFromHeadMatrix(eye), &eye_matrix);
-    vr::MatrixMul(eye_matrix, head_pose, &eye_view_matrix);
+    gfx::Transform eye_matrix;
+    GvrMatToTransform(gvr_api_->GetEyeFromHeadMatrix(eye), &eye_matrix);
+    gfx::Transform eye_view_matrix = eye_matrix * head_pose;
 
     const gfx::RectF& rect = GfxRectFromUV(buffer_viewport_->GetSourceUv());
     const gfx::Rect& pixel_rect = CalculatePixelSpaceRect(render_size, rect);
     glViewport(pixel_rect.x(), pixel_rect.y(), pixel_rect.width(),
                pixel_rect.height());
 
-    vr::Mat4f view_proj_matrix;
-    vr::Mat4f perspective_matrix;
-    GvrMatToMatf(PerspectiveMatrixFromView(buffer_viewport_->GetSourceFov(),
-                                           kZNear, kZFar),
-                 &perspective_matrix);
-
-    vr::MatrixMul(perspective_matrix, eye_view_matrix, &view_proj_matrix);
+    gfx::Transform perspective_matrix = PerspectiveMatrixFromView(
+        buffer_viewport_->GetSourceFov(), kZNear, kZFar);
+    gfx::Transform view_proj_matrix = perspective_matrix * eye_view_matrix;
 
     DrawElements(view_proj_matrix, sorted_elements, draw_reticle);
     if (draw_reticle) {
@@ -1204,7 +1200,7 @@ void VrShellGl::DrawUiView(const vr::Mat4f& head_pose,
   }
 }
 
-void VrShellGl::DrawElements(const vr::Mat4f& view_proj_matrix,
+void VrShellGl::DrawElements(const gfx::Transform& view_proj_matrix,
                              const std::vector<const UiElement*>& elements,
                              bool draw_reticle) {
   if (elements.empty())
@@ -1229,10 +1225,9 @@ void VrShellGl::DrawElements(const vr::Mat4f& view_proj_matrix,
   vr_shell_renderer_->Flush();
 }
 
-void VrShellGl::DrawElement(const vr::Mat4f& view_proj_matrix,
+void VrShellGl::DrawElement(const gfx::Transform& view_proj_matrix,
                             const UiElement& element) {
-  vr::Mat4f transform;
-  vr::MatrixMul(view_proj_matrix, element.TransformMatrix(), &transform);
+  gfx::Transform transform = view_proj_matrix * element.TransformMatrix();
 
   switch (element.fill()) {
     case Fill::OPAQUE_GRADIENT: {
@@ -1265,7 +1260,7 @@ void VrShellGl::DrawElement(const vr::Mat4f& view_proj_matrix,
 }
 
 std::vector<const UiElement*> VrShellGl::GetElementsInDrawOrder(
-    const vr::Mat4f& view_matrix,
+    const gfx::Transform& view_matrix,
     const std::vector<const UiElement*>& elements) {
   std::vector<const UiElement*> sorted_elements = elements;
 
@@ -1280,27 +1275,23 @@ std::vector<const UiElement*> VrShellGl::GetElementsInDrawOrder(
               if (first->draw_phase() != second->draw_phase()) {
                 return first->draw_phase() < second->draw_phase();
               } else {
-                return vr::GetTranslation(first->TransformMatrix()).z() <
-                       vr::GetTranslation(second->TransformMatrix()).z();
+                return first->TransformMatrix().matrix().get(2, 3) <
+                       second->TransformMatrix().matrix().get(2, 3);
               }
             });
 
   return sorted_elements;
 }
 
-void VrShellGl::DrawReticle(const vr::Mat4f& render_matrix) {
-  vr::Mat4f mat;
-  vr::SetIdentityM(&mat);
-
+void VrShellGl::DrawReticle(const gfx::Transform& render_matrix) {
   // Scale the reticle to have a fixed FOV size at any distance.
   const float eye_to_target =
       std::sqrt(target_point_.SquaredDistanceTo(kOrigin));
-  vr::ScaleM(
-      mat,
-      {kReticleWidth * eye_to_target, kReticleHeight * eye_to_target, 1.0f},
-      &mat);
 
-  vr::Quatf rotation;
+  gfx::Transform mat;
+  mat.Scale(kReticleWidth * eye_to_target, kReticleHeight * eye_to_target);
+
+  gfx::Quaternion rotation;
   if (reticle_render_target_ != nullptr) {
     // Make the reticle planar to the element it's hitting.
     rotation = GetRotationFromZAxis(reticle_render_target_->GetNormal());
@@ -1308,74 +1299,67 @@ void VrShellGl::DrawReticle(const vr::Mat4f& render_matrix) {
     // Rotate the reticle to directly face the eyes.
     rotation = GetRotationFromZAxis(target_point_ - kOrigin);
   }
-  vr::Mat4f rotation_mat;
-  vr::QuatToMatrix(rotation, &rotation_mat);
-  vr::MatrixMul(rotation_mat, mat, &mat);
+  gfx::Transform rotation_mat(rotation);
+  mat.PreconcatTransform(rotation_mat);
 
   gfx::Point3F target_point = ScalePoint(target_point_, kReticleOffset);
   // Place the pointer slightly in front of the plane intersection point.
-  vr::TranslateM(mat, target_point - kOrigin, &mat);
+  mat.Translate(target_point.x(), target_point.y());
 
-  vr::Mat4f transform;
-  vr::MatrixMul(render_matrix, mat, &transform);
+  gfx::Transform transform = render_matrix * mat;
   vr_shell_renderer_->GetReticleRenderer()->Draw(transform);
 }
 
-void VrShellGl::DrawLaser(const vr::Mat4f& render_matrix) {
+void VrShellGl::DrawLaser(const gfx::Transform& render_matrix) {
   gfx::Point3F target_point = ScalePoint(target_point_, kReticleOffset);
   // Find the length of the beam (from hand to target).
   const float laser_length =
       std::sqrt(pointer_start_.SquaredDistanceTo(target_point));
 
-  vr::Mat4f mat;
   // Build a beam, originating from the origin.
-  vr::SetIdentityM(&mat);
+  gfx::Transform mat;
 
   // Move the beam half its height so that its end sits on the origin.
-  vr::TranslateM(mat, {0.0f, 0.5f, 0.0f}, &mat);
-  vr::ScaleM(mat, {kLaserWidth, laser_length, 1}, &mat);
+  mat.Translate3d(0.0f, 0.5f, 0.0f);
+  mat.Scale(kLaserWidth, laser_length);
 
   // Tip back 90 degrees to flat, pointing at the scene.
-  const vr::Quatf quat = vr::QuatFromAxisAngle({1.0f, 0.0f, 0.0f, -M_PI / 2});
-  vr::Mat4f rotation_mat;
-  vr::QuatToMatrix(quat, &rotation_mat);
-  vr::MatrixMul(rotation_mat, mat, &mat);
+  mat.RotateAbout(gfx::Vector3dF(1.0f, 0.0f, 0.0f), -90);
 
   const gfx::Vector3dF beam_direction = target_point_ - pointer_start_;
 
-  vr::Mat4f beam_direction_mat;
-  vr::QuatToMatrix(GetRotationFromZAxis(beam_direction), &beam_direction_mat);
+  gfx::Transform beam_direction_mat(GetRotationFromZAxis(beam_direction));
 
   float opacity = controller_->GetOpacity();
   // Render multiple faces to make the laser appear cylindrical.
   const int faces = 4;
-  vr::Mat4f face_transform;
-  vr::Mat4f transform;
+  gfx::Transform face_transform;
+  gfx::Transform transform;
   for (int i = 0; i < faces; i++) {
     // Rotate around Z.
-    const float angle = M_PI * 2 * i / faces;
-    const vr::Quatf rot = vr::QuatFromAxisAngle({0.0f, 0.0f, 1.0f, angle});
-    vr::QuatToMatrix(rot, &face_transform);
-    vr::MatrixMul(face_transform, mat, &face_transform);
+    const float angle = 360 * i / faces;
+    face_transform.RotateAbout(gfx::Vector3dF(0.0f, 0.0f, 1.0f), angle);
+    face_transform.PreconcatTransform(mat);
     // Orient according to target direction.
-    vr::MatrixMul(beam_direction_mat, face_transform, &face_transform);
+    face_transform.PreconcatTransform(beam_direction_mat);
 
     // Move the beam origin to the hand.
-    vr::TranslateM(face_transform, pointer_start_ - kOrigin, &face_transform);
-    vr::MatrixMul(render_matrix, face_transform, &transform);
+    face_transform.Translate3d(pointer_start_.x(), pointer_start_.y(),
+                               pointer_start_.z());
+
+    transform = render_matrix * face_transform;
     vr_shell_renderer_->GetLaserRenderer()->Draw(opacity, transform);
   }
 }
 
-void VrShellGl::DrawController(const vr::Mat4f& view_proj_matrix) {
+void VrShellGl::DrawController(const gfx::Transform& view_proj_matrix) {
   if (!vr_shell_renderer_->GetControllerRenderer()->IsSetUp())
     return;
   auto state = controller_->GetModelState();
   auto opacity = controller_->GetOpacity();
-  vr::Mat4f controller_transform;
+  gfx::Transform controller_transform;
   controller_->GetTransform(&controller_transform);
-  vr::Mat4f transform;
-  vr::MatrixMul(view_proj_matrix, controller_transform, &transform);
+  gfx::Transform transform = view_proj_matrix * controller_transform;
   vr_shell_renderer_->GetControllerRenderer()->Draw(state, opacity, transform);
 }
 
@@ -1564,7 +1548,7 @@ void VrShellGl::SendVSync(base::TimeDelta time, GetVSyncCallback callback) {
 
   int64_t prediction_nanos = GetPredictedFrameTimeNanos();
 
-  vr::Mat4f head_mat;
+  gfx::Transform head_mat;
   device::mojom::VRPosePtr pose =
       device::GvrDelegate::GetVRPosePtrWithNeckModel(gvr_api_.get(), &head_mat,
                                                      prediction_nanos);

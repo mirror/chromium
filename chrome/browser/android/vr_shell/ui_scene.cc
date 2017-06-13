@@ -13,7 +13,6 @@
 #include "chrome/browser/android/vr_shell/animation.h"
 #include "chrome/browser/android/vr_shell/easing.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element.h"
-#include "device/vr/vr_math.h"
 
 namespace vr_shell {
 
@@ -22,7 +21,7 @@ namespace {
 void ApplyAnchoring(const UiElement& parent,
                     XAnchoring x_anchoring,
                     YAnchoring y_anchoring,
-                    Transform* transform) {
+                    gfx::Transform* transform) {
   // To anchor a child, use the parent's size to find its edge.
   float x_offset;
   switch (x_anchoring) {
@@ -48,7 +47,7 @@ void ApplyAnchoring(const UiElement& parent,
       y_offset = 0.0f;
       break;
   }
-  transform->Translate(gfx::Vector3dF(x_offset, y_offset, 0));
+  transform->Translate(x_offset, y_offset);
 }
 
 }  // namespace
@@ -234,33 +233,32 @@ void UiScene::ApplyRecursiveTransforms(UiElement* element) {
     CHECK(parent != nullptr);
   }
 
-  Transform* transform = element->mutable_transform();
+  gfx::Transform* transform = element->mutable_transform();
   transform->MakeIdentity();
-  transform->Scale(element->size());
   element->set_computed_opacity(element->opacity());
   element->set_computed_lock_to_fov(element->lock_to_fov());
 
   // Compute an inheritable transformation that can be applied to this element,
   // and it's children, if applicable.
-  Transform* inheritable = &element->inheritable_transform();
+  gfx::Transform* inheritable = &element->inheritable_transform();
   inheritable->MakeIdentity();
-  inheritable->Scale(element->scale());
-  inheritable->Rotate(element->rotation());
-  inheritable->Translate(element->translation());
+  inheritable->Translate3d(element->translation());
+  inheritable->PreconcatTransform(gfx::Transform(element->rotation()));
+  inheritable->Scale3d(element->scale().x(), element->scale().y(),
+                       element->scale().z());
   if (parent) {
+    ApplyRecursiveTransforms(parent);
+    inheritable->ConcatTransform(parent->inheritable_transform());
     ApplyAnchoring(*parent, element->x_anchoring(), element->y_anchoring(),
                    inheritable);
-    ApplyRecursiveTransforms(parent);
-    vr::MatrixMul(parent->inheritable_transform().to_world,
-                  inheritable->to_world, &inheritable->to_world);
 
     element->set_computed_opacity(element->computed_opacity() *
                                   parent->opacity());
     element->set_computed_lock_to_fov(parent->lock_to_fov());
   }
 
-  vr::MatrixMul(inheritable->to_world, transform->to_world,
-                &transform->to_world);
+  transform->ConcatTransform(*inheritable);
+
   element->set_dirty(false);
 }
 
