@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fdd299b_cdcab69a",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-06-13T10:54:40Z",
+      "side": 1,
+      "message": "nit: std::string()",
+      "range": {
+        "startLine": 358,
+        "startChar": 27,
+        "endLine": 358,
+        "endChar": 42
+      },
+      "revId": "80d45244703ccc4ed6c7ff456c796a816e199c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e06bafdc_2668766a",
+        "filename": "chrome/browser/extensions/api/certificate_provider/platform_keys_bridge_apitest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1179304
+      },
+      "writtenOn": "2017-06-13T10:54:40Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 385,
+        "startChar": 27,
+        "endLine": 385,
+        "endChar": 42
+      },
+      "revId": "80d45244703ccc4ed6c7ff456c796a816e199c47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
