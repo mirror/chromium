@@ -56,7 +56,6 @@ class WebSharedWorkerClient;
 class WebString;
 class WebURL;
 class WebView;
-class WorkerClients;
 class WorkerInspectorProxy;
 class WorkerScriptLoader;
 
@@ -116,14 +115,6 @@ class WebSharedWorkerImpl final : public WebFrameClient,
   void PostMessageToPageInspector(const String& message);
   void DidCloseWorkerGlobalScope();
   void DidTerminateWorkerThread();
-
-  using WorkerClientsCreatedCallback = void (*)(WorkerClients*);
-  // Allows for the registration of a callback that is invoked whenever a new
-  // OnScriptLoaderFinished is called. Callbacks are executed in the order that
-  // they were added using RegisterWorkerClientsCreatedCallback, and there are
-  // no checks for adding a callback multiple times.
-  CORE_EXPORT static void RegisterWorkerClientsCreatedCallback(
-      WorkerClientsCreatedCallback);
 
  private:
   ~WebSharedWorkerImpl() override;

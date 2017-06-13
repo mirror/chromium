@@ -78,20 +78,12 @@
 
 namespace blink {
 
-namespace {
-
-// Vector of callbacks for the OnScriptLoaderFinished method.
-using WorkerClientsCreatedCallbackVector =
-    WTF::Vector<WebSharedWorkerImpl::WorkerClientsCreatedCallback>;
-WorkerClientsCreatedCallbackVector& GetWorkerClientsCreatedCallbackVector() {
-  DEFINE_STATIC_LOCAL(WorkerClientsCreatedCallbackVector, callback_vector, ());
-  return callback_vector;
-}
-
-}  // namespace
-
 // TODO(toyoshim): Share implementation with WebEmbeddedWorkerImpl as much as
 // possible.
+
+template <>
+CORE_EXPORT WorkerClientsInitializer<WebSharedWorkerImpl>*
+    WorkerClientsInitializer<WebSharedWorkerImpl>::instance_ = nullptr;
 
 WebSharedWorkerImpl::WebSharedWorkerImpl(WebSharedWorkerClient* client)
     : web_view_(nullptr),
@@ -263,11 +255,6 @@ void WebSharedWorkerImpl::DidTerminateWorkerThread() {
   delete this;
 }
 
-void WebSharedWorkerImpl::RegisterWorkerClientsCreatedCallback(
-    WorkerClientsCreatedCallback callback) {
-  GetWorkerClientsCreatedCallbackVector().push_back(callback);
-}
-
 void WebSharedWorkerImpl::Connect(
     std::unique_ptr<WebMessagePortChannel> web_channel) {
   DCHECK(IsMainThread());
@@ -338,10 +325,7 @@ void WebSharedWorkerImpl::OnScriptLoaderFinished() {
   SecurityOrigin* starter_origin = loading_document_->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
-  DCHECK(!GetWorkerClientsCreatedCallbackVector().IsEmpty());
-  for (auto& callback : GetWorkerClientsCreatedCallbackVector()) {
-    callback(worker_clients);
-  }
+  WorkerClientsInitializer<WebSharedWorkerImpl>::Run(worker_clients);
 
   WebSecurityOrigin web_security_origin(loading_document_->GetSecurityOrigin());
   ProvideContentSettingsClientToWorker(
