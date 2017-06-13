@@ -12,8 +12,13 @@
 #include "components/offline_pages/core/client_namespace_constants.h"
 #include "components/offline_pages/core/offline_event_logger.h"
 #include "components/offline_pages/core/offline_page_feature.h"
+#include "components/offline_pages/core/prefetch/generate_page_bundle_request.h"
+#include "components/offline_pages/core/prefetch/get_operation_request.h"
 #include "components/offline_pages/core/prefetch/prefetch_in_memory_store.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
+#include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
+#include "components/version_info/channel.h"
+#include "net/url_request/url_request_test_util.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace offline_pages {
@@ -31,7 +36,35 @@ class TestScopedBackgroundTask
   bool needs_reschedule_called = false;
 };
 
-class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
+class TestNetworkRequestFactory
+    : public PrefetchDispatcher::NetworkRequestFactory {
+ public:
+  TestNetworkRequestFactory()
+      : request_context(new net::TestURLRequestContextGetter(
+            base::ThreadTaskRunnerHandle::Get())) {}
+  ~TestNetworkRequestFactory() override = default;
+
+  std::unique_ptr<GeneratePageBundleRequest> MakeGeneratePageBundleRequest(
+      const std::vector<GURL>& prefetch_urls,
+      const std::string& gcm_registration_id,
+      const PrefetchRequestFinishedCallback& callback) override {
+    // No way to return a testing request.
+    return nullptr;
+  }
+
+  std::unique_ptr<GetOperationRequest> MakeGetOperationRequest(
+      const std::string& operation_name,
+      const PrefetchRequestFinishedCallback& callback) override {
+    // No way to return a testing request.
+    return nullptr;
+  }
+
+  version_info::Channel channel = version_info::Channel::UNKNOWN;
+  std::string user_agent = "Chrome/57.0.2987.133";
+  scoped_refptr<net::TestURLRequestContextGetter> request_context;
+};
+
+class PrefetchDispatcherTest : public testing::Test {
  public:
   PrefetchDispatcherTest();
 
@@ -39,32 +72,24 @@ class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
   void SetUp() override;
   void TearDown() override;
 
-  // PrefetchService implementation:
-  OfflineEventLogger* GetLogger() override;
-  OfflineMetricsCollector* GetOfflineMetricsCollector() override;
-  PrefetchDispatcher* GetPrefetchDispatcher() override;
-  PrefetchGCMHandler* GetPrefetchGCMHandler() override;
-  PrefetchStore* GetPrefetchStore() override;
-  SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
-
-  // KeyedService implementation.
-  void Shutdown() override {}
-
   void PumpLoop();
   PrefetchDispatcher::ScopedBackgroundTask* GetBackgroundTask() {
-    return dispatcher_impl_->task_.get();
+    return dispatcher_->task_.get();
   }
 
-  TaskQueue* dispatcher_task_queue() { return &dispatcher_impl_->task_queue_; }
+  TaskQueue* dispatcher_task_queue() { return &dispatcher_->task_queue_; }
+  PrefetchDispatcher* prefetch_dispatcher() { return dispatcher_; }
 
  private:
+  PrefetchServiceTestTaco taco_;
   OfflineEventLogger logger_;
   base::test::ScopedFeatureList feature_list_;
 
-  std::unique_ptr<PrefetchInMemoryStore> in_memory_store_;
-  std::unique_ptr<PrefetchDispatcherImpl> dispatcher_impl_;
+  // Owned by |taco_|.
+  PrefetchDispatcherImpl* dispatcher_;
 
   scoped_refptr<base::TestSimpleTaskRunner> task_runner_;
+  scoped_refptr<net::TestURLRequestContextGetter> request_context_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
 };
 
@@ -72,46 +97,21 @@ PrefetchDispatcherTest::PrefetchDispatcherTest()
     : task_runner_(new base::TestSimpleTaskRunner),
       task_runner_handle_(task_runner_) {
   feature_list_.InitAndEnableFeature(kPrefetchingOfflinePagesFeature);
+  request_context_ = new net::TestURLRequestContextGetter(task_runner_);
+  dispatcher_ =
+      new PrefetchDispatcherImpl(base::MakeUnique<TestNetworkRequestFactory>());
+
+  taco_.SetPrefetchDispatcher(base::WrapUnique(dispatcher_));
+  taco_.CreatePrefetchService();
 }
 
 void PrefetchDispatcherTest::SetUp() {
   ASSERT_EQ(base::ThreadTaskRunnerHandle::Get(), task_runner_);
   ASSERT_FALSE(task_runner_->HasPendingTask());
-  in_memory_store_ = base::MakeUnique<PrefetchInMemoryStore>();
-  dispatcher_impl_ = base::MakeUnique<PrefetchDispatcherImpl>();
-  dispatcher_impl_->SetService(this);
 }
 
 void PrefetchDispatcherTest::TearDown() {
   task_runner_->ClearPendingTasks();
-}
-
-OfflineEventLogger* PrefetchDispatcherTest::GetLogger() {
-  return &logger_;
-}
-
-OfflineMetricsCollector* PrefetchDispatcherTest::GetOfflineMetricsCollector() {
-  NOTREACHED();
-  return nullptr;
-}
-
-PrefetchDispatcher* PrefetchDispatcherTest::GetPrefetchDispatcher() {
-  return dispatcher_impl_.get();
-}
-
-PrefetchGCMHandler* PrefetchDispatcherTest::GetPrefetchGCMHandler() {
-  NOTREACHED();
-  return nullptr;
-}
-
-PrefetchStore* PrefetchDispatcherTest::GetPrefetchStore() {
-  return in_memory_store_.get();
-}
-
-SuggestedArticlesObserver*
-PrefetchDispatcherTest::GetSuggestedArticlesObserver() {
-  NOTREACHED();
-  return nullptr;
 }
 
 void PrefetchDispatcherTest::PumpLoop() {
@@ -119,15 +119,15 @@ void PrefetchDispatcherTest::PumpLoop() {
 }
 
 TEST_F(PrefetchDispatcherTest, DispatcherDoesNotCrash) {
-  GetPrefetchDispatcher()->AddCandidatePrefetchURLs(std::vector<PrefetchURL>());
-  GetPrefetchDispatcher()->RemoveAllUnprocessedPrefetchURLs(
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(std::vector<PrefetchURL>());
+  prefetch_dispatcher()->RemoveAllUnprocessedPrefetchURLs(
       kSuggestedArticlesNamespace);
-  GetPrefetchDispatcher()->RemovePrefetchURLsByClientId(
+  prefetch_dispatcher()->RemovePrefetchURLsByClientId(
       {kSuggestedArticlesNamespace, "123"});
 }
 
 TEST_F(PrefetchDispatcherTest, AddCandidatePrefetchURLsTask) {
-  GetPrefetchDispatcher()->AddCandidatePrefetchURLs(std::vector<PrefetchURL>());
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(std::vector<PrefetchURL>());
   EXPECT_TRUE(dispatcher_task_queue()->HasPendingTasks());
   EXPECT_TRUE(dispatcher_task_queue()->HasRunningTask());
   PumpLoop();
@@ -142,12 +142,12 @@ TEST_F(PrefetchDispatcherTest, DispatcherDoesNothingIfFeatureNotEnabled) {
   // Don't add a task for new prefetch URLs.
   ClientId client_id("namespace", "id");
   PrefetchURL prefetch_url(client_id, GURL("https://www.chromium.org"));
-  GetPrefetchDispatcher()->AddCandidatePrefetchURLs(
+  prefetch_dispatcher()->AddCandidatePrefetchURLs(
       std::vector<PrefetchURL>(1, prefetch_url));
   EXPECT_FALSE(dispatcher_task_queue()->HasRunningTask());
 
   // Do nothing with a new background task.
-  GetPrefetchDispatcher()->BeginBackgroundTask(
+  prefetch_dispatcher()->BeginBackgroundTask(
       base::MakeUnique<TestScopedBackgroundTask>());
   EXPECT_EQ(nullptr, GetBackgroundTask());
 
