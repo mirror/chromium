@@ -15,6 +15,8 @@
 #include "components/offline_pages/core/prefetch/prefetch_types.h"
 
 namespace offline_pages {
+class GeneratePageBundleRequest;
+class GetOperationRequest;
 class PrefetchService;
 
 // Serves as the entry point for external signals into the prefetching system.
@@ -33,6 +35,23 @@ class PrefetchDispatcher {
     // Used on destruction to inform the system about whether rescheduling with
     // or without backoff is required.
     virtual void SetNeedsReschedule(bool reschedule, bool backoff) = 0;
+  };
+
+  // A class that can inject Chrome-specific data such as the request context,
+  // user agent and channel when sending network requests.
+  class NetworkRequestFactory {
+   public:
+    virtual ~NetworkRequestFactory() = default;
+
+    virtual std::unique_ptr<GeneratePageBundleRequest>
+    MakeGeneratePageBundleRequest(
+        const std::vector<GURL>& urls,
+        const std::string& gcm_registration_id,
+        const PrefetchRequestFinishedCallback& callback) = 0;
+
+    virtual std::unique_ptr<GetOperationRequest> MakeGetOperationRequest(
+        const std::string& operation_name,
+        const PrefetchRequestFinishedCallback& callback) = 0;
   };
 
   virtual ~PrefetchDispatcher() = default;
