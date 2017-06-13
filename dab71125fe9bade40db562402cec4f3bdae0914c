@@ -165,6 +165,30 @@
       "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8de2171c_96970c1f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002172
+      },
+      "writtenOn": "2017-06-13T09:46:29Z",
+      "side": 1,
+      "message": "Good point. It\u0027s started from non-throttled state, and changed to throttled after the 10 sec. So this does not fit to our use case because we want to throttle such cases exactly.\n\nSo, we have some choices here.\n\n1) go to throttled state immediately if a frame starts from the invisible state\n2) use the raw page_visible state to notify ThrottlingObserver as I did first.\n\nSami, do you have any preference here? 1) should affect scheduler behavior itself, and could make another unexpected impact. So, I think 2) is reasonable.",
+      "parentUuid": "45b7a2ad_7fa00d2b",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
