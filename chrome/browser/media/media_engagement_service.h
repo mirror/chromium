@@ -8,10 +8,16 @@
 #include <set>
 
 #include "base/macros.h"
+#include "chrome/browser/media/media_engagement_score.h"
 #include "components/keyed_service/core/keyed_service.h"
+#include "url/gurl.h"
 
 class MediaEngagementContentsObserver;
 class Profile;
+
+namespace base {
+class Clock;
+}
 
 namespace content {
 class WebContents;
@@ -32,10 +38,48 @@ class MediaEngagementService : public KeyedService {
   explicit MediaEngagementService(Profile* profile);
   ~MediaEngagementService() override;
 
+  // Returns the engagement score of |url|.
+  double GetEngagementScore(const GURL& url) const;
+
+  // Returns a map of all stored origins and their engagement levels.
+  std::map<GURL, double> GetScoreMap() const;
+
+  enum InteractionTypes {
+    INTERACTION_VISIT = 1 << 0,         // The URL was visited.
+    INTERACTION_MEDIA_PLAYED = 1 << 1,  // Media was played on the URL.
+  };
+
+  // Update the engagement score of |url| for a combination of interactions.
+  // |interactions| is a bitwise OR of InteractionTypes.
+  void HandleInteraction(const GURL& url, unsigned short int interactions);
+
  private:
+  FRIEND_TEST_ALL_PREFIXES(MediaEngagementServiceTest,
+                           RestrictedToHTTPAndHTTPS);
+  FRIEND_TEST_ALL_PREFIXES(MediaEngagementServiceTest, HandleInteraction);
+  FRIEND_TEST_ALL_PREFIXES(MediaEngagementServiceTest,
+                           IncognitoEngagementService);
+  FRIEND_TEST_ALL_PREFIXES(MediaEngagementServiceTest,
+                           CleanupOriginsOnHistoryDeletion);
+  friend class MediaEngagementServiceTest;
+  friend class MediaEngagementContentsObserverTest;
   friend MediaEngagementContentsObserver;
 
+  MediaEngagementService(Profile* profile, std::unique_ptr<base::Clock> clock);
+
   std::set<MediaEngagementContentsObserver*> contents_observers_;
+
+  Profile* profile_;
+
+  // An internal clock for testing.
+  std::unique_ptr<base::Clock> clock_;
+
+  // Returns true if we should record engagement for this url. Currently,
+  // engagement is only earned for HTTP and HTTPS.
+  bool ShouldRecordEngagement(const GURL& url) const;
+
+  // Retrieves the MediaEngagementScore for |url|.
+  MediaEngagementScore CreateEngagementScore(const GURL& url) const;
 
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementService);
 };
