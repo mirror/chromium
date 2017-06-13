@@ -18,4 +18,8 @@ bool StartupStatus::Ok() const {
   return driver_ok.value() && model_ok.value();
 }
 
+bool StartupStatus::DriverOk() const {
+  return driver_ok.has_value() && driver_ok.value();
+}
+
 }  // namespace download
