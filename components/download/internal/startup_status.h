@@ -27,6 +27,9 @@ struct StartupStatus {
   // be called if Complete() is true.
   bool Ok() const;
 
+  // Whether the driver is successfully initialized.
+  bool DriverOk() const;
+
  private:
   DISALLOW_COPY_AND_ASSIGN(StartupStatus);
 };
