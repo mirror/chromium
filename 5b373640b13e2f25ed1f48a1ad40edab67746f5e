@@ -16,6 +16,24 @@
       "revId": "5b373640b13e2f25ed1f48a1ad40edab67746f5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "968b9dc1_3c4dee82",
+        "filename": "components/subresource_filter/core/common/test_ruleset_creator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1175790
+      },
+      "writtenOn": "2017-06-13T13:01:07Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "07ae0c34_38fbdfbf",
+      "revId": "5b373640b13e2f25ed1f48a1ad40edab67746f5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
