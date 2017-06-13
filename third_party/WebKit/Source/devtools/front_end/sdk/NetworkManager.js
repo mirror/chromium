@@ -74,6 +74,21 @@ SDK.NetworkManager = class extends SDK.SDKModel {
   }
 
   /**
+   * @param {!SDK.NetworkRequest} request
+   * @return {!Promise<!SDK.NetworkRequest.ResponseData>}
+   */
+  static async requestResponseData(request) {
+    if (request.resourceType() === Common.resourceTypes.WebSocket)
+      return {error: 'Content for WebSockets is currently not supported', content: null, encoded: false};
+    if (!request.finished)
+      await new Promise(resolve => request.once(SDK.NetworkRequest.Events.FinishedLoading, resolve));
+    var manager = request.networkManager();
+    var response = await manager._networkAgent.invoke_getResponseBody({requestId: request.requestId()});
+    var error = response[Protocol.Error] || null;
+    return {error: error, content: error ? null : response.body, encoded: response.base64Encoded};
+  }
+
+  /**
    * @param {!SDK.NetworkManager.Conditions} conditions
    * @return {!Protocol.Network.ConnectionType}
    * TODO(allada): this belongs to NetworkConditionsSelector, which should hardcode/guess it.

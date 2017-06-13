@@ -41,13 +41,14 @@ Network.RequestView = class extends UI.VBox {
 
   /**
    * @param {!SDK.NetworkRequest} request
+   * @param {!SDK.NetworkRequest.ResponseData} responseData
    * @return {boolean}
    */
-  static hasTextContent(request) {
+  static hasTextContent(request, responseData) {
     if (request.resourceType().isTextType())
       return true;
-    if (request.resourceType() === Common.resourceTypes.Other || request.hasErrorStatusCode())
-      return !!request.content && !request.contentEncoded;
+    if (request.resourceType() === Common.resourceTypes.Other || responseData.error)
+      return !!responseData.content && !responseData.encoded;
     return false;
   }
 

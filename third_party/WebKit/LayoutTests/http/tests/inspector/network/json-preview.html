@@ -10,7 +10,7 @@ async function test()
         InspectorTest.addResult("Creating a NetworkRequest with type: " + type);
         var request = new SDK.NetworkRequest(SDK.targetManager.mainTarget(), 0, 'http://localhost');
         request.mimeType = type;
-        request._content = '{"number": 42}';
+        request._responseData = Promise.resolve({ error: null, content: '{"number": 42}', encoded: false });
         return request;
     }
 

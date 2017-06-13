@@ -12,7 +12,7 @@ async function test()
         var request = new SDK.NetworkRequest(SDK.targetManager.mainTarget(), 0, 'http://localhost');
         InspectorTest.addResult("Content: " + content.replace(/\0/g, "**NULL**"));
         request.mimeType = mimeType;
-        request._content = content;
+        request._responseData = Promise.resolve({error: null, content: content, encoded: false});
         if (statusCode !== undefined)
             request.statusCode = statusCode;
         return request;

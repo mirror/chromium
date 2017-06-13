@@ -31,11 +31,9 @@
 Network.RequestPreviewView = class extends Network.RequestContentView {
   /**
    * @param {!SDK.NetworkRequest} request
-   * @param {!UI.Widget} responseView
    */
-  constructor(request, responseView) {
+  constructor(request) {
     super(request);
-    this._responseView = responseView;
     /** @type {?Promise<!UI.Widget>} */
     this._previewView = null;
   }
@@ -78,17 +76,15 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
   /**
    * @override
    */
-  contentLoaded() {
-    if (!this._previewView)
-      this._previewView = this._createPreviewView();
-    this._previewView.then(this._showPreviewView.bind(this));
+  wasShown() {
+    this._showPreviewView();
   }
 
-  /**
-   * @param {!UI.Widget} previewView
-   */
-  _showPreviewView(previewView) {
-    if (previewView.parentWidget())
+  async _showPreviewView() {
+    if (!this._previewView)
+      this._previewView = this._createPreviewView();
+    var previewView = await this._previewView;
+    if (this.element.contains(previewView.element))
       return;
 
     previewView.show(this.element);
@@ -98,39 +94,41 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
       for (var item of previewView.syncToolbarItems())
         toolbar.appendToolbarItem(item);
     }
+
+    this._previewDidShowForTest(previewView);
+  }
+
+  _previewDidShowForTest(view) {
   }
 
   /**
-   * @return {string}
+   * @return {!Promise<?Network.RequestHTMLView>}
    */
-  _requestContent() {
-    var content = this.request.content;
-    return this.request.contentEncoded ? window.atob(content || '') : (content || '');
-  }
-
-  /**
-   * @return {?Network.RequestHTMLView}
-   */
-  _htmlErrorPreview() {
+  async _htmlErrorPreview() {
     var whitelist = ['text/html', 'text/plain', 'application/xhtml+xml'];
     if (whitelist.indexOf(this.request.mimeType) === -1)
       return null;
 
-    var dataURL = this.request.asDataURL();
+    var responseData = await this.request.responseData();
+    var dataURL = Common.ContentProvider.contentAsDataURL(
+        responseData.content, this.request.mimeType, responseData.encoded, responseData.encoded ? 'utf-8' : null);
     if (dataURL === null)
       return null;
 
-    return new Network.RequestHTMLView(this.request, dataURL);
+    return new Network.RequestHTMLView(this.request, /** @type {string} */ (dataURL));
   }
 
   /**
    * @return {!Promise<!UI.Widget>}
    */
   async _createPreviewView() {
-    if (this.request.contentError())
+    var responseData = await this.request.responseData();
+    if (responseData.error)
       return Network.RequestPreviewView._createMessageView(Common.UIString('Failed to load response data'));
 
-    var content = this._requestContent();
+    var content = responseData.content || '';
+    if (responseData.encoded)
+      content = window.atob(content);
     if (!content)
       return Network.RequestPreviewView._createEmptyWidget();
 
@@ -148,13 +146,14 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
     }
 
     if (this.request.hasErrorStatusCode() || this.request.resourceType() === Common.resourceTypes.XHR) {
-      var htmlErrorPreview = this._htmlErrorPreview();
+      var htmlErrorPreview = await this._htmlErrorPreview();
       if (htmlErrorPreview)
         return htmlErrorPreview;
     }
 
-    if (this._responseView.sourceView)
-      return this._responseView.sourceView;
+    var sourceView = await Network.RequestResponseView.sourceViewForRequest(this.request);
+    if (sourceView)
+      return sourceView;
 
     if (this.request.resourceType() === Common.resourceTypes.Other)
       return Network.RequestPreviewView._createEmptyWidget();

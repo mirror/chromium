@@ -55,7 +55,7 @@ Network.NetworkItemView = class extends UI.TabbedPane {
       this.appendTab('eventSource', Common.UIString('EventStream'), new Network.EventSourceMessagesView(request));
     } else {
       var responseView = new Network.RequestResponseView(request);
-      var previewView = new Network.RequestPreviewView(request, responseView);
+      var previewView = new Network.RequestPreviewView(request);
       this.appendTab('preview', Common.UIString('Preview'), previewView);
       this.appendTab('response', Common.UIString('Response'), responseView);
     }
