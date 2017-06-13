@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "d7d7e6df_f7894304",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-13T18:57:40Z",
+      "side": 1,
+      "message": "should be fine",
+      "parentUuid": "9ddb3ad5_20b17e74",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b1e17bd_dfeb2784",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 1
@@ -264,6 +282,24 @@
     },
     {
       "key": {
+        "uuid": "dc7a8a07_457d39b2",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-13T18:57:40Z",
+      "side": 1,
+      "message": "The cookies store should be the default cookie store tied to user profile.",
+      "parentUuid": "678e4ab4_ae2211ba",
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc6f352_158d7e36",
         "filename": "content/browser/download/download_manager_impl.cc",
         "patchSetId": 1
@@ -275,6 +311,30 @@
       "writtenOn": "2017-06-06T09:28:50Z",
       "side": 1,
       "message": "Does it mean that downloading cannot be disabled by settings or policy?",
+      "range": {
+        "startLine": 81,
+        "startChar": 24,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "2be61076e4f08c4beae0f63144db855c2470a060",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66c0afca_fdef4f51",
+        "filename": "content/browser/download/download_manager_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-13T18:57:40Z",
+      "side": 1,
+      "message": "I don\u0027t find any seeings/policies to disable download",
+      "parentUuid": "8dc6f352_158d7e36",
       "range": {
         "startLine": 81,
         "startChar": 24,
