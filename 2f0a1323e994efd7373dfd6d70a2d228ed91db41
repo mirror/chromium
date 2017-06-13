@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "6aa8e177_c3593333",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T16:02:24Z",
+      "side": 1,
+      "message": "That this needs to be called with an NSGraphicsContext present, such as within the scope of -drawRect:. In other words, onto/into what is this method painting?",
+      "parentUuid": "b662ec43_a266edc3",
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9667ad_5acdb655",
         "filename": "chrome/browser/ui/cocoa/animated_icon.h",
         "patchSetId": 4

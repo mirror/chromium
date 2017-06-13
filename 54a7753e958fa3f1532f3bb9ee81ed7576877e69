@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98aa9eff_de03f59b",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T16:02:24Z",
+      "side": 1,
+      "message": "const goes after the * (NSView isn\u0027t const, the pointer is)",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c90a0b2_beb35779",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T16:02:24Z",
+      "side": 1,
+      "message": "Can this cast be removed by updating toolbar_controller.h/mm?",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1de04da_b65f2c45",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T16:02:24Z",
+      "side": 1,
+      "message": "Since this class is a simple button, it shouldn\u0027t really know about things like tabs. I think exposing -animateIfPossible would be better, and call that directly in -onTabInsertedInForeground. (And do the same for AppMenuController).",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
