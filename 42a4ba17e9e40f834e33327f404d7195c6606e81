@@ -34,6 +34,24 @@
       "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41d332a4_f0aee548",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-13T08:09:49Z",
+      "side": 1,
+      "message": "No, I meant RenderWidgetHostViewAndroid and WebContentsAccessibilityAndroid, but as I look at it some more, it\u0027s limited to the subclass of RenderWidgetHostConnector. I wasn\u0027t really familiar with that before but it seems reasonable.\n\nThanks for adding the Delegate interface to WebContentsAccessibility, but I think I\u0027ve decided I like the previous patch set better. Since WebContentsAccessibility::Delegate still needs the BrowserAccessibility type, it doesn\u0027t really decouple them (since you can easily get from a BrowserAccessibility to a BrowserAccessibilityManager). So I think it\u0027s better to not complicate it.",
+      "parentUuid": "b4a20497_f03796e6",
+      "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
