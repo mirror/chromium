@@ -63,6 +63,11 @@ class CONTENT_EXPORT LevelDBWrapperImpl : public mojom::LevelDBWrapper {
                      Delegate* delegate);
   ~LevelDBWrapperImpl() override;
 
+  // Call this method to change the database this wrapper is associated with.
+  // In particular you can set the database to null to detach the wrapper from
+  // the database completely, after which modification are only kept in memory.
+  void SetDatabase(leveldb::mojom::LevelDBDatabase* database);
+
   void Bind(mojom::LevelDBWrapperRequest request);
 
   bool empty() const { return bytes_used_ == 0; }
