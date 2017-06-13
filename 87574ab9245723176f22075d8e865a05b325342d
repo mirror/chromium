@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cff49342_ec0e1ce5",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T17:03:50Z",
+      "side": 1,
+      "message": "This is partly a mock, partly a fake. I believe we discouraged to mix these two in the testing sessions.\n\nWhy cannot you use the trick of passing a pointer of the callback to the mocked method and using standard gmock tricks to call the callback whenever FetchSnippets gets called?\n(see, e.g. https://cs.chromium.org/chromium/src/components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc?l\u003d142)",
+      "range": {
+        "startLine": 423,
+        "startChar": 7,
+        "endLine": 423,
+        "endChar": 25
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7ae6130_496b3acb",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T17:03:50Z",
+      "side": 1,
+      "message": "Why do you need this function?\n\nIn ShouldExcludeKnownSuggestionsWithoutTruncatingWhenFetchingMore test, you call Fetch() directly and it looks good to me.",
+      "range": {
+        "startLine": 605,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 23
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02b14a81_34f1f512",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T17:03:50Z",
+      "side": 1,
+      "message": "nit: RemoteSuggestionsProvider::FetchStatusCallback()? (as used in other tests below)",
+      "range": {
+        "startLine": 1998,
+        "startChar": 5,
+        "endLine": 1999,
+        "endChar": 67
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01eef03d_ca304890",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T17:03:50Z",
+      "side": 1,
+      "message": "In my opinion, this deserves a helper function, e.g. \n  RemoteSuggestion CreateTestRemoteSuggestion(const std::string\u0026 url). \n\nI do not think that reader of these tests need to understand how a RemoteSuggestion gets created in order to understand these tests.",
+      "range": {
+        "startLine": 2019,
+        "startChar": 2,
+        "endLine": 2031,
+        "endChar": 0
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc10cda3_d6f09a62",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-13T17:03:50Z",
+      "side": 1,
+      "message": "nit: Why not .RetiresOnSaturation() for the EXPECT_CALL?",
+      "range": {
+        "startLine": 2100,
+        "startChar": 2,
+        "endLine": 2100,
+        "endChar": 49
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
