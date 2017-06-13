@@ -40,6 +40,9 @@ class MediaEngagementScore {
   int media_playbacks() const { return media_playbacks_; }
   void increment_media_playbacks() { media_playbacks_++; }
 
+  // Calculate the score as per the formula in the design doc.
+  static double CalculateScore(int visits, int media_playbacks);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementScoreTest, PartiallyEmptyDictionary);
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementScoreTest, PopulatedDictionary);

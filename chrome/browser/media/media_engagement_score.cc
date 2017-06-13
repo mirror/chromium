@@ -47,9 +47,13 @@ MediaEngagementScore& MediaEngagementScore::operator=(
     MediaEngagementScore&& other) = default;
 
 double MediaEngagementScore::GetTotalScore() const {
-  if (visits_ < kScoreMinVisits)
+  return MediaEngagementScore::CalculateScore(visits_, media_playbacks_);
+}
+
+double MediaEngagementScore::CalculateScore(int visits, int media_playbacks) {
+  if (visits < kScoreMinVisits)
     return 0;
-  return media_playbacks_ / (double)visits_;
+  return media_playbacks / (double)visits;
 }
 
 void MediaEngagementScore::Commit() {

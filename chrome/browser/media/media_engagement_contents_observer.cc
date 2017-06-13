@@ -46,8 +46,8 @@ void MediaEngagementContentsObserver::DidFinishNavigation(
 
   if (committed_origin_.unique())
     return;
-
-  // TODO(mlamouri): record the visit into content settings.
+  service_->HandleInteraction(committed_origin_.GetURL(),
+                              MediaEngagementService::INTERACTION_VISIT);
 }
 
 void MediaEngagementContentsObserver::WasShown() {
@@ -96,7 +96,8 @@ void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
   if (committed_origin_.unique())
     return;
 
-  // TODO(mlamouri): record the playback into content settings.
+  service_->HandleInteraction(committed_origin_.GetURL(),
+                              MediaEngagementService::INTERACTION_MEDIA_PLAYED);
 }
 
 bool MediaEngagementContentsObserver::AreConditionsMet() const {
