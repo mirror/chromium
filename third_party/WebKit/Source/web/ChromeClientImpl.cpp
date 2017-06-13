@@ -1135,28 +1135,4 @@ double ChromeClientImpl::LastFrameTimeMonotonic() const {
   return web_view_->LastFrameTimeMonotonic();
 }
 
-void ChromeClientImpl::InstallSupplements(LocalFrame& frame) {
-  WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(&frame);
-  WebFrameClient* client = web_frame->Client();
-  DCHECK(client);
-  ProvidePushControllerTo(frame, client->PushClient());
-  ProvideUserMediaTo(frame,
-                     UserMediaClientImpl::Create(client->UserMediaClient()));
-  ProvideIndexedDBClientTo(frame, IndexedDBClientImpl::Create(frame));
-  ProvideLocalFileSystemTo(frame, LocalFileSystemClient::Create());
-  NavigatorContentUtils::ProvideTo(
-      *frame.DomWindow()->navigator(),
-      NavigatorContentUtilsClientImpl::Create(web_frame));
-
-  ScreenOrientationControllerImpl::ProvideTo(
-      frame, client->GetWebScreenOrientationClient());
-  if (RuntimeEnabledFeatures::PresentationEnabled())
-    PresentationController::ProvideTo(frame, client->PresentationClient());
-  if (RuntimeEnabledFeatures::AudioOutputDevicesEnabled()) {
-    ProvideAudioOutputDeviceClientTo(frame,
-                                     new AudioOutputDeviceClientImpl(frame));
-  }
-  InstalledAppController::ProvideTo(frame, client->GetRelatedAppsFetcher());
-}
-
 }  // namespace blink
