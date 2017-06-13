@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70aaf23f_2a45af37",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "So we never cancel this callback? What if the viewholder gets rebound before the request returns?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8101309d_19424ba1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "Don\u0027t just blindly pepper |mIsDestroyed| checks everywhere, or you\u0027re going to end up with a whole bunch of objects that may or may not be alive at any given point and are just silently going to fail on misuse. It doesn\u0027t make sense for a client of this class to call a method on it after it has been destroyed -- the only time when the check makes sense is when a method in this class is being called from somewhere that doesn\u0027t know whether this object is still in use, for example in callbacks (e.g. from native code) that we can\u0027t cancel on destruction, and which could happen after the UI has been torn down.",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60c5b2b_79138088",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "I don\u0027t think the ImageFetcher is actually ever registered as a DestructionObserver. What you should probably do though is have the SuggestionsUiDelegateImpl directly call this method instead of going through an interface -- it knows about the ImageFetcher class (so it\u0027s not a layering violation), and it creates the ImageFetcher instance, so it makes sense for it to destroy it too.",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5a5fe34_b3db4e0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "Be consistent with how you write these comments (equals sign or not, whitespace or no whitespace). My personal favorite is to use an equals sign and spaces around it and inside the comments, i.e. /* useLargeIcon \u003d */.",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c39b79_8460e809",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "What happens if someone cancels the request after the ImageFetcher has been destroyed?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6c401f4_a1a10bc6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "These classes do all their work in the constructor and are not used otherwise. You could just replace them with plain methods that return void.",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08583842_a8de458a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "Can you only wrap the URI parsing in this try-catch block?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3d4f0c1_3fafa1c7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "I might have already mentioned this somewhere else, but I forgot where: Do we actually need to expose the NativePageHost? It looks like this is only needed to get a WebContents for fetching favicons, so could we expose the WebContents instead?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c57d5e26_6ea3bd7a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T15:06:16Z",
+      "side": 1,
+      "message": "Are these unused now?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
