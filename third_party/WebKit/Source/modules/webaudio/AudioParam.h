@@ -83,6 +83,7 @@ enum AudioParamType {
   kParamTypeAudioListenerUpY,
   kParamTypeAudioListenerUpZ,
   kParamTypeConstantSourceValue,
+  kParamTypeAudioWorkletNode
 };
 
 // AudioParamHandler is an actual implementation of web-exposed AudioParam
