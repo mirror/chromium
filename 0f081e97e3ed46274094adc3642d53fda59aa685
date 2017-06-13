@@ -22,6 +22,30 @@
       "revId": "0f081e97e3ed46274094adc3642d53fda59aa685",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fca3d406_eba3df6a",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 4294,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-13T21:47:03Z",
+      "side": 1,
+      "message": "I wanted to avoid resize events due to scrollbars coming in and out of existence during a single layout - seems like suppressed scrollbars early in layout should avoid causing a resize. That said, this doesn\u0027t fire a resize if the page loads with a scrollbar. IMO, it should, when we navigate to a page we start off with no content. If the content adds a scrollbar due to overflow, we should get a resize event on the visual viewport. I\u0027ve moved this code to trace the viewport size before and after a layout in the FrameView. I\u0027ve also added an explicit test for this case.",
+      "parentUuid": "66a39eba_6037e927",
+      "range": {
+        "startLine": 4294,
+        "startChar": 6,
+        "endLine": 4294,
+        "endChar": 28
+      },
+      "revId": "0f081e97e3ed46274094adc3642d53fda59aa685",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
