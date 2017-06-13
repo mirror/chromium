@@ -18,6 +18,10 @@
 #include "components/viz/frame_sinks/gpu_compositor_frame_sink_delegate.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+namespace cc {
+class FrameSinkManager;
+}
+
 namespace viz {
 
 // Server side representation of a WindowSurface.
@@ -28,7 +32,7 @@ class GpuCompositorFrameSink
  public:
   GpuCompositorFrameSink(
       GpuCompositorFrameSinkDelegate* delegate,
-      cc::SurfaceManager* surface_manager,
+      cc::FrameSinkManager* frame_sink_manager,
       const cc::FrameSinkId& frame_sink_id,
       cc::mojom::MojoCompositorFrameSinkRequest request,
       cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,

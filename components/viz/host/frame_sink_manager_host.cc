@@ -18,10 +18,6 @@ FrameSinkManagerHost::FrameSinkManagerHost()
 
 FrameSinkManagerHost::~FrameSinkManagerHost() {}
 
-cc::SurfaceManager* FrameSinkManagerHost::surface_manager() {
-  return frame_sink_manager_.surface_manager();
-}
-
 void FrameSinkManagerHost::ConnectToFrameSinkManager() {
   DCHECK(!frame_sink_manager_ptr_.is_bound());
   cc::mojom::FrameSinkManagerClientPtr client;

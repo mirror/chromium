@@ -590,10 +590,10 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       compositor->widget());
 #endif
   if (data->synthetic_begin_frame_source) {
-    GetSurfaceManager()->UnregisterBeginFrameSource(
+    GetFrameSinkManager()->UnregisterBeginFrameSource(
         data->synthetic_begin_frame_source.get());
   } else if (data->gpu_vsync_begin_frame_source) {
-    GetSurfaceManager()->UnregisterBeginFrameSource(
+    GetFrameSinkManager()->UnregisterBeginFrameSource(
         data->gpu_vsync_begin_frame_source.get());
   }
 
@@ -608,8 +608,8 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
       std::move(display_output_surface), std::move(scheduler),
       base::MakeUnique<cc::TextureMailboxDeleter>(
           compositor->task_runner().get()));
-  GetSurfaceManager()->RegisterBeginFrameSource(begin_frame_source,
-                                                compositor->frame_sink_id());
+  GetFrameSinkManager()->RegisterBeginFrameSource(begin_frame_source,
+                                                  compositor->frame_sink_id());
   // Note that we are careful not to destroy prior BeginFrameSource objects
   // until we have reset |data->display|.
   data->synthetic_begin_frame_source = std::move(synthetic_begin_frame_source);
@@ -621,12 +621,12 @@ void GpuProcessTransportFactory::EstablishedGpuChannel(
   auto compositor_frame_sink =
       vulkan_context_provider
           ? base::MakeUnique<cc::DirectCompositorFrameSink>(
-                compositor->frame_sink_id(), GetSurfaceManager(),
+                compositor->frame_sink_id(), GetFrameSinkManager(),
                 data->display.get(),
                 static_cast<scoped_refptr<cc::VulkanContextProvider>>(
                     vulkan_context_provider))
           : base::MakeUnique<cc::DirectCompositorFrameSink>(
-                compositor->frame_sink_id(), GetSurfaceManager(),
+                compositor->frame_sink_id(), GetFrameSinkManager(),
                 data->display.get(), context_provider,
                 shared_worker_context_provider_, GetGpuMemoryBufferManager(),
                 viz::HostSharedBitmapManager::current());
@@ -670,10 +670,10 @@ void GpuProcessTransportFactory::RemoveCompositor(ui::Compositor* compositor) {
     gpu::GpuSurfaceTracker::Get()->RemoveSurface(data->surface_handle);
 #endif
   if (data->synthetic_begin_frame_source) {
-    GetSurfaceManager()->UnregisterBeginFrameSource(
+    GetFrameSinkManager()->UnregisterBeginFrameSource(
         data->synthetic_begin_frame_source.get());
   } else if (data->gpu_vsync_begin_frame_source) {
-    GetSurfaceManager()->UnregisterBeginFrameSource(
+    GetFrameSinkManager()->UnregisterBeginFrameSource(
         data->gpu_vsync_begin_frame_source.get());
   }
   per_compositor_data_.erase(it);
@@ -724,12 +724,6 @@ GpuProcessTransportFactory::GetContextFactoryPrivate() {
 
 cc::FrameSinkId GpuProcessTransportFactory::AllocateFrameSinkId() {
   return frame_sink_id_allocator_.NextFrameSinkId();
-}
-
-cc::SurfaceManager* GpuProcessTransportFactory::GetSurfaceManager() {
-  return BrowserMainLoop::GetInstance()
-      ->frame_sink_manager_host()
-      ->surface_manager();
 }
 
 viz::FrameSinkManagerHost*
@@ -830,6 +824,12 @@ void GpuProcessTransportFactory::AddObserver(
 void GpuProcessTransportFactory::RemoveObserver(
     ui::ContextFactoryObserver* observer) {
   observer_list_.RemoveObserver(observer);
+}
+
+cc::FrameSinkManager* GpuProcessTransportFactory::GetFrameSinkManager() {
+  return BrowserMainLoop::GetInstance()
+      ->frame_sink_manager_host()
+      ->frame_sink_manager();
 }
 
 viz::GLHelper* GpuProcessTransportFactory::GetGLHelper() {

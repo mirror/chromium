@@ -14,7 +14,7 @@
 #include "base/threading/thread_checker.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
 #include "cc/surfaces/frame_sink_id.h"
-#include "cc/surfaces/surface_manager.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/surface_observer.h"
 #include "components/viz/frame_sinks/gpu_compositor_frame_sink_delegate.h"
 #include "components/viz/viz_export.h"
@@ -42,7 +42,7 @@ class VIZ_EXPORT MojoFrameSinkManager
                        DisplayProvider* display_provider);
   ~MojoFrameSinkManager() override;
 
-  cc::SurfaceManager* surface_manager() { return &manager_; }
+  cc::FrameSinkManager* frame_sink_manager() { return &frame_sink_manager_; }
 
   // Binds to |request| and store connection back to |client|.
   void Connect(cc::mojom::FrameSinkManagerRequest request,
@@ -93,10 +93,10 @@ class VIZ_EXPORT MojoFrameSinkManager
   void OnPrivateConnectionLost(const cc::FrameSinkId& frame_sink_id,
                                bool destroy_compositor_frame_sink) override;
 
-  // SurfaceManager should be the first object constructed and the last object
+  // FrameSinkManager should be the first object constructed and the last object
   // destroyed in order to ensure that all other objects that depend on it have
   // access to a valid pointer for the entirety of their lifetimes.
-  cc::SurfaceManager manager_;
+  cc::FrameSinkManager frame_sink_manager_;
 
   std::unique_ptr<cc::SurfaceDependencyTracker> dependency_tracker_;
 

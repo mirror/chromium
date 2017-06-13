@@ -30,8 +30,8 @@ class BeginFrameSource;
 class CompositorFrameSinkSupport;
 class ContextProvider;
 class Display;
+class FrameSinkManager;
 class LocalSurfaceIdAllocator;
-class SurfaceManager;
 }
 
 namespace IPC {
@@ -152,7 +152,7 @@ class SynchronousCompositorFrameSink
 
   // TODO(danakj): These don't to be stored in unique_ptrs when OutputSurface
   // is owned/destroyed on the compositor thread.
-  std::unique_ptr<cc::SurfaceManager> surface_manager_;
+  std::unique_ptr<cc::FrameSinkManager> frame_sink_manager_;
   std::unique_ptr<cc::LocalSurfaceIdAllocator> local_surface_id_allocator_;
   cc::LocalSurfaceId child_local_surface_id_;
   cc::LocalSurfaceId root_local_surface_id_;

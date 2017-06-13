@@ -66,7 +66,6 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   void RemoveReflector(ui::Reflector* reflector) override;
   void RemoveCompositor(ui::Compositor* compositor) override;
   cc::FrameSinkId AllocateFrameSinkId() override;
-  cc::SurfaceManager* GetSurfaceManager() override;
   viz::FrameSinkManagerHost* GetFrameSinkManagerHost() override;
   void SetDisplayVisible(ui::Compositor* compositor, bool visible) override;
   void ResizeDisplay(ui::Compositor* compositor,
@@ -84,6 +83,7 @@ class GpuProcessTransportFactory : public ui::ContextFactory,
   // ImageTransportFactory implementation.
   ui::ContextFactory* GetContextFactory() override;
   ui::ContextFactoryPrivate* GetContextFactoryPrivate() override;
+  cc::FrameSinkManager* GetFrameSinkManager() override;
   viz::GLHelper* GetGLHelper() override;
   void SetGpuChannelEstablishFactory(
       gpu::GpuChannelEstablishFactory* factory) override;
