@@ -22,6 +22,30 @@
       "revId": "2a2918a34eae64368876931c79e36647b46a91d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc4335e9_9703fe49",
+        "filename": "chromecast/media/audio/cast_audio_output_stream.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-13T04:50:47Z",
+      "side": 1,
+      "message": "Yes - this is expected. AudioOutputStream does not recover. Once the error is reported they are soon destroyed.",
+      "parentUuid": "9c74d900_f6393a58",
+      "range": {
+        "startLine": 220,
+        "startChar": 0,
+        "endLine": 220,
+        "endChar": 30
+      },
+      "revId": "2a2918a34eae64368876931c79e36647b46a91d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
