@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "24634cd8_48e99a4c",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-13T08:06:53Z",
+      "side": 0,
+      "message": "Fair enough. Removed too.",
+      "parentUuid": "ac63b0c8_a43e9383",
+      "range": {
+        "startLine": 53,
+        "startChar": 12,
+        "endLine": 53,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c2f28ee_1a8de82b",
         "filename": "components/doodle/doodle_types.h",
         "patchSetId": 1
@@ -178,6 +202,30 @@
       "side": 0,
       "message": "I remember the same. So, transparent Doodles will not exist?",
       "parentUuid": "5995d42d_5850a95c",
+      "range": {
+        "startLine": 84,
+        "startChar": 54,
+        "endLine": 84,
+        "endChar": 0
+      },
+      "revId": "bf77209685ba07195bf0c0ba84c2e1d1a78f4491",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "26f72317_85cfb875",
+        "filename": "components/doodle/doodle_types.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-13T08:06:53Z",
+      "side": 0,
+      "message": "I don\u0027t think so, no. If they do (re)appear, we\u0027ll just have to add this back.\n[I think we looked into them for the gray-background NTP, but eventually went for non-transparent images with an explicit gray background instead.]",
+      "parentUuid": "3e64795b_36605178",
       "range": {
         "startLine": 84,
         "startChar": 54,
