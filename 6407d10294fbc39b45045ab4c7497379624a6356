@@ -22,6 +22,30 @@
       "revId": "6407d10294fbc39b45045ab4c7497379624a6356",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f89e550_6f2d680f",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-13T18:43:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2ffdfbe_fbb5f4a6",
+      "range": {
+        "startLine": 249,
+        "startChar": 43,
+        "endLine": 249,
+        "endChar": 71
+      },
+      "revId": "6407d10294fbc39b45045ab4c7497379624a6356",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
