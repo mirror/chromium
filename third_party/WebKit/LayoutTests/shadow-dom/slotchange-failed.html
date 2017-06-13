@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<script src="resources/shadow-dom.js"></script>
+
+<div id="test8">
+  <div id="host1">
+    <template id="shadowroot" data-mode="open">
+      <slot id="s1"></slot>
+    </template>
+  </div>
+</div>
+
+<script>
+function doneIfSlotChange(slots, test) {
+  let fired = new Set();
+  for (let slot of slots) {
+    slot.addEventListener('slotchange', test.step_func((e) => {
+      assert_false(fired.has(slot.id));
+      fired.add(slot.id);
+      if (fired.size == slots.length) {
+        test.done();
+      }
+    }))
+  }
+}
+
+async_test((test) => {
+  const n = createTestTree(window.test8);
+  removeWhiteSpaceOnlyTextNodes(n.test8);
+  n.host1.innerHTML = 'hello';
+
+  window.setTimeout(() => {
+    doneIfSlotChange([n.s1], test);
+    n.host1.innerHTML = 'world';
+  }, 0);
+}, 'slotchange event: Replacing a text node with innerHTML.');
+</script>

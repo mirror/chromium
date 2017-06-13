@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script type="text/javascript" src="../resources/runner.js"></script>
+</head>
+<body>
+  <div id="app"></div>
+<script>
+const app = document.querySelector('#app');
+const children = 10;
+
+function createNestedComponent(nest) {
+  // Creating a nested component where a node is re-distributed into a slot in a despendant shadow tree
+  const x = document.createElement('div');
+  x.appendChild(document.createElement('slot'));
+  x.appendChild(document.createElement('p'));
+  const sr = x.attachShadow({ mode: 'open' });
+  if (nest == 0) {
+    sr.appendChild(document.createElement('slot'));
+  } else {
+    sr.appendChild(createNestedComponent(nest - 1));
+  }
+  return x;
+}
+
+function setup() {
+  const nest = 100;
+  for (let i = 0; i < children; ++i) {
+    app.appendChild(createNestedComponent(nest));
+  }
+  document.body.offsetLeft;
+}
+
+function run() {
+  for (let i = 0; i < children; ++i) {
+    const firstChild = app.firstChild;
+    firstChild.remove();
+    app.appendChild(firstChild);
+    firstChild.shadowRoot.querySelector('slot').assignedNodes();
+  }
+}
+
+setup();
+
+PerfTestRunner.measureRunsPerSecond({
+  description: 'Measure a distribution cost when a subtree is disconnected, and then connected',
+  run: run,
+  done: () => {
+    app.innerHTML = '';
+  }
+});
+</script>
+</body>
+</html>

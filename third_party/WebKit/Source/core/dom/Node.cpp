@@ -2563,9 +2563,19 @@ void Node::SetV0CustomElementState(V0CustomElementState new_state) {
 void Node::CheckSlotChange(SlotChangeType slot_change_type) {
   // Common check logic is used in both cases, "after inserted" and "before
   // removed".
+
+  // This function is usually called while DOM Mutation is still continuing.
+  // For "after inserted" case, parent and child have been already connected.
+  // For "bofore removed" case, parent and child have not been disconnected yet.
+  // Disconnection will happen later in DOM Mutation process.
+
   if (!IsSlotable())
     return;
+
   if (ShadowRoot* root = V1ShadowRootOfParent()) {
+    // A shadow host's child might be assigned to a slot in the host's shadow
+    // tree.
+
     // Relevant DOM Standard:
     // https://dom.spec.whatwg.org/#concept-node-insert
     // - 6.1.2: If parent is a shadow host and node is a slotable, then assign a
@@ -2578,7 +2588,9 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
     // slotables" at this timing, we skip it as an optimization.
     if (HTMLSlotElement* slot = root->AssignedSlotFor(*this))
       slot->DidSlotChange(slot_change_type);
-  } else {
+  } else if (IsInV1ShadowTree()) {
+    // Checking for fallback content if we are in a v1 shadow tree.
+
     // Relevant DOM Standard:
     // https://dom.spec.whatwg.org/#concept-node-insert
     // - 6.1.3: If parent is a slot whose assigned nodes is the empty list, then
@@ -2589,11 +2601,12 @@ void Node::CheckSlotChange(SlotChangeType slot_change_type) {
     Element* parent = parentElement();
     if (parent && isHTMLSlotElement(parent)) {
       HTMLSlotElement& parent_slot = toHTMLSlotElement(*parent);
-      // TODO(hayato): Support slotchange for slots in non-shadow trees.
-      if (ShadowRoot* root = ContainingShadowRoot()) {
-        if (root && root->IsV1() && !parent_slot.HasAssignedNodesSlow())
-          parent_slot.DidSlotChange(slot_change_type);
-      }
+      DCHECK(parent_slot.SupportsDistribution());
+      // The parent_slot's assigned nodes might not be caluculated because it is
+      // lazy evalucated later at UpdateDistribution() so we have to check it
+      // here.
+      if (!parent_slot.HasAssignedNodesSlow())
+        parent_slot.DidSlotChange(slot_change_type);
     }
   }
 }
