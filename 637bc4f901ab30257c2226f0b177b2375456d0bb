@@ -16,6 +16,24 @@
       "revId": "637bc4f901ab30257c2226f0b177b2375456d0bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ab682e3_6f0d6485",
+        "filename": "chrome/browser/ui/views/harmony/chrome_layout_provider.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-13T14:48:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dec0d89_f85ef944",
+      "revId": "637bc4f901ab30257c2226f0b177b2375456d0bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
