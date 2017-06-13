@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9827fb33_684909ea",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002611
+      },
+      "writtenOn": "2017-06-13T19:20:53Z",
+      "side": 1,
+      "message": "Sorry, not sure what this refers to. Did you forget to add the citation?",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "c9a146e739fa352feb21ca18056fcff82ebe7046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
