@@ -37,8 +37,6 @@
 
 namespace blink {
 
-class WorkerClients;
-
 // This is created on the main thread, passed to the worker thread and
 // attached to WorkerOrWorkletGlobalScope when it is created.
 // This class can be used to provide "client" implementations to workers or
@@ -60,6 +58,51 @@ class CORE_EXPORT WorkerClients final : public GarbageCollected<WorkerClients>,
 };
 
 extern template class CORE_EXTERN_TEMPLATE_EXPORT Supplement<WorkerClients>;
+
+// Allows for the registration of a callback that is invoked whenever a new
+// worker starts. Callbacks are expected to provide module clients to a given
+// WorkerClients.
+//
+// Example:
+//   // In ModulesInitializer.cpp.
+//   WorkerClientsInitializer<CoolWorker>::Register(
+//       [](WorkerClients* worker_clients) {
+//         // Provides module clients to |worker_clients| here.
+//       });
+//
+//   // In CoolWorker.cpp.
+//   WorkerClients* worker_clients = WorkerClients::Create();
+//   WorkerClients<CoolWorker>::Run(worker_clients);
+//
+template <class WorkerType>
+class CORE_EXPORT WorkerClientsInitializer {
+ public:
+  using Callback = void (*)(WorkerClients*);
+
+  static void Register(Callback callback) {
+    if (!instance_)
+      instance_ = new WorkerClientsInitializer<WorkerType>;
+    instance_->RegisterInternal(callback);
+  }
+
+  static void Run(WorkerClients* worker_clients) {
+    DCHECK(instance_);
+    instance_->RunInternal(worker_clients);
+  }
+
+ private:
+  void RegisterInternal(Callback callback) { callbacks_.push_back(callback); }
+
+  void RunInternal(WorkerClients* worker_clients) {
+    DCHECK(!callbacks_.IsEmpty());
+    for (auto& callback : callbacks_)
+      callback(worker_clients);
+  }
+
+  Vector<Callback> callbacks_;
+
+  static WorkerClientsInitializer<WorkerType>* instance_;
+};
 
 }  // namespace blink
 
