@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b85b282_cc6fb9f4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-13T22:34:16Z",
+      "side": 0,
+      "message": "Why is this exception not relevant anymore?",
+      "revId": "9061a92f5c2d505e792cf02ec95dcac8946298df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

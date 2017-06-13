@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b609a15e_2f59ca0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-13T22:34:16Z",
+      "side": 1,
+      "message": "micro nit since I see this a bit more often now: common todo syntax is like this:\n\n// TODO(awdf): Foo bar baz.\n// TODO(crbug.com/123465): Foo bar baz.\n\nThere used to be a few tools that scraped the source code for them. It\u0027s also following google3 conventions, so adding the colon may be a good habit to get in to.",
+      "range": {
+        "startLine": 33,
+        "startChar": 12,
+        "endLine": 33,
+        "endChar": 16
+      },
+      "revId": "1b603c38479e54e6c5321b374f90fd6934334bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "616c2b5a_707546a0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-13T22:34:16Z",
+      "side": 1,
+      "message": "Why is this better than the conventional singleton pattern where you have a static member that you check for a NULL value prior to initialization?",
+      "revId": "1b603c38479e54e6c5321b374f90fd6934334bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac2cad47_2ad0cd7f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/SiteChannelsManager.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-13T22:34:16Z",
+      "side": 1,
+      "message": "nit: document either all or none of the parameters",
+      "revId": "1b603c38479e54e6c5321b374f90fd6934334bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
