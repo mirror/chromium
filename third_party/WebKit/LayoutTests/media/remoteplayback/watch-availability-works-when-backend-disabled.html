@@ -15,7 +15,7 @@
 
     var availability_callback_id = -1;
     var v = document.querySelector('video');
-    v.src = findMediaFile('video', 'content/test');
+    v.src = findMediaFile('video', '../content/test');
 
     function callback(available) {
       assert_false(available);
