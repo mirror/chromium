@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "91559d48_4a548224",
+        "filename": "third_party/WebKit/LayoutTests/paint/tables/collapsed-border-corner-conflict-expected.png",
+        "patchSetId": 11
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T01:18:22Z",
+      "side": 1,
+      "message": "This test result may be helpful to understand the joint adjustment algorithm in this patch.\n\nYou can see that\n- Each joint is covered by the thickest border of the adjoining borders.\n- The length of the joint-covering border depends on the width of the thickest border that is perpendicular to it.\n- The borders of a cell can be covered at the joints by borders from another cell (e.g. cell (r\u003d0, c\u003d1)\u0027s bottom-left corner. \n\nPreviously, to achieve this result, we painted borders in multiple passes. Later painted thicker borders will cover previously painted thinner borders.\n\nNow the joint adjustment algorithm calculates the length of each border, considering all adjoining ones, so that we can paint the borders in any order.",
+      "revId": "801c9151ae4887ff9387aed465da23d5111a989f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22281ffa_3c705a0e",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 11
