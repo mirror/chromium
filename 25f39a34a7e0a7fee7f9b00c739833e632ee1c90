@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f96775b_5b4dd7d8",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObjectCacheImpl.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T23:19:48Z",
+      "side": 1,
+      "message": "Nit: we should be able to DCHECK this condition given all the null checks that already happen on line 1116 (specifically, the one that the LocalFrame has a Page should indicate that the frame is still attached, and has a WebFrameClient)",
+      "range": {
+        "startLine": 1121,
+        "startChar": 18,
+        "endLine": 1121,
+        "endChar": 36
+      },
+      "revId": "25f39a34a7e0a7fee7f9b00c739833e632ee1c90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
