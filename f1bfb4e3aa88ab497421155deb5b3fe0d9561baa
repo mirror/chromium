@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "a4bcf77f_f6fb8d5a",
+        "filename": "base/win/com_init_check_hook.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-13T19:31:16Z",
+      "side": 1,
+      "message": "Nice! I didn\u0027t know this was now atomic. Done!",
+      "parentUuid": "d68b84f0_4eb4b379",
+      "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed9ca6c6_ed3623c6",
         "filename": "base/win/com_init_check_hook.h",
         "patchSetId": 2
@@ -69,6 +87,24 @@
       "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b08ffb2_4b3fcef5",
+        "filename": "base/win/com_init_check_hook.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-13T19:31:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed9ca6c6_ed3623c6",
+      "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
