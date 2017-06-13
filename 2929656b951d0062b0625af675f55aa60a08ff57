@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b262b67_41f24b7a",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "nit: import\n\n(aside: also the #if __OBJC__ lines in that header are tautology -- scoped_nsobject forces you to be .mm always)",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 67
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8a3f365_9833e507",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "nit: I usually don\u0027t bother with empty destructors in .mm/.cc - we run a clang plugin that complains in header files though\n\n(I see you\u0027re just moving this, but the green background compels me :)",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "739696d1_ad6dbf0d",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "nit: d -\u003e native_dialog?\n\n(style guide doesn\u0027t like abbreviations ;)",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9ee905f_8cbd2184",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "I think base::WrapUnique tends to be preferred over .reset() now. I think you could do\n\nauto factory \u003d base::WrapUnique\u003capp_modal::JavaScriptNativeDialogFactory\u003e(\n    ui::MaterialDesignController::IsSecondaryUiMaterial()\n        ? new ChromeJavaScriptNativeDialogViewsFactory\n        : new ChromeJavaScriptNativeDialogCocoaFactory);",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fead53e6_53152292",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "JavaScriptAppModalDialogViews has\n\nui::ModalType JavaScriptAppModalDialogViews::GetModalType() const {\n  return ui::MODAL_TYPE_SYSTEM;\n}\n\n\nBut NativeWidgetMac has\n\nvoid NativeWidgetMac::InitModalType(ui::ModalType modal_type) {\n  if (modal_type \u003d\u003d ui::MODAL_TYPE_NONE)\n    return;\n\n  // System modal windows not implemented (or used) on Mac.\n  DCHECK_NE(ui::MODAL_TYPE_SYSTEM, modal_type);\n\n\nSo I think this should crash.",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 70
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c2e653_3d54e35b",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "This Linux-specific code suggests to me either that\n a) using ChromeJavaScriptAppModalDialogViews won\u0027t give us correct \"app modal\" behaviour for Mac; or\n b) the changed modality of javascript dialogs in OldSpice could mean that we no longer need specific Desktop-Linux code to get the correct behavior.",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff459400_6172720e",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-13T23:31:34Z",
+      "side": 1,
+      "message": "E.g. I think this creates a sheet on Mac. But that may mess with sites using BeforeUnload along with popups. .. like gmail",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
