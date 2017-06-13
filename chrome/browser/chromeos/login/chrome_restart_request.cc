@@ -79,8 +79,13 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisable2dCanvasImageChromium,
     ::switches::kDisableAccelerated2dCanvas,
     ::switches::kDisableAcceleratedJpegDecoding,
+#if defined(OS_LINUX)
+    ::switches::kEnableAcceleratedMjpegDecode,
+    ::switches::kEnableAcceleratedVideo,
+#else
     ::switches::kDisableAcceleratedMjpegDecode,
     ::switches::kDisableAcceleratedVideoDecode,
+#endif
     ::switches::kDisableBlinkFeatures,
     ::switches::kDisableCastStreamingHWEncoding,
     ::switches::kDisableDistanceFieldText,
@@ -168,7 +173,7 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisableWebGLImageChromium,
     ::switches::kEnableWebGLImageChromium,
     ::switches::kEnableWebVR,
-#if BUILDFLAG(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC) && !defined(OS_LINUX)
     ::switches::kDisableWebRtcHWDecoding,
     ::switches::kDisableWebRtcHWEncoding,
 #endif

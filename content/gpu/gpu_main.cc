@@ -83,7 +83,7 @@
 #include "ui/ozone/public/ozone_platform.h"
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
 #include "media/gpu/vaapi_wrapper.h"
 #endif
 
@@ -139,7 +139,7 @@ class ContentSandboxHelper : public gpu::GpuSandboxHelper {
       (void)base::RandUint64();
     }
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
     media::VaapiWrapper::PreSandboxInitialization();
 #endif
 #if defined(OS_WIN)
