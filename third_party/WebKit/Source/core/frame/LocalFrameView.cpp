@@ -2156,7 +2156,7 @@ void LocalFrameView::ContentsResized() {
   SetNeedsLayout();
 }
 
-void LocalFrameView::ScrollbarExistenceDidChange() {
+void LocalFrameView::ScrollbarExistenceMaybeChanged() {
   // We check to make sure the view is attached to a frame() as this method can
   // be triggered before the view is attached by LocalFrame::createView(...)
   // setting various values such as setScrollBarModes(...) for example.  An
@@ -2171,14 +2171,8 @@ void LocalFrameView::ScrollbarExistenceDidChange() {
       ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
       !ShouldUseCustomScrollbars(custom_scrollbar_element);
 
-  if (!uses_overlay_scrollbars) {
-    if (NeedsLayout())
-      UpdateLayout();
-
-    if (frame_->IsMainFrame() &&
-        RuntimeEnabledFeatures::VisualViewportAPIEnabled())
-      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
-  }
+  if (!uses_overlay_scrollbars && NeedsLayout())
+    UpdateLayout();
 
   if (!GetLayoutViewItem().IsNull() && GetLayoutViewItem().UsesCompositing()) {
     GetLayoutViewItem().Compositor()->FrameViewScrollbarsExistenceDidChange();
@@ -2952,7 +2946,7 @@ void LocalFrameView::VisualViewportScrollbarsChanged() {
 
   if (has_horizontal_scrollbar != should_have_horizontal_scrollbar ||
       has_vertical_scrollbar != should_have_vertical_scrollbar) {
-    ScrollbarExistenceDidChange();
+    ScrollbarExistenceMaybeChanged();
 
     if (!VisualViewportSuppliesScrollbars())
       UpdateScrollbarGeometry();
@@ -4291,7 +4285,7 @@ bool LocalFrameView::AdjustScrollbarExistence(
   // changes due to window resizing for example).  This layout will not re-enter
   // updateScrollbars and does not count towards our max layout pass total.
   if (!scrollbars_suppressed_)
-    ScrollbarExistenceDidChange();
+    ScrollbarExistenceMaybeChanged();
 
   bool has_horizontal_scrollbar = HorizontalScrollbar();
   bool has_vertical_scrollbar = VerticalScrollbar();
@@ -4313,9 +4307,21 @@ bool LocalFrameView::AdjustScrollbarExistence(
   if (scrollbars_suppressed_)
     return true;
 
-  if (!HasOverlayScrollbars())
+  Element* custom_scrollbar_element = nullptr;
+  bool uses_overlay_scrollbars =
+      ScrollbarTheme::GetTheme().UsesOverlayScrollbars() &&
+      !ShouldUseCustomScrollbars(custom_scrollbar_element);
+
+  if (!uses_overlay_scrollbars) {
     SetNeedsLayout();
-  ScrollbarExistenceDidChange();
+
+    // Classic scrollbars changing state causes a visual viewport size change.
+    if (frame_->IsMainFrame() &&
+        RuntimeEnabledFeatures::VisualViewportAPIEnabled())
+      frame_->GetDocument()->EnqueueVisualViewportResizeEvent();
+  }
+
+  ScrollbarExistenceMaybeChanged();
   return true;
 }
 
