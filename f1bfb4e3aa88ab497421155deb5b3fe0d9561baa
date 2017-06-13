@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f9ffefa_bf02bc29",
+        "filename": "base/win/com_init_check_hook.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-13T17:19:44Z",
+      "side": 1,
+      "message": "Please use a factory function with a function-scope static instead of Singleton.",
+      "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed9ca6c6_ed3623c6",
+        "filename": "base/win/com_init_check_hook.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-13T17:19:44Z",
+      "side": 1,
+      "message": "Can you add some more conditions here? !GOOGLE_CHROME_BUILD and maybe despite my general reservations for this, !OFFICIAL_BUILD.\n\nWe\u0027ve shipped DCHECKs before to Canary, but this hooking is necessarily racy with crapware and Windows whoever, so I think we should be extra careful not to ship it.",
+      "revId": "f1bfb4e3aa88ab497421155deb5b3fe0d9561baa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
