@@ -1051,7 +1051,19 @@ void LocalFrameView::PerformLayout(bool in_subtree_layout) {
 
   // FIXME: ForceLayoutParentViewIfNeeded can cause this document's lifecycle
   // to change, which should not happen.
-  ForceLayoutParentViewIfNeeded();
+  //LOG(INFO) << "about to call ForceLayoutParentViewIfNeeded";
+  //LOG(INFO) << "is attached? " << (IsAttached() ? "yes" : "no");
+  bool is_owner_detached = false;
+  LayoutEmbeddedContentItem owner_layout_item = frame_->OwnerLayoutItem();
+  if (!owner_layout_item.IsNull()) {
+    LocalFrameView* frame_view = owner_layout_item.GetFrame()->View();
+    if (frame_view) {
+      is_owner_detached = !frame_view->IsAttached();
+      //LOG(INFO) << "owner frame is attached? " << (frame_view->IsAttached() ? "yes" : "no");
+    }
+  }
+  if (!is_owner_detached)
+    ForceLayoutParentViewIfNeeded();
   CHECK(IsInPerformLayout() ||
         Lifecycle().GetState() >= DocumentLifecycle::kLayoutClean);
 
