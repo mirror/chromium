@@ -9,6 +9,7 @@
 #include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
+#include "base/optional.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
 #include "cc/surfaces/frame_sink_id.h"
 #include "components/viz/host/frame_sink_observer.h"
@@ -44,8 +45,8 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
   void CreateCompositorFrameSink(
       const cc::FrameSinkId& frame_sink_id,
       cc::mojom::MojoCompositorFrameSinkRequest request,
-      cc::mojom::MojoCompositorFrameSinkPrivateRequest private_request,
       cc::mojom::MojoCompositorFrameSinkClientPtr client);
+  void DestroyCompositorFrameSink(const cc::FrameSinkId& frame_sink_id);
   void RegisterFrameSinkHierarchy(const cc::FrameSinkId& parent_frame_sink_id,
                                   const cc::FrameSinkId& child_frame_sink_id);
   void UnregisterFrameSinkHierarchy(const cc::FrameSinkId& parent_frame_sink_id,
@@ -58,9 +59,12 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
  private:
   struct FrameSinkData {
     FrameSinkData();
+    FrameSinkData(FrameSinkData&& other);
     ~FrameSinkData();
+    FrameSinkData& operator=(FrameSinkData&& other);
 
-    cc::FrameSinkId parent;
+    base::Optional<cc::FrameSinkId> parent;
+    cc::mojom::MojoCompositorFrameSinkPrivatePtr private_interface;
   };
 
   // cc::mojom::FrameSinkManagerClient:
