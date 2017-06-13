@@ -7,6 +7,10 @@
 
 #include "content/browser/accessibility/browser_accessibility_manager.h"
 
+namespace ui {
+class MotionEventAndroid;
+}
+
 namespace content {
 
 // A Java counterpart will be generated for this enum.
@@ -68,6 +72,9 @@ class CONTENT_EXPORT BrowserAccessibilityManagerAndroid
 
   bool ShouldRespectDisplayedPasswordText();
   bool ShouldExposePasswordText();
+
+  // Returns true if the hover event will be consumed by accessibility flow.
+  bool OnHoverEvent(const ui::MotionEventAndroid& event);
 
   // BrowserAccessibilityManager overrides.
   BrowserAccessibility* GetFocus() override;
