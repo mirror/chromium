@@ -204,7 +204,7 @@ bool ShellMainDelegate::BasicStartupComplete(int* exit_code) {
     command_line.AppendSwitch(switches::kEnablePreciseMemoryInfo);
 
     command_line.AppendSwitchASCII(switches::kHostResolverRules,
-                                   "MAP *.test 127.0.0.1");
+                                   "MAP *.test 127.0.0.1,MAP *.is 127.0.0.1");
 
     command_line.AppendSwitch(switches::kEnablePartialRaster);
 
