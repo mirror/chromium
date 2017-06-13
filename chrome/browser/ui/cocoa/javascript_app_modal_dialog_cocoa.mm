@@ -451,31 +451,3 @@ void JavaScriptAppModalDialogCocoa::CancelAppModalDialog() {
 bool JavaScriptAppModalDialogCocoa::IsShowing() const {
   return is_showing_;
 }
-
-namespace {
-
-class ChromeJavaScriptNativeDialogCocoaFactory
-    : public app_modal::JavaScriptNativeDialogFactory {
- public:
-  ChromeJavaScriptNativeDialogCocoaFactory() {}
-  ~ChromeJavaScriptNativeDialogCocoaFactory() override {}
-
- private:
-  app_modal::NativeAppModalDialog* CreateNativeJavaScriptDialog(
-      app_modal::JavaScriptAppModalDialog* dialog) override {
-    app_modal::NativeAppModalDialog* d =
-        new JavaScriptAppModalDialogCocoa(dialog);
-    dialog->web_contents()->GetDelegate()->ActivateContents(
-        dialog->web_contents());
-    return d;
-  }
-
-  DISALLOW_COPY_AND_ASSIGN(ChromeJavaScriptNativeDialogCocoaFactory);
-};
-
-}  // namespace
-
-void InstallChromeJavaScriptNativeDialogFactory() {
-  app_modal::JavaScriptDialogManager::GetInstance()->SetNativeDialogFactory(
-      base::WrapUnique(new ChromeJavaScriptNativeDialogCocoaFactory));
-}
