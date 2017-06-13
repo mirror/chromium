@@ -6648,6 +6648,9 @@ void RenderFrameImpl::RegisterMojoInterfaces() {
     // Host zoom is per-page, so only added on the main frame.
     GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
         &RenderFrameImpl::OnHostZoomClientRequest, weak_factory_.GetWeakPtr()));
+
+    GetAssociatedInterfaceRegistry()->AddInterface(base::Bind(
+        &ManifestManager::BindToRequest, base::Unretained(manifest_manager_)));
   }
 }
 
