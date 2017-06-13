@@ -22,6 +22,30 @@
       "revId": "c9a146e739fa352feb21ca18056fcff82ebe7046",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d4b28f9_8ff4c07d",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-13T19:23:18Z",
+      "side": 1,
+      "message": "Apologies. Yes, I forgot the citation. This is supposed to point to the design doc:\n[1] https://docs.google.com/a/chromium.org/document/d/1Qw7rw1AJy0QHXjha36jZNiEuxsxWslJ_X-zpOhijvI8/edit?usp\u003dsharing\n\nI will update the CL description.",
+      "parentUuid": "9827fb33_684909ea",
+      "range": {
+        "startLine": 10,
+        "startChar": 8,
+        "endLine": 10,
+        "endChar": 14
+      },
+      "revId": "c9a146e739fa352feb21ca18056fcff82ebe7046",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
