@@ -166,7 +166,6 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/DedicatedWorkerMessagingProxyProviderImpl.h"
 #include "web/LinkHighlightImpl.h"
 #include "web/PageOverlay.h"
 #include "web/PrerendererClientImpl.h"
@@ -399,8 +398,6 @@ WebViewImpl::WebViewImpl(WebViewClient* client,
 
   ProvideStorageQuotaClientTo(*page_, StorageQuotaClientImpl::Create());
   page_->SetValidationMessageClient(ValidationMessageClientImpl::Create(*this));
-  ProvideDedicatedWorkerMessagingProxyProviderTo(
-      *page_, DedicatedWorkerMessagingProxyProviderImpl::Create(*page_));
   StorageNamespaceController::ProvideStorageNamespaceTo(*page_,
                                                         &storage_client_impl_);
 
