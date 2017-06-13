@@ -284,8 +284,7 @@ ThreadableLoader* BlobBytesConsumer::CreateLoader() {
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options(
-      kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
+  ResourceLoaderOptions resource_loader_options;
   resource_loader_options.data_buffering_policy = kDoNotBufferData;
   resource_loader_options.initiator_info.name =
       FetchInitiatorTypeNames::internal;
