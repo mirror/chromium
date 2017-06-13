@@ -105,6 +105,30 @@
       "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2698f0b_a155a9ed",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 4383,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-13T19:13:26Z",
+      "side": 1,
+      "message": "Interesting! I didn\u0027t know we had a \"no util!\" clause. That makes sense.\n\nThat said, I think that \"active_use_util\" is consistent with https://google.github.io/styleguide/cppguide.html#Namespace_Names, which says to prefer something like websearch:index_util over websearch:util. In this case, \"active_use\" scopes it fairly well, don\u0027t you think? Or are we allergic to \"util\" itself?\n\nI\u0027ll ignore this for now in the hope that you will lash me with a wet noodle should you find something concrete. :-)  (In which case I will happily rename it and consider myself educated.)",
+      "parentUuid": "7cdb8ec1_de4ad851",
+      "range": {
+        "startLine": 4382,
+        "startChar": 19,
+        "endLine": 4383,
+        "endChar": 13
+      },
+      "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
