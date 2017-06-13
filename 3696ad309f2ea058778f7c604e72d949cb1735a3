@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c598ff2_51f5f379",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-13T16:17:29Z",
+      "side": 1,
+      "message": "Nice catch! Sorry I missed this one, and I hope it wasn\u0027t too big of a pain to find. :(",
+      "range": {
+        "startLine": 784,
+        "startChar": 0,
+        "endLine": 784,
+        "endChar": 58
+      },
+      "revId": "3696ad309f2ea058778f7c604e72d949cb1735a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
