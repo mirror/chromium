@@ -13,6 +13,7 @@
 #include "base/task_runner_util.h"
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "components/subresource_filter/core/common/memory_mapped_ruleset.h"
+#include "components/url_pattern_index/proto/rules.pb.h"
 
 namespace subresource_filter {
 
@@ -99,8 +100,9 @@ void AsyncDocumentSubresourceFilter::GetLoadPolicyForSubdocument(
             DCHECK(core);
             DocumentSubresourceFilter* filter = core->filter();
             return filter
-                       ? filter->GetLoadPolicy(subdocument_url,
-                                               proto::ELEMENT_TYPE_SUBDOCUMENT)
+                       ? filter->GetLoadPolicy(
+                             subdocument_url,
+                             url_pattern_index::proto::ELEMENT_TYPE_SUBDOCUMENT)
                        : LoadPolicy::ALLOW;
           },
           core_.get(), subdocument_url),
