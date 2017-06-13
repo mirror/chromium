@@ -31,7 +31,6 @@ from webkitpy.common.system.filesystem_mock import MockFileSystem
 from webkitpy.w3c.test_copier import TestCopier
 from webkitpy.common.system.log_testing import LoggingTestCase
 
-
 FAKE_SOURCE_REPO_DIR = '/blink'
 
 FAKE_FILES = {
