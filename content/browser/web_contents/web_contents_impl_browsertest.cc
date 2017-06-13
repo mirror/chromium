@@ -937,6 +937,25 @@ IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest,
   EXPECT_TRUE(shell()->web_contents()->IsLoading());
 }
 
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, NoOnBeforeUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url = embedded_test_server()->GetURL("/simple_page.html");
+  NavigateToURL(shell(), url);
+  RenderFrameHostImpl* rfh = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  EXPECT_FALSE(rfh->ShouldDispatchBeforeUnload());
+}
+
+IN_PROC_BROWSER_TEST_F(WebContentsImplBrowserTest, OnBeforeUnload) {
+  ASSERT_TRUE(embedded_test_server()->Start());
+  GURL url =
+      embedded_test_server()->GetURL("/page_with_empty_beforeunload.html");
+  NavigateToURL(shell(), url);
+  RenderFrameHostImpl* rfh = static_cast<RenderFrameHostImpl*>(
+      shell()->web_contents()->GetMainFrame());
+  EXPECT_TRUE(rfh->ShouldDispatchBeforeUnload());
+}
+
 namespace {
 
 class TestJavaScriptDialogManager : public JavaScriptDialogManager,
