@@ -2208,13 +2208,15 @@ void LocalFrameView::HandleLoadCompleted() {
         ToPaintLayerScrollableArea(scrollable_area);
     if (paint_layer_scrollable_area->ScrollsOverflow() &&
         !paint_layer_scrollable_area->Layer()->IsRootLayer()) {
-      DEFINE_STATIC_LOCAL(
-          CustomCountHistogram, scrollable_area_size_histogram,
-          ("Event.Scroll.ScrollerSize.OnLoad", 1, kScrollerSizeLargestBucket,
-           kScrollerSizeBucketCount));
-      scrollable_area_size_histogram.Count(
-          paint_layer_scrollable_area->VisibleContentRect().Width() *
-          paint_layer_scrollable_area->VisibleContentRect().Height());
+      uint64_t size =
+          paint_layer_scrollable_area->VisibleContentRect().Size().Area();
+      if (size > 0) {
+        if (size > INT_MAX)
+          size = INT_MAX;
+        UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.ScrollerSize.OnLoad", size, 1,
+                                    kScrollerSizeLargestBucket,
+                                    kScrollerSizeBucketCount);
+      }
     }
   }
 }

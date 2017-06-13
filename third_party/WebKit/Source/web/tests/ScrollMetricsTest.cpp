@@ -163,6 +163,29 @@ TEST_F(ScrollMetricsTest, ScrollerSizeOnPageLoadHistogramRecordingTest) {
   histogram_tester.ExpectTotalCount("Event.Scroll.ScrollerSize.OnLoad", 2);
 }
 
+TEST_F(ScrollMetricsTest, ScrollerSizeWithOverflowHistogramRecordingTest) {
+  HistogramTester histogram_tester;
+  SetUpHtml(
+      "<!DOCTYPE html>"
+      "<style>"
+      " .box { width: 1000000px; height: 1000000px; overflow: scroll; }"
+      " .spacer { height: 2000000px; }"
+      "</style>"
+      "<div id='box' class='box'>"
+      " <div class='spacer'></div>"
+      "</div>");
+  testing::RunPendingTasks();
+
+  histogram_tester.ExpectBucketCount("Event.Scroll.ScrollerSize.OnLoad",
+                                     kScrollerSizeLargestBucket, 1);
+
+  Element* box = GetDocument().getElementById("box");
+
+  Scroll(box, kWebGestureDeviceTouchpad);
+  histogram_tester.ExpectBucketCount("Event.Scroll.ScrollerSize.OnScroll_Wheel",
+                                     kScrollerSizeLargestBucket, 1);
+}
+
 TEST_F(ScrollMetricsTest,
        ScrollerSizeOfMainThreadScrollingHistogramRecordingTest) {
   HistogramTester histogram_tester;
