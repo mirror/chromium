@@ -122,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "d576da38_0f664489",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T16:12:36Z",
+      "side": 1,
+      "message": "Okay... could we add an empty cancel() method with a TODO to make it work?",
+      "parentUuid": "8bf8394a_85117ad3",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08583842_a8de458a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
