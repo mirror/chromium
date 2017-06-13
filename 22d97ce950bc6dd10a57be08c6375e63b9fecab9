@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebbb59d6_c05d64be",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-13T14:09:25Z",
+      "side": 1,
+      "message": "I\u0027d name this content_block_size_ while you\u0027re touching this",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12e02410_54a7a7b6",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-13T14:09:25Z",
+      "side": 1,
+      "message": "border_box_height?",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260bcc6f_8dd78ea0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-13T14:09:25Z",
+      "side": 1,
+      "message": "For consistency, please also rename the argument in ng_length_utils.h",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
