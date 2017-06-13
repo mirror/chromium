@@ -22,6 +22,14 @@ struct EnumTraits<blink::mojom::FetchCredentialsMode,
 };
 
 template <>
+struct EnumTraits<blink::mojom::FetchCacheMode, content::FetchCacheMode> {
+  static blink::mojom::FetchCacheMode ToMojom(content::FetchCacheMode input);
+
+  static bool FromMojom(blink::mojom::FetchCacheMode input,
+                        content::FetchCacheMode* out);
+};
+
+template <>
 struct EnumTraits<blink::mojom::FetchRedirectMode, content::FetchRedirectMode> {
   static blink::mojom::FetchRedirectMode ToMojom(
       content::FetchRedirectMode input);
@@ -126,6 +134,11 @@ struct StructTraits<blink::mojom::FetchAPIRequestDataView,
   static content::FetchCredentialsMode credentials_mode(
       const content::ServiceWorkerFetchRequest& request) {
     return request.credentials_mode;
+  }
+
+  static content::FetchCacheMode cache_mode(
+      const content::ServiceWorkerFetchRequest& request) {
+    return request.cache_mode;
   }
 
   static content::FetchRedirectMode redirect_mode(

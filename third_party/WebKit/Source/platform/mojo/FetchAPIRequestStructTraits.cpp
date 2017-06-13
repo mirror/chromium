@@ -28,6 +28,7 @@ struct FetchAPIRequestStructTraitsContext {
 }  // namespace
 
 using blink::mojom::FetchCredentialsMode;
+using blink::mojom::FetchCacheMode;
 using blink::mojom::FetchRedirectMode;
 using blink::mojom::FetchRequestMode;
 using blink::mojom::RequestContextFrameType;
@@ -67,6 +68,53 @@ bool EnumTraits<FetchCredentialsMode,
       return true;
     case FetchCredentialsMode::PASSWORD:
       *out = blink::WebURLRequest::kFetchCredentialsModePassword;
+      return true;
+  }
+
+  return false;
+}
+
+FetchCacheMode
+EnumTraits<FetchCacheMode, blink::WebURLRequest::FetchCacheMode>::ToMojom(
+    blink::WebURLRequest::FetchCacheMode input) {
+  switch (input) {
+    case blink::WebURLRequest::kFetchCacheModeDefault:
+      return FetchCacheMode::DEFAULT;
+    case blink::WebURLRequest::kFetchCacheModeNoStore:
+      return FetchCacheMode::NO_STORE;
+    case blink::WebURLRequest::kFetchCacheModeReload:
+      return FetchCacheMode::RELOAD;
+    case blink::WebURLRequest::kFetchCacheModeNoCache:
+      return FetchCacheMode::NO_CACHE;
+    case blink::WebURLRequest::kFetchCacheModeForceCache:
+      return FetchCacheMode::FORCE_CACHE;
+    case blink::WebURLRequest::kFetchCacheModeOnlyIfCached:
+      return FetchCacheMode::ONLY_IF_CACHED;
+  }
+
+  NOTREACHED();
+}
+
+bool EnumTraits<FetchCacheMode, blink::WebURLRequest::FetchCacheMode>::
+    FromMojom(FetchCacheMode input, blink::WebURLRequest::FetchCacheMode* out) {
+  switch (input) {
+    case FetchCacheMode::DEFAULT:
+      *out = blink::WebURLRequest::kFetchCacheModeDefault;
+      return true;
+    case FetchCacheMode::NO_STORE:
+      *out = blink::WebURLRequest::kFetchCacheModeNoStore;
+      return true;
+    case FetchCacheMode::RELOAD:
+      *out = blink::WebURLRequest::kFetchCacheModeReload;
+      return true;
+    case FetchCacheMode::NO_CACHE:
+      *out = blink::WebURLRequest::kFetchCacheModeNoCache;
+      return true;
+    case FetchCacheMode::FORCE_CACHE:
+      *out = blink::WebURLRequest::kFetchCacheModeForceCache;
+      return true;
+    case FetchCacheMode::ONLY_IF_CACHED:
+      *out = blink::WebURLRequest::kFetchCacheModeOnlyIfCached;
       return true;
   }
 
@@ -470,6 +518,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   WTF::String blobUuid;
   blink::Referrer referrer;
   blink::WebURLRequest::FetchCredentialsMode credentialsMode;
+  blink::WebURLRequest::FetchCacheMode cacheMode;
   blink::WebURLRequest::FetchRedirectMode redirectMode;
   WTF::String clientId;
 
@@ -478,6 +527,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
       !data.ReadMethod(&method) || !data.ReadHeaders(&headers) ||
       !data.ReadBlobUuid(&blobUuid) || !data.ReadReferrer(&referrer) ||
       !data.ReadCredentialsMode(&credentialsMode) ||
+      !data.ReadCacheMode(&cacheMode) ||
       !data.ReadRedirectMode(&redirectMode) || !data.ReadClientId(&clientId)) {
     return false;
   }
@@ -494,6 +544,7 @@ bool StructTraits<blink::mojom::FetchAPIRequestDataView,
   out->SetReferrer(referrer.referrer, static_cast<blink::WebReferrerPolicy>(
                                           referrer.referrer_policy));
   out->SetCredentialsMode(credentialsMode);
+  out->SetCacheMode(cacheMode);
   out->SetRedirectMode(redirectMode);
   out->SetClientId(clientId);
   out->SetIsReload(data.is_reload());

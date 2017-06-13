@@ -91,6 +91,16 @@ enum FetchCredentialsMode {
   FETCH_CREDENTIALS_MODE_LAST = FETCH_CREDENTIALS_MODE_PASSWORD
 };
 
+enum FetchCacheMode {
+  FETCH_CACHE_MODE_DEFAULT,
+  FETCH_CACHE_MODE_NO_STORE,
+  FETCH_CACHE_MODE_RELOAD,
+  FETCH_CACHE_MODE_NO_CACHE,
+  FETCH_CACHE_MODE_FORCE_CACHE,
+  FETCH_CACHE_MODE_ONLY_IF_CACHED,
+  FETCH_CACHE_MODE_LAST = FETCH_CACHE_MODE_ONLY_IF_CACHED
+};
+
 enum class FetchRedirectMode {
   FOLLOW_MODE,
   ERROR_MODE,
@@ -162,6 +172,7 @@ struct CONTENT_EXPORT ServiceWorkerFetchRequest {
   uint64_t blob_size;
   Referrer referrer;
   FetchCredentialsMode credentials_mode;
+  FetchCacheMode cache_mode;
   FetchRedirectMode redirect_mode;
   std::string client_id;
   bool is_reload;

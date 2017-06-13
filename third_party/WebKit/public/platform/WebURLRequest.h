@@ -121,13 +121,13 @@ class WebURLRequest {
     kFetchCredentialsModePassword
   };
 
-  enum FetchRequestCacheMode {
-    kFetchRequestCacheModeDefault,
-    kFetchRequestCacheModeNoStore,
-    kFetchRequestCacheModeReload,
-    kFetchRequestCacheModeNoCache,
-    kFetchRequestCacheModeForceCache,
-    kFetchRequestCacheModeOnlyIfCached
+  enum FetchCacheMode {
+    kFetchCacheModeDefault,
+    kFetchCacheModeNoStore,
+    kFetchCacheModeReload,
+    kFetchCacheModeNoCache,
+    kFetchCacheModeForceCache,
+    kFetchCacheModeOnlyIfCached
   };
 
   enum FetchRedirectMode {
@@ -310,6 +310,10 @@ class WebURLRequest {
   // The credentials mode which will be passed to the ServiceWorker.
   BLINK_PLATFORM_EXPORT FetchCredentialsMode GetFetchCredentialsMode() const;
   BLINK_PLATFORM_EXPORT void SetFetchCredentialsMode(FetchCredentialsMode);
+
+  // The cache mode which will be passed to the ServiceWorker.
+  BLINK_PLATFORM_EXPORT FetchCacheMode GetFetchCacheMode() const;
+  BLINK_PLATFORM_EXPORT void SetFetchCacheMode(FetchCacheMode);
 
   // The redirect mode which is used in Fetch API.
   BLINK_PLATFORM_EXPORT FetchRedirectMode GetFetchRedirectMode() const;
