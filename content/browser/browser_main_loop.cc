@@ -1585,8 +1585,7 @@ void BrowserMainLoop::InitializeMemoryManagementComponent() {
 #if defined(OS_CHROMEOS)
   if (chromeos::switches::MemoryPressureHandlingEnabled()) {
     memory_pressure_monitor_ =
-        base::MakeUnique<base::chromeos::MemoryPressureMonitor>(
-            chromeos::switches::GetMemoryPressureThresholds());
+        base::MakeUnique<base::chromeos::MemoryPressureMonitor>();
   }
 #elif defined(OS_MACOSX)
   memory_pressure_monitor_ =

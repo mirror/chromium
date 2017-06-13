@@ -34,8 +34,6 @@ const int kModerateMemoryPressureCooldown =
 // Threshold constants to emit pressure events.
 const int kNormalMemoryPressureModerateThresholdPercent = 60;
 const int kNormalMemoryPressureCriticalThresholdPercent = 95;
-const int kAggressiveMemoryPressureModerateThresholdPercent = 35;
-const int kAggressiveMemoryPressureCriticalThresholdPercent = 70;
 
 // The possible state for memory pressure level. The values should be in line
 // with values in MemoryPressureListener::MemoryPressureLevel and should be
@@ -52,36 +50,12 @@ enum MemoryPressureLevelUMA {
 // condition.
 const char kLowMemFile[] = "/dev/chromeos-low-mem";
 
-// Converts a |MemoryPressureThreshold| value into a used memory percentage for
-// the moderate pressure event.
-int GetModerateMemoryThresholdInPercent(
-    MemoryPressureMonitor::MemoryPressureThresholds thresholds) {
-  return thresholds == MemoryPressureMonitor::
-                           THRESHOLD_AGGRESSIVE_CACHE_DISCARD ||
-         thresholds == MemoryPressureMonitor::THRESHOLD_AGGRESSIVE
-             ? kAggressiveMemoryPressureModerateThresholdPercent
-             : kNormalMemoryPressureModerateThresholdPercent;
-}
-
-// Converts a |MemoryPressureThreshold| value into a used memory percentage for
-// the critical pressure event.
-int GetCriticalMemoryThresholdInPercent(
-    MemoryPressureMonitor::MemoryPressureThresholds thresholds) {
-  return thresholds == MemoryPressureMonitor::
-                           THRESHOLD_AGGRESSIVE_TAB_DISCARD ||
-         thresholds == MemoryPressureMonitor::THRESHOLD_AGGRESSIVE
-             ? kAggressiveMemoryPressureCriticalThresholdPercent
-             : kNormalMemoryPressureCriticalThresholdPercent;
-}
-
 // Converts free percent of memory into a memory pressure value.
 MemoryPressureListener::MemoryPressureLevel GetMemoryPressureLevelFromFillLevel(
-    int actual_fill_level,
-    int moderate_threshold,
-    int critical_threshold) {
-  if (actual_fill_level < moderate_threshold)
+    int actual_fill_level) {
+  if (actual_fill_level < kNormalMemoryPressureModerateThresholdPercent)
     return MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE;
-  return actual_fill_level < critical_threshold
+  return actual_fill_level < kNormalMemoryPressureCriticalThresholdPercent
              ? MemoryPressureListener::MEMORY_PRESSURE_LEVEL_MODERATE
              : MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL;
 }
@@ -103,16 +77,11 @@ bool IsLowMemoryCondition(int file_descriptor) {
 
 }  // namespace
 
-MemoryPressureMonitor::MemoryPressureMonitor(
-    MemoryPressureThresholds thresholds)
+MemoryPressureMonitor::MemoryPressureMonitor()
     : current_memory_pressure_level_(
           MemoryPressureListener::MEMORY_PRESSURE_LEVEL_NONE),
       moderate_pressure_repeat_count_(0),
       seconds_since_reporting_(0),
-      moderate_pressure_threshold_percent_(
-          GetModerateMemoryThresholdInPercent(thresholds)),
-      critical_pressure_threshold_percent_(
-          GetCriticalMemoryThresholdInPercent(thresholds)),
       low_mem_file_(HANDLE_EINTR(::open(kLowMemFile, O_RDONLY))),
       dispatch_callback_(
           base::Bind(&MemoryPressureListener::NotifyMemoryPressure)),
@@ -199,9 +168,7 @@ void MemoryPressureMonitor::CheckMemoryPressure() {
         MemoryPressureListener::MEMORY_PRESSURE_LEVEL_CRITICAL;
   } else {
     current_memory_pressure_level_ = GetMemoryPressureLevelFromFillLevel(
-        GetUsedMemoryInPercent(),
-        moderate_pressure_threshold_percent_,
-        critical_pressure_threshold_percent_);
+        GetUsedMemoryInPercent());
 
     // When listening to the kernel, we ignore the reported memory pressure
     // level from our own computation and reduce critical to moderate.
