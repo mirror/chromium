@@ -424,6 +424,8 @@ RenderFrameHostImpl::RenderFrameHostImpl(SiteInstance* site_instance,
       is_waiting_for_swapout_ack_(false),
       render_frame_created_(false),
       navigations_suspended_(false),
+      has_beforeunload_handlers_(false),
+      has_unload_handlers_(false),
       is_waiting_for_beforeunload_ack_(false),
       unload_ack_is_for_navigation_(false),
       is_loading_(false),
@@ -814,6 +816,10 @@ bool RenderFrameHostImpl::OnMessageReceived(const IPC::Message &msg) {
     IPC_MESSAGE_HANDLER(FrameHostMsg_DocumentOnLoadCompleted,
                         OnDocumentOnLoadCompleted)
     IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnload_ACK, OnBeforeUnloadACK)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_BeforeUnloadHandlersPresent,
+                        OnBeforeUnloadHandlersPresent)
+    IPC_MESSAGE_HANDLER(FrameHostMsg_UnloadHandlersPresent,
+                        OnUnloadHandlersPresent)
     IPC_MESSAGE_HANDLER(FrameHostMsg_SwapOut_ACK, OnSwapOutACK)
     IPC_MESSAGE_HANDLER(FrameHostMsg_ContextMenu, OnContextMenu)
     IPC_MESSAGE_HANDLER(FrameHostMsg_JavaScriptExecuteResponse,
@@ -2509,7 +2515,7 @@ void RenderFrameHostImpl::OnDidStartLoading(bool to_different_document) {
   }
 }
 
-void RenderFrameHostImpl::OnDidStopLoading() {
+void RenderFrameHostImpl::OnDidStopLoading(const GURL& loading_url) {
   TRACE_EVENT1("navigation", "RenderFrameHostImpl::OnDidStopLoading",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id());
 
@@ -2522,6 +2528,10 @@ void RenderFrameHostImpl::OnDidStopLoading() {
     LOG(WARNING) << "OnDidStopLoading was called twice.";
     return;
   }
+
+  if (IsBrowserSideNavigationEnabled() && !loading_url.is_empty() &&
+      navigation_handle_ && navigation_handle_->GetURL() != loading_url)
+    return;
 
   is_loading_ = false;
   navigation_handle_.reset();
@@ -2576,6 +2586,14 @@ void RenderFrameHostImpl::OnSetDevToolsFrameId(
   untrusted_devtools_frame_id_ = devtools_frame_id;
 }
 
+void RenderFrameHostImpl::OnBeforeUnloadHandlersPresent(bool present) {
+  has_beforeunload_handlers_ = present;
+}
+
+void RenderFrameHostImpl::OnUnloadHandlersPresent(bool present) {
+  has_unload_handlers_ = present;
+}
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 void RenderFrameHostImpl::OnShowPopup(
     const FrameHostMsg_ShowPopup_Params& params) {
@@ -2608,7 +2626,7 @@ void RenderFrameHostImpl::OnNavigationHandledByEmbedder() {
   if (navigation_handle_)
     navigation_handle_->set_net_error_code(net::ERR_ABORTED);
 
-  OnDidStopLoading();
+  OnDidStopLoading(GURL());
 }
 #endif
 
@@ -3063,7 +3081,25 @@ void RenderFrameHostImpl::SimulateBeforeUnloadAck() {
 }
 
 bool RenderFrameHostImpl::ShouldDispatchBeforeUnload() {
-  return IsRenderFrameLive();
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_beforeunload_handlers_)
+      return true;
+  }
+  return false;
+}
+
+bool RenderFrameHostImpl::HasUnloadHandler() {
+  if (!IsRenderFrameLive())
+    return false;
+
+  for (FrameTreeNode* node : frame_tree_->SubtreeNodes(frame_tree_node_)) {
+    if (node->current_frame_host()->has_unload_handlers_)
+      return true;
+  }
+  return false;
 }
 
 void RenderFrameHostImpl::UpdateOpener() {
@@ -3400,7 +3436,7 @@ void RenderFrameHostImpl::ResetLoadingState() {
     if (!is_active())
       is_loading_ = false;
     else
-      OnDidStopLoading();
+      OnDidStopLoading(GURL());
   }
 }
 

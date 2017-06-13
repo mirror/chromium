@@ -4692,6 +4692,19 @@ void RenderFrameImpl::ExitFullscreen() {
   Send(new FrameHostMsg_ToggleFullscreen(routing_id_, false));
 }
 
+void RenderFrameImpl::SuddenTerminationDisablerChanged(
+    bool present,
+    blink::WebFrameClient::SuddenTerminationDisablerType type) {
+  switch (type) {
+    case blink::WebFrameClient::kBeforeUnloadHandler:
+      Send(new FrameHostMsg_BeforeUnloadHandlersPresent(routing_id_, present));
+      break;
+    case blink::WebFrameClient::kUnloadHandler:
+      Send(new FrameHostMsg_UnloadHandlersPresent(routing_id_, present));
+      break;
+  }
+}
+
 void RenderFrameImpl::RegisterProtocolHandler(const WebString& scheme,
                                               const WebURL& url,
                                               const WebString& title) {
@@ -5076,7 +5089,8 @@ void RenderFrameImpl::DidStopLoading() {
   SendUpdateFaviconURL(icon_types_mask);
 
   render_view_->FrameDidStopLoading(frame_);
-  Send(new FrameHostMsg_DidStopLoading(routing_id_));
+  Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                       frame_->GetDocument().Url()));
 }
 
 void RenderFrameImpl::DidChangeLoadProgress(double load_progress) {
@@ -5191,7 +5205,8 @@ void RenderFrameImpl::OnFailedNavigation(
   if (!ShouldDisplayErrorPageForFailedLoad(error_code, common_params.url)) {
     // The browser expects this frame to be loading an error page. Inform it
     // that the load stopped.
-    Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                         frame_->GetDocument().Url()));
     browser_side_navigation_pending_ = false;
     return;
   }
@@ -5207,7 +5222,8 @@ void RenderFrameImpl::OnFailedNavigation(
       // either, as the frame has already been populated with something
       // unrelated to this navigation failure. In that case, just send a stop
       // IPC to the browser to unwind its state, and leave the frame as-is.
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+      Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                           frame_->GetDocument().Url()));
     }
     browser_side_navigation_pending_ = false;
     return;
@@ -6154,8 +6170,10 @@ void RenderFrameImpl::NavigateInternal(
     // send a stop message if a history navigation is loading in this frame
     // nonetheless. This behavior will go away with subframe navigation
     // entries.
-    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame)
-      Send(new FrameHostMsg_DidStopLoading(routing_id_));
+    if (frame_ && !frame_->IsLoading() && !has_history_navigation_in_frame) {
+      Send(new FrameHostMsg_DidStopLoading(routing_id_,
+                                           frame_->GetDocument().Url()));
+    }
   }
 
   // In case LoadRequest failed before didCreateDataSource was called.
