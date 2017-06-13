@@ -6,6 +6,7 @@
 
 #include "base/macros.h"
 #include "chrome/app/chrome_command_ids.h"
+#include "chrome/browser/ui/bookmarks/bookmark_bar_constants.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/browser/ui/views/bookmarks/bookmark_bar_view.h"
 #include "chrome/browser/ui/views/frame/browser_view_layout.h"
@@ -114,6 +115,9 @@ TEST_F(BrowserViewTest, BrowserViewLayout) {
   BookmarkBarView* bookmark_bar = browser_view()->GetBookmarkBarView();
   EXPECT_FALSE(bookmark_bar->visible());
   EXPECT_FALSE(bookmark_bar->IsDetached());
+  EXPECT_EQ(bookmark_bar->height(), devtools_web_view->y());
+  EXPECT_EQ(bookmark_bar->GetMinimumSize().height(),
+            chrome::kMinimumBookmarkBarHeight);
   chrome::ExecuteCommand(browser, IDC_SHOW_BOOKMARK_BAR);
   EXPECT_TRUE(bookmark_bar->visible());
   EXPECT_FALSE(bookmark_bar->IsDetached());
