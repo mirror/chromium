@@ -53,8 +53,6 @@ component("web") {
     "FullscreenController.h",
     "InspectorOverlayAgent.cpp",
     "InspectorOverlayAgent.h",
-    "LinkHighlightImpl.cpp",
-    "LinkHighlightImpl.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
     "MediaKeysClientImpl.cpp",
@@ -165,7 +163,6 @@ test("webkit_unit_tests") {
 
   sources = [
     "ExternalPopupMenuTest.cpp",
-    "LinkHighlightImplTest.cpp",
     "PageOverlayTest.cpp",
     "WebAssociatedURLLoaderImplTest.cpp",
     "WebDragDataTest.cpp",
