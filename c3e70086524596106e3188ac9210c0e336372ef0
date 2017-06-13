@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "f5dca2ea_16a89788",
+        "filename": "components/subresource_filter/core/common/PRESUBMIT.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1161815
+      },
+      "writtenOn": "2017-06-13T20:14:30Z",
+      "side": 1,
+      "message": "nit: change to \"some of the following files are changed\" or \"any of the following files is changed\"",
+      "range": {
+        "startLine": 14,
+        "startChar": 39,
+        "endLine": 14,
+        "endChar": 41
+      },
+      "revId": "c3e70086524596106e3188ac9210c0e336372ef0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bd02882_68406cec",
         "filename": "components/url_pattern_index/README",
         "patchSetId": 8
