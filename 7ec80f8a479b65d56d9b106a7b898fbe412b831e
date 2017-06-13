@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6689e998_e466aa4d",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-13T23:29:39Z",
+      "side": 1,
+      "message": "nit: comma after device",
+      "range": {
+        "startLine": 258,
+        "startChar": 70,
+        "endLine": 258,
+        "endChar": 76
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2a153cb1_3f5a80ca",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-13T23:29:39Z",
+      "side": 1,
+      "message": "It\u0027s slightly unclear what you meant here..\nIs it \"a (possibly empty) subset of available services\"?",
+      "range": {
+        "startLine": 259,
+        "startChar": 28,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e19a97de_bc29464b",
+        "filename": "extensions/common/api/bluetooth_low_energy.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1000232
+      },
+      "writtenOn": "2017-06-13T23:29:39Z",
+      "side": 1,
+      "message": "and\n(or did you mean and/or)",
+      "range": {
+        "startLine": 260,
+        "startChar": 36,
+        "endLine": 260,
+        "endChar": 42
+      },
+      "revId": "7ec80f8a479b65d56d9b106a7b898fbe412b831e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
