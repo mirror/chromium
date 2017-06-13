@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8dfcf5c9_3172a850",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 673,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T13:57:34Z",
+      "side": 1,
+      "message": "really nitty: can remove the space before \\n",
+      "revId": "f84c84608260a68bfa499e3d63a4e9e02c9dfd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a9bbb3d_a278c0bd",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T13:57:34Z",
+      "side": 1,
+      "message": "remove space before \\n",
+      "revId": "f84c84608260a68bfa499e3d63a4e9e02c9dfd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df8ac4f_bf9e8599",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 868,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T13:57:34Z",
+      "side": 1,
+      "message": "It\u0027s a bit nicer to do ServiceWorkerStatusCodeToString(status)\n(the arguments aren\u0027t evaluated when tracing is off)",
+      "revId": "f84c84608260a68bfa499e3d63a4e9e02c9dfd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d09803_ea156f88",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 915,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T13:57:34Z",
+      "side": 1,
+      "message": "Can do \"status\", StatusToString(code)",
+      "revId": "f84c84608260a68bfa499e3d63a4e9e02c9dfd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b479230e_cb455d02",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T13:57:34Z",
+      "side": 1,
+      "message": "I didn\u0027t mean for you to delete the comment about the UI thread and the callback. That was good.",
+      "revId": "f84c84608260a68bfa499e3d63a4e9e02c9dfd4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
