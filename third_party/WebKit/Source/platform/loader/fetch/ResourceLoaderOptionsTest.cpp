@@ -16,10 +16,6 @@ TEST(ResourceLoaderOptionsTest, DeepCopy) {
   // initiatorInfo and securityOrigin.
   static_assert(std::is_enum<DataBufferingPolicy>::value,
                 "DataBufferingPolicy should be an enum");
-  static_assert(std::is_enum<StoredCredentials>::value,
-                "StoredCredentials should be an enum");
-  static_assert(std::is_enum<CredentialRequest>::value,
-                "CredentialRequest should be an enum");
   static_assert(std::is_enum<ContentSecurityPolicyDisposition>::value,
                 "ContentSecurityPolicyDisposition should be an enum");
   static_assert(std::is_enum<RequestInitiatorContext>::value,
@@ -29,8 +25,7 @@ TEST(ResourceLoaderOptionsTest, DeepCopy) {
   static_assert(std::is_enum<CORSEnabled>::value,
                 "CORSEnabled should be an enum");
 
-  ResourceLoaderOptions original(kDoNotAllowStoredCredentials,
-                                 kClientDidNotRequestCredentials);
+  ResourceLoaderOptions original;
   RefPtr<SecurityOrigin> security_origin =
       SecurityOrigin::CreateFromString("http://www.google.com");
   original.security_origin = security_origin;
@@ -42,8 +37,6 @@ TEST(ResourceLoaderOptionsTest, DeepCopy) {
 
   // Check that contents are correctly copied to |copyData|
   EXPECT_EQ(original.data_buffering_policy, copy_data.data_buffering_policy);
-  EXPECT_EQ(original.allow_credentials, copy_data.allow_credentials);
-  EXPECT_EQ(original.credentials_requested, copy_data.credentials_requested);
   EXPECT_EQ(original.content_security_policy_option,
             copy_data.content_security_policy_option);
   EXPECT_EQ(original.initiator_info.name, copy_data.initiator_info.name);
@@ -75,8 +68,6 @@ TEST(ResourceLoaderOptionsTest, DeepCopy) {
 
   // Check that contents are correctly copied to |copy|
   EXPECT_EQ(original.data_buffering_policy, copy.data_buffering_policy);
-  EXPECT_EQ(original.allow_credentials, copy.allow_credentials);
-  EXPECT_EQ(original.credentials_requested, copy.credentials_requested);
   EXPECT_EQ(original.content_security_policy_option,
             copy.content_security_policy_option);
   EXPECT_EQ(original.initiator_info.name, copy.initiator_info.name);
