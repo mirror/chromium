@@ -358,15 +358,15 @@ Timeline.TimelineTreeView = class extends UI.VBox {
         null;
     if (selectedNode === this._lastSelectedNode)
       return;
-    this._lastSelectedNode = selectedNode;
     if (this._splitWidget.showMode() === UI.SplitWidget.ShowMode.OnlyMain)
       return;
+    this._lastSelectedNode = selectedNode;
     this._detailsView.detachChildWidgets();
     this._detailsView.element.removeChildren();
-    if (!selectedNode || !this._showDetailsForNode(selectedNode)) {
-      var banner = this._detailsView.element.createChild('div', 'full-widget-dimmed-banner');
-      banner.createTextChild(Common.UIString('Select item for details.'));
-    }
+    if (selectedNode && this._showDetailsForNode(selectedNode))
+      return;
+    var banner = this._detailsView.element.createChild('div', 'full-widget-dimmed-banner');
+    banner.createTextChild(Common.UIString('Select item for details.'));
   }
 
   /**
