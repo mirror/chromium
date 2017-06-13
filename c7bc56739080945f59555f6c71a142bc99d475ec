@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7b72bc69_57d3eaec",
+        "filename": "chrome/browser/media/router/media_sinks_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T21:43:27Z",
+      "side": 1,
+      "message": "UNAVAILABLE should work here, although it\u0027s a little fragile to rely on an empty origin list in Android.   I would at a minimum add a check to ensure it\u0027s empty before doing CORS checks in Android.",
+      "parentUuid": "95c6bd80_229f9774",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93a69913_50f6ed38",
         "filename": "chrome/browser/media/router/media_sinks_observer.h",
         "patchSetId": 3
@@ -66,6 +84,58 @@
       "side": 1,
       "message": "Why? What\u0027s the alternative then?\nI don\u0027t think I want to duplicate the enum without a strong reason to.",
       "parentUuid": "93a69913_50f6ed38",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f7e36ef_c8ed1a62",
+        "filename": "chrome/browser/media/router/media_sinks_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T21:43:27Z",
+      "side": 1,
+      "message": "The reason is layering.  MR is built upon the content API and is split between the browser and a couple of components.  We are not in a position to re-architect the MR to be layered directly onto Blink APIs - at a minimum it would require future refactoring into layered components.",
+      "parentUuid": "4f1963dc_cc4fc43c",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b585e251_fc93c4e1",
+        "filename": "chrome/browser/ui/ash/cast_config_client_media_router.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T21:43:27Z",
+      "side": 1,
+      "message": "Similar comment here about ignoring |availability|.",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5cc9fe73_8bc0f839",
+        "filename": "chrome/browser/ui/webui/media_router/query_result_manager.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-13T21:43:27Z",
+      "side": 1,
+      "message": "But this implementation ignores |availability| which doesn\u0027t seem right.",
       "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
