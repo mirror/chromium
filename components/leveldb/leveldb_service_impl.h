@@ -24,18 +24,23 @@ class LevelDBServiceImpl : public mojom::LevelDBService {
   ~LevelDBServiceImpl() override;
 
   // Overridden from LevelDBService:
-  void Open(filesystem::mojom::DirectoryPtr directory,
-            const std::string& dbname,
-            leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
-            OpenCallback callback) override;
+  void Open(
+      filesystem::mojom::DirectoryPtr directory,
+      const std::string& dbname,
+      base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id,
+      leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
+      OpenCallback callback) override;
   void OpenWithOptions(
       leveldb::mojom::OpenOptionsPtr open_options,
       filesystem::mojom::DirectoryPtr directory,
       const std::string& dbname,
+      base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id,
       leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
       OpenCallback callback) override;
-  void OpenInMemory(leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
-                    OpenInMemoryCallback callback) override;
+  void OpenInMemory(
+      base::Optional<base::trace_event::MemoryAllocatorDumpGuid> memory_dump_id,
+      leveldb::mojom::LevelDBDatabaseAssociatedRequest database,
+      OpenInMemoryCallback callback) override;
   void Destroy(filesystem::mojom::DirectoryPtr directory,
                const std::string& dbname,
                DestroyCallback callback) override;
