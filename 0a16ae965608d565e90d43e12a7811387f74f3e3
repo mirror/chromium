@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aac4a6f7_a7774cce",
+        "filename": "mojo/common/memory_allocator_dump_cross_process_uid.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T21:01:15Z",
+      "side": 1,
+      "message": "Out of curiosity: why pass by value? The underlying C++ type seems to be passed by reference fairly often as well, and the memory-infra APIs seem to take it by const ref as well.",
+      "range": {
+        "startLine": 12,
+        "startChar": 115,
+        "endLine": 12,
+        "endChar": 137
+      },
+      "revId": "0a16ae965608d565e90d43e12a7811387f74f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
