@@ -2,12 +2,6 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// Needed on Windows to get |M_PI| from math.h.
-#ifdef _WIN32
-#define _USE_MATH_DEFINES
-#endif
-
-#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 #include <stdlib.h>
@@ -15,6 +9,7 @@
 
 #include <limits>
 
+#include "base/numerics/math_util.h"
 #include "ppapi/c/pp_errors.h"
 #include "ppapi/cpp/audio.h"
 #include "ppapi/cpp/audio_config.h"
@@ -78,10 +73,10 @@ class MyInstance : public pp::Instance {
   }
 
   void SineWaveCallback(void* samples, uint32_t num_bytes) {
-    double delta_l = 2.0 * M_PI * kLeftFrequency / sample_rate_ /
-        (visible_ ? 1 : 2);
-    double delta_r = 2.0 * M_PI * kRightFrequency / sample_rate_ /
-        (visible_ ? 1 : 2);
+    double delta_l = 2.0 * base::kPiDouble * kLeftFrequency / sample_rate_ /
+                     (visible_ ? 1 : 2);
+    double delta_r = 2.0 * base::kPiDouble * kRightFrequency / sample_rate_ /
+                     (visible_ ? 1 : 2);
 
     // Use per channel audio wave value to avoid clicks on buffer boundries.
     double wave_l = audio_wave_l_;
@@ -91,13 +86,13 @@ class MyInstance : public pp::Instance {
     for (size_t sample = 0; sample < sample_count_; ++sample) {
       *buf++ = static_cast<int16_t>(sin(wave_l) * max_int16);
       *buf++ = static_cast<int16_t>(sin(wave_r) * max_int16);
-      // Add delta, keep within -2 * M_PI .. 2 * M_PI to preserve precision.
+      // Add delta, keep within -2 * pi .. 2 * pi to preserve precision.
       wave_l += delta_l;
-      if (wave_l > 2.0 * M_PI)
-        wave_l -= 2.0 * M_PI;
+      if (wave_l > 2.0 * base::kPiDouble)
+        wave_l -= 2.0 * base::kPiDouble;
       wave_r += delta_r;
-      if (wave_r > 2.0 * M_PI)
-        wave_r -= 2.0 * M_PI;
+      if (wave_r > 2.0 * base::kPiDouble)
+        wave_r -= 2.0 * base::kPiDouble;
     }
     // Store current value to use as starting point for next callback.
     audio_wave_l_ = wave_l;

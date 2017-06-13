@@ -4,13 +4,8 @@
 
 #include "ui/gfx/geometry/vector3d_f.h"
 
-#include <cmath>
-
+#include "base/numerics/math_util.h"
 #include "base/strings/stringprintf.h"
-
-namespace {
-const float kRadiansToDegrees = 180.0f / 3.14159265f;
-}
 
 namespace gfx {
 
@@ -76,8 +71,8 @@ Vector3dF ScaleVector3d(const Vector3dF& v,
 
 float AngleBetweenVectorsInDegrees(const gfx::Vector3dF& base,
                                    const gfx::Vector3dF& other) {
-  return acos(gfx::DotProduct(base, other) / base.Length() / other.Length()) *
-         kRadiansToDegrees;
+  return base::RadToDeg(
+      acos(gfx::DotProduct(base, other) / base.Length() / other.Length()));
 }
 
 float ClockwiseAngleBetweenVectorsInDegrees(const gfx::Vector3dF& base,
