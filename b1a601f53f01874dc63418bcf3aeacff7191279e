@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a36e313c_ba742bc9",
+        "filename": "third_party/WebKit/Source/core/page/ContextMenuClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T20:22:17Z",
+      "side": 1,
+      "message": "Can we make this take a mutable ref?",
+      "range": {
+        "startLine": 41,
+        "startChar": 29,
+        "endLine": 41,
+        "endChar": 50
+      },
+      "revId": "b1a601f53f01874dc63418bcf3aeacff7191279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51fddebc_b9cdba9a",
+        "filename": "third_party/WebKit/Source/core/page/ContextMenuClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T20:22:17Z",
+      "side": 1,
+      "message": "Since this doesn\u0027t delegate anyway.",
+      "range": {
+        "startLine": 49,
+        "startChar": 24,
+        "endLine": 49,
+        "endChar": 42
+      },
+      "revId": "b1a601f53f01874dc63418bcf3aeacff7191279e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
