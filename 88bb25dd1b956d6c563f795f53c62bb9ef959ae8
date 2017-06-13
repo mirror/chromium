@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f2e0520_26d855a9",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-13T15:52:50Z",
+      "side": 1,
+      "message": "nit: making sure checking the new variable here is not better than using it to set use_pool \u003d false.",
+      "revId": "88bb25dd1b956d6c563f795f53c62bb9ef959ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
