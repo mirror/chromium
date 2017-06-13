@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d298a765_d36f1114",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T09:48:07Z",
+      "side": 1,
+      "message": "Btw, this isn\u0027t going to persist the bit correctly for OOPIF.\n\nMore generally, we need to clean this logic up if we want to add a new field: right now, has_received_user_gesture is also (sometimes) reset by LocalFrame::DocumentAttached, so we end up in a state where it\u0027s sometimes reset... and sometimes not.",
+      "parentUuid": "8e67b47f_7c49afa1",
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5b773d7_771d1b2c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 4
@@ -128,6 +146,29 @@
       "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6e2c4697_05f7d9d1",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T09:48:07Z",
+      "side": 1,
+      "message": "This should probably be based on the origin... what happens if it\u0027s an about:blank frame?",
+      "range": {
+        "startLine": 1486,
+        "startChar": 23,
+        "endLine": 1486,
+        "endChar": 59
+      },
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
