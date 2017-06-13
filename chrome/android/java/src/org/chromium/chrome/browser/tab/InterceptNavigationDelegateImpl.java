@@ -4,6 +4,7 @@
 
 package org.chromium.chrome.browser.tab;
 
+import org.chromium.base.ThreadUtils;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
@@ -243,7 +244,14 @@ public class InterceptNavigationDelegateImpl implements InterceptNavigationDeleg
                 // crbug.com/487938.
                 mTab.getActivity().moveTaskToBack(false);
             }
-            mTab.getTabModelSelector().closeTab(mTab);
+            // Defer closing a tab (and the associated WebContents) till the navigation
+            // request and the throttle finishes the job with it.
+            ThreadUtils.postOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    mTab.getTabModelSelector().closeTab(mTab);
+                }
+            });
         } else if (mTab.getTabRedirectHandler().isOnNavigation()) {
             int lastCommittedEntryIndexBeforeNavigation = mTab.getTabRedirectHandler()
                     .getLastCommittedEntryIndexBeforeStartingNavigation();
