@@ -422,6 +422,24 @@
     },
     {
       "key": {
+        "uuid": "a824a09a_8dfe8cb1",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-13T20:28:05Z",
+      "side": 1,
+      "message": "Thanks! I think the lack of timeout handling is fine, as long as we\u0027re being 1) consistent about it, and 2) explicit documenting it being part of the API (i.e. if you\u0027re a client and you don\u0027t run the callback, you\u0027re breaking the service).",
+      "parentUuid": "45306e50_e7f392e7",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9abd551_e200e26b",
         "filename": "services/resource_coordinator/tracing/coordinator.h",
         "patchSetId": 3

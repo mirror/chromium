@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6efab65c_07c662be",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115989
+      },
+      "writtenOn": "2017-06-13T20:28:05Z",
+      "side": 1,
+      "message": "If the closure names are always going to be string constants, you could also do a similar thing to supports_user_data.h and use the address of the constant as the key.",
+      "revId": "79ab19405efffe2a05a876cf86856c3edaaa39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
