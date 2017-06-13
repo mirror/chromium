@@ -393,11 +393,12 @@ void WebAssociatedURLLoaderImpl::LoadAsynchronously(
         static_cast<PreflightPolicy>(options_.preflight_policy);
     options.fetch_request_mode = options_.fetch_request_mode;
 
-    StoredCredentials allow_credentials = options_.allow_credentials
-                                              ? kAllowStoredCredentials
-                                              : kDoNotAllowStoredCredentials;
-    ResourceLoaderOptions resource_loader_options(
-        allow_credentials, kClientDidNotRequestCredentials);
+    new_request.SetFetchCredentialsMode(
+        options_.allow_credentials
+            ? WebURLRequest::kFetchCredentialsModeSameOrigin
+            : WebURLRequest::kFetchCredentialsModeOmit);
+
+    ResourceLoaderOptions resource_loader_options;
     resource_loader_options.data_buffering_policy = kDoNotBufferData;
 
     const ResourceRequest& webcore_request = new_request.ToResourceRequest();
