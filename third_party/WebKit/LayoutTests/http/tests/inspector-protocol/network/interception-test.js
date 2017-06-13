@@ -199,10 +199,10 @@ InspectorTest.startInterceptionTest = function(requestInterceptedDict,
 }
 
 InspectorTest.allowRequest = function(event) {
-    var id = canonicalId(event.params.InterceptionId);
+    var id = canonicalId(event.params.interceptionId);
     log(id, "allowRequest " + id);
     InspectorTest.sendCommand("Network.continueInterceptedRequest", {
-        "interceptionId": event.params.InterceptionId
+        "interceptionId": event.params.interceptionId
     });
 }
 
