@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "387e2a45_164e0e67",
+        "filename": "docs/git_tips.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-13T14:45:09Z",
+      "side": 1,
+      "message": "Incorporated, thanks!",
+      "parentUuid": "6fad8b9b_7ecf8b53",
+      "revId": "6b75456fa20094994b39b50ef1797b6d1705fe35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "244419ca_b9b354ef",
         "filename": "docs/git_tips.md",
         "patchSetId": 3
@@ -39,6 +57,30 @@
       "revId": "6b75456fa20094994b39b50ef1797b6d1705fe35",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5bed15d6_b1e62049",
+        "filename": "docs/git_tips.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-13T14:45:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "244419ca_b9b354ef",
+      "range": {
+        "startLine": 45,
+        "startChar": 23,
+        "endLine": 45,
+        "endChar": 33
+      },
+      "revId": "6b75456fa20094994b39b50ef1797b6d1705fe35",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
