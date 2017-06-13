@@ -60,6 +60,9 @@ std::unique_ptr<LinuxSandbox> InitializeSandbox() {
 void RunStandaloneService(const StandaloneServiceCallback& callback) {
   DCHECK(!base::MessageLoop::current());
 
+#if defined(OS_IOS)
+  NOTREACHED();
+#else
 #if defined(OS_MACOSX)
   // Send our task port to the parent.
   MachBroker::SendTaskPortToParent();
@@ -87,6 +90,7 @@ void RunStandaloneService(const StandaloneServiceCallback& callback) {
       mojo::edk::IncomingBrokerClientInvitation::AcceptFromCommandLine(
           mojo::edk::TransportProtocol::kLegacy);
   callback.Run(GetServiceRequestFromCommandLine(invitation.get()));
+#endif  // defined(OS_IOS)
 }
 
 }  // namespace service_manager
