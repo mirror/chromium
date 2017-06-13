@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e0f6581_0116de5f",
+        "filename": "chrome/browser/extensions/webstore_installer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 701,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-13T09:45:50Z",
+      "side": 1,
+      "message": "You forgot about this (should be \"user\" AFAIU).",
+      "range": {
+        "startLine": 701,
+        "startChar": 25,
+        "endLine": 701,
+        "endChar": 30
+      },
+      "revId": "644e236ae83b8ae08e7689de253395095c7b640a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
