@@ -19,6 +19,74 @@
     },
     {
       "key": {
+        "uuid": "b3a48d4e_687e4315",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1090,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T19:29:44Z",
+      "side": 1,
+      "message": "nit: use DCHECK instead of CHECK.",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "909fe648_d94b0941",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1091,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T19:29:44Z",
+      "side": 1,
+      "message": "Beware that RenderThreadImpl::current() can be null in tests.",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34c9b057_c92e051f",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T19:29:44Z",
+      "side": 1,
+      "message": "Why static? This seems a little fragile....\n\t\nRendererBlinkPlatformImpl gets initialized in RenderThreadImpl::Init (on the main thread), after RenderThreadImpl::gpu_ gets initialized, so you can simply lookup the gpu_memory_buffer_manager in the RendererBlinkPlatformImpl constructor (or maybe even better yet - inject it to the constructor), and keep it in a field, then return the field here. That way you\u0027re not dependent on the order in which threads look this up.",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21922553_ea5907ce",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1148065
+      },
+      "writtenOn": "2017-06-13T19:29:44Z",
+      "side": 1,
+      "message": "nit: image_uses_gpu",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4a77b404_9e25910b",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 1
