@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "876e041d_9a29232a",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebViewWebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-13T16:58:59Z",
+      "side": 1,
+      "message": "Use the pollInstrumentationThread in AwTestBase instead, which has standard webview timeouts.",
+      "revId": "7d138a9a0798a1af915bb12c7292edf82f91f923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
