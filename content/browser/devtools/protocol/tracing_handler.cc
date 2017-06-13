@@ -21,6 +21,9 @@
 #include "content/browser/devtools/devtools_io_context.h"
 #include "content/browser/devtools/devtools_session.h"
 #include "content/browser/tracing/tracing_controller_impl.h"
+#include "content/public/common/service_manager_connection.h"
+#include "content/public/common/service_names.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace content {
 namespace protocol {
@@ -290,18 +293,28 @@ void TracingHandler::RequestMemoryDump(
     return;
   }
 
-  base::trace_event::MemoryDumpManager::GetInstance()->RequestGlobalDump(
+  if (!memory_instrumentation_) {
+    service_manager::Connector* connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+    connector->BindInterface(content::mojom::kBrowserServiceName,
+                             mojo::MakeRequest(&memory_instrumentation_));
+  }
+  base::trace_event::MemoryDumpRequestArgs args = {
+      0 /* GUID TODO */,
       base::trace_event::MemoryDumpType::EXPLICITLY_TRIGGERED,
-      base::trace_event::MemoryDumpLevelOfDetail::DETAILED,
+      base::trace_event::MemoryDumpLevelOfDetail::DETAILED};
+  // TODO threading for the callback.
+  auto on_dump_finished =
       base::Bind(&TracingHandler::OnMemoryDumpFinished,
-                 weak_factory_.GetWeakPtr(),
-                 base::Passed(std::move(callback))));
+                 weak_factory_.GetWeakPtr(), base::Passed(std::move(callback)));
+  memory_instrumentation_->RequestGlobalMemoryDump(args, on_dump_finished);
 }
 
 void TracingHandler::OnMemoryDumpFinished(
     std::unique_ptr<RequestMemoryDumpCallback> callback,
     uint64_t dump_guid,
-    bool success) {
+    bool success,
+    memory_instrumentation::mojom::GlobalMemoryDumpPtr) {
   callback->sendSuccess(base::StringPrintf("0x%" PRIx64, dump_guid), success);
 }
 

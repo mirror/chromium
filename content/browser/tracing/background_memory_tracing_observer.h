@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_TRACING_BACKGROUND_MEMORY_TRACING_OBSERVER_H_
 
 #include "content/browser/tracing/background_tracing_manager_impl.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace content {
 
@@ -21,6 +22,8 @@ class BackgroundMemoryTracingObserver
  private:
   BackgroundMemoryTracingObserver();
   ~BackgroundMemoryTracingObserver() override;
+
+  memory_instrumentation::mojom::CoordinatorPtr memory_instrumentation_;
 
   DISALLOW_COPY_AND_ASSIGN(BackgroundMemoryTracingObserver);
 };

@@ -19,6 +19,7 @@
 #include "content/browser/devtools/protocol/tracing.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/tracing_controller.h"
+#include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
 
 namespace base {
 class Timer;
@@ -71,7 +72,8 @@ class TracingHandler : public DevToolsDomainHandler,
                             const std::set<std::string>& category_set);
   void OnMemoryDumpFinished(std::unique_ptr<RequestMemoryDumpCallback> callback,
                             uint64_t dump_guid,
-                            bool success);
+                            bool success,
+                            memory_instrumentation::mojom::GlobalMemoryDumpPtr);
 
   void SetupTimer(double usage_reporting_interval);
   void StopTracing(
@@ -85,6 +87,7 @@ class TracingHandler : public DevToolsDomainHandler,
   std::unique_ptr<base::Timer> buffer_usage_poll_timer_;
   Target target_;
 
+  memory_instrumentation::mojom::CoordinatorPtr memory_instrumentation_;
   std::unique_ptr<Tracing::Frontend> frontend_;
   DevToolsIOContext* io_context_;
   int frame_tree_node_id_;

@@ -9,8 +9,6 @@
 #include "base/run_loop.h"
 #include "base/trace_event/memory_dump_manager.h"
 #include "base/trace_event/memory_dump_request_args.h"
-#include "base/trace_event/trace_config.h"
-#include "base/trace_event/trace_log.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/resource_coordinator/public/cpp/memory_instrumentation/coordinator.h"
 #include "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom.h"
@@ -53,50 +51,45 @@ class ClientProcessImplTest : public testing::Test {
     client_process_.reset(new ClientProcessImpl(config));
     client_process_->SetAsNonCoordinatorForTesting();
 
-    // Enable tracing.
-    std::string category_filter = "-*,";
-    category_filter += MemoryDumpManager::kTraceCategory;
-    base::trace_event::TraceConfig trace_config(category_filter, "");
-    base::trace_event::TraceLog::GetInstance()->SetEnabled(
-        trace_config, base::trace_event::TraceLog::RECORDING_MODE);
-
     // Reset the counters.
-    expected_callback_calls_ = 0;
+    expected_callbacks_left_ = 0;
     dump_requests_received_by_coordinator_ = 0;
     quit_closure_.Reset();
   }
 
   void TearDown() override {
-    base::trace_event::TraceLog::GetInstance()->SetDisabled();
     mdm_.reset();
     client_process_.reset();
     coordinator_.reset();
     message_loop_.reset();
   }
 
-  void OnGlobalMemoryDumpDone(int more_requests,
+  void OnGlobalMemoryDumpDone(int num_requests_left,
                               uint64_t dump_guid,
-                              bool success) {
-    EXPECT_GT(expected_callback_calls_, 0);
+                              bool success,
+                              mojom::GlobalMemoryDumpPtr result) {
+    EXPECT_GT(expected_callbacks_left_, 0);
     EXPECT_FALSE(quit_closure_.is_null());
 
     dump_requests_received_by_coordinator_ += success ? 1 : 0;
-    expected_callback_calls_--;
-    if (expected_callback_calls_ == 0)
+    expected_callbacks_left_--;
+    if (expected_callbacks_left_ == 0)
       quit_closure_.Run();
 
-    if (more_requests > 0)
-      SequentiallyRequestGlobalDumps(more_requests);
+    if (num_requests_left > 0)
+      SequentiallyRequestGlobalDumps(num_requests_left);
   }
 
   void SequentiallyRequestGlobalDumps(int num_requests) {
-    MemoryDumpManager::GetInstance()->RequestGlobalDump(
-        MemoryDumpType::EXPLICITLY_TRIGGERED, MemoryDumpLevelOfDetail::LIGHT,
-        base::Bind(&ClientProcessImplTest::OnGlobalMemoryDumpDone,
-                   base::Unretained(this), num_requests - 1));
+    base::trace_event::MemoryDumpRequestArgs args{
+        num_requests /* dump_guid */, MemoryDumpType::SUMMARY_ONLY,
+        MemoryDumpLevelOfDetail::BACKGROUND};
+    client_process_->RequestGlobalMemoryDump(
+        args, base::Bind(&ClientProcessImplTest::OnGlobalMemoryDumpDone,
+                         base::Unretained(this), num_requests - 1));
   }
 
-  int expected_callback_calls_;
+  int expected_callbacks_left_;
   int dump_requests_received_by_coordinator_;
   base::Closure quit_closure_;
 
@@ -111,26 +104,27 @@ class ClientProcessImplTest : public testing::Test {
 // previous one. There should be no throttling and all requests should be
 // forwarded to the coordinator.
 TEST_F(ClientProcessImplTest, NonOverlappingMemoryDumpRequests) {
+  const int kNumRequests = 3;
+  expected_callbacks_left_ = kNumRequests;
   base::RunLoop run_loop;
-  expected_callback_calls_ = 3;
   quit_closure_ = run_loop.QuitClosure();
-  SequentiallyRequestGlobalDumps(3);
+  SequentiallyRequestGlobalDumps(kNumRequests);
   run_loop.Run();
-  EXPECT_EQ(3, dump_requests_received_by_coordinator_);
+  EXPECT_EQ(kNumRequests, dump_requests_received_by_coordinator_);
 }
 
 // Makes several global dump requests without waiting for previous requests to
-// finish. Only the first request should make it to the coordinator. The rest
-// should be cancelled.
+// finish. They should be queued by the coordinator and served in sequence if
+// the type != MemoryDumpType::PERIODIC_INTERVAL.
 TEST_F(ClientProcessImplTest, OverlappingMemoryDumpRequests) {
+  const int kNumRequests = 3;
+  expected_callbacks_left_ = kNumRequests;
   base::RunLoop run_loop;
-  expected_callback_calls_ = 3;
   quit_closure_ = run_loop.QuitClosure();
-  SequentiallyRequestGlobalDumps(1);
-  SequentiallyRequestGlobalDumps(1);
-  SequentiallyRequestGlobalDumps(1);
+  for (int i = 0; i < kNumRequests; i++)
+    SequentiallyRequestGlobalDumps(1);
   run_loop.Run();
-  EXPECT_EQ(1, dump_requests_received_by_coordinator_);
+  EXPECT_EQ(kNumRequests, dump_requests_received_by_coordinator_);
 }
 
 }  // namespace memory_instrumentation
