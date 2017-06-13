@@ -826,6 +826,103 @@ void ServiceWorkerContextWrapper::DidDeleteAndStartOver(
                          &ServiceWorkerContextObserver::OnStorageWiped);
 }
 
+void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHint(
+    const GURL& document_url,
+    const StartServiceWorkerForNavigationHintCallback& callback) {
+  TRACE_EVENT1("ServiceWorker", "StartServiceWorkerForNavigationHint",
+               "document_url", document_url.spec());
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::Bind(
+          &ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO,
+          this, document_url, callback));
+}
+
+void ServiceWorkerContextWrapper::StartServiceWorkerForNavigationHintOnIO(
+    const GURL& document_url,
+    const StartServiceWorkerForNavigationHintCallback& callback) {
+  TRACE_EVENT1("ServiceWorker", "StartServiceWorkerForNavigationHintOnIO",
+               "document_url", document_url.spec());
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!context_core_) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(callback,
+                   StartServiceWorkerForNavigationHintResult::FAILED));
+    return;
+  }
+  context_core_->storage()->FindRegistrationForDocument(
+      net::SimplifyUrlForRequest(document_url),
+      base::Bind(
+          &ServiceWorkerContextWrapper::DidFindRegistrationForNavigationHint,
+          this, callback));
+}
+
+void ServiceWorkerContextWrapper::DidFindRegistrationForNavigationHint(
+    const StartServiceWorkerForNavigationHintCallback& callback,
+    ServiceWorkerStatusCode status,
+    scoped_refptr<ServiceWorkerRegistration> registration) {
+  TRACE_EVENT0("ServiceWorker", "DidFindRegistrationForNavigationHint");
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  if (!registration) {
+    DCHECK_NE(status, SERVICE_WORKER_OK);
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(callback, StartServiceWorkerForNavigationHintResult::
+                                 NO_SERVICE_WORKER_REGISTRATION));
+    return;
+  }
+  if (!registration->active_version()) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(callback, StartServiceWorkerForNavigationHintResult::
+                                 NO_ACTIVE_SERVICE_WORKER_VERSION));
+    return;
+  }
+  if (registration->active_version()->fetch_handler_existence() ==
+      ServiceWorkerVersion::FetchHandlerExistence::DOES_NOT_EXIST) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(
+            callback,
+            StartServiceWorkerForNavigationHintResult::NO_FETCH_HANDLER));
+    return;
+  }
+  if (registration->active_version()->running_status() ==
+      EmbeddedWorkerStatus::RUNNING) {
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::Bind(callback,
+                   StartServiceWorkerForNavigationHintResult::ALREADY_RUNNING));
+    return;
+  }
+  LOG(ERROR) << "DidFindRegistrationForNavigationHint StartWorker ";
+  registration->active_version()->StartWorker(
+      ServiceWorkerMetrics::EventType::NAVIGATION_HINT,
+      base::Bind(
+          &ServiceWorkerContextWrapper::DidStartServiceWorkerForNavigationHint,
+          this, registration->pattern(), callback));
+  LOG(ERROR) << "DidFindRegistrationForNavigationHint StartWorker done";
+}
+
+void ServiceWorkerContextWrapper::DidStartServiceWorkerForNavigationHint(
+    const GURL& pattern,
+    const StartServiceWorkerForNavigationHintCallback& callback,
+    ServiceWorkerStatusCode code) {
+  TRACE_EVENT1("ServiceWorker", "DidStartServiceWorkerForNavigationHint", "url",
+               pattern.spec());
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(callback,
+                 code == SERVICE_WORKER_OK
+                     ? StartServiceWorkerForNavigationHintResult::STARTED
+                     : StartServiceWorkerForNavigationHintResult::FAILED));
+}
+
 void ServiceWorkerContextWrapper::BindWorkerFetchContext(
     int render_process_id,
     int service_worker_provider_id,

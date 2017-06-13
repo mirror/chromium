@@ -305,8 +305,11 @@ void BrowserChildProcessHostImpl::BindInterface(
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  if (!child_connection_)
+  if (!child_connection_) {
+    LOG(ERROR)
+        << "BrowserChildProcessHostImpl::BindInterface !child_connection_";
     return;
+  }
 
   child_connection_->BindInterface(interface_name, std::move(interface_pipe));
 }
@@ -572,6 +575,7 @@ void BrowserChildProcessHostImpl::OnMojoError(
     base::WeakPtr<BrowserChildProcessHostImpl> process,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner,
     const std::string& error) {
+  LOG(ERROR) << "BrowserChildProcessHostImpl::OnMojoError";
   if (!task_runner->BelongsToCurrentThread()) {
     task_runner->PostTask(
         FROM_HERE, base::Bind(&BrowserChildProcessHostImpl::OnMojoError,

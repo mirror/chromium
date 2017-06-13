@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
@@ -82,6 +83,7 @@ void SetupOnUI(
     const base::Callback<
         void(std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy>,
              bool wait_for_debugger)>& callback) {
+  LOG(ERROR) << "SetupOnUI " << process_id;
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy;
   int worker_devtools_agent_route_id = MSG_ROUTING_NONE;
@@ -96,10 +98,15 @@ void SetupOnUI(
                 service_worker_context, service_worker_context_weak,
                 service_worker_version_id, url, scope),
             is_installed);
-    if (request.is_pending())
+    if (request.is_pending()) {
+      LOG(ERROR) << "calling BindInterface";
       BindInterface(rph, std::move(request));
+      LOG(ERROR) << "calling BindInterface done";
+    }
     devtools_proxy = base::MakeUnique<EmbeddedWorkerInstance::DevToolsProxy>(
         process_id, worker_devtools_agent_route_id);
+  } else {
+    LOG(ERROR) << "No RenderProcessHost";
   }
   BrowserThread::PostTask(
       BrowserThread::IO, FROM_HERE,
@@ -107,6 +114,8 @@ void SetupOnUI(
 }
 
 void CallDetach(EmbeddedWorkerInstance* instance) {
+  LOG(ERROR) << "CallDetach";
+  base::debug::StackTrace().Print();
   // This could be called on the UI thread if |client_| still be valid when the
   // message loop on the UI thread gets destructed.
   // TODO(shimazu): Remove this after https://crbug.com/604762 is fixed
@@ -284,6 +293,7 @@ class EmbeddedWorkerInstance::StartTask {
 
   void Start(std::unique_ptr<EmbeddedWorkerStartParams> params,
              const StatusCallback& callback) {
+    LOG(ERROR) << "StartTask::Start()";
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     state_ = ProcessAllocationState::ALLOCATING;
     start_callback_ = callback;
@@ -324,6 +334,7 @@ class EmbeddedWorkerInstance::StartTask {
                           int process_id,
                           bool is_new_process,
                           const EmbeddedWorkerSettings& settings) {
+    LOG(ERROR) << "StartTask::OnProcessAllocated()";
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
     if (status != SERVICE_WORKER_OK) {
@@ -386,6 +397,7 @@ class EmbeddedWorkerInstance::StartTask {
       bool is_new_process,
       std::unique_ptr<EmbeddedWorkerInstance::DevToolsProxy> devtools_proxy,
       bool wait_for_debugger) {
+    LOG(ERROR) << "StartTask::OnSetupOnUICompleted()";
     DCHECK_CURRENTLY_ON(BrowserThread::IO);
     params->worker_devtools_agent_route_id = devtools_proxy->agent_route_id();
     params->wait_for_debugger = wait_for_debugger;
@@ -398,6 +410,7 @@ class EmbeddedWorkerInstance::StartTask {
 
     ServiceWorkerStatusCode status =
         instance_->SendStartWorker(std::move(params));
+    LOG(ERROR) << " SendStartWorker result: " << static_cast<int>(status);
     if (status != SERVICE_WORKER_OK) {
       StatusCallback callback = start_callback_;
       start_callback_.Reset();
@@ -444,6 +457,7 @@ void EmbeddedWorkerInstance::Start(
     std::unique_ptr<EmbeddedWorkerStartParams> params,
     mojom::ServiceWorkerEventDispatcherRequest dispatcher_request,
     const StatusCallback& callback) {
+  LOG(ERROR) << "EmbeddedWorkerInstance::Start()";
   restart_count_++;
   if (!context_) {
     callback.Run(SERVICE_WORKER_ERROR_ABORT);
@@ -560,6 +574,8 @@ void EmbeddedWorkerInstance::OnProcessAllocated(
     ServiceWorkerMetrics::StartSituation start_situation) {
   DCHECK_EQ(EmbeddedWorkerStatus::STARTING, status_);
   DCHECK(!process_handle_);
+  LOG(ERROR) << "EmbeddedWorkerInstance::OnProcessAllocated "
+             << handle->process_id() << " " << embedded_worker_id();
 
   process_handle_ = std::move(handle);
   starting_phase_ = REGISTERING_TO_DEVTOOLS;
@@ -804,6 +820,9 @@ void EmbeddedWorkerInstance::OnStopped() {
 }
 
 void EmbeddedWorkerInstance::OnDetached() {
+  LOG(ERROR) << "EmbeddedWorkerInstance::OnDetached()------------------------";
+  // base::debug::StackTrace().Print();
+  // LOG(ERROR) << "------------------------";
   EmbeddedWorkerStatus old_status = status_;
   ReleaseProcess();
   for (auto& observer : listener_list_)
@@ -811,6 +830,7 @@ void EmbeddedWorkerInstance::OnDetached() {
 }
 
 void EmbeddedWorkerInstance::Detach() {
+  LOG(ERROR) << "EmbeddedWorkerInstance::Detach()";
   registry_->DetachWorker(process_id(), embedded_worker_id());
   OnDetached();
 }
@@ -889,6 +909,7 @@ void EmbeddedWorkerInstance::OnNetworkAccessedForScriptLoad() {
 }
 
 void EmbeddedWorkerInstance::ReleaseProcess() {
+  LOG(ERROR) << "EmbeddedWorkerInstance::ReleaseProcess---------";
   // Abort an inflight start task.
   inflight_start_task_.reset();
 

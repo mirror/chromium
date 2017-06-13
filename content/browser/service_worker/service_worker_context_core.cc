@@ -307,6 +307,7 @@ ServiceWorkerDispatcherHost* ServiceWorkerContextCore::GetDispatcherHost(
 }
 
 void ServiceWorkerContextCore::RemoveDispatcherHost(int process_id) {
+  LOG(ERROR) << "ServiceWorkerContextCore::RemoveDispatcherHost";
   DCHECK(dispatcher_hosts_.find(process_id) != dispatcher_hosts_.end());
   RemoveAllProviderHostsForProcess(process_id);
   embedded_worker_registry_->RemoveProcess(process_id);

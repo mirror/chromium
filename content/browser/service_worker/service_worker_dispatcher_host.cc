@@ -98,6 +98,7 @@ ServiceWorkerDispatcherHost::ServiceWorkerDispatcherHost(
 }
 
 ServiceWorkerDispatcherHost::~ServiceWorkerDispatcherHost() {
+  LOG(ERROR) << "ServiceWorkerDispatcherHost::~ServiceWorkerDispatcherHost";
   if (GetContext())
     GetContext()->RemoveDispatcherHost(render_process_id_);
 }
@@ -118,6 +119,7 @@ void ServiceWorkerDispatcherHost::Init(
 }
 
 void ServiceWorkerDispatcherHost::OnFilterAdded(IPC::Channel* channel) {
+  LOG(ERROR) << "ServiceWorkerDispatcherHost::OnFilterAdded";
   TRACE_EVENT0("ServiceWorker",
                "ServiceWorkerDispatcherHost::OnFilterAdded");
   channel_ready_ = true;
@@ -129,6 +131,7 @@ void ServiceWorkerDispatcherHost::OnFilterAdded(IPC::Channel* channel) {
 }
 
 void ServiceWorkerDispatcherHost::OnFilterRemoved() {
+  LOG(ERROR) << "ServiceWorkerDispatcherHost::OnFilterRemoved";
   // Don't wait until the destructor to teardown since a new dispatcher host
   // for this process might be created before then.
   if (GetContext())

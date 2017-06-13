@@ -183,6 +183,7 @@ int NextTraceId() {
 
 void OnEventDispatcherConnectionError(
     base::WeakPtr<EmbeddedWorkerInstance> embedded_worker) {
+  LOG(ERROR) << "OnEventDispatcherConnectionError";
   if (!embedded_worker)
     return;
 
@@ -416,6 +417,7 @@ void ServiceWorkerVersion::set_fetch_handler_existence(
 
 void ServiceWorkerVersion::StartWorker(ServiceWorkerMetrics::EventType purpose,
                                        const StatusCallback& callback) {
+  LOG(ERROR) << "ServiceWorkerVersion::StartWorker";
   TRACE_EVENT_INSTANT2(
       "ServiceWorker", "ServiceWorkerVersion::StartWorker (instant)",
       TRACE_EVENT_SCOPE_THREAD, "Script", script_url_.spec(), "Purpose",
@@ -1395,6 +1397,7 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
     const StatusCallback& callback,
     ServiceWorkerStatusCode status,
     scoped_refptr<ServiceWorkerRegistration> registration) {
+  LOG(ERROR) << "DidEnsureLiveRegistrationForStartWorker";
   scoped_refptr<ServiceWorkerRegistration> protect = registration;
   if (status == SERVICE_WORKER_ERROR_NOT_FOUND) {
     // When the registration has already been deleted from the storage but its
@@ -1423,6 +1426,8 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
 
   MarkIfStale();
 
+  LOG(ERROR) << "DidEnsureLiveRegistrationForStartWorker running_status: "
+             << static_cast<int>(running_status());
   switch (running_status()) {
     case EmbeddedWorkerStatus::RUNNING:
       RunSoon(base::Bind(callback, SERVICE_WORKER_OK));
@@ -1456,6 +1461,7 @@ void ServiceWorkerVersion::DidEnsureLiveRegistrationForStartWorker(
 }
 
 void ServiceWorkerVersion::StartWorkerInternal() {
+  LOG(ERROR) << "ServiceWorkerVersion::StartWorkerInternal";
   DCHECK_EQ(EmbeddedWorkerStatus::STOPPED, running_status());
 
   if (!ServiceWorkerMetrics::ShouldExcludeSiteFromHistogram(site_for_uma_)) {
@@ -1787,6 +1793,7 @@ void ServiceWorkerVersion::FoundRegistrationForUpdate(
 }
 
 void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
+  LOG(ERROR) << "ServiceWorkerVersion::OnStoppedInternal";
   DCHECK_EQ(EmbeddedWorkerStatus::STOPPED, running_status());
   scoped_refptr<ServiceWorkerVersion> protect;
   if (!in_dtor_)
@@ -1797,7 +1804,7 @@ void ServiceWorkerVersion::OnStoppedInternal(EmbeddedWorkerStatus old_status) {
   bool should_restart = !is_redundant() && !start_callbacks_.empty() &&
                         (old_status != EmbeddedWorkerStatus::STARTING) &&
                         !in_dtor_ && !ping_controller_->IsTimedOut();
-
+  LOG(ERROR) << " should_restart : " << should_restart;
   if (!stop_time_.is_null()) {
     TRACE_EVENT_ASYNC_END1("ServiceWorker", "ServiceWorkerVersion::StopWorker",
                            stop_time_.ToInternalValue(), "Restart",

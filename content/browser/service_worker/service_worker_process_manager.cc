@@ -164,6 +164,7 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
                               bool is_new_process,
                               const EmbeddedWorkerSettings&)>& callback) {
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    LOG(ERROR) << "ServiceWorkerProcessManager::AllocateWorkerProcess IO";
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&ServiceWorkerProcessManager::AllocateWorkerProcess,
@@ -171,6 +172,7 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
                    can_use_existing_process, callback));
     return;
   }
+  LOG(ERROR) << "ServiceWorkerProcessManager::AllocateWorkerProcess UI";
 
   // This |EmbeddedWorkerSettings| only populates |data_saver_enabled|,
   // but in general, this function will populate settings from prefs, while

@@ -435,6 +435,7 @@ class ContentMainRunnerImpl : public ContentMainRunner {
         completed_basic_startup_(false),
         delegate_(NULL),
         ui_task_(NULL) {
+    LOG(ERROR) << "ContentMainRunnerImpl::ContentMainRunnerImpl";
 #if defined(OS_WIN)
     memset(&sandbox_info_, 0, sizeof(sandbox_info_));
 #endif

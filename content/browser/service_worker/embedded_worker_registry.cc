@@ -5,6 +5,7 @@
 #include "content/browser/service_worker/embedded_worker_registry.h"
 
 #include "base/bind_helpers.h"
+#include "base/debug/stack_trace.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/stl_util.h"
 #include "content/browser/renderer_host/render_widget_helper.h"
@@ -95,6 +96,9 @@ void EmbeddedWorkerRegistry::OnDevToolsAttached(int embedded_worker_id) {
 }
 
 void EmbeddedWorkerRegistry::RemoveProcess(int process_id) {
+  LOG(ERROR) << "EmbeddedWorkerRegistry::RemoveProcess " << process_id;
+
+  base::debug::StackTrace().Print();
   std::map<int, std::set<int> >::iterator found =
       worker_process_map_.find(process_id);
   if (found != worker_process_map_.end()) {
@@ -111,6 +115,7 @@ void EmbeddedWorkerRegistry::RemoveProcess(int process_id) {
       // Set the worker's status to STOPPED so a new thread can be created for
       // this version. Use OnDetached rather than OnStopped so UMA doesn't
       // record it as a normal stoppage.
+      LOG(ERROR) << "Calling  OnDetached";
       worker_map_[embedded_worker_id]->OnDetached();
     }
     worker_process_map_.erase(found);

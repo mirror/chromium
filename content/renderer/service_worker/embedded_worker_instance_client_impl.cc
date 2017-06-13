@@ -33,6 +33,7 @@ EmbeddedWorkerInstanceClientImpl::WorkerWrapper::~WorkerWrapper() = default;
 void EmbeddedWorkerInstanceClientImpl::Create(
     const service_manager::BindSourceInfo& source_info,
     mojom::EmbeddedWorkerInstanceClientRequest request) {
+  LOG(ERROR) << "EmbeddedWorkerInstanceClientImpl::Create<>>><><><><><><><><";
   // This won't be leaked because the lifetime will be managed internally.
   new EmbeddedWorkerInstanceClientImpl(std::move(request));
 }

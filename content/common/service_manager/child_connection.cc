@@ -61,6 +61,8 @@ class ChildConnection::IOThreadContext
     if (connector_) {
       connector_->BindInterface(child_identity_, interface_name,
                                 std::move(request_handle));
+    } else {
+      LOG(ERROR) << "BindInterfaceOnIOThread !connector_";
     }
   }
 
@@ -92,6 +94,7 @@ class ChildConnection::IOThreadContext
   }
 
   void ShutDownOnIOThread() {
+    LOG(ERROR) << "ShutDownOnIOThread";
     connector_.reset();
     pid_receiver_.reset();
   }
