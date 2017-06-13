@@ -74,7 +74,7 @@ class MockAudioManager : public media::FakeAudioManager {
     MockGetAudioOutputDeviceNames(device_names);
   }
 
-  media::AudioParameters GetDefaultOutputStreamParameters() override {
+  media::AudioParameters GetDefaultOutputStreamParameters() {
     return media::AudioParameters(media::AudioParameters::AUDIO_PCM_LOW_LATENCY,
                                   media::CHANNEL_LAYOUT_STEREO, 48000, 16, 128);
   }
