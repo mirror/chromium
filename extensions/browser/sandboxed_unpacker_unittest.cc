@@ -64,11 +64,13 @@ class MockSandboxedUnpackerClient : public SandboxedUnpackerClient {
 
 class SandboxedUnpackerTest : public ExtensionsTest {
  public:
+  SandboxedUnpackerTest()
+      : ExtensionsTest(base::MakeUnique<content::TestBrowserThreadBundle>(
+            content::TestBrowserThreadBundle::IO_MAINLOOP)) {}
+
   void SetUp() override {
     ExtensionsTest::SetUp();
     ASSERT_TRUE(extensions_dir_.CreateUniqueTempDir());
-    browser_threads_.reset(new content::TestBrowserThreadBundle(
-        content::TestBrowserThreadBundle::IO_MAINLOOP));
     in_process_utility_thread_helper_.reset(
         new content::InProcessUtilityThreadHelper);
     // It will delete itself.
@@ -85,6 +87,8 @@ class SandboxedUnpackerTest : public ExtensionsTest {
     sandboxed_unpacker_ = NULL;
     base::RunLoop().RunUntilIdle();
     ExtensionsTest::TearDown();
+    in_process_utility_thread_helper_.reset();
+    browser_threads_.reset();
   }
 
   base::FilePath GetCrxFullPath(const std::string& crx_name) {
@@ -132,7 +136,6 @@ class SandboxedUnpackerTest : public ExtensionsTest {
   base::ScopedTempDir extensions_dir_;
   MockSandboxedUnpackerClient* client_;
   scoped_refptr<SandboxedUnpacker> sandboxed_unpacker_;
-  std::unique_ptr<content::TestBrowserThreadBundle> browser_threads_;
   std::unique_ptr<content::InProcessUtilityThreadHelper>
       in_process_utility_thread_helper_;
 };
