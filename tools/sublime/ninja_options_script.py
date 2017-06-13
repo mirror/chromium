@@ -17,6 +17,7 @@
 import imp
 import optparse
 import os
+import pipes
 
 ycm_module_path = os.path.normpath(
     os.path.join(os.path.dirname(os.path.abspath(__file__)),
@@ -38,7 +39,7 @@ def main():
   results = ycm_extra_conf.FlagsForFile(path)
 
   for flag in results['flags']:
-    print flag
+    print pipes.quote(flag)
 
 if __name__ == "__main__":
   main()
