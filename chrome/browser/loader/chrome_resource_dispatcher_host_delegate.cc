@@ -359,16 +359,7 @@ void NotifyUIThreadOfRequestStarted(
   if (!web_contents)
     return;
 
-  if (!is_download) {
-    page_load_metrics::MetricsWebContentsObserver* metrics_observer =
-        page_load_metrics::MetricsWebContentsObserver::FromWebContents(
-            web_contents);
-
-    if (metrics_observer) {
-      metrics_observer->OnRequestStarted(request_id, resource_type,
-                                         request_creation_time);
-    }
-  }
+  // TODO(petewil): Add code here for measuring resource request starting.
 }
 
 void NotifyUIThreadOfRequestComplete(
