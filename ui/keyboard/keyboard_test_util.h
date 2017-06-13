@@ -18,7 +18,7 @@ bool WaitUntilShown();
 bool WaitUntilHidden();
 
 // Waits until the keyboard state is changed to the given state.
-void WaitControllerStateChangesTo(KeyboardControllerState state);
+void WaitControllerStateChangesTo(const KeyboardControllerState state);
 
 }  // namespace keyboard
 
