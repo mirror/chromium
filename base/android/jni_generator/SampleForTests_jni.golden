@@ -482,9 +482,14 @@ static const JNINativeMethod kMethodsSampleForTests[] = {
     },
 };
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
 static bool RegisterNativesImpl(JNIEnv* env) {
-  if (jni_generator::ShouldSkipJniRegistration(false))
-    return true;
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool
+    RegisterNativeOrgChromiumExampleJni_GeneratorSamplefortests(JNIEnv* env) {
 
   const int kMethodsInnerClassSize = arraysize(kMethodsInnerClass);
 

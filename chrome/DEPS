@@ -15,6 +15,7 @@ include_rules = [
   # The subdirectories in chrome/ will manually allow their own include
   # directories in chrome/ so we disallow all of them.
   "-chrome",
+  "+chrome/browser/android/chrome_jni_registration.h"
   "+chrome/common",
   "+chrome/test",
   "+components/content_settings/core/common",

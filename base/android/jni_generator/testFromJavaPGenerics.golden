@@ -51,6 +51,9 @@ static void Java_HashSet_dummy(JNIEnv* env, const
 
 // Step 3: RegisterNatives.
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
+
 }  // namespace JNI_HashSet
 
 #endif  // java_util_HashSet_JNI

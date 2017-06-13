@@ -2190,6 +2190,9 @@ static void Java_MotionEvent_writeToParcel(JNIEnv* env, const
 
 // Step 3: RegisterNatives.
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
+
 }  // namespace JNI_MotionEvent
 
 #endif  // android_view_MotionEvent_JNI

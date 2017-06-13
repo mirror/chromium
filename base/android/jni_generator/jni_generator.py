@@ -184,6 +184,14 @@ class JniParams(object):
   _implicit_imports = []
 
   @staticmethod
+  def ResetStates():
+    JniParams._imports = []
+    JniParams._fully_qualified_class = ''
+    JniParams._package = ''
+    JniParams._inner_classes = []
+    JniParams._implicit_imports = []
+
+  @staticmethod
   def SetFullyQualifiedClass(fully_qualified_class):
     JniParams._fully_qualified_class = 'L' + fully_qualified_class
     JniParams._package = '/'.join(fully_qualified_class.split('/')[:-1])
@@ -413,7 +421,7 @@ def ExtractNatives(contents, ptr_type):
 
 
 def IsMainDexJavaClass(contents):
-  """Returns "true" if the class is annotated with "@MainDex", "false" if not.
+  """Returns True if the class is annotated with "@MainDex", False if not.
 
   JNI registration doesn't always need to be completed for non-browser processes
   since most Java code is only used by the browser process. Classes that are
@@ -422,7 +430,7 @@ def IsMainDexJavaClass(contents):
   """
   re_maindex = re.compile(r'@MainDex[\s\S]*class({|[\s\S]*{)')
   found = re.search(re_maindex, contents)
-  return 'true' if found else 'false'
+  return True if found else False
 
 
 def GetStaticCastForReturnType(return_type):
@@ -724,7 +732,7 @@ class InlHeaderFileGenerator(object):
   """Generates an inline header file for JNI integration."""
 
   def __init__(self, namespace, fully_qualified_class, natives,
-               called_by_natives, constant_fields, options, maindex='false'):
+               called_by_natives, constant_fields, options, maindex=False):
     self.namespace = namespace
     self.fully_qualified_class = fully_qualified_class
     self.class_name = self.fully_qualified_class.split('/')[-1]
@@ -773,6 +781,9 @@ $METHOD_STUBS
 
 // Step 3: RegisterNatives.
 $JNI_NATIVE_METHODS
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
+$REGISTER_NATIVES_EMPTY
 $REGISTER_NATIVES
 $CLOSE_NAMESPACE
 
@@ -786,7 +797,8 @@ $CLOSE_NAMESPACE
         'METHOD_STUBS': self.GetMethodStubsString(),
         'OPEN_NAMESPACE': self.GetOpenNamespaceString(),
         'JNI_NATIVE_METHODS': self.GetJNINativeMethodsString(),
-        'REGISTER_NATIVES': self.GetRegisterNativesString(),
+        'REGISTER_NATIVES_EMPTY': self.GetRegisterNativesString(True),
+        'REGISTER_NATIVES': self.GetRegisterNativesString(False),
         'CLOSE_NAMESPACE': self.GetCloseNamespaceString(),
         'HEADER_GUARD': self.header_guard,
         'INCLUDES': self.GetIncludesString(),
@@ -860,7 +872,7 @@ ${KMETHODS}
 """)
     return self.SubstituteNativeMethods(template)
 
-  def GetRegisterNativesString(self):
+  def GetRegisterNativesString(self, is_empty_register):
     """Returns the code for RegisterNatives."""
     natives = self.GetRegisterNativesImplString()
     if not natives:
@@ -868,25 +880,28 @@ ${KMETHODS}
 
     template = Template("""\
 ${REGISTER_NATIVES_SIGNATURE} {
-${EARLY_EXIT}
 ${NATIVES}
   return true;
 }
 """)
-    signature = 'static bool RegisterNativesImpl(JNIEnv* env)'
-    early_exit = ''
-    if self.options.native_exports_optional:
-      early_exit = """\
-  if (jni_generator::ShouldSkipJniRegistration(%s))
-    return true;
-""" % self.maindex
+    if is_empty_register:
+      return """static bool RegisterNativesImpl(JNIEnv* env) {
+  return true;
+}
+"""
+    signature = 'JNI_REGISTRATION_EXPORT bool {}(JNIEnv* env)'.format(
+        self.GetRegisterName())
 
-    values = {'REGISTER_NATIVES_SIGNATURE': signature,
-              'EARLY_EXIT': early_exit,
-              'NATIVES': natives,
-             }
+    values = {
+        'REGISTER_NATIVES_SIGNATURE': signature,
+        'NATIVES': natives
+    }
 
     return template.substitute(values)
+
+  def GetRegisterName(self):
+    java_name = self.fully_qualified_class.title().replace('/', '')
+    return 'RegisterNative{}'.format(java_name)
 
   def GetRegisterNativesImplString(self):
     """Returns the shared implementation for RegisterNatives."""
@@ -1321,18 +1336,18 @@ def GenerateJNIHeader(input_file, output_file, options):
     print e
     sys.exit(1)
   if output_file:
-    if not os.path.exists(os.path.dirname(os.path.abspath(output_file))):
-      os.makedirs(os.path.dirname(os.path.abspath(output_file)))
+    output_file_path = os.path.dirname(os.path.abspath(output_file))
+    if not os.path.exists(output_file_path):
+      os.makedirs(output_file_path)
     if options.optimize_generation and os.path.exists(output_file):
-      with file(output_file, 'r') as f:
+      with open(output_file) as f:
         existing_content = f.read()
         if existing_content == content:
           return
-    with file(output_file, 'w') as f:
+    with open(output_file, 'w') as f:
       f.write(content)
   else:
     print content
-
 
 def GetScriptName():
   script_components = os.path.abspath(sys.argv[0]).split(os.path.sep)

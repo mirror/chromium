@@ -47,7 +47,13 @@ static const JNINativeMethod kMethodsBar[] = {
 "I", reinterpret_cast<void*>(Java_org_chromium_foo_Bar_nativeStaticMethod) },
 };
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
 static bool RegisterNativesImpl(JNIEnv* env) {
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool RegisterNativeOrgChromiumFooBar(JNIEnv* env) {
   if (jni_generator::ShouldSkipJniRegistration(true))
     return true;
 
