@@ -117,6 +117,30 @@
       "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "84e10ef2_12f084c6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/web_frame_scheduler_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-13T08:59:44Z",
+      "side": 1,
+      "message": "Hm, but wouldn\u0027t it mean that we might not save user experience for the initial 10 sec, which could feel forever if the user\u0027s having sluggish behavior in foreground tabs?",
+      "parentUuid": "a0f5c132_b97beada",
+      "range": {
+        "startLine": 111,
+        "startChar": 7,
+        "endLine": 111,
+        "endChar": 20
+      },
+      "revId": "dab71125fe9bade40db562402cec4f3bdae0914c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
