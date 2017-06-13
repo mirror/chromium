@@ -68,11 +68,11 @@ void OffscreenCanvasSurfaceImpl::OnSurfaceCreated(
 
 void OffscreenCanvasSurfaceImpl::Require(const cc::SurfaceId& surface_id,
                                          const cc::SurfaceSequence& sequence) {
-  GetSurfaceManager()->RequireSequence(surface_id, sequence);
+  GetFrameSinkManager()->RequireSequence(surface_id, sequence);
 }
 
 void OffscreenCanvasSurfaceImpl::Satisfy(const cc::SurfaceSequence& sequence) {
-  GetSurfaceManager()->SatisfySequence(sequence);
+  GetFrameSinkManager()->SatisfySequence(sequence);
 }
 
 void OffscreenCanvasSurfaceImpl::OnSurfaceConnectionClosed() {

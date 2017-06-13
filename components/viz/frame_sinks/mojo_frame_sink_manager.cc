@@ -20,22 +20,23 @@ namespace viz {
 
 MojoFrameSinkManager::MojoFrameSinkManager(bool use_surface_references,
                                            DisplayProvider* display_provider)
-    : manager_(use_surface_references
-                   ? cc::SurfaceManager::LifetimeType::REFERENCES
-                   : cc::SurfaceManager::LifetimeType::SEQUENCES),
+    : frame_sink_manager_(use_surface_references
+                              ? cc::SurfaceManager::LifetimeType::REFERENCES
+                              : cc::SurfaceManager::LifetimeType::SEQUENCES),
       display_provider_(display_provider),
       binding_(this) {
-  manager_.AddObserver(this);
+  frame_sink_manager_.AddSurfaceObserver(this);
   dependency_tracker_ = base::MakeUnique<cc::SurfaceDependencyTracker>(
-      &manager_, manager_.GetPrimaryBeginFrameSource());
-  manager_.SetDependencyTracker(dependency_tracker_.get());
+      frame_sink_manager_.surface_manager(),
+      frame_sink_manager_.GetPrimaryBeginFrameSource());
+  frame_sink_manager_.SetDependencyTracker(dependency_tracker_.get());
 }
 
 MojoFrameSinkManager::~MojoFrameSinkManager() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  manager_.SetDependencyTracker(nullptr);
+  frame_sink_manager_.SetDependencyTracker(nullptr);
   dependency_tracker_.reset();
-  manager_.RemoveObserver(this);
+  frame_sink_manager_.RemoveSurfaceObserver(this);
 }
 
 void MojoFrameSinkManager::Connect(
@@ -64,7 +65,7 @@ void MojoFrameSinkManager::CreateRootCompositorFrameSink(
 
   compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<GpuRootCompositorFrameSink>(
-          this, &manager_, frame_sink_id, std::move(display),
+          this, &frame_sink_manager_, frame_sink_id, std::move(display),
           std::move(begin_frame_source), std::move(request),
           std::move(private_request), std::move(client),
           std::move(display_private_request));
@@ -80,27 +81,27 @@ void MojoFrameSinkManager::CreateCompositorFrameSink(
 
   compositor_frame_sinks_[frame_sink_id] =
       base::MakeUnique<GpuCompositorFrameSink>(
-          this, &manager_, frame_sink_id, std::move(request),
+          this, &frame_sink_manager_, frame_sink_id, std::move(request),
           std::move(private_request), std::move(client));
 }
 
 void MojoFrameSinkManager::RegisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
-  manager_.RegisterFrameSinkHierarchy(parent_frame_sink_id,
-                                      child_frame_sink_id);
+  frame_sink_manager_.RegisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                 child_frame_sink_id);
 }
 
 void MojoFrameSinkManager::UnregisterFrameSinkHierarchy(
     const cc::FrameSinkId& parent_frame_sink_id,
     const cc::FrameSinkId& child_frame_sink_id) {
-  manager_.UnregisterFrameSinkHierarchy(parent_frame_sink_id,
-                                        child_frame_sink_id);
+  frame_sink_manager_.UnregisterFrameSinkHierarchy(parent_frame_sink_id,
+                                                   child_frame_sink_id);
 }
 
 void MojoFrameSinkManager::DropTemporaryReference(
     const cc::SurfaceId& surface_id) {
-  manager_.DropTemporaryReference(surface_id);
+  frame_sink_manager_.DropTemporaryReference(surface_id);
 }
 
 void MojoFrameSinkManager::DestroyCompositorFrameSink(cc::FrameSinkId sink_id) {
