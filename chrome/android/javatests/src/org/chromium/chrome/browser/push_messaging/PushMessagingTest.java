@@ -229,6 +229,19 @@ public class PushMessagingTest implements PushMessagingServiceObserver.Listener 
     }
 
     /**
+     * Verifies that there is a subscription when there should be.
+     */
+    @Test
+    @MediumTest
+    @Feature({"Browser", "PushMessaging"})
+    public void testHasSubscription() throws InterruptedException, TimeoutException {
+        mNotificationTestRule.setNotificationContentSettingForCurrentOrigin(ContentSetting.ALLOW);
+        runScriptAndWaitForTitle("subscribePush()", "subscribe ok");
+        Assert.assertEquals("\"granted\"", runScriptBlocking("Notification.permission"));
+        runScriptAndWaitForTitle("hasSubscription()", "true - subscribed");
+    }
+
+    /**
      * Verifies that the default notification is shown when no notification is shown from the push
      * event handler while no tab is visible for the origin, and grace has been exceeded.
      */

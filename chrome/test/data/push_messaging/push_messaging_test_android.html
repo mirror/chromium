@@ -38,6 +38,18 @@
             .catch(error => sendToTest('subscribe fail: ' + error));
       }
 
+      // Checks whether there is a subscription or not.
+      function hasSubscription() {
+        navigator.serviceWorker.ready
+          .then(registration => {
+              registration.pushManager.getSubscription()})
+            .then(subscription => {
+              sendToTest(subscription ? 'true - subscribed'
+                                      : 'false - not subscribed');
+            })
+            .catch(error => sendToTest('hasSubscription fail: ' + error));
+      }
+
       // Sets whether the service worker should show a notification when it
       // receives a push message or not. Called by the test.
       function setNotifyOnPush(notify) {
