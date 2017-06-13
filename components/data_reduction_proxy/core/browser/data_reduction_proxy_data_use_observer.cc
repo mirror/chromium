@@ -86,6 +86,9 @@ void DataReductionProxyDataUseObserver::OnPageResourceLoad(
 
   if (data_use->traffic_type() !=
       data_use_measurement::DataUse::TrafficType::USER_TRAFFIC) {
+    LOG(WARNING) << "DataReductionProxyDataUseObserver::OnPageResourceLoad NON USER TRAFFIC totalreceivedbytes="
+                 << request.GetTotalReceivedBytes() << " url="
+                 << request.url() << " type=" << (int)data_use->traffic_type();
     return;
   }
 

@@ -1195,6 +1195,8 @@ void DataReductionProxyCompressionStats::RecordDataUseByHost(
 
   data_usage_map_last_updated_ = time;
   data_usage_map_is_dirty_ = true;
+  LOG(WARNING) << "DataReductionProxyCompressionStats::RecordDataUseByHost original_size="
+               << normalized_host << " " << original_size << " data_used=" << data_used;
 }
 
 void DataReductionProxyCompressionStats::PersistDataUsage() {

@@ -185,6 +185,9 @@ void DataUseMeasurement::OnCompleted(const net::URLRequest& request,
                                      bool started) {
   // TODO(amohammadkhan): Verify that there is no double recording in data use
   // of redirected requests.
+  LOG(WARNING) << "DataUseMeasurement::OnCompleted totalreceivedbytes="
+               << request.GetTotalReceivedBytes() << " url="
+               << request.url();
   UpdateDataUsePrefs(request);
   ReportServicesMessageSizeUMA(request);
   RecordPageTransitionUMA(request);

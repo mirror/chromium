@@ -100,6 +100,7 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
         CreateNewDataUseRecorder(request, DataUse::TrafficType::UNKNOWN);
     DataUse& data_use = entry->data_use();
     data_use.set_url(request->url());
+    LOG(WARNING) << "empty GlobalRequestID " << request->url();
     return entry;
   }
 
@@ -138,6 +139,7 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
       return data_use_recorders_.end();
     }
 
+    LOG(WARNING) << "normal request rfh=" << render_process_id << "-" << render_frame_id << " " << request->url();
     const auto entry = frame_iter->second;
     request->SetUserData(
         DataUseRecorderEntryAsUserData::kUserDataKey,
@@ -147,6 +149,7 @@ ChromeDataUseAscriber::GetOrCreateDataUseRecorderEntry(
   }
 
   // Create a new DataUseRecorder for all other requests.
+  LOG(WARNING) << "misc request " << request->url();
   DataUseRecorderEntry entry = CreateNewDataUseRecorder(
       request,
       content::ResourceRequestInfo::OriginatedFromServiceWorker(request)
@@ -248,8 +251,9 @@ void ChromeDataUseAscriber::RenderFrameCreated(int render_process_id,
     auto frame_iter = main_render_frame_data_use_map_.find(
         RenderFrameHostID(render_process_id, render_frame_id));
     DCHECK(frame_iter == main_render_frame_data_use_map_.end());
+    LOG(WARNING) << "RF created unknown";
     DataUseRecorderEntry entry =
-        CreateNewDataUseRecorder(nullptr, DataUse::TrafficType::UNKNOWN);
+        CreateNewDataUseRecorder(nullptr, DataUse::TrafficType::USER_TRAFFIC);
     entry->set_main_frame_id(
         RenderFrameHostID(render_process_id, render_frame_id));
     main_render_frame_data_use_map_.insert(std::make_pair(
