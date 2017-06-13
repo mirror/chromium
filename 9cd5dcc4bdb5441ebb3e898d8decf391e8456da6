@@ -46,6 +46,30 @@
       "revId": "9cd5dcc4bdb5441ebb3e898d8decf391e8456da6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ee0f75_a8cf7fb8",
+        "filename": "chrome/browser/media/router/media_sinks_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133789
+      },
+      "writtenOn": "2017-06-13T17:54:03Z",
+      "side": 1,
+      "message": "With the exception of ScreenAvailabilityNotSupported which is handled separately and at the PresentationServiceDelegate level, the Presentation API only cares about whether or not availability is AVAILABLE. So I think it\u0027s fine for this scenario to be treated as UNAVAILABLE. Also, it would be simpler if we let PresentationMediaSinksObserver do the sink-list-to-availability mapping if possible, as that would mean we touch fewer files. I\u0027m not sure if the non-web facing code needs to know about the ScreenAvailability value.",
+      "parentUuid": "5bcfec36_3fb904b1",
+      "range": {
+        "startLine": 51,
+        "startChar": 54,
+        "endLine": 51,
+        "endChar": 74
+      },
+      "revId": "9cd5dcc4bdb5441ebb3e898d8decf391e8456da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
