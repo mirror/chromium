@@ -169,6 +169,30 @@
       "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cc44fb6_5514941a",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-13T10:12:48Z",
+      "side": 1,
+      "message": "The explanation wrt using eTLD+1 is given in the docs linked from the bug. TL;DR is that for autoplay, we don\u0027t want to penalise websites having www.foo.com and category.foo.com.",
+      "parentUuid": "6e2c4697_05f7d9d1",
+      "range": {
+        "startLine": 1486,
+        "startChar": 23,
+        "endLine": 1486,
+        "endChar": 59
+      },
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
