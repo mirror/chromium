@@ -1,0 +1,249 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ce2681_7a1cbe80",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "Let\u0027s use 732682 instead.",
+      "range": {
+        "startLine": 9,
+        "startChar": 4,
+        "endLine": 9,
+        "endChar": 10
+      },
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad61909_7f930224",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "could do e.waitUntil(new Promise(r \u003d\u003e { /* never resolve */})); for even less chance of flakes.",
+      "range": {
+        "startLine": 674,
+        "startChar": 29,
+        "endLine": 674,
+        "endChar": 32
+      },
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a26a8f_95264ce9",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 867,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "We could log |status| in the trace event here.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61ed61de_75317419",
+        "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 914,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "log |code| in the trace event",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8141b719_f274f017",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// The navigation hint should not be sent as an event.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f21c3d22_c0ea7b78",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// The service worker started successfully.",
+      "range": {
+        "startLine": 23,
+        "startChar": 5,
+        "endLine": 23,
+        "endChar": 10
+      },
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7a3ba1b_655754b9",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// The service worker was already running.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bea4436e_17b17869",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// There was no service worker registration for the given URL.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c011d3d1_51dd2f47",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// There was no active service worker for the given URL.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26b6de6_b4f93029",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// The service worker for the given URL had no fetch event handler.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "806aa03f_0891bc6d",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "// Something failed.",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0560cb5c_bb9e595d",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "Do you envision the caller using this callback?\n\nI considered removing it for simplicity of implementation and ease of use, but I see the tests rely on it.",
+      "range": {
+        "startLine": 51,
+        "startChar": 12,
+        "endLine": 51,
+        "endChar": 20
+      },
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da0a720f_9cc765a5",
+        "filename": "content/public/browser/service_worker_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-13T07:17:18Z",
+      "side": 1,
+      "message": "More verbose and hopefully more clear:\n\n\"Starts the service worker for |document_url|. Called when a navigation to that URL is predicted to occur soon.\"",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
