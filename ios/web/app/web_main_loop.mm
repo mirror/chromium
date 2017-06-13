@@ -159,7 +159,7 @@ int WebMainLoop::CreateThreads() {
         *task_scheduler_init_params.get());
   }
 
-  GetWebClient()->PerformExperimentalTaskSchedulerRedirections();
+  base::SequencedWorkerPool::EnableWithRedirectionToTaskSchedulerForProcess();
 
   base::Thread::Options io_message_loop_options;
   io_message_loop_options.message_loop_type = base::MessageLoop::TYPE_IO;
