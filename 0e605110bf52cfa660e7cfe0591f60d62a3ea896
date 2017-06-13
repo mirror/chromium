@@ -193,6 +193,30 @@
       "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6ee0441_81e2d61f",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1486,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T10:30:47Z",
+      "side": 1,
+      "message": "Not sure why this penalizes those sites? We can still use the eTLD+1 logic.",
+      "parentUuid": "6cc44fb6_5514941a",
+      "range": {
+        "startLine": 1486,
+        "startChar": 23,
+        "endLine": 1486,
+        "endChar": 59
+      },
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
