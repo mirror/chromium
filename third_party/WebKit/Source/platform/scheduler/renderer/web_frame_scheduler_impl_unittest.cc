@@ -58,6 +58,35 @@ class WebFrameSchedulerImplTest : public testing::Test {
 
 namespace {
 
+class MockThrottlingObserver : public WebFrameScheduler::Observer {
+ public:
+  MockThrottlingObserver() : throttled_count_(0), not_throttled_count_(0) {}
+
+  void CheckObserverState(size_t throttled_count_expectation,
+                          size_t not_throttled_count_expectation) {
+    EXPECT_EQ(throttled_count_expectation, throttled_count_);
+    EXPECT_EQ(not_throttled_count_expectation, not_throttled_count_);
+  }
+
+  // WebFrameScheduler::Observer.
+  void OnThrottlingStateChanged(
+      WebFrameScheduler::ThrottlingState state) override {
+    switch (state) {
+      case WebFrameScheduler::ThrottlingState::kThrottled:
+        throttled_count_++;
+        break;
+      case WebFrameScheduler::ThrottlingState::kNotThrottled:
+        not_throttled_count_++;
+        break;
+        // We should not have another state, and compiler checks it.
+    }
+  }
+
+ private:
+  size_t throttled_count_;
+  size_t not_throttled_count_;
+};
+
 void RunRepeatingTask(RefPtr<WebTaskRunner> task_runner, int* run_count);
 
 std::unique_ptr<WTF::Closure> MakeRepeatingTask(
@@ -223,6 +252,50 @@ TEST_F(WebFrameSchedulerImplTest, SuspendAndResume) {
   EXPECT_EQ(2, counter);
   mock_task_runner_->RunUntilIdle();
   EXPECT_EQ(5, counter);
+}
+
+// Tests if throttling observer interfaces work.
+TEST_F(WebFrameSchedulerImplTest, ThrottlingObserver) {
+  std::unique_ptr<MockThrottlingObserver> observer =
+      base::MakeUnique<MockThrottlingObserver>();
+
+  size_t throttled_count = 0u;
+  size_t not_throttled_count = 0u;
+
+  observer->CheckObserverState(throttled_count, not_throttled_count);
+
+  web_frame_scheduler_->AddThrottlingObserver(
+      WebFrameScheduler::ObserverType::kLoader, observer.get());
+
+  // Initial state should be synchronously notified here.
+  // We assume kNotThrottled is notified as an initial state, but it could
+  // depend on implementation details and can be changed.
+  observer->CheckObserverState(throttled_count, ++not_throttled_count);
+
+  // Once the page gets to be invisible, it should notify after a certain
+  // period. It will be asynchronous notification in typical cases, but could
+  // be synchronous in a specific condition.
+  web_view_scheduler_->SetPageVisible(false);
+
+  // kBackgroundThrottlingGracePeriod in WebViewSchedulerImpl is 10 seconds.
+  // Within the 11 seconds, the observer should be notified even in the worst
+  // case.
+  clock_->Advance(base::TimeDelta::FromSeconds(11));
+  mock_task_runner_->RunUntilIdle();
+  observer->CheckObserverState(++throttled_count, not_throttled_count);
+
+  // Moving to visible should notify synchronously.
+  web_view_scheduler_->SetPageVisible(true);
+  observer->CheckObserverState(throttled_count, ++not_throttled_count);
+
+  // Remove from the observer list, and see if any other callback should not be
+  // invoked when the condition is changed.
+  web_frame_scheduler_->RemoveThrottlingObserver(
+      WebFrameScheduler::ObserverType::kLoader, observer.get());
+  web_view_scheduler_->SetPageVisible(false);
+  clock_->Advance(base::TimeDelta::FromSeconds(100));
+  mock_task_runner_->RunUntilIdle();
+  observer->CheckObserverState(throttled_count, not_throttled_count);
 }
 
 }  // namespace scheduler
