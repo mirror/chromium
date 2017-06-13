@@ -52,6 +52,24 @@
       "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a4f7f2c_a0a590bf",
+        "filename": "ui/display/manager/display_manager_utilities.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1129199
+      },
+      "writtenOn": "2017-06-13T00:41:54Z",
+      "side": 1,
+      "message": "(as long as src/ui/display/manager/chromeos/display_change_observer.cc:kThresholdTable[] does not change).",
+      "parentUuid": "a15fe54f_cf331169",
+      "revId": "491dd2622570ccd492d02b368b92f52a576965aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
