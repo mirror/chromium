@@ -10,6 +10,7 @@
 #include "ash/system/tray/tray_bubble_wrapper.h"
 #include "ash/wm/container_finder.h"
 #include "ui/aura/window.h"
+#include "ui/display/screen.h"
 #include "ui/views/widget/widget.h"
 
 namespace ash {
@@ -60,6 +61,15 @@ void TrayEventFilter::ProcessPressedEvent(const gfx::Point& location_in_screen,
       return;
     }
   }
+
+  // Don't process events that occurred inside a virtual keyboard.
+  // We have to find the target window here because the virtual keyboard window
+  // is not associated with Widget.
+  aura::Window* target_window =
+      display::Screen::GetScreen()->GetWindowAtScreenPoint(location_in_screen);
+  if (wm::GetContainerForWindow(target_window)->id() ==
+      kShellWindowId_VirtualKeyboardContainer)
+    return;
 
   std::set<TrayBackgroundView*> trays;
   // Check the boundary for all wrappers, and do not handle the event if it
