@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7d8b9175_b845caed",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-13T23:11:12Z",
+      "side": 1,
+      "message": "Nit: extra \"the\"",
+      "revId": "af2fad8030cd9e02c0a74456cc5c7d735531e3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521fc220_078b3630",
+        "filename": "chrome/browser/ui/views/profiles/profile_chooser_view.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-13T23:11:12Z",
+      "side": 1,
+      "message": "Nit: \"Because the title is centered, the unavailable space to the left of the title is also unavailable to the right.\"?",
+      "revId": "af2fad8030cd9e02c0a74456cc5c7d735531e3a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
