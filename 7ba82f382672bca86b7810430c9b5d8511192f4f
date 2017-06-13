@@ -16,6 +16,24 @@
       "revId": "7ba82f382672bca86b7810430c9b5d8511192f4f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5932d82f_720db718",
+        "filename": "chrome/browser/extensions/api/desktop_capture/desktop_capture_base.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-13T18:46:12Z",
+      "side": 1,
+      "message": "Updated the comment.\nSharedXDisplay is shareable, but it cannot be used concurrently on multiple threads. Previously we were sharing it between the two capturers when there was only one NativeDesktopMediaList.",
+      "parentUuid": "d4f612c4_c853d18d",
+      "revId": "7ba82f382672bca86b7810430c9b5d8511192f4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
