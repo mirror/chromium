@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc4238e1_bcd82939",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-13T19:55:05Z",
+      "side": 1,
+      "message": "Instead of adding it here, can this go in mojom::GpuMain [1]? e.g. a new\n\n  GpuMain::CreateJpegDecoder(media::mojom::GpuJpegDecodeAccelerator\u0026 request);\n\n[1] https://cs.chromium.org/chromium/src/services/ui/gpu/interfaces/gpu_main.mojom?sq\u003dpackage:chromium\u0026dr\u0026l\u003d14",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
