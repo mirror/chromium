@@ -70,6 +70,30 @@
       "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6153d595_cee7dde5",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-13T20:10:58Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb1a850d_738302e3",
+      "range": {
+        "startLine": 372,
+        "startChar": 10,
+        "endLine": 372,
+        "endChar": 32
+      },
+      "revId": "8be9875258e273b446dd1dfcfafaefbe7f2dff83",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
