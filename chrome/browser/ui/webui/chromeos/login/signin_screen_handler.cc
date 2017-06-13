@@ -62,6 +62,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_metrics.h"
 #include "chrome/browser/signin/easy_unlock_service.h"
+#include "chrome/browser/ui/ash/ime_controller_client.h"
 #include "chrome/browser/ui/ash/session_controller_client.h"
 #include "chrome/browser/ui/webui/chromeos/login/error_screen_handler.h"
 #include "chrome/browser/ui/webui/chromeos/login/gaia_screen_handler.h"
@@ -259,6 +260,7 @@ void EnforcePolicyInputMethods(std::string user_input_method) {
   chromeos::input_method::InputMethodManager* imm =
       chromeos::input_method::InputMethodManager::Get();
   imm->GetActiveIMEState()->SetAllowedInputMethods(allowed_input_methods);
+  ImeControllerClient::Get()->SetImesManagedByPolicy(true);
 }
 
 void StopEnforcingPolicyInputMethods() {
@@ -267,6 +269,7 @@ void StopEnforcingPolicyInputMethods() {
   chromeos::input_method::InputMethodManager* imm =
       chromeos::input_method::InputMethodManager::Get();
   imm->GetActiveIMEState()->SetAllowedInputMethods(allowed_input_methods);
+  ImeControllerClient::Get()->SetImesManagedByPolicy(false);
 }
 
 }  // namespace
