@@ -16,6 +16,13 @@
     public *;
 }
 
+# Keep all methods on anonymous classes within WebViewChromiumFactoryProvider.
+# Notably, this includes the implementation of WebViewFactoryProvider.Statics
+# returned by WebViewChromiumFactoryProvider.getStatics().
+-keep class com.android.webview.chromium.WebViewChromiumFactoryProvider$* {
+    *;
+}
+
 -keep class com.android.webview.chromium.ContentSettingsAdapter {
     public *;
 }
