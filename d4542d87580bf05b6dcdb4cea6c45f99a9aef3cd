@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79d84e49_e4781ab8",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 426,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-13T20:28:03Z",
+      "side": 1,
+      "message": "This assumption would not work in the new views-based lock screen. The password sent back via mojo is hashed before sending back. If we need raw password here, we might need to do similar tricks as current AD daemon does, i.e. use a one time pipe FD to pass it back.\n\n+jdufault, xiaoyinh",
+      "range": {
+        "startLine": 426,
+        "startChar": 34,
+        "endLine": 426,
+        "endChar": 78
+      },
+      "revId": "d4542d87580bf05b6dcdb4cea6c45f99a9aef3cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
