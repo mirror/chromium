@@ -16,6 +16,52 @@
       "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54d33201_dca3bbe2",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46824,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-13T18:37:35Z",
+      "side": 1,
+      "message": "Recorded regardless of success or failure of the last attempt?  Please answer in histogram description.\n\nAlso, would it help have this sliced separately?",
+      "range": {
+        "startLine": 46824,
+        "startChar": 41,
+        "endLine": 46824,
+        "endChar": 0
+      },
+      "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f16a881_cb00a9ba",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46999,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-13T18:37:35Z",
+      "side": 1,
+      "message": "Only recorded when there\u0027s an error, right?",
+      "range": {
+        "startLine": 46999,
+        "startChar": 55,
+        "endLine": 46999,
+        "endChar": 61
+      },
+      "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
