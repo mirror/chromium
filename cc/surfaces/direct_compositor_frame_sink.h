@@ -17,8 +17,8 @@
 
 namespace cc {
 class Display;
+class FrameSinkManager;
 class LocalSurfaceIdAllocator;
-class SurfaceManager;
 
 // This class submits compositor frames to an in-process Display, with the
 // client's frame being the root surface of the Display.
@@ -32,7 +32,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
   // outlive this class.
   DirectCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
-      SurfaceManager* surface_manager,
+      FrameSinkManager* frame_sink_manager,
       Display* display,
       scoped_refptr<ContextProvider> context_provider,
       scoped_refptr<ContextProvider> worker_context_provider,
@@ -40,7 +40,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
       SharedBitmapManager* shared_bitmap_manager);
   DirectCompositorFrameSink(
       const FrameSinkId& frame_sink_id,
-      SurfaceManager* surface_manager,
+      FrameSinkManager* frame_sink_manager,
       Display* display,
       scoped_refptr<VulkanContextProvider> vulkan_context_provider);
   ~DirectCompositorFrameSink() override;
@@ -77,7 +77,7 @@ class CC_SURFACES_EXPORT DirectCompositorFrameSink
 
   const FrameSinkId frame_sink_id_;
   LocalSurfaceId local_surface_id_;
-  SurfaceManager* surface_manager_;
+  FrameSinkManager* frame_sink_manager_;
   LocalSurfaceIdAllocator local_surface_id_allocator_;
   Display* display_;
   gfx::Size last_swap_frame_size_;

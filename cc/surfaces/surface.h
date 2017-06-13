@@ -43,6 +43,7 @@ class CC_SURFACES_EXPORT Surface {
 
   Surface(
       const SurfaceInfo& surface_info,
+      SurfaceManager* surface_manager,
       base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support);
   ~Surface();
 
@@ -165,7 +166,10 @@ class CC_SURFACES_EXPORT Surface {
 
   SurfaceInfo surface_info_;
   SurfaceId previous_frame_surface_id_;
+
+  // TODO(staraz): Surface shouldn't know about CompositorFrameSinkSupport.
   base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support_;
+
   SurfaceManager* const surface_manager_;
 
   base::Optional<FrameData> pending_frame_data_;
