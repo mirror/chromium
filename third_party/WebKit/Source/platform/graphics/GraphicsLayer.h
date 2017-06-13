@@ -324,6 +324,7 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
                                                   RenderingContextMap&) const;
 
   sk_sp<PaintRecord> CaptureRecord();
+  void CheckPaintUnderInvalidations(sk_sp<PaintRecord>);
 
   GraphicsLayerClient* client_;
 

@@ -8,8 +8,10 @@
 #include "cc/layers/picture_layer.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/paint/display_item_list.h"
+#include "cc/paint/drawing_display_item.h"
+#include "cc/paint/paint_canvas.h"
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_op_buffer.h"
+#include "cc/paint/paint_recorder.h"
 #include "cc/test/layer_tree_pixel_test.h"
 #include "cc/test/test_compositor_frame_sink.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
@@ -109,8 +111,9 @@ class BlueYellowClient : public ContentLayerClient {
       PaintingControlSetting painting_status) override {
     auto display_list = make_scoped_refptr(new DisplayItemList);
 
-    PaintOpBuffer* buffer = display_list->StartPaint();
-
+    PaintRecorder recorder;
+    PaintCanvas* canvas =
+        recorder.beginRecording(gfx::RectToSkRect(PaintableRegion()));
     gfx::Rect top(0, 0, size_.width(), size_.height() / 2);
     gfx::Rect bottom(0, size_.height() / 2, size_.width(), size_.height() / 2);
 
@@ -121,11 +124,13 @@ class BlueYellowClient : public ContentLayerClient {
     flags.setStyle(PaintFlags::kFill_Style);
 
     flags.setColor(SK_ColorBLUE);
-    buffer->push<DrawRectOp>(gfx::RectToSkRect(blue_rect), flags);
+    canvas->drawRect(gfx::RectToSkRect(blue_rect), flags);
     flags.setColor(SK_ColorYELLOW);
-    buffer->push<DrawRectOp>(gfx::RectToSkRect(yellow_rect), flags);
+    canvas->drawRect(gfx::RectToSkRect(yellow_rect), flags);
 
-    display_list->EndPaintOfUnpaired(PaintableRegion());
+    display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
+        PaintableRegion(), recorder.finishRecordingAsPicture(),
+        gfx::RectToSkRect(PaintableRegion()));
     display_list->Finalize();
     return display_list;
   }

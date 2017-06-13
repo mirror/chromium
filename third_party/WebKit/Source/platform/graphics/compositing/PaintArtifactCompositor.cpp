@@ -150,8 +150,6 @@ class PaintArtifactCompositor::ContentLayerClientImpl
     return paint_chunk.id && id_ == *paint_chunk.id;
   }
 
-  const String& DebugName() const { return debug_name_; }
-
  private:
   PaintChunk::Id id_;
   String debug_name_;
@@ -253,6 +251,7 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
     const PendingLayer& pending_layer,
     gfx::Vector2dF& layer_offset,
     Vector<std::unique_ptr<ContentLayerClientImpl>>& new_content_layer_clients,
+    RasterInvalidationTrackingMap<const PaintChunk>* tracking_map,
     bool store_debug_info) {
   DCHECK(pending_layer.paint_chunks.size());
   const PaintChunk& first_paint_chunk = *pending_layer.paint_chunks[0];
@@ -272,6 +271,14 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
   gfx::Rect cc_combined_bounds(EnclosingIntRect(pending_layer.bounds));
 
   layer_offset = cc_combined_bounds.OffsetFromOrigin();
+  scoped_refptr<cc::DisplayItemList> display_list =
+      PaintChunksToCcLayer::Convert(
+          pending_layer.paint_chunks, pending_layer.property_tree_state,
+          layer_offset, paint_artifact.GetDisplayItemList());
+  content_layer_client->SetDisplayList(std::move(display_list));
+  content_layer_client->SetPaintableRegion(
+      gfx::Rect(cc_combined_bounds.size()));
+
   scoped_refptr<cc::PictureLayer> cc_picture_layer =
       content_layer_client->CcPictureLayer();
   cc_picture_layer->SetBounds(cc_combined_bounds.size());
@@ -288,9 +295,10 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
                   DisplayItemList::kShownOnlyDisplayItemTypes));
     }
 
-    DCHECK(paint_chunk->raster_invalidation_tracking.IsEmpty() ||
-           paint_chunk->raster_invalidation_rects.size() ==
-               paint_chunk->raster_invalidation_tracking.size());
+    auto* raster_tracking =
+        tracking_map ? tracking_map->Find(paint_chunk) : nullptr;
+    DCHECK(!raster_tracking || paint_chunk->raster_invalidation_rects.size() ==
+                                   raster_tracking->invalidations.size());
 
     for (size_t i = 0; i < paint_chunk->raster_invalidation_rects.size(); ++i) {
       auto rect = MapRasterInvalidationRectFromChunkToLayer(
@@ -300,32 +308,16 @@ PaintArtifactCompositor::CompositedLayerForPendingLayer(
         continue;
       content_layer_client->SetNeedsDisplayRect(rect);
 
-      if (paint_chunk->raster_invalidation_tracking.IsEmpty())
+      if (!raster_tracking)
         continue;
       auto& cc_tracking =
           content_layer_client->EnsureRasterInvalidationTracking();
-      auto info = paint_chunk->raster_invalidation_tracking[i];
+      auto info = raster_tracking->invalidations[i];
       info.rect = rect;
       cc_tracking.invalidations.push_back(info);
       cc_tracking.invalidation_region_since_last_paint.Unite(rect);
     }
   }
-
-  Optional<RasterUnderInvalidationCheckingParams> params;
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
-    params.emplace(
-        content_layer_client->EnsureRasterInvalidationTracking(),
-        IntRect(0, 0, cc_combined_bounds.width(), cc_combined_bounds.height()),
-        content_layer_client->DebugName());
-  }
-
-  auto display_list = PaintChunksToCcLayer::Convert(
-      pending_layer.paint_chunks, pending_layer.property_tree_state,
-      layer_offset, paint_artifact.GetDisplayItemList(),
-      params ? &*params : nullptr);
-  content_layer_client->SetDisplayList(std::move(display_list));
-  content_layer_client->SetPaintableRegion(
-      gfx::Rect(cc_combined_bounds.size()));
 
   new_content_layer_clients.push_back(std::move(content_layer_client));
   return cc_picture_layer;
@@ -617,6 +609,7 @@ void PaintArtifactCompositor::CollectPendingLayers(
 
 void PaintArtifactCompositor::Update(
     const PaintArtifact& paint_artifact,
+    RasterInvalidationTrackingMap<const PaintChunk>* raster_chunk_invalidations,
     bool store_debug_info,
     CompositorElementIdSet& composited_element_ids) {
 #ifndef NDEBUG
@@ -662,7 +655,7 @@ void PaintArtifactCompositor::Update(
     gfx::Vector2dF layer_offset;
     scoped_refptr<cc::Layer> layer = CompositedLayerForPendingLayer(
         paint_artifact, pending_layer, layer_offset, new_content_layer_clients,
-        store_debug_info);
+        raster_chunk_invalidations, store_debug_info);
 
     const auto* transform = pending_layer.property_tree_state.Transform();
     int transform_id =

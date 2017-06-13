@@ -11,9 +11,9 @@
 #include "base/memory/ref_counted.h"
 #include "base/values.h"
 #include "cc/base/region.h"
+#include "cc/paint/clip_display_item.h"
 #include "cc/paint/discardable_image_store.h"
 #include "cc/paint/paint_flags.h"
-#include "cc/paint/paint_op_buffer.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/test/fake_content_layer_client.h"
 #include "cc/test/fake_recording_source.h"
@@ -43,11 +43,14 @@ struct PositionScaleDrawImage {
   SkSize scale;
 };
 
-sk_sp<PaintOpBuffer> CreateRecording(const PaintImage& discardable_image,
-                                     const gfx::Rect& visible_rect) {
-  auto buffer = sk_make_sp<PaintOpBuffer>();
-  buffer->push<DrawImageOp>(discardable_image, 0.f, 0.f, nullptr);
-  return buffer;
+sk_sp<PaintRecord> CreateRecording(const PaintImage& discardable_image,
+                                   const gfx::Rect& visible_rect) {
+  PaintRecorder recorder;
+  PaintCanvas* canvas =
+      recorder.beginRecording(visible_rect.width(), visible_rect.height());
+  canvas->drawImage(discardable_image, 0, 0, nullptr);
+  sk_sp<PaintRecord> record = recorder.finishRecordingAsPicture();
+  return record;
 }
 
 }  // namespace
@@ -545,17 +548,17 @@ TEST_F(DiscardableImageMapTest, GetDiscardableImagesRectInBounds) {
   std::vector<PositionScaleDrawImage> images =
       GetDiscardableImagesInRect(image_map, gfx::Rect(0, 0, 1, 1));
   std::vector<gfx::Rect> inset_rects = InsetImageRects(images);
-  ASSERT_EQ(1u, images.size());
+  EXPECT_EQ(1u, images.size());
   EXPECT_EQ(gfx::Rect(0, 0, 90, 89), inset_rects[0]);
 
   images = GetDiscardableImagesInRect(image_map, gfx::Rect(999, 999, 1, 1));
   inset_rects = InsetImageRects(images);
-  ASSERT_EQ(1u, images.size());
+  EXPECT_EQ(1u, images.size());
   EXPECT_EQ(gfx::Rect(950, 951, 50, 49), inset_rects[0]);
 
   images = GetDiscardableImagesInRect(image_map, gfx::Rect(0, 500, 1, 1));
   inset_rects = InsetImageRects(images);
-  ASSERT_EQ(1u, images.size());
+  EXPECT_EQ(1u, images.size());
   EXPECT_EQ(gfx::Rect(0, 500, 1000, 100), inset_rects[0]);
 
   gfx::Rect discardable_image_rect;
@@ -656,13 +659,11 @@ TEST_F(DiscardableImageMapTest, ClipsImageRects) {
   sk_sp<PaintRecord> record = CreateRecording(discardable_image, visible_rect);
 
   scoped_refptr<DisplayItemList> display_list = new DisplayItemList;
-
-  PaintOpBuffer* buffer = display_list->StartPaint();
-  buffer->push<ClipRectOp>(gfx::RectToSkRect(gfx::Rect(250, 250)),
-                           SkClipOp::kIntersect, false);
-  buffer->push<DrawRecordOp>(std::move(record));
-  display_list->EndPaintOfUnpaired(gfx::Rect(250, 250));
-
+  display_list->CreateAndAppendPairedBeginItem<ClipDisplayItem>(
+      gfx::Rect(250, 250), std::vector<SkRRect>(), false);
+  display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
+      gfx::Rect(500, 500), record, SkRect::MakeWH(500, 500));
+  display_list->CreateAndAppendPairedEndItem<EndClipDisplayItem>();
   display_list->Finalize();
   display_list->GenerateDiscardableImagesMetadata();
 
@@ -677,32 +678,28 @@ TEST_F(DiscardableImageMapTest, ClipsImageRects) {
 }
 
 TEST_F(DiscardableImageMapTest, GathersDiscardableImagesFromNestedOps) {
-  // This |discardable_image| is in a PaintOpBuffer that gets added to
-  // the root buffer.
-  auto internal_record = sk_make_sp<PaintOpBuffer>();
+  sk_sp<PaintRecord> internal_record = sk_make_sp<PaintRecord>();
   PaintImage discardable_image =
       CreateDiscardablePaintImage(gfx::Size(100, 100));
   internal_record->push<DrawImageOp>(discardable_image, 0.f, 0.f, nullptr);
 
-  // This |discardable_image2| is in a DisplayItemList that gets added
-  // to the root buffer.
+  sk_sp<PaintRecord> list_record = sk_make_sp<PaintRecord>();
   PaintImage discardable_image2 =
       CreateDiscardablePaintImage(gfx::Size(100, 100));
-
+  list_record->push<DrawImageOp>(discardable_image2, 100.f, 100.f, nullptr);
   scoped_refptr<DisplayItemList> display_list = new DisplayItemList;
-  PaintOpBuffer* buffer = display_list->StartPaint();
-  buffer->push<DrawImageOp>(discardable_image2, 100.f, 100.f, nullptr);
-  display_list->EndPaintOfUnpaired(gfx::Rect(100, 100, 100, 100));
+  display_list->CreateAndAppendDrawingItem<DrawingDisplayItem>(
+      gfx::Rect(100, 100, 100, 100), list_record, SkRect::MakeWH(100, 100));
   display_list->Finalize();
 
-  PaintOpBuffer root_buffer;
-  root_buffer.push<DrawRecordOp>(internal_record);
-  root_buffer.push<DrawDisplayItemListOp>(display_list);
+  PaintOpBuffer buffer;
+  buffer.push<DrawRecordOp>(internal_record);
+  buffer.push<DrawDisplayItemListOp>(display_list);
   DiscardableImageMap image_map_;
   {
     DiscardableImageMap::ScopedMetadataGenerator generator(&image_map_,
                                                            gfx::Size(200, 200));
-    generator.image_store()->GatherDiscardableImages(&root_buffer);
+    generator.image_store()->GatherDiscardableImages(&buffer);
   }
 
   gfx::ColorSpace target_color_space;

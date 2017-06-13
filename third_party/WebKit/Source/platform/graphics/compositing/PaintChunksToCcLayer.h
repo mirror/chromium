@@ -7,9 +7,7 @@
 
 #include "base/memory/ref_counted.h"
 #include "platform/PlatformExport.h"
-#include "platform/geometry/IntRect.h"
 #include "platform/wtf/Vector.h"
-#include "platform/wtf/text/WTFString.h"
 
 namespace cc {
 class DisplayItemList;
@@ -24,20 +22,6 @@ namespace blink {
 class DisplayItemList;
 struct PaintChunk;
 class PropertyTreeState;
-struct RasterInvalidationTracking;
-
-struct RasterUnderInvalidationCheckingParams {
-  RasterUnderInvalidationCheckingParams(RasterInvalidationTracking& tracking,
-                                        const IntRect& interest_rect,
-                                        const String& debug_name)
-      : tracking(tracking),
-        interest_rect(interest_rect),
-        debug_name(debug_name) {}
-
-  RasterInvalidationTracking& tracking;
-  IntRect interest_rect;
-  String debug_name;
-};
 
 class PLATFORM_EXPORT PaintChunksToCcLayer {
  public:
@@ -45,8 +29,7 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
       const Vector<const PaintChunk*>&,
       const PropertyTreeState& layer_state,
       const gfx::Vector2dF& layer_offset,
-      const DisplayItemList&,
-      RasterUnderInvalidationCheckingParams* = nullptr);
+      const DisplayItemList&);
 };
 
 }  // namespace blink
