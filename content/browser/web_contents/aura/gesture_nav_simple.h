@@ -34,9 +34,9 @@ class GestureNavSimple : public OverscrollControllerDelegate {
   gfx::Rect GetVisibleBounds() const override;
   bool OnOverscrollUpdate(float delta_x, float delta_y) override;
   void OnOverscrollComplete(OverscrollMode overscroll_mode) override;
-  void OnOverscrollModeChange(OverscrollMode old_mode,
-                              OverscrollMode new_mode,
-                              OverscrollSource source) override;
+  float OnOverscrollModeChange(OverscrollMode old_mode,
+                               OverscrollMode new_mode,
+                               OverscrollSource source) override;
 
   WebContentsImpl* web_contents_;
   std::unique_ptr<Affordance> affordance_;
