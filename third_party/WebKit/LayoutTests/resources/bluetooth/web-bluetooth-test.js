@@ -150,6 +150,7 @@
   class FakePeripheral {
     constructor(address, fake_central_ptr) {
       this.address = address;
+      this.services_ = [];
       this.fake_central_ptr_ = fake_central_ptr;
     }
 
@@ -188,6 +189,28 @@
           this.address, code);
 
       if (success !== true) throw 'setNextGATTDiscoveryResponse failed.';
+    }
+
+    async addFakeService({uuid}) {
+      let {service_id} = await this.fake_central_ptr_.addFakeService(
+        this.address, {uuid: BluetoothUUID.getService(uuid)});
+
+      if (service_id === null) throw 'addFakeService failed';
+
+      let fake_service = new FakeRemoteGATTService(
+        service_id, this.address, this.fake_central_ptr_);
+
+      this.services_.push(fake_service);
+
+      return fake_service;
+    }
+  }
+
+  class FakeRemoteGATTService {
+    constructor(service_id, peripheral_address, fake_central_ptr_) {
+      this.service_id_ = service_id;
+      this.peripheral_address_ = peripheral_address;
+      this.fake_central_ptr_ = fake_central_ptr_;
     }
   }
 
