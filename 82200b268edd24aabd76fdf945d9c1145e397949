@@ -117,6 +117,24 @@
     },
     {
       "key": {
+        "uuid": "b9e68ed9_0f7f7f56",
+        "filename": "third_party/WebKit/Source/bindings/scripts/v8_methods.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-13T02:15:16Z",
+      "side": 1,
+      "message": "Yes",
+      "parentUuid": "e55982e8_8f780ff5",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ee9f8560_40e75576",
         "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
         "patchSetId": 5
@@ -146,6 +164,24 @@
       "side": 1,
       "message": "I ran some experiments locally by adding counters to all attributes/methods, and it looks the overhead of calling the attribute/method counter is relatively large, and the times measured are inflated and noisy because of that (the total time measured for one particular attribute setter went from ~6 ms with just the bindings counter to ~12 ms with both counters. This makes the times measured by both counters unreliable (and incorrect), so I think I agree with you, I will remove the attribute/method counter.",
       "parentUuid": "ee9f8560_40e75576",
+      "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7bfb2af3_a4418e6a",
+        "filename": "third_party/WebKit/Source/bindings/templates/attributes.cpp.tmpl",
+        "patchSetId": 5
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-13T02:15:16Z",
+      "side": 1,
+      "message": "Sounds good!",
+      "parentUuid": "b3bd9757_b273f361",
       "revId": "82200b268edd24aabd76fdf945d9c1145e397949",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
