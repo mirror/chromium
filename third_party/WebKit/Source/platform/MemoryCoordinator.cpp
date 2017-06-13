@@ -5,10 +5,12 @@
 #include "platform/MemoryCoordinator.h"
 
 #include "base/sys_info.h"
+#include "platform/WebTaskRunner.h"
 #include "platform/fonts/FontCache.h"
 #include "platform/graphics/ImageDecodingStore.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/allocator/Partitions.h"
+#include "public/platform/WebThread.h"
 
 namespace blink {
 
@@ -51,6 +53,13 @@ MemoryCoordinator& MemoryCoordinator::Instance() {
   return *external.Get();
 }
 
+void MemoryCoordinator::RegisterThread(WebThread* thread) {
+  MemoryCoordinator::Instance().web_threads_.insert(thread);
+}
+
+void MemoryCoordinator::UnregisterThread(WebThread* thread) {
+  MemoryCoordinator::Instance().web_threads_.erase(thread);
+}
 
 MemoryCoordinator::MemoryCoordinator() {}
 
@@ -89,6 +98,15 @@ void MemoryCoordinator::OnPurgeMemory() {
   // cache in purge+throttle.
   ImageDecodingStore::Instance().Clear();
   WTF::Partitions::DecommitFreeableMemory();
+
+  // Thread-specific data never issues a layout, so we are safe here.
+  for (auto thread : web_threads_) {
+    if (!thread->GetWebTaskRunner())
+      continue;
+
+    thread->GetWebTaskRunner()->PostTask(
+        FROM_HERE, WTF::Bind(MemoryCoordinator::ClearThreadSpecificMemory));
+  }
 }
 
 void MemoryCoordinator::ClearMemory() {
@@ -96,6 +114,10 @@ void MemoryCoordinator::ClearMemory() {
   // TODO(tasak|bashi): Make ImageDecodingStore and FontCache be
   // MemoryCoordinatorClients rather than clearing caches here.
   ImageDecodingStore::Instance().Clear();
+  FontCache::GetFontCache()->Invalidate();
+}
+
+void MemoryCoordinator::ClearThreadSpecificMemory() {
   FontCache::GetFontCache()->Invalidate();
 }
 
