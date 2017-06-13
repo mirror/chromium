@@ -9,6 +9,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #include "ios/chrome/browser/ui/payments/billing_address_selection_mediator.h"
+#import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(__has_feature) || !__has_feature(objc_arc)
@@ -81,9 +82,23 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
   // Update the data source with the selection.
   self.mediator.selectedItemIndex = index;
 
-  DCHECK(index < self.paymentRequest->billing_profiles().size());
-  [self delayedNotifyDelegateOfSelection:self.paymentRequest
-                                             ->billing_profiles()[index]];
+  // Proceed with item selection only if the item has all required
+  // info.
+  if (((CollectionViewItem<PaymentsHasEditableInfoType>*)
+           self.mediator.selectableItems[index])
+          .complete) {
+    DCHECK(index < self.paymentRequest->billing_profiles().size());
+    [self delayedNotifyDelegateOfSelection:self.paymentRequest
+                                               ->billing_profiles()[index]];
+  } else {
+    self.addressEditCoordinator = [[AddressEditCoordinator alloc]
+        initWithBaseViewController:self.viewController];
+    self.addressEditCoordinator.paymentRequest = self.paymentRequest;
+    self.addressEditCoordinator.address =
+        self.paymentRequest->billing_profiles()[index];
+    self.addressEditCoordinator.delegate = self;
+    [self.addressEditCoordinator start];
+  }
 }
 
 - (void)paymentRequestSelectorViewControllerDidFinish:
@@ -106,6 +121,12 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
        didFinishEditingAddress:(autofill::AutofillProfile*)address {
   [self.addressEditCoordinator stop];
   self.addressEditCoordinator = nil;
+
+  // Mark the item as complete meaning all required information has been
+  // filled out.
+  ((CollectionViewItem<PaymentsHasEditableInfoType>*)
+       self.mediator.selectableItems[self.mediator.selectedItemIndex])
+      .complete = YES;
 
   // Inform |self.delegate| that |address| has been selected.
   [self.delegate billingAddressSelectionCoordinator:self

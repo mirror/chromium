@@ -7,6 +7,7 @@
 #import "ios/chrome/browser/ui/payments/billing_address_selection_mediator.h"
 
 #include "base/logging.h"
+#include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -96,6 +97,15 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
     item.name = GetNameLabelFromAutofillProfile(*billingProfile);
     item.address = GetBillingAddressLabelFromAutofillProfile(*billingProfile);
     item.phoneNumber = GetPhoneNumberLabelFromAutofillProfile(*billingProfile);
+    if (!_paymentRequest->profile_comparator()->IsShippingComplete(
+            billingProfile)) {
+      item.notification = base::SysUTF16ToNSString(
+          _paymentRequest->profile_comparator()
+              ->GetStringForMissingShippingFields(*billingProfile));
+      item.complete = NO;
+    } else {
+      item.complete = YES;
+    }
     if (self.selectedBillingProfile == billingProfile)
       _selectedItemIndex = index;
 
