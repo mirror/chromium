@@ -81,6 +81,30 @@
       "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cdb8ec1_de4ad851",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 4383,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-13T19:00:04Z",
+      "side": 1,
+      "message": "Yes, some concrete name would be better imho (but feel free to ignore, and if you don\u0027t ignore it I leave the name choice to you). I thought we also had a paragraph on \"no util\" in some chromium style guide, but I fail to find it at the moment.",
+      "parentUuid": "1c043a20_eead0408",
+      "range": {
+        "startLine": 4382,
+        "startChar": 19,
+        "endLine": 4383,
+        "endChar": 13
+      },
+      "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
