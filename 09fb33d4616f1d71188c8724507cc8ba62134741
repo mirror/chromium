@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e3f15cca_4c04f774",
+        "filename": "ash/shelf/app_list_button_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001380
+      },
+      "writtenOn": "2017-06-13T06:21:06Z",
+      "side": 1,
+      "message": "can you use add base::test::ScopedCommandLine instance (no scoped_ptr needed) so that it\u0027ll be reset for each unit test?",
+      "revId": "09fb33d4616f1d71188c8724507cc8ba62134741",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
