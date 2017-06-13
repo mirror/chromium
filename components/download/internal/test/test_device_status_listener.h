@@ -8,6 +8,7 @@
 #include "components/download/internal/scheduler/device_status_listener.h"
 
 namespace download {
+namespace test {
 
 // Test device status listener can directly notify the observer about battery
 // and network changes, without calling external class methods.
@@ -27,6 +28,7 @@ class TestDeviceStatusListener : public DeviceStatusListener {
   DISALLOW_COPY_AND_ASSIGN(TestDeviceStatusListener);
 };
 
+}  // namespace test
 }  // namespace download
 
 #endif  // COMPONENTS_DOWNLOAD_INTERNAL_TEST_TEST_DEVICE_STATUS_LISTENER_H_
