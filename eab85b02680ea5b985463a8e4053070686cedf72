@@ -16,6 +16,24 @@
       "revId": "eab85b02680ea5b985463a8e4053070686cedf72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f243d394_07871b55",
+        "filename": "tools/sublime/ninja_options_script.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-06-13T16:31:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d18406d9_15954bff",
+      "revId": "eab85b02680ea5b985463a8e4053070686cedf72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
