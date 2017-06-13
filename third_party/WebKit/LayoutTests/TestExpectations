@@ -2683,7 +2683,6 @@ crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-00
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-table-001-inline.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-002.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-003.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display-3/display-contents-computed-style.html [ Failure ]
 
 # ====== End of display: contents tests ======
 

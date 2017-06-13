@@ -34,6 +34,7 @@
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/StyleChangeReason.h"
 #include "core/dom/StyleEngine.h"
+#include "core/dom/WhitespaceAttacher.h"
 #include "core/dom/shadow/ElementShadow.h"
 #include "core/dom/shadow/InsertionPoint.h"
 #include "core/dom/shadow/SlotAssignment.h"
@@ -182,12 +183,17 @@ AtomicString HTMLSlotElement::GetName() const {
   return NormalizeSlotName(FastGetAttribute(HTMLNames::nameAttr));
 }
 
-void HTMLSlotElement::AttachLayoutTree(const AttachContext& context) {
+void HTMLSlotElement::AttachLayoutTree(AttachContext& context) {
   if (SupportsDistribution()) {
+    AttachContext children_context(context);
+    children_context.resolved_style = nullptr;
+
     for (auto& node : distributed_nodes_) {
       if (node->NeedsAttach())
-        node->AttachLayoutTree(context);
+        node->AttachLayoutTree(children_context);
     }
+    if (children_context.previous_in_flow)
+      context.previous_in_flow = children_context.previous_in_flow;
   }
   HTMLElement::AttachLayoutTree(context);
 }
@@ -200,15 +206,15 @@ void HTMLSlotElement::DetachLayoutTree(const AttachContext& context) {
   HTMLElement::DetachLayoutTree(context);
 }
 
-void HTMLSlotElement::RebuildDistributedChildrenLayoutTrees() {
+void HTMLSlotElement::RebuildDistributedChildrenLayoutTrees(
+    WhitespaceAttacher& whitespace_attacher) {
   if (!SupportsDistribution())
     return;
-  Text* next_text_sibling = nullptr;
   // This loop traverses the nodes from right to left for the same reason as the
   // one described in ContainerNode::RebuildChildrenLayoutTrees().
   for (auto it = distributed_nodes_.rbegin(); it != distributed_nodes_.rend();
        ++it) {
-    RebuildLayoutTreeForChild(*it, next_text_sibling);
+    RebuildLayoutTreeForChild(*it, whitespace_attacher);
   }
 }
 
