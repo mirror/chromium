@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c3205c03_8b870a89",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 488,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T13:41:50Z",
+      "side": 1,
+      "message": "Leave a link to the crbug here so that it\u0027s easy to see what this is regression-testing for.",
+      "range": {
+        "startLine": 488,
+        "startChar": 72,
+        "endLine": 488,
+        "endChar": 73
+      },
+      "revId": "64faf5a52f4c492bcdae4487477766f583cf6c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50e42100_ae32e42d",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_bubble_controller_unittest.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-13T13:41:50Z",
+      "side": 1,
+      "message": "naming: bookmark_bar_node",
+      "range": {
+        "startLine": 492,
+        "startChar": 22,
+        "endLine": 492,
+        "endChar": 37
+      },
+      "revId": "64faf5a52f4c492bcdae4487477766f583cf6c3d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
