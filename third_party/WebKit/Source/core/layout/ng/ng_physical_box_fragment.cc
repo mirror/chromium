@@ -13,7 +13,7 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
     NGPhysicalSize size,
     NGPhysicalSize overflow,
     Vector<RefPtr<NGPhysicalFragment>>& children,
-    Vector<NGPositionedFloat>& positioned_floats,
+    const Vector<NGPositionedFloat>& positioned_floats,
     const WTF::Optional<NGLogicalOffset>& bfc_offset,
     const NGMarginStrut& end_margin_strut,
     unsigned border_edges,  // NGBorderEdges::Physical
@@ -28,6 +28,15 @@ NGPhysicalBoxFragment::NGPhysicalBoxFragment(
       end_margin_strut_(end_margin_strut) {
   children_.swap(children);
   border_edge_ = border_edges;
+}
+
+RefPtr<NGPhysicalFragment> NGPhysicalBoxFragment::CloneWithoutOffset() const {
+  Vector<RefPtr<NGPhysicalFragment>> children_copy(children_);
+  RefPtr<NGPhysicalFragment> physical_fragment =
+      AdoptRef(new NGPhysicalBoxFragment(
+          layout_object_, size_, overflow_, children_copy, positioned_floats_,
+          bfc_offset_, end_margin_strut_, border_edge_, break_token_));
+  return physical_fragment;
 }
 
 }  // namespace blink

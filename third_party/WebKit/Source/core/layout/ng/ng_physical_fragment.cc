@@ -63,4 +63,25 @@ String NGPhysicalFragment::ToString() const {
                         Offset().ToString().Ascii().data(), IsPlaced());
 }
 
+RefPtr<NGPhysicalFragment> NGPhysicalFragment::CloneWithoutOffset() const {
+  switch (Type()) {
+    case kFragmentBox:
+      return static_cast<const NGPhysicalBoxFragment*>(this)
+          ->CloneWithoutOffset();
+      break;
+    case kFragmentText:
+      return static_cast<const NGPhysicalTextFragment*>(this)
+          ->CloneWithoutOffset();
+      break;
+    case kFragmentLineBox:
+      return static_cast<const NGPhysicalLineBoxFragment*>(this)
+          ->CloneWithoutOffset();
+      break;
+    default:
+      NOTREACHED();
+      break;
+  }
+  return nullptr;
+}
+
 }  // namespace blink

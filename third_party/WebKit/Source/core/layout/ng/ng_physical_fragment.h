@@ -89,6 +89,8 @@ class CORE_EXPORT NGPhysicalFragment : public RefCounted<NGPhysicalFragment> {
       Destroy();
   }
 
+  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
+
  protected:
   NGPhysicalFragment(LayoutObject* layout_object,
                      NGPhysicalSize size,
