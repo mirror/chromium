@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9676b59e_4d0134a1",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 576,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T19:15:23Z",
+      "side": 1,
+      "message": "The reason to not update should_hit_test_ when draws_content is false is because should_hit_test_ may be true even if it does not draw content, i.e. the case of a transparent layer. Currently the cc side incorrectly hit tests transparent layers over scrollers due to this characteristic.\n\nI changed SetShouldHitTest(draws_content) to SetShouldHitTest(true).",
+      "parentUuid": "93901213_55d1b1cc",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9c3393ac_430a8b54",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "9753fab4_d526653c",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1931,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T19:15:23Z",
+      "side": 1,
+      "message": "With the current implementation, this function should only return a scrolling layer or drawn scrollbar. This function is being called by by LayerTreeImpl::FindFirstScrollingLayerOrDrawnScrollbarThatIsHitByPoint. We don\u0027t want this to be returning true for the transparent layers because these are neither scrolling layers nor drawn scrollbars.",
+      "parentUuid": "9c3393ac_430a8b54",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5627ec5c_a07af3ee",
         "filename": "cc/trees/layer_tree_impl.cc",
         "patchSetId": 6
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-12T17:28:38Z",
       "side": 1,
       "message": "WDYT of setting should_hit_test when a layer is set to be scrollable or the touch event handler region is non-empty? Maybe we could do that as a followup.",
+      "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fc0f399_afd24cc7",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1947,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-13T19:15:23Z",
+      "side": 1,
+      "message": "I agree this would be a good step to follow up with.",
+      "parentUuid": "5627ec5c_a07af3ee",
       "revId": "f47873ad7a80005f80e9d7aa7b7fa0d09ac979a0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
