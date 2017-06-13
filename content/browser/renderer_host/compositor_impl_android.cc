@@ -881,8 +881,8 @@ cc::FrameSinkId CompositorImpl::GetFrameSinkId() {
 
 void CompositorImpl::AddChildFrameSink(const cc::FrameSinkId& frame_sink_id) {
   if (has_compositor_frame_sink_) {
-    GetSurfaceManager()->RegisterFrameSinkHierarchy(frame_sink_id_,
-                                                    frame_sink_id);
+    GetFrameSinkManagerHost()->RegisterFrameSinkHierarchy(frame_sink_id_,
+                                                          frame_sink_id);
   } else {
     pending_child_frame_sink_ids_.insert(frame_sink_id);
   }
@@ -895,8 +895,8 @@ void CompositorImpl::RemoveChildFrameSink(
     pending_child_frame_sink_ids_.erase(it);
     return;
   }
-  GetSurfaceManager()->UnregisterFrameSinkHierarchy(frame_sink_id_,
-                                                    frame_sink_id);
+  GetFrameSinkManagerHost()->UnregisterFrameSinkHierarchy(frame_sink_id_,
+                                                          frame_sink_id);
 }
 
 bool CompositorImpl::HavePendingReadbacks() {

@@ -6,6 +6,7 @@
 #define COMPONENTS_VIZ_HOST_FRAME_SINK_MANAGER_HOST_H_
 
 #include "base/compiler_specific.h"
+#include "base/containers/flat_map.h"
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "cc/ipc/frame_sink_manager.mojom.h"
@@ -55,6 +56,13 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
       MojoFrameSinkManager* manager);
 
  private:
+  struct FrameSinkData {
+    FrameSinkData();
+    ~FrameSinkData();
+
+    cc::FrameSinkId parent;
+  };
+
   // cc::mojom::FrameSinkManagerClient:
   void OnSurfaceCreated(const cc::SurfaceInfo& surface_info) override;
 
@@ -63,6 +71,9 @@ class VIZ_HOST_EXPORT FrameSinkManagerHost
 
   // Mojo connection back from the FrameSinkManager.
   mojo::Binding<cc::mojom::FrameSinkManagerClient> binding_;
+
+  // Track per FrameSink data.
+  base::flat_map<cc::FrameSinkId, FrameSinkData> frame_sink_data_map_;
 
   // Local observers to that receive OnSurfaceCreated() messages from IPC.
   base::ObserverList<FrameSinkObserver> observers_;
