@@ -16,6 +16,24 @@
       "revId": "7d138a9a0798a1af915bb12c7292edf82f91f923",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f6a9b5_61b705f0",
+        "filename": "android_webview/javatests/src/org/chromium/android_webview/test/WebViewWebVrTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-13T18:01:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "876e041d_9a29232a",
+      "revId": "7d138a9a0798a1af915bb12c7292edf82f91f923",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
