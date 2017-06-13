@@ -16,6 +16,24 @@
       "revId": "88bb25dd1b956d6c563f795f53c62bb9ef959ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "390e4f26_4752e956",
+        "filename": "build/config/android/internal_rules.gni",
+        "patchSetId": 1
+      },
+      "lineNbr": 1116,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-13T16:00:01Z",
+      "side": 1,
+      "message": "I think it\u0027s more clear as implemented - a user of the dex template would be surprised to find that setting use_pool\u003dtrue only works if enable_concurrent_apk_finalization is false.",
+      "parentUuid": "4f2e0520_26d855a9",
+      "revId": "88bb25dd1b956d6c563f795f53c62bb9ef959ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
