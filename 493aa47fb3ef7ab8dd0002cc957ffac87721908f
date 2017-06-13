@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ce1ed24_a0b5fa47",
+        "filename": "media/audio/audio_system_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1137384
+      },
+      "writtenOn": "2017-06-13T07:09:03Z",
+      "side": 1,
+      "message": "This is incorrect: please see GetDefaultOutputStreamParameters(), usage of GetDefaultOutputDeviceID() there, and platform-specific implementations of the latter.\n\nSame in other places: the actual default device id is platform-specific; kDefaultDeviceId is a renderer-side-visible constant.\n\nGetOutputStreamParameters() accepts the real device ids only.",
+      "revId": "493aa47fb3ef7ab8dd0002cc957ffac87721908f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
