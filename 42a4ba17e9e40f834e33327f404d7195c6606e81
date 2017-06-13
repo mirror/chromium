@@ -16,6 +16,24 @@
       "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a20497_f03796e6",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-13T07:47:22Z",
+      "side": 1,
+      "message": "Agreed. But I presume you\u0027re talking about BrowserAccessibilityManagerAndroid and WebContentsAccessibilityAndroid, right? They are the ones referencing each other. WCAA does not depend on RWHVA. Only its |Connnector| is passed a pointer to RWHVA, but it doesn\u0027t keep the reference either. Or is the point that it doesn\u0027t look desirable for RWHVA to have a direct reference to WCAA for the sake of consistency with the way RFH communicates with BAM? I see RHF inherit BAM delegate. This may work, but not ideal for WCAA/RWHVA as they have different lifetime. |Connector| is a minimum mechanism to replace the way the connection between them is managed, with CVC that was used before.\n\nAnyway I uploaded a new patch that defines WebContentsAccessibility::Delegate interface that BAMA implements. I think it also a part that needs a delegate interface. I defined the delegate on WCAA side since it seems natural to me that WCAA needs a delegate to process the request from Java layer(but it can be easily viewed the other way around too... they were one class that now got split. Who depends who may not be clear). Another reason is that BAM already has a delegate - I\u0027d rather not add another one in there.",
+      "parentUuid": "6b86cd37_4b82aa79",
+      "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
