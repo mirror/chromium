@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "100e7928_bf7d0337",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-13T10:09:35Z",
+      "side": 1,
+      "message": "I\u0027m a bit confused by this. I thought that the new pipeline did not need us to have the metadata loaded in order to provide information with regards to availability. Based on what I read here, it sounds that this is the opposite and it will be harder to get availability back. Can you give more details?",
+      "revId": "1003e21addf12fe83909daa168cd8bf3ed843be5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
