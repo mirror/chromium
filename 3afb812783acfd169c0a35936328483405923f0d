@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "2170dd4b_17085eaf",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrInstallUpdateInfoBarTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-13T14:43:01Z",
+      "side": 1,
+      "message": "nit: We don\u0027t need the enable-webvr flag anymore here, do we?",
+      "range": {
+        "startLine": 35,
+        "startChar": 72,
+        "endLine": 35,
+        "endChar": 77
+      },
+      "revId": "3afb812783acfd169c0a35936328483405923f0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "781bc508_b7c58313",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/vr_shell/VrShellCompositorViewHolderTest.java",
         "patchSetId": 2
