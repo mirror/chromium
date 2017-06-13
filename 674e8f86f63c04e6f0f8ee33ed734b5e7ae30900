@@ -96,6 +96,23 @@
     },
     {
       "key": {
+        "uuid": "7701cea4_faa92cc7",
+        "filename": "chrome/browser/chrome_service_worker_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-13T08:55:04Z",
+      "side": 1,
+      "message": "I removed ChromeServiceWorkerNavigationHintTest.FailedDueToRendererCrash from this CL because of crbug.com/732729",
+      "revId": "674e8f86f63c04e6f0f8ee33ed734b5e7ae30900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92a26a8f_95264ce9",
         "filename": "content/browser/service_worker/service_worker_context_wrapper.cc",
         "patchSetId": 1
