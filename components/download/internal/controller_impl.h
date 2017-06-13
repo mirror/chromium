@@ -12,6 +12,7 @@
 #include "base/optional.h"
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
+#include "components/download/internal/entry.h"
 #include "components/download/internal/model.h"
 #include "components/download/internal/scheduler/device_status_listener.h"
 #include "components/download/internal/startup_status.h"
@@ -22,9 +23,16 @@ namespace download {
 class ClientSet;
 class DownloadDriver;
 class Model;
+class Scheduler;
 
 struct Configuration;
 struct SchedulingParams;
+
+enum class CompletionType {
+  SUCCEED = 0,
+  FAIL = 1,
+  CANCEL = 2,
+};
 
 // The internal Controller implementation.  This class does all of the heavy
 // lifting for the DownloadService.
@@ -38,7 +46,8 @@ class ControllerImpl : public Controller,
                  std::unique_ptr<Configuration> config,
                  std::unique_ptr<DownloadDriver> driver,
                  std::unique_ptr<Model> model,
-                 std::unique_ptr<DeviceStatusListener> device_status_listener);
+                 std::unique_ptr<DeviceStatusListener> device_status_listener,
+                 std::unique_ptr<Scheduler> scheduler);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -88,6 +97,14 @@ class ControllerImpl : public Controller,
   // resolve state issues during startup.
   void ResolveInitialRequestStates();
 
+  // Updates the driver states based on the states of entries in download
+  // service.
+  void UpdateDriverStates();
+
+  // Starts or resumes download based on |entry|, returns true if starts as a
+  // new download.
+  bool StartOrResumeDownload(const Entry& entry);
+
   // Notifies all Client in |clients_| that this controller is initialized and
   // lets them know which download requests we are aware of for their
   // DownloadClient.
@@ -106,6 +123,17 @@ class ControllerImpl : public Controller,
       DownloadParams::StartResult result,
       const DownloadParams::StartCallback& callback);
 
+  // Transits the state of |entry| to |new_state|, and returns if the transition
+  // is valid and state has been changed.
+  void TransitTo(Entry* entry, Entry::State new_state);
+
+  // Completes the download.
+  void Complete(CompletionType type, const std::string& guid);
+
+  // Find more available entries to download, until the number of active entries
+  // reached maximum. Returns the number of entries activated.
+  uint32_t ActivateMoreDownloads();
+
   std::unique_ptr<ClientSet> clients_;
   std::unique_ptr<Configuration> config_;
 
@@ -113,6 +141,7 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
+  std::unique_ptr<Scheduler> scheduler_;
 
   // Internal state.
   StartupStatus startup_status_;
