@@ -48,6 +48,7 @@
 #include "extensions/common/permissions/api_permission.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "media/media_features.h"
+#include "content/public/browser/notification_service.h"
 
 namespace keys = extensions::preference_api_constants;
 namespace helpers = extensions::preference_helpers;
@@ -360,17 +361,22 @@ class PrefMapping {
 PreferenceEventRouter::PreferenceEventRouter(Profile* profile)
     : profile_(profile) {
   registrar_.Init(profile_->GetPrefs());
-  incognito_registrar_.Init(profile_->GetOffTheRecordPrefs());
   for (size_t i = 0; i < arraysize(kPrefMapping); ++i) {
     registrar_.Add(kPrefMapping[i].browser_pref,
                    base::Bind(&PreferenceEventRouter::OnPrefChanged,
                               base::Unretained(this),
                               registrar_.prefs()));
-    incognito_registrar_.Add(kPrefMapping[i].browser_pref,
-                             base::Bind(&PreferenceEventRouter::OnPrefChanged,
-                                        base::Unretained(this),
-                                        incognito_registrar_.prefs()));
   }
+  notification_registrar_.Add(this,
+                              chrome::NOTIFICATION_PROFILE_CREATED,
+                              content::NotificationService::AllSources());
+  notification_registrar_.Add(this,
+                              chrome::NOTIFICATION_PROFILE_DESTROYED,
+                              content::NotificationService::AllSources());
+  if (profile->HasOffTheRecordProfile())
+    OnIncognitoProfileCreated(profile->GetOffTheRecordProfile()->GetPrefs());
+  else
+    OnIncognitoProfileCreated(profile->GetOffTheRecordPrefs());
 }
 
 PreferenceEventRouter::~PreferenceEventRouter() { }
@@ -422,6 +428,41 @@ void PreferenceEventRouter::OnPrefChanged(PrefService* pref_service,
   helpers::DispatchEventToExtensions(profile_, histogram_value, event_name,
                                      &args, permission, incognito,
                                      browser_pref);
+}
+
+void PreferenceEventRouter::Observe(
+    int type,
+    const content::NotificationSource& source,
+    const content::NotificationDetails& details) {
+  switch (type) {
+    case chrome::NOTIFICATION_PROFILE_CREATED: {
+      Profile* profile = content::Source<Profile>(source).ptr();
+      if (profile != profile_ && profile->GetOriginalProfile() == profile_) {
+        OnIncognitoProfileCreated(profile->GetPrefs());
+      }
+      break;
+    }
+    case chrome::NOTIFICATION_PROFILE_DESTROYED: {
+      Profile* profile = content::Source<Profile>(source).ptr();
+      if (profile->GetOriginalProfile() == profile_) {
+        incognito_registrar_.reset();
+      }
+      break;
+    }
+    default:
+      NOTREACHED();
+  }
+}
+
+void PreferenceEventRouter::OnIncognitoProfileCreated(PrefService* prefs) {
+  incognito_registrar_.reset(new PrefChangeRegistrar());
+  incognito_registrar_->Init(prefs);
+  for (size_t i = 0; i < arraysize(kPrefMapping); ++i) {
+    incognito_registrar_->Add(
+        kPrefMapping[i].browser_pref,
+        base::Bind(&PreferenceEventRouter::OnPrefChanged,
+                   base::Unretained(this), incognito_registrar_->prefs()));
+  }
 }
 
 void PreferenceAPIBase::SetExtensionControlledPref(

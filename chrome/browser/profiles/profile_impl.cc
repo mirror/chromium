@@ -10,6 +10,8 @@
 #include <utility>
 #include <vector>
 
+#include "base/debug/stack_trace.h"
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/command_line.h"
@@ -831,7 +833,6 @@ Profile* ProfileImpl::GetOffTheRecordProfile() {
 
 void ProfileImpl::DestroyOffTheRecordProfile() {
   off_the_record_profile_.reset();
-  otr_prefs_->ClearMutableValues();
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   ExtensionPrefValueMapFactory::GetForBrowserContext(this)->
       ClearAllIncognitoSessionOnlyPreferences();
@@ -995,14 +996,19 @@ ChromeZoomLevelPrefs* ProfileImpl::GetZoomLevelPrefs() {
 #endif  // !defined(OS_ANDROID)
 
 PrefService* ProfileImpl::GetOffTheRecordPrefs() {
-  DCHECK(prefs_);
-  if (!otr_prefs_) {
-    // The new ExtensionPrefStore is ref_counted and the new PrefService
-    // stores a reference so that we do not leak memory here.
-    otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
-        prefs_.get(), CreateExtensionPrefStore(this, true)));
+  if (HasOffTheRecordProfile())
+    return GetOffTheRecordProfile()->GetPrefs();
+  // The extensions preference API calls this method even when there's no OTR
+  // profile, in order to figure out what a pref value would have been returned
+  // if an OTR profile existed. To support that case we return a dummy
+  // PrefService here. Ideally this logic should move into the code that relies
+  // on it.
+  if (!dummy_otr_prefs_) {
+    dummy_otr_prefs_.reset(CreateIncognitoPrefServiceSyncable(
+        prefs_.get(), CreateExtensionPrefStore(this, true),
+        std::set<PrefValueStore::PrefStoreType>(), nullptr, nullptr));
   }
-  return otr_prefs_.get();
+  return dummy_otr_prefs_.get();
 }
 
 content::ResourceContext* ProfileImpl::GetResourceContext() {
