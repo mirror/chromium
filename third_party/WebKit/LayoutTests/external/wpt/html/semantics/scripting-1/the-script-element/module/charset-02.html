@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <title>Module Scripts should always use UTF-8 (ignore UTF-16 BOMs)</title>
+  <link rel="help" href="https://html.spec.whatwg.org/multipage/scripting.html#attr-script-charset">
+  <script src="/resources/testharness.js"></script>
+  <script src="/resources/testharnessreport.js"></script>
+  <div id="log"></div>
+
+  <script type="module" src="../serve-with-content-type.py?fn=resources/bom-utf-8.js&ct=text/javascript">
+  </script>
+  <script type="module">
+  test(function() {
+    assert_equals(window.getSomeString(), '\u4e09\u6751\u304b\u306a\u5b50',
+                  'Should be decoded as UTF-8');
+  }, 'UTF-8 module script with UTF-8 BOM');
+  </script>
+
+  <script>
+    var t1 = async_test('UTF-16 module script with UTF-16-BE BOM');
+  </script>
+  <script type="module" src="../serve-with-content-type.py?fn=resources/bom-utf-16be.js&ct=text/javascript" onload="t1.step(function() {assert_unreached();})" onerror="t1.done()">
+  </script>
+  <script type="module">
+  t1.step(function() {
+    assert_equals(window.getSomeString_16be, undefined,
+                  'Script should result in compile error because of failing ' +
+                  'to decode UTF-16 with BOM as UTF-8');
+  });
+  </script>
+
+  <script>
+    var t2 = async_test('UTF-16 module script with UTF-16-LE BOM');
+  </script>
+  <script type="module" src="../serve-with-content-type.py?fn=resources/bom-utf-16le.js&ct=text/javascript" onload="t2.step(function() {assert_unreached();})" onerror="t2.done()">
+  </script>
+  <script type="module">
+  t2.step(function() {
+    assert_equals(window.getSomeString_16le, undefined,
+                  'Script should result in compile error because of failing ' +
+                  'to decode UTF-16 with BOM as UTF-8');
+  });
+  </script>
+</head>

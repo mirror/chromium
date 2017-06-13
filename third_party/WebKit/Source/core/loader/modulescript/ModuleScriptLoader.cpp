@@ -129,6 +129,11 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // Module scripts are always async.
   fetch_params.SetDefer(FetchParameters::kLazyLoad);
 
+  // Use UTF-8, according to Step 8:
+  // "Let source text be the result of UTF-8 decoding response's body."
+  // TODO(hiroshige): Enforce UTF-8 and disable encoding detection by BOMs.
+  fetch_params.SetCharset("UTF-8");
+
   // Step 6. If the caller specified custom steps to perform the fetch,
   // perform them on request, setting the is top-level flag if the top-level
   // module fetch flag is set. Return from this algorithm, and when the custom
