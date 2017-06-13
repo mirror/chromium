@@ -123,8 +123,21 @@ void* ArrayBufferContents::AllocateMemoryOrNull(size_t size,
   return AllocateMemoryWithFlags(size, policy, base::PartitionAllocReturnNull);
 }
 
+void* ArrayBufferContents::ReserveMemory(size_t size) {
+  void* const hint = nullptr;
+  const size_t align = 64 << 10;  // Wasm page size
+  // TODO(eholk): On Windows this commits all the memory, rather than just
+  // reserving it. This is very bad and should be fixed, but we don't use this
+  // feature on Windows at all yet.
+  return base::AllocPages(hint, size, align, base::PageInaccessible);
+}
+
 void ArrayBufferContents::FreeMemory(void* data) {
   PartitionFreeGeneric(Partitions::ArrayBufferPartition(), data);
+}
+
+void ArrayBufferContents::ReleaseReservedMemory(void* data, size_t size) {
+  base::FreePages(data, size);
 }
 
 ArrayBufferContents::DataHandle ArrayBufferContents::CreateDataHandle(

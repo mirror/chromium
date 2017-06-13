@@ -93,7 +93,9 @@ class WTF_EXPORT ArrayBufferContents {
   void CopyTo(ArrayBufferContents& other);
 
   static void* AllocateMemoryOrNull(size_t, InitializationPolicy);
+  static void* ReserveMemory(size_t);
   static void FreeMemory(void*);
+  static void ReleaseReservedMemory(void*, size_t);
   static DataHandle CreateDataHandle(size_t, InitializationPolicy);
   static void Initialize(
       AdjustAmountOfExternalAllocatedMemoryFunction function) {
