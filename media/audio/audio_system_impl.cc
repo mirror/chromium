@@ -182,7 +182,8 @@ AudioParameters AudioSystemImpl::GetOutputParametersOnDeviceThread(
     return AudioParameters();
 
   return media::AudioDeviceDescription::IsDefaultDevice(device_id)
-             ? audio_manager->GetDefaultOutputStreamParameters()
+             ? audio_manager->GetOutputStreamParameters(
+                   AudioDeviceDescription::kDefaultDeviceId)
              : audio_manager->GetOutputStreamParameters(device_id);
 }
 

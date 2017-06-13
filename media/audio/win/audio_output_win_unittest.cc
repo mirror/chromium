@@ -449,7 +449,8 @@ TEST_F(WinAudioTest, PCMWaveStreamPlay200HzToneLowLatency) {
   // Use 10 ms buffer size for WASAPI and 50 ms buffer size for Wave.
   // Take the existing native sample rate into account.
   const AudioParameters params =
-      audio_manager_device_info_->GetDefaultOutputStreamParameters();
+      audio_manager_device_info_->GetOutputStreamParameters(
+          AudioDeviceDescription::kDefaultDeviceId);
   int sample_rate = params.sample_rate();
   uint32_t samples_10_ms = sample_rate / 100;
   int n = 1;

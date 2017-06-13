@@ -209,7 +209,8 @@ class AudioManagerTest : public ::testing::Test {
   }
 
   void GetDefaultOutputStreamParameters(media::AudioParameters* params) {
-    *params = device_info_accessor_->GetDefaultOutputStreamParameters();
+    *params = device_info_accessor_->GetOutputStreamParameters(
+        AudioDeviceDescription::kDefaultDeviceId);
   }
 
   void GetAssociatedOutputDeviceID(const std::string& input_device_id,

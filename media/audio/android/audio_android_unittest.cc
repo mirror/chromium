@@ -552,7 +552,8 @@ class AudioAndroidOutputTest : public testing::Test {
   void GetDefaultOutputStreamParameters() {
     DCHECK(audio_manager()->GetTaskRunner()->BelongsToCurrentThread());
     audio_output_parameters_ =
-        audio_manager_device_info()->GetDefaultOutputStreamParameters();
+        audio_manager_device_info()->GetOutputStreamParameters(
+            AudioDeviceDescription::kDefaultDeviceId);
     EXPECT_TRUE(audio_output_parameters_.IsValid());
   }
 

@@ -264,7 +264,7 @@ class AudioOutputStreamTraits {
   static AudioParameters GetDefaultAudioStreamParameters(
       AudioManager* audio_manager) {
     return AudioDeviceInfoAccessorForTests(audio_manager)
-        .GetDefaultOutputStreamParameters();
+        .GetOutputStreamParameters(AudioDeviceDescription::kDefaultDeviceId);
   }
 
   static StreamType* CreateStream(AudioManager* audio_manager,

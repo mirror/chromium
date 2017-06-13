@@ -30,8 +30,6 @@ class AudioDeviceInfoAccessorForTests {
   void GetAudioOutputDeviceDescriptions(
       AudioDeviceDescriptions* device_descriptions);
 
-  AudioParameters GetDefaultOutputStreamParameters();
-
   AudioParameters GetOutputStreamParameters(const std::string& device_id);
 
   AudioParameters GetInputStreamParameters(const std::string& device_id);
