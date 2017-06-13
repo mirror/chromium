@@ -40,6 +40,8 @@
 #include "mojo/edk/embedder/scoped_platform_handle.h"
 #include "mojo/public/cpp/bindings/binding.h"
 
+#include "base/task_scheduler/post_task.h"
+
 namespace arc {
 
 namespace {
@@ -212,6 +214,11 @@ class ArcSessionImpl : public ArcSession,
   void OnShutdown() override;
 
  private:
+  void Upgrade(const cryptohome::Identification& cryptohome_id,
+               bool skip_boot_completed_broadcast,
+               bool scan_vendor_priv_app,
+               mojo::edk::ScopedPlatformHandle socket_fd);
+
   // Creates the UNIX socket on a worker pool and then processes its file
   // descriptor.
   static mojo::edk::ScopedPlatformHandle CreateSocket();
@@ -345,6 +352,20 @@ mojo::edk::ScopedPlatformHandle ArcSessionImpl::CreateSocket() {
   return socket_fd;
 }
 
+void ArcSessionImpl::Upgrade(const cryptohome::Identification& cryptohome_id,
+                             bool skip_boot_completed_broadcast,
+                             bool scan_vendor_priv_app,
+                             mojo::edk::ScopedPlatformHandle socket_fd) {
+  LOG(ERROR) << "Calling StartArcInstance";
+  chromeos::SessionManagerClient* session_manager_client =
+      chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+  session_manager_client->StartArcInstance(
+      chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
+      skip_boot_completed_broadcast, scan_vendor_priv_app,
+      base::Bind(&ArcSessionImpl::OnInstanceStarted, weak_factory_.GetWeakPtr(),
+                 base::Passed(&socket_fd)));
+}
+
 void ArcSessionImpl::OnSocketCreated(
     mojo::edk::ScopedPlatformHandle socket_fd) {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -379,11 +400,18 @@ void ArcSessionImpl::OnSocketCreated(
 
   chromeos::SessionManagerClient* session_manager_client =
       chromeos::DBusThreadManager::Get()->GetSessionManagerClient();
+  LOG(ERROR) << "Calling StartArcInstanceForLoginScreen";
   session_manager_client->StartArcInstance(
-      chromeos::SessionManagerClient::ArcStartupMode::FULL, cryptohome_id,
-      skip_boot_completed_broadcast, scan_vendor_priv_app,
-      base::Bind(&ArcSessionImpl::OnInstanceStarted, weak_factory_.GetWeakPtr(),
-                 base::Passed(&socket_fd)));
+      chromeos::SessionManagerClient::ArcStartupMode::LOGIN_SCREEN,
+      cryptohome::Identification(), false, false,
+      base::Bind([](chromeos::SessionManagerClient::StartArcInstanceResult r,
+                    const std::string& id) { LOG(ERROR) << "ID=" << id; }));
+  base::PostDelayedTask(
+      FROM_HERE,
+      base::Bind(&ArcSessionImpl::Upgrade, weak_factory_.GetWeakPtr(),
+                 cryptohome_id, skip_boot_completed_broadcast,
+                 scan_vendor_priv_app, base::Passed(&socket_fd)),
+      base::TimeDelta::FromSeconds(15));
 }
 
 void ArcSessionImpl::OnInstanceStarted(
