@@ -17,12 +17,14 @@
 #include "base/threading/sequenced_task_runner_handle.h"
 #include "components/subresource_filter/content/browser/async_document_subresource_filter_test_utils.h"
 #include "components/subresource_filter/core/common/load_policy.h"
-#include "components/subresource_filter/core/common/proto/rules.pb.h"
 #include "components/subresource_filter/core/common/test_ruleset_creator.h"
 #include "components/subresource_filter/core/common/test_ruleset_utils.h"
+#include "components/url_pattern_index/proto/rules.pb.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 namespace subresource_filter {
+
+namespace proto = url_pattern_index::proto;
 
 class AsyncDocumentSubresourceFilterTest : public ::testing::Test {
  public:
