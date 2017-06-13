@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d6cad37b_a43e801c",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Can\u0027t we push the headers in?  I thought this was already supported on DownloadUrlParameters (background fetch does this IIRC)?",
+      "range": {
+        "startLine": 103,
+        "startChar": 2,
+        "endLine": 104,
+        "endChar": 34
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9af1051_baecd69e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Maybe use your helper method here?  That would make it easier for me to just call it from the recovery code as well?  Basically we want a MakeDriverLookLikeMyEntryState() method :D",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 23
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7717e9d_288a69df",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Should this just get called in ActivateMoreDownloads()?  Looks like we call it after each call.",
+      "range": {
+        "startLine": 101,
+        "startChar": 2,
+        "endLine": 101,
+        "endChar": 48
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce829518_bf218eb4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Same here?",
+      "range": {
+        "startLine": 114,
+        "startChar": 2,
+        "endLine": 114,
+        "endChar": 24
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75893ee_1ae162a3",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "This should probably happen in Complete().  That way all code paths have the download automatically removed.",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 24
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb00f7d_41a1d68b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Should we log this and/or UMA?",
+      "range": {
+        "startLine": 143,
+        "startChar": 2,
+        "endLine": 144,
+        "endChar": 11
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24a20486_a2a4ab1c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "What if we update the params on Entry and then call your helper method to make the driver state reflect the entry state?  e.g.:\n\nentry-\u003escheduling_params \u003d params;\nmodel_-\u003eUpdate(*entry);\nUpdateDriverStateHelperMethodThingy(entry);\nActivateMoreDownloads();",
+      "range": {
+        "startLine": 146,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 48
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8555712d_00f2d6e3",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Need to abort here if the the return value is ABORT.",
+      "range": {
+        "startLine": 181,
+        "startChar": 6,
+        "endLine": 182,
+        "endChar": 59
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620e2044_df30150c",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "We don\u0027t want to do this if we don\u0027t know about the download right?  Same below for all of these",
+      "range": {
+        "startLine": 187,
+        "startChar": 2,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2745e47_7df5d63f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Do this all inside complete.  Same with below.",
+      "range": {
+        "startLine": 194,
+        "startChar": 2,
+        "endLine": 196,
+        "endChar": 44
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0a94dea_34f75cf3",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Skip based on download state?  e.g. cancelled?  Maybe only broadcast this if the state is IN_PROGRESS?",
+      "range": {
+        "startLine": 212,
+        "startChar": 39,
+        "endLine": 212,
+        "endChar": 66
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7c16c6f8_6858d17a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "We need to probably do more here too?  Need to delete the file from disk as well (if we were complete/watchdog).\n\nKeep a TODO or something?",
+      "range": {
+        "startLine": 311,
+        "startChar": 4,
+        "endLine": 312,
+        "endChar": 26
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d71fc6ff_f5b39f13",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Maybe move this into the helper function that sets the driver state for an entry?  Handle the State::PAUSE criteria as well?",
+      "range": {
+        "startLine": 327,
+        "startChar": 4,
+        "endLine": 341,
+        "endChar": 34
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ebafbf1_de25f6b4",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "UMA?",
+      "range": {
+        "startLine": 402,
+        "startChar": 21,
+        "endLine": 402,
+        "endChar": 29
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7be600d_8004168a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 403,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Only if we know about the entry",
+      "range": {
+        "startLine": 403,
+        "startChar": 2,
+        "endLine": 403,
+        "endChar": 24
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5450674c_48cc425b",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Add a comment for the enum and/or comments on each type.  I think we need more detail on the fail cases (timed out, failed, abort, unknown - or whatever we send when we detect that we canceled during a restart).",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 0
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c83b884_55c48c2f",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "ProcessActiveDownload?  Should this also pause the driver download if it should be paused?",
+      "range": {
+        "startLine": 106,
+        "startChar": 2,
+        "endLine": 106,
+        "endChar": 49
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b292782d_1f624fc8",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Mention this is a helper method to make it easier to change states.  And/or move this to the CC file and just pass in the model.",
+      "range": {
+        "startLine": 126,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 50
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f5f1a59_dab3d92b",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Probably don\u0027t need if we make the name a bit longer",
+      "range": {
+        "startLine": 129,
+        "startChar": 2,
+        "endLine": 129,
+        "endChar": 28
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c3cec0_04c0afa7",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "HandleCompleteDownload() just to be a bit more explicit?",
+      "range": {
+        "startLine": 130,
+        "startChar": 7,
+        "endLine": 130,
+        "endChar": 15
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "488a58e5_453a890b",
+        "filename": "components/download/internal/driver_entry.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "Meh",
+      "range": {
+        "startLine": 41,
+        "startChar": 2,
+        "endLine": 41,
+        "endChar": 66
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9741bb1e_81d1b1fd",
+        "filename": "components/download/internal/startup_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T20:23:57Z",
+      "side": 1,
+      "message": "We probably shouldn\u0027t need to check this IMO",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
