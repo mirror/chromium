@@ -173,6 +173,24 @@
       "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f38a0afd_5e92a6aa",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-13T20:45:04Z",
+      "side": 1,
+      "message": "Right. I noticed that on linux (and Win I presume?) using SCANOUT_CPU_READ_WRITE is a bad idea when the drawing buffer is GPU-acclerated because the GMB implementation under the hood falls back to the default implementation that uses a SharedBitmap, so copying the rendered result to the GMB triggers a synchronous GPU readback (ouch).  However, when the canvas is not GPU accelerated, I figured we might as well always use GMBs.  That way there is one fewer code paths to maintain (I got rid of SetTransferableResourceToSharedGPUContext in this CL).",
+      "parentUuid": "711717b4_e9d8a994",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
