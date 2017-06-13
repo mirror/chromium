@@ -38,7 +38,7 @@ function test_matchall(frame, expected, query_options) {
       throw new Error(data);
     }
 
-    assert_equals(data.length, expected.length, 'result count');
+    assert_equals(data.length, expected.length, 'expecting ' + expected + ': result count');
 
     for (var i = 0; i < data.length; ++i) {
       assert_array_equals(data[i], expected[i]);
