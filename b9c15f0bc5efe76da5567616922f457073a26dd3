@@ -34,6 +34,24 @@
       "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82890e03_109b01d0",
+        "filename": "third_party/WebKit/Source/modules/websockets/WebPepperSocket.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-13T23:11:49Z",
+      "side": 1,
+      "message": "I would merge this with WebPepperSocketImpl, lifting all method defns into this class, removing virtual and basically doing a find-and-replace of WebPepperSocketImpl -\u003e WebPepperSocket",
+      "parentUuid": "278f37a7_150d021a",
+      "revId": "b9c15f0bc5efe76da5567616922f457073a26dd3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
