@@ -106,6 +106,7 @@ class OpenURLObserver : public WebContentsObserver {
 };
 
 ServiceWorkerClientInfo GetWindowClientInfoOnUI(
+    const GURL& document_url,
     int render_process_id,
     int render_frame_id,
     base::TimeTicks create_time,
@@ -121,14 +122,15 @@ ServiceWorkerClientInfo GetWindowClientInfoOnUI(
   // expecting.
   return ServiceWorkerClientInfo(
       client_uuid, render_frame_host->GetVisibilityState(),
-      render_frame_host->IsFocused(), render_frame_host->GetLastCommittedURL(),
+      render_frame_host->IsFocused(), document_url,
       render_frame_host->GetParent() ? REQUEST_CONTEXT_FRAME_TYPE_NESTED
                                      : REQUEST_CONTEXT_FRAME_TYPE_TOP_LEVEL,
       render_frame_host->frame_tree_node()->last_focus_time(), create_time,
       blink::kWebServiceWorkerClientTypeWindow);
 }
 
-ServiceWorkerClientInfo FocusOnUI(int render_process_id,
+ServiceWorkerClientInfo FocusOnUI(const GURL& document_url,
+                                  int render_process_id,
                                   int render_frame_id,
                                   base::TimeTicks create_time,
                                   const std::string& client_uuid) {
@@ -153,8 +155,8 @@ ServiceWorkerClientInfo FocusOnUI(int render_process_id,
   // Move the web contents to the foreground.
   web_contents->Activate();
 
-  return GetWindowClientInfoOnUI(render_process_id, render_frame_id,
-                                 create_time, client_uuid);
+  return GetWindowClientInfoOnUI(document_url, render_process_id,
+                                 render_frame_id, create_time, client_uuid);
 }
 
 // This is only called for main frame navigations in OpenWindowOnUI().
@@ -282,9 +284,9 @@ void DidNavigate(const base::WeakPtr<ServiceWorkerContextCore>& context,
     }
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&GetWindowClientInfoOnUI, provider_host->process_id(),
-                   provider_host->route_id(), provider_host->create_time(),
-                   provider_host->client_uuid()),
+        base::Bind(&GetWindowClientInfoOnUI, provider_host->document_url(),
+                   provider_host->process_id(), provider_host->route_id(),
+                   provider_host->create_time(), provider_host->client_uuid()),
         base::Bind(callback, SERVICE_WORKER_OK));
     return;
   }
@@ -296,14 +298,14 @@ void DidNavigate(const base::WeakPtr<ServiceWorkerContextCore>& context,
 
 void AddWindowClient(
     ServiceWorkerProviderHost* host,
-    std::vector<std::tuple<int, int, base::TimeTicks, std::string>>*
+    std::vector<std::tuple<GURL, int, int, base::TimeTicks, std::string>>*
         client_info) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   if (host->client_type() != blink::kWebServiceWorkerClientTypeWindow)
     return;
-  client_info->push_back(std::make_tuple(host->process_id(), host->frame_id(),
-                                         host->create_time(),
-                                         host->client_uuid()));
+  client_info->push_back(std::make_tuple(
+      host->document_url(), host->process_id(), host->frame_id(),
+      host->create_time(), host->client_uuid()));
 }
 
 void AddNonWindowClient(ServiceWorkerProviderHost* host,
@@ -326,8 +328,9 @@ void AddNonWindowClient(ServiceWorkerProviderHost* host,
 }
 
 void OnGetWindowClientsOnUI(
-    // The tuple contains process_id, frame_id, create_time, client_uuid.
-    const std::vector<std::tuple<int, int, base::TimeTicks, std::string>>&
+    // The tuple contains document_url, process_id, frame_id, create_time,
+    // client_uuid.
+    const std::vector<std::tuple<GURL, int, int, base::TimeTicks, std::string>>&
         clients_info,
     const GURL& script_url,
     const GetWindowClientsCallback& callback,
@@ -336,7 +339,8 @@ void OnGetWindowClientsOnUI(
 
   for (const auto& it : clients_info) {
     ServiceWorkerClientInfo info = GetWindowClientInfoOnUI(
-        std::get<0>(it), std::get<1>(it), std::get<2>(it), std::get<3>(it));
+        std::get<0>(it), std::get<1>(it), std::get<2>(it), std::get<3>(it),
+        std::get<4>(it));
 
     // If the request to the provider_host returned an empty
     // ServiceWorkerClientInfo, that means that it wasn't possible to associate
@@ -427,7 +431,8 @@ void GetWindowClients(const base::WeakPtr<ServiceWorkerVersion>& controller,
   DCHECK(options.client_type == blink::kWebServiceWorkerClientTypeWindow ||
          options.client_type == blink::kWebServiceWorkerClientTypeAll);
 
-  std::vector<std::tuple<int, int, base::TimeTicks, std::string>> clients_info;
+  std::vector<std::tuple<GURL, int, int, base::TimeTicks, std::string>>
+      clients_info;
   if (!options.include_uncontrolled) {
     for (auto& controllee : controller->controllee_map())
       AddWindowClient(controllee.second, &clients_info);
@@ -461,9 +466,9 @@ void FocusWindowClient(ServiceWorkerProviderHost* provider_host,
             provider_host->client_type());
   BrowserThread::PostTaskAndReplyWithResult(
       BrowserThread::UI, FROM_HERE,
-      base::Bind(&FocusOnUI, provider_host->process_id(),
-                 provider_host->frame_id(), provider_host->create_time(),
-                 provider_host->client_uuid()),
+      base::Bind(&FocusOnUI, provider_host->document_url(),
+                 provider_host->process_id(), provider_host->frame_id(),
+                 provider_host->create_time(), provider_host->client_uuid()),
       callback);
 }
 
@@ -509,9 +514,9 @@ void GetClient(ServiceWorkerProviderHost* provider_host,
   if (client_type == blink::kWebServiceWorkerClientTypeWindow) {
     BrowserThread::PostTaskAndReplyWithResult(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&GetWindowClientInfoOnUI, provider_host->process_id(),
-                   provider_host->route_id(), provider_host->create_time(),
-                   provider_host->client_uuid()),
+        base::Bind(&GetWindowClientInfoOnUI, provider_host->document_url(),
+                   provider_host->process_id(), provider_host->route_id(),
+                   provider_host->create_time(), provider_host->client_uuid()),
         callback);
     return;
   }
