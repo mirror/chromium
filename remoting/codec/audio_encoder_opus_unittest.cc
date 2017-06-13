@@ -2,18 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to get M_PI.
-#define _USE_MATH_DEFINES
-
 #include "remoting/codec/audio_encoder_opus.h"
 
-#include <math.h>
 #include <stddef.h>
 #include <stdint.h>
 
 #include <utility>
 
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "remoting/codec/audio_decoder_opus.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -27,7 +24,7 @@ const int kMaxSampleValue = 32767;
 const int kChannels = 2;
 
 // Phase shift between left and right channels.
-const double kChannelPhaseShift = 2 * M_PI / 3;
+const double kChannelPhaseShift = 2 * base::kPiDouble / 3;
 
 // The sampling rate that OPUS uses internally and that we expect to get
 // from the decoder.
@@ -60,8 +57,8 @@ class OpusAudioEncoderTest : public testing::Test {
                                 double frequency_hz,
                                 double pos,
                                 int channel) {
-    double angle = pos * 2 * M_PI * frequency_hz / rate +
-        kChannelPhaseShift * channel;
+    double angle = pos * 2 * base::kPiDouble * frequency_hz / rate +
+                   kChannelPhaseShift * channel;
     return static_cast<int>(sin(angle) * kMaxSampleValue + 0.5);
   }
 

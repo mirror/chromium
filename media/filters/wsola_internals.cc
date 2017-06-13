@@ -2,17 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to be set before any other includes to get M_PI.
-#define _USE_MATH_DEFINES
-
 #include "media/filters/wsola_internals.h"
 
 #include <algorithm>
-#include <cmath>
 #include <limits>
 #include <memory>
 
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "media/base/audio_bus.h"
 
 #if defined(ARCH_CPU_X86_FAMILY)
@@ -309,7 +306,7 @@ int OptimalIndex(const AudioBus* search_block,
 }
 
 void GetSymmetricHanningWindow(int window_length, float* window) {
-  const float scale = 2.0f * M_PI / window_length;
+  const float scale = 2.0f * base::kPiFloat / window_length;
   for (int n = 0; n < window_length; ++n)
     window[n] = 0.5f * (1.0f - cosf(n * scale));
 }
