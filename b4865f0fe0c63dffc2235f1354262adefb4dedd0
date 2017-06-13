@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4e3cc47_2f8a45fc",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-13T22:59:53Z",
+      "side": 1,
+      "message": "It seems like we\u0027d want to UMA success cases as well, directory exists and successful directory creation.",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b019934_1dda0be5",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-13T22:59:53Z",
+      "side": 1,
+      "message": "Do we want a special value here such as -1 so we can commpare sizes?\nUMA_HISTOGRAM_COUNTS(\"OfflinePages.SavedPageCount\", -1);",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f971b0_7c96c740",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-13T22:59:53Z",
+      "side": 1,
+      "message": "nit: Now you are depending on the Sequenced property implicitly.  Not sure that makes it easier to read.",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3b1d08c_389fc791",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-13T22:59:53Z",
+      "side": 1,
+      "message": "Can you use a histogram tester to ensure that the correct metrics are reported?  Also it\u0027d be best to ensure that the loop terminates after the correct number of retries.",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
