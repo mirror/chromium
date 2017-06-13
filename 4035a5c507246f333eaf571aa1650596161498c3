@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "efcbd346_0b6d8d11",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 852,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-13T03:54:28Z",
+      "side": 1,
+      "message": "WDYT of removing these lines?\nEXPECT_EQ(root_transform_node-\u003eid, root_-\u003etransform_tree_index());\nEXPECT_EQ(root_effect_node-\u003eid, root_-\u003eeffect_tree_index());\nEXPECT_EQ(root_scroll_node-\u003eid, root_-\u003escroll_tree_index());\nEXPECT_EQ(root_clip_node-\u003eid, root_-\u003eclip_tree_index());\n\nWith this patch, they are pretty much just checking that the assignment above works.",
+      "revId": "4035a5c507246f333eaf571aa1650596161498c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74431049_091318fa",
+        "filename": "cc/trees/property_tree.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-13T03:54:28Z",
+      "side": 1,
+      "message": "Remove this public: as it\u0027s already public here.",
+      "revId": "4035a5c507246f333eaf571aa1650596161498c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
