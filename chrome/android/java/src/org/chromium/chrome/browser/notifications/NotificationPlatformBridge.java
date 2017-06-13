@@ -32,6 +32,7 @@ import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
+import org.chromium.chrome.browser.notifications.channels.SiteChannelsManager;
 import org.chromium.chrome.browser.preferences.PrefServiceBridge;
 import org.chromium.chrome.browser.preferences.Preferences;
 import org.chromium.chrome.browser.preferences.PreferencesLauncher;
@@ -515,7 +516,7 @@ public class NotificationPlatformBridge {
         boolean hasImage = image != null;
         boolean forWebApk = !webApkPackage.isEmpty();
         NotificationBuilderBase notificationBuilder =
-                createNotificationBuilder(context, forWebApk, hasImage)
+                createNotificationBuilder(context, forWebApk, hasImage, origin)
                         .setTitle(title)
                         .setBody(body)
                         .setImage(image)
@@ -594,11 +595,11 @@ public class NotificationPlatformBridge {
     }
 
     private NotificationBuilderBase createNotificationBuilder(
-            Context context, boolean forWebApk, boolean hasImage) {
+            Context context, boolean forWebApk, boolean hasImage, String origin) {
         // Don't set a channelId for web apk notifications because the channel won't be
         // initialized for the web apk and it will crash on notify - see crbug.com/727178.
         // (It's okay to not set a channel on them because web apks don't target O yet.)
-        String channelId = forWebApk ? null : ChannelDefinitions.CHANNEL_ID_SITES;
+        String channelId = forWebApk ? null : SiteChannelsManager.toChannelId(origin);
         if (useCustomLayouts(hasImage)) {
             return new CustomNotificationBuilder(context, channelId);
         }
