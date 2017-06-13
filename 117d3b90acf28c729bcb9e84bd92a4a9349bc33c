@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "2237a01c_29fe918f",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-13T09:10:34Z",
+      "side": 1,
+      "message": "This is inside unnamed namespace (line 19). So it is already not visible outside this .cc file.",
+      "parentUuid": "20373a22_fcb2384e",
+      "revId": "117d3b90acf28c729bcb9e84bd92a4a9349bc33c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "452cc049_50e210c6",
         "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
         "patchSetId": 4
