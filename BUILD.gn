@@ -199,7 +199,12 @@ group("gn_all") {
       "//v8:gn_all",
     ]
   } else if (is_ios) {
-    deps += [ "//ios:all" ]
+    deps += [
+      "//ios:all",
+      "//services:services_unittests",
+      "//services/service_manager:all",
+      "//services/service_manager/public/cpp",
+    ]
   }
 
   deps += root_extra_deps
