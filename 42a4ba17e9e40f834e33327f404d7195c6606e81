@@ -52,6 +52,24 @@
       "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22c47057_381a8f13",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 1415,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-13T08:15:24Z",
+      "side": 1,
+      "message": "No problem. Will revert the last patch before landing.",
+      "parentUuid": "41d332a4_f0aee548",
+      "revId": "42a4ba17e9e40f834e33327f404d7195c6606e81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
