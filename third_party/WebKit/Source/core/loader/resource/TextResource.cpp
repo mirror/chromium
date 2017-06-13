@@ -6,6 +6,7 @@
 
 #include "core/html/parser/TextResourceDecoder.h"
 #include "platform/SharedBuffer.h"
+#include "platform/loader/fetch/FetchParameters.h"
 #include "platform/wtf/text/StringBuilder.h"
 
 namespace blink {
@@ -26,6 +27,15 @@ void TextResource::SetEncoding(const String& chs) {
 
 String TextResource::Encoding() const {
   return decoder_->Encoding().GetName();
+}
+
+bool TextResource::CanReuse(const FetchParameters& params) const {
+  if (!params.Charset())
+    return true;
+
+  return decoder_->Encoding() ==
+         TextResourceDecoder::DefaultEncoding(
+             TextResourceDecoder::kPlainTextContent, params.Charset());
 }
 
 String TextResource::DecodedText() const {

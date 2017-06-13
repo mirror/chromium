@@ -21,6 +21,7 @@ class CORE_EXPORT TextResource : public Resource {
 
   void SetEncoding(const String&) override;
   String Encoding() const override;
+  bool CanReuse(const FetchParameters&) const final;
 
  protected:
   TextResource(const ResourceRequest&,

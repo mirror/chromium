@@ -90,6 +90,17 @@ class CORE_EXPORT TextResourceDecoder {
   bool SawError() const { return saw_error_; }
   size_t CheckForBOM(const char*, size_t);
 
+  enum ContentType {
+    kPlainTextContent,
+    kHTMLContent,
+    kXMLContent,
+    kCSSContent
+  };  // PlainText only checks for BOM.
+  static ContentType DetermineContentType(const String& mime_type);
+  static const WTF::TextEncoding& DefaultEncoding(
+      ContentType,
+      const WTF::TextEncoding& default_encoding);
+
  protected:
   // TextResourceDecoder does three kind of encoding detection:
   // 1. By BOM,
@@ -117,17 +128,6 @@ class CORE_EXPORT TextResourceDecoder {
                       const KURL& hint_url);
 
  private:
-  enum ContentType {
-    kPlainTextContent,
-    kHTMLContent,
-    kXMLContent,
-    kCSSContent
-  };  // PlainText only checks for BOM.
-  static ContentType DetermineContentType(const String& mime_type);
-  static const WTF::TextEncoding& DefaultEncoding(
-      ContentType,
-      const WTF::TextEncoding& default_encoding);
-
   bool CheckForCSSCharset(const char*, size_t, bool& moved_data_to_buffer);
   bool CheckForXMLCharset(const char*, size_t, bool& moved_data_to_buffer);
   void CheckForMetaCharset(const char*, size_t);
