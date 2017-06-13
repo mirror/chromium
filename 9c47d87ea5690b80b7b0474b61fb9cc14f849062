@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "98f5d670_493c2d10",
+        "filename": "components/offline_pages/core/offline_page_model_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 851,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-13T18:27:34Z",
+      "side": 1,
+      "message": "is it better to do this check inside CheckMetadataConsistency?",
+      "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
