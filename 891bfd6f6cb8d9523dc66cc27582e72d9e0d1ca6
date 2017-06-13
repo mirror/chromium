@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "773bee32_9e871e3b",
+        "filename": "extensions/browser/sandboxed_unpacker_unittest.cc",
+        "patchSetId": 20
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002272
+      },
+      "writtenOn": "2017-06-13T11:31:28Z",
+      "side": 1,
+      "message": "Should this still be here?",
+      "range": {
+        "startLine": 139,
+        "startChar": 52,
+        "endLine": 139,
+        "endChar": 68
+      },
+      "revId": "891bfd6f6cb8d9523dc66cc27582e72d9e0d1ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
