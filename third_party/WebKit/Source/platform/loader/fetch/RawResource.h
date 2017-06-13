@@ -53,8 +53,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
 
   // Exposed for testing
   static RawResource* Create(const ResourceRequest& request, Type type) {
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
+    ResourceLoaderOptions options;
     return new RawResource(request, type, options);
   }
 

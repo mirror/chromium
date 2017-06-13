@@ -211,10 +211,12 @@ void SVGUseElement::UpdateTargetReference() {
       (resource_ &&
        EqualIgnoringFragmentIdentifier(resolved_url, resource_->Url())))
     return;
-  ResourceLoaderOptions options(kAllowStoredCredentials,
-                                kClientRequestedCredentials);
+
+  ResourceLoaderOptions options;
   options.initiator_info.name = localName();
+
   FetchParameters params(ResourceRequest(resolved_url), options);
+
   SetDocumentResource(
       DocumentResource::FetchSVGDocument(params, GetDocument().Fetcher()));
 }

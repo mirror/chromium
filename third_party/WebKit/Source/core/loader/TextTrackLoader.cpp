@@ -126,9 +126,9 @@ bool TextTrackLoader::Load(const KURL& url,
                            CrossOriginAttributeValue cross_origin) {
   CancelLoad();
 
-  ResourceLoaderOptions options(kAllowStoredCredentials,
-                                kClientRequestedCredentials);
+  ResourceLoaderOptions options;
   options.initiator_info.name = FetchInitiatorTypeNames::texttrack;
+
   FetchParameters cue_fetch_params(ResourceRequest(url), options);
 
   if (cross_origin != kCrossOriginAttributeNotSet) {
