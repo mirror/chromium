@@ -19,7 +19,8 @@
 namespace blink {
 
 void PaintController::SetTracksRasterInvalidations(bool value) {
-  if (value) {
+  if (value ||
+      RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
     raster_invalidation_tracking_info_ =
         WTF::MakeUnique<RasterInvalidationTrackingInfo>();
 
@@ -30,19 +31,8 @@ void PaintController::SetTracksRasterInvalidations(bool value) {
       raster_invalidation_tracking_info_->old_client_debug_names.Set(
           &item.Client(), item.Client().DebugName());
     }
-  } else if (!RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled()) {
+  } else {
     raster_invalidation_tracking_info_ = nullptr;
-  }
-
-  for (auto& chunk : current_paint_artifact_.PaintChunks())
-    chunk.raster_invalidation_tracking.clear();
-}
-
-void PaintController::SetupRasterUnderInvalidationChecking() {
-  if (RuntimeEnabledFeatures::PaintUnderInvalidationCheckingEnabled() &&
-      !raster_invalidation_tracking_info_) {
-    raster_invalidation_tracking_info_ =
-        WTF::MakeUnique<RasterInvalidationTrackingInfo>();
   }
 }
 
@@ -565,6 +555,8 @@ void PaintController::CommitNewDisplayItems() {
       !new_display_item_list_.IsEmpty())
     GenerateRasterInvalidations(new_paint_chunks_.LastChunk());
 
+  int num_slow_paths = 0;
+
   current_cache_generation_ =
       DisplayItemClient::CacheGenerationOrInvalidationReason::Next();
 
@@ -576,6 +568,8 @@ void PaintController::CommitNewDisplayItems() {
 
   Vector<const DisplayItemClient*> skipped_cache_clients;
   for (const auto& item : new_display_item_list_) {
+    num_slow_paths += item.NumberOfSlowPaths();
+
     if (item.IsCacheable()) {
       item.Client().SetDisplayItemsCached(current_cache_generation_);
     } else {
@@ -592,9 +586,13 @@ void PaintController::CommitNewDisplayItems() {
   // The new list will not be appended to again so we can release unused memory.
   new_display_item_list_.ShrinkToFit();
 
+  if (raster_invalidation_tracking_info_) {
+    for (const auto& chunk : current_paint_artifact_.PaintChunks())
+      raster_invalidation_tracking_info_->map.Remove(&chunk);
+  }
   current_paint_artifact_ =
       PaintArtifact(std::move(new_display_item_list_),
-                    new_paint_chunks_.ReleasePaintChunks());
+                    new_paint_chunks_.ReleasePaintChunks(), num_slow_paths);
 
   ResetCurrentListIndices();
   out_of_order_item_indices_.clear();
@@ -653,7 +651,6 @@ void PaintController::AppendDebugDrawingAfterCommit(
     const DisplayItemClient& display_item_client,
     sk_sp<PaintRecord> record,
     const FloatRect& record_bounds) {
-  DCHECK(!RuntimeEnabledFeatures::SlimmingPaintV2Enabled());
   DCHECK(new_display_item_list_.IsEmpty());
   DrawingDisplayItem& display_item =
       current_paint_artifact_.GetDisplayItemList()
@@ -750,7 +747,8 @@ void PaintController::TrackRasterInvalidation(const DisplayItemClient& client,
     info.client_debug_name = client.DebugName();
   }
 
-  chunk.raster_invalidation_tracking.push_back(info);
+  raster_invalidation_tracking_info_->map.Add(&chunk).invalidations.push_back(
+      info);
 }
 
 void PaintController::GenerateRasterInvalidationsComparingChunks(
