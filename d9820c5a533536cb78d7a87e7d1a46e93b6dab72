@@ -93,6 +93,30 @@
       "revId": "d9820c5a533536cb78d7a87e7d1a46e93b6dab72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c51785f5_641582b5",
+        "filename": "mojo/common/memory_allocator_dump_guid.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T06:58:55Z",
+      "side": 1,
+      "message": "I\u0027d be OK as long as this struct is called whatever we expect the final name to be.",
+      "parentUuid": "615100f7_8b4c10cb",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "d9820c5a533536cb78d7a87e7d1a46e93b6dab72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
