@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "909d5d3c_e8dbd99a",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1905,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-13T13:29:47Z",
+      "side": 1,
+      "message": "s/Intersection/DurationOfIntervalOverlap ?",
+      "range": {
+        "startLine": 1905,
+        "startChar": 16,
+        "endLine": 1905,
+        "endChar": 28
+      },
+      "revId": "8f07514f1b17dfa21f4979ee5c15aa8f55a35dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "871c0321_a25d22dd",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 1948,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-13T13:29:47Z",
+      "side": 1,
+      "message": "Could you please comment why 1 minute?",
+      "range": {
+        "startLine": 1948,
+        "startChar": 25,
+        "endLine": 1948,
+        "endChar": 36
+      },
+      "revId": "8f07514f1b17dfa21f4979ee5c15aa8f55a35dbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
