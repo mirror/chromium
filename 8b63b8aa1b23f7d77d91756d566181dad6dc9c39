@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51fc77c4_d40baa77",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-13T08:52:07Z",
+      "side": 1,
+      "message": "Can we have a thread check here (partly for documentation purpose)",
+      "revId": "8b63b8aa1b23f7d77d91756d566181dad6dc9c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
