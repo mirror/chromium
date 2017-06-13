@@ -192,6 +192,8 @@ blink_core_sources("dom") {
     "LayoutTreeBuilder.h",
     "LayoutTreeBuilderTraversal.cpp",
     "LayoutTreeBuilderTraversal.h",
+    "LinkHighlightImpl.cpp",
+    "LinkHighlightImpl.h",
     "LiveNodeList.cpp",
     "LiveNodeList.h",
     "LiveNodeListBase.cpp",
