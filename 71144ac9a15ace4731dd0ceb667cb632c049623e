@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a0785ee_0e5928fd",
+        "filename": "components/password_manager/core/browser/login_database.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 538,
+      "author": {
+        "id": 1217169
+      },
+      "writtenOn": "2017-06-13T08:37:59Z",
+      "side": 1,
+      "message": "You\u0027re right, it would be nice to do the recovery during database working.\nBut it is not conflict to this CL. Later someone will make the second part of work.\nIf necessary I can create a new ticket to implement second part of work.",
+      "parentUuid": "2b012a6e_9265b64d",
+      "range": {
+        "startLine": 538,
+        "startChar": 19,
+        "endLine": 538,
+        "endChar": 51
+      },
+      "revId": "71144ac9a15ace4731dd0ceb667cb632c049623e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32ec67fc_8fbf624f",
         "filename": "sql/utils.cc",
         "patchSetId": 2
