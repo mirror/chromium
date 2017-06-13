@@ -1,0 +1,279 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97aad562_924d588b",
+        "filename": "base/message_loop/message_loop.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 468,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "// Enables the SequenceLocalStorageSlot API within its scope. Instantiated in BindToCurrentThread().",
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68082de2_4cde2988",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "to",
+      "range": {
+        "startLine": 1047,
+        "startChar": 28,
+        "endLine": 1047,
+        "endChar": 30
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1082b36a_4db86575",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1047,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "access",
+      "range": {
+        "startLine": 1047,
+        "startChar": 52,
+        "endLine": 1047,
+        "endChar": 60
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "abdd46fd_1f810134",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1056,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "Instead of making a single call to a method within a lambda, you can directly bind a call to that method:\n\nThreadTaskRunnerHandle::Get()-\u003ePostTask(FROM_HERE, BindOnce(\u0026SequenceLocalStorageSlot\u003cint\u003e::Set, Unretained(\u0026slot), 11));",
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3481e2b1_393700d6",
+        "filename": "base/message_loop/message_loop_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "Also verify that:\n- Code running within the scope of the MessageLoop but outside of a task can access the value.\n- Code running within the scope of a different MessageLoop doesn\u0027t see the value.",
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d076d07f_453a6574",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "Move this into the body of the constructor.",
+      "range": {
+        "startLine": 25,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 39
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "228ae8cc_41ff1440",
+        "filename": "base/threading/sequence_local_storage_map.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "// Restore the previous value in |tls_current_sequence_local_storage|.",
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ffea9513_19c7238a",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "Remove this comment since it\u0027s currently wrong.",
+      "range": {
+        "startLine": 76,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 33
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1888a124_b22eac4c",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "|old_sequence_local_storage|",
+      "range": {
+        "startLine": 78,
+        "startChar": 27,
+        "endLine": 78,
+        "endChar": 53
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba3805fe_9a54924d",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "to be scoped -\u003e per thread ?",
+      "range": {
+        "startLine": 79,
+        "startChar": 52,
+        "endLine": 79,
+        "endChar": 64
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af03201c_1402b684",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "SequenceLocalStorageMap* const previous_sequence_local_storage_;\n\nAdd trailing underscore to variable name.\nAdd const.\nDo not initialize with nullptr since the constructor always initializes this member.",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 64
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcc55637_be652c2e",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "To be more accurate:\n\nThere is a ScopedSetSequenceLocalStorageMapForCurrentThread in the scope of a MessageLoop and in the scope in which TaskScheduler runs its tasks.",
+      "range": {
+        "startLine": 50,
+        "startChar": 3,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75eb19d3_64b64a36",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-13T18:56:41Z",
+      "side": 1,
+      "message": "One paragraph for all of this.",
+      "range": {
+        "startLine": 47,
+        "startChar": 0,
+        "endLine": 51,
+        "endChar": 59
+      },
+      "revId": "0baae2f61274b804ed88f1d7941ff0e535e2d035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
