@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2805c7e2_84d6f2cc",
+        "filename": "services/resource_coordinator/tracing/agent_registry.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4451d9d6_c762446e",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3051bfa5_b6a05b3a",
         "filename": "services/resource_coordinator/tracing/agent_registry.h",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1286d39a_05ce2ea4",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3051bfa5_b6a05b3a",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "80bf0369_c5d433e3",
         "filename": "services/resource_coordinator/tracing/agent_registry.h",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-09T06:12:41Z",
       "side": 1,
       "message": "Why is this needed when there can just be a single Coordinator?",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c18a553c_ce0e8d57",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "These closures run when an agent disconnects. True, there is only one Coordinator; but it can install several disconnect closures. For example, the Coordinator can install a disconnect closure when it calls StartTracing on an agent and install another closure when it calls RequestBufferUsage before receiving a response for the StartTracing call. In that case, when the agent disconnects, we should wrap up the pending work for both StartTracing and RequestBufferUsage calls.",
+      "parentUuid": "80bf0369_c5d433e3",
       "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ea9caa10_b4a3af6a",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3dd6cde_32d5bddf",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbe783ec_ed9f4ba6",
         "filename": "services/resource_coordinator/tracing/coordinator.cc",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "50b84c53_5a61fe37",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dbe783ec_ed9f4ba6",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27718cbd_2d30cdfe",
         "filename": "services/resource_coordinator/tracing/coordinator.cc",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-09T06:12:41Z",
       "side": 1,
       "message": "I guess this is in later CLs, but: wouldn\u0027t this make more sense as a leaky singleton?\n\nOr even lazily created as a local static in Coordinator::GetInstance() to simplify things a bit; no need for the global and the DCHECK(!g_coordinator) at that point with a private constructor etc.",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "646dba78_50e7e11d",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "IMHO the code will be easier to debug and understand if it\u0027s clear where exactly the Coordinator is created. So, I prefer to try to explicitly call the ctor in just one place and call GetInstance everywhere else, as opposed to calling GetInstance everywhere and then the reader is not sure which one actually creates the instance.",
+      "parentUuid": "27718cbd_2d30cdfe",
       "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "36b1d625_59031426",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Should we really assume that the agent may neither reply nor disconnect? I\u0027m not sure about the answer. It looks like the current tracing controller sometimes makes that assumption (for StartTracing) and sometimes assumes that clients behave (no timeout for GetTraceBufferUsage).\n\nI\u0027m OK either way, but I think we should either always assume that agents behave and don\u0027t make the Coordinator code completely unnecessarily, or always assume that agents may misbehave. wdyt?",
+      "parentUuid": "3fed002c_6464aca9",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "990c480d_1b78e3e0",
         "filename": "services/resource_coordinator/tracing/coordinator.cc",
         "patchSetId": 3
@@ -135,6 +261,24 @@
       "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44a258fb_a1285de5",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "I agree, but note that the callback is usually used 2 times: once as a disconnect callback and once is passed to the actually Mojo call. e.g.\n\n1- agent_entry-\u003eAddDisconnectClosure(closure_id, \u003cCALLBACK\u003e);\n2- agent_entry-\u003eagent()-\u003eStartTracing(..., \u003cCALLBACK\u003e);\n\nAnd if I do it like you said, then I have to use two different functions in the above two cases that only differ in input parameter ordering (in cases that the callback has parameters, like in RequestBufferUsage) which looks even more redundant.",
+      "parentUuid": "990c480d_1b78e3e0",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "68d33ebd_3a80cd2c",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8e6e2dc2_94e9a0e1",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd6506b_3dc85232",
         "filename": "services/resource_coordinator/tracing/coordinator.cc",
         "patchSetId": 3
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "d6caed38_1ae4b6d6",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd6506b_3dc85232",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e25138ea_f33b5ff9",
         "filename": "services/resource_coordinator/tracing/coordinator.cc",
         "patchSetId": 3
@@ -186,6 +366,24 @@
       "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa5018f8_fb9e9571",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e25138ea_f33b5ff9",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -220,6 +418,24 @@
       "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8839254_0d175059",
+        "filename": "services/resource_coordinator/tracing/coordinator.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-13T16:26:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9abd551_e200e26b",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
