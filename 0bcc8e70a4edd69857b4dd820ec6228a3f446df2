@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "19b4daaf_02e085bf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T16:23:01Z",
+      "side": 1,
+      "message": "Yeah, I\u0027m not sure if waitForIdleSync would help, but it doesn\u0027t seem to imply that it would wait for at least one frame, and I don\u0027t know how drawing fits into the idling mechanism. It all feels a bit brittle...",
+      "parentUuid": "f6a97658_8044382c",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec5df590_67db6369",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 5
@@ -282,6 +306,30 @@
       "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9037f55_dfb29131",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-13T16:23:01Z",
+      "side": 1,
+      "message": "The thing is, it\u0027s pretty easy to just create a real one, so there is no need for abstraction or divergent behavior for tests.",
+      "parentUuid": "c7506dc0_c387ad4a",
+      "range": {
+        "startLine": 201,
+        "startChar": 46,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
