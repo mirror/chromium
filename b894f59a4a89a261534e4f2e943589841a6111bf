@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21da92ea_b76196bb",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-13T14:04:07Z",
+      "side": 1,
+      "message": "if this throws an exception, we used to system.exit(-1) (since it\u0027s treated as library load failure), but now it just throws an exception\n\nnot sure if changing this to exception is ok though..",
+      "revId": "b894f59a4a89a261534e4f2e943589841a6111bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
