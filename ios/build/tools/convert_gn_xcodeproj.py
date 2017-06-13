@@ -28,6 +28,7 @@ import tempfile
 
 
 XCTEST_PRODUCT_TYPE = 'com.apple.product-type.bundle.unit-test'
+XCUITEST_PRODUCT_TYPE = 'com.apple.product-type.bundle.ui-testing'
 
 
 class XcodeProject(object):
@@ -88,7 +89,8 @@ def UpdateProductsProject(file_input, file_output, configurations):
   project = XcodeProject(json_data['objects'])
 
   objects_to_remove = []
-  for value in project.objects.values():
+  for key in project.objects.keys():
+    value = project.objects[key]
     isa = value['isa']
 
     # TODO(crbug.com/619072): gn does not write the min deployment target in the
@@ -104,7 +106,14 @@ def UpdateProductsProject(file_input, file_output, configurations):
     if isa == 'PBXShellScriptBuildPhase':
       value['shellScript'] = value['shellScript'].replace(
           'ninja -C .',
-          'ninja -C "../${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}"')
+          'ninja -C "/Users/liaoyuke/bling/src/out/${CONFIGURATION}${EFFECTIVE_PLATFORM_NAME}"')
+
+    if isa == 'PBXNativeTarget' and value['productType'] == XCUITEST_PRODUCT_TYPE:
+      configuration_list = project.objects[value['buildConfigurationList']]
+      for config_name in configuration_list['buildConfigurations']:
+        config = project.objects[config_name]
+        if not config['buildSettings'].get('TEST_TARGET_NAME'):
+          config['buildSettings']['TEST_TARGET_NAME'] = 'chrome'
 
     # Configure BUNDLE_LOADER and TEST_HOST for xctest targets (if not yet
     # configured by gn). Old convention was to name the test dynamic module
@@ -138,6 +147,30 @@ def UpdateProductsProject(file_input, file_output, configurations):
         value['buildConfigurations'].append(
             project.AddObject('products', new_build_config))
 
+  pbxproject_key = ''
+  for key in project.objects.keys():
+    if project.objects[key]['isa'] == 'PBXProject':
+      pbxproject_key = key
+      break
+
+  for key in project.objects.keys():
+    value = project.objects[key]
+    isa = value['isa']
+
+    if isa == 'PBXNativeTarget' and value['name'] == 'xcuitests-Runner':
+      value['name'] = 'xcuitests'
+
+    if isa == 'PBXNativeTarget' and value['name'] == 'xcuitests_module':
+      objects_to_remove.append(key)
+      objects_to_remove.extend(value['buildPhases'])
+      objects_to_remove.extend(value['dependencies'])
+      objects_to_remove.append(value['buildConfigurationList'])
+      build_config_list_key = value['buildConfigurationList']
+      objects_to_remove.extend(project.objects[build_config_list_key]['buildConfigurations'])
+
+      pbxproject_targets = project.objects[pbxproject_key]['targets']
+      pbxproject_targets.remove(key)
+
   for object_id in objects_to_remove:
     del project.objects[object_id]
 
@@ -162,6 +195,7 @@ def ConvertGnXcodeProject(input_dir, output_dir, configurations):
       least one value.
   '''
   # Update products project.
+
   products = os.path.join('products.xcodeproj', 'project.pbxproj')
   product_input = os.path.join(input_dir, products)
   product_output = os.path.join(output_dir, products)
