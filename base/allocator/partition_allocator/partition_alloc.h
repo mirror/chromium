@@ -67,6 +67,7 @@
 #include "base/bits.h"
 #include "base/compiler_specific.h"
 #include "base/logging.h"
+#include "base/synchronization/lock.h"
 #include "base/sys_byteorder.h"
 #include "build/build_config.h"
 
@@ -338,7 +339,7 @@ struct PartitionRoot : public PartitionRootBase {
 // Never instantiate a PartitionRootGeneric directly, instead use
 // PartitionAllocatorGeneric.
 struct PartitionRootGeneric : public PartitionRootBase {
-  subtle::SpinLock lock;
+  char lock[sizeof(base::Lock)];
   // Some pre-computed constants.
   size_t order_index_shifts[kBitsPerSizeT + 1];
   size_t order_sub_index_masks[kBitsPerSizeT + 1];
@@ -350,6 +351,8 @@ struct PartitionRootGeneric : public PartitionRootBase {
   PartitionBucket*
       bucket_lookups[((kBitsPerSizeT + 1) * kGenericNumBucketsPerOrder) + 1];
   PartitionBucket buckets[kGenericNumBuckets];
+
+  base::Lock& get_lock() { return *reinterpret_cast<base::Lock*>(&lock); }
 };
 
 // Flags for PartitionAllocGenericFlags.
@@ -799,7 +802,7 @@ ALWAYS_INLINE void* PartitionAllocGenericFlags(PartitionRootGeneric* root,
   PartitionBucket* bucket = PartitionGenericSizeToBucket(root, size);
   void* ret = nullptr;
   {
-    subtle::SpinLock::Guard guard(root->lock);
+    base::AutoLock al(root->get_lock());
     ret = PartitionBucketAlloc(root, flags, size, bucket);
   }
   PartitionAllocHooks::AllocationHookIfEnabled(ret, requested_size, type_name);
@@ -828,7 +831,7 @@ ALWAYS_INLINE void PartitionFreeGeneric(PartitionRootGeneric* root, void* ptr) {
   // TODO(palmer): See if we can afford to make this a CHECK.
   DCHECK(PartitionPagePointerIsValid(page));
   {
-    subtle::SpinLock::Guard guard(root->lock);
+    base::AutoLock al(root->get_lock());
     PartitionFreeWithPage(ptr, page);
   }
 #endif

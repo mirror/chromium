@@ -159,7 +159,8 @@ void PartitionAllocInit(PartitionRoot* root,
 }
 
 void PartitionAllocGenericInit(PartitionRootGeneric* root) {
-  subtle::SpinLock::Guard guard(root->lock);
+  new (root->lock) base::Lock();
+  base::AutoLock al(root->get_lock());
 
   PartitionAllocBaseInit(root);
 
@@ -1221,7 +1222,7 @@ void PartitionPurgeMemory(PartitionRoot* root, int flags) {
 }
 
 void PartitionPurgeMemoryGeneric(PartitionRootGeneric* root, int flags) {
-  subtle::SpinLock::Guard guard(root->lock);
+  base::AutoLock al(root->get_lock());
   if (flags & PartitionPurgeDecommitEmptyPages)
     PartitionDecommitEmptyPages(root);
   if (flags & PartitionPurgeDiscardUnusedSystemPages) {
@@ -1336,7 +1337,7 @@ void PartitionDumpStatsGeneric(PartitionRootGeneric* partition,
   PartitionBucketMemoryStats bucket_stats[kGenericNumBuckets];
   size_t num_direct_mapped_allocations = 0;
   {
-    subtle::SpinLock::Guard guard(partition->lock);
+    base::AutoLock al(partition->get_lock());
 
     for (size_t i = 0; i < kGenericNumBuckets; ++i) {
       const PartitionBucket* bucket = &partition->buckets[i];
