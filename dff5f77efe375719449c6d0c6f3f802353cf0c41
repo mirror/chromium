@@ -16,6 +16,24 @@
       "revId": "dff5f77efe375719449c6d0c6f3f802353cf0c41",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34ba03bf_7a71b7ea",
+        "filename": "third_party/WebKit/Source/core/loader/FrameFetchContext.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-13T09:29:09Z",
+      "side": 1,
+      "message": "Yes. I was thinking I should minimize the diff to make this simpler to merge back, but if we have to merge it back to stable we\u0027re going to have to rewrite it anyway since `BaseFetchContext` didn\u0027t exist in M59. Bleh.\n\nI\u0027ll drop the runtime thingie.",
+      "parentUuid": "456c8c6d_187b4187",
+      "revId": "dff5f77efe375719449c6d0c6f3f802353cf0c41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
