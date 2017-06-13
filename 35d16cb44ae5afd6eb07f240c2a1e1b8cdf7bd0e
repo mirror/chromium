@@ -22,6 +22,30 @@
       "revId": "35d16cb44ae5afd6eb07f240c2a1e1b8cdf7bd0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a71739c_8123b350",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-13T00:56:10Z",
+      "side": 1,
+      "message": "WakeUps may still be requested by an dedicated SingleThreadTaskRunner. Because STTR\u0027s directly work with their SchedulerWorkers, they don\u0027t have a notion of a started or stopped SchedulerWorker. \n\nThe only component that knows the Started state is the SingleThreadTaskRunnerManager, which does not keep track of SingleThreadTaskRunners by design because maintain a strong ref would basically \"leak\" the STTR when the last external reference was released. As a result, it cannot notify STTRs of the Started state and we have to no-op WakeUps when SchedulerWorker isn\u0027t started.",
+      "parentUuid": "4909f130_ee0b2cc1",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 35
+      },
+      "revId": "35d16cb44ae5afd6eb07f240c2a1e1b8cdf7bd0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
