@@ -9,6 +9,8 @@
 #include "components/payments/core/strings_util.h"
 #include "ios/chrome/browser/payments/payment_request.h"
 #import "ios/chrome/browser/payments/payment_request_util.h"
+#import "ios/chrome/browser/ui/payments/cells/autofill_profile_item.h"
+
 #include "ios/chrome/browser/ui/payments/payment_request_selector_view_controller.h"
 #include "ios/chrome/browser/ui/payments/shipping_address_selection_mediator.h"
 
@@ -102,9 +104,24 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
   // Update the data source with the selection.
   self.mediator.selectedItemIndex = index;
 
-  DCHECK(index < self.paymentRequest->shipping_profiles().size());
-  [self delayedNotifyDelegateOfSelection:self.paymentRequest
-                                             ->shipping_profiles()[index]];
+  // Proceed with item selection only if the item has all required
+  // info.
+  if (((CollectionViewItem<PaymentsHasEditableInfoType>*)
+           self.mediator.selectableItems[index])
+          .complete) {
+    DCHECK(index < self.paymentRequest->shipping_profiles().size());
+    [self delayedNotifyDelegateOfSelection:self.paymentRequest
+                                               ->shipping_profiles()[index]];
+  } else {
+    self.addressEditCoordinator = [[AddressEditCoordinator alloc]
+        initWithBaseViewController:self.viewController];
+    self.addressEditCoordinator.paymentRequest = self.paymentRequest;
+    self.addressEditCoordinator.address =
+        self.paymentRequest->shipping_profiles()[index];
+    self.paymentRequest->shipping_profiles()[index];
+    self.addressEditCoordinator.delegate = self;
+    [self.addressEditCoordinator start];
+  }
 }
 
 - (void)paymentRequestSelectorViewControllerDidFinish:
@@ -127,6 +144,12 @@ const int64_t kDelegateNotificationDelayInNanoSeconds = 0.2 * NSEC_PER_SEC;
        didFinishEditingAddress:(autofill::AutofillProfile*)address {
   [self.addressEditCoordinator stop];
   self.addressEditCoordinator = nil;
+
+  // Mark the item as complete meaning all required information has been
+  // filled out.
+  ((CollectionViewItem<PaymentsHasEditableInfoType>*)
+       self.mediator.selectableItems[self.mediator.selectedItemIndex])
+      .complete = YES;
 
   // Inform |self.delegate| that |address| has been selected.
   [self.delegate shippingAddressSelectionCoordinator:self
