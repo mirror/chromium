@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af39416_ef45efbe",
+        "filename": "content/browser/devtools/devtools_frontend_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "DCHECK(!frame-\u003eIsMainFrame());",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d13d50e_c7493f80",
+        "filename": "content/renderer/devtools/devtools_agent.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "Outdated comment.",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45cded29_85bb25ff",
+        "filename": "content/renderer/devtools/devtools_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "missing {}",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453c5a04_1052b41d",
+        "filename": "content/shell/common/layout_test/layout_test_content_client.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "This may manifest on android perf bots.",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7530809_54ae63fa",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions/extensions-events.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "Does this even work? I thought nothing outside of http is accessible from http test.",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d63af62e_14ddba17",
+        "filename": "third_party/WebKit/Source/web/WebDevToolsFrontendImpl.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:20:07Z",
+      "side": 1,
+      "message": "if (web_frame_ !\u003d frame)\n  return;",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
