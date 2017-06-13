@@ -56,6 +56,10 @@ class CONTENT_EXPORT VideoCaptureManager
   explicit VideoCaptureManager(
       std::unique_ptr<VideoCaptureProvider> video_capture_provider);
 
+  // Shuts down all internal modules and threads. Invokes |done_cb| when
+  // finished, potentially synchronously.
+  void Shutdown(base::OnceClosure done_cb);
+
   // AddVideoCaptureObserver() can be called only before any devices are opened.
   // RemoveAllVideoCaptureObservers() can be called only after all devices
   // are closed.
@@ -250,6 +254,7 @@ class CONTENT_EXPORT VideoCaptureManager
                         VideoCaptureController* controller,
                         const media::VideoCaptureParams& params);
   void DoStopDevice(VideoCaptureController* controller);
+  void OnDeviceReleased(scoped_refptr<VideoCaptureController> controller);
   void ProcessDeviceStartRequestQueue();
 
   void MaybePostDesktopCaptureWindowId(media::VideoCaptureSessionId session_id);
@@ -280,6 +285,13 @@ class CONTENT_EXPORT VideoCaptureManager
   // TODO(chfremer): Consider using CancellableTaskTracker, see
   // crbug.com/598465.
   DeviceStartQueue device_start_request_queue_;
+  bool stop_processing_device_start_requests_;
+
+  // Number of controllers for which we have issued ReleaseDeviceAsync(done_cb)
+  // calls, but which have not yet invoked |done_cb|.
+  int devices_releasing_count_;
+
+  base::OnceClosure devices_releasing_count_reached_zero_cb_;
 
   // Queue to keep photo-associated requests waiting for a device to initialize,
   // bundles a session id integer and an associated photo-related request.

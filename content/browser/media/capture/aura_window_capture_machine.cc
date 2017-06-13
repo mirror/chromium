@@ -136,16 +136,15 @@ void AuraWindowCaptureMachine::InternalResume() {
   MaybeCaptureForRefresh();
 }
 
-void AuraWindowCaptureMachine::Stop(const base::Closure& callback) {
+void AuraWindowCaptureMachine::Stop(base::OnceClosure done_cb) {
   // Stops the capture machine asynchronously.
   BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE, base::Bind(
-          &AuraWindowCaptureMachine::InternalStop,
-          base::Unretained(this),
-          callback));
+      BrowserThread::UI, FROM_HERE,
+      base::Bind(&AuraWindowCaptureMachine::InternalStop,
+                 base::Unretained(this), base::Passed(&done_cb)));
 }
 
-void AuraWindowCaptureMachine::InternalStop(const base::Closure& callback) {
+void AuraWindowCaptureMachine::InternalStop(base::OnceClosure done_cb) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   // Cancel any and all outstanding callbacks owned by external modules.
@@ -164,7 +163,7 @@ void AuraWindowCaptureMachine::InternalStop(const base::Closure& callback) {
     cursor_renderer_.reset();
   }
 
-  callback.Run();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void AuraWindowCaptureMachine::MaybeCaptureForRefresh() {

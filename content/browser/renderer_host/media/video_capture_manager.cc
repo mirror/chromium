@@ -104,11 +104,28 @@ VideoCaptureManager::CaptureDeviceStartRequest::CaptureDeviceStartRequest(
 VideoCaptureManager::VideoCaptureManager(
     std::unique_ptr<VideoCaptureProvider> video_capture_provider)
     : new_capture_session_id_(1),
+      stop_processing_device_start_requests_(false),
+      devices_releasing_count_(0),
       video_capture_provider_(std::move(video_capture_provider)) {}
 
 VideoCaptureManager::~VideoCaptureManager() {
   DCHECK(controllers_.empty());
   DCHECK(device_start_request_queue_.empty());
+}
+
+void VideoCaptureManager::Shutdown(base::OnceClosure done_cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  DCHECK(controllers_.empty());
+  stop_processing_device_start_requests_ = true;
+  if (devices_releasing_count_ == 0) {
+    DVLOG(1) << "No devices are releasing, so we don't need to wait";
+    base::ResetAndReturn(&done_cb).Run();
+    return;
+  }
+  DVLOG(1) << "Waiting for " << devices_releasing_count_ << " devices to finish"
+           << " releasing";
+  // Invoke |done_cb| when devices have shut down.
+  devices_releasing_count_reached_zero_cb_ = std::move(done_cb);
 }
 
 void VideoCaptureManager::AddVideoCaptureObserver(
@@ -257,13 +274,28 @@ void VideoCaptureManager::DoStopDevice(VideoCaptureController* controller) {
   // Since we may be removing |controller| from |controllers_| while
   // ReleaseDeviceAsnyc() is executing, we pass it shared ownership to
   // |controller|.
+  devices_releasing_count_++;
   controller->ReleaseDeviceAsync(
-      base::Bind([](scoped_refptr<VideoCaptureController>) {},
+      base::Bind(&VideoCaptureManager::OnDeviceReleased, this,
                  GetControllerSharedRef(controller)));
+}
+
+void VideoCaptureManager::OnDeviceReleased(
+    scoped_refptr<VideoCaptureController> /*controller*/) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  devices_releasing_count_--;
+  if (devices_releasing_count_ == 0 &&
+      !devices_releasing_count_reached_zero_cb_.is_null()) {
+    base::ResetAndReturn(&devices_releasing_count_reached_zero_cb_).Run();
+  }
 }
 
 void VideoCaptureManager::ProcessDeviceStartRequestQueue() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  if (stop_processing_device_start_requests_)
+    return;
+
   DeviceStartQueue::iterator request = device_start_request_queue_.begin();
   if (request == device_start_request_queue_.end())
     return;

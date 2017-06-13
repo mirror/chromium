@@ -125,6 +125,8 @@ class CONTENT_EXPORT VideoCaptureController
   void CreateAndStartDeviceAsync(const media::VideoCaptureParams& params,
                                  VideoCaptureDeviceLaunchObserver* callbacks,
                                  base::OnceClosure done_cb);
+  // The implementation guarantees that it invokes |done_cb| as soon as the
+  // device and any internal threads it owns have been shut down.
   void ReleaseDeviceAsync(base::OnceClosure done_cb);
   bool IsDeviceAlive() const;
   void GetPhotoCapabilities(
@@ -227,6 +229,7 @@ class CONTENT_EXPORT VideoCaptureController
   std::unique_ptr<VideoCaptureDeviceLauncher> device_launcher_;
   std::unique_ptr<LaunchedVideoCaptureDevice> launched_device_;
   VideoCaptureDeviceLaunchObserver* device_launch_observer_;
+  base::OnceClosure release_device_done_cb_;
 
   std::vector<BufferContext> buffer_contexts_;
 

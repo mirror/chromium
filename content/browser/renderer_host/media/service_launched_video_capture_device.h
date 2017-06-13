@@ -6,6 +6,7 @@
 #define CONTENT_BROWSER_RENDERER_HOST_MEDIA_SERVICE_LAUNCHED_VIDEO_CAPTURE_DEVICE_H_
 
 #include "content/browser/renderer_host/media/video_capture_provider.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/video_capture/public/interfaces/device.mojom.h"
 
 namespace content {
@@ -14,11 +15,15 @@ namespace content {
 // service.
 class ServiceLaunchedVideoCaptureDevice : public LaunchedVideoCaptureDevice {
  public:
-  ServiceLaunchedVideoCaptureDevice(video_capture::mojom::DevicePtr device,
-                                    base::OnceClosure connection_lost_cb);
+  ServiceLaunchedVideoCaptureDevice(
+      video_capture::mojom::DevicePtr device,
+      std::unique_ptr<video_capture::mojom::Receiver> receiver_adapter,
+      mojo::InterfaceRequest<video_capture::mojom::Receiver> receiver_request,
+      base::OnceClosure connection_lost_cb);
   ~ServiceLaunchedVideoCaptureDevice() override;
 
   // LaunchedVideoCaptureDevice implementation.
+  void ShutdownAsync(base::OnceClosure done_cb) override;
   void GetPhotoCapabilities(
       media::VideoCaptureDevice::GetPhotoCapabilitiesCallback callback)
       const override;
@@ -40,6 +45,8 @@ class ServiceLaunchedVideoCaptureDevice : public LaunchedVideoCaptureDevice {
   void OnLostConnectionToDevice();
 
   video_capture::mojom::DevicePtr device_;
+  std::unique_ptr<video_capture::mojom::Receiver> receiver_;
+  mojo::Binding<video_capture::mojom::Receiver> receiver_binding_;
   base::OnceClosure connection_lost_cb_;
   base::SequenceChecker sequence_checker_;
 };

@@ -38,7 +38,7 @@ class VideoCaptureDeviceLinux : public VideoCaptureDevice {
   // VideoCaptureDevice implementation.
   void AllocateAndStart(const VideoCaptureParams& params,
                         std::unique_ptr<Client> client) override;
-  void StopAndDeAllocate() override;
+  void StopAndDeAllocate(base::OnceClosure done_cb) override;
   void TakePhoto(TakePhotoCallback callback) override;
   void GetPhotoCapabilities(GetPhotoCapabilitiesCallback callback) override;
   void SetPhotoOptions(mojom::PhotoSettingsPtr settings,

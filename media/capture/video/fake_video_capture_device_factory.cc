@@ -75,7 +75,7 @@ class ErrorFakeDevice : public media::VideoCaptureDevice {
     client->OnError(FROM_HERE, "Device has no supported formats.");
   }
 
-  void StopAndDeAllocate() override {}
+  void StopAndDeAllocate(base::OnceClosure done_cb) override {}
   void GetPhotoCapabilities(GetPhotoCapabilitiesCallback callback) override {}
   void SetPhotoOptions(media::mojom::PhotoSettingsPtr settings,
                        SetPhotoOptionsCallback callback) override {}

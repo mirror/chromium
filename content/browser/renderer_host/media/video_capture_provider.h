@@ -51,6 +51,11 @@ class CONTENT_EXPORT VideoCaptureDeviceLauncher {
 class LaunchedVideoCaptureDevice
     : public media::VideoFrameConsumerFeedbackObserver {
  public:
+  // Shuts down the device and invokes |done_cb| as soon as it is guaranteed
+  // that any internal threads have exited and no more frames are sent to
+  // |receiver| set in VideoCaptureDeviceLauncher::LaunchDeviceAsync().
+  virtual void ShutdownAsync(base::OnceClosure done_cb) = 0;
+
   // Device operation methods.
   virtual void GetPhotoCapabilities(
       media::VideoCaptureDevice::GetPhotoCapabilitiesCallback callback)

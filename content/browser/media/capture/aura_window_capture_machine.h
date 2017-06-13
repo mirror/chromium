@@ -42,7 +42,7 @@ class AuraWindowCaptureMachine
              const base::Callback<void(bool)> callback) override;
   void Suspend() override;
   void Resume() override;
-  void Stop(const base::Closure& callback) override;
+  void Stop(base::OnceClosure done_cb) override;
   void MaybeCaptureForRefresh() override;
 
   // Implements aura::WindowObserver.
@@ -67,7 +67,7 @@ class AuraWindowCaptureMachine
       const media::VideoCaptureParams& params);
   void InternalSuspend();
   void InternalResume();
-  void InternalStop(const base::Closure& callback);
+  void InternalStop(base::OnceClosure done_cb);
 
   // Captures a frame. |event_time| is provided by the compositor, or is null
   // for refresh requests.

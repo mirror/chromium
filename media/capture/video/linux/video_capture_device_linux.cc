@@ -76,7 +76,7 @@ void VideoCaptureDeviceLinux::AllocateAndStart(
   photo_requests_queue_.clear();
 }
 
-void VideoCaptureDeviceLinux::StopAndDeAllocate() {
+void VideoCaptureDeviceLinux::StopAndDeAllocate(base::OnceClosure done_cb) {
   if (!v4l2_thread_.IsRunning())
     return;  // Wrong state.
   v4l2_thread_.task_runner()->PostTask(
@@ -86,6 +86,7 @@ void VideoCaptureDeviceLinux::StopAndDeAllocate() {
   v4l2_thread_.Stop();
 
   capture_impl_ = nullptr;
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void VideoCaptureDeviceLinux::TakePhoto(TakePhotoCallback callback) {

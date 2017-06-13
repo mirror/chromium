@@ -18,6 +18,8 @@ class InProcessLaunchedVideoCaptureDevice : public LaunchedVideoCaptureDevice {
       scoped_refptr<base::SingleThreadTaskRunner> device_task_runner);
   ~InProcessLaunchedVideoCaptureDevice() override;
 
+  void ShutdownAsync(base::OnceClosure done_cb) override;
+
   void GetPhotoCapabilities(
       media::VideoCaptureDevice::GetPhotoCapabilitiesCallback callback)
       const override;

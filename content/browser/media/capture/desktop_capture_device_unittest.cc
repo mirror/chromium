@@ -312,7 +312,7 @@ TEST_F(DesktopCaptureDeviceTest, MAYBE_Capture) {
   capture_params.requested_format.pixel_format = media::PIXEL_FORMAT_I420;
   capture_device_->AllocateAndStart(capture_params, std::move(client));
   EXPECT_TRUE(done_event.TimedWait(TestTimeouts::action_max_timeout()));
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 
   EXPECT_GT(format.frame_size.width(), 0);
   EXPECT_GT(format.frame_size.height(), 0);
@@ -364,7 +364,7 @@ TEST_F(DesktopCaptureDeviceTest, ScreenResolutionChangeConstantResolution) {
     done_event.Reset();
   }
 
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Test that screen capturer behaves correctly if the source frame size changes,
@@ -413,7 +413,7 @@ TEST_F(DesktopCaptureDeviceTest, ScreenResolutionChangeFixedAspectRatio) {
     done_event.Reset();
   }
 
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Test that screen capturer behaves correctly if the source frame size changes
@@ -462,7 +462,7 @@ TEST_F(DesktopCaptureDeviceTest, ScreenResolutionChangeVariableResolution) {
     done_event.Reset();
   }
 
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // This test verifies that an unpacked frame is converted to a packed frame.
@@ -501,7 +501,7 @@ TEST_F(DesktopCaptureDeviceTest, UnpackedFrame) {
 
   EXPECT_TRUE(done_event.TimedWait(TestTimeouts::action_max_timeout()));
   done_event.Reset();
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 
   // Verifies that |output_frame_| has the same data as a packed frame of the
   // same size.
@@ -548,7 +548,7 @@ TEST_F(DesktopCaptureDeviceTest, InvertedFrame) {
 
   EXPECT_TRUE(done_event.TimedWait(TestTimeouts::action_max_timeout()));
   done_event.Reset();
-  capture_device_->StopAndDeAllocate();
+  capture_device_->StopAndDeAllocate(base::Bind(&base::DoNothing));
 
   // Verifies that |output_frame_| has the same pixel values as the inverted
   // frame.

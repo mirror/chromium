@@ -1213,6 +1213,11 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
     midi_service_->Shutdown();
   }
 
+  {
+    base::ThreadRestrictions::ScopedAllowWait allow_wait_for_join;
+    TRACE_EVENT0("shutdown", "BrowserMainLoop::Subsystem:MediaStreamManager");
+    media_stream_manager_->Shutdown();
+  }
   TRACE_EVENT0("shutdown",
                "BrowserMainLoop::Subsystem:SpeechRecognitionManager");
   io_thread_->task_runner()->DeleteSoon(FROM_HERE,

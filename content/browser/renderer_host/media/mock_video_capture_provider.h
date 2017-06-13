@@ -58,6 +58,11 @@ class MockLaunchedVideoCaptureDevice : public LaunchedVideoCaptureDevice {
   MockLaunchedVideoCaptureDevice();
   ~MockLaunchedVideoCaptureDevice() override;
 
+  void ShutdownAsync(base::OnceClosure done_cb) override {
+    DoShutdownAsync(&done_cb);
+  }
+  MOCK_METHOD1(DoShutdownAsync, void(base::OnceClosure* done_cb));
+
   MOCK_CONST_METHOD1(
       DoGetPhotoCapabilities,
       void(media::VideoCaptureDevice::GetPhotoCapabilitiesCallback* callback));

@@ -8,9 +8,17 @@ namespace content {
 
 ServiceLaunchedVideoCaptureDevice::ServiceLaunchedVideoCaptureDevice(
     video_capture::mojom::DevicePtr device,
+    std::unique_ptr<video_capture::mojom::Receiver> receiver,
+    mojo::InterfaceRequest<video_capture::mojom::Receiver> receiver_request,
     base::OnceClosure connection_lost_cb)
     : device_(std::move(device)),
+      receiver_(std::move(receiver)),
+      receiver_binding_(receiver_.get(), std::move(receiver_request)),
       connection_lost_cb_(std::move(connection_lost_cb)) {
+  // Unretained |this| is safe, because |this| owns |receiver_binding_|.
+  receiver_binding_.set_connection_error_handler(
+      base::Bind(&ServiceLaunchedVideoCaptureDevice::OnLostConnectionToDevice,
+                 base::Unretained(this)));
   // Unretained |this| is safe, because |this| owns |device_|.
   device_.set_connection_error_handler(
       base::Bind(&ServiceLaunchedVideoCaptureDevice::OnLostConnectionToDevice,
@@ -19,6 +27,13 @@ ServiceLaunchedVideoCaptureDevice::ServiceLaunchedVideoCaptureDevice(
 
 ServiceLaunchedVideoCaptureDevice::~ServiceLaunchedVideoCaptureDevice() {
   DCHECK(sequence_checker_.CalledOnValidSequence());
+}
+
+void ServiceLaunchedVideoCaptureDevice::ShutdownAsync(
+    base::OnceClosure done_cb) {
+  DCHECK(sequence_checker_.CalledOnValidSequence());
+  receiver_binding_.Close();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void ServiceLaunchedVideoCaptureDevice::GetPhotoCapabilities(

@@ -96,6 +96,10 @@ class CONTENT_EXPORT MediaStreamManager
 
   ~MediaStreamManager() override;
 
+  // Shuts down all internal modules and threads and blocks until they have
+  // exited.
+  void Shutdown();
+
   // Used to access VideoCaptureManager.
   VideoCaptureManager* video_capture_manager();
 
@@ -427,6 +431,8 @@ class CONTENT_EXPORT MediaStreamManager
   std::map<int, base::Callback<void(const std::string&)>> log_callbacks_;
 
   GenerateStreamTestCallback generate_stream_test_callback_;
+
+  SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(MediaStreamManager);
 };

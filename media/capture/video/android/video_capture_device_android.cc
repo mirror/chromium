@@ -111,6 +111,7 @@ VideoCaptureDeviceAndroid::VideoCaptureDeviceAndroid(
 
 VideoCaptureDeviceAndroid::~VideoCaptureDeviceAndroid() {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
+  base::RunLoop run_loop;
   StopAndDeAllocate();
 }
 
@@ -180,7 +181,7 @@ void VideoCaptureDeviceAndroid::AllocateAndStart(
   }
 }
 
-void VideoCaptureDeviceAndroid::StopAndDeAllocate() {
+void VideoCaptureDeviceAndroid::StopAndDeAllocate(base::OnceClosure done_cb) {
   DCHECK(main_task_runner_->BelongsToCurrentThread());
   {
     base::AutoLock lock(lock_);
@@ -202,7 +203,10 @@ void VideoCaptureDeviceAndroid::StopAndDeAllocate() {
     client_.reset();
   }
 
+  // Q: Does this block until complete or is it fire & forget?
   Java_VideoCapture_deallocate(env, j_capture_);
+
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void VideoCaptureDeviceAndroid::TakePhoto(TakePhotoCallback callback) {

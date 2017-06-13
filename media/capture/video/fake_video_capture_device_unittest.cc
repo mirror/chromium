@@ -284,7 +284,7 @@ TEST_P(FakeVideoCaptureDeviceTest, CaptureUsing) {
     EXPECT_EQ(resolution.second.height(), last_format().frame_size.height());
     EXPECT_EQ(last_format().pixel_format, testing::get<0>(GetParam()));
     EXPECT_EQ(last_format().frame_rate, testing::get<2>(GetParam()));
-    device->StopAndDeAllocate();
+    device->StopAndDeAllocate(base::Bind(&base::DoNothing));
   }
 }
 
@@ -481,7 +481,7 @@ TEST_F(FakeVideoCaptureDeviceTest, GetAndSetCapabilities) {
   EXPECT_EQ(max_zoom_value,
             image_capture_client_->capabilities()->zoom->current);
 
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 TEST_F(FakeVideoCaptureDeviceTest, TakePhoto) {
@@ -508,7 +508,7 @@ TEST_F(FakeVideoCaptureDeviceTest, TakePhoto) {
 
   run_loop_.reset(new base::RunLoop());
   run_loop_->Run();
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 struct CommandLineTestData {
@@ -583,7 +583,7 @@ TEST_P(FakeVideoCaptureDeviceFactoryTest, FrameRateAndDeviceCount) {
     EXPECT_EQ(GetParam().expected_fps, last_format().frame_rate);
     EXPECT_EQ(GetParam().expected_pixel_formats[device_index],
               last_format().pixel_format);
-    device->StopAndDeAllocate();
+    device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 
     device_index++;
   }

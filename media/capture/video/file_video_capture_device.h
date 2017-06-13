@@ -50,7 +50,7 @@ class CAPTURE_EXPORT FileVideoCaptureDevice : public VideoCaptureDevice {
   void AllocateAndStart(
       const VideoCaptureParams& params,
       std::unique_ptr<VideoCaptureDevice::Client> client) override;
-  void StopAndDeAllocate() override;
+  void StopAndDeAllocate(base::OnceClosure done_cb) override;
 
  private:
   // Opens a given file |file_path| for reading, and stores collected format

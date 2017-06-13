@@ -49,7 +49,7 @@ class MockDevice : public media::VideoCaptureDevice {
 
   void AllocateAndStart(const media::VideoCaptureParams& params,
                         std::unique_ptr<Client> client) override;
-  void StopAndDeAllocate() override;
+  void StopAndDeAllocate(base::OnceClosure done_cb) override;
   void GetPhotoCapabilities(GetPhotoCapabilitiesCallback callback) override;
   void SetPhotoOptions(media::mojom::PhotoSettingsPtr settings,
                        SetPhotoOptionsCallback callback) override;

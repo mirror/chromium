@@ -49,9 +49,10 @@ void MockDevice::AllocateAndStart(const media::VideoCaptureParams& params,
   DoAllocateAndStart(params, &client);
 }
 
-void MockDevice::StopAndDeAllocate() {
+void MockDevice::StopAndDeAllocate(base::OnceClosure done_cb) {
   DoStopAndDeAllocate();
   client_.reset();
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void MockDevice::GetPhotoCapabilities(GetPhotoCapabilitiesCallback callback) {

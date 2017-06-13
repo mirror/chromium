@@ -469,12 +469,13 @@ void DesktopCaptureDevice::AllocateAndStart(
                  base::Passed(&client)));
 }
 
-void DesktopCaptureDevice::StopAndDeAllocate() {
+void DesktopCaptureDevice::StopAndDeAllocate(base::OnceClosure done_cb) {
   if (core_) {
     base::ThreadRestrictions::ScopedAllowIO allow_io;
     thread_.task_runner()->DeleteSoon(FROM_HERE, core_.release());
     thread_.Stop();
   }
+  base::ResetAndReturn(&done_cb).Run();
 }
 
 void DesktopCaptureDevice::SetNotificationWindowId(

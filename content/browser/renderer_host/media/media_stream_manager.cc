@@ -456,6 +456,23 @@ MediaStreamManager::~MediaStreamManager() {
     power_monitor->RemoveObserver(this);
 }
 
+void MediaStreamManager::Shutdown() {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  base::WaitableEvent event(base::WaitableEvent::ResetPolicy::MANUAL,
+                            base::WaitableEvent::InitialState::NOT_SIGNALED);
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(
+          &VideoCaptureManager::Shutdown,
+          base::Unretained(video_capture_manager_.get()),
+          base::Bind([](base::WaitableEvent* event) { event->Signal(); },
+                     &event)));
+  event.Wait();
+#if defined(OS_WIN)
+  video_capture_thread_.Stop();
+#endif
+}
+
 VideoCaptureManager* MediaStreamManager::video_capture_manager() {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   DCHECK(video_capture_manager_.get());

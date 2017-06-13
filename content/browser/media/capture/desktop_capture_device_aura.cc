@@ -70,8 +70,8 @@ void DesktopCaptureDeviceAura::RequestRefreshFrame() {
   core_->RequestRefreshFrame();
 }
 
-void DesktopCaptureDeviceAura::StopAndDeAllocate() {
-  core_->StopAndDeAllocate();
+void DesktopCaptureDeviceAura::StopAndDeAllocate(base::OnceClosure done_cb) {
+  core_->StopAndDeAllocate(std::move(done_cb));
 }
 
 void DesktopCaptureDeviceAura::OnUtilizationReport(int frame_feedback_id,

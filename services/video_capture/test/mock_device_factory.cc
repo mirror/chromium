@@ -26,7 +26,9 @@ class RawPointerVideoCaptureDevice : public media::VideoCaptureDevice {
     device_->AllocateAndStart(params, std::move(client));
   }
   void RequestRefreshFrame() override { device_->RequestRefreshFrame(); }
-  void StopAndDeAllocate() override { device_->StopAndDeAllocate(); }
+  void StopAndDeAllocate(base::OnceClosure done_cb) override {
+    device_->StopAndDeAllocate(std::move(done_cb));
+  }
   void GetPhotoCapabilities(GetPhotoCapabilitiesCallback callback) override {
     device_->GetPhotoCapabilities(std::move(callback));
   }

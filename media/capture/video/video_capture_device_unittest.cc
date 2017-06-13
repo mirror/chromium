@@ -393,7 +393,7 @@ TEST_P(VideoCaptureDeviceTest, CaptureWithSize) {
   if (last_format().pixel_format != PIXEL_FORMAT_MJPEG)
     EXPECT_EQ(size.GetArea(), last_format().frame_size.GetArea());
   EXPECT_EQ(last_format().frame_rate, 30);
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 const gfx::Size kCaptureSizes[] = {gfx::Size(640, 480), gfx::Size(1280, 720)};
@@ -423,7 +423,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_AllocateBadSize) {
   capture_params.requested_format.pixel_format = PIXEL_FORMAT_I420;
   device->AllocateAndStart(capture_params, std::move(video_capture_client_));
   WaitForCapturedFrame();
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
   EXPECT_EQ(last_format().frame_size.width(), input_size.width());
   EXPECT_EQ(last_format().frame_size.height(), input_size.height());
   if (last_format().pixel_format != PIXEL_FORMAT_MJPEG)
@@ -452,7 +452,7 @@ TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
     capture_params.requested_format.frame_rate = 30;
     capture_params.requested_format.pixel_format = PIXEL_FORMAT_I420;
     device->AllocateAndStart(capture_params, std::move(video_capture_client_));
-    device->StopAndDeAllocate();
+    device->StopAndDeAllocate(base::Bind(&base::DoNothing));
   }
 
   // Finally, do a device start and wait for it to finish.
@@ -468,7 +468,7 @@ TEST_F(VideoCaptureDeviceTest, DISABLED_ReAllocateCamera) {
 
   device->AllocateAndStart(capture_params, std::move(video_capture_client_));
   WaitForCapturedFrame();
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
   device.reset();
   EXPECT_EQ(last_format().frame_size.width(), 320);
   EXPECT_EQ(last_format().frame_size.height(), 240);
@@ -509,7 +509,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_CaptureMjpeg) {
   EXPECT_EQ(last_format().pixel_format, PIXEL_FORMAT_MJPEG);
   EXPECT_GE(static_cast<size_t>(1280 * 720),
             last_format().ImageAllocationSize());
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 TEST_F(VideoCaptureDeviceTest, NoCameraSupportsPixelFormatMax) {
@@ -565,7 +565,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_TakePhoto) {
   device->TakePhoto(std::move(scoped_callback));
   run_loop.Run();
 
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 // Starts the camera and verifies that the photo capabilities can be retrieved.
@@ -613,7 +613,7 @@ TEST_F(VideoCaptureDeviceTest, MAYBE_GetPhotoCapabilities) {
 
   ASSERT_TRUE(image_capture_client_->capabilities());
 
-  device->StopAndDeAllocate();
+  device->StopAndDeAllocate(base::Bind(&base::DoNothing));
 }
 
 };  // namespace media
