@@ -22,6 +22,30 @@
       "revId": "4cd8966bc2b20f69b9b23d2538eb25452775134e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b994391e_72b307a1",
+        "filename": "chrome/browser/plugins/flash_download_interception.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-13T17:20:10Z",
+      "side": 0,
+      "message": "It told the callback in the throttle to run in synchronous fashion. We don\u0027t need it any more now that it always does.",
+      "parentUuid": "e908e2c3_f7c3200a",
+      "range": {
+        "startLine": 162,
+        "startChar": 60,
+        "endLine": 162,
+        "endChar": 64
+      },
+      "revId": "4cd8966bc2b20f69b9b23d2538eb25452775134e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
