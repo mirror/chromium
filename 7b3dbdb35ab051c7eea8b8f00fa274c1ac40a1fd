@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6be5d781_4c52a473",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-06-13T12:04:09Z",
+      "side": 1,
+      "message": "s/one/some/",
+      "range": {
+        "startLine": 11,
+        "startChar": 25,
+        "endLine": 11,
+        "endChar": 28
+      },
+      "revId": "7b3dbdb35ab051c7eea8b8f00fa274c1ac40a1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26adad5_1658772b",
+        "filename": "third_party/WebKit/Source/modules/websockets/WorkerWebSocketChannel.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 380,
+      "author": {
+        "id": 1002340
+      },
+      "writtenOn": "2017-06-13T12:04:09Z",
+      "side": 1,
+      "message": "Did you consider changing the name of the \"peer\" local variable here?",
+      "range": {
+        "startLine": 380,
+        "startChar": 21,
+        "endLine": 380,
+        "endChar": 25
+      },
+      "revId": "7b3dbdb35ab051c7eea8b8f00fa274c1ac40a1fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
