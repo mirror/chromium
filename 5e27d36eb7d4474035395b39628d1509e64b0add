@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6a1e06fd_ac5e82e5",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-13T14:00:29Z",
+      "side": 1,
+      "message": "This is done for a reason. We can\u0027t inline these calls because the order of a function arguments evaluation is undefined. The second base::BindOnce() inside of PostTaskAndReply() passes the ownership of unique_ptr. Thus, the first base::BindOnce() could be called after the second one causing dereferencing of nullptr.\nI\u0027ve added a comment explaining this.",
+      "parentUuid": "a0012c24_fe8859c1",
+      "range": {
+        "startLine": 417,
+        "startChar": 2,
+        "endLine": 417,
+        "endChar": 56
+      },
+      "revId": "5e27d36eb7d4474035395b39628d1509e64b0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c3557c0_6507d7d3",
         "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-13T13:22:53Z",
       "side": 1,
       "message": "unrelated, but asking because I forgot why this is here. Is it for performance reasons?",
+      "range": {
+        "startLine": 656,
+        "startChar": 34,
+        "endLine": 656,
+        "endChar": 50
+      },
+      "revId": "5e27d36eb7d4474035395b39628d1509e64b0add",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a66038_630decf5",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 656,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-13T14:00:29Z",
+      "side": 1,
+      "message": "Yes.\nWe need to make a round trip from UI thread to DB and back for the top hosts list + to search top hosts in predictor db cache.\nAs it turned out, this metric didn\u0027t prove to be really useful.",
+      "parentUuid": "3c3557c0_6507d7d3",
       "range": {
         "startLine": 656,
         "startChar": 34,
