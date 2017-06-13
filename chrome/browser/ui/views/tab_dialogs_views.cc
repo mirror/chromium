@@ -42,6 +42,17 @@ void TabDialogsViews::ShowCollectedCookies() {
   new CollectedCookiesViews(web_contents_);
 }
 
+void TabDialogsViews::ShowFirstRunBubble() {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  views::View* anchor_view = static_cast<BrowserView*>(browser->window())
+                                 ->browser_view()
+                                 ->toolbar()
+                                 ->location_bar()
+                                 ->GetSecurityBubbleAnchorView();
+  FirstRunBubble::ShowBubble(browser, anchor_view, gfx::Point(),
+                             anchor_view->GetWidget()->GetNativeWindow());
+}
+
 void TabDialogsViews::ShowHungRendererDialog(
     const content::WebContentsUnresponsiveState& unresponsive_state) {
   HungRendererDialogView::Show(web_contents_, unresponsive_state);
