@@ -870,7 +870,7 @@ void Range::insertNode(Node* new_node, ExceptionState& exception_state) {
     exception_state.ThrowDOMException(
         kHierarchyRequestError,
         "Nodes of type '" + new_node->nodeName() +
-            "' may not be inserted inside nodes of type '" +
+            "' may not be inserted inside nodes of type ___'" +
             start_node.nodeName() + "'.");
     return;
   }
