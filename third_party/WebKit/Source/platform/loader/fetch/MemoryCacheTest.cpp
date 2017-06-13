@@ -47,8 +47,7 @@ class MemoryCacheTest : public ::testing::Test {
    public:
     static FakeDecodedResource* Create(const ResourceRequest& request,
                                        Type type) {
-      ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                    kClientDidNotRequestCredentials);
+      ResourceLoaderOptions options;
       return new FakeDecodedResource(request, type, options);
     }
 
@@ -69,8 +68,7 @@ class MemoryCacheTest : public ::testing::Test {
   class FakeResource final : public Resource {
    public:
     static FakeResource* Create(const ResourceRequest& request, Type type) {
-      ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                    kClientDidNotRequestCredentials);
+      ResourceLoaderOptions options;
       return new FakeResource(request, type, options);
     }
 

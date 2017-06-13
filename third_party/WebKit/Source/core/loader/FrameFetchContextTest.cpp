@@ -194,8 +194,7 @@ class FrameFetchContextSubresourceFilterTest : public FrameFetchContextTest {
       SecurityViolationReportingPolicy reporting_policy) {
     KURL input_url(kParsedURLString, "http://example.com/");
     ResourceRequest resource_request(input_url);
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
+    ResourceLoaderOptions options;
     return fetch_context->CanRequest(
         Resource::kImage, resource_request, input_url, options,
         reporting_policy, FetchParameters::kUseDefaultOriginRestrictionForType);
@@ -494,8 +493,7 @@ TEST_F(FrameFetchContextTest, PopulateResourceRequestChecksReportOnlyCSP) {
   KURL url(KURL(), "http://baz.test");
   ResourceRequest resource_request(url);
   resource_request.SetRequestContext(WebURLRequest::kRequestContextScript);
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  ResourceLoaderOptions options;
   fetch_context->PopulateResourceRequest(
       url, Resource::kScript, ClientHintsPreferences(),
       FetchParameters::ResourceWidth(), options,
@@ -1234,8 +1232,7 @@ TEST_F(FrameFetchContextTest, PopulateResourceRequestWhenDetached) {
   client_hints_preferences.SetShouldSendViewportWidth(true);
 
   FetchParameters::ResourceWidth resource_width;
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  ResourceLoaderOptions options;
 
   document->GetClientHintsPreferences().SetShouldSendDeviceRAM(true);
   document->GetClientHintsPreferences().SetShouldSendDPR(true);

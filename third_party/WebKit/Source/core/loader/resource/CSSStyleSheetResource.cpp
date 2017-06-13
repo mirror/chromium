@@ -56,8 +56,7 @@ CSSStyleSheetResource* CSSStyleSheetResource::Fetch(FetchParameters& params,
 CSSStyleSheetResource* CSSStyleSheetResource::CreateForTest(
     const ResourceRequest& request,
     const String& charset) {
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  ResourceLoaderOptions options;
   return new CSSStyleSheetResource(request, options, charset);
 }
 
