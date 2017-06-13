@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88e28bb7_fb3abcfc",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-13T20:58:17Z",
+      "side": 1,
+      "message": "nit: if we\u0027re not going to use the weak_ptr on IO thread anyway, how about making OnWhitelistCheckDoneOnIO a member function instead of a static one? Such that we don\u0027t need to pass this weak_ptr.",
+      "revId": "6055c03c16cc7ba0e6edb4d86d0991569f1b090c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f24b116c_9798c0c6",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-13T20:58:17Z",
+      "side": 1,
+      "message": "nit: add a blank line before line 89",
+      "revId": "6055c03c16cc7ba0e6edb4d86d0991569f1b090c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
