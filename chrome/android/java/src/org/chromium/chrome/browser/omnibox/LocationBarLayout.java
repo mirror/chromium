@@ -1282,7 +1282,9 @@ public class LocationBarLayout extends FrameLayout
     }
 
     private int getSecurityLevel() {
-        if (getCurrentTab() == null) return ConnectionSecurityLevel.NONE;
+        if (getCurrentTab() == null || OfflinePageUtils.isOfflinePage(getCurrentTab())) {
+            return ConnectionSecurityLevel.NONE;
+        }
         return getCurrentTab().getSecurityLevel();
     }
 
@@ -1295,11 +1297,7 @@ public class LocationBarLayout extends FrameLayout
      */
     public static int getSecurityIconResource(
             int securityLevel, boolean isSmallDevice, boolean isOfflinePage) {
-        // Both conditions should be met, because isOfflinePage might take longer to be cleared.
-        // HTTP_SHOW_WARNING added because of field trail causing http://crbug.com/671453.
-        if ((securityLevel == ConnectionSecurityLevel.NONE
-                    || securityLevel == ConnectionSecurityLevel.HTTP_SHOW_WARNING)
-                && isOfflinePage) {
+        if (isOfflinePage) {
             return R.drawable.offline_pin_round;
         }
         switch (securityLevel) {
