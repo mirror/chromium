@@ -1,0 +1,234 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f22cb351_fdaf286a",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "Please do not use friend for this, consider an alternative:\n(1) move those enums to PasswordFormUkmRecorder and make them public\n(2) make them public here\n\nAdding a friend makes the code fragile and removes the guarantee that private stuff is only ever used here.",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 38
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d72f029f_f9c78fef",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "Please comment on why this needs to be a unique_ptr and not just a direct member. I assume it is to initialise it lazily? Do we expect that it won\u0027t get initialise all the time? If so, should we stop the destructor from actually creating it every time?",
+      "range": {
+        "startLine": 663,
+        "startChar": 7,
+        "endLine": 663,
+        "endChar": 17
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c27b82f_d961df0f",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 663,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "Please comment on the general purpose of this data member as well. At the very least, please expand on what UKM means.",
+      "range": {
+        "startLine": 663,
+        "startChar": 43,
+        "endLine": 663,
+        "endChar": 70
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6df51c8_ad3a739f",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "The header says: \"and reports them on destruction.\" It seems weird that the destructor is empty. It is also weird that the builder is never called to actually build something. So I guess the builder builds and reports automatically on its own destruction? If so, then please mention it in the declaration of the builder.",
+      "range": {
+        "startLine": 22,
+        "startChar": 54,
+        "endLine": 22,
+        "endChar": 61
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b948b44_ce5bed52",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "Please consider base::checked_cast instead.",
+      "range": {
+        "startLine": 28,
+        "startChar": 52,
+        "endLine": 28,
+        "endChar": 63
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d6b0a6e_612db8a4",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "#include \u003cstdint.h\u003e",
+      "range": {
+        "startLine": 28,
+        "startChar": 64,
+        "endLine": 28,
+        "endChar": 71
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e86293ee_36caa907",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "nit: No need for \"explicit\" with 2 arguments.",
+      "range": {
+        "startLine": 22,
+        "startChar": 2,
+        "endLine": 22,
+        "endChar": 10
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e0742c3_e79f3b30",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "You seem to be using unique_ptr to express optionality. Please use base::Optional instead, that will spare us the heap allocation.",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bd55f1_d44395f5",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "nit: The possessive form of \"it\" is written without the apostrophe: \"its\".",
+      "range": {
+        "startLine": 223,
+        "startChar": 11,
+        "endLine": 223,
+        "endChar": 12
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59c47548_2e420a30",
+        "filename": "components/ukm/public/ukm_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-13T18:14:09Z",
+      "side": 1,
+      "message": "I am surprised by this reference cycle (password_manager component referencing ukm and vice versa). I understand that by making this just a forward declaration without an actual #include makes this cycle invisible to DEPS checking tools, but it also makes it more fragile (changes in password_manager are not automatically reflected or at least flagged here).\n\nI acknowledge that this is already the pattern here, so not blaming your CL on that. Do you know whether this was discussed or who on the UKM team I could ask about this?",
+      "range": {
+        "startLine": 41,
+        "startChar": 10,
+        "endLine": 41,
+        "endChar": 26
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
