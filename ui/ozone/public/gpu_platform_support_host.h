@@ -35,6 +35,10 @@ class OZONE_BASE_EXPORT GpuPlatformSupportHost : public IPC::Listener {
       scoped_refptr<base::SingleThreadTaskRunner> send_runner,
       const base::Callback<void(IPC::Message*)>& sender) = 0;
 
+  // Called when the channel is established.
+  // This is called from browser UI thread.
+  virtual void OnChannelEstablished() = 0;
+
   // Called when the GPU process is destroyed.
   // This is called from browser UI thread.
   virtual void OnChannelDestroyed(int host_id) = 0;

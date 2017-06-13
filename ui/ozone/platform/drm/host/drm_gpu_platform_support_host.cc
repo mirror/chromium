@@ -118,10 +118,6 @@ void DrmGpuPlatformSupportHost::OnGpuProcessLaunched(
 
   for (GpuThreadObserver& observer : gpu_thread_observers_)
     observer.OnGpuProcessLaunched();
-
-  ui_runner_->PostTask(
-      FROM_HERE, base::Bind(&DrmGpuPlatformSupportHost::OnChannelEstablished,
-                            weak_ptr_factory_.GetWeakPtr()));
 }
 
 void DrmGpuPlatformSupportHost::OnChannelDestroyed(int host_id) {

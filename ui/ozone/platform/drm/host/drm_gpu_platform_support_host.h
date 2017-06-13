@@ -40,6 +40,7 @@ class DrmGpuPlatformSupportHost : public GpuPlatformSupportHost,
       scoped_refptr<base::SingleThreadTaskRunner> ui_runner,
       scoped_refptr<base::SingleThreadTaskRunner> send_runner,
       const base::Callback<void(IPC::Message*)>& send_callback) override;
+  void OnChannelEstablished() override;
   void OnChannelDestroyed(int host_id) override;
 
   // IPC::Listener:
@@ -96,7 +97,6 @@ class DrmGpuPlatformSupportHost : public GpuPlatformSupportHost,
                               const gfx::Rect& bounds) override;
 
  private:
-  void OnChannelEstablished();
   bool OnMessageReceivedForDrmDisplayHostManager(const IPC::Message& message);
   void OnUpdateNativeDisplays(
       const std::vector<DisplaySnapshot_Params>& displays);
