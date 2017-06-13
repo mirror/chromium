@@ -1,0 +1,170 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d4ab4a1f_ac83f218",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "This already contains content, let\u0027s not request it in line 495?",
+      "range": {
+        "startLine": 498,
+        "startChar": 47,
+        "endLine": 498,
+        "endChar": 59
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa94cfa1_4880b48b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "content might be null, don\u0027t implicitly convert it to boolean.",
+      "range": {
+        "startLine": 499,
+        "startChar": 43,
+        "endLine": 499,
+        "endChar": 50
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3380bdcf_b9bd7984",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 502,
+        "startChar": 53,
+        "endLine": 502,
+        "endChar": 60
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac837ed3_ac79ad28",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "How do the changes in this file relate to the patch?",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1bcb029_1c4cd5c9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "How do the changes in this file relate to the patch?",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e478bc2a_5b811fec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "await request.once(...);",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "334b39c2_29144e58",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "This is already gone, isn\u0027t it?",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 40
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "632dc70d_7f0311b2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-13T17:40:36Z",
+      "side": 1,
+      "message": "ContentData",
+      "range": {
+        "startLine": 1092,
+        "startChar": 19,
+        "endLine": 1092,
+        "endChar": 31
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
