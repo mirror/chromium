@@ -39,6 +39,29 @@
       "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06f42e45_1cc38853",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-06-13T20:51:06Z",
+      "side": 1,
+      "message": "There are other flows in this code where we end up closing the tab. Look in ExternalNavigationDelegateImpl.java for closeTab() calls. All of these happen during the throttle as well.",
+      "range": {
+        "startLine": 252,
+        "startChar": 47,
+        "endLine": 252,
+        "endChar": 55
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
