@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "8070fe36_0a86909a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-13T03:11:16Z",
+      "side": 1,
+      "message": "This description makes it sound like we\u0027re recording (# of small scrollers)/(# of scrollers). You should make it clearer that this is the percentage of the combined *area* of all scrollers that belongs to small scrollers.",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 70
+      },
+      "revId": "8b438d21220a80bfbdbd8d01474cb73a9573fb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea8301aa_bda8a3c2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-13T03:11:16Z",
+      "side": 1,
+      "message": "Typo: Not -\u003e Note",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 3
+      },
+      "revId": "8b438d21220a80bfbdbd8d01474cb73a9573fb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e8e1693b_d33ed4eb",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 4
@@ -46,6 +92,52 @@
       "revId": "8b438d21220a80bfbdbd8d01474cb73a9573fb8b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "8f3bee57_a42b01ed",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2220,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-13T03:11:16Z",
+      "side": 1,
+      "message": "I think this might overflow on practical examples (admittedly rarely). e.g. build logs on a wide monitor probably wouldn\u0027t fit in an int. Store it in a uint64_t and clamp it to kScrollerSizeLargestBucket.",
+      "range": {
+        "startLine": 2220,
+        "startChar": 10,
+        "endLine": 2220,
+        "endChar": 14
+      },
+      "revId": "8b438d21220a80bfbdbd8d01474cb73a9573fb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f98c29_b52a6d2c",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 2227,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-13T03:11:16Z",
+      "side": 1,
+      "message": "Ditto for total_size and small_scroller_size, they should also be 64 bit",
+      "range": {
+        "startLine": 2227,
+        "startChar": 6,
+        "endLine": 2227,
+        "endChar": 16
+      },
+      "revId": "8b438d21220a80bfbdbd8d01474cb73a9573fb8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
