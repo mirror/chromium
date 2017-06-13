@@ -1798,12 +1798,6 @@ void PropertyTrees::SetInnerViewportScrollBoundsDelta(
   inner_viewport_scroll_bounds_delta_ = bounds_delta;
 }
 
-void PropertyTrees::RemoveIdFromIdToIndexMaps(int id) {
-  transform_tree.SetOwningLayerIdForNode(nullptr, id);
-  clip_tree.SetOwningLayerIdForNode(nullptr, id);
-  scroll_tree.SetOwningLayerIdForNode(nullptr, id);
-}
-
 void PropertyTrees::UpdateChangeTracking() {
   for (int id = EffectTree::kContentsRootNodeId;
        id < static_cast<int>(effect_tree.size()); ++id) {
