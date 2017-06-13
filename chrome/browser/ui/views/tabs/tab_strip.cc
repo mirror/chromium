@@ -253,7 +253,10 @@ const TabSizeInfo& GetTabSizeInfo() {
   tab_size_info->min_active_width = Tab::GetMinimumActiveSize().width();
   tab_size_info->min_inactive_width = Tab::GetMinimumInactiveSize().width();
   tab_size_info->max_size = Tab::GetStandardSize();
-  tab_size_info->tab_overlap = Tab::GetOverlap();
+  // TODO(pkasting): Maybe this should be removed and computed dynamically
+  // during layout?  How does this interact with modifying the minimum tab size?
+  tab_size_info->tab_overlap =
+      Tab::GetOverlapForEndcapWidth(TabStrip::GetTabEndcapMaxWidth());
   tab_size_info->pinned_to_normal_offset = kPinnedToNonPinnedOffset;
   return *tab_size_info;
 }
@@ -373,7 +376,9 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
   SkPath fill;
   const float fill_bottom = (visible_height - 2) * scale;
   const float diag_height = fill_bottom - 3.5 * scale;
-  const float diag_width = diag_height * Tab::GetInverseDiagonalSlope();
+  const float diag_width =
+      diag_height * Tab::GetInverseDiagonalSlopeForEndcapWidth(
+                        tab_strip_->GetTabEndcapWidth());
   fill.moveTo(diag_width + 4 * scale, fill_bottom);
   fill.rCubicTo(-0.75 * scale, 0, -1.625 * scale, -0.5 * scale, -2 * scale,
                 -1.5 * scale);
@@ -430,7 +435,8 @@ void NewTabButton::GetBorderPath(float button_y,
                                  float scale,
                                  bool extend_to_top,
                                  SkPath* path) const {
-  const float inverse_slope = Tab::GetInverseDiagonalSlope();
+  const float inverse_slope = Tab::GetInverseDiagonalSlopeForEndcapWidth(
+      tab_strip_->GetTabEndcapWidth());
   const float fill_bottom =
       (GetLayoutSize(NEW_TAB_BUTTON).height() - 2) * scale;
   const float stroke_bottom = button_y + fill_bottom + 1;
@@ -586,6 +592,7 @@ TabStrip::TabStrip(TabStripController* controller)
       newtab_button_(NULL),
       current_inactive_width_(Tab::GetStandardSize().width()),
       current_active_width_(Tab::GetStandardSize().width()),
+      current_endcap_width_(GetTabEndcapMaxWidth()),
       available_width_for_tabs_(-1),
       in_tab_close_(false),
       animation_container_(new gfx::AnimationContainer()),
@@ -617,6 +624,15 @@ TabStrip::~TabStrip() {
   // The children (tabs) may callback to us from their destructor. Delete them
   // so that if they call back we aren't in a weird state.
   RemoveAllChildViews(true);
+}
+
+// static
+float TabStrip::GetTabEndcapMaxWidth() {
+  // TODO(pkasting): Maybe this should be removed from these insets and just
+  // defined here?  This would require redefining the minimum tab width.  See
+  // also comments in Tab::SetBorderForEndcapWidth() about scaling down the
+  // content inset, since the computation there would want to match.
+  return GetLayoutInsets(TAB).left() - 0.5f;
 }
 
 void TabStrip::AddObserver(TabStripObserver* observer) {
@@ -870,8 +886,9 @@ void TabStrip::PrepareForCloseAt(int model_index, CloseTabSource source) {
     // user closes tabs with the mouse a tab continues to fall under the mouse.
     Tab* last_tab = tab_at(model_count - 1);
     Tab* tab_being_removed = tab_at(model_index);
-    available_width_for_tabs_ = last_tab->bounds().right() -
-                                tab_being_removed->width() + Tab::GetOverlap();
+    available_width_for_tabs_ =
+        last_tab->bounds().right() - tab_being_removed->width() +
+        Tab::GetOverlapForEndcapWidth(current_endcap_width_);
     if (model_index == 0 && tab_being_removed->data().pinned &&
         !tab_at(1)->data().pinned) {
       available_width_for_tabs_ -= kPinnedToNonPinnedOffset;
@@ -1250,9 +1267,14 @@ void TabStrip::OnMouseEventInTab(views::View* source,
   UpdateStackedLayoutFromMouseEvent(source, event);
 }
 
+float TabStrip::GetTabEndcapWidth() const {
+  return current_endcap_width_;
+}
+
 bool TabStrip::ShouldPaintTab(
     const Tab* tab,
-    const base::Callback<gfx::Path(const gfx::Size&)>& border_callback,
+    const base::Callback<gfx::Path(const gfx::Size&, float endcap_width)>&
+        border_callback,
     gfx::Path* clip) {
   if (!MaySetClip())
     return true;
@@ -1267,6 +1289,7 @@ bool TabStrip::ShouldPaintTab(
     active_index--;
 
   const int current_x = tab_at(index)->x();
+  const int endcap_width = GetTabEndcapWidth();
   if (index < active_index) {
     const int next_x = tab_at(index + 1)->x();
     if (current_x == next_x)
@@ -1275,7 +1298,7 @@ bool TabStrip::ShouldPaintTab(
     if (current_x > next_x)
       return true;  // Can happen during dragging.
 
-    *clip = border_callback.Run(tab_at(index + 1)->size());
+    *clip = border_callback.Run(tab_at(index + 1)->size(), endcap_width);
     clip->offset(SkIntToScalar(next_x - current_x), 0);
   } else if (index > active_index && index > 0) {
     const gfx::Rect& previous_bounds(tab_at(index - 1)->bounds());
@@ -1286,8 +1309,9 @@ bool TabStrip::ShouldPaintTab(
     if (current_x < previous_x)
       return true;  // Can happen during dragging.
 
-    if (previous_bounds.right() - Tab::GetOverlap() != current_x) {
-      *clip = border_callback.Run(tab_at(index - 1)->size());
+    const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+    if (previous_bounds.right() - overlap != current_x) {
+      *clip = border_callback.Run(tab_at(index - 1)->size(), endcap_width);
       clip->offset(SkIntToScalar(previous_x - current_x), 0);
     }
   }
@@ -1490,7 +1514,7 @@ gfx::Size TabStrip::CalculatePreferredSize() const {
                           ((remaining_tab_count - 1) * min_unselected_width);
     }
 
-    const int overlap = Tab::GetOverlap();
+    const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
     if (tab_count() > 1)
       needed_tab_width -= (tab_count() - 1) * overlap;
 
@@ -1646,7 +1670,8 @@ void TabStrip::StartInsertTabAnimation(int model_index) {
                    ideal_bounds(model_index).height());
   } else {
     Tab* last_tab = tab_at(model_index - 1);
-    tab->SetBounds(last_tab->bounds().right() - Tab::GetOverlap(),
+    const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+    tab->SetBounds(last_tab->bounds().right() - overlap,
                    ideal_bounds(model_index).y(), 0,
                    ideal_bounds(model_index).height());
   }
@@ -1888,7 +1913,7 @@ void TabStrip::LayoutDraggedTabsAt(const Tabs& tabs,
 
 void TabStrip::CalculateBoundsForDraggedTabs(const Tabs& tabs,
                                              std::vector<gfx::Rect>* bounds) {
-  const int overlap = Tab::GetOverlap();
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
   int x = 0;
   for (size_t i = 0; i < tabs.size(); ++i) {
     Tab* tab = tabs[i];
@@ -1909,8 +1934,10 @@ int TabStrip::GetSizeNeededForTabs(const Tabs& tabs) {
     if (i > 0 && tab->data().pinned != tabs[i - 1]->data().pinned)
       width += kPinnedToNonPinnedOffset;
   }
-  if (!tabs.empty())
-    width -= Tab::GetOverlap() * (tabs.size() - 1);
+  if (!tabs.empty()) {
+    const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+    width -= overlap * (tabs.size() - 1);
+  }
   return width;
 }
 
@@ -2244,7 +2271,7 @@ gfx::Rect TabStrip::GetDropBounds(int drop_index,
                                   bool* is_beneath) {
   DCHECK_NE(drop_index, -1);
 
-  const int overlap = Tab::GetOverlap();
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
   int center_x;
   if (drop_index < tab_count()) {
     Tab* tab = tab_at(drop_index);
@@ -2398,10 +2425,10 @@ void TabStrip::GenerateIdealBounds() {
     const int available_width = (available_width_for_tabs_ < 0)
                                     ?  GetTabAreaWidth()
                                     : available_width_for_tabs_;
-    const std::vector<gfx::Rect> tabs_bounds =
-        CalculateBounds(GetTabSizeInfo(), GetPinnedTabCount(), tab_count(),
-                        controller_->GetActiveIndex(), available_width,
-                        &current_active_width_, &current_inactive_width_);
+    const std::vector<gfx::Rect> tabs_bounds = CalculateBounds(
+        GetTabSizeInfo(), GetPinnedTabCount(), tab_count(),
+        controller_->GetActiveIndex(), available_width, &current_active_width_,
+        &current_inactive_width_, &current_endcap_width_);
     DCHECK_EQ(static_cast<size_t>(tab_count()), tabs_bounds.size());
 
     for (size_t i = 0; i < tabs_bounds.size(); ++i)
@@ -2437,9 +2464,10 @@ int TabStrip::GenerateIdealBoundsForPinnedTabs(int* first_non_pinned_index) {
                                &tab_bounds);
   for (int i = 0; i < num_pinned_tabs; ++i)
     tabs_.set_ideal_bounds(i, tab_bounds[i]);
-  return (num_pinned_tabs < tab_count())
-             ? tab_bounds[num_pinned_tabs].x()
-             : tab_bounds[num_pinned_tabs - 1].right() - Tab::GetOverlap();
+  if (num_pinned_tabs < tab_count())
+    return tab_bounds[num_pinned_tabs].x();
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+  return tab_bounds[num_pinned_tabs - 1].right() - overlap;
 }
 
 int TabStrip::GetTabAreaWidth() const {
@@ -2466,7 +2494,8 @@ void TabStrip::StartMouseInitiatedRemoveTabAnimation(int model_index) {
   // The user initiated the close. We want to persist the bounds of all the
   // existing tabs, so we manually shift ideal_bounds then animate.
   Tab* tab_closing = tab_at(model_index);
-  int delta = tab_closing->width() - Tab::GetOverlap();
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+  int delta = tab_closing->width() - overlap;
   // If the tab being closed is a pinned tab next to a non-pinned tab, be sure
   // to add the extra padding.
   DCHECK_LT(model_index, tab_count() - 1);
@@ -2519,7 +2548,8 @@ int TabStrip::GetStartXForNormalTabs() const {
   int pinned_tab_count = GetPinnedTabCount();
   if (pinned_tab_count == 0)
     return 0;
-  return pinned_tab_count * (Tab::GetPinnedWidth() - Tab::GetOverlap()) +
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+  return pinned_tab_count * (Tab::GetPinnedWidth() - overlap) +
          kPinnedToNonPinnedOffset;
 }
 
@@ -2587,7 +2617,7 @@ void TabStrip::SwapLayoutIfNecessary() {
   if (needs_touch) {
     gfx::Size tab_size(Tab::GetTouchWidth(), GetLayoutConstant(TAB_HEIGHT));
 
-    const int overlap = Tab::GetOverlap();
+    const int overlap = Tab::GetOverlapForEndcapWidth(GetTabEndcapMaxWidth());
     touch_layout_.reset(new StackedTabStripLayout(
         tab_size, overlap, kStackedPadding, kMaxStackedCount, &tabs_));
     touch_layout_->SetWidth(GetTabAreaWidth());
@@ -2617,8 +2647,8 @@ bool TabStrip::NeedsTouchLayout() const {
   int normal_count = tab_count() - pinned_tab_count;
   if (normal_count <= 1 || normal_count == pinned_tab_count)
     return false;
-  return (Tab::GetTouchWidth() * normal_count -
-          Tab::GetOverlap() * (normal_count - 1)) >
+  const int overlap = Tab::GetOverlapForEndcapWidth(current_endcap_width_);
+  return (Tab::GetTouchWidth() * normal_count - overlap * (normal_count - 1)) >
          GetTabAreaWidth() - GetStartXForNormalTabs();
 }
 

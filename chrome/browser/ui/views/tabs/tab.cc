@@ -100,17 +100,6 @@ const char kTabCloseButtonName[] = "TabCloseButton";
 ////////////////////////////////////////////////////////////////////////////////
 // Drawing and utility functions
 
-// Returns the width of the tab endcap in DIP.  More precisely, this is the
-// width of the curve making up either the outer or inner edge of the stroke;
-// since these two curves are horizontally offset by 1 px (regardless of scale),
-// the total width of the endcap from tab outer edge to the inside end of the
-// stroke inner edge is (GetUnscaledEndcapWidth() * scale) + 1.
-//
-// The value returned here must be at least Tab::kMinimumEndcapWidth.
-float GetTabEndcapWidth() {
-  return GetLayoutInsets(TAB).left() - 0.5f;
-}
-
 void DrawHighlight(gfx::Canvas* canvas,
                    const SkPoint& p,
                    SkScalar radius,
@@ -177,8 +166,8 @@ gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
 gfx::Path GetBorderPath(float scale,
                         bool unscale_at_end,
                         bool extend_to_top,
-                        float endcap_width,
-                        const gfx::Size& size) {
+                        const gfx::Size& size,
+                        float endcap_width) {
   const float top = scale - 1;
   const float right = size.width() * scale;
   const float bottom = size.height() * scale;
@@ -193,7 +182,8 @@ gfx::Path GetBorderPath(float scale,
     // Create the vertical extension by extending the side diagonals until
     // they reach the top of the bounds.
     const float dy = 2.5 * scale - 1;
-    const float dx = Tab::GetInverseDiagonalSlope() * dy;
+    const float dx =
+        Tab::GetInverseDiagonalSlopeForEndcapWidth(endcap_width) * dy;
     path.rLineTo(dx, -dy);
     path.lineTo(right - (endcap_width - 2) * scale - dx, 0);
     path.rLineTo(dx, dy);
@@ -456,7 +446,7 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
 
   set_id(VIEW_ID_TAB);
 
-  SetBorder(views::CreateEmptyBorder(GetLayoutInsets(TAB)));
+  SetBorderForEndcapWidth(TabStrip::GetTabEndcapMaxWidth());
 
   title_->SetHorizontalAlignment(gfx::ALIGN_TO_HEAD);
   title_->SetElideBehavior(gfx::FADE_TAIL);
@@ -626,7 +616,8 @@ gfx::Size Tab::GetMinimumActiveSize() {
 // static
 gfx::Size Tab::GetStandardSize() {
   constexpr int kNetTabWidth = 193;
-  const int overlap = GetOverlap();
+  const int overlap =
+      GetOverlapForEndcapWidth(TabStrip::GetTabEndcapMaxWidth());
   return gfx::Size(kNetTabWidth + overlap, GetMinimumInactiveSize().height());
 }
 
@@ -642,7 +633,7 @@ int Tab::GetPinnedWidth() {
 }
 
 // static
-float Tab::GetInverseDiagonalSlope() {
+float Tab::GetInverseDiagonalSlopeForEndcapWidth(float endcap_width) {
   // This is computed from the border path as follows:
   // * The endcap width is enough for the whole stroke outer curve, i.e. the
   //   side diagonal plus the curves on both its ends.
@@ -653,14 +644,13 @@ float Tab::GetInverseDiagonalSlope() {
   //   so the diagonal is ((height - 1.5 - 1.5) * scale - 1 - (scale - 1)) px
   //   high.  Simplifying this gives (height - 4) * scale px, or (height - 4)
   //   DIP.
-  return (GetTabEndcapWidth() - kMinimumEndcapWidth) /
+  return (endcap_width - kMinimumEndcapWidth) /
          (Tab::GetMinimumInactiveSize().height() - 4);
 }
 
-// static
-int Tab::GetOverlap() {
+int Tab::GetOverlapForEndcapWidth(float endcap_width) {
   // We want to overlap the endcap portions entirely.
-  return gfx::ToCeiledInt(GetTabEndcapWidth());
+  return gfx::ToCeiledInt(endcap_width);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -725,7 +715,7 @@ bool Tab::GetHitTestMask(gfx::Path* mask) const {
   *mask =
       GetBorderPath(GetWidget()->GetCompositor()->device_scale_factor(), true,
                     widget && (widget->IsMaximized() || widget->IsFullscreen()),
-                    GetTabEndcapWidth(), size());
+                    size(), controller_->GetTabEndcapWidth());
   return true;
 }
 
@@ -748,9 +738,7 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
 
   gfx::Path clip;
   if (!controller_->ShouldPaintTab(
-          this,
-          base::Bind(&GetBorderPath, canvas->image_scale(), true, false,
-                     GetTabEndcapWidth()),
+          this, base::Bind(&GetBorderPath, canvas->image_scale(), true, false),
           &clip))
     return;
 
@@ -758,7 +746,8 @@ void Tab::OnPaint(gfx::Canvas* canvas) {
 }
 
 void Tab::Layout() {
-  const gfx::Rect lb = GetContentsBounds();
+  SetBorderForEndcapWidth(controller_->GetTabEndcapWidth());
+  gfx::Rect lb = GetContentsBounds();
   showing_icon_ = ShouldShowIcon();
   // See comments in IconCapacity().
   const int extra_padding =
@@ -1008,6 +997,16 @@ void Tab::OnGestureEvent(ui::GestureEvent* event) {
   event->SetHandled();
 }
 
+void Tab::SetBorderForEndcapWidth(float endcap_width) {
+  // TODO(pkasting): This should probably scale down more slowly than the endcap
+  // width does, so that at the minimum endcap width there's still a bit of
+  // padding inside the endcap before the contents.
+  const gfx::Insets insets = GetLayoutInsets(TAB);
+  const int horizontal_inset = gfx::ToCeiledInt(endcap_width);
+  SetBorder(views::CreateEmptyBorder(insets.top(), horizontal_inset,
+                                     insets.bottom(), horizontal_inset));
+}
+
 ////////////////////////////////////////////////////////////////////////////////
 // Tab, private
 
@@ -1099,7 +1098,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
   // |y_offset| is only set when |fill_id| is being used.
   DCHECK(!y_offset || fill_id);
 
-  const float endcap_width = GetTabEndcapWidth();
+  const float endcap_width = controller_->GetTabEndcapWidth();
   const ui::ThemeProvider* tp = GetThemeProvider();
   const SkColor active_color = tp->GetColor(ThemeProperties::COLOR_TOOLBAR);
   const SkColor inactive_color =
@@ -1118,7 +1117,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
     gfx::Path fill_path =
         GetFillPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
-                                          endcap_width, size());
+                                          size(), endcap_width);
     PaintTabBackgroundFill(canvas, fill_path, active, paint_hover_effect,
                            active_color, inactive_color, fill_id, y_offset);
     gfx::ScopedCanvas scoped_canvas(clip ? canvas : nullptr);
@@ -1136,7 +1135,7 @@ void Tab::PaintTabBackground(gfx::Canvas* canvas,
     gfx::Path fill_path =
         GetFillPath(canvas->image_scale(), size(), endcap_width);
     gfx::Path stroke_path = GetBorderPath(canvas->image_scale(), false, false,
-                                          endcap_width, size());
+                                          size(), endcap_width);
     cc::PaintRecorder recorder;
 
     {
