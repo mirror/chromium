@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "6d3bbe57_6cedbf68",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46824,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-13T19:49:14Z",
+      "side": 1,
+      "message": "Good point, max attempts can be either success or failure. Removed recording at failure (there is a separate UMA for failures), updated description.",
+      "parentUuid": "54d33201_dca3bbe2",
+      "range": {
+        "startLine": 46824,
+        "startChar": 41,
+        "endLine": 46824,
+        "endChar": 0
+      },
+      "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7f16a881_cb00a9ba",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 4
@@ -62,6 +86,30 @@
       "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "108dc6e0_5b208bda",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 4
+      },
+      "lineNbr": 46999,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-13T19:49:14Z",
+      "side": 1,
+      "message": "Updated description.",
+      "parentUuid": "7f16a881_cb00a9ba",
+      "range": {
+        "startLine": 46999,
+        "startChar": 55,
+        "endLine": 46999,
+        "endChar": 61
+      },
+      "revId": "9c47d87ea5690b80b7b0474b61fb9cc14f849062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
