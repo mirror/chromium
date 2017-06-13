@@ -140,6 +140,24 @@
     },
     {
       "key": {
+        "uuid": "59393be1_f1c48f67",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-13T16:24:33Z",
+      "side": 1,
+      "message": "From what I understand, the only image that can be cancelled is a download thumbnail though, right? \nIf that\u0027s the case, then we can make them all simple void methods and only the makeDownloadThumbnailRequest() will return a DownloadThumbnailRequest, which will enable cancellation from the SnippetArticleViewHolder.",
+      "parentUuid": "d576da38_0f664489",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "08583842_a8de458a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
