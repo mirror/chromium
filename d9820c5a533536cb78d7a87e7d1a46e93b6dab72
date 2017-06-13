@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d314828_a725b595",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T01:52:11Z",
+      "side": 1,
+      "message": "Nit: consider adding constexpr",
+      "range": {
+        "startLine": 377,
+        "startChar": 2,
+        "endLine": 377,
+        "endChar": 5
+      },
+      "revId": "d9820c5a533536cb78d7a87e7d1a46e93b6dab72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01d6c855_b00b2a1d",
+        "filename": "mojo/common/memory_allocator_dump_guid.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-13T01:52:11Z",
+      "side": 1,
+      "message": "This isn\u0027t a guid, can we name it something else? I think I discussed this in the past with some of the memory people, but I can\u0027t remember the conclusion we came to.",
+      "range": {
+        "startLine": 8,
+        "startChar": 7,
+        "endLine": 8,
+        "endChar": 30
+      },
+      "revId": "d9820c5a533536cb78d7a87e7d1a46e93b6dab72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
