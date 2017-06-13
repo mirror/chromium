@@ -4,13 +4,12 @@
 
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_navigation_view.h"
 
-#include <cmath>
-
 #include "base/logging.h"
 #include "base/mac/objc_property_releaser.h"
 #include "base/mac/scoped_nsobject.h"
 #include "base/metrics/user_metrics.h"
 #include "base/metrics/user_metrics_action.h"
+#include "base/numerics/math_util.h"
 #import "ios/chrome/browser/ui/side_swipe/side_swipe_util.h"
 #import "ios/chrome/browser/ui/side_swipe_gesture_recognizer.h"
 #include "ios/chrome/browser/ui/ui_util.h"
@@ -132,7 +131,7 @@ const CGFloat kSelectionAnimationDuration = 0.5;
       [border setFrame:borderFrame];
       [border setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
     } else {
-      [border setTransform:CGAffineTransformMakeRotation(M_PI)];
+      [border setTransform:CGAffineTransformMakeRotation(base::kPiFloat)];
       [border setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin];
     }
 
@@ -187,14 +186,14 @@ const CGFloat kSelectionAnimationDuration = 0.5;
   [selectionCircleLayer_ setPosition:center];
   [CATransaction commit];
 
-  CGFloat rotationStart = -M_PI_2;
+  CGFloat rotationStart = -base::kPiFloat / 2;
   CGFloat rotationEnd = 0;
   if (gesture.direction == UISwipeGestureRecognizerDirectionLeft) {
     if (rotateForward_) {
-      rotationStart = M_PI * 1.5;
-      rotationEnd = M_PI;
+      rotationStart = base::kPiFloat * 1.5;
+      rotationEnd = base::kPiFloat;
     } else {
-      rotationStart = M_PI * 0.5;
+      rotationStart = base::kPiFloat * 0.5;
       rotationEnd = 0;
     }
   }

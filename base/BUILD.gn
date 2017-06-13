@@ -622,6 +622,7 @@ component("base") {
     "nix/mime_util_xdg.h",
     "nix/xdg_util.cc",
     "nix/xdg_util.h",
+    "numerics/math_util.h",
     "numerics/safe_conversions.h",
     "numerics/safe_conversions_impl.h",
     "numerics/safe_math.h",

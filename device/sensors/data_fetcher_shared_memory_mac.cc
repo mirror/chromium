@@ -8,6 +8,7 @@
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/math_util.h"
 #include "base/single_thread_task_runner.h"
 #include "device/sensors/ambient_light_mac.h"
 #include "device/sensors/public/cpp/device_util_mac.h"
@@ -83,9 +84,8 @@ void FetchOrientation(SuddenMotionSensor* sensor,
   // This is necessary in order to provide enough information to solve
   // the equations.
   //
-  const double kRad2deg = 180.0 / M_PI;
-  double beta = kRad2deg * atan2(-axis_value[1], axis_value[2]);
-  double gamma = kRad2deg * asin(axis_value[0]);
+  double beta = base::RadToDeg(atan2(-axis_value[1], axis_value[2]));
+  double gamma = base::RadToDeg(asin(axis_value[0]));
 
   // Make sure that the interval boundaries comply with the specification. At
   // this point, beta is [-180, 180] and gamma is [-90, 90], but the spec has

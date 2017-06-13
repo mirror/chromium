@@ -76,10 +76,8 @@ std::string ConvertTimeToExtensionVersion(const Time& create_time) {
       (create_time_exploded.minute * Time::kMicrosecondsPerMinute) +
       (create_time_exploded.hour * Time::kMicrosecondsPerHour));
   double day_fraction = micros / Time::kMicrosecondsPerDay;
-  double stamp = day_fraction * std::numeric_limits<uint16_t>::max();
-
-  // Ghetto-round, since VC++ doesn't have round().
-  stamp = stamp >= (floor(stamp) + 0.5) ? (stamp + 1) : stamp;
+  double stamp =
+      std::round(day_fraction * std::numeric_limits<uint16_t>::max());
 
   return base::StringPrintf(
       "%i.%i.%i.%i", create_time_exploded.year, create_time_exploded.month,

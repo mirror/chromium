@@ -2,14 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-// MSVC++ requires this to be set before any other includes to get M_PI.
-#define _USE_MATH_DEFINES
-
 #include "content/browser/renderer_host/input/motion_event_web.h"
 
-#include <cmath>
-
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "content/common/input/web_touch_event_traits.h"
 #include "ui/events/blink/blink_event_util.h"
 
@@ -130,9 +126,9 @@ float MotionEventWeb::GetTouchMinor(size_t pointer_index) const {
 float MotionEventWeb::GetOrientation(size_t pointer_index) const {
   DCHECK_LT(pointer_index, GetPointerCount());
 
-  float orientation_rad = event_.touches[pointer_index].rotationAngle
-      * M_PI / 180.f;
-  DCHECK(0 <= orientation_rad && orientation_rad <= M_PI_2)
+  float orientation_rad =
+      base::DegToRad(event_.touches[pointer_index].rotationAngle);
+  DCHECK(0 <= orientation_rad && orientation_rad <= base::kPiFloat / 2)
       << "Unexpected touch rotation angle";
 
   if (GetToolType(pointer_index) == TOOL_TYPE_STYLUS) {
@@ -141,22 +137,22 @@ float MotionEventWeb::GetOrientation(size_t pointer_index) const {
     if (pointer.tiltY <= 0 && pointer.tiltX < 0) {
       // Stylus is tilted to the left away from the user or straight
       // to the left thus the orientation should be within [pi/2,pi).
-      orientation_rad += static_cast<float>(M_PI_2);
+      orientation_rad += base::kPiFloat / 2;
     } else if (pointer.tiltY < 0 && pointer.tiltX >= 0) {
       // Stylus is tilted to the right away from the user or straight away
       // from the user thus the orientation should be within [-pi,-pi/2).
-      orientation_rad -= static_cast<float>(M_PI);
+      orientation_rad -= base::kPiFloat;
     } else if (pointer.tiltY >= 0 && pointer.tiltX > 0) {
       // Stylus is tilted to the right towards the user or straight
       // to the right thus the orientation should be within [-pi/2,0).
-      orientation_rad -= static_cast<float>(M_PI_2);
+      orientation_rad -= base::kPiFloat / 2;
     }
   } else if (event_.touches[pointer_index].radiusX
              > event_.touches[pointer_index].radiusY) {
     // The case radiusX == radiusY is omitted from here on purpose: for circles,
     // we want to pass the angle (which could be any value in such cases but
     // always seems to be set to zero) unchanged.
-    orientation_rad -= static_cast<float>(M_PI_2);
+    orientation_rad -= base::kPiFloat / 2;
   }
 
   return orientation_rad;
@@ -174,10 +170,10 @@ float MotionEventWeb::GetTilt(size_t pointer_index) const {
 
   const WebPointerProperties& pointer = event_.touches[pointer_index];
 
-  float tilt_x_r = sin(pointer.tiltX * M_PI / 180.f);
-  float tilt_x_z = cos(pointer.tiltX * M_PI / 180.f);
-  float tilt_y_r = sin(pointer.tiltY * M_PI / 180.f);
-  float tilt_y_z = cos(pointer.tiltY * M_PI / 180.f);
+  float tilt_x_r = sinf(base::DegToRad(static_cast<float>(pointer.tiltX)));
+  float tilt_x_z = cosf(base::DegToRad(static_cast<float>(pointer.tiltX)));
+  float tilt_y_r = sinf(base::DegToRad(static_cast<float>(pointer.tiltY)));
+  float tilt_y_z = cosf(base::DegToRad(static_cast<float>(pointer.tiltY)));
   float r_x = tilt_x_r * tilt_y_z;
   float r_y = tilt_y_r * tilt_x_z;
   float r = sqrt(r_x * r_x + r_y * r_y);
