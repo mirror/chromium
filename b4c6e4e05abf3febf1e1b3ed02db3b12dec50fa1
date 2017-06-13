@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "bd4bf9b8_eb5000b2",
+        "filename": "third_party/WebKit/Source/core/editing/CaretDisplayItemClient.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T17:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db53f949_937cf2e3",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "82446a1c_961cbd9b",
         "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
         "patchSetId": 7
@@ -158,6 +176,24 @@
       "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5a1320c_14d21764",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutObjectChildList.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T17:53:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "60b49fc8_cf30a6d4",
+      "revId": "b4c6e4e05abf3febf1e1b3ed02db3b12dec50fa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
