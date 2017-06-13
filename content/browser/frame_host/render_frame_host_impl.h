@@ -434,6 +434,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
   // frame is the main frame.
   bool ShouldDispatchBeforeUnload();
 
+  // Returns true if the frame or any of its descendents have an onunload
+  // handler.
+  bool HasUnloadHandler();
+
   // Update the frame's opener in the renderer process in response to the
   // opener being modified (e.g., with window.open or being set to null) in
   // another renderer process.
@@ -773,8 +777,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
                                 base::string16 text,
                                 base::string16 html);
   void OnToggleFullscreen(bool enter_fullscreen);
+  void OnBeforeUnloadHandlersPresent(bool present);
+  void OnUnloadHandlersPresent(bool present);
   void OnDidStartLoading(bool to_different_document);
-  void OnDidStopLoading();
+  void OnDidStopLoading(const GURL& loading_url);
   void OnDidChangeLoadProgress(double load_progress);
   void OnSerializeAsMHTMLResponse(
       int job_id,
@@ -1048,6 +1054,10 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // When the last BeforeUnload message was sent.
   base::TimeTicks send_before_unload_start_time_;
+
+  // Used to track whether the frame has onbeforeunload and onunload handlers
+  bool has_beforeunload_handlers_;
+  bool has_unload_handlers_;
 
   // Set to true when there is a pending FrameMsg_BeforeUnload message.  This
   // ensures we don't spam the renderer with multiple beforeunload requests.

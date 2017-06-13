@@ -3660,7 +3660,7 @@ TEST_F(NavigationControllerTest, ShowBrowserURLAfterFailUntilModified) {
     params.showing_repost_interstitial = false;
     main_test_rfh()->OnMessageReceived(
         FrameHostMsg_DidFailProvisionalLoadWithError(0, params));
-    main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0));
+    main_test_rfh()->OnMessageReceived(FrameHostMsg_DidStopLoading(0, GURL()));
   }
   EXPECT_EQ(url, controller.GetVisibleEntry()->GetURL());
 

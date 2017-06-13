@@ -285,16 +285,41 @@ IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                    ->IsViewSourceMode());
 }
 
+namespace {
+
+// Used to wait on WebContentsObserver::WebContentsDestroyed() method
+class WebContentsDestroyedObserver : public content::WebContentsObserver {
+ public:
+  explicit WebContentsDestroyedObserver(WebContents* contents)
+      : content::WebContentsObserver(contents) {}
+
+  void Wait() { close_loop_.Run(); }
+
+  void WebContentsDestroyed() override { close_loop_.Quit(); }
+
+ private:
+  base::RunLoop close_loop_;
+
+  DISALLOW_COPY_AND_ASSIGN(WebContentsDestroyedObserver);
+};
+
+}  // namespace
+
 // Ensure that closing a page by running its beforeunload handler doesn't hang
 // if there's an ongoing navigation.
 IN_PROC_BROWSER_TEST_F(BrowserSideNavigationBrowserTest,
                        UnloadDuringNavigation) {
-  content::WindowedNotificationObserver close_observer(
-      content::NOTIFICATION_WEB_CONTENTS_DESTROYED,
-      content::Source<content::WebContents>(shell()->web_contents()));
-  GURL url("chrome://resources/css/tabs.css");
-  NavigationHandleObserver handle_observer(shell()->web_contents(), url);
-  shell()->LoadURL(url);
+  GURL first_url =
+      embedded_test_server()->GetURL("/page_with_empty_beforeunload.html");
+  GURL second_url = embedded_test_server()->GetURL("/title1.html");
+  NavigateToURL(shell(), first_url);
+  TestNavigationManager start_observer(shell()->web_contents(), second_url);
+  WebContentsDestroyedObserver close_observer(shell()->web_contents());
+  NavigationHandleObserver handle_observer(shell()->web_contents(), second_url);
+
+  shell()->LoadURL(second_url);
+  bool didStart = start_observer.WaitForRequestStart();
+  ASSERT_TRUE(didStart);
   shell()->web_contents()->DispatchBeforeUnload();
   close_observer.Wait();
   EXPECT_EQ(net::ERR_ABORTED, handle_observer.net_error_code());
