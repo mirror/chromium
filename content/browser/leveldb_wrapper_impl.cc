@@ -71,6 +71,15 @@ LevelDBWrapperImpl::~LevelDBWrapperImpl() {
     CommitChanges();
 }
 
+void LevelDBWrapperImpl::SetDatabase(
+    leveldb::mojom::LevelDBDatabase* database) {
+  database_ = database;
+  if (!database_) {
+    commit_batch_ = nullptr;
+    return;
+  }
+}
+
 void LevelDBWrapperImpl::Bind(mojom::LevelDBWrapperRequest request) {
   bindings_.AddBinding(this, std::move(request));
 }
@@ -423,7 +432,8 @@ base::TimeDelta LevelDBWrapperImpl::ComputeCommitDelay() const {
 }
 
 void LevelDBWrapperImpl::CommitChanges() {
-  DCHECK(database_);
+  if (!database_)
+    return;
   DCHECK(map_);
   if (!commit_batch_)
     return;

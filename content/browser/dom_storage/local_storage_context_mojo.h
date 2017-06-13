@@ -126,6 +126,9 @@ class CONTENT_EXPORT LocalStorageContextMojo
   void OnGotStorageUsageForShutdown(std::vector<LocalStorageUsageInfo> usage);
   void OnShutdownComplete(leveldb::mojom::DatabaseError error);
 
+  void OnCommitResult(leveldb::mojom::DatabaseError error);
+  void OnReconnectedToDB();
+
   std::unique_ptr<service_manager::Connector> connector_;
   const base::FilePath subdirectory_;
 
@@ -156,6 +159,10 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // Used to access old data for migration.
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
   base::FilePath old_localstorage_path_;
+
+  // Counts consecutive commit errors. If this number reaches a threshold, the
+  // whole database is thrown away.
+  int commit_error_count_ = 0;
 
   base::WeakPtrFactory<LocalStorageContextMojo> weak_ptr_factory_;
 };

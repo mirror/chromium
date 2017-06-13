@@ -23,6 +23,7 @@
 #include "mojo/public/cpp/bindings/associated_binding.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
+#include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "services/file/file_service.h"
 #include "services/file/public/interfaces/constants.mojom.h"
 #include "services/file/user_id_map.h"
@@ -728,6 +729,8 @@ class LocalStorageContextMojoTestWithService
   }
 
   void TearDown() override {
+    service_manager::ServiceContext::ClearGlobalBindersForTesting(
+        file::mojom::kServiceName);
     ServiceTest::TearDown();
   }
 
@@ -963,6 +966,182 @@ TEST_F(LocalStorageContextMojoTestWithService, CorruptionOnDisk) {
   EXPECT_TRUE(DoTestGet(context, key, &result));
   EXPECT_EQ(value, result);
   context->ShutdownAndDelete();
+}
+
+namespace {
+
+class MockLevelDBService : public leveldb::mojom::LevelDBService {
+ public:
+  void Open(filesystem::mojom::DirectoryPtr,
+            const std::string& dbname,
+            leveldb::mojom::LevelDBDatabaseAssociatedRequest request,
+            OpenCallback callback) override {
+    open_requests_.push_back(
+        {false, dbname, std::move(request), std::move(callback)});
+    if (on_open_callback_)
+      on_open_callback_.Run();
+  }
+
+  void OpenWithOptions(leveldb::mojom::OpenOptionsPtr options,
+                       filesystem::mojom::DirectoryPtr,
+                       const std::string& dbname,
+                       leveldb::mojom::LevelDBDatabaseAssociatedRequest request,
+                       OpenCallback callback) override {
+    open_requests_.push_back(
+        {false, dbname, std::move(request), std::move(callback)});
+    if (on_open_callback_)
+      on_open_callback_.Run();
+  }
+
+  void OpenInMemory(leveldb::mojom::LevelDBDatabaseAssociatedRequest request,
+                    OpenCallback callback) override {
+    open_requests_.push_back(
+        {true, "", std::move(request), std::move(callback)});
+    if (on_open_callback_)
+      on_open_callback_.Run();
+  }
+
+  void Destroy(filesystem::mojom::DirectoryPtr,
+               const std::string& dbname,
+               DestroyCallback callback) override {
+    destroy_requests_.push_back({dbname});
+    std::move(callback).Run(leveldb::mojom::DatabaseError::OK);
+  }
+
+  struct OpenRequest {
+    bool in_memory;
+    std::string dbname;
+    leveldb::mojom::LevelDBDatabaseAssociatedRequest request;
+    OpenCallback callback;
+  };
+  std::vector<OpenRequest> open_requests_;
+  base::Closure on_open_callback_;
+
+  struct DestroyRequest {
+    std::string dbname;
+  };
+  std::vector<DestroyRequest> destroy_requests_;
+
+  void Bind(const service_manager::BindSourceInfo& source_info,
+            const std::string& interface_name,
+            mojo::ScopedMessagePipeHandle interface_pipe) {
+    bindings_.AddBinding(
+        this, leveldb::mojom::LevelDBServiceRequest(std::move(interface_pipe)));
+  }
+
+ private:
+  mojo::BindingSet<leveldb::mojom::LevelDBService> bindings_;
+};
+
+class MockLevelDBDatabaseErrorOnWrite : public MockLevelDBDatabase {
+ public:
+  explicit MockLevelDBDatabaseErrorOnWrite(
+      std::map<std::vector<uint8_t>, std::vector<uint8_t>>* mock_data)
+      : MockLevelDBDatabase(mock_data) {}
+
+  void Write(std::vector<leveldb::mojom::BatchedOperationPtr> operations,
+             WriteCallback callback) override {
+    std::move(callback).Run(leveldb::mojom::DatabaseError::IO_ERROR);
+  }
+};
+
+}  // namespace
+
+TEST_F(LocalStorageContextMojoTestWithService, RecreateOnCommitFailure) {
+  MockLevelDBService mock_leveldb_service;
+  service_manager::ServiceContext::SetGlobalBinderForTesting(
+      file::mojom::kServiceName, leveldb::mojom::LevelDBService::Name_,
+      base::Bind(&MockLevelDBService::Bind,
+                 base::Unretained(&mock_leveldb_service)));
+
+  std::map<std::vector<uint8_t>, std::vector<uint8_t>> test_data;
+
+  base::FilePath test_path(FILE_PATH_LITERAL("test_path"));
+  auto* context = new LocalStorageContextMojo(
+      base::ThreadTaskRunnerHandle::Get(), connector(), nullptr,
+      base::FilePath(), test_path, nullptr);
+
+  auto key = StdStringToUint8Vector("key");
+  auto value = StdStringToUint8Vector("value");
+
+  mojom::LevelDBWrapperPtr wrapper;
+  {
+    base::RunLoop loop;
+    mock_leveldb_service.on_open_callback_ = loop.QuitClosure();
+    context->OpenLocalStorage(url::Origin(GURL("http://foobar.com")),
+                              MakeRequest(&wrapper));
+    loop.Run();
+  }
+
+  ASSERT_EQ(1u, mock_leveldb_service.open_requests_.size());
+  auto& open_request = mock_leveldb_service.open_requests_[0];
+  auto mock_db = mojo::MakeStrongAssociatedBinding(
+      base::MakeUnique<MockLevelDBDatabaseErrorOnWrite>(&test_data),
+      std::move(open_request.request));
+  std::move(open_request.callback).Run(leveldb::mojom::DatabaseError::OK);
+
+  base::RunLoop reopen_loop;
+  mock_leveldb_service.on_open_callback_ = reopen_loop.QuitClosure();
+
+  for (int i = 0; i < 20; ++i) {
+    value[0]++;
+    base::RunLoop put_loop;
+    wrapper->Put(key, value, "source",
+                 base::Bind([](base::Closure quit_closure,
+                               bool success) { quit_closure.Run(); },
+                            put_loop.QuitClosure()));
+    put_loop.RunUntilIdle();
+    context->Flush();
+  }
+  if (mock_db)
+    mock_db->FlushForTesting();
+  EXPECT_FALSE(mock_db);
+
+  {
+    base::RunLoop get_loop;
+    std::vector<uint8_t> result;
+    bool success = false;
+    wrapper->Get(key, base::Bind(&GetCallback, get_loop.QuitClosure(), &success,
+                                 &result));
+    get_loop.Run();
+    EXPECT_TRUE(success);
+  }
+
+  TestLevelDBObserver observer;
+  wrapper->AddObserver(observer.Bind());
+
+  reopen_loop.Run();
+  ASSERT_EQ(2u, mock_leveldb_service.open_requests_.size());
+  auto& reopen_request = mock_leveldb_service.open_requests_[1];
+  mock_db = mojo::MakeStrongAssociatedBinding(
+      base::MakeUnique<MockLevelDBDatabase>(&test_data),
+      std::move(reopen_request.request));
+  std::move(reopen_request.callback).Run(leveldb::mojom::DatabaseError::OK);
+  mock_db->FlushForTesting();
+
+  {
+    base::RunLoop get_loop;
+    std::vector<uint8_t> result;
+    bool success = true;
+    wrapper->Get(key, base::Bind(&GetCallback, get_loop.QuitClosure(), &success,
+                                 &result));
+    get_loop.Run();
+    EXPECT_FALSE(success);
+  }
+  wrapper = nullptr;
+
+  EXPECT_EQ(1u, observer.observations().size());
+  EXPECT_EQ(TestLevelDBObserver::Observation::kDeleteAll,
+            observer.observations()[0].type);
+
+  {
+    // Committing data should now work.
+    DoTestPut(context, key, value);
+    std::vector<uint8_t> result;
+    EXPECT_TRUE(DoTestGet(context, key, &result));
+    EXPECT_EQ(value, result);
+    EXPECT_FALSE(test_data.empty());
+  }
 }
 
 }  // namespace content
