@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0d73f9ba_bec50764",
+        "filename": "components/metrics/proto/cast_logs.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-13T21:42:48Z",
+      "side": 1,
+      "message": "Please first make this change upstream, in the google3 repository.  (And, as you do, please double-check whether any related code needs to be updated to handle the new enum value -- e.g. is there code that translates the enum to a human-readable string?)",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "41ed570c745b3011b16227f6d0418753f825fba4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
