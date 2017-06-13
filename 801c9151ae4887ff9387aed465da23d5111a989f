@@ -22,6 +22,30 @@
       "revId": "801c9151ae4887ff9387aed465da23d5111a989f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f470bb6a_9b89e732",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-13T00:45:18Z",
+      "side": 1,
+      "message": "Changed to:\n// Returns all borders. The caller should not assume that the returned\n// borders are in any particular order.\n\nIn the patch this is used by LayoutTable::EnsuerIsReadyForPaintInvalidation() to check if there are any borders with different priorities and set NeedsAdjustCollapsedBorderCorners().",
+      "parentUuid": "22281ffa_3c705a0e",
+      "range": {
+        "startLine": 315,
+        "startChar": 7,
+        "endLine": 315,
+        "endChar": 9
+      },
+      "revId": "801c9151ae4887ff9387aed465da23d5111a989f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
