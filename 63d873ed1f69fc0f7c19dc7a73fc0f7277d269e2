@@ -237,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "ce847ea4_cb0295a8",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 8
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-13T20:18:13Z",
+      "side": 1,
+      "message": "Because that\u0027s how Java binary names are generated; _ is the escape character. I\u0027m not sure if that matters in this specific context, but in any context where you\u0027re generating a symbol the VM is going to look up you need this replacement, so it might be best to be consistent anyway? (since the actual JNI methods will have _1 in them)",
+      "parentUuid": "4640f62a_6e6091ce",
+      "range": {
+        "startLine": 894,
+        "startChar": 50,
+        "endLine": 894,
+        "endChar": 61
+      },
+      "revId": "63d873ed1f69fc0f7c19dc7a73fc0f7277d269e2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6d786408_8512da8d",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 8
