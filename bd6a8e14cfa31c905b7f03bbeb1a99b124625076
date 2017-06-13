@@ -22,6 +22,30 @@
       "revId": "bd6a8e14cfa31c905b7f03bbeb1a99b124625076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1573c5cf_537a0a3f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-13T20:21:02Z",
+      "side": 1,
+      "message": "See https://cs.chromium.org/chromium/src/components/leveldb/leveldb_service_impl.cc?l\u003d52, that\u0027s already the default value.",
+      "parentUuid": "44a9ba40_03467c77",
+      "range": {
+        "startLine": 491,
+        "startChar": 11,
+        "endLine": 491,
+        "endChar": 29
+      },
+      "revId": "bd6a8e14cfa31c905b7f03bbeb1a99b124625076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
