@@ -34,6 +34,24 @@
       "revId": "2ffea18a09d72a6cfdc68445f3fd0174de2dbc40",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aa58791_bd792b33",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-13T16:42:46Z",
+      "side": 0,
+      "message": "Yeah, DocumentLoader is only directly responsible for loading the main resource, but it still shares some of the responsible for all the per-frame loading \"stuff\" with FrameFetchContext and ResourceFetcher (see, e.g., StartPreload). Maybe if we disentangle some of that, we should change the name to resource_ in the future.",
+      "parentUuid": "3c8aa64e_fcbea62b",
+      "revId": "2ffea18a09d72a6cfdc68445f3fd0174de2dbc40",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
