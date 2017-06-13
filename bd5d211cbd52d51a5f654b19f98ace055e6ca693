@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2ead93de_929fd2a6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-13T19:57:48Z",
+      "side": 1,
+      "message": "Moving to synchronous doesn\u0027t change what thread any of the calls happen on does it?  This post on UI is really just to defer the task and not to ensure threading correctness right?\n\nNothing in this class is thread safe, so making sure the change doesn\u0027t affect that.",
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc3b3477_86ec93ce",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-13T19:57:48Z",
+      "side": 1,
+      "message": "What happens if you have \"Don\u0027t keep activities\" set in Android?  Does this get called after the activity has been destroyed (I would assume not due to the various hops of moveTaskToBack)?  I want to make sure that we don\u0027t inadvertently leave tabs around because by the time closeTab was called the tab model selector was destroyed.\n\nI wonder if we could synchronously mark the tab as closing above and then close it below (although those signals might not be used by the serialization logic in which case it wouldn\u0027t help).",
+      "range": {
+        "startLine": 252,
+        "startChar": 25,
+        "endLine": 252,
+        "endChar": 44
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
