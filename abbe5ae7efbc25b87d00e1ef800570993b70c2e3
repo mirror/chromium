@@ -34,6 +34,24 @@
       "revId": "abbe5ae7efbc25b87d00e1ef800570993b70c2e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fc9609b0_17e5bce3",
+        "filename": "chrome/browser/conflicts/module_database_win.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-13T07:15:05Z",
+      "side": 1,
+      "message": "Ack. My preference is for all int-ish things that can be initialiezd in the class to be there, and only initialize things that take args in the .cc file. Since there\u0027s nothing in the guide relating to this, it\u0027s just personal preference.",
+      "parentUuid": "a95a2c53_4cae9e41",
+      "revId": "abbe5ae7efbc25b87d00e1ef800570993b70c2e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
