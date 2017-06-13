@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7dfc9675_f2b8918d",
+        "filename": "content/browser/frame_host/render_frame_host_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1565,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 0,
+      "message": "Shouldn\u0027t we rather force site isolation for the extensions now, considering we don\u0027t support them in-process now?",
+      "revId": "6c84a944f1ac480f9afd1ad93225499c40ddbf0b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

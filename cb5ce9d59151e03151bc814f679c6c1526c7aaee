@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "64d5587d_77e94a9b",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 1,
+      "message": "is this actually implemented?",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3280bb76_68e8f52c",
+        "filename": "chrome/browser/devtools/devtools_ui_bindings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 1,
+      "message": "ExtensionsAPIsByOrigin?",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1af39416_ef45efbe",
         "filename": "content/browser/devtools/devtools_frontend_host_impl.cc",
         "patchSetId": 4
@@ -53,6 +87,40 @@
     },
     {
       "key": {
+        "uuid": "12eef68d_23528d66",
+        "filename": "content/renderer/devtools/devtools_client.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 1,
+      "message": "nit: pass string by value, use std::move() on call site.",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93b0052_3edb6a4e",
+        "filename": "content/shell/browser/shell_devtools_bindings.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 1,
+      "message": "ExtensionsAPIsByOrigin",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "453c5a04_1052b41d",
         "filename": "content/shell/common/layout_test/layout_test_content_client.cc",
         "patchSetId": 4
@@ -81,6 +149,23 @@
       "writtenOn": "2017-06-13T17:20:07Z",
       "side": 1,
       "message": "Does this even work? I thought nothing outside of http is accessible from http test.",
+      "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf534a0f_09477472",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions/extensions-network.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-13T18:48:03Z",
+      "side": 1,
+      "message": "This may flake -- please use some async form of eval in extension_doXHR() then (e.g. do it via evaluateOnFrontend + InspectorTest.evaluateInPageAsync())",
       "revId": "cb5ce9d59151e03151bc814f679c6c1526c7aaee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
