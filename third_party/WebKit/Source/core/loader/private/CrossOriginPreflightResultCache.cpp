@@ -157,14 +157,15 @@ bool CrossOriginPreflightResultCacheItem::AllowsCrossOriginHeaders(
 }
 
 bool CrossOriginPreflightResultCacheItem::AllowsRequest(
-    StoredCredentials include_credentials,
+    WebURLRequest::FetchCredentialsMode fetch_credentials_mode,
     const String& method,
     const HTTPHeaderMap& request_headers) const {
   String ignored_explanation;
   if (absolute_expiry_time_ < CurrentTime())
     return false;
-  if (include_credentials == kAllowStoredCredentials &&
-      credentials_ == kDoNotAllowStoredCredentials)
+  if (credentials_ ||
+      (fetch_credentials_mode != WebURLRequest::kFetchCredentialsModeInclude &&
+       fetch_credentials_mode != WebURLRequest::kFetchCredentialsModePassword))
     return false;
   if (!AllowsCrossOriginMethod(method, ignored_explanation))
     return false;
@@ -191,7 +192,7 @@ void CrossOriginPreflightResultCache::AppendEntry(
 bool CrossOriginPreflightResultCache::CanSkipPreflight(
     const String& origin,
     const KURL& url,
-    StoredCredentials include_credentials,
+    WebURLRequest::FetchCredentialsMode fetch_credentials_mode,
     const String& method,
     const HTTPHeaderMap& request_headers) {
   DCHECK(IsMainThread());
@@ -200,7 +201,7 @@ bool CrossOriginPreflightResultCache::CanSkipPreflight(
   if (cache_it == preflight_hash_map_.end())
     return false;
 
-  if (cache_it->value->AllowsRequest(include_credentials, method,
+  if (cache_it->value->AllowsRequest(fetch_credentials_mode, method,
                                      request_headers))
     return true;
 
