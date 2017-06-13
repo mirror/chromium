@@ -108,34 +108,33 @@ bool OverlayUserPrefStore::GetMutableValue(const std::string& key,
   if (!underlay_->GetMutableValue(key, &underlay_value))
     return false;
 
-  *result = underlay_value->DeepCopy();
-  overlay_->SetValue(key, base::WrapUnique(*result),
-                     WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+  *result =
+      overlay_->SetValue(key, base::MakeUnique<base::Value>(*underlay_value),
+                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
   return true;
 }
 
-void OverlayUserPrefStore::SetValue(const std::string& key,
-                                    std::unique_ptr<base::Value> value,
-                                    uint32_t flags) {
-  if (!ShallBeStoredInOverlay(key)) {
-    underlay_->SetValue(key, std::move(value), flags);
-    return;
-  }
-
-  written_overlay_names_.insert(key);
-  overlay_->SetValue(key, std::move(value), flags);
-}
-
-void OverlayUserPrefStore::SetValueSilently(const std::string& key,
+base::Value* OverlayUserPrefStore::SetValue(const std::string& key,
                                             std::unique_ptr<base::Value> value,
                                             uint32_t flags) {
   if (!ShallBeStoredInOverlay(key)) {
-    underlay_->SetValueSilently(key, std::move(value), flags);
-    return;
+    return underlay_->SetValue(key, std::move(value), flags);
   }
 
   written_overlay_names_.insert(key);
-  overlay_->SetValueSilently(key, std::move(value), flags);
+  return overlay_->SetValue(key, std::move(value), flags);
+}
+
+base::Value* OverlayUserPrefStore::SetValueSilently(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
+  if (!ShallBeStoredInOverlay(key)) {
+    return underlay_->SetValueSilently(key, std::move(value), flags);
+  }
+
+  written_overlay_names_.insert(key);
+  return overlay_->SetValueSilently(key, std::move(value), flags);
 }
 
 void OverlayUserPrefStore::RemoveValue(const std::string& key, uint32_t flags) {

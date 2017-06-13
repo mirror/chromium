@@ -380,7 +380,7 @@ std::unique_ptr<Value> JSONParser::ConsumeDictionary() {
       return nullptr;
     }
 
-    dict_storage.emplace_back(key.DestructiveAsString(), std::move(value));
+    dict_storage.emplace_back(key.DestructiveAsString(), std::move(*value));
 
     NextChar();
     token = GetNextToken();

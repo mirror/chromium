@@ -43,18 +43,26 @@ bool InMemoryPrefStore::IsInitializationComplete() const {
   return true;
 }
 
-void InMemoryPrefStore::SetValue(const std::string& key,
-                                 std::unique_ptr<base::Value> value,
-                                 uint32_t flags) {
+base::Value* InMemoryPrefStore::SetValue(const std::string& key,
+                                         std::unique_ptr<base::Value> value,
+                                         uint32_t flags) {
   DCHECK(value);
   if (prefs_.SetValue(key, std::move(value)))
     ReportValueChanged(key, flags);
+
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
-void InMemoryPrefStore::SetValueSilently(const std::string& key,
-                                      std::unique_ptr<base::Value> value,
-                                      uint32_t flags) {
+base::Value* InMemoryPrefStore::SetValueSilently(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
   prefs_.SetValue(key, std::move(value));
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
 void InMemoryPrefStore::RemoveValue(const std::string& key, uint32_t flags) {

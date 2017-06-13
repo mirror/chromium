@@ -31,10 +31,16 @@ TEST(ValuesTest, TestNothrow) {
       std::is_nothrow_constructible<Value, Value::BlobStorage&&>::value,
       "IsNothrowMoveConstructibleFromBlob");
   static_assert(
+      std::is_nothrow_constructible<Value, Value::DictStorage&&>::value,
+      "IsNothrowMoveConstructibleFromDict");
+  static_assert(
       std::is_nothrow_constructible<Value, Value::ListStorage&&>::value,
       "IsNothrowMoveConstructibleFromList");
   static_assert(std::is_nothrow_move_assignable<Value>::value,
                 "IsNothrowMoveAssignable");
+  static_assert(std::is_nothrow_constructible<DictionaryValue,
+                                              Value::DictStorage&&>::value,
+                "DictIsNothrowMoveConstructibleFromDict");
   static_assert(
       std::is_nothrow_constructible<ListValue, Value::ListStorage&&>::value,
       "ListIsNothrowMoveConstructibleFromList");
@@ -120,6 +126,28 @@ TEST(ValuesTest, ConstructDict) {
 TEST(ValuesTest, ConstructList) {
   ListValue value;
   EXPECT_EQ(Value::Type::LIST, value.type());
+}
+
+TEST(ValuesTest, ConstructDictFromStorage) {
+  Value::DictStorage storage;
+  storage.emplace("foo", base::Value("bar"));
+
+  {
+    DictionaryValue value(storage);
+    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
+    std::string payload;
+    EXPECT_TRUE(value.GetString("foo", &payload));
+    EXPECT_EQ("bar", payload);
+  }
+
+  storage["foo"] = base::Value("baz");
+  {
+    DictionaryValue value(std::move(storage));
+    EXPECT_EQ(Value::Type::DICTIONARY, value.type());
+    std::string payload;
+    EXPECT_TRUE(value.GetString("foo", &payload));
+    EXPECT_EQ("baz", payload);
+  }
 }
 
 TEST(ValuesTest, ConstructListFromStorage) {
@@ -776,7 +804,9 @@ TEST(ValuesTest, DictionaryRemovePath) {
 }
 
 TEST(ValuesTest, DeepCopy) {
-  DictionaryValue original_dict;
+  Value::DictStorage storage;
+  storage.reserve(9);
+  DictionaryValue original_dict(std::move(storage));
   Value* null_weak = original_dict.Set("null", MakeUnique<Value>());
   Value* bool_weak = original_dict.Set("bool", MakeUnique<Value>(true));
   Value* int_weak = original_dict.Set("int", MakeUnique<Value>(42));
@@ -1086,7 +1116,9 @@ TEST(ValuesTest, Comparisons) {
 }
 
 TEST(ValuesTest, DeepCopyCovariantReturnTypes) {
-  DictionaryValue original_dict;
+  Value::DictStorage storage;
+  storage.reserve(8);
+  DictionaryValue original_dict(std::move(storage));
   Value* null_weak = original_dict.Set("null", MakeUnique<Value>());
   Value* bool_weak = original_dict.Set("bool", MakeUnique<Value>(true));
   Value* int_weak = original_dict.Set("int", MakeUnique<Value>(42));
@@ -1246,7 +1278,6 @@ TEST(ValuesTest, MergeDictionary) {
 
 TEST(ValuesTest, MergeDictionaryDeepCopy) {
   std::unique_ptr<DictionaryValue> child(new DictionaryValue);
-  DictionaryValue* original_child = child.get();
   child->SetString("test", "value");
   EXPECT_EQ(1U, child->size());
 
@@ -1255,12 +1286,13 @@ TEST(ValuesTest, MergeDictionaryDeepCopy) {
   EXPECT_EQ("value", value);
 
   std::unique_ptr<DictionaryValue> base(new DictionaryValue);
-  base->Set("dict", std::move(child));
+  DictionaryValue* original_child =
+      base->SetDictionary("dict", std::move(child));
   EXPECT_EQ(1U, base->size());
 
   DictionaryValue* ptr;
   EXPECT_TRUE(base->GetDictionary("dict", &ptr));
-  EXPECT_EQ(original_child, ptr);
+  EXPECT_EQ(*original_child, *ptr);
 
   std::unique_ptr<DictionaryValue> merged(new DictionaryValue);
   merged->MergeDictionary(base.get());
@@ -1325,7 +1357,7 @@ TEST(ValuesTest, StdDictionaryIterator) {
   for (const auto& it : dict) {
     EXPECT_FALSE(seen1);
     EXPECT_EQ("key1", it.first);
-    EXPECT_EQ(value1, *it.second);
+    EXPECT_EQ(value1, it.second);
     seen1 = true;
   }
   EXPECT_TRUE(seen1);
@@ -1336,11 +1368,11 @@ TEST(ValuesTest, StdDictionaryIterator) {
   for (const auto& it : dict) {
     if (it.first == "key1") {
       EXPECT_FALSE(seen1);
-      EXPECT_EQ(value1, *it.second);
+      EXPECT_EQ(value1, it.second);
       seen1 = true;
     } else if (it.first == "key2") {
       EXPECT_FALSE(seen2);
-      EXPECT_EQ(value2, *it.second);
+      EXPECT_EQ(value2, it.second);
       seen2 = true;
     } else {
       ADD_FAILURE();

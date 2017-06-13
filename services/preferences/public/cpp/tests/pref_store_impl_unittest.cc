@@ -55,13 +55,15 @@ class MockPrefStore : public ValueMapPrefStore {
     }
   }
 
-  void SetValue(const std::string& key,
-                std::unique_ptr<base::Value> value,
-                uint32_t flags) override {
-    ValueMapPrefStore::SetValue(key, std::move(value), flags);
+  base::Value* SetValue(const std::string& key,
+                        std::unique_ptr<base::Value> value,
+                        uint32_t flags) override {
+    base::Value* handle =
+        ValueMapPrefStore::SetValue(key, std::move(value), flags);
     for (auto& observer : observers_) {
       observer.OnPrefValueChanged(key);
     }
+    return handle;
   }
 
  private:

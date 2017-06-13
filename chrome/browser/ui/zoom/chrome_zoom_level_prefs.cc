@@ -115,10 +115,8 @@ void ChromeZoomLevelPrefs::OnZoomLevelChanged(
   base::DictionaryValue* host_zoom_dictionary_weak = nullptr;
   if (!host_zoom_dictionaries->GetDictionary(partition_key_,
                                              &host_zoom_dictionary_weak)) {
-    auto host_zoom_dictionary = base::MakeUnique<base::DictionaryValue>();
-    host_zoom_dictionary_weak = host_zoom_dictionary.get();
-    host_zoom_dictionaries->Set(partition_key_,
-                                std::move(host_zoom_dictionary));
+    host_zoom_dictionary_weak = host_zoom_dictionaries->SetDictionary(
+        partition_key_, base::MakeUnique<base::DictionaryValue>());
   }
 
   if (modification_is_removal) {

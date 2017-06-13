@@ -33,13 +33,17 @@ bool ValueMapPrefStore::HasObservers() const {
   return observers_.might_have_observers();
 }
 
-void ValueMapPrefStore::SetValue(const std::string& key,
-                                 std::unique_ptr<base::Value> value,
-                                 uint32_t flags) {
+base::Value* ValueMapPrefStore::SetValue(const std::string& key,
+                                         std::unique_ptr<base::Value> value,
+                                         uint32_t flags) {
   if (prefs_.SetValue(key, std::move(value))) {
     for (Observer& observer : observers_)
       observer.OnPrefValueChanged(key);
   }
+
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
 void ValueMapPrefStore::RemoveValue(const std::string& key, uint32_t flags) {
@@ -60,10 +64,14 @@ void ValueMapPrefStore::ReportValueChanged(const std::string& key,
     observer.OnPrefValueChanged(key);
 }
 
-void ValueMapPrefStore::SetValueSilently(const std::string& key,
-                                         std::unique_ptr<base::Value> value,
-                                         uint32_t flags) {
+base::Value* ValueMapPrefStore::SetValueSilently(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
   prefs_.SetValue(key, std::move(value));
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
 ValueMapPrefStore::~ValueMapPrefStore() {}

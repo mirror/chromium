@@ -165,15 +165,18 @@ PersistentPrefStoreClient::PersistentPrefStoreClient(
                                prefs::mojom::PrefStoreConnectionPtr>());
 }
 
-void PersistentPrefStoreClient::SetValue(const std::string& key,
-                                         std::unique_ptr<base::Value> value,
-                                         uint32_t flags) {
-  base::Value* old_value = nullptr;
-  GetMutableValues().Get(key, &old_value);
-  if (!old_value || !value->Equals(old_value)) {
+base::Value* PersistentPrefStoreClient::SetValue(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
+  base::Value* handle = nullptr;
+  GetMutableValues().Get(key, &handle);
+  if (!handle || !value->Equals(handle)) {
     GetMutableValues().Set(key, std::move(value));
     ReportValueChanged(key, flags);
   }
+
+  return handle;
 }
 
 void PersistentPrefStoreClient::RemoveValue(const std::string& key,
@@ -204,12 +207,12 @@ void PersistentPrefStoreClient::ReportSubValuesChanged(
   ReportPrefValueChanged(key);
 }
 
-void PersistentPrefStoreClient::SetValueSilently(
+base::Value* PersistentPrefStoreClient::SetValueSilently(
     const std::string& key,
     std::unique_ptr<base::Value> value,
     uint32_t flags) {
   DCHECK(pref_store_);
-  GetMutableValues().Set(key, std::move(value));
+  return GetMutableValues().Set(key, std::move(value));
 }
 
 bool PersistentPrefStoreClient::ReadOnly() const {

@@ -226,9 +226,8 @@ void SerializeExpectCTData(TransportSecurityState* state,
     if (!toplevel->GetDictionary(key, &serialized)) {
       std::unique_ptr<base::DictionaryValue> serialized_scoped(
           new base::DictionaryValue);
-      serialized = serialized_scoped.get();
-      PopulateEntryWithDefaults(serialized);
-      toplevel->Set(key, std::move(serialized_scoped));
+      PopulateEntryWithDefaults(serialized_scoped.get());
+      serialized = toplevel->SetDictionary(key, std::move(serialized_scoped));
     }
 
     std::unique_ptr<base::DictionaryValue> expect_ct_subdictionary(

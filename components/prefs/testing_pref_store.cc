@@ -52,22 +52,31 @@ bool TestingPrefStore::IsInitializationComplete() const {
   return init_complete_;
 }
 
-void TestingPrefStore::SetValue(const std::string& key,
-                                std::unique_ptr<base::Value> value,
-                                uint32_t flags) {
+base::Value* TestingPrefStore::SetValue(const std::string& key,
+                                        std::unique_ptr<base::Value> value,
+                                        uint32_t flags) {
   if (prefs_.SetValue(key, std::move(value))) {
     committed_ = false;
     NotifyPrefValueChanged(key);
   }
+
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
-void TestingPrefStore::SetValueSilently(const std::string& key,
-                                        std::unique_ptr<base::Value> value,
-                                        uint32_t flags) {
+base::Value* TestingPrefStore::SetValueSilently(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
   if (value)
     CheckPrefIsSerializable(key, *value);
   if (prefs_.SetValue(key, std::move(value)))
     committed_ = false;
+
+  base::Value* handle = nullptr;
+  prefs_.GetValue(key, &handle);
+  return handle;
 }
 
 void TestingPrefStore::RemoveValue(const std::string& key, uint32_t flags) {

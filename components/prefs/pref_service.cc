@@ -471,8 +471,8 @@ base::Value* PrefService::GetMutableUserPref(const std::string& path,
     } else {
       NOTREACHED();
     }
-    user_pref_store_->SetValueSilently(path, base::WrapUnique(value),
-                                       GetWriteFlags(pref));
+    value = user_pref_store_->SetValueSilently(path, base::WrapUnique(value),
+                                               GetWriteFlags(pref));
   }
   return value;
 }

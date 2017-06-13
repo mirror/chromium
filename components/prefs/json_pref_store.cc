@@ -209,32 +209,36 @@ bool JsonPrefStore::GetMutableValue(const std::string& key,
   return prefs_->Get(key, result);
 }
 
-void JsonPrefStore::SetValue(const std::string& key,
-                             std::unique_ptr<base::Value> value,
-                             uint32_t flags) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
-
-  DCHECK(value);
-  base::Value* old_value = nullptr;
-  prefs_->Get(key, &old_value);
-  if (!old_value || !value->Equals(old_value)) {
-    prefs_->Set(key, std::move(value));
-    ReportValueChanged(key, flags);
-  }
-}
-
-void JsonPrefStore::SetValueSilently(const std::string& key,
+base::Value* JsonPrefStore::SetValue(const std::string& key,
                                      std::unique_ptr<base::Value> value,
                                      uint32_t flags) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   DCHECK(value);
-  base::Value* old_value = nullptr;
-  prefs_->Get(key, &old_value);
-  if (!old_value || !value->Equals(old_value)) {
-    prefs_->Set(key, std::move(value));
+  base::Value* handle = nullptr;
+  prefs_->Get(key, &handle);
+  if (!handle || !value->Equals(handle)) {
+    handle = prefs_->Set(key, std::move(value));
+    ReportValueChanged(key, flags);
+  }
+
+  return handle;
+}
+
+base::Value* JsonPrefStore::SetValueSilently(const std::string& key,
+                                             std::unique_ptr<base::Value> value,
+                                             uint32_t flags) {
+  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+
+  DCHECK(value);
+  base::Value* handle = nullptr;
+  prefs_->Get(key, &handle);
+  if (!handle || !value->Equals(handle)) {
+    handle = prefs_->Set(key, std::move(value));
     ScheduleWrite(flags);
   }
+
+  return handle;
 }
 
 void JsonPrefStore::RemoveValue(const std::string& key, uint32_t flags) {

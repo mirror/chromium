@@ -22,9 +22,11 @@ class ExtensionScopedPrefs {
   ~ExtensionScopedPrefs() {}
 
   // Sets the pref |key| for extension |id| to |value|.
-  virtual void UpdateExtensionPref(const std::string& id,
-                                   const std::string& key,
-                                   std::unique_ptr<base::Value> value) = 0;
+  // Returns a weak pointer to the updated value.
+  virtual base::Value* UpdateExtensionPref(
+      const std::string& id,
+      const std::string& key,
+      std::unique_ptr<base::Value> value) = 0;
 
   // Deletes the pref dictionary for extension |id|.
   virtual void DeleteExtensionPrefs(const std::string& id) = 0;

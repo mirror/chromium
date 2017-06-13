@@ -99,10 +99,10 @@ std::unique_ptr<base::DictionaryValue> SegregatedPrefStore::GetValues() const {
   return values;
 }
 
-void SegregatedPrefStore::SetValue(const std::string& key,
-                                   std::unique_ptr<base::Value> value,
-                                   uint32_t flags) {
-  StoreForKey(key)->SetValue(key, std::move(value), flags);
+base::Value* SegregatedPrefStore::SetValue(const std::string& key,
+                                           std::unique_ptr<base::Value> value,
+                                           uint32_t flags) {
+  return StoreForKey(key)->SetValue(key, std::move(value), flags);
 }
 
 void SegregatedPrefStore::RemoveValue(const std::string& key, uint32_t flags) {
@@ -119,10 +119,11 @@ void SegregatedPrefStore::ReportValueChanged(const std::string& key,
   StoreForKey(key)->ReportValueChanged(key, flags);
 }
 
-void SegregatedPrefStore::SetValueSilently(const std::string& key,
-                                           std::unique_ptr<base::Value> value,
-                                           uint32_t flags) {
-  StoreForKey(key)->SetValueSilently(key, std::move(value), flags);
+base::Value* SegregatedPrefStore::SetValueSilently(
+    const std::string& key,
+    std::unique_ptr<base::Value> value,
+    uint32_t flags) {
+  return StoreForKey(key)->SetValueSilently(key, std::move(value), flags);
 }
 
 bool SegregatedPrefStore::ReadOnly() const {

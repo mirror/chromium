@@ -59,11 +59,10 @@ class PreferenceAPIBase {
   // but rather about something global the extension wants to override.
 
   // Set a new extension-controlled preference value.
-  // Takes ownership of |value|.
   void SetExtensionControlledPref(const std::string& extension_id,
                                   const std::string& pref_key,
                                   ExtensionPrefsScope scope,
-                                  base::Value* value);
+                                  std::unique_ptr<base::Value> value);
 
   // Remove an extension-controlled preference value.
   void RemoveExtensionControlledPref(const std::string& extension_id,

@@ -428,7 +428,7 @@ void PreferenceAPIBase::SetExtensionControlledPref(
     const std::string& extension_id,
     const std::string& pref_key,
     ExtensionPrefsScope scope,
-    base::Value* value) {
+    std::unique_ptr<base::Value> value) {
 #ifndef NDEBUG
   const PrefService::Preference* pref =
       extension_prefs()->pref_service()->FindPreference(pref_key);
@@ -449,8 +449,8 @@ void PreferenceAPIBase::SetExtensionControlledPref(
     auto preference = update.Create();
     preference->SetWithoutPathExpansion(pref_key, value->CreateDeepCopy());
   }
-  extension_pref_value_map()->SetExtensionPref(
-      extension_id, pref_key, scope, value);
+  extension_pref_value_map()->SetExtensionPref(extension_id, pref_key, scope,
+                                               std::move(value));
 }
 
 void PreferenceAPIBase::RemoveExtensionControlledPref(
@@ -733,7 +733,7 @@ ExtensionFunction::ResponseAction SetPreferenceFunction::Run() {
 
   PreferenceAPI::Get(browser_context())
       ->SetExtensionControlledPref(extension_id(), browser_pref, scope,
-                                   browser_pref_value.release());
+                                   std::move(browser_pref_value));
   return RespondNow(NoArguments());
 }
 

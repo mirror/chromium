@@ -38,11 +38,10 @@ const base::DictionaryValue* GetIdMappingDictionary(
           &out_value) || out_value == NULL) {
     // Looks like this is the first call to get the dictionary. Let us create
     // a dictionary and set it in to |extension_prefs|.
-    std::unique_ptr<base::DictionaryValue> dictionary(
-        new base::DictionaryValue());
-    out_value = dictionary.get();
-    extension_prefs->UpdateExtensionPref(extension_id, kPrefStringForIdMapping,
-                                         std::move(dictionary));
+    out_value = static_cast<base::DictionaryValue*>(
+        extension_prefs->UpdateExtensionPref(
+            extension_id, kPrefStringForIdMapping,
+            base::MakeUnique<base::DictionaryValue>()));
   }
 
   return out_value;
@@ -140,4 +139,3 @@ ExtensionFunction::ResponseAction SignedInDevicesGetFunction::Run() {
 }
 
 }  // namespace extensions
-

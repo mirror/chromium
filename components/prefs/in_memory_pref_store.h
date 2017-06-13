@@ -35,12 +35,12 @@ class COMPONENTS_PREFS_EXPORT InMemoryPrefStore : public PersistentPrefStore {
   // PersistentPrefStore implementation.
   bool GetMutableValue(const std::string& key, base::Value** result) override;
   void ReportValueChanged(const std::string& key, uint32_t flags) override;
-  void SetValue(const std::string& key,
-                std::unique_ptr<base::Value> value,
-                uint32_t flags) override;
-  void SetValueSilently(const std::string& key,
+  base::Value* SetValue(const std::string& key,
                         std::unique_ptr<base::Value> value,
                         uint32_t flags) override;
+  base::Value* SetValueSilently(const std::string& key,
+                                std::unique_ptr<base::Value> value,
+                                uint32_t flags) override;
   void RemoveValue(const std::string& key, uint32_t flags) override;
   bool ReadOnly() const override;
   PrefReadError GetReadError() const override;

@@ -243,8 +243,8 @@ void LoadExtensionControlledPrefs(ExtensionPrefs* prefs,
 
   for (base::DictionaryValue::Iterator iter(*preferences); !iter.IsAtEnd();
        iter.Advance()) {
-    value_map->SetExtensionPref(
-        extension_id, iter.key(), scope, iter.value().DeepCopy());
+    value_map->SetExtensionPref(extension_id, iter.key(), scope,
+                                base::MakeUnique<base::Value>(iter.value()));
   }
 }
 
@@ -316,10 +316,7 @@ base::ListValue* ExtensionPrefs::ScopedListUpdate::Create() {
   if ((*update_)->GetList(key_, &key_value))
     return key_value;
 
-  auto list_value = base::MakeUnique<base::ListValue>();
-  key_value = list_value.get();
-  (*update_)->Set(key_, std::move(list_value));
-  return key_value;
+  return (*update_)->SetList(key_, base::MakeUnique<base::ListValue>());
 }
 
 //
@@ -433,19 +430,20 @@ const base::DictionaryValue* ExtensionPrefs::GetExtensionPref(
   return extension_dict;
 }
 
-void ExtensionPrefs::UpdateExtensionPref(
+base::Value* ExtensionPrefs::UpdateExtensionPref(
     const std::string& extension_id,
     const std::string& key,
     std::unique_ptr<base::Value> data_value) {
   if (!crx_file::id_util::IdIsValid(extension_id)) {
     NOTREACHED() << "Invalid extension_id " << extension_id;
-    return;
+    return nullptr;
   }
   ScopedExtensionPrefUpdate update(prefs_, extension_id);
   if (data_value)
-    update->Set(key, std::move(data_value));
-  else
-    update->Remove(key, NULL);
+    return update->Set(key, std::move(data_value));
+
+  update->Remove(key, NULL);
+  return nullptr;
 }
 
 void ExtensionPrefs::DeleteExtensionPrefs(const std::string& extension_id) {
@@ -1348,10 +1346,9 @@ bool ExtensionPrefs::FinishDelayedInstallInfo(
       kPrefInstallTime, base::Int64ToString(install_time.ToInternalValue()));
 
   // Commit the delayed install data.
-  for (base::DictionaryValue::Iterator it(
-           *pending_install_dict->AsConstDictionary());
-       !it.IsAtEnd(); it.Advance()) {
-    extension_dict->Set(it.key(), base::MakeUnique<base::Value>(it.value()));
+  for (auto& iter : *pending_install_dict->AsConstDictionary()) {
+    extension_dict->Set(iter.first,
+                        base::MakeUnique<base::Value>(std::move(iter.second)));
   }
   FinishExtensionInfoPrefs(extension_id, install_time, needs_sort_ordinal,
                            suggested_page_ordinal, extension_dict.get());

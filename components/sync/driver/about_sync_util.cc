@@ -79,9 +79,9 @@ base::ListValue* AddSection(base::ListValue* parent_list,
                             const std::string& title) {
   auto section = base::MakeUnique<base::DictionaryValue>();
   section->SetString("title", title);
+  section->SetBoolean("is_sensitive", false);
   base::ListValue* section_contents =
       section->SetList("data", base::MakeUnique<base::ListValue>());
-  section->SetBoolean("is_sensitive", false);
   // If the following |Append| results in a reallocation, pointers to the
   // members of |parent_list| will be invalidated. This would result in
   // use-after-free in |*SyncStat::SetValue|. This is why the following CHECK is
@@ -98,9 +98,9 @@ base::ListValue* AddSensitiveSection(base::ListValue* parent_list,
                                      const std::string& title) {
   auto section = base::MakeUnique<base::DictionaryValue>();
   section->SetString("title", title);
+  section->SetBoolean("is_sensitive", true);
   base::ListValue* section_contents =
       section->SetList("data", base::MakeUnique<base::ListValue>());
-  section->SetBoolean("is_sensitive", true);
   // If the following |Append| results in a reallocation, pointers to
   // |parent_list| and its members will be invalidated. This would result in
   // use-after-free in |*SyncStat::SetValue|. This is why the following CHECK is
@@ -284,8 +284,6 @@ std::string GetConnectionStatus(const SyncService::SyncTokenStatus& status) {
 std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
     SyncService* service,
     version_info::Channel channel) {
-  auto about_info = base::MakeUnique<base::DictionaryValue>();
-
   // 'details': A list of sections.
   auto stats_list = base::MakeUnique<base::ListValue>();
   // TODO(crbug.com/702230): Remove the usages of raw pointers in this file.
@@ -418,6 +416,7 @@ std::unique_ptr<base::DictionaryValue> ConstructAboutInformation(
 
   // This list of sections belongs in the 'details' field of the returned
   // message.
+  auto about_info = base::MakeUnique<base::DictionaryValue>();
   about_info->Set(kDetailsKey, std::move(stats_list));
 
   // Populate all the fields we declared above.

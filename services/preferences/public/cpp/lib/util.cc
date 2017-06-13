@@ -51,12 +51,14 @@ std::unique_ptr<base::DictionaryValue> FilterPrefsImpl(
       case MatchType::kNo:
         break;
       case MatchType::kExact:
-        filtered_value->Set(pref.first, std::move(pref.second));
+        filtered_value->Set(
+            pref.first, base::MakeUnique<base::Value>(std::move(pref.second)));
         break;
       case MatchType::kPrefix:
-        auto filtered_subpref =
-            FilterPrefsImpl(base::DictionaryValue::From(std::move(pref.second)),
-                            observed_prefs, full_path);
+        auto filtered_subpref = FilterPrefsImpl(
+            base::DictionaryValue::From(
+                base::MakeUnique<base::Value>(std::move(pref.second))),
+            observed_prefs, full_path);
         if (filtered_subpref)
           filtered_value->Set(pref.first, std::move(filtered_subpref));
         break;
