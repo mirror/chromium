@@ -893,6 +893,9 @@
       name: "ScriptedSpeech",
       status: "stable",
     },
+    {
+      name: "ScriptSampleForEval",
+    },
     // Scrolls to compensate for layout movements (bit.ly/scroll-anchoring).
     {
       name: "ScrollAnchoring",
