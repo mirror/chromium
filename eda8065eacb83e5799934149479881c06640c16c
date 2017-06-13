@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "af7d42c2_da6c3d2c",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-13T05:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "20a3216a_073412fd",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50ad9ee5_b0910d7f",
         "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "5ce060d3_28ee6d30",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-13T05:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50ad9ee5_b0910d7f",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b03cbb4_8dcfd01f",
         "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-13T05:03:58Z",
       "side": 1,
       "message": "nit question: why not passing two parameters directly but two parameters in a object?",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "161ed58c_78379f40",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-13T05:54:19Z",
+      "side": 1,
+      "message": "It\u0027s usual convention in ES6 if we expect the parameter list is growing.\nI thought the number of parameters is growing.",
+      "parentUuid": "1b03cbb4_8dcfd01f",
       "revId": "eda8065eacb83e5799934149479881c06640c16c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "e1604470_13311241",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-13T05:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "da8f2d3e_8971663c",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe33eeef_e54601b4",
         "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
         "patchSetId": 3
@@ -84,6 +156,24 @@
       "revId": "eda8065eacb83e5799934149479881c06640c16c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e26093a4_29f4a7ca",
+        "filename": "third_party/WebKit/PerformanceTests/ShadowDOM/v1-common.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-13T05:54:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe33eeef_e54601b4",
+      "revId": "eda8065eacb83e5799934149479881c06640c16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
