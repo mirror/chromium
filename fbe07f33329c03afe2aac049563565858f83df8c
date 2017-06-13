@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "220d4fa7_b6b35d95",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/service/DownloadBackgroundTask.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T00:04:56Z",
+      "side": 1,
+      "message": "Ok just add a comment saying if we upgrade we need to build an intent for the old version and validate this code still works.  This will require decoupling this immediate class from native as well.  Then remove the default invalid value and asserts :).",
+      "range": {
+        "startLine": 25,
+        "startChar": 13,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "fbe07f33329c03afe2aac049563565858f83df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8903ac_d1ef6e6f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T00:04:56Z",
+      "side": 1,
+      "message": "Maybe try:\n\nwhile (!task_finished_callbacks_.empty()) {\n  auto it \u003d task_finished_callbacks_.begin();\n  \n  // TODO(shaktisahu): Actually execute the task!\n\n  HandleTaskFinished(it.first, false, stats::ScheduledTaskStatus::COMPLETED_NORMALLY);\n}",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 0
+      },
+      "revId": "fbe07f33329c03afe2aac049563565858f83df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea2c55c_a03d5616",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T00:04:56Z",
+      "side": 1,
+      "message": "Do this for each task in the map right?",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 69
+      },
+      "revId": "fbe07f33329c03afe2aac049563565858f83df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd075ab3_b691088a",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-13T00:04:56Z",
+      "side": 1,
+      "message": "Maybe roll this into ProcessScheduledTasks() and make that check startup_status_.Ok?",
+      "range": {
+        "startLine": 255,
+        "startChar": 4,
+        "endLine": 258,
+        "endChar": 75
+      },
+      "revId": "fbe07f33329c03afe2aac049563565858f83df8c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
