@@ -1433,8 +1433,9 @@ void Browser::OnWindowDidShow() {
     error->ShowBubbleView(this);
 }
 
-void Browser::ShowFirstRunBubble() {
-  window()->GetLocationBar()->ShowFirstRunBubble();
+void Browser::ShowFirstRunBubble(WebContents* source) {
+  TabDialogs::FromWebContents(source)->ShowFirstRunBubble();
+  //  window()->GetLocationBar()->ShowFirstRunBubble();
 }
 
 ///////////////////////////////////////////////////////////////////////////////
