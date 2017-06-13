@@ -37,25 +37,25 @@ AgentRegistry::AgentEntry::AgentEntry(size_t id,
 
 AgentRegistry::AgentEntry::~AgentEntry() = default;
 
-void AgentRegistry::AgentEntry::SetDisconnectClosure(
+void AgentRegistry::AgentEntry::AddDisconnectClosure(
+    uint32_t closure_id,
     base::OnceClosure closure) {
-  DCHECK(closure_.is_null());
-  closure_ = std::move(closure);
+  DCHECK_EQ(0u, closures_.count(closure_id));
+  closures_[closure_id] = std::move(closure);
 }
 
-bool AgentRegistry::AgentEntry::RemoveDisconnectClosure() {
-  bool closure_was_set = !closure_.is_null();
-  closure_.Reset();
-  return closure_was_set;
+bool AgentRegistry::AgentEntry::RemoveDisconnectClosure(uint32_t closure_id) {
+  return closures_.erase(closure_id) > 0;
 }
 
 void AgentRegistry::AgentEntry::OnConnectionError() {
-  // Run the disconnect closure if it is set. We should mark |closure_| as
-  // movable so that the version of |Run| that takes an rvalue reference is
+  // Run disconnect closures if there is any. We should mark |key_value.second|
+  // as movable so that the version of |Run| that takes an rvalue reference is
   // selected not the version that takes a const reference. The former is for
   // once callbacks and the latter is for repeating callbacks.
-  if (!closure_.is_null())
-    std::move(closure_).Run();
+  for (auto& key_value : closures_) {
+    std::move(key_value.second).Run();
+  }
   agent_registry_->UnregisterAgent(id_);
 }
 

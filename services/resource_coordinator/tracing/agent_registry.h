@@ -30,11 +30,9 @@ class AgentRegistry : public mojom::AgentRegistry {
                bool supports_explicit_clock_sync);
     ~AgentEntry();
 
-    // Currently, at most one callback when the tracing agent is disconnected is
-    // enough. We can generalize this later if several parts of the service need
-    // to get notified when an agent disconnects.
-    void SetDisconnectClosure(base::OnceClosure closure);
-    bool RemoveDisconnectClosure();
+    uint32_t NextDisconnectClosureId() { return next_disconnect_closure_id_++; }
+    void AddDisconnectClosure(uint32_t closure_id, base::OnceClosure closure);
+    bool RemoveDisconnectClosure(uint32_t closure_id);
 
     mojom::Agent* agent() const { return agent_.get(); }
     const std::string& label() const { return label_; }
@@ -52,7 +50,8 @@ class AgentRegistry : public mojom::AgentRegistry {
     const std::string label_;
     const mojom::TraceDataType type_;
     const bool supports_explicit_clock_sync_;
-    base::OnceClosure closure_;
+    uint32_t next_disconnect_closure_id_ = 0;
+    std::map<uint32_t, base::OnceClosure> closures_;
 
     DISALLOW_COPY_AND_ASSIGN(AgentEntry);
   };
@@ -83,6 +82,7 @@ class AgentRegistry : public mojom::AgentRegistry {
  private:
   friend std::default_delete<AgentRegistry>;
   friend class AgentRegistryTest;  // For testing.
+  friend class CoordinatorTest;    // For testing.
 
   ~AgentRegistry() override;
 
