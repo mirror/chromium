@@ -52,6 +52,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/sessions/content/content_record_password_state.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "components/ukm/public/ukm_recorder.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/child_process_security_policy.h"
@@ -171,7 +172,11 @@ ChromePasswordManagerClient::ChromePasswordManagerClient(
       observer_(nullptr),
       credentials_filter_(this,
                           base::Bind(&GetSyncService, profile_),
-                          base::Bind(&GetSigninManager, profile_)) {
+                          base::Bind(&GetSigninManager, profile_)),
+      // TODO(crbug.com/732846): The UKM Source should be recycled (e.g. from
+      // the web contents), once the UKM framework provides a mechanism for
+      // that.
+      ukm_source_id_(ukm::UkmRecorder::GetNewSourceID()) {
   ContentPasswordManagerDriverFactory::CreateForWebContents(web_contents, this,
                                                             autofill_client);
   driver_factory_ =
@@ -435,6 +440,14 @@ void ChromePasswordManagerClient::CheckProtectedPasswordEntry(
   }
 }
 #endif
+
+ukm::UkmRecorder* ChromePasswordManagerClient::GetUkmRecorder() {
+  return ukm::UkmRecorder::Get();
+}
+
+ukm::SourceId ChromePasswordManagerClient::GetUkmSourceId() {
+  return ukm_source_id_;
+}
 
 // TODO(crbug.com/706392): Fix password reuse detection for Android.
 #if !defined(OS_ANDROID)

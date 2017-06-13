@@ -32,6 +32,7 @@ namespace password_manager {
 class FormSaver;
 class PasswordManager;
 class PasswordManagerClient;
+class PasswordFormUkmRecorder;
 
 // A map from field names to field types.
 using FieldTypeMap = std::map<base::string16, autofill::ServerFieldType>;
@@ -261,6 +262,9 @@ class PasswordFormManager : public FormFetcher::Consumer {
       size_t filtered_count) override;
 
  private:
+  // Friend class to expose enum types.
+  friend password_manager::PasswordFormUkmRecorder;
+
   // ManagerAction - What does the manager do with this form? Either it
   // fills it, or it doesn't. If it doesn't fill it, that's either
   // because it has no match or it is disabled via the AUTOCOMPLETE=off
@@ -505,6 +509,10 @@ class PasswordFormManager : public FormFetcher::Consumer {
   base::Optional<autofill::PasswordForm> UpdatePendingAndGetOldKey(
       std::vector<autofill::PasswordForm>* credentials_to_update);
 
+  // Lazily creates and returns a PasswordFormUkmRecorder which reports
+  // the recorded metrics on destruction of the PasswordFormManager.
+  PasswordFormUkmRecorder* GetPasswordFormUkmRecorder();
+
   // Set of nonblacklisted PasswordForms from the DB that best match the form
   // being managed by |this|, indexed by username. They are owned by
   // |form_fetcher_|.
@@ -651,6 +659,8 @@ class PasswordFormManager : public FormFetcher::Consumer {
   // True if the main frame's visible URL, at the time this PasswordFormManager
   // was created, is secure.
   bool is_main_frame_secure_ = false;
+
+  std::unique_ptr<PasswordFormUkmRecorder> password_form_ukm_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormManager);
 };

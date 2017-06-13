@@ -29,6 +29,7 @@
 #include "components/password_manager/core/browser/form_fetcher_impl.h"
 #include "components/password_manager/core/browser/form_saver.h"
 #include "components/password_manager/core/browser/log_manager.h"
+#include "components/password_manager/core/browser/password_form_ukm_recorder.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
@@ -253,6 +254,8 @@ PasswordFormManager::PasswordFormManager(
 PasswordFormManager::~PasswordFormManager() {
   form_fetcher_->RemoveConsumer(this);
 
+  PasswordFormUkmRecorder* ukm_recorder = GetPasswordFormUkmRecorder();
+
   UMA_HISTOGRAM_ENUMERATION("PasswordManager.ActionsTakenV3", GetActionsTaken(),
                             kMaxNumActionsTaken);
 
@@ -263,6 +266,8 @@ PasswordFormManager::~PasswordFormManager() {
     UMA_HISTOGRAM_ENUMERATION("PasswordManager.ActionsTakenOnNonSecureForm",
                               GetActionsTaken(), kMaxNumActionsTaken);
   }
+
+  ukm_recorder->RecordSubmitResult(submit_result_);
 
   RecordHistogramsOnSuppressedAccounts();
 
@@ -282,6 +287,7 @@ PasswordFormManager::~PasswordFormManager() {
       UMA_HISTOGRAM_ENUMERATION("PasswordManager.SubmittedNonSecureFormType",
                                 form_type_, kFormTypeMax);
     }
+    ukm_recorder->RecordFormType(form_type_);
   }
 }
 
@@ -1504,6 +1510,23 @@ base::Optional<PasswordForm> PasswordFormManager::UpdatePendingAndGetOldKey(
   }
 
   return old_primary_key;
+}
+
+PasswordFormUkmRecorder* PasswordFormManager::GetPasswordFormUkmRecorder() {
+  if (!password_form_ukm_recorder_) {
+    ukm::UkmRecorder* recorder = client_->GetUkmRecorder();
+    ukm::SourceId source_id = client_->GetUkmSourceId();
+    if (recorder) {
+      // TODO(crbug.com/732846): Once the UKM framework takes care of managing
+      // SourceIDs for WebContents, it should not be necessary to update the
+      // source URL here.
+      recorder->UpdateSourceURL(source_id, client_->GetMainFrameURL());
+    }
+
+    password_form_ukm_recorder_ =
+        base::MakeUnique<PasswordFormUkmRecorder>(recorder, source_id);
+  }
+  return password_form_ukm_recorder_.get();
 }
 
 }  // namespace password_manager

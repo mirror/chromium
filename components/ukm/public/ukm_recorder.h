@@ -38,6 +38,10 @@ namespace payments {
 class JourneyLogger;
 }
 
+namespace password_manager {
+class PasswordFormUkmRecorder;
+}
+
 namespace ukm {
 
 class UkmEntryBuilder;
@@ -80,6 +84,7 @@ class UKM_EXPORT UkmRecorder {
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
+  friend password_manager::PasswordFormUkmRecorder;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
