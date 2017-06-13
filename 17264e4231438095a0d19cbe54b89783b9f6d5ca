@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65a52a92_35666ce7",
+        "filename": "third_party/WebKit/LayoutTests/FlagExpectations/enable-network-service",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002532
+      },
+      "writtenOn": "2017-06-13T23:24:12Z",
+      "side": 1,
+      "message": "maybe we should just disable all of bluetooth/ for now if we keep seeing more failures.",
+      "range": {
+        "startLine": 23,
+        "startChar": 20,
+        "endLine": 23,
+        "endChar": 26
+      },
+      "revId": "17264e4231438095a0d19cbe54b89783b9f6d5ca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
