@@ -892,6 +892,17 @@ void Layer::SetTouchEventHandlerRegion(const Region& region) {
   SetNeedsCommit();
 }
 
+void Layer::SetTouchEventHandlerRegionMap(
+    TouchActionRegionMap touch_event_handler_region_map) {
+  DCHECK(IsPropertyChangeAllowed());
+  if (inputs_.touch_event_handler_region_map == touch_event_handler_region_map)
+    return;
+  inputs_.touch_event_handler_region_map =
+      std::move(touch_event_handler_region_map);
+  SetPropertyTreesNeedRebuild();
+  SetNeedsCommit();
+}
+
 void Layer::SetForceRenderSurfaceForTesting(bool force) {
   DCHECK(IsPropertyChangeAllowed());
   if (force_render_surface_for_testing_ == force)
@@ -1160,7 +1171,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->set_main_thread_scrolling_reasons(
       inputs_.main_thread_scrolling_reasons);
   layer->SetNonFastScrollableRegion(inputs_.non_fast_scrollable_region);
-  layer->SetTouchEventHandlerRegion(inputs_.touch_event_handler_region);
+  layer->SetTouchEventHandlerRegionMap(inputs_.touch_event_handler_region_map);
   layer->SetContentsOpaque(inputs_.contents_opaque);
   layer->SetPosition(inputs_.position);
   layer->set_should_flatten_transform_from_property_tree(

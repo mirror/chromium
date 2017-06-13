@@ -318,6 +318,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   layer->draws_content_ = draws_content_;
   layer->non_fast_scrollable_region_ = non_fast_scrollable_region_;
   layer->touch_event_handler_region_ = touch_event_handler_region_;
+  layer->touch_event_handler_region_map_ = touch_event_handler_region_map_;
   layer->background_color_ = background_color_;
   layer->safe_opaque_background_color_ = safe_opaque_background_color_;
   layer->position_ = position_;

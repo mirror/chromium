@@ -302,10 +302,14 @@ WebVector<WebRect> WebLayerImpl::NonFastScrollableRegion() const {
 void WebLayerImpl::SetTouchEventHandlerRegion(
     const WebVector<blink::WebTouchInfo>& touch_info) {
   cc::Region region;
-  for (size_t i = 0; i < touch_info.size(); ++i)
+  cc::TouchActionRegionMap touch_action_region_map;
+  for (size_t i = 0; i < touch_info.size(); ++i) {
     region.Union(touch_info[i].rect);
-  // TODO(xidachen): set the touch action bit for the region.
-  layer_->SetTouchEventHandlerRegion(region);
+    touch_action_region_map[touch_info[i].touch_action].Union(
+        touch_info[i].rect);
+  }
+  layer_->SetTouchEventHandlerRegion(std::move(region));
+  layer_->SetTouchEventHandlerRegionMap(std::move(touch_action_region_map));
 }
 
 WebVector<WebRect> WebLayerImpl::TouchEventHandlerRegion() const {
