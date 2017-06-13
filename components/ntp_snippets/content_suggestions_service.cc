@@ -51,6 +51,34 @@ void RecordFaviconFetchResult(FaviconFetchResult result) {
 
 }  // namespace
 
+ContentSuggestionsArchive::ContentSuggestionsArchive() {}
+
+ContentSuggestionsArchive::~ContentSuggestionsArchive() {}
+
+ContentSuggestion* ContentSuggestionsArchive::FindSuggestion(
+    const ContentSuggestion::ID& suggestion_id) {
+  auto it = archived_suggestions_.find(suggestion_id);
+  if (it == archived_suggestions_.end()) {
+    return nullptr;
+  }
+  return &it->second;
+}
+
+void ContentSuggestionsArchive::ArchiveSuggestion(
+    ContentSuggestion suggestion) {
+  std::vector<ContentSuggestion> suggestions;
+  suggestions.push_back(std::move(suggestion));
+  ArchiveSuggestions(std::move(suggestions));
+}
+
+void ContentSuggestionsArchive::ArchiveSuggestions(
+    std::vector<ContentSuggestion> suggestions) {
+  for (auto it = suggestions.begin(); it != suggestions.end(); ++it) {
+    ContentSuggestion::ID id = it->id();
+    archived_suggestions_.insert(std::make_pair(id, std::move(*it)));
+  }
+}
+
 ContentSuggestionsService::ContentSuggestionsService(
     State state,
     SigninManagerBase* signin_manager,
@@ -363,10 +391,10 @@ void ContentSuggestionsService::DismissSuggestion(
   providers_by_category_[suggestion_id.category()]->DismissSuggestion(
       suggestion_id);
 
-  // Remove the suggestion locally if it is present. A suggestion may be missing
-  // localy e.g. if it was sent to UI through |Fetch| or it has been dismissed
-  // from a different NTP.
-  RemoveSuggestionByID(suggestion_id);
+  // Archive the suggestion locally if it is present. A suggestion may be
+  // missing localy e.g. if it was sent to UI through |Fetch| or it has been
+  // dismissed from a different NTP.
+  RemoveSuggestionByID(suggestion_id, /*remove_into_archive=*/true);
 }
 
 void ContentSuggestionsService::DismissCategory(Category category) {
@@ -479,6 +507,7 @@ void ContentSuggestionsService::OnNewSuggestions(
     return;
   }
 
+  archive_.ArchiveSuggestions(std::move(suggestions_by_category_[category]));
   suggestions_by_category_[category] = std::move(suggestions);
 
   for (Observer& observer : observers_) {
@@ -508,7 +537,7 @@ void ContentSuggestionsService::OnCategoryStatusChanged(
 void ContentSuggestionsService::OnSuggestionInvalidated(
     ContentSuggestionsProvider* provider,
     const ContentSuggestion::ID& suggestion_id) {
-  RemoveSuggestionByID(suggestion_id);
+  RemoveSuggestionByID(suggestion_id, /*remove_into_archive=*/false);
   for (Observer& observer : observers_) {
     observer.OnSuggestionInvalidated(suggestion_id);
   }
@@ -629,8 +658,25 @@ void ContentSuggestionsService::UnregisterCategory(
   suggestions_by_category_.erase(category);
 }
 
-bool ContentSuggestionsService::RemoveSuggestionByID(
+ContentSuggestion* ContentSuggestionsService::FindSuggestion(
     const ContentSuggestion::ID& suggestion_id) {
+  std::vector<ContentSuggestion>* suggestions =
+      &suggestions_by_category_[suggestion_id.category()];
+  auto position =
+      std::find_if(suggestions->begin(), suggestions->end(),
+                   [&suggestion_id](const ContentSuggestion& suggestion) {
+                     return suggestion_id == suggestion.id();
+                   });
+  if (position != suggestions->end()) {
+    return &(*position);
+  }
+
+  return archive_.FindSuggestion(suggestion_id);
+}
+
+bool ContentSuggestionsService::RemoveSuggestionByID(
+    const ContentSuggestion::ID& suggestion_id,
+    bool remove_into_archive) {
   std::vector<ContentSuggestion>* suggestions =
       &suggestions_by_category_[suggestion_id.category()];
   auto position =
@@ -640,6 +686,9 @@ bool ContentSuggestionsService::RemoveSuggestionByID(
                    });
   if (position == suggestions->end()) {
     return false;
+  }
+  if (remove_into_archive) {
+    archive_.ArchiveSuggestion(std::move(*position));
   }
   suggestions->erase(position);
 

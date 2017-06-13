@@ -44,6 +44,35 @@ namespace ntp_snippets {
 
 class RemoteSuggestionsProvider;
 
+// ContentSuggestionsArchive keeps suggestions that have appeared on any surface
+// in memory. The storage is not persistent nad thus is cleared when the current
+// Chrome instance exits.
+class ContentSuggestionsArchive {
+ public:
+  ContentSuggestionsArchive();
+  ~ContentSuggestionsArchive();
+
+  // Returns the archived suggestion with |suggestion_id| or nullptr if not
+  // found.
+  ContentSuggestion* FindSuggestion(const ContentSuggestion::ID& suggestion_id);
+
+  // Archive the provided |suggestion|.
+  void ArchiveSuggestion(ContentSuggestion suggestion);
+
+  // Archive the provided |suggestions|.
+  void ArchiveSuggestions(std::vector<ContentSuggestion> suggestion);
+
+ private:
+  // All current archived suggestions. This contains an entry for every
+  // suggestion that was archived in the current instance of Chrome.
+  std::map<ContentSuggestion::ID,
+           ContentSuggestion,
+           ContentSuggestion::ID::CompareByID>
+      archived_suggestions_;
+
+  DISALLOW_COPY_AND_ASSIGN(ContentSuggestionsArchive);
+};
+
 // Retrieves suggestions from a number of ContentSuggestionsProviders and serves
 // them grouped into categories. There can be at most one provider per category.
 class ContentSuggestionsService : public KeyedService,
@@ -313,9 +342,14 @@ class ContentSuggestionsService : public KeyedService,
   void UnregisterCategory(Category category,
                           ContentSuggestionsProvider* provider);
 
+  // Returns the suggestion with |suggestion_id| in the current suggestions list
+  // or in the archive. Returns nullptr if not found.
+  ContentSuggestion* FindSuggestion(const ContentSuggestion::ID& suggestion_id);
+
   // Removes a suggestion from the local store |suggestions_by_category_|, if it
   // exists. Returns true if a suggestion was removed.
-  bool RemoveSuggestionByID(const ContentSuggestion::ID& suggestion_id);
+  bool RemoveSuggestionByID(const ContentSuggestion::ID& suggestion_id,
+                            bool remove_into_archive);
 
   // Fires the OnCategoryStatusChanged event for the given |category|.
   void NotifyCategoryStatusChanged(Category category);
@@ -383,6 +417,9 @@ class ContentSuggestionsService : public KeyedService,
   // loading).
   std::map<Category, std::vector<ContentSuggestion>, Category::CompareByID>
       suggestions_by_category_;
+
+  // In-memory archive for previous content suggestions.
+  ContentSuggestionsArchive archive_;
 
   // Observer for the SigninManager. All observers are notified when the signin
   // state changes so that they can refresh their list of suggestions.
