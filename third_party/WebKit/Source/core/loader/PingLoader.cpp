@@ -195,10 +195,7 @@ class PingLoaderImpl : public GarbageCollectedFinalized<PingLoaderImpl>,
   WTF_MAKE_NONCOPYABLE(PingLoaderImpl);
 
  public:
-  PingLoaderImpl(LocalFrame*,
-                 ResourceRequest&,
-                 const AtomicString&,
-                 StoredCredentials);
+  PingLoaderImpl(LocalFrame*, ResourceRequest&, const AtomicString&);
   ~PingLoaderImpl() override;
 
   DECLARE_VIRTUAL_TRACE();
@@ -236,8 +233,7 @@ class PingLoaderImpl : public GarbageCollectedFinalized<PingLoaderImpl>,
 
 PingLoaderImpl::PingLoaderImpl(LocalFrame* frame,
                                ResourceRequest& request,
-                               const AtomicString& initiator,
-                               StoredCredentials credentials_allowed)
+                               const AtomicString& initiator)
     : ContextClient(frame),
       timeout_(this, &PingLoaderImpl::Timeout),
       url_(request.Url()),
@@ -271,9 +267,26 @@ PingLoaderImpl::PingLoaderImpl(LocalFrame* frame,
 
   loader_ = fetch_context.CreateURLLoader(request);
   DCHECK(loader_);
+
   WrappedResourceRequest wrapped_request(request);
-  wrapped_request.SetAllowStoredCredentials(credentials_allowed ==
-                                            kAllowStoredCredentials);
+
+  bool allow_stored_credentials = false;
+  switch (request.GetFetchCredentialsMode()) {
+    case WebURLRequest::kFetchCredentialsModeOmit:
+      allow_stored_credentials = false;
+      break;
+    case WebURLRequest::kFetchCredentialsModeSameOrigin:
+      allow_stored_credentials =
+          frame->GetDocument()->GetSecurityOrigin()->CanRequestNoSuborigin(
+              request.Url());
+      break;
+    case WebURLRequest::kFetchCredentialsModeInclude:
+    case WebURLRequest::kFetchCredentialsModePassword:
+      allow_stored_credentials = true;
+      break;
+  }
+  request.SetAllowStoredCredentials(allow_stored_credentials);
+
   loader_->LoadAsynchronously(wrapped_request, this);
 
   // If the server never responds, FrameLoader won't be able to cancel this load
@@ -309,13 +322,13 @@ bool PingLoaderImpl::WillFollowRedirect(
     DCHECK(!redirect_response.IsNull());
 
     String error_description;
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
-    // TODO(tyoshino): Save updated data in options.securityOrigin and pass it
+    ResourceLoaderOptions options;
+    // TODO(tyoshino): Save updated data in options.security_origin and pass it
     // on the next time.
     if (!CrossOriginAccessControl::HandleRedirect(
-            origin_, new_request, redirect_response, kAllowStoredCredentials,
-            options, error_description)) {
+            origin_, new_request, redirect_response,
+            passed_new_request.GetFetchCredentialsMode(), options,
+            error_description)) {
       if (GetFrame()) {
         if (GetFrame()->GetDocument()) {
           GetFrame()->GetDocument()->AddConsoleMessage(ConsoleMessage::Create(
@@ -410,16 +423,14 @@ void FinishPingRequestInitialization(
 
 bool SendPingCommon(LocalFrame* frame,
                     ResourceRequest& request,
-                    const AtomicString& initiator,
-                    StoredCredentials credentials_allowed) {
+                    const AtomicString& initiator) {
   request.SetKeepalive(true);
   if (MixedContentChecker::ShouldBlockFetch(frame, request, request.Url()))
     return false;
 
   // The loader keeps itself alive until it receives a response and disposes
   // itself.
-  PingLoaderImpl* loader =
-      new PingLoaderImpl(frame, request, initiator, credentials_allowed);
+  PingLoaderImpl* loader = new PingLoaderImpl(frame, request, initiator);
   DCHECK(loader);
 
   return true;
@@ -463,13 +474,13 @@ bool SendBeaconCommon(LocalFrame* frame,
   ResourceRequest request(url);
   request.SetHTTPMethod(HTTPNames::POST);
   request.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=0");
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextBeacon);
 
   beacon.Serialize(request);
 
-  return SendPingCommon(frame, request, FetchInitiatorTypeNames::beacon,
-                        kAllowStoredCredentials);
+  return SendPingCommon(frame, request, FetchInitiatorTypeNames::beacon);
 }
 
 }  // namespace
@@ -477,11 +488,11 @@ bool SendBeaconCommon(LocalFrame* frame,
 void PingLoader::LoadImage(LocalFrame* frame, const KURL& url) {
   ResourceRequest request(url);
   request.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=0");
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextPing);
 
-  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping,
-                 kAllowStoredCredentials);
+  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping);
 }
 
 // http://www.whatwg.org/specs/web-apps/current-work/multipage/links.html#hyperlink-auditing
@@ -502,6 +513,7 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
   request.SetHTTPContentType("text/ping");
   request.SetHTTPBody(EncodedFormData::Create("PING"));
   request.SetHTTPHeaderField(HTTPNames::Cache_Control, "max-age=0");
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeInclude);
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextPing);
 
@@ -520,8 +532,7 @@ void PingLoader::SendLinkAuditPing(LocalFrame* frame,
         AtomicString(frame->GetDocument()->Url().GetString()));
   }
 
-  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping,
-                 kAllowStoredCredentials);
+  SendPingCommon(frame, request, FetchInitiatorTypeNames::ping);
 }
 
 void PingLoader::SendViolationReport(LocalFrame* frame,
@@ -539,16 +550,12 @@ void PingLoader::SendViolationReport(LocalFrame* frame,
       break;
   }
   request.SetHTTPBody(std::move(report));
+  request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeSameOrigin);
   FinishPingRequestInitialization(request, frame,
                                   WebURLRequest::kRequestContextCSPReport);
 
-  StoredCredentials credentials_allowed =
-      SecurityOrigin::Create(report_url)
-              ->IsSameSchemeHostPort(frame->GetDocument()->GetSecurityOrigin())
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  SendPingCommon(frame, request, FetchInitiatorTypeNames::violationreport,
-                 credentials_allowed);
+  SendPingCommon(frame, request, FetchInitiatorTypeNames::violationreport);
 }
 
 bool PingLoader::SendBeacon(LocalFrame* frame,
