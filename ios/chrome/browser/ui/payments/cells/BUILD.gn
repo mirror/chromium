@@ -13,6 +13,7 @@ source_set("cells") {
     "payment_method_item.h",
     "payment_method_item.mm",
     "payments_has_accessory_type.h",
+    "payments_has_editable_info_type.h",
     "payments_selector_edit_item.h",
     "payments_selector_edit_item.mm",
     "payments_text_item.h",
