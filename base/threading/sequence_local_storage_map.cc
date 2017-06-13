@@ -22,16 +22,20 @@ SequenceLocalStorageMap::SequenceLocalStorageMap() = default;
 
 SequenceLocalStorageMap::~SequenceLocalStorageMap() = default;
 
+// TODO(jeffreyhe): Add check to make sure no
+// ScopedSetSequenceLocalStorageMapForCurrentThread is already instantiated
+// (DCHECK(!tls_current_sequence_local_storage.Get().Get()))
+// once ScopedTaskScheduler is removed.
 ScopedSetSequenceLocalStorageMapForCurrentThread::
     ScopedSetSequenceLocalStorageMapForCurrentThread(
         SequenceLocalStorageMap* sequence_local_storage) {
-  DCHECK(!tls_current_sequence_local_storage.Get().Get());
+  old_sequence_local_storage = tls_current_sequence_local_storage.Get().Get();
   tls_current_sequence_local_storage.Get().Set(sequence_local_storage);
 }
 
 ScopedSetSequenceLocalStorageMapForCurrentThread::
     ~ScopedSetSequenceLocalStorageMapForCurrentThread() {
-  tls_current_sequence_local_storage.Get().Set(nullptr);
+  tls_current_sequence_local_storage.Get().Set(old_sequence_local_storage);
 }
 
 SequenceLocalStorageMap& SequenceLocalStorageMap::GetForCurrentThread() {
