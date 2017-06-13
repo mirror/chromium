@@ -26,6 +26,8 @@ class WebFactoryImpl : public WebFactory {
       blink::InterfaceProvider*,
       blink::InterfaceRegistry*,
       WebFrame* opener = nullptr) const override;
+
+  WebAXObject* CreateWebAXObject(AXObject*) const override;
 };
 
 }  // namespace blink

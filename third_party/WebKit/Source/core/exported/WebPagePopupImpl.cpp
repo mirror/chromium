@@ -27,11 +27,14 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebPagePopupImpl.h"
+#include "core/exported/WebPagePopupImpl.h"
 
+#include "core/dom/AXObject.h"
+#include "core/dom/AXObjectCacheBase.h"
 #include "core/dom/ContextFeatures.h"
 #include "core/events/MessageEvent.h"
 #include "core/events/WebInputEventConversion.h"
+#include "core/exported/WebFactory.h"
 #include "core/exported/WebSettingsImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrame.h"
@@ -39,6 +42,7 @@
 #include "core/frame/LocalFrameView.h"
 #include "core/frame/Settings.h"
 #include "core/frame/VisualViewport.h"
+#include "core/frame/WebLocalFrameBase.h"
 #include "core/input/EventHandler.h"
 #include "core/layout/api/LayoutAPIShim.h"
 #include "core/layout/api/LayoutViewItem.h"
@@ -48,8 +52,6 @@
 #include "core/page/Page.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PagePopupSupplement.h"
-#include "modules/accessibility/AXObjectCacheImpl.h"
-#include "modules/accessibility/AXObjectImpl.h"
 #include "platform/EventDispatchForbiddenScope.h"
 #include "platform/LayoutTestSupport.h"
 #include "platform/ScriptForbiddenScope.h"
@@ -61,11 +63,9 @@
 #include "public/platform/WebCompositeAndReadbackAsyncCallback.h"
 #include "public/platform/WebCursorInfo.h"
 #include "public/platform/WebFloatRect.h"
-#include "public/web/WebAXObject.h"
 #include "public/web/WebFrameClient.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWidgetClient.h"
-#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
@@ -204,8 +204,9 @@ class PagePopupChromeClient final : public EmptyChromeClient {
 
   void SetTouchAction(LocalFrame* frame, TouchAction touch_action) override {
     DCHECK(frame);
-    WebLocalFrameImpl* web_frame = WebLocalFrameImpl::FromFrame(frame);
-    WebFrameWidgetBase* widget = web_frame->LocalRoot()->FrameWidget();
+    WebLocalFrameBase* web_frame = WebLocalFrameBase::FromFrame(frame);
+    WebFrameWidgetBase* widget =
+        ToWebFrameWidgetBase(web_frame->LocalRoot()->FrameWidget());
     if (!widget)
       return;
 
@@ -221,21 +222,24 @@ class PagePopupChromeClient final : public EmptyChromeClient {
   void PostAccessibilityNotification(
       AXObject* obj,
       AXObjectCache::AXNotification notification) override {
-    WebLocalFrameImpl* frame = WebLocalFrameImpl::FromFrame(
+    WebLocalFrameBase* frame = WebLocalFrameBase::FromFrame(
         popup_->popup_client_->OwnerElement().GetDocument().GetFrame());
     if (obj && frame && frame->Client()) {
+      std::unique_ptr<WebAXObject> ax_obj(
+          WebFactory::GetInstance().CreateWebAXObject(obj));
+
       frame->Client()->PostAccessibilityEvent(
-          WebAXObject(ToAXObjectImpl(obj)),
-          static_cast<WebAXEvent>(notification));
+          *ax_obj, static_cast<WebAXEvent>(notification));
     }
   }
 
   void SetToolTip(LocalFrame&,
                   const String& tooltip_text,
                   TextDirection dir) override {
-    if (popup_->WidgetClient())
+    if (popup_->WidgetClient()) {
       popup_->WidgetClient()->SetToolTipText(tooltip_text,
                                              ToWebTextDirection(dir));
+    }
   }
 
   WebPagePopupImpl* popup_;
@@ -363,7 +367,7 @@ AXObject* WebPagePopupImpl::RootAXObject() {
     return 0;
   AXObjectCache* cache = document->AxObjectCache();
   DCHECK(cache);
-  return ToAXObjectCacheImpl(cache)->GetOrCreate(ToLayoutView(
+  return ToAXObjectCacheBase(cache)->GetOrCreate(ToLayoutView(
       LayoutAPIShim::LayoutObjectFrom(document->GetLayoutViewItem())));
 }
 
@@ -430,9 +434,10 @@ void WebPagePopupImpl::UpdateAllLifecyclePhases() {
 }
 
 void WebPagePopupImpl::Paint(WebCanvas* canvas, const WebRect& rect) {
-  if (!closing_)
+  if (!closing_) {
     PageWidgetDelegate::Paint(*page_, canvas, rect,
                               *page_->DeprecatedLocalMainFrame());
+  }
 }
 
 void WebPagePopupImpl::Resize(const WebSize& new_size_in_viewport) {

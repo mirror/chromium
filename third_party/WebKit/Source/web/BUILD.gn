@@ -95,8 +95,6 @@ component("web") {
     "WebLeakDetector.cpp",
     "WebLocalFrameImpl.cpp",
     "WebLocalFrameImpl.h",
-    "WebPagePopupImpl.cpp",
-    "WebPagePopupImpl.h",
     "WebSurroundingText.cpp",
     "WebViewImpl.cpp",
     "WebViewImpl.h",

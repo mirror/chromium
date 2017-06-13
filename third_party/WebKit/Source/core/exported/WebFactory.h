@@ -10,6 +10,7 @@
 
 namespace blink {
 
+class AXObject;
 class ChromeClient;
 class WebViewBase;
 class WebLocalFrameBase;
@@ -17,6 +18,7 @@ class WebViewClient;
 class WebFrameClient;
 class InterfaceProvider;
 class InterfaceRegistry;
+class WebAXObject;
 class WebFrame;
 enum class WebTreeScopeType;
 
@@ -36,6 +38,8 @@ class CORE_EXPORT WebFactory {
       blink::InterfaceProvider*,
       blink::InterfaceRegistry*,
       WebFrame* opener = nullptr) const = 0;
+
+  virtual WebAXObject* CreateWebAXObject(AXObject*) const = 0;
 
  protected:
   // Takes ownership of |factory|.

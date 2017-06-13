@@ -3,6 +3,9 @@
 // found in the LICENSE file.
 
 #include "web/WebFactoryImpl.h"
+
+#include "modules/accessibility/AXObjectImpl.h"
+#include "public/web/WebAXObject.h"
 #include "web/ChromeClientImpl.h"
 #include "web/WebLocalFrameImpl.h"
 #include "web/WebViewImpl.h"
@@ -31,4 +34,9 @@ WebLocalFrameBase* WebFactoryImpl::CreateWebLocalFrameBase(
     WebFrame* opener) const {
   return WebLocalFrameImpl::Create(type, client, provider, registry, opener);
 }
+
+WebAXObject* WebFactoryImpl::CreateWebAXObject(AXObject* ax_object) const {
+  return new WebAXObject(ToAXObjectImpl(ax_object));
 }
+
+}  // namespace blink
