@@ -16,6 +16,24 @@
       "revId": "2a3b265d18028c221c168a781c994943b2ddb42a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eff2ed1_d79e5efa",
+        "filename": "build/android/pylib/local/machine/local_machine_junit_test_run.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-13T19:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e77e55da_52c61160",
+      "revId": "2a3b265d18028c221c168a781c994943b2ddb42a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
