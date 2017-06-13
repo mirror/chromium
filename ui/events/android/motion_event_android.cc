@@ -210,7 +210,8 @@ MotionEventAndroid::MotionEventAndroid(JNIEnv* env,
                                        jfloat raw_offset_x_pixels,
                                        jfloat raw_offset_y_pixels,
                                        const Pointer* const pointer0,
-                                       const Pointer* const pointer1)
+                                       const Pointer* const pointer1,
+                                       jboolean is_hover)
     : pix_to_dip_(pix_to_dip),
       ticks_x_(ticks_x),
       ticks_y_(ticks_y),
@@ -226,6 +227,7 @@ MotionEventAndroid::MotionEventAndroid(JNIEnv* env,
       cached_flags_(ToEventFlags(android_meta_state, android_button_state)),
       cached_raw_position_offset_(ToDips(raw_offset_x_pixels),
                                   ToDips(raw_offset_y_pixels)),
+      is_hover_(is_hover),
       unique_event_id_(ui::GetNextTouchEventId()) {
   DCHECK_GT(cached_pointer_count_, 0U);
   DCHECK(cached_pointer_count_ == 1 || pointer1);
@@ -255,6 +257,7 @@ MotionEventAndroid::MotionEventAndroid(const MotionEventAndroid& e)
       cached_button_state_(e.cached_button_state_),
       cached_flags_(e.cached_flags_),
       cached_raw_position_offset_(e.cached_raw_position_offset_),
+      is_hover_(e.is_hover_),
       unique_event_id_(ui::GetNextTouchEventId()) {
   cached_pointers_[0] = e.cached_pointers_[0];
   if (cached_pointer_count_ > 1)

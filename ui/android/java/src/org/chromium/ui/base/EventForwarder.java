@@ -155,9 +155,31 @@ public class EventForwarder {
                 || eventAction == MotionEvent.ACTION_POINTER_UP;
     }
 
+    /**
+     * @see View#onHoverEvent(MotionEvent)
+     */
+    public boolean onHoverEvent(MotionEvent event) {
+        TraceEvent.begin("onHoverEvent");
+        boolean res = sendNativeMouseEvent(event, true /* hover */);
+        TraceEvent.end("onHoverEvent");
+        return res;
+    }
+
+    /**
+     * @see View#onMouseEvent(MotionEvent)
+     */
     public boolean onMouseEvent(MotionEvent event) {
         TraceEvent.begin("sendMouseEvent");
+        boolean res = sendNativeMouseEvent(event, false);
+        TraceEvent.end("sendMouseEvent");
+        return res;
+    }
 
+    /**
+     * Sends mouse event to native. Hover event is also converted to mouse event,
+     * only differentiated by an internal flag.
+     */
+    private boolean sendNativeMouseEvent(MotionEvent event, boolean isHover) {
         assert mNativeEventForwarder != 0;
 
         MotionEvent offsetEvent = createOffsetMotionEvent(event);
@@ -180,7 +202,7 @@ public class EventForwarder {
                             offsetEvent.getY(), event.getPointerId(0), event.getPressure(0),
                             event.getOrientation(0), event.getAxisValue(MotionEvent.AXIS_TILT, 0),
                             MotionEvent.BUTTON_PRIMARY, event.getButtonState(),
-                            event.getMetaState(), event.getToolType(0));
+                            event.getMetaState(), event.getToolType(0), isHover);
                 }
                 mLastMouseButtonState = 0;
             }
@@ -207,11 +229,10 @@ public class EventForwarder {
                     offsetEvent.getX(), offsetEvent.getY(), event.getPointerId(0),
                     event.getPressure(0), event.getOrientation(0),
                     event.getAxisValue(MotionEvent.AXIS_TILT, 0), getMouseEventActionButton(event),
-                    event.getButtonState(), event.getMetaState(), event.getToolType(0));
+                    event.getButtonState(), event.getMetaState(), event.getToolType(0), isHover);
             return true;
         } finally {
             offsetEvent.recycle();
-            TraceEvent.end("sendMouseEvent");
         }
     }
 
@@ -288,7 +309,7 @@ public class EventForwarder {
             int androidMetaState, boolean isTouchHandleEvent);
     private native void nativeOnMouseEvent(long nativeEventForwarder, long timeMs, int action,
             float x, float y, int pointerId, float pressure, float orientation, float tilt,
-            int changedButton, int buttonState, int metaState, int toolType);
+            int changedButton, int buttonState, int metaState, int toolType, boolean isHover);
     private native void nativeOnMouseWheelEvent(long nativeEventForwarder, long timeMs, float x,
             float y, float ticksX, float ticksY, float pixelsPerTick);
     private native void nativeOnDragEvent(long nativeEventForwarder, int action, int x, int y,
