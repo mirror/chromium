@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "f6a97658_8044382c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-13T15:26:51Z",
+      "side": 1,
+      "message": "What\u0027s the issue with seeing one frame of the initial drawable? That it would make the test not work/flaky? Would our old friend waitForIdleSync help?",
+      "parentUuid": "2dc3e8f7_442db8a2",
+      "range": {
+        "startLine": 447,
+        "startChar": 12,
+        "endLine": 447,
+        "endChar": 21
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ec5df590_67db6369",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
         "patchSetId": 5
@@ -237,6 +261,30 @@
     },
     {
       "key": {
+        "uuid": "c7506dc0_c387ad4a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/snippets/ArticleSnippetsTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-13T15:26:51Z",
+      "side": 1,
+      "message": "Yeah, or we could create a NullContextMenuManager or something like that. I\u0027m probably being a bit too pedantic for test neatness.",
+      "parentUuid": "c729ef5c_3dabbc25",
+      "range": {
+        "startLine": 201,
+        "startChar": 46,
+        "endLine": 201,
+        "endChar": 64
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17ac7b66_2edeb280",
         "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
         "patchSetId": 5
@@ -281,6 +329,30 @@
       "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5242778b_7b2ba080",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/RenderTestRule.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-13T15:26:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3952bbe8_28defcf5",
+      "range": {
+        "startLine": 138,
+        "startChar": 30,
+        "endLine": 138,
+        "endChar": 51
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -375,6 +447,30 @@
       "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d45ff3de_69e247ea",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/util/browser/suggestions/FakeSuggestionsSource.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1149979
+      },
+      "writtenOn": "2017-06-13T15:26:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3dc3b27c_d798b337",
+      "range": {
+        "startLine": 184,
+        "startChar": 19,
+        "endLine": 184,
+        "endChar": 34
+      },
+      "revId": "0bcc8e70a4edd69857b4dd820ec6228a3f446df2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
