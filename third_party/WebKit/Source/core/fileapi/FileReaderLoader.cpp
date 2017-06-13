@@ -85,6 +85,8 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   ResourceRequest request(url_for_reading_);
   request.SetExternalRequestStateFromRequestorAddressSpace(
       execution_context->GetSecurityContext().AddressSpace());
+  request.SetFetchCredentialsMode(
+      WebURLRequest::kFetchCredentialsModeSameOrigin);
 
   // FIXME: Should this really be 'internal'? Do we know anything about the
   // actual request that generated this fetch?
@@ -102,8 +104,7 @@ void FileReaderLoader::Start(ExecutionContext* execution_context,
   options.content_security_policy_enforcement =
       kDoNotEnforceContentSecurityPolicy;
 
-  ResourceLoaderOptions resource_loader_options(
-      kAllowStoredCredentials, kClientDidNotRequestCredentials);
+  ResourceLoaderOptions resource_loader_options;
   // Use special initiator to hide the request from the inspector.
   resource_loader_options.initiator_info.name =
       FetchInitiatorTypeNames::internal;

@@ -60,8 +60,7 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   // Public for testing
   static ScriptResource* Create(const ResourceRequest& request,
                                 const String& charset) {
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
+    ResourceLoaderOptions options;
     return new ScriptResource(request, options, charset);
   }
 

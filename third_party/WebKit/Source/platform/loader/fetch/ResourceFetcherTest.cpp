@@ -325,8 +325,7 @@ TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
       ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
   ResourceRequest request(KURL(kParsedURLString, "data:text/html,foo"));
   request.SetRequestContext(WebURLRequest::kRequestContextVideo);
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  ResourceLoaderOptions options;
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters fetch_params(request, options);

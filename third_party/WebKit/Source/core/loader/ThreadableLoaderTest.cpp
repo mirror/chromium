@@ -132,8 +132,7 @@ class DocumentThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
       WebURLRequest::FetchRequestMode fetch_request_mode) override {
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options(
-        kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
+    ResourceLoaderOptions resource_loader_options;
     loader_ = DocumentThreadableLoader::Create(
         *ThreadableLoadingContext::Create(GetDocument()), client, options,
         resource_loader_options);
@@ -284,8 +283,7 @@ class WorkerThreadableLoaderTestHelper : public ThreadableLoaderTestHelper {
 
     ThreadableLoaderOptions options;
     options.fetch_request_mode = fetch_request_mode;
-    ResourceLoaderOptions resource_loader_options(
-        kDoNotAllowStoredCredentials, kClientDidNotRequestCredentials);
+    ResourceLoaderOptions resource_loader_options;
 
     // Ensure that WorkerThreadableLoader is created.
     // ThreadableLoader::create() determines whether it should create
