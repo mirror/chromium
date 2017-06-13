@@ -57,6 +57,30 @@
       "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c043a20_eead0408",
+        "filename": "chrome/browser/BUILD.gn",
+        "patchSetId": 10
+      },
+      "lineNbr": 4383,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-13T18:52:10Z",
+      "side": 1,
+      "message": "does that mean you would prefer \"should_record_active_use\" for the source set and the .cc/.h files?",
+      "parentUuid": "0a732a8d_f96e670d",
+      "range": {
+        "startLine": 4382,
+        "startChar": 19,
+        "endLine": 4383,
+        "endChar": 13
+      },
+      "revId": "c6c7c110e82a5d23ff1f177db2006731d859c8f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
