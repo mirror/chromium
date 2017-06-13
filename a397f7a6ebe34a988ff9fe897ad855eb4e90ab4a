@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "53c442f7_c7986d62",
+        "filename": "content/renderer/renderer_blink_platform_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-13T20:00:09Z",
+      "side": 1,
+      "message": "Yes! that is much cleaner.  Thanks.",
+      "parentUuid": "34c9b057_c92e051f",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21922553_ea5907ce",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 1
@@ -87,6 +105,24 @@
     },
     {
       "key": {
+        "uuid": "cd56a2f2_4d2d5b4f",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-13T20:00:09Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "21922553_ea5907ce",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4a77b404_9e25910b",
         "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
         "patchSetId": 1
@@ -98,6 +134,24 @@
       "writtenOn": "2017-06-13T19:29:24Z",
       "side": 1,
       "message": "Should we instead put this behind a command line flag and only enable it on platforms and devices that we know this will work on? Keeps the logic simply and makes it easier to detect problems.",
+      "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d56b915_33bb52ec",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 356,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-13T20:00:09Z",
+      "side": 1,
+      "message": "Yeah... I was wondering what the right approach would be here. I noticed code in other places uses ifdefs, which seems non-ideal because the ifdefs won\u0027t automatically pick-up future supported platforms.  I also noticed that on the service side there are IsConfigurationSupported() and other methods that are used internally, and I was wondering whether it would be reasonable to expose that in GpuMemoryBufferManager... Regarding the use of a command line flag, I just looked it up now, and I noticed that there are already flags that this CL is not honoring: --disable-webgl-image-chromium, --enable-webgl-image-chromium, --disable-2d-canvas-image-chromium. I\u0027m not sure why there is no \"enable\" for 2D canvas.  Anyways, these flags currently control HTMLCanvasElement, and I think they might as well also apply to OffscreenCanvas rendering contexts.",
+      "parentUuid": "4a77b404_9e25910b",
       "revId": "a397f7a6ebe34a988ff9fe897ad855eb4e90ab4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
