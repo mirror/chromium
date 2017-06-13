@@ -84,6 +84,8 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
     private AnimatorSet mMenuBadgeAnimatorSet;
     private boolean mIsMenuBadgeAnimationRunning;
 
+    private boolean mInflateFinished;
+
     /**
      * Basic constructor for {@link ToolbarLayout}.
      */
@@ -186,6 +188,8 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
                 return false;
             }
         };
+
+        mInflateFinished = true;
     }
 
     /**
@@ -689,6 +693,7 @@ public abstract class ToolbarLayout extends FrameLayout implements Toolbar {
 
     @Override
     public void setMenuButtonHighlight(boolean highlight) {
+        if (!mInflateFinished) return;
         mHighlightingMenu = highlight;
         setMenuButtonHighlightDrawable(mHighlightingMenu);
     }
