@@ -22,6 +22,30 @@
       "revId": "3696ad309f2ea058778f7c604e72d949cb1735a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a533d08_e78a9cf3",
+        "filename": "ios/chrome/browser/translate/translate_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-13T16:40:14Z",
+      "side": 1,
+      "message": "Nah, it was okay. Took me more time to rebuild with Xcode 8 than to find and fix the problem (EG tests don\u0027t work with Xcode 9).",
+      "parentUuid": "3c598ff2_51f5f379",
+      "range": {
+        "startLine": 784,
+        "startChar": 0,
+        "endLine": 784,
+        "endChar": 58
+      },
+      "revId": "3696ad309f2ea058778f7c604e72d949cb1735a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
