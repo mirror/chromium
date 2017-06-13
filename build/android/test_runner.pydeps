@@ -200,6 +200,7 @@ pylib/utils/device_dependencies.py
 pylib/utils/dexdump.py
 pylib/utils/google_storage_helper.py
 pylib/utils/logdog_helper.py
+pylib/utils/logging_utils.py
 pylib/utils/proguard.py
 pylib/utils/repo_utils.py
 pylib/valgrind_tools.py
