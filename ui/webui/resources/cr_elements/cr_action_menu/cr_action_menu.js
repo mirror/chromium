@@ -121,6 +121,9 @@ var AnchorAlignment = {
     /** @private {boolean} */
     hasMousemoveListener_: false,
 
+    /** @private {?MutationObserver} */
+    mutationObserver_: null,
+
     hostAttributes: {
       tabindex: 0,
     },
@@ -132,13 +135,12 @@ var AnchorAlignment = {
     },
 
     /** override */
-    attached: function() {
-      this.options_ = this.querySelectorAll('.dropdown-item');
-    },
-
-    /** override */
     detached: function() {
       this.removeListeners_();
+      if (this.mutationObserver_) {
+        this.mutationObserver_.disconnect();
+        this.mutationObserver_ = null;
+      }
     },
 
     /** @private */
@@ -307,6 +309,16 @@ var AnchorAlignment = {
       }.bind(this);
       window.addEventListener('resize', this.boundClose_);
       window.addEventListener('popstate', this.boundClose_);
+
+      if (!this.mutationObserver_) {
+        var childrenChangedCallback = function() {
+          this.options_ = this.querySelectorAll('.dropdown-item');
+        }.bind(this);
+
+        this.mutationObserver_ = new MutationObserver(childrenChangedCallback);
+        this.mutationObserver_.observe(this, {childList: true});
+        childrenChangedCallback();
+      }
 
       // Reset position to prevent previous values from affecting layout.
       this.style.left = '';
