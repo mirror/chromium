@@ -73,7 +73,8 @@ void FirstRunBubbleTest::CreateAndCloseBubbleOnEventTest(ui::Event* event) {
   anchor_widget.Show();
 
   FirstRunBubble* delegate =
-      FirstRunBubble::ShowBubble(nullptr, anchor_widget.GetContentsView());
+      FirstRunBubble::ShowBubble(nullptr, anchor_widget.GetContentsView(),
+                                 gfx::Point());
   EXPECT_TRUE(delegate);
 
   anchor_widget.GetContentsView()->RequestFocus();
@@ -99,7 +100,8 @@ TEST_F(FirstRunBubbleTest, CreateAndClose) {
   anchor_widget.Show();
 
   FirstRunBubble* delegate =
-      FirstRunBubble::ShowBubble(nullptr, anchor_widget.GetContentsView());
+      FirstRunBubble::ShowBubble(nullptr, anchor_widget.GetContentsView(),
+                                 gfx::Point());
   EXPECT_TRUE(delegate);
   delegate->GetWidget()->CloseNow();
 }

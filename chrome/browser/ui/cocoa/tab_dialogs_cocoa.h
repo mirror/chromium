@@ -8,6 +8,8 @@
 #include "base/macros.h"
 #include "chrome/browser/ui/tab_dialogs.h"
 
+@class BrowserWindowController;
+
 // Cocoa implementation of TabDialogs interface.
 class TabDialogsCocoa : public TabDialogs {
  public:
@@ -17,6 +19,7 @@ class TabDialogsCocoa : public TabDialogs {
   // TabDialogs:
   gfx::NativeView GetDialogParentView() const override;
   void ShowCollectedCookies() override;
+  void ShowFirstRunBubble() override;
   void ShowHungRendererDialog(
       const content::WebContentsUnresponsiveState& unresponsive_state) override;
   void HideHungRendererDialog() override;
@@ -34,6 +37,7 @@ class TabDialogsCocoa : public TabDialogs {
 
  protected:
   content::WebContents* web_contents() const { return web_contents_; }
+  BrowserWindowController* GetBrowserWindowController() const;
 
  private:
   content::WebContents* web_contents_;  // Weak. Owns this.

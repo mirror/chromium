@@ -30,10 +30,12 @@ const int kRightInset = 2;
 
 // static
 FirstRunBubble* FirstRunBubble::ShowBubble(Browser* browser,
-                                           views::View* anchor_view) {
+                                           views::View* anchor_view,
+                                           const gfx::Point& anchor_point) {
   first_run::LogFirstRunMetric(first_run::FIRST_RUN_BUBBLE_SHOWN);
 
-  FirstRunBubble* delegate = new FirstRunBubble(browser, anchor_view);
+  FirstRunBubble* delegate = new FirstRunBubble(browser, anchor_view,
+anchor_point);
   views::BubbleDialogDelegateView::CreateBubble(delegate)->ShowInactive();
   return delegate;
 }
@@ -86,7 +88,8 @@ void FirstRunBubble::Init() {
   layout->AddView(subtext, columns->num_columns(), 1);
 }
 
-FirstRunBubble::FirstRunBubble(Browser* browser, views::View* anchor_view)
+FirstRunBubble::FirstRunBubble(Browser* browser, views::View* anchor_view,
+                               const gfx::Point& anchor_point)
     : views::BubbleDialogDelegateView(anchor_view,
                                       views::BubbleBorder::TOP_LEFT),
       browser_(browser),
@@ -94,6 +97,7 @@ FirstRunBubble::FirstRunBubble(Browser* browser, views::View* anchor_view)
   // Compensate for built-in vertical padding in the anchor view's image.
   set_anchor_view_insets(gfx::Insets(
       GetLayoutConstant(LOCATION_BAR_BUBBLE_ANCHOR_VERTICAL_INSET), 0));
+  SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::FIRST_RUN);
 }
 

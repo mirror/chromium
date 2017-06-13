@@ -5,8 +5,12 @@
 #include "chrome/browser/ui/cocoa/tab_dialogs_cocoa.h"
 
 #include "base/memory/ptr_util.h"
+#include "chrome/browser/ui/browser_finder.h"
+#include "chrome/browser/ui/cocoa/browser_window_cocoa.h"
+#import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/content_settings/collected_cookies_mac.h"
 #import "chrome/browser/ui/cocoa/hung_renderer_controller.h"
+#import "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_cocoa.h"
 #import "chrome/browser/ui/cocoa/profiles/profile_signin_confirmation_dialog_cocoa.h"
 #include "chrome/browser/ui/cocoa/tab_dialogs_views_mac.h"
@@ -52,6 +56,12 @@ void TabDialogsCocoa::ShowCollectedCookies() {
   new CollectedCookiesMac(web_contents_);
 }
 
+void TabDialogsCocoa::ShowFirstRunBubble() {
+  BrowserWindowController* controller = GetBrowserWindowController();
+  if (controller)
+    [controller locationBarBridge]->ShowFirstRunBubble();
+}
+
 void TabDialogsCocoa::ShowHungRendererDialog(
     const content::WebContentsUnresponsiveState& unresponsive_state) {
   [HungRendererController showForWebContents:web_contents_];
@@ -84,4 +94,14 @@ base::WeakPtr<ValidationMessageBubble> TabDialogsCocoa::ShowValidationMessage(
     const base::string16& sub_text) {
   return (new ValidationMessageBubbleCocoa(
       web_contents_, anchor_in_root_view, main_text, sub_text))->AsWeakPtr();
+}
+
+BrowserWindowController* TabDialogsCocoa::GetBrowserWindowController() const {
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents_);
+  if (!browser)
+    return nullptr;
+  auto* window = static_cast<BrowserWindowCocoa*>(browser->window());
+  if (!window)
+    return nullptr;
+  return window->cocoa_controller();
 }

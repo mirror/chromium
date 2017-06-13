@@ -22,7 +22,8 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
                        public views::LinkListener {
  public:
   // |browser| is the opening browser and is NULL in unittests.
-  static FirstRunBubble* ShowBubble(Browser* browser, views::View* anchor_view);
+  static FirstRunBubble* ShowBubble(Browser* browser, views::View* anchor_view,
+                                    const gfx::Point& anchor_point);
 
  protected:
   // views::BubbleDialogDelegateView overrides:
@@ -30,7 +31,8 @@ class FirstRunBubble : public views::BubbleDialogDelegateView,
   int GetDialogButtons() const override;
 
  private:
-  FirstRunBubble(Browser* browser, views::View* anchor_view);
+  FirstRunBubble(Browser* browser, views::View* anchor_view, const gfx::Point&
+anchor_point);
   ~FirstRunBubble() override;
 
   // This class observes keyboard events, mouse clicks and touch down events
