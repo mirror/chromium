@@ -22,6 +22,30 @@
       "revId": "0a16ae965608d565e90d43e12a7811387f74f3e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ade97faa_a9f457c7",
+        "filename": "mojo/common/memory_allocator_dump_cross_process_uid.typemap",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-13T21:11:45Z",
+      "side": 1,
+      "message": "Good question, pass-by-const-ref definitely seems more common, so got rid of the pass-by-value. I had mostly noticed the class itself looking like pass-by-value was the expected behavior, but other code indeed seems to pass-by-ref a lot more.",
+      "parentUuid": "aac4a6f7_a7774cce",
+      "range": {
+        "startLine": 12,
+        "startChar": 115,
+        "endLine": 12,
+        "endChar": 137
+      },
+      "revId": "0a16ae965608d565e90d43e12a7811387f74f3e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
