@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "95c6bd80_229f9774",
+        "filename": "chrome/browser/media/router/media_sinks_observer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-13T21:00:25Z",
+      "side": 1,
+      "message": "RemotePlayback API: SOURCE_NOT_SUPPORTED is for CORS/audio/video codecs checks by the MRP.\nOrigin whitelisting will not be used - |origins| will always be empty on Android AFAIK.\n\nI\u0027m fine returning UNAVAILABLE if that\u0027s what Presentation API needs in this case.",
+      "parentUuid": "4626a11f_05407259",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "93a69913_50f6ed38",
         "filename": "chrome/browser/media/router/media_sinks_observer.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-13T19:11:53Z",
       "side": 1,
       "message": "We don\u0027t use Blink types in the MR code base.",
+      "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f1963dc_cc4fc43c",
+        "filename": "chrome/browser/media/router/media_sinks_observer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-13T21:00:25Z",
+      "side": 1,
+      "message": "Why? What\u0027s the alternative then?\nI don\u0027t think I want to duplicate the enum without a strong reason to.",
+      "parentUuid": "93a69913_50f6ed38",
       "revId": "c7bc56739080945f59555f6c71a142bc99d475ec",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

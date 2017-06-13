@@ -70,6 +70,30 @@
       "revId": "9cd5dcc4bdb5441ebb3e898d8decf391e8456da6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e71aa92c_02b9aa64",
+        "filename": "chrome/browser/media/router/media_sinks_observer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-13T21:00:25Z",
+      "side": 1,
+      "message": "ScreenAvailabilityNotSupported is handled via the enum in the follow-up CL: https://chromium-review.googlesource.com/c/530324/3; also, it\u0027s called DISABLED now. SOURCE_NOT_SUPPORTED is for a particular source not working well with devices/screens even if available. Hence I thought it\u0027s a good match for this case (the source\u0027s frame origin is not supported).\n\nI\u0027m fine with returning UNAVAILABLE for Presentation API here.\n\nIn the RemotePlayback API case, SOURCE_NOT_SUPPORTED will be sent back from the MRP so relying on just the emptiness of the array of sinks is not possible/will require a separate method plumbing perhaps (e.g. OnSourceUnsupported vs OnSinksUpdated).",
+      "parentUuid": "06ee0f75_a8cf7fb8",
+      "range": {
+        "startLine": 51,
+        "startChar": 54,
+        "endLine": 51,
+        "endChar": 74
+      },
+      "revId": "9cd5dcc4bdb5441ebb3e898d8decf391e8456da6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
