@@ -36,6 +36,13 @@ static_library("prefetch") {
     "prefetch_store.h",
     "prefetch_types.cc",
     "prefetch_types.h",
+    "store/delete_prefetch_items_command_sql.cc",
+    "store/delete_prefetch_items_command_sql.h",
+    "store/prefetch_store_sql.cc",
+    "store/prefetch_store_sql.h",
+    "store/prefetch_store_sql_utils.cc",
+    "store/prefetch_store_sql_utils.h",
+    "store/store_command.h",
     "suggested_articles_observer.cc",
     "suggested_articles_observer.h",
   ]
