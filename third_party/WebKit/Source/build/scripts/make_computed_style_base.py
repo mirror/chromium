@@ -12,7 +12,7 @@ import make_style_builder
 
 from name_utilities import (
     enum_for_css_keyword, enum_type_name, enum_value_name, class_member_name, method_name,
-    class_name, join_name
+    class_name, join_names
 )
 from collections import defaultdict, OrderedDict
 from itertools import chain
@@ -64,8 +64,8 @@ class Group(object):
         self.name = name
         self.subgroups = subgroups
         self.fields = fields
-        self.type_name = class_name(join_name('style', name, 'data'))
-        self.member_name = class_member_name(join_name(name, 'data'))
+        self.type_name = class_name(['style', name, 'data'])
+        self.member_name = class_member_name([name, 'data'])
         self.num_32_bit_words_for_bit_fields = _num_32_bit_words_for_bit_fields(
             field for field in fields if field.is_bit_field
         )
@@ -130,7 +130,7 @@ class Field(object):
         self.alignment_type = self.wrapper_pointer_name or self.type_name
         self.field_template = field_template
         self.group_name = field_group
-        self.group_member_name = class_member_name(join_name(field_group, 'data')) if field_group else None
+        self.group_member_name = class_member_name([field_group, 'data']) if field_group else None
         self.size = size
         self.default_value = default_value
         self.custom_copy = custom_copy
@@ -147,17 +147,17 @@ class Field(object):
             self.is_independent = kwargs.pop('independent')
             assert self.is_inherited or not self.is_independent, 'Only inherited fields can be independent'
 
-            self.is_inherited_method_name = method_name(join_name(name_for_methods, 'is inherited'))
+            self.is_inherited_method_name = method_name([name_for_methods, 'is', 'inherited'])
 
         # Method names
         # TODO(nainar): Method name generation is inconsistent. Fix.
         self.getter_method_name = getter_method_name
         self.setter_method_name = setter_method_name
-        self.internal_getter_method_name = method_name(join_name(self.name, 'Internal'))
-        self.internal_mutable_method_name = method_name(join_name('Mutable', name_for_methods, 'Internal'))
-        self.internal_setter_method_name = method_name(join_name(setter_method_name, 'Internal'))
+        self.internal_getter_method_name = method_name([self.name, 'internal'])
+        self.internal_mutable_method_name = method_name(['mutable', name_for_methods, 'internal'])
+        self.internal_setter_method_name = method_name([setter_method_name, 'internal'])
         self.initial_method_name = initial_method_name
-        self.resetter_method_name = method_name(join_name('Reset', name_for_methods))
+        self.resetter_method_name = method_name(['reset', name_for_methods])
         if self.group_name:
             self.getter_expression = self.group_member_name + '->' + class_member_name(self.name)
         else:
@@ -312,7 +312,7 @@ def _create_inherited_flag_field(property_):
     Create the field used for an inheritance fast path from an independent CSS property,
     and return the Field object.
     """
-    name_for_methods = join_name(property_['name_for_methods'], 'is inherited')
+    name_for_methods = join_names(property_['name_for_methods'], 'is', 'inherited')
     return Field(
         'inherited_flag',
         name_for_methods,
@@ -326,8 +326,8 @@ def _create_inherited_flag_field(property_):
         custom_copy=False,
         custom_compare=False,
         getter_method_name=method_name(name_for_methods),
-        setter_method_name=method_name(join_name('set', name_for_methods)),
-        initial_method_name=method_name(join_name('initial', name_for_methods)),
+        setter_method_name=method_name(['set', name_for_methods]),
+        initial_method_name=method_name(['initial', name_for_methods]),
     )
 
 

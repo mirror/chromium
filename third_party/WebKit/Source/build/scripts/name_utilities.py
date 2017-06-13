@@ -118,6 +118,8 @@ def enum_for_css_property(property_name):
 def enum_for_css_property_alias(property_name):
     return 'CSSPropertyAlias' + upper_camel_case(property_name)
 
+
+
 # TODO(shend): Merge these with the above methods.
 # and update all the generators to use these ones.
 # TODO(shend): Switch external callers of these methods to use the high level
@@ -129,45 +131,64 @@ def split_name(name):
     return re.findall(r'(?:[A-Z][a-z]*)|[a-z]+|(?:\d+[a-z]*)', upper_first_letter(name))
 
 
-def upper_camel_case(name):
-    return ''.join(upper_first_letter(word) for word in split_name(name))
+def join_names(*names):
+    """Given a list of names, join them into a single space-separated name."""
+    result = []
+    for name in names:
+        result.extend(split_name(name))
+    return ' '.join(result)
 
 
-def lower_camel_case(name):
-    return lower_first_letter(upper_camel_case(name))
+def naming_style(f):
+    def inner(name_or_names):
+        names = name_or_names if isinstance(name_or_names, list) else [name_or_names]
+        words = []
+        for name in names:
+            words.extend(split_name(name))
+        return f(words)
+    return inner
 
 
-def snake_case(name):
-    return '_'.join(word.lower() for word in split_name(name))
+@naming_style
+def upper_camel_case(words):
+    return ''.join(upper_first_letter(word) for word in words)
+
+
+@naming_style
+def lower_camel_case(words):
+    return lower_first_letter(upper_camel_case(words))
+
+
+@naming_style
+def snake_case(words):
+    return '_'.join(word.lower() for word in words)
 
 
 # Use these high level naming functions which describe the semantics of the name,
 # rather than a particular style.
 
 
-def enum_type_name(name):
-    return upper_camel_case(name)
+@naming_style
+def enum_type_name(words):
+    return upper_camel_case(words)
 
 
-def enum_value_name(name):
-    return 'k' + upper_camel_case(name)
+@naming_style
+def enum_value_name(words):
+    return 'k' + upper_camel_case(words)
 
 
-def class_name(name):
-    return upper_camel_case(name)
+@naming_style
+def class_name(words):
+    return upper_camel_case(words)
 
 
-def class_member_name(name):
-    return snake_case(name) + "_"
+@naming_style
+def class_member_name(words):
+    return snake_case(words) + "_"
 
 
-def method_name(name):
-    return upper_camel_case(name)
+@naming_style
+def method_name(words):
+    return upper_camel_case(words)
 
-
-def join_name(*names):
-    """Given a list of names, join them into a single space-separated name."""
-    result = []
-    for name in names:
-        result.extend(split_name(name))
-    return ' '.join(result)
