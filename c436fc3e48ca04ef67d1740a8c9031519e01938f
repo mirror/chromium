@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad633ee9_5c94d61e",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-13T20:53:55Z",
+      "side": 1,
+      "message": "map and string are needed?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39a7c90c_42d9c5a9",
+        "filename": "content/browser/tracing/background_tracing_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-13T20:53:55Z",
+      "side": 1,
+      "message": "yeah looks like there is no reason to call this since the filter will be removed when the process is shutting down. There is no reason to clear the UMA callback in that case. That is why the bug about unregistration didn\u0027t surface",
+      "range": {
+        "startLine": 244,
+        "startChar": 21,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ee26c23_6bc4120b",
+        "filename": "content/browser/tracing/tracing_controller_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-13T20:53:55Z",
+      "side": 1,
+      "message": "nit: maybe comment saying should be called on UI thread?",
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
