@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6f8a71aa_6e7cde34",
+        "filename": "mojo/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-13T16:45:54Z",
+      "side": 0,
+      "message": "In order to remove this line, we need to ensure that there *isn\u0027t* any mojom target that:\n1) depends on common_custom_types; and\n2) is used in JavaScript; and\n3) use_new_js_bindings \u003d false is set for that target.\n\nI didn\u0027t look into the bot failures. They might be caused by this.",
+      "range": {
+        "startLine": 29,
+        "startChar": 23,
+        "endLine": 29,
+        "endChar": 24
+      },
+      "revId": "495e3ea575d0356f6aee1bb958de5cebd692baa1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
