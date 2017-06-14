@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9848b295_622b1fe8",
+        "filename": "cc/surfaces/compositor_frame_sink_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "Why change this?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eda1dd11_37ebea96",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e165ecd_c6a7831d",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90481d0b_71cbcf66",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "I understand that adding all these makes this CL easier so we don\u0027t have to change so many call sites but in the next CL could you please try to avoid forwarding? We should look into eliminating all the forwarding methods here.",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "960370bf_1b6b5b6c",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "Maybe file a bug and reference it here?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ad611df_e20f0192",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "Do we need this now?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61089ffc_3a6bd9b2",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-14T22:15:59Z",
+      "side": 1,
+      "message": "huh?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
