@@ -2878,3 +2878,13 @@ crbug.com/731535 [ Win ] fast/dom/Window/window-resize-contents.html [ Failure P
 
 crbug.com/732103 [ Mac ] http/tests/shapedetection/shapedetection-cross-origin.html [ Failure Pass Timeout ]
 crbug.com/732103 [ Mac ] virtual/mojo-loading/http/tests/shapedetection/shapedetection-cross-origin.html [ Failure Pass Timeout ]
+
+
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/basic-scrollbar.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/border-box-rect-clips-scrollbars.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/custom-scrollbar-appearance-property.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/disabled-scrollbar.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/resize-scales-with-dpi-150.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/scrollbar-buttons.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/scrollbar-orientation.html [ NeedsRebaseline ]
+Bug(bokan) virtual/rootlayerscrolls/scrollbars/scrollbars-on-positioned-content.html [ NeedsRebaseline ]
