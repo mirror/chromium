@@ -284,6 +284,24 @@
     },
     {
       "key": {
+        "uuid": "a7ad1243_5a973f51",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-14T10:02:45Z",
+      "side": 1,
+      "message": "I like not having default: because it lets the compiler to flag where we need to update the switch statements if new enum values are added.",
+      "parentUuid": "874f1ef5_3caff871",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "144e43d9_5ce296d1",
         "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
         "patchSetId": 1
