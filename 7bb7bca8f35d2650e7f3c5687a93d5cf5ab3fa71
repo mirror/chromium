@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ff16a8c_f672b995",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "I would drop this comment",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11035b0e_1ed122f1",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "nit: put all these at the bottom of the file?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1265cd3d_6c70c3d9",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "and this",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8caa4375_0b39cf28",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "Is this CHECK claiming that a malicious client can get through to here, and then crash the browser process? That seems not good, can we prevent that earlier and close the renderer\u0027s connection instead?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c081ec14_222a98f7",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "Would this not be a bug? Can this happen?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5973874_be190f80",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "let\u0027s dcheck that parent is null?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4c5c33_d62dd28d",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "How would these happen as well, why aren\u0027t these dchecks?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c658f059_5b9d5d71",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "Can we unit test all these methods?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fdb003a_1d2c49c0",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "Can you document on these methods that you can Register either before or after calling CreateCFS? (that\u0027s intended right?)",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d85f960_54a8d99b",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:05:15Z",
+      "side": 1,
+      "message": "can you delete the copy constructor/operator\u003d? (DISALLOW_COPY_AND_ASSIGN)",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
