@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6e96cc_bed73254",
+        "filename": "third_party/wayland-protocols/include/protocol/alpha-compositing-unstable-v1-client-protocol.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-14T13:23:34Z",
+      "side": 0,
+      "message": "Please use wayland-scanner version in third_party/wayland/src to generate all these files (1.13.0 after https://chromium-review.googlesource.com/c/535753 lands).",
+      "revId": "00058c119c207251ac6423b6a9eebedabdf6941f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
