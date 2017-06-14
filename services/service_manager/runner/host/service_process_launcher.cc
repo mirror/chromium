@@ -45,7 +45,9 @@ ServiceProcessLauncher::ServiceProcessLauncher(
     const base::FilePath& service_path)
     : launch_process_runner_(launch_process_runner),
       delegate_(delegate),
+#if !defined(OS_IOS)
       start_sandboxed_(false),
+#endif
       service_path_(service_path),
       start_child_process_event_(
           base::WaitableEvent::ResetPolicy::AUTOMATIC,
@@ -56,13 +58,19 @@ ServiceProcessLauncher::ServiceProcessLauncher(
 }
 
 ServiceProcessLauncher::~ServiceProcessLauncher() {
+#if !defined(OS_IOS)
   Join();
+#endif
 }
 
 mojom::ServicePtr ServiceProcessLauncher::Start(
     const Identity& target,
     bool start_sandboxed,
     const ProcessReadyCallback& callback) {
+#if defined(OS_IOS)
+  NOTREACHED();
+  return nullptr;
+#else
   DCHECK(!child_process_.IsValid());
 
   start_sandboxed_ = start_sandboxed;
@@ -97,9 +105,13 @@ mojom::ServicePtr ServiceProcessLauncher::Start(
       base::Bind(&ServiceProcessLauncher::DidStart,
                  weak_factory_.GetWeakPtr(), callback));
   return client;
+#endif  // defined(OS_IOS)
 }
 
 void ServiceProcessLauncher::Join() {
+#if defined(OS_IOS)
+  NOTREACHED();
+#else
   if (mojo_ipc_channel_)
     start_child_process_event_.Wait();
   mojo_ipc_channel_.reset();
@@ -109,9 +121,13 @@ void ServiceProcessLauncher::Join() {
         << "Failed to wait for child process";
     child_process_.Close();
   }
+#endif  // defined(OS_IOS)
 }
 
 void ServiceProcessLauncher::DidStart(const ProcessReadyCallback& callback) {
+#if defined(OS_IOS)
+  NOTREACHED();
+#else
   if (child_process_.IsValid()) {
     callback.Run(child_process_.Pid());
   } else {
@@ -119,6 +135,7 @@ void ServiceProcessLauncher::DidStart(const ProcessReadyCallback& callback) {
     mojo_ipc_channel_.reset();
     callback.Run(base::kNullProcessId);
   }
+#endif
 }
 
 void ServiceProcessLauncher::DoLaunch(
@@ -128,6 +145,9 @@ void ServiceProcessLauncher::DoLaunch(
                                                    child_command_line.get());
   }
 
+#if defined(OS_IOS)
+  NOTREACHED();
+#else
   base::LaunchOptions options;
 #if defined(OS_WIN)
   options.handles_to_inherit = &handle_passing_info_;
@@ -209,6 +229,7 @@ void ServiceProcessLauncher::DoLaunch(
     }
   }
   start_child_process_event_.Signal();
+#endif  // defined(OS_IOS)
 }
 
 }  // namespace service_manager

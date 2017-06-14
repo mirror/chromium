@@ -33,40 +33,42 @@ source_set("lib") {
   }
 }
 
-source_set("unittests") {
-  testonly = true
-  sources = [
-    "service_process_launcher_unittest.cc",
-  ]
+if (!is_ios) {
+  source_set("unittests") {
+    testonly = true
+    sources = [
+      "service_process_launcher_unittest.cc",
+    ]
 
-  deps = [
-    ":lib",
-    "//base",
-    "//base/test:test_support",
-    "//mojo/edk/system",
-    "//services/service_manager",
-    "//services/service_manager/runner:init",
-    "//services/service_manager/runner/common",
-    "//testing/gtest",
-  ]
+    deps = [
+      ":lib",
+      "//base",
+      "//base/test:test_support",
+      "//mojo/edk/system",
+      "//services/service_manager",
+      "//services/service_manager/runner:init",
+      "//services/service_manager/runner/common",
+      "//testing/gtest",
+    ]
 
-  data_deps = [
-    ":host_test_service",
-  ]
-}
+    data_deps = [
+      ":host_test_service",
+    ]
+  }
 
-service("host_test_service") {
-  sources = [
-    "host_test_service_main.cc",
-  ]
+  service("host_test_service") {
+    sources = [
+      "host_test_service_main.cc",
+    ]
 
-  deps = [
-    "//mojo/public/cpp/system",
-    "//services/service_manager/public/cpp/standalone_service:main",
-  ]
-}
+    deps = [
+      "//mojo/public/cpp/system",
+      "//services/service_manager/public/cpp/standalone_service:main",
+    ]
+  }
 
-service_manifest("host_test_service_manifest") {
-  name = "host_test_service"
-  source = "host_test_service_manifest.json"
+  service_manifest("host_test_service_manifest") {
+    name = "host_test_service"
+    source = "host_test_service_manifest.json"
+  }
 }
