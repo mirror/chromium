@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e35b50bf_90f6fa59",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T16:43:08Z",
+      "side": 1,
+      "message": "I like that better!",
+      "range": {
+        "startLine": 107,
+        "startChar": 4,
+        "endLine": 107,
+        "endChar": 75
+      },
+      "revId": "8cc8364aa80254a9cff2a4f2fc12967756119011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "811af0bf_fae28ea0",
+        "filename": "chrome/browser/chromeos/login/enterprise_enrollment_browsertest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T16:43:08Z",
+      "side": 1,
+      "message": "Do the same in login_browsertest.cc.",
+      "range": {
+        "startLine": 158,
+        "startChar": 0,
+        "endLine": 160,
+        "endChar": 63
+      },
+      "revId": "8cc8364aa80254a9cff2a4f2fc12967756119011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "c5dd1e72_eaba70bf",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T16:43:08Z",
+      "side": 1,
+      "message": "This just says, \"if you override a function, use \u0027override\u0027\". What I mean is that you don\u0027t have to override the destructor at all because the compiler will already do it for you. The line can be dropped and the other as well, if it compiles.",
+      "parentUuid": "37340782_7bea0345",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4c155d1_b147976d",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
         "patchSetId": 2
