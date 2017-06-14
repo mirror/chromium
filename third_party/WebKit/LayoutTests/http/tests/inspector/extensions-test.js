@@ -14,7 +14,7 @@ var extensionsOrigin = "http://devtools-extensions.test:8000";
 var initialize_ExtensionsTest = function()
 {
 
-var extensionsHost = "devtools-extensions.test";
+var extensionsHost = "devtools-extensions.oopif.test";
 var extensionsOrigin = `http://${extensionsHost}:8000`;
 
 Extensions.extensionServer._registerHandler("evaluateForTestInFrontEnd", onEvaluate);
