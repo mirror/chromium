@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8a4533b8_4e24eadf",
+        "filename": "chrome/browser/devtools/devtools_file_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T04:43:50Z",
+      "side": 1,
+      "message": "If you do file_watcher_.release()-\u003eDeleteSoon(), there is no need to expose impl_task_runner() at all.",
+      "revId": "a24109af3a155993f2e405b0ee7f06c421300105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40f6f8c3_9aff1633",
+        "filename": "chrome/browser/devtools/devtools_file_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T04:43:50Z",
+      "side": 1,
+      "message": "Unused?",
+      "range": {
+        "startLine": 51,
+        "startChar": 43,
+        "endLine": 51,
+        "endChar": 60
+      },
+      "revId": "a24109af3a155993f2e405b0ee7f06c421300105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "617e8495_72e18242",
+        "filename": "chrome/browser/devtools/devtools_file_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T04:43:50Z",
+      "side": 1,
+      "message": "I\u0027d prefer to pass this one explicitly from helper.",
+      "range": {
+        "startLine": 199,
+        "startChar": 6,
+        "endLine": 199,
+        "endChar": 25
+      },
+      "revId": "a24109af3a155993f2e405b0ee7f06c421300105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2711701_46ba5af1",
+        "filename": "chrome/browser/devtools/devtools_file_watcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T04:43:50Z",
+      "side": 1,
+      "message": "Why does this one have to differ from file_task_runner_ from helper? I find it easier to understand if it\u0027s the same one.",
+      "range": {
+        "startLine": 200,
+        "startChar": 2,
+        "endLine": 200,
+        "endChar": 18
+      },
+      "revId": "a24109af3a155993f2e405b0ee7f06c421300105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
