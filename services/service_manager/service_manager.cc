@@ -173,7 +173,12 @@ class ServiceManager::Instance
         weak_factory_(this) {
     if (identity_.name() == service_manager::mojom::kServiceName ||
         identity_.name() == catalog::mojom::kServiceName) {
+#if defined(OS_IOS)
+      // iOS does not support base::Process.
+      pid_ = 0;
+#else
       pid_ = base::Process::Current().Pid();
+#endif
     }
     DCHECK_NE(mojom::kInvalidInstanceID, id_);
   }
@@ -583,10 +588,14 @@ class ServiceManager::Instance
   }
 
   void PIDAvailable(base::ProcessId pid) {
+#if !defined(OS_IOS)
+    // iOS does not support base::Process and simply passes 0 here, so elide
+    // this check on that platform.
     if (pid == base::kNullProcessId) {
       service_manager_->OnInstanceError(this);
       return;
     }
+#endif
     pid_ = pid;
   }
 
@@ -899,7 +908,12 @@ void ServiceManager::RegisterService(
   if (!pid_receiver_request.is_pending()) {
     mojom::PIDReceiverPtr pid_receiver;
     pid_receiver_request = mojo::MakeRequest(&pid_receiver);
+#if defined(OS_IOS)
+    // iOS does not support base::Process.
+    pid_receiver->SetPID(0);
+#else
     pid_receiver->SetPID(base::Process::Current().Pid());
+#endif
   }
 
   params->set_source(identity);

@@ -15,7 +15,6 @@ source_set("standalone") {
   deps = [
     "//base",
     "//base/third_party/dynamic_annotations",
-    "//components/tracing:startup_tracing",
     "//mojo/common:common_base",
     "//mojo/edk/system",
     "//services/catalog:lib",

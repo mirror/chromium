@@ -12,8 +12,11 @@ group("all") {
     ":service_manager",
     "//services/service_manager/background",
     "//services/service_manager/standalone",
-    "//services/service_manager/tests",
   ]
+
+  if (!is_ios) {
+    deps += [ "//services/service_manager/tests" ]
+  }
 }
 
 source_set("service_manager") {
