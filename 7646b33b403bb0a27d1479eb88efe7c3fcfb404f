@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5cc46726_912f4637",
+        "filename": "services/service_manager/runner/host/service_process_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-14T15:08:30Z",
+      "side": 1,
+      "message": "No, I was suggesting to not build anything which uses this class, not include the header, not compile the cc, etc. on IOS.\n\nSorry I missed the original notes though. That explains it. If header-only doesn\u0027t work, feel free to ignore this suggestion.\n\nAlternatively could we at least consolidate some of the blocks here? e.g. rather than having one here and in Join, just make Join a no-op on IOS rather than NOTREACHED?",
+      "parentUuid": "821c6311_43fea826",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce3b0ee_ef9b0552",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
