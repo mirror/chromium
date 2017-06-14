@@ -449,6 +449,12 @@ void PaymentRequestBrowserTestBase::AddCreditCard(
   EXPECT_EQ(card_count + 1, personal_data_manager->GetCreditCards().size());
 }
 
+void PaymentRequestBrowserTestBase::AddServerCard(
+    const autofill::CreditCard& card) {
+  GetDataManager()->AddServerCreditCardForTest(
+      base::MakeUnique<autofill::CreditCard>(card));
+}
+
 void PaymentRequestBrowserTestBase::CreatePaymentRequestForTest(
     content::WebContents* web_contents,
     const service_manager::BindSourceInfo& source_info,

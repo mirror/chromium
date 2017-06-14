@@ -180,7 +180,7 @@ void PaymentRequest::Complete(mojom::PaymentComplete result) {
   if (!client_.is_bound())
     return;
 
-  if (result != mojom::PaymentComplete::SUCCESS) {
+  if (result == mojom::PaymentComplete::FAIL) {
     delegate_->ShowErrorMessage();
   } else {
     DCHECK(!has_recorded_completion_);
