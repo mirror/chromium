@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "74d49970_d3dbb06f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T12:58:48Z",
+      "side": 1,
+      "message": "Do you mean making it static and cancelling to remove the reference to the view holder would be enough or should we also not propagate the fetched thumbnail to the suggestion? It won\u0027t stop concurrent requests for the same suggestion for now, but at least we would avoid a good number of fetches when scrolling all the way down then back up.\n\n(note: if we keep setting the thumbnail, we should check it has not been set by another completed callback first)",
+      "parentUuid": "96607873_f1702872",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8101309d_19424ba1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
