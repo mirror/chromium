@@ -19,32 +19,28 @@ import android.view.inputmethod.InputConnection;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.junit.runners.Parameterized.Parameters;
 import org.mockito.InOrder;
 import org.mockito.MockitoAnnotations;
-import org.robolectric.ParameterizedRobolectricTestRunner;
 import org.robolectric.RuntimeEnvironment;
 import org.robolectric.annotation.Config;
 import org.robolectric.shadows.ShadowLog;
 
 import org.chromium.base.Log;
-
-import java.util.Arrays;
-import java.util.Collection;
+import org.chromium.testing.local.LocalRobolectricTestRunner;
 
 /**
  * A robolectric test for {@link AutocompleteEditText} class.
  */
-@RunWith(ParameterizedRobolectricTestRunner.class)
-@Config(sdk = 21, manifest = Config.NONE)
-public class AutocompleteEditTextTest {
+@RunWith(LocalRobolectricTestRunner.class)
+@Config(manifest = Config.NONE)
+public class SpannableAutocompleteEditTextTest {
     private static final String TAG = "cr_AutocompleteEdit";
 
     private static final boolean DEBUG = false;
 
-    private boolean mUseSpannableModel;
     private InOrder mInOrder;
     private AutocompleteEditText mAutocomplete;
+    private SpannableAutocompleteEditTextModel mModel;
     private Context mContext;
     private InputConnection mInputConnection;
     private BaseInputConnection mDummyTargetInputConnection;
@@ -64,13 +60,11 @@ public class AutocompleteEditTextTest {
 
         @Override
         protected AutocompleteEditTextModelBase createModel() {
-            return mUseSpannableModel ? new SpannableAutocompleteEditTextModel(this)
-                                      : new AutocompleteEditTextModel(this);
+            return new SpannableAutocompleteEditTextModel(this);
         }
 
         @Override
         public void onAutocompleteTextStateChanged(boolean textDeleted, boolean updateDisplay) {
-            // This function is called in super(), so mVerifier may be null.
             if (mVerifier != null) {
                 mVerifier.onAutocompleteTextStateChanged(textDeleted, updateDisplay);
             }
@@ -82,19 +76,12 @@ public class AutocompleteEditTextTest {
         }
     }
 
-    @Parameters
-    public static Collection<Object[]> data() {
-        return Arrays.asList(new Object[][] {{true}, {false}});
-    }
-
-    public AutocompleteEditTextTest(boolean useSpannableModel) {
-        mUseSpannableModel = useSpannableModel;
-    }
-
     @Before
     public void setUp() throws Exception {
-        ShadowLog.stream = System.out;
-        if (DEBUG) Log.i(TAG, "setUp started.");
+        if (DEBUG) {
+            ShadowLog.stream = System.out;
+            Log.i(TAG, "setUp started.");
+        }
         MockitoAnnotations.initMocks(this);
         mContext = RuntimeEnvironment.application;
         mVerifier = spy(new Verifier());
@@ -135,14 +122,14 @@ public class AutocompleteEditTextTest {
 
         assertTrue(mInputConnection.beginBatchEdit());
         assertTrue(mInputConnection.commitText(" ", 1));
-
-        // Autocomplete text is adjusted but not redrawn until the batch edit ends.
+        // Autocomplete text is not redrawn until the batch edit ends.
         assertEquals("hello ", mAutocomplete.getTextWithAutocomplete());
 
         mInOrder.verifyNoMoreInteractions();
         assertTrue(mInputConnection.endBatchEdit());
         // Autocomplete text gets redrawn.
         assertTexts("hello ", "world");
+
         mInOrder.verify(mVerifier).onAutocompleteTextStateChanged(false, true);
         mAutocomplete.setAutocompleteText("hello ", "world");
         assertTexts("hello ", "world");
