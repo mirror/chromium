@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc2a085f_cc1111cf",
+        "filename": "third_party/WebKit/Source/core/html/forms/InternalPopupMenu.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-14T06:38:26Z",
+      "side": 1,
+      "message": "Remove this comment.",
+      "revId": "899b877a19b492cab51e67dec5d6fca5c7bede56",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
