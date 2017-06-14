@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0359b0f3_3bd17ce9",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/html/browsers/origin/relaxing-the-same-origin-restriction/document_domain_setter_null.tentative.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T11:15:57Z",
+      "side": 1,
+      "message": "nit. space at EOL",
+      "revId": "768666d0fe82579d8afd805c9978394f24da3e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
