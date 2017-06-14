@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91da1128_7ad38b3c",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-14T08:19:48Z",
+      "side": 1,
+      "message": "It\u0027s just for grouping all trace events related to ReadFromCacheJob. All of NESTABLE_ASYNC events will be aggregated into one tree-style bar.\nMoving the trace to Start/Done is also good, but I thought the ctor/dtor would be more informative because Start/Done is very similar to the beginning of \"Start\" and the end of \"ReadRawData\".",
+      "parentUuid": "3a844799_c70aef64",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c8bd34_b74392c7",
         "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-14T00:53:28Z",
       "side": 1,
       "message": "How about recording ASYNC_INSTANCE0 here?",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f4bc48_38a201e7",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-14T08:19:48Z",
+      "side": 1,
+      "message": "That\u0027s good!",
+      "parentUuid": "a3c8bd34_b74392c7",
       "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2a58bbb9_ac1fe2ae",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-14T08:19:48Z",
+      "side": 1,
+      "message": "Sounds good, Changed.",
+      "parentUuid": "b125b08d_9d179279",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6648f4d9_7f77c638",
         "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-14T00:53:28Z",
       "side": 1,
       "message": "Just curious: Why did you move this before ReadRawDataComplete?",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5466bd3_feafb875",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1125915
+      },
+      "writtenOn": "2017-06-14T08:19:48Z",
+      "side": 1,
+      "message": "It\u0027s because ReadRawDataComplete calls a callback internally. I tried to avoid it in the trace.",
+      "parentUuid": "6648f4d9_7f77c638",
       "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
