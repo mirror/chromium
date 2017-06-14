@@ -52,7 +52,7 @@
 #include "core/workers/WorkerInspectorProxy.h"
 #include "core/workers/WorkerScriptLoader.h"
 #include "core/workers/WorkerThreadStartupData.h"
-#include "modules/indexeddb/IndexedDBClientImpl.h"
+#include "modules/serviceworkers/ServiceWorker.h"
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClientImpl.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
@@ -81,6 +81,8 @@
 #include "public/web/modules/serviceworker/WebServiceWorkerContextClient.h"
 
 namespace blink {
+
+template class WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
 WebEmbeddedWorker* WebEmbeddedWorker::Create(
     WebServiceWorkerContextClient* client,
@@ -410,10 +412,10 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   SecurityOrigin* starter_origin = document->GetSecurityOrigin();
 
   WorkerClients* worker_clients = WorkerClients::Create();
+  WorkerClientsInitializer<WebEmbeddedWorkerImpl>::Run(worker_clients);
+
   ProvideContentSettingsClientToWorker(worker_clients,
                                        std::move(content_settings_client_));
-  ProvideIndexedDBClientToWorker(worker_clients,
-                                 IndexedDBClientImpl::Create(*worker_clients));
   ProvideServiceWorkerGlobalScopeClientToWorker(
       worker_clients,
       ServiceWorkerGlobalScopeClientImpl::Create(*worker_context_client_));

@@ -7,6 +7,8 @@
 
 #include "core/workers/InProcessWorkerBase.h"
 
+#include "core/workers/WorkerClients.h"
+
 namespace blink {
 
 class ExceptionState;
@@ -28,6 +30,8 @@ class CORE_EXPORT Worker final : public InProcessWorkerBase {
       ExecutionContext*) override;
   const AtomicString& InterfaceName() const override;
 };
+
+extern template class WorkerClientsInitializer<Worker>;
 
 }  // namespace blink
 
