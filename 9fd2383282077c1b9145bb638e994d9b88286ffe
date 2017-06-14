@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21271bf8_6ae369f7",
+        "filename": "chrome/browser/android/vr_shell/elbow_model.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-14T15:22:10Z",
+      "side": 1,
+      "message": "Why is this an incorrect assumption, don\u0027t we explicitly create an angle in degrees above?",
+      "range": {
+        "startLine": 131,
+        "startChar": 42,
+        "endLine": 131,
+        "endChar": 49
+      },
+      "revId": "9fd2383282077c1b9145bb638e994d9b88286ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "476f161e_419adc5f",
+        "filename": "chrome/browser/android/vr_shell/vr_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-14T15:22:10Z",
+      "side": 1,
+      "message": "vr::ToQuaternion?",
+      "range": {
+        "startLine": 218,
+        "startChar": 39,
+        "endLine": 218,
+        "endChar": 51
+      },
+      "revId": "9fd2383282077c1b9145bb638e994d9b88286ffe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
