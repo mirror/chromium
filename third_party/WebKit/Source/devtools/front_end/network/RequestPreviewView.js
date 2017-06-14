@@ -28,164 +28,136 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-/**
- * @unrestricted
- */
 Network.RequestPreviewView = class extends Network.RequestContentView {
   /**
    * @param {!SDK.NetworkRequest} request
-   * @param {!UI.Widget} responseView
    */
-  constructor(request, responseView) {
+  constructor(request) {
     super(request);
-    this._responseView = responseView;
-    /** @type {?UI.Widget} */
+    /** @type {?Promise<!UI.Widget>} */
     this._previewView = null;
-  }
-
-  /**
-   * @override
-   */
-  contentLoaded() {
-    if (!this.request.content && !this.request.contentError()) {
-      if (!this._emptyWidget) {
-        this._emptyWidget = this._createEmptyWidget();
-        this._emptyWidget.show(this.element);
-        this._previewView = this._emptyWidget;
-      }
-      return;
-    }
-    if (this._emptyWidget) {
-      this._emptyWidget.detach();
-      delete this._emptyWidget;
-      this._previewView = null;
-    }
-
-    if (!this._previewView)
-      this._createPreviewView(handlePreviewView.bind(this));
-    else
-      this._previewView.show(this.element);
-
-    /**
-     * @param {!UI.Widget} view
-     * @this {Network.RequestPreviewView}
-     */
-    function handlePreviewView(view) {
-      this._previewView = view;
-      view.show(this.element);
-      if (view instanceof UI.SimpleView) {
-        var toolbar = new UI.Toolbar('network-item-preview-toolbar', this.element);
-        for (var item of /** @type {!UI.SimpleView} */ (this._previewView).syncToolbarItems())
-          toolbar.appendToolbarItem(item);
-      }
-      this._previewViewHandledForTest(view);
-    }
-  }
-
-  /**
-   * @param {!UI.Widget} view
-   */
-  _previewViewHandledForTest(view) {
   }
 
   /**
    * @return {!UI.EmptyWidget}
    */
-  _createEmptyWidget() {
-    return this._createMessageView(Common.UIString('This request has no preview available.'));
+  static _createEmptyWidget() {
+    return Network.RequestPreviewView._createMessageView(Common.UIString('This request has no preview available.'));
   }
 
   /**
    * @param {string} message
    * @return {!UI.EmptyWidget}
    */
-  _createMessageView(message) {
+  static _createMessageView(message) {
     return new UI.EmptyWidget(message);
   }
 
   /**
-   * @return {string}
+   * @param {string} content
+   * @param {string} mimeType
+   * @return {?UI.SearchableView}
    */
-  _requestContent() {
-    var content = this.request.content;
-    return this.request.contentEncoded ? window.atob(content || '') : (content || '');
+  static _xmlView(content, mimeType) {
+    var parsedXML = Network.XMLView.parseXML(content, mimeType);
+    return parsedXML ? Network.XMLView.createSearchableView(parsedXML) : null;
   }
 
   /**
    * @param {?Network.ParsedJSON} parsedJSON
    * @return {?UI.SearchableView}
    */
-  _jsonView(parsedJSON) {
+  static _jsonView(parsedJSON) {
     if (!parsedJSON || typeof parsedJSON.data !== 'object')
       return null;
     return Network.JSONView.createSearchableView(/** @type {!Network.ParsedJSON} */ (parsedJSON));
   }
 
   /**
-   * @return {?UI.SearchableView}
+   * @override
    */
-  _xmlView() {
-    var parsedXML = Network.XMLView.parseXML(this._requestContent(), this.request.mimeType);
-    return parsedXML ? Network.XMLView.createSearchableView(parsedXML) : null;
+  wasShown() {
+    this._showPreviewView();
+  }
+
+  async _showPreviewView() {
+    if (!this._previewView)
+      this._previewView = this._createPreviewView();
+    var previewView = await this._previewView;
+    if (this.element.contains(previewView.element))
+      return;
+
+    previewView.show(this.element);
+
+    if (previewView instanceof UI.SimpleView) {
+      var toolbar = new UI.Toolbar('network-item-preview-toolbar', this.element);
+      for (var item of previewView.syncToolbarItems())
+        toolbar.appendToolbarItem(item);
+    }
+
+    this._previewDidShowForTest(previewView);
+  }
+
+  _previewDidShowForTest(view) {
   }
 
   /**
-   * @return {?Network.RequestHTMLView}
+   * @return {!Promise<?Network.RequestHTMLView>}
    */
-  _htmlErrorPreview() {
+  async _htmlErrorPreview() {
     var whitelist = ['text/html', 'text/plain', 'application/xhtml+xml'];
     if (whitelist.indexOf(this.request.mimeType) === -1)
       return null;
 
-    var dataURL = this.request.asDataURL();
+    var contentData = await this.request.contentData();
+    var dataURL = Common.ContentProvider.contentAsDataURL(
+        contentData.content, this.request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
     if (dataURL === null)
       return null;
 
-    return new Network.RequestHTMLView(this.request, dataURL);
+    return new Network.RequestHTMLView(this.request, /** @type {string} */ (dataURL));
   }
 
   /**
-   * @param {function(!UI.Widget)} callback
+   * @return {!Promise<!UI.Widget>}
    */
-  _createPreviewView(callback) {
-    if (this.request.contentError()) {
-      callback(this._createMessageView(Common.UIString('Failed to load response data')));
-      return;
+  async _createPreviewView() {
+    var contentData = await this.request.contentData();
+    if (contentData.error)
+      return Network.RequestPreviewView._createMessageView(Common.UIString('Failed to load response data'));
+
+    var content = contentData.content || '';
+    if (contentData.encoded)
+      content = window.atob(content);
+    if (!content)
+      return Network.RequestPreviewView._createEmptyWidget();
+
+    var xmlView = Network.RequestPreviewView._xmlView(content, this.request.mimeType);
+    if (xmlView)
+      return xmlView;
+
+    // We support non-strict JSON parsing by parsing an AST tree which is why we offload it to a worker.
+    var jsonData = await Network.JSONView.parseJSON(content);
+
+    if (jsonData) {
+      var jsonView = Network.RequestPreviewView._jsonView(jsonData);
+      if (jsonView)
+        return jsonView;
     }
 
-    var xmlView = this._xmlView();
-    if (xmlView) {
-      callback(xmlView);
-      return;
+    if (this.request.hasErrorStatusCode() || this.request.resourceType() === Common.resourceTypes.XHR) {
+      var htmlErrorPreview = await this._htmlErrorPreview();
+      if (htmlErrorPreview)
+        return htmlErrorPreview;
     }
 
-    Network.JSONView.parseJSON(this._requestContent()).then(chooseView.bind(this)).then(callback);
+    var sourceView = await Network.RequestResponseView.sourceViewForRequest(this.request);
+    if (sourceView)
+      return sourceView;
 
-    /**
-     * @this {Network.RequestPreviewView}
-     * @param {?Network.ParsedJSON} jsonData
-     * @return {!UI.Widget}
-     */
-    function chooseView(jsonData) {
-      if (jsonData) {
-        var jsonView = this._jsonView(jsonData);
-        if (jsonView)
-          return jsonView;
-      }
+    if (this.request.resourceType() === Common.resourceTypes.Other)
+      return Network.RequestPreviewView._createEmptyWidget();
 
-      if (this.request.hasErrorStatusCode() || this.request.resourceType() === Common.resourceTypes.XHR) {
-        var htmlErrorPreview = this._htmlErrorPreview();
-        if (htmlErrorPreview)
-          return htmlErrorPreview;
-      }
-
-      if (this._responseView.sourceView)
-        return this._responseView.sourceView;
-
-      if (this.request.resourceType() === Common.resourceTypes.Other)
-        return this._createEmptyWidget();
-
-      return Network.RequestView.nonSourceViewForRequest(this.request);
-    }
+    return Network.RequestView.nonSourceViewForRequest(this.request);
   }
 };

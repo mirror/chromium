@@ -1207,16 +1207,14 @@ Network.NetworkLogView = class extends UI.VBox {
   /**
    * @param {!SDK.NetworkRequest} request
    */
-  _copyResponse(request) {
-    /**
-     * @param {?string} content
-     */
-    function callback(content) {
-      if (request.contentEncoded)
-        content = request.asDataURL();
-      InspectorFrontendHost.copyText(content || '');
+  async _copyResponse(request) {
+    var contentData = await request.contentData();
+    var content = contentData.content;
+    if (contentData.encoded) {
+      content = Common.ContentProvider.contentAsDataURL(
+          contentData.content, request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
     }
-    request.requestContent().then(callback);
+    InspectorFrontendHost.copyText(content || '');
   }
 
   /**
