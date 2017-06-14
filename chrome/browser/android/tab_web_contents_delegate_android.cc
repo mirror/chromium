@@ -28,6 +28,7 @@
 #include "chrome/browser/prerender/prerender_manager.h"
 #include "chrome/browser/prerender/prerender_manager_factory.h"
 #include "chrome/browser/profiles/profile.h"
+#include "chrome/browser/subresource_filter/chrome_subresource_filter_client.h"
 #include "chrome/browser/ui/android/bluetooth_chooser_android.h"
 #include "chrome/browser/ui/blocked_content/popup_blocker_tab_helper.h"
 #include "chrome/browser/ui/find_bar/find_notification_details.h"
@@ -339,11 +340,14 @@ WebContents* TabWebContentsDelegateAndroid::OpenURLFromTab(
       PopupBlockerTabHelper::FromWebContents(source);
   DCHECK(popup_blocker_helper);
 
+  // The subresource_filter triggers an extra aggressive popup blocker on
+  // pages where ads are being blocked.
   if ((params.disposition == WindowOpenDisposition::NEW_POPUP ||
        params.disposition == WindowOpenDisposition::NEW_FOREGROUND_TAB ||
        params.disposition == WindowOpenDisposition::NEW_BACKGROUND_TAB ||
        params.disposition == WindowOpenDisposition::NEW_WINDOW) &&
-      !params.user_gesture &&
+      ChromeSubresourceFilterClient::ShouldDisallowNewWindow(
+          source, params.user_gesture) &&
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kDisablePopupBlocking)) {
     if (popup_blocker_helper->MaybeBlockPopup(nav_params,
