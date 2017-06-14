@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "5d7f8822_c6229ab5",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:50:25Z",
+      "side": 1,
+      "message": "This was not intended for change her but if we are landing yet another impl of a database, we probably should look at newly-landed UMA in a few weeks and decide if we need retry and on which level. Feel free to ignore this note for now, I\u0027d simply do the retry here *if* we were to implement it.",
+      "parentUuid": "deed8e20_1364da86",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52790380_71aae9c9",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 1
@@ -143,6 +167,30 @@
     },
     {
       "key": {
+        "uuid": "e8fc2311_66f23689",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:50:25Z",
+      "side": 1,
+      "message": "Oh, I realize it\u0027s what we do in other places and it\u0027s probably ok. But, sqlite makes me paranoid lately :) So if this transforms to a landing CL, we might as well start from the right approach while it\u0027s still simple.",
+      "parentUuid": "d70f32d1_6dedb06d",
+      "range": {
+        "startLine": 202,
+        "startChar": 9,
+        "endLine": 202,
+        "endChar": 12
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f556a6c9_afc3027e",
         "filename": "components/offline_pages/core/prefetch/store/store_command.h",
         "patchSetId": 1
@@ -172,6 +220,24 @@
       "side": 1,
       "message": "Good point. This should probably go on StoreCommand interface.",
       "parentUuid": "f556a6c9_afc3027e",
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1984c76f_8e301f33",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:50:25Z",
+      "side": 1,
+      "message": "Indeed, perhaps like a comment here and then codereview practice. Executor may retry N times and UMA results... We can also have a test for commands that applies them more tan once with rollback in between...",
+      "parentUuid": "b4e80137_7b7ac0eb",
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
