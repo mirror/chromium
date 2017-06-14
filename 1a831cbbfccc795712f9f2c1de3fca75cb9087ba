@@ -1,0 +1,90 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ed9c381_92a35d9a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:01:24Z",
+      "side": 1,
+      "message": "If we ever want to retry opening, this probably is a good place to PostDelayedTask?",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52790380_71aae9c9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:01:24Z",
+      "side": 1,
+      "message": "any reason this can not be done first thing in OpenConnectionSync? Then db_ is operated on a single thread only.",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 11
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "711a1943_7ed40196",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:01:24Z",
+      "side": 1,
+      "message": "Technically speaking this is a cross-thread check. It\u0027d be probably better to store a \u0027success\u0027 bool returned from OpenConnectionSync and check that on main thread.. Same about DCHECK(db_.get()) above.",
+      "range": {
+        "startLine": 202,
+        "startChar": 9,
+        "endLine": 202,
+        "endChar": 12
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f556a6c9_afc3027e",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T22:01:24Z",
+      "side": 1,
+      "message": "It would be nice to enforce the rule that Execute() may be run more than once if the DB can not commit the transaction. We might just postulate this as a requirement?",
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
