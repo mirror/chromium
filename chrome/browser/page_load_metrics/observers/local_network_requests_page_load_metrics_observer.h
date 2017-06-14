@@ -11,75 +11,52 @@
 
 #include "base/macros.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
+#include "net/base/ip_address.h"
 
 namespace {
 
-// The types of host IP addresses to distinguish between when collecting local
-// network request metrics. Routers are a subset of private addresses.
-enum HostType {
+// The domain type of the IP address of the loaded page. We use these to
+// determine what classes of resource request metrics to collect.
+enum DomainType {
   HOST_TYPE_PUBLIC = 0,
   HOST_TYPE_PRIVATE = 1,
   HOST_TYPE_LOCALHOST = 2,
-  HOST_TYPE_ROUTER = 5,
 };
+
+// The type of the IP address of the loaded resource.
+enum ResourceType {
+  RESOURCE_TYPE_PUBLIC = 0,
+  RESOURCE_TYPE_PRIVATE = 1,
+  RESOURCE_TYPE_LOCAL_SAME_SUBNET = 2,
+  RESOURCE_TYPE_LOCAL_DIFF_SUBNET = 4,
+  RESOURCE_TYPE_ROUTER = 8,
+  RESOURCE_TYPE_LOCALHOST = 16,
+}
 
 // The types of services to distinguish between when collecting local network
 // request metrics.
 enum PortType {
-  PORT_TYPE_WEB,
-  PORT_TYPE_DB,
-  PORT_TYPE_PRINT,
-  PORT_TYPE_OTHER,
+  PORT_TYPE_WEB = 1,
+  PORT_TYPE_DB = 2,
+  PORT_TYPE_PRINT = 4,
+  PORT_TYPE_DEV = 8,
+  PORT_TYPE_OTHER = 0,
 };
-
-// TODO(uthakore): Update router regex based on further study.
-std::regex kRouterIpRegex = std::regex(
-    "^192\.168\.(0|10?)\.(1(00?)?)|^10\.(0|1)\.(0|10?)\.(1(00?)?|2)");
 
 }  // namespace
 
 namespace internal {
 
 // UKM event names
-const char kUkmLocalNetworkRequestsPublicPageEvent[] =
-    "LocalNetworkRequests.PublicPage";
-const char kUkmLocalNetworkRequestsPrivatePageEvent[] =
-    "LocalNetworkRequests.PrivatePage";
+const char kUkmPageLoadEventName[] = "PageLoad";
+const char kUkmLocalNetworkRequestsEventName[] = "LocalNetworkRequests";
 
 // UKM metric names
-const char kUkmSuccessfulPrivateRequestMetric[] =
-    "PrivateRequestCount.Successful";
-const char kUkmFailedPrivateRequestMetric[] = "PrivateRequestCount.Failed";
-const char kUkmSuccessfulRouterRequestMetric[] =
-    "RouterRequestCount.Successful";
-const char kUkmFailedRouterRequestMetric[] = "RouterRequestCount.Failed";
-const char kUkmSuccessfulLocalhostWebRequestMetric[] =
-    "Localhost.WebRequestCount.Successful";
-const char kUkmFailedLocalhostWebRequestMetric[] =
-    "Localhost.WebRequestCount.Failed";
-const char kUkmSuccessfulLocalhostDBRequestMetric[] =
-    "Localhost.DBRequestCount.Successful";
-const char kUkmFailedLocalhostDBRequestMetric[] =
-    "Localhost.DBRequestCount.Failed";
-const char kUkmSuccessfulLocalhostPrinterRequestMetric[] =
-    "Localhost.PrinterRequestCount.Successful";
-const char kUkmFailedLocalhostPrinterRequestMetric[] =
-    "Localhost.PrinterRequestCount.Failed";
-const char kUkmSuccessfulLocalhostOtherRequestMetric[] =
-    "Localhost.OtherRequestCount.Successful";
-const char kUkmFailedLocalhostOtherRequestMetric[] =
-    "Localhost.OtherRequestCount.Failed";
-const char kUkmSuccessfulPublicRequestMetric[] =
-    "PublicRequestCount.Successful";
-const char kUkmFailedPublicRequestMetric[] = "PublicRequestCount.Failed";
-const char kUkmSuccessfulSameSubnetRequestMetric[] =
-    "SameSubnetRequestCount.Successful";
-const char kUkmFailedSameSubnetRequestMetric[] =
-    "SameSubnetRequestCount.Failed";
-const char kUkmSuccessfulDifferentSubnetRequestMetric[] =
-    "DifferentSubnetRequestCount.Successful";
-const char kUkmFailedDifferentSubnetRequestMetric[] =
-    "DifferentSubnetRequestCount.Failed";
+const char kUkmDomainTypeName[] = "DomainType";
+const char kUkmResourceTypeName[] = "ResourceType";
+const char kUkmPortTypeName[] = "PortType";
+const char kUkmSuccessfulCountName[] = "Count.Successful";
+const char kUkmFailedCountName[] = "Count.Failed";
 
 // UMA public page histogram names
 const char kHistogramPublicPageSuccessfulPrivateRequest[] =
@@ -96,10 +73,10 @@ const char kHistogramPublicPageSuccessfulLocalhostWebRequest[] =
 const char kHistogramPublicPageFailedLocalhostWebRequest[] =
     "LocalNetworkRequests.PublicPage.Localhost."
     "WebRequestCount.Failed";
-const char kHistogramPublicPageSuccessfulLocalhostDatabaseRequest[] =
+const char kHistogramPublicPageSuccessfulLocalhostDBRequest[] =
     "LocalNetworkRequests.PublicPage.Localhost."
     "DatabaseRequestCount.Successful";
-const char kHistogramPublicPageFailedLocalhostDatabaseRequest[] =
+const char kHistogramPublicPageFailedLocalhostDBRequest[] =
     "LocalNetworkRequests.PublicPage.Localhost."
     "DatabaseRequestCount.Failed";
 const char kHistogramPublicPageSuccessfulLocalhostPrinterRequest[] =
@@ -108,6 +85,12 @@ const char kHistogramPublicPageSuccessfulLocalhostPrinterRequest[] =
 const char kHistogramPublicPageFailedLocalhostPrinterRequest[] =
     "LocalNetworkRequests.PublicPage.Localhost."
     "PrinterRequestCount.Failed";
+const char kHistogramPublicPageSuccessfulLocalhostDevRequest[] =
+    "LocalNetworkRequests.PublicPage.Localhost."
+    "DevelopmentRequestCount.Successful";
+const char kHistogramPublicPageFailedLocalhostDevRequest[] =
+    "LocalNetworkRequests.PublicPage.Localhost."
+    "DevelopmentRequestCount.Failed";
 const char kHistogramPublicPageSuccessfulLocalhostOtherRequest[] =
     "LocalNetworkRequests.PublicPage.Localhost."
     "OtherRequestCount.Successful";
@@ -124,10 +107,10 @@ const char kHistogramPrivatePageSuccessfulSameSubnetRequest[] =
     "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
 const char kHistogramPrivatePageFailedSameSubnetRequest[] =
     "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
-const char kHistogramPrivatePageSuccessfulDifferentSubnetRequest[] =
+const char kHistogramPrivatePageSuccessfulDiffSubnetRequest[] =
     "LocalNetworkRequests.PrivatePage."
     "DifferentSubnetRequestCount.Successful";
-const char kHistogramPrivatePageFailedDifferentSubnetRequest[] =
+const char kHistogramPrivatePageFailedDiffSubnetRequest[] =
     "LocalNetworkRequests.PrivatePage."
     "DifferentSubnetRequestCount.Failed";
 const char kHistogramPrivatePageSuccessfulLocalhostWebRequest[] =
@@ -136,10 +119,10 @@ const char kHistogramPrivatePageSuccessfulLocalhostWebRequest[] =
 const char kHistogramPrivatePageFailedLocalhostWebRequest[] =
     "LocalNetworkRequests.PrivatePage.Localhost."
     "WebRequestCount.Failed";
-const char kHistogramPrivatePageSuccessfulLocalhostDatabaseRequest[] =
+const char kHistogramPrivatePageSuccessfulLocalhostDBRequest[] =
     "LocalNetworkRequests.PrivatePage.Localhost."
     "DatabaseRequestCount.Successful";
-const char kHistogramPrivatePageFailedLocalhostDatabaseRequest[] =
+const char kHistogramPrivatePageFailedLocalhostDBRequest[] =
     "LocalNetworkRequests.PrivatePage.Localhost."
     "DatabaseRequestCount.Failed";
 const char kHistogramPrivatePageSuccessfulLocalhostPrinterRequest[] =
@@ -148,6 +131,12 @@ const char kHistogramPrivatePageSuccessfulLocalhostPrinterRequest[] =
 const char kHistogramPrivatePageFailedLocalhostPrinterRequest[] =
     "LocalNetworkRequests.PrivatePage.Localhost."
     "PrinterRequestCount.Failed";
+const char kHistogramPrivatePageSuccessfulLocalhostDevRequest[] =
+    "LocalNetworkRequests.PublicPage.Localhost."
+    "DevelopmentRequestCount.Successful";
+const char kHistogramPrivatePageFailedLocalhostDevRequest[] =
+    "LocalNetworkRequests.PublicPage.Localhost."
+    "DevelopmentRequestCount.Failed";
 const char kHistogramPrivatePageSuccessfulLocalhostOtherRequest[] =
     "LocalNetworkRequests.PrivatePage.Localhost."
     "OtherRequestCount.Successful";
@@ -177,35 +166,53 @@ class LocalNetworkRequestsPageLoadMetricsObserver
                   const page_load_metrics::PageLoadExtraInfo& info) override;
 
  private:
-  // Clears all local resource request counts. Only used if we decide to log
-  // metrics but the observer may stay in scope and capture additional resource
-  // requests.
-  void ClearLocalState();
-
   // Stores all requisite information for each resource request that is made by
   // the page.
   void ProcessLoadedResource(
       const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info);
 
+  // Clears all local resource request counts. Only used if we decide to log
+  // metrics but the observer may stay in scope and capture additional resource
+  // requests.
+  void ClearLocalState();
+  // Determines the resource type for the |ip_address| based on the page load
+  // type.
+  ResourceType DetermineResourceType(IPAddress ip_address);
+  // Determines the port type for the localhost |port|.
+  PortType DeterminePortType(int port);
+  // Resolves the resource types to report for all IP addresses in
+  // |resource_request_counts_|.
+  void ResolveResourceTypes();
+
   void RecordUkmDomainType();
   void RecordHistograms();
   void RecordUkmMetrics();
+  void RecordSingleUkmMetric();
 
   // Stores the counts of resource requests for each non-localhost IP address as
   // pairs of (successful, failed) request counts.
-  std::unordered_map<IPAddress, std::pair<int, int>> resource_request_counts_;
+  std::unordered_map<IPAddress, std::pair<int32_t, int32_t>>
+      resource_request_counts_;
+
+  std::unique_ptr<std::unordered_map<IPAddress, ResourceType>>
+      requested_resource_types_ = nullptr;
 
   // Stores the counts of resource requests for each localhost port as
   // pairs of (successful, failed) request counts.
-  std::unordered_map<int, std::pair<int, int>> localhost_request_counts_;
+  std::unordered_map<int, std::pair<int32_t, int32_t>>
+      localhost_request_counts_;
 
-  // The page load type. This is used to determine whether the UKM/UMA event is
-  // PublicPage or PrivatePage.
-  HostType page_load_type_;
+  // The page load type. This is used to determine what resource requests to
+  // monitor while the page is committed and to determine the UMA histogram name
+  // to use.
+  DomainType page_load_type_;
+
+  // The IP address of the page that was loaded.
+  IPAddress page_ip_address_;
 
   // List of mappings for localhost ports that belong to special categories that
   // we want to track.
-  const std::unordered_map<int, PortType> localhost_port_categories_ = {
+  const std::unordered_map<uint16_t, PortType> localhost_port_categories_ = {
       {80, PortType::PORT_TYPE_WEB},    {8000, PortType::PORT_TYPE_WEB},
       {8008, PortType::PORT_TYPE_WEB},  {8080, PortType::PORT_TYPE_WEB},
       {8081, PortType::PORT_TYPE_WEB},  {8088, PortType::PORT_TYPE_WEB},
