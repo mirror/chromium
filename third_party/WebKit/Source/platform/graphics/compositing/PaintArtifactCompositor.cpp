@@ -147,7 +147,7 @@ class PaintArtifactCompositor::ContentLayerClientImpl
   scoped_refptr<cc::PictureLayer> CcPictureLayer() { return cc_picture_layer_; }
 
   bool Matches(const PaintChunk& paint_chunk) {
-    return paint_chunk.id && id_ == *paint_chunk.id;
+    return paint_chunk.Matches(&id_);
   }
 
   const String& DebugName() const { return debug_name_; }
