@@ -26,6 +26,7 @@
 #include "gpu/command_buffer/common/activity_flags.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
 #include "ipc/ipc_sync_message_filter.h"
+#include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h"
 #include "media/gpu/ipc/service/media_gpu_channel_manager.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/connector.h"
@@ -208,6 +209,7 @@ void GpuChildThread::Init(const base::Time& process_start_time) {
   registry->AddInterface(base::Bind(&GpuChildThread::BindServiceFactoryRequest,
                                     weak_factory_.GetWeakPtr()),
                          base::ThreadTaskRunnerHandle::Get());
+
   if (GetContentClient()->gpu())  // NULL in tests.
     GetContentClient()->gpu()->Initialize(this, registry.get());
 
@@ -301,6 +303,12 @@ void GpuChildThread::CreateFrameSinkManager(
     cc::mojom::FrameSinkManagerRequest request,
     cc::mojom::FrameSinkManagerClientPtr client) {
   NOTREACHED();
+}
+
+void GpuChildThread::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  // TODO(c.padhi): Ensure this happens on IO thread.
+  media::GpuJpegDecodeAccelerator::Create(std::move(request));
 }
 
 void GpuChildThread::BindServiceFactoryRequest(
