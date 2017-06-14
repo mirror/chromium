@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40562204_f8f412e1",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-14T17:14:56Z",
+      "side": 1,
+      "message": "Can you clarify this comment a bit -- the messages weren\u0027t requested when?",
+      "range": {
+        "startLine": 650,
+        "startChar": 61,
+        "endLine": 650,
+        "endChar": 70
+      },
+      "revId": "58a4c273ec777584c5e0d78babebee9faae0b7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
