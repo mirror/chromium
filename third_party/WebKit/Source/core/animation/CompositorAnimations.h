@@ -54,16 +54,21 @@ class CORE_EXPORT CompositorAnimations {
   static bool IsCompositableProperty(CSSPropertyID);
   static const CSSPropertyID kCompositableProperties[7];
 
-  static bool IsCandidateForAnimationOnCompositor(
+  static bool CanStartAnimationOnCompositor(const Timing&,
+                                            const Element&,
+                                            const Animation*,
+                                            const EffectModel&,
+                                            double animation_playback_rate);
+  static bool CanStartEffectOnCompositorForTesting(
       const Timing&,
       const Element&,
       const Animation*,
       const EffectModel&,
       double animation_playback_rate);
+  static bool CanStartElementOnCompositorForTesting(const Element&);
   static void CancelIncompatibleAnimationsOnCompositor(const Element&,
                                                        const Animation&,
                                                        const EffectModel&);
-  static bool CanStartAnimationOnCompositor(const Element&);
   static void StartAnimationOnCompositor(const Element&,
                                          int group,
                                          double start_time,
