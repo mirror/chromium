@@ -34,8 +34,8 @@ class LockScreenActionTray::NewNoteActionView : public views::View {
   NewNoteActionView() {
     SetLayoutManager(new views::FillLayout);
     icon_ = new views::ImageView();
-    icon_->SetImage(CreateVectorIcon(kPaletteActionCreateNoteIcon,
-                                     kTrayIconSize, kShelfIconColor));
+ //   icon_->SetImage(CreateVectorIcon(kPaletteActionCreateNoteIcon,
+   //                                  kTrayIconSize, kShelfIconColor));
     icon_->SetTooltipText(
         l10n_util::GetStringUTF16(IDS_ASH_STYLUS_TOOLS_CREATE_NOTE_ACTION));
     AddChildView(icon_);
