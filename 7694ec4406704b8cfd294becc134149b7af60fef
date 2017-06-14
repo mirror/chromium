@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16d177c0_22b36ff2",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-14T23:37:07Z",
+      "side": 1,
+      "message": "Example output from this:\n\n\u003cLots of raw data spewed out here\u003e\nMin application FPS: 24.1122\nMax application FPS: 29.7781\nAverage application FPS: 25.9469 +/- 1.5822\n0 total application frame submissions blocked on GPU\n---\nMin application FPS after first second: 24.1122\nMax application FPS after first second: 29.7781\nAverage application FPS after first second: 25.8557 +/- 1.5119\n---\nMin async reprojection thread FPS: 59.6800\nMax async reprojection thread FPS: 59.8463\nAverage async reprojection thread FPS: 59.7863 +/- 0.0290\nAsync reprojection thread missed 1 vsyncs\nAverage vsync miss time: 50362.0000 +/- 0.0000 us",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d33a4615_e786f14a",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-14T23:37:07Z",
+      "side": 1,
+      "message": "Here\u0027s an example dashboard using the current version of uploaded data https://chromeperf.appspot.com/report?sid\u003d5fe73d6ff0a74aec33e519d6283bda0fbe84d37a7b8182d6cf9952744396de5c\n\nThe blocked frame submissions doesn\u0027t seem particularly helpful since most of the time the value is 0, and thus the average is small - perhaps we should just report the total number of blocked frames per URL, and the summary can be the average number of frames blocked.\n\nThe missed vsyncs chart also feels like it could be improved - maybe by having another chart that reports the total number of vsyncs missed instead of by how much time? The current version could show that a run with lots of missed vsyncs is better than a run with a single missed vsync if the average of multiple misses is less than the single miss.\n\nAlso, do we want to create additional charts for min/max FPS?\n\nAny other feedback what statistics would be useful to report welcome.",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
