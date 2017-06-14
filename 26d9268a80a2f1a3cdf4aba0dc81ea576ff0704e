@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71fb184d_eac82801",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/NavigationRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-14T08:36:38Z",
+      "side": 1,
+      "message": "Maybe this is just me not knowing Java, but why does only endUrl have a @Nullable annotation? The code assumes that the tab can also be null.",
+      "revId": "26d9268a80a2f1a3cdf4aba0dc81ea576ff0704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
