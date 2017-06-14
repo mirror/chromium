@@ -24,8 +24,9 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
     private final SuggestionsRanker mSuggestionsRanker;
     private final SuggestionsEventReporter mSuggestionsEventReporter;
     private final SuggestionsNavigationDelegate mSuggestionsNavigationDelegate;
-    private final NativePageHost mHost;
     private final ImageFetcher mImageFetcher;
+
+    private final NativePageHost mHost;
 
     private final DiscardableReferencePool mReferencePool;
 
