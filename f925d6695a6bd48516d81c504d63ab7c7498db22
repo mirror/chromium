@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcf03192_e0946f02",
+        "filename": "ui/gfx/geometry/vector3d_f.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1144349
+      },
+      "writtenOn": "2017-06-14T01:06:35Z",
+      "side": 1,
+      "message": "nit: Add a comment that we can return false for a small vector.",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 20
+      },
+      "revId": "f925d6695a6bd48516d81c504d63ab7c7498db22",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
