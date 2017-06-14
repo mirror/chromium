@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "821d55e3_2c08eb09",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-14T18:01:13Z",
+      "side": 1,
+      "message": "I don\u0027t think we should move this into the impl itself. Having this clear abstraction makes very clear what needs to be mocked out for tests.\n\nBut if what\u0027s being abstracted here is the providing of context/UA/channel I think a factory is doing too much. Message creation and parameters-translation are duties that should be performed by the dispatcher itself IMO.\n\nI\u0027d suggest this class to be made a delegate instead that would either receive a generic message type and \"brand\" it with the needed embedder data or have one/many getters for the data that would then be passed into the message constructor.",
+      "parentUuid": "1f085f97_a74d1e6c",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f19b558d_ed2feabf",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -81,6 +99,29 @@
       "writtenOn": "2017-06-14T00:27:52Z",
       "side": 1,
       "message": "I think this\u0027d better called once.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a1756ca_629eee36",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-14T18:01:13Z",
+      "side": 1,
+      "message": "Is this never reset?\n\nNote not affecting this CL: To me it was very surprising that there was no \"sending\" of the message happening, until I found that the messages send themselves upon construction. Also the send-receive code is currently duplicated in each message. I think this could/should be improved but in another patch.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 24
+      },
       "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
