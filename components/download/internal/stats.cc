@@ -29,5 +29,9 @@ void LogModelOperationResult(ModelAction action, bool success) {
   // TODO(dtrainor): Log |action|.
 }
 
+void LogDownloadCompletion(CompletionType type) {
+  // TODO(xingliu): Log completion.
+}
+
 }  // namespace stats
 }  // namespace download
