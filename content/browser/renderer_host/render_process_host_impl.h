@@ -21,6 +21,7 @@
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
 #include "build/build_config.h"
+#include "content/browser/browser_histogram_provider.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
 #include "content/browser/renderer_host/frame_sink_provider_impl.h"
@@ -30,6 +31,7 @@
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/content_export.h"
+#include "content/common/histogram.mojom.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
 #include "content/common/renderer.mojom.h"
@@ -112,7 +114,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
       public ui::GpuSwitchingObserver,
       public NON_EXPORTED_BASE(mojom::RouteProvider),
       public NON_EXPORTED_BASE(mojom::AssociatedInterfaceProvider),
-      public NON_EXPORTED_BASE(mojom::RendererHost) {
+      public NON_EXPORTED_BASE(mojom::RendererHost),
+      public NON_EXPORTED_BASE(mojom::HistogramCollector) {
  public:
   RenderProcessHostImpl(BrowserContext* browser_context,
                         StoragePartitionImpl* storage_partition_impl,
@@ -388,6 +391,11 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // mojom::RendererHost
   void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
 
+  // mojom::HistogramCollector
+  void RegisterClient(
+      mojom::HistogramCollectorClientPtr client,
+      mojom::HistogramCollector::RegisterClientCallback cb) override;
+
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
   void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
@@ -402,6 +410,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       mojom::StoragePartitionServiceRequest request);
   void CreateRendererHost(const service_manager::BindSourceInfo& source_info,
                           mojom::RendererHostRequest request);
+  void CreateHistogramCollector(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::HistogramCollectorRequest request);
   void CreateURLLoaderFactory(
       const service_manager::BindSourceInfo& source_info,
       mojom::URLLoaderFactoryRequest request);
@@ -508,6 +519,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
       ServiceManagerConnection::kInvalidConnectionFilterId;
   scoped_refptr<ConnectionFilterController> connection_filter_controller_;
   service_manager::mojom::ServicePtr test_service_;
+  BrowserHistogramProvider browser_histogram_provider_;
 
   // The number of service workers running in this process.
   size_t service_worker_ref_count_;
@@ -690,6 +702,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
   mojom::RendererAssociatedPtr renderer_interface_;
   mojo::Binding<mojom::RendererHost> renderer_host_binding_;
+  mojo::Binding<mojom::HistogramCollector> histogram_collector_binding_;
 
   // Tracks active audio streams within the render process; used to determine if
   // if a process should be backgrounded.
