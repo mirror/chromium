@@ -26,6 +26,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
+#include "content/browser/histogram_controller.h"
 #include "content/browser/histogram_message_filter.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/profiler_message_filter.h"
@@ -48,6 +49,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/embedder/switches.h"
 
 #if defined(OS_MACOSX)
@@ -349,11 +351,12 @@ void BrowserChildProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   delegate_->OnChannelConnected(peer_pid);
 
   if (IsProcessLaunched()) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));
   }
+
+  // TODO(slan): Need to register Mojo interfaces here!
 }
 
 void BrowserChildProcessHostImpl::OnChannelError() {
@@ -516,13 +519,23 @@ void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
       /*readonly=*/false));
 }
 
-void BrowserChildProcessHostImpl::ShareMetricsAllocatorToProcess() {
-  if (metrics_allocator_) {
-    base::SharedMemoryHandle shm_handle =
-        metrics_allocator_->shared_memory()->handle().Duplicate();
-    Send(new ChildProcessMsg_SetHistogramMemory(
-        shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
-  }
+void BrowserChildProcessHostImpl::RegisterClient(
+    mojom::HistogramCollectorClientPtr client,
+    mojom::HistogramCollector::RegisterClientCallback cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // Run the callback, then immediately register this client with the
+  // HistogramController. This ensures that the client will handle the callback
+  // before any data requests are made.
+  std::move(cb).Run(
+      metrics_allocator_
+          ? mojo::WrapSharedMemoryHandle(
+                metrics_allocator_->shared_memory()->handle().Duplicate(),
+                metrics_allocator_->shared_memory()->mapped_size(),
+                false /* read_only */)
+          : mojo::ScopedSharedBufferHandle());
+  HistogramController::GetInstance()->RegisterClientOnIoThread(
+      std::move(client));
 }
 
 void BrowserChildProcessHostImpl::OnProcessLaunchFailed(int error_code) {
@@ -554,7 +567,6 @@ void BrowserChildProcessHostImpl::OnProcessLaunched() {
   delegate_->OnProcessLaunched();
 
   if (is_channel_connected_) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));

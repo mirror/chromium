@@ -27,6 +27,44 @@ HistogramController::HistogramController() : subscriber_(NULL) {
 HistogramController::~HistogramController() {
 }
 
+void HistogramController::Register(HistogramSubscriber* subscriber) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  DCHECK(!subscriber_);
+  subscriber_ = subscriber;
+}
+
+void HistogramController::Unregister(const HistogramSubscriber* subscriber) {
+  DCHECK_EQ(subscriber_, subscriber);
+  subscriber_ = NULL;
+}
+
+void HistogramController::GetHistogramData(int sequence_number) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  // Collect the histogram data from clients on the UI thread.
+  GetHistogramDataFromClients(sequence_number, &ui_thread_clients_,
+                              false /* end */);
+
+  // Collect the histogram data from clients on the IO thread.
+  BrowserThread::PostTask(
+      BrowserThread::IO, FROM_HERE,
+      base::BindOnce(&HistogramController::GetHistogramDataFromClients,
+                     base::Unretained(this), sequence_number,
+                     &io_thread_clients_, true /* end */));
+}
+
+void HistogramController::RegisterClient(
+    mojom::HistogramCollectorClientPtr client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  ui_thread_clients_.AddPtr(std::move(client));
+}
+
+void HistogramController::RegisterClientOnIoThread(
+    mojom::HistogramCollectorClientPtr client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+  io_thread_clients_.AddPtr(std::move(client));
+}
+
 void HistogramController::OnPendingProcesses(int sequence_number,
                                              int pending_processes,
                                              bool end) {
@@ -41,10 +79,9 @@ void HistogramController::OnHistogramDataCollected(
   if (!BrowserThread::CurrentlyOn(BrowserThread::UI)) {
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
-        base::Bind(&HistogramController::OnHistogramDataCollected,
-                   base::Unretained(this),
-                   sequence_number,
-                   pickled_histograms));
+        base::BindOnce(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number,
+                       pickled_histograms));
     return;
   }
 
@@ -55,77 +92,31 @@ void HistogramController::OnHistogramDataCollected(
   }
 }
 
-void HistogramController::Register(HistogramSubscriber* subscriber) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!subscriber_);
-  subscriber_ = subscriber;
-}
-
-void HistogramController::Unregister(
-    const HistogramSubscriber* subscriber) {
-  DCHECK_EQ(subscriber_, subscriber);
-  subscriber_ = NULL;
-}
-
-void HistogramController::GetHistogramDataFromChildProcesses(
-    int sequence_number) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
+void HistogramController::GetHistogramDataFromClients(
+    int sequence_number,
+    mojo::InterfacePtrSet<mojom::HistogramCollectorClient>* clients,
+    bool end) {
+  DCHECK(clients);
   int pending_processes = 0;
-  for (BrowserChildProcessHostIterator iter; !iter.Done(); ++iter) {
-    const ChildProcessData& data = iter.GetData();
+  clients->ForAllPtrs([this, sequence_number, &pending_processes](
+                          mojom::HistogramCollectorClient* client) {
+    client->RequestNonPersistentHistogramData(
+        base::BindOnce(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number));
+    pending_processes += 1;
+  });
 
-    // Only get histograms from content process types; skip "embedder" process
-    // types.
-    if (data.process_type >= PROCESS_TYPE_CONTENT_END)
-      continue;
-
-    // In some cases, there may be no child process of the given type (for
-    // example, the GPU process may not exist and there may instead just be a
-    // GPU thread in the browser process). If that's the case, then the process
-    // handle will be base::kNullProcessHandle and we shouldn't ask it for data.
-    if (data.handle == base::kNullProcessHandle)
-      continue;
-
-    ++pending_processes;
-    if (!iter.Send(new ChildProcessMsg_GetChildNonPersistentHistogramData(
-            sequence_number))) {
-      --pending_processes;
-    }
+  // If we're on the UI thread, notify the subscriber synchronously...
+  if (BrowserThread::CurrentlyOn(BrowserThread::UI)) {
+    OnPendingProcesses(sequence_number, pending_processes, end);
+    return;
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(
-          &HistogramController::OnPendingProcesses,
-          base::Unretained(this),
-          sequence_number,
-          pending_processes,
-          true));
-}
-
-void HistogramController::GetHistogramData(int sequence_number) {
-  DCHECK_CURRENTLY_ON(BrowserThread::UI);
-
-  int pending_processes = 0;
-  for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
-       !it.IsAtEnd(); it.Advance()) {
-    ++pending_processes;
-    if (!it.GetCurrentValue()->Send(
-            new ChildProcessMsg_GetChildNonPersistentHistogramData(
-                sequence_number))) {
-      --pending_processes;
-    }
-  }
-  OnPendingProcesses(sequence_number, pending_processes, false);
-
-  BrowserThread::PostTask(
-      BrowserThread::IO,
-      FROM_HERE,
-      base::Bind(&HistogramController::GetHistogramDataFromChildProcesses,
-                 base::Unretained(this),
-                 sequence_number));
+  // ...otherwise, notify the subscriber asynchronously on the UI thread.
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::Bind(&HistogramController::OnPendingProcesses,
+                                     base::Unretained(this), sequence_number,
+                                     pending_processes, end));
 }
 
 }  // namespace content
