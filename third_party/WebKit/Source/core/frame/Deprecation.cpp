@@ -439,7 +439,13 @@ String Deprecation::DeprecationMessage(WebFeature feature) {
           "The CredentialsContainer.requireUserMediation method",
           "the CredentialsContainer.preventSilentAccess method", M62,
           "4781762488041472");
-
+    case WebFeature::kHTMLImportsHasStyleSheets:
+      return String::Format(
+          "Styling master document from stylesheets defined in HTML Import "
+          "is deprecated, and will be removed in %s. Please refer to "
+          "https://bit.ly/style-in-html-imports-removal for possible "
+          "migration path.",
+          milestoneString(M61));
     case WebFeature::kDeprecatedTimingFunctionStepMiddle:
       return replacedWillBeRemoved(
           "The step timing function with step position 'middle'",
