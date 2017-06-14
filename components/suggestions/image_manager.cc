@@ -216,6 +216,8 @@ void ImageManager::ServeFromCacheOrNetwork(
 void ImageManager::SaveImage(const std::string& url, const SkBitmap& bitmap) {
   scoped_refptr<base::RefCountedBytes> encoded_data(
       new base::RefCountedBytes());
+  // TODO(treib): Should encoding happen on the |background_task_runner_|?
+  // *De*coding happens there.
   if (!EncodeSkBitmapToJPEG(bitmap, &encoded_data->data())) {
     return;
   }
