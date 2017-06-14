@@ -132,7 +132,7 @@ class CORE_EXPORT NGBlockLayoutAlgorithm
   NGLogicalSize child_percentage_size_;
 
   NGBoxStrut border_and_padding_;
-  LayoutUnit content_size_;
+  LayoutUnit content_block_size_;
   LayoutUnit max_inline_size_;
 };
 

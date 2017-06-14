@@ -260,26 +260,26 @@ LayoutUnit ComputeInlineSizeForFragment(
 LayoutUnit ComputeBlockSizeForFragment(
     const NGConstraintSpace& constraint_space,
     const ComputedStyle& style,
-    LayoutUnit content_size) {
+    LayoutUnit border_box_block_size) {
   if (constraint_space.IsFixedSizeBlock())
     return constraint_space.AvailableSize().block_size;
 
-  LayoutUnit extent =
-      ResolveBlockLength(constraint_space, style, style.LogicalHeight(),
-                         content_size, LengthResolveType::kContentSize);
+  LayoutUnit extent = ResolveBlockLength(
+      constraint_space, style, style.LogicalHeight(), border_box_block_size,
+      LengthResolveType::kContentSize);
   if (extent == NGSizeIndefinite) {
-    DCHECK_EQ(content_size, NGSizeIndefinite);
+    DCHECK_EQ(border_box_block_size, NGSizeIndefinite);
     return extent;
   }
   Optional<LayoutUnit> max_length;
   if (!style.LogicalMaxHeight().IsMaxSizeNone()) {
     max_length =
         ResolveBlockLength(constraint_space, style, style.LogicalMaxHeight(),
-                           content_size, LengthResolveType::kMaxSize);
+                           border_box_block_size, LengthResolveType::kMaxSize);
   }
   Optional<LayoutUnit> min_length =
       ResolveBlockLength(constraint_space, style, style.LogicalMinHeight(),
-                         content_size, LengthResolveType::kMinSize);
+                         border_box_block_size, LengthResolveType::kMinSize);
   return ConstrainByMinMax(extent, min_length, max_length);
 }
 

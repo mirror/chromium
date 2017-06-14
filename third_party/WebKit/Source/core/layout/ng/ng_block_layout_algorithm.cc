@@ -173,8 +173,9 @@ NGLogicalOffset NGBlockLayoutAlgorithm::CalculateLogicalOffset(
     return known_fragment_offset.value() - ContainerBfcOffset();
   LayoutUnit inline_offset =
       border_and_padding_.inline_start + child_margins.inline_start;
-  // TODO(ikilpatrick): Using the content_size_ here looks suspicious - check.
-  return {inline_offset, content_size_};
+  // TODO(ikilpatrick): Using the content_block_size_ here looks suspicious -
+  // check.
+  return {inline_offset, content_block_size_ + border_and_padding_.block_start};
 }
 
 RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
@@ -216,7 +217,7 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
 
   // If we are resuming from a break token our start border and padding is
   // within a previous fragment.
-  content_size_ = BreakToken() ? LayoutUnit() : border_and_padding_.block_start;
+  content_block_size_ = LayoutUnit();
 
   NGMarginStrut input_margin_strut = ConstraintSpace().MarginStrut();
   LayoutUnit input_bfc_block_offset =
@@ -246,10 +247,12 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     DCHECK_EQ(container_builder_.BfcOffset().value(), NGLogicalOffset());
   }
 
-  input_bfc_block_offset += content_size_;
+  input_bfc_block_offset +=
+      BreakToken() ? LayoutUnit() : border_and_padding_.block_start;
 
   NGPreviousInflowPosition previous_inflow_position = {
-      input_bfc_block_offset, content_size_, input_margin_strut};
+      input_bfc_block_offset, border_and_padding_.block_start,
+      input_margin_strut};
 
   while (child) {
     if (child.IsOutOfFlowPositioned()) {
@@ -274,7 +277,8 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
     child = entry.node;
     child_break_token = entry.token;
 
-    if (IsOutOfSpace(ConstraintSpace(), content_size_))
+    if (IsOutOfSpace(ConstraintSpace(),
+                     content_block_size_ + border_and_padding_.block_start))
       break;
   }
 
@@ -285,16 +289,17 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   //   Bottom margins of an in-flow block box doesn't collapse with its last
   //   in-flow block-level child's bottom margin if the box has bottom
   //   border/padding.
-  content_size_ += border_and_padding_.block_end;
+  LayoutUnit border_box_block_size =
+      content_block_size_ + border_and_padding_.BlockSum();
   if (border_and_padding_.block_end ||
       ConstraintSpace().IsNewFormattingContext()) {
-    content_size_ += end_margin_strut.Sum();
+    border_box_block_size += end_margin_strut.Sum();
     end_margin_strut = NGMarginStrut();
   }
 
   // Recompute the block-axis size now that we know our content size.
-  size.block_size =
-      ComputeBlockSizeForFragment(ConstraintSpace(), Style(), content_size_);
+  size.block_size = ComputeBlockSizeForFragment(ConstraintSpace(), Style(),
+                                                border_box_block_size);
   container_builder_.SetBlockSize(size.block_size);
 
   // Layout our absolute and fixed positioned children.
@@ -320,7 +325,7 @@ RefPtr<NGLayoutResult> NGBlockLayoutAlgorithm::Layout() {
   container_builder_.SetEndMarginStrut(end_margin_strut);
 
   container_builder_.SetOverflowSize(
-      NGLogicalSize(max_inline_size_, content_size_));
+      NGLogicalSize(max_inline_size_, border_box_block_size));
 
   // We only finalize for fragmentation if the fragment has a BFC offset. This
   // may occur with a zero block size fragment. We need to know the BFC offset
@@ -473,16 +478,18 @@ NGPreviousInflowPosition NGBlockLayoutAlgorithm::FinishChildLayout(
   NGMarginStrut margin_strut = fragment.EndMarginStrut();
   margin_strut.Append(child_data.margins.block_end);
 
-  // Only modify content_size_ if the fragment's BlockSize is not empty. This is
-  // needed to prevent the situation when logical_offset is included in
-  // content_size_ for empty blocks. Example:
+  // Only modify content_block_size_ if the fragment's BlockSize is not empty.
+  // This is needed to prevent the situation when logical_offset is included in
+  // content_block_size_ for empty blocks. Example:
   //   <div style="overflow:hidden">
   //     <div style="margin-top: 8px"></div>
   //     <div style="margin-top: 10px"></div>
   //   </div>
   if (fragment.BlockSize())
-    content_size_ = std::max(
-        content_size_, logical_offset.block_offset + fragment.BlockSize());
+    content_block_size_ =
+        std::max(content_block_size_, logical_offset.block_offset +
+                                          fragment.BlockSize() -
+                                          border_and_padding_.block_start);
   max_inline_size_ = std::max(
       max_inline_size_, fragment.InlineSize() + child_data.margins.InlineSum() +
                             border_and_padding_.InlineSum());
@@ -621,7 +628,8 @@ void NGBlockLayoutAlgorithm::FinalizeForFragmentation() {
   LayoutUnit used_block_size =
       BreakToken() ? BreakToken()->UsedBlockSize() : LayoutUnit();
   LayoutUnit block_size = ComputeBlockSizeForFragment(
-      ConstraintSpace(), Style(), used_block_size + content_size_);
+      ConstraintSpace(), Style(),
+      used_block_size + content_block_size_ + border_and_padding_.block_start);
 
   block_size -= used_block_size;
   DCHECK_GE(block_size, LayoutUnit())
@@ -652,7 +660,7 @@ void NGBlockLayoutAlgorithm::FinalizeForFragmentation() {
 
   // The end of the block fits in the current fragmentainer.
   container_builder_.SetBlockSize(block_size);
-  container_builder_.SetBlockOverflow(content_size_);
+  container_builder_.SetBlockOverflow(content_block_size_);
 }
 
 NGBoxStrut NGBlockLayoutAlgorithm::CalculateMargins(NGLayoutInputNode child) {

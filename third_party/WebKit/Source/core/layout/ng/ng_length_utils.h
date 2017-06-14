@@ -78,9 +78,10 @@ ComputeInlineSizeForFragment(const NGConstraintSpace&,
 // Resolves the given length to a layout unit, constraining it by the min
 // logical height and max logical height properties from the ComputedStyle
 // object.
-CORE_EXPORT LayoutUnit ComputeBlockSizeForFragment(const NGConstraintSpace&,
-                                                   const ComputedStyle&,
-                                                   LayoutUnit content_size);
+CORE_EXPORT LayoutUnit
+ComputeBlockSizeForFragment(const NGConstraintSpace&,
+                            const ComputedStyle&,
+                            LayoutUnit border_box_block_size);
 
 // Based on available inline size, CSS computed column-width, CSS computed
 // column-count and CSS used column-gap, return CSS used column-count.
