@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "91f77579_eb249e79",
+        "filename": "components/ntp_snippets/content_suggestion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s better. Done.",
+      "parentUuid": "4c619b4a_ebe49825",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f6e9eb1e_254ddc54",
         "filename": "components/ntp_snippets/content_suggestion.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "0d9621fc_122b0afb",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Sorry for the inconsistency.\n\nDone, renamed to \"Compare\", consistently with http://en.cppreference.com/w/cpp/container/map naming.",
+      "parentUuid": "f6e9eb1e_254ddc54",
+      "range": {
+        "startLine": 84,
+        "startChar": 68,
+        "endLine": 85,
+        "endChar": 64
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2880ae27_a627f467",
         "filename": "components/ntp_snippets/content_suggestion.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-14T09:00:20Z",
       "side": 1,
       "message": "You can\u0027t use this directly to order ContentSuggestion.",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 45
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd8192a_eb7b61fa",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "I do not understand. I do not want to order ContentSuggestions, I want to order the IDs.",
+      "parentUuid": "2880ae27_a627f467",
       "range": {
         "startLine": 223,
         "startChar": 24,
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "a2e75fd3_f90f7345",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "602242da_229f4d70",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1088055d_15f98482",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4e7d8ff_133ebc0c",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Rewritten.",
+      "parentUuid": "1088055d_15f98482",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 36
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "a87bcc5a_2d36fe3c",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "563f4793_06addbe1",
+      "range": {
+        "startLine": 453,
+        "startChar": 2,
+        "endLine": 453,
+        "endChar": 4
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d5f43b09_2d9705d4",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 1
@@ -160,6 +304,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae841ba1_48733759",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5f43b09_2d9705d4",
+      "range": {
+        "startLine": 510,
+        "startChar": 2,
+        "endLine": 510,
+        "endChar": 77
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +354,30 @@
     },
     {
       "key": {
+        "uuid": "4ff8ad5c_740b61d6",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "No, I meant to make it const and then I\u0027ve forgotten. Fixed also for Find in Archive.",
+      "parentUuid": "c5278144_da28ec73",
+      "range": {
+        "startLine": 661,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 18
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47c880ed_0f8e1e40",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 1
@@ -209,6 +401,30 @@
     },
     {
       "key": {
+        "uuid": "158ea48c_1607367d",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Then it is added by the [] operator. This has no effect anywhere else (and was there before in RemoveSuggestionByID).",
+      "parentUuid": "47c880ed_0f8e1e40",
+      "range": {
+        "startLine": 664,
+        "startChar": 32,
+        "endLine": 664,
+        "endChar": 56
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83319146_e4f6a314",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 1
@@ -229,6 +445,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43a4b7b0_e73061bf",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "This code has not changed (also see the comment above).",
+      "parentUuid": "83319146_e4f6a314",
+      "range": {
+        "startLine": 681,
+        "startChar": 32,
+        "endLine": 681,
+        "endChar": 56
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +518,54 @@
     },
     {
       "key": {
+        "uuid": "32760ac1_e53f0701",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c1cdbcb_defb5162",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a7a3e0a9_8a9b34ff",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a7390d28_86994d39",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7885e9f2_08c73227",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 1
@@ -298,6 +586,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d945825_982a0e81",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Makes sense, done.",
+      "parentUuid": "7885e9f2_08c73227",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -324,6 +636,30 @@
     },
     {
       "key": {
+        "uuid": "5494ac53_a1a19d5d",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done. I kept the message there because I find it cumbersome to only talk about ID collision.",
+      "parentUuid": "323e54a2_03d3f9b7",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af019223_10a2480a",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 1
@@ -344,6 +680,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "186f11f9_ce192547",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af019223_10a2480a",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -370,6 +730,30 @@
     },
     {
       "key": {
+        "uuid": "fdb53896_37ff357a",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "1) My omission. Implemented a limit.\n2) This approach is the current approach in RemoteSuggestionsProvider (which will be removed in a later CL). I think that extracting the functionality into a class does not block us to improve it further if we see the need.\n3) I hope to comments got improved. Going for \"all in archive\" is a bit more complex. I do not want to duplicate suggestions across archive and the current cache of the service. Thus, we would need to serve current suggestions from the archive which requires sorting suggestions on the client, etc.\n4) Expanded the comment in content_suggestions_surface.h.",
+      "parentUuid": "9ea720a4_edb1ccf6",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 2
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9409aec1_d61324ff",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 1
@@ -390,6 +774,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c1a8a75_9c31c42e",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9409aec1_d61324ff",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 22
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -439,6 +847,54 @@
     },
     {
       "key": {
+        "uuid": "c74eacc8_a2683c71",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e3396d64_7a51748a",
+      "range": {
+        "startLine": 349,
+        "startChar": 31,
+        "endLine": 349,
+        "endChar": 73
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "3317b50d_b8f5fb8b",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ceaae6d0_7fe37827",
+      "range": {
+        "startLine": 349,
+        "startChar": 2,
+        "endLine": 349,
+        "endChar": 4
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d43ac7be_c38cd72b",
         "filename": "components/ntp_snippets/content_suggestions_service.h",
         "patchSetId": 1
@@ -459,6 +915,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bc4c1f5_46a9d8e6",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d43ac7be_c38cd72b",
+      "range": {
+        "startLine": 352,
+        "startChar": 33,
+        "endLine": 352,
+        "endChar": 52
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -505,6 +985,54 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9682baf_2fad814d",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5e8d4808_a1bf4e4c",
+      "range": {
+        "startLine": 422,
+        "startChar": 28,
+        "endLine": 422,
+        "endChar": 36
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5ebf88bc_7c7db30c",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-14T13:17:46Z",
+      "side": 1,
+      "message": "Done.\n\nI shortened the comment for suggestions_by_category_ because it was an implementation detail (that was anyway not fully honored by the code).",
+      "parentUuid": "7f795c2c_2214ef7c",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 37
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
