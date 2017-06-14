@@ -1036,12 +1036,12 @@ void GtkUi::UpdateDefaultFont() {
     query.point_size = static_cast<int>(size_points);
   }
 
-  query.style = gfx::Font::NORMAL;
+  query.style = gfx::TextStyle::NORMAL;
   query.weight =
       static_cast<gfx::Font::Weight>(pango_font_description_get_weight(desc));
   // TODO(davemoore): What about PANGO_STYLE_OBLIQUE?
   if (pango_font_description_get_style(desc) == PANGO_STYLE_ITALIC)
-    query.style |= gfx::Font::ITALIC;
+    query.style |= gfx::TextStyle::ITALIC;
 
   default_font_render_params_ =
       gfx::GetFontRenderParams(query, &default_font_family_);
