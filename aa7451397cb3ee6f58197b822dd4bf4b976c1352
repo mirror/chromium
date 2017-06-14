@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7cbb09c6_ab5a4e93",
+        "filename": "android_webview/apk/java/proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T19:34:28Z",
+      "side": 1,
+      "message": "Should just be able to add \"implements android.webkit.WebViewFactoryProvider$Statics\" here really. Is that what you already tried?",
+      "revId": "aa7451397cb3ee6f58197b822dd4bf4b976c1352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
