@@ -13,7 +13,6 @@
 #include "modules/EventTargetModules.h"
 #include "modules/imagecapture/MediaSettingsRange.h"
 #include "modules/imagecapture/PhotoCapabilities.h"
-#include "modules/imagecapture/PhotoSettings.h"
 #include "modules/mediastream/MediaStreamTrack.h"
 #include "modules/mediastream/MediaTrackCapabilities.h"
 #include "modules/mediastream/MediaTrackConstraints.h"
@@ -128,17 +127,44 @@ ScriptPromise ImageCapture::getPhotoCapabilities(ScriptState* script_state) {
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return promise;
   }
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
+
+  auto resolver_cb = ConvertToBaseCallback(WTF::Bind(
+      &ImageCapture::ResolveWithPhotoCapabilities, WrapPersistent(this)));
 
   // m_streamTrack->component()->source()->id() is the renderer "name" of the
   // camera;
   // TODO(mcasas) consider sending the security origin as well:
   // scriptState->getExecutionContext()->getSecurityOrigin()->toString()
-  service_->GetPhotoState(
-      stream_track_->Component()->Source()->Id(),
-      ConvertToBaseCallback(
-          WTF::Bind(&ImageCapture::OnMojoGetPhotoState, WrapPersistent(this),
-                    WrapPersistent(resolver), false /* trigger_take_photo */)));
+  service_->GetPhotoState(stream_track_->Component()->Source()->Id(),
+                          ConvertToBaseCallback(WTF::Bind(
+                              &ImageCapture::OnMojoGetPhotoState,
+                              WrapPersistent(this), WrapPersistent(resolver),
+                              resolver_cb, false /* trigger_take_photo */)));
+  return promise;
+}
+
+ScriptPromise ImageCapture::getPhotoSettings(ScriptState* script_state) {
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+
+  if (!service_) {
+    resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
+    return promise;
+  }
+  service_requests_.insert(resolver);
+
+  auto resolver_cb = ConvertToBaseCallback(
+      WTF::Bind(&ImageCapture::ResolveWithPhotoSettings, WrapPersistent(this)));
+  // m_streamTrack->component()->source()->id() is the renderer "name" of the
+  // camera;
+  // TODO(mcasas) consider sending the security origin as well:
+  // scriptState->getExecutionContext()->getSecurityOrigin()->toString()
+  service_->GetPhotoState(stream_track_->Component()->Source()->Id(),
+                          ConvertToBaseCallback(WTF::Bind(
+                              &ImageCapture::OnMojoGetPhotoState,
+                              WrapPersistent(this), WrapPersistent(resolver),
+                              resolver_cb, false /* trigger_take_photo */)));
   return promise;
 }
 
@@ -158,7 +184,7 @@ ScriptPromise ImageCapture::setOptions(ScriptState* script_state,
     resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
     return promise;
   }
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
 
   // TODO(mcasas): should be using a mojo::StructTraits instead.
   auto settings = media::mojom::blink::PhotoSettings::New();
@@ -211,11 +237,14 @@ ScriptPromise ImageCapture::setOptions(ScriptState* script_state,
     settings->fill_light_mode = ParseFillLightMode(fill_light_mode);
   }
 
+  auto resolver_cb = ConvertToBaseCallback(
+      WTF::Bind(&ImageCapture::ResolveWithNothing, WrapPersistent(this)));
+
   service_->SetOptions(
       stream_track_->Component()->Source()->Id(), std::move(settings),
-      ConvertToBaseCallback(
-          WTF::Bind(&ImageCapture::OnMojoSetOptions, WrapPersistent(this),
-                    WrapPersistent(resolver), trigger_take_photo)));
+      ConvertToBaseCallback(WTF::Bind(
+          &ImageCapture::OnMojoSetOptions, WrapPersistent(this),
+          WrapPersistent(resolver), resolver_cb, trigger_take_photo)));
   return promise;
 }
 
@@ -233,7 +262,7 @@ ScriptPromise ImageCapture::takePhoto(ScriptState* script_state) {
     return promise;
   }
 
-  service_requests_.insert(resolver, HeapVector<MediaTrackConstraintSet>());
+  service_requests_.insert(resolver);
 
   // m_streamTrack->component()->source()->id() is the renderer "name" of the
   // camera;
@@ -499,13 +528,20 @@ void ImageCapture::SetMediaTrackConstraints(
 
   current_constraints_ = temp_constraints;
 
-  service_requests_.insert(resolver, constraints_vector);
+  MediaTrackConstraints the_constraints;
+  the_constraints.setAdvanced(constraints_vector);
+  auto resolver_cb = ConvertToBaseCallback(
+      WTF::Bind(&ImageCapture::ResolveWithMediaTrackConstraints,
+                WrapPersistent(this), the_constraints));
+
+  service_requests_.insert(resolver);
 
   service_->SetOptions(
       stream_track_->Component()->Source()->Id(), std::move(settings),
-      ConvertToBaseCallback(
-          WTF::Bind(&ImageCapture::OnMojoSetOptions, WrapPersistent(this),
-                    WrapPersistent(resolver), false /* trigger_take_photo */)));
+      ConvertToBaseCallback(WTF::Bind(&ImageCapture::OnMojoSetOptions,
+                                      WrapPersistent(this),
+                                      WrapPersistent(resolver), resolver_cb,
+                                      false /* trigger_take_photo */)));
 }
 
 const MediaTrackConstraintSet& ImageCapture::GetMediaTrackConstraints() const {
@@ -599,6 +635,7 @@ ImageCapture::ImageCapture(ExecutionContext* context, MediaStreamTrack* track)
 
 void ImageCapture::OnMojoGetPhotoState(
     ScriptPromiseResolver* resolver,
+    SuperResolver resolve_cb,
     bool trigger_take_photo,
     media::mojom::blink::PhotoStatePtr photo_state) {
   if (!service_requests_.Contains(resolver))
@@ -609,6 +646,11 @@ void ImageCapture::OnMojoGetPhotoState(
     service_requests_.erase(resolver);
     return;
   }
+
+  photo_settings_ = PhotoSettings();
+  photo_settings_.setImageHeight(photo_state->height->current);
+  photo_settings_.setImageWidth(photo_state->width->current);
+  // TODO the other two
 
   photo_capabilities_ = PhotoCapabilities::Create();
   photo_capabilities_->SetRedEyeReduction(photo_state->red_eye_reduction);
@@ -637,23 +679,12 @@ void ImageCapture::OnMojoGetPhotoState(
     return;
   }
 
-  // If this is a response to a SetMediaTrackConstraints() request, it will have
-  // the original constraints to apply: Resolve() with those; Resolve() with the
-  // |photo_capabilities_| otherwise.
-  const HeapVector<MediaTrackConstraintSet>& originalConstraints =
-      service_requests_.at(resolver);
-  if (originalConstraints.IsEmpty()) {
-    resolver->Resolve(photo_capabilities_);
-  } else {
-    MediaTrackConstraints constraints;
-    constraints.setAdvanced(originalConstraints);
-    resolver->Resolve(constraints);
-  }
-
+  resolve_cb.Run(resolver);
   service_requests_.erase(resolver);
 }
 
 void ImageCapture::OnMojoSetOptions(ScriptPromiseResolver* resolver,
+                                    SuperResolver resolve_cb,
                                     bool trigger_take_photo,
                                     bool result) {
   if (!service_requests_.Contains(resolver))
@@ -670,7 +701,7 @@ void ImageCapture::OnMojoSetOptions(ScriptPromiseResolver* resolver,
       stream_track_->Component()->Source()->Id(),
       ConvertToBaseCallback(
           WTF::Bind(&ImageCapture::OnMojoGetPhotoState, WrapPersistent(this),
-                    WrapPersistent(resolver), trigger_take_photo)));
+                    WrapPersistent(resolver), resolve_cb, trigger_take_photo)));
 }
 
 void ImageCapture::OnMojoTakePhoto(ScriptPromiseResolver* resolver,
@@ -790,9 +821,36 @@ void ImageCapture::UpdateMediaTrackCapabilities(
 
 void ImageCapture::OnServiceConnectionError() {
   service_.reset();
-  for (const auto& resolver : service_requests_)
-    resolver.key->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
+  for (ScriptPromiseResolver* resolver : service_requests_)
+    resolver->Reject(DOMException::Create(kNotFoundError, kNoServiceError));
   service_requests_.clear();
+}
+
+void ImageCapture::ResolveWithNothing(ScriptPromiseResolver* resolver) {
+  DVLOG(1) << __func__;
+  DCHECK(resolver);
+  resolver->Resolve();
+}
+
+void ImageCapture::ResolveWithPhotoSettings(ScriptPromiseResolver* resolver) {
+  DVLOG(1) << __func__;
+  DCHECK(resolver);
+  resolver->Resolve(photo_settings_);
+}
+
+void ImageCapture::ResolveWithPhotoCapabilities(
+    ScriptPromiseResolver* resolver) {
+  DVLOG(1) << __func__;
+  DCHECK(resolver);
+  resolver->Resolve(photo_capabilities_);
+}
+
+void ImageCapture::ResolveWithMediaTrackConstraints(
+    MediaTrackConstraints constraints,
+    ScriptPromiseResolver* resolver) {
+  DVLOG(1) << __func__;
+  DCHECK(resolver);
+  resolver->Resolve(constraints);
 }
 
 DEFINE_TRACE(ImageCapture) {
