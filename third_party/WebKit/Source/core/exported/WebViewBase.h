@@ -151,7 +151,8 @@ class WebViewBase : public WebView, public RefCounted<WebViewBase> {
 
   virtual void EnterFullscreen(LocalFrame&) = 0;
   virtual void ExitFullscreen(LocalFrame&) = 0;
-  virtual void FullscreenElementChanged(Element*, Element*) = 0;
+  virtual void FullscreenElementChanged(Element* from_element,
+                                        Element* to_element) = 0;
 
   virtual bool HasOpenedPopup() const = 0;
 
