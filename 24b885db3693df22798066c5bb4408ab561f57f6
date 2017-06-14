@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "4bf31fbd_fedfb018",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-14T13:28:00Z",
+      "side": 1,
+      "message": "I don\u0027t see an issue with a numerical histogram emitting a single entry per program run. Whether it should be an enum - it depends on what kind of analysis you are planning on doing. This will give a distribution of how many Shell Extensions people have, which seems reasonable to me but maybe Siggi has something else in mind?\n\nAre you interested in how many of these an individual has or do you just want the aggregate amount across the population?",
+      "parentUuid": "da531f8d_884dc107",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60d695c9_4bd0b04d",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 11
@@ -234,6 +258,29 @@
       "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b314980c_d0b69ba5",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 77035,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-14T13:28:00Z",
+      "side": 1,
+      "message": "please add a unit",
+      "range": {
+        "startLine": 77035,
+        "startChar": 56,
+        "endLine": 77035,
+        "endChar": 57
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
