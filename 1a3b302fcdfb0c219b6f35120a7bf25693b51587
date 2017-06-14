@@ -97,6 +97,30 @@
     },
     {
       "key": {
+        "uuid": "f2be5643_5b1753b4",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-06-14T14:27:50Z",
+      "side": 1,
+      "message": "Imho it\u0027s not ideal because it creates a time window in which the CL is in an inconsistent state (potentially creating confusion for reviewers): Comments refer to code changes that haven\u0027t been uploaded yet. Imho it\u0027s better to first upload the code and then the comments to make sure the CL is self-consistent at all times.",
+      "parentUuid": "0cfd2a7f_4b8112e6",
+      "range": {
+        "startLine": 797,
+        "startChar": 65,
+        "endLine": 797,
+        "endChar": 0
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1921655_c4d3054a",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 1
@@ -132,6 +156,30 @@
       "side": 1,
       "message": "I was going to put \u0027[default \u003d DISABLED]\u0027 on the \u0027optional U2fMode mode\u0027 line below, I forgot about it.\nIs this ok ?",
       "parentUuid": "e1921655_c4d3054a",
+      "range": {
+        "startLine": 802,
+        "startChar": 7,
+        "endLine": 802,
+        "endChar": 20
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1b17ae5_10413415",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-06-14T14:27:50Z",
+      "side": 1,
+      "message": "I still suggest to remove the \"default value\" comment.  Having the comment in one place and the actual default definition in another could lead to the two of them getting out of sync.",
+      "parentUuid": "037415ef_1f8d3473",
       "range": {
         "startLine": 802,
         "startChar": 7,
