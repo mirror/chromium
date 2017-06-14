@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "696abf7e_9ee696ce",
+        "filename": "content/browser/power_monitor_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-14T18:13:37Z",
+      "side": 1,
+      "message": "Can you comment why this is needed for the utility process but not the renderer process?",
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a870b39e_7b5700aa",
+        "filename": "content/shell/utility/shell_content_utility_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-14T18:13:37Z",
+      "side": 1,
+      "message": "Is this code copied from the renderer test? If so, should we pull it out and put it in some common test location?",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
