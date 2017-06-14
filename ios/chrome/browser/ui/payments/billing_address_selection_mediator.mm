@@ -7,6 +7,7 @@
 #import "ios/chrome/browser/ui/payments/billing_address_selection_mediator.h"
 
 #include "base/logging.h"
+#include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -99,6 +100,13 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
     item.name = GetNameLabelFromAutofillProfile(*billingProfile);
     item.address = GetBillingAddressLabelFromAutofillProfile(*billingProfile);
     item.phoneNumber = GetPhoneNumberLabelFromAutofillProfile(*billingProfile);
+    NSString* notificationLabel = [[NSString alloc] init];
+    notificationLabel = base::SysUTF16ToNSString(
+        _paymentRequest->profile_comparator()
+            ->GetStringForMissingShippingFields(*billingProfile));
+    item.notification =
+        [notificationLabel length] == 0 ? nil : notificationLabel;
+    item.complete = [notificationLabel length] == 0;
     if (self.selectedBillingProfile == billingProfile)
       _selectedItemIndex = index;
 
