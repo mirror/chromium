@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40eb7f2e_ad438892",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-06-14T03:49:07Z",
+      "side": 1,
+      "message": "Where does this lead to a crash? It seems like this test avoids some condition that\u0027s actually an implementation detail deep within some other code. As such, this is fragile - the other code may change at any time, and nobody will know that this must be updated. I\u0027d rather make whatever dependency we require obvious in the API well call.",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
