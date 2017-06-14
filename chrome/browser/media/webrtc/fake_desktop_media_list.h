@@ -11,7 +11,7 @@
 
 class FakeDesktopMediaList : public DesktopMediaList {
  public:
-  FakeDesktopMediaList();
+  FakeDesktopMediaList(content::DesktopMediaID::Type type);
   ~FakeDesktopMediaList() override;
 
   void AddSource(int id);
@@ -34,6 +34,8 @@ class FakeDesktopMediaList : public DesktopMediaList {
   std::vector<Source> sources_;
   DesktopMediaListObserver* observer_;
   gfx::ImageSkia thumbnail_;
+  // Desktop media type of the list.
+  content::DesktopMediaID::Type type_ = content::DesktopMediaID::TYPE_NONE;
 };
 
 #endif  // CHROME_BROWSER_MEDIA_WEBRTC_FAKE_DESKTOP_MEDIA_LIST_H_

@@ -108,14 +108,13 @@ NSString* const kTitleId = @"title";
 
 @implementation DesktopMediaPickerController
 
-- (id)initWithScreenList:(std::unique_ptr<DesktopMediaList>)screenList
-              windowList:(std::unique_ptr<DesktopMediaList>)windowList
-                 tabList:(std::unique_ptr<DesktopMediaList>)tabList
-                  parent:(NSWindow*)parent
-                callback:(const DesktopMediaPicker::DoneCallback&)callback
-                 appName:(const base::string16&)appName
-              targetName:(const base::string16&)targetName
-            requestAudio:(bool)requestAudio {
+- (id)initWithSourceLists:
+          (std::vector<std::unique_ptr<DesktopMediaList>>&)sourceLists
+                   parent:(NSWindow*)parent
+                 callback:(const DesktopMediaPicker::DoneCallback&)callback
+                  appName:(const base::string16&)appName
+               targetName:(const base::string16&)targetName
+             requestAudio:(bool)requestAudio {
   const NSUInteger kStyleMask =
       NSTitledWindowMask | NSClosableWindowMask | NSResizableWindowMask;
   base::scoped_nsobject<NSWindow> window(
@@ -127,22 +126,32 @@ NSString* const kTitleId = @"title";
   if ((self = [super initWithWindow:window])) {
     [parent addChildWindow:window ordered:NSWindowAbove];
     [window setDelegate:self];
-    if (screenList) {
-      screenList_ = std::move(screenList);
-      screenItems_.reset([[NSMutableArray alloc] init]);
-    }
 
-    if (windowList) {
-      windowList_ = std::move(windowList);
-      windowList_->SetViewDialogWindowId(
-          DesktopMediaID(DesktopMediaID::TYPE_WINDOW, [window windowNumber]));
-      windowItems_.reset([[NSMutableArray alloc] init]);
+    for (auto& sourceList : sourceLists) {
+      switch (sourceList->GetMediaListType()) {
+        case DesktopMediaID::TYPE_NONE:
+          NOTREACHED();
+          break;
+        case DesktopMediaID::TYPE_SCREEN:
+          sourceTypes_.push_back(DesktopMediaID::TYPE_SCREEN);
+          screenList_ = std::move(sourceList);
+          screenItems_.reset([[NSMutableArray alloc] init]);
+          break;
+        case DesktopMediaID::TYPE_WINDOW:
+          sourceTypes_.push_back(DesktopMediaID::TYPE_WINDOW);
+          windowList_ = std::move(sourceList);
+          windowList_->SetViewDialogWindowId(DesktopMediaID(
+              DesktopMediaID::TYPE_WINDOW, [window windowNumber]));
+          windowItems_.reset([[NSMutableArray alloc] init]);
+          break;
+        case DesktopMediaID::TYPE_WEB_CONTENTS:
+          sourceTypes_.push_back(DesktopMediaID::TYPE_WEB_CONTENTS);
+          tabList_ = std::move(sourceList);
+          tabItems_.reset([[NSMutableArray alloc] init]);
+          break;
+      }
     }
-
-    if (tabList) {
-      tabList_ = std::move(tabList);
-      tabItems_.reset([[NSMutableArray alloc] init]);
-    }
+    DCHECK(!sourceTypes_.empty());
 
     [self initializeContentsWithAppName:appName
                              targetName:targetName
@@ -229,39 +238,50 @@ NSString* const kTitleId = @"title";
   sourceTypeControl_.reset(
       [[NSSegmentedControl alloc] initWithFrame:NSZeroRect]);
 
-  NSInteger segmentCount =
-      (screenList_ ? 1 : 0) + (windowList_ ? 1 : 0) + (tabList_ ? 1 : 0);
+  NSInteger segmentCount = sourceTypes_.size();
   [sourceTypeControl_ setSegmentCount:segmentCount];
   NSInteger segmentIndex = 0;
 
-  if (screenList_) {
-    [sourceTypeControl_
-          setLabel:l10n_util::GetNSString(
-                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
-        forSegment:segmentIndex];
+  for (auto sourceType : sourceTypes_) {
+    switch (sourceType) {
+      case DesktopMediaID::TYPE_NONE:
+        NOTREACHED();
+        break;
+      case DesktopMediaID::TYPE_SCREEN:
+        if (screenList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_SCREEN)
+              forSegment:segmentIndex];
 
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
-                           forSegment:segmentIndex];
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_SCREEN
+                                 forSegment:segmentIndex];
+        }
+        break;
+      case DesktopMediaID::TYPE_WINDOW:
+        if (windowList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
+              forSegment:segmentIndex];
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
+                                 forSegment:segmentIndex];
+        }
+        break;
+      case DesktopMediaID::TYPE_WEB_CONTENTS:
+        if (tabList_) {
+          [sourceTypeControl_
+                setLabel:l10n_util::GetNSString(
+                             IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
+              forSegment:segmentIndex];
+          [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
+                                 forSegment:segmentIndex];
+        }
+        break;
+    }
     ++segmentIndex;
   }
 
-  if (windowList_) {
-    [sourceTypeControl_
-          setLabel:l10n_util::GetNSString(
-                       IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_WINDOW)
-        forSegment:segmentIndex];
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WINDOW
-                           forSegment:segmentIndex];
-    ++segmentIndex;
-  }
-
-  if (tabList_) {
-    [sourceTypeControl_ setLabel:l10n_util::GetNSString(
-                                     IDS_DESKTOP_MEDIA_PICKER_SOURCE_TYPE_TAB)
-                      forSegment:segmentIndex];
-    [[sourceTypeControl_ cell] setTag:DesktopMediaID::TYPE_WEB_CONTENTS
-                           forSegment:segmentIndex];
-  }
   [sourceTypeControl_ setTarget:self];
   [sourceTypeControl_ setAction:@selector(typeButtonPressed:)];
 
