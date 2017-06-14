@@ -250,6 +250,11 @@ class RefCounted : public subtle::RefCountedBase {
 
   void Release() const {
     if (subtle::RefCountedBase::Release()) {
+      // For static analysis builds, prune the code paths which consider the
+      // destruction of |this|. Use after free errors are impossible under the
+      // dynamic guarantees of the refcounting system.
+      ANALYZER_ASSUME_TRUE(false);
+
       delete static_cast<const T*>(this);
     }
   }
