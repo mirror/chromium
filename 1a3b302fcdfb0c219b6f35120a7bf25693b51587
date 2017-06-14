@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bb36f6bd_14b80468",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-06-14T13:48:05Z",
+      "side": 1,
+      "message": "Updated",
+      "parentUuid": "28c5369d_6ab6f5d2",
+      "range": {
+        "startLine": 797,
+        "startChar": 65,
+        "endLine": 797,
+        "endChar": 0
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1921655_c4d3054a",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T13:36:55Z",
       "side": 1,
       "message": "Not sure what that means in the context of proto2.",
+      "range": {
+        "startLine": 802,
+        "startChar": 7,
+        "endLine": 802,
+        "endChar": 20
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "037415ef_1f8d3473",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-06-14T13:48:05Z",
+      "side": 1,
+      "message": "I was going to put \u0027[default \u003d DISABLED]\u0027 on the \u0027optional U2fMode mode\u0027 line below, I forgot about it.\nIs this ok ?",
+      "parentUuid": "e1921655_c4d3054a",
       "range": {
         "startLine": 802,
         "startChar": 7,
