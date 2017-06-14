@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "29ea165e_ea696b1f",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-14T16:51:09Z",
+      "side": 1,
+      "message": "Update to:\n\n// Note: this is true in the scope of tasks posted to a (Sequenced|SingleThreadTaskRunner) obtained from post_task.h or from a MessageLoop.",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 72
+      },
+      "revId": "0e92609e97da3a7187b21c4d2365b12c152e507d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
