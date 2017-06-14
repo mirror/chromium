@@ -40,6 +40,7 @@ WebFrameSchedulerImpl::WebFrameSchedulerImpl(
       parent_web_view_scheduler_(parent_web_view_scheduler),
       blame_context_(blame_context),
       frame_visible_(true),
+      page_visible_(true),
       page_throttled_(true),
       frame_suspended_(false),
       cross_origin_(false),
@@ -104,6 +105,25 @@ void WebFrameSchedulerImpl::RemoveTimerQueueFromBackgroundCPUTimeBudgetPool() {
 
   time_budget_pool->RemoveQueue(renderer_scheduler_->tick_clock()->NowTicks(),
                                 timer_task_queue_.get());
+}
+
+void WebFrameSchedulerImpl::AddThrottlingObserver(ObserverType type,
+                                                  Observer* observer) {
+  DCHECK_EQ(ObserverType::kLoader, type);
+  DCHECK(observer);
+  observer->OnThrottlingStateChanged(page_throttled_
+                                         ? ThrottlingState::kThrottled
+                                         : ThrottlingState::kNotThrottled);
+  loader_observers_.insert(observer);
+}
+
+void WebFrameSchedulerImpl::RemoveThrottlingObserver(ObserverType type,
+                                                     Observer* observer) {
+  DCHECK_EQ(ObserverType::kLoader, type);
+  DCHECK(observer);
+  const auto found = loader_observers_.find(observer);
+  DCHECK(loader_observers_.end() != found);
+  loader_observers_.erase(found);
 }
 
 void WebFrameSchedulerImpl::SetFrameVisible(bool frame_visible) {
@@ -291,6 +311,17 @@ void WebFrameSchedulerImpl::AsValueInto(
                          reinterpret_cast<void*>(blame_context_->id())));
     state->SetString("scope", blame_context_->scope());
     state->EndDictionary();
+  }
+}
+
+void WebFrameSchedulerImpl::SetPageVisible(bool page_visible) {
+  if (page_visible_ == page_visible)
+    return;
+  page_visible_ = page_visible;
+  for (auto observer : loader_observers_) {
+    observer->OnThrottlingStateChanged(page_visible_
+                                           ? ThrottlingState::kNotThrottled
+                                           : ThrottlingState::kThrottled);
   }
 }
 
