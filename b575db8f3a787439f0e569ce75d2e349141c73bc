@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "014fea20_09c3e8b3",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "We save the fetched image in the snippet article and can use it later. I don\u0027t think these article thumbnail fetches can currently be cancelled from the java side. The call is passed to the backend, which creates tasks and I am not sure how a cancellation is possible there.\n\nIn the download thumbnails cancellation is possible because there is a queue of requests which are served one by one (this is in the thumbnail provider). By cancelling, we remove the request from the queue. But for the article thumbnails the call is passed directly to the backend.\n\nAm I missing something?",
+      "parentUuid": "70aaf23f_2a45af37",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8101309d_19424ba1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-13T15:06:16Z",
       "side": 1,
       "message": "Don\u0027t just blindly pepper |mIsDestroyed| checks everywhere, or you\u0027re going to end up with a whole bunch of objects that may or may not be alive at any given point and are just silently going to fail on misuse. It doesn\u0027t make sense for a client of this class to call a method on it after it has been destroyed -- the only time when the check makes sense is when a method in this class is being called from somewhere that doesn\u0027t know whether this object is still in use, for example in callbacks (e.g. from native code) that we can\u0027t cancel on destruction, and which could happen after the UI has been torn down.",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3df4fdb7_fe2700c9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "How does a class know that the image fetcher is still in use or not? I thought the onDestroy method is called only when the activity is about to finish anyway?\n\nShould I leave the check in all the public methods and just put asserts in the private methods? And also do the check in the cancellation methods?",
+      "parentUuid": "8101309d_19424ba1",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "73da4e39_226f042b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 136,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f60c5b2b_79138088",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5a5fe34_b3db4e0d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9378e608_c0bb294a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Thanks. I just moved this code from another class and didn\u0027t notice the comments :)",
+      "parentUuid": "e5a5fe34_b3db4e0d",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23c39b79_8460e809",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-13T15:06:16Z",
       "side": 1,
       "message": "What happens if someone cancels the request after the ImageFetcher has been destroyed?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbc57d27_e3a985d4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 328,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Will put a check there.",
+      "parentUuid": "23c39b79_8460e809",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -175,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "fe1a6869_29557936",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Sure. I assume that fetching a favicon will always require the url? So, in fetchFaviconFromLocalCacheOrGoogleServer(..) it will eventually also try to parse the url and fail if it\u0027s badly formed, so better to stop it here?",
+      "parentUuid": "08583842_a8de458a",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c3d4f0c1_3fafa1c7",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
         "patchSetId": 9
@@ -192,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "6f407865_824ddaed",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c3d4f0c1_3fafa1c7",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c57d5e26_6ea3bd7a",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
         "patchSetId": 9
@@ -203,6 +329,24 @@
       "writtenOn": "2017-06-13T15:06:16Z",
       "side": 1,
       "message": "Are these unused now?",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1ba05ae_2bddb522",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T09:52:36Z",
+      "side": 1,
+      "message": "Yes. Done and gone :)",
+      "parentUuid": "c57d5e26_6ea3bd7a",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
