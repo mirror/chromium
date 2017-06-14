@@ -59,6 +59,52 @@
     },
     {
       "key": {
+        "uuid": "aa33ad0d_70e941d2",
+        "filename": "content/public/common/content_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 922,
+      "author": {
+        "id": 1221790
+      },
+      "writtenOn": "2017-06-14T16:42:21Z",
+      "side": 1,
+      "message": "!defined(OS_LINUX)",
+      "range": {
+        "startLine": 922,
+        "startChar": 4,
+        "endLine": 922,
+        "endChar": 11
+      },
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff2fc55_3eb81a3b",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1221790
+      },
+      "writtenOn": "2017-06-14T16:42:21Z",
+      "side": 1,
+      "message": "should be !defined.",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 11
+      },
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3842d3f2_c0aa43d9",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 1
