@@ -52,6 +52,24 @@
       "revId": "750760d4c5bfaea40854306e289e820cbfa1d13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1eeb50de_caf66638",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5062,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-14T19:52:38Z",
+      "side": 1,
+      "message": "Done - although I somehow failed to see that you wrote \"!Style()-\u003eHasOutOfFlowPosition()\", so I did !IsFloatingOrOutOfFlowPositioned() instead - which is closer to what the spec tells us to anyway. Any reason not to trust the information in the layout objects when calling this method? Otherwise I see no need for using Style(). As far as I can tell, this code isn\u0027t invoked via code like Style{Did,Will}Change().\n\nThis change isn\u0027t going to affect behavior, but it will save some time when called on an out-of-flow LEGEND element.",
+      "parentUuid": "740b38dd_72356e30",
+      "revId": "750760d4c5bfaea40854306e289e820cbfa1d13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
