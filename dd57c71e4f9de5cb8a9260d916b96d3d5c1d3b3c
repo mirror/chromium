@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "17323994_aa272176",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 2855,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-14T16:35:14Z",
+      "side": 1,
+      "message": "This is implied by virtue of it having been hit in the hit test. You can change this to a DCHECK though.",
+      "range": {
+        "startLine": 2855,
+        "startChar": 10,
+        "endLine": 2855,
+        "endChar": 14
+      },
+      "revId": "dd57c71e4f9de5cb8a9260d916b96d3d5c1d3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9fe9c0d_2be392ec",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 2212,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-14T16:35:14Z",
+      "side": 1,
+      "message": "int rather than uint32_t",
+      "range": {
+        "startLine": 2212,
+        "startChar": 6,
+        "endLine": 2212,
+        "endChar": 14
+      },
+      "revId": "dd57c71e4f9de5cb8a9260d916b96d3d5c1d3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91e19112_2fe0b820",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-14T16:35:14Z",
+      "side": 1,
+      "message": "Ditto here, if we\u0027ve managed to target it for scrolling it must have non-0 size",
+      "range": {
+        "startLine": 247,
+        "startChar": 6,
+        "endLine": 247,
+        "endChar": 19
+      },
+      "revId": "dd57c71e4f9de5cb8a9260d916b96d3d5c1d3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12f3a6e0_fabd1037",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-14T16:35:14Z",
+      "side": 1,
+      "message": "Also mention this update to use the histogram macro in the commit message",
+      "range": {
+        "startLine": 253,
+        "startChar": 6,
+        "endLine": 253,
+        "endChar": 33
+      },
+      "revId": "dd57c71e4f9de5cb8a9260d916b96d3d5c1d3b3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
