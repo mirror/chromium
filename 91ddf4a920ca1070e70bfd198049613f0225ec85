@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbac8035_d1ccc2de",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-14T17:34:39Z",
+      "side": 1,
+      "message": "Probably don\u0027t need the only_testing_tests \u0026\u0026 part?",
+      "range": {
+        "startLine": 272,
+        "startChar": 6,
+        "endLine": 272,
+        "endChar": 24
+      },
+      "revId": "91ddf4a920ca1070e70bfd198049613f0225ec85",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
