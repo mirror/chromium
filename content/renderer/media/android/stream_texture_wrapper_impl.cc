@@ -180,9 +180,10 @@ void StreamTextureWrapperImpl::InitializeOnMainThread(
 }
 
 void StreamTextureWrapperImpl::Destroy() {
-  // Note: StreamTextureProxy stop calling back the provided frame received
-  // callback immediately, and delete itself on the right thread.
-  stream_texture_proxy_.reset();
+  // Safely stop StreamTextureProxy from signaling the arrival of new frames.
+  // |stream_texture_proxy_| will be cleared on the main task runner, and its
+  // deleter will destroy the underlying object on the right task runner.
+  stream_texture_proxy_->ClearReceivedFrameCB();
 
   if (!main_task_runner_->BelongsToCurrentThread()) {
     // base::Unretained is safe here because this function is the only one that
