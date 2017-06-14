@@ -98,6 +98,8 @@ target(link_target_type, "child") {
     "font_warmup_win.h",
     "ftp_directory_listing_response_delegate.cc",
     "ftp_directory_listing_response_delegate.h",
+    "histogram_controller_client.cc",
+    "histogram_controller_client.h",
     "image_decoder.cc",
     "image_decoder.h",
     "indexed_db/indexed_db_callbacks_impl.cc",

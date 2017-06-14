@@ -1,0 +1,20 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module content.mojom;
+
+interface HistogramControllerClient {
+  // Request histogram data from the client. The callback will be called with
+  // an array of pickled strings containing the deltas from the last call.
+  RequestNonPersistentHistogramData() => (array<string> deltas);
+};
+
+
+// Collects histogram data from child processes.
+interface HistogramController {
+  // Allow child processes to register clients from which histogram data will be
+  // collected. The callback will be invoked with a handle to shared memory in
+  // which the client can write histogram data.
+  RegisterClient(HistogramControllerClient client) => (handle<shared_buffer> metrics_memory);
+};

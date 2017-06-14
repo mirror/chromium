@@ -30,6 +30,7 @@
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
 #include "content/common/content_export.h"
+#include "content/common/histogram.mojom.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
 #include "content/common/renderer.mojom.h"
@@ -112,7 +113,8 @@ class CONTENT_EXPORT RenderProcessHostImpl
       public ui::GpuSwitchingObserver,
       public NON_EXPORTED_BASE(mojom::RouteProvider),
       public NON_EXPORTED_BASE(mojom::AssociatedInterfaceProvider),
-      public NON_EXPORTED_BASE(mojom::RendererHost) {
+      public NON_EXPORTED_BASE(mojom::RendererHost),
+      public NON_EXPORTED_BASE(mojom::HistogramController) {
  public:
   RenderProcessHostImpl(BrowserContext* browser_context,
                         StoragePartitionImpl* storage_partition_impl,
@@ -388,6 +390,11 @@ class CONTENT_EXPORT RenderProcessHostImpl
   // mojom::RendererHost
   void GetBlobURLLoaderFactory(mojom::URLLoaderFactoryRequest request) override;
 
+  // mojom::HistogramController
+  void RegisterClient(
+      mojom::HistogramControllerClientPtr client,
+      mojom::HistogramController::RegisterClientCallback cb) override;
+
   void BindRouteProvider(mojom::RouteProviderAssociatedRequest request);
 
   void CreateMusGpuRequest(const service_manager::BindSourceInfo& source_info,
@@ -402,6 +409,9 @@ class CONTENT_EXPORT RenderProcessHostImpl
       mojom::StoragePartitionServiceRequest request);
   void CreateRendererHost(const service_manager::BindSourceInfo& source_info,
                           mojom::RendererHostRequest request);
+  void CreateHistogramController(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::HistogramControllerRequest request);
   void CreateURLLoaderFactory(
       const service_manager::BindSourceInfo& source_info,
       mojom::URLLoaderFactoryRequest request);
@@ -690,6 +700,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
   mojom::RendererAssociatedPtr renderer_interface_;
   mojo::Binding<mojom::RendererHost> renderer_host_binding_;
+  mojo::Binding<mojom::HistogramController> histogram_controller_binding_;
 
   // Tracks active audio streams within the render process; used to determine if
   // if a process should be backgrounded.

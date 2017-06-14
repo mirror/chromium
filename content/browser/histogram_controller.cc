@@ -71,6 +71,7 @@ void HistogramController::GetHistogramDataFromChildProcesses(
     int sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
 
+  // TODO(slan): Migrate BrowserChildProcessHostImpl too.
   int pending_processes = 0;
   for (BrowserChildProcessHostIterator iter; !iter.Done(); ++iter) {
     const ChildProcessData& data = iter.GetData();
@@ -105,19 +106,23 @@ void HistogramController::GetHistogramDataFromChildProcesses(
           true));
 }
 
+void HistogramController::RegisterClient(
+    mojom::HistogramControllerClientPtr client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  clients_.AddPtr(std::move(client));
+}
+
 void HistogramController::GetHistogramData(int sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   int pending_processes = 0;
-  for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
-       !it.IsAtEnd(); it.Advance()) {
-    ++pending_processes;
-    if (!it.GetCurrentValue()->Send(
-            new ChildProcessMsg_GetChildNonPersistentHistogramData(
-                sequence_number))) {
-      --pending_processes;
-    }
-  }
+  clients_.ForAllPtrs([this, sequence_number, &pending_processes](
+                          mojom::HistogramControllerClient* client) {
+    client->RequestNonPersistentHistogramData(
+        base::BindOnce(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number));
+    pending_processes += 1;
+  });
   OnPendingProcesses(sequence_number, pending_processes, false);
 
   BrowserThread::PostTask(
