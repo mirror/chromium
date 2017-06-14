@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "96607873_f1702872",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T11:13:14Z",
+      "side": 1,
+      "message": "Right now, rebinding the view holder will cancel the |mImageCallback|, which won\u0027t actually cancel the fetch in the backend (there\u0027s a TODO for that though), but it will invalidate the back-reference to the view holder in the callback, so that if the callback returns, it won\u0027t update a view holder that is now bound to a different article.\n\nLooking through your CL, I see now that you do have a check that the article hasn\u0027t changed, but it relies on using a non-static inner class and generally feels a bit brittle... It\u0027s surprisingly easy to forget about the implicit reference to the outer class and then end up with a memory leak (eg. https://crbug.com/708710).",
+      "parentUuid": "014fea20_09c3e8b3",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8101309d_19424ba1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "How does a class know that the image fetcher is still in use or not? I thought the onDestroy method is called only when the activity is about to finish anyway?\n\nShould I leave the check in all the public methods and just put asserts in the private methods? And also do the check in the cancellation methods?",
       "parentUuid": "8101309d_19424ba1",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef65027_9cdda3de",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T11:13:14Z",
+      "side": 1,
+      "message": "\u003e How does a class know that the image fetcher is still in use or not? I thought the onDestroy method is called only when the activity is about to finish anyway?\n\nSort of -- it\u0027s called when the SuggestionsUiDelegateImpl is destroyed, which happens when the NewTabPage is destroyed, or if ChromeHome is enabled, currently never. The point is though, if the UI is destroyed, how could it happen that someone calls a method on the ImageFetcher?\n\n\u003e Should I leave the check in all the public methods and just put asserts in the private methods? And also do the check in the cancellation methods?\n\nNo, if anything, assert in the public methods. Then you could also assert in the private methods, but you know from where those are called, so those asserts would be a bit redundant.",
+      "parentUuid": "3df4fdb7_fe2700c9",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

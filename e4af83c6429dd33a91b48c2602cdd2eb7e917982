@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca8cfbc3_1fed3061",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T11:13:14Z",
+      "side": 1,
+      "message": "It doesn\u0027t make much sense for this interface to be private, as no one outside of this class can use it, so they can\u0027t call methods in subclasses through this interface.",
+      "revId": "e4af83c6429dd33a91b48c2602cdd2eb7e917982",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
