@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7cf6d398_d227052d",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-14T14:23:55Z",
+      "side": 1,
+      "message": "\u003e nit. why no dtor?\n\nI had it originally in patch set #18. Daniel suggested is was not needed [1], so I removed it in patch sets #19+.\n\n[1] https://chromium-review.googlesource.com/c/515323/18/chrome%252Fbrowser%252Fchrome_site_per_process_browsertest.cc#790\n\nand an aside: seems this test is the first test ever added for the spell check panel feature.",
+      "parentUuid": "a5a281b1_ca6a94e2",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf76d3b3_26b4c10b",
         "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
         "patchSetId": 29
@@ -33,6 +51,24 @@
       "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b7e3407_eeb879e4",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-14T14:23:55Z",
+      "side": 1,
+      "message": "\u003e why is this not protected by #if BUILDFLAG(HAS_SPELLCHECK_PANEL)?\n\nThat\u0027d be redundant.  HAS_SPELLCHECK_PANEL is an OSX-only feature as mentioned in the change description.  This code is in a .mm file -\u003e OSX-only by definition.",
+      "parentUuid": "bf76d3b3_26b4c10b",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fe117104_a5fa2510",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-14T14:23:55Z",
+      "side": 1,
+      "message": "\u003e I see, you use the interface as empty client as well.\n\nYes, I used the fact that WebSpellCheckPanelHostClient (formerly WebSpellCheckClient) was not pure virtual ...\n\n\u003e I\u0027d introduce an explicit EmptyWebSpellCheckPanelHostClient similar to what is done for SpellCheckerClient above.\n\n... to save me having to define an empty client :)  You prefer an explicit empty one, so ok:\n\n - changed WebSpellCheckPanelHostClient.h to be pure virtual\n - fwd declared WebString in WebSpellCheckPanelHostClient.h\n - added an EmptySpellCheckPanelHostClient in EmptyClients.h \n - used that empty spell check host client class here\n\nHad to add a Get prefix here to avoid compilation fail, added #includes to EmptyClients.h (since blink::WebString is fwd declared WebSpellCheckPanelHostClient.h now) and elsewhere (IWYU).",
+      "parentUuid": "14d54775_68c57375",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0513046_8d82ffc1",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
         "patchSetId": 29
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3c1376a0_79814d40",
+        "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-14T14:23:55Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "a0513046_8d82ffc1",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "932316fa_a2aa13c0",
         "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
         "patchSetId": 29
@@ -84,6 +156,24 @@
       "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f60637df_17162d4c",
+        "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-14T14:23:55Z",
+      "side": 1,
+      "message": "\u003e why aren\u0027t those methods pure virtual?\n\nYeah, tossed a coin on this one.  WebSpellCheckPanelHostClient was also the concrete impl used, as you noted later on.\n\nPure virtual is ok with me, done, need to add an empty client now.",
+      "parentUuid": "932316fa_a2aa13c0",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
