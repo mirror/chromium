@@ -1,0 +1,340 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c9602c9_288d8c04",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "Adding a reset method here to get around the script expecting to only be run for one class is a bit gross; just making this non-static seems like it\u0027d be better.",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb0391a1_a06c3031",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "It doesn\u0027t look like the generator actually uses this any more? If not, just remove it.",
+      "range": {
+        "startLine": 735,
+        "startChar": 60,
+        "endLine": 735,
+        "endChar": 67
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d52a3d9_9d6ff1ce",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "nit: preferable to write crbug.com as the crbug/ redirector only exists inside google\nAlso, the comment gets generated even when $REGISTER_NATIVES_EMPTY is empty; you can make it part of that string literal instead of the template?",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 13
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09dc686a_ac80471f",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "The empty case doesn\u0027t really seem to have anything in common with the real case. Just do it separately, I think the function would be simpler.",
+      "range": {
+        "startLine": 875,
+        "startChar": 37,
+        "endLine": 875,
+        "endChar": 54
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5877342_0156a6eb",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "Use Template to generate this string like the rest of the file. We aren\u0027t using str.format anywhere else and its placeholder {} is confusing in the context of C++ code.",
+      "range": {
+        "startLine": 892,
+        "startChar": 63,
+        "endLine": 892,
+        "endChar": 69
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d498311d_8920c12c",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "I think you should use the actual binary name of the class here instead of making up a new name mangling convention - you could pull the logic from GetStubName out into a separate function and share it.",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc18006c_0c8c08a9",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "It\u0027s usually better to split this kind of unrelated cleanup into a separate CL when you\u0027re already doing something quite complicated.",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8edb85c0_67cbd6a0",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "I assume you\u0027re exporting this because otherwise they aren\u0027t visible from outside the component in a component build? That seems unfortunate to have to do it that way. Limit this to component builds only at least?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5fe47d_ea20c19a",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "Can we delete this now?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "904afc1a_c86fc58e",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "Is there guaranteed to be any particular order of these inputs? I don\u0027t think so?\nCan you sort the list so that the output of the script is deterministic?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d2ff27d_14da2235",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "It seems like you\u0027re having to do a lot of things that this script doesn\u0027t really care about just to satisfy the existing API. I\u0027d suggest just refactoring the existing script a bit more to make the actual things you care about more standalone.\n\nIt looks like all you need to be able to do here is:\n\n1) Check whether the class has any natives or not\n2) Check whether it\u0027s in the main dex\n3) Get the name of the registration function for the class\n4) Get the C++ namespace the class uses (which could be avoided if you just generated the registration function outside the namespace to begin with, actually).\n\nThis seems like it could be done with a much simpler API that wouldn\u0027t require creating an instance of InlHeaderFileGenerator which needs all these calls to gather its parameters.",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56da288f_33a9c437",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "same comment about str.format in this file too :)",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 41
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7320a573_779ac546",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "This just adds a call to it, not the body, right?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "578dbe3c_e6e5b49f",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "What is this needed for?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33b52c77_852795f8",
+        "filename": "base/android/jni_generator/testMainDexFile.golden",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "You removed the test that uses this file; you should be able to just delete it?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2153794a_18d89a48",
+        "filename": "base/android/jni_generator/testNonMainDexFile.golden",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "You removed the test that uses this file; you should be able to just delete it?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15b5f96c_6cc87046",
+        "filename": "chrome/browser/android/chrome_sync_shell_entry_point.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "Why do we have to duplicate this?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6051b0b2_25ee4a06",
+        "filename": "testing/test.gni",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T20:53:38Z",
+      "side": 1,
+      "message": "I guess you\u0027re switching this to allow regular JVM lookup so you don\u0027t have to update all the test entry points and have all the tests generate a registration function?\n\nI\u0027m not sure I like that; having tests rely on the same mechanism that the shipping binary (or at least the most restrictive one) uses seems like a good way to make sure the mechanism is working properly. Even though this change makes the chance of incorrect registration much lower...",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
