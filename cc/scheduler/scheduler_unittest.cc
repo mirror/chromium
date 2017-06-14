@@ -510,7 +510,7 @@ TEST_F(SchedulerTest, VideoNeedsBeginFrames) {
   client_->Reset();
   task_runner_->RunTasksWhile(client_->InsideBeginImplFrame(true));
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
   EXPECT_FALSE(scheduler_->begin_frames_expected());
 }
 
@@ -570,7 +570,7 @@ TEST_F(SchedulerTest, RequestCommit) {
   client_->Reset();
 
   task_runner().RunPendingTasks();  // Run posted deadline.
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
   client_->Reset();
 }
 
@@ -1032,7 +1032,7 @@ TEST_F(SchedulerTest, PrepareTiles) {
   EXPECT_TRUE(client_->IsInsideBeginImplFrame());
   client->Reset();
   task_runner().RunPendingTasks();  // Run posted deadline.
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
   EXPECT_EQ(0, client->num_draws());
 
@@ -1312,7 +1312,7 @@ TEST_F(SchedulerTest, WaitForReadyToDrawCancelledWhenLostCompositorFrameSink) {
   EXPECT_TRUE(client_->IsInsideBeginImplFrame());
   task_runner().RunPendingTasks();  // Run posted deadline.
   EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 }
 
 void SchedulerTest::AdvanceAndMissOneFrame() {
@@ -2096,7 +2096,7 @@ void SchedulerTest::BeginFramesNotFromClient(BeginFrameSourceType bfs_type) {
   // Make sure SetNeedsBeginFrame isn't called on the client
   // when the BeginFrame is no longer needed.
   task_runner().RunPendingTasks();  // Run posted deadline.
-  EXPECT_ACTIONS("SendBeginMainFrameNotExpectedSoon");
+  EXPECT_NO_ACTION();
   client_->Reset();
 }
 
@@ -2244,7 +2244,7 @@ TEST_F(SchedulerTest, DidLoseCompositorFrameSinkAfterBeginFrameStarted) {
   client_->Reset();
   task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
   EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest,
@@ -2272,7 +2272,7 @@ TEST_F(SchedulerTest,
   // OnBeginImplFrameDeadline didn't schedule CompositorFrameSink creation
   // because
   // main frame is not yet completed.
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
 
   // BeginImplFrame is not started.
@@ -2315,7 +2315,7 @@ TEST_F(SchedulerTest, DidLoseCompositorFrameSinkAfterReadyToCommit) {
   client_->Reset();
   task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
   EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest, DidLoseCompositorFrameSinkAfterSetNeedsPrepareTiles) {
@@ -2339,7 +2339,7 @@ TEST_F(SchedulerTest, DidLoseCompositorFrameSinkAfterSetNeedsPrepareTiles) {
   task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
   EXPECT_ACTIONS("ScheduledActionPrepareTiles",
                  "ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest,
@@ -2378,8 +2378,7 @@ TEST_F(SchedulerTest,
 
   client_->Reset();
   task_runner().RunTasksWhile(client_->InsideBeginImplFrame(true));
-  EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation");
   EXPECT_FALSE(scheduler_->begin_frames_expected());
 }
 
@@ -2412,7 +2411,7 @@ TEST_F(SchedulerTest, DidLoseCompositorFrameSinkWhenIdle) {
   client_->Reset();
   scheduler_->DidLoseCompositorFrameSink();
   EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest, ScheduledActionActivateAfterBecomingInvisible) {
@@ -2438,8 +2437,7 @@ TEST_F(SchedulerTest, ScheduledActionActivateAfterBecomingInvisible) {
   task_runner().RunPendingTasks();  // Run posted deadline.
 
   // Sync tree should be forced to activate.
-  EXPECT_ACTIONS("ScheduledActionActivateSyncTree", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("ScheduledActionActivateSyncTree", "RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest, ScheduledActionActivateAfterBeginFrameSourcePaused) {
@@ -2654,7 +2652,7 @@ TEST_F(SchedulerTest, SwitchFrameSourceWhenNotObserving) {
   EXPECT_TRUE(client_->IsInsideBeginImplFrame());
   task_runner().RunPendingTasks();
   EXPECT_ACTIONS("ScheduledActionBeginCompositorFrameSinkCreation",
-                 "RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+                 "RemoveObserver(this)");
 
   // Changing begin frame source doesn't do anything.
   // The unthrottled source doesn't print Add/RemoveObserver like the fake one.
@@ -2761,6 +2759,44 @@ TEST_F(SchedulerTest, SendBeginMainFrameNotExpectedSoon_Unrequested) {
   client_->Reset();
 }
 
+// Tests to ensure that we dont't send a BeginMainFrameNotExpectedSoon when
+// possible but not requested.
+TEST_F(SchedulerTest, SendBeginMainFrameNotExpectedSoon_Unrequested) {
+  SetUpScheduler(EXTERNAL_BFS);
+
+  // SetNeedsBeginMainFrame should begin the frame on the next BeginImplFrame.
+  scheduler_->SetNeedsBeginMainFrame();
+  EXPECT_ACTIONS("AddObserver(this)");
+  client_->Reset();
+
+  // Trigger a frame draw.
+  EXPECT_SCOPED(AdvanceFrame());
+  scheduler_->NotifyBeginMainFrameStarted(base::TimeTicks());
+  scheduler_->NotifyReadyToCommit();
+  scheduler_->NotifyReadyToActivate();
+  task_runner().RunPendingTasks();
+  EXPECT_ACTIONS("WillBeginImplFrame", "ScheduledActionSendBeginMainFrame",
+                 "ScheduledActionCommit", "ScheduledActionActivateSyncTree",
+                 "ScheduledActionDrawIfPossible");
+  client_->Reset();
+
+  EXPECT_SCOPED(AdvanceFrame());
+  EXPECT_ACTIONS("WillBeginImplFrame");
+  EXPECT_TRUE(client_->IsInsideBeginImplFrame());
+  client_->Reset();
+
+  // The BeginImplFrame deadline should SetNeedsBeginFrame(false), but doesn't
+  // send a SendBeginMainFrameNotExpectedSoon as it's not been requested by the
+  // main thread.
+  task_runner().RunPendingTasks();  // Run posted deadline.
+  EXPECT_ACTIONS("RemoveObserver(this)");
+  client_->Reset();
+
+  scheduler_->SetMainThreadWantsBeginMainFrameNotExpected(true);
+
+  EXPECT_ACTIONS("SendBeginMainFrameNotExpectedSoon");
+}
+
 TEST_F(SchedulerTest, SynchronousCompositorAnimation) {
   scheduler_settings_.using_synchronous_renderer_compositor = true;
   SetUpScheduler(EXTERNAL_BFS);
@@ -2809,8 +2845,7 @@ TEST_F(SchedulerTest, SynchronousCompositorAnimation) {
 
   // Idle on next vsync, as the animation has completed.
   AdvanceFrame();
-  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
   client_->Reset();
 }
@@ -2828,8 +2863,7 @@ TEST_F(SchedulerTest, SynchronousCompositorOnDrawDuringIdle) {
 
   // Idle on next vsync.
   AdvanceFrame();
-  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
   client_->Reset();
 }
@@ -2867,7 +2901,7 @@ TEST_F(SchedulerTest, SetNeedsOneBeginImplFrame) {
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
 
   // Scheduler shuts down the source now that no begin frame is requested.
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
 }
 
 TEST_F(SchedulerTest, SynchronousCompositorCommitAndVerifyBeginFrameAcks) {
@@ -2941,8 +2975,7 @@ TEST_F(SchedulerTest, SynchronousCompositorCommitAndVerifyBeginFrameAcks) {
 
   // Idle on next vsync.
   args = SendNextBeginFrame();
-  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
 
   latest_confirmed_sequence_number = args.sequence_number;
@@ -3046,8 +3079,7 @@ TEST_F(SchedulerTest, SynchronousCompositorPrepareTilesOnDraw) {
   // Next vsync.
   EXPECT_SCOPED(AdvanceFrame());
   EXPECT_FALSE(scheduler_->PrepareTilesPending());
-  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("WillBeginImplFrame", "RemoveObserver(this)");
   EXPECT_FALSE(scheduler_->begin_frames_expected());
   client_->Reset();
 }
@@ -3207,7 +3239,7 @@ TEST_F(SchedulerTest, NoCompositorFrameSinkCreationWhileCommitPending) {
   // commit is aborted.
   task_runner_->RunTasksWhile(client_->InsideBeginImplFrame(true));
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
-  EXPECT_ACTIONS("SendBeginMainFrameNotExpectedSoon");
+  EXPECT_NO_ACTION();
 
   // Abort the commit.
   client_->Reset();
@@ -3496,8 +3528,7 @@ TEST_F(SchedulerTest, BeginFrameAckForBeginFrameBeforeLastDeadline) {
   // during which tiles will be prepared. As a result of that, no further
   // BeginFrames will be needed, and the new BeginFrame should be dropped.
   BeginFrameArgs args = SendNextBeginFrame();
-  EXPECT_ACTIONS("ScheduledActionPrepareTiles", "RemoveObserver(this)",
-                 "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("ScheduledActionPrepareTiles", "RemoveObserver(this)");
   EXPECT_FALSE(client_->IsInsideBeginImplFrame());
   EXPECT_FALSE(scheduler_->begin_frames_expected());
 
@@ -3548,7 +3579,7 @@ TEST_F(SchedulerTest, BeginFrameAckForDroppedBeginFrame) {
   client_->Reset();
 
   task_runner().RunPendingTasks();  // Run deadline of prior BeginFrame.
-  EXPECT_ACTIONS("RemoveObserver(this)", "SendBeginMainFrameNotExpectedSoon");
+  EXPECT_ACTIONS("RemoveObserver(this)");
 
   // We'd expect an out-of-order ack for the prior BeginFrame, confirming it.
   latest_confirmed_sequence_number = first_args.sequence_number;
