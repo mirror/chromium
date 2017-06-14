@@ -19,6 +19,7 @@
 #include "base/synchronization/waitable_event_watcher.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/common/histogram.mojom.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/child_process_host_delegate.h"
@@ -44,11 +45,12 @@ class ChildConnection;
 /// class because it lives on the UI thread.
 class CONTENT_EXPORT BrowserChildProcessHostImpl
     : public BrowserChildProcessHost,
+      public ChildProcessLauncher::Client,
       public NON_EXPORTED_BASE(ChildProcessHostDelegate),
 #if defined(OS_WIN)
       public base::win::ObjectWatcher::Delegate,
 #endif
-      public ChildProcessLauncher::Client {
+      public NON_EXPORTED_BASE(mojom::HistogramController) {
  public:
   BrowserChildProcessHostImpl(content::ProcessType process_type,
                               BrowserChildProcessHostDelegate* delegate,
@@ -137,6 +139,15 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   // ChildProcessLauncher::Client implementation.
   void OnProcessLaunched() override;
   void OnProcessLaunchFailed(int error_code) override;
+
+  // mojom::HistogramController implementation. Must be called on the IO thread.
+  void RegisterClient(
+      mojom::HistogramControllerClientPtr client,
+      mojom::HistogramController::RegisterClientCallback cb) override;
+
+  // Register a ptr described by |client_info| on the UI thread,
+  void RegisterClientOnUIThread(
+      mojom::HistogramControllerClientPtrInfo client_info);
 
   // Returns true if the process has successfully launched. Must only be called
   // on the IO thread.

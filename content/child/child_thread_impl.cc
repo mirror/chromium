@@ -36,7 +36,6 @@
 #include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "components/tracing/child/child_trace_message_filter.h"
-#include "content/child/child_histogram_message_filter.h"
 #include "content/child/child_process.h"
 #include "content/child/child_resource_message_filter.h"
 #include "content/child/fileapi/file_system_dispatcher.h"
@@ -472,7 +471,6 @@ void ChildThreadImpl::Init(const Options& options) {
       this, message_loop()->task_runner()));
   file_system_dispatcher_.reset(new FileSystemDispatcher());
 
-  histogram_message_filter_ = new ChildHistogramMessageFilter();
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher());
 

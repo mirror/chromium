@@ -67,58 +67,24 @@ void HistogramController::Unregister(
   subscriber_ = NULL;
 }
 
-void HistogramController::GetHistogramDataFromChildProcesses(
-    int sequence_number) {
-  DCHECK_CURRENTLY_ON(BrowserThread::IO);
-
-  int pending_processes = 0;
-  for (BrowserChildProcessHostIterator iter; !iter.Done(); ++iter) {
-    const ChildProcessData& data = iter.GetData();
-
-    // Only get histograms from content process types; skip "embedder" process
-    // types.
-    if (data.process_type >= PROCESS_TYPE_CONTENT_END)
-      continue;
-
-    // In some cases, there may be no child process of the given type (for
-    // example, the GPU process may not exist and there may instead just be a
-    // GPU thread in the browser process). If that's the case, then the process
-    // handle will be base::kNullProcessHandle and we shouldn't ask it for data.
-    if (data.handle == base::kNullProcessHandle)
-      continue;
-
-    ++pending_processes;
-    if (!iter.Send(new ChildProcessMsg_GetChildNonPersistentHistogramData(
-            sequence_number))) {
-      --pending_processes;
-    }
-  }
-
-  BrowserThread::PostTask(
-      BrowserThread::UI,
-      FROM_HERE,
-      base::Bind(
-          &HistogramController::OnPendingProcesses,
-          base::Unretained(this),
-          sequence_number,
-          pending_processes,
-          true));
+void HistogramController::RegisterClient(
+    mojom::HistogramControllerClientPtr client) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  clients_.AddPtr(std::move(client));
 }
 
 void HistogramController::GetHistogramData(int sequence_number) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
   int pending_processes = 0;
-  for (RenderProcessHost::iterator it(RenderProcessHost::AllHostsIterator());
-       !it.IsAtEnd(); it.Advance()) {
-    ++pending_processes;
-    if (!it.GetCurrentValue()->Send(
-            new ChildProcessMsg_GetChildNonPersistentHistogramData(
-                sequence_number))) {
-      --pending_processes;
-    }
-  }
-  OnPendingProcesses(sequence_number, pending_processes, false);
+  clients_.ForAllPtrs([this, sequence_number, &pending_processes](
+                          mojom::HistogramControllerClient* client) {
+    client->RequestNonPersistentHistogramData(
+        base::BindOnce(&HistogramController::OnHistogramDataCollected,
+                       base::Unretained(this), sequence_number));
+    pending_processes += 1;
+  });
+  OnPendingProcesses(sequence_number, pending_processes, true);
 
   BrowserThread::PostTask(
       BrowserThread::IO,

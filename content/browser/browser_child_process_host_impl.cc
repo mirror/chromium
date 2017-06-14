@@ -26,7 +26,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
-#include "content/browser/histogram_message_filter.h"
+#include "content/browser/histogram_controller.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/profiler_message_filter.h"
 #include "content/browser/service_manager/service_manager_context.h"
@@ -48,6 +48,7 @@
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/embedder/switches.h"
 
 #if defined(OS_MACOSX)
@@ -157,7 +158,6 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
   child_process_host_.reset(ChildProcessHost::Create(this));
   AddFilter(new TraceMessageFilter(data_.id));
   AddFilter(new ProfilerMessageFilter(process_type));
-  AddFilter(new HistogramMessageFilter);
 
   g_child_process_list.Get().push_back(this);
   GetContentClient()->browser()->BrowserChildProcessHostCreated(this);
@@ -516,13 +516,34 @@ void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
       /*readonly=*/false));
 }
 
-void BrowserChildProcessHostImpl::ShareMetricsAllocatorToProcess() {
-  if (metrics_allocator_) {
-    base::SharedMemoryHandle shm_handle =
-        metrics_allocator_->shared_memory()->handle().Duplicate();
-    Send(new ChildProcessMsg_SetHistogramMemory(
-        shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
-  }
+void BrowserChildProcessHostImpl::RegisterClient(
+    mojom::HistogramControllerClientPtr client,
+    mojom::HistogramController::RegisterClientCallback cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // Call the callback before registering this client with the
+  // HistogramController.
+  std::move(cb).Run(
+      metrics_allocator_
+          ? mojo::WrapSharedMemoryHandle(
+                metrics_allocator_->shared_memory()->handle().Duplicate(),
+                metrics_allocator_->shared_memory()->mapped_size(),
+                false /* read_only */)
+          : mojo::ScopedSharedBufferHandle());
+
+  BrowserThread::PostTask(
+      BrowserThread::UI, FROM_HERE,
+      base::BindOnce(&BrowserChildProcessHostImpl::RegisterClientOnUIThread,
+                     base::Unretained(this), client.PassInterface()));
+}
+
+void BrowserChildProcessHostImpl::RegisterClientOnUIThread(
+    mojom::HistogramControllerClientPtrInfo client_info) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+  mojom::HistogramControllerClientPtr client;
+  client.Bind(std::move(client_info));
+  ::content::HistogramController::GetInstance()->RegisterClient(
+      std::move(client));
 }
 
 void BrowserChildProcessHostImpl::OnProcessLaunchFailed(int error_code) {
