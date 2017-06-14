@@ -1,0 +1,77 @@
+# Chrome Release Cycle
+
+[TOC]
+
+## Overview
+
+Chrome pushes a new stable version to the public every 6 business weeks while
+taking 7 business weeks to stabilize the beta branch.
+
+## Chrome Release Key dates
+
+![Chrome Release Key dates](images/release_cycle.png)
+
+### Feature Freeze
+
+**2 business weeks** on **Friday** before branch point, feature freeze is
+declared! Any feature planned to launch with this milestone should be
+code-complete (its implementation should be done) and enabled on Trunk/Canary
+so that the test team can give initial feedback. By feature freeze, all strings
+must be landed! However, depending on the context and number of strings to be
+translated, changes made to a.grd file could be merged into the release branch.
+
+### Branch Point
+
+**Every 6 business weeks** on **Thursday**, the latest canary is declared as the
+new stabilization branch with a number (used as the branch name) associated with
+it. Feature enhancement should be completed by branch point and all
+ReleaseBlock-Beta bugs should be fixed. Avoid committing big and risky changes
+close to branch point!
+
+### First Beta
+
+**2 business weeks** after branch point on **Thursday** or at the end of the
+2-week branch stabilization period, the first beta release is pushed. However,
+depending on the build quality, we may sometimes delay the initial beta for up
+to a week. During the branch stabilization period, all disabled tests associated
+with the release milestone should be completely addressed. New beta builds are
+pushed weekly until the stable release.
+
+### Stable Cut
+
+**The Thursday** before stable release date, the last build from the beta branch
+is cut as the release build. Stable cut will, unless there are exceptions, use
+the final beta as its basis. All ReleaseBlock-Stable bugs should be fixed by
+stable cut, which consequently corresponds to the absolute last date a merge to
+the release branch should be taken for inclusion in the initial stable release.
+
+### Stable Release
+
+**7 business weeks** on **Tuesday** right after branch point a new major version
+is released. Stable rollout is staged over time so that any issues can be
+detected early and addressed before they reach all users. Each Chrome platform
+has a different stable rollout plan and the schedule below can vary based on
+circumstances:
+
+*  **Desktop**: Desktop consists of three main platforms, Windows, Mac, and
+Linux. Linux is ramped up to 100% immediately. For Mac and Windows follow a
+staged rollout as follows:
+    * 5% deployment ->15% deployment ->50% deployment ->100% deployment.
+*  **Android**: Android releases both Chrome and WebView with each release, and
+follows a pattern similar to:
+    * 1% deployment -> 5% deployment -> 10% deployment -> 50% deployment
+    -> 100% deployment.
+*  **iOS**: iOS follows a phased release with no control over the following
+rollout percentage schedule configurability:
+    * Day 1: 1% -> Day 2: 2% -> Day 3: 5% -> Day 4: 10% -> Day 5: 20%
+    -> Day 6: 50% -> Day 7: 100%.
+
+### Stable Refresh
+
+A Stable refresh is considered as a release of a new Chrome build outside of the
+normal development and release process to fix very critical or high impact bugs
+detected during stable rollout. Except for extremely critical issues like
+security breaches or user data leaks, Chrome stable refresh should not be pushed
+more than **2 business weeks** after the previous Chrome major version has been
+released to the public. In this case, we should consider punting any detected
+production issues to the next release.
