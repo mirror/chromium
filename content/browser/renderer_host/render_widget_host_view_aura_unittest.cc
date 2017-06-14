@@ -27,9 +27,9 @@
 #include "cc/output/compositor_frame.h"
 #include "cc/output/compositor_frame_metadata.h"
 #include "cc/output/copy_output_request.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface.h"
-#include "cc/surfaces/surface_manager.h"
 #include "cc/test/begin_frame_args_test.h"
 #include "cc/test/fake_external_begin_frame_source.h"
 #include "cc/test/fake_surface_observer.h"
@@ -2302,9 +2302,9 @@ TEST_F(RenderWidgetHostViewAuraTest, ReturnedResources) {
 TEST_F(RenderWidgetHostViewAuraTest, TwoOutputSurfaces) {
   cc::FakeSurfaceObserver manager_observer;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  cc::SurfaceManager* manager =
-      factory->GetContextFactoryPrivate()->GetSurfaceManager();
-  manager->AddObserver(&manager_observer);
+  cc::FrameSinkManager* manager =
+      factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+  manager->AddSurfaceObserver(&manager_observer);
 
   gfx::Size view_size(100, 100);
   gfx::Rect view_rect(view_size);
@@ -2342,7 +2342,7 @@ TEST_F(RenderWidgetHostViewAuraTest, TwoOutputSurfaces) {
   view_->renderer_compositor_frame_sink_->Flush();
   EXPECT_TRUE(view_->renderer_compositor_frame_sink_->did_receive_ack());
 
-  manager->RemoveObserver(&manager_observer);
+  manager->RemoveSurfaceObserver(&manager_observer);
 }
 
 // Resizing in fullscreen mode should send the up-to-date screen info.
@@ -2455,8 +2455,8 @@ TEST_F(RenderWidgetHostViewAuraTest, MirrorLayers) {
   cc::SurfaceId id = view_->GetDelegatedFrameHost()->SurfaceIdForTesting();
   if (id.is_valid()) {
     ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-    cc::SurfaceManager* manager =
-        factory->GetContextFactoryPrivate()->GetSurfaceManager();
+    cc::FrameSinkManager* manager =
+        factory->GetContextFactoryPrivate()->GetFrameSinkManager();
     cc::Surface* surface = manager->GetSurfaceForId(id);
     EXPECT_TRUE(surface);
 
@@ -3301,9 +3301,9 @@ TEST_F(RenderWidgetHostViewAuraTest, ForwardsBeginFrameAcks) {
 
   cc::FakeSurfaceObserver observer;
   ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
-  cc::SurfaceManager* surface_manager =
-      factory->GetContextFactoryPrivate()->GetSurfaceManager();
-  surface_manager->AddObserver(&observer);
+  cc::FrameSinkManager* surface_manager =
+      factory->GetContextFactoryPrivate()->GetFrameSinkManager();
+  surface_manager->AddSurfaceObserver(&observer);
 
   view_->SetNeedsBeginFrames(true);
   uint32_t source_id = 10;
@@ -3396,7 +3396,7 @@ TEST_F(RenderWidgetHostViewAuraTest, ForwardsBeginFrameAcks) {
     EXPECT_EQ(ack, observer.last_ack());
   }
 
-  surface_manager->RemoveObserver(&observer);
+  surface_manager->RemoveSurfaceObserver(&observer);
   view_->SetNeedsBeginFrames(false);
 }
 

@@ -6,6 +6,7 @@
 
 #include "base/command_line.h"
 #include "base/sys_info.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/host/frame_sink_manager_host.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/compositor_switches.h"
@@ -14,8 +15,8 @@
 
 namespace {
 
-static viz::FrameSinkManagerHost* g_frame_sink_manager = nullptr;
-static cc::SurfaceManager* g_surface_manager = nullptr;
+static viz::FrameSinkManagerHost* g_frame_sink_manager_host = nullptr;
+static cc::FrameSinkManager* g_frame_sink_manager = nullptr;
 static ui::InProcessContextFactory* g_implicit_factory = nullptr;
 static gl::DisableNullDrawGLBindings* g_disable_null_draw = nullptr;
 
@@ -35,10 +36,10 @@ void InitializeContextFactoryForTests(
     enable_pixel_output = true;
   if (enable_pixel_output)
     g_disable_null_draw = new gl::DisableNullDrawGLBindings;
-  g_frame_sink_manager = new viz::FrameSinkManagerHost;
-  g_surface_manager = new cc::SurfaceManager;
-  g_implicit_factory =
-      new InProcessContextFactory(g_frame_sink_manager, g_surface_manager);
+  g_frame_sink_manager_host = new viz::FrameSinkManagerHost;
+  g_frame_sink_manager = new cc::FrameSinkManager;
+  g_implicit_factory = new InProcessContextFactory(g_frame_sink_manager_host,
+                                                   g_frame_sink_manager);
   g_implicit_factory->SetUseFastRefreshRateForTests();
   *context_factory = g_implicit_factory;
   *context_factory_private = g_implicit_factory;
@@ -50,10 +51,10 @@ void TerminateContextFactoryForTests() {
     delete g_implicit_factory;
     g_implicit_factory = nullptr;
   }
-  delete g_surface_manager;
-  g_surface_manager = nullptr;
   delete g_frame_sink_manager;
   g_frame_sink_manager = nullptr;
+  delete g_frame_sink_manager_host;
+  g_frame_sink_manager_host = nullptr;
   delete g_disable_null_draw;
   g_disable_null_draw = nullptr;
 }

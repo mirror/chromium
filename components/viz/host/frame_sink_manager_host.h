@@ -16,7 +16,6 @@
 
 namespace cc {
 class SurfaceInfo;
-class SurfaceManager;
 }
 
 namespace viz {
