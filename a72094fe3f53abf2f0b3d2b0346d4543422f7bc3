@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a122ac87_8e849fcf",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T02:07:32Z",
+      "side": 1,
+      "message": "Do we need this?  Are we querying this before the menu is built (just checking since it looked like the crash was from CCT).  Instead what do you think about just quitting in setMenuButtonHighlightDrawable() if mMenuButtonWrapper is null?",
+      "range": {
+        "startLine": 87,
+        "startChar": 4,
+        "endLine": 87,
+        "endChar": 37
+      },
+      "revId": "a72094fe3f53abf2f0b3d2b0346d4543422f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
