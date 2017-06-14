@@ -843,6 +843,34 @@ void Resource::FinishPendingClients() {
   DCHECK(clients_awaiting_callback_.IsEmpty() || scheduled);
 }
 
+bool Resource::CanReuse(const FetchParameters& params) const {
+  const ResourceRequest& request = params.GetResourceRequest();
+  // Different fetch request modes result in different load results.
+  if (request.GetFetchRequestMode() !=
+      GetResourceRequest().GetFetchRequestMode()) {
+    return false;
+  }
+
+  // Certain requests (e.g., XHRs) might have manually set headers that require
+  // revalidation. In theory, this should be a Revalidate case. In practice, the
+  // MemoryCache revalidation path assumes a whole bunch of things about how
+  // revalidation works that manual headers violate, so punt to Reload instead.
+  //
+  // Similarly, a request with manually added revalidation headers can lead to a
+  // 304 response for a request that wasn't flagged as a revalidation attempt.
+  // Normally, successful revalidation will maintain the original response's
+  // status code, but for a manual revalidation the response code remains 304.
+  // In this case, the Resource likely has insufficient context to provide a
+  // useful cache hit or revalidation. See http://crbug.com/643659
+  if (request.IsConditional() || GetResponse().HttpStatusCode() == 304)
+    return false;
+
+  if (!params.Options().CanReuseRequest(Options()))
+    return false;
+
+  return true;
+}
+
 void Resource::Prune() {
   DestroyDecodedDataIfPossible();
 }
