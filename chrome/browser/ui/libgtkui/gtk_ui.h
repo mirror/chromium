@@ -15,6 +15,7 @@
 #include "chrome/browser/ui/libgtkui/gtk_signal.h"
 #include "chrome/browser/ui/libgtkui/libgtkui_export.h"
 #include "ui/gfx/color_utils.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/views/linux_ui/linux_ui.h"
 #include "ui/views/window/frame_buttons.h"
 
@@ -153,7 +154,7 @@ class GtkUi : public views::LinuxUI {
   std::string default_font_family_;
   int default_font_size_pixels_ = 0;
   // Bitfield of gfx::Font::Style values.
-  int default_font_style_ = gfx::Font::NORMAL;
+  int default_font_style_ = gfx::TextStyle::NORMAL;
   gfx::Font::Weight default_font_weight_ = gfx::Font::Weight::NORMAL;
   gfx::FontRenderParams default_font_render_params_;
 

@@ -301,7 +301,7 @@ void NotificationViewMD::CreateOrUpdateContextTitleView(
   DCHECK(top_view_);
 
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      -2, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      -2, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
 
   base::string16 sub_title = notification.display_source();
   if (!context_title_view_) {
@@ -319,7 +319,7 @@ void NotificationViewMD::CreateOrUpdateTitleView(
   DCHECK(top_view_ != NULL);
 
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      1, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
 
   int title_character_limit =
       kNotificationWidth * kMaxTitleLines / kMinPixelsPerTitleCharacter;
@@ -352,7 +352,7 @@ void NotificationViewMD::CreateOrUpdateMessageView(
       notification.message(), kMessageCharacterLimit, gfx::WORD_BREAK);
 
   const gfx::FontList& font_list = views::Label().font_list().Derive(
-      1, gfx::Font::NORMAL, gfx::Font::Weight::NORMAL);
+      1, gfx::TextStyle::NORMAL, gfx::Font::Weight::NORMAL);
 
   if (!message_view_) {
     message_view_ = new BoundedLabel(text, font_list);
