@@ -440,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "5d45ef94_62f69223",
+        "filename": "services/resource_coordinator/tracing/coordinator.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-14T15:56:39Z",
+      "side": 1,
+      "message": "I documented the assumption in Coordinator.h.",
+      "parentUuid": "a824a09a_8dfe8cb1",
+      "revId": "1b9eb917be8281b843b1081784c41640cd56b098",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d9abd551_e200e26b",
         "filename": "services/resource_coordinator/tracing/coordinator.h",
         "patchSetId": 3

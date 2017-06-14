@@ -16,6 +16,24 @@
       "revId": "79ab19405efffe2a05a876cf86856c3edaaa39cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4a7de8_bb384b7e",
+        "filename": "services/resource_coordinator/tracing/agent_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-14T15:56:39Z",
+      "side": 1,
+      "message": "Done. I\u0027m wondering if it\u0027s better to use the callback method address directly, like AddDisconnectClosure(\u0026Coordinator::OnTracingStarted, \u003cCALLBACK\u003e) ...",
+      "parentUuid": "6efab65c_07c662be",
+      "revId": "79ab19405efffe2a05a876cf86856c3edaaa39cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
