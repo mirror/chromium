@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "08283a86_88f42be2",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "\u003d default",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbfe7136_19752ec6",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "\u003ddefault",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67f9313f_27d6d4a9",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "It would be nice to not have to copy on return here. However the tricky part is when |touch_action| is not in the map, cuz we\u0027d have to return a reference to *something*. I\u0027ve seen this solved by keeping a static empty Region in the file, and returning that when the map find fails.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb2c7890_f6507e1d",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "This will insert if there\u0027s nothing in the map, prefer to use find()",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f41418ae_870fd401",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "if the maps are equal the regions have to be equal right? do we need to compare region_ in any cases?",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41f88772_9f0becf4",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "I think this is now an implementation detail of the TouchActionRegion, so either make it private in there, or just use base::flat_map directly (I lean toward the latter, as it makes code read more clear, and you can use `auto` in places that would be verbose usually)\n\nhttps://google.github.io/styleguide/cppguide.html#Aliases \"Don\u0027t put an alias in your public API just to save typing in the implementation; do so only if you intend it to be used by your clients.\"",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fdae0b_f18acb68",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "Let\u0027s put this in its own file, it\u0027s not part of the Layer class.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13b3d3c0_ea838d56",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "I\u0027m going to spam a few style guide links hope you don\u0027t mind :) https://google.github.io/styleguide/cppguide.html#Copyable_Movable_Types has a few things relevant here.\n\nCan we make this movable too? Because moving a map is much better than copying it, it is worth to add. \"If your type is copyable, do not define move operations unless they are significantly more efficient than the corresponding copy operations\", is the case for flat_map.\n\nThat\u0027d involve adding a move constructor (take an rvalue ref). Adding a operator\u003d for an rvalue ref.\n\nA copy or move constructor should always come with an operator\u003d to match, so this is missing the copy operator\u003d right now. \"If you define a copy or move constructor, define the corresponding assignment operator, and vice-versa.\"",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "446d0fc1_5668fc69",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "TouchAction is a primitive type (an enum) so you can pass it by value",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29dd4e12_27443b8e",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "You can make simple accessors inline in the header, it allows them to be inlined more easily by the compiler.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ba41245_03078a6c",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "How about SetTouchActionRegion, since that is what we\u0027re doing now? Or would that lose contextual meaning? If you agree, then also the member variable would be |touch_action_region_|.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8366a907_d2412871",
+        "filename": "cc/layers/layer.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "If you agree with the above, then this could be touch_action_region() to match.\n\nCan you return a const\u0026 so that calling this does not copy the structure by default? This is different than a parameter which we\u0027re making pass-by-value, because here we\u0027re returning something and we\u0027re not moving the member variable into the return. So if the caller wants to own the result it will have to do a copy, but if it does not then we don\u0027t want to force a copy which this would do. Whereas for the parameter we\u0027re always copying into the member var, so forcing a copy isn\u0027t worse, and it enables callers to move.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84d40707_f5aff3ce",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "This isn\u0027t desirable, but we can fix it by moving the new class to its own file",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64336188_f995ce6a",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "Same thought about names here for the method and variable names",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25606a03_7d1fa80a",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 19
+      },
+      "lineNbr": 327,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "move() this to avoid copying twice",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef7508e5_f4122674",
+        "filename": "cc/trees/debug_rect_history.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "You could leave a TODO here that we could iterate each of the TouchActions and show their individual regions separately instead of combining them all.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f615304e_6dbacd98",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 19
+      },
+      "lineNbr": 991,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T22:39:20Z",
+      "side": 1,
+      "message": "if you pass a variable with std::move() (as done on L971), unless the type defines otherwise, you have to treat it as being in a \"valid but undefined\" state. so any operations that depend on its current state (such as reading state, or Union in this case) are not valid. you should not move() it above if you want to have both rects in the region, but I notice before the test did not do that. So maybe you want to assign an empty TouchActionRegion() to it first to reset its state to something defined before Union.",
+      "revId": "6e3b1ad2f8b5982db08a8e303ec4f168011a66b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
