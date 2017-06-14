@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3946c03_726bd257",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "i think you could reset the directory_ and file_system_ inside the !database_ condition",
+      "range": {
+        "startLine": 579,
+        "startChar": 7,
+        "endLine": 579,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f513ac0_df05645f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "this comment is stale now, maybe the DCHECK should be changed to an assignment?",
+      "range": {
+        "startLine": 596,
+        "startChar": 40,
+        "endLine": 596,
+        "endChar": 51
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac0941fc_13fd1cf8",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "if we get into a state where no commit succeeds, i think could end up repeatedly deleting/recrateing databases, tried_to_recreate_ is about defending against that sort of pathology",
+      "range": {
+        "startLine": 758,
+        "startChar": 6,
+        "endLine": 758,
+        "endChar": 26
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff1df5e1_4d3885cf",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "Another option could be to let the existing wrapper run detached from a backing store, functioning out of its in-memory map only. When all consumers go away, the next page to touch localStorage for that origin will start afresh with an empty area that will persist new changes.",
+      "range": {
+        "startLine": 780,
+        "startChar": 22,
+        "endLine": 780,
+        "endChar": 30
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4519b53e_32950c22",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "it took me a while to understand what the test was doing at each step, some comments describing the state you expect the wrapper to be in along the way might help",
+      "range": {
+        "startLine": 1050,
+        "startChar": 47,
+        "endLine": 1050,
+        "endChar": 70
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6bf123c_6e548431",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "since you\u0027ve satisfied the open_request, maybe clear the vector",
+      "range": {
+        "startLine": 1081,
+        "startChar": 25,
+        "endLine": 1081,
+        "endChar": 33
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2da461cc_4cc6cf59",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "comment on the reason for putting and flushing multiple times",
+      "range": {
+        "startLine": 1086,
+        "startChar": 22,
+        "endLine": 1086,
+        "endChar": 24
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c72b0ba7_203f4c93",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "maybe EXPECT_TRUE(open_requests_.size() \u003d\u003d 2), i think the context should have started DeleteAndRecreate process, but we haven\u0027t yet satisfied it\u0027s open request\n\nmaybe add expectations for LevelDBObserver too, one KeyAdded and 19 KeyChanges",
+      "range": {
+        "startLine": 1098,
+        "startChar": 2,
+        "endLine": 1098,
+        "endChar": 14
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bef7ecc_4637d918",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "comment on why you expect a result at this point",
+      "range": {
+        "startLine": 1107,
+        "startChar": 4,
+        "endLine": 1107,
+        "endChar": 15
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c7c9364_4e9a4d0f",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "might want to throw away the commit batch no matter what, presumably the db is different so the delta represented in any commit batch won\u0027t apply to the new db",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64431e94_2f7f0233",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "is the test for !commit_batch_ sufficient, this line might not be needed although i see the dcheck here is no longer valid, maybe just remove the dcheck and not add the new early return",
+      "range": {
+        "startLine": 433,
+        "startChar": 7,
+        "endLine": 433,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25517302_f8d0ff96",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-14T01:07:37Z",
+      "side": 1,
+      "message": "hmmm... at this point, we\u0027ve lost the changes in any commit_batch_ that failed",
+      "range": {
+        "startLine": 485,
+        "startChar": 13,
+        "endLine": 485,
+        "endChar": 22
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
