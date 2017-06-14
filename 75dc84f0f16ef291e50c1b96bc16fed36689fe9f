@@ -22,6 +22,108 @@
       "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c52a4d0c_0a63b652",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"after the branch point\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf01c748_3f0eb57c",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"before the stable release date\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aefe003_9eef3097",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"The stable cut\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8c42a18_fd6f3416",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"the stable cut\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf372f4e_b5fa9bf7",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"The stable rollout\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad676459_d0a1b1d5",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003232
+      },
+      "writtenOn": "2017-06-14T23:41:14Z",
+      "side": 1,
+      "message": "\"a Chrome stable refresh\"",
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
