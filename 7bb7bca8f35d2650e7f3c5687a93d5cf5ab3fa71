@@ -142,6 +142,24 @@
     },
     {
       "key": {
+        "uuid": "1cf8a509_4b997c67",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:43:24Z",
+      "side": 1,
+      "message": "That\u0027s what DCHECK is for, so let\u0027s do that instead?",
+      "parentUuid": "225e356d_000cbd16",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c081ec14_222a98f7",
         "filename": "components/viz/host/frame_sink_manager_host.cc",
         "patchSetId": 4
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "We don\u0027t call UnregisterFrameSinkHierarchy() when reparenting so that wouldn\u0027t work.",
       "parentUuid": "e5973874_be190f80",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d4fd3c04_8b8d0bc0",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:43:24Z",
+      "side": 1,
+      "message": "Oh I see, can you mention in the .h in a comment that this can be used in that way?",
+      "parentUuid": "000f03f3_f30e556e",
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -282,6 +318,24 @@
     },
     {
       "key": {
+        "uuid": "166c8c0d_581926f6",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:43:24Z",
+      "side": 1,
+      "message": "Cool!! Does it need to be separate from this?",
+      "parentUuid": "c1be8de1_8961a49e",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fdb003a_1d2c49c0",
         "filename": "components/viz/host/frame_sink_manager_host.h",
         "patchSetId": 4
@@ -311,6 +365,24 @@
       "side": 1,
       "message": "Ideally, we wouldn\u0027t call register before create and that would be enforced. We don\u0027t actually call create normally though, since most things don\u0027t use FSMH, so that can\u0027t be enforced yet.",
       "parentUuid": "2fdb003a_1d2c49c0",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "859a7e64_aed1ecbf",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T16:43:24Z",
+      "side": 1,
+      "message": "Hm, can we put that guidance then and a TODO perhaps if we wanna enforce it eventually?",
+      "parentUuid": "f83d9f7d_4cd55a7d",
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
