@@ -13,6 +13,7 @@
 #include "base/run_loop.h"
 #include "cc/ipc/mojo_compositor_frame_sink.mojom.h"
 #include "cc/output/compositor_frame.h"
+#include "content/browser/compositor/surface_utils.h"
 #include "content/browser/compositor/test/no_transport_image_transport_factory.h"
 #include "content/browser/renderer_host/offscreen_canvas_surface_impl.h"
 #include "testing/gmock/include/gmock/gmock.h"
@@ -152,8 +153,8 @@ class OffscreenCanvasProviderImplTest : public testing::Test {
     // The FrameSinkManager implementation is in-process here for tests.
     frame_sink_manager_ =
         base::MakeUnique<viz::MojoFrameSinkManager>(false, nullptr);
-    viz::FrameSinkManagerHost::ConnectWithInProcessFrameSinkManager(
-        frame_sink_manager_host_.get(), frame_sink_manager_.get());
+    ConnectWithInProcessFrameSinkManager(frame_sink_manager_host_.get(),
+                                         frame_sink_manager_.get());
 
     provider_ = base::MakeUnique<OffscreenCanvasProviderImpl>(
         frame_sink_manager_host_.get(), kRendererClientId);
