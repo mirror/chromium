@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "087e3163_f4c9803a",
+        "filename": "components/history/core/browser/top_sites_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 531,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-14T10:30:18Z",
+      "side": 0,
+      "message": "SetPageThumbnailNoDB (now SetPageThumbnailInCache) DCHECKs that the URL is known, so this check isn\u0027t necessary.",
+      "range": {
+        "startLine": 531,
+        "startChar": 31,
+        "endLine": 531,
+        "endChar": 0
+      },
+      "revId": "e2d1d93c5b61ce06be4b0620b7e40429365e3582",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
