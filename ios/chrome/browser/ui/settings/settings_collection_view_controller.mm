@@ -58,7 +58,6 @@
 #import "ios/chrome/browser/ui/settings/cells/account_signin_item.h"
 #import "ios/chrome/browser/ui/settings/content_settings_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/material_cell_catalog_view_controller.h"
-#import "ios/chrome/browser/ui/settings/native_apps_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/privacy_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/save_passwords_collection_view_controller.h"
 #import "ios/chrome/browser/ui/settings/search_engine_settings_collection_view_controller.h"
@@ -112,7 +111,6 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeSearchEngine,
   ItemTypeSavedPasswords,
   ItemTypeAutofill,
-  ItemTypeNativeApps,
   ItemTypeVoiceSearch,
   ItemTypePrivacy,
   ItemTypeContentSettings,
@@ -361,10 +359,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       toSectionWithIdentifier:SectionIdentifierBasics];
   [model addItem:[self autoFillDetailItem]
       toSectionWithIdentifier:SectionIdentifierBasics];
-  if (experimental_flags::IsNativeAppLauncherEnabled()) {
-    [model addItem:[self nativeAppsDetailItem]
-        toSectionWithIdentifier:SectionIdentifierBasics];
-  }
 
   // Advanced Section
   [model addSectionWithIdentifier:SectionIdentifierAdvanced];
@@ -493,13 +487,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
                     detailText:autofillDetail];
 
   return _autoFillDetailItem;
-}
-
-- (CollectionViewItem*)nativeAppsDetailItem {
-  return [self
-      detailItemWithType:ItemTypeNativeApps
-                    text:l10n_util::GetNSString(IDS_IOS_GOOGLE_APPS_SM_SETTINGS)
-              detailText:nil];
 }
 
 - (CollectionViewItem*)voiceSearchDetailItem {
@@ -757,11 +744,6 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
     case ItemTypeAutofill:
       controller = [[AutofillCollectionViewController alloc]
           initWithBrowserState:_mainBrowserState];
-      break;
-    case ItemTypeNativeApps:
-      controller = [[NativeAppsCollectionViewController alloc]
-          initWithURLRequestContextGetter:_currentBrowserState
-                                              ->GetRequestContext()];
       break;
     case ItemTypeVoiceSearch:
       controller = [[VoicesearchCollectionViewController alloc]
