@@ -522,13 +522,7 @@ class MockUpdateProviderVisitor : public MockProviderVisitor {
 class ExtensionServiceTest
     : public extensions::ExtensionServiceTestWithInstall {
  public:
-  ExtensionServiceTest() {
-    // The extension subsystem posts logging tasks to be done after
-    // browser startup. There's no StartupObserver as there normally
-    // would be since we're in a unit test, so we have to explicitly
-    // note tasks should be processed.
-    AfterStartupTaskUtils::SetBrowserStartupIsCompleteForTesting();
-  }
+  ExtensionServiceTest() = default;
 
   MockExternalProvider* AddMockExternalProvider(Manifest::Location location) {
     auto provider = base::MakeUnique<MockExternalProvider>(service(), location);
