@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21e38100_b4a77a8c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "typo",
+      "range": {
+        "startLine": 13,
+        "startChar": 4,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d58fd4_2446c204",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "make final?",
+      "range": {
+        "startLine": 42,
+        "startChar": 12,
+        "endLine": 42,
+        "endChar": 33
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e34cf035_b38e034c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "could be a plain ImageRequest, also update the name to [thumbnail|image]Request or similar",
+      "range": {
+        "startLine": 59,
+        "startChar": 50,
+        "endLine": 59,
+        "endChar": 68
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f46fe6f1_848fcb27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "mSuggestion",
+      "range": {
+        "startLine": 61,
+        "startChar": 27,
+        "endLine": 61,
+        "endChar": 35
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6884aa74_15ee9f56",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "suggestion",
+      "range": {
+        "startLine": 84,
+        "startChar": 53,
+        "endLine": 84,
+        "endChar": 60
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4d48c7_d1da9b06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "can\u0027t this be private? Also, you should be able to use mArticle/mSuggestion instead of passing it in.",
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17d8db06_20485721",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "same as above",
+      "range": {
+        "startLine": 117,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 28
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3d3fff7_6c065434",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "You are never setting the request to something, so that it can be cancelled.",
+      "range": {
+        "startLine": 183,
+        "startChar": 22,
+        "endLine": 183,
+        "endChar": 50
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "515626d9_77da9ced",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "We don\u0027t make assumptions about the way the fields are displayed, so I\u0027d recommend not using \"card\" here. Maybe rename to \"updateFieldsVisibility\" ?",
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5cda94e_5fc15e06",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsBinder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T14:13:09Z",
+      "side": 1,
+      "message": "Will need to be updated depending on the other review. Moving code like that is a common way to lose changes.",
+      "range": {
+        "startLine": 286,
+        "startChar": 18,
+        "endLine": 286,
+        "endChar": 40
+      },
+      "revId": "9c5b77be9c8818afdd786d0322b1ef40c1b6bbb4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
