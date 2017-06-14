@@ -1263,7 +1263,10 @@ config("no_chromium_code") {
     if (is_clang && !is_nacl) {
       # TODO(thakis): Remove !is_nacl once
       # https://codereview.webrtc.org/1552863002/ made its way into chromium.
-      cflags += [ "-Wall" ]
+      cflags += [
+        "-Wall",
+        "-Wextra-semi",
+      ]
     }
   }
 
