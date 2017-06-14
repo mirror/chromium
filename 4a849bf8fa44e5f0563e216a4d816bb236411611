@@ -1,0 +1,510 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4c619b4a_ebe49825",
+        "filename": "components/ntp_snippets/content_suggestion.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "Nits:\n1) {} around one line |if| body.\n2) There is a nice idiom for writing comparators:\nif (left.category().id() !\u003d right.category().id()) {\n return left.category().id() \u003c right.category().id()\n}",
+      "range": {
+        "startLine": 54,
+        "startChar": 2,
+        "endLine": 57,
+        "endChar": 17
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6e9eb1e_254ddc54",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "s/categories/suggestions?\n\nWhy is this in ContentSuggestion::ID? If this is intended, the name ContentSuggestion::ID::CompareByID feels strange.\n\nUPD: indeed, you have this for std::map. Then s/categories/suggestions ids? Also change the name (but I am not sure how)?",
+      "range": {
+        "startLine": 84,
+        "startChar": 68,
+        "endLine": 85,
+        "endChar": 64
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2880ae27_a627f467",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "You can\u0027t use this directly to order ContentSuggestion.",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 45
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "602242da_229f4d70",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "nit: implementing |ArchiveSuggestion| and using it here feels more natural.",
+      "range": {
+        "startLine": 74,
+        "startChar": 32,
+        "endLine": 74,
+        "endChar": 50
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1088055d_15f98482",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "You need to update this comment.\n\n1) It is very non-obvious why we need to store a dismissed suggestion. I would move the explanation at the front.\n2) \"locally\" is ambiguous, does it mean inside the service or the archive? If the latter, \"e.g. if it was sent to UI through |Fetch|\" is not true.\n3) s/localy/locally",
+      "range": {
+        "startLine": 394,
+        "startChar": 0,
+        "endLine": 396,
+        "endChar": 36
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "563f4793_06addbe1",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 453,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "TODO?",
+      "range": {
+        "startLine": 453,
+        "startChar": 2,
+        "endLine": 453,
+        "endChar": 4
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5f43b09_2d9705d4",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 510,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "a comment explaining why? I.e. previously opened surfaces.",
+      "range": {
+        "startLine": 510,
+        "startChar": 2,
+        "endLine": 510,
+        "endChar": 77
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5278144_da28ec73",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "Do you really want to allow clients of this interface to edit archived suggestions?",
+      "range": {
+        "startLine": 661,
+        "startChar": 0,
+        "endLine": 661,
+        "endChar": 18
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47c880ed_0f8e1e40",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "what if this category is not in the list anymore?",
+      "range": {
+        "startLine": 664,
+        "startChar": 32,
+        "endLine": 664,
+        "endChar": 56
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83319146_e4f6a314",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "What if the category is not present?",
+      "range": {
+        "startLine": 681,
+        "startChar": 32,
+        "endLine": 681,
+        "endChar": 56
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7390d28_86994d39",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "That\u0027s how it can be used, but not what it does. It keeps suggestions which it is given.",
+      "range": {
+        "startLine": 47,
+        "startChar": 47,
+        "endLine": 48,
+        "endChar": 12
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c1cdbcb_defb5162",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "and",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 47
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7885e9f2_08c73227",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "So why not a separate file?",
+      "range": {
+        "startLine": 50,
+        "startChar": 6,
+        "endLine": 50,
+        "endChar": 31
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "323e54a2_03d3f9b7",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "This does not bring any value (the same below). Instead, you should say what happens if you insert the same ID twice.",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 39
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af019223_10a2480a",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "suggestions",
+      "range": {
+        "startLine": 63,
+        "startChar": 57,
+        "endLine": 63,
+        "endChar": 67
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea720a4_edb1ccf6",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "My concerns:\n1) This may grow indefinitely.\n2) If we are going this way, is this solution good enough? For example, we could store suggestions per surface for all surfaces with some refcounting, listen to surfaces being closed and do garbage collection for real. It would be a shame to find out that the approach above consumes too much memory and then implement something more complex.\n3) Below I\u0027ve got an impression that this is meant for \"previous\" surfaces, while the comment above is about \"all\" surfaces. \"Previous\" surfaces are cumbersome to define, so it may be worth storing indeed \"all\" surfaces and do lookups only in archive.\n4) It may be worth pointing why in-memory solution is reasonable. I did not know that after a restart one gets only 1 NTP no matter how many there were before.",
+      "range": {
+        "startLine": 74,
+        "startChar": 0,
+        "endLine": 74,
+        "endChar": 2
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9409aec1_d61324ff",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "Isn\u0027t this an implementation detail? It should rather be \"from any surface\".",
+      "range": {
+        "startLine": 346,
+        "startChar": 5,
+        "endLine": 346,
+        "endChar": 22
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ceaae6d0_7fe37827",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "You should probably say something about the new argument here.",
+      "range": {
+        "startLine": 349,
+        "startChar": 2,
+        "endLine": 349,
+        "endChar": 4
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3396d64_7a51748a",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "Not your doing, but this is a private implementation detail (especially the variable name).",
+      "range": {
+        "startLine": 349,
+        "startChar": 31,
+        "endLine": 349,
+        "endChar": 73
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d43ac7be_c38cd72b",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 352,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "The name is a bit confusing.\nIt feels like it should have been \"remove_from_archive\".\nI would rename to \"move_to_archive\".",
+      "range": {
+        "startLine": 352,
+        "startChar": 33,
+        "endLine": 352,
+        "endChar": 52
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f795c2c_2214ef7c",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "I think it is important to clearly explain the difference between suggestions_by_category_ and archived suggestions. Currently the comments may be misleading. For example, how to interpret \"all *current* suggestions\" and \"*previous* content suggestions\"? In my view, the former is what the user sees on new surfaces, the latter contains suggestions which were/are present on any surface, but not present in |suggestions_by_category_|.",
+      "range": {
+        "startLine": 414,
+        "startChar": 0,
+        "endLine": 422,
+        "endChar": 37
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e8d4808_a1bf4e4c",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T09:00:20Z",
+      "side": 1,
+      "message": "The name is not explicit enough.",
+      "range": {
+        "startLine": 422,
+        "startChar": 28,
+        "endLine": 422,
+        "endChar": 36
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
