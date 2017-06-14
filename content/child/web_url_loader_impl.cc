@@ -1107,6 +1107,8 @@ void WebURLLoaderImpl::PopulateURLResponse(const GURL& url,
 
   SetSecurityStyleAndDetails(url, info, response, report_security_info);
 
+  response->SetIsSameOrigin(info.is_same_origin);
+
   WebURLResponseExtraDataImpl* extra_data =
       new WebURLResponseExtraDataImpl(info.alpn_negotiated_protocol);
   response->SetExtraData(extra_data);

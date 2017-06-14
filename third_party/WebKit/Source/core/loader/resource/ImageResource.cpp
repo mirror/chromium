@@ -589,6 +589,10 @@ bool ImageResource::IsAccessAllowed(
   if (does_current_frame_has_single_security_origin !=
       ImageResourceInfo::kHasSingleSecurityOrigin)
     return false;
+
+  // TODO(hintzed) ResourceDispatcher would need to care about unique origins
+  if (GetResponse().IsSameOrigin())
+    return true;
   if (PassesAccessControlCheck(security_origin))
     return true;
   return !security_origin->TaintsCanvas(GetResponse().Url());
