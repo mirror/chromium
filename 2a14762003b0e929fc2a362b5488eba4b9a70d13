@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "73afd851_5d7c794d",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1003321
+      },
+      "writtenOn": "2017-06-14T03:30:46Z",
+      "side": 1,
+      "message": "I\u0027m not too familiar with mojo yet, but yeah, this seems like it\u0027s perfectly safe.",
+      "parentUuid": "b1c2c637_80d9eda4",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9926f18_e094ba55",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 4
