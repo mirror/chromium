@@ -4,10 +4,16 @@
 
 package org.chromium.chrome.browser.suggestions;
 
+import android.os.SystemClock;
 import android.support.v7.widget.RecyclerView;
 
+import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.chrome.browser.ntp.snippets.FaviconFetchResult;
+import org.chromium.chrome.browser.ntp.snippets.SnippetArticle;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Exposes methods to report suggestions related events, for UMA or Fetch scheduling purposes.
@@ -58,6 +64,22 @@ public abstract class SuggestionsMetrics {
 
     public static void recordActionViewAll() {
         RecordUserAction.record("Suggestions.Category.ViewAll");
+    }
+
+    static void recordFaviconFetchTime(long faviconFetchStartTimeMs) {
+        RecordHistogram.recordMediumTimesHistogram(
+                "NewTabPage.ContentSuggestions.ArticleFaviconFetchTime",
+                SystemClock.elapsedRealtime() - faviconFetchStartTimeMs, TimeUnit.MILLISECONDS);
+    }
+
+    static void recordFaviconFetchResult(SnippetArticle suggestion, @FaviconFetchResult int result,
+            long faviconFetchStartTimeMs) {
+        // Record the histogram for articles only to have a fair comparision.
+        if (!suggestion.isArticle()) return;
+        RecordHistogram.recordEnumeratedHistogram(
+                "NewTabPage.ContentSuggestions.ArticleFaviconFetchResult", result,
+                FaviconFetchResult.COUNT);
+        recordFaviconFetchTime(faviconFetchStartTimeMs);
     }
 
     /**
