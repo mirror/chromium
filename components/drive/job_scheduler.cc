@@ -176,6 +176,17 @@ struct JobScheduler::ResumeUploadParams {
   std::string content_type;
 };
 
+JobScheduler::JobScheduler(
+    PrefService* pref_service,
+    EventLogger* logger,
+    DriveServiceInterface* drive_service,
+    base::SequencedTaskRunner* blocking_task_runner,
+    std::unique_ptr<service_manager::Connector> connector)
+    : JobScheduler(pref_service, logger, drive_service, blocking_task_runner) {
+  uploader_.reset(new DriveUploader(drive_service, blocking_task_runner,
+                                    std::move(connector)));
+}
+
 JobScheduler::JobScheduler(PrefService* pref_service,
                            EventLogger* logger,
                            DriveServiceInterface* drive_service,
