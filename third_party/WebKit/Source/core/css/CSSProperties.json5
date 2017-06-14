@@ -2627,7 +2627,7 @@
       type_name: "EMarginCollapse",
       field_template: "storage_only",
       field_group: "rare-non-inherited",
-      default_value: "kMarginCollapseCollapse",
+      default_value: "EMarginCollapse::kCollapse",
       field_size: 2,
     },
     {
@@ -2635,7 +2635,7 @@
       type_name: "EMarginCollapse",
       field_template: "storage_only",
       field_group: "rare-non-inherited",
-      default_value: "kMarginCollapseCollapse",
+      default_value: "EMarginCollapse::kCollapse",
       field_size: 2,
     },
     {
