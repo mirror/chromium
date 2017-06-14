@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "fddcd4b0_eaa7239d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-14T22:09:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5613cded_3eebbd47",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6a8ae13_dad5e26d",
         "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
         "patchSetId": 11
@@ -51,6 +69,24 @@
       "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27432f53_ad22ac4a",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-14T22:09:55Z",
+      "side": 1,
+      "message": "Added a comment. Let me know if this isn\u0027t the type of explanation you wanted?\n\nThanks!",
+      "parentUuid": "341a58de_f37c0815",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
