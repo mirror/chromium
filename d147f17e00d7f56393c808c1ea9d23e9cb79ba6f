@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "4c26845e_83dacd28",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-14T07:10:53Z",
+      "side": 1,
+      "message": "Both before and after this change we\u0027re on the parent context thread when we call WorkerThreadTerminated, so threading should be fine.  Reg: why this was async I suppose it\u0027s primarily because WorkerThreadTerminated may delete this, and anyone calls this method needs to take care of that otherwise.",
+      "parentUuid": "86036cc2_8c614f8b",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ecf02f8_92836658",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -155,6 +173,24 @@
       "side": 1,
       "message": "My question is about Case 1.\n\nHow is it possible that ParentObejctDestroyed() gets called in the first place? Given that ThreadedMessagingProxyBase is holding a strong reference to the parent object, the parent object wouldn\u0027t get destructed in the first place.",
       "parentUuid": "e1248161_e76d03fe",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0801aa8_47e72ae0",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-14T07:10:53Z",
+      "side": 1,
+      "message": "That\u0027s the reason hiroki made it WeakMember I guess?",
+      "parentUuid": "dfca09d1_65b67d38",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
