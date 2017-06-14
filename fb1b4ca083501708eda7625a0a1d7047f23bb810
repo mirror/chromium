@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9ec05212_782b85ea",
+        "filename": "base/threading/sequenced_worker_pool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-14T16:44:33Z",
+      "side": 1,
+      "message": "Right, I\u0027ll do it in steps, just didn\u0027t feel like this TODO had to be specific. I plan to:\n1) Enable redirect in unit-tests\n2) Attempt to remove Enable*() and just have it always on.\n3) Remove the SWP\u0027s worker code.",
+      "parentUuid": "35302405_52c17e33",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 63
+      },
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "32b54920_5f4278fe",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 3
@@ -60,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "da7a79a3_87cdef90",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-14T16:44:33Z",
+      "side": 1,
+      "message": "Ok will do in follow-up CL since it may have repercussions and I don\u0027t want this whole CL to be reverted",
+      "parentUuid": "c893f63e_115cf77f",
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "55a6d774_73c9455d",
         "filename": "ios/web/app/web_main_loop.mm",
         "patchSetId": 3
@@ -80,6 +122,30 @@
       "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0941ddc0_6595292b",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-14T16:44:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "55a6d774_73c9455d",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 78
+      },
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
