@@ -141,6 +141,23 @@
     },
     {
       "key": {
+        "uuid": "63a84343_3df11715",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:09:14Z",
+      "side": 1,
+      "message": "Nit: Can we just \u003ddefault these in the .h?",
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94c2e653_3d54e35b",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
@@ -181,6 +198,23 @@
         "endLine": 77,
         "endChar": 51
       },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c36d78a9_b14c22ea",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:09:14Z",
+      "side": 1,
+      "message": "Nit: While here: Maybe fix this up to use MakeUnique instead",
       "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
