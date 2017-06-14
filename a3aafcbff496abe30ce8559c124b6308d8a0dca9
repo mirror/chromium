@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3df5c1d_b6a8050f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T18:23:53Z",
+      "side": 1,
+      "message": "This should be in OnItemUpdated if state \u003d\u003d COMPLETE or WATCHDOG?",
+      "range": {
+        "startLine": 263,
+        "startChar": 2,
+        "endLine": 263,
+        "endChar": 24
+      },
+      "revId": "a3aafcbff496abe30ce8559c124b6308d8a0dca9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
