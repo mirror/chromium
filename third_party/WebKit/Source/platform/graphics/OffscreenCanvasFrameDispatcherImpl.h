@@ -16,6 +16,10 @@
 #include "platform/graphics/StaticBitmapImage.h"
 #include "platform/wtf/Compiler.h"
 
+namespace gfx {
+class GpuMemoryBuffer;
+}
+
 namespace blink {
 
 class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
@@ -23,12 +27,18 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
       NON_EXPORTED_BASE(
           public cc::mojom::blink::MojoCompositorFrameSinkClient) {
  public:
+  enum GpuMemoryBufferMode {
+    UseGpuMemoryBuffer,
+    DontUseGpuMemoryBuffer,
+  };
+
   OffscreenCanvasFrameDispatcherImpl(OffscreenCanvasFrameDispatcherClient*,
                                      uint32_t client_id,
                                      uint32_t sink_id,
                                      int canvas_id,
                                      int width,
-                                     int height);
+                                     int height,
+                                     GpuMemoryBufferMode);
 
   // OffscreenCanvasFrameDispatcher implementation.
   ~OffscreenCanvasFrameDispatcherImpl() final;
@@ -52,9 +62,9 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   // This enum is used in histogram, so it should be append-only.
   enum OffscreenCanvasCommitType {
     kCommitGPUCanvasGPUCompositing = 0,
-    kCommitGPUCanvasSoftwareCompositing = 1,
-    kCommitSoftwareCanvasGPUCompositing = 2,
     kCommitSoftwareCanvasSoftwareCompositing = 3,
+    kCommitGPUCanvasGPUMemoryBuffer = 4,
+    kCommitSoftwareCanvasGPUMemoryBuffer = 5,
     kOffscreenCanvasCommitTypeCount,
   };
 
@@ -100,15 +110,22 @@ class PLATFORM_EXPORT OffscreenCanvasFrameDispatcherImpl final
   cc::mojom::blink::MojoCompositorFrameSinkPtr sink_;
   mojo::Binding<cc::mojom::blink::MojoCompositorFrameSinkClient> binding_;
 
+  std::unique_ptr<gfx::GpuMemoryBuffer> gpu_memory_buffer_;
+  gfx::BufferUsage buffer_usage_;
+  gfx::BufferFormat buffer_format_;
+  GpuMemoryBufferMode gpu_memory_buffer_mode_;
+
   int placeholder_canvas_id_;
 
   cc::BeginFrameAck current_begin_frame_ack_;
 
-  void SetTransferableResourceToSharedBitmap(cc::TransferableResource&,
+  bool SetTransferableResourceToSharedBitmap(cc::TransferableResource&,
                                              RefPtr<StaticBitmapImage>);
-  void SetTransferableResourceToSharedGPUContext(cc::TransferableResource&,
-                                                 RefPtr<StaticBitmapImage>);
-  void SetTransferableResourceToStaticBitmapImage(cc::TransferableResource&,
+  bool SetTransferableResourceToGpuMemoryBuffer(cc::TransferableResource&,
+                                                RefPtr<StaticBitmapImage>,
+                                                const SkIRect& damage_rect,
+                                                bool image_uses_gpu);
+  bool SetTransferableResourceToStaticBitmapImage(cc::TransferableResource&,
                                                   RefPtr<StaticBitmapImage>);
 };
 

@@ -229,14 +229,36 @@ bool OffscreenCanvas::IsAccelerated() const {
   return context_ && context_->IsAccelerated();
 }
 
+bool OffscreenCanvas::ShouldUseGpuMemoryBuffer() const {
+  DCHECK(context_);
+  if (!Platform::Current()->IsGPUCompositingEnabled())
+    return false;
+
+  if (!context_->IsAccelerated())
+    return true;
+
+  if (context_->Is2d())
+    return RuntimeEnabledFeatures::Canvas2dImageChromiumEnabled();
+
+  if (context_->Is3d())
+    return RuntimeEnabledFeatures::WebGLImageChromiumEnabled();
+  NOTREACHED();
+  return false;
+}
+
 OffscreenCanvasFrameDispatcher* OffscreenCanvas::GetOrCreateFrameDispatcher() {
   if (!frame_dispatcher_) {
+    OffscreenCanvasFrameDispatcherImpl::GpuMemoryBufferMode mode =
+        ShouldUseGpuMemoryBuffer()
+            ? OffscreenCanvasFrameDispatcherImpl::UseGpuMemoryBuffer
+            : OffscreenCanvasFrameDispatcherImpl::DontUseGpuMemoryBuffer;
+
     // The frame dispatcher connects the current thread of OffscreenCanvas
     // (either main or worker) to the browser process and remains unchanged
     // throughout the lifetime of this OffscreenCanvas.
     frame_dispatcher_ = WTF::WrapUnique(new OffscreenCanvasFrameDispatcherImpl(
         this, client_id_, sink_id_, placeholder_canvas_id_, size_.Width(),
-        size_.Height()));
+        size_.Height(), mode));
   }
   return frame_dispatcher_.get();
 }
