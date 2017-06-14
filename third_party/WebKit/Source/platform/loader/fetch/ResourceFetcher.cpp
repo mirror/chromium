@@ -890,7 +890,7 @@ Resource* ResourceFetcher::MatchPreload(const FetchParameters& params,
     return resource;
   }
 
-  if (!IsReusableAlsoForPreloading(params, resource, false))
+  if (!IsReusableAlsoForPreloading(params, resource))
     return nullptr;
 
   resource->DecreasePreloadCount();
@@ -918,9 +918,9 @@ void ResourceFetcher::InsertAsPreloadIfNecessary(Resource* resource,
   }
 }
 
-bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
-                                                  Resource* existing_resource,
-                                                  bool is_static_data) const {
+bool ResourceFetcher::IsReusableAlsoForPreloading(
+    const FetchParameters& params,
+    Resource* existing_resource) const {
   const ResourceRequest& request = params.GetResourceRequest();
   // Do not load from cache if images are not enabled. There are two general
   // cases:
@@ -953,7 +953,7 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  if (!is_static_data && !existing_resource->CanReuse(params))
+  if (!existing_resource->CanReuse(params))
     return false;
 
   // Certain requests (e.g., XHRs) might have manually set headers that require
@@ -967,16 +967,13 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   // status code, but for a manual revalidation the response code remains 304.
   // In this case, the Resource likely has insufficient context to provide a
   // useful cache hit or revalidation. See http://crbug.com/643659
-  if (!is_static_data &&
-      (request.IsConditional() ||
-       existing_resource->GetResponse().HttpStatusCode() == 304)) {
+  if (request.IsConditional() ||
+      existing_resource->GetResponse().HttpStatusCode() == 304) {
     return false;
   }
 
-  if (!is_static_data &&
-      !params.Options().CanReuseRequest(existing_resource->Options())) {
+  if (!params.Options().CanReuseRequest(existing_resource->Options()))
     return false;
-  }
 
   return true;
 }
@@ -1034,10 +1031,8 @@ ResourceFetcher::DetermineRevalidationPolicy(
 
   // If |existing_resource| is not reusable as a preloaded resource, it should
   // not be reusable as a normal resource as well.
-  if (!IsReusableAlsoForPreloading(fetch_params, existing_resource,
-                                   is_static_data)) {
+  if (!IsReusableAlsoForPreloading(fetch_params, existing_resource))
     return kReload;
-  }
 
   // If resource was populated from a SubstituteData load or data: url, use it.
   if (is_static_data)
