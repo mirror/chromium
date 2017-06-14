@@ -250,6 +250,7 @@ FrameView::~FrameView() {
 
 DEFINE_TRACE(FrameView) {
   visitor->Trace(frame_);
+  visitor->Trace(parent_);
   visitor->Trace(fragment_anchor_);
   visitor->Trace(scrollable_areas_);
   visitor->Trace(animating_scrollable_areas_);
@@ -3814,9 +3815,17 @@ void FrameView::RemoveAnimatingScrollableArea(ScrollableArea* scrollable_area) {
 }
 
 void FrameView::Attach() {
-  DCHECK(!is_attached_);
+  CHECK(!is_attached_);
   is_attached_ = true;
-  if (ParentFrameView()->IsVisible())
+  parent_ = ParentFrameView();
+  if (!parent_) {
+    Frame* parent_frame = frame_->Tree().Parent();
+    CHECK(parent_frame);
+    CHECK(parent_frame->IsLocalFrame());
+    CHECK(ToLocalFrame(parent_frame)->View());
+  }
+  CHECK(parent_);
+  if (parent_->IsVisible())
     SetParentVisible(true);
   UpdateParentScrollableAreaSet();
   SetupRenderThrottling();
@@ -3824,7 +3833,16 @@ void FrameView::Attach() {
 }
 
 void FrameView::Detach() {
-  DCHECK(is_attached_);
+  // TODO(crbug.com/729196): Trace why LocalFrameView::DetachFromLayout crashes.
+  CHECK(is_attached_);
+  FrameView* parent = ParentFrameView();
+  if (!parent) {
+    Frame* parent_frame = frame_->Tree().Parent();
+    CHECK(parent_frame);
+    CHECK(parent_frame->IsLocalFrame());
+    CHECK(ToLocalFrame(parent_frame)->View());
+  }
+  CHECK(parent == parent_);
   if (!RuntimeEnabledFeatures::rootLayerScrollingEnabled())
     ParentFrameView()->RemoveScrollableArea(this);
   SetParentVisible(false);
