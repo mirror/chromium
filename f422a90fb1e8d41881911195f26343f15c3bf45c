@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "695d63b8_ef049927",
+        "filename": "components/translate/ios/browser/ios_translate_driver.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-06-14T07:23:48Z",
+      "side": 1,
+      "message": "As mentioned in my first comment: content_language and html_root_language are also available. I think it\u0027s better to populate everything you can here (so that it isn\u0027t missed by future engineers).",
+      "revId": "f422a90fb1e8d41881911195f26343f15c3bf45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
