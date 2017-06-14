@@ -15,7 +15,7 @@
 namespace offline_pages {
 
 namespace {
-const char kGetOperationURLPath[] = "v1/operations/";
+const char kGetOperationURLPath[] = "v1/";
 }  // namespace
 
 GetOperationRequest::GetOperationRequest(
