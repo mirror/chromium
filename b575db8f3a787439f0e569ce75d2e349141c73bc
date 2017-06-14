@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "49f2038b_3413f8c4",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T16:46:15Z",
+      "side": 1,
+      "message": "Oh, if we can get rid of the |mIsDestroyed| flag, that would be the best option :) I do remember having had some issues though with callbacks being called after an object had its destroy() method being called, but I can\u0027t remember exactly what they were. Nicolas, do you remember?",
+      "parentUuid": "e84c0a0b_e866bbde",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f60c5b2b_79138088",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -367,6 +385,24 @@
       "side": 1,
       "message": "Sure. I assume that fetching a favicon will always require the url? So, in fetchFaviconFromLocalCacheOrGoogleServer(..) it will eventually also try to parse the url and fail if it\u0027s badly formed, so better to stop it here?",
       "parentUuid": "08583842_a8de458a",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95892eb2_68271850",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T16:46:15Z",
+      "side": 1,
+      "message": "fetchFaviconFromLocalCacheOrGoogleServer() seems to go through a different code path, which looks at existing GURLs on the native side, so maybe it\u0027s actually fair to assume that the URI will always be valid... in which case you could just assert false in the catch block.",
+      "parentUuid": "fe1a6869_29557936",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
