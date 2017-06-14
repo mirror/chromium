@@ -14,44 +14,51 @@ namespace blink {
 
 class TransformPaintPropertyNode;
 
-// A GeometryMapperTransformCache hangs off a TransformPaintPropertyNode. It
-// stores cached "transformed rects" (See GeometryMapper.h) from that node in
-// ancestor spaces.
+// A GeometryMapperTransformCache hangs off a TransformPaintPropertyNode.
+// It stores useful intermediate results such as screen matrix for geometry
+// queries.
 class PLATFORM_EXPORT GeometryMapperTransformCache {
   USING_FAST_MALLOC(GeometryMapperTransformCache);
-
  public:
-  GeometryMapperTransformCache();
-
-  // Returns the transformed rect (see GeometryMapper.h) of |this| in the
-  // space of |ancestorTransform|, if there is one cached. Otherwise returns
-  // null.
-  //
-  // These transforms are not flattened to 2d.
-  const TransformationMatrix* GetCachedTransform(
-      const TransformPaintPropertyNode* ancestor_transform);
-
-  // Stores the "transformed rect" of |this| in the space of |ancestors|,
-  // into a local cache.
-  void SetCachedTransform(const TransformPaintPropertyNode* ancestor_transform,
-                          const TransformationMatrix& to_ancestor);
+  GeometryMapperTransformCache() = default;
 
   static void ClearCache();
 
+  void UpdateIfNeeded(const TransformPaintPropertyNode& node) {
+    if (cache_generation_ != s_global_generation)
+      Update(node);
+    DCHECK_EQ(cache_generation_, s_global_generation);
+  }
+
+  const TransformationMatrix& to_screen() const { return to_screen_; }
+  bool to_screen_is_invertible() const { return to_screen_is_invertible_; }
+
+  const TransformationMatrix& projection_from_screen() const {
+    return projection_from_screen_;
+  }
+  bool projection_from_screen_is_valid() const {
+    return projection_from_screen_is_valid_;
+  }
+
+  const TransformationMatrix& to_checkpoint() const { return to_checkpoint_; }
+  const TransformationMatrix& from_checkpoint() const {
+    return from_checkpoint_;
+  }
+  const TransformPaintPropertyNode* checkpoint() const { return checkpoint_; }
+
  private:
-  struct TransformCacheEntry {
-    const TransformPaintPropertyNode* ancestor_node;
-    TransformationMatrix to_ancestor;
-    TransformCacheEntry(const TransformPaintPropertyNode* ancestor_node_arg,
-                        const TransformationMatrix& to_ancestor_arg)
-        : ancestor_node(ancestor_node_arg), to_ancestor(to_ancestor_arg) {}
-  };
+  void Update(const TransformPaintPropertyNode&);
 
-  void InvalidateCacheIfNeeded();
+  static unsigned s_global_generation;
 
-  Vector<TransformCacheEntry> transform_cache_;
-  unsigned cache_generation_;
-
+  TransformationMatrix to_screen_;
+  TransformationMatrix projection_from_screen_;
+  TransformationMatrix to_checkpoint_;
+  TransformationMatrix from_checkpoint_;
+  const TransformPaintPropertyNode* checkpoint_ = nullptr;
+  unsigned cache_generation_ = s_global_generation - 1;
+  unsigned to_screen_is_invertible_ : 1;
+  unsigned projection_from_screen_is_valid_ : 1;
   DISALLOW_COPY_AND_ASSIGN(GeometryMapperTransformCache);
 };
 
