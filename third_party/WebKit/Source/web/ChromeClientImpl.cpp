@@ -66,7 +66,7 @@
 #include "core/page/ChromeClient.h"
 #include "core/page/ExternalPopupMenu.h"
 #include "core/page/Page.h"
-#include "core/page/PopupMenuImpl.h"
+#include "core/page/PopupMenu.h"
 #include "core/page/PopupOpeningObserver.h"
 #include "modules/accessibility/AXObjectImpl.h"
 #include "platform/Cursor.h"
@@ -779,7 +779,7 @@ PopupMenu* ChromeClientImpl::OpenPopupMenu(LocalFrame& frame,
     return new ExternalPopupMenu(frame, select, *web_view_);
 
   DCHECK(RuntimeEnabledFeatures::PagePopupEnabled());
-  return PopupMenuImpl::Create(this, select);
+  return PopupMenu::Create(this, select);
 }
 
 PagePopup* ChromeClientImpl::OpenPagePopup(PagePopupClient* client) {
