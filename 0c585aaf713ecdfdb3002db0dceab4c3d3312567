@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77c11b24_1a4ea359",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/ui_element.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-14T22:16:02Z",
+      "side": 0,
+      "message": "Presumably the fact that this is inefficient is still true? Should we maybe keep a similar comment?\n\nOr is something like Transform::RotateAbout the answer? I don\u0027t actually know if that\u0027s equivalent.",
+      "range": {
+        "startLine": 48,
+        "startChar": 44,
+        "endLine": 48,
+        "endChar": 48
+      },
+      "revId": "0c585aaf713ecdfdb3002db0dceab4c3d3312567",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
