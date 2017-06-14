@@ -150,7 +150,6 @@ test("webkit_unit_tests") {
   visibility = [ "*" ]
 
   sources = [
-    "ExternalPopupMenuTest.cpp",
     "PageOverlayTest.cpp",
     "WebAssociatedURLLoaderImplTest.cpp",
     "WebDragDataTest.cpp",
