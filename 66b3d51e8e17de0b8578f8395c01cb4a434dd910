@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082e4159_772f5e84",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/embedded-enforcement/required_csp-header.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T10:27:50Z",
+      "side": 1,
+      "message": "Can you add a `TODO` for `report-to`?",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e701422_73631dca",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T10:27:50Z",
+      "side": 1,
+      "message": "s/d/D/\ns/$/./",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62aff7c_0ce06512",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T10:27:50Z",
+      "side": 1,
+      "message": "Do you need a loop here? There should one and only one entry, as per line 1719 above, so `policy-\u003epolicies_[0]-\u003eReportEndpoints().size()` should be enough, right?",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0584fcbf_e6f669b5",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T10:27:50Z",
+      "side": 1,
+      "message": "Can you add a `report-to` TODO so we don\u0027t forget that later?",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b538c90c_b4b5c215",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T10:27:50Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
