@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9a826a7d_7d231989",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-14T09:32:57Z",
+      "side": 0,
+      "message": "As the VirtualTestSuits says,\n\n1. virtual/service-worker-navigation-preload no longer exists\n2. virtual/service-worker-navigation-preload-disabled no longer targets http/tests/serviceworker/chromium (it looks like this was target at https://codereview.chromium.org/2627023002 but changed at https://codereview.chromium.org/2811063002).",
+      "parentUuid": "95e2848b_84f1b036",
+      "revId": "4a746f61dd2ec4814428d66099c5194cc68e900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb649ec1_64255437",
         "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "4a746f61dd2ec4814428d66099c5194cc68e900a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ebe05d0_13c962d4",
+        "filename": "third_party/WebKit/LayoutTests/LeakExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-14T09:32:57Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "cb649ec1_64255437",
+      "revId": "4a746f61dd2ec4814428d66099c5194cc68e900a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
