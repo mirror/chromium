@@ -263,6 +263,8 @@ static bool IsCacheableHTTPMethod(const AtomicString& method) {
 }
 
 bool RawResource::CanReuse(const FetchParameters& new_fetch_parameters) const {
+  if (!Resource::CanReuse(new_fetch_parameters))
+    return false;
   const ResourceRequest& new_request =
       new_fetch_parameters.GetResourceRequest();
 

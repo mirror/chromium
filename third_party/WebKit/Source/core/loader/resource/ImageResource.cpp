@@ -174,6 +174,8 @@ ImageResource* ImageResource::Fetch(FetchParameters& params,
 }
 
 bool ImageResource::CanReuse(const FetchParameters& params) const {
+  if (!Resource::CanReuse(params))
+    return false;
   // If the image is a placeholder, but this fetch doesn't allow a
   // placeholder, then do not reuse this resource.
   if (params.GetPlaceholderImageRequestType() !=

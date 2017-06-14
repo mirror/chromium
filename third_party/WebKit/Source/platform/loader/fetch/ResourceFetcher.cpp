@@ -946,37 +946,8 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   if (request.DownloadToFile() || request.UseStreamOnResponse())
     return false;
 
-  // Never reuse a resource whose fetch request mode is different from the
-  // request's fetch request mode.
-  if (request.GetFetchRequestMode() !=
-      existing_resource->GetResourceRequest().GetFetchRequestMode()) {
-    return false;
-  }
-
   if (!is_static_data && !existing_resource->CanReuse(params))
     return false;
-
-  // Certain requests (e.g., XHRs) might have manually set headers that require
-  // revalidation. In theory, this should be a Revalidate case. In practice, the
-  // MemoryCache revalidation path assumes a whole bunch of things about how
-  // revalidation works that manual headers violate, so punt to Reload instead.
-  //
-  // Similarly, a request with manually added revalidation headers can lead to a
-  // 304 response for a request that wasn't flagged as a revalidation attempt.
-  // Normally, successful revalidation will maintain the original response's
-  // status code, but for a manual revalidation the response code remains 304.
-  // In this case, the Resource likely has insufficient context to provide a
-  // useful cache hit or revalidation. See http://crbug.com/643659
-  if (!is_static_data &&
-      (request.IsConditional() ||
-       existing_resource->GetResponse().HttpStatusCode() == 304)) {
-    return false;
-  }
-
-  if (!is_static_data &&
-      !params.Options().CanReuseRequest(existing_resource->Options())) {
-    return false;
-  }
 
   return true;
 }
