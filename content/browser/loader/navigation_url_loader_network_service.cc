@@ -95,6 +95,27 @@ class AssociatedURLLoaderWrapper final : public mojom::URLLoader {
   DISALLOW_COPY_AND_ASSIGN(AssociatedURLLoaderWrapper);
 };
 
+net::NetworkTrafficAnnotationTag kTrafficAnnotation =
+    net::DefineNetworkTrafficAnnotation("...", R"(
+          semantics {
+            sender: "..."
+            description: "..."
+            trigger: "..."
+            data: "..."
+            destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+          }
+          policy {
+            cookies_allowed: false/true
+            cookies_store: "..."
+            setting: "..."
+            chrome_policy {
+              [POLICY_NAME] {
+                [POLICY_NAME]: ... //(value to disable it)
+              }
+            }
+            policy_exception_justification: "..."
+          })");
+
 }  // namespace
 
 // Kept around during the lifetime of the navigation request, and is
@@ -146,7 +167,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
           factory_ptr.get(), std::move(url_loader_request),
           mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
           std::move(url_loader_client_ptr_),
-          net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
+          net::MutableNetworkTrafficAnnotationTag(kTrafficAnnotation));
       return;
     }
 
@@ -219,7 +240,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
         factory, std::move(url_loader_request_),
         mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
         std::move(url_loader_client_ptr_),
-        net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
+        net::MutableNetworkTrafficAnnotationTag(kTrafficAnnotation));
   }
 
  private:
