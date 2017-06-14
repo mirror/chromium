@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8195e9b2_c7bf9092",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-14T19:16:20Z",
+      "side": 1,
+      "message": "Can we remove the MutationObserver here (inside removeListeners_), where we remove other listeners too? Basically I am proposing the following.\n\n1) attached -\u003e no MutationObserver\n2) showAtPosition -\u003e MutationObserver added\n3) close -\u003e MutationObserver removed\n4) detached -\u003e MutationObserver removed (if it exists).\n\nIf an action menu is detached without close() it will still be addressed by step 4.",
+      "revId": "cc043c108171d53f5031379f4a767041afcd2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
