@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
+#include "base/power_monitor/power_monitor.h"
 #include "base/process/process.h"
 #include "content/public/child/child_thread.h"
 #include "content/public/common/service_manager_connection.h"
@@ -17,6 +18,7 @@
 #include "content/public/test/test_host_resolver.h"
 #include "content/public/test/test_service.h"
 #include "content/public/test/test_service.mojom.h"
+#include "content/shell/common/power_monitor_test.mojom.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 #include "mojo/public/cpp/system/buffer.h"
 #include "net/base/net_errors.h"
@@ -107,6 +109,61 @@ class NetworkServiceTestImpl : public mojom::NetworkServiceTest {
   DISALLOW_COPY_AND_ASSIGN(NetworkServiceTestImpl);
 };
 
+class PowerMonitorTestImpl : public base::PowerObserver,
+                             public mojom::PowerMonitorTest {
+ public:
+  static void MakeStrongBinding(
+      std::unique_ptr<PowerMonitorTestImpl> instance,
+      const service_manager::BindSourceInfo& source_info,
+      mojom::PowerMonitorTestRequest request) {
+    mojo::MakeStrongBinding(std::move(instance), std::move(request));
+  }
+
+  PowerMonitorTestImpl() {
+    base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+    if (power_monitor)
+      power_monitor->AddObserver(this);
+  }
+  ~PowerMonitorTestImpl() override {
+    base::PowerMonitor* power_monitor = base::PowerMonitor::Get();
+    if (power_monitor)
+      power_monitor->RemoveObserver(this);
+  }
+
+ private:
+  // mojom::PowerMonitorTest:
+  void QueryNextState(QueryNextStateCallback callback) override {
+    // Do not allow overlapping call.
+    DCHECK(callback_.is_null());
+    callback_ = std::move(callback);
+
+    if (need_to_report_)
+      ReportState();
+  }
+
+  // base::PowerObserver:
+  void OnPowerStateChange(bool on_battery_power) override {
+    on_battery_power_ = on_battery_power;
+    need_to_report_ = true;
+
+    if (!callback_.is_null())
+      ReportState();
+  }
+  void OnSuspend() override {}
+  void OnResume() override {}
+
+  void ReportState() {
+    std::move(callback_).Run(on_battery_power_);
+    need_to_report_ = false;
+  }
+
+  QueryNextStateCallback callback_;
+  bool on_battery_power_ = false;
+  bool need_to_report_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(PowerMonitorTestImpl);
+};
+
 }  // namespace
 
 ShellContentUtilityClient::ShellContentUtilityClient() {}
@@ -118,6 +175,10 @@ void ShellContentUtilityClient::UtilityThreadStarted() {
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(base::Bind(&TestServiceImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface<mojom::PowerMonitorTest>(
+      base::Bind(&PowerMonitorTestImpl::MakeStrongBinding,
+                 base::Passed(base::MakeUnique<PowerMonitorTestImpl>())),
+      base::ThreadTaskRunnerHandle::Get());
   content::ChildThread::Get()
       ->GetServiceManagerConnection()
       ->AddConnectionFilter(
