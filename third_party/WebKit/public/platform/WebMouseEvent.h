@@ -22,6 +22,7 @@ class WebGestureEvent;
 class WebMouseEvent : public WebInputEvent, public WebPointerProperties {
  public:
   static constexpr PointerId kMousePointerId = std::numeric_limits<int>::max();
+  static constexpr PointerId kFakeMousePointerId = -1;
 
   int click_count;
 

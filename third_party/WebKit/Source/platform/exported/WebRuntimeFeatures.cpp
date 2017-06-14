@@ -414,4 +414,8 @@ void WebRuntimeFeatures::EnableMediaCastOverlayButton(bool enable) {
   RuntimeEnabledFeatures::SetMediaCastOverlayButtonEnabled(enable);
 }
 
+void WebRuntimeFeatures::EnableUpdateHoverPostLayout(bool enable) {
+  RuntimeEnabledFeatures::SetUpdateHoverPostLayoutEnabled(enable);
+}
+
 }  // namespace blink

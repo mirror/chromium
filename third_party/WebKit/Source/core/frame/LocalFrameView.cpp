@@ -2575,6 +2575,10 @@ void LocalFrameView::PerformPostLayoutTasks() {
   // if there are no RemoteFrame ancestors in the frame tree. Use of
   // localFrameRoot() is discouraged but will change when cursor update
   // scheduling is moved from EventHandler to PageEventHandler.
+
+  // Fire a fake a mouse move event to update hover state and mouse cursor, and
+  // send the right mouse out/over events.
+  frame_->GetEventHandler().DispatchFakeMouseMoveEventSoon();
   GetFrame().LocalFrameRoot().GetEventHandler().ScheduleCursorUpdate();
 
   UpdateGeometries();
