@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e479529_2af24fa6",
+        "filename": "third_party/WebKit/Source/core/page/PopupMenuImpl.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-14T02:35:00Z",
+      "side": 1,
+      "message": "We can\u0027t do it because PopupMenu is abstraction of PopupMenuImpl and ExternalPopupMenu.",
+      "revId": "6161a43f311f916bf63e88e8d95c6b725dc62c00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
