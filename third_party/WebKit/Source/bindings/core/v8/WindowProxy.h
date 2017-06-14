@@ -31,6 +31,7 @@
 #ifndef WindowProxy_h
 #define WindowProxy_h
 
+#include "base/debug/stack_trace.h"
 #include "core/CoreExport.h"
 #include "platform/bindings/DOMWrapperWorld.h"
 #include "platform/bindings/ScopedPersistent.h"
@@ -257,6 +258,10 @@ class WindowProxy : public GarbageCollectedFinalized<WindowProxy> {
   // to be destroyed.
   ScopedPersistent<v8::Object> global_proxy_;
   Lifecycle lifecycle_;
+
+  // TODO(dcheng): Remove this temporary code for debugging
+  // https://crbug.com/728693.
+  base::debug::StackTrace initialization_stack_;
 };
 
 }  // namespace blink

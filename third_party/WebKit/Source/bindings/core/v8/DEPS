@@ -1,0 +1,6 @@
+specific_include_rules = {
+  "WindowProxy\.(cpp|h)": [
+    "+base/debug/alias.h",
+    "+base/debug/stack_trace.h",
+  ],
+}
