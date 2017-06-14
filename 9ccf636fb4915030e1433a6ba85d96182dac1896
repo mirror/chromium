@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "0de809ba_511ff3a4",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentOrderedMap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-14T08:30:58Z",
+      "side": 1,
+      "message": "This interface looks very fragile.\n\nOne alternative may be merging the logic in\nSlotAssignment::GetCachedFirstSlotWithoutAccessingNodeTree()\ninto this and make the interface exclusively for \u003cslot\u003e element,\nto avoid other users.\n\nMaybe better ideas.",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "761673e6_d57d7265",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-14T08:30:58Z",
+      "side": 1,
+      "message": "IIUC DocumentOrderedMap\u0027s cached |element| returns null when there are 2+\nelements for the same key slot name - in that case, old_active is nullptr.\n\nIs this case covered?",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "419469c1_6c439570",
         "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
         "patchSetId": 8
