@@ -1,0 +1,176 @@
+# Copyright 2017 The Chromium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+"""Parses logcat output for VrCore performance logs and computes stats.
+
+Can be used either as a standalone manual script or as part of the automated
+VR performance tests.
+"""
+
+import math
+import sys
+
+SESSION_START_LINE = "PerfMon: Start of session"
+SESSION_END_LINE = "PerfMon: End of session"
+LINES_OF_INTEREST = [
+    "Async reprojection thread FPS: ",
+    "Application FPS: ",
+    "Application frame submits blocked on GPU in FPS window: ",
+    "Async reprojection thread missed vsync (late by ",
+]
+
+APP_FPS_KEY ='app_fps_data'
+ASYNC_FPS_KEY = 'async_fps_data'
+ASYNC_MISSED_KEY = 'asymc_missed_data'
+BLOCKED_SUBMISSION_KEY = 'blocked_submission_key'
+
+def CalculateAverage(inputs):
+  return sum(inputs) / len(inputs)
+
+def CalculateStandardDeviation(inputs):
+  average = sum(inputs) / len(inputs)
+  sum_of_squares = 0
+  for element in inputs:
+    sum_of_squares += math.pow(element - average, 2)
+  sum_of_squares /= len(inputs)
+  return math.sqrt(sum_of_squares)
+
+def GetInputFromStdin():
+  """Turns stdin input into a single string.
+
+  Returns:
+    A single string containing all lines input via Stdin
+  """
+  print "Waiting for stdin input."
+  lines = []
+  while True:
+    try:
+      line = sys.stdin.readline()
+    except KeyboardInterrupt:
+      break
+    if not line:
+      break
+    lines.append(line)
+
+  return "\n".join(lines)
+
+def ParseLinesIntoSessions(lines):
+  """Parses a string for VR performance logs.
+
+  lines: A string containing lines of logcat output.
+
+  Returns:
+    A list of strings, where each element contains all the lines of interest
+    for a single session
+  """
+  logging_sessions = []
+  for line in lines.split('\n'):
+    if SESSION_START_LINE in line:
+      logging_sessions.append("")
+    elif SESSION_END_LINE in line:
+      continue
+    for loi in LINES_OF_INTEREST:
+      if loi in line:
+        logging_sessions[-1] += (line + "\n")
+        break
+  return logging_sessions
+
+def ComputeSessionStatistics(session):
+  """Extracts raw statistical data from a session string.
+
+  session: A string containing all the performance logging lines from
+    a single VR session
+
+  Returns:
+    A dictionary containing the raw statistics
+  """
+  app_fps_data = []
+  async_fps_data = []
+  async_missed_data = []
+  blocked_submission_data = []
+
+  for line in session.split("\n"):
+    if LINES_OF_INTEREST[0] in line: # Async thread FPS
+      async_fps_data.append( float(line.split(LINES_OF_INTEREST[0])[1]) )
+    elif LINES_OF_INTEREST[1] in line: # Application FPS
+      app_fps_data.append( float(line.split(LINES_OF_INTEREST[1])[1]) )
+    elif LINES_OF_INTEREST[2] in line: # Application frame blocked
+      blocked_submission_data.append(int(line.split(LINES_OF_INTEREST[2])[1]))
+    elif LINES_OF_INTEREST[3] in line: # Async thread missed vsync
+      async_missed_data.append( float(
+          line.split(LINES_OF_INTEREST[3])[1].split("us")[0]))
+
+  return {
+      APP_FPS_KEY: app_fps_data,
+      ASYNC_FPS_KEY: async_fps_data,
+      ASYNC_MISSED_KEY: async_missed_data,
+      BLOCKED_SUBMISSION_KEY: blocked_submission_data,
+  }
+
+def StringifySessionStatistics(statistics):
+  """Turns a raw statistics dictionary into a formatted string.
+
+  statistics: A raw statistics dictionary
+
+  Returns:
+    A string with min/max/average calculations
+  """
+  app_fps_data = statistics[APP_FPS_KEY]
+  async_fps_data = statistics[ASYNC_FPS_KEY]
+  async_missed_data = statistics[ASYNC_MISSED_KEY]
+  blocked_submission_data = statistics[BLOCKED_SUBMISSION_KEY]
+
+  output = []
+
+  output.append("Min application FPS: %.4f" % min(app_fps_data))
+  output.append("Max application FPS: %.4f" % max(app_fps_data))
+  output.append("Average application FPS: %.4f +/- %.4f" % (
+                CalculateAverage(app_fps_data),
+                CalculateStandardDeviation(app_fps_data)))
+  output.append("%d total application frame submissions blocked on GPU" %
+                sum(blocked_submission_data))
+  output.append("---")
+  output.append("Min application FPS after first second: %.4f" %
+                min(app_fps_data[1:]))
+  output.append("Max application FPS after first second: %.4f" %
+                max(app_fps_data[1:]))
+  output.append("Average application FPS after first second: %.4f +/- %.4f" % (
+                CalculateAverage(app_fps_data[1:]),
+                CalculateStandardDeviation(app_fps_data[1:])))
+  output.append("---")
+  output.append("Min async reprojection thread FPS: %.4f" %
+                min(async_fps_data))
+  output.append("Max async reprojection thread FPS: %.4f" %
+                max(async_fps_data))
+  output.append("Average async reprojection thread FPS: %.4f +/- %.4f" % (
+                CalculateAverage(async_fps_data),
+                CalculateStandardDeviation(async_fps_data)))
+  output.append("Async reprojection thread missed %d vsyncs" %
+                len(async_missed_data))
+  if len(async_missed_data) > 0:
+    output.append("Average vsync miss time: %.4f +/- %.4f us" % (
+                  CalculateAverage(async_missed_data),
+                  CalculateStandardDeviation(async_missed_data)))
+  return "\n".join(output)
+
+
+def ComputeAndPrintStatistics(session):
+  if len(session) == 0:
+    print "No data collected for session"
+    return
+
+  print StringifySessionStatistics(ComputeSessionStatistics(session))
+
+
+def main():
+  logging_sessions = ParseLinesIntoSessions(GetInputFromStdin())
+  print "Found %d sessions" % len(logging_sessions)
+  counter = 1
+  for session in logging_sessions:
+    print "\n#### Session %d ####" % counter
+    ComputeAndPrintStatistics(session)
+    counter += 1
+
+if __name__ == "__main__":
+  main()
