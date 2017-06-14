@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "deed8e20_1364da86",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-14T22:07:54Z",
+      "side": 1,
+      "message": "Not sure I follow. I am not trying to solve a retry problem here thou, so not sure if there is anything to do with that suggestion.",
+      "parentUuid": "3ed9c381_92a35d9a",
+      "range": {
+        "startLine": 158,
+        "startChar": 2,
+        "endLine": 158,
+        "endChar": 8
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52790380_71aae9c9",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T22:01:24Z",
       "side": 1,
       "message": "any reason this can not be done first thing in OpenConnectionSync? Then db_ is operated on a single thread only.",
+      "range": {
+        "startLine": 180,
+        "startChar": 6,
+        "endLine": 180,
+        "endChar": 11
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13463379_4ef5fd32",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-14T22:07:54Z",
+      "side": 1,
+      "message": "good point.",
+      "parentUuid": "52790380_71aae9c9",
       "range": {
         "startLine": 180,
         "startChar": 6,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d70f32d1_6dedb06d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-14T22:07:54Z",
+      "side": 1,
+      "message": "Yes, as you probably noticed this is a copy of other stores we have and I didn\u0027t yet try to solve that issue. But I think the suggestion to do everything on background thread actually is the way to go here.",
+      "parentUuid": "711a1943_7ed40196",
+      "range": {
+        "startLine": 202,
+        "startChar": 9,
+        "endLine": 202,
+        "endChar": 12
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f556a6c9_afc3027e",
         "filename": "components/offline_pages/core/prefetch/store/store_command.h",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-14T22:01:24Z",
       "side": 1,
       "message": "It would be nice to enforce the rule that Execute() may be run more than once if the DB can not commit the transaction. We might just postulate this as a requirement?",
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4e80137_7b7ac0eb",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-14T22:07:54Z",
+      "side": 1,
+      "message": "Good point. This should probably go on StoreCommand interface.",
+      "parentUuid": "f556a6c9_afc3027e",
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
