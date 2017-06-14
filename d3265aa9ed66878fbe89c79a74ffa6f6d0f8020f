@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f7b168_11f08bf8",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-14T20:48:52Z",
+      "side": 1,
+      "message": "CanvasImageSource allows us to consolidate the drawing into the image source class instead of having them in separate files or classes.",
+      "range": {
+        "startLine": 50,
+        "startChar": 39,
+        "endLine": 50,
+        "endChar": 56
+      },
+      "revId": "d3265aa9ed66878fbe89c79a74ffa6f6d0f8020f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21760c28_2ace08db",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-14T20:48:52Z",
+      "side": 1,
+      "message": "This block moves here from CalculateBatteryImageInfo. It\u0027s not possible to calculate the exact number of pixels or dip of charge until we know the size of the icon (the previous hardcoded kBatteryImageHeight was both fragile and not generalizable to different size icons). Using dsf (i.e. 1dip) instead of 0 here this is a slight behavioral change, designed to match the comment.",
+      "range": {
+        "startLine": 100,
+        "startChar": 74,
+        "endLine": 100,
+        "endChar": 77
+      },
+      "revId": "d3265aa9ed66878fbe89c79a74ffa6f6d0f8020f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
