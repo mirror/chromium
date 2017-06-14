@@ -54,6 +54,7 @@ target(modules_target_type, "modules") {
   visibility = [ "//third_party/WebKit/*" ]
 
   sources = [
+    "AssertMatchingEnums.cpp",
     "EventModules.h",
     "EventModulesFactory.h",
     "EventTargetModules.h",
