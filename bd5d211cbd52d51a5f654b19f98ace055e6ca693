@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31ca4f2c_7b45e7b7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-14T07:48:05Z",
+      "side": 1,
+      "message": "Sorry for the confusing description. Correct, this is not about sync/async across threads. These all run on UI thread and it doesn\u0027t change. It defers the tab closing so that the throttle flow proceeds without having to worry about web contents being destroyed in the middle - just switches the execution order within UI thread. No thread safety is of a concern here.",
+      "parentUuid": "2ead93de_929fd2a6",
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dc3b3477_86ec93ce",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
         "patchSetId": 2
@@ -58,6 +76,54 @@
         "startChar": 47,
         "endLine": 252,
         "endChar": 55
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe80bef7_c7824e35",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-14T07:48:05Z",
+      "side": 1,
+      "message": "Yes I looked into all the possible cases and concluded they are safe from UAF (also verified by testing). https://bugs.chromium.org/p/chromium/issues/detail?id\u003d732260#c2",
+      "parentUuid": "06f42e45_1cc38853",
+      "range": {
+        "startLine": 252,
+        "startChar": 47,
+        "endLine": 252,
+        "endChar": 55
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ab1ea2_72d999e1",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-14T07:48:05Z",
+      "side": 1,
+      "message": "This tab closing would still precede the activity destruction if it happened, but the activity doesn\u0027t get destroyed since the code here is for the situation where a new tab gets opened with a URI that launches an external app or leads to file download, etc (in-place navigation doesn\u0027t reach here to close the current tab). Which means there always will at least one tab alive (where the link was clicked from) so the activity never goes away. Verified this by manual testing/tracking.\n\nWhat you wonder sounds essentially the same as how it worked before the CL. It updated the state to \u0027DEFER\u0027 to avoid accessing web contents further down in the navigation throttle flow. I think we need similar amount/kind of logic I\u0027m gutting out in this CL to make it work.",
+      "parentUuid": "dc3b3477_86ec93ce",
+      "range": {
+        "startLine": 252,
+        "startChar": 25,
+        "endLine": 252,
+        "endChar": 44
       },
       "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
