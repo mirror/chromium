@@ -1,0 +1,470 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module extensions.mojom;
+
+import "ui/gfx/geometry/mojo/geometry.mojom";
+import "ui/gfx/mojo/transform.mojom";
+
+// Mirror of ui::AXEvent.
+enum AXEvent {
+  NONE,
+  ACTIVEDESCENDANTCHANGED,
+  ALERT,
+  ARIA_ATTRIBUTE_CHANGED,
+  AUTOCORRECTION_OCCURED,
+  BLUR,
+  CHECKED_STATE_CHANGED,
+  CHILDREN_CHANGED,
+  CLICKED,
+  DOCUMENT_SELECTION_CHANGED,
+  EXPANDED_CHANGED,
+  FOCUS,
+  HIDE,
+  HOVER,
+  IMAGE_FRAME_UPDATED,
+  INVALID_STATUS_CHANGED,
+  LAYOUT_COMPLETE,
+  LIVE_REGION_CREATED,
+  LIVE_REGION_CHANGED,
+  LOAD_COMPLETE,
+  LOCATION_CHANGED,
+  MEDIA_STARTED_PLAYING,
+  MEDIA_STOPPED_PLAYING,
+  MENU_END,
+  MENU_LIST_ITEM_SELECTED,
+  MENU_LIST_VALUE_CHANGED,
+  MENU_POPUP_END,
+  MENU_POPUP_START,
+  MENU_START,
+  MOUSE_CANCELED,
+  MOUSE_DRAGGED,
+  MOUSE_MOVED,
+  MOUSE_PRESSED,
+  MOUSE_RELEASED,
+  ROW_COLLAPSED,
+  ROW_COUNT_CHANGED,
+  ROW_EXPANDED,
+  SCROLL_POSITION_CHANGED,
+  SCROLLED_TO_ANCHOR,
+  SELECTED_CHILDREN_CHANGED,
+  SELECTION,
+  SELECTION_ADD,
+  SELECTION_REMOVE,
+  SHOW,
+  TEXT_CHANGED,
+  TEXT_SELECTION_CHANGED,
+  TREE_CHANGED,
+  VALUE_CHANGED,
+  LAST,
+};
+
+// Mirror of ui::AXEventFrom.
+enum AXEventFrom {
+  AX_EVENT_FROM_NONE,
+  AX_EVENT_FROM_USER,
+  AX_EVENT_FROM_PAGE,
+  AX_EVENT_FROM_ACTION,
+  AX_EVENT_FROM_LAST = AX_EVENT_FROM_ACTION,
+};
+
+// Mirror of ui::AXStringAttribute.
+enum AXStringAttribute {
+  NONE,
+  ACCESS_KEY,
+  ARIA_INVALID_VALUE,
+  AUTO_COMPLETE,
+  CHROME_CHANNEL,
+  CONTAINER_LIVE_RELEVANT,
+  CONTAINER_LIVE_STATUS,
+  DESCRIPTION,
+  DISPLAY,
+  FONT_FAMILY,
+  HTML_TAG,
+  IMAGE_DATA_URL,
+  INNER_HTML,
+  KEY_SHORTCUTS,
+  LANGUAGE,
+  NAME,
+  LIVE_RELEVANT,
+  LIVE_STATUS,
+  PLACEHOLDER,
+  ROLE,
+  ROLE_DESCRIPTION,
+  URL,
+  VALUE,
+  STRING_ATTRIBUTE_LAST,
+};
+
+// Mirror of ui::AXIntAttribute.
+enum AXIntAttribute {
+  NONE,
+  DEFAULT_ACTION_VERB,
+  SCROLL_X,
+  SCROLL_X_MIN,
+  SCROLL_X_MAX,
+  SCROLL_Y,
+  SCROLL_Y_MIN,
+  SCROLL_Y_MAX,
+  TEXT_SEL_START,
+  TEXT_SEL_END,
+  ARIA_COLUMN_COUNT,
+  ARIA_CELL_COLUMN_INDEX,
+  ARIA_ROW_COUNT,
+  ARIA_CELL_ROW_INDEX,
+  TABLE_ROW_COUNT,
+  TABLE_COLUMN_COUNT,
+  TABLE_HEADER_ID,
+  TABLE_ROW_INDEX,
+  TABLE_ROW_HEADER_ID,
+  TABLE_COLUMN_INDEX,
+  TABLE_COLUMN_HEADER_ID,
+  TABLE_CELL_COLUMN_INDEX,
+  TABLE_CELL_COLUMN_SPAN,
+  TABLE_CELL_ROW_INDEX,
+  TABLE_CELL_ROW_SPAN,
+  SORT_DIRECTION,
+  HIERARCHICAL_LEVEL,
+  NAME_FROM,
+  DESCRIPTION_FROM,
+  ACTIVEDESCENDANT_ID,
+  ERRORMESSAGE_ID,
+  IN_PAGE_LINK_TARGET_ID,
+  MEMBER_OF_ID,
+  NEXT_ON_LINE_ID,
+  PREVIOUS_ON_LINE_ID,
+  CHILD_TREE_ID,
+  SET_SIZE,
+  POS_IN_SET,
+  COLOR_VALUE,
+  ARIA_CURRENT_STATE,
+  BACKGROUND_COLOR,
+  COLOR,
+  INVALID_STATE,
+  CHECKED_STATE,
+  TEXT_DIRECTION,
+  TEXT_STYLE,
+  INT_ATTRIBUTE_LAST,
+};
+
+// Mirror of ui::AXFloatAttribute.
+enum AXFloatAttribute {
+  AX_FLOAT_ATTRIBUTE_NONE,
+  VALUE_FOR_RANGE,
+  MIN_VALUE_FOR_RANGE,
+  MAX_VALUE_FOR_RANGE,
+  FONT_SIZE,
+  AX_FLOAT_ATTRIBUTE_LAST,
+};
+
+// Mirror of ui::AXBoolAttribute.
+enum AXBoolAttribute {
+  AX_BOOL_ATTRIBUTE_NONE,
+  CONTAINER_LIVE_ATOMIC,
+  CONTAINER_LIVE_BUSY,
+  LIVE_ATOMIC,
+  LIVE_BUSY,
+  MODAL,
+  ARIA_READONLY,
+  UPDATE_LOCATION_ONLY,
+  CANVAS_HAS_FALLBACK,
+  AX_BOOL_ATTRIBUTE_LAST,
+};
+
+// Mirror of ui::AXIntListAttribute.
+enum AXIntListAttribute {
+  AX_INT_LIST_ATTRIBUTE_NONE,
+  INDIRECT_CHILD_IDS,
+  CONTROLS_IDS,
+  DESCRIBEDBY_IDS,
+  DETAILS_IDS,
+  FLOWTO_IDS,
+  LABELLEDBY_IDS,
+  RADIO_GROUP_IDS,
+  LINE_BREAKS,
+  MARKER_TYPES,
+  MARKER_STARTS,
+  MARKER_ENDS,
+  CELL_IDS,
+  UNIQUE_CELL_IDS,
+  CHARACTER_OFFSETS,
+  CACHED_LINE_STARTS,
+  WORD_STARTS,
+  WORD_ENDS,
+  AX_INT_LIST_ATTRIBUTE_LAST,
+};
+
+// Mirror of ui::AXTextAffinity.
+enum AXTextAffinity {
+  NONE,
+  DOWNSTREAM,
+  UPSTREAM,
+  LAST,
+};
+
+// Mirror of ui::AXRole.
+enum AXRole {
+  NONE,
+  ABBR,
+  ALERT_DIALOG,
+  ALERT,
+  ANCHOR,
+  ANNOTATION,
+  APPLICATION,
+  ARTICLE,
+  AUDIO,
+  BANNER,
+  BLOCKQUOTE,
+  BUSY_INDICATOR,
+  BUTTON,
+  BUTTON_DROP_DOWN,
+  CANVAS,
+  CAPTION,
+  CARET,
+  CELL,
+  CHECK_BOX,
+  CLIENT,
+  COLOR_WELL,
+  COLUMN_HEADER,
+  COLUMN,
+  COMBO_BOX,
+  COMPLEMENTARY,
+  CONTENT_INFO,
+  DATE,
+  DATE_TIME,
+  DEFINITION,
+  DESCRIPTION_LIST_DETAIL,
+  DESCRIPTION_LIST,
+  DESCRIPTION_LIST_TERM,
+  DESKTOP,
+  DETAILS,
+  DIALOG,
+  DIRECTORY,
+  DISCLOSURE_TRIANGLE,
+  DOCUMENT,
+  EMBEDDED_OBJECT,
+  FEED,
+  FIGCAPTION,
+  FIGURE,
+  FOOTER,
+  FORM,
+  GENERIC_CONTAINER,
+  GRID,
+  GROUP,
+  HEADING,
+  IFRAME,
+  IFRAME_PRESENTATIONAL,
+  IGNORED,
+  IMAGE_MAP_LINK,
+  IMAGE_MAP,
+  IMAGE,
+  INLINE_TEXT_BOX,
+  INPUT_TIME,
+  LABEL_TEXT,
+  LEGEND,
+  LINE_BREAK,
+  LINK,
+  LIST_BOX_OPTION,
+  LIST_BOX,
+  LIST_ITEM,
+  LIST_MARKER,
+  LIST,
+  LOCATION_BAR,
+  LOG,
+  MAIN,
+  MARK,
+  MARQUEE,
+  MATH,
+  MENU,
+  MENU_BAR,
+  MENU_BUTTON,
+  MENU_ITEM,
+  MENU_ITEM_CHECK_BOX,
+  MENU_ITEM_RADIO,
+  MENU_LIST_OPTION,
+  MENU_LIST_POPUP,
+  METER,
+  NAVIGATION,
+  NOTE,
+  OUTLINE,
+  PANE,
+  PARAGRAPH,
+  POP_UP_BUTTON,
+  PRE,
+  PRESENTATIONAL,
+  PROGRESS_INDICATOR,
+  RADIO_BUTTON,
+  RADIO_GROUP,
+  REGION,
+  ROOT_WEB_AREA,
+  ROW_HEADER,
+  ROW,
+  RUBY,
+  RULER,
+  SVG_ROOT,
+  SCROLL_AREA,
+  SCROLL_BAR,
+  SEAMLESS_WEB_AREA,
+  SEARCH,
+  SEARCH_BOX,
+  SLIDER,
+  SLIDER_THUMB,
+  SPIN_BUTTON_PART,
+  SPIN_BUTTON,
+  SPLITTER,
+  STATIC_TEXT,
+  STATUS,
+  SWITCH,
+  TAB_GROUP,
+  TAB_LIST,
+  TAB_PANEL,
+  TAB,
+  TABLE_HEADER_CONTAINER,
+  TABLE,
+  TERM,
+  TEXT_FIELD,
+  TIME,
+  TIMER,
+  TITLE_BAR,
+  TOGGLE_BUTTON,
+  TOOLBAR,
+  TREE_GRID,
+  TREE_ITEM,
+  TREE,
+  UNKNOWN,
+  TOOLTIP,
+  VIDEO,
+  WEB_AREA,
+  WEB_VIEW,
+  WINDOW,
+  LAST,
+};
+
+struct AXStringAttributePair {
+  AXStringAttribute attribute;
+  string value;
+};
+
+struct AXIntAttributePair {
+  AXIntAttribute attribute;
+  int32 value;
+};
+
+struct AXFloatAttributePair {
+  AXFloatAttribute attribute;
+  float value;
+};
+
+struct AXBoolAttributePair {
+  AXBoolAttribute attribute;
+  bool value;
+};
+
+struct AXIntListAttributePair {
+  AXIntListAttribute attribute;
+  array<int32> values;
+};
+
+// Mirror of std::pair<std::string, std::string>.
+struct StringPair {
+  string pair1;
+  string pair2;
+};
+
+// Mirror of ui::AXTreeData.
+struct AXTreeData {
+  int32 tree_id;
+  int32 parent_tree_id;
+  int32 focused_tree_id;
+  string url;
+  string title;
+  string mimetype;
+  string doctype;
+  bool loaded;
+  float loading_progress;
+  int32 focus_id;
+  int32 sel_anchor_object_id;
+  int32 sel_anchor_offset;
+  AXTextAffinity sel_anchor_affinity;
+  int32 sel_focus_object_id;
+  int32 sel_focus_offset;
+  AXTextAffinity sel_focus_affinity;
+};
+
+// Mirror of ui::AXNodeData.
+struct AXNodeData {
+  int32 id;
+  AXRole role;
+  int32 state;
+  int32 actions;
+  gfx.mojom.RectF location;
+  gfx.mojom.Transform transform;
+  array<AXStringAttributePair> string_attributes;
+  array<AXIntAttributePair> int_attributes;
+  array<AXFloatAttributePair> float_attributes;
+  array<AXBoolAttributePair> bool_attributes;
+  array<AXIntListAttributePair> intlist_attributes;
+  array<StringPair> html_attributes;
+  array<int32> child_ids;
+  int32 offset_container_id;
+};
+
+// Mirror of ui::AXTreeUpdate.
+struct AXTreeUpdate {
+  bool has_tree_data;
+  AXTreeData tree_data;
+  int32 node_id_to_clear;
+  int32 root_id;
+  array<AXNodeData> nodes;
+};
+
+// Mirror of ui::AXRelativeBounds.
+struct AXRelativeBounds {
+  int32 offset_container_id;
+  gfx.mojom.RectF bounds;
+  gfx.mojom.Transform transform;
+};
+
+struct AccessibilityEventParams {
+  // ID of the accessibility tree that this event applies to.
+  int32 tree_id;
+
+  // The tree update.
+  AXTreeUpdate update;
+
+  // Type of event.
+  AXEvent event_type;
+
+  // ID of the node that the event applies to.
+  int32 id;
+
+  // The source of this event.
+  AXEventFrom event_from;
+
+  // The mouse location in screen coordinates.
+  gfx.mojom.PointF mouse_location;
+};
+
+struct AccessibilityLocationChangeParams {
+  // ID of the accessibility tree that this event applies to.
+  int32 tree_id;
+
+  // ID of the object whose location is changing.
+  int32 id;
+
+  // The object's new location info.
+  AXRelativeBounds new_locations;
+};
+
+interface Accessibility {
+  // Forward an accessibility message to an extension process where an
+  // extension is using the automation API to listen for accessibility events.
+  AccessibilityEvent(AccessibilityEventParams params, bool is_active_profile);
+
+  // Forward an accessibility location change message to an extension process
+  // where an extension is using the automation API to listen for
+  // accessibility events.
+  AccessibilityLocationChange(AccessibilityLocationChangeParams params);
+};
+

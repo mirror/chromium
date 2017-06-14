@@ -318,6 +318,7 @@ static_library("common") {
       "extensions/manifest_handlers/theme_handler.h",
       "extensions/manifest_handlers/ui_overrides_handler.cc",
       "extensions/manifest_handlers/ui_overrides_handler.h",
+      "extensions/mojom/accessibility_traits.h",
       "extensions/mojom/inline_install_traits.h",
       "extensions/permissions/chrome_api_permissions.cc",
       "extensions/permissions/chrome_api_permissions.h",

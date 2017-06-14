@@ -26,6 +26,7 @@ group("test_features") {
 mojom("mojo_bindings") {
   sources = [
     "media_parser.mojom",
+    "mojom/accessibility.mojom",
     "mojom/inline_install.mojom",
     "removable_storage_writer.mojom",
   ]
@@ -36,5 +37,7 @@ mojom("mojo_bindings") {
 
   public_deps = [
     "//mojo/common:common_custom_types",
+    "//ui/gfx/geometry/mojo",
+    "//ui/gfx/mojo",
   ]
 }
