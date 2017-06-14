@@ -75,9 +75,13 @@ static const JNINativeMethod kMethodsFoo[] = {
 "V", reinterpret_cast<void*>(Java_org_chromium_foo_Foo_nativeDoSomething) },
 };
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
 static bool RegisterNativesImpl(JNIEnv* env) {
-  if (jni_generator::ShouldSkipJniRegistration(false))
-    return true;
+  return true;
+}
+
+JNI_REGISTRATION_EXPORT bool RegisterNativeOrgChromiumFooFoo(JNIEnv* env) {
 
   const int kMethodsFooSize = arraysize(kMethodsFoo);
 

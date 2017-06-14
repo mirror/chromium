@@ -494,4 +494,7 @@ static base::android::ScopedJavaLocalRef<jobject>
 
 // Step 3: RegisterNatives.
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
+
 #endif  // org_chromium_TestJni_JNI

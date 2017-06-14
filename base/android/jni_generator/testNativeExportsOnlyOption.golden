@@ -182,4 +182,7 @@ static_cast<jstring>(env->CallStaticObjectMethod(SampleForTests_clazz(env),
 
 // Step 3: RegisterNatives.
 
+// TODO(crbug/683256): Remove these empty registration functions and functions
+// calling them.
+
 #endif  // org_chromium_example_jni_generator_SampleForTests_JNI
