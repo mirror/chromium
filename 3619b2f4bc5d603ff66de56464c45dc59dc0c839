@@ -1,0 +1,418 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb071ebe_d1f65085",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 798,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Put this in a finally.  So:\n\nStrictMode.ThreadPolicy oldPolicy \u003d ...;\ntry {\n  mScreenshotMonitor \u003d ...;\n} finally {\n  StrictMode.setThreadPolicy(oldPolicy);\n}",
+      "range": {
+        "startLine": 798,
+        "startChar": 12,
+        "endLine": 798,
+        "endChar": 50
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28395f70_03ac6fdd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2186,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 2186,
+        "startChar": 4,
+        "endLine": 2186,
+        "endChar": 37
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84b48343_b485f70b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2195,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Are there any other criteria where we wouldn\u0027t want to show this?  Talk to Shakti about the criteria he uses to figure out whether or not we\u0027re actually able to download this page.",
+      "range": {
+        "startLine": 2194,
+        "startChar": 4,
+        "endLine": 2195,
+        "endChar": 53
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "809c9573_d23b00f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 2196,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Remove! :)",
+      "range": {
+        "startLine": 2196,
+        "startChar": 8,
+        "endLine": 2196,
+        "endChar": 11
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6065c42_f021ffec",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Does this have to be protected?  Also add final.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 14
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94a05a30_dea5319f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "private static final String DIR_PATH?  Maybe add a TODO to generate this based on the device (different devices store screenshots in different directories IIRC).",
+      "range": {
+        "startLine": 23,
+        "startChar": 26,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0317aaf5_09bae66f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Don\u0027t need.  False is the default value.",
+      "range": {
+        "startLine": 29,
+        "startChar": 8,
+        "endLine": 29,
+        "endChar": 30
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db95df34_dea4cce7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Javadocs on all of these :).  Can we just override startWatching and stopWatching since we\u0027re a FileObserver?  Either that or maybe we should contain one internally instead of extending it.  I could see callers using the wrong method because they didn\u0027t know the difference.",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 35
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec69a1e3_19ad7ad0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "@Override",
+      "range": {
+        "startLine": 44,
+        "startChar": 4,
+        "endLine": 44,
+        "endChar": 49
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69f18333_a319df40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "So I think this function is called on a special thread.  The cleanest way to do this is to probably do something like immediately post to the UI thread (\"onEventOnUi\" or something) and let that do the monitor check.  Feel free to put the ThreadUtils.postOnUiThread() here and have the runnable just call your \"onEventOnUi\" method.  You could leave the path and assert here though I think.",
+      "range": {
+        "startLine": 45,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "deb45bfe_dc8dd349",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorDelegate.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Don\u0027t need to bleed out this detail.  The class shouldn\u0027t care who the delegate is :).  Maybe even put this delegate interface inside ScreenshotMonitor?",
+      "range": {
+        "startLine": 8,
+        "startChar": 58,
+        "endLine": 8,
+        "endChar": 81
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259757ad_b4695ae0",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Do we want this now that we\u0027re more deterministic?",
+      "range": {
+        "startLine": 29,
+        "startChar": 0,
+        "endLine": 29,
+        "endChar": 15
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cfe434_fce17244",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Remove s.  Add the final attribute.",
+      "range": {
+        "startLine": 31,
+        "startChar": 26,
+        "endLine": 31,
+        "endChar": 35
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e415acda_13cd38a2",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Do we need timeouts now?",
+      "range": {
+        "startLine": 35,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 55
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028a84f6_e6d31982",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "So this is bleeding too much of the implementation out to the test.  If you change the code in ScreenshotMonitor to just make sure this method is called on the UI thread, your test code could look like:\n\n@Override\nprotected void onEventOnUi() {\n  super.onEventOnUi();\n  synchronized (TestScreenshotMonitor.this) {\n    TestScreenshotMonitor.this.notify();\n  }\n}\n\nNote that the delegate doesn\u0027t have to be protected if you do it this way :).",
+      "range": {
+        "startLine": 53,
+        "startChar": 8,
+        "endLine": 64,
+        "endChar": 9
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c6473cd_611f4f1d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Should be 0 by default.",
+      "range": {
+        "startLine": 88,
+        "startChar": 8,
+        "endLine": 88,
+        "endChar": 66
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16149a03_a7c59b9b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Should be 0 by default.",
+      "range": {
+        "startLine": 91,
+        "startChar": 8,
+        "endLine": 91,
+        "endChar": 60
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bf5797_2aa7633a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T17:03:07Z",
+      "side": 1,
+      "message": "Maybe pull out a test helper method to build the path?",
+      "range": {
+        "startLine": 115,
+        "startChar": 16,
+        "endLine": 117,
+        "endChar": 52
+      },
+      "revId": "3619b2f4bc5d603ff66de56464c45dc59dc0c839",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
