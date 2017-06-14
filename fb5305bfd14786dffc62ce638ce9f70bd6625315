@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2cff6ed9_24f70db6",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-14T22:55:36Z",
+      "side": 1,
+      "message": "maybe s/id/!!id/",
+      "revId": "fb5305bfd14786dffc62ce638ce9f70bd6625315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
