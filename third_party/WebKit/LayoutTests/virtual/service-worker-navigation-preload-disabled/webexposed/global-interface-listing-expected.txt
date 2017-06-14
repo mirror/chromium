@@ -190,11 +190,6 @@ interface AnimationTimeline
     method constructor
     method getAnimations
     setter currentTime
-interface AppBannerPromptResult
-    attribute @@toStringTag
-    getter outcome
-    getter platform
-    method constructor
 interface ApplicationCache : EventTarget
     attribute @@toStringTag
     attribute CHECKING
