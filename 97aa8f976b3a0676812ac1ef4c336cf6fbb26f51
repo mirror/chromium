@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d7cb70af_eeaaa56b",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-14T16:25:02Z",
+      "side": 1,
+      "message": "Yes! done.",
+      "parentUuid": "e36fa0e6_bdc1863f",
+      "range": {
+        "startLine": 257,
+        "startChar": 5,
+        "endLine": 257,
+        "endChar": 10
+      },
+      "revId": "97aa8f976b3a0676812ac1ef4c336cf6fbb26f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8ebeaffc_68c72fa5",
         "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-13T08:17:33Z",
       "side": 1,
       "message": "Should this be a while loop if we are deep in the hierarchy? Maybe not worth the added complexity, if this case never happens?",
+      "range": {
+        "startLine": 260,
+        "startChar": 16,
+        "endLine": 260,
+        "endChar": 25
+      },
+      "revId": "97aa8f976b3a0676812ac1ef4c336cf6fbb26f51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9928f568_bcf8edde",
+        "filename": "ios/chrome/browser/ui/settings/settings_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 260,
+      "author": {
+        "id": 1147750
+      },
+      "writtenOn": "2017-06-14T16:25:02Z",
+      "side": 1,
+      "message": "Yeah, I think the complexity is too much. I looked at the code, and it seems this file doesn\u0027t have to tap Back twice in a row, so I think this should be sufficient.",
+      "parentUuid": "8ebeaffc_68c72fa5",
       "range": {
         "startLine": 260,
         "startChar": 16,
