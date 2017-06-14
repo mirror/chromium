@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6a8bd958_3a259102",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T01:15:23Z",
+      "side": 1,
+      "message": "\u003e I don\u0027t think I changed the existing behavior. The current code calls useSharedRelros from a background thread. The main blocks after the library is loaded, so there is already no guarantee that useHaredRelro is called before loadlibrary.\n\nAhh, that\u0027s not true. This is java, not pthreads, and java makes more guarantees. Calling notify will *not* immediately wake up any thread. The signaled thread is guaranteed to block until the signaling thread exists its corresponding synchronized block. You can double check the java documentation. So in that sense, the notifyAll call in line 363 in old code does absolutely nothing, and can be removed without changing behavior. Then I think it\u0027s clear that old code actually has additional synchronization here that guarantees useSharedRelro is always called before load.\n\n\n\u003e Also the Linker documentations explicitly says that this is the actual behavior.\n\u003e The doc for useSharedRelros mentions:\n\u003e \"If initServiceProcess() was previously called, finishLibraryLoad() will not exit until this method is called in another thread with a non-null value.\" (and we do call initServiceProcess).\n\u003e And LibraryLoader.loadNowOverrideApplicationContext does call finishLibraryLoad() (which it should always do since the doc also mentions finishLibraryLoad should always be called).\n\u003e So unless a change lands that break these documented behaviors, then I believe we should be fine, unless I missed something.\n\nYeah, I did see that doc, and I checked code as well. But then surely having tests to verify these things is easy to write.",
+      "parentUuid": "a886aef4_73b4ad80",
+      "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600c253d_49ddc2ed",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
         "patchSetId": 2
@@ -66,6 +84,24 @@
       "side": 1,
       "message": "I believe we can reliably assert in connectionSetup() to validate it\u0027s called only once.\nDo you think it\u0027s enough?",
       "parentUuid": "600c253d_49ddc2ed",
+      "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c1010a_4c4e019c",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T01:15:23Z",
+      "side": 1,
+      "message": "asserts only run on debug, which effectively means only cq. maybe we can have legit production check instead",
+      "parentUuid": "7374a5ae_9add5a04",
       "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
