@@ -16,6 +16,24 @@
       "revId": "e95fe26acc418cc061d4a23078896857a8445728",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d391388a_431e245d",
+        "filename": "components/translate/ios/browser/ios_translate_driver.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-06-14T06:06:00Z",
+      "side": 1,
+      "message": "thanks!",
+      "parentUuid": "e6659821_0cfc45ec",
+      "revId": "e95fe26acc418cc061d4a23078896857a8445728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
