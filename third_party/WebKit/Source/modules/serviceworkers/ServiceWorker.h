@@ -35,6 +35,7 @@
 #include "bindings/core/v8/ScriptPromise.h"
 #include "bindings/core/v8/serialization/SerializedScriptValue.h"
 #include "core/workers/AbstractWorker.h"
+#include "core/workers/WorkerClients.h"
 #include "modules/ModulesExport.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/PassRefPtr.h"
@@ -97,6 +98,10 @@ class MODULES_EXPORT ServiceWorker final
   std::unique_ptr<WebServiceWorker::Handle> handle_;
   bool was_stopped_;
 };
+
+// TODO(nhiroki): Move this into WebEmbeddedWorkerImpl.cpp once it's moved from
+// web/ to modules/ (see https://crbug.com/712963)
+extern template class WorkerClientsInitializer<ServiceWorker>;
 
 }  // namespace blink
 

@@ -15,6 +15,8 @@
 #include "core/html/HTMLMediaElement.h"
 #include "core/offscreencanvas/OffscreenCanvas.h"
 #include "core/page/ChromeClient.h"
+#include "core/workers/Worker.h"
+#include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerContentSettingsClient.h"
 #include "modules/EventModulesFactory.h"
 #include "modules/EventModulesNames.h"
@@ -43,6 +45,7 @@
 #include "modules/presentation/PresentationController.h"
 #include "modules/push_messaging/PushController.h"
 #include "modules/screen_orientation/ScreenOrientationControllerImpl.h"
+#include "modules/serviceworkers/ServiceWorker.h"
 #include "modules/time_zone_monitor/TimeZoneMonitorClient.h"
 #include "modules/vr/VRController.h"
 #include "modules/webdatabase/DatabaseManager.h"
@@ -52,6 +55,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/InterfaceRegistry.h"
 #include "public/platform/WebSecurityOrigin.h"
+#include "public/web/WebEmbeddedWorker.h"
 
 namespace blink {
 
@@ -140,13 +144,27 @@ void ModulesInitializer::Initialize() {
     InstalledAppController::ProvideTo(frame, client->GetRelatedAppsFetcher());
   });
 
-  // WebSharedWorkerImpl callbacks for modules initialization.
-  // TODO(nhiroki): Implement a common mechanism to set up WorkerClients
-  // (https://crbug.com/729500).
-  WebSharedWorkerImpl::RegisterWorkerClientsCreatedCallback(
+  // DedicatedWorker callbacks for modules initialization.
+  WorkerClientsInitializer<Worker>::Register(
       [](WorkerClients* worker_clients) {
         ProvideLocalFileSystemToWorker(worker_clients,
                                        LocalFileSystemClient::Create());
+        ProvideIndexedDBClientToWorker(
+            worker_clients, IndexedDBClientImpl::Create(*worker_clients));
+      });
+
+  // SharedWorker callbacks for modules initialization.
+  WorkerClientsInitializer<WebSharedWorkerImpl>::Register(
+      [](WorkerClients* worker_clients) {
+        ProvideLocalFileSystemToWorker(worker_clients,
+                                       LocalFileSystemClient::Create());
+        ProvideIndexedDBClientToWorker(
+            worker_clients, IndexedDBClientImpl::Create(*worker_clients));
+      });
+
+  // ServiceWorker callbacks for modules initialization.
+  WorkerClientsInitializer<ServiceWorker>::Register(
+      [](WorkerClients* worker_clients) {
         ProvideIndexedDBClientToWorker(
             worker_clients, IndexedDBClientImpl::Create(*worker_clients));
       });

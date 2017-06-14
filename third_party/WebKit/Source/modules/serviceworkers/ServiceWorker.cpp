@@ -46,6 +46,10 @@
 
 namespace blink {
 
+// TODO(nhiroki): Move this into WebEmbeddedWorkerImpl.cpp once it's moved from
+// web/ to modules/ (see https://crbug.com/712963)
+template class MODULES_EXPORT WorkerClientsInitializer<ServiceWorker>;
+
 const AtomicString& ServiceWorker::InterfaceName() const {
   return EventTargetNames::ServiceWorker;
 }
