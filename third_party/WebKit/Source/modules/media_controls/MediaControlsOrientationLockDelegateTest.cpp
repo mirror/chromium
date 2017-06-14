@@ -140,13 +140,13 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
 
     Fullscreen::RequestFullscreen(Video());
     Fullscreen::From(GetDocument()).DidEnterFullscreen();
-    testing::RunPendingTasks();
+    GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   }
 
   void SimulateExitFullscreen() {
     Fullscreen::ExitFullscreen(GetDocument());
     Fullscreen::From(GetDocument()).DidExitFullscreen();
-    testing::RunPendingTasks();
+    GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   }
 
   void SimulateOrientationLock() {
