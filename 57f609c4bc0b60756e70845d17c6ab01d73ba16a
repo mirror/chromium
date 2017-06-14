@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3dd6da8_de26d5da",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-14T12:21:21Z",
+      "side": 1,
+      "message": "old_sequence_local_storage_",
+      "range": {
+        "startLine": 76,
+        "startChar": 28,
+        "endLine": 76,
+        "endChar": 54
+      },
+      "revId": "57f609c4bc0b60756e70845d17c6ab01d73ba16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab2e306b_225988df",
+        "filename": "base/threading/sequence_local_storage_map.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-14T12:21:21Z",
+      "side": 1,
+      "message": "per thread at a time",
+      "range": {
+        "startLine": 77,
+        "startChar": 52,
+        "endLine": 77,
+        "endChar": 62
+      },
+      "revId": "57f609c4bc0b60756e70845d17c6ab01d73ba16a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
