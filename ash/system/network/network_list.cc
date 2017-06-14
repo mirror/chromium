@@ -15,6 +15,7 @@
 #include "ash/system/network/network_info.h"
 #include "ash/system/network/network_state_list_detailed_view.h"
 #include "ash/system/networking_config_delegate.h"
+#include "ash/system/power/power_status.h"
 #include "ash/system/tray/hover_highlight_view.h"
 #include "ash/system/tray/system_menu_button.h"
 #include "ash/system/tray/system_tray_controller.h"
@@ -595,36 +596,23 @@ void NetworkListView::UpdateViewForNetwork(HoverHighlightView* view,
 
 views::View* NetworkListView::CreatePowerStatusView(const NetworkInfo& info) {
   // Mobile can be Cellular or Tether.
-  if (info.type != NetworkInfo::Type::MOBILE)
-    return nullptr;
+  //  if (info.type != NetworkInfo::Type::MOBILE)
+  //    return nullptr;
 
   const chromeos::NetworkState* network =
       NetworkHandler::Get()->network_state_handler()->GetNetworkStateFromGuid(
           info.guid);
 
   // Only return a battery icon for Tether network type.
-  if (!NetworkTypePattern::Tether().MatchesType(network->type()))
-    return nullptr;
+  // if (!NetworkTypePattern::Tether().MatchesType(network->type()))
+  // return nullptr;
 
   views::ImageView* icon = TrayPopupUtils::CreateMoreImageView();
-  gfx::Size canvas_size = gfx::Size(kMenuIconSize, kMenuIconSize);
-  gfx::Canvas canvas(canvas_size, 1.0f, false /* opaque */);
+  PowerStatus::BatteryImageInfo icon_info;
+  icon_info.charge_percent = network->battery_percentage();
+  icon->SetImage(PowerStatus::GetBatteryImage(
+      icon_info, kMenuIconSize, kMenuIconColorDisabled, kMenuIconColor));
 
-  // Paint the battery's base (background) color.
-  PaintVectorIcon(&canvas, kSystemTrayBatteryIcon, kMenuIconSize,
-                  kMenuIconColorDisabled);
-  // Paint the charged portion of the battery.
-  const int charge_height = network->battery_percentage() * kMenuIconSize / 100;
-  gfx::Rect clip_rect(0, kMenuIconSize - charge_height, kMenuIconSize,
-                      charge_height);
-  canvas.Save();
-  canvas.ClipRect(clip_rect);
-  PaintVectorIcon(&canvas, kSystemTrayBatteryIcon, kMenuIconSize,
-                  kMenuIconColor);
-  canvas.Restore();
-
-  // Show the battery icon with correct charge height.
-  icon->SetImage(gfx::ImageSkia::CreateFrom1xBitmap(canvas.GetBitmap()));
   // Show the numeric battery percentage on hover.
   icon->SetTooltipText(base::FormatPercent(network->battery_percentage()));
 
