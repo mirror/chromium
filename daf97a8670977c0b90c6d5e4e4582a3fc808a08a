@@ -152,6 +152,24 @@
       "revId": "daf97a8670977c0b90c6d5e4e4582a3fc808a08a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf928560_2e6ef820",
+        "filename": "content/public/browser/web_contents.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 789,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:25:52Z",
+      "side": 1,
+      "message": "I don\u0027t see that method invoked in that CL either.\n\nOTOH, if chrome/ tracks what media is muted, we shouldn\u0027t maintain the state in content/",
+      "parentUuid": "3b79095b_86eb6c7d",
+      "revId": "daf97a8670977c0b90c6d5e4e4582a3fc808a08a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
