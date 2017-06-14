@@ -37,13 +37,9 @@ extern NSString* const kSettingsVoiceSearchCellId;
 @property(weak, nonatomic, readonly)
     SigninInteractionController* signinInteractionController;
 
-// Initializes a new SettingsCollectionViewController. |mainBrowserState|,
-// |currentBrowserState| and |dataSource| must not be nil.
-// If |currentBrowserState| is not off the record, then it must be equal to
-// |mainBrowserState|.
-- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)mainBrowserState
-                 currentBrowserState:
-                     (ios::ChromeBrowserState*)currentBrowserState
+// Initializes a new SettingsCollectionViewController. |browserState| must be an
+// original browser state (i.e. not Off-the-Record) and must not be nil.
+- (instancetype)initWithBrowserState:(ios::ChromeBrowserState*)browserState
     NS_DESIGNATED_INITIALIZER;
 
 - (instancetype)initWithStyle:(CollectionViewControllerStyle)style
