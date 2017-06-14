@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "243947c0_80e5a8d1",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-14T17:19:46Z",
+      "side": 1,
+      "message": "nit: extra line break? Please provide comment for the else part as well.",
+      "range": {
+        "startLine": 86,
+        "startChar": 2,
+        "endLine": 86,
+        "endChar": 10
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21384809_f0dc20f8",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-14T17:19:46Z",
+      "side": 1,
+      "message": "Please avoid C style casts. use static_cast or similar ones if you need to. Given our discussion about the protocols, I think you won\u0027t need a cast here.",
+      "range": {
+        "startLine": 87,
+        "startChar": 7,
+        "endLine": 87,
+        "endChar": 57
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93a132c_51d85b01",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-14T17:19:46Z",
+      "side": 1,
+      "message": "nit: no need for the extra brackets. self.mediator.selectableItems[index].complete is fine.",
+      "range": {
+        "startLine": 88,
+        "startChar": 47,
+        "endLine": 88,
+        "endChar": 48
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "604e232a_749a33dc",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-14T17:19:46Z",
+      "side": 1,
+      "message": "nit: you can add a method such as GetNotificationLabelFromAutofillProfile to the payment_request_util.h and have it return nil if the string is empty and simply assign to item.complete and item.notification without the if/else statements.",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 68
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e36e1d4_8cbe1de7",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_has_editable_info_type.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-14T17:19:46Z",
+      "side": 1,
+      "message": "As per our offline discussion, please combine the two protocols into a one protocol rather than extending PaymentsHasAccessoryType.",
+      "range": {
+        "startLine": 12,
+        "startChar": 38,
+        "endLine": 12,
+        "endChar": 62
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
