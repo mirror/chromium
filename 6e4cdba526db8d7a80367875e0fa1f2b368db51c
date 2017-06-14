@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "4e1f77ee_d421e61a",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 179,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "Note that the ChromePasswordManagerClient has WebContents-lifetime. We will have to create a new ID here (or re-fetch a shared one) on each committed main-frame navigation.\n\nA good solution to achieve that is to observe WebContentsObserver::DidFinishLoad, and recreate the ID when navigation_handle-\u003eIsInMainFrame() \u0026\u0026 navigation_handle-\u003eHasCommitted() \u0026\u0026 !navigation_handle-\u003eIsSameDocument().",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de76e95e_8796a7dc",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "Note that while UkmRecorder indeed looks like a singleton, and as such Get() will retrieve the correct instance; still, all other call sites seem to access this through BrowserProcessImpl::ukm_recorder().",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f22cb351_fdaf286a",
         "filename": "components/password_manager/core/browser/password_form_manager.h",
         "patchSetId": 1
@@ -13,6 +47,30 @@
       "writtenOn": "2017-06-13T18:14:09Z",
       "side": 1,
       "message": "Please do not use friend for this, consider an alternative:\n(1) move those enums to PasswordFormUkmRecorder and make them public\n(2) make them public here\n\nAdding a friend makes the code fragile and removes the guarantee that private stuff is only ever used here.",
+      "range": {
+        "startLine": 265,
+        "startChar": 5,
+        "endLine": 265,
+        "endChar": 38
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf6f59c1_484e5b96",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "Alternatively:\n(3) move the definitions outside of either class into a shared header.\n\nI\u0027d only consider (1) if the corresponding variables do not affect the _behavior of this class_ at all apart from being used metrics collection.\n\nOptionally, in a prior CL we could factor out all metrics collection from this class into a PasswordFormMetricsRecorder, and then have this CL add UKM collection there. The assignments of |manager_action_| and friends seem to be scattered throughout this entire class, however, so probably hard to decouple entirely.",
+      "parentUuid": "f22cb351_fdaf286a",
       "range": {
         "startLine": 265,
         "startChar": 5,
@@ -64,6 +122,29 @@
         "startChar": 43,
         "endLine": 663,
         "endChar": 70
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4b43b28_3053b32e",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "nit: I think these days it\u0027s fashionable to write this: `constexpr const char`.\n\nSee: https://groups.google.com/a/chromium.org/forum/#!searchin/chromium-dev/static$20const/chromium-dev/pF7nAmUQ2uw/HxEHUR1tNhwJ",
+      "range": {
+        "startLine": 10,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 10
       },
       "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -140,6 +221,92 @@
     },
     {
       "key": {
+        "uuid": "d5e6a12f_710b4c86",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "Let\u0027s make these named constants above in the unnamed namespace.",
+      "range": {
+        "startLine": 35,
+        "startChar": 32,
+        "endLine": 35,
+        "endChar": 53
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c106318e_403a811f",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "Have you considered either directly recording the SubmitResult enum here, or introducing another enum to be recorded? Without it, it will be difficult to read the corresponding tests and understand the expectations.",
+      "range": {
+        "startLine": 39,
+        "startChar": 63,
+        "endLine": 39,
+        "endChar": 64
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "874f1ef5_3caff871",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "nit: WDYT about adding `default:` label around this line?",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "144e43d9_5ce296d1",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 46,
+        "startChar": 6,
+        "endLine": 46,
+        "endChar": 16
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e86293ee_36caa907",
         "filename": "components/password_manager/core/browser/password_form_ukm_recorder.h",
         "patchSetId": 1
@@ -202,6 +369,29 @@
         "startChar": 11,
         "endLine": 223,
         "endChar": 12
+      },
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6462d89e_d3d0b201",
+        "filename": "components/password_manager/core/browser/password_manager_client.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T09:27:09Z",
+      "side": 1,
+      "message": "phrasing nit: and its last committed main frame navigation.",
+      "range": {
+        "startLine": 223,
+        "startChar": 9,
+        "endLine": 223,
+        "endChar": 27
       },
       "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
