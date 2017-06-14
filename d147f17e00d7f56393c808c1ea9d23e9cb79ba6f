@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "ff0f2265_c76f9db2",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T07:41:34Z",
+      "side": 1,
+      "message": "InProcessWorkerMessagingProxy (ThreadedMessagingProxyBase) has a strong persistent reference via KeepAlive. To cut the persistent reference, the parent object needs to call ParentObjectDestroyed() in its dtor. If this is Member, the dtor is never called because the parent object is reachable from the persistent reference.",
+      "parentUuid": "13e783a5_95b481e5",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879b1349_a97cd04f",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -126,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "428e20f0_704e9f25",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T07:41:34Z",
+      "side": 1,
+      "message": "As kinuko@ mentioned, ParentObjectDestroyed() is called on the main thread (a.k.a., parent thread), so the both functions also called on the main thread regardless of PostTask(). Using ParentFrameTaskRunenrs to post a task from/to the main thread was confusing...\n\nReg: async, that makes sense. This function is now called only from Oilpan\u0027s finalizer so that I think we no longer have to take care of the case, but to minimize the diff of changes, I reverted this part.",
+      "parentUuid": "4c26845e_83dacd28",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ecf02f8_92836658",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -191,6 +227,24 @@
       "side": 1,
       "message": "That\u0027s the reason hiroki made it WeakMember I guess?",
       "parentUuid": "dfca09d1_65b67d38",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61cfc4c4_1ca5c019",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T07:41:34Z",
+      "side": 1,
+      "message": "kinuko@: That\u0027s right.\n\nSee my review comment in InProcessWorkerMessagingProxy.h",
+      "parentUuid": "e0801aa8_47e72ae0",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
