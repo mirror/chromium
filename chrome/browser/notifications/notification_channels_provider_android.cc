@@ -182,6 +182,8 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
       NOTREACHED();
       break;
   }
+  NotifyObservers(primary_pattern, secondary_pattern, content_type,
+                  resource_identifier);
   return true;
 }
 

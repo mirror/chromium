@@ -48,7 +48,7 @@ class ProtectedMediaIdentifierPermissionContext
   ContentSetting GetPermissionStatusInternal(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
-      const GURL& embedding_origin) const override;
+      const GURL& embedding_origin) override;
   void CancelPermissionRequest(content::WebContents* web_contents,
                                const PermissionRequestID& id) override;
 

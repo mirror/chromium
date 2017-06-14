@@ -11,6 +11,7 @@
 #include "base/rand_util.h"
 #include "base/single_thread_task_runner.h"
 #include "base/stl_util.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "base/timer/timer.h"
 #include "chrome/browser/notifications/desktop_notification_profile_util.h"
@@ -172,15 +173,26 @@ NotificationPermissionContext::~NotificationPermissionContext() {}
 ContentSetting NotificationPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
+    const GURL& embedding_origin) {
   // Push messaging is only allowed to be granted on top-level origins.
   if (content_settings_type() == CONTENT_SETTINGS_TYPE_PUSH_MESSAGING
           && requesting_origin != embedding_origin) {
     return CONTENT_SETTING_BLOCK;
   }
-
-  return PermissionContextBase::GetPermissionStatusInternal(
+  ContentSetting setting = PermissionContextBase::GetPermissionStatusInternal(
       render_frame_host, requesting_origin, embedding_origin);
+  if (cached_permission_settings_[requesting_origin] != setting &&
+      (setting == CONTENT_SETTING_ALLOW || setting == CONTENT_SETTING_BLOCK)) {
+    LOG(WARNING) << __FUNCTION__ << "Detected change in permission status";
+    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+        ->PostTask(
+            FROM_HERE,
+            base::Bind(&NotificationPermissionContext::UpdateContentSetting,
+                       weak_factory_ui_thread_.GetWeakPtr(), requesting_origin,
+                       embedding_origin, setting));
+  }
+  cached_permission_settings_[requesting_origin] = setting;
+  return setting;
 }
 
 void NotificationPermissionContext::ResetPermission(

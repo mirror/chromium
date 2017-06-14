@@ -18,7 +18,7 @@ class MidiPermissionContext : public PermissionContextBase {
   ContentSetting GetPermissionStatusInternal(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
-      const GURL& embedding_origin) const override;
+      const GURL& embedding_origin) override;
   bool IsRestrictedToSecureOrigins() const override;
 
   DISALLOW_COPY_AND_ASSIGN(MidiPermissionContext);

@@ -90,7 +90,7 @@ class PermissionContextBase : public KeyedService {
   PermissionResult GetPermissionStatus(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
-      const GURL& embedding_origin) const;
+      const GURL& embedding_origin);
 
   // Update |result| with any modifications based on the device state. For
   // example, if |result| is ALLOW but Chrome does not have the relevant
@@ -118,7 +118,7 @@ class PermissionContextBase : public KeyedService {
   virtual ContentSetting GetPermissionStatusInternal(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
-      const GURL& embedding_origin) const;
+      const GURL& embedding_origin);
 
   // Decide whether the permission should be granted.
   // Calls PermissionDecided if permission can be decided non-interactively,

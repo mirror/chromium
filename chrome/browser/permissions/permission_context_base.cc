@@ -222,7 +222,7 @@ void PermissionContextBase::UserMadePermissionDecision(
 PermissionResult PermissionContextBase::GetPermissionStatus(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
+    const GURL& embedding_origin) {
   // If the permission has been disabled through Finch, block all requests.
   if (IsPermissionKillSwitchOn()) {
     return PermissionResult(CONTENT_SETTING_BLOCK,
@@ -316,7 +316,7 @@ bool PermissionContextBase::IsPermissionKillSwitchOn() const {
 ContentSetting PermissionContextBase::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
+    const GURL& embedding_origin) {
   return HostContentSettingsMapFactory::GetForProfile(profile_)
       ->GetContentSetting(requesting_origin, embedding_origin,
                           content_settings_storage_type(), std::string());

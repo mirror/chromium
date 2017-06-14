@@ -5,6 +5,8 @@
 #ifndef CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PERMISSION_CONTEXT_H_
 #define CHROME_BROWSER_NOTIFICATIONS_NOTIFICATION_PERMISSION_CONTEXT_H_
 
+#include <map>
+
 #include "base/gtest_prod_util.h"
 #include "chrome/browser/permissions/permission_context_base.h"
 #include "components/content_settings/core/common/content_settings.h"
@@ -21,7 +23,7 @@ class NotificationPermissionContext : public PermissionContextBase {
   ContentSetting GetPermissionStatusInternal(
       content::RenderFrameHost* render_frame_host,
       const GURL& requesting_origin,
-      const GURL& embedding_origin) const override;
+      const GURL& embedding_origin) override;
   void ResetPermission(const GURL& requesting_origin,
                        const GURL& embedder_origin) override;
   void CancelPermissionRequest(content::WebContents* web_contents,
@@ -42,6 +44,7 @@ class NotificationPermissionContext : public PermissionContextBase {
                             ContentSetting content_setting) override;
   bool IsRestrictedToSecureOrigins() const override;
 
+  std::map<GURL, ContentSetting> cached_permission_settings_;
   base::WeakPtrFactory<NotificationPermissionContext> weak_factory_ui_thread_;
 };
 
