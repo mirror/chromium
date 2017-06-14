@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "81f61986_1f3b211d",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-14T19:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5614c185_c894902f",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5d4f438c_2d649eea",
         "filename": "cc/layers/layer_impl.h",
         "patchSetId": 18
@@ -33,6 +51,24 @@
       "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ea441fd_8f2a5a8d",
+        "filename": "cc/layers/layer_impl.h",
+        "patchSetId": 18
+      },
+      "lineNbr": 333,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-14T19:21:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5d4f438c_2d649eea",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "b81e0fcb_6f4fb819",
+        "filename": "cc/test/layer_tree_json_parser.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-14T19:21:49Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "17a7dd0c_2906759e",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "13f4d003_795e6021",
         "filename": "content/renderer/gpu/render_widget_compositor.cc",
         "patchSetId": 18
@@ -67,6 +121,24 @@
       "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cc4066d9_5033ddcd",
+        "filename": "content/renderer/gpu/render_widget_compositor.cc",
+        "patchSetId": 18
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-14T19:21:49Z",
+      "side": 1,
+      "message": "No longer needed due to the Union function.",
+      "parentUuid": "13f4d003_795e6021",
+      "revId": "3df80fa2880c6ee97455c44eb2837e2c9d3e3e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
