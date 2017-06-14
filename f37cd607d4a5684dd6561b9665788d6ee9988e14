@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f25a2912_84a1c956",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-14T18:18:52Z",
+      "side": 1,
+      "message": "This piece of example code is now stale.",
+      "range": {
+        "startLine": 19,
+        "startChar": 4,
+        "endLine": 19,
+        "endChar": 22
+      },
+      "revId": "f37cd607d4a5684dd6561b9665788d6ee9988e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7188672_c9b3b385",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-14T18:18:52Z",
+      "side": 1,
+      "message": "(Possibly as a followup) Can we give this a variable a different name that makes it more clear that it\u0027s an array.  The current name reads like a BOOL, which may have helped obscure the fact that the original code was wrong.",
+      "revId": "f37cd607d4a5684dd6561b9665788d6ee9988e14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
