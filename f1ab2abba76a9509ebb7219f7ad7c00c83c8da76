@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f78e2cf2_99f49b25",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-14T15:11:02Z",
+      "side": 1,
+      "message": "\u003e\u003ewe need to atomically reset the client\nHow do we do this?\n\n\u003e\u003ewe need to synchronize with the IO thread\nSo we need to wait here while we delete |decoder_| on IO thread? May be use a WaitableEvent?",
+      "parentUuid": "d6b5fa10_9153f194",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1ebdaee2_f239080b",
         "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-13T20:14:06Z",
       "side": 1,
       "message": "nit: please document why Unretained is safe here.",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9346ee85_a005924d",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-14T15:11:02Z",
+      "side": 1,
+      "message": "Sure. I will take up this in a later patch set as I need to add comments at few other places as well.",
+      "parentUuid": "1ebdaee2_f239080b",
       "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -64,6 +100,24 @@
       "writtenOn": "2017-06-13T19:55:05Z",
       "side": 1,
       "message": "Instead of adding it here, can this go in mojom::GpuMain [1]? e.g. a new\n\n  GpuMain::CreateJpegDecoder(media::mojom::GpuJpegDecodeAccelerator\u0026 request);\n\n[1] https://cs.chromium.org/chromium/src/services/ui/gpu/interfaces/gpu_main.mojom?sq\u003dpackage:chromium\u0026dr\u0026l\u003d14",
+      "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a226c4c2_eeb195b4",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-14T15:11:02Z",
+      "side": 1,
+      "message": "I have done that. Please see ps10.\nHow do we access mojom::GpuMain::CreateJpegDecoder from VideoCaptureGpuJpegDecoder?\nAs I see, GpuProcessHost(browser) and DefaultGpuHost(window server?) has its own mojom::GpuMainPtr. Each one of these also inherits mojom::GpuHost. \nSo, I think we need a common place from where we can access CreateJpegDecoder via mojom::GpuMain?",
+      "parentUuid": "dc4238e1_bcd82939",
       "revId": "f1ab2abba76a9509ebb7219f7ad7c00c83c8da76",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
