@@ -199,5 +199,9 @@ void PDFResource::SetCrashData(const char* pdf_url, const char* top_level_url) {
     PluginGlobals::Get()->SetActiveURL(top_level_url);
 }
 
+void PDFResource::SetPastable(bool is_pastable) {
+  Post(RENDERER, PpapiHostMsg_PDF_SetPastable(is_pastable));
+}
+
 }  // namespace proxy
 }  // namespace ppapi

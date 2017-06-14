@@ -2518,6 +2518,9 @@ IPC_MESSAGE_CONTROL3(
     std::vector<PP_PrivateAccessibilityTextRunInfo> /* text_runs */,
     std::vector<PP_PrivateAccessibilityCharInfo> /* chars */)
 
+// Notifies the embedder that the current selection is pastable.
+IPC_MESSAGE_CONTROL1(PpapiHostMsg_PDF_SetPastable, bool /* is_pastable */)
+
 // VideoCapture ----------------------------------------------------------------
 
 // VideoCapture_Dev, plugin -> host

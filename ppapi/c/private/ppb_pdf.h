@@ -162,6 +162,9 @@ struct PPB_PDF {
   void (*SetCrashData)(PP_Instance instance,
                        const char* pdf_url,
                        const char* top_level_url);
+
+  // Sets if the current position accepts paste.
+  void (*SetPastable)(PP_Instance instance, bool is_pastable);
 };
 
 #endif  // PPAPI_C_PRIVATE_PPB_PDF_H_

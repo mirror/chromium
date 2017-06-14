@@ -41,6 +41,7 @@ class PPB_PDF_API {
       PP_PrivateAccessibilityTextRunInfo text_runs[],
       PP_PrivateAccessibilityCharInfo chars[]) = 0;
   virtual void SetCrashData(const char* pdf_url, const char* top_level_url) = 0;
+  virtual void SetPastable(bool is_pastable) = 0;
 
   static const SingletonResourceID kSingletonResourceID = PDF_SINGLETON_ID;
 };

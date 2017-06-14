@@ -71,6 +71,7 @@ class PDF {
   static void SetCrashData(const InstanceHandle& instance,
                            const char* pdf_url,
                            const char* top_level_url);
+  static void SetPastable(const InstanceHandle& instance, bool is_pastable);
 };
 
 }  // namespace pp

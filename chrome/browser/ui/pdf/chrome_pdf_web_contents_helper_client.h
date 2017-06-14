@@ -23,6 +23,8 @@ class ChromePDFWebContentsHelperClient
 
   void OnSaveURL(content::WebContents* contents) override;
 
+  void OnSetPastable(content::WebContents* contents, bool is_pastable) override;
+
   DISALLOW_COPY_AND_ASSIGN(ChromePDFWebContentsHelperClient);
 };
 

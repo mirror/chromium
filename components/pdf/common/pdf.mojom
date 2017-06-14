@@ -16,4 +16,7 @@ interface PdfService {
 
   // Brings up SaveAs... dialog to save specified URL.
   SaveUrlAs(url.mojom.Url url, blink.mojom.Referrer referrer);
+
+  // Sets if the current widget accepts paste.
+  SetPastable(bool is_pastable);
 };
