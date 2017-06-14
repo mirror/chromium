@@ -794,6 +794,8 @@ devtools_emulated_devices_images = [
   "front_end/emulated_devices/Nexus5X-portrait.svg",
   "front_end/emulated_devices/Nexus6P-landscape.svg",
   "front_end/emulated_devices/Nexus6P-portrait.svg",
+  "front_end/emulated_devices/google-pixel.svg",
+  "front_end/emulated_devices/google-pixel-xl.svg",
 ]
 
 devtools_image_files = [
