@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "95b018d7_244ae9a1",
+        "filename": "third_party/WebKit/Source/platform/MemoryCoordinator.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-14T15:37:22Z",
+      "side": 1,
+      "message": "GetFontCache could end up lazily creating a FontCache object on a thread that does not need one.  Would it be possible to test whether the current thread has a FontCache to avoid lazily creating one?",
+      "range": {
+        "startLine": 121,
+        "startChar": 13,
+        "endLine": 121,
+        "endChar": 25
+      },
+      "revId": "637fee0c92a5cb11248a616e7f3818d0751e6daa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
