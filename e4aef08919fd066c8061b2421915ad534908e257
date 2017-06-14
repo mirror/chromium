@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f07b27fd_b8765fe9",
+        "filename": "chrome/browser/ui/views/frame/browser_view_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:13:18Z",
+      "side": 1,
+      "message": "Nit: (expected, actual) for both these lines",
+      "revId": "e4aef08919fd066c8061b2421915ad534908e257",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
