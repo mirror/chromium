@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "0cfd2a7f_4b8112e6",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1000016
+      },
+      "writtenOn": "2017-06-14T14:21:56Z",
+      "side": 1,
+      "message": "I\u0027m using my usual Chrome OS gerrit workflow now Chrome is on gerrit (ie uploading comments answer before the actual revision of the code)\nmaybe it\u0027s bad from a Chrome process PoV",
+      "parentUuid": "abf5c467_da850f5c",
+      "range": {
+        "startLine": 797,
+        "startChar": 65,
+        "endLine": 797,
+        "endChar": 0
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1921655_c4d3054a",
         "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
         "patchSetId": 1
