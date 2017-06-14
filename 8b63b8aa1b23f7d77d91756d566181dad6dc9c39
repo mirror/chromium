@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "229863ac_ad399220",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerClients.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1211710
+      },
+      "writtenOn": "2017-06-14T16:25:18Z",
+      "side": 1,
+      "message": "yes we should work towards a clean structure that makes it clear where these callbacks are defined, when they are registered, and when they are executed across all of the modules -\u003e core callbacks.",
+      "parentUuid": "4159ff4b_831683bc",
+      "revId": "8b63b8aa1b23f7d77d91756d566181dad6dc9c39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "51fc77c4_d40baa77",
         "filename": "third_party/WebKit/Source/core/workers/WorkerClients.h",
         "patchSetId": 4
