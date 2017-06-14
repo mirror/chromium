@@ -206,8 +206,7 @@ class SubresourceIntegrityTest : public ::testing::Test {
           SecurityOrigin::Create(allow_origin_url)->ToAtomicString());
       response.SetHTTPHeaderField("access-control-allow-credentials", "true");
     }
-    Resource* resource =
-        RawResource::Create(ResourceRequest(response.Url()), Resource::kRaw);
+    Resource* resource = RawResource::Create(response.Url(), Resource::kRaw);
     resource->SetResponse(response);
     return resource;
   }
