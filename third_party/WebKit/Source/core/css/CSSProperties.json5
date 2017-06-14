@@ -1333,7 +1333,7 @@
       field_template: "external",
       include_paths: ["platform/Length.h"],
       type_name: "Length",
-      field_group: "box",
+      field_group: "a->b->c->d->e",
       default_value: "Length()",
     },
     {
