@@ -12,6 +12,7 @@
 #include "base/memory/ref_counted.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "base/time/time.h"
 #include "chrome/browser/history/history_service_factory.h"
 #include "chrome/browser/predictors/loading_predictor.h"
@@ -23,6 +24,7 @@
 #include "components/history/core/browser/history_types.h"
 #include "components/sessions/core/session_id.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "net/http/http_response_headers.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request_context.h"
@@ -68,7 +70,9 @@ class FakeGlowplugKeyValueTable : public GlowplugKeyValueTable<T> {
 class MockResourcePrefetchPredictorTables
     : public ResourcePrefetchPredictorTables {
  public:
-  MockResourcePrefetchPredictorTables() = default;
+  MockResourcePrefetchPredictorTables()
+      : ResourcePrefetchPredictorTables(
+            base::SequencedTaskRunnerHandle::Get()) {}
 
   void ScheduleDBTask(const tracked_objects::Location& from_here,
                       DBTask task) override {
@@ -160,8 +164,7 @@ class ResourcePrefetchPredictorTest : public testing::Test {
 
   void InitializePredictor() {
     loading_predictor_->StartInitialization();
-    base::RunLoop loop;
-    loop.RunUntilIdle();  // Runs the DB lookup.
+    content::RunAllBlockingPoolTasksUntilIdle();
     profile_->BlockUntilHistoryProcessesPendingRequests();
   }
 
@@ -202,7 +205,7 @@ ResourcePrefetchPredictorTest::ResourcePrefetchPredictorTest()
 
 ResourcePrefetchPredictorTest::~ResourcePrefetchPredictorTest() {
   profile_.reset(NULL);
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 void ResourcePrefetchPredictorTest::SetUp() {

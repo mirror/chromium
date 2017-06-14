@@ -405,8 +405,8 @@ void ResourcePrefetchPredictor::StartInitialization() {
       tables_, tables_->origin_table(), config_.max_hosts_to_track);
 
   // Storage objects have to be initialized on a DB thread.
-  BrowserThread::PostTaskAndReply(
-      BrowserThread::DB, FROM_HERE,
+  tables_->GetTaskRunner()->PostTaskAndReply(
+      FROM_HERE,
       base::BindOnce(&ResourcePrefetchPredictor::InitializeOnDBThread,
                      base::Unretained(this)),
       base::BindOnce(&ResourcePrefetchPredictor::ConnectToHistoryService,

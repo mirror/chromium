@@ -135,7 +135,9 @@ void ResourcePrefetchPredictorTables::SortOrigins(OriginData* data) {
             });
 }
 
-ResourcePrefetchPredictorTables::ResourcePrefetchPredictorTables() {
+ResourcePrefetchPredictorTables::ResourcePrefetchPredictorTables(
+    scoped_refptr<base::SequencedTaskRunner> db_task_runner)
+    : PredictorTableBase(db_task_runner) {
   url_resource_table_ = base::MakeUnique<GlowplugKeyValueTable<PrefetchData>>(
       kUrlResourceTableName);
   url_redirect_table_ = base::MakeUnique<GlowplugKeyValueTable<RedirectData>>(
@@ -220,14 +222,14 @@ float ResourcePrefetchPredictorTables::ComputeOriginScore(
 void ResourcePrefetchPredictorTables::ScheduleDBTask(
     const tracked_objects::Location& from_here,
     DBTask task) {
-  BrowserThread::PostTask(
-      BrowserThread::DB, from_here,
+  GetTaskRunner()->PostTask(
+      from_here,
       base::BindOnce(&ResourcePrefetchPredictorTables::ExecuteDBTaskOnDBThread,
                      this, std::move(task)));
 }
 
 void ResourcePrefetchPredictorTables::ExecuteDBTaskOnDBThread(DBTask task) {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  CHECK(GetTaskRunner()->RunsTasksInCurrentSequence());
   if (CantAccessDatabase())
     return;
 
@@ -323,7 +325,7 @@ bool ResourcePrefetchPredictorTables::SetDatabaseVersion(sql::Connection* db,
 }
 
 void ResourcePrefetchPredictorTables::CreateTableIfNonExistent() {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  CHECK(GetTaskRunner()->RunsTasksInCurrentSequence());
   if (CantAccessDatabase())
     return;
 
@@ -352,7 +354,7 @@ void ResourcePrefetchPredictorTables::CreateTableIfNonExistent() {
 }
 
 void ResourcePrefetchPredictorTables::LogDatabaseStats() {
-  DCHECK_CURRENTLY_ON(BrowserThread::DB);
+  CHECK(GetTaskRunner()->RunsTasksInCurrentSequence());
   if (CantAccessDatabase())
     return;
 

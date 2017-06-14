@@ -5,11 +5,17 @@
 #ifndef CHROME_BROWSER_PREDICTORS_PREDICTOR_DATABASE_H_
 #define CHROME_BROWSER_PREDICTORS_PREDICTOR_DATABASE_H_
 
+#include <memory>
+
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "components/keyed_service/core/keyed_service.h"
 
 class Profile;
+
+namespace base {
+class SequencedTaskRunner;
+}
 
 namespace sql {
 class Connection;
@@ -23,7 +29,8 @@ class ResourcePrefetchPredictorTables;
 
 class PredictorDatabase : public KeyedService {
  public:
-  explicit PredictorDatabase(Profile* profile);
+  PredictorDatabase(Profile* profile,
+                    scoped_refptr<base::SequencedTaskRunner> db_task_runner);
   ~PredictorDatabase() override;
 
   scoped_refptr<AutocompleteActionPredictorTable> autocomplete_table();
