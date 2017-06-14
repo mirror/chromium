@@ -33,7 +33,7 @@ class ElbowModel {
   void Update(const UpdateData& update);
   void SetHandedness(gvr::ControllerHandedness handedness);
 
- private:
+ protected:
   void UpdateHandedness();
   void UpdateTorsoDirection(const UpdateData& update);
   void ApplyArmModel(const UpdateData& update);
