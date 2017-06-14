@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "15dba26a_7576a9a8",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-14T17:43:28Z",
+      "side": 1,
+      "message": "Would this be a race then too? It seems like ApplyViewportDeltas is called via BeginMainFrame which is happening on the main thread while it isn\u0027t blocked.",
+      "revId": "ffb217e0bb19bf10b364443a9a408c5667a1ad0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
