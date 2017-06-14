@@ -319,14 +319,102 @@ void HTMLSlotElement::UpdateDistributedNodesWithFallback() {
   }
 }
 
+namespace {
+
+constexpr size_t kDistributedNodesLimitInTable = 10;
+using CostTable = std::array<std::array<int, kDistributedNodesLimitInTable>,
+                             kDistributedNodesLimitInTable>;
+using BackRef = std::pair<size_t, size_t>;
+using BackRefTable =
+    std::array<std::array<BackRef, kDistributedNodesLimitInTable>,
+               kDistributedNodesLimitInTable>;
+
+}  // namespace
+
 void HTMLSlotElement::LazyReattachDistributedNodesIfNeeded() {
-  // TODO(hayato): Figure out an exact condition where reattach is required
-  if (old_distributed_nodes_ != distributed_nodes_) {
+  if (old_distributed_nodes_ == distributed_nodes_)
+    return;
+  probe::didPerformSlotDistribution(this);
+
+  // Use dynamic programming to minimize the number of nodes being reattached.
+  const size_t rows = old_distributed_nodes_.size();
+  const size_t columns = distributed_nodes_.size();
+
+  if (rows > kDistributedNodesLimitInTable ||
+      columns > kDistributedNodesLimitInTable) {
+    // Since DP takes O(N^2), we don't use DP if it might take some time.
+    // TODO(hayato): Use some heaulistic to avoid to reattach all nodes
     for (auto& node : old_distributed_nodes_)
       node->LazyReattachIfAttached();
     for (auto& node : distributed_nodes_)
       node->LazyReattachIfAttached();
-    probe::didPerformSlotDistribution(this);
+    return;
+  }
+
+  CostTable cost_table;
+  BackRefTable back_ref_table;
+
+  const size_t substitute_cost = 2;
+  const size_t insert_or_delete_cost = 1;
+
+  for (size_t r = 0; r <= rows; ++r) {
+    cost_table[r][0] = r * insert_or_delete_cost;
+  }
+  for (size_t c = 0; c <= columns; ++c) {
+    cost_table[0][c] = c * insert_or_delete_cost;
+  }
+
+  for (size_t r = 1; r <= rows; ++r) {
+    for (size_t c = 1; c <= columns; ++c) {
+      // (r-1, c-1) -> (r, c)
+      size_t min_cost =
+          cost_table[r - 1][c - 1] +
+          (old_distributed_nodes_[r - 1] == distributed_nodes_[c - 1]
+               ? 0
+               : substitute_cost);
+      BackRef back_ref = std::make_pair(r - 1, c - 1);
+
+      // (r-1, c) -> (r, c)
+      size_t cost = cost_table[r - 1][c] + insert_or_delete_cost;
+      if (cost < min_cost) {
+        min_cost = cost;
+        back_ref = std::make_pair(r - 1, c);
+      }
+
+      // (r, c-1) -> (r, c)
+      cost = cost_table[r][c - 1] + insert_or_delete_cost;
+      if (cost < min_cost) {
+        min_cost = cost;
+        back_ref = std::make_pair(r, c - 1);
+      }
+      cost_table[r][c] = min_cost;
+      back_ref_table[r][c] = back_ref;
+    }
+  }
+
+  size_t r = rows;
+  size_t c = columns;
+  while (r > 0 && c > 0) {
+    BackRef back_ref = back_ref_table[r][c];
+    if (back_ref == std::make_pair(r - 1, c - 1)) {
+      if (old_distributed_nodes_[r - 1] != distributed_nodes_[c - 1]) {
+        old_distributed_nodes_[r - 1]->LazyReattachIfAttached();
+        distributed_nodes_[c - 1]->LazyReattachIfAttached();
+      }
+    } else if (back_ref == std::make_pair(r - 1, c)) {
+      old_distributed_nodes_[r - 1]->LazyReattachIfAttached();
+    } else {
+      DCHECK(back_ref == std::make_pair(r, c - 1));
+      distributed_nodes_[c - 1]->LazyReattachIfAttached();
+    }
+    std::tie(r, c) = back_ref;
+  }
+  if (r > 0) {
+    for (size_t i = 0; i < r; ++i)
+      old_distributed_nodes_[i]->LazyReattachIfAttached();
+  } else if (c > 0) {
+    for (size_t i = 0; i < c; ++i)
+      distributed_nodes_[i]->LazyReattachIfAttached();
   }
   old_distributed_nodes_.clear();
 }
