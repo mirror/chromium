@@ -354,7 +354,7 @@ component("media") {
     ]
   }
 
-  if (current_cpu != "arm" && is_chromeos) {
+  if (current_cpu != "arm" && (is_chromeos || is_desktop_linux)) {
     sources += [
       "filters/h264_bitstream_buffer.cc",
       "filters/h264_bitstream_buffer.h",
