@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "a1d484ce_49222e61",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 370,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T16:51:07Z",
+      "side": 1,
+      "message": "AFAICT we set the placeholder directly on the view without setting it in the SnippetArticle (`mThumbnailView.setImageResource(R.drawable.ic_snippet_thumbnail_placeholder);` in #setThumbnail), so SnippetArticle.mThumbnailBitmap would be null, right?",
+      "parentUuid": "9d7f0d67_3682fef8",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8101309d_19424ba1",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
@@ -174,6 +192,24 @@
       "side": 1,
       "message": "Oh, if we can get rid of the |mIsDestroyed| flag, that would be the best option :) I do remember having had some issues though with callbacks being called after an object had its destroy() method being called, but I can\u0027t remember exactly what they were. Nicolas, do you remember?",
       "parentUuid": "e84c0a0b_e866bbde",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9eb6764_f7b4df33",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-14T16:51:07Z",
+      "side": 1,
+      "message": "It might have been related to callbacks completing after we navigated away from the NTP, but I\u0027m not sure anymore. Checks were there before we started working on the NTP anyway, and we just did the same things adding new ones.",
+      "parentUuid": "49f2038b_3413f8c4",
       "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
