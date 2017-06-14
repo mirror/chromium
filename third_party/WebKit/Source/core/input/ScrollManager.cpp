@@ -200,7 +200,8 @@ void ScrollManager::CustomizedScroll(const Node& start_node,
 
 void ScrollManager::ComputeScrollRelatedMetrics(
     uint32_t* non_composited_main_thread_scrolling_reasons,
-    int* scroller_size) {
+    int* scroller_size,
+    bool* record_scroller_size) {
   // When scrolling on the main thread, the scrollableArea may or may not be
   // composited. Either way, we have recorded either the reasons stored in
   // its layer or the reason NonFastScrollableRegion from the compositor
@@ -208,10 +209,6 @@ void ScrollManager::ComputeScrollRelatedMetrics(
   // non-composited scroller.
   if (!scroll_gesture_handling_node_->GetLayoutObject())
     return;
-
-  // When recording the size of the scroller, we only need to record the
-  // first scrollable area that we find during the walk up.
-  bool set_scroller_size = false;
 
   for (auto* cur_box =
            scroll_gesture_handling_node_->GetLayoutObject()->EnclosingBox();
@@ -221,10 +218,12 @@ void ScrollManager::ComputeScrollRelatedMetrics(
     if (!scrollable_area || !scrollable_area->ScrollsOverflow())
       continue;
 
-    if (!set_scroller_size && !cur_box->Layer()->IsRootLayer()) {
+    // When recording the size of the scroller, we only need to record the
+    // first scrollable area that we find during the walk up.
+    if (!*record_scroller_size && !cur_box->Layer()->IsRootLayer()) {
       *scroller_size = scrollable_area->VisibleContentRect().Width() *
                        scrollable_area->VisibleContentRect().Height();
-      set_scroller_size = true;
+      *record_scroller_size = true;
     }
 
     DCHECK(!scrollable_area->UsesCompositedScrolling() ||
@@ -240,23 +239,21 @@ void ScrollManager::RecordScrollRelatedMetrics(const WebGestureDevice device) {
     return;
   }
 
-  int scroller_size = -1;
+  int scroller_size = 0;
+  bool record_scroller_size = false;
   uint32_t non_composited_main_thread_scrolling_reasons = 0;
   ComputeScrollRelatedMetrics(&non_composited_main_thread_scrolling_reasons,
-                              &scroller_size);
-  if (scroller_size >= 0) {
+                              &scroller_size, &record_scroller_size);
+  if (record_scroller_size) {
+    DCHECK_GT(scroller_size, 0);
     if (device == kWebGestureDeviceTouchpad) {
-      DEFINE_STATIC_LOCAL(
-          CustomCountHistogram, size_histogram_wheel,
-          ("Event.Scroll.ScrollerSize.OnScroll_Wheel", 1,
-           kScrollerSizeLargestBucket, kScrollerSizeBucketCount));
-      size_histogram_wheel.Count(scroller_size);
+      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.ScrollerSize.OnScroll_Wheel",
+                                  scroller_size, 1, kScrollerSizeLargestBucket,
+                                  kScrollerSizeBucketCount);
     } else {
-      DEFINE_STATIC_LOCAL(
-          CustomCountHistogram, size_histogram_touch,
-          ("Event.Scroll.ScrollerSize.OnScroll_Touch", 1,
-           kScrollerSizeLargestBucket, kScrollerSizeBucketCount));
-      size_histogram_touch.Count(scroller_size);
+      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.ScrollerSize.OnScroll_Touch",
+                                  scroller_size, 1, kScrollerSizeLargestBucket,
+                                  kScrollerSizeBucketCount);
     }
   }
 
