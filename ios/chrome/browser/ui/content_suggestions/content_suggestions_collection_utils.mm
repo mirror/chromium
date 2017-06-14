@@ -24,8 +24,7 @@ const CGFloat kSpacingIPhone = 16;
 const CGFloat kSpacingIPad = 24;
 
 const CGFloat kMaxSearchFieldFrameMargin = 200;
-const CGFloat kDoodleTopMarginIPadPortrait = 82;
-const CGFloat kDoodleTopMarginIPadLandscape = 82;
+const CGFloat kDoodleTopMarginIPad = 82;
 const CGFloat kNTPSearchFieldBottomPadding = 16;
 
 const CGFloat kVoiceSearchButtonWidth = 48;
@@ -36,11 +35,6 @@ const CGFloat kNonGoogleSearchDoodleHeight = 60;
 // engine.
 const CGFloat kNonGoogleSearchHeaderHeightIPad = 10;
 
-enum InterfaceOrientation {
-  ALL = 0,
-  IPHONE_LANDSCAPE = 1,
-};
-
 // Returns the width necessary to fit |numberOfItem| items, with no padding on
 // the side.
 CGFloat widthForNumberOfItem(NSUInteger numberOfItem) {
@@ -50,6 +44,8 @@ CGFloat widthForNumberOfItem(NSUInteger numberOfItem) {
 }
 
 namespace content_suggestions {
+
+const CGFloat kSearchFieldHeight = 50;
 
 NSUInteger numberOfTilesForWidth(CGFloat availableWidth) {
   if (availableWidth > widthForNumberOfItem(4))
@@ -66,18 +62,6 @@ CGFloat spacingBetweenTiles() {
   return IsIPadIdiom() ? kSpacingIPad : kSpacingIPhone;
 }
 
-CGRect getOrientationFrame(const CGRect frames[], CGFloat width) {
-  BOOL is_portrait = UIInterfaceOrientationIsPortrait(
-      [[UIApplication sharedApplication] statusBarOrientation]);
-  InterfaceOrientation orientation =
-      (IsIPadIdiom() || is_portrait) ? ALL : IPHONE_LANDSCAPE;
-
-  // Calculate width based on screen width and origin x.
-  CGRect frame = frames[orientation];
-  frame.size.width = fmax(width - 2 * frame.origin.x, 50);
-  return frame;
-}
-
 CGFloat centeredTilesMarginForWidth(CGFloat width) {
   NSUInteger columns = numberOfTilesForWidth(width - 2 * spacingBetweenTiles());
   CGFloat whitespace =
@@ -88,42 +72,42 @@ CGFloat centeredTilesMarginForWidth(CGFloat width) {
   return margin;
 }
 
-CGRect doodleFrame(CGFloat width, BOOL logoIsShowing) {
-  const CGRect kDoodleFrame[2] = {
-      CGRectMake(0, 66, 0, 120), CGRectMake(0, 56, 0, 120),
-  };
-  CGRect doodleFrame = getOrientationFrame(kDoodleFrame, width);
+CGFloat doodleHeight(BOOL logoIsShowing) {
   if (!IsIPadIdiom() && !logoIsShowing)
-    doodleFrame.size.height = kNonGoogleSearchDoodleHeight;
-  if (IsIPadIdiom()) {
-    doodleFrame.origin.y = IsPortrait() ? kDoodleTopMarginIPadPortrait
-                                        : kDoodleTopMarginIPadLandscape;
-  }
-  return doodleFrame;
+    return kNonGoogleSearchDoodleHeight;
+  return 120;
 }
 
-CGRect searchFieldFrame(CGFloat width, BOOL logoIsShowing) {
-  CGFloat y = CGRectGetMaxY(doodleFrame(width, logoIsShowing));
-  CGFloat margin = centeredTilesMarginForWidth(width);
+CGFloat doodleTopMargin() {
+  if (IsIPadIdiom())
+    return kDoodleTopMarginIPad;
+  if (IsPortrait())
+    return 66;
+  return 56;
+}
+
+CGFloat searchFieldTopMargin(BOOL logoIsShowing) {
+  CGFloat y = doodleTopMargin() + doodleHeight(logoIsShowing);
+
+  if (IsIPadIdiom()) {
+    return y + kDoodleTopMarginIPad;
+  } else if (IsPortrait()) {
+    return y + 32;
+  } else {
+    return y + 16;
+  }
+}
+
+CGFloat searchFieldWidth(CGFloat superviewWidth) {
+  CGFloat margin = centeredTilesMarginForWidth(superviewWidth);
   if (margin > kMaxSearchFieldFrameMargin)
     margin = kMaxSearchFieldFrameMargin;
-  const CGRect kSearchFieldFrame[2] = {
-      CGRectMake(margin, y + 32, 0, 50), CGRectMake(margin, y + 16, 0, 50),
-  };
-  CGRect searchFieldFrame = getOrientationFrame(kSearchFieldFrame, width);
-  if (IsIPadIdiom()) {
-    CGFloat iPadTopMargin = IsPortrait() ? kDoodleTopMarginIPadPortrait
-                                         : kDoodleTopMarginIPadLandscape;
-    searchFieldFrame.origin.y += iPadTopMargin - 32;
-  }
-  return searchFieldFrame;
+  return fmax(superviewWidth - 2 * margin, 50);
 }
 
-CGFloat heightForLogoHeader(CGFloat width,
-                            BOOL logoIsShowing,
-                            BOOL promoCanShow) {
-  CGFloat headerHeight = CGRectGetMaxY(searchFieldFrame(width, logoIsShowing)) +
-                         kNTPSearchFieldBottomPadding;
+CGFloat heightForLogoHeader(BOOL logoIsShowing, BOOL promoCanShow) {
+  CGFloat headerHeight = searchFieldTopMargin(logoIsShowing) +
+                         kSearchFieldHeight + kNTPSearchFieldBottomPadding;
   if (!IsIPadIdiom()) {
     return headerHeight;
   }
@@ -144,18 +128,13 @@ CGFloat heightForLogoHeader(CGFloat width,
 }
 
 void configureSearchHintLabel(UILabel* searchHintLabel,
-                              UIButton* searchTapTarget,
-                              CGFloat searchFieldWidth) {
-  CGRect hintFrame = CGRectInset(searchTapTarget.bounds, 12, 3);
-  const CGFloat kVoiceSearchOffset = 48;
-  hintFrame.size.width = searchFieldWidth - kVoiceSearchOffset;
+                              UIButton* searchTapTarget) {
   [searchHintLabel setTranslatesAutoresizingMaskIntoConstraints:NO];
 
   [searchTapTarget addSubview:searchHintLabel];
 
   [NSLayoutConstraint activateConstraints:@[
-    [searchHintLabel.heightAnchor
-        constraintEqualToConstant:hintFrame.size.height],
+    [searchHintLabel.heightAnchor constraintEqualToConstant:44],
     [searchHintLabel.centerYAnchor
         constraintEqualToAnchor:searchTapTarget.centerYAnchor]
   ]];
