@@ -281,7 +281,6 @@ void Pointer::OnCursorDisplayChanged(const display::Display& display) {
 // SurfaceDelegate overrides:
 
 void Pointer::OnSurfaceCommit() {
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
   surface_->CommitSurfaceHierarchy();
 
   // Capture new cursor to reflect result of commit.
