@@ -34,6 +34,24 @@
       "revId": "2b04928b33aaf7f25db1d7aebd6471663b5dfc25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbfec12_b0a06dab",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_manifest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-14T00:19:14Z",
+      "side": 1,
+      "message": "Agreed, good to go with the style guide (and to be consistent).",
+      "parentUuid": "60f90c12_6c6fd541",
+      "revId": "2b04928b33aaf7f25db1d7aebd6471663b5dfc25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
