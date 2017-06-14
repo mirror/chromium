@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_DOWNLOAD_INTERNAL_STATS_H_
 #define COMPONENTS_DOWNLOAD_INTERNAL_STATS_H_
 
+#include "components/download/internal/controller.h"
 #include "components/download/public/clients.h"
 #include "components/download/public/download_params.h"
 
@@ -74,6 +75,9 @@ void LogStartDownloadResult(DownloadClient client,
 // Logs statistics about the result of a Model operation.  Used to track failure
 // cases.
 void LogModelOperationResult(ModelAction action, bool success);
+
+// Logs download completion event.
+void LogDownloadCompletion(CompletionType type);
 
 }  // namespace stats
 }  // namespace download
