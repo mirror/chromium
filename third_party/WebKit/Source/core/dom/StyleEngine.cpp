@@ -307,13 +307,14 @@ void StyleEngine::UpdateActiveStyleSheetsInImport(
     StyleEngine& master_engine,
     DocumentStyleSheetCollector& parent_collector) {
   DCHECK(!IsMaster());
+#if 0
   HeapVector<Member<StyleSheet>> sheets_for_list;
   ImportedDocumentStyleSheetCollector subcollector(parent_collector,
                                                    sheets_for_list);
   GetDocumentStyleSheetCollection().CollectStyleSheets(master_engine,
                                                        subcollector);
   GetDocumentStyleSheetCollection().SwapSheetsForSheetList(sheets_for_list);
-
+#endif
   // all_tree_scopes_dirty_ should only be set on main documents, never html
   // imports.
   DCHECK(!all_tree_scopes_dirty_);
