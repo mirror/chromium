@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "293e2418_aeb0a215",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-06-14T16:11:32Z",
+      "side": 1,
+      "message": "Remove |pool| as it\u0027s not necessary with @autoreleasepool",
+      "range": {
+        "startLine": 32,
+        "startChar": 4,
+        "endLine": 32,
+        "endChar": 21
+      },
+      "revId": "2a482b363a3dc2380314e8632809ab2faaa6aa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79026926_7c6aa872",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-06-14T16:11:32Z",
+      "side": 1,
+      "message": "same here",
+      "range": {
+        "startLine": 55,
+        "startChar": 10,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "2a482b363a3dc2380314e8632809ab2faaa6aa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0795c760_9c3e0ffe",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-06-14T16:11:32Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "2a482b363a3dc2380314e8632809ab2faaa6aa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffda1ae_c916b978",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1148126
+      },
+      "writtenOn": "2017-06-14T16:11:32Z",
+      "side": 1,
+      "message": "and here",
+      "revId": "2a482b363a3dc2380314e8632809ab2faaa6aa34",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
