@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "65bc7e91_246c503d",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-14T10:29:30Z",
+      "side": 1,
+      "message": "Maybe add some comment for this one too (WeakMember is not so common)",
+      "revId": "c664131d09705b5d4925e4d42840f86bcc4126e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f0a4fcff_c6b26221",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.h",
         "patchSetId": 7
@@ -13,6 +30,23 @@
       "writtenOn": "2017-06-14T08:52:30Z",
       "side": 1,
       "message": "Let\u0027s elaborate more on how the lifetime of the MessagingProxy, worker object and the worker thread is managed.",
+      "revId": "c664131d09705b5d4925e4d42840f86bcc4126e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9574804e_8d614e04",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-14T10:29:30Z",
+      "side": 1,
+      "message": "Let\u0027s note that this may cause deletion of this via keep_alive_",
       "revId": "c664131d09705b5d4925e4d42840f86bcc4126e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
