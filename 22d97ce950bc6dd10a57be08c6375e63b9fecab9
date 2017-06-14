@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a305e7d_236ef9fb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-14T00:49:17Z",
+      "side": 1,
+      "message": "Both options pass all the tests:\n\n{inline_offset, content_block_size_};\n{inline_offset, content_block_size_ + border_and_padding_.block_start};\n\nWhat would you like to do?\n\nIdeally, we\u0027d have a test for this. I do not feel qualified to write one because my block_layout knowledge is so narrow. If you want to sketch one out, I can submit it with this patch.\n\nIn general, block_layout needs more ng-specific tests. Once your docs are done, we can go through and see what is being tested and what is not.",
+      "parentUuid": "8e8eb7f9_70bb7c2a",
+      "range": {
+        "startLine": 177,
+        "startChar": 25,
+        "endLine": 177,
+        "endChar": 38
+      },
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ebbb59d6_c05d64be",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "ed116ad2_1be705bb",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-14T00:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbb59d6_c05d64be",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2908c065_9e3c8844",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-13T18:58:22Z",
       "side": 1,
       "message": "Should NGPreviousInflowPosition::logical_block_offset include border_and_padding_.block_start?\n\nIt is used within HandleOutOfFlowPositioned.\n\nThis also looks suspicious as previously was being switched on BreakToken() above.",
+      "range": {
+        "startLine": 253,
+        "startChar": 30,
+        "endLine": 253,
+        "endChar": 49
+      },
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c15eaaf_8c98c68f",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-14T00:49:17Z",
+      "side": 1,
+      "message": "I think logical_block_offset _should_ include border_and_padding_.block_start.\nIt is a physical offset from border_box.",
+      "parentUuid": "2908c065_9e3c8844",
       "range": {
         "startLine": 253,
         "startChar": 30,
@@ -100,6 +166,24 @@
     },
     {
       "key": {
+        "uuid": "1944285e_b006ea93",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-14T00:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78a205c8_b32eb80a",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "260bcc6f_8dd78ea0",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -114,6 +198,24 @@
       "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa1d92b1_112ea8f3",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-14T00:49:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "260bcc6f_8dd78ea0",
+      "revId": "22d97ce950bc6dd10a57be08c6375e63b9fecab9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
