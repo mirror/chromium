@@ -359,7 +359,7 @@ void Shell::CreateKeyboard() {
       keyboard::KeyboardController::GetInstance());
 }
 
-void Shell::DeactivateKeyboard() {
+void Shell::DestroyKeyboard() {
   // TODO(jamescook): Move keyboard create and hide into ShellPort.
   keyboard_ui_->Hide();
   if (keyboard::KeyboardController::GetInstance()) {
@@ -673,7 +673,7 @@ Shell::~Shell() {
 
   // Destroy the keyboard before closing the shelf, since it will invoke a shelf
   // layout.
-  DeactivateKeyboard();
+  DestroyKeyboard();
 
   toast_manager_.reset();
 
