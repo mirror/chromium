@@ -732,6 +732,105 @@ class SiteProcessCountTracker : public base::SupportsUserData::Data,
   CountPerProcessPerSiteMap map_;
 };
 
+const void* const kReusableServiceWorkerProcessTrackerKey =
+    "ReusableServiceWorkerProcessTrackerKey";
+
+class ReusableServiceWorkerProcessTracker : public base::SupportsUserData::Data,
+                                            public RenderProcessHostObserver {
+ public:
+  ReusableServiceWorkerProcessTracker() {}
+  ~ReusableServiceWorkerProcessTracker() override {
+    DCHECK(site_to_processes_map_.empty());
+    DCHECK(process_to_site_map_.empty());
+  }
+
+  static void Register(BrowserContext* browser_context,
+                       RenderProcessHost* render_process_host,
+                       const GURL& site_url) {
+    DCHECK(!site_url.is_empty());
+    ReusableServiceWorkerProcessTracker* tracker =
+        static_cast<ReusableServiceWorkerProcessTracker*>(
+            browser_context->GetUserData(
+                kReusableServiceWorkerProcessTrackerKey));
+    if (!tracker) {
+      tracker = new ReusableServiceWorkerProcessTracker();
+      browser_context->SetUserData(kReusableServiceWorkerProcessTrackerKey,
+                                   base::WrapUnique(tracker));
+    }
+    tracker->RegisterProcess(site_url, render_process_host->GetID());
+  }
+
+  static RenderProcessHost* FindForSite(BrowserContext* browser_context,
+                                        const GURL& site_url) {
+    if (site_url.is_empty())
+      return nullptr;
+    ReusableServiceWorkerProcessTracker* tracker =
+        static_cast<ReusableServiceWorkerProcessTracker*>(
+            browser_context->GetUserData(
+                kReusableServiceWorkerProcessTrackerKey));
+    if (!tracker)
+      return nullptr;
+    RenderProcessHost* host = tracker->GetFreshestProcessesForSite(site_url);
+    if (!host)
+      return nullptr;
+    tracker->UnregisterProcess(host->GetID());
+    return host;
+  }
+
+ private:
+  // RenderProcessHostObserver
+  void RenderProcessHostDestroyed(RenderProcessHost* host) override {
+    if (process_to_site_map_.find(host->GetID()) == process_to_site_map_.end())
+      return;
+    UnregisterProcess(host->GetID());
+  }
+
+  void RegisterProcess(const GURL& site_url, int render_process_host_id) {
+    DCHECK(process_to_site_map_.find(render_process_host_id) ==
+           process_to_site_map_.end());
+    process_to_site_map_[render_process_host_id] = site_url;
+
+    std::set<ProcessID>& processes = site_to_processes_map_[site_url];
+    DCHECK(processes.find(render_process_host_id) == processes.end());
+    processes.insert(render_process_host_id);
+    RenderProcessHost* host = RenderProcessHost::FromID(render_process_host_id);
+    host->AddObserver(this);
+  }
+
+  void UnregisterProcess(int render_process_host_id) {
+    auto site_it = process_to_site_map_.find(render_process_host_id);
+    DCHECK(site_it != process_to_site_map_.end());
+    auto processes_it = site_to_processes_map_.find(site_it->second);
+    DCHECK(processes_it != site_to_processes_map_.end());
+    std::set<ProcessID>& processes = processes_it->second;
+    auto process_it = processes.find(render_process_host_id);
+    DCHECK(process_it != processes.end());
+    processes.erase(process_it);
+    process_to_site_map_.erase(site_it);
+    if (processes.empty())
+      site_to_processes_map_.erase(processes_it);
+
+    RenderProcessHost* host = RenderProcessHost::FromID(render_process_host_id);
+    host->RemoveObserver(this);
+  }
+
+  RenderProcessHost* GetFreshestProcessesForSite(const GURL& site_url) const {
+    const auto& processes_it = site_to_processes_map_.find(site_url);
+    if (processes_it == site_to_processes_map_.end())
+      return nullptr;
+    const std::set<ProcessID>& processes = processes_it->second;
+    RenderProcessHost* host = RenderProcessHost::FromID(*processes.crbegin());
+    DCHECK(host);
+    return host;
+  }
+
+  using ProcessID = int;
+  using SiteToProcessesMap = std::map<GURL, std::set<ProcessID>>;
+  using ProcessToSiteMap = std::map<ProcessID, GURL>;
+  SiteToProcessesMap site_to_processes_map_;
+  ProcessToSiteMap process_to_site_map_;
+};
+
 }  // namespace
 
 RendererMainThreadFactoryFunction g_renderer_main_thread_factory = NULL;
@@ -3101,8 +3200,13 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
           browser_context, site_instance, is_for_guests_only);
       break;
     case SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE:
+    case SiteInstanceImpl::ProcessReusePolicy::REUSE_POLICY_FOR_SERVICE_WORKER:
       render_process_host =
           FindReusableProcessHostForSite(browser_context, site_url);
+      break;
+    case SiteInstanceImpl::ProcessReusePolicy::DEFAULT:
+      render_process_host = ReusableServiceWorkerProcessTracker::FindForSite(
+          browser_context, site_url);
       break;
     default:
       break;
@@ -3116,6 +3220,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Otherwise (or if that fails), create a new one.
   if (!render_process_host) {
+    LOG(ERROR) << "create a new process " << site_url;
     if (g_render_process_host_factory_) {
       render_process_host =
           g_render_process_host_factory_->CreateRenderProcessHost(
@@ -3125,6 +3230,11 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
           BrowserContext::GetStoragePartition(browser_context, site_instance));
       render_process_host = new RenderProcessHostImpl(
           browser_context, partition, is_for_guests_only);
+    }
+    if (process_reuse_policy ==
+        SiteInstanceImpl::ProcessReusePolicy::REUSE_POLICY_FOR_SERVICE_WORKER) {
+      ReusableServiceWorkerProcessTracker::Register(
+          browser_context, render_process_host, site_url);
     }
   }
   return render_process_host;
