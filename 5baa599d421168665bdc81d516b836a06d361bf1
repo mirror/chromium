@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28e67379_551fbb36",
+        "filename": "chrome/browser/ui/browser.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T21:03:40Z",
+      "side": 1,
+      "message": "Nit: Note what |contents| gets used for.\n\nIt might make sense to pass a TabDialogs* instead since that\u0027s what the implementation actually depends on.",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "714ea15f_ae43e261",
+        "filename": "chrome/browser/ui/tab_dialogs.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T21:03:40Z",
+      "side": 1,
+      "message": "Nit: Should this be const?  (Same applies to most other methods on this object.)\n\nAlso wondering whether some API like ShowDialog(enum DialogType) would allow condensing these functions and doing maintenance more easily, but maybe not.",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "260d5b44_8b921a0e",
+        "filename": "chrome/browser/ui/views/first_run_bubble.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T21:03:40Z",
+      "side": 1,
+      "message": "I don\u0027t think you want to do this if |anchor_view| is non-null?  Though maybe it will just get overwritten in that case once someone tries to read the anchor back...",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96004906_3cbfcc07",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T21:03:40Z",
+      "side": 1,
+      "message": "This should document why we\u0027d take both an anchor view and an anchor point: basically, that we expect only one to be non-null.\n\nThat said, I don\u0027t feel good about how LocationBarView exposes both GetInfoBarAnchorPoint() and GetSecurityBubbleAnchorView() today, and we anchor to one on Mac and the other on non-Mac.  I think ideally this class would expose only one of those (probably the latter), and it would be implemented on Mac and non-Mac, and we\u0027d call it everywhere and just pass that.\n\nWhat blocks doing things that way?",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
