@@ -152,6 +152,7 @@ void ServiceDiscardableManager::EnforceLimits() {
     // Erase before calling texture_manager->RemoveTexture, to avoid attempting
     // to remove the texture from entries_ twice.
     it = entries_.Erase(it);
+    LOG(ERROR) << "DELETING " << texture_id;
     texture_manager->RemoveTexture(texture_id);
   }
 }
