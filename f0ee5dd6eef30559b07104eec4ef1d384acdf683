@@ -166,6 +166,30 @@
       "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9ddfe45_7f6eef8e",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-14T18:32:37Z",
+      "side": 1,
+      "message": "Mike: I see. Thanks for letting me know that sometimes a crash is preferred. It makes sense to me now. \n\nMike/Mattias: How about I open a bug to capture this discussion on improving web_modal API, with a TODO here to remove this check, and land this current solution as is. Hopefully this whole file will be removed before that TODO is addressed :) WDYT?",
+      "parentUuid": "9e415270_fbcbb763",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
