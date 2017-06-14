@@ -1,0 +1,124 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb339cce_72308af4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "Comment doesn\u0027t add anything\n(it\u0027s also not a \"fetch\" time)",
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3bd359_8005daf9",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "Uncomment or remove",
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c74df6_967ee629",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "This is probably a size_t",
+      "range": {
+        "startLine": 49,
+        "startChar": 32,
+        "endLine": 49,
+        "endChar": 44
+      },
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d556ebe5_8f6c17bb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "provided_category_\n\nOr switch to using category on :60—either is fine, since you\u0027ve DCHECKed that they\u0027re the same, but please be consistent.",
+      "range": {
+        "startLine": 57,
+        "startChar": 61,
+        "endLine": 57,
+        "endChar": 69
+      },
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb69f99e_102b9979",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "This and other methods below could use an implementation, or at least a TODO now.",
+      "range": {
+        "startLine": 83,
+        "startChar": 48,
+        "endLine": 83,
+        "endChar": 50
+      },
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0fa8b63_04515ece",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1150535
+      },
+      "writtenOn": "2017-06-14T09:29:48Z",
+      "side": 1,
+      "message": "Notify with empty list",
+      "revId": "74def59c1ca0b5e0bcfea0b891d261dfa9b49e71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
