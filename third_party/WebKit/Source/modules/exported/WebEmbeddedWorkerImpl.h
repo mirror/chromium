@@ -32,6 +32,7 @@
 #define WebEmbeddedWorkerImpl_h
 
 #include <memory>
+#include "core/workers/WorkerClients.h"
 #include "platform/heap/Handle.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebContentSecurityPolicy.h"
@@ -138,6 +139,8 @@ class WebEmbeddedWorkerImpl final : public WebEmbeddedWorker,
 
   WaitingForDebuggerState waiting_for_debugger_state_;
 };
+
+extern template class WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
 }  // namespace blink
 
