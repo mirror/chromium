@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4fd40761_94c74200",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/csspaint/border-color.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1148182
+      },
+      "writtenOn": "2017-06-14T20:42:15Z",
+      "side": 1,
+      "message": "should these have a parseFloat(styleMap.get(\u0027\u0027)) ? instead on relying on implicit conversion? up to you.",
+      "revId": "f31dd27536c0d626243de1a847813402b47493d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
