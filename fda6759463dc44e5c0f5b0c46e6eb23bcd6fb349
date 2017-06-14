@@ -46,6 +46,30 @@
       "revId": "fda6759463dc44e5c0f5b0c46e6eb23bcd6fb349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8abfc524_33580b17",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBKey.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-14T20:07:13Z",
+      "side": 0,
+      "message": "The component build splits the giant monolothic chrome.dll into a bunch of smaller shared libraries. Unfortunately, this means that symbols need to be exported to be accessible from other shared libraries (in a regular build, this isn\u0027t needed, because everything is in the same shared library).\n\nThe FOO_IMPLEMENTATION macros are helpers used to define the FOO_EXPORT macros so we turn them into dllexport/dllimport as appropriate (on Windows) or GCC visibility attributes (on POSIX).\n\nThey\u0027re being abused here to detect which component is including a header so we can conditionally compile in additional helpers (or not). This looks like a hack to avoid multiple definition issues \u003d/",
+      "parentUuid": "9590235f_8e51d4be",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "fda6759463dc44e5c0f5b0c46e6eb23bcd6fb349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
