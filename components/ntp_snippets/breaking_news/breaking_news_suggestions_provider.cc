@@ -5,18 +5,22 @@
 #include "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h"
 
 #include "base/bind.h"
+#include "base/time/clock.h"
 #include "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h"
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/pref_names.h"
+#include "components/ntp_snippets/remote/json_to_categories.h"
 #include "components/strings/grit/components_strings.h"
 
 namespace ntp_snippets {
 
 BreakingNewsSuggestionsProvider::BreakingNewsSuggestionsProvider(
     ContentSuggestionsProvider::Observer* observer,
-    std::unique_ptr<ContentSuggestionsGCMAppHandler> gcm_app_handler)
+    std::unique_ptr<ContentSuggestionsGCMAppHandler> gcm_app_handler,
+    std::unique_ptr<base::Clock> clock)
     : ContentSuggestionsProvider(observer),
       gcm_app_handler_(std::move(gcm_app_handler)),
+      clock_(std::move(clock)),
       provided_category_(
           Category::FromKnownCategory(KnownCategories::BREAKING_NEWS)),
       category_status_(CategoryStatus::INITIALIZING) {}
@@ -33,7 +37,29 @@ void BreakingNewsSuggestionsProvider::Start() {
 }
 
 void BreakingNewsSuggestionsProvider::OnNewContentSuggestion(
-    std::unique_ptr<base::Value> content) {}
+    std::unique_ptr<base::Value> content) {
+  DCHECK(content);
+  // Record the time when the breaking news arrive.
+  const base::Time fetch_time = clock_->Now();
+  FetchedCategoriesVector categories;
+  if (!JsonToCategories(*content, &categories, fetch_time)) {
+    // LOG(WARNING) << "Received invalid breaking news: " << content;
+    return;
+  }
+  DCHECK_EQ(categories.size(), (unsigned int)1);
+  auto& fetched_category = categories[0];
+  Category category = fetched_category.category;
+  DCHECK(category.IsKnownCategory(KnownCategories::BREAKING_NEWS));
+
+  std::vector<ContentSuggestion> suggestions;
+  for (const std::unique_ptr<RemoteSuggestion>& suggestion :
+       fetched_category.suggestions) {
+    suggestions.emplace_back(suggestion->ToContentSuggestion(category));
+  }
+
+  observer()->OnNewSuggestions(this, provided_category_,
+                               std::move(suggestions));
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Private methods
