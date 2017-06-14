@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a886aef4_73b4ad80",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-14T00:31:21Z",
+      "side": 1,
+      "message": "I don\u0027t think I changed the existing behavior. The current code calls useSharedRelros from a background thread. The main blocks after the library is loaded, so there is already no guarantee that useHaredRelro is called before loadlibrary. \n\nAlso the Linker documentations explicitly says that this is the actual behavior.\nThe doc for useSharedRelros mentions:\n\"If initServiceProcess() was previously called, finishLibraryLoad() will not exit until this method is called in another thread with a non-null value.\" (and we do call initServiceProcess).\nAnd LibraryLoader.loadNowOverrideApplicationContext does call finishLibraryLoad() (which it should always do since the doc also mentions finishLibraryLoad should always be called).\nSo unless a change lands that break these documented behaviors, then I believe we should be fine, unless I missed something.",
+      "parentUuid": "125f00d3_cfd039b3",
+      "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "600c253d_49ddc2ed",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-13T23:50:37Z",
       "side": 1,
       "message": "the other concern I had is that new code is less tolerant of connectionSetup being called twice. connectionSetup is oneway/async, so if it\u0027s called twice, then this code could run on two threads in parallel.\n\nIt should not be called more than once, but verifying that is actually really difficult.. so I guess make that more clear in code, both in browser and renderer side, before making this change?",
+      "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7374a5ae_9add5a04",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-14T00:31:21Z",
+      "side": 1,
+      "message": "I believe we can reliably assert in connectionSetup() to validate it\u0027s called only once.\nDo you think it\u0027s enough?",
+      "parentUuid": "600c253d_49ddc2ed",
       "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
