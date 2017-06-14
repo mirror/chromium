@@ -16,6 +16,24 @@
       "revId": "c9440d47f64723fb3b40d21898d5cbd7ccb10fed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b5262ea_f85ae8da",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 11
+      },
+      "lineNbr": 921,
+      "author": {
+        "id": 1148599
+      },
+      "writtenOn": "2017-06-14T20:29:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "32d073f4_0b1c487f",
+      "revId": "c9440d47f64723fb3b40d21898d5cbd7ccb10fed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
