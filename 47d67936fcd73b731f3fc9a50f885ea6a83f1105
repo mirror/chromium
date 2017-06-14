@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19c79362_3ce08ab1",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_dialog.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1135824
+      },
+      "writtenOn": "2017-06-14T20:30:06Z",
+      "side": 1,
+      "message": "Nit: the TODO and bug should be assigned to whoever owns WebContentsModalDialog - it\u0027s that API that crashes without a non-hacky way to work around it, and improvements on that code will lead to resolution of this TODO.",
+      "range": {
+        "startLine": 51,
+        "startChar": 5,
+        "endLine": 52,
+        "endChar": 48
+      },
+      "revId": "47d67936fcd73b731f3fc9a50f885ea6a83f1105",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
