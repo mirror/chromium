@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "d45982ad_1433c2e8",
+        "filename": "docs/memory/key_concepts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-14T22:49:50Z",
+      "side": 1,
+      "message": "I\u0027m going to change the preface and run with this for now. Will revisit in later revision.",
+      "parentUuid": "70bc90f9_76c07c3e",
+      "range": {
+        "startLine": 8,
+        "startChar": 34,
+        "endLine": 8,
+        "endChar": 39
+      },
+      "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe984ea2_e630d07d",
         "filename": "docs/memory/key_concepts.md",
         "patchSetId": 1
@@ -60,6 +84,30 @@
       "writtenOn": "2017-06-08T23:32:15Z",
       "side": 1,
       "message": "Thank you for doing this! I think it will be very valuable for other people trying to enter the memory space.",
+      "range": {
+        "startLine": 74,
+        "startChar": 20,
+        "endLine": 74,
+        "endChar": 24
+      },
+      "revId": "df44e2ad7ca6e3e11fa10e9446e10713d88fbf27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd0331_2ced15ba",
+        "filename": "docs/memory/key_concepts.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000046
+      },
+      "writtenOn": "2017-06-14T22:49:50Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "fe984ea2_e630d07d",
       "range": {
         "startLine": 74,
         "startChar": 20,
