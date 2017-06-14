@@ -5,7 +5,6 @@
 #include "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h"
 
 #include "base/bind.h"
-#include "base/json/json_writer.h"
 #include "base/time/clock.h"
 #include "components/ntp_snippets/breaking_news/content_suggestions_gcm_app_handler.h"
 #include "components/ntp_snippets/category.h"
@@ -18,13 +17,19 @@ namespace ntp_snippets {
 BreakingNewsSuggestionsProvider::BreakingNewsSuggestionsProvider(
     ContentSuggestionsProvider::Observer* observer,
     std::unique_ptr<ContentSuggestionsGCMAppHandler> gcm_app_handler,
-    std::unique_ptr<base::Clock> clock)
+    std::unique_ptr<base::Clock> clock,
+    std::unique_ptr<RemoteSuggestionsDatabase> database)
     : ContentSuggestionsProvider(observer),
       gcm_app_handler_(std::move(gcm_app_handler)),
       clock_(std::move(clock)),
+      database_(std::move(database)),
       provided_category_(
           Category::FromKnownCategory(KnownCategories::BREAKING_NEWS)),
-      category_status_(CategoryStatus::INITIALIZING) {}
+      category_status_(CategoryStatus::INITIALIZING) {
+  database_->LoadSnippets(
+      base::Bind(&BreakingNewsSuggestionsProvider::OnDatabaseLoaded,
+                 base::Unretained(this)));
+}
 
 BreakingNewsSuggestionsProvider::~BreakingNewsSuggestionsProvider() {
   gcm_app_handler_->StopListening();
@@ -40,26 +45,18 @@ void BreakingNewsSuggestionsProvider::Start() {
 void BreakingNewsSuggestionsProvider::OnNewContentSuggestion(
     std::unique_ptr<base::Value> content) {
   DCHECK(content);
-  const base::Time receive_time = clock_->Now();
+  // Record the time when the breaking news arrive.
+  const base::Time fetch_time = clock_->Now();
   FetchedCategoriesVector categories;
-  if (!JsonToCategories(*content, &categories, receive_time)) {
-    std::string content_json;
-    base::JSONWriter::Write(*content, &content_json);
-    LOG(WARNING) << "Received invalid breaking news: " << content_json;
+  if (!JsonToCategories(*content, &categories, fetch_time)) {
+    // LOG(WARNING) << "Received invalid breaking news: " << content;
     return;
   }
-  DCHECK_EQ(categories.size(), (size_t)1);
+  DCHECK_EQ(categories.size(), (unsigned int)1);
   auto& fetched_category = categories[0];
   Category category = fetched_category.category;
   DCHECK(category.IsKnownCategory(KnownCategories::BREAKING_NEWS));
-
-  std::vector<ContentSuggestion> suggestions;
-  for (const std::unique_ptr<RemoteSuggestion>& suggestion :
-       fetched_category.suggestions) {
-    suggestions.emplace_back(suggestion->ToContentSuggestion(category));
-  }
-
-  observer()->OnNewSuggestions(this, category, std::move(suggestions));
+  NotifyNewSuggestions(std::move(fetched_category.suggestions));
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -81,29 +78,22 @@ CategoryInfo BreakingNewsSuggestionsProvider::GetCategoryInfo(
 }
 
 void BreakingNewsSuggestionsProvider::DismissSuggestion(
-    const ContentSuggestion::ID& suggestion_id) {
-  // TODO(mamir): implement.
-}
+    const ContentSuggestion::ID& suggestion_id) {}
 
 void BreakingNewsSuggestionsProvider::FetchSuggestionImage(
     const ContentSuggestion::ID& suggestion_id,
-    const ImageFetchedCallback& callback) {
-  // TODO(mamir): implement.
-}
+    const ImageFetchedCallback& callback) {}
 
 void BreakingNewsSuggestionsProvider::Fetch(
     const Category& category,
     const std::set<std::string>& known_suggestion_ids,
-    const FetchDoneCallback& callback) {
-  // TODO(mamir): implement.
-}
+    const FetchDoneCallback& callback) {}
 
 void BreakingNewsSuggestionsProvider::ClearHistory(
     base::Time begin,
     base::Time end,
     const base::Callback<bool(const GURL& url)>& filter) {
-  observer()->OnNewSuggestions(this, provided_category_,
-                               std::vector<ContentSuggestion>());
+  // TODO(mamir): clear the provider.
 }
 
 void BreakingNewsSuggestionsProvider::ClearCachedSuggestions(
@@ -114,13 +104,33 @@ void BreakingNewsSuggestionsProvider::ClearCachedSuggestions(
 
 void BreakingNewsSuggestionsProvider::GetDismissedSuggestionsForDebugging(
     Category category,
-    const DismissedSuggestionsCallback& callback) {
-  // TODO(mamir): implement.
-}
+    const DismissedSuggestionsCallback& callback) {}
 
 void BreakingNewsSuggestionsProvider::ClearDismissedSuggestionsForDebugging(
-    Category category) {
+    Category category) {}
+
+void BreakingNewsSuggestionsProvider::OnDatabaseLoaded(
+    std::vector<std::unique_ptr<RemoteSuggestion>> suggestions) {
+  // TODO(mamir): check and update DB status.
+  NotifyNewSuggestions(std::move(suggestions));
+}
+
+void BreakingNewsSuggestionsProvider::OnDatabaseError() {
   // TODO(mamir): implement.
+  // EnterState(State::ERROR_OCCURRED);
+  // UpdateAllCategoryStatus(CategoryStatus::LOADING_ERROR);
+}
+
+void BreakingNewsSuggestionsProvider::NotifyNewSuggestions(
+    std::vector<std::unique_ptr<RemoteSuggestion>> suggestions) {
+  std::vector<ContentSuggestion> result;
+  for (const std::unique_ptr<RemoteSuggestion>& suggestion : suggestions) {
+    result.emplace_back(suggestion->ToContentSuggestion(provided_category_));
+  }
+
+  DVLOG(1) << "NotifyNewSuggestions(): " << result.size()
+           << " items in category " << provided_category_;
+  observer()->OnNewSuggestions(this, provided_category_, std::move(result));
 }
 
 }  // namespace ntp_snippets
