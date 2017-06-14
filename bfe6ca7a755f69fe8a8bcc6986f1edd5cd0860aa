@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a7b0e7d7_3b4460d2",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-14T21:01:50Z",
+      "side": 0,
+      "message": "read_lock_fences_enabled needs to be set to true when using GMBs as the buffer can\u0027t be reused until the GPU is done with it.",
+      "revId": "bfe6ca7a755f69fe8a8bcc6986f1edd5cd0860aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

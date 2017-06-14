@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1af69493_2256239c",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-14T21:01:50Z",
+      "side": 1,
+      "message": "How are we preventing this code from modifying the buffer while it\u0027s in use by the compositor?",
+      "revId": "56eed1e03bcdd13b73f50fcbb416b800fc60bc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
