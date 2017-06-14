@@ -81,6 +81,11 @@ class ContentSuggestion {
     bool operator==(const ID& rhs) const;
     bool operator!=(const ID& rhs) const;
 
+    // An arbitrary but consistent ordering. Can be used to look up suggestion
+    // ids in a std::map, but should not be used to order suggestion ids for
+    // other purposes.
+    struct Compare;
+
    private:
     Category category_;
     std::string id_within_category_;
@@ -213,6 +218,11 @@ class ContentSuggestion {
 };
 
 std::ostream& operator<<(std::ostream& os, const ContentSuggestion::ID& id);
+
+struct ContentSuggestion::ID::Compare {
+  bool operator()(const ContentSuggestion::ID& left,
+                  const ContentSuggestion::ID& right) const;
+};
 
 }  // namespace ntp_snippets
 

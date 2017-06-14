@@ -24,6 +24,7 @@
 #include "components/ntp_snippets/category.h"
 #include "components/ntp_snippets/category_rankers/category_ranker.h"
 #include "components/ntp_snippets/category_status.h"
+#include "components/ntp_snippets/content_suggestions_archive.h"
 #include "components/ntp_snippets/content_suggestions_provider.h"
 #include "components/ntp_snippets/remote/remote_suggestions_scheduler.h"
 #include "components/ntp_snippets/user_classifier.h"
@@ -313,9 +314,16 @@ class ContentSuggestionsService : public KeyedService,
   void UnregisterCategory(Category category,
                           ContentSuggestionsProvider* provider);
 
-  // Removes a suggestion from the local store |suggestions_by_category_|, if it
-  // exists. Returns true if a suggestion was removed.
-  bool RemoveSuggestionByID(const ContentSuggestion::ID& suggestion_id);
+  // Returns the suggestion with |suggestion_id| from any surface. Returns
+  // nullptr if not found.
+  const ContentSuggestion* FindSuggestion(
+      const ContentSuggestion::ID& suggestion_id);
+
+  // Removes a suggestion from the cache (if it is there). If |move_to_archive|,
+  // the suggestion is moved to the archive. Otherwise, the suggestion is
+  // deleted. Returns true if the suggestion was removed.
+  bool RemoveSuggestionByID(const ContentSuggestion::ID& suggestion_id,
+                            bool move_to_archive);
 
   // Fires the OnCategoryStatusChanged event for the given |category|.
   void NotifyCategoryStatusChanged(Category category);
@@ -377,12 +385,16 @@ class ContentSuggestionsService : public KeyedService,
   // exactly the same categories as |providers_by_category_|.
   std::vector<Category> categories_;
 
-  // All current suggestions grouped by category. This contains an entry for
-  // every category in |categories_| whose status is an available status. It may
-  // contain an empty vector if the category is available but empty (or still
-  // loading).
+  // Currently cached suggestions grouped by category (the cache contains
+  // suggestions that are shown when a new surface is opened).
   std::map<Category, std::vector<ContentSuggestion>, Category::CompareByID>
       suggestions_by_category_;
+
+  // In-memory archive for content suggestions that appeared in some previous
+  // surface and are not be cached in |suggestions_by_category_| any more. We
+  // need to keep them around because the previous surface still may get
+  // visible. In-memory suffices because state of open surfaces is not persited.
+  ContentSuggestionsArchive suggestions_archive_;
 
   // Observer for the SigninManager. All observers are notified when the signin
   // state changes so that they can refresh their list of suggestions.

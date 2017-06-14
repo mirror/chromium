@@ -37,6 +37,8 @@ static_library("ntp_snippets") {
     "category_status.h",
     "content_suggestion.cc",
     "content_suggestion.h",
+    "content_suggestions_archive.cc",
+    "content_suggestions_archive.h",
     "content_suggestions_metrics.cc",
     "content_suggestions_metrics.h",
     "content_suggestions_provider.cc",

@@ -48,6 +48,15 @@ GURL ContentSuggestion::GetFaviconDomain(const GURL& favicon_url) {
   return favicon_url.GetWithEmptyPath();
 }
 
+bool ContentSuggestion::ID::Compare::operator()(
+    const ContentSuggestion::ID& left,
+    const ContentSuggestion::ID& right) const {
+  if (left.category().id() != right.category().id()) {
+    return left.category().id() < right.category().id();
+  }
+  return left.id_within_category() < right.id_within_category();
+}
+
 void ContentSuggestion::set_download_suggestion_extra(
     std::unique_ptr<DownloadSuggestionExtra> download_suggestion_extra) {
   DCHECK(id_.category().IsKnownCategory(KnownCategories::DOWNLOADS));

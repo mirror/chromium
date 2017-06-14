@@ -363,10 +363,9 @@ void ContentSuggestionsService::DismissSuggestion(
   providers_by_category_[suggestion_id.category()]->DismissSuggestion(
       suggestion_id);
 
-  // Remove the suggestion locally if it is present. A suggestion may be missing
-  // localy e.g. if it was sent to UI through |Fetch| or it has been dismissed
-  // from a different NTP.
-  RemoveSuggestionByID(suggestion_id);
+  // The dismissed suggestion may stay visible in other open surfaces. Thus, we
+  // do not delete it, only move it into the archive (unless already there).
+  RemoveSuggestionByID(suggestion_id, /*move_to_archive=*/true);
 }
 
 void ContentSuggestionsService::DismissCategory(Category category) {
@@ -422,6 +421,7 @@ void ContentSuggestionsService::Fetch(
 
   metrics::RecordFetchAction();
 
+  // TODO(jkrcal): store these suggestions in the archive. crbug.com/714031
   providers_it->second->Fetch(category, known_suggestion_ids, callback);
 }
 
@@ -479,6 +479,16 @@ void ContentSuggestionsService::OnNewSuggestions(
     return;
   }
 
+  // The current content of |suggestions_by_category_[category]| may still be
+  // used in other open surfaces. Move these old suggestions into the archive.
+  suggestions_archive_.ArchiveSuggestions(
+      std::move(suggestions_by_category_[category]));
+  // Some suggestion may be both in the old (archived) list and in the new list.
+  // We do not need to store them twice, remove them from the archive.
+  for (const ContentSuggestion& suggestion : suggestions) {
+    suggestions_archive_.DeleteSuggestion(suggestion.id());
+  }
+
   suggestions_by_category_[category] = std::move(suggestions);
 
   for (Observer& observer : observers_) {
@@ -508,7 +518,9 @@ void ContentSuggestionsService::OnCategoryStatusChanged(
 void ContentSuggestionsService::OnSuggestionInvalidated(
     ContentSuggestionsProvider* provider,
     const ContentSuggestion::ID& suggestion_id) {
-  RemoveSuggestionByID(suggestion_id);
+  // This suggestion will be removed from all open surfaces. Thus, there is no
+  // need to store it in the archive, and we can delete it.
+  RemoveSuggestionByID(suggestion_id, /*move_to_archive=*/false);
   for (Observer& observer : observers_) {
     observer.OnSuggestionInvalidated(suggestion_id);
   }
@@ -629,8 +641,25 @@ void ContentSuggestionsService::UnregisterCategory(
   suggestions_by_category_.erase(category);
 }
 
-bool ContentSuggestionsService::RemoveSuggestionByID(
+const ContentSuggestion* ContentSuggestionsService::FindSuggestion(
     const ContentSuggestion::ID& suggestion_id) {
+  std::vector<ContentSuggestion>* suggestions =
+      &suggestions_by_category_[suggestion_id.category()];
+  auto position =
+      std::find_if(suggestions->begin(), suggestions->end(),
+                   [&suggestion_id](const ContentSuggestion& suggestion) {
+                     return suggestion_id == suggestion.id();
+                   });
+  if (position != suggestions->end()) {
+    return &(*position);
+  }
+
+  return suggestions_archive_.FindSuggestion(suggestion_id);
+}
+
+bool ContentSuggestionsService::RemoveSuggestionByID(
+    const ContentSuggestion::ID& suggestion_id,
+    bool remove_into_archive) {
   std::vector<ContentSuggestion>* suggestions =
       &suggestions_by_category_[suggestion_id.category()];
   auto position =
@@ -640,6 +669,9 @@ bool ContentSuggestionsService::RemoveSuggestionByID(
                    });
   if (position == suggestions->end()) {
     return false;
+  }
+  if (remove_into_archive) {
+    suggestions_archive_.ArchiveSuggestion(std::move(*position));
   }
   suggestions->erase(position);
 
