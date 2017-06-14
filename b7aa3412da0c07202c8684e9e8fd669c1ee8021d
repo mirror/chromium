@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a6d1fad9_33d37d4a",
+        "filename": "third_party/WebKit/Source/modules/navigatorcontentutils/testing/NavigatorContentUtilsClientMock.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-14T05:27:59Z",
+      "side": 1,
+      "message": "Per my comment on the other patch, I think the right long-term approach is to make NavigatorContentUtilsClient non-virtual and test using a WebFrameClient mock. Can we add a TODO for that?",
+      "range": {
+        "startLine": 36,
+        "startChar": 38,
+        "endLine": 36,
+        "endChar": 75
+      },
+      "revId": "b7aa3412da0c07202c8684e9e8fd669c1ee8021d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
