@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7eedef29_9d068aaa",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-14T00:44:08Z",
+      "side": 1,
+      "message": "Will remove space in next patch.",
+      "range": {
+        "startLine": 72,
+        "startChar": 35,
+        "endLine": 72,
+        "endChar": 36
+      },
+      "revId": "2e1b4cb51e833f7ec3001fbfdbcd1a6f56e9aec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb77d482_fd576318",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1172795
+      },
+      "writtenOn": "2017-06-14T00:44:08Z",
+      "side": 1,
+      "message": "This enum value doesn\u0027t exist. Will delete in next patch.",
+      "revId": "2e1b4cb51e833f7ec3001fbfdbcd1a6f56e9aec0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
