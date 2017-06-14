@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "b1c2c637_80d9eda4",
+        "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-14T02:20:53Z",
+      "side": 1,
+      "message": "Michael, thanks!\nThe original code create the PowerSaveBlocker directly. \nNow the RequestWakeLock() is a mojo call, which essentially sends a message to the Device-Service(who also runs in browser process), afterwards, the device-service create the PowerSaveBlocker for its client.\nSo now it is in an Async way. A kind of IPC(from browser process to browser process) happens here.\n\nNot only RequestWakeLock(), but also inside GetWakeLock() uses the |wake_lock_provider_| to perform mojo call.\n\nI guess all the new added async stuff should be safe here, WDYT?",
+      "parentUuid": "0594d091_848b1cf9",
+      "revId": "2a14762003b0e929fc2a362b5488eba4b9a70d13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c9926f18_e094ba55",
         "filename": "chrome/browser/ui/webui/chromeos/login/encryption_migration_screen_handler.cc",
         "patchSetId": 4
