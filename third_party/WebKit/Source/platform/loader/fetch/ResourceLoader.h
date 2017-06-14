@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/FetchDispatcher.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -50,6 +51,7 @@ class ResourceFetcher;
 // implemented in this class basically.
 class PLATFORM_EXPORT ResourceLoader final
     : public GarbageCollectedFinalized<ResourceLoader>,
+      public FetchDispatcher::Client,
       protected WebURLLoaderClient {
   USING_PRE_FINALIZER(ResourceLoader, Dispose);
 
@@ -58,7 +60,7 @@ class PLATFORM_EXPORT ResourceLoader final
   ~ResourceLoader() override;
   DECLARE_TRACE();
 
-  void Start(const ResourceRequest&);
+  void Start();
 
   void Cancel();
 
@@ -111,9 +113,14 @@ class PLATFORM_EXPORT ResourceLoader final
 
   void DidFinishLoadingFirstPartInMultipart();
 
+  // FetchDispatcher::Client.
+  void OnRequestDispatched() override;
+
  private:
   // Assumes ResourceFetcher and Resource are non-null.
   ResourceLoader(ResourceFetcher*, Resource*);
+
+  void StartWithResourceRequest(const ResourceRequest&);
 
   // This method is currently only used for service worker fallback request and
   // cache-aware loading, other users should be careful not to break
