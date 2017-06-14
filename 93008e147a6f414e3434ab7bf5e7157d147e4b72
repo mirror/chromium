@@ -69,6 +69,24 @@
       "revId": "93008e147a6f414e3434ab7bf5e7157d147e4b72",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4353822e_8988eb82",
+        "filename": "components/translate/ios/browser/ios_translate_driver.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-06-14T06:03:31Z",
+      "side": 1,
+      "message": "changed as whether cld is reliable is propagated.",
+      "parentUuid": "ac03dbdf_4548934d",
+      "revId": "93008e147a6f414e3434ab7bf5e7157d147e4b72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
