@@ -138,7 +138,8 @@ class PLATFORM_EXPORT SharedBuffer : public RefCounted<SharedBuffer> {
     size_t pos = 0;
 
     while (size_t length = GetSomeData(segment, pos)) {
-      func(segment, length, pos);
+      if (!func(segment, length, pos))
+        break;
       pos += length;
     }
   }
