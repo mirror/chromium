@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "143f62f8_12344ab5",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-14T19:40:00Z",
+      "side": 1,
+      "message": "All of these are actually called from web/, so it is unclear why you need them on the base interface. They will move along with the AgentImpl when it moves.",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752d8732_8c627f98",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
         "patchSetId": 2
