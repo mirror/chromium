@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b2d19bd_018f9edf",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-06-14T03:40:01Z",
+      "side": 1,
+      "message": "Phrased better as:\n\nEnsure that all fields/subgroups on this group link to it",
+      "revId": "a414f27d0c435a8a398749fa5f5ee8ae8af69edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6e4980_be77ec7b",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-06-14T03:40:01Z",
+      "side": 1,
+      "message": "can none be renamed to something clearer like self?",
+      "revId": "a414f27d0c435a8a398749fa5f5ee8ae8af69edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fda742f8_e0b79a66",
+        "filename": "third_party/WebKit/Source/build/scripts/templates/fields/group.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-06-14T03:40:01Z",
+      "side": 1,
+      "message": "remove?",
+      "revId": "a414f27d0c435a8a398749fa5f5ee8ae8af69edc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
