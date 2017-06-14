@@ -20,6 +20,7 @@
 #include "components/strings/grit/components_strings.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
+#include "ui/base/ui_features.h"
 #include "ui/gfx/native_widget_types.h"
 #include "ui/views/controls/message_box_view.h"
 #include "ui/views/widget/widget.h"
@@ -251,13 +252,15 @@ void ShowMessageBoxAsyncImpl(
   dialog->Run(std::move(callback));
 }
 
-MessageBoxResult ShowMessageBoxImpl(gfx::NativeWindow parent,
-                                    const base::string16& title,
-                                    const base::string16& message,
-                                    MessageBoxType type,
-                                    const base::string16& yes_text,
-                                    const base::string16& no_text,
-                                    const base::string16& checkbox_text) {
+}  // namespace
+
+MessageBoxResult ShowMessageBoxViews(gfx::NativeWindow parent,
+                                     const base::string16& title,
+                                     const base::string16& message,
+                                     MessageBoxType type,
+                                     const base::string16& yes_text,
+                                     const base::string16& no_text,
+                                     const base::string16& checkbox_text) {
   MessageBoxResult result = MESSAGE_BOX_RESULT_NO;
 
   // TODO(pkotwicz): Exit message loop when the dialog is closed by some other
@@ -280,8 +283,7 @@ MessageBoxResult ShowMessageBoxImpl(gfx::NativeWindow parent,
   return result;
 }
 
-}  // namespace
-
+#if !defined(OS_MACOSX) || BUILDFLAG(MAC_VIEWS_BROWSER)
 bool CloseMessageBoxForTest(bool accept) {
   if (!g_current_message_box)
     return false;
@@ -296,8 +298,8 @@ bool CloseMessageBoxForTest(bool accept) {
 void ShowWarningMessageBox(gfx::NativeWindow parent,
                            const base::string16& title,
                            const base::string16& message) {
-  ShowMessageBoxImpl(parent, title, message, MESSAGE_BOX_TYPE_WARNING,
-                     base::string16(), base::string16(), base::string16());
+  ShowMessageBoxViews(parent, title, message, MESSAGE_BOX_TYPE_WARNING,
+                      base::string16(), base::string16(), base::string16());
 }
 
 void ShowWarningMessageBoxWithCheckbox(
@@ -321,9 +323,9 @@ void ShowWarningMessageBoxWithCheckbox(
 MessageBoxResult ShowQuestionMessageBox(gfx::NativeWindow parent,
                                         const base::string16& title,
                                         const base::string16& message) {
-  return ShowMessageBoxImpl(parent, title, message, MESSAGE_BOX_TYPE_QUESTION,
-                            base::string16(), base::string16(),
-                            base::string16());
+  return ShowMessageBoxViews(parent, title, message, MESSAGE_BOX_TYPE_QUESTION,
+                             base::string16(), base::string16(),
+                             base::string16());
 }
 
 MessageBoxResult ShowMessageBoxWithButtonText(gfx::NativeWindow parent,
@@ -331,8 +333,10 @@ MessageBoxResult ShowMessageBoxWithButtonText(gfx::NativeWindow parent,
                                               const base::string16& message,
                                               const base::string16& yes_text,
                                               const base::string16& no_text) {
-  return ShowMessageBoxImpl(parent, title, message, MESSAGE_BOX_TYPE_QUESTION,
-                            yes_text, no_text, base::string16());
+  return ShowMessageBoxViews(parent, title, message, MESSAGE_BOX_TYPE_QUESTION,
+                             yes_text, no_text, base::string16());
 }
+
+#endif  // !OS_MACOSX || BUILDFLAG(MAC_VIEWS_BROWSER)
 
 }  // namespace chrome
