@@ -91,6 +91,8 @@ int32_t PepperPDFHost::OnResourceMessageReceived(
     PPAPI_DISPATCH_HOST_RESOURCE_CALL(
         PpapiHostMsg_PDF_SetAccessibilityPageInfo,
         OnHostMsgSetAccessibilityPageInfo)
+    PPAPI_DISPATCH_HOST_RESOURCE_CALL(PpapiHostMsg_PDF_SelectionChanged,
+                                      OnHostMsgSelectionChanged)
   PPAPI_END_MESSAGE_MAP()
   return PP_ERROR_FAILED;
 }
@@ -223,6 +225,21 @@ int32_t PepperPDFHost::OnHostMsgSetAccessibilityPageInfo(
   CreatePdfAccessibilityTreeIfNeeded();
   pdf_accessibility_tree_->SetAccessibilityPageInfo(
       page_info, text_run_info, chars);
+  return PP_OK;
+}
+
+int32_t PepperPDFHost::OnHostMsgSelectionChanged(
+    ppapi::host::HostMessageContext* context,
+    PP_Point left,
+    int32_t left_height,
+    PP_Point right,
+    int32_t right_height) {
+  mojom::PdfService* service = GetRemotePdfService();
+  if (!service)
+    return PP_ERROR_FAILED;
+
+  service->SelectionChanged(gfx::Point(left.x, left.y), left_height,
+                            gfx::Point(right.x, right.y), right_height);
   return PP_OK;
 }
 
