@@ -1,6 +1,10 @@
 {% from 'fields/field.tmpl' import encode, declare_storage, compare %}
 {% from 'macros.tmpl' import print_if %}
 {% macro declare_field_group_class(group): -%}
+{% for subgroup in group.subgroups %}
+{{declare_field_group_class(subgroup)}}
+
+{% endfor %}
 class {{group.type_name}} : public RefCounted<{{group.type_name}}> {
  public:
   static PassRefPtr<{{group.type_name}}> Create() {
@@ -19,6 +23,9 @@ class {{group.type_name}} : public RefCounted<{{group.type_name}}> {
   }
   bool operator!=(const {{group.type_name}}& other) const { return !(*this == other); }
 
+  {% for subgroup in group.subgroups %}
+  DataRef<{{subgroup.type_name}}> {{subgroup.member_name}};
+  {% endfor %}
   {% for field in group.fields %}
   {{declare_storage(field)}}
   {% endfor %}
@@ -30,11 +37,19 @@ class {{group.type_name}} : public RefCounted<{{group.type_name}}> {
 {%- endmacro %}
 
 {% macro define_field_group_class(group): -%}
+{% for subgroup in group.subgroups %}
+{{define_field_group_class(subgroup)}}
+
+{% endfor %}
 ComputedStyleBase::{{group.type_name}}::{{group.type_name}}() :
   {% for field in group.fields %}
       {{field.name}}({{encode(field, field.default_value)}}){{print_if(not loop.last, ',')}}
   {% endfor %}
-  {}
+  {
+  {% for subgroup in group.subgroups %}
+    {{subgroup.member_name}}.Init();
+  {% endfor %}
+  }
 
 ComputedStyleBase::{{group.type_name}}::{{group.type_name}}(const {{group.type_name}}& other) :
   {% for field in group.fields %}
