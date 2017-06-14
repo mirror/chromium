@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1cdd22f_e36d74b0",
+        "filename": "content/browser/tracing/background_tracing_manager_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-14T16:25:27Z",
+      "side": 1,
+      "message": "Lines 63 and 133 use them, for example.",
+      "parentUuid": "ad633ee9_5c94d61e",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39a7c90c_42d9c5a9",
         "filename": "content/browser/tracing/background_tracing_rule.cc",
         "patchSetId": 5
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-13T20:53:55Z",
       "side": 1,
       "message": "yeah looks like there is no reason to call this since the filter will be removed when the process is shutting down. There is no reason to clear the UMA callback in that case. That is why the bug about unregistration didn\u0027t surface",
+      "range": {
+        "startLine": 244,
+        "startChar": 21,
+        "endLine": 244,
+        "endChar": 48
+      },
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6972d484_a08d615a",
+        "filename": "content/browser/tracing/background_tracing_rule.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-14T16:25:27Z",
+      "side": 1,
+      "message": "I see :) Do you think we should still call OnTraceMessageFilterRemoved when a child shuts down just in case we have other types of observers in the future that actually care about this event?",
+      "parentUuid": "39a7c90c_42d9c5a9",
       "range": {
         "startLine": 244,
         "startChar": 21,
@@ -62,6 +110,24 @@
       "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43981bad_0f954054",
+        "filename": "content/browser/tracing/tracing_controller_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1112474
+      },
+      "writtenOn": "2017-06-14T16:25:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ee26c23_6bc4120b",
+      "revId": "c436fc3e48ca04ef67d1740a8c9031519e01938f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
