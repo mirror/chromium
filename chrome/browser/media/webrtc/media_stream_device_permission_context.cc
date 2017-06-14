@@ -57,7 +57,7 @@ void MediaStreamDevicePermissionContext::DecidePermission(
 ContentSetting MediaStreamDevicePermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
+    const GURL& embedding_origin) {
   // TODO(raymes): Merge this policy check into content settings
   // crbug.com/244389.
   const char* policy_name = nullptr;

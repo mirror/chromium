@@ -15,7 +15,7 @@ MidiPermissionContext::~MidiPermissionContext() {
 ContentSetting MidiPermissionContext::GetPermissionStatusInternal(
     content::RenderFrameHost* render_frame_host,
     const GURL& requesting_origin,
-    const GURL& embedding_origin) const {
+    const GURL& embedding_origin) {
   return CONTENT_SETTING_ALLOW;
 }
 
