@@ -183,6 +183,10 @@ struct CONTENT_EXPORT ResourceResponseInfo {
   // for this response.
   bool did_service_worker_navigation_preload;
 
+  // True if the initial URL and all the URLs of the redirects that where
+  // followed, if any, are same-origin to the requestor origin.
+  bool is_same_origin;
+
   // NOTE: When adding or changing fields here, also update
   // ResourceResponse::DeepCopy in resource_response.cc.
 };

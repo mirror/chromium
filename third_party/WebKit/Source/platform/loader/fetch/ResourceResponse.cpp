@@ -388,6 +388,14 @@ void ResourceResponse::SetSecurityDetails(
   security_details_.sct_list = sct_list;
 }
 
+void ResourceResponse::SetIsSameOrigin(bool same_origin) {
+  same_origin_ = same_origin;
+}
+
+bool ResourceResponse::IsSameOrigin() const {
+  return same_origin_;
+}
+
 void ResourceResponse::SetHTTPHeaderField(const AtomicString& name,
                                           const AtomicString& value) {
   UpdateHeaderParsedState(name);

@@ -262,6 +262,14 @@ void WebURLResponse::SetSecurityDetails(
       sct_list);
 }
 
+void WebURLResponse::SetIsSameOrigin(bool value) {
+  resource_response_->SetIsSameOrigin(value);
+}
+
+bool WebURLResponse::IsSameOrigin() const {
+  return resource_response_->IsSameOrigin();
+}
+
 const ResourceResponse& WebURLResponse::ToResourceResponse() const {
   return *resource_response_;
 }

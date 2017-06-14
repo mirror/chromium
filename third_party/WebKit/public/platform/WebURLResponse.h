@@ -198,6 +198,11 @@ class WebURLResponse {
 
   BLINK_PLATFORM_EXPORT void SetSecurityDetails(const WebSecurityDetails&);
 
+  // True if the initial URL and all the URLs of the redirects this object
+  // has followed, if any, are same-origin to WebURLRequest::RequestorOrigin().
+  BLINK_PLATFORM_EXPORT bool IsSameOrigin() const;
+  BLINK_PLATFORM_EXPORT void SetIsSameOrigin(bool);
+
 #if INSIDE_BLINK
   BLINK_PLATFORM_EXPORT const ResourceResponse& ToResourceResponse() const;
 #endif

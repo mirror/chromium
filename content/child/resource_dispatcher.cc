@@ -42,6 +42,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -315,6 +316,12 @@ void ResourceDispatcher::OnReceivedRedirect(
     request_info->response_url = redirect_info.new_url;
     request_info->pending_redirect_message.reset(
         new ResourceHostMsg_FollowRedirect(request_id));
+
+    // The request is same origin iif the original URL and all redirect URLs are
+    // same origin to the requestor origin.
+    request_info->same_origin &=
+        IsSameOrigin(request_info->frame_origin, redirect_info.new_url);
+
     if (!request_info->is_deferred) {
       FollowPendingRedirect(request_id, request_info);
     }
@@ -515,6 +522,7 @@ ResourceDispatcher::PendingRequestInfo::PendingRequestInfo(
       origin_pid(origin_pid),
       url(request_url),
       frame_origin(frame_origin),
+      same_origin(IsSameOrigin(frame_origin, request_url)),
       response_url(request_url),
       download_to_file(download_to_file),
       request_start(base::TimeTicks::Now()) {}
@@ -688,6 +696,12 @@ void ResourceDispatcher::ToResourceResponseInfo(
     const ResourceResponseHead& browser_info,
     ResourceResponseInfo* renderer_info) const {
   *renderer_info = browser_info;
+
+  // TODO(hintzed): I think eventually the browser would set this flag so it
+  // should then already be in the browser_info, thus allowing us to remove
+  // is_same_origin from the PendingRequestInfo.
+  renderer_info->is_same_origin = request_info.same_origin;
+
   if (base::TimeTicks::IsConsistentAcrossProcesses() ||
       request_info.request_start.is_null() ||
       request_info.response_start.is_null() ||
@@ -846,6 +860,21 @@ void ResourceDispatcher::ReleaseResourcesInMessageQueue(MessageQueue* queue) {
     queue->pop_front();
     delete message;
   }
+}
+
+// static
+// TODO(hintzed): It seems like a good idea to move the related methods from
+// blink::SecurityOrigin to either url::Origin or something nearby instead of
+// duplicating it.
+bool ResourceDispatcher::IsSameOrigin(const url::Origin& origin,
+                                      const GURL& url) {
+  url::Origin target(url);
+
+  // Unique origins are never same origin to anything, including themselves
+  if (origin.unique() || target.unique())
+    return false;
+
+  return origin.IsSameOriginWith(target);
 }
 
 void ResourceDispatcher::SetResourceSchedulingFilter(

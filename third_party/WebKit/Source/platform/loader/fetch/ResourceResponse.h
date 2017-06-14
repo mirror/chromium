@@ -248,6 +248,9 @@ class PLATFORM_EXPORT ResourceResponse final {
                           const Vector<AtomicString>& certificate,
                           const SignedCertificateTimestampList& sct_list);
 
+  bool IsSameOrigin() const;
+  void SetIsSameOrigin(bool);
+
   long long AppCacheID() const { return app_cache_id_; }
   void SetAppCacheID(long long id) { app_cache_id_ = id; }
 
@@ -418,6 +421,11 @@ class PLATFORM_EXPORT ResourceResponse final {
   // If m_securityStyle is Unknown or Unauthenticated, this does not contain
   // valid data.
   SecurityDetails security_details_;
+
+  // True if the initial URL and all the URLs of the redirects this object
+  // has followed, if any, are same-origin to
+  // ResourceRequest::RequestorOrigin().
+  bool same_origin_;
 
   // HTTP version used in the response, if known.
   HTTPVersion http_version_;

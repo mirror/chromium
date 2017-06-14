@@ -182,6 +182,11 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
     GURL url;
     // The security origin of the frame that initiates this request.
     url::Origin frame_origin;
+
+    // True if the initial URL and all the URLs of the redirects this object
+    // has followed, if any, are same-origin to frame_origin
+    bool same_origin;
+
     // The url of the latest response even in case of redirection.
     GURL response_url;
     bool download_to_file;
@@ -251,6 +256,8 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
   void ContinueForNavigation(
       int request_id,
       mojo::ScopedDataPipeConsumerHandle consumer_handle);
+
+  static bool IsSameOrigin(const url::Origin& origin, const GURL& url);
 
   // Returns true if the message passed in is a resource related message.
   static bool IsResourceDispatcherMessage(const IPC::Message& message);
