@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "869090af_8cb97e4c",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "The constructor declaration might be necessary because it might sometimes be implicitly deleted. I don\u0027t think overriding the destructor and declaring it default is ever necessary. I tried removing a few instances and it didn\u0027t cause harm. In any case, I believe the rule-of-thumb is, if you can remove it and it still compiles, it\u0027s fine.",
+      "parentUuid": "f0626746_cb348467",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c4c155d1_b147976d",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
         "patchSetId": 2
@@ -131,6 +155,30 @@
       "side": 1,
       "message": "We want to remove existing enabler first and then create a new one.",
       "parentUuid": "c4c155d1_b147976d",
+      "range": {
+        "startLine": 74,
+        "startChar": 4,
+        "endLine": 76,
+        "endChar": 71
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4fbaea90_4e532376",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "Makes sense, but please add a comment.",
+      "parentUuid": "318c88ce_ff1d9e8f",
       "range": {
         "startLine": 74,
         "startChar": 4,
@@ -660,6 +708,30 @@
     },
     {
       "key": {
+        "uuid": "00100735_8e393e47",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "Oh right. But it looks like FakeAuthPolicyClient is used by some tests, e.g. ActiveDirectoryLoginTest. Sure enough, if I set the delay to 0, the total time for\n  out/Release/interactive_ui_tests --gtest_filter\u003dActiveDirectoryLoginTest.*\ngoes down from 28 seconds to 13 seconds!\n\nWould it make sense to set the default delay to 0 and only set the delay to 3 seconds if you\u0027re actually running Chrome on Linux (i.e. if you\u0027re not in a test)? It seems more practical than keeping the default at 3 seconds and changing it to 0 in all tests.",
+      "parentUuid": "40efa125_7fa42f9c",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 35,
+        "endChar": 0
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "412a8edf_6295333e",
         "filename": "chromeos/dbus/fake_auth_policy_client.cc",
         "patchSetId": 2
@@ -695,6 +767,30 @@
       "side": 1,
       "message": "See my answer above.",
       "parentUuid": "412a8edf_6295333e",
+      "range": {
+        "startLine": 42,
+        "startChar": 0,
+        "endLine": 42,
+        "endChar": 37
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0763204b_fef05277",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "See my reply above.",
+      "parentUuid": "3d1babb6_80b2848b",
       "range": {
         "startLine": 42,
         "startChar": 0,
@@ -789,6 +885,30 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "e66015f0_07cb4db6",
+      "range": {
+        "startLine": 135,
+        "startChar": 2,
+        "endLine": 135,
+        "endChar": 29
+      },
+      "revId": "9710a9a2ceb08a8fdb63fee26b2a96cbc83c53ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ac942e54_af6ea8c6",
+        "filename": "chromeos/dbus/fake_auth_policy_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "Actually, I was partly lying. The default is \u0027not set\u0027, i.e. has_... returns false, but if you access it, it returns an empty string. Probably \u0027jacket like trousers\u0027, though.",
+      "parentUuid": "c08831cb_4e66b04b",
       "range": {
         "startLine": 135,
         "startChar": 2,

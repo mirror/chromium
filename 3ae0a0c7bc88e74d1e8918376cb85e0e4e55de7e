@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e63bb7f_21cee67a",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "I believe user_manager_enabler_.reset() deletes mock_user_manager(), so this might be illegal. However, deletion verifies expectations, so this line might just be unnecessary.",
+      "range": {
+        "startLine": 91,
+        "startChar": 4,
+        "endLine": 91,
+        "endChar": 67
+      },
+      "revId": "3ae0a0c7bc88e74d1e8918376cb85e0e4e55de7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32b02590_7a4bc1a0",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1161264
+      },
+      "writtenOn": "2017-06-14T09:16:45Z",
+      "side": 1,
+      "message": "Can be removed, it\u0027s clear now.",
+      "range": {
+        "startLine": 164,
+        "startChar": 2,
+        "endLine": 164,
+        "endChar": 22
+      },
+      "revId": "3ae0a0c7bc88e74d1e8918376cb85e0e4e55de7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
