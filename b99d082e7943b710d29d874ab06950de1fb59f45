@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b62cc704_77eab947",
+        "filename": "chrome/browser/notifications/notification_permission_context.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-14T17:49:03Z",
+      "side": 1,
+      "message": "Will remove",
+      "revId": "b99d082e7943b710d29d874ab06950de1fb59f45",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
