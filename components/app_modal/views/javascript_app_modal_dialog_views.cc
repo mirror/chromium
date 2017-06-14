@@ -132,7 +132,13 @@ base::string16 JavaScriptAppModalDialogViews::GetDialogButtonLabel(
 // JavaScriptAppModalDialogViews, views::WidgetDelegate implementation:
 
 ui::ModalType JavaScriptAppModalDialogViews::GetModalType() const {
+#if defined(OS_MACOSX)
+  // On Mac, the system window manager has no concept of a system modal dialog;
+  // the closest approximation is a dialog that is modal to the window.
+  return ui::MODAL_TYPE_WINDOW;
+#else
   return ui::MODAL_TYPE_SYSTEM;
+#endif
 }
 
 views::View* JavaScriptAppModalDialogViews::GetContentsView() {
