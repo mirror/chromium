@@ -54,11 +54,42 @@ class CORE_EXPORT CompositorAnimations {
   static bool IsCompositableProperty(CSSPropertyID);
   static const CSSPropertyID kCompositableProperties[7];
 
-  static bool CanStartAnimationOnCompositor(const Timing&,
-                                            const Element&,
-                                            const Animation*,
-                                            const EffectModel&,
-                                            double animation_playback_rate);
+  struct FailureCode {
+    const bool can_composite = true;
+    const bool web_developer_actionable = false;
+    const String reason;
+
+    static FailureCode None() { return FailureCode(true, false, String()); }
+    static FailureCode Actionable(const String& reason) {
+      return FailureCode(false, true, reason);
+    }
+    static FailureCode NonActionable(const String& reason) {
+      return FailureCode(false, false, reason);
+    }
+
+    bool Ok() const { return can_composite; }
+
+    bool operator==(const FailureCode& other) const {
+      return can_composite == other.can_composite &&
+             web_developer_actionable == other.web_developer_actionable &&
+             reason == other.reason;
+    }
+
+   private:
+    FailureCode(bool can_composite,
+                bool web_developer_actionable,
+                const String& reason)
+        : can_composite(can_composite),
+          web_developer_actionable(web_developer_actionable),
+          reason(reason) {}
+  };
+
+  static FailureCode CanStartAnimationOnCompositor(
+      const Timing&,
+      const Element&,
+      const Animation*,
+      const EffectModel&,
+      double animation_playback_rate);
   static void CancelIncompatibleAnimationsOnCompositor(const Element&,
                                                        const Animation&,
                                                        const EffectModel&);
@@ -111,12 +142,12 @@ class CORE_EXPORT CompositorAnimations {
       double animation_playback_rate);
 
  private:
-  static bool CanStartEffectOnCompositor(const Timing&,
-                                         const Element&,
-                                         const Animation*,
-                                         const EffectModel&,
-                                         double animation_playback_rate);
-  static bool CanStartElementOnCompositor(const Element&);
+  static FailureCode CanStartEffectOnCompositor(const Timing&,
+                                                const Element&,
+                                                const Animation*,
+                                                const EffectModel&,
+                                                double animation_playback_rate);
+  static FailureCode CanStartElementOnCompositor(const Element&);
 
   friend class AnimationCompositorAnimationsTest;
   FRIEND_TEST_ALL_PREFIXES(AnimationCompositorAnimationsTest,
