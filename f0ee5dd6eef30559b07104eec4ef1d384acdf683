@@ -118,6 +118,30 @@
       "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e415270_fbcbb763",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-06-14T18:04:43Z",
+      "side": 1,
+      "message": "\u003e (2) But even if we do the \"real solution\" as you proposed, it doesn\u0027t prevent all potential crashes like this one from happening again. Your suggestion indicates that whoever uses ShowWebModalDialogViews() (a public API) needs to make sure the WebContents is properly prepared by attaching WebContentsModalDialogManager etc, which developers will definitely do for the main use case. But given the fact that there are so many different ways of creating WebContents, it\u0027s very likely that some path is not covered and could cause a crash. This is basically how the crash I am fixing happened in the first place. With that, I feel the original change in constrained_window::ShowWebModalDialogViews still makes some sense. It will at least help prevent some crashes from happening. But again to make a complete fix, we probably also need to update the documentation on ShowWebModalDialogViews(), mentioning that it could return null (and/or add DCHECKs somewhere).\n\nI agree that the case you mention is a weakness of the web_modal API, but I don\u0027t think this is a good solution. As I mentioned in the bug, this would have the effect of implicitly making decisions with security and privacy implications on the user\u0027s behalf, decisions that we\u0027ve already recognized that we don\u0027t have the information to answer ourselves. In analogous fashion to the guidance to use CHECK() if the consequence of a failed assertion would be a security vulnerability, it\u0027s better to crash than to make a wrong decision with security implications. Crashing also provides visibility into the fact that there is a problem -- using a null check would just silently hide it.\n\nIMO a better approach to the general issue would be to either provide a more structured mechanism to create WebContents within Chrome that attaches a WebContentsModalDialogManager, or update the web_modal functionality to supply some WebContentsModalDialogManager-of-last-resort to handle cases where no manager was registered.",
+      "parentUuid": "719d5561_309873ee",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
