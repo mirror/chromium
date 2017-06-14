@@ -144,6 +144,24 @@
     },
     {
       "key": {
+        "uuid": "e84c0a0b_e866bbde",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1195464
+      },
+      "writtenOn": "2017-06-14T15:49:27Z",
+      "side": 1,
+      "message": "The only entry point to the ImageFetcher from the backend is in DownloadThumbnailRequest.onThumbnailRetreived(). Do you mean I should only have a check there (and asserts in public methods)? Doesn\u0027t that mean that the same should be done for LargeIconCallback.onLargeIconAvailable() and the FaviconCallback.onFaviconAvailable().\n\nWhat would happen if we don\u0027t do any checks? The UI is getting destroyed anyway.",
+      "parentUuid": "bef65027_9cdda3de",
+      "revId": "b575db8f3a787439f0e569ce75d2e349141c73bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f60c5b2b_79138088",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/ImageFetcher.java",
         "patchSetId": 9
