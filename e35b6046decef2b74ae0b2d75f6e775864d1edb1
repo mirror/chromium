@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b9f448b_d6740062",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T17:27:05Z",
+      "side": 1,
+      "message": "Sorry, think u missed this, mind adding comment that this can reparent without calling unregister?",
+      "revId": "e35b6046decef2b74ae0b2d75f6e775864d1edb1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
