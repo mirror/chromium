@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7390b306_d603c6f2",
+        "filename": "cc/layers/layer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-14T22:51:06Z",
+      "side": 1,
+      "message": "I would add a helper like\nTransformNode* Layer::GimmeMahTransformNode() {\n  return has_transform_node_ ? layer_tree_host_-\u003eproperty_trees()-\u003etransform_tree.Node(transform_tree_index_) : nullptr;\n}\nI don\u0027t feel strongly about it either way though.",
+      "revId": "faa904e9b02c1c32fc1c0efa7e8657215a4fcf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3788a126_21c7ee0a",
+        "filename": "cc/layers/layer_impl.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-14T22:51:06Z",
+      "side": 1,
+      "message": "Hmm. Layer/LayerImpl don\u0027t remember if they own the node. It feels silly to carry that information all the way for the sole purpose of a DCHECK. :/\n\nThat said I don\u0027t think clip_node can ever be nullptr at this point... How about this:\n\nClipNode* clip_node \u003d property_trees-\u003eclip_tree.Node(clip_tree_index());\n// This layer should have created one for mask_to_bounds().\n// See property_tree_builder.cc:AddClipNodeIfNeeded()\nCHECK(clip_node);",
+      "revId": "faa904e9b02c1c32fc1c0efa7e8657215a4fcf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "122602ac_5cbc2aab",
+        "filename": "cc/trees/layer_tree_host.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1382,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-14T22:51:06Z",
+      "side": 1,
+      "message": "DCHECK(has_transform_node_);",
+      "revId": "faa904e9b02c1c32fc1c0efa7e8657215a4fcf54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
