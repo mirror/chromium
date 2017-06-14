@@ -1,0 +1,208 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e17e6ac4_e05c44b9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Can you add a TODO so that we can try to return a better name by looking at the actual worklet node parameter name?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16ad395d_5504401f",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Does this need to be inline?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ed43143_f19ff58b",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Does this need to be inline?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be603627_339082a8",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Does this need to be inline?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d7ee7e2_fa2c8551",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Add comments on what each of these member vars actually mean.",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c75cee3_ff3687c9",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "I think this loop can be done with just AddOutput(number_of_outputs)",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b090f697_2d954465",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Add TODO to explain briefly why this is empty.",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4562d36e_bc40ef86",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "What getter are we talking about here?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27f6945_f1e73f77",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "This is almost identical to the method below.  Can this method call the method below by passing in an empty AudioWorkletNodeOptions parameter?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02bc4e9d_db3a22ad",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "I don\u0027t think matches the algorithm in the spec about the lifetime. Just add a TODO here?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f61bf9d6_5524dbf5",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Probably s/do access/access/ ?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3231ccb6_0de238d1",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116024
+      },
+      "writtenOn": "2017-06-14T15:33:55Z",
+      "side": 1,
+      "message": "Add comment on what this holds.",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
