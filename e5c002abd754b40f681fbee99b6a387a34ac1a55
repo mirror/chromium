@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5687bdbf_cc9ab56c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T16:59:00Z",
+      "side": 1,
+      "message": "Do we need copyright or AUTHORS entry for this?",
+      "revId": "e5c002abd754b40f681fbee99b6a387a34ac1a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90e0ed73_ad89ea40",
+        "filename": "third_party/WebKit/Source/devtools/front_end/emulated_devices/module.json",
+        "patchSetId": 3
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-14T16:59:00Z",
+      "side": 1,
+      "message": "We should recycle some older devices from visible by default then. The list is big enough already.",
+      "range": {
+        "startLine": 464,
+        "startChar": 35,
+        "endLine": 464,
+        "endChar": 39
+      },
+      "revId": "e5c002abd754b40f681fbee99b6a387a34ac1a55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
