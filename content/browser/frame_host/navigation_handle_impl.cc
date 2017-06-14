@@ -6,6 +6,7 @@
 
 #include <iterator>
 
+#include "base/debug/stack_trace.h"
 #include "base/logging.h"
 #include "content/browser/appcache/appcache_navigation_handle.h"
 #include "content/browser/appcache/appcache_service_impl.h"
@@ -121,6 +122,8 @@ NavigationHandleImpl::NavigationHandleImpl(
       is_form_submission_(is_form_submission),
       expected_render_process_host_id_(ChildProcessHost::kInvalidUniqueID),
       weak_factory_(this) {
+  LOG(ERROR) << "NavigationHandle::NavigationHandle " << url;
+  // base::debug::StackTrace().Print();
   TRACE_EVENT_ASYNC_BEGIN2("navigation", "NavigationHandle", this,
                            "frame_tree_node",
                            frame_tree_node_->frame_tree_node_id(), "url",
@@ -702,7 +705,7 @@ void NavigationHandleImpl::ReadyToCommitNavigation(
     RenderFrameHostImpl* render_frame_host) {
   TRACE_EVENT_ASYNC_STEP_INTO0("navigation", "NavigationHandle", this,
                                "ReadyToCommitNavigation");
-
+  TRACE_EVENT0("navigation", "NavigationHandleImpl::ReadyToCommitNavigation");
   DCHECK(!render_frame_host_ || render_frame_host_ == render_frame_host);
   render_frame_host_ = render_frame_host;
   state_ = READY_TO_COMMIT;
@@ -768,6 +771,7 @@ void NavigationHandleImpl::DidCommitNavigation(
 
 void NavigationHandleImpl::SetExpectedProcess(
     RenderProcessHost* expected_process) {
+  TRACE_EVENT0("navigation", "NavigationHandleImpl::SetExpectedProcess");
   if (expected_process &&
       expected_process->GetID() == expected_render_process_host_id_) {
     // This |expected_process| has already been informed of the navigation,
@@ -1127,6 +1131,7 @@ bool NavigationHandleImpl::IsSelfReferentialURL() {
 }
 
 void NavigationHandleImpl::UpdateSiteURL() {
+  TRACE_EVENT0("navigation", "NavigationHandleImpl::UpdateSiteURL");
   GURL new_site_url = SiteInstance::GetSiteForURL(
       frame_tree_node_->navigator()->GetController()->GetBrowserContext(),
       url_);

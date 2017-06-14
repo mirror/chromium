@@ -38,6 +38,7 @@
 #include "content/public/browser/storage_partition.h"
 #include "content/public/browser/stream_handle.h"
 #include "content/public/common/appcache_info.h"
+#include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_client.h"
 #include "content/public/common/origin_util.h"
 #include "content/public/common/request_context_type.h"
@@ -490,6 +491,18 @@ void NavigationRequest::CreateNavigationHandle() {
     navigation_handle_->set_source_location(
         common_params_.source_location.value());
   }
+
+  if (IsBrowserSideNavigationEnabled()) {
+    DCHECK_NE(AssociatedSiteInstanceType::NONE, associated_site_instance_type_);
+    RenderFrameHostImpl* navigating_frame_host =
+        associated_site_instance_type_ ==
+                AssociatedSiteInstanceType::SPECULATIVE
+            ? frame_tree_node_->render_manager()->speculative_frame_host()
+            : frame_tree_node_->current_frame_host();
+    DCHECK(navigating_frame_host);
+
+    navigation_handle_->SetExpectedProcess(navigating_frame_host->GetProcess());
+  }
 }
 
 void NavigationRequest::TransferNavigationHandleOwnership(
@@ -733,6 +746,7 @@ void NavigationRequest::OnRequestStarted(base::TimeTicks timestamp) {
 
 void NavigationRequest::OnStartChecksComplete(
     NavigationThrottle::ThrottleCheckResult result) {
+  TRACE_EVENT0("navigation", "NavigationRequest::OnStartChecksComplete");
   DCHECK(result != NavigationThrottle::DEFER);
   DCHECK(result != NavigationThrottle::BLOCK_RESPONSE);
 

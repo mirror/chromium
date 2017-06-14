@@ -36,6 +36,7 @@ class PredictorTabHelper
   explicit PredictorTabHelper(content::WebContents* web_contents);
   friend class content::WebContentsUserData<PredictorTabHelper>;
 
+  void HandleNavigation(const GURL& url);
   void PreconnectUrl(const GURL& url);
 
   // This boolean is set to true after a call to
