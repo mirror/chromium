@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "06147949_54fd3c0e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:10:13Z",
+      "side": 1,
+      "message": "Done.\n\nI removed the \"fake\" part and capture the callback as per our offline discussion.",
+      "parentUuid": "cff49342_ec0e1ce5",
+      "range": {
+        "startLine": 423,
+        "startChar": 7,
+        "endLine": 423,
+        "endChar": 25
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b7ae6130_496b3acb",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-13T17:03:50Z",
       "side": 1,
       "message": "Why do you need this function?\n\nIn ShouldExcludeKnownSuggestionsWithoutTruncatingWhenFetchingMore test, you call Fetch() directly and it looks good to me.",
+      "range": {
+        "startLine": 605,
+        "startChar": 7,
+        "endLine": 605,
+        "endChar": 23
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9361dea_71fb3ae4",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:10:13Z",
+      "side": 1,
+      "message": "In ShouldExcludeKnownSuggestionsWithoutTruncatingWhenFetchingMore I am testing FetchMore, so I am calling Fetch.\n\nIn other tests I need to dismiss some suggestions and I use FetchSuggestions to get them to the provider in the first place. This function is |LoadFromJSONString| without JSON :) I cannot call the method directly, because it is private. Using FetchMore to get first suggestions feels wrong, because that\u0027s not how it works in real life.",
+      "parentUuid": "b7ae6130_496b3acb",
       "range": {
         "startLine": 605,
         "startChar": 7,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "b6ffc353_f2b705e1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1999,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:10:13Z",
+      "side": 1,
+      "message": "This is Fetch (not FetchSnippets) and it requires FetchDoneCallback. FetchDoneCallback().is_null() \u003d\u003d true and the code crashes if I pass it.",
+      "parentUuid": "02b14a81_34f1f512",
+      "range": {
+        "startLine": 1998,
+        "startChar": 5,
+        "endLine": 1999,
+        "endChar": 67
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "01eef03d_ca304890",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "887b924e_72d7d2ce",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2031,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:10:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "01eef03d_ca304890",
+      "range": {
+        "startLine": 2019,
+        "startChar": 2,
+        "endLine": 2031,
+        "endChar": 0
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc10cda3_d6f09a62",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "87574ab9245723176f22075d8e865a05b325342d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbab20e0_090325c1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2100,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:10:13Z",
+      "side": 1,
+      "message": "Done.\n\nI did not know about it.",
+      "parentUuid": "fc10cda3_d6f09a62",
+      "range": {
+        "startLine": 2100,
+        "startChar": 2,
+        "endLine": 2100,
+        "endChar": 49
+      },
+      "revId": "87574ab9245723176f22075d8e865a05b325342d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
