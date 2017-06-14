@@ -66,7 +66,7 @@ class GPU_EXPORT ServiceDiscardableManager {
 
   // TODO(ericrk): Arbitrary limit, refine this once we actually use this class
   // in production. crbug.com/706456
-  static const size_t kMaxSize = 256 * 1024 * 1024;
+  static const size_t kMaxSize = 2 * 1024 * 1024;
 
  private:
   void EnforceLimits();

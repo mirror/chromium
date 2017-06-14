@@ -2266,6 +2266,7 @@ void LayerTreeHostImpl::CreateTileManagerResources() {
 
   if (use_gpu_rasterization_) {
     image_decode_cache_ = base::MakeUnique<GpuImageDecodeCache>(
+        compositor_frame_sink_->context_provider(),
         compositor_frame_sink_->worker_context_provider(),
         settings_.preferred_tile_format,
         settings_.decoded_image_working_set_budget_bytes,
