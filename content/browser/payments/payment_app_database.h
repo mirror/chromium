@@ -11,13 +11,13 @@
 
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "components/payments/mojom/payment_app.mojom.h"
 #include "content/browser/service_worker/service_worker_context_wrapper.h"
 #include "content/browser/service_worker/service_worker_registration.h"
 #include "content/common/content_export.h"
 #include "content/common/service_worker/service_worker_status_code.h"
 #include "content/public/browser/stored_payment_instrument.h"
 #include "mojo/public/cpp/bindings/binding.h"
+#include "third_party/WebKit/public/platform/modules/payments/payment_app.mojom.h"
 
 namespace content {
 
