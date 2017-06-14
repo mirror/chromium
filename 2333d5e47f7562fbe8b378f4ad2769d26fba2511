@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7c3d670_ad4fb036",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerBase.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-14T03:48:37Z",
+      "side": 1,
+      "message": "Do we need this?",
+      "revId": "2333d5e47f7562fbe8b378f4ad2769d26fba2511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
