@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "1f085f97_a74d1e6c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-14T00:27:52Z",
+      "side": 1,
+      "message": "This seems not to be referenced in this base class. It probably needs to be moved to PrefetchDispatcherImpl.\n\nIMO, it is simpler to move these Make***Request to PrefetchDispatcherImpl and let the testing code override these methods in TestPrefetchDispatcherImpl.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f19b558d_ed2feabf",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-14T00:27:52Z",
+      "side": 1,
+      "message": "If you add this empty line, please also add one just after namespace line.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc07f11a_8913e81b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-14T00:27:52Z",
+      "side": 1,
+      "message": "Please comment on this.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1848463f_d446b7e3",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -13,6 +64,40 @@
       "writtenOn": "2017-06-14T00:07:11Z",
       "side": 1,
       "message": "Looking into moving this into AddUniqueUrlsTask.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80912199_311dbf91",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-14T00:27:52Z",
+      "side": 1,
+      "message": "I think this\u0027d better called once.",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24306079_384f571b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-14T00:27:52Z",
+      "side": 1,
+      "message": "Is this being used?",
       "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
