@@ -1,0 +1,28 @@
+rootWebArea
+++genericContainer
+++++paragraph
+++++++staticText name='A contenteditable with a '
+++++++++inlineTextBox name='A contenteditable with a '
+++++++link name='link'
+++++++++staticText name='link'
+++++++++++inlineTextBox name='link'
+++++++staticText name=' and an '
+++++++++inlineTextBox name=' and an '
+++++++image name='Image'
+++++++staticText name=' and a '
+++++++++inlineTextBox name=' and a '
+++++++button name='Button'
+++++++staticText name='.'
+++++++++inlineTextBox name='.'
+++++table
+++++++row
+++++++++cell name='Always expose editable tables as tables.'
+++++++++++staticText name='Always expose editable tables as tables.'
+++++++++++++inlineTextBox name='Always expose editable tables as tables.'
+++++++column
+++++++tableHeaderContainer
+++++list
+++++++listItem
+++++++++listMarker name='1'
+++++++++staticText name='Editable list item.'
+++++++++++inlineTextBox name='Editable list item.'
