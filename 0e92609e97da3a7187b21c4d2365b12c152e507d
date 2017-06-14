@@ -22,6 +22,30 @@
       "revId": "0e92609e97da3a7187b21c4d2365b12c152e507d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f099d96_ad09ca0a",
+        "filename": "base/threading/sequence_local_storage_slot.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1212597
+      },
+      "writtenOn": "2017-06-14T16:57:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "29ea165e_ea696b1f",
+      "range": {
+        "startLine": 49,
+        "startChar": 3,
+        "endLine": 50,
+        "endChar": 72
+      },
+      "revId": "0e92609e97da3a7187b21c4d2365b12c152e507d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
