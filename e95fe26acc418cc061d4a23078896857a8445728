@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6659821_0cfc45ec",
+        "filename": "components/translate/ios/browser/ios_translate_driver.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1215199
+      },
+      "writtenOn": "2017-06-14T04:18:42Z",
+      "side": 1,
+      "message": "These assignments are in-correct/complete. You should have\ndetection_details.html_root_language \u003d details.html_root_language;\ndetection_details.content_language \u003d details.content_language;\ndetection_details.cld_language \u003d details.cld_language;\ndetection_details.is_cld3_reliable \u003d details.is_cld_reliable;\ndetection_details.adopted_language \u003d details.adopted_language;",
+      "revId": "e95fe26acc418cc061d4a23078896857a8445728",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
