@@ -22,6 +22,7 @@ class SharedWorkerRepositoryClientImpl;
 class TextCheckerClient;
 class TextFinder;
 class WebDevToolsAgentImpl;
+class WebDevToolsAgentBase;
 class WebDevToolsFrontendImpl;
 class WebFrameClient;
 class WebFrameWidgetBase;
@@ -58,7 +59,10 @@ class WebLocalFrameBase : public GarbageCollectedFinalized<WebLocalFrameBase>,
   virtual TextFinder& EnsureTextFinder() = 0;
   virtual WebFrameWidgetBase* FrameWidget() const = 0;
   virtual void SetFrameWidget(WebFrameWidgetBase*) = 0;
+  // TODO(sashab): Remove this method and update callers to use
+  // DevToolsAgentBase() instead.
   virtual WebDevToolsAgentImpl* DevToolsAgentImpl() const = 0;
+  virtual WebDevToolsAgentBase* DevToolsAgentBase() const = 0;
   virtual void SetDevToolsFrontend(WebDevToolsFrontendImpl*) = 0;
   virtual WebDevToolsFrontendImpl* DevToolsFrontend() = 0;
   virtual void WillBeDetached() = 0;

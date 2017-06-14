@@ -41,6 +41,7 @@
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/events/WebInputEventConversion.h"
+#include "core/exported/WebDevToolsAgentBase.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -73,7 +74,6 @@
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebPagePopupImpl.h"
 
 namespace blink {
@@ -250,7 +250,7 @@ void WebFrameWidgetImpl::UpdateAllLifecyclePhases() {
   if (!local_root_)
     return;
 
-  if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl())
+  if (WebDevToolsAgentBase* devtools = local_root_->DevToolsAgentBase())
     devtools->PaintOverlay();
   PageWidgetDelegate::UpdateAllLifecyclePhases(*GetPage(),
                                                *local_root_->GetFrame());
@@ -358,7 +358,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
     return WebInputEventResult::kNotHandled;
 
   if (local_root_) {
-    if (WebDevToolsAgentImpl* devtools = local_root_->DevToolsAgentImpl()) {
+    if (WebDevToolsAgentBase* devtools = local_root_->DevToolsAgentBase()) {
       if (devtools->HandleInputEvent(input_event))
         return WebInputEventResult::kHandledSuppressed;
     }
@@ -369,7 +369,7 @@ WebInputEventResult WebFrameWidgetImpl::HandleInputEvent(
   if (IgnoreInputEvents())
     return WebInputEventResult::kNotHandled;
 
-  // FIXME: pass event to m_localRoot's WebDevToolsAgentImpl once available.
+  // FIXME: pass event to m_localRoot's WebDevToolsAgentBase once available.
 
   AutoReset<const WebInputEvent*> current_event_change(&current_input_event_,
                                                        &input_event);
@@ -1071,7 +1071,7 @@ void WebFrameWidgetImpl::InitializeLayerTreeView() {
         layer_tree_view_->CompositorAnimationHost());
   }
 
-  if (WebDevToolsAgentImpl* dev_tools = local_root_->DevToolsAgentImpl())
+  if (WebDevToolsAgentBase* dev_tools = local_root_->DevToolsAgentBase())
     dev_tools->LayerTreeViewChanged(layer_tree_view_);
 
   GetPage()->GetSettings().SetAcceleratedCompositingEnabled(layer_tree_view_);
