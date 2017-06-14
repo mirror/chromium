@@ -923,7 +923,9 @@ WebInputEventResult WebFrameWidgetImpl::HandleGestureEvent(
     case WebInputEvent::kGestureShowPress:
     case WebInputEvent::kGestureDoubleTap:
     case WebInputEvent::kGestureTwoFingerTap:
+      break;
     case WebInputEvent::kGestureLongPress:
+      break;
     case WebInputEvent::kGestureLongTap:
       break;
     case WebInputEvent::kGestureFlingStart:
