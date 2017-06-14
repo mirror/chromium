@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a15db51d_28b77706",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T13:54:21Z",
+      "side": 1,
+      "message": "Can you remove this inclusion?",
+      "revId": "559b721cfc91fcf1baa8f36708e1cda1110043c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acda9d86_c78226f5",
+        "filename": "content/renderer/service_worker/embedded_worker_instance_client_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T13:54:21Z",
+      "side": 1,
+      "message": "Can you remove this inclusion?",
+      "revId": "559b721cfc91fcf1baa8f36708e1cda1110043c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
