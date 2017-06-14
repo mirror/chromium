@@ -44,6 +44,11 @@ void AudioWorkletProcessorDefinition::SetAudioParamDescriptors(
   audio_param_descriptors_ = descriptors;
 }
 
+const HeapVector<AudioParamDescriptor>&
+    AudioWorkletProcessorDefinition::GetAudioParamDescriptors() const {
+  return audio_param_descriptors_;
+}
+
 const Vector<String>
     AudioWorkletProcessorDefinition::GetAudioParamDescriptorNames() const {
   Vector<String> names;

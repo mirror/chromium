@@ -137,6 +137,8 @@ String AudioParamHandler::GetParamName() const {
       return "AudioListener.upZ";
     case kParamTypeConstantSourceValue:
       return "ConstantSource.sourceValue";
+    case kParamTypeAudioWorkletNode:
+      return "AudioWorkletNode.customParameter";
   };
 
   NOTREACHED();
