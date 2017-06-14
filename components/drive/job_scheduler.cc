@@ -179,6 +179,16 @@ struct JobScheduler::ResumeUploadParams {
 JobScheduler::JobScheduler(PrefService* pref_service,
                            EventLogger* logger,
                            DriveServiceInterface* drive_service,
+                           base::SequencedTaskRunner* blocking_task_runner,
+                           service_manager::Connector* connector)
+    : JobScheduler(pref_service, logger, drive_service, blocking_task_runner) {
+  uploader_.reset(
+      new DriveUploader(drive_service, blocking_task_runner, connector));
+}
+
+JobScheduler::JobScheduler(PrefService* pref_service,
+                           EventLogger* logger,
+                           DriveServiceInterface* drive_service,
                            base::SequencedTaskRunner* blocking_task_runner)
     : throttle_count_(0),
       wait_until_(base::Time::Now()),
