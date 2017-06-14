@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "007f002e_94b8f2e5",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcMessageValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-14T19:38:30Z",
+      "side": 1,
+      "message": "We used to check record.data.length as well; is that no longer necessary?",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "fd4dcb0230f08c92bcf2dfbcf9d9653c6fab96cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
