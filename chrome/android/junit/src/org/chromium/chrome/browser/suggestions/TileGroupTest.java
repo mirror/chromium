@@ -304,7 +304,9 @@ public class TileGroupTest {
         verify(mTileGroupObserver).onLoadTaskAdded();
 
         ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate).getLargeIconForUrl(any(String.class), anyInt(), captor.capture());
+        verify(uiDelegate)
+                .getImageFetcher()
+                .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
         for (LargeIconCallback cb : captor.getAllValues()) {
             cb.onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, /* isColorDefault = */ false);
         }
@@ -330,7 +332,9 @@ public class TileGroupTest {
         verify(mTileGroupObserver, never()).onLoadTaskAdded();
 
         ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate).getLargeIconForUrl(any(String.class), anyInt(), captor.capture());
+        verify(uiDelegate)
+                .getImageFetcher()
+                .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
         for (LargeIconCallback cb : captor.getAllValues()) {
             cb.onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, /* isColorDefault = */ false);
         }
@@ -354,7 +358,9 @@ public class TileGroupTest {
         verify(mTileGroupObserver).onLoadTaskAdded();
 
         ArgumentCaptor<LargeIconCallback> captor = ArgumentCaptor.forClass(LargeIconCallback.class);
-        verify(uiDelegate).getLargeIconForUrl(any(String.class), anyInt(), captor.capture());
+        verify(uiDelegate)
+                .getImageFetcher()
+                .makeLargeIconRequest(any(String.class), anyInt(), captor.capture());
         captor.getValue().onLargeIconAvailable(mock(Bitmap.class), Color.BLACK, false);
 
         verify(mTileGroupObserver).onLoadTaskCompleted();
