@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "7d4c631a_46bb8647",
+        "filename": "services/service_manager/runner/host/service_process_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-14T14:58:48Z",
+      "side": 1,
+      "message": "Are you suggesting having an alternative empty definition of this class on iOS, or making it so that these symbols aren\u0027t needed in the iOS build? I investigated the latter and concluded that it would be nontrivial (this is one of the notes I sent in my initial message to you).",
+      "parentUuid": "be202190_7b41d621",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce3b0ee_ef9b0552",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
