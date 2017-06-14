@@ -15,6 +15,7 @@
 #include "chrome/browser/android/vr_shell/ui_elements/exit_prompt_backplane.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/loading_indicator.h"
+#include "chrome/browser/android/vr_shell/ui_elements/location_access_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/permanent_security_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/screen_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/screen_dimmer.h"
@@ -68,11 +69,13 @@ static constexpr float kIndicatorContentDistance = 0.1;
 static constexpr float kAudioCaptureIndicatorWidth = 0.5;
 static constexpr float kVideoCaptureIndicatorWidth = 0.5;
 static constexpr float kScreenCaptureIndicatorWidth = 0.4;
+static constexpr float kLocationIndicatorWidth = 0.088;
 
 static constexpr float kCaptureIndicatorsVerticalOffset = 0.1;
 static constexpr float kAudioCaptureHorizontalOffset = -0.6;
 static constexpr float kVideoCaptureHorizontalOffset = 0;
 static constexpr float kScreenCaptureHorizontalOffset = 0.6;
+static constexpr float kLocationAccessHorizontalOffset = 1.0;
 
 static constexpr float kCloseButtonDistance = 2.4;
 static constexpr float kCloseButtonHeight = 0.088 * kCloseButtonDistance;
@@ -200,6 +203,19 @@ void UiSceneManager::CreateSystemIndicators() {
   element->set_size({kAudioCaptureIndicatorWidth, 0, 1});
   element->set_visible(false);
   audio_capture_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
+
+  element = base::MakeUnique<LocationAccessIndicator>(512);
+  element->set_debug_id(kLocationAccessIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kLocationAccessHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_size({kLocationIndicatorWidth, 0, 1});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_visible(false);
+  location_access_indicator_ = element.get();
   scene_->AddUiElement(std::move(element));
 
   element = base::MakeUnique<VideoCaptureIndicator>(512);
@@ -383,6 +399,7 @@ void UiSceneManager::SetWebVrMode(bool web_vr) {
   audio_capture_indicator_->set_visible(!web_vr && audio_capturing_);
   video_capture_indicator_->set_visible(!web_vr && video_capturing_);
   screen_capture_indicator_->set_visible(!web_vr && screen_capturing_);
+  location_access_indicator_->set_visible(!web_vr && location_access_);
 }
 
 void UiSceneManager::ConfigureScene() {
@@ -468,6 +485,11 @@ void UiSceneManager::SetVideoCapturingIndicator(bool enabled) {
 void UiSceneManager::SetScreenCapturingIndicator(bool enabled) {
   screen_capturing_ = enabled;
   screen_capture_indicator_->set_visible(enabled && !web_vr_mode_);
+}
+
+void UiSceneManager::SetLocationAccessIndicator(bool enabled) {
+  location_access_ = enabled;
+  location_access_indicator_->set_visible(enabled && !web_vr_mode_);
 }
 
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {

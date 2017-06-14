@@ -279,6 +279,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
   manager_->SetAudioCapturingIndicator(true);
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
+  manager_->SetLocationAccessIndicator(true);
 
   // All elements should be hidden.
   VerifyElementsVisible("Elements hidden", std::set<UiElementDebugId>{});
@@ -289,6 +290,7 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
   manager_->SetAudioCapturingIndicator(true);
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
+  manager_->SetLocationAccessIndicator(true);
 
   // Transition to WebVR mode
   manager_->SetWebVrMode(true);
@@ -303,31 +305,38 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
 
   manager_->SetAudioCapturingIndicator(true);
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
+  manager_->SetLocationAccessIndicator(true);
 
   EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
   EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
   EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
 
   manager_->SetWebVrMode(true);
   EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
 
   manager_->SetWebVrMode(false);
   EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
   EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
   EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
 
   manager_->SetAudioCapturingIndicator(false);
   manager_->SetVideoCapturingIndicator(false);
   manager_->SetScreenCapturingIndicator(false);
+  manager_->SetLocationAccessIndicator(false);
 
   EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
+  EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
 }
 }  // namespace vr_shell
