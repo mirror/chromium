@@ -382,7 +382,7 @@ void FirstRunBubbleLauncher::Observe(
                     first_run::FIRST_RUN_BUBBLE_DONT_SHOW);
 
   // Show the bubble now and destroy this bubble launcher.
-  browser->ShowFirstRunBubble();
+  browser->ShowFirstRunBubble(contents);
   delete this;
 }
 

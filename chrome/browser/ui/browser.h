@@ -518,7 +518,7 @@ class Browser : public TabStripModelObserver,
   void OnWindowDidShow();
 
   // Show the first run search engine bubble on the location bar.
-  void ShowFirstRunBubble();
+  void ShowFirstRunBubble(content::WebContents* web_contents);
 
   ExclusiveAccessManager* exclusive_access_manager() {
     return exclusive_access_manager_.get();

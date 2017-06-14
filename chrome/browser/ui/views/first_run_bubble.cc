@@ -30,10 +30,13 @@ const int kRightInset = 2;
 
 // static
 FirstRunBubble* FirstRunBubble::ShowBubble(Browser* browser,
-                                           views::View* anchor_view) {
+                                           views::View* anchor_view,
+                                           const gfx::Point& anchor_point,
+                                           gfx::NativeWindow window) {
   first_run::LogFirstRunMetric(first_run::FIRST_RUN_BUBBLE_SHOWN);
 
-  FirstRunBubble* delegate = new FirstRunBubble(browser, anchor_view);
+  FirstRunBubble* delegate =
+      new FirstRunBubble(browser, anchor_view, anchor_point, window);
   views::BubbleDialogDelegateView::CreateBubble(delegate)->ShowInactive();
   return delegate;
 }
@@ -86,14 +89,18 @@ void FirstRunBubble::Init() {
   layout->AddView(subtext, columns->num_columns(), 1);
 }
 
-FirstRunBubble::FirstRunBubble(Browser* browser, views::View* anchor_view)
+FirstRunBubble::FirstRunBubble(Browser* browser,
+                               views::View* anchor_view,
+                               const gfx::Point& anchor_point,
+                               gfx::NativeWindow window)
     : views::BubbleDialogDelegateView(anchor_view,
                                       views::BubbleBorder::TOP_LEFT),
       browser_(browser),
-      bubble_closer_(this, anchor_view) {
+      bubble_closer_(this, window) {
   // Compensate for built-in vertical padding in the anchor view's image.
   set_anchor_view_insets(gfx::Insets(
       GetLayoutConstant(LOCATION_BAR_BUBBLE_ANCHOR_VERTICAL_INSET), 0));
+  SetAnchorRect(gfx::Rect(anchor_point, gfx::Size()));
   chrome::RecordDialogCreation(chrome::DialogIdentifier::FIRST_RUN);
 }
 
@@ -114,10 +121,9 @@ void FirstRunBubble::LinkClicked(views::Link* source, int event_flags) {
 
 FirstRunBubble::FirstRunBubbleCloser::FirstRunBubbleCloser(
     FirstRunBubble* bubble,
-    views::View* anchor_view)
+    gfx::NativeWindow window)
     : bubble_(bubble) {
-  event_monitor_ = views::EventMonitor::CreateWindowMonitor(
-      this, anchor_view->GetWidget()->GetNativeWindow());
+  event_monitor_ = views::EventMonitor::CreateWindowMonitor(this, window);
 }
 
 FirstRunBubble::FirstRunBubbleCloser::~FirstRunBubbleCloser() {}

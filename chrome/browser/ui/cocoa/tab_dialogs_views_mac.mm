@@ -10,8 +10,10 @@
 #include "chrome/browser/ui/browser_window.h"
 #include "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/bubble_anchor_helper_views.h"
+#include "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.h"
 #import "chrome/browser/ui/cocoa/passwords/passwords_bubble_controller.h"
 #include "chrome/browser/ui/views/collected_cookies_views.h"
+#include "chrome/browser/ui/views/first_run_bubble.h"
 #include "chrome/browser/ui/views/passwords/manage_passwords_bubble_view.h"
 #include "chrome/browser/ui/views/sync/profile_signin_confirmation_dialog_views.h"
 #include "content/public/browser/web_contents.h"
@@ -27,6 +29,18 @@ TabDialogsViewsMac::~TabDialogsViewsMac() {}
 void TabDialogsViewsMac::ShowCollectedCookies() {
   // Deletes itself on close.
   new CollectedCookiesViews(web_contents());
+}
+
+void TabDialogsViewsMac::ShowFirstRunBubble() {
+  BrowserWindowController* controller = GetBrowserWindowController();
+  Browser* browser = chrome::FindBrowserWithWebContents(web_contents());
+  LocationBarViewMac* location_bar = [controller locationBarBridge];
+  gfx::Point anchor_point =
+      gfx::ScreenPointFromNSPoint(ui::ConvertPointFromWindowToScreen(
+          [controller window], location_bar->GetInfoBarAnchorPoint()));
+  FirstRunBubble* bubble = FirstRunBubble::ShowBubble(
+      browser, nullptr, anchor_point, [controller window]);
+  KeepBubbleAnchored(bubble, location_bar->GetPageInfoDecoration());
 }
 
 void TabDialogsViewsMac::ShowProfileSigninConfirmation(

@@ -15,6 +15,7 @@ class TabDialogsViewsMac : public TabDialogsCocoa {
 
   // TabDialogs:
   void ShowCollectedCookies() override;
+  void ShowFirstRunBubble() override;
   void ShowProfileSigninConfirmation(
       Browser* browser,
       Profile* profile,

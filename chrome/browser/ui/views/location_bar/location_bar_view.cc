@@ -806,7 +806,9 @@ void LocationBarView::ShowFirstRunBubbleInternal() {
     return;
   Browser* browser = chrome::FindBrowserWithWebContents(web_contents);
   if (browser)
-    FirstRunBubble::ShowBubble(browser, GetSecurityBubbleAnchorView());
+    FirstRunBubble::ShowBubble(
+        browser, GetSecurityBubbleAnchorView(), gfx::Point(),
+        GetSecurityBubbleAnchorView()->GetWidget()->GetNativeWindow());
 #endif
 }
 
