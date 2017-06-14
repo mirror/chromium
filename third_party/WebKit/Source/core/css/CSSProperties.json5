@@ -1066,6 +1066,11 @@
     {
       name: "column-fill",
       type_name: "ColumnFill",
+      field_template: "storage_only",
+      type_name: "ColumnFill",
+      default_value: "true",
+      field_size: 1,
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "contain",
@@ -2589,6 +2594,9 @@
       custom_all: true,
       interpolable: true,
       type_name: "unsigned short",
+      field_template: "storage_only",
+      default_value: "1",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "column-gap",
@@ -2597,6 +2605,10 @@
       converter: "ConvertComputedLength<float>",
       custom_all: true,
       interpolable: true,
+      type_name: "float",
+      field_template: "storage_only",
+      default_value: "0.0f",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "column-rule-color",
@@ -2630,6 +2642,10 @@
       converter: "ConvertComputedLength<float>",
       custom_all: true,
       interpolable: true,
+      field_template: "storage_only",
+      type_name: "float",
+      default_value: "0.0f",
+      field_group: "rare-non-inherited->multi-col",
     },
     {
       name: "-webkit-highlight",
