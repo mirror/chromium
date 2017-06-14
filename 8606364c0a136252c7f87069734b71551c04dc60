@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fb12a55_75680820",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-14T15:33:15Z",
+      "side": 1,
+      "message": "const Document*?",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8cb120_1c83311d",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-14T15:33:15Z",
+      "side": 1,
+      "message": "Might be easier to have this take a Document pointer and a Font builder instead of a state object.",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6831ac0c_d0b9893a",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1115899
+      },
+      "writtenOn": "2017-06-14T15:33:15Z",
+      "side": 1,
+      "message": "Could we add a compile time assert ensuring that the property lists are identical or at the very least have the same size?",
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
