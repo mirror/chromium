@@ -240,23 +240,19 @@ void ScrollManager::RecordScrollRelatedMetrics(const WebGestureDevice device) {
     return;
   }
 
-  int scroller_size = -1;
+  int scroller_size = 0;
   uint32_t non_composited_main_thread_scrolling_reasons = 0;
   ComputeScrollRelatedMetrics(&non_composited_main_thread_scrolling_reasons,
                               &scroller_size);
-  if (scroller_size >= 0) {
+  if (scroller_size > 0) {
     if (device == kWebGestureDeviceTouchpad) {
-      DEFINE_STATIC_LOCAL(
-          CustomCountHistogram, size_histogram_wheel,
-          ("Event.Scroll.ScrollerSize.OnScroll_Wheel", 1,
-           kScrollerSizeLargestBucket, kScrollerSizeBucketCount));
-      size_histogram_wheel.Count(scroller_size);
+      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.ScrollerSize.OnScroll_Wheel",
+                                  scroller_size, 1, kScrollerSizeLargestBucket,
+                                  kScrollerSizeBucketCount);
     } else {
-      DEFINE_STATIC_LOCAL(
-          CustomCountHistogram, size_histogram_touch,
-          ("Event.Scroll.ScrollerSize.OnScroll_Touch", 1,
-           kScrollerSizeLargestBucket, kScrollerSizeBucketCount));
-      size_histogram_touch.Count(scroller_size);
+      UMA_HISTOGRAM_CUSTOM_COUNTS("Event.Scroll.ScrollerSize.OnScroll_Touch",
+                                  scroller_size, 1, kScrollerSizeLargestBucket,
+                                  kScrollerSizeBucketCount);
     }
   }
 
