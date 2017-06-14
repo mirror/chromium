@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28c5369d_6ab6f5d2",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-06-14T13:36:55Z",
+      "side": 1,
+      "message": "Nit: Please wrap comments at 80 characters.",
+      "range": {
+        "startLine": 797,
+        "startChar": 65,
+        "endLine": 797,
+        "endChar": 0
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1921655_c4d3054a",
+        "filename": "chrome/browser/chromeos/policy/proto/chrome_device_policy.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 802,
+      "author": {
+        "id": 1111798
+      },
+      "writtenOn": "2017-06-14T13:36:55Z",
+      "side": 1,
+      "message": "Not sure what that means in the context of proto2.",
+      "range": {
+        "startLine": 802,
+        "startChar": 7,
+        "endLine": 802,
+        "endChar": 20
+      },
+      "revId": "1a3b302fcdfb0c219b6f35120a7bf25693b51587",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
