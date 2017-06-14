@@ -22,6 +22,30 @@
       "revId": "141a5ae78417f9c0c6455b60ff30c59301e0f122",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad0a21b6_3c8ea89b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-14T20:55:33Z",
+      "side": 1,
+      "message": "Would you accept graceful in scare quotes?",
+      "parentUuid": "b395eb7b_4ff20799",
+      "range": {
+        "startLine": 9,
+        "startChar": 58,
+        "endLine": 9,
+        "endChar": 63
+      },
+      "revId": "141a5ae78417f9c0c6455b60ff30c59301e0f122",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
