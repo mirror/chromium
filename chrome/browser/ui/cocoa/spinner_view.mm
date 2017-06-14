@@ -6,17 +6,18 @@
 
 #import <QuartzCore/QuartzCore.h>
 
-#include "base/mac/sdk_forward_declarations.h"
 #include "base/mac/scoped_cftyperef.h"
+#include "base/mac/sdk_forward_declarations.h"
+#include "base/numerics/math_util.h"
 #include "skia/ext/skia_utils_mac.h"
 #include "ui/base/theme_provider.h"
 #include "ui/native_theme/native_theme.h"
 
 namespace {
-const CGFloat kDegrees90               = (M_PI / 2);
-const CGFloat kDegrees180              = (M_PI);
-const CGFloat kDegrees270              = (3 * M_PI / 2);
-const CGFloat kDegrees360              = (2 * M_PI);
+const CGFloat kDegrees90 = base::DegToRad(90.0f);
+const CGFloat kDegrees180 = base::DegToRad(180.0f);
+const CGFloat kDegrees270 = base::DegToRad(270.0f);
+const CGFloat kDegrees360 = base::DegToRad(360.0f);
 const CGFloat kDesignWidth             = 28.0;
 const CGFloat kArcRadius               = 12.5;
 const CGFloat kArcDiameter             = kArcRadius * 2.0;

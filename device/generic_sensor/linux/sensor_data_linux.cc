@@ -2,10 +2,11 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "device/generic_sensor/linux/sensor_data_linux.h"
+#include "base/numerics/math_util.h"
 #include "base/sys_info.h"
 #include "base/version.h"
 #include "device/generic_sensor/generic_sensor_consts.h"
-#include "device/generic_sensor/linux/sensor_data_linux.h"
 #include "device/generic_sensor/public/cpp/sensor_reading.h"
 
 namespace device {
@@ -113,7 +114,7 @@ void InitGyroscopeSensorData(SensorPathsLinux* data) {
   data->sensor_frequency_file_name = "in_anglvel_base_frequency";
   data->apply_scaling_func = base::Bind(
       [](double scaling_value, double offset, SensorReading& reading) {
-        double scaling = kMeanGravity * kRadiansInDegrees / scaling_value;
+        double scaling = base::DegToRad(kMeanGravity) / scaling_value;
         // Adapt CrOS reading values to generic sensor api specs.
         reading.values[0] = -scaling * (reading.values[0] + offset);
         reading.values[1] = -scaling * (reading.values[1] + offset);
