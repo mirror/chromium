@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c97af507_14f4916d",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Hmm, \"accelerated animations\" is probably a more web developer friendly term. Changed to that.",
+      "parentUuid": "2611d22f_9a988bd9",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0e0d806_69004f57",
         "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "321f03ba_816156a0",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0e0d806_69004f57",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bb283959_2e603513",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f20a6c_5767263b",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "83fcae5e_11d52359",
         "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0a92fc71_7e9a8a59",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83fcae5e_11d52359",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b40ca312_c7eb252a",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 1
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-14T02:11:19Z",
       "side": 1,
       "message": "I find this reason unclear. Do you mean \"Transform-related property cannot be composited\"? This case seems to be something about the target element that prohibits the compositing, but the reason doesn\u0027t mention the element.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85da9904_ec6bd07a",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s a bit confusing. Changed to \"Transform related property cannot be accelerated on target element\". This check includes both elements for whom transform does not apply and SVGs that have their transforms processed on main thread only.",
+      "parentUuid": "b40ca312_c7eb252a",
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "dc783b70_167e5b07",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "088ef7b4_c2664027",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ca83c0e_593dbc43",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 1
@@ -118,6 +226,24 @@
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b76f52b3_3a1c070c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9ca83c0e_593dbc43",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "5907afa4_0f8948b4",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86412ecf_3020cabb",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ac15beb_02db9cef",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 1
@@ -152,6 +296,24 @@
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab1662be_6ad048d0",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done.\n\nGood point re i18n.",
+      "parentUuid": "1ac15beb_02db9cef",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "fd177170_cac3ad40",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d105aaf_45f59c65",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3386cc41_d289f02c",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 1
@@ -186,6 +366,24 @@
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2abe740f_a0ea2d75",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "3386cc41_d289f02c",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "21766579_4cab08c9",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f2dcf10_60788877",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "312bcc8f_3817a31b",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
         "patchSetId": 1
@@ -220,6 +436,24 @@
       "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e72ad11e_75180559",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T05:08:51Z",
+      "side": 1,
+      "message": "Agreed, replaced with Ok().",
+      "parentUuid": "312bcc8f_3817a31b",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
