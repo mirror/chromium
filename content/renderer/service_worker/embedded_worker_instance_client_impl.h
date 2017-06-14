@@ -96,8 +96,6 @@ class EmbeddedWorkerInstanceClientImpl
   // nullptr means the worker is not running.
   std::unique_ptr<WorkerWrapper> wrapper_;
 
-  base::Optional<base::TimeTicks> stop_worker_time_;
-
   DISALLOW_COPY_AND_ASSIGN(EmbeddedWorkerInstanceClientImpl);
 };
 
