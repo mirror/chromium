@@ -106,6 +106,7 @@
 #include "core/dom/TransformSource.h"
 #include "core/dom/TreeWalker.h"
 #include "core/dom/VisitedLinkState.h"
+#include "core/dom/WhitespaceAttacher.h"
 #include "core/dom/XMLDocument.h"
 #include "core/dom/custom/CustomElement.h"
 #include "core/dom/custom/CustomElementDefinition.h"
@@ -2171,7 +2172,8 @@ void Document::UpdateStyle() {
     if (document_element->NeedsReattachLayoutTree() ||
         document_element->ChildNeedsReattachLayoutTree()) {
       TRACE_EVENT0("blink,blink_style", "Document::rebuildLayoutTree");
-      document_element->RebuildLayoutTree();
+      WhitespaceAttacher whitespace_attacher;
+      document_element->RebuildLayoutTree(whitespace_attacher);
     }
   }
 
@@ -2516,7 +2518,8 @@ void Document::Initialize() {
   layout_view_->Compositor()->SetNeedsCompositingUpdate(
       kCompositingUpdateAfterCompositingInputChange);
 
-  ContainerNode::AttachLayoutTree();
+  AttachContext context;
+  ContainerNode::AttachLayoutTree(context);
 
   // The TextAutosizer can't update layout view info while the Document is
   // detached, so update now in case anything changed.
