@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d265ce1d_47152565",
+        "filename": "services/service_manager/public/cpp/standalone_service/standalone_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-14T14:50:21Z",
+      "side": 1,
+      "message": "I would rather not do this - can we just avoid buliding the standalone_service code on iOS? It will never be useful there AFAICT.",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be202190_7b41d621",
+        "filename": "services/service_manager/runner/host/service_process_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-14T14:50:21Z",
+      "side": 1,
+      "message": "I\u0027d really prefer to minimize the number of preprocessor blocks scattered across this code. \n\nCan we just not build this source on IOS? There is no conceivable reason why we would ever want any part of this class on iOS.",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce3b0ee_ef9b0552",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-14T14:50:21Z",
+      "side": 1,
+      "message": "nit: how about introducing a file-local function like GetCurrentPid() which isolates the platform check?",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
