@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "89f809a7_8e900267",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 7843,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-14T01:36:36Z",
+      "side": 1,
+      "message": "The intent of this test case is to verify that changing the body\u0027s overflow style from \u0027hidden\u0027 to \u0027auto\u0027 changes the values of WebLayer::UserScrollable{Horizontal,Vertical}.\n\nIf there\u0027s no overflow, that seems like a bug - the #a element has height: 1000px and the WebView is sized to 100 x 100.",
+      "parentUuid": "208233e5_1906e885",
+      "range": {
+        "startLine": 7843,
+        "startChar": 28,
+        "endLine": 7843,
+        "endChar": 29
+      },
+      "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fbf64a85_9e6576cf",
         "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
         "patchSetId": 4
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/compositing/CompositedLayerMapping.cpp?rcl\u003d061d80fa409b0723b83c0c96661c550761021e1d\u0026l\u003d1473\n\nScrollableArea::ScrollPosition() includes ScrollOrigin",
       "parentUuid": "fbf64a85_9e6576cf",
+      "range": {
+        "startLine": 11898,
+        "startChar": 21,
+        "endLine": 11898,
+        "endChar": 29
+      },
+      "revId": "c65b6773b2e57d4fc015102299c3b0ceba189f88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bf666f8_0e48cdbc",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 11898,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-14T01:36:36Z",
+      "side": 1,
+      "message": "So it is not the WebLayer that adds the scroll offset, but the caller of WebLayer::SetScrollPosition.  That makes more sense.\n\nBut my point remains: since nothing below WebLayer knows about scroll origins, it doesn\u0027t seem possible for the scroll position of the layout viewport\u0027s LayerForScrolling() to have different values depending on RLS.  So I am suspicious of these if (RLS) ... expectations.",
+      "parentUuid": "d183d791_f877210c",
       "range": {
         "startLine": 11898,
         "startChar": 21,
