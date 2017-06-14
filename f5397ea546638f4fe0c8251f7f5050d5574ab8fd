@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c5871678_9a820fcf",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-14T20:14:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a109b0f_0777207f",
+      "range": {
+        "startLine": 2854,
+        "startChar": 37,
+        "endLine": 2854,
+        "endChar": 44
+      },
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26aae7b1_25b318c4",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 7
@@ -39,6 +63,24 @@
       "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74c3ab25_224163a7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-14T20:14:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26aae7b1_25b318c4",
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "09235de7_67ed99a5",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-14T20:14:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0dabf33c_0bf4a065",
+      "range": {
+        "startLine": 226,
+        "startChar": 7,
+        "endLine": 226,
+        "endChar": 27
+      },
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f726bbf5_209bc836",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
         "patchSetId": 7
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-14T18:05:51Z",
       "side": 1,
       "message": "The meaning of this parameter isn\u0027t clear from the name.\n\nIt\u0027s an out parameter, but it\u0027s named like an in parameter, indicating whether or not the method should record the scroller size.",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "56fe5fe0_17dd3f92",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-14T20:14:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f726bbf5_209bc836",
       "range": {
         "startLine": 118,
         "startChar": 12,
