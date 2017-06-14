@@ -37,6 +37,30 @@
 
 namespace cc {
 
+TouchActionRegion::TouchActionRegion() {}
+TouchActionRegion::TouchActionRegion(
+    const TouchActionRegion& touch_action_region) = default;
+TouchActionRegion::~TouchActionRegion() {}
+
+void TouchActionRegion::Union(const TouchAction& touch_action,
+                              const gfx::Rect& rect) {
+  region_.Union(rect);
+  map_[touch_action].Union(rect);
+}
+
+const Region& TouchActionRegion::region() const {
+  return region_;
+}
+
+Region TouchActionRegion::GetRegionForTouchAction(
+    const TouchAction& touch_action) {
+  return map_[touch_action];
+}
+
+bool TouchActionRegion::operator==(const TouchActionRegion& other) const {
+  return region_ == other.region_ && map_ == other.map_;
+}
+
 base::StaticAtomicSequenceNumber g_next_layer_id;
 
 Layer::Inputs::Inputs(int layer_id)
@@ -882,12 +906,12 @@ void Layer::SetNonFastScrollableRegion(const Region& region) {
   SetNeedsCommit();
 }
 
-void Layer::SetTouchEventHandlerRegion(const Region& region) {
+void Layer::SetTouchEventHandler(TouchActionRegion touch_event_handler) {
   DCHECK(IsPropertyChangeAllowed());
-  if (inputs_.touch_event_handler_region == region)
+  if (inputs_.touch_event_handler == touch_event_handler)
     return;
 
-  inputs_.touch_event_handler_region = region;
+  inputs_.touch_event_handler = std::move(touch_event_handler);
   SetPropertyTreesNeedRebuild();
   SetNeedsCommit();
 }
@@ -1160,7 +1184,7 @@ void Layer::PushPropertiesTo(LayerImpl* layer) {
   layer->set_main_thread_scrolling_reasons(
       inputs_.main_thread_scrolling_reasons);
   layer->SetNonFastScrollableRegion(inputs_.non_fast_scrollable_region);
-  layer->SetTouchEventHandlerRegion(inputs_.touch_event_handler_region);
+  layer->SetTouchEventHandler(inputs_.touch_event_handler);
   layer->SetContentsOpaque(inputs_.contents_opaque);
   layer->SetPosition(inputs_.position);
   layer->set_should_flatten_transform_from_property_tree(

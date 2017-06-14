@@ -24,6 +24,7 @@
 #include "cc/debug/layer_tree_debug_state.h"
 #include "cc/input/input_handler.h"
 #include "cc/layers/draw_properties.h"
+#include "cc/layers/layer.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_impl_test_properties.h"
 #include "cc/layers/layer_position_constraint.h"
@@ -322,11 +323,11 @@ class CC_EXPORT LayerImpl {
     return non_fast_scrollable_region_;
   }
 
-  void SetTouchEventHandlerRegion(const Region& region) {
-    touch_event_handler_region_ = region;
+  void SetTouchEventHandler(TouchActionRegion touch_event_handler) {
+    touch_event_handler_ = touch_event_handler;
   }
-  const Region& touch_event_handler_region() const {
-    return touch_event_handler_region_;
+  const TouchActionRegion& touch_event_handler() const {
+    return touch_event_handler_;
   }
 
   bool HasPotentiallyRunningTransformAnimation() const;
@@ -503,7 +504,7 @@ class CC_EXPORT LayerImpl {
   uint8_t viewport_layer_type_ : 3;  // ViewportLayerType
 
   Region non_fast_scrollable_region_;
-  Region touch_event_handler_region_;
+  TouchActionRegion touch_event_handler_;
   SkColor background_color_;
   SkColor safe_opaque_background_color_;
 

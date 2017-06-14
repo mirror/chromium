@@ -22,6 +22,7 @@
 #include "cc/benchmarks/micro_benchmark.h"
 #include "cc/cc_export.h"
 #include "cc/input/input_handler.h"
+#include "cc/input/touch_action.h"
 #include "cc/layers/layer_collections.h"
 #include "cc/layers/layer_position_constraint.h"
 #include "cc/paint/paint_record.h"
@@ -43,6 +44,25 @@ class ConvertableToTraceFormat;
 }
 
 namespace cc {
+
+using TouchActionRegionMap = base::flat_map<TouchAction, Region>;
+
+class CC_EXPORT TouchActionRegion {
+ public:
+  TouchActionRegion();
+  TouchActionRegion(const TouchActionRegion& touch_action_region);
+  ~TouchActionRegion();
+
+  void Union(const TouchAction&, const gfx::Rect&);
+  const Region& region() const;
+  Region GetRegionForTouchAction(const TouchAction&);
+
+  bool operator==(const TouchActionRegion& other) const;
+
+ private:
+  TouchActionRegionMap map_;
+  Region region_;
+};
 
 class CopyOutputRequest;
 class LayerClient;
@@ -239,9 +259,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     return inputs_.non_fast_scrollable_region;
   }
 
-  void SetTouchEventHandlerRegion(const Region& touch_event_handler_region);
-  const Region& touch_event_handler_region() const {
-    return inputs_.touch_event_handler_region;
+  void SetTouchEventHandler(TouchActionRegion touch_event_handler);
+  TouchActionRegion touch_event_handler() const {
+    return inputs_.touch_event_handler;
   }
 
   void set_did_scroll_callback(
@@ -571,7 +591,7 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     uint32_t main_thread_scrolling_reasons;
     Region non_fast_scrollable_region;
 
-    Region touch_event_handler_region;
+    TouchActionRegion touch_event_handler;
 
     bool is_container_for_fixed_position_layers : 1;
     LayerPositionConstraint position_constraint;

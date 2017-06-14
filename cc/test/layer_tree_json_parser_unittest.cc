@@ -43,9 +43,8 @@ bool LayerTreesMatch(LayerImpl* const layer_impl,
 
   RETURN_IF_EXPECTATION_FAILS(
       EXPECT_FLOAT_EQ(layer_impl->Opacity(), layer->opacity()));
-  RETURN_IF_EXPECTATION_FAILS(
-      EXPECT_EQ(layer_impl->touch_event_handler_region(),
-                layer->touch_event_handler_region()));
+  RETURN_IF_EXPECTATION_FAILS(EXPECT_EQ(layer_impl->touch_event_handler(),
+                                        layer->touch_event_handler()));
 
   for (size_t i = 0; i < layer_impl->test_properties()->children.size(); ++i) {
     RETURN_IF_EXPECTATION_FAILS(
@@ -106,10 +105,10 @@ TEST_F(LayerTreeJsonParserSanityCheck, EventHandlerRegions) {
   root_impl->SetBounds(gfx::Size(100, 100));
   touch_layer->SetBounds(gfx::Size(50, 50));
 
-  Region touch_region;
-  touch_region.Union(gfx::Rect(10, 10, 20, 30));
-  touch_region.Union(gfx::Rect(40, 10, 20, 20));
-  touch_layer->SetTouchEventHandlerRegion(touch_region);
+  TouchActionRegion touch_event_handler;
+  touch_event_handler.Union(kTouchActionNone, gfx::Rect(10, 10, 20, 30));
+  touch_event_handler.Union(kTouchActionNone, gfx::Rect(40, 10, 20, 20));
+  touch_layer->SetTouchEventHandler(std::move(touch_event_handler));
 
   root_impl->test_properties()->AddChild(std::move(touch_layer));
   tree->SetRootLayerForTesting(std::move(root_impl));
