@@ -700,6 +700,8 @@ void RenderFrameHostManager::DidCreateNavigationRequest(
 // PlzNavigate
 RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     const NavigationRequest& request) {
+  TRACE_EVENT0("navigation",
+               "RenderFrameHostManager::GetFrameHostForNavigation");
   CHECK(IsBrowserSideNavigationEnabled());
 
   SiteInstance* current_site_instance = render_frame_host_->GetSiteInstance();
@@ -787,6 +789,7 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
       // SiteInstance differs from the one for the current URL, a new one needs
       // to be created.
       CleanUpNavigation();
+      TRACE_EVENT0("navigation", "CreateSpeculativeRenderFrameHost");
       bool success = CreateSpeculativeRenderFrameHost(current_site_instance,
                                                       dest_site_instance.get());
       DCHECK(success);

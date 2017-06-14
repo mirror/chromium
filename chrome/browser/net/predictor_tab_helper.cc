@@ -8,7 +8,11 @@
 #include "chrome/browser/net/predictor.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/common/url_constants.h"
+#include "content/public/browser/browser_thread.h"
 #include "content/public/browser/navigation_handle.h"
+#include "content/public/browser/render_process_host.h"
+#include "content/public/browser/service_worker_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 
 #if defined(OS_CHROMEOS)
@@ -25,6 +29,8 @@ namespace {
 // more navigations.
 const base::Feature kPreconnectMore{"PreconnectMore",
                                     base::FEATURE_DISABLED_BY_DEFAULT};
+
+void NoOpCallback(content::StartServiceWorkerForNavigationHintResult result) {}
 
 }  // namespace
 
@@ -49,7 +55,7 @@ void PredictorTabHelper::DidStartNavigation(
     predicted_from_pending_entry_ = false;
     return;
   }
-  PreconnectUrl(navigation_handle->GetURL());
+  HandleNavigation(navigation_handle->GetURL());
 }
 
 void PredictorTabHelper::DidStartNavigationToPendingEntry(
@@ -61,7 +67,7 @@ void PredictorTabHelper::DidStartNavigationToPendingEntry(
     return;
 
   // The standard way to preconnect based on navigation.
-  PreconnectUrl(url);
+  HandleNavigation(url);
   predicted_from_pending_entry_ = true;
 }
 
@@ -75,6 +81,21 @@ void PredictorTabHelper::DocumentOnLoadCompletedInMainFrame() {
 #endif
   if (predictor)
     predictor->SaveStateForNextStartup();
+}
+
+void PredictorTabHelper::HandleNavigation(const GURL& url) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  TRACE_EVENT1("net", "PredictorTabHelper::HandleNavigation", "url",
+               url.spec());
+  if (!url.SchemeIsHTTPOrHTTPS())
+    return;
+  content::RenderProcessHost* host = web_contents()->GetRenderProcessHost();
+  if (host) {
+    host->GetStoragePartition()
+        ->GetServiceWorkerContext()
+        ->StartServiceWorkerForNavigationHint(url, base::Bind(&NoOpCallback));
+  }
+  PreconnectUrl(url);
 }
 
 void PredictorTabHelper::PreconnectUrl(const GURL& url) {

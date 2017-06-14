@@ -172,6 +172,10 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
     return;
   }
 
+  TRACE_EVENT1("ServiceWorker",
+               "ServiceWorkerProcessManager::AllocateWorkerProcess", "pattern",
+               pattern.spec());
+
   // This |EmbeddedWorkerSettings| only populates |data_saver_enabled|,
   // but in general, this function will populate settings from prefs, while
   // the caller will be responsible for populating settings from other sources,

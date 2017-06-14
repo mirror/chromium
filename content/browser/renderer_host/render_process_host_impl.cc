@@ -21,6 +21,7 @@
 #include "base/debug/alias.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/files/file.h"
 #include "base/lazy_instance.h"
@@ -3116,6 +3117,12 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Otherwise (or if that fails), create a new one.
   if (!render_process_host) {
+    TRACE_EVENT0("ServiceWorker",
+                 "RenderProcessHostImpl::GetProcessHostForSiteInstance Create "
+                 "a new process");
+    LOG(ERROR) << " -------- Create a new process.";
+    // base::debug::StackTrace().Print();
+
     if (g_render_process_host_factory_) {
       render_process_host =
           g_render_process_host_factory_->CreateRenderProcessHost(
