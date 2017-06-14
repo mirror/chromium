@@ -43,6 +43,7 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDevToolsAgentBase.h"
 #include "core/exported/WebPluginContainerImpl.h"
 #include "core/exported/WebViewBase.h"
 #include "core/frame/LocalFrameView.h"
@@ -107,7 +108,6 @@
 #include "public/web/WebPluginParams.h"
 #include "public/web/WebViewClient.h"
 #include "v8/include/v8.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
 
 namespace blink {
@@ -398,7 +398,7 @@ void LocalFrameClientImpl::DispatchDidStartProvisionalLoad(
     web_frame_->Client()->DidStartProvisionalLoad(
         WebDataSourceImpl::FromDocumentLoader(loader), wrapped_request);
   }
-  if (WebDevToolsAgentImpl* dev_tools = DevToolsAgent())
+  if (WebDevToolsAgentBase* dev_tools = DevToolsAgent())
     dev_tools->DidStartProvisionalLoad(web_frame_->GetFrame());
 }
 
@@ -426,7 +426,7 @@ void LocalFrameClientImpl::DispatchDidCommitLoad(
     web_frame_->Client()->DidCommitProvisionalLoad(
         WebHistoryItem(item), static_cast<WebHistoryCommitType>(commit_type));
   }
-  if (WebDevToolsAgentImpl* dev_tools = DevToolsAgent())
+  if (WebDevToolsAgentBase* dev_tools = DevToolsAgent())
     dev_tools->DidCommitLoadForLocalFrame(web_frame_->GetFrame());
 }
 
@@ -1021,9 +1021,9 @@ bool LocalFrameClientImpl::ShouldUseClientLoFiForRequest(
   return false;
 }
 
-WebDevToolsAgentImpl* LocalFrameClientImpl::DevToolsAgent() {
+WebDevToolsAgentBase* LocalFrameClientImpl::DevToolsAgent() {
   return WebLocalFrameBase::FromFrame(web_frame_->GetFrame()->LocalFrameRoot())
-      ->DevToolsAgentImpl();
+      ->DevToolsAgentBase();
 }
 
 KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {
