@@ -10,7 +10,8 @@
 
 namespace password_manager {
 
-PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(bool is_main_frame_secure)
+PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
+    bool is_main_frame_secure)
     : is_main_frame_secure_(is_main_frame_secure),
       generation_available_(false),
       has_generated_password_(false),
@@ -44,7 +45,8 @@ void PasswordFormMetricsRecorder::MarkGenerationAvailable() {
   generation_available_ = true;
 }
 
-void PasswordFormMetricsRecorder::SetHasGeneratedPassword(bool has_generated_password) {
+void PasswordFormMetricsRecorder::SetHasGeneratedPassword(
+    bool has_generated_password) {
   has_generated_password_ = has_generated_password;
 }
 
@@ -63,7 +65,8 @@ void PasswordFormMetricsRecorder::SetUserAction(UserAction user_action) {
   } else if (user_action == UserAction::kUserActionOverridePassword) {
     base::RecordAction(
         base::UserMetricsAction("PasswordManager_LoggedInWithNewPassword"));
-  } else if (user_action == UserAction::kUserActionOverrideUsernameAndPassword) {
+  } else if (user_action ==
+             UserAction::kUserActionOverrideUsernameAndPassword) {
     base::RecordAction(
         base::UserMetricsAction("PasswordManager_LoggedInWithNewUsername"));
   } else {

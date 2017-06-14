@@ -16,12 +16,12 @@ namespace password_manager {
 // get OverridePassword, and if the user types in a new value for the
 // username and password you get OverrideUsernameAndPassword.
 enum class UserAction {
-    kUserActionNone = 0,
-    kUserActionChoose,
-    kUserActionChoosePslMatch,
-    kUserActionOverridePassword,
-    kUserActionOverrideUsernameAndPassword,
-    kUserActionMax
+  kUserActionNone = 0,
+  kUserActionChoose,
+  kUserActionChoosePslMatch,
+  kUserActionOverridePassword,
+  kUserActionOverrideUsernameAndPassword,
+  kUserActionMax
 };
 
 }  // namespace password_manager
