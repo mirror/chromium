@@ -302,6 +302,24 @@
     },
     {
       "key": {
+        "uuid": "09fb8fb5_49980ae4",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-14T10:09:56Z",
+      "side": 1,
+      "message": "Does that work for unscoped enums?",
+      "parentUuid": "a7ad1243_5a973f51",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "144e43d9_5ce296d1",
         "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
         "patchSetId": 1
