@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2350e15f_728b0a60",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryServices/services-found.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-14T22:39:42Z",
+      "side": 1,
+      "message": "// Expect 3 service instances...\n\n// ... two ow which are both health_thermometer, so only 2 unique UUIDs.",
+      "range": {
+        "startLine": 18,
+        "startChar": 24,
+        "endLine": 18,
+        "endChar": 25
+      },
+      "revId": "353b6dc3f12f0192e25b4cc906fa9043b0ff9b9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

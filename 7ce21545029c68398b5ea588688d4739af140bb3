@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df154090_ab336b8e",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryServices/blocklisted-services.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-14T22:39:42Z",
+      "side": 0,
+      "message": "I\u0027m not sure why we expected this one TO work before.  But, in the new form of the test I\u0027m presuming it\u0027s omitted because HID is enough to verify that blocklist is working?\n\nI think this was attempting to test that a dynamically added blocklist item would also be blocked correctly. Other browsers may not support dynamic blocklists -- so perhaps we shouldn\u0027t add that concept to the testing API. But, if you think it likely they all would then it would be nice to keep. Otherwise we loose a bit of testing coverage, though we do have unit test coverage for dynamically adding.",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "7ce21545029c68398b5ea588688d4739af140bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
