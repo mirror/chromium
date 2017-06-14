@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "85592d9c_00207936",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-06-14T18:50:43Z",
+      "side": 1,
+      "message": "I think dynamic linker will fail because there\u0027s no such symbol anywhere and that failure will lead to \u0027crash\u0027 at launch. \n\nGiven that \"there\u0027s basically zero Android L LP64 devices\" (quoting Android libc folk),  I guess this is not an issue. Even if we tried to work around with dlsym(), there\u0027s no fallback to resort to (well, we can just do nothing - as before - if dlsym() does not find the symbol).",
+      "parentUuid": "c79ef075_fd0405cf",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "e850a0d14ba7c8b6452d0e93bee1d9d26a442899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b1927db_33af924d",
         "filename": "base/android/timezone_utils.cc",
         "patchSetId": 21
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T15:53:55Z",
       "side": 1,
       "message": "does this need to be in base? seems like it could jsut be in base/i18n?",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "e850a0d14ba7c8b6452d0e93bee1d9d26a442899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2adb88e7_92bf9b30",
+        "filename": "base/android/timezone_utils.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1151758
+      },
+      "writtenOn": "2017-06-14T18:50:43Z",
+      "side": 1,
+      "message": "Yeah. I tried that earlier (when I still used JNI), but somehow I had an issue with linking (gn was not happy with dependency even though I think I did the right thing).  Let me try again.",
+      "parentUuid": "0b1927db_33af924d",
       "range": {
         "startLine": 16,
         "startChar": 12,
