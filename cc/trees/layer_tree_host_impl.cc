@@ -2850,16 +2850,18 @@ InputHandler::ScrollStatus LayerTreeHostImpl::ScrollBegin(
         (settings_.is_layer_tree_for_subframe ||
          (!scrolling_node->scrolls_outer_viewport &&
           !scrolling_node->scrolls_inner_viewport))) {
-      if (IsWheelBasedScroll(type)) {
-        UMA_HISTOGRAM_CUSTOM_COUNTS(
-            "Event.Scroll.ScrollerSize.OnScroll_Wheel",
-            scrolling_node->scroll_clip_layer_bounds.GetArea(), 1,
-            kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
-      } else {
-        UMA_HISTOGRAM_CUSTOM_COUNTS(
-            "Event.Scroll.ScrollerSize.OnScroll_Touch",
-            scrolling_node->scroll_clip_layer_bounds.GetArea(), 1,
-            kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      int size = scrolling_node->scroll_clip_layer_bounds.GetCheckedArea()
+                     .ValueOrDefault(INT_MAX);
+      if (size > 0) {
+        if (IsWheelBasedScroll(type)) {
+          UMA_HISTOGRAM_CUSTOM_COUNTS(
+              "Event.Scroll.ScrollerSize.OnScroll_Wheel", size, 1,
+              kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+        } else {
+          UMA_HISTOGRAM_CUSTOM_COUNTS(
+              "Event.Scroll.ScrollerSize.OnScroll_Touch", size, 1,
+              kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+        }
       }
     }
   }
