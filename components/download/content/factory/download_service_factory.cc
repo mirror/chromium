@@ -44,10 +44,9 @@ DownloadService* CreateDownloadService(
   auto device_status_listener = base::MakeUnique<DeviceStatusListener>();
 
   auto controller = base::MakeUnique<ControllerImpl>(
-      std::move(client_set), std::move(config), std::move(driver),
-      std::move(model), std::move(device_status_listener),
-      std::move(task_scheduler));
-  return new DownloadServiceImpl(std::move(controller));
+      config.get(), std::move(client_set), std::move(driver), std::move(model),
+      std::move(device_status_listener), std::move(task_scheduler));
+  return new DownloadServiceImpl(std::move(config), std::move(controller));
 }
 
 }  // namespace download
