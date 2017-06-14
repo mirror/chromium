@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "419469c1_6c439570",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-14T07:00:05Z",
+      "side": 1,
+      "message": "should be kSlotRemoved and kSlotRenamed.",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
