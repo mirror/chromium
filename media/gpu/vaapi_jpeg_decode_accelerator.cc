@@ -137,12 +137,12 @@ bool VaapiJpegDecodeAccelerator::Initialize(Client* client) {
                            base::Bind(&ReportToUMA, VAAPI_ERROR));
 
   if (!vaapi_wrapper_.get()) {
-    DLOG(ERROR) << "Failed initializing VAAPI";
+    DVLOG(1) << "Failed initializing VAAPI";
     return false;
   }
 
   if (!decoder_thread_.Start()) {
-    DLOG(ERROR) << "Failed to start decoding thread.";
+    DVLOG(1) << "Failed to start decoding thread.";
     return false;
   }
   decoder_task_runner_ = decoder_thread_.task_runner();

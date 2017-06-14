@@ -1437,7 +1437,11 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
   scoped_refptr<base::SingleThreadTaskRunner> media_task_runner =
       GetMediaThreadTaskRunner();
   const bool enable_video_accelerator =
+#if defined(OS_LINUX)
+      cmd_line->HasSwitch(switches::kEnableAcceleratedVideo);
+#else
       !cmd_line->HasSwitch(switches::kDisableAcceleratedVideoDecode);
+#endif
   const bool enable_gpu_memory_buffer_video_frames =
 #if defined(OS_MACOSX) || defined(OS_LINUX)
       !cmd_line->HasSwitch(switches::kDisableGpuMemoryBufferVideoFrames) &&
@@ -1450,7 +1454,7 @@ media::GpuVideoAcceleratorFactories* RenderThreadImpl::GetGpuFactories() {
       (cmd_line->HasSwitch(switches::kEnableGpuMemoryBufferVideoFrames) ||
        gpu_channel_host->gpu_info().supports_overlays);
 #else
-      cmd_line->HasSwitch(switches::kEnableGpuMemoryBufferVideoFrames);
+          cmd_line->HasSwitch(switches::kEnableGpuMemoryBufferVideoFrames);
 #endif
 
   gpu_factories_.push_back(RendererGpuVideoAcceleratorFactories::Create(
