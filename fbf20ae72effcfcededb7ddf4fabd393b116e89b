@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5725b7a9_62a11456",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 1336,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-14T06:27:40Z",
+      "side": 1,
+      "message": "Not sure how I feel about strings being used here when we have JSON5 available for representing structured data.",
+      "revId": "fbf20ae72effcfcededb7ddf4fabd393b116e89b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
