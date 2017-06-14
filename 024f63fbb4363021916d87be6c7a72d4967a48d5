@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d45e6566_f7437c3f",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Can this be inlined in the .h file as set_page_scale_factor?  It looks like a trivial implementation.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db6a9240_db3a3707",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Virtual methods should always be CamelCase.  Sorry for missing that in https://codereview.chromium.org/2883653002.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6b7e632_4588ac4d",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: Please use ForTesting() on both of these, as in the cases above.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1364b5f_9ee7446e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10237,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: timeout",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50c78485_879b9ff5",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10238,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Are these timeouts creating a risk that the test will be flaky?  Or is there a reason that won\u0027t happen?",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25def2ad_3d78899e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10270,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: Initialize to -1?",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ee8bfa_98690ffd",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10295,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: Don\u0027t leave commented out code in place.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f54c15b1_0b63824e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10321,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Let\u0027s decide on this if possible, so we can avoid the TODO.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b48d8e00_f16ff64e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10352,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Maybe move this below the anonymous namespace?  Also, please document what the parameter controls.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ce97387_b8819486",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10358,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Please add a comment showing an example of a conversion.\n\nnit: ConvertJSONToPoint",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2142a907_b739581e",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10404,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: Clarify if you mean compositor frames, since \"frames\" here tends to mean RenderFrames.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaf2736e_2d6a3efe",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10419,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: No blank line here, since the big comment above seems to be referring to line 10423 below.  (Yikes, this file is getting big.)  :)",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed904bc_98143f1c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10467,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "nit: offset",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db667916_c9719601",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10476,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T19:43:40Z",
+      "side": 1,
+      "message": "Do we need to run the whole test twice (parameterized) for this, or can we just do an outside tap followed by an inside tap, possibly with some reset in between?  Just seeing if we can reduce some of the (large) overhead from running the test twice.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
