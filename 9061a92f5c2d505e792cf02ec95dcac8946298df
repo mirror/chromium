@@ -16,6 +16,24 @@
       "revId": "9061a92f5c2d505e792cf02ec95dcac8946298df",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1065e0d_fa803131",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelsInitializer.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-14T09:42:32Z",
+      "side": 0,
+      "message": "Oops, actually this doesn\u0027t need to be removed thanks to the new early return above.\n\nReinstated.",
+      "parentUuid": "5b85b282_cc6fb9f4",
+      "revId": "9061a92f5c2d505e792cf02ec95dcac8946298df",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
