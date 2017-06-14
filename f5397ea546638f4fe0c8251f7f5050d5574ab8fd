@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "1a109b0f_0777207f",
+        "filename": "cc/trees/layer_tree_host_impl.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 2854,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-14T18:20:27Z",
+      "side": 1,
+      "message": "nit: std::numeric_limits\u003cint\u003e::max()?",
+      "range": {
+        "startLine": 2854,
+        "startChar": 37,
+        "endLine": 2854,
+        "endChar": 44
+      },
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26aae7b1_25b318c4",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 2214,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-14T18:20:27Z",
+      "side": 1,
+      "message": "You should use\nWTF::CheckedNumeric\u003cint\u003e size \u003d width;\nsize *\u003d height;\nif (size.IsValid()) {\n ... size.ValueOrDie() ...",
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0dabf33c_0bf4a065",
         "filename": "third_party/WebKit/Source/core/input/ScrollManager.cpp",
         "patchSetId": 7
