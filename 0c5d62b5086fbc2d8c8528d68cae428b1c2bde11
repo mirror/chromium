@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3059430d_866d3d7a",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-14T12:59:00Z",
+      "side": 1,
+      "message": "For the follow-up CLs, I believe this cleanup cuts vr_common\u0027s dependence on device/vr.",
+      "revId": "0c5d62b5086fbc2d8c8528d68cae428b1c2bde11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
