@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db701b3f_0df8ea89",
+        "filename": "docs/clang_static_analyzer.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-14T19:12:09Z",
+      "side": 1,
+      "message": "should this mention false positives?",
+      "range": {
+        "startLine": 11,
+        "startChar": 33,
+        "endLine": 11,
+        "endChar": 45
+      },
+      "revId": "cf8a789611536d26847fe980d59860b1f9782bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
