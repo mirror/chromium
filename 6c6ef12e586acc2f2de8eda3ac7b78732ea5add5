@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "752d8732_8c627f98",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-14T08:55:46Z",
+      "side": 1,
+      "message": "Is this commented-out function necessary?",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "521ebd78_5db7d9ce",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-14T08:55:46Z",
+      "side": 1,
+      "message": "Is this commented-out function necessary?",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
