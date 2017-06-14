@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbcb549e_43652dde",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b262b67_41f24b7a",
+      "range": {
+        "startLine": 5,
+        "startChar": 34,
+        "endLine": 5,
+        "endChar": 67
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8a3f365_9833e507",
         "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f86bf739_424a8dc6",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Done - it seems that the constructor is needed, though, because JavaScriptNativeDialogFactory does not declare a public one (?).",
+      "parentUuid": "e8a3f365_9833e507",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "3b67d7ef_7942e946",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "739696d1_ad6dbf0d",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 35
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9ee905f_8cbd2184",
         "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
         "patchSetId": 1
@@ -91,6 +163,30 @@
       "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc7784f3_9bdd7ae8",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Unfortunately you can\u0027t write this, because the two arms of a ternary must be compatible, and CJSNDViewsFactory and CJSNDCocoaFactory are not compatible :(. You can write:\n\nauto factory \u003d IsMd() ? WrapUnique\u003c...\u003e(new ...) : WrapUnique\u003c...\u003e(new ...)\n\nbut it ends up quite ugly :\\ so I think I would prefer to leave this code using reset() unless there is a nicer way to use WrapUnique that I haven\u0027t thought of.",
+      "parentUuid": "c9ee905f_8cbd2184",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -141,6 +237,30 @@
     },
     {
       "key": {
+        "uuid": "bfe50558_7bbbe54c",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "I tried changing it to MODAL_TYPE_WINDOW. Everything seems to work, but there is behavior that people might find surprising: you can still use some window-level hotkeys and the window menu, which is not possible with the Cocoa type of modal. Clearly, there is some different type of modality at play here, but I\u0027m not sure if the behavior with MODAL_TYPE_WINDOW is expected or not.",
+      "parentUuid": "64006028_820931c8",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 70
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "63a84343_3df11715",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
@@ -158,6 +278,24 @@
     },
     {
       "key": {
+        "uuid": "4f1b687f_9bcb5f58",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63a84343_3df11715",
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "94c2e653_3d54e35b",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
@@ -169,6 +307,30 @@
       "writtenOn": "2017-06-13T23:31:34Z",
       "side": 1,
       "message": "This Linux-specific code suggests to me either that\n a) using ChromeJavaScriptAppModalDialogViews won\u0027t give us correct \"app modal\" behaviour for Mac; or\n b) the changed modality of javascript dialogs in OldSpice could mean that we no longer need specific Desktop-Linux code to get the correct behavior.",
+      "range": {
+        "startLine": 61,
+        "startChar": 10,
+        "endLine": 61,
+        "endChar": 42
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac360c2e_bd753219",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "I *think* the answer might be (b)? But I am not sure; I will ask avi@",
+      "parentUuid": "94c2e653_3d54e35b",
       "range": {
         "startLine": 61,
         "startChar": 10,
@@ -204,6 +366,30 @@
     },
     {
       "key": {
+        "uuid": "2db053a7_670b5cc3",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "It does create a sheet. Do you know how to get gmail to create a BeforeUnload? I can\u0027t seem to make one appear.",
+      "parentUuid": "ff459400_6172720e",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c36d78a9_b14c22ea",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
@@ -218,6 +404,24 @@
       "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42b49599_0092e72d",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-14T15:07:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c36d78a9_b14c22ea",
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
