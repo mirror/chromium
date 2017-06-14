@@ -55,7 +55,7 @@ Network.NetworkItemView = class extends UI.TabbedPane {
       this.appendTab('eventSource', Common.UIString('EventStream'), new Network.EventSourceMessagesView(request));
     } else {
       var responseView = new Network.RequestResponseView(request);
-      var previewView = new Network.RequestPreviewView(request, responseView);
+      var previewView = new Network.RequestPreviewView(request);
       this.appendTab('preview', Common.UIString('Preview'), previewView);
       this.appendTab('response', Common.UIString('Response'), responseView);
     }
@@ -104,15 +104,13 @@ Network.NetworkItemView = class extends UI.TabbedPane {
   }
 };
 
-/**
- * @unrestricted
- */
 Network.RequestContentView = class extends Network.RequestView {
   /**
    * @param {!SDK.NetworkRequest} request
    */
   constructor(request) {
     super(request);
+    this._innerViewShowRequested = false;
   }
 
   /**

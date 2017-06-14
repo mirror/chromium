@@ -491,22 +491,17 @@ Extensions.ExtensionServer = class extends Common.Object {
    * @param {!Object} message
    * @param {!MessagePort} port
    */
-  _getResourceContent(contentProvider, message, port) {
-    /**
-     * @param {?string} content
-     * @this {Extensions.ExtensionServer}
-     */
-    function onContentAvailable(content) {
-      var contentEncoded = false;
-      if (contentProvider instanceof SDK.Resource)
-        contentEncoded = contentProvider.contentEncoded;
-      if (contentProvider instanceof SDK.NetworkRequest)
-        contentEncoded = contentProvider.contentEncoded;
-      var response = {encoding: contentEncoded && content ? 'base64' : '', content: content};
-      this._dispatchCallback(message.requestId, port, response);
+  async _getResourceContent(contentProvider, message, port) {
+    var content = await contentProvider.requestContent();
+    var encoded = false;
+    if (contentProvider instanceof SDK.NetworkRequest) {
+      var responseData = await contentProvider.responseData();
+      encoded = !!(responseData.encoded && content);
     }
+    if (contentProvider instanceof SDK.Resource)
+      encoded = !!(contentProvider.contentEncoded && content);
 
-    contentProvider.requestContent().then(onContentAvailable.bind(this));
+    this._dispatchCallback(message.requestId, port, {encoding: encoded ? 'base64' : '', content: content});
   }
 
   _onGetRequestContent(message, port) {

@@ -43,13 +43,8 @@ Network.HARWriter = class {
     this._pendingRequests = 1;  // Guard against completing resource transfer before all requests are made.
     var entries = this._harLog.entries;
     for (var i = 0; i < entries.length; ++i) {
-      var content = requests[i].content;
-      if (typeof content === 'undefined' && requests[i].finished) {
-        ++this._pendingRequests;
-        requests[i].requestContent().then(this._onContentAvailable.bind(this, entries[i], requests[i]));
-      } else if (content !== null) {
-        this._setEntryContent(entries[i], requests[i]);
-      }
+      ++this._pendingRequests;
+      requests[i].responseData().then(this._onContentAvailable.bind(this, entries[i], requests[i]));
     }
     var compositeProgress = new Common.CompositeProgress(progress);
     this._writeProgress = compositeProgress.createSubProgress();
@@ -64,22 +59,22 @@ Network.HARWriter = class {
 
   /**
    * @param {!Object} entry
-   * @param {!SDK.NetworkRequest} request
+   * @param {!SDK.NetworkRequest.ResponseData} responseData
    */
-  _setEntryContent(entry, request) {
-    if (request.content !== null)
-      entry.response.content.text = request.content;
-    if (request.contentEncoded)
+  _setEntryContent(entry, responseData) {
+    if (responseData.content !== null)
+      entry.response.content.text = responseData.content;
+    if (responseData.encoded)
       entry.response.content.encoding = 'base64';
   }
 
   /**
    * @param {!Object} entry
    * @param {!SDK.NetworkRequest} request
-   * @param {?string} content
+   * @param {!SDK.NetworkRequest.ResponseData} responseData
    */
-  _onContentAvailable(entry, request, content) {
-    this._setEntryContent(entry, request);
+  _onContentAvailable(entry, request, responseData) {
+    this._setEntryContent(entry, responseData);
     if (this._requestsProgress)
       this._requestsProgress.worked();
     if (!--this._pendingRequests) {

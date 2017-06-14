@@ -159,6 +159,7 @@ PerfUI.TimelineOverviewPane = class extends UI.VBox {
     this._overviewCalculator.setDisplayWidth(this._overviewGrid.clientWidth());
     for (var i = 0; i < this._overviewControls.length; ++i)
       this._overviewControls[i].update();
+    this._overviewGrid.updateDividers(this._overviewCalculator);
     this._updateMarkers();
     this._updateWindow();
   }

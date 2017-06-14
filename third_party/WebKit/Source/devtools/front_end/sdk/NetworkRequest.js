@@ -73,7 +73,6 @@ SDK.NetworkRequest = class extends Common.Object {
 
     /** @type {!Common.ResourceType} */
     this._resourceType = Common.resourceTypes.Other;
-    this._contentEncoded = false;
     this._pendingContentCallbacks = [];
     /** @type {!Array.<!SDK.NetworkRequest.WebSocketFrame>} */
     this._frames = [];
@@ -365,11 +364,8 @@ SDK.NetworkRequest = class extends Common.Object {
 
     this._finished = x;
 
-    if (x) {
+    if (x)
       this.dispatchEventToListeners(SDK.NetworkRequest.Events.FinishedLoading, this);
-      if (this._pendingContentCallbacks.length)
-        this._innerRequestContent();
-    }
   }
 
   /**
@@ -866,24 +862,13 @@ SDK.NetworkRequest = class extends Common.Object {
   }
 
   /**
-   * @return {?string|undefined}
+   * @return {!Promise<!SDK.NetworkRequest.ResponseData>}
    */
-  get content() {
-    return this._content;
-  }
-
-  /**
-   * @return {?Protocol.Error|undefined}
-   */
-  contentError() {
-    return this._contentError;
-  }
-
-  /**
-   * @return {boolean}
-   */
-  get contentEncoded() {
-    return this._contentEncoded;
+  responseData() {
+    if (this._responseData)
+      return this._responseData;
+    this._responseData = SDK.NetworkManager.requestResponseData(this);
+    return this._responseData;
   }
 
   /**
@@ -906,20 +891,8 @@ SDK.NetworkRequest = class extends Common.Object {
    * @override
    * @return {!Promise<?string>}
    */
-  requestContent() {
-    // We do not support content retrieval for WebSockets at the moment.
-    // Since WebSockets are potentially long-living, fail requests immediately
-    // to prevent caller blocking until resource is marked as finished.
-    if (this._resourceType === Common.resourceTypes.WebSocket)
-      return Promise.resolve(/** @type {?string} */ (null));
-    if (typeof this._content !== 'undefined')
-      return Promise.resolve(/** @type {?string} */ (this.content || null));
-    var callback;
-    var promise = new Promise(fulfill => callback = fulfill);
-    this._pendingContentCallbacks.push(callback);
-    if (this.finished)
-      this._innerRequestContent();
-    return promise;
+  async requestContent() {
+    return (await this.responseData()).content;
   }
 
   /**
@@ -998,35 +971,6 @@ SDK.NetworkRequest = class extends Common.Object {
     }
 
     this.requestContent().then(onResourceContent.bind(this));
-  }
-
-  /**
-   * @return {?string}
-   */
-  asDataURL() {
-    var content = this._content;
-    var charset = null;
-    if (!this._contentEncoded) {
-      content = content.toBase64();
-      charset = 'utf-8';
-    }
-    return Common.ContentProvider.contentAsDataURL(content, this.mimeType, true, charset);
-  }
-
-  async _innerRequestContent() {
-    if (this._contentRequested)
-      return;
-    this._contentRequested = true;
-
-    var response =
-        await this._networkManager.target().networkAgent().invoke_getResponseBody({requestId: this._requestId});
-
-    this._content = response[Protocol.Error] ? null : response.body;
-    this._contentError = response[Protocol.Error];
-    this._contentEncoded = response.base64Encoded;
-    for (var callback of this._pendingContentCallbacks.splice(0))
-      callback(this._content);
-    delete this._contentRequested;
   }
 
   /**
@@ -1143,3 +1087,6 @@ SDK.NetworkRequest.WebSocketFrame;
 
 /** @typedef {!{time: number, eventName: string, eventId: string, data: string}} */
 SDK.NetworkRequest.EventSourceMessage;
+
+/** @typedef {!{error: ?string, content: ?string, encoded: boolean}} */
+SDK.NetworkRequest.ResponseData;
