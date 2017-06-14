@@ -1062,6 +1062,7 @@ class CORE_EXPORT LocalFrameView final
   HashSet<RefPtr<LayoutPart>> parts_;
 
   Member<LocalFrame> frame_;
+  Member<LocalFrameView> parent_;
 
   IntRect frame_rect_;
   bool is_attached_;
