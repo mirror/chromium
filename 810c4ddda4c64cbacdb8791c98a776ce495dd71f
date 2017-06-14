@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "eb96ea55_60e80098",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12216,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-14T13:57:35Z",
+      "side": 1,
+      "message": "Done (to the best of my ability).\n\nI think the main reason the period string exists is because the use of that string has the full text:\n\n\"Ads blocked. \u003clink\u003eDetails\u003c/link\u003e\" \n\nThe period as separator is necessary here.",
+      "parentUuid": "5871d453_8f3b949f",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ee45ae2_5e6c1b86",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 6
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "25bd7502_40740e9e",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12222,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-14T13:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee45ae2_5e6c1b86",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69c6c2d0_a60599fb",
         "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
         "patchSetId": 6
@@ -50,6 +86,24 @@
       "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0333af_03f2b6ff",
+        "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-14T13:57:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69c6c2d0_a60599fb",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
