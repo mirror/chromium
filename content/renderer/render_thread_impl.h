@@ -131,6 +131,7 @@ class DBMessageFilter;
 class DevToolsAgentFilter;
 class DomStorageDispatcher;
 class FrameSwapMessageQueue;
+class HistogramControllerClient;
 class IndexedDBDispatcher;
 class InputHandlerManager;
 class MidiMessageFilter;
@@ -786,6 +787,7 @@ class CONTENT_EXPORT RenderThreadImpl
       std::map<int, scoped_refptr<PendingFrameCreate>>;
   PendingFrameCreateMap pending_frame_creates_;
 
+  std::unique_ptr<HistogramControllerClient> histogram_controller_client_;
   mojom::StoragePartitionServicePtr storage_partition_service_;
   mojom::RendererHostPtr renderer_host_;
   mojom::URLLoaderFactoryPtr blob_url_loader_factory_;

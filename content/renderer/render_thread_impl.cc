@@ -60,9 +60,9 @@
 #include "content/child/appcache/appcache_dispatcher.h"
 #include "content/child/appcache/appcache_frontend_impl.h"
 #include "content/child/blob_storage/blob_message_filter.h"
-#include "content/child/child_histogram_message_filter.h"
 #include "content/child/child_resource_message_filter.h"
 #include "content/child/db_message_filter.h"
+#include "content/child/histogram_controller_client.h"
 #include "content/child/indexed_db/indexed_db_dispatcher.h"
 #include "content/child/memory/child_memory_coordinator_impl.h"
 #include "content/child/resource_dispatcher.h"
@@ -925,6 +925,9 @@ void RenderThreadImpl::Init(
 
   GetConnector()->BindInterface(mojom::kBrowserServiceName,
                                 mojo::MakeRequest(&storage_partition_service_));
+
+  histogram_controller_client_ =
+      base::MakeUnique<HistogramControllerClient>(GetConnector());
 
 #if defined(OS_LINUX)
   ChildProcess::current()->SetIOThreadPriority(base::ThreadPriority::DISPLAY);
