@@ -22,6 +22,29 @@
       "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f726bbf5_209bc836",
+        "filename": "third_party/WebKit/Source/core/input/ScrollManager.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1116050
+      },
+      "writtenOn": "2017-06-14T18:05:51Z",
+      "side": 1,
+      "message": "The meaning of this parameter isn\u0027t clear from the name.\n\nIt\u0027s an out parameter, but it\u0027s named like an in parameter, indicating whether or not the method should record the scroller size.",
+      "range": {
+        "startLine": 118,
+        "startChar": 12,
+        "endLine": 118,
+        "endChar": 32
+      },
+      "revId": "f5397ea546638f4fe0c8251f7f5050d5574ab8fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
