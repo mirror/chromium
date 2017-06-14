@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "905eda51_ef691baf",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-14T21:49:14Z",
+      "side": 1,
+      "message": "Please name the variable name; its meaning is not implied here. (or better yet, use an enum)",
+      "revId": "f2e9ee4e0b5b4b7ebdf730645db3e0da8a842018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
