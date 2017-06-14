@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ecf86e91_1632b381",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioParam.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 141,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "Thought about it, but I don\u0027t think this is the right place to have such TODO item. I rather file an issue after this CL lands.",
+      "parentUuid": "e17e6ac4_e05c44b9",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16ad395d_5504401f",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioParamMap.h",
         "patchSetId": 2
@@ -104,6 +122,24 @@
     },
     {
       "key": {
+        "uuid": "9158df04_c9474558",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "I believe AddOutput takes the number of channels for the output port, not the number of ports.",
+      "parentUuid": "4c75cee3_ff3687c9",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b090f697_2d954465",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -115,6 +151,24 @@
       "writtenOn": "2017-06-14T15:33:55Z",
       "side": 1,
       "message": "Add TODO to explain briefly why this is empty.",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7aab477_d41983f3",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "This is WIP, so the method will be implemented after the dependent CL is landed.",
+      "parentUuid": "b090f697_2d954465",
       "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +192,24 @@
     },
     {
       "key": {
+        "uuid": "81209cb8_985f6a89",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "GetProcessorDefinition(name)\n\nhasn\u0027t been implemented yet.",
+      "parentUuid": "4562d36e_bc40ef86",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f27f6945_f1e73f77",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -155,6 +227,24 @@
     },
     {
       "key": {
+        "uuid": "c606cea3_014db319",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "Not possible. This method is called by the v8 binding (not us) and the very last argument is not optional.",
+      "parentUuid": "f27f6945_f1e73f77",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02bc4e9d_db3a22ad",
         "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
         "patchSetId": 2
@@ -166,6 +256,24 @@
       "writtenOn": "2017-06-14T15:33:55Z",
       "side": 1,
       "message": "I don\u0027t think matches the algorithm in the spec about the lifetime. Just add a TODO here?",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5a37568_0795a88a",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "I think this is a reasonable thing to do until the life cycle is implemented correctly.",
+      "parentUuid": "02bc4e9d_db3a22ad",
       "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -200,6 +308,24 @@
       "writtenOn": "2017-06-14T15:33:55Z",
       "side": 1,
       "message": "Add comment on what this holds.",
+      "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "050dc833_3bcdf019",
+        "filename": "third_party/WebKit/Source/modules/webaudio/AudioWorkletNode.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1130280
+      },
+      "writtenOn": "2017-06-14T16:57:05Z",
+      "side": 1,
+      "message": "Hmm. Is it necessary? It\u0027s on the spec and AudioParamMap is actually a user-visible data container. I tried to add a comment, but it seemed a bit redundant.",
+      "parentUuid": "3231ccb6_0de238d1",
       "revId": "216afd87c6dd9dd6eeda85634bc8054fd9566343",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
