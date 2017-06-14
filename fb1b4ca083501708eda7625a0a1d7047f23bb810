@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "35302405_52c17e33",
+        "filename": "base/threading/sequenced_worker_pool.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-14T12:45:37Z",
+      "side": 1,
+      "message": "A first goal could be to remove EnableForProcess/EnableWithRedirectionToTaskSchedulerForProcess/DisableForProcessForTesting/IsEnabled and have the SequencedWorkerPool be always enabled with redirection to TaskScheduler.",
+      "range": {
+        "startLine": 192,
+        "startChar": 24,
+        "endLine": 192,
+        "endChar": 63
+      },
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "32b54920_5f4278fe",
         "filename": "content/browser/browser_main_loop.cc",
         "patchSetId": 3
@@ -13,6 +36,47 @@
       "writtenOn": "2017-06-13T20:08:17Z",
       "side": 1,
       "message": "+fdoray: Can we remove this?",
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c893f63e_115cf77f",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 809,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-14T12:45:37Z",
+      "side": 1,
+      "message": "Yes.\n\nThis should have been moved after the call to GetContentClient()-\u003ebrowser()-\u003ePerformExperimentalTaskSchedulerRedirections() below as part of https://codereview.chromium.org/2539263003.\n\nIt can now be removed entirely as CreateThreads() will now always enabled the SequencedWorkerPool (this is no longer up to the ContentBrowserClient).",
+      "parentUuid": "32b54920_5f4278fe",
+      "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55a6d774_73c9455d",
+        "filename": "ios/web/app/web_main_loop.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-14T12:45:37Z",
+      "side": 1,
+      "message": "Missing sequenced_worker_pool.h include.",
+      "range": {
+        "startLine": 162,
+        "startChar": 2,
+        "endLine": 162,
+        "endChar": 78
+      },
       "revId": "fb1b4ca083501708eda7625a0a1d7047f23bb810",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
