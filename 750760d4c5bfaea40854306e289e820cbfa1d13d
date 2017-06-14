@@ -16,6 +16,24 @@
       "revId": "750760d4c5bfaea40854306e289e820cbfa1d13d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44b7efcb_de1b2544",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5062,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-14T19:18:39Z",
+      "side": 1,
+      "message": "I could, but I decided against it, since LayoutFieldset::FindInFlowLegend() won\u0027t find out-of-flow stuff anyway. If you think adding a check here is important for performance, I can add it. Otherwise, it\u0027s just more code.",
+      "parentUuid": "5be10b50_63d86899",
+      "revId": "750760d4c5bfaea40854306e289e820cbfa1d13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
