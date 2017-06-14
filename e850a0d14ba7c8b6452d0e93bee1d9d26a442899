@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c79ef075_fd0405cf",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 21
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-14T15:53:55Z",
+      "side": 1,
+      "message": "what does this mean? do we just crash (and therefore crash on launch) if this configuration exists?",
+      "range": {
+        "startLine": 17,
+        "startChar": 13,
+        "endLine": 17,
+        "endChar": 14
+      },
+      "revId": "e850a0d14ba7c8b6452d0e93bee1d9d26a442899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b1927db_33af924d",
+        "filename": "base/android/timezone_utils.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001618
+      },
+      "writtenOn": "2017-06-14T15:53:55Z",
+      "side": 1,
+      "message": "does this need to be in base? seems like it could jsut be in base/i18n?",
+      "range": {
+        "startLine": 16,
+        "startChar": 12,
+        "endLine": 16,
+        "endChar": 32
+      },
+      "revId": "e850a0d14ba7c8b6452d0e93bee1d9d26a442899",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
