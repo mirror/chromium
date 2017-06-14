@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "97e18488_42829dd0",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-06-14T13:48:49Z",
+      "side": 1,
+      "message": "In this case, is it also the case that we can\u0027t animate transform on that element at all? If so maybe something like \"Target does not support transform-related properties\" would be clearer.",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42fa46b9_e96c11a2",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1002110
+      },
+      "writtenOn": "2017-06-14T13:48:49Z",
+      "side": 1,
+      "message": "Is there something more that we can say here to help a developer figure out what they need to change? (I\u0027m not familiar with this reason for not compositing, so I don\u0027t have a specific suggestion for wording.)",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
