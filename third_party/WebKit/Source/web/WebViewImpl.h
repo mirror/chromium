@@ -428,7 +428,8 @@ class WEB_EXPORT WebViewImpl final
 
   void EnterFullscreen(LocalFrame&) override;
   void ExitFullscreen(LocalFrame&) override;
-  void FullscreenElementChanged(Element*, Element*) override;
+  void FullscreenElementChanged(Element* from_element,
+                                Element* to_element) override;
 
   // Exposed for the purpose of overriding device metrics.
   void SendResizeEventAndRepaint();

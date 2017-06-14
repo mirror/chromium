@@ -61,7 +61,7 @@ class CORE_EXPORT FullscreenController {
 
   // Called by Fullscreen (via ChromeClient) to notify that the fullscreen
   // element has changed.
-  void FullscreenElementChanged(Element*, Element*);
+  void FullscreenElementChanged(Element* from_element, Element* to_element);
 
   bool IsFullscreenOrTransitioning() const { return state_ != State::kInitial; }
 
