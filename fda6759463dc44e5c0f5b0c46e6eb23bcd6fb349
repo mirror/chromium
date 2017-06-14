@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "013ffc8e_872c9ef5",
+        "filename": "third_party/WebKit/public/platform/modules/indexeddb/WebIDBKey.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-14T19:48:48Z",
+      "side": 0,
+      "message": "o.O",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 72,
+        "endChar": 5
+      },
+      "revId": "fda6759463dc44e5c0f5b0c46e6eb23bcd6fb349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
