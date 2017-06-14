@@ -46,11 +46,9 @@ BASE_EXPORT int GetNextSequenceLocalStorageSlotNumber();
 //
 // SequenceLocalStorageSlot must be used within the scope of a
 // ScopedSetSequenceLocalStorageMapForCurrentThread object.
-//
-// TODO(jeffreyhe): Mention that TaskScheduler and MessageLoop run
-// tasks within the scope of a
-// ScopedSetSequenceLocalStorageMapForCurrentThread object once this
-// is true.
+// Note: this is true in the scope of tasks posted to a
+// (Sequenced|SingleThreadTaskRunner) obtained from post_task.h or from a
+// MessageLoop.
 template <typename T, typename Deleter = std::default_delete<T>>
 class SequenceLocalStorageSlot {
  public:
