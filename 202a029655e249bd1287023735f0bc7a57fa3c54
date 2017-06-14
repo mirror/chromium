@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aed50e3c_46832bd8",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-14T17:08:33Z",
+      "side": 1,
+      "message": "Not sure, but you\u0027ll need to resolve this before commit.",
+      "revId": "202a029655e249bd1287023735f0bc7a57fa3c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
