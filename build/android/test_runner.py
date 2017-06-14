@@ -9,6 +9,7 @@
 import argparse
 import collections
 import contextlib
+import inspect
 import itertools
 import logging
 import os
@@ -40,9 +41,11 @@ from pylib.base import test_instance_factory
 from pylib.base import test_run_factory
 from pylib.results import json_results
 from pylib.results import report_results
+from pylib.utils import instrumentation_tracing
 from pylib.utils import logdog_helper
 from pylib.utils import logging_utils
 
+from py_trace_event import trace_event
 from py_utils import contextlib_ext
 
 
@@ -926,6 +929,10 @@ def main():
       args.command_line_flags = unknown_args
     else:
       parser.error('unrecognized arguments: %s' % ' '.join(unknown_args))
+
+  if args.trace_output:
+    instrumentation_tracing.StartInstrumenting(["clankium"], ["proguard"],
+                                               args.trace_output)
 
   try:
     return RunTestsCommand(args)
