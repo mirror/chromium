@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<body>
+<canvas id="output" width="160" height="100"></canvas>
+<script>
+function fillQuad(ctx, x1, y1, x2, y2, x3, y3, x4, y4, style) {
+    ctx.beginPath();
+    ctx.fillStyle = style;
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x3, y3);
+    ctx.lineTo(x4, y4);
+    ctx.lineTo(x1, y1);
+    ctx.fill();
+}
+
+var canvas = document.getElementById('output');
+var ctx = canvas.getContext('2d');
+fillQuad(ctx, 40, 10, 0, 0, 180, 0, 140, 10, "red");
+fillQuad(ctx, 140, 10, 160, 0, 160, 40, 140, 10, "green");
+fillQuad(ctx, 140, 10, 160, 40, 0, 40, 40, 10, "cyan");
+fillQuad(ctx, 40, 10, 0, 40, 0, 0, 40, 10, "blue");
+</script>
+</body>
+</html>
