@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb7eae3b_574a15e2",
+        "filename": "content/browser/compositor/surface_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-14T19:28:52Z",
+      "side": 1,
+      "message": "ConnectHostWith or something? Cuz this isn\u0027t in the host class anymore.\n\nAlso not a big fan of free functions in headers like this, they\u0027re hard to find. What about content::surface_utils namespace around this? You could follow up and put that around the whole file?",
+      "revId": "caa52b56bfbe6a0d5c2c91ffe58f55659216c199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
