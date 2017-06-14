@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0f10840_180d7a82",
+        "filename": "build/android/pylib/utils/logging_utils.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1114914
+      },
+      "writtenOn": "2017-06-14T00:43:59Z",
+      "side": 1,
+      "message": "This one scares me.",
+      "revId": "ba5df12ef526220841b07f373fc1ec4765329985",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
