@@ -33,6 +33,24 @@
       "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341a58de_f37c0815",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-14T20:38:19Z",
+      "side": 1,
+      "message": "Charlie, did you mean deleted state of BLO? or something else?\n\nI can only see a scenario, where there is more posted tasks queued for snapshot controller ahead of delete, in which case BLO::StartSnapshot may be called a few more times, but state being reset, that should not be a problem.\n\nHearing the above, we could call something like snapshot_controller_-\u003eStop() or Reset() to ensure we don\u0027t Start another snapshot. It would be safer then.",
+      "parentUuid": "d6a8ae13_dad5e26d",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
