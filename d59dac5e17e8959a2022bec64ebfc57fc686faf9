@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "556ac5f8_a36d452d",
+        "filename": "components/ntp_snippets/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "Please upload the files.",
+      "range": {
+        "startLine": 41,
+        "startChar": 5,
+        "endLine": 41,
+        "endChar": 32
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fe018ac_46c3f009",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "Ambiguous. Is this (\"deleted\" || \"moved to archive\")?",
+      "range": {
+        "startLine": 324,
+        "startChar": 49,
+        "endLine": 324,
+        "endChar": 56
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b41ee4f3_f9a0f599",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "nit: replace with \".These suggestions are shown ...\".\nI am not sure why you need to introduce \"cache\" here.",
+      "range": {
+        "startLine": 388,
+        "startChar": 54,
+        "endLine": 389,
+        "endChar": 25
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6f453c_07a711f6",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "remove",
+      "range": {
+        "startLine": 394,
+        "startChar": 25,
+        "endLine": 394,
+        "endChar": 27
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5942f864_6d0f23f2",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "If the meaning is \"no longer\", then it is an adverb and no space in between.\nhttp://dictionary.cambridge.org/grammar/british-grammar/any-more-or-anymore",
+      "range": {
+        "startLine": 394,
+        "startChar": 65,
+        "endLine": 394,
+        "endChar": 73
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd4540db_cf1d7f4a",
+        "filename": "components/ntp_snippets/content_suggestions_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "s/persited/persisted",
+      "range": {
+        "startLine": 396,
+        "startChar": 75,
+        "endLine": 396,
+        "endChar": 77
+      },
+      "revId": "d59dac5e17e8959a2022bec64ebfc57fc686faf9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

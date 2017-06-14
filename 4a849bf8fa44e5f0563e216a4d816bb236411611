@@ -143,6 +143,30 @@
     },
     {
       "key": {
+        "uuid": "054d099a_90f4bf3b",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "Originally I got an impression that you were going to order suggestions.",
+      "parentUuid": "fbd8192a_eb7b61fa",
+      "range": {
+        "startLine": 223,
+        "startChar": 24,
+        "endLine": 223,
+        "endChar": 45
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "602242da_229f4d70",
         "filename": "components/ntp_snippets/content_suggestions_service.cc",
         "patchSetId": 1
@@ -422,6 +446,30 @@
       "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "d6338526_ccf96590",
+        "filename": "components/ntp_snippets/content_suggestions_service.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 664,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-14T13:48:37Z",
+      "side": 1,
+      "message": "Since you are touching this, could you please change this not to add a category (e.g. check presence before)?\nI do not feel comfortable adding sections like that.\nThis may have no effect now, but something may change.",
+      "parentUuid": "158ea48c_1607367d",
+      "range": {
+        "startLine": 664,
+        "startChar": 32,
+        "endLine": 664,
+        "endChar": 56
+      },
+      "revId": "4a849bf8fa44e5f0563e216a4d816bb236411611",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
