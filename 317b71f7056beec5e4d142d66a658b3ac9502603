@@ -22,6 +22,30 @@
       "revId": "317b71f7056beec5e4d142d66a658b3ac9502603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce736163_7ffd6576",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-14T15:14:39Z",
+      "side": 1,
+      "message": "I sort of do mentioned that, although I\u0027m happy to alter the wording if you have suggestions. \n\nIn continueInterceptedRequest.authChallengeResponse the description is: \"Response to a requestIntercepted with an authChallenge. Must not be set otherwise.\"\nIn requestIntercepted.authChallenge the description is: \"Details of the Authorization Challenge encountered. If this is set then continueInterceptedRequest must contain an authChallengeResponse.\"\n\nWDYT?",
+      "parentUuid": "a97f3c84_5d1e022a",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 66
+      },
+      "revId": "317b71f7056beec5e4d142d66a658b3ac9502603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
