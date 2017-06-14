@@ -1,0 +1,13 @@
+rootWebArea
+++genericContainer
+++++inputTime
+++++++genericContainer
+++++++++genericContainer
+++++++++++spinButton description='Hours' descriptionFrom=2
+++++++++++staticText name=':'
+++++++++++++inlineTextBox name=':'
+++++++++++spinButton description='Minutes' descriptionFrom=2
+++++++++++spinButton description='AM/PM' descriptionFrom=2
+++++++spinButton
+++++++++button
+++++++++button
