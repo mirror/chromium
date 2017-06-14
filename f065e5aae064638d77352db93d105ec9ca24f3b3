@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02019016_a1123cb1",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T07:16:32Z",
+      "side": 1,
+      "message": "Why 128 characters if we\u0027re going to strip it to 40 while reporting? Something about converting from v8::String to String?",
+      "revId": "f065e5aae064638d77352db93d105ec9ca24f3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80228346_ebc00453",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T07:16:32Z",
+      "side": 1,
+      "message": "At some point, we should go through and rename these bits to match the scenarios in which they\u0027re used...",
+      "revId": "f065e5aae064638d77352db93d105ec9ca24f3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf02cd3c_a95ecc64",
+        "filename": "third_party/WebKit/Source/core/frame/csp/CSPDirectiveList.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T07:16:32Z",
+      "side": 1,
+      "message": "Ah. This should include a check against `directive-\u003eAllowReportSample()`.",
+      "revId": "f065e5aae064638d77352db93d105ec9ca24f3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e03f28c7_a523fc0c",
+        "filename": "third_party/WebKit/Source/platform/RuntimeEnabledFeatures.json5",
+        "patchSetId": 5
+      },
+      "lineNbr": 897,
+      "author": {
+        "id": 1211509
+      },
+      "writtenOn": "2017-06-14T07:16:32Z",
+      "side": 1,
+      "message": "Would you like a separate intent to implement/ship for this? Or could we consider it covered under the initial https://groups.google.com/a/chromium.org/d/msg/blink-dev/XlcpobBfJOI/8WYpiyk0CQAJ, which I don\u0027t think has hit stable yet?\n\nIf you want a separate intent, then this is the way to land it, and I\u0027ll flip it to experimental/stable after discussion.\n\nIf you don\u0027t think this is large enough, then we should probably land it as experimental and update the //external/wpt tests accordingly.\n\nIt seems like we need some tests somewhere, so the latter\u0027s more appealing to me? :)",
+      "revId": "f065e5aae064638d77352db93d105ec9ca24f3b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
