@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "components/prefs/pref_change_registrar.h"
 
@@ -23,6 +24,7 @@ class Profile;
 
 namespace base {
 class FilePath;
+class SequencedTaskRunner;
 }
 
 namespace content {
@@ -147,6 +149,7 @@ class DevToolsFileHelper {
   PrefChangeRegistrar pref_change_registrar_;
   std::set<std::string> file_system_paths_;
   std::unique_ptr<DevToolsFileWatcher> file_watcher_;
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
   base::WeakPtrFactory<DevToolsFileHelper> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileHelper);
 };
