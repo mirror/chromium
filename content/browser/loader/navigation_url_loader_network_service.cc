@@ -137,6 +137,26 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
                                        resource_context_);
     }
 
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
     // Requests to WebUI scheme won't get redirected to/from other schemes
     // or be intercepted, so we just let it go here.
     if (factory_for_webui.is_valid()) {
@@ -146,7 +166,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
           factory_ptr.get(), std::move(url_loader_request),
           mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
           std::move(url_loader_client_ptr_),
-          net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
+          net::MutableNetworkTrafficAnnotationTag(traffic_annotation));
       return;
     }
 
@@ -178,12 +198,14 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
         handlers_.push_back(std::move(appcache_handler));
     }
 
-    Restart(std::move(url_loader_request), std::move(url_loader_client_ptr_));
+    Restart(std::move(url_loader_request), std::move(url_loader_client_ptr_),
+            traffic_annotation);
   }
 
   // This could be called multiple times.
   void Restart(mojom::URLLoaderRequest url_loader_request,
-               mojom::URLLoaderClientPtr url_loader_client_ptr) {
+               mojom::URLLoaderClientPtr url_loader_client_ptr,
+               const net::NetworkTrafficAnnotationTag& traffic_annotation) {
     url_loader_request_ = std::move(url_loader_request);
     url_loader_client_ptr_ = std::move(url_loader_client_ptr);
     handler_index_ = 0;
@@ -219,7 +241,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController {
         factory, std::move(url_loader_request_),
         mojom::kURLLoadOptionSendSSLInfo, *resource_request_,
         std::move(url_loader_client_ptr_),
-        net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET));
+        net::MutableNetworkTrafficAnnotationTag(traffic_annotation));
   }
 
  private:
