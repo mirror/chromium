@@ -188,6 +188,13 @@ class _CompilerDispatcher(object):
 
 def main():
   parser = argparse.ArgumentParser()
+  parser.add_argument(
+      '--options-file',
+      help='optional file to read options from')
+  args, _ = parser.parse_known_args()
+  argv = open(args.options_file).read().split() if args.options_file \
+      else sys.argv[1:]
+
   parser.add_argument('--tool', required=True, help='clang tool to run')
   parser.add_argument('--all', action='store_true')
   parser.add_argument(
@@ -208,7 +215,7 @@ def main():
   parser.add_argument(
       '--tool-args', nargs='*',
       help='optional arguments passed to the tool')
-  args = parser.parse_args()
+  args = parser.parse_args(argv)
 
   os.environ['PATH'] = '%s%s%s' % (
       os.path.abspath(os.path.join(
