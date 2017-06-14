@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33de4d8d_9be08ea6",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-14T17:20:54Z",
+      "side": 1,
+      "message": "You duplicate this logic in 3 places. Instead, pass user_gesture to ShouldDisallowNewWindow() and make it return the right thing.",
+      "range": {
+        "startLine": 346,
+        "startChar": 8,
+        "endLine": 346,
+        "endChar": 16
+      },
+      "revId": "e2bcf20388343893e982ba2e36dbcbb99276228f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
