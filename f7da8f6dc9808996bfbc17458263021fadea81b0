@@ -1,0 +1,152 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9221ffd_4f54ec2b",
+        "filename": "content/browser/accessibility/web_contents_accessibility_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 540,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "still want to return true in the else case? if yes, maybe worth a comment",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e11371b1_dafa5b38",
+        "filename": "content/public/android/java/src/org/chromium/content/browser/accessibility/WebContentsAccessibility.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 1253,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "can remove this",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3efff42e_717d8bc6",
+        "filename": "ui/android/event_forwarder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "/* hover */",
+      "range": {
+        "startLine": 81,
+        "startChar": 70,
+        "endLine": 81,
+        "endChar": 75
+      },
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa8066f4_3a94b194",
+        "filename": "ui/android/event_forwarder.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 140,
+        "startChar": 15,
+        "endLine": 140,
+        "endChar": 20
+      },
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eb989be_298e4e22",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "end usually go into a finally block, in case the body throws an exception or something",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "67e95878_8ee00730",
+        "filename": "ui/android/java/src/org/chromium/ui/base/EventForwarder.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1acb12c9_56e57ec4",
+        "filename": "ui/events/android/motion_event_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "neither should be inlined",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0be6d050_3e7af017",
+        "filename": "ui/events/android/motion_event_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-14T23:26:43Z",
+      "side": 1,
+      "message": "hmm, not rounded?",
+      "revId": "f7da8f6dc9808996bfbc17458263021fadea81b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
