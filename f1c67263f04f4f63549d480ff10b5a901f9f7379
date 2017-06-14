@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a281b1_ca6a94e2",
+        "filename": "chrome/browser/chrome_site_per_process_browsertest.cc",
+        "patchSetId": 29
+      },
+      "lineNbr": 739,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:35:43Z",
+      "side": 1,
+      "message": "nit. why no dtor?",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf76d3b3_26b4c10b",
+        "filename": "chrome/browser/renderer_host/chrome_render_widget_host_view_mac_delegate.mm",
+        "patchSetId": 29
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:35:43Z",
+      "side": 1,
+      "message": "why is this not protected by #if BUILDFLAG(HAS_SPELLCHECK_PANEL)?",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14d54775_68c57375",
+        "filename": "third_party/WebKit/Source/core/editing/spellcheck/SpellChecker.cpp",
+        "patchSetId": 29
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:35:43Z",
+      "side": 1,
+      "message": "I see, you use the interface as empty client as well. I\u0027d introduce an explicit EmptyWebSpellCheckPanelHostClient similar to what is done for SpellCheckerClient above.",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0513046_8d82ffc1",
+        "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:35:43Z",
+      "side": 1,
+      "message": "can be forward-declared",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "932316fa_a2aa13c0",
+        "filename": "third_party/WebKit/public/platform/WebSpellCheckPanelHostClient.h",
+        "patchSetId": 29
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-14T08:35:43Z",
+      "side": 1,
+      "message": "why aren\u0027t those methods pure virtual?",
+      "revId": "f1c67263f04f4f63549d480ff10b5a901f9f7379",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
