@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a97f3c84_5d1e022a",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-14T11:12:03Z",
+      "side": 1,
+      "message": "Mutually exclusive with all of the above, right? Should we note this in browser_protocol.json, too?",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 66
+      },
+      "revId": "317b71f7056beec5e4d142d66a658b3ac9502603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
