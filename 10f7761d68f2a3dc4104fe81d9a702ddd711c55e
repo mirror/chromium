@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1527dc5e_cd62306a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4ab4a1f_ac83f218",
+      "range": {
+        "startLine": 498,
+        "startChar": 47,
+        "endLine": 498,
+        "endChar": 59
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fa94cfa1_4880b48b",
         "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "817be79f_1216152d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 499,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa94cfa1_4880b48b",
+      "range": {
+        "startLine": 499,
+        "startChar": 43,
+        "endLine": 499,
+        "endChar": 50
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "f8987f45_5dbfee72",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3380bdcf_b9bd7984",
+      "range": {
+        "startLine": 502,
+        "startChar": 53,
+        "endLine": 502,
+        "endChar": 60
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac837ed3_ac79ad28",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
         "patchSetId": 1
@@ -82,6 +154,24 @@
       "writtenOn": "2017-06-13T17:40:36Z",
       "side": 1,
       "message": "How do the changes in this file relate to the patch?",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a600ac39_ca1501aa",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Because you used to be able to assume .content existed on the NetworkRequest when contentLoaded() was executed, but now that\u0027s not possible and there was no point in having wrapper code any more so I removed the wrapper code that is defunct now.",
+      "parentUuid": "ac837ed3_ac79ad28",
       "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "11429211_b173ab6f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestResponseView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "This area used to get requestContent() then expect .content and .contentEncoded to be present, but this is not possible any more, so I had to refactor this section to use contentData() instead.",
+      "parentUuid": "f1bcb029_1c4cd5c9",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e478bc2a_5b811fec",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 1
@@ -122,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "0ebaf8c2_bae18c9f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Done. I did this because the patch that changed it to promise did not land when I first uploaded.",
+      "parentUuid": "e478bc2a_5b811fec",
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "334b39c2_29144e58",
         "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
         "patchSetId": 1
@@ -133,6 +259,30 @@
       "writtenOn": "2017-06-13T17:40:36Z",
       "side": 1,
       "message": "This is already gone, isn\u0027t it?",
+      "range": {
+        "startLine": 85,
+        "startChar": 26,
+        "endLine": 85,
+        "endChar": 40
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8984ddb2_3a381757",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkManager.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Not yet... different patch. Which ever lands first will have to rebase the changes.",
+      "parentUuid": "334b39c2_29144e58",
       "range": {
         "startLine": 85,
         "startChar": 26,
@@ -165,6 +315,30 @@
       "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e78dd5a2_2913a5ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/sdk/NetworkRequest.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1092,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-14T21:09:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "632dc70d_7f0311b2",
+      "range": {
+        "startLine": 1092,
+        "startChar": 19,
+        "endLine": 1092,
+        "endChar": 31
+      },
+      "revId": "10f7761d68f2a3dc4104fe81d9a702ddd711c55e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
