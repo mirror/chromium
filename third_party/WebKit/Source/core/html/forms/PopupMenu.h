@@ -6,8 +6,8 @@
 #define PopupMenu_h
 
 #include "core/CoreExport.h"
+#include "core/html/forms/PopupMenu.h"
 #include "core/page/PagePopupClient.h"
-#include "core/page/PopupMenu.h"
 #include "platform/heap/Handle.h"
 
 namespace blink {

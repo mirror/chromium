@@ -345,6 +345,8 @@ blink_core_sources("html") {
     "forms/PasswordInputType.h",
     "forms/PickerIndicatorElement.cpp",
     "forms/PickerIndicatorElement.h",
+    "forms/PopupMenu.cpp",
+    "forms/PopupMenu.h",
     "forms/RadioButtonGroupScope.cpp",
     "forms/RadioButtonGroupScope.h",
     "forms/RadioInputType.cpp",
