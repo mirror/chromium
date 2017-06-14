@@ -87,6 +87,24 @@
       "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "03e54c26_01879315",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T23:23:50Z",
+      "side": 1,
+      "message": "Thanks.  Yes, I was concerned that SnapshotController might have pointers to things that get cleared here, and that leaving it around could lead to use-after-frees.  (Similarly, it might call into BLO in ways that crash after ResetState.)\n\nIt sounds like that\u0027s not possible, and that SnapshotController only interacts with this class via StartSnapshot(), which returns early in this case.  If it doesn\u0027t seem likely that future dependencies will be added between the two, then we\u0027re probably ok here.",
+      "parentUuid": "27432f53_ad22ac4a",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
