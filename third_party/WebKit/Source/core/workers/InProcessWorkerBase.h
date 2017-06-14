@@ -11,6 +11,7 @@
 #include "core/events/EventListener.h"
 #include "core/events/EventTarget.h"
 #include "core/workers/AbstractWorker.h"
+#include "core/workers/WorkerScriptLoader.h"
 #include "platform/bindings/ActiveScriptWrappable.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/PassRefPtr.h"
@@ -22,13 +23,16 @@ class ExceptionState;
 class ExecutionContext;
 class InProcessWorkerMessagingProxy;
 class ScriptState;
-class WorkerScriptLoader;
 
 // Base class for workers that operate in the same process as the document that
 // creates them.
 class CORE_EXPORT InProcessWorkerBase
     : public AbstractWorker,
       public ActiveScriptWrappable<InProcessWorkerBase> {
+  // Eager finalization is needed to notify the parent object destruction of the
+  // GC-managed messaging proxy and to initiate worker termination.
+  EAGERLY_FINALIZE();
+
  public:
   ~InProcessWorkerBase() override;
 
@@ -67,8 +71,7 @@ class CORE_EXPORT InProcessWorkerBase
 
   RefPtr<WorkerScriptLoader> script_loader_;
 
-  // The proxy outlives the worker to perform thread shutdown.
-  InProcessWorkerMessagingProxy* context_proxy_;
+  Member<InProcessWorkerMessagingProxy> context_proxy_;
 };
 
 }  // namespace blink

@@ -10,7 +10,6 @@
 #include "core/events/MessageEvent.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/InProcessWorkerMessagingProxy.h"
-#include "core/workers/WorkerScriptLoader.h"
 #include "platform/bindings/ScriptState.h"
 #include "platform/loader/fetch/ResourceFetcher.h"
 
@@ -105,6 +104,7 @@ void InProcessWorkerBase::OnFinished() {
 }
 
 DEFINE_TRACE(InProcessWorkerBase) {
+  visitor->Trace(context_proxy_);
   AbstractWorker::Trace(visitor);
 }
 
