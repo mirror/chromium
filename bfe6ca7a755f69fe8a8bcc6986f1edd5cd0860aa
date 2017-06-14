@@ -16,6 +16,24 @@
       "revId": "bfe6ca7a755f69fe8a8bcc6986f1edd5cd0860aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de030896_fde60804",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-14T21:18:25Z",
+      "side": 0,
+      "message": "Thanks. That might explain some of the flaky bot failures on Mac.",
+      "parentUuid": "a7b0e7d7_3b4460d2",
+      "revId": "bfe6ca7a755f69fe8a8bcc6986f1edd5cd0860aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

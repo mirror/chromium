@@ -16,6 +16,24 @@
       "revId": "56eed1e03bcdd13b73f50fcbb416b800fc60bc16",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ab8972_f1448c8b",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 172,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-14T21:18:25Z",
+      "side": 1,
+      "message": "Yeah this is a bit broken for now, but since the feature is not shipped, it is no big deal. I am planning to fix that in a follow-up CL when I add the low latency opt-in bit.  This code we see here is going to be the low latency (risk of tearing) code path.",
+      "parentUuid": "1af69493_2256239c",
+      "revId": "56eed1e03bcdd13b73f50fcbb416b800fc60bc16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
