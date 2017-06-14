@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "65075f75_adfd32cf",
+        "filename": "content/browser/renderer_host/media/video_capture_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-14T19:54:06Z",
+      "side": 1,
+      "message": "In this case I want to keep the same functionality as on other OSes.  To do that I have to toggle the logic only for OS_LINUX",
+      "parentUuid": "5afffc13_c46ccd83",
+      "range": {
+        "startLine": 158,
+        "startChar": 7,
+        "endLine": 158,
+        "endChar": 11
+      },
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7ea1f62_ecf0ee58",
         "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-13T04:02:16Z",
       "side": 1,
       "message": "Is this condition reversed?",
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ff826a7_ac58857c",
+        "filename": "content/common/sandbox_linux/bpf_gpu_policy_linux.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-14T19:54:06Z",
+      "side": 1,
+      "message": "same explanation as previous.",
+      "parentUuid": "b7ea1f62_ecf0ee58",
       "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "986ac987_39176ac6",
+        "filename": "content/gpu/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-14T19:54:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6ab3b7d4_730d5a52",
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "f65d939c_68df4861",
+        "filename": "content/public/common/content_switches.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-14T19:54:06Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "2ff2fc55_3eb81a3b",
+      "range": {
+        "startLine": 273,
+        "startChar": 4,
+        "endLine": 273,
+        "endChar": 11
+      },
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3842d3f2_c0aa43d9",
         "filename": "content/renderer/render_thread_impl.cc",
         "patchSetId": 1
@@ -119,6 +203,24 @@
       "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee62e99f_169af99b",
+        "filename": "content/renderer/render_thread_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1457,
+      "author": {
+        "id": 1001815
+      },
+      "writtenOn": "2017-06-14T19:54:06Z",
+      "side": 1,
+      "message": "This is a change introduced by git cl format.  I\u0027m ignoring it on the next patch set",
+      "parentUuid": "3842d3f2_c0aa43d9",
+      "revId": "35ebb1801c25987f9ba619f71a41251d71df8ade",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
