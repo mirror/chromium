@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7339e83_2e131d56",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPluginArray.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-14T22:17:48Z",
+      "side": 1,
+      "message": "I want to keep this CHECK for now, since there were crashes where GetPluginData() !\u003d nullptr, which I still don\u0027t have a reasonable explanation.",
+      "revId": "f6d631e768fb3ee7b369c43e69b7ab6772c080c9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
