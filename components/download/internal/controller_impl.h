@@ -35,9 +35,9 @@ class ControllerImpl : public Controller,
                        public Model::Client,
                        public DeviceStatusListener::Observer {
  public:
-  // |clients| is externally owned and must be guaranteed to outlive this class.
-  ControllerImpl(std::unique_ptr<ClientSet> clients,
-                 std::unique_ptr<Configuration> config,
+  // |config| is externally owned and must be guaranteed to outlive this class.
+  ControllerImpl(Configuration* config,
+                 std::unique_ptr<ClientSet> clients,
                  std::unique_ptr<DownloadDriver> driver,
                  std::unique_ptr<Model> model,
                  std::unique_ptr<DeviceStatusListener> device_status_listener,
@@ -120,10 +120,10 @@ class ControllerImpl : public Controller,
                           bool needs_reschedule,
                           stats::ScheduledTaskStatus status);
 
-  std::unique_ptr<ClientSet> clients_;
-  std::unique_ptr<Configuration> config_;
+  Configuration* config_;
 
   // Owned Dependencies.
+  std::unique_ptr<ClientSet> clients_;
   std::unique_ptr<DownloadDriver> driver_;
   std::unique_ptr<Model> model_;
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
