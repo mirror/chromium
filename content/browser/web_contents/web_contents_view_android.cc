@@ -266,6 +266,11 @@ void WebContentsViewAndroid::SetOverscrollControllerEnabled(bool enabled) {
 
 void WebContentsViewAndroid::ShowContextMenu(
     RenderFrameHost* render_frame_host, const ContextMenuParams& params) {
+  RenderWidgetHostViewAndroid* rwhv = static_cast<RenderWidgetHostViewAndroid*>(
+      web_contents_->GetRenderWidgetHostView());
+  if (rwhv && rwhv->ShowSelectionMenu(params))
+    return;
+
   if (delegate_)
     delegate_->ShowContextMenu(render_frame_host, params);
 }

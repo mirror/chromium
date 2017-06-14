@@ -17,8 +17,7 @@ content::WebContentsViewDelegate* AwWebContentsViewDelegate::Create(
 }
 
 AwWebContentsViewDelegate::AwWebContentsViewDelegate(
-    content::WebContents* web_contents)
-    : web_contents_(web_contents) {
+    content::WebContents* web_contents) {
   // Cannot instantiate web_contents_view_delegate_ here because
   // AwContents::SetWebDelegate is not called yet.
 }
@@ -30,15 +29,6 @@ content::WebDragDestDelegate* AwWebContentsViewDelegate::GetDragDestDelegate() {
   // and must have an implementation although android doesn't use it.
   NOTREACHED();
   return NULL;
-}
-
-void AwWebContentsViewDelegate::ShowContextMenu(
-    content::RenderFrameHost* render_frame_host,
-    const content::ContextMenuParams& params) {
-  content::ContentViewCore* content_view_core =
-      content::ContentViewCore::FromWebContents(web_contents_);
-  if (content_view_core)
-    content_view_core->ShowSelectionMenu(params);
 }
 
 }  // namespace android_webview

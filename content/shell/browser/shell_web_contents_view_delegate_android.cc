@@ -17,22 +17,10 @@ WebContentsViewDelegate* CreateShellWebContentsViewDelegate(
   return new ShellWebContentsViewDelegate(web_contents);
 }
 
-
 ShellWebContentsViewDelegate::ShellWebContentsViewDelegate(
-    WebContents* web_contents)
-    : web_contents_(web_contents) {
-}
+    WebContents* web_contents) {}
 
 ShellWebContentsViewDelegate::~ShellWebContentsViewDelegate() {
-}
-
-void ShellWebContentsViewDelegate::ShowContextMenu(
-    RenderFrameHost* render_frame_host,
-    const ContextMenuParams& params) {
-  content::ContentViewCore* content_view_core =
-      ContentViewCore::FromWebContents(web_contents_);
-  if (content_view_core)
-    content_view_core->ShowSelectionMenu(params);
 }
 
 }  // namespace content

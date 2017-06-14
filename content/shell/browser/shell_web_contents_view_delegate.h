@@ -28,16 +28,14 @@ class ShellWebContentsViewDelegate : public WebContentsViewDelegate {
   explicit ShellWebContentsViewDelegate(WebContents* web_contents);
   ~ShellWebContentsViewDelegate() override;
 
-  // Overridden from WebContentsViewDelegate:
-  void ShowContextMenu(RenderFrameHost* render_frame_host,
-                       const ContextMenuParams& params) override;
-
 #if defined(OS_MACOSX)
   void ActionPerformed(int id);
 #endif
 
  private:
+#if !defined(OS_ANDROID)
   WebContents* web_contents_;
+#endif
 #if defined(OS_MACOSX)
   ContextMenuParams params_;
 #endif
