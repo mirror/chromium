@@ -19,6 +19,7 @@
 #include "cc/quads/texture_draw_quad.h"
 #include "cc/resources/shared_bitmap_manager.h"
 #include "cc/surfaces/compositor_frame_sink_support.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "cc/surfaces/local_surface_id_allocator.h"
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
@@ -68,7 +69,7 @@ class SurfaceAggregatorTest : public testing::Test {
                                                kRootIsRoot,
                                                kHandlesFrameSinkIdInvalidation,
                                                kNeedsSyncPoints)),
-        aggregator_(&manager_, NULL, use_damage_rect) {}
+        aggregator_(manager_.surface_manager(), NULL, use_damage_rect) {}
 
   SurfaceAggregatorTest() : SurfaceAggregatorTest(false) {}
 
@@ -78,7 +79,7 @@ class SurfaceAggregatorTest : public testing::Test {
   }
 
  protected:
-  SurfaceManager manager_;
+  FrameSinkManager manager_;
   FakeCompositorFrameSinkSupportClient fake_client_;
   std::unique_ptr<CompositorFrameSinkSupport> support_;
   SurfaceAggregator aggregator_;
@@ -1933,13 +1934,13 @@ class SurfaceAggregatorWithResourcesTest : public testing::Test {
     resource_provider_ =
         FakeResourceProvider::Create(nullptr, shared_bitmap_manager_.get());
 
-    aggregator_.reset(
-        new SurfaceAggregator(&manager_, resource_provider_.get(), false));
+    aggregator_.reset(new SurfaceAggregator(manager_.surface_manager(),
+                                            resource_provider_.get(), false));
     aggregator_->set_output_is_secure(true);
   }
 
  protected:
-  SurfaceManager manager_;
+  FrameSinkManager manager_;
   std::unique_ptr<SharedBitmapManager> shared_bitmap_manager_;
   std::unique_ptr<ResourceProvider> resource_provider_;
   std::unique_ptr<SurfaceAggregator> aggregator_;

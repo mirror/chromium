@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "cc/surfaces/frame_sink_id.h"
 #include "cc/surfaces/primary_begin_frame_source.h"
+#include "cc/surfaces/surface_manager.h"
 #include "cc/surfaces/surfaces_export.h"
 
 namespace cc {
@@ -22,14 +23,19 @@ class BeginFrameSource;
 class FrameSinkManagerClient;
 
 namespace test {
+class CompositorFrameSinkSupportTest;
 class SurfaceSynchronizationTest;
 }
 
 class CC_SURFACES_EXPORT FrameSinkManager {
  public:
-  FrameSinkManager();
+  FrameSinkManager(SurfaceManager::LifetimeType lifetime_type =
+                       SurfaceManager::LifetimeType::SEQUENCES);
   ~FrameSinkManager();
 
+  void AddSurfaceObserver(SurfaceObserver* obs);
+  void RemoveSurfaceObserver(SurfaceObserver* obs);
+  SurfaceDependencyTracker* GetDependencyTracker();
   void RegisterFrameSinkId(const FrameSinkId& frame_sink_id);
 
   // Invalidate a frame_sink_id that might still have associated sequences,
@@ -71,13 +77,82 @@ class CC_SURFACES_EXPORT FrameSinkManager {
   void UnregisterFrameSinkHierarchy(const FrameSinkId& parent_frame_sink_id,
                                     const FrameSinkId& child_frame_sink_id);
 
-  // Export list of valid frame_sink_ids for SatisfyDestructionDeps in surface
-  // may be removed later when References replace Sequences
-  std::unordered_set<FrameSinkId, FrameSinkIdHash>* GetValidFrameSinkIds() {
-    return &valid_frame_sink_ids_;
-  }
+  // Assigns |frame_sink_id| as the owner of the temporary reference to
+  // |surface_id|. If |frame_sink_id| is invalidated the temporary reference
+  // will be removed. If a surface reference has already been added from the
+  // parent to |surface_id| then this will do nothing.
+  void AssignTemporaryReference(const SurfaceId& surface_id,
+                                const FrameSinkId& owner);
+
+  // Drops the temporary reference for |surface_id|. If a surface reference has
+  // already been added from the parent to |surface_id| then this will do
+  // nothing.
+  void DropTemporaryReference(const SurfaceId& surface_id);
+
+  bool IsUsingSurfaceReferences() const;
+
+  // Adds all surface references in |references|. This will remove any temporary
+  // references for child surface in a surface reference.
+  void AddSurfaceReferences(const std::vector<SurfaceReference>& references);
+
+  // Removes all surface references in |references| then runs garbage
+  // collection to delete unreachable surfaces.
+  void RemoveSurfaceReferences(const std::vector<SurfaceReference>& references);
+
+  // Returns the top level root SurfaceId. Surfaces that are not reachable
+  // from the top level root may be garbage collected. It will not be a valid
+  // SurfaceId and will never correspond to a surface.
+  const SurfaceId& GetRootSurfaceId() const;
+
+  // Called when a CompositorFrame is submitted to a CompositorFrameSinkSupport
+  // for a given |surface_id| for the first time.
+  void SurfaceCreated(const SurfaceInfo& surface_info);
+
+  // Called when a CompositorFrame within |surface| has activated.
+  void SurfaceActivated(Surface* surface);
+
+  // Called when a Surface is modified, e.g. when a CompositorFrame is
+  // activated, its producer confirms that no CompositorFrame will be submitted
+  // in response to a BeginFrame, or a CopyOutputRequest is issued.
+  //
+  // |ack.sequence_number| is only valid if called in response to a BeginFrame.
+  bool SurfaceModified(const SurfaceId& surface_id, const BeginFrameAck& ack);
+
+  // Called when a Surface's CompositorFrame producer has received a BeginFrame
+  // and, thus, is expected to produce damage soon.
+  void SurfaceDamageExpected(const SurfaceId& surface_id,
+                             const BeginFrameArgs& args);
+
+  std::unique_ptr<Surface> CreateSurface(
+      base::WeakPtr<CompositorFrameSinkSupport> compositor_frame_sink_support,
+      const SurfaceInfo& surface_info);
+
+  // Destroy the Surface once a set of sequence numbers has been satisfied.
+  void DestroySurface(std::unique_ptr<Surface> surface);
+
+  scoped_refptr<SurfaceReferenceFactory> GetReferenceFactory();
+
+  // Require that the given sequence number must be satisfied (using
+  // SatisfySequence) before the given surface can be destroyed.
+  void RequireSequence(const SurfaceId& surface_id,
+                       const SurfaceSequence& sequence);
+
+  // Satisfies the given sequence number. Once all sequence numbers that
+  // a surface depends on are satisfied, the surface can be destroyed.
+  void SatisfySequence(const SurfaceSequence& sequence);
+
+  // Returns all surfaces referenced by parent |surface_id|. Will return an
+  // empty set if |surface_id| is unknown or has no references.
+  const base::flat_set<SurfaceId>& GetSurfacesReferencedByParent(
+      const SurfaceId& surface_id) const;
+
+  void SetDependencyTracker(SurfaceDependencyTracker* dependency_tracker);
+  Surface* GetSurfaceForId(const SurfaceId& surface_id);
+
+  SurfaceManager* surface_manager() { return &surface_manager_; }
 
  private:
+  friend class test::CompositorFrameSinkSupportTest;
   friend class test::SurfaceSynchronizationTest;
 
   void RecursivelyAttachBeginFrameSource(const FrameSinkId& frame_sink_id,
@@ -89,11 +164,6 @@ class CC_SURFACES_EXPORT FrameSinkManager {
   // child.
   bool ChildContains(const FrameSinkId& child_frame_sink_id,
                      const FrameSinkId& search_frame_sink_id) const;
-
-  // Set of valid framesink Ids. When a framesink Id  is removed from
-  // this set, any remaining (surface) sequences with that framesink are
-  // considered satisfied.
-  std::unordered_set<FrameSinkId, FrameSinkIdHash> valid_frame_sink_ids_;
 
   // Begin frame source routing. Both BeginFrameSource and
   // CompositorFrameSinkSupport pointers guaranteed alive by callers until
@@ -111,9 +181,9 @@ class CC_SURFACES_EXPORT FrameSinkManager {
 
   std::unordered_map<FrameSinkId, FrameSinkManagerClient*, FrameSinkIdHash>
       clients_;
-
   std::unordered_map<FrameSinkId, FrameSinkSourceMapping, FrameSinkIdHash>
       frame_sink_source_map_;
+  SurfaceManager surface_manager_;
 
   // Set of BeginFrameSource along with associated FrameSinkIds. Any child
   // that is implicitly using this framesink must be reachable by the
