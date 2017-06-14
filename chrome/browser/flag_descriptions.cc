@@ -1894,6 +1894,17 @@ const char kCrossProcessGuestViewIsolationDescription[] =
     "Highly experimental where guests such as &lt;webview> are implemented "
     "on the out-of-process iframe infrastructure.";
 
+// Web accessible PDF Extension.
+const char kWebAccessiblePdfExtensionIsolationName[] =
+    "Web accessible PDF Extension";
+
+const char kWebAccessiblePdfExtensionIsolationDescription[] =
+    "Experimental mode where PDF extension can be directly loaded inside an "
+    "&lt;iframe&gt;. This will extend to &lt;embed&gt; and &lt;object&gt; tags "
+    "where the src attributed is set to a PDF URL, as well as &lt;iframe&gt;'s "
+    "navigated to the  chrome extension scheme and extension Id for PDF "
+    "extension.";
+
 //  Task Scheduler
 
 const char kBrowserTaskSchedulerName[] = "Task Scheduler";

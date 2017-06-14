@@ -48,6 +48,8 @@ content::StoragePartition* GetStoragePartitionForExtensionId(
     const std::string& extension_id,
     content::BrowserContext* browser_context);
 
+bool ForPDFExtension(const GURL& url);
+
 }  // namespace util
 }  // namespace extensions
 

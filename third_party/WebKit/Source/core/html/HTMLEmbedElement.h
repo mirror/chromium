@@ -59,6 +59,8 @@ class CORE_EXPORT HTMLEmbedElement final : public HTMLPlugInElement {
 
   bool ShouldRegisterAsNamedItem() const override { return true; }
   bool IsInteractiveContent() const override;
+
+  bool handles_post_message_;
 };
 
 }  // namespace blink

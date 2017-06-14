@@ -290,6 +290,9 @@ const base::Feature kVrShell {
 #endif
 };
 
+const base::Feature kWebAccessiblePdfExtension{
+    "WebAccessiblePdfExtension", base::FEATURE_DISABLED_BY_DEFAULT};
+
 // Enable WebAssembly structured cloning.
 // http://webassembly.org/
 const base::Feature kWebAssembly{"WebAssembly",

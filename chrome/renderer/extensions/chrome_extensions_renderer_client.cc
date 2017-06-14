@@ -9,6 +9,7 @@
 
 #include "base/command_line.h"
 #include "base/lazy_instance.h"
+#include "base/strings/stringprintf.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
 #include "chrome/common/chrome_switches.h"
 #include "chrome/common/extensions/extension_constants.h"
@@ -21,7 +22,9 @@
 #include "chrome/renderer/extensions/resource_request_policy.h"
 #include "chrome/renderer/media/cast_ipc_dispatcher.h"
 #include "content/public/common/content_constants.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
+#include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_thread.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -34,6 +37,7 @@
 #include "extensions/renderer/guest_view/extensions_guest_view_container.h"
 #include "extensions/renderer/guest_view/extensions_guest_view_container_dispatcher.h"
 #include "extensions/renderer/guest_view/mime_handler_view/mime_handler_view_container.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "extensions/renderer/script_context.h"
 #include "third_party/WebKit/public/platform/WebURL.h"
 #include "third_party/WebKit/public/web/WebDocument.h"
@@ -47,69 +51,70 @@ namespace {
 bool IsStandaloneExtensionProcess() {
   return base::CommandLine::ForCurrentProcess()->HasSwitch(
       extensions::switches::kExtensionProcess);
-}
-
-void IsGuestViewApiAvailableToScriptContext(
-    bool* api_is_available,
-    extensions::ScriptContext* context) {
-  if (context->GetAvailability("guestViewInternal").is_available()) {
-    *api_is_available = true;
   }
-}
 
-// Returns true if the frame is navigating to an URL either into or out of an
-// extension app's extent.
-bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
-                             const GURL& new_url,
-                             bool is_extension_url,
-                             bool is_initial_navigation) {
-  DCHECK(!frame->Parent());
-  GURL old_url(frame->GetDocument().Url());
+  void IsGuestViewApiAvailableToScriptContext(
+      bool* api_is_available,
+      extensions::ScriptContext* context) {
+    if (context->GetAvailability("guestViewInternal").is_available()) {
+      *api_is_available = true;
+    }
+  }
 
-  extensions::RendererExtensionRegistry* extension_registry =
-      extensions::RendererExtensionRegistry::Get();
+  // Returns true if the frame is navigating to an URL either into or out of an
+  // extension app's extent.
+  bool CrossesExtensionExtents(blink::WebLocalFrame* frame,
+                               const GURL& new_url,
+                               bool is_extension_url,
+                               bool is_initial_navigation) {
+    DCHECK(!frame->Parent());
+    GURL old_url(frame->GetDocument().Url());
 
-  // If old_url is still empty and this is an initial navigation, then this is
-  // a window.open operation.  We should look at the opener URL.  Note that the
-  // opener is a local frame in this case.
-  if (is_initial_navigation && old_url.is_empty() && frame->Opener()) {
-    blink::WebLocalFrame* opener_frame = frame->Opener()->ToWebLocalFrame();
+    extensions::RendererExtensionRegistry* extension_registry =
+        extensions::RendererExtensionRegistry::Get();
 
-    // We want to compare against the URL that determines the type of
-    // process.  Use the URL of the opener's local frame root, which will
-    // correctly handle any site isolation modes (e.g. --site-per-process).
-    blink::WebLocalFrame* local_root = opener_frame->LocalRoot();
-    old_url = local_root->GetDocument().Url();
+    // If old_url is still empty and this is an initial navigation, then this is
+    // a window.open operation.  We should look at the opener URL.  Note that
+    // the opener is a local frame in this case.
+    if (is_initial_navigation && old_url.is_empty() && frame->Opener()) {
+      blink::WebLocalFrame* opener_frame = frame->Opener()->ToWebLocalFrame();
 
-    // If we're about to open a normal web page from a same-origin opener stuck
-    // in an extension process (other than the Chrome Web Store), we want to
-    // keep it in process to allow the opener to script it.
-    blink::WebDocument opener_document = opener_frame->GetDocument();
-    blink::WebSecurityOrigin opener_origin =
-        opener_document.GetSecurityOrigin();
-    bool opener_is_extension_url =
-        !opener_origin.IsUnique() && extension_registry->GetExtensionOrAppByURL(
+      // We want to compare against the URL that determines the type of
+      // process.  Use the URL of the opener's local frame root, which will
+      // correctly handle any site isolation modes (--site-per-process and
+      // --isolate-extensions).
+      blink::WebLocalFrame* local_root = opener_frame->LocalRoot();
+      old_url = local_root->GetDocument().Url();
+
+      // If we're about to open a normal web page from a same-origin opener
+      // stuck in an extension process (other than the Chrome Web Store), we
+      // want to keep it in process to allow the opener to script it.
+      blink::WebDocument opener_document = opener_frame->GetDocument();
+      blink::WebSecurityOrigin opener_origin =
+          opener_document.GetSecurityOrigin();
+      bool opener_is_extension_url = !opener_origin.IsUnique() &&
+                                     extension_registry->GetExtensionOrAppByURL(
                                          opener_document.Url()) != nullptr;
-    const Extension* opener_top_extension =
-        extension_registry->GetExtensionOrAppByURL(old_url);
-    bool opener_is_web_store =
-        opener_top_extension &&
-        opener_top_extension->id() == extensions::kWebStoreAppId;
-    if (!is_extension_url && !opener_is_extension_url && !opener_is_web_store &&
-        IsStandaloneExtensionProcess() &&
-        opener_origin.CanRequest(blink::WebURL(new_url)))
-      return false;
+      const Extension* opener_top_extension =
+          extension_registry->GetExtensionOrAppByURL(old_url);
+      bool opener_is_web_store =
+          opener_top_extension &&
+          opener_top_extension->id() == extensions::kWebStoreAppId;
+      if (!is_extension_url && !opener_is_extension_url &&
+          !opener_is_web_store && IsStandaloneExtensionProcess() &&
+          opener_origin.CanRequest(blink::WebURL(new_url)))
+        return false;
+    }
+
+    // Only consider keeping non-app URLs in an app process if this window
+    // has an opener (in which case it might be an OAuth popup that tries to
+    // script an iframe within the app).
+    bool should_consider_workaround = !!frame->Opener();
+
+    return extensions::CrossesExtensionProcessBoundary(
+        *extension_registry->GetMainThreadExtensionSet(), old_url, new_url,
+        should_consider_workaround);
   }
-
-  // Only consider keeping non-app URLs in an app process if this window
-  // has an opener (in which case it might be an OAuth popup that tries to
-  // script an iframe within the app).
-  bool should_consider_workaround = !!frame->Opener();
-
-  return extensions::CrossesExtensionProcessBoundary(
-      *extension_registry->GetMainThreadExtensionSet(), old_url, new_url,
-      should_consider_workaround);
-}
 
 }  // namespace
 
@@ -301,6 +306,13 @@ ChromeExtensionsRendererClient::CreateBrowserPluginDelegate(
     return new extensions::ExtensionsGuestViewContainer(render_frame);
   return new extensions::MimeHandlerViewContainer(render_frame, mime_type,
                                                   original_url);
+}
+
+GURL ChromeExtensionsRendererClient::OverridePDFEmbedWithHTML(
+    const GURL& completed_url,
+    const std::string& mime_type) {
+  return extensions::MimeHandlerViewManager::GetExtensionURL(completed_url,
+                                                             mime_type);
 }
 
 void ChromeExtensionsRendererClient::RunScriptsAtDocumentStart(

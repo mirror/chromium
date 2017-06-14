@@ -248,6 +248,13 @@ GURL ContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return GURL();
 }
 
+GURL ContentRendererClient::OverridePDFEmbedWithHTML(
+    RenderFrame* render_frame,
+    const GURL& url,
+    const std::string& mime_type) {
+  return GURL();
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ContentRendererClient::GetTaskSchedulerInitParams() {
   return nullptr;

@@ -53,7 +53,6 @@ void ExtensionWebContentsObserver::InitializeRenderFrame(
     content::RenderFrameHost* render_frame_host) {
   DCHECK(render_frame_host);
   DCHECK(render_frame_host->IsRenderFrameLive());
-
   // At the initialization of the render frame, the last committed URL is not
   // reliable, so do not take it into account in determining whether it is an
   // extension frame.

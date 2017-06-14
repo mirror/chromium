@@ -363,6 +363,12 @@ class CONTENT_EXPORT ContentRendererClient {
   // An empty URL is returned if the URL is not overriden.
   virtual GURL OverrideFlashEmbedWithHTML(const GURL& url);
 
+  // Overwrites the given URL to use an HTML5 embed if possible.
+  // An empty URL is returned if the URL is not overriden.
+  virtual GURL OverridePDFEmbedWithHTML(RenderFrame* render_frame,
+                                        const GURL& url,
+                                        const std::string& mime_type);
+
   // Provides parameters for initializing the global task scheduler. Default
   // params are used if this returns nullptr.
   virtual std::unique_ptr<base::TaskScheduler::InitParams>

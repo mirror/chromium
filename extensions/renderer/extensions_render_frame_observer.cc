@@ -6,13 +6,21 @@
 
 #include <stddef.h>
 
+#include "base/feature_list.h"
 #include "base/strings/string_split.h"
 #include "base/strings/utf_string_conversions.h"
+#include "content/public/common/content_features.h"
 #include "content/public/renderer/render_frame.h"
 #include "content/public/renderer/render_view.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/stack_frame.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
+#include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/platform/WebURLRequest.h"
+#include "third_party/WebKit/public/web/WebDataSource.h"
+#include "third_party/WebKit/public/web/WebFrame.h"
 #include "third_party/WebKit/public/web/WebLocalFrame.h"
 #include "third_party/WebKit/public/web/WebView.h"
 
@@ -124,6 +132,34 @@ void ExtensionsRenderFrameObserver::DetailedConsoleMessageAdded(
 
 void ExtensionsRenderFrameObserver::OnDestruct() {
   delete this;
+}
+
+void ExtensionsRenderFrameObserver::DidStartProvisionalLoad(
+    blink::WebDataSource* data_source) {
+  if (!base::FeatureList::IsEnabled(features::kWebAccessiblePdfExtension))
+    return;
+
+  GURL url(data_source->GetRequest().Url());
+
+  if (url.scheme() != kExtensionScheme)
+    return;
+
+  if (url.host() != extension_misc::kPdfExtensionId)
+    return;
+
+  blink::WebFrame* parent = render_frame()->GetWebFrame()->Parent();
+  if (!parent || parent->IsWebRemoteFrame()) {
+    // The request for the resource is sent through the embedder process; hence
+    // the parent cannot be remote. Furthermore, we do not navigate the main
+    // frame to the extension process as the PDF is always added to the document
+    // through an <embed> tag (which has a content frame).
+    return;
+  }
+
+  MimeHandlerViewManager::FromRenderFrame(
+      content::RenderFrame::FromWebFrame(parent->ToWebLocalFrame()))
+      ->MaybeRequestResource(render_frame(),
+                             GURL(data_source->GetRequest().Url()));
 }
 
 }  // namespace extensions

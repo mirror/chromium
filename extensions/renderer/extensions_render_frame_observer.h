@@ -13,6 +13,10 @@
 #include "mojo/public/cpp/bindings/binding_set.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
+namespace blink {
+class WebDataSource;
+}
+
 namespace extensions {
 
 // This class holds the extensions specific parts of RenderFrame, and has the
@@ -39,6 +43,8 @@ class ExtensionsRenderFrameObserver : public content::RenderFrameObserver,
                                    uint32_t line_number,
                                    int32_t severity_level) override;
   void OnDestruct() override;
+
+  void DidStartProvisionalLoad(blink::WebDataSource* data_source) override;
 
   // true if webview is overlayed with grey color.
   bool webview_visually_deemphasized_;

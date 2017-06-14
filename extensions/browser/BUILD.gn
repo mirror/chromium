@@ -348,6 +348,7 @@ source_set("browser_sources") {
     "//extensions/browser/app_window",
     "//extensions/browser/install",
     "//extensions/browser/kiosk",
+    "//extensions/browser/mime_handler_view:mime_handler_view_browser",
     "//extensions/browser/updater",
     "//extensions/browser/value_store",
     "//ipc",

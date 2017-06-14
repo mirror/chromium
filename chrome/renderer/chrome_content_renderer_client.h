@@ -192,6 +192,9 @@ class ChromeContentRendererClient : public content::ContentRendererClient {
       const GURL& url) override;
   bool ShouldEnforceWebRTCRoutingPreferences() override;
   GURL OverrideFlashEmbedWithHTML(const GURL& url) override;
+  GURL OverridePDFEmbedWithHTML(content::RenderFrame* render_frame,
+                                const GURL& url,
+                                const std::string& orig_mime_type) override;
   std::unique_ptr<base::TaskScheduler::InitParams> GetTaskSchedulerInitParams()
       override;
 

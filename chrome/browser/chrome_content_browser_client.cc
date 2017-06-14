@@ -341,6 +341,7 @@
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
 #include "extensions/browser/guest_view/web_view/web_view_permission_helper.h"
 #include "extensions/browser/guest_view/web_view/web_view_renderer_state.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_service.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
 #include "extensions/common/extension_set.h"
@@ -3064,6 +3065,13 @@ void ChromeContentBrowserClient::ExposeInterfacesToFrame(
 #if defined(OS_LINUX) || defined(OS_WIN)
   if (!ChromeOriginTrialPolicy().IsFeatureDisabled("WebShare")) {
     registry->AddInterface(base::Bind(&ShareServiceImpl::Create));
+  }
+#endif
+
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (base::FeatureList::IsEnabled(features::kWebAccessiblePdfExtension)) {
+    registry->AddInterface(base::Bind(
+        extensions::MimeHandlerViewService::CreateForFrame, render_frame_host));
   }
 #endif
 }
