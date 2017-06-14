@@ -16,6 +16,24 @@
       "revId": "5dda72d1dfb9446381ee48e9778ff8acd704bf0c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf527b0_04aa01ba",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-14T14:07:32Z",
+      "side": 1,
+      "message": "No :-)",
+      "parentUuid": "4ce68b06_cd2b533a",
+      "revId": "5dda72d1dfb9446381ee48e9778ff8acd704bf0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
