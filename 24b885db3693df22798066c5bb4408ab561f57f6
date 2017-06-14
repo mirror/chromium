@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "33038d6f_0e4a956c",
+        "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-14T18:51:25Z",
+      "side": 1,
+      "message": "As per offline discussion, I am keeping the histogram but changing the macro for a function.",
+      "parentUuid": "4bf31fbd_fedfb018",
+      "range": {
+        "startLine": 96,
+        "startChar": 2,
+        "endLine": 96,
+        "endChar": 26
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "60d695c9_4bd0b04d",
         "filename": "chrome/browser/conflicts/shell_extension_enumerator_win.cc",
         "patchSetId": 11
@@ -281,6 +305,30 @@
       "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac906226_afecc594",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 11
+      },
+      "lineNbr": 77035,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-14T18:51:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b314980c_d0b69ba5",
+      "range": {
+        "startLine": 77035,
+        "startChar": 56,
+        "endLine": 77035,
+        "endChar": 57
+      },
+      "revId": "24b885db3693df22798066c5bb4408ab561f57f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
