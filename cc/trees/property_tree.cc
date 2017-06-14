@@ -76,7 +76,6 @@ void PropertyTree<T>::clear() {
   nodes_.push_back(T());
   back()->id = kRootNodeId;
   back()->parent_id = kInvalidNodeId;
-  owning_layer_id_to_node_index_.clear();
 
 #if DCHECK_IS_ON()
   PropertyTree<T> tree;
@@ -86,8 +85,7 @@ void PropertyTree<T>::clear() {
 
 template <typename T>
 bool PropertyTree<T>::operator==(const PropertyTree<T>& other) const {
-  return nodes_ == other.nodes() && needs_update_ == other.needs_update() &&
-         owning_layer_id_to_node_index_ == other.owning_layer_id_to_node_index_;
+  return nodes_ == other.nodes() && needs_update_ == other.needs_update();
 }
 
 template <typename T>
@@ -1796,12 +1794,6 @@ bool PropertyTrees::ElementIsAnimatingChanged(
 void PropertyTrees::SetInnerViewportScrollBoundsDelta(
     gfx::Vector2dF bounds_delta) {
   inner_viewport_scroll_bounds_delta_ = bounds_delta;
-}
-
-void PropertyTrees::RemoveIdFromIdToIndexMaps(int id) {
-  transform_tree.SetOwningLayerIdForNode(nullptr, id);
-  clip_tree.SetOwningLayerIdForNode(nullptr, id);
-  scroll_tree.SetOwningLayerIdForNode(nullptr, id);
 }
 
 void PropertyTrees::UpdateChangeTracking() {
