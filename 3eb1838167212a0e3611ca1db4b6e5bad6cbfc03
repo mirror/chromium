@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2be5770d_60f44c46",
+        "filename": "content/browser/download/save_package.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T15:54:12Z",
+      "side": 1,
+      "message": "DCHECK or CHECK?  Do we want these to hard crash in production?",
+      "range": {
+        "startLine": 326,
+        "startChar": 2,
+        "endLine": 326,
+        "endChar": 10
+      },
+      "revId": "3eb1838167212a0e3611ca1db4b6e5bad6cbfc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
