@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c7a2d18_e4292ed6",
+        "filename": "third_party/WebKit/LayoutTests/external/PRESUBMIT.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-14T23:12:42Z",
+      "side": 0,
+      "message": "This argument wasn\u0027t quite right --\n\nAs is, it was causing the linter to print a usage help message (which has no stdout and so the presubmit appears to pass).\n\nChanging it to \u0027--ignore-glob\u0027, \u0027\"*-expected.txt\"\u0027 also didn\u0027t work because then the glob string being matched against was \u0027\"*-expected.txt\"\u0027, including double quotes, so it wasn\u0027t matching anything.",
+      "revId": "704f4daf9c7a181b58c9d4b248dd9254baa2b4fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
