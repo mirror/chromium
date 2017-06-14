@@ -16,6 +16,7 @@
 #include "base/run_loop.h"
 #include "base/test/test_discardable_memory_allocator.h"
 #include "build/build_config.h"
+#include "cc/surfaces/frame_sink_manager.h"
 #include "components/viz/host/frame_sink_manager_host.h"
 #include "ui/base/ime/input_method_initializer.h"
 #include "ui/base/material_design/material_design_controller.h"
@@ -67,10 +68,10 @@ int main(int argc, char** argv) {
   gl::init::InitializeGLOneOff();
 
   // The ContextFactory must exist before any Compositors are created.
-  viz::FrameSinkManagerHost frame_sink_manager_;
-  cc::SurfaceManager surface_manager_;
+  viz::FrameSinkManagerHost frame_sink_manager_host_;
+  cc::FrameSinkManager frame_sink_manager_;
   auto context_factory = base::MakeUnique<ui::InProcessContextFactory>(
-      &frame_sink_manager_, &surface_manager_);
+      &frame_sink_manager_host_, &frame_sink_manager_);
   context_factory->set_use_test_surface(false);
 
   base::MessageLoopForUI message_loop;
