@@ -142,6 +142,30 @@
       "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d62a44d8_6e1474f9",
+        "filename": "chrome/browser/chromeos/attestation/platform_verification_dialog.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002120
+      },
+      "writtenOn": "2017-06-14T18:27:19Z",
+      "side": 1,
+      "message": "\u003e Mike, I disagree that this solution is more localized with responsible code. If there\u0027s an API that takes a WebContents*, but it\u0027ll just crash if that WebContents is in a state that the API doesn\u0027t expect, that\u0027s a problem of the API implementation and not a problem of the caller. So my argument would be that the check should live in the API implementation, for the very reason that it\u0027s more localized with the responsible code. If you\u0027re worried about affecting other code paths, then how about making a function like bool SupportsWebModalDialogs(WebContents* web_contents) that the consumers can call but that hides away the details of figuring out whether web modal dialogs work for the WebContents in question? I don\u0027t think it makes sense to fight this to death though - so I\u0027ll stop arguing and let the two of you figure this out among yourselves. Whatever solution you come up with, please file a bug to remove the hack once a proper solution is implemented.\n\nUltimately, the bug here is that the creator of the WebContents did not set up the WebContents properly to account for the fact that it might trigger dialogs. And unfortunately, because of the decentralized management of WebContents in the application, we don\u0027t have a good way of detecting this case before attempting to display the dialog. I\u0027m reluctant to provide a SupportsWebModalDialogs-style interface for the security and privacy reasons I mentioned in my previous comment; I think one of the other two solutions mentioned would be much better.",
+      "parentUuid": "9e415270_fbcbb763",
+      "range": {
+        "startLine": 51,
+        "startChar": 7,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "f0ee5dd6eef30559b07104eec4ef1d384acdf683",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
