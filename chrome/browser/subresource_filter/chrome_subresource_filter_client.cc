@@ -69,6 +69,18 @@ ChromeSubresourceFilterClient::ChromeSubresourceFilterClient(
 
 ChromeSubresourceFilterClient::~ChromeSubresourceFilterClient() {}
 
+bool ChromeSubresourceFilterClient::ShouldDisallowNewWindow(
+    content::WebContents* web_contents,
+    bool user_gesture) {
+  if (!user_gesture)
+    return true;
+
+  auto* driver_factory = subresource_filter::
+      ContentSubresourceFilterDriverFactory::FromWebContents(web_contents);
+  return driver_factory &&
+         driver_factory->throttle_manager()->ShouldDisallowNewWindow();
+}
+
 void ChromeSubresourceFilterClient::MaybeAppendNavigationThrottles(
     content::NavigationHandle* navigation_handle,
     std::vector<std::unique_ptr<content::NavigationThrottle>>* throttles) {
