@@ -223,7 +223,8 @@ bool CompositorAnimations::GetAnimatedBoundingBox(FloatBox& box,
   return true;
 }
 
-bool CompositorAnimations::CanStartEffectOnCompositor(
+CompositorAnimations::FailureCode
+CompositorAnimations::CanStartEffectOnCompositor(
     const Timing& timing,
     const Element& target_element,
     const Animation* animation_to_add,
@@ -234,19 +235,21 @@ bool CompositorAnimations::CanStartEffectOnCompositor(
 
   PropertyHandleSet properties = keyframe_effect.Properties();
   if (properties.IsEmpty()) {
-    return false;
+    return FailureCode::Actionable("Animation does not affect any properties");
   }
 
   unsigned transform_property_count = 0;
   for (const auto& property : properties) {
     if (!property.IsCSSProperty()) {
-      return false;
+      return FailureCode::Actionable("Animation affects non-CSS properties");
     }
 
     if (IsTransformRelatedCSSProperty(property)) {
       if (target_element.GetLayoutObject() &&
           !target_element.GetLayoutObject()->IsTransformApplicable()) {
-        return false;
+        return FailureCode::Actionable(
+            "Transform-related property cannot be accelerated on target "
+            "element");
       }
       transform_property_count++;
     }
@@ -264,7 +267,8 @@ bool CompositorAnimations::CanStartEffectOnCompositor(
       if ((keyframe->Composite() != EffectModel::kCompositeReplace &&
            !is_neutral_keyframe) ||
           !keyframe->GetAnimatableValue()) {
-        return false;
+        return FailureCode::NonActionable(
+            "Accelerated keyframe value could not be computed");
       }
 
       switch (property.CssProperty()) {
@@ -277,7 +281,9 @@ bool CompositorAnimations::CanStartEffectOnCompositor(
           if (ToAnimatableTransform(keyframe->GetAnimatableValue().Get())
                   ->GetTransformOperations()
                   .DependsOnBoxSize()) {
-            return false;
+            return FailureCode::Actionable(
+                "Transform-related property value depends on layout box "
+                "size");
           }
           break;
         case CSSPropertyFilter:
@@ -286,38 +292,49 @@ bool CompositorAnimations::CanStartEffectOnCompositor(
               ToAnimatableFilterOperations(keyframe->GetAnimatableValue().Get())
                   ->Operations();
           if (operations.HasFilterThatMovesPixels()) {
-            return false;
+            return FailureCode::Actionable(
+                "Filter-related property may affect surrounding pixels");
           }
           break;
         }
         default:
           // any other types are not allowed to run on compositor.
-          return false;
+          return FailureCode::Actionable(
+              String("CSS property not supported: ") +
+              getPropertyName(property.CssProperty()));
       }
     }
   }
 
   // TODO: Support multiple transform property animations on the compositor
-  if (transform_property_count > 1)
-    return false;
+  if (transform_property_count > 1) {
+    return FailureCode::Actionable(
+        "Accelerated animations do not support multiple transform-related "
+        "properties in a single animation");
+  }
 
   if (animation_to_add &&
       HasIncompatibleAnimations(target_element, *animation_to_add, effect)) {
-    return false;
+    return FailureCode::Actionable(
+        "Animation not compatible for acceleration with other animations on "
+        "the target element");
   }
 
   CompositorTiming out;
   if (!ConvertTimingForCompositor(timing, 0, out, animation_playback_rate)) {
-    return false;
+    return FailureCode::NonActionable(
+        "The specified timing parameters are not supported by accelerated "
+        "animations");
   }
 
-  return true;
+  return FailureCode::None();
 }
 
-bool CompositorAnimations::CanStartElementOnCompositor(
+CompositorAnimations::FailureCode
+CompositorAnimations::CanStartElementOnCompositor(
     const Element& target_element) {
   if (!Platform::Current()->IsThreadedAnimationEnabled()) {
-    return false;
+    return FailureCode::NonActionable("Accelerated animations are disabled");
   }
 
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
@@ -334,24 +351,41 @@ bool CompositorAnimations::CanStartElementOnCompositor(
     const TransformPaintPropertyNode* transform_node =
         paint_properties->Transform();
     const EffectPaintPropertyNode* effect_node = paint_properties->Effect();
-    return (transform_node && transform_node->HasDirectCompositingReasons()) ||
-           (effect_node && effect_node->HasDirectCompositingReasons());
+    bool has_direct_compositing_reasons =
+        (transform_node && transform_node->HasDirectCompositingReasons()) ||
+        (effect_node && effect_node->HasDirectCompositingReasons());
+    if (!has_direct_compositing_reasons) {
+      return FailureCode::NonActionable(
+          "Element has no direct compositing reasons");
+    }
+  } else {
+    bool paints_into_own_backing =
+        target_element.GetLayoutObject() &&
+        target_element.GetLayoutObject()->GetCompositingState() ==
+            kPaintsIntoOwnBacking;
+    if (!paints_into_own_backing) {
+      return FailureCode::NonActionable(
+          "Element does not paint into own backing");
+    }
   }
 
-  return target_element.GetLayoutObject() &&
-         target_element.GetLayoutObject()->GetCompositingState() ==
-             kPaintsIntoOwnBacking;
+  return FailureCode::None();
 }
 
-bool CompositorAnimations::CanStartAnimationOnCompositor(
+CompositorAnimations::FailureCode
+CompositorAnimations::CanStartAnimationOnCompositor(
     const Timing& timing,
     const Element& target_element,
     const Animation* animation_to_add,
     const EffectModel& effect,
     double animation_playback_rate) {
-  return CanStartEffectOnCompositor(timing, target_element, animation_to_add,
-                                    effect, animation_playback_rate) &&
-         CanStartElementOnCompositor(target_element);
+  FailureCode code =
+      CanStartEffectOnCompositor(timing, target_element, animation_to_add,
+                                 effect, animation_playback_rate);
+  if (!code.can_composite) {
+    return code;
+  }
+  return CanStartElementOnCompositor(target_element);
 }
 
 void CompositorAnimations::CancelIncompatibleAnimationsOnCompositor(
@@ -402,7 +436,8 @@ void CompositorAnimations::StartAnimationOnCompositor(
     double animation_playback_rate) {
   DCHECK(started_animation_ids.IsEmpty());
   DCHECK(CanStartAnimationOnCompositor(timing, element, &animation, effect,
-                                       animation_playback_rate));
+                                       animation_playback_rate)
+             .Ok());
 
   const KeyframeEffectModelBase& keyframe_effect =
       ToKeyframeEffectModelBase(effect);
@@ -426,7 +461,7 @@ void CompositorAnimations::CancelAnimationOnCompositor(
     const Element& element,
     const Animation& animation,
     int id) {
-  if (!CanStartElementOnCompositor(element)) {
+  if (!CanStartElementOnCompositor(element).Ok()) {
     // When an element is being detached, we cancel any associated
     // Animations for CSS animations. But by the time we get
     // here the mapping will have been removed.
@@ -449,7 +484,7 @@ void CompositorAnimations::PauseAnimationForTestingOnCompositor(
   // https://code.google.com/p/chromium/issues/detail?id=339847
   DisableCompositingQueryAsserts disabler;
 
-  if (!CanStartElementOnCompositor(element)) {
+  if (!CanStartElementOnCompositor(element).Ok()) {
     NOTREACHED();
     return;
   }
