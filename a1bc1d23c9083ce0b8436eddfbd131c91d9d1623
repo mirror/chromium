@@ -1033,6 +1033,30 @@
       "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0f8b2007_042deb49",
+        "filename": "components/download/internal/startup_status.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Still might not need that either if we do that check inside the driver.  That way the driver is faithfully honoring the API surface instead of bleeding out some awkwardness of the download manager.",
+      "parentUuid": "c97d71b5_8630d3ff",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 31,
+        "endChar": 24
+      },
+      "revId": "a1bc1d23c9083ce0b8436eddfbd131c91d9d1623",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -1,0 +1,257 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e61e6bc1_2c420e1e",
+        "filename": "components/download/internal/controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Probably need two more (we can add these later I guess);\n\nTIMEOUT\nUNKNOWN (for when we detect a failed download after restart).",
+      "range": {
+        "startLine": 20,
+        "startChar": 11,
+        "endLine": 20,
+        "endChar": 25
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "222a7784_4aaac270",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "This feels super weird.  If the driver isn\u0027t ready this entire class won\u0027t be initialized yet.  Why not do this inside the driver itself and hide the implementation oddness? :)",
+      "range": {
+        "startLine": 179,
+        "startChar": 2,
+        "endLine": 182,
+        "endChar": 11
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "734d4ce2_9b54f3b1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Add a TODO to track non-service downloads.",
+      "range": {
+        "startLine": 185,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 11
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35744618_08c1f676",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be possible.  We\u0027re in a really weird state if this is the case.",
+      "range": {
+        "startLine": 188,
+        "startChar": 2,
+        "endLine": 190,
+        "endChar": 11
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d8fa2a6_1f9f0dbc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "This probably won\u0027t come through this function though.  Add the TODO to the enum or something?",
+      "range": {
+        "startLine": 205,
+        "startChar": 2,
+        "endLine": 205,
+        "endChar": 61
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90b1d329_a2308546",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Ok! Either that or just remove all the client calls altogether.",
+      "range": {
+        "startLine": 208,
+        "startChar": 2,
+        "endLine": 210,
+        "endChar": 44
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a80048ae_8a5e8eb9",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Probably just need a TODO for Shakti.  Sorry about the confusion!",
+      "range": {
+        "startLine": 325,
+        "startChar": 4,
+        "endLine": 325,
+        "endChar": 30
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76a7791d_d97e1ee9",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 378,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Do we expect this to ever happen aside from startup?  Maybe remove since we deal with removing the entry directly in other places?  This will also make it easier to auto-support things like \"pause all non UI downloads\" by just calling UpdateDriverStates() when we see a non-service download.",
+      "range": {
+        "startLine": 370,
+        "startChar": 4,
+        "endLine": 378,
+        "endChar": 12
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2520a53_4a4a1422",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "We might have to do this after we get the persist ACK?  Otherwise when we restore we might think the download wasn\u0027t even started yet?",
+      "range": {
+        "startLine": 427,
+        "startChar": 2,
+        "endLine": 427,
+        "endChar": 24
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "154d0f60_363397dc",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "Add a TODO to notify the client here in the future?",
+      "range": {
+        "startLine": 433,
+        "startChar": 2,
+        "endLine": 433,
+        "endChar": 3
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ca02aac_82f2fa76",
+        "filename": "components/download/internal/download_driver.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-14T16:16:32Z",
+      "side": 1,
+      "message": "We want to use the file monitor for this.  There probably won\u0027t even be a driver entry for some orphaned requests (e.g. they might have been completed already and we\u0027re in the watchdog state).",
+      "range": {
+        "startLine": 70,
+        "startChar": 2,
+        "endLine": 71,
+        "endChar": 55
+      },
+      "revId": "2303abb14e9c84953772831876c32da9a3d13cfa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
