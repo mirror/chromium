@@ -41,6 +41,7 @@
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutDeprecatedFlexibleBox.h"
 #include "core/layout/LayoutEmbeddedContent.h"
+#include "core/layout/LayoutFieldset.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutGrid.h"
 #include "core/layout/LayoutInline.h"
@@ -3007,9 +3008,7 @@ bool LayoutBox::AutoWidthShouldFitContent() const {
   return GetNode() &&
          (isHTMLInputElement(*GetNode()) || isHTMLSelectElement(*GetNode()) ||
           isHTMLButtonElement(*GetNode()) ||
-          isHTMLTextAreaElement(*GetNode()) ||
-          (isHTMLLegendElement(*GetNode()) &&
-           !Style()->HasOutOfFlowPosition()));
+          isHTMLTextAreaElement(*GetNode()) || IsRenderedLegend());
 }
 
 void LayoutBox::ComputeMarginsForDirection(MarginDirection flow_direction,
@@ -5058,6 +5057,16 @@ void LayoutBox::MarkOrthogonalWritingModeRoot() {
 void LayoutBox::UnmarkOrthogonalWritingModeRoot() {
   DCHECK(GetFrameView());
   GetFrameView()->RemoveOrthogonalWritingModeRoot(*this);
+}
+
+bool LayoutBox::IsRenderedLegend() const {
+  if (!isHTMLLegendElement(GetNode()))
+    return false;
+  if (IsFloatingOrOutOfFlowPositioned())
+    return false;
+  const auto* parent = Parent();
+  return parent && parent->IsFieldset() &&
+         ToLayoutFieldset(parent)->FindInFlowLegend() == this;
 }
 
 void LayoutBox::AddVisualEffectOverflow() {
