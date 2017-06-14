@@ -229,7 +229,7 @@ void ServiceWorkerProcessManager::AllocateWorkerProcess(
       SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
   if (can_use_existing_process) {
     site_instance->set_process_reuse_policy(
-        SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE);
+        SiteInstanceImpl::ProcessReusePolicy::REUSE_POLICY_FOR_SERVICE_WORKER);
   }
   RenderProcessHost* rph = site_instance->GetProcess();
 

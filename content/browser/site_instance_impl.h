@@ -70,6 +70,8 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
     // priority, and otherwise one is selected randomly.
     REUSE_PENDING_OR_COMMITTED_SITE,
 
+    REUSE_POLICY_FOR_SERVICE_WORKER,
+
     // By default, a new RenderProcessHost will be created unless the process
     // limit has been reached. The RenderProcessHost reused will be chosen
     // randomly and not based on the site.

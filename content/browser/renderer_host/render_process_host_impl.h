@@ -452,6 +452,14 @@ class CONTENT_EXPORT RenderProcessHostImpl
       BrowserContext* browser_context,
       const GURL& site_url);
 
+  static void AddReusableServiceWorkerProcess(
+      BrowserContext* browser_context,
+      RenderProcessHost* render_process_host,
+      const GURL& site_url);
+  static RenderProcessHost* FindReusableServiceWorkerProcessHost(
+      BrowserContext* browser_context,
+      const GURL& site_url);
+
 #if BUILDFLAG(ENABLE_WEBRTC)
   void OnRegisterAecDumpConsumer(int id);
   void OnUnregisterAecDumpConsumer(int id);

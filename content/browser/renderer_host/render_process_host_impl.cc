@@ -648,6 +648,9 @@ const void* const kCommittedSiteProcessCountTrackerKey =
     "CommittedSiteProcessCountTrackerKey";
 const void* const kPendingSiteProcessCountTrackerKey =
     "PendingSiteProcessCountTrackerKey";
+const void* const kReusableServiceWorkerProcessTrackerKey =
+    "ReusableServiceWorkerProcessTrackerKey";
+
 class SiteProcessCountTracker : public base::SupportsUserData::Data,
                                 public RenderProcessHostObserver {
  public:
@@ -1979,6 +1982,24 @@ void RenderProcessHostImpl::RemoveExpectedNavigationToSite(
   tracker->DecrementSiteProcessCount(site_url, render_process_host->GetID());
 }
 
+// static
+void RenderProcessHostImpl::AddReusableServiceWorkerProcess(
+    BrowserContext* browser_context,
+    RenderProcessHost* render_process_host,
+    const GURL& site_url) {
+  if (site_url.is_empty())
+    return;
+
+  SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
+      browser_context->GetUserData(kReusableServiceWorkerProcessTrackerKey));
+  if (!tracker) {
+    tracker = new SiteProcessCountTracker();
+    browser_context->SetUserData(kReusableServiceWorkerProcessTrackerKey,
+                                 base::WrapUnique(tracker));
+  }
+  tracker->IncrementSiteProcessCount(site_url, render_process_host->GetID());
+}
+
 bool RenderProcessHostImpl::IsForGuestsOnly() const {
   return is_for_guests_only_;
 }
@@ -3101,8 +3122,14 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
           browser_context, site_instance, is_for_guests_only);
       break;
     case SiteInstanceImpl::ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE:
+    case SiteInstanceImpl::ProcessReusePolicy::REUSE_POLICY_FOR_SERVICE_WORKER:
       render_process_host =
           FindReusableProcessHostForSite(browser_context, site_url);
+      break;
+
+    case SiteInstanceImpl::ProcessReusePolicy::DEFAULT:
+      render_process_host =
+          FindReusableServiceWorkerProcessHost(browser_context, site_url);
       break;
     default:
       break;
@@ -3125,6 +3152,11 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
           BrowserContext::GetStoragePartition(browser_context, site_instance));
       render_process_host = new RenderProcessHostImpl(
           browser_context, partition, is_for_guests_only);
+    }
+    if (process_reuse_policy ==
+        SiteInstanceImpl::ProcessReusePolicy::REUSE_POLICY_FOR_SERVICE_WORKER) {
+      AddReusableServiceWorkerProcess(browser_context, render_process_host,
+                                      site_url);
     }
   }
   return render_process_host;
@@ -3537,6 +3569,44 @@ RenderProcessHost* RenderProcessHostImpl::FindReusableProcessHostForSite(
     auto iterator = eligible_background_hosts.begin();
     for (int i = 0; i < index; ++i)
       ++iterator;
+    return (*iterator);
+  }
+
+  return nullptr;
+}
+
+// static
+RenderProcessHost* RenderProcessHostImpl::FindReusableServiceWorkerProcessHost(
+    BrowserContext* browser_context,
+    const GURL& site_url) {
+  if (site_url.is_empty())
+    return nullptr;
+
+  std::set<RenderProcessHost*> eligible_foreground_hosts;
+  std::set<RenderProcessHost*> eligible_background_hosts;
+
+  SiteProcessCountTracker* tracker = static_cast<SiteProcessCountTracker*>(
+      browser_context->GetUserData(kReusableServiceWorkerProcessTrackerKey));
+  if (tracker) {
+    tracker->FindRenderProcessesForSite(site_url, &eligible_foreground_hosts,
+                                        &eligible_background_hosts);
+  }
+
+  if (!eligible_foreground_hosts.empty()) {
+    int index = base::RandInt(0, eligible_foreground_hosts.size() - 1);
+    auto iterator = eligible_foreground_hosts.begin();
+    for (int i = 0; i < index; ++i)
+      ++iterator;
+    tracker->DecrementSiteProcessCount(site_url, (*iterator)->GetID());
+    return (*iterator);
+  }
+
+  if (!eligible_background_hosts.empty()) {
+    int index = base::RandInt(0, eligible_background_hosts.size() - 1);
+    auto iterator = eligible_background_hosts.begin();
+    for (int i = 0; i < index; ++i)
+      ++iterator;
+    tracker->DecrementSiteProcessCount(site_url, (*iterator)->GetID());
     return (*iterator);
   }
 
