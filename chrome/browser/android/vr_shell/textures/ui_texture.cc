@@ -161,7 +161,8 @@ std::unique_ptr<gfx::RenderText> UiTexture::CreateRenderText(
   }
 
   const int font_style = font_list.GetFontStyle();
-  render_text->SetStyle(gfx::ITALIC, (font_style & gfx::Font::ITALIC) != 0);
+  render_text->SetStyle(gfx::ITALIC,
+                        (font_style & gfx::TextStyle::ITALIC) != 0);
   render_text->SetStyle(gfx::UNDERLINE,
                         (font_style & gfx::Font::UNDERLINE) != 0);
   render_text->SetWeight(font_list.GetFontWeight());

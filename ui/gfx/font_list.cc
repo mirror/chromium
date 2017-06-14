@@ -75,11 +75,11 @@ bool FontList::ParseDescription(const std::string& description,
     return false;
 
   // Font supports ITALIC and weights; underline is supported via RenderText.
-  *style_out = Font::NORMAL;
+  *style_out = TextStyle::NORMAL;
   *weight_out = Font::Weight::NORMAL;
   for (const auto& style_string : styles) {
     if (style_string == "Italic")
-      *style_out |= Font::ITALIC;
+      *style_out |= TextStyle::ITALIC;
     else if (style_string == "Thin")
       *weight_out = Font::Weight::THIN;
     else if (style_string == "Ultra-Light")
