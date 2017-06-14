@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "add69814_78e15ba6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/NavigationRecorder.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T10:17:50Z",
+      "side": 1,
+      "message": "Nit: I think you can just directly refer to {@link #record}?",
+      "range": {
+        "startLine": 21,
+        "startChar": 56,
+        "endLine": 21,
+        "endChar": 74
+      },
+      "revId": "26d9268a80a2f1a3cdf4aba0dc81ea576ff0704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71fb184d_eac82801",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/NavigationRecorder.java",
         "patchSetId": 1
@@ -13,6 +36,52 @@
       "writtenOn": "2017-06-14T08:36:38Z",
       "side": 1,
       "message": "Maybe this is just me not knowing Java, but why does only endUrl have a @Nullable annotation? The code assumes that the tab can also be null.",
+      "revId": "26d9268a80a2f1a3cdf4aba0dc81ea576ff0704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5a9714_3df89306",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T10:17:50Z",
+      "side": 1,
+      "message": "If this class knows about NavigationRecorder, could we just add a convenience method that calls NavigationRecorder.record() with this callback and expose that method instead of the callback?",
+      "range": {
+        "startLine": 90,
+        "startChar": 24,
+        "endLine": 90,
+        "endChar": 54
+      },
+      "revId": "26d9268a80a2f1a3cdf4aba0dc81ea576ff0704e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7a91dc7_81204edd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsNavigationDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-14T10:17:50Z",
+      "side": 1,
+      "message": "I would be tempted to have this method return the loading tab and then call record() at the call site if desired and the loading tab is not null.",
+      "range": {
+        "startLine": 149,
+        "startChar": 17,
+        "endLine": 149,
+        "endChar": 24
+      },
       "revId": "26d9268a80a2f1a3cdf4aba0dc81ea576ff0704e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
