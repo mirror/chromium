@@ -91,9 +91,9 @@ KeyedService* SuggestionsServiceFactory::BuildServiceInstanceFor(
       new ImageFetcherImpl(
           base::MakeUnique<suggestions::ImageDecoderImpl>(),
           profile->GetRequestContext()));
-  std::unique_ptr<ImageManager> thumbnail_manager(new ImageManager(
-      std::move(image_fetcher), std::move(db), database_dir,
-      BrowserThread::GetTaskRunnerForThread(BrowserThread::DB)));
+  std::unique_ptr<ImageManager> thumbnail_manager(
+      new ImageManager(std::move(image_fetcher), std::move(db), database_dir,
+                       background_task_runner));
   return new SuggestionsServiceImpl(
       signin_manager, token_service, sync_service, profile->GetRequestContext(),
       std::move(suggestions_store), std::move(thumbnail_manager),
