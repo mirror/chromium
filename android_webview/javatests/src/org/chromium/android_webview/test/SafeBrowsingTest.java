@@ -544,4 +544,24 @@ public class SafeBrowsingTest extends AwTestBase {
                         != GraphicsTestUtils.getPixelColorAtCenterOfView(
                                    mAwContents, mContainerView));
     }
+
+    @SmallTest
+    @Feature({"AndroidWebView"})
+    @CommandLineFlags.Add(AwSwitches.WEBVIEW_ENABLE_SAFEBROWSING_SUPPORT)
+    public void testSafeBrowsingProceedQuietInterstitial() throws Throwable {
+        mAwContents.setCanShowBigInterstitial(false);
+        int interstitialCount =
+                mWebContentsObserver.getAttachedInterstitialPageHelper().getCallCount();
+        final String responseUrl = mTestServer.getURL(PHISHING_HTML_PATH);
+        loadUrlAsync(mAwContents, responseUrl);
+        mWebContentsObserver.getAttachedInterstitialPageHelper().waitForCallback(interstitialCount);
+        OnReceivedError2Helper errorHelper = mContentsClient.getOnReceivedError2Helper();
+        int errorCount = errorHelper.getCallCount();
+        dontProceedThroughInterstitial();
+        errorHelper.waitForCallback(errorCount);
+        assertEquals(
+                ErrorCodeConversionHelper.ERROR_UNSAFE_RESOURCE, errorHelper.getError().errorCode);
+        assertEquals("Network error is for the malicious page", responseUrl,
+                errorHelper.getRequest().url);
+    }
 }
