@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "497d0ff6_236619c9",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T16:27:18Z",
+      "side": 1,
+      "message": "FWIW, WrapUnique is pretty much as bad as reset(); it\u0027s mostly MakeUnique that\u0027s considered a win.\n\nI don\u0027t know a way to do this nicely with ?: and MakeUnique here, because I don\u0027t think you can static_cast unique_ptr\u003cDerived\u003e to unique_ptr\u003cBase\u003e.",
+      "parentUuid": "dc7784f3_9bdd7ae8",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fead53e6_53152292",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
