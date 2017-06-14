@@ -338,6 +338,11 @@ int ChromeTranslateClient::GetInfobarIconID() const {
 #endif
 }
 
+void ChromeTranslateClient::RecordLanguageDetectionEvent(
+    const translate::LanguageDetectionDetails& details) const {
+  LogLanguageDetectionEvent(web_contents(), details);
+}
+
 bool ChromeTranslateClient::IsTranslatableURL(const GURL& url) {
   return TranslateService::IsTranslatableURL(url);
 }
@@ -378,7 +383,7 @@ void ChromeTranslateClient::OnLanguageDetermined(
       content::Source<content::WebContents>(web_contents()),
       content::Details<const translate::LanguageDetectionDetails>(&details));
 
-  LogLanguageDetectionEvent(web_contents(), details);
+  RecordLanguageDetectionEvent(details);
   // Unless we have no language model (e.g., in incognito), notify the model
   // about detected language of every page visited.
   if (language_model_ && details.is_cld_reliable)

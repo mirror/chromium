@@ -52,7 +52,7 @@ TEST_F(ChromeTranslateClientTest, LanguageEventShouldRecord) {
   details.cld_language = "en";
   details.is_cld_reliable = true;
   details.adopted_language = "en";
-  client.OnLanguageDetermined(details);
+  client.RecordLanguageDetectionEvent(details);
   EXPECT_EQ(1ul, GetUserEventService()->GetRecordedUserEvents().size());
 }
 
@@ -64,6 +64,6 @@ TEST_F(ChromeTranslateClientTest, LanguageEventShouldNotRecord) {
   details.cld_language = "en";
   details.is_cld_reliable = true;
   details.adopted_language = "en";
-  client.OnLanguageDetermined(details);
+  client.RecordLanguageDetectionEvent(details);
   EXPECT_EQ(0u, GetUserEventService()->GetRecordedUserEvents().size());
 }
