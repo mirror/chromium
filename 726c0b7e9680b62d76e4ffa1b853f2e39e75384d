@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e596af83_37c02345",
+        "filename": "base/android/timezone_utils.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-14T21:00:30Z",
+      "side": 1,
+      "message": "Android recommend against using system properties from NDK apps because they are not part of the android API and aren\u0027t guaranteed to exist or have the same names or values or meanings.\n\nI think this one in particular is probably pretty safe, but it seems unfortunate to move from using a supported Java API to this just because of a problem with a test :/",
+      "revId": "726c0b7e9680b62d76e4ffa1b853f2e39e75384d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
