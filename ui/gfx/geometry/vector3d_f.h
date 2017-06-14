@@ -71,6 +71,8 @@ class GFX_EXPORT Vector3dF {
   // Take the cross product of this vector with |other| and become the result.
   void Cross(const Vector3dF& other);
 
+  bool GetNormalized(Vector3dF* out) const;
+
   std::string ToString() const;
 
  private:
