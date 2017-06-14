@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e14919f4_e57c2036",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ff16a8c_f672b995",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11035b0e_1ed122f1",
         "filename": "components/viz/host/frame_sink_manager_host.cc",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95765258_09b680bd",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11035b0e_1ed122f1",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "bcd6d23f_e191134a",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1265cd3d_6c70c3d9",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8caa4375_0b39cf28",
         "filename": "components/viz/host/frame_sink_manager_host.cc",
         "patchSetId": 4
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-14T16:05:15Z",
       "side": 1,
       "message": "Is this CHECK claiming that a malicious client can get through to here, and then crash the browser process? That seems not good, can we prevent that earlier and close the renderer\u0027s connection instead?",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "225e356d_000cbd16",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "We should already have conditionals earlier so that this CHECK never happens. It seems useful to have a CHECK that crashes things in a central place, just in case the earlier safeguards are accidentally removed/skipped/missing a new case/etc. rather than risk being able to submit CompositorFrames to some other FrameSinkId.\n\nThoughts?",
+      "parentUuid": "8caa4375_0b39cf28",
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "56afe381_81da968b",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Ya, it\u0027s a bug. I\u0027m fine with DCHECKing here instead of return early.",
+      "parentUuid": "c081ec14_222a98f7",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e5973874_be190f80",
         "filename": "components/viz/host/frame_sink_manager_host.cc",
         "patchSetId": 4
@@ -101,6 +191,24 @@
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "000f03f3_f30e556e",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "We don\u0027t call UnregisterFrameSinkHierarchy() when reparenting so that wouldn\u0027t work.",
+      "parentUuid": "e5973874_be190f80",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "e48b537a_cebc6477",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Sure. DCHECK it is.",
+      "parentUuid": "8b4c5c33_d62dd28d",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c658f059_5b9d5d71",
         "filename": "components/viz/host/frame_sink_manager_host.cc",
         "patchSetId": 4
@@ -135,6 +261,24 @@
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1be8de1_8961a49e",
+        "filename": "components/viz/host/frame_sink_manager_host.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Yes it\u0027s possible and I\u0027ve got a test CL in the works.",
+      "parentUuid": "c658f059_5b9d5d71",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f83d9f7d_4cd55a7d",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Ideally, we wouldn\u0027t call register before create and that would be enforced. We don\u0027t actually call create normally though, since most things don\u0027t use FSMH, so that can\u0027t be enforced yet.",
+      "parentUuid": "2fdb003a_1d2c49c0",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0d85f960_54a8d99b",
         "filename": "components/viz/host/frame_sink_manager_host.h",
         "patchSetId": 4
@@ -169,6 +331,24 @@
       "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589fb8ee_8b4c9bb2",
+        "filename": "components/viz/host/frame_sink_manager_host.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-14T16:34:56Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "0d85f960_54a8d99b",
+      "revId": "7bb7bca8f35d2650e7f3c5687a93d5cf5ab3fa71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
