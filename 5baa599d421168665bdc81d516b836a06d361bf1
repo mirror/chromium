@@ -67,6 +67,52 @@
       "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db14aaea_76e69012",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 807,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-14T22:55:59Z",
+      "side": 1,
+      "message": "I think this `ShowFirstRunBubbleInternal` member function should just be deleted. It\u0027s called _from_ Browser, but then it has to hunt again for a Browser* here. Browser::ShowFirstRunBubble() should just pass `this` to a thin per-platform wrapper around a call to FirstRunBubble::ShowBubble(..) in global methods.",
+      "range": {
+        "startLine": 807,
+        "startChar": 29,
+        "endLine": 807,
+        "endChar": 55
+      },
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff4826a4_8665ea19",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-14T22:55:59Z",
+      "side": 1,
+      "message": "I don\u0027t think TabDialogs is the right place for the first run bubble. TabDialogs is for things tied to a specific WebContents - a new instance of TabDialogs is associated with each WebContents. But the first run bubble is tied to the Browser* -- after this line in each impl class we no longer need the web_contents_.\n\nbrowser_dialogs.h tends to be the place we put dialogs that are tied to a Browser*; the methods there typically take a Browser*.",
+      "range": {
+        "startLine": 50,
+        "startChar": 29,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
