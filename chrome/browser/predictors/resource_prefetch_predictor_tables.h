@@ -87,7 +87,8 @@ class ResourcePrefetchPredictorTables : public PredictorTableBase {
  protected:
   // Protected for testing. Use PredictorDatabase::resource_prefetch_tables()
   // instead of this constructor.
-  ResourcePrefetchPredictorTables();
+  ResourcePrefetchPredictorTables(
+      scoped_refptr<base::SequencedTaskRunner> db_task_runner);
   ~ResourcePrefetchPredictorTables() override;
 
  private:

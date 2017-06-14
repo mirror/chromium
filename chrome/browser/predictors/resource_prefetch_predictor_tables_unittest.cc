@@ -10,6 +10,7 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/predictors/loading_test_util.h"
 #include "chrome/browser/predictors/predictor_database.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_tables.h"
@@ -34,7 +35,7 @@ class ResourcePrefetchPredictorTablesTest : public testing::Test {
   void SetUp() override;
   void TearDown() override;
 
-  void DeleteAllData() const;
+  void DeleteAllData();
   void GetAllData(PrefetchDataMap* url_resource_data,
                   PrefetchDataMap* host_resource_data,
                   RedirectDataMap* url_redirect_data,
@@ -50,6 +51,7 @@ class ResourcePrefetchPredictorTablesTest : public testing::Test {
   void TestDeleteAllData();
 
   content::TestBrowserThreadBundle thread_bundle_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   TestingProfile profile_;
   std::unique_ptr<PredictorDatabase> db_;
   scoped_refptr<ResourcePrefetchPredictorTables> tables_;
@@ -113,7 +115,8 @@ class ResourcePrefetchPredictorTablesReopenTest
 };
 
 ResourcePrefetchPredictorTablesTest::ResourcePrefetchPredictorTablesTest()
-    : db_(new PredictorDatabase(&profile_)),
+    : task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      db_(base::MakeUnique<PredictorDatabase>(&profile_, task_runner_)),
       tables_(db_->resource_prefetch_tables()) {
   base::RunLoop().RunUntilIdle();
 }
@@ -124,11 +127,12 @@ ResourcePrefetchPredictorTablesTest::~ResourcePrefetchPredictorTablesTest() {
 void ResourcePrefetchPredictorTablesTest::SetUp() {
   DeleteAllData();
   InitializeSampleData();
+  base::RunLoop().RunUntilIdle();
 }
 
 void ResourcePrefetchPredictorTablesTest::TearDown() {
   tables_ = nullptr;
-  db_.reset();
+  db_ = nullptr;
   base::RunLoop().RunUntilIdle();
 }
 
@@ -546,7 +550,7 @@ void ResourcePrefetchPredictorTablesTest::AddKey(OriginDataMap* m,
   m->insert(*it);
 }
 
-void ResourcePrefetchPredictorTablesTest::DeleteAllData() const {
+void ResourcePrefetchPredictorTablesTest::DeleteAllData() {
   tables_->ExecuteDBTaskOnDBThread(
       base::BindOnce(&GlowplugKeyValueTable<PrefetchData>::DeleteAllData,
                      base::Unretained(tables_->url_resource_table())));
@@ -812,7 +816,7 @@ void ResourcePrefetchPredictorTablesTest::InitializeSampleData() {
 }
 
 void ResourcePrefetchPredictorTablesTest::ReopenDatabase() {
-  db_.reset(new PredictorDatabase(&profile_));
+  db_ = base::MakeUnique<PredictorDatabase>(&profile_, task_runner_);
   base::RunLoop().RunUntilIdle();
   tables_ = db_->resource_prefetch_tables();
 }

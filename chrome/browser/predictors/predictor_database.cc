@@ -12,6 +12,7 @@
 #include "base/files/file_util.h"
 #include "base/logging.h"
 #include "base/macros.h"
+#include "base/sequenced_task_runner.h"
 #include "chrome/browser/predictors/autocomplete_action_predictor_table.h"
 #include "chrome/browser/predictors/loading_predictor_config.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor.h"
@@ -40,7 +41,9 @@ class PredictorDatabaseInternal
   friend class base::RefCountedThreadSafe<PredictorDatabaseInternal>;
   friend class PredictorDatabase;
 
-  explicit PredictorDatabaseInternal(Profile* profile);
+  explicit PredictorDatabaseInternal(
+      Profile* profile,
+      scoped_refptr<base::SequencedTaskRunner> db_task_runner);
   virtual ~PredictorDatabaseInternal();
 
   // Opens the database file from the profile path. Separated from the
@@ -55,6 +58,7 @@ class PredictorDatabaseInternal
   bool is_resource_prefetch_predictor_enabled_;
   base::FilePath db_path_;
   std::unique_ptr<sql::Connection> db_;
+  scoped_refptr<base::SequencedTaskRunner> db_task_runner_;
 
   // TODO(shishir): These tables may not need to be refcounted. Maybe move them
   // to using a WeakPtr instead.
@@ -64,12 +68,16 @@ class PredictorDatabaseInternal
   DISALLOW_COPY_AND_ASSIGN(PredictorDatabaseInternal);
 };
 
-
-PredictorDatabaseInternal::PredictorDatabaseInternal(Profile* profile)
+PredictorDatabaseInternal::PredictorDatabaseInternal(
+    Profile* profile,
+    scoped_refptr<base::SequencedTaskRunner> db_task_runner)
     : db_path_(profile->GetPath().Append(kPredictorDatabaseName)),
-      db_(new sql::Connection()),
-      autocomplete_table_(new AutocompleteActionPredictorTable()),
-      resource_prefetch_tables_(new ResourcePrefetchPredictorTables()) {
+      db_(base::MakeUnique<sql::Connection>()),
+      db_task_runner_(db_task_runner),
+      autocomplete_table_(
+          new AutocompleteActionPredictorTable(db_task_runner_)),
+      resource_prefetch_tables_(
+          new ResourcePrefetchPredictorTables(db_task_runner_)) {
   db_->set_histogram_tag("Predictor");
 
   // This db does not use [meta] table, store mmap status data elsewhere.
@@ -82,13 +90,11 @@ PredictorDatabaseInternal::PredictorDatabaseInternal(Profile* profile)
 PredictorDatabaseInternal::~PredictorDatabaseInternal() {
   // The connection pointer needs to be deleted on the DB thread since there
   // might be a task in progress on the DB thread which uses this connection.
-  if (BrowserThread::IsMessageLoopValid(BrowserThread::DB))
-    BrowserThread::DeleteSoon(BrowserThread::DB, FROM_HERE, db_.release());
+  db_task_runner_->DeleteSoon(FROM_HERE, db_.release());
 }
 
 void PredictorDatabaseInternal::Initialize() {
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::DB) ||
-        !BrowserThread::IsMessageLoopValid(BrowserThread::DB));
+  CHECK(db_task_runner_->RunsTasksInCurrentSequence());
   // TODO(tburkard): figure out if we need this.
   //  db_->set_exclusive_locking();
   bool success = db_->Open(db_path_);
@@ -115,19 +121,19 @@ void PredictorDatabaseInternal::SetCancelled() {
 }
 
 void PredictorDatabaseInternal::LogDatabaseStats() {
-  CHECK(BrowserThread::CurrentlyOn(BrowserThread::DB) ||
-        !BrowserThread::IsMessageLoopValid(BrowserThread::DB));
+  CHECK(db_task_runner_->RunsTasksInCurrentSequence());
 
   autocomplete_table_->LogDatabaseStats();
   if (is_resource_prefetch_predictor_enabled_)
     resource_prefetch_tables_->LogDatabaseStats();
 }
 
-PredictorDatabase::PredictorDatabase(Profile* profile)
-    : db_(new PredictorDatabaseInternal(profile)) {
-  BrowserThread::PostTask(
-      BrowserThread::DB, FROM_HERE,
-      base::BindOnce(&PredictorDatabaseInternal::Initialize, db_));
+PredictorDatabase::PredictorDatabase(
+    Profile* profile,
+    scoped_refptr<base::SequencedTaskRunner> db_task_runner)
+    : db_(new PredictorDatabaseInternal(profile, db_task_runner)) {
+  db_task_runner->PostTask(
+      FROM_HERE, base::BindOnce(&PredictorDatabaseInternal::Initialize, db_));
 }
 
 PredictorDatabase::~PredictorDatabase() {
