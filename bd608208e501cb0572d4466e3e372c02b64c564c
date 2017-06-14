@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c05b6a73_e33c37b8",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 0,
+      "message": "I\u0027d keep SiteInstance checks for the frame and panel, since that\u0027s what the test is mostly concerned with:\n\nEXPECT_EQ(extensions_a_instance, devtools_extension_a_panel_rfh-\u003eGetSiteInstance());\nEXPECT_EQ(extensions_b_instance, devtools_extension_b_frame_rfh-\u003eGetSiteInstance());",
+      "revId": "bd608208e501cb0572d4466e3e372c02b64c564c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

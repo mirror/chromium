@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d671ba60_5aa5c342",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "Did you mean to use extensions_instance here?",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73e8b185_f938340b",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1081,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "It might be nice to also check\n  EXPECT_NE(extensions_instance, web_frame_rfh-\u003eGetSiteInstance());\nhere.",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccfa2468_b83785cf",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "nit: update this comment",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a412ce7c_e15ff4b1",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "I think this should use devtools_extension_b_devtools_rfh (b instead of a).",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e074fd4_29b1d8ca",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "nit: add EXPECT_NE(devtools_instance, extension_b_instance); for completeness?",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8c75b31_1d330e1c",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "I\u0027d expect this to be EXPECT_NE - it should hold once you fix the definition of extension_b_instance above.",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2f72dcf_d961c4ea",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "nit: update this comment",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8903c4c5_40c792b0",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-14T23:48:55Z",
+      "side": 1,
+      "message": "Since this isn\u0027t a real extension URL, we won\u0027t force a process swap unless we\u0027re in --site-per-process mode.  Are we forcing --site-per-process for these tests somewhere else? Or just relying on coverage by linux_site_isolation trybot (which is part of the CQ and runs layout tests with --site-per-process) and the Win/Linux site isolation FYI bots?",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
