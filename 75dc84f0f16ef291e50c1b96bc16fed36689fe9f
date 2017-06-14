@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfb4a4f3_98e3d7de",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-14T23:14:49Z",
+      "side": 1,
+      "message": "Should be Chrome release key dates",
+      "range": {
+        "startLine": 12,
+        "startChar": 17,
+        "endLine": 12,
+        "endChar": 20
+      },
+      "revId": "75dc84f0f16ef291e50c1b96bc16fed36689fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
