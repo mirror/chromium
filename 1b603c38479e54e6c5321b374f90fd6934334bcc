@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce19cf87_036152fd",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridge.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-14T12:32:13Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e007222_abb22de9",
+      "revId": "1b603c38479e54e6c5321b374f90fd6934334bcc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b609a15e_2f59ca0c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/notifications/channels/ChannelDefinitions.java",
         "patchSetId": 2
