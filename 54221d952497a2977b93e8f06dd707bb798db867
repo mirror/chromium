@@ -22,6 +22,30 @@
       "revId": "54221d952497a2977b93e8f06dd707bb798db867",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b33fa939_61803965",
+        "filename": "chrome/browser/predictors/predictor_database_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-14T18:32:23Z",
+      "side": 1,
+      "message": "\u003e Two questions:\n\u003e 1) Do we need to run all sqlite operations on a single thread? If yes, we need to replace SequencedTaskRunner with SingleThreadTaskRunner.\n\nI think we don\u0027t need SingleThread because we are not using thread-local-storage and fancy stuff like this.\n\n\u003e 2) Are these traits applicable? We need MayBlock to perform I/O operations, operations are not user visible so the priority is BACKGROUND and the loss of information after shutdown is not critical so SKIP_ON_SHUTDOWN.\n\nI think this is the right call, but I don\u0027t know the API very well. It\u0027s not testable, which makes me worried.",
+      "parentUuid": "b804c250_a73c9467",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 21
+      },
+      "revId": "54221d952497a2977b93e8f06dd707bb798db867",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
