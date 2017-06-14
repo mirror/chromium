@@ -61,7 +61,7 @@ public class PaymentRequestMetricsTest implements MainActivityStartCallback {
                 "US", "650-253-0000", "", "en-US"));
         mHelper.setCreditCard(new CreditCard("", "https://example.com", true, true, "Jon Doe",
                 "4111111111111111", "1111", "12", "2050", "visa", R.drawable.visa_card,
-                mBillingAddressId, "" /* serverId */));
+                CardType.UNKNOWN, mBillingAddressId, "" /* serverId */));
     }
 
     /**
