@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "13e783a5_95b481e5",
+        "filename": "third_party/WebKit/Source/core/workers/InProcessWorkerMessagingProxy.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-14T05:04:02Z",
+      "side": 1,
+      "message": "If you\u0027re talking about InProcessWorkerBase::context_proxy_, it is a Member. So it\u0027s fine to make InProcessWorkerMessagingProxy::worker_object_ a Member as well, right? Oilpan can collect a cycle of Members.",
+      "parentUuid": "7d89f58d_cc0e9cb7",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "879b1349_a97cd04f",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "86036cc2_8c614f8b",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-14T05:04:02Z",
+      "side": 1,
+      "message": "If we don\u0027t post the task to the main thread, TerminateGlobalScope and WorkerThreadTerminated are called on the worker thread. Is it really okay?\n\nBefore this CL it shouldn\u0027t be okay because WorkerThreadTerminated() was calling delete (which must be executed on the same thread that created this object).",
+      "parentUuid": "4ed83efc_95eb48cc",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ecf02f8_92836658",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "WorkerThreadTerminated() can be called from ParentObjectDestroyed() on the main thread (case 1) or ThreadedObjectProxyBase::DidTerminateWorkerThread() on the worker thread (case 2).\n\nCase 1: When the parent object is destroyed before worker thread termination is terminated, ParentObejctDestroyed() starts the thread termination (see line 127) and the messaging proxy is alive w/ this keep-alive handle until WorkerThreadTerminated() is called from ThreadedObjectProxyBase.\n\nCase 2: When the parent object is destroyed after \nthe worker thread is terminated, this keep-alive handle should already be cleared during the termination sequence and the parent object is the last owner, so the messaging proxy is destroyed at the end of the dtor of the parent object.",
       "parentUuid": "5ecf02f8_92836658",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfca09d1_65b67d38",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-14T05:04:02Z",
+      "side": 1,
+      "message": "My question is about Case 1.\n\nHow is it possible that ParentObejctDestroyed() gets called in the first place? Given that ThreadedMessagingProxyBase is holding a strong reference to the parent object, the parent object wouldn\u0027t get destructed in the first place.",
+      "parentUuid": "e1248161_e76d03fe",
       "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
