@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc089acd_561bb570",
+        "filename": "third_party/libwebp/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002219
+      },
+      "writtenOn": "2017-06-14T07:02:43Z",
+      "side": 1,
+      "message": "specific_include_rules seems to want to match on basename. this is particular to imageio/ and examples/ so I could add additional DEPS there if that\u0027s preferred. I had that first and only pulled it to keep the snapshot update (slightly) simpler, but it really wouldn\u0027t be an issue.",
+      "revId": "82f017a0c9c4b2fd876557182b60da47269ea35c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
