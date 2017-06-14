@@ -33,7 +33,7 @@
 
 #include <memory>
 #include "core/CoreExport.h"
-#include "core/page/PopupMenu.h"
+#include "core/html/forms/PopupMenu.h"
 #include "platform/Timer.h"
 #include "platform/wtf/Compiler.h"
 #include "public/platform/WebCanvas.h"
@@ -51,6 +51,7 @@ struct WebPopupMenuInfo;
 
 // The ExternalPopupMenu connects the actual implementation of the popup menu
 // to the WebCore popup menu.
+// TODO(sashab): Move this file to core/html/forms.
 class CORE_EXPORT ExternalPopupMenu final : NON_EXPORTED_BASE(public PopupMenu),
                                             public WebExternalPopupMenuClient {
  public:
