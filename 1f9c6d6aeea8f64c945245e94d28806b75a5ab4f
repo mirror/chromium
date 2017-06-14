@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4072eaa9_c39d6734",
+        "filename": "ash/system/power/power_status.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1000191
+      },
+      "writtenOn": "2017-06-14T21:17:02Z",
+      "side": 1,
+      "message": "I\u0027m not sure what \u0027alert\u0027 is for, can we document this? Is it \u0027show alert because the level is too low\u0027? (In which case, maybe just name it show_alert?)",
+      "range": {
+        "startLine": 79,
+        "startChar": 9,
+        "endLine": 79,
+        "endChar": 14
+      },
+      "revId": "1f9c6d6aeea8f64c945245e94d28806b75a5ab4f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
