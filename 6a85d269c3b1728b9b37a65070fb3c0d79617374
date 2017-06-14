@@ -1,0 +1,242 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2611d22f_9a988bd9",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Is \"compositor animations\" a clear phrase for web developers? This might be a question for DevTools folks and/or DevRel.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e0d806_69004f57",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 783,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "I find \"non-one playback rates\" to be a very odd phrase. Even \"playback rates other than 1\" feels clearer. \"sped up or slowed down playback\"? \"non-default playback rates\"?",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f20a6c_5767263b",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 793,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "I think you mean \"effect\" as a technical term here, but I interpret this more readily in the casual sense of \"has no effect\". Perhaps \"Animation has no animation effect\" or \"There is no effect attached to the animation\"?",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fcae5e_11d52359",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 797,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Nit: \"keyframe-based\"",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b40ca312_c7eb252a",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "I find this reason unclear. Do you mean \"Transform-related property cannot be composited\"? This case seems to be something about the target element that prohibits the compositing, but the reason doesn\u0027t mention the element.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "088ef7b4_c2664027",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Nit: \"Transform-related\"",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ca83c0e_593dbc43",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Nit: \"Filter-related\"",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86412ecf_3020cabb",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Nit: \"transform-related\"",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ac15beb_02db9cef",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Assuming this is to be shown to developers, it\u0027s probably better to be verbose than to use telegraphic speech. In this case, I suggest \"on the element\". This and other reasons might also benefit from not eliding other small words.\n\nSpeaking of showing this to developers, please double-check with DevTools folks what their protocols are for i18n support.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d105aaf_45f59c65",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "\"The specified timing parameters are not supported in compositor animations\"?",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3386cc41_d289f02c",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 393,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Run this one by the threaded rendering and DevTools teams. They may have a suggestion for wording.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f2dcf10_60788877",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Hmm, I can understand wanting these fields to be easily accessible, but do we want them to be modifiable? Perhaps const, if not private? The content of None/Actionable/NonActionable can be calls to a constructor.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "312bcc8f_3817a31b",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "I assume this is so we can write\n\nif (CanStartAnimationOnCompositor(...)) {\n  // everything fine, go ahead and composite\n}\n\nBut I think this means we can also write:\n\nFailureCode failure_code \u003d ...;\nif (failure_code) {\n  // everything fine, can composite\n} else {\n  // can\u0027t composite\n}\n\nwhich feels upside-down.\n\nI know I was the one saying that \"return code of 0 can be used to mean everything is fine\" but I think we need to be very careful about the interface we provide. I\u0027d prefer to drop the definition of \"operator bool()\" and instead require the call-site to explicitly ask for can_composite.",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfe0123e_4ef5cb6f",
+        "filename": "third_party/WebKit/Source/core/animation/KeyframeEffectReadOnly.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-14T02:11:19Z",
+      "side": 1,
+      "message": "Nit: \"transform-related\"",
+      "revId": "6a85d269c3b1728b9b37a65070fb3c0d79617374",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
