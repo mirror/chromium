@@ -5,6 +5,8 @@
 #include "device/bluetooth/test/fake_peripheral.h"
 
 #include "base/memory/weak_ptr.h"
+#include "device/bluetooth/bluetooth_uuid.h"
+#include "device/bluetooth/test/fake_remote_gatt_service.h"
 
 namespace bluetooth {
 
@@ -40,6 +42,23 @@ void FakePeripheral::SetNextGATTConnectionResponse(uint16_t code) {
 void FakePeripheral::SetNextGATTDiscoveryResponse(uint16_t code) {
   DCHECK(!next_discovery_response_);
   next_discovery_response_ = code;
+}
+
+std::string FakePeripheral::AddFakeService(
+    const device::BluetoothUUID& service_uuid) {
+  std::string new_service_id = std::to_string(++last_service_id_);
+
+  GattServiceMap::iterator it;
+  bool inserted;
+
+  std::tie(it, inserted) = gatt_services_.emplace(
+      new_service_id,
+      base::MakeUnique<FakeRemoteGattService>(
+          // TODO: Add moar args.
+          new_service_id, service_uuid, true /* is_primary */, this));
+
+  DCHECK(inserted);
+  return it->second->GetIdentifier();
 }
 
 uint32_t FakePeripheral::GetBluetoothClass() const {
