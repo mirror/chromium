@@ -22,6 +22,30 @@
       "revId": "04e4b9e1065728f886520dc581c38f8dc7d1d677",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f721c2b0_5a765069",
+        "filename": "device/vr/vr_math.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1000537
+      },
+      "writtenOn": "2017-06-14T23:52:57Z",
+      "side": 1,
+      "message": "Unfortunately, I think that vr::Mat4f and gfx::Transform aren\u0027t laid out the same. gfx::Transform is column major. On the plus side, it means that I\u0027ll be able to make this function cheaper: https://cs.chromium.org/chromium/src/chrome/browser/android/vr_shell/vr_gl_util.cc?rcl\u003de3873dfc2212de0b9b0784315b30b38ce0f46fbc\u0026l\u003d15",
+      "parentUuid": "42711c3a_5e12ece9",
+      "range": {
+        "startLine": 299,
+        "startChar": 37,
+        "endLine": 299,
+        "endChar": 38
+      },
+      "revId": "04e4b9e1065728f886520dc581c38f8dc7d1d677",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
