@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5613cded_3eebbd47",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 509,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T18:41:46Z",
+      "side": 1,
+      "message": "s/when/after/",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6a8ae13_dad5e26d",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 511,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-14T18:41:46Z",
+      "side": 1,
+      "message": "This seems really risky to me.  You all know this particular code better than I do, but I\u0027ve seen lots of bugs (including a release-blocking use-after-free bug I\u0027m working on right now) due to asynchronous deletion.  If snapshot_controller_ has any way to continue accessing deleted state before this deletion task runs, we\u0027ll have big problems (potentially security bugs).\n\nIf you\u0027re certain that it\u0027s safe, can you include a comment above explaining why?",
+      "revId": "1747531f4ca596c868ada3d8323a7d0072a61d86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
