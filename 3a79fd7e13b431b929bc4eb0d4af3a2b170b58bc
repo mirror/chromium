@@ -105,6 +105,24 @@
       "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab5bedb5_cdc5ebbe",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-14T03:10:35Z",
+      "side": 1,
+      "message": "OK, my current goal is to move the child process launching code to base.\nThis was mostly a clean-up of the existing code. \nIf this change is too risky, I\u0027ll get back to it (if I have some time) once I have finished my main objective.",
+      "parentUuid": "d0c1010a_4c4e019c",
+      "revId": "3a79fd7e13b431b929bc4eb0d4af3a2b170b58bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
