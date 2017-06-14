@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "821c6311_43fea826",
+        "filename": "services/service_manager/runner/host/service_process_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-14T15:04:10Z",
+      "side": 1,
+      "message": "Oh, or are you suggesting leaving the header includes in place in the shared code (for stuff like ServiceProcessLauncherFactory) but just literally excluding the building of service_process_launcher.cc on iOS? I can try that.",
+      "parentUuid": "7d4c631a_46bb8647",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce3b0ee_ef9b0552",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
