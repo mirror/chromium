@@ -2135,6 +2135,25 @@ void DownloadItemImpl::ResumeInterruptedDownload(
       BrowserContext::GetStoragePartitionForSite(GetBrowserContext(),
                                                  request_info_.site_url);
 
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("download_manager_resume", R"(
+        semantics {
+          sender: "Download Manager"
+          description:
+            "When user resumes downloading a file, a network request is made "
+            "to fetch it."
+          trigger:
+            "User resumes a download."
+          data:
+            "Cookies and user authentication (if available)."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting: "This feature cannot be disabled."
+          policy_exception_justification: "Not implemented."
+        })");
   // Avoid using the WebContents even if it's still around. Resumption requests
   // are consistently routed through the no-renderer code paths so that the
   // request will not be dropped if the WebContents (and by extension, the
@@ -2142,7 +2161,7 @@ void DownloadItemImpl::ResumeInterruptedDownload(
   std::unique_ptr<DownloadUrlParameters> download_params(
       new DownloadUrlParameters(GetURL(),
                                 storage_partition->GetURLRequestContext(),
-                                NO_TRAFFIC_ANNOTATION_YET));
+                                traffic_annotation));
   download_params->set_file_path(GetFullPath());
   if (received_slices_.size() > 0) {
     std::vector<DownloadItem::ReceivedSlice> slices_to_download
