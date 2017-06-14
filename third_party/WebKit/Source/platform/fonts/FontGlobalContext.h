@@ -17,9 +17,12 @@ class PLATFORM_EXPORT FontGlobalContext {
   WTF_MAKE_NONCOPYABLE(FontGlobalContext);
 
  public:
-  static FontGlobalContext& Get();
+  static FontGlobalContext* Get(bool = true);
 
-  static inline FontCache& GetFontCache() { return Get().font_cache; }
+  static inline FontCache& GetFontCache() { return Get()->font_cache; }
+
+  // Called by MemoryCoordinator to clear memory.
+  static void ClearMemory();
 
  private:
   friend class WTF::ThreadSpecific<FontGlobalContext>;
