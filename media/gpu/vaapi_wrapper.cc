@@ -266,7 +266,11 @@ VaapiWrapper::GetSupportedDecodeProfiles() {
 
 // static
 bool VaapiWrapper::IsJpegDecodeSupported() {
-  return GetProfileInfos()->IsProfileSupported(kDecode, VAProfileJPEGBaseline);
+  bool ret_val;
+  ret_val =
+      GetProfileInfos()->IsProfileSupported(kDecode, VAProfileJPEGBaseline);
+  DVLOG(1) << "jpeg is supported ? " << ret_val;
+  return ret_val;
 }
 
 void VaapiWrapper::TryToSetVADisplayAttributeToLocalGPU() {
@@ -1132,6 +1136,7 @@ void VaapiWrapper::PreSandboxInitialization() {
   if (drm_file.IsValid())
     GetDisplayState()->SetDrmFd(drm_file.GetPlatformFile());
 #endif
+  GetProfileInfos();  // dlopen all necessary libraries
 }
 
 // static

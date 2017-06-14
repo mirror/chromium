@@ -28,7 +28,7 @@
 #include "media/gpu/ipc/common/media_messages.h"
 #include "ui/gfx/geometry/size.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
 #if defined(ARCH_CPU_X86_FAMILY)
 #include "media/gpu/vaapi_jpeg_decode_accelerator.h"
 #endif
@@ -57,7 +57,7 @@ std::unique_ptr<media::JpegDecodeAccelerator> CreateV4L2JDA(
 std::unique_ptr<media::JpegDecodeAccelerator> CreateVaapiJDA(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner) {
   std::unique_ptr<media::JpegDecodeAccelerator> decoder;
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
   decoder.reset(
       new media::VaapiJpegDecodeAccelerator(std::move(io_task_runner)));
 #endif
