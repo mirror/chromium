@@ -24852,6 +24852,25 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>The type of Vary header for a given GET response.</summary>
 </histogram>
 
+<histogram name="HungRenderer.TerminationStatus"
+    enum="HungRendererTerminationStatus">
+  <owner>tzik@chromium.org</owner>
+  <owner>bashi@chromium.org</owner>
+  <summary>
+    The status code that indicates how a hung renderer terminated. Recorded for
+    each renderer hang.
+  </summary>
+</histogram>
+
+<histogram name="HungRenderer.TimeToHungRendererTermination" units="ms">
+  <owner>tzik@chromium.org</owner>
+  <owner>bashi@chromium.org</owner>
+  <summary>
+    The time elapsed between a crash request from the browser to a hung renderer
+    and the corresponding renderer termination. Recorded for each renderer hang.
+  </summary>
+</histogram>
+
 <histogram name="Hyphenation.Open" units="ms">
   <owner>kojii@chromium.org</owner>
   <summary>The time it takes to open a hyphenation dictionary.</summary>

@@ -61,6 +61,8 @@ target(link_target_type, "child") {
     "child_message_filter.h",
     "child_process.cc",
     "child_process.h",
+    "child_process_crasher_impl.cc",
+    "child_process_crasher_impl.h",
     "child_process_sandbox_support_impl_linux.cc",
     "child_process_sandbox_support_impl_linux.h",
     "child_process_sandbox_support_impl_shm_linux.cc",
