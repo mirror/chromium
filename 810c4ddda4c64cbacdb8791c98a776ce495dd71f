@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5871d453_8f3b949f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12216,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:23:23Z",
+      "side": 1,
+      "message": "This description doesn\u0027t note how this string differs from the one above.  They need to state their requirements about having/not having periods, nd ideally why those requirements exist.",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee45ae2_5e6c1b86",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12222,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:23:23Z",
+      "side": 1,
+      "message": "\"Slightly longer\" is in reference to something, but string descriptions should stand alone.",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69c6c2d0_a60599fb",
+        "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:23:23Z",
+      "side": 1,
+      "message": "This doesn\u0027t really seem like the \"title\" of anything, it seems like an infobar message, which is why it\u0027s supposed to be a sentence.  I suggest renaming the string constant here from _TITLE_PERIOD to _INFOBAR_MESSAGE or something to make this clear.",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a85d620_5c040fdb",
+        "filename": "chrome/browser/ui/views/content_setting_bubble_contents.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-14T00:23:23Z",
+      "side": 1,
+      "message": "Nit: Remove apostrophe",
+      "revId": "810c4ddda4c64cbacdb8791c98a776ce495dd71f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
