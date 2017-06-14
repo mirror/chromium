@@ -1714,10 +1714,17 @@ bool ContentSecurityPolicy::IsValidCSPAttr(const String& attr) {
   policy->AddPolicyFromHeaderValue(attr,
                                    kContentSecurityPolicyHeaderTypeEnforce,
                                    kContentSecurityPolicyHeaderSourceHTTP);
-  if (policy->console_messages_.IsEmpty() && policy->policies_.size() == 1) {
-    return true;
+  if (!policy->console_messages_.IsEmpty())
+    return false;
+  if (policy->policies_.size() != 1)
+    return false;
+
+  // don't allow any report endpoints in "csp" attributes
+  for (auto& directiveList : policy->policies_) {
+    if (directiveList->ReportEndpoints().size() != 0)
+      return false;
   }
-  return false;
+  return true;
 }
 
 }  // namespace blink
