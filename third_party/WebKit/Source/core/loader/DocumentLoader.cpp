@@ -865,8 +865,7 @@ void DocumentLoader::StartLoadingMainResource() {
     GetTiming().MarkFetchStart();
   }
 
-  ResourceLoaderOptions options(kAllowStoredCredentials,
-                                kClientRequestedCredentials);
+  ResourceLoaderOptions options;
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::document;
   FetchParameters fetch_params(request_, options);

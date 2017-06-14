@@ -67,7 +67,7 @@ FrameLoadRequest::FrameLoadRequest(
   resource_request_.SetFetchRequestMode(
       WebURLRequest::kFetchRequestModeNavigate);
   resource_request_.SetFetchCredentialsMode(
-      WebURLRequest::kFetchCredentialsModeInclude);
+      WebURLRequest::kFetchCredentialsModeSameOrigin);
   resource_request_.SetFetchRedirectMode(
       WebURLRequest::kFetchRedirectModeManual);
 

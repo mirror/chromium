@@ -38,6 +38,7 @@ namespace blink {
 enum class ScriptIntegrityDisposition { kNotChecked = 0, kFailed, kPassed };
 
 class FetchParameters;
+class KURL;
 class ResourceFetcher;
 class ScriptResource;
 
@@ -58,10 +59,10 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
 
   // Public for testing
-  static ScriptResource* Create(const ResourceRequest& request,
-                                const String& charset) {
-    ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                  kClientDidNotRequestCredentials);
+  static ScriptResource* Create(const KURL& url, const String& charset) {
+    ResourceRequest request(url);
+    request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
+    ResourceLoaderOptions options;
     return new ScriptResource(request, options, charset);
   }
 
