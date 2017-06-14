@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5be10b50_63d86899",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5062,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-14T19:07:00Z",
+      "side": 1,
+      "message": "Should this also check !Style()-\u003eHasOutOfFlowPosition() ?",
+      "revId": "750760d4c5bfaea40854306e289e820cbfa1d13d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
