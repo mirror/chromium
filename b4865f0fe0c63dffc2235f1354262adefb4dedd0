@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2c4e3617_9f33be75",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 286,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T01:00:34Z",
+      "side": 1,
+      "message": "\"Directory exists\" are going to be close to the number of times ppl started Chrome... \nI\u0027ve added \u0027successful creation\u0027.",
+      "parentUuid": "b4e3cc47_2f8a45fc",
+      "range": {
+        "startLine": 286,
+        "startChar": 3,
+        "endLine": 286,
+        "endChar": 0
+      },
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2b019934_1dda0be5",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b10a9bb_77ca8f0c",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T01:00:34Z",
+      "side": 1,
+      "message": "Discussed offline, since we already report the success/failure separately, we only need the page count on successes.",
+      "parentUuid": "2b019934_1dda0be5",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "c13a9720_c851aec6",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T01:00:34Z",
+      "side": 1,
+      "message": "Added a comment, hopefully it\u0027s clearer.",
+      "parentUuid": "75f971b0_7c96c740",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3b1d08c_389fc791",
         "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe8c406b_1ae42f1e",
+        "filename": "components/offline_pages/core/offline_page_model_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1255,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-14T01:00:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3b1d08c_389fc791",
+      "revId": "b4865f0fe0c63dffc2235f1354262adefb4dedd0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
