@@ -116,6 +116,8 @@ AccountInfo AccountTrackerService::GetAccountInfo(
 
 AccountInfo AccountTrackerService::FindAccountInfoByGaiaId(
     const std::string& gaia_id) const {
+  DVLOG(0) << "AccountTrackerService::FindAccountInfoByGaiaId"
+           << " gaia_id=" << gaia_id;
   if (!gaia_id.empty()) {
     for (std::map<std::string, AccountState>::const_iterator it =
              accounts_.begin();
@@ -197,6 +199,7 @@ void AccountTrackerService::StartTrackingAccount(
 }
 
 void AccountTrackerService::StopTrackingAccount(const std::string& account_id) {
+  DCHECK(0);
   DVLOG(1) << "StopTracking " << account_id;
   if (base::ContainsKey(accounts_, account_id)) {
     AccountState& state = accounts_[account_id];
