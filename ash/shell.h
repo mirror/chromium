@@ -629,11 +629,12 @@ class ASH_EXPORT Shell : public SessionObserver,
 
   void Init(const ShellInitParams& init_params);
 
-  // Initializes virtual keyboard controller.
-  void InitKeyboard();
-
   // Initializes the root window so that it can host browser windows.
   void InitRootWindow(aura::Window* root_window);
+
+  // Initializes the |KeyboardController| without activating it for
+  // |RootWindowController|.
+  void InitKeyboard();
 
   void SetSystemTrayDelegate(std::unique_ptr<SystemTrayDelegate> delegate);
   void DeleteSystemTrayDelegate();
