@@ -35,10 +35,28 @@ BlobReader::BlobReader(content::BrowserContext* browser_context,
   }
   DCHECK(blob_url.is_valid());
 
-  // This network request is annotated with NO_TRAFFIC_ANNOTATION_YET as
-  // it is scheduled to be removed in (crbug.com/701851).
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("...", R"(
+        semantics {
+          sender: "..."
+          description: "..."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: false/true
+          cookies_store: "..."
+          setting: "..."
+          chrome_policy {
+            [POLICY_NAME] {
+              [POLICY_NAME]: ... //(value to disable it)
+            }
+          }
+          policy_exception_justification: "..."
+        })");
   fetcher_ = net::URLFetcher::Create(blob_url, net::URLFetcher::GET, this,
-                                     NO_TRAFFIC_ANNOTATION_YET);
+                                     traffic_annotation);
   fetcher_->SetRequestContext(
       content::BrowserContext::GetDefaultStoragePartition(browser_context)
           ->GetURLRequestContext());
