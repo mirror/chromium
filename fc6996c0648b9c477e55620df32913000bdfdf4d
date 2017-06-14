@@ -49,6 +49,47 @@
     },
     {
       "key": {
+        "uuid": "44ec2657_5579e512",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T14:25:01Z",
+      "side": 1,
+      "message": "I see. Thank you for the clarification.",
+      "parentUuid": "91da1128_7ad38b3c",
+      "range": {
+        "startLine": 43,
+        "startChar": 37,
+        "endLine": 43,
+        "endChar": 50
+      },
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f7cf0e3_c17b7f73",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T14:25:01Z",
+      "side": 1,
+      "message": "Is it ok to omit \"ServiceWorkerReadFromCacheJob::\" from the event name (i.e., \"Start\")?\n\nI know this is nested in \"ServiceWorkerReadFromCacheJob\" scope defined in the ctor/dtor and basically it\u0027s easy to know this \"Start\" comes from ServiceWorkerReadFromCacheJob, but what if other classes also record something on ASYNC_INSTANT0(\"ServiceWorker\", \"Start\", ...) in this scope? Are we able to easily/quickly distinguish them?",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c8bd34_b74392c7",
         "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
         "patchSetId": 1
@@ -148,6 +189,24 @@
       "side": 1,
       "message": "It\u0027s because ReadRawDataComplete calls a callback internally. I tried to avoid it in the trace.",
       "parentUuid": "6648f4d9_7f77c638",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2548da8e_1492b125",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-14T14:25:01Z",
+      "side": 1,
+      "message": "That makes sense.",
+      "parentUuid": "b5466bd3_feafb875",
       "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
