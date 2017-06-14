@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/math_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/fps_meter.h"
@@ -1351,7 +1352,8 @@ void VrShellGl::DrawLaser(const vr::Mat4f& render_matrix) {
   vr::ScaleM(mat, {kLaserWidth, laser_length, 1}, &mat);
 
   // Tip back 90 degrees to flat, pointing at the scene.
-  const vr::Quatf quat = vr::QuatFromAxisAngle({1.0f, 0.0f, 0.0f, -M_PI / 2});
+  const vr::Quatf quat =
+      vr::QuatFromAxisAngle({1.0f, 0.0f, 0.0f, -base::kPiFloat / 2});
   vr::Mat4f rotation_mat;
   vr::QuatToMatrix(quat, &rotation_mat);
   vr::MatrixMul(rotation_mat, mat, &mat);
@@ -1368,7 +1370,7 @@ void VrShellGl::DrawLaser(const vr::Mat4f& render_matrix) {
   vr::Mat4f transform;
   for (int i = 0; i < faces; i++) {
     // Rotate around Z.
-    const float angle = M_PI * 2 * i / faces;
+    const float angle = base::kPiFloat * 2 * i / faces;
     const vr::Quatf rot = vr::QuatFromAxisAngle({0.0f, 0.0f, 1.0f, angle});
     vr::QuatToMatrix(rot, &face_transform);
     vr::MatrixMul(face_transform, mat, &face_transform);

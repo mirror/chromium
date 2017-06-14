@@ -14,13 +14,13 @@
 #include "base/command_line.h"
 #include "base/location.h"
 #include "base/memory/ptr_util.h"
+#include "base/numerics/math_util.h"
 #include "base/run_loop.h"
 #include "base/test/histogram_tester.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "cc/animation/animation_host.h"
 #include "cc/animation/animation_id_provider.h"
 #include "cc/animation/transform_operations.h"
-#include "cc/base/math_util.h"
 #include "cc/input/browser_controls_offset_manager.h"
 #include "cc/input/main_thread_scrolling_reason.h"
 #include "cc/input/page_scale_animation.h"
@@ -6220,8 +6220,8 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
     // The child layer should have scrolled down in its local coordinates an
     // amount proportional to the angle between it and the input scroll delta.
     gfx::Vector2d expected_scroll_delta(
-        0, gesture_scroll_delta.y() *
-               std::cos(MathUtil::Deg2Rad(child_layer_angle)));
+        0,
+        gesture_scroll_delta.y() * std::cos(base::DegToRad(child_layer_angle)));
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
         host_impl_->ProcessScrollDeltas();
     EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), child_scroll_id,
@@ -6246,7 +6246,7 @@ TEST_F(LayerTreeHostImplTest, ScrollNonAxisAlignedRotatedLayer) {
     // The child layer shouldn't have scrolled.
     gfx::Vector2d expected_scroll_delta(
         0, -gesture_scroll_delta.x() *
-               std::sin(MathUtil::Deg2Rad(child_layer_angle)));
+               std::sin(base::DegToRad(child_layer_angle)));
     std::unique_ptr<ScrollAndScaleSet> scroll_info =
         host_impl_->ProcessScrollDeltas();
     EXPECT_TRUE(ScrollInfoContains(*scroll_info.get(), child_scroll_id,

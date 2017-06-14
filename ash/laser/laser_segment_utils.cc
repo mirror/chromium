@@ -4,9 +4,11 @@
 
 #include "ash/laser/laser_segment_utils.h"
 
+#include <cmath>
 #include <limits>
 
 #include "base/logging.h"
+#include "base/numerics/math_util.h"
 #include "ui/gfx/geometry/point3_f.h"
 #include "ui/gfx/geometry/point_f.h"
 #include "ui/gfx/geometry/vector2d_f.h"
@@ -29,7 +31,7 @@ float QuadraticEquation(bool use_plus, float a, float b, float c) {
 float AngleOfPointInNewCoordinates(const gfx::PointF& origin,
                                    const gfx::Vector2dF& direction,
                                    const gfx::PointF& point) {
-  double angle_degrees = atan2(direction.y(), direction.x()) * 180.0f / M_PI;
+  double angle_degrees = base::RadToDeg(atan2(direction.y(), direction.x()));
   gfx::Transform transform;
   transform.Rotate(-angle_degrees);
   transform.Translate(-origin.x(), -origin.y());
@@ -67,8 +69,8 @@ void ComputeProjectedPoints(const gfx::PointF& point,
                             gfx::PointF* second_projection) {
   // If the slope is NaN, the y-intercept should be NaN too. The line is thus
   // vertical and projections will be projected straight up/down from |point|.
-  if (isnan(line_slope)) {
-    DCHECK(isnan(line_y_intercept));
+  if (std::isnan(line_slope)) {
+    DCHECK(std::isnan(line_y_intercept));
 
     *first_projection =
         gfx::PointF(point.x(), point.y() + round(projection_distance));
