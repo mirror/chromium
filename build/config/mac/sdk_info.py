@@ -46,8 +46,9 @@ def FillSDKPathAndVersion(settings, platform, xcode_version):
   # TODO: unconditionally use --show-sdk-build-version once Xcode 7.2 or
   # higher is required to build Chrome for iOS or OS X.
   if xcode_version >= '0720':
-    settings['sdk_build'] = subprocess.check_output([
-        'xcrun', '-sdk', platform, '--show-sdk-build-version']).strip()
+    settings['sdk_build'] = '10.12'
+    # subprocess.check_output([
+    #     'xcrun', '-sdk', platform, '--show-sdk-build-version']).strip()
   else:
     settings['sdk_build'] = settings['sdk_version']
 
