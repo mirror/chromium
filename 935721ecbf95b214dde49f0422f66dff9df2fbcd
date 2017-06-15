@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "860ab801_a73a100f",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-15T14:36:09Z",
+      "side": 1,
+      "message": "This would be more readable if you explicitly mentioned that the matrix is constructed as the identity so you have to zero out the ones.",
+      "range": {
+        "startLine": 158,
+        "startChar": 28,
+        "endLine": 158,
+        "endChar": 29
+      },
+      "revId": "935721ecbf95b214dde49f0422f66dff9df2fbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0327c5a8_8a30124d",
+        "filename": "chrome/browser/android/vr_shell/vr_shell_gl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1048,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-15T14:36:09Z",
+      "side": 1,
+      "message": "nit: Helper function for readability?",
+      "range": {
+        "startLine": 1048,
+        "startChar": 45,
+        "endLine": 1048,
+        "endChar": 51
+      },
+      "revId": "935721ecbf95b214dde49f0422f66dff9df2fbcd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
