@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4d1e1647_2c220f15",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-15T17:36:16Z",
+      "side": 1,
+      "message": "Set cannot contain \"int\", only \"Integer\" is allowed.",
+      "parentUuid": "d3c06af2_4efe859c",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "330a73f1_cdca8249",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentInstrument.java",
         "patchSetId": 10
@@ -45,6 +69,30 @@
       "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16cb0f04_faa2682c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentInstrument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-15T17:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "330a73f1_cdca8249",
+      "range": {
+        "startLine": 269,
+        "startChar": 19,
+        "endLine": 269,
+        "endChar": 30
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7ec061ec_f832f920",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentInstrument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-15T17:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69731ed6_ec6cef36",
+      "range": {
+        "startLine": 371,
+        "startChar": 27,
+        "endLine": 371,
+        "endChar": 44
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a9b92dd6_ed80247c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
         "patchSetId": 10
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "336248e6_08103708",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-15T17:36:16Z",
+      "side": 1,
+      "message": "As you mentioned, this editor edit the number of only local cards, for which we don\u0027t know the type in the first place.",
+      "parentUuid": "a9b92dd6_ed80247c",
+      "range": {
+        "startLine": 369,
+        "startChar": 26,
+        "endLine": 369,
+        "endChar": 31
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "20e9a8dd_e1c986a8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
         "patchSetId": 10
@@ -114,6 +210,30 @@
       "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6481d43d_0521461e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-15T17:36:16Z",
+      "side": 1,
+      "message": "Good catch! Fixed.",
+      "parentUuid": "20e9a8dd_e1c986a8",
+      "range": {
+        "startLine": 1543,
+        "startChar": 12,
+        "endLine": 1543,
+        "endChar": 39
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
