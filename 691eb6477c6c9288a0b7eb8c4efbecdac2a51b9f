@@ -22,6 +22,30 @@
       "revId": "691eb6477c6c9288a0b7eb8c4efbecdac2a51b9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc50d6fc_abfe7ba5",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-15T17:45:12Z",
+      "side": 1,
+      "message": "Ah, yep. I\u0027ll remove this before submitting.",
+      "parentUuid": "9a93b38f_801a99da",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "691eb6477c6c9288a0b7eb8c4efbecdac2a51b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
