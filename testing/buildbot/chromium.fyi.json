@@ -2697,6 +2697,21 @@
       }
     ]
   },
+  "ChromiumOS amd64-generic Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
+  "ChromiumOS daisy Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
+  "ChromiumOS x86-generic Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
   "ClangToTAndroid x64": {
     "gtest_tests": [
       {
