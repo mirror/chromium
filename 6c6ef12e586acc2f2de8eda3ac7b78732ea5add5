@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0b0f8ac2_d08830ad",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-15T06:58:20Z",
+      "side": 1,
+      "message": "They need to be virtual so that the linker doesn\u0027t look for the implementation in web/ when its called from core/.",
+      "parentUuid": "143f62f8_12344ab5",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "752d8732_8c627f98",
         "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "440376c3_879ccad2",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-15T06:58:20Z",
+      "side": 1,
+      "message": "Nope, sorry, thanks. Removed.",
+      "parentUuid": "752d8732_8c627f98",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e3d7be90_7a8f1796",
+        "filename": "third_party/WebKit/Source/core/exported/WebDevToolsAgentBase.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-15T06:58:20Z",
+      "side": 1,
+      "message": "Removed; thanks.",
+      "parentUuid": "521ebd78_5db7d9ce",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0698d5b5_d611d17b",
         "filename": "third_party/WebKit/Source/web/WebFrameWidgetImpl.cpp",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "3ac3bd25_60827f9a",
+        "filename": "third_party/WebKit/Source/web/WebFrameWidgetImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-15T06:58:20Z",
+      "side": 1,
+      "message": "Nice find; fixed. :)",
+      "parentUuid": "0698d5b5_d611d17b",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f8ee4491_1c96b54e",
         "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.h",
         "patchSetId": 2
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-14T09:19:18Z",
       "side": 1,
       "message": "Why we need this here?",
+      "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0fae29_52a675f4",
+        "filename": "third_party/WebKit/Source/web/WebLocalFrameImpl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-15T06:58:20Z",
+      "side": 1,
+      "message": "Oh sorry; meant to point this out :) It\u0027s so this file knows that WebDevToolsAgentBase is a parent of WebDevToolsAgentImpl (it needs to auto upcast in dev_tools_agent_.Get()). I was going to add a TODO to remove this but there\u0027s already a TODO to remove the DevToolsAgentImpl() method; I\u0027ll add a TODO now anyway because maybe its not clear :) wdyt?",
+      "parentUuid": "f8ee4491_1c96b54e",
       "revId": "6c6ef12e586acc2f2de8eda3ac7b78732ea5add5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
