@@ -15,6 +15,7 @@
 namespace blink {
 
 class LocalFrame;
+class WebDevToolsAgentClient;
 
 // WebDevToolsAgentBase is a temporary class the provides a layer of abstraction
 // for WebDevToolsAgentImpl. Mehtods that are declared public in
@@ -35,15 +36,21 @@ class CORE_EXPORT WebDevToolsAgentBase
  public:
   DEFINE_INLINE_VIRTUAL_TRACE() {}
 
+  virtual void WillBeDestroyed() = 0;
+  virtual WebDevToolsAgentClient* Client() = 0;
+  virtual void FlushProtocolNotifications() = 0;
   virtual void PaintOverlay() = 0;
+  virtual void LayoutOverlay() = 0;
   virtual bool HandleInputEvent(const WebInputEvent&) = 0;
 
   // Instrumentation from web/ layer.
   virtual void DidCommitLoadForLocalFrame(LocalFrame*) = 0;
   virtual void DidStartProvisionalLoad(LocalFrame*) = 0;
+  virtual bool ScreencastEnabled() = 0;
   virtual void WillAddPageOverlay(const GraphicsLayer*) = 0;
   virtual void DidRemovePageOverlay(const GraphicsLayer*) = 0;
   virtual void LayerTreeViewChanged(WebLayerTreeView*) = 0;
+  virtual void RootLayerCleared() = 0;
 };
 
 }  // namespace blink

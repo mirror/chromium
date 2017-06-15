@@ -83,7 +83,7 @@ class PageScaleConstraintsSet;
 class PaintLayerCompositor;
 class UserGestureToken;
 class WebActiveGestureAnimation;
-class WebDevToolsAgentImpl;
+class WebDevToolsAgentBase;
 class WebElement;
 class WebInputMethodController;
 class WebLayerTreeView;
@@ -291,7 +291,7 @@ class WEB_EXPORT WebViewImpl final
   // the page is shutting down, but will be valid at all other times.
   Page* GetPage() const override { return page_.Get(); }
 
-  WebDevToolsAgentImpl* MainFrameDevToolsAgentImpl();
+  WebDevToolsAgentBase* MainFrameDevToolsAgentBase();
 
   DevToolsEmulator* GetDevToolsEmulator() const override {
     return dev_tools_emulator_.Get();

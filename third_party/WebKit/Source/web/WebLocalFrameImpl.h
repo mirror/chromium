@@ -45,8 +45,6 @@
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
 #include "web/LocalFrameClientImpl.h"
-// TODO(sashab): Remove this once the DevToolsAgentImpl() method is removed.
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebExport.h"
 
 #include <memory>
@@ -368,9 +366,6 @@ class WEB_EXPORT WebLocalFrameImpl final
     return GetFrame() ? GetFrame()->View() : 0;
   }
 
-  WebDevToolsAgentImpl* DevToolsAgentImpl() const override {
-    return dev_tools_agent_.Get();
-  }
   WebDevToolsAgentBase* DevToolsAgentBase() const override {
     return dev_tools_agent_.Get();
   }
@@ -485,7 +480,7 @@ class WEB_EXPORT WebLocalFrameImpl final
   // change to WebFrame when we introduce WebFrameProxy.
   Member<LocalFrame> frame_;
 
-  Member<WebDevToolsAgentImpl> dev_tools_agent_;
+  Member<WebDevToolsAgentBase> dev_tools_agent_;
 
   // This is set if the frame is the root of a local frame tree, and requires a
   // widget for layout.

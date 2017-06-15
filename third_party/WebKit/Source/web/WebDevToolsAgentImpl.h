@@ -60,24 +60,23 @@ class WebDevToolsAgentImpl final : public WebDevToolsAgentBase {
   ~WebDevToolsAgentImpl() override;
   DECLARE_VIRTUAL_TRACE();
 
-  void WillBeDestroyed();
-  WebDevToolsAgentClient* Client() { return client_; }
-  void FlushProtocolNotifications();
-  void LayoutOverlay();
-
   // Instrumentation from web/ layer.
-  bool ScreencastEnabled();
-  void RootLayerCleared();
   bool CacheDisabled() override;
 
   // WebDevToolsAgentBase implementation.
+  void WillBeDestroyed() override;
+  WebDevToolsAgentClient* Client() override { return client_; }
+  void FlushProtocolNotifications() override;
   void PaintOverlay() override;
+  void LayoutOverlay() override;
   bool HandleInputEvent(const WebInputEvent&) override;
   void DidCommitLoadForLocalFrame(LocalFrame*) override;
   void DidStartProvisionalLoad(LocalFrame*) override;
+  bool ScreencastEnabled() override;
   void WillAddPageOverlay(const GraphicsLayer*) override;
   void DidRemovePageOverlay(const GraphicsLayer*) override;
   void LayerTreeViewChanged(WebLayerTreeView*) override;
+  void RootLayerCleared() override;
 
   // WebDevToolsAgent implementation.
   void Attach(const WebString& host_id, int session_id) override;

@@ -162,7 +162,7 @@ class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
 
   void RunLoop(WebLocalFrameBase* frame) {
     // 0. Flush pending frontend messages.
-    WebDevToolsAgentImpl* agent = frame->DevToolsAgentImpl();
+    WebDevToolsAgentBase* agent = frame->DevToolsAgentBase();
     agent->FlushProtocolNotifications();
 
     // 1. Disable input events.
@@ -213,8 +213,8 @@ class ClientMessageLoopAdapter : public MainThreadDebugger::ClientMessageLoop {
     if (QuitForCreateWindow())
       return;
     // Otherwise, pass to the client (embedded workers do it differently).
-    WebDevToolsAgentImpl* agent =
-        WebLocalFrameBase::FromFrame(frame)->DevToolsAgentImpl();
+    WebDevToolsAgentBase* agent =
+        WebLocalFrameBase::FromFrame(frame)->DevToolsAgentBase();
     if (agent && agent->Client())
       agent->Client()->ResumeStartup();
   }
