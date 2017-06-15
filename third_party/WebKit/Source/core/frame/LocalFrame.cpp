@@ -427,6 +427,11 @@ void LocalFrame::Detach(FrameDetachType type) {
     performance_monitor_->Shutdown();
 
   PluginScriptForbiddenScope forbid_plugin_destructor_scripting;
+
+  // TODO: Page should take care of updating focus/scrolling instead of Frame.
+  if (page_->GetFocusController().FocusedFrame() == this)
+    page_->GetFocusController().SetFocusedFrame(nullptr);
+
   loader_.StopAllLoaders();
   // Don't allow any new child frames to load in this frame: attaching a new
   // child frame during or after detaching children results in an attached
@@ -481,10 +486,6 @@ void LocalFrame::Detach(FrameDetachType type) {
   // so page() could be null.
   if (GetPage() && GetPage()->GetFocusController().FocusedFrame() == this)
     GetPage()->GetFocusController().SetFocusedFrame(nullptr);
-
-  if (GetPage() && GetPage()->GetScrollingCoordinator() && view_)
-    GetPage()->GetScrollingCoordinator()->WillDestroyScrollableArea(
-        view_.Get());
 
   probe::frameDetachedFromParent(this);
   Frame::Detach(type);
