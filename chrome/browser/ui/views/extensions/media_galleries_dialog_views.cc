@@ -84,16 +84,6 @@ MediaGalleriesDialogViews::~MediaGalleriesDialogViews() {
     delete contents_;
 }
 
-void MediaGalleriesDialogViews::AcceptDialogForTesting() {
-  accepted_ = true;
-
-  web_modal::WebContentsModalDialogManager* manager =
-      web_modal::WebContentsModalDialogManager::FromWebContents(
-          controller_->WebContents());
-  DCHECK(manager);
-  web_modal::WebContentsModalDialogManager::TestApi(manager).CloseAllDialogs();
-}
-
 void MediaGalleriesDialogViews::InitChildViews() {
   // Outer dialog layout.
   contents_->RemoveAllChildViews(true);

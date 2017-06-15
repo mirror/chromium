@@ -23,9 +23,6 @@ class MockMediaGalleriesDialog : public MediaGalleriesDialog {
   int update_count() const;
 
  private:
-  // MediaGalleriesDialog implementation.
-  void AcceptDialogForTesting() override;
-
   int update_count_;
 
   DialogDestroyedCallback dialog_destroyed_callback_;

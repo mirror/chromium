@@ -59,9 +59,6 @@ class MediaGalleriesDialogCocoa : public ConstrainedWindowMacDelegate,
   FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, UpdateAdds);
   FRIEND_TEST_ALL_PREFIXES(MediaGalleriesDialogTest, ForgetDeletes);
 
-  // MediaGalleriesDialog implementation:
-  void AcceptDialogForTesting() override;
-
   void InitDialogControls();
   CGFloat CreateCheckboxes(
       CGFloat y_pos,

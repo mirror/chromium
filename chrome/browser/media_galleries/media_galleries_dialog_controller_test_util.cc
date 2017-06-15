@@ -22,6 +22,3 @@ int MockMediaGalleriesDialog::update_count() const {
   return update_count_;
 }
 
-void MockMediaGalleriesDialog::AcceptDialogForTesting() {
-  NOTREACHED();
-}
