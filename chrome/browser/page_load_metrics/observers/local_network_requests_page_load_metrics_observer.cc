@@ -56,7 +56,7 @@ static const std::map<uint16_t, PortType>& localhost_port_categories =
         {631, PortType::PORT_TYPE_PRINT},
         // TODO(uthakore): Add additional port mappings based on further study.
     };
-}
+} // namespace
 
 namespace internal {
 

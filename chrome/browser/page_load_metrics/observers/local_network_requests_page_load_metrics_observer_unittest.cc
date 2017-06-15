@@ -24,39 +24,7 @@
 
 namespace {
 
-// TODO(uthakore): Update router regex based on further study.
-// Returns true if the IP address matches the following regular expression for
-// common router IP addresses:
-// "^192\.168\.(0|10?|2)\.(1(00?)?)|^10\.(0|1)\.(0|10?)\.(1(00?)?|2)"
-bool IsLikelyRouterIP(net::IPAddress ip_address) {
-  return ip_address.IsIPv4() &&
-         ((ip_address.bytes()[0] == 192 && ip_address.bytes()[1] == 168 &&
-           (ip_address.bytes()[2] == 0 || ip_address.bytes()[2] == 1 ||
-            ip_address.bytes()[2] == 2 || ip_address.bytes()[2] == 10) &&
-           (ip_address.bytes()[3] == 1 || ip_address.bytes()[3] == 10 ||
-            ip_address.bytes()[3] == 100)) ||
-          (ip_address.bytes()[0] == 10 &&
-           (ip_address.bytes()[1] == 0 || ip_address.bytes()[1] == 1) &&
-           (ip_address.bytes()[2] == 0 || ip_address.bytes()[2] == 1 ||
-            ip_address.bytes()[2] == 10) &&
-           (ip_address.bytes()[3] == 1 || ip_address.bytes()[3] == 10 ||
-            ip_address.bytes()[3] == 100 || ip_address.bytes()[3] == 2)));
-}
-
-// List of mappings for localhost ports that belong to special categories that
-// we want to track.
-static const std::map<uint16_t, PortType>& localhost_port_categories =
-    *new std::map<uint16_t, PortType>{
-        {80, PortType::PORT_TYPE_WEB},    {8000, PortType::PORT_TYPE_WEB},
-        {8008, PortType::PORT_TYPE_WEB},  {8080, PortType::PORT_TYPE_WEB},
-        {8081, PortType::PORT_TYPE_WEB},  {8088, PortType::PORT_TYPE_WEB},
-        {3306, PortType::PORT_TYPE_DB},   {5432, PortType::PORT_TYPE_DB},
-        {27017, PortType::PORT_TYPE_DB},  {27018, PortType::PORT_TYPE_DB},
-        {27019, PortType::PORT_TYPE_DB},  {515, PortType::PORT_TYPE_PRINT},
-        {631, PortType::PORT_TYPE_PRINT},
-        // TODO(uthakore): Add additional port mappings based on further study.
-    };
-}
+} // namespace
 
 namespace internal {
 
@@ -81,33 +49,33 @@ GetNonlocalhostHistogramNames() {
           *new std::map<DomainType,
                         std::map<ResourceType, std::map<bool, std::string>>>();
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][true] =
-      "LocalNetworkRequests.PublicPage.PrivateRequests.Successful";
+      "LocalNetworkRequests.PublicPage.PrivateRequestCount.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][false] =
-          "LocalNetworkRequests.PublicPage.PrivateRequests.Failed";
+          "LocalNetworkRequests.PublicPage.PrivateRequestCount.Failed";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][true] =
-      "LocalNetworkRequests.PublicPage.RouterRequests.Successful";
+      "LocalNetworkRequests.PublicPage.RouterRequestCount.Successful";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][false] =
-      "LocalNetworkRequests.PublicPage.RouterRequests.Failed";
+      "LocalNetworkRequests.PublicPage.RouterRequestCount.Failed";
 
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][true] =
-      "LocalNetworkRequests.PrivatePage.PublicRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.PublicRequestCount.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][false] =
-          "LocalNetworkRequests.PrivatePage.PublicRequests.Failed";
+          "LocalNetworkRequests.PrivatePage.PublicRequestCount.Failed";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][true] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Successful";
+          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Failed";
+          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE]
                              [RESOURCE_TYPE_LOCAL_DIFF_SUBNET][true] =
                                  "LocalNetworkRequests.PrivatePage."
-                                 "DifferentSubnetRequests.Successful";
+                                 "DifferentSubnetRequestCount.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_DIFF_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Failed";
+          "LocalNetworkRequests.PrivatePage.DifferentSubnetRequestCount.Failed";
 
   return kNonlocalhostHistogramNames;
 }
@@ -121,46 +89,66 @@ GetLocalhostHistogramNames() {
                         std::map<PortType, std::map<bool, std::string>>>();
 
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][true] =
-      "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "WebRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][false] =
-      "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "WebRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][true] =
-      "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "DatabaseRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][false] =
-      "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "DatabaseRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][true] =
-      "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "PrinterRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][false] =
-      "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "PrinterRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][true] =
-      "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "DevelopmentRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][false] =
-      "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "DevelopmentRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][true] =
-      "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "OtherRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][false] =
-      "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost."
+      "OtherRequestCount.Failed";
 
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "WebRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "WebRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "DatabaseRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "DatabaseRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "PrinterRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "PrinterRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "DevelopmentRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "DevelopmentRequestCount.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "OtherRequestCount.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost."
+      "OtherRequestCount.Failed";
   return kLocalhostHistogramNames;
 }
 
@@ -177,12 +165,7 @@ static const std::map<DomainType,
 
 }  // namespace internal
 
-LocalNetworkRequestsPageLoadMetricsObserver::
-    LocalNetworkRequestsPageLoadMetricsObserver() {}
-LocalNetworkRequestsPageLoadMetricsObserver::
-    ~LocalNetworkRequestsPageLoadMetricsObserver() {}
-
-page_load_metrics::PageLoadMetricsObserver::ObservePolicy
+/*page_load_metrics::PageLoadMetricsObserver::ObservePolicy
 LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
     content::NavigationHandle* navigation_handle,
     ukm::SourceId source_id) {
@@ -446,4 +429,4 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordUkmDomainType(
       ukm_recorder->GetEntryBuilder(source_id, internal::kUkmPageLoadEventName);
   builder->AddMetric(internal::kUkmDomainTypeName,
                      static_cast<int>(page_load_type_));
-}
+}*/
