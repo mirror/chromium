@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f6dccda_424a8c3f",
+        "filename": "net/android/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-15T19:22:29Z",
+      "side": 1,
+      "message": "nit: now that the other srcjar is excluded, a better name for this would be \"embedded_test_server_aidl_java\"",
+      "range": {
+        "startLine": 44,
+        "startChar": 17,
+        "endLine": 44,
+        "endChar": 45
+      },
+      "revId": "ccaa07336269dbda847b8042b7c5b79171290b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9ed2b98_a61186f5",
+        "filename": "net/android/BUILD.gn",
+        "patchSetId": 7
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-15T19:22:29Z",
+      "side": 1,
+      "message": "I don\u0027t think any of the files use this (remove)",
+      "range": {
+        "startLine": 85,
+        "startChar": 19,
+        "endLine": 85,
+        "endChar": 24
+      },
+      "revId": "ccaa07336269dbda847b8042b7c5b79171290b2a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
