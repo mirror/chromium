@@ -26,7 +26,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "build/build_config.h"
 #include "components/tracing/common/tracing_switches.h"
-#include "content/browser/histogram_message_filter.h"
+#include "content/browser/histogram_controller.h"
 #include "content/browser/loader/resource_message_filter.h"
 #include "content/browser/profiler_message_filter.h"
 #include "content/browser/service_manager/service_manager_context.h"
@@ -47,8 +47,11 @@
 #include "content/public/common/result_codes.h"
 #include "content/public/common/sandboxed_process_launcher_delegate.h"
 #include "content/public/common/service_manager_connection.h"
+#include "content/public/common/simple_connection_filter.h"
 #include "mojo/edk/embedder/embedder.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "services/service_manager/embedder/switches.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 #if defined(OS_MACOSX)
 #include "content/browser/mach_broker_mac.h"
@@ -63,6 +66,34 @@ static base::LazyInstance<
 
 base::LazyInstance<base::ObserverList<BrowserChildProcessObserver>>::
     DestructorAtExit g_observers = LAZY_INSTANCE_INITIALIZER;
+
+class ChildConnectionFilter : public SimpleConnectionFilter {
+ public:
+  ChildConnectionFilter(
+      const service_manager::Identity& child_identity,
+      std::unique_ptr<service_manager::BinderRegistry> registry)
+      : SimpleConnectionFilter(std::move(registry)),
+        child_identity_(child_identity) {}
+  ~ChildConnectionFilter() override = default;
+
+  // SimpleConnectionFilter implementation.
+  void OnBindInterface(const service_manager::BindSourceInfo& source_info,
+                       const std::string& interface_name,
+                       mojo::ScopedMessagePipeHandle* interface_pipe,
+                       service_manager::Connector* connector) override {
+    if (child_identity_.name() != source_info.identity.name() ||
+        child_identity_.instance() != source_info.identity.instance()) {
+      return;
+    }
+    SimpleConnectionFilter::OnBindInterface(source_info, interface_name,
+                                            interface_pipe, connector);
+  }
+
+ private:
+  const service_manager::Identity child_identity_;
+
+  DISALLOW_COPY_AND_ASSIGN(ChildConnectionFilter);
+};
 
 void NotifyProcessLaunchedAndConnected(const ChildProcessData& data) {
   for (auto& observer : g_observers.Get())
@@ -148,6 +179,7 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
     : data_(process_type),
       delegate_(delegate),
       broker_client_invitation_(new mojo::edk::OutgoingBrokerClientInvitation),
+      histogram_collector_binding_(this),
       channel_(nullptr),
       is_channel_connected_(false),
       notify_child_disconnected_(false),
@@ -157,7 +189,6 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
   child_process_host_.reset(ChildProcessHost::Create(this));
   AddFilter(new TraceMessageFilter(data_.id));
   AddFilter(new ProfilerMessageFilter(process_type));
-  AddFilter(new HistogramMessageFilter);
 
   g_child_process_list.Get().push_back(this);
   GetContentClient()->browser()->BrowserChildProcessHostCreated(this);
@@ -171,6 +202,7 @@ BrowserChildProcessHostImpl::BrowserChildProcessHostImpl(
         new ChildConnection(child_identity, broker_client_invitation_.get(),
                             ServiceManagerContext::GetConnectorForIOThread(),
                             base::ThreadTaskRunnerHandle::Get()));
+    RegisterMojoInterfaces();
   }
 
   // Create a persistent memory segment for subprocess histograms.
@@ -349,7 +381,6 @@ void BrowserChildProcessHostImpl::OnChannelConnected(int32_t peer_pid) {
   delegate_->OnChannelConnected(peer_pid);
 
   if (IsProcessLaunched()) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));
@@ -457,6 +488,21 @@ bool BrowserChildProcessHostImpl::Send(IPC::Message* message) {
   return child_process_host_->Send(message);
 }
 
+void BrowserChildProcessHostImpl::RegisterMojoInterfaces() {
+  DCHECK(child_connection_);
+  auto registry = base::MakeUnique<service_manager::BinderRegistry>();
+
+  registry->AddInterface(base::BindRepeating(
+      &BrowserChildProcessHostImpl::CreateHistogramCollector,
+      base::Unretained(this)));
+
+  if (ServiceManagerConnection::GetForProcess()) {
+    ServiceManagerConnection::GetForProcess()->AddConnectionFilter(
+        base::MakeUnique<ChildConnectionFilter>(
+            child_connection_->child_identity(), std::move(registry)));
+  }
+}
+
 void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
   // Create a persistent memory segment for subprocess histograms only if
   // they're active in the browser.
@@ -516,13 +562,33 @@ void BrowserChildProcessHostImpl::CreateMetricsAllocator() {
       /*readonly=*/false));
 }
 
-void BrowserChildProcessHostImpl::ShareMetricsAllocatorToProcess() {
-  if (metrics_allocator_) {
-    base::SharedMemoryHandle shm_handle =
-        metrics_allocator_->shared_memory()->handle().Duplicate();
-    Send(new ChildProcessMsg_SetHistogramMemory(
-        shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
-  }
+void BrowserChildProcessHostImpl::CreateHistogramCollector(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::HistogramCollectorRequest request) {
+  // Only support one connection at a time.
+  DCHECK(!histogram_collector_binding_.is_bound());
+  histogram_collector_binding_.Bind(std::move(request));
+  histogram_collector_binding_.set_connection_error_handler(base::Bind(
+      base::IgnoreResult(&mojo::Binding<mojom::HistogramCollector>::Unbind),
+      base::Unretained(&histogram_collector_binding_)));
+}
+
+void BrowserChildProcessHostImpl::RegisterClient(
+    mojom::HistogramCollectorClientPtr client,
+    mojom::HistogramCollector::RegisterClientCallback cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::IO);
+
+  // Run the callback, then immediately register this client with the
+  // HistogramController. This ensures that the client will handle the callback
+  // before any data requests are made.
+  std::move(cb).Run(
+      metrics_allocator_
+          ? mojo::WrapSharedMemoryHandle(
+                metrics_allocator_->shared_memory()->handle().Duplicate(),
+                metrics_allocator_->shared_memory()->mapped_size(),
+                false /* read_only */)
+          : mojo::ScopedSharedBufferHandle());
+  HistogramController::GetInstance()->RegisterClient(std::move(client));
 }
 
 void BrowserChildProcessHostImpl::OnProcessLaunchFailed(int error_code) {
@@ -554,7 +620,6 @@ void BrowserChildProcessHostImpl::OnProcessLaunched() {
   delegate_->OnProcessLaunched();
 
   if (is_channel_connected_) {
-    ShareMetricsAllocatorToProcess();
     BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
                             base::Bind(&NotifyProcessLaunchedAndConnected,
                                        data_));

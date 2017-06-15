@@ -19,10 +19,12 @@
 #include "base/synchronization/waitable_event_watcher.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/common/histogram.mojom.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/child_process_host_delegate.h"
 #include "mojo/edk/embedder/outgoing_broker_client_invitation.h"
+#include "mojo/public/cpp/bindings/binding.h"
 
 #if defined(OS_WIN)
 #include "base/win/object_watcher.h"
@@ -44,11 +46,12 @@ class ChildConnection;
 /// class because it lives on the UI thread.
 class CONTENT_EXPORT BrowserChildProcessHostImpl
     : public BrowserChildProcessHost,
+      public ChildProcessLauncher::Client,
       public NON_EXPORTED_BASE(ChildProcessHostDelegate),
 #if defined(OS_WIN)
       public base::win::ObjectWatcher::Delegate,
 #endif
-      public ChildProcessLauncher::Client {
+      public NON_EXPORTED_BASE(mojom::HistogramCollector) {
  public:
   BrowserChildProcessHostImpl(content::ProcessType process_type,
                               BrowserChildProcessHostDelegate* delegate,
@@ -126,13 +129,22 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   static void AddObserver(BrowserChildProcessObserver* observer);
   static void RemoveObserver(BrowserChildProcessObserver* observer);
 
+  // Register mojo interfaces hosted in the browser, exposed to the child
+  // process.
+  void RegisterMojoInterfaces();
+
   // Creates the |metrics_allocator_|.
   void CreateMetricsAllocator();
 
-  // Passes the |metrics_allocator_|, if any, to the managed process. This
-  // requires the process to have been launched and the IPC channel to be
-  // available.
-  void ShareMetricsAllocatorToProcess();
+  // Binds a request from the child for a histogram collector.
+  void CreateHistogramCollector(
+      const service_manager::BindSourceInfo& source_info,
+      mojom::HistogramCollectorRequest request);
+
+  // mojom::HistogramCollector implementation. Must be called on the IO thread.
+  void RegisterClient(
+      mojom::HistogramCollectorClientPtr client,
+      mojom::HistogramCollector::RegisterClientCallback cb) override;
 
   // ChildProcessLauncher::Client implementation.
   void OnProcessLaunched() override;
@@ -171,6 +183,7 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
 
   // The memory allocator, if any, in which the process will write its metrics.
   std::unique_ptr<base::SharedPersistentMemoryAllocator> metrics_allocator_;
+  mojo::Binding<mojom::HistogramCollector> histogram_collector_binding_;
 
   IPC::Channel* channel_ = nullptr;
   bool is_channel_connected_;
