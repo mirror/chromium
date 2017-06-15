@@ -277,8 +277,8 @@ bool RawResource::CanReuse(const FetchParameters& new_fetch_parameters) const {
   if (GetResourceRequest().HttpBody() != new_request.HttpBody())
     return false;
 
-  if (GetResourceRequest().AllowStoredCredentials() !=
-      new_request.AllowStoredCredentials())
+  if (GetResourceRequest().GetFetchCredentialsMode() !=
+      new_request.GetFetchCredentialsMode())
     return false;
 
   // Ensure most headers match the existing headers before continuing. Note that
