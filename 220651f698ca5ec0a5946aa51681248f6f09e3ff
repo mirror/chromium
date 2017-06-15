@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "973350df_acf1e9c9",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-06-15T00:30:53Z",
+      "side": 1,
+      "message": "I would just add another \"match_tag\" for \"platform: win32\" here and remove the second entry. Not sure what that\u0027s referencing, but that wheel doesn\u0027t exist as you\u0027ve named it: https://chrome-infra-packages.appspot.com/#/?path\u003dinfra/python/wheels/pywin32\n\nIf you do this, you can also remove the newline between the above comment and this \"wheel\" entry, which should make things look nicer.",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "220651f698ca5ec0a5946aa51681248f6f09e3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
