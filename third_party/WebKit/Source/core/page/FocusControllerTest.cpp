@@ -8,6 +8,8 @@
 #include "bindings/core/v8/V8BindingForCore.h"
 #include "core/dom/shadow/ShadowRootInit.h"
 #include "core/html/HTMLElement.h"
+#include "core/html/HTMLFormElement.h"
+#include "core/html/HTMLFormControlElement.h"
 #include "core/testing/DummyPageHolder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -92,6 +94,46 @@ TEST_F(FocusControllerTest, SetActiveOnInactiveDocument) {
   // document().page() becomes nullptr.
   // Use DummyPageHolder's page to retrieve FocusController.
   PageHolder()->GetPage().GetFocusController().SetActive(true);
+}
+
+// This test is for crbug.com/733218
+TEST_F(FocusControllerTest, SVGFocusableElementInForm) {
+  GetDocument().body()->setInnerHTML(
+      "<form>"
+      "<input id='first'>"
+      "<input id='middle'>"
+      "<svg width='100px' height='100px'>"
+      "<a xlink:href='#'><circle cx='50' cy='50' r='30' /></a>"
+      "</svg>"
+      "<input id='last'>"
+      "</form>");
+  Element* form = ToElement(GetDocument().body()->firstChild());
+  Element* first = ToElement(form->firstChild());
+  Element* last = ToElement(form->lastChild());
+
+  // TODO: remove later
+#if 1
+  Element* form_owner = ToHTMLFormControlElement(first)->formOwner();
+
+  EXPECT_TRUE(isHTMLFormElement(form));
+  EXPECT_TRUE(isHTMLInputElement(first));
+  EXPECT_TRUE(isHTMLInputElement(last));
+  EXPECT_EQ(form_owner, form);
+
+  first->focus();
+  GetFocusController().AdvanceFocus(kWebFocusTypeForward);
+  EXPECT_NE(last, GetDocument().FocusedElement()) << "FFF";
+#endif
+
+  Element* next = GetFocusController().NextFocusableElementInForm(
+      first, kWebFocusTypeForward);
+  EXPECT_EQ(next, last)
+      << "SVG Element should be skipped even when focusable in form.";
+
+  Element* prev = GetFocusController().NextFocusableElementInForm(
+      next, kWebFocusTypeBackward);
+  EXPECT_EQ(prev, first)
+      << "SVG Element should be skipped even when focusable in form.";
 }
 
 }  // namespace blink
