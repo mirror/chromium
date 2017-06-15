@@ -22,6 +22,30 @@
       "revId": "220651f698ca5ec0a5946aa51681248f6f09e3ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ece6ed54_d3386ac1",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-15T16:45:20Z",
+      "side": 1,
+      "message": "Done, much better",
+      "parentUuid": "973350df_acf1e9c9",
+      "range": {
+        "startLine": 24,
+        "startChar": 2,
+        "endLine": 26,
+        "endChar": 3
+      },
+      "revId": "220651f698ca5ec0a5946aa51681248f6f09e3ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
