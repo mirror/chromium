@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e8b111cf_bf061f30",
+        "filename": "services/service_manager/public/cpp/standalone_service/standalone_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T13:58:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d265ce1d_47152565",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "be202190_7b41d621",
         "filename": "services/service_manager/runner/host/service_process_launcher.cc",
         "patchSetId": 5
@@ -90,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "c4fb8823_2fd7a4e9",
+        "filename": "services/service_manager/runner/host/service_process_launcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T13:58:22Z",
+      "side": 1,
+      "message": "As discussed offline, split out ServiceProcessLauncher::Delegate and ServiceProcessLauncherFactory into their own headers. This enables stopping building service_process_launcher.* on iOS, which results in much less (and more comprehensible) if-defing.",
+      "parentUuid": "5cc46726_912f4637",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce3b0ee_ef9b0552",
         "filename": "services/service_manager/service_manager.cc",
         "patchSetId": 5
@@ -104,6 +140,24 @@
       "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de51b089_0914472e",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T13:58:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce3b0ee_ef9b0552",
+      "revId": "7646b33b403bb0a27d1479eb88efe7c3fcfb404f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
