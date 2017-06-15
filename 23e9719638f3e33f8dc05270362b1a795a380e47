@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e8dbacc_469b8b4b",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T20:20:01Z",
+      "side": 1,
+      "message": "nit: please sort alphabetically here and in shipping_address_selection_mediator (I\u0027m guilty of not doing so myself)",
+      "range": {
+        "startLine": 29,
+        "startChar": 77,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "23e9719638f3e33f8dc05270362b1a795a380e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c4a161_447c8c60",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T20:20:01Z",
+      "side": 1,
+      "message": "I thought we decided to use PaymentsProfileComparator::IsShippingComplete",
+      "revId": "23e9719638f3e33f8dc05270362b1a795a380e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
