@@ -22,6 +22,30 @@
       "revId": "bd0e4e2fe0ff3eefb3837a4f0dbbd539b6850ab5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "655b1056_2936d695",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-15T17:56:50Z",
+      "side": 1,
+      "message": "The call below should be removed. Done.",
+      "parentUuid": "3fda3613_4984e126",
+      "range": {
+        "startLine": 101,
+        "startChar": 49,
+        "endLine": 101,
+        "endChar": 70
+      },
+      "revId": "bd0e4e2fe0ff3eefb3837a4f0dbbd539b6850ab5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
