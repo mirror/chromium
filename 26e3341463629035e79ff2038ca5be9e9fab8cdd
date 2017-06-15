@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83af789f_42a22278",
+        "filename": "content/renderer/media/mojo_audio_output_ipc.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-15T17:54:46Z",
+      "side": 1,
+      "message": "Simply resetting the callback has the same effect (since it has the ScopedClosureRunner inside), but I\u0027m doing this since it feels more explicit.",
+      "revId": "26e3341463629035e79ff2038ca5be9e9fab8cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
