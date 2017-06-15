@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c39ebf79_d3bbae3e",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentOrderedMap.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-15T09:14:29Z",
+      "side": 1,
+      "message": "No, that is not intended usage of this function. This function is okay to return null here if they don\u0027t have a cache. null is one of the possible return values.\n\nWe use this fact in DCHECK() at several places. DCHECK the return value is caller\u0027s responsibility.",
+      "parentUuid": "7a2021f7_9a8e84f0",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74d6541f_de3c8acb",
         "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T08:28:00Z",
       "side": 1,
       "message": "How much does this change contribute to the performance gain?\ni.e. this can be replaced with FindSlotByName(slot_name) (as the old code did),\nwhich has more strong guarantee but could be slower.\nIf you expect the mapentry-\u003eelement is cached, the difference would be\nmarginal (if I read the DocumentOrderedMap::Get() correctly).",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62bcdecf_cda25140",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-15T09:14:29Z",
+      "side": 1,
+      "message": "This is not for the performance. This is rather for assertion that the first element is always on the cache if there is in the tree in this code path.\n\nWe can use FindSlotByName here. But it hides the fact that the first element is always on the cache. \n\nIn other words, if FindSlotByName returns an element, it always return the element from the cache without accessing node tree.\n\nSee post-condition DCHECK in DidAddSlot.",
+      "parentUuid": "74d6541f_de3c8acb",
       "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
