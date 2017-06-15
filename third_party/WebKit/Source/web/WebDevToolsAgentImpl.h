@@ -33,16 +33,11 @@
 
 #include <memory>
 
-#include "core/inspector/InspectorEmulationAgent.h"
-#include "core/inspector/InspectorPageAgent.h"
-#include "core/inspector/InspectorSession.h"
-#include "core/inspector/InspectorTracingAgent.h"
+#include "core/exported/WebDevToolsAgentBase.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/Forward.h"
 #include "platform/wtf/Vector.h"
 #include "public/platform/WebSize.h"
-#include "public/platform/WebThread.h"
-#include "public/web/WebDevToolsAgent.h"
 
 namespace blink {
 
@@ -58,14 +53,7 @@ class WebLayerTreeView;
 class WebLocalFrameBase;
 class WebString;
 
-class WebDevToolsAgentImpl final
-    : public GarbageCollectedFinalized<WebDevToolsAgentImpl>,
-      public WebDevToolsAgent,
-      public InspectorEmulationAgent::Client,
-      public InspectorTracingAgent::Client,
-      public InspectorPageAgent::Client,
-      public InspectorSession::Client,
-      private WebThread::TaskObserver {
+class WebDevToolsAgentImpl final : public WebDevToolsAgentBase {
  public:
   static WebDevToolsAgentImpl* Create(WebLocalFrameBase*,
                                       WebDevToolsAgentClient*);
@@ -75,19 +63,21 @@ class WebDevToolsAgentImpl final
   void WillBeDestroyed();
   WebDevToolsAgentClient* Client() { return client_; }
   void FlushProtocolNotifications();
-  void PaintOverlay();
   void LayoutOverlay();
-  bool HandleInputEvent(const WebInputEvent&);
 
   // Instrumentation from web/ layer.
-  void DidCommitLoadForLocalFrame(LocalFrame*);
-  void DidStartProvisionalLoad(LocalFrame*);
   bool ScreencastEnabled();
-  void WillAddPageOverlay(const GraphicsLayer*);
-  void DidRemovePageOverlay(const GraphicsLayer*);
-  void LayerTreeViewChanged(WebLayerTreeView*);
   void RootLayerCleared();
   bool CacheDisabled() override;
+
+  // WebDevToolsAgentBase implementation.
+  void PaintOverlay() override;
+  bool HandleInputEvent(const WebInputEvent&) override;
+  void DidCommitLoadForLocalFrame(LocalFrame*) override;
+  void DidStartProvisionalLoad(LocalFrame*) override;
+  void WillAddPageOverlay(const GraphicsLayer*) override;
+  void DidRemovePageOverlay(const GraphicsLayer*) override;
+  void LayerTreeViewChanged(WebLayerTreeView*) override;
 
   // WebDevToolsAgent implementation.
   void Attach(const WebString& host_id, int session_id) override;

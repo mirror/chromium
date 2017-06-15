@@ -29,6 +29,7 @@
 #include "web/PageOverlay.h"
 
 #include <memory>
+#include "core/exported/WebDevToolsAgentBase.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebFrameWidgetBase.h"
@@ -42,7 +43,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebLayer.h"
 #include "public/web/WebViewClient.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 namespace blink {
 
@@ -61,7 +61,7 @@ PageOverlay::~PageOverlay() {
     return;
 
   layer_->RemoveFromParent();
-  if (WebDevToolsAgentImpl* dev_tools = frame_impl_->DevToolsAgentImpl())
+  if (WebDevToolsAgentBase* dev_tools = frame_impl_->DevToolsAgentBase())
     dev_tools->DidRemovePageOverlay(layer_.get());
   layer_ = nullptr;
 }
@@ -78,7 +78,7 @@ void PageOverlay::Update() {
     layer_ = GraphicsLayer::Create(this);
     layer_->SetDrawsContent(true);
 
-    if (WebDevToolsAgentImpl* dev_tools = frame_impl_->DevToolsAgentImpl())
+    if (WebDevToolsAgentBase* dev_tools = frame_impl_->DevToolsAgentBase())
       dev_tools->WillAddPageOverlay(layer_.get());
 
     // This is required for contents of overlay to stay in sync with the page

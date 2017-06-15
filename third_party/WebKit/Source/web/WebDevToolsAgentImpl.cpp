@@ -285,6 +285,7 @@ DEFINE_TRACE(WebDevToolsAgentImpl) {
   visitor->Trace(tracing_agents_);
   visitor->Trace(overlay_agents_);
   visitor->Trace(sessions_);
+  WebDevToolsAgentBase::Trace(visitor);
 }
 
 void WebDevToolsAgentImpl::WillBeDestroyed() {

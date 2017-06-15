@@ -45,6 +45,8 @@
 #include "public/platform/WebFileSystemType.h"
 #include "public/web/WebLocalFrame.h"
 #include "web/LocalFrameClientImpl.h"
+// TODO(sashab): Remove this once the DevToolsAgentImpl() method is removed.
+#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebExport.h"
 
 #include <memory>
@@ -63,7 +65,6 @@ class WebAssociatedURLLoader;
 struct WebAssociatedURLLoaderOptions;
 class WebAutofillClient;
 class WebDataSourceImpl;
-class WebDevToolsAgentImpl;
 class WebDevToolsFrontendImpl;
 class WebFrameClient;
 class WebInputMethodControllerImpl;
@@ -368,6 +369,9 @@ class WEB_EXPORT WebLocalFrameImpl final
   }
 
   WebDevToolsAgentImpl* DevToolsAgentImpl() const override {
+    return dev_tools_agent_.Get();
+  }
+  WebDevToolsAgentBase* DevToolsAgentBase() const override {
     return dev_tools_agent_.Get();
   }
 
