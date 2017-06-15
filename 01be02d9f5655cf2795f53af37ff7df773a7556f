@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a322bf37_e5d97df9",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T11:23:22Z",
+      "side": 1,
+      "message": "CreateFromURLForTest or CreateForTest (for consistency)",
+      "revId": "01be02d9f5655cf2795f53af37ff7df773a7556f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73d42335_41db53f9",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T11:23:22Z",
+      "side": 1,
+      "message": "CreateForTest",
+      "revId": "01be02d9f5655cf2795f53af37ff7df773a7556f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56737ca2_d05bdc5f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T11:23:22Z",
+      "side": 1,
+      "message": "Ditto",
+      "range": {
+        "startLine": 64,
+        "startChar": 9,
+        "endLine": 64,
+        "endChar": 20
+      },
+      "revId": "01be02d9f5655cf2795f53af37ff7df773a7556f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
