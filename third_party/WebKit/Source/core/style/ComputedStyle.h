@@ -1019,16 +1019,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SetRespectImageOrientationInternal(v);
   }
 
-  // mix-blend-mode
-  static WebBlendMode InitialBlendMode() { return kWebBlendModeNormal; }
-  WebBlendMode BlendMode() const {
-    return static_cast<WebBlendMode>(
-        rare_non_inherited_data_->effective_blend_mode_);
-  }
-  void SetBlendMode(WebBlendMode v) {
-    rare_non_inherited_data_.Access()->effective_blend_mode_ = v;
-  }
-
   // offset-anchor
   static LengthPoint InitialOffsetAnchor() {
     return LengthPoint(Length(kAuto), Length(kAuto));
