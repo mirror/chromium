@@ -79,10 +79,10 @@ class GeometryStructTraitsTest
     NOTREACHED();
   }
 
+  base::MessageLoop message_loop_;
+
   mojo::BindingSet<gfx::mojom::blink::GeometryTraitsTestService>
       traits_test_bindings_;
-
-  base::MessageLoop message_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(GeometryStructTraitsTest);
 };
