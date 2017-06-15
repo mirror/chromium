@@ -10,6 +10,8 @@
 
 #include "base/macros.h"
 #include "base/memory/singleton.h"
+#include "content/common/histogram.mojom.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 
 namespace content {
 
@@ -17,7 +19,8 @@ class HistogramSubscriber;
 
 // HistogramController is used on the browser process to collect histogram data.
 // Only the browser UI thread is allowed to interact with the
-// HistogramController object.
+// HistogramController object, except for RegisterClient(), which may also be
+// called on the IO thread.
 class HistogramController {
  public:
   // Returns the HistogramController object for the current process, or NULL if
@@ -39,8 +42,16 @@ class HistogramController {
   // Safe to call even if caller is not the current subscriber.
   void Unregister(const HistogramSubscriber* subscriber);
 
-  // Contact all processes and get their histogram data.
+  // Contact all registered clients and get their histogram data.
   void GetHistogramData(int sequence_number);
+
+  // Register |client| as a provider of histogram data from a remote process.
+  // |client| will be queried on the calling thread for histogram data when
+  // GetHistogramData() is called. Must be called on the UI or IO threads.
+  void RegisterClient(mojom::HistogramCollectorClientPtr client);
+
+ private:
+  friend struct base::DefaultSingletonTraits<HistogramController>;
 
   // Notify the |subscriber_| that it should expect at least |pending_processes|
   // additional calls to OnHistogramDataCollected().  OnPendingProcess() may be
@@ -49,19 +60,26 @@ class HistogramController {
   // increase.  This is called on the UI thread.
   void OnPendingProcesses(int sequence_number, int pending_processes, bool end);
 
-  // Send the |histogram| back to the |subscriber_|.
-  // This can be called from any thread.
+  // Send the |histogram| back to the |subscriber_|. This can be called from any
+  // thread.
   void OnHistogramDataCollected(
       int sequence_number,
       const std::vector<std::string>& pickled_histograms);
 
- private:
-  friend struct base::DefaultSingletonTraits<HistogramController>;
+  // Collect histogram data from each of a given set of |clients|. This method
+  // can be called on either the IO or UI thread, but the appropriate client set
+  // must be used. |sequence_number| and |end| will be passsed to
+  // OnPendingProcess() after requests are made to all of the clients.
+  void GetHistogramDataFromClients(
+      int sequence_number,
+      mojo::InterfacePtrSet<mojom::HistogramCollectorClient>* clients,
+      bool end);
 
-  // Contact PLUGIN and GPU child processes and get their histogram data.
-  // TODO(rtenneti): Enable getting histogram data for other processes like
-  // PPAPI and NACL.
-  void GetHistogramDataFromChildProcesses(int sequence_number);
+  // Binding sets for the remote clients. Wrap these in unique_ptr so
+  // BrowserThread::DeleteSoon() can be used on destruction.
+  using ClientPtrSet = mojo::InterfacePtrSet<mojom::HistogramCollectorClient>;
+  std::unique_ptr<ClientPtrSet> ui_thread_clients_;
+  std::unique_ptr<ClientPtrSet> io_thread_clients_;
 
   HistogramSubscriber* subscriber_;
 
