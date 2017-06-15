@@ -19,6 +19,8 @@ class ValidatingCombobox : public views::Combobox,
  public:
   ValidatingCombobox(std::unique_ptr<ui::ComboboxModel> model,
                      std::unique_ptr<ValidationDelegate> delegate);
+  ValidatingCombobox(ui::ComboboxModel* model,
+                     std::unique_ptr<ValidationDelegate> delegate);
   ~ValidatingCombobox() override;
 
   // Combobox:

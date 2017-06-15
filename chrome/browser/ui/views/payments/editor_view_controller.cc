@@ -202,9 +202,7 @@ views::View* EditorViewController::GetFirstFocusedView() {
 
 std::unique_ptr<ValidatingCombobox>
 EditorViewController::CreateComboboxForField(const EditorField& field) {
-  std::unique_ptr<ValidatingCombobox> combobox =
-      base::MakeUnique<ValidatingCombobox>(GetComboboxModelForType(field.type),
-                                           CreateValidationDelegate(field));
+  std::unique_ptr<ValidatingCombobox> combobox = GetComboboxForField(field);
   base::string16 initial_value = GetInitialValueForType(field.type);
   combobox->SetAccessibleName(field.label);
   if (!initial_value.empty()) {
@@ -215,6 +213,14 @@ EditorViewController::CreateComboboxForField(const EditorField& field) {
   combobox->set_id(GetInputFieldViewId(field.type));
   combobox->set_listener(this);
   comboboxes_.insert(std::make_pair(combobox.get(), field));
+  return combobox;
+}
+
+std::unique_ptr<ValidatingCombobox>
+EditorViewController::GetComboboxForField(const EditorField& field) {
+  std::unique_ptr<ValidatingCombobox> combobox =
+      base::MakeUnique<ValidatingCombobox>(GetComboboxModelForType(field.type),
+                                           CreateValidationDelegate(field));
   return combobox;
 }
 

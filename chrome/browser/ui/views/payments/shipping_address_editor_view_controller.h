@@ -14,6 +14,7 @@
 #include "base/strings/string16.h"
 #include "chrome/browser/ui/views/payments/editor_view_controller.h"
 #include "chrome/browser/ui/views/payments/validating_textfield.h"
+#include "components/autofill/core/browser/region_combobox_model.h"
 
 namespace autofill {
 class AutofillProfile;
@@ -55,6 +56,7 @@ class ShippingAddressEditorViewController : public EditorViewController {
       const autofill::ServerFieldType& type) override;
   void OnPerformAction(views::Combobox* combobox) override;
   void UpdateEditorView() override;
+  std::unique_ptr<ValidatingCombobox> GetComboboxForField(const EditorField& field) override;
 
   // PaymentRequestSheetController:
   base::string16 GetSheetTitle() override;
@@ -126,6 +128,8 @@ class ShippingAddressEditorViewController : public EditorViewController {
   // Identifies whether we tried and failed to load region data.
   bool failed_to_load_region_data_;
 
+  std::unique_ptr<autofill::RegionComboboxModel> region_model_;
+
   // Updates |countries_| with the content of |model| if it's not null,
   // otherwise use a local model.
   void UpdateCountries(autofill::CountryComboboxModel* model);
@@ -148,6 +152,8 @@ class ShippingAddressEditorViewController : public EditorViewController {
 
   // Failed to fetch the region data in time.
   void RegionDataLoadTimedOut();
+
+  ui::ComboboxModel* GetComboboxModelForState();
 
   DISALLOW_COPY_AND_ASSIGN(ShippingAddressEditorViewController);
 };

@@ -164,6 +164,8 @@ class EditorViewController : public PaymentRequestSheetController,
   std::unique_ptr<ValidatingCombobox> CreateComboboxForField(
       const EditorField& field);
 
+  virtual std::unique_ptr<ValidatingCombobox> GetComboboxForField(const EditorField& field);
+
  private:
   // views::TextfieldController:
   void ContentsChanged(views::Textfield* sender,

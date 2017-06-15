@@ -21,7 +21,6 @@
 #include "components/autofill/core/browser/country_combobox_model.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/autofill/core/browser/region_combobox_model.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_constants.h"
 #include "components/payments/content/payment_request_state.h"
@@ -128,8 +127,7 @@ ShippingAddressEditorViewController::CreateValidationDelegate(
 std::unique_ptr<ui::ComboboxModel>
 ShippingAddressEditorViewController::GetComboboxModelForType(
     const autofill::ServerFieldType& type) {
-  switch (type) {
-    case autofill::ADDRESS_HOME_COUNTRY: {
+  if (type == autofill::ADDRESS_HOME_COUNTRY) {
       std::unique_ptr<autofill::CountryComboboxModel> model =
           base::MakeUnique<autofill::CountryComboboxModel>();
       model->SetCountries(*state()->GetPersonalDataManager(),
@@ -139,32 +137,30 @@ ShippingAddressEditorViewController::GetComboboxModelForType(
         UpdateCountries(model.get());
       return std::move(model);
     }
-    case autofill::ADDRESS_HOME_STATE: {
-      std::unique_ptr<autofill::RegionComboboxModel> model =
-          base::MakeUnique<autofill::RegionComboboxModel>();
-      if (chosen_country_index_ < countries_.size()) {
-        model->LoadRegionData(countries_[chosen_country_index_].first,
-                              state()->GetRegionDataLoader(),
-                              /*timeout_ms=*/5000);
-        if (!model->IsPendingRegionDataLoad()) {
-          // If the data was already pre-loaded, the observer won't get notified
-          // so we have to check for failure here.
-          failed_to_load_region_data_ = model->failed_to_load_data();
-        }
-      } else {
-        failed_to_load_region_data_ = true;
-      }
-      if (failed_to_load_region_data_) {
-        // We can't update the view synchronously while building the view.
-        OnDataChanged(/*synchronous=*/false);
-      }
-      return std::move(model);
-    }
-    default:
-      NOTREACHED();
-      break;
-  }
+
+ NOTREACHED();
   return std::unique_ptr<ui::ComboboxModel>();
+}
+
+ui::ComboboxModel* ShippingAddressEditorViewController::GetComboboxModelForState() {
+  region_model_ = base::MakeUnique<autofill::RegionComboboxModel>();
+  if (chosen_country_index_ < countries_.size()) {
+    region_model_->LoadRegionData(countries_[chosen_country_index_].first,
+                          state()->GetRegionDataLoader(),
+                          /*timeout_ms=*/5000);
+    if (!region_model_->IsPendingRegionDataLoad()) {
+      // If the data was already pre-loaded, the observer won't get notified
+      // so we have to check for failure here.
+      failed_to_load_region_data_ = region_model_->failed_to_load_data();
+    }
+  } else {
+    failed_to_load_region_data_ = true;
+  }
+  if (failed_to_load_region_data_) {
+    // We can't update the view synchronously while building the view.
+    OnDataChanged(/*synchronous=*/false);
+  }
+return region_model_.get();
 }
 
 void ShippingAddressEditorViewController::OnPerformAction(
@@ -200,6 +196,16 @@ void ShippingAddressEditorViewController::UpdateEditorView() {
   }
   // Ignore temporary profile once the editor view has been updated.
   temporary_profile_.reset();
+}
+
+std::unique_ptr<ValidatingCombobox> ShippingAddressEditorViewController::GetComboboxForField(const EditorField& field) {
+  if (field.type != autofill::ADDRESS_HOME_STATE)
+    return EditorViewController::GetComboboxForField(field);
+
+  std::unique_ptr<ValidatingCombobox> combobox =
+      base::MakeUnique<ValidatingCombobox>(GetComboboxModelForState(),
+                                           CreateValidationDelegate(field));
+  return combobox;
 }
 
 base::string16 ShippingAddressEditorViewController::GetSheetTitle() {
