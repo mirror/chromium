@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2566bfab_1560bdcb",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T04:04:59Z",
+      "side": 1,
+      "message": "This changed because web frame clients can delete themselves on detach now, and this would be a use-after-free.",
+      "range": {
+        "startLine": 79,
+        "startChar": 6,
+        "endLine": 79,
+        "endChar": 37
+      },
+      "revId": "42905ee66f1c601f7520af2c3454780cedffe055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f6d1977_87f732ef",
+        "filename": "third_party/WebKit/Source/web/tests/DocumentLoaderTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T04:04:59Z",
+      "side": 1,
+      "message": "One possibility to avoid this boilerplate is to have TestWebFrameClient default to internally creating a wrapper TestWebFrameClient that forwards to the parent frame one. I didn\u0027t take this route, because the wrapper TestWebFrameClient would have to define all the WebFrameClient methods to forward them, and that would be pretty cumbersome...",
+      "range": {
+        "startLine": 150,
+        "startChar": 0,
+        "endLine": 166,
+        "endChar": 4
+      },
+      "revId": "42905ee66f1c601f7520af2c3454780cedffe055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
