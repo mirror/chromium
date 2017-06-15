@@ -22,6 +22,30 @@
       "revId": "d68d23514fc984057b0a89719e57d3c2c85ac10e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71182de2_fbcedc56",
+        "filename": "tools/perf/docs/apk_size_regressions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-06-15T20:43:36Z",
+      "side": 1,
+      "message": "I think it\u0027s much better to just have MonochromePublic! Only reason I did this was because clicking on the link led to graphs with both, I always just clicked on the link before this.\n\nThough the bold is nice, I think it\u0027s too easy for the displayed link and actual link to get de-synced like in this case.\n\nUpdated to just MonochromePublic.",
+      "parentUuid": "d1fbf90c_e09814fd",
+      "range": {
+        "startLine": 60,
+        "startChar": 116,
+        "endLine": 60,
+        "endChar": 122
+      },
+      "revId": "d68d23514fc984057b0a89719e57d3c2c85ac10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
