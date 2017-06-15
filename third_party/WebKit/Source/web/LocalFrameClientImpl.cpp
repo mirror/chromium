@@ -1036,6 +1036,12 @@ void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
     autofill_client->UserGestureObserved();
 }
 
+void LocalFrameClientImpl::SetHasReceivedUserGestureBeforeNavigation(
+    bool value) {
+  if (web_frame_->Client())
+    web_frame_->Client()->SetHasReceivedUserGestureBeforeNavigation(value);
+}
+
 void LocalFrameClientImpl::SetDevToolsFrameId(const String& devtools_frame_id) {
   if (web_frame_->Client())
     web_frame_->Client()->SetDevToolsFrameId(devtools_frame_id);

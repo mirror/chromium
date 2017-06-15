@@ -224,6 +224,11 @@ WebRect WebRemoteFrameImpl::SelectionBoundsRect() const {
   return WebRect();
 }
 
+void WebRemoteFrameImpl::SetDocumentHasReceivedUserGestureBeforeNavigation(
+    bool value) {
+  GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(value);
+}
+
 WebLocalFrame* WebRemoteFrameImpl::CreateLocalChild(
     WebTreeScopeType scope,
     const WebString& name,
