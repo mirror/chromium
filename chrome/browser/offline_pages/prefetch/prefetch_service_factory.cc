@@ -11,6 +11,9 @@
 #include "base/memory/singleton.h"
 #include "chrome/browser/offline_pages/prefetch/offline_metrics_collector_impl.h"
 #include "chrome/browser/offline_pages/prefetch/prefetch_instance_id_proxy.h"
+#include "chrome/browser/profiles/profile.h"
+#include "chrome/common/channel_info.h"
+#include "chrome/common/chrome_content_client.h"
 #include "components/keyed_service/content/browser_context_dependency_manager.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_app_handler.h"
@@ -18,6 +21,7 @@
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/browser_thread.h"
 
 namespace offline_pages {
 
@@ -39,7 +43,11 @@ PrefetchService* PrefetchServiceFactory::GetForBrowserContext(
 
 KeyedService* PrefetchServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  auto prefetch_dispatcher = base::MakeUnique<PrefetchDispatcherImpl>();
+  Profile* profile = Profile::FromBrowserContext(context);
+  DCHECK(profile);
+  auto prefetch_dispatcher = base::MakeUnique<PrefetchDispatcherImpl>(
+      PrefetchDispatcherImpl::NetworkParams(
+          profile->GetRequestContext(), chrome::GetChannel(), GetUserAgent()));
   auto prefetch_gcm_app_handler = base::MakeUnique<PrefetchGCMAppHandler>(
       base::MakeUnique<PrefetchInstanceIDProxy>(kPrefetchingOfflinePagesAppId,
                                                 context));
