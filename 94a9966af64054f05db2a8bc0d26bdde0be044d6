@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e304782_745d94ed",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "Sorry, I don\u0027t understand how this code works.\nWhy is team_drive_id totally ignored?",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1e8acc3_7e2bde91",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "If we are to use changes.list to get the largest change ID, isn\u0027t it possible to fetch ChangeList at the same time?\nWhy do we need to get the largest change ID first?",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e27d122_85528206",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "nit: the server",
+      "range": {
+        "startLine": 320,
+        "startChar": 53,
+        "endLine": 320,
+        "endChar": 59
+      },
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e13badcf_3a1856e9",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "nit: Fields other than",
+      "range": {
+        "startLine": 322,
+        "startChar": 34,
+        "endLine": 322,
+        "endChar": 51
+      },
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97d132f9_75c7ea79",
+        "filename": "components/drive/service/drive_service_interface.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 324,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "GetLargestChangeId sounds too generic.\nPlease make it clear that this method is for Team Drives.",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec3f2cf_e78a3d33",
+        "filename": "google_apis/drive/drive_api_url_generator.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:26:01Z",
+      "side": 1,
+      "message": "Why is this necessary?\n\nIt\u0027s difficult to understand what only_largest_change_id means just by looking at this code.",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
