@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6634960e_402a9120",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T18:49:17Z",
+      "side": 1,
+      "message": "found the reliable context reset repro in that bug",
+      "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
