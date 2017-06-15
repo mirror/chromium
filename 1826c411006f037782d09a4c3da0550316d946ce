@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9257750c_dd79f9b2",
+        "filename": "third_party/WebKit/Source/core/css/ComputedStyleCSSValueMapping.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3293,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-15T11:14:32Z",
+      "side": 0,
+      "message": "nit: do we know whether the style guide should be \"3d\" or \"3D\"? If it should be 3D, I\u0027ll do a patch later to fix the name formatting in the generator.",
+      "revId": "1826c411006f037782d09a4c3da0550316d946ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
