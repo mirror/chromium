@@ -451,6 +451,11 @@ void GLES2DecoderPassthroughImpl::SetDescheduleUntilFinishedCallback(
 void GLES2DecoderPassthroughImpl::SetRescheduleAfterFinishedCallback(
     const NoParamCallback& callback) {}
 
+void GLES2DecoderPassthroughImpl::SetSwapSchedulingCallbacks(
+    const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) {
+  NOTREACHED();
+}
+
 gpu::gles2::QueryManager* GLES2DecoderPassthroughImpl::GetQueryManager() {
   return nullptr;
 }

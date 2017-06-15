@@ -1918,6 +1918,8 @@ void LayerTreeHostImpl::UpdateTreeResourcesForGpuRasterizationIfNeeded() {
 void LayerTreeHostImpl::WillBeginImplFrame(const BeginFrameArgs& args) {
   current_begin_frame_tracker_.Start(args);
 
+  tile_manager_.Flush();
+
   if (is_likely_to_require_a_draw_) {
     // Optimistically schedule a draw. This will let us expect the tile manager
     // to complete its work so that we can draw new tiles within the impl frame
