@@ -158,6 +158,7 @@ class PaymentRequestBrowserTestBase
   // are added close to each other.
   void AddAutofillProfile(const autofill::AutofillProfile& profile);
   void AddCreditCard(const autofill::CreditCard& card);
+  void AddServerCard(const autofill::CreditCard& card);
 
   void CreatePaymentRequestForTest(
       content::WebContents* web_contents,
