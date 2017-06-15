@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b575aedd_019b36f7",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/referrer-policy/generic/tools/clean.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-15T22:40:40Z",
+      "side": 1,
+      "message": "Are Python files like this meant to be imported?",
+      "revId": "dccd3b098e30342c311f722fbffbe15369e7f156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
