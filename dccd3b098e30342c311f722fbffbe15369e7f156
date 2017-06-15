@@ -16,6 +16,24 @@
       "revId": "dccd3b098e30342c311f722fbffbe15369e7f156",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4a4511c_720b8063",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/referrer-policy/generic/tools/clean.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-15T22:45:50Z",
+      "side": 1,
+      "message": "yes - importing this file is intentional, after https://chromium-review.googlesource.com/c/535063/.\n\nSome subdirs in wpt include Python scripts, which we didn\u0027t import before - I believe that this was because our general policy was to import only tests.\n\nBut as a general direction now, I beleive we want to import as much as possible and change as little as possible -- this allows Chromium developers to use and modify these scripts (and have those changes exported).\n\n\nOne possible issue that may come up, is: in Chromium there\u0027s a presubmit check for scripts with shebang lines that aren\u0027t executable. I\u0027m not entirely sure whether this will pass that check, but if it passes then I think it should be committed as-is.",
+      "parentUuid": "b575aedd_019b36f7",
+      "revId": "dccd3b098e30342c311f722fbffbe15369e7f156",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
