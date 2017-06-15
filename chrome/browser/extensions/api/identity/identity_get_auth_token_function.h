@@ -106,6 +106,14 @@ class IdentityGetAuthTokenFunction : public ChromeAsyncExtensionFunction,
   FRIEND_TEST_ALL_PREFIXES(GetAuthTokenFunctionTest, InteractiveQueueShutdown);
   FRIEND_TEST_ALL_PREFIXES(GetAuthTokenFunctionTest, NoninteractiveShutdown);
 
+  void OnReceivedPrimaryAccountInfo(
+      std::set<std::string> scopes,
+      const std::string& extension_gaia_id,
+      const base::Optional<AccountInfo>& account_info);
+  void OnReceivedExtensionAccountInfo(
+      bool is_primary_account,
+      std::set<std::string> scopes,
+      const base::Optional<AccountInfo>& primary_account_info);
   // ExtensionFunction:
   bool RunAsync() override;
 
