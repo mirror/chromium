@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "171bc41c_c8ef81c5",
+        "filename": "mojo/public/cpp/bindings/tests/report_bad_message_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-15T18:00:37Z",
+      "side": 1,
+      "message": "IIUC, we need to ensure things like |proxy_| and |impl_| to be destructed before |message_loop| right?\n\nWill this restriction cause trouble during message_loop/thread/process shutdown in non-testing code?",
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1145149e_e52dff3e",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-15T18:00:37Z",
+      "side": 1,
+      "message": "Just to double check: Is it possible for this task runner to run tasks both on the current thread and on a different thread?",
+      "range": {
+        "startLine": 264,
+        "startChar": 27,
+        "endLine": 264,
+        "endChar": 62
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc15005c_6a908b0e",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-15T18:00:37Z",
+      "side": 1,
+      "message": "It seems there is only one subclass of this. Does it make sense to merge the two?",
+      "range": {
+        "startLine": 394,
+        "startChar": 6,
+        "endLine": 394,
+        "endChar": 33
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0ee961f_6096e5d4",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-15T18:00:37Z",
+      "side": 1,
+      "message": "The names SyncMethodCommonOnSequencedTaskRunnerCommonTest and SyncMethodCommonOnSequencedTaskRunnerTest seem hard to understand. Could you please find better names or at least add comments?",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 434,
+        "endChar": 53
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d394d029_d5c63f5c",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-15T18:00:37Z",
+      "side": 1,
+      "message": "Please comment on why the order of these fields matters.",
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
