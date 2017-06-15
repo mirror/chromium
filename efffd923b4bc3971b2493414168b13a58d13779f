@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f131629_649a26df",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:43:12Z",
+      "side": 1,
+      "message": "in the past it was unsafe to call this so early because the logo size was not finalized.  I think this is safe now, but it will require some testing.",
+      "revId": "efffd923b4bc3971b2493414168b13a58d13779f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87b3d0f5_e98f2ac9",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:43:12Z",
+      "side": 1,
+      "message": "commented out?",
+      "revId": "efffd923b4bc3971b2493414168b13a58d13779f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

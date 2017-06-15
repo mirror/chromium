@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e07b0e34_9cbe655b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:43:12Z",
+      "side": 0,
+      "message": "why is this no longer needed?",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fe56760_371a380e",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:43:12Z",
+      "side": 0,
+      "message": "It looks like we are removing a lot of these hacks.  Are you confirming that the bugs that required these changes are no longer reproducable with autolayout?",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "652dfaf0_80d2982a",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:43:12Z",
+      "side": 0,
+      "message": "will this still be called somewhere else?",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
