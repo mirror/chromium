@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4eb4f942_9a3866db",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-15T14:19:01Z",
+      "side": 1,
+      "message": "we discussed offline, I think you still want to maintain the check (the one with the todo) otherwise you might overwrite the extra os dumps with null os dumps if they show up in this order:\n\nDump1 {pid\u003d1..., extra{pid\u003d2, OS\u003dfoo}}\nDump2 {pid\u003d2, osdump\u003dempty}",
+      "range": {
+        "startLine": 275,
+        "startChar": 3,
+        "endLine": 276,
+        "endChar": 0
+      },
+      "revId": "ab99e5c72f4c74986f72864005f9d181e484fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "501eec9b_16096145",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-15T14:19:01Z",
+      "side": 1,
+      "message": "Maybe RawOSMemDump for consistency with the other CL?",
+      "range": {
+        "startLine": 74,
+        "startChar": 11,
+        "endLine": 74,
+        "endChar": 19
+      },
+      "revId": "ab99e5c72f4c74986f72864005f9d181e484fe73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
