@@ -30,6 +30,8 @@ class CORE_EXPORT WorkletGlobalScopeProxy : public GarbageCollectedMixin {
       RefPtr<WebTaskRunner> outside_settings_task_runner,
       WorkletPendingTasks*) = 0;
 
+  virtual void WorkletObjectDestroyed() = 0;
+
   // Terminates the worklet global scope from the main thread.
   virtual void TerminateWorkletGlobalScope() = 0;
 };
