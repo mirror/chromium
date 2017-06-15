@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "be50c0da_ce7d41c8",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentOrderedMap.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-15T07:27:42Z",
+      "side": 1,
+      "message": "Yeah, your suggestion is actually I did at first. Then, I changed my mind to choose a non-invasive way with a clear separation.\nI don\u0027t have a strong opinion. Either might be okay.",
+      "parentUuid": "0de809ba_511ff3a4",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "761673e6_d57d7265",
         "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-14T08:30:58Z",
       "side": 1,
       "message": "IIUC DocumentOrderedMap\u0027s cached |element| returns null when there are 2+\nelements for the same key slot name - in that case, old_active is nullptr.\n\nIs this case covered?",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec7c332_80c5eeaf",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-15T07:27:42Z",
+      "side": 1,
+      "message": "As we chatted offline, this case is covered. I added the comment why this case is covered.",
+      "parentUuid": "761673e6_d57d7265",
       "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db693699_d83ada2d",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-15T07:27:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "419469c1_6c439570",
+      "revId": "9ccf636fb4915030e1433a6ba85d96182dac1896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
