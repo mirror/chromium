@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b639006_3d67e504",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 728,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-15T20:22:06Z",
+      "side": 1,
+      "message": "Why not? Was this mechanism not working for selected/active tabs in a window that is subsequently brought to foreground?\n\nIf so, does it make sense to fix that by calling ReloadIfNeeded when the window visibility or focus changes?",
+      "revId": "a617b369e52df76845639563ef19515c0979d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f53e96a4_a623e267",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 822,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-15T20:22:06Z",
+      "side": 1,
+      "message": "I\u0027m not sure I follow why we\u0027re doing this? Should\u0027t non-active tabs that are discarded already be in a needs_reload state? And shouldn\u0027t they start loading automatically when their visibility changes?",
+      "range": {
+        "startLine": 822,
+        "startChar": 4,
+        "endLine": 822,
+        "endChar": 32
+      },
+      "revId": "a617b369e52df76845639563ef19515c0979d85d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
