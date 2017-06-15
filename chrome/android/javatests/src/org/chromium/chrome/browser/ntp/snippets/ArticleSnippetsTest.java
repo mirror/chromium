@@ -426,7 +426,7 @@ public class ArticleSnippetsTest {
             @Override
             public FaviconRequest makeFaviconRequest(SnippetArticle suggestion,
                     final int faviconSizePx, final Callback<Bitmap> faviconCallback) {
-                // Run the callback asynchronously incase the caller made that assumption.
+                // Run the callback asynchronously in case the caller made that assumption.
                 ThreadUtils.postOnUiThread(new Runnable() {
                     @Override
                     public void run() {

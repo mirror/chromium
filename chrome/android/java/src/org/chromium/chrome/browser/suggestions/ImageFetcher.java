@@ -76,7 +76,7 @@ public class ImageFetcher {
      */
     public DownloadThumbnailRequest makeDownloadThumbnailRequest(
             SnippetArticle suggestion, int thumbnailSizePx, Callback<Bitmap> imageCallback) {
-        assert !mIsDestroyed;
+        if (mIsDestroyed) return null;
 
         return new DownloadThumbnailRequest(suggestion, imageCallback, thumbnailSizePx);
     }
@@ -92,7 +92,7 @@ public class ImageFetcher {
      */
     public ArticleThumbnailRequest makeArticleThumbnailRequest(
             SnippetArticle suggestion, Callback<Bitmap> callback) {
-        assert !mIsDestroyed;
+        if (mIsDestroyed) return null;
 
         return new ArticleThumbnailRequest(suggestion, callback);
     }
@@ -109,7 +109,7 @@ public class ImageFetcher {
      */
     public FaviconRequest makeFaviconRequest(SnippetArticle suggestion, final int faviconSizePx,
             final Callback<Bitmap> faviconCallback) {
-        assert !mIsDestroyed;
+        if (mIsDestroyed) return null;
 
         return new FaviconRequest(suggestion, faviconCallback, faviconSizePx);
     }
@@ -126,7 +126,7 @@ public class ImageFetcher {
      */
     public LargeIconRequest makeLargeIconRequest(
             String url, int size, LargeIconBridge.LargeIconCallback callback) {
-        assert !mIsDestroyed;
+        if (mIsDestroyed) return null;
 
         return new LargeIconRequest(url, size, callback);
     }
@@ -153,6 +153,8 @@ public class ImageFetcher {
     private void fetchFaviconFromLocalCache(final URI snippetUri, final boolean fallbackToService,
             final long faviconFetchStartTimeMs, final int faviconSizePx,
             final SnippetArticle suggestion, final Callback<Bitmap> faviconCallback) {
+        if (mIsDestroyed) return;
+
         getFaviconHelper().getLocalFaviconImageForURL(mProfile, getSnippetDomain(snippetUri),
                 faviconSizePx, new FaviconHelper.FaviconImageCallback() {
                     @Override
@@ -247,6 +249,7 @@ public class ImageFetcher {
      */
     private void ensureIconIsAvailable(String pageUrl, String iconUrl, boolean isLargeIcon,
             boolean isTemporary, FaviconHelper.IconAvailabilityCallback callback) {
+        if (mIsDestroyed) return;
         if (mUiDelegate.getWebContents() != null) {
             getFaviconHelper().ensureIconIsAvailable(mProfile, mUiDelegate.getWebContents(),
                     pageUrl, iconUrl, isLargeIcon, isTemporary, callback);
@@ -274,6 +277,7 @@ public class ImageFetcher {
      * calls in tests.
      */
     private ThumbnailProvider getThumbnailProvider() {
+        assert !mIsDestroyed;
         if (mThumbnailProvider == null) mThumbnailProvider = new ThumbnailProviderImpl();
         return mThumbnailProvider;
     }
@@ -283,6 +287,7 @@ public class ImageFetcher {
      * calls in tests.
      */
     private FaviconHelper getFaviconHelper() {
+        assert !mIsDestroyed;
         if (mFaviconHelper == null) mFaviconHelper = new FaviconHelper();
         return mFaviconHelper;
     }
@@ -292,14 +297,12 @@ public class ImageFetcher {
      * calls in tests.
      */
     private LargeIconBridge getLargeIconBridge() {
+        assert !mIsDestroyed;
         if (mLargeIconBridge == null) mLargeIconBridge = new LargeIconBridge(mProfile);
         return mLargeIconBridge;
     }
 
-    /**
-     * Interface for all image requests.
-     */
-    public interface ImageRequest { void cancel(); }
+    private interface ImageRequest { void cancel(); }
 
     /**
      * Request for a download thumbnail.
