@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4b8c9d92_8ac961b2",
+        "filename": "third_party/WebKit/Source/core/css/CSSValueIDMappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-15T01:19:32Z",
+      "side": 1,
+      "message": "Either remove this line or put braces around the if.",
+      "revId": "04d9d194124224fa2ddfcf74e6b9345d65b0d3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
