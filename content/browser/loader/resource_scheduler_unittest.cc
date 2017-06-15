@@ -57,6 +57,8 @@ const char kPrioritySupportedRequestsDelayable[] =
 const char kNetworkSchedulerYielding[] = "NetworkSchedulerYielding";
 const int kMaxRequestsBeforeYielding = 5;  // sync with .cc.
 
+const char kMediumPriorityLayoutBlocking[] = "MediumPriorityLayoutBlocking";
+
 class TestRequest : public ResourceThrottle::Delegate {
  public:
   TestRequest(std::unique_ptr<net::URLRequest> url_request,
@@ -322,6 +324,60 @@ TEST_F(ResourceSchedulerTest, MediumDoesNotBlockCriticalComplete) {
   EXPECT_FALSE(lowest2->started());
 
   scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(lowest2->started());
+}
+
+TEST_F(ResourceSchedulerTest, MediumLayoutBlockingOneLowUntilCriticalComplete) {
+  // kMediumPriorityLayoutBlocking determines if net::MEDIUM priority requests
+  // must be considered as layout blocking before the HTML body is parsed. It is
+  // a finch feature.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(kMediumPriorityLayoutBlocking, "");
+  InitializeScheduler();
+
+  std::unique_ptr<TestRequest> medium(
+      NewRequest("http://host/low", net::MEDIUM));
+  std::unique_ptr<TestRequest> lowest(
+      NewRequest("http://host/lowest", net::LOWEST));
+  std::unique_ptr<TestRequest> lowest2(
+      NewRequest("http://host/lowest", net::LOWEST));
+  EXPECT_TRUE(medium->started());
+  EXPECT_TRUE(lowest->started());
+  EXPECT_FALSE(lowest2->started());
+
+  medium.reset();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(lowest2->started());
+
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(lowest2->started());
+}
+
+TEST_F(ResourceSchedulerTest, MediumLayoutBlockingOneLowUntilBodyInserted) {
+  // kMediumPriorityLayoutBlocking determines if net::MEDIUM priority requests
+  // must be considered as layout blocking before the HTML body is parsed. It is
+  // a finch feature.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(kMediumPriorityLayoutBlocking, "");
+  InitializeScheduler();
+
+  std::unique_ptr<TestRequest> medium(
+      NewRequest("http://host/low", net::MEDIUM));
+  std::unique_ptr<TestRequest> lowest(
+      NewRequest("http://host/lowest", net::LOWEST));
+  std::unique_ptr<TestRequest> lowest2(
+      NewRequest("http://host/lowest", net::LOWEST));
+  EXPECT_TRUE(medium->started());
+  EXPECT_TRUE(lowest->started());
+  EXPECT_FALSE(lowest2->started());
+
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(lowest2->started());
+
+  medium.reset();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(lowest2->started());
 }
