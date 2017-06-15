@@ -158,7 +158,17 @@ component("core") {
     "CoreExport.h",
     "CoreInitializer.cpp",
     "CoreInitializer.h",
+    "linux/WebFontRendering.cpp",
+    "mac/WebScrollbarTheme.mm",
+    "mac/WebSubstringUtil.mm",
+    "win/WebFontRendering.cpp",
   ]
+
+  if (is_android) {
+    set_sources_assignment_filter([])
+    sources += [ "linux/WebFontRendering.cpp" ]
+    set_sources_assignment_filter(sources_assignment_filter)
+  }
 
   configs -= core_config_remove
   configs += core_config_add
