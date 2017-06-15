@@ -34,6 +34,24 @@
       "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4184774d_8f8bbaeb",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-15T21:25:33Z",
+      "side": 1,
+      "message": "Ah I see, of course. Thanks for explaining. That said, I think there was value in the previous version of checking against an explicit 0 for the ltr case; I am not sure this new approach tests very much except for internal consistency. Ideally, we\u0027d determine the size of the scrollbar (maybe measure it from an overflow:scroll diff) and check that the targetOffset is exactly that on the side where we expect it and 0 otherwise -- right? Isn\u0027t that what we really want to test?",
+      "parentUuid": "f0b5d554_b1934f91",
+      "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
