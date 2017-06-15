@@ -5,12 +5,10 @@
 #include "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer.h"
 
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
-#include "components/subresource_filter/content/browser/content_subresource_filter_driver_factory.h"
 #include "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.h"
 #include "components/subresource_filter/core/common/activation_decision.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 
-using subresource_filter::ContentSubresourceFilterDriverFactory;
 using subresource_filter::SubresourceFilterSafeBrowsingActivationThrottle;
 using ActivationDecision = subresource_filter::ActivationDecision;
 

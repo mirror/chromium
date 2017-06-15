@@ -70,12 +70,11 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
   if (navigation_handle->GetNetErrorCode() != net::OK)
     return;
 
-  activation_decision_ = activation_decision;
   activation_options_ = matched_options;
-  DCHECK_NE(activation_decision_, ActivationDecision::UNKNOWN);
+  DCHECK_NE(activation_decision, ActivationDecision::UNKNOWN);
 
   // ACTIVATION_DISABLED implies DISABLED activation level.
-  DCHECK(activation_decision_ != ActivationDecision::ACTIVATION_DISABLED ||
+  DCHECK(activation_decision != ActivationDecision::ACTIVATION_DISABLED ||
          activation_options_.activation_level == ActivationLevel::DISABLED);
   ActivationState state = ActivationState(activation_options_.activation_level);
   state.measure_performance = ShouldMeasurePerformanceForPageLoad(
@@ -90,7 +89,7 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
           kSafeBrowsingSubresourceFilterExperimentalUI);
 
   SubresourceFilterObserverManager::FromWebContents(web_contents())
-      ->NotifyPageActivationComputed(navigation_handle, activation_decision_,
+      ->NotifyPageActivationComputed(navigation_handle, activation_decision,
                                      state);
 }
 
@@ -109,7 +108,6 @@ void ContentSubresourceFilterDriverFactory::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle->IsInMainFrame() &&
       !navigation_handle->IsSameDocument()) {
-    activation_decision_ = ActivationDecision::UNKNOWN;
     client_->ToggleNotificationVisibility(false);
   }
 }
