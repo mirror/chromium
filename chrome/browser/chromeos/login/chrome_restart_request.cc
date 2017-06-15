@@ -79,6 +79,10 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisable2dCanvasImageChromium,
     ::switches::kDisableAccelerated2dCanvas,
     ::switches::kDisableAcceleratedJpegDecoding,
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    ::switches::kEnableAcceleratedMjpegDecode,
+    ::switches::kEnableAcceleratedVideo,
+#endif
     ::switches::kDisableAcceleratedMjpegDecode,
     ::switches::kDisableAcceleratedVideoDecode,
     ::switches::kDisableBlinkFeatures,
@@ -168,7 +172,7 @@ void DeriveCommandLine(const GURL& start_url,
     ::switches::kDisableWebGLImageChromium,
     ::switches::kEnableWebGLImageChromium,
     ::switches::kEnableWebVR,
-#if BUILDFLAG(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC) && defined(OS_CHROMEOS)
     ::switches::kDisableWebRtcHWDecoding,
     ::switches::kDisableWebRtcHWEncoding,
 #endif
