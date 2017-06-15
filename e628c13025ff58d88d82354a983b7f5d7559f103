@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c5d3561c_e501fcf2",
+        "filename": "chrome/browser/themes/theme_properties.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-15T16:23:56Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5969cf46_a8566f46",
+      "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0f5176e2_bf9b95a5",
         "filename": "chrome/browser/themes/theme_service.cc",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "3f341041_57bfdb82",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-15T16:23:56Z",
+      "side": 1,
+      "message": "Wouldn\u0027t you get worse results if the bookmark bar were visible? I haven\u0027t seen many (any) themes where the toolbar and bookmark bar are dramatically different in color. In fact there\u0027s no such thing as COLOR_BOOKMARK_BAR.\n\nOn the other hand, I can find themes where COLOR_TAB_TEXT doesn\u0027t match COLOR_BOOKMARK_TEXT, but if there\u0027s any reason behind that decision, it appears to be based on the appearance of the top of the toolbar vs. the bottom of the toolbar. For example the toolbar in \"Virginia Beach\" has a gradient that goes from lighter at the top to darker at the bottom. Since this separator is at the bottom, I think it\u0027s better to base it off the text that would appear towards the bottom.",
+      "parentUuid": "0f5176e2_bf9b95a5",
+      "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87afec3b_d51c0275",
         "filename": "chrome/browser/themes/theme_service.cc",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-14T21:34:27Z",
       "side": 1,
       "message": "Note that if we want to ensure this 0x20 stays in sync with the 0x20 below we should use some sort of shared constant.  I don\u0027t know if we want that.",
+      "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28881b8d_ade0e141",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-15T16:23:56Z",
+      "side": 1,
+      "message": "seems reasonable, done.",
+      "parentUuid": "87afec3b_d51c0275",
       "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

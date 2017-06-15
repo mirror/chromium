@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "16bc7c53_5f58dd76",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-15T16:23:56Z",
+      "side": 1,
+      "message": "I changed this to SkColorSetA(COLOR_BOOKMARK_TEXT, 0x20) because it works better for themes that don\u0027t have a toolbar background color specified and instead just use an image. (Virginia Beach, again, is one of these.) For themes that use COLOR_TOOLBAR instead of an image, it should make no difference. At that point, it became the same implementation as COLOR_DETACHED_BOOKMARK_BAR_SEPARATOR so it just calls through to that. SG?",
+      "range": {
+        "startLine": 481,
+        "startChar": 13,
+        "endLine": 481,
+        "endChar": 21
+      },
+      "revId": "3e8c5244872efe94bbc36d424510e8e85fbadc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
