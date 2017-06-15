@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a2021f7_9a8e84f0",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentOrderedMap.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 209,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-15T08:28:00Z",
+      "side": 1,
+      "message": "IIUC the condition that this function can be callable when\nentry has a cached |-\u003eelement|, i.e. this function should not\nbe called after the cache is cleared and before the cache is\nrecalculated (in Get\u003c\u003e function).\n\nSo if the understanding is true, rather than DCHECK(entry-\u003ecount),\nDCHECK(entry-\u003eelement);\nwill catch when the cache isn\u0027t yet calculated and this function\nshould not be called?",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74d6541f_de3c8acb",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-15T08:28:00Z",
+      "side": 1,
+      "message": "How much does this change contribute to the performance gain?\ni.e. this can be replaced with FindSlotByName(slot_name) (as the old code did),\nwhich has more strong guarantee but could be slower.\nIf you expect the mapentry-\u003eelement is cached, the difference would be\nmarginal (if I read the DocumentOrderedMap::Get() correctly).",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
