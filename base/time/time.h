@@ -320,6 +320,7 @@ class TimeBase {
       kMicrosecondsPerHour * kHoursPerDay;
   static const int64_t kMicrosecondsPerWeek = kMicrosecondsPerDay * 7;
   static const int64_t kNanosecondsPerMicrosecond = 1000;
+  static const int64_t kNanosecondsPerMillisecond = 1000000;
   static const int64_t kNanosecondsPerSecond =
       kNanosecondsPerMicrosecond * kMicrosecondsPerSecond;
 

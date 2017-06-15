@@ -144,6 +144,8 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
 
   std::vector<GLSurfaceOverlay> pending_overlays_;
 
+  std::vector<EGLuint64KHR> frame_ids_;
+
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceEGL);
 };
 
