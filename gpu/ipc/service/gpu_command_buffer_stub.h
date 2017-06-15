@@ -193,6 +193,10 @@ class GPU_EXPORT GpuCommandBufferStub
   void OnDescheduleUntilFinished();
   void OnRescheduleAfterFinished();
 
+  void OnDescheduleAfterSwap();
+  void PostRescheduleAfterSwap();
+  void OnRescheduleAfterSwap();
+
   void OnCreateImage(const GpuCommandBufferMsg_CreateImage_Params& params);
   void OnDestroyImage(int32_t id);
   void OnCreateStreamTexture(uint32_t texture_id,
@@ -246,6 +250,9 @@ class GPU_EXPORT GpuCommandBufferStub
   base::TimeTicks last_idle_time_;
 
   LatencyInfoCallback latency_info_callback_;
+  base::Closure deschedule_after_swap_callback_;
+  base::Closure post_reschedule_after_swap_callback_;
+  base::Closure reschedule_after_swap_callback_;
 
   GURL active_url_;
   size_t active_url_hash_;

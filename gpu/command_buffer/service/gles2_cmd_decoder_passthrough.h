@@ -155,6 +155,9 @@ class GLES2DecoderPassthroughImpl : public GLES2Decoder {
   void SetRescheduleAfterFinishedCallback(
       const NoParamCallback& callback) override;
 
+  void SetSwapSchedulingCallbacks(
+      const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) override;
+
   // Gets the QueryManager for this context.
   QueryManager* GetQueryManager() override;
 

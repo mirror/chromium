@@ -206,7 +206,7 @@ gl::GLSurface* GpuChannelManager::GetDefaultOffscreenSurface() {
   return default_offscreen_surface_.get();
 }
 
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
 void GpuChannelManager::DidAccessGpu() {
   last_gpu_access_time_ = base::TimeTicks::Now();
 }

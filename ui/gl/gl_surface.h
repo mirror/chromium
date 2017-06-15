@@ -104,7 +104,8 @@ class GL_EXPORT GLSurface : public base::RefCounted<GLSurface> {
   // surface is displayed on screen. The callback can be used to delay sending
   // SwapBufferAck till that data is available. The callback should be run on
   // the calling thread (i.e. same thread SwapBuffersAsync is called)
-  virtual void SwapBuffersAsync(const SwapCompletionCallback& callback);
+  virtual void SwapBuffersAsync(const SwapCompletionCallback& complete_cb);
+  virtual void SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb);
 
   // Swap buffers with content bounds.
   virtual gfx::SwapResult SwapBuffersWithBounds(
@@ -256,7 +257,7 @@ class GL_EXPORT GLSurfaceAdapter : public GLSurface {
   bool DeferDraws() override;
   bool IsOffscreen() override;
   gfx::SwapResult SwapBuffers() override;
-  void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
+  void SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) override;
   gfx::SwapResult SwapBuffersWithBounds(
       const std::vector<gfx::Rect>& rects) override;
   gfx::SwapResult PostSubBuffer(int x, int y, int width, int height) override;

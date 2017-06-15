@@ -298,6 +298,9 @@ class GPU_EXPORT GLES2Decoder : public CommonDecoder,
   virtual void SetRescheduleAfterFinishedCallback(
       const NoParamCallback& callback) = 0;
 
+  virtual void SetSwapSchedulingCallbacks(
+      const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) = 0;
+
   virtual void WaitForReadPixels(base::Closure callback) = 0;
 
   // Returns true if the context was lost either by GL_ARB_robustness, forced

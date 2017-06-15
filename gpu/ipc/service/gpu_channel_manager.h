@@ -84,7 +84,7 @@ class GPU_EXPORT GpuChannelManager {
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const SyncToken& sync_token);
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   void WakeUpGpu();
 #endif
   void DestroyAllChannels();
@@ -114,7 +114,7 @@ class GPU_EXPORT GpuChannelManager {
     return gpu_memory_buffer_factory_;
   }
 
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   void DidAccessGpu();
 #endif
 
@@ -132,7 +132,7 @@ class GPU_EXPORT GpuChannelManager {
   void InternalDestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id, int client_id);
   void InternalDestroyGpuMemoryBufferOnIO(gfx::GpuMemoryBufferId id,
                                           int client_id);
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   void ScheduleWakeUpGpu();
   void DoWakeUpGpu();
 #endif
@@ -169,7 +169,7 @@ class GPU_EXPORT GpuChannelManager {
   GpuMemoryBufferFactory* const gpu_memory_buffer_factory_;
   GpuFeatureInfo gpu_feature_info_;
   ServiceDiscardableManager discardable_manager_;
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   // Last time we know the GPU was powered on. Global for tracking across all
   // transport surfaces.
   base::TimeTicks last_gpu_access_time_;

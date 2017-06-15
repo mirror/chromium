@@ -610,6 +610,9 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   void SetRescheduleAfterFinishedCallback(
       const NoParamCallback& callback) override;
 
+  void SetSwapSchedulingCallbacks(
+      const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) override;
+
   void SetIgnoreCachedStateForTest(bool ignore) override;
   void SetForceShaderNameHashingForTest(bool force) override;
   uint32_t GetAndClearBackbufferClearBitsForTest() override;
@@ -2346,6 +2349,8 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   WaitSyncTokenCallback wait_sync_token_callback_;
   NoParamCallback deschedule_until_finished_callback_;
   NoParamCallback reschedule_after_finished_callback_;
+  base::Closure deschedule_after_swap_callback_;
+  base::Closure reschedule_after_swap_callback_;
 
   ShaderCacheCallback shader_cache_callback_;
 
@@ -2381,6 +2386,10 @@ class GLES2DecoderImpl : public GLES2Decoder, public ErrorStateClient {
   scoped_refptr<FeatureInfo> feature_info_;
 
   int frame_number_;
+
+  // For async trace IDs.
+  uint64_t async_swap_count_= 0;
+  uint64_t async_swap_ack_count_= 0;
 
   // Number of commands remaining to be processed in DoCommands().
   int commands_to_process_;
@@ -4719,6 +4728,14 @@ void GLES2DecoderImpl::SetDescheduleUntilFinishedCallback(
 void GLES2DecoderImpl::SetRescheduleAfterFinishedCallback(
     const NoParamCallback& callback) {
   reschedule_after_finished_callback_ = callback;
+}
+
+void GLES2DecoderImpl::SetSwapSchedulingCallbacks(
+    const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) {
+  deschedule_after_swap_callback_ = deschedule_cb;
+  reschedule_after_swap_callback_ = reschedule_cb;
+  CHECK(!!deschedule_after_swap_callback_);
+  CHECK(!!reschedule_after_swap_callback_);
 }
 
 bool GLES2DecoderImpl::GetServiceTextureId(uint32_t client_texture_id,
@@ -15616,9 +15633,15 @@ void GLES2DecoderImpl::DoSwapBuffers() {
     ++pending_swaps_;
     TRACE_EVENT_ASYNC_BEGIN0("gpu", "AsyncSwapBuffers", async_swap_id);
 
-    surface_->SwapBuffersAsync(
+
+    CHECK(!!deschedule_after_swap_callback_);
+    CHECK(!!reschedule_after_swap_callback_);
+
+    surface_->SwapBuffersAsync2(
         base::Bind(&GLES2DecoderImpl::FinishAsyncSwapBuffers,
-                   weak_ptr_factory_.GetWeakPtr()));
+                   weak_ptr_factory_.GetWeakPtr()),
+        deschedule_after_swap_callback_,
+        reschedule_after_swap_callback_);
   } else {
     FinishSwapBuffers(surface_->SwapBuffers());
   }

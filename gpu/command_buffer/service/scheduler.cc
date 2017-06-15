@@ -165,6 +165,8 @@ bool Scheduler::Sequence::NeedsRescheduling() const {
 }
 
 bool Scheduler::Sequence::IsRunnable() const {
+  TRACE_EVENT2("gpu", "Sequence::IsRunnable", "enabled", enabled_, "tasks", !tasks_.empty());
+  TRACE_EVENT2("gpu", "Sequence::IsRunnable", "wait_fences_", !wait_fences_.empty(), "order_num",  wait_fences_.front().order_num > tasks_.front().order_num);
   return enabled_ && !tasks_.empty() &&
          (wait_fences_.empty() ||
           wait_fences_.front().order_num > tasks_.front().order_num);
@@ -411,9 +413,11 @@ void Scheduler::TryScheduleSequence(Sequence* sequence) {
     return;
 
   if (sequence->NeedsRescheduling()) {
+    TRACE_EVENT0("gpu", "NeedsRescheduling");
     DCHECK(sequence->IsRunnable());
     rebuild_scheduling_queue_ = true;
   } else if (!sequence->scheduled() && sequence->IsRunnable()) {
+    TRACE_EVENT0("gpu", "!scheduled && IsRunnable");
     sequence->SetScheduled();
     scheduling_queue_.push_back(sequence->scheduling_state());
     std::push_heap(scheduling_queue_.begin(), scheduling_queue_.end(),
@@ -436,11 +440,15 @@ void Scheduler::RebuildSchedulingQueue() {
     return;
   rebuild_scheduling_queue_ = false;
 
+  TRACE_EVENT0("gpu", "Scheduler::RebuildSchedulingQueue");
+
   scheduling_queue_.clear();
   for (const auto& kv : sequences_) {
+    TRACE_EVENT0("gpu", "sequence");
     Sequence* sequence = kv.second.get();
     if (!sequence->IsRunnable() || sequence->running())
       continue;
+    TRACE_EVENT0("gpu", "schedule");
     sequence->SetScheduled();
     scheduling_queue_.push_back(sequence->scheduling_state());
   }

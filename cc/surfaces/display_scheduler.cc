@@ -29,7 +29,7 @@ DisplayScheduler::DisplayScheduler(base::SingleThreadTaskRunner* task_runner,
       has_pending_surfaces_(false),
       next_swap_id_(1),
       pending_swaps_(0),
-      max_pending_swaps_(max_pending_swaps),
+      max_pending_swaps_(1),
       observing_begin_frame_source_(false),
       weak_ptr_factory_(this) {
   begin_frame_deadline_closure_ = base::Bind(
