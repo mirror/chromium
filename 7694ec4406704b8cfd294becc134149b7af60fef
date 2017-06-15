@@ -2,6 +2,144 @@
   "comments": [
     {
       "key": {
+        "uuid": "c147d3c3_a0c9779b",
+        "filename": "chrome/test/vr/perf/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "The data dependency here is identical to latency test, considering to put it in centralized place as following:\n\nsource_data \u003d [\n  ....\n]\n\n\t\ngroup(\"vrcore_fps_test\") {\n  testonly \u003d true\n  data \u003d source_data\n  data_deps \u003d [...]\n}",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "513f7385_0745fcb2",
+        "filename": "chrome/test/vr/perf/vr_perf_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "Considering to put self._Teardown() in try-finally, so you don\u0027t need to run _Teardown in _OneTimeTeardown().",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "590b8111_a4d9e867",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "Considering to use string format to make it more readable.\n\noutput \u003d \n  \"\"\"\n  Min application FPS: %{min_app_fps_data).4f\n  Max application FPS: %{max_app_fps_data).4f\n  Average ...\n  \"\"\" % ({\u0027min_app_fps_data\u0027: min(app_fps_data),\n          \u0027max_app_fps_data\u0027: max(app_fps_data),\n          ...})",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72dbc2c9_e4bc73ac",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "Considering to use logging.warning.",
+      "range": {
+        "startLine": 164,
+        "startChar": 4,
+        "endLine": 164,
+        "endChar": 9
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff46a299_10236ab9",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 7
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "314ae677_e08c811c",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 15
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "16d177c0_22b36ff2",
         "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test.py",
         "patchSetId": 3
@@ -42,6 +180,47 @@
         "endLine": 82,
         "endChar": 24
       },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc054c4a_7931fb87",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "Several suggestions:\n1. Covert vsync miss time to ms instead of us, that is easy to read.\n2. I think min and max FPS are useful, especially min FPS, if min FPS is too low, that means there is something wrong during VR. \n\nWhat is the current value for blocked frame submission in the graph? Is it the total number?\n\nFor missed vsyncs chart, I feel total number of vsyncs missed is better, average value sometimes will hide the problem.",
+      "parentUuid": "d33a4615_e786f14a",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d7c6a1d_7a79d33f",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test_config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-15T21:07:48Z",
+      "side": 1,
+      "message": "This file is identical to latency_test_config.py, it is better to merge into one.",
       "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
