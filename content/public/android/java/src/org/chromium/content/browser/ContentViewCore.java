@@ -1243,27 +1243,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
     }
 
     /**
-     * @see View#onHoverEvent(MotionEvent)
-     * Mouse move events are sent on hover move.
-     */
-    public boolean onHoverEvent(MotionEvent event) {
-        TraceEvent.begin("onHoverEvent");
-
-        MotionEvent offset = createOffsetMotionEvent(event);
-        try {
-            if (mWebContentsAccessibility != null && !mIsObscuredByAnotherView
-                    && mWebContentsAccessibility.onHoverEvent(offset)) {
-                return true;
-            }
-
-            return getEventForwarder().onMouseEvent(event);
-        } finally {
-            offset.recycle();
-            TraceEvent.end("onHoverEvent");
-        }
-    }
-
-    /**
      * Removes noise from joystick motion events.
      */
     private static float getFilteredAxisValue(MotionEvent event, int axis) {
@@ -1316,12 +1295,6 @@ public class ContentViewCore implements AccessibilityStateChangeListener, Displa
         mCurrentTouchOffsetX = dx;
         mCurrentTouchOffsetY = dy;
         getEventForwarder().setCurrentTouchEventOffsets(dx, dy);
-    }
-
-    private MotionEvent createOffsetMotionEvent(MotionEvent src) {
-        MotionEvent dst = MotionEvent.obtain(src);
-        dst.offsetLocation(mCurrentTouchOffsetX, mCurrentTouchOffsetY);
-        return dst;
     }
 
     /**

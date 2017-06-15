@@ -65,15 +65,17 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
                      jfloat raw_offset_x_pixels,
                      jfloat raw_offset_y_pixels,
                      const Pointer* const pointer0,
-                     const Pointer* const pointer1);
+                     const Pointer* const pointer1,
+                     jboolean is_hover);
   ~MotionEventAndroid() override;
 
   // Create a new instance from |this| with its cached pointers set
   // to a given point.
   std::unique_ptr<MotionEventAndroid> CreateFor(const gfx::PointF& point) const;
 
-  // Convenience method returning the pointer at index 0.
-  gfx::PointF GetPoint() const { return gfx::PointF(GetX(0), GetY(0)); }
+  // Convenience methods returning the pointer at index 0.
+  gfx::PointF GetPointF() const;
+  gfx::Point GetPoint() const;
 
   // ui::MotionEvent methods.
   uint32_t GetUniqueEventId() const override;
@@ -110,6 +112,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   float ticks_y() const { return ticks_y_; }
   float time_sec() const { return time_sec_; }
   float GetTickMultiplier() const;
+  bool is_hover() const { return is_hover_; }
 
   base::android::ScopedJavaLocalRef<jobject> GetJavaObject() const;
 
@@ -159,6 +162,7 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
     float tilt_y;
     ToolType tool_type;
   } cached_pointers_[MAX_POINTERS_TO_CACHE];
+  const bool is_hover_;
 
   // A unique identifier for the Android motion event.
   const uint32_t unique_event_id_;

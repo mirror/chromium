@@ -59,7 +59,8 @@ class EventForwarder {
                     jint android_changed_button,
                     jint android_button_state,
                     jint android_meta_state,
-                    jint tool_type);
+                    jint tool_type,
+                    jboolean is_hover);
 
   void OnMouseWheelEvent(JNIEnv* env,
                          const base::android::JavaParamRef<jobject>& obj,
