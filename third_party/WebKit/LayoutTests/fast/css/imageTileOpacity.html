@@ -14,7 +14,6 @@
             position:absolute;
             top:162px;
             right:150px;
-
         }
 
         .dialog-button {
@@ -44,13 +43,13 @@
                 var button_div = document.createElement('div');
                 button_div.setAttribute('class', 'dialog-button dialog-cancel-button');
                 div.appendChild (button_div);
-                createDialogButton (button_div, 'Cancel', 66);
+                createDialogButton (button_div, 'Cancel');
                 
                 document.body.appendChild(div);
                 this.background = div;	
             }
             
-            function createDialogButton (div, title, minwidth)
+            function createDialogButton (div, title)
             {
                 element = document.createElement('div');
                 element.setAttribute ("style", 'display:inline-block;text-align:center;line-height:24px;background:url(button_center.png) repeat-x top left;');	
