@@ -1,0 +1,30 @@
+rootWebArea
+++list
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='copy'
+++++++++inlineTextBox name='copy'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='move'
+++++++++inlineTextBox name='move'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='link'
+++++++++inlineTextBox name='link'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='execute'
+++++++++inlineTextBox name='execute'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='popup'
+++++++++inlineTextBox name='popup'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='none(default)'
+++++++++inlineTextBox name='none(default)'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='link'
+++++++++inlineTextBox name='link'
