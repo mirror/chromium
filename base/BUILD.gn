@@ -1246,6 +1246,7 @@ component("base") {
       "process/process_handle_posix.cc",
       "process/process_posix.cc",
       "rand_util_posix.cc",
+      "sync_socket_posix.cc",
     ]
 
     sources += [
@@ -2329,6 +2330,10 @@ test("base_unittests") {
       "//base/android/jni_generator:jni_generator_tests",
       "//base/test:test_support_java",
     ]
+  }
+
+  if (is_fuchsia) {
+    sources -= [ "sync_socket_unittest.cc" ]
   }
 
   if (is_ios) {
