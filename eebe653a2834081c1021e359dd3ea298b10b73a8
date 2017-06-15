@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c85fd73_b9c81ceb",
+        "filename": "extensions/browser/api/usb/usb_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 374,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T19:44:24Z",
+      "side": 1,
+      "message": "By the way, can you remind me why we can\u0027t typemap this?",
+      "range": {
+        "startLine": 374,
+        "startChar": 34,
+        "endLine": 374,
+        "endChar": 53
+      },
+      "revId": "eebe653a2834081c1021e359dd3ea298b10b73a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
