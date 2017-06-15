@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "34508ba6_7948a81b",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-15T19:27:52Z",
+      "side": 1,
+      "message": "Gotcha thanks",
+      "parentUuid": "6aa8e177_c3593333",
+      "revId": "2f0a1323e994efd7373dfd6d70a2d228ed91db41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf9667ad_5acdb655",
         "filename": "chrome/browser/ui/cocoa/animated_icon.h",
         "patchSetId": 4

@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a070633_c294ad58",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-15T19:27:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "98aa9eff_de03f59b",
+      "range": {
+        "startLine": 45,
+        "startChar": 2,
+        "endLine": 45,
+        "endChar": 8
+      },
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8c90a0b2_beb35779",
         "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-13T16:02:24Z",
       "side": 1,
       "message": "Can this cast be removed by updating toolbar_controller.h/mm?",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcbcbd53_cc2a4465",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-15T19:27:52Z",
+      "side": 1,
+      "message": "I just gave that a try and doing that will open a can of worms. There\u0027s a lot of classes that calls this method so I\u0027ll have to change all of them which won\u0027t be fun.\n\nI can introduce a new method that will actually return an AppToolbarButton though.",
+      "parentUuid": "8c90a0b2_beb35779",
       "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -56,6 +98,24 @@
       "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ca21cf6_98d8c80b",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-15T19:27:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b1de04da_b65f2c45",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
