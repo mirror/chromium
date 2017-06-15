@@ -50,6 +50,29 @@
       "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8ca5853_c3671de8",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1115423
+      },
+      "writtenOn": "2017-06-15T06:47:55Z",
+      "side": 1,
+      "message": "Is there no need to remove the constraints before adding the new constraints?",
+      "range": {
+        "startLine": 870,
+        "startChar": 12,
+        "endLine": 870,
+        "endChar": 37
+      },
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
