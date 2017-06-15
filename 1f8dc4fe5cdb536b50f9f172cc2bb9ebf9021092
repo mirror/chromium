@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cd123f05_729e5b8e",
+        "filename": "media/audio/audio_input_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-06-15T20:02:35Z",
+      "side": 1,
+      "message": "let\u0027s not add sstream for this. Usage of streams should be limited to debug logging and test diagnostics. The webrtc log falls under that since it\u0027s meant to be used to debug applications that run on top of chrome and not necessarily chrome itself while developing.",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 17
+      },
+      "revId": "1f8dc4fe5cdb536b50f9f172cc2bb9ebf9021092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

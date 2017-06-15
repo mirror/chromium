@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22e4f9ba_45cac006",
+        "filename": "media/audio/audio_input_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 406,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-06-15T20:02:35Z",
+      "side": 0,
+      "message": "the usage of StringPrintf for this purpose, is preferred over ostringstream",
+      "range": {
+        "startLine": 406,
+        "startChar": 45,
+        "endLine": 406,
+        "endChar": 57
+      },
+      "revId": "a2c5540dd92ca78780a8836b8325bd34440c318f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
