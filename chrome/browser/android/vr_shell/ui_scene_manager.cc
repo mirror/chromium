@@ -79,9 +79,9 @@ static constexpr float kCloseButtonHeight = 0.088 * kCloseButtonDistance;
 static constexpr float kCloseButtonWidth = 0.088 * kCloseButtonDistance;
 static constexpr float kCloseButtonFullscreenDistance = 2.9;
 static constexpr float kCloseButtonFullscreenHeight =
-    0.088 * kCloseButtonDistance;
+    0.088 * kCloseButtonFullscreenDistance;
 static constexpr float kCloseButtonFullscreenWidth =
-    0.088 * kCloseButtonDistance;
+    0.088 * kCloseButtonFullscreenDistance;
 
 static constexpr float kLoadingIndicatorWidth = 0.24 * kUrlBarDistance;
 static constexpr float kLoadingIndicatorHeight = 0.008 * kUrlBarDistance;
