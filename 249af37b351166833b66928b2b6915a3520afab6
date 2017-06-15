@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "75fdd94c_708de2e0",
+        "filename": "media/capture/video/chromeos/camera_device_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-15T13:20:45Z",
+      "side": 1,
+      "message": "Added the missing initialization.",
+      "range": {
+        "startLine": 44,
+        "startChar": 73,
+        "endLine": 44,
+        "endChar": 78
+      },
+      "revId": "249af37b351166833b66928b2b6915a3520afab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "43240ada_81a918f4",
+        "filename": "media/capture/video/chromeos/camera_device_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-15T13:20:45Z",
+      "side": 1,
+      "message": "Added the missing initialization.",
+      "range": {
+        "startLine": 49,
+        "startChar": 49,
+        "endLine": 49,
+        "endChar": 54
+      },
+      "revId": "249af37b351166833b66928b2b6915a3520afab6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
