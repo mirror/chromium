@@ -15,65 +15,43 @@
 var container = document.getElementById("flexContainer");
 var item = document.getElementById("flexItem");
 
-function checkAlignSelfValue(value, computedValue, gridEnabled)
+function checkAlignSelfValue(value, computedValue)
 {
     item.style.webkitAlignSelf = value;
-    if (gridEnabled)
-        checkValues(item, "alignSelf", "align-self", value, computedValue);
-    else
-        checkValues(item, "alignSelf", "align-self", "flex-start", "flex-start");
+    checkValues(item, "alignSelf", "align-self", value, computedValue);
 }
 
-function checkAlignItemsValue(value, computedValue, gridEnabled)
+function checkAlignItemsValue(value, computedValue)
 {
     container.style.webkitAlignItems = value;
-    if (gridEnabled) {
-        checkValues(container, "alignItems", "align-items", value, computedValue);
-        checkValues(item, "alignSelf", "align-self", "auto", "auto");
-    } else {
-        checkValues(container, "alignItems", "align-items", "flex-end", "flex-end");
-        checkValues(item, "alignSelf", "align-self", "auto", "auto");
-    }
+    checkValues(container, "alignItems", "align-items", value, computedValue);
+    checkValues(item, "alignSelf", "align-self", "auto", "auto");
 }
 
-function checkSelfAlignmentValues(gridEnabled)
+function checkSelfAlignmentValues()
 {
-    if (window.internals)
-        internals.runtimeFlags.cssGridLayoutEnabled = gridEnabled;
-
     item.style.webkitAlignSelf = "flex-start";
 
-    checkAlignSelfValue("start unsafe", "start unsafe", gridEnabled)
-    checkAlignSelfValue("start", "start", gridEnabled)
-    checkAlignSelfValue("end", "end", gridEnabled)
-    checkAlignSelfValue("flex-start safe", "flex-start safe", gridEnabled)
-    checkAlignSelfValue("self-start", "self-start", gridEnabled)
-    checkAlignSelfValue("self-end", "self-end", gridEnabled)
+    checkAlignSelfValue("start unsafe", "start unsafe")
+    checkAlignSelfValue("start", "start")
+    checkAlignSelfValue("end", "end")
+    checkAlignSelfValue("flex-start safe", "flex-start safe")
+    checkAlignSelfValue("self-start", "self-start")
+    checkAlignSelfValue("self-end", "self-end")
 }
 
-function checkDefaultAlignmentValues(gridEnabled)
+function checkDefaultAlignmentValues()
 {
-    if (window.internals)
-        internals.runtimeFlags.cssGridLayoutEnabled = gridEnabled;
-
     container.style.webkitAlignItems = "flex-end";
     item.style.webkitAlignSelf = "auto";
 
-    checkAlignItemsValue("start unsafe", "start unsafe", gridEnabled)
-    checkAlignItemsValue("start", "start", gridEnabled)
-    checkAlignItemsValue("end", "end", gridEnabled)
-    checkAlignItemsValue("flex-start safe", "flex-start safe", gridEnabled)
-    checkAlignItemsValue("self-start", "self-start", gridEnabled)
-    checkAlignItemsValue("self-end", "self-end", gridEnabled)
+    checkAlignItemsValue("start unsafe", "start unsafe")
+    checkAlignItemsValue("start", "start")
+    checkAlignItemsValue("end", "end")
+    checkAlignItemsValue("flex-start safe", "flex-start safe")
+    checkAlignItemsValue("self-start", "self-start")
+    checkAlignItemsValue("self-end", "self-end")
 }
-
-test(function() {
-    checkSelfAlignmentValues(false);
-}, "New Self-Alignment values should be invalid when grid layout is DISABLED.");
-
-test(function() {
-    checkDefaultAlignmentValues(false);
-}, "New Default-Alignment values should be invalid when grid layout is DISABLED.");
 
 test(function() {
     checkSelfAlignmentValues(true);
