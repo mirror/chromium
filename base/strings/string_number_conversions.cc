@@ -329,7 +329,7 @@ bool String16ToIntImpl(const StringPiece16& input, VALUE* output) {
 }  // namespace
 
 std::string IntToString(int value) {
-  return IntToStringT<std::string, int>::IntToString(value);
+  return std::to_string(value);
 }
 
 string16 IntToString16(int value) {
@@ -337,7 +337,7 @@ string16 IntToString16(int value) {
 }
 
 std::string UintToString(unsigned int value) {
-  return IntToStringT<std::string, unsigned int>::IntToString(value);
+  return std::to_string(value);
 }
 
 string16 UintToString16(unsigned int value) {
@@ -345,7 +345,7 @@ string16 UintToString16(unsigned int value) {
 }
 
 std::string Int64ToString(int64_t value) {
-  return IntToStringT<std::string, int64_t>::IntToString(value);
+  return std::to_string(value);
 }
 
 string16 Int64ToString16(int64_t value) {
@@ -353,7 +353,7 @@ string16 Int64ToString16(int64_t value) {
 }
 
 std::string Uint64ToString(uint64_t value) {
-  return IntToStringT<std::string, uint64_t>::IntToString(value);
+  return std::to_string(value);
 }
 
 string16 Uint64ToString16(uint64_t value) {
@@ -361,7 +361,7 @@ string16 Uint64ToString16(uint64_t value) {
 }
 
 std::string SizeTToString(size_t value) {
-  return IntToStringT<std::string, size_t>::IntToString(value);
+  return std::to_string(value);
 }
 
 string16 SizeTToString16(size_t value) {
