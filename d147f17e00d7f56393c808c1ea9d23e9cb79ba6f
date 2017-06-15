@@ -162,6 +162,24 @@
     },
     {
       "key": {
+        "uuid": "79b4c596_d8e49392",
+        "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-15T01:29:39Z",
+      "side": 1,
+      "message": "Let me make this synchronous again.\n\nI noticed making this synchronous is necessary because WrapPersistent(this) doesn\u0027t work when |keep_alive_| is already cleared and ParentObjectDestroyed() is called from the finalizer. In the case, this messaging proxy is also being finalized.",
+      "parentUuid": "428e20f0_704e9f25",
+      "revId": "d147f17e00d7f56393c808c1ea9d23e9cb79ba6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5ecf02f8_92836658",
         "filename": "third_party/WebKit/Source/core/workers/ThreadedMessagingProxyBase.cpp",
         "patchSetId": 3
