@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "168532dc_7145df9b",
+        "filename": "third_party/WebKit/Source/core/css/CSSFontFaceSrcValue.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T10:51:13Z",
+      "side": 1,
+      "message": "Looks like the pred is reversed?\nif (!param.Url().IsLocalFile())",
+      "range": {
+        "startLine": 96,
+        "startChar": 8,
+        "endLine": 96,
+        "endChar": 14
+      },
+      "revId": "f9d112f50292bad38e11eea7b54c717241ddc2f0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
