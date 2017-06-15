@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "12072d5a_cf86f2ba",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T08:26:04Z",
+      "side": 1,
+      "message": "Here and for all comments: It was not a constant (CGRectMake(0, 66, 0, 120) here). You can see it as I did not removed any existing constant.\nI was keeping consistent with the current implementation, but I can clean those up.",
+      "parentUuid": "ac020fb5_e002895b",
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5af816ca_ac0708d4",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77089605_40fbf0fa",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T08:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5af816ca_ac0708d4",
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "912c0763_43c3fb71",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T08:26:04Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ffbdbba1_55908ce8",
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8ca5853_c3671de8",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 5
@@ -64,6 +118,30 @@
       "writtenOn": "2017-06-15T06:47:55Z",
       "side": 1,
       "message": "Is there no need to remove the constraints before adding the new constraints?",
+      "range": {
+        "startLine": 870,
+        "startChar": 12,
+        "endLine": 870,
+        "endChar": 37
+      },
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d9d1724_b674a7ee",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 870,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T08:26:04Z",
+      "side": 1,
+      "message": "Discussed offline: as we only go through this function once and the constraints are mainly between the headerView (re-created here) and the other views, it should be fine.",
+      "parentUuid": "e8ca5853_c3671de8",
       "range": {
         "startLine": 870,
         "startChar": 12,
