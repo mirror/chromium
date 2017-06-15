@@ -320,7 +320,7 @@ bool ViewAndroid::OnTouchEvent(const MotionEventAndroid& event,
                                bool for_touch_handle) {
   return HitTest(
       base::Bind(&ViewAndroid::SendTouchEventToClient, for_touch_handle), event,
-      event.GetPoint());
+      event.GetPointF());
 }
 
 // static
@@ -334,7 +334,7 @@ bool ViewAndroid::SendTouchEventToClient(bool for_touch_handle,
 
 bool ViewAndroid::OnMouseEvent(const MotionEventAndroid& event) {
   return HitTest(base::Bind(&ViewAndroid::SendMouseEventToClient), event,
-                 event.GetPoint());
+                 event.GetPointF());
 }
 
 // static
@@ -347,7 +347,7 @@ bool ViewAndroid::SendMouseEventToClient(ViewClient* client,
 
 bool ViewAndroid::OnMouseWheelEvent(const MotionEventAndroid& event) {
   return HitTest(base::Bind(&ViewAndroid::SendMouseWheelEventToClient), event,
-                 event.GetPoint());
+                 event.GetPointF());
 }
 
 // static

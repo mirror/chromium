@@ -55,7 +55,7 @@ class ViewAndroidBoundsTest : public testing::Test {
     ui::MotionEventAndroid::Pointer pointer1(0, 0, 0, 0, 0, 0, 0, 0);
     ui::MotionEventAndroid event(nullptr, JavaParamRef<jobject>(nullptr), 1.f,
                                  0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-                                 &pointer0, &pointer1);
+                                 &pointer0, &pointer1, false);
     root_.OnTouchEvent(event, false);
   }
 
