@@ -22,6 +22,30 @@
       "revId": "58a4c273ec777584c5e0d78babebee9faae0b7e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "206408bb_48412eb4",
+        "filename": "cc/scheduler/scheduler.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 650,
+      "author": {
+        "id": 1204345
+      },
+      "writtenOn": "2017-06-15T11:15:12Z",
+      "side": 1,
+      "message": "Done. Hopefully this is clearer.",
+      "parentUuid": "40562204_f8f412e1",
+      "range": {
+        "startLine": 650,
+        "startChar": 61,
+        "endLine": 650,
+        "endChar": 70
+      },
+      "revId": "58a4c273ec777584c5e0d78babebee9faae0b7e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
