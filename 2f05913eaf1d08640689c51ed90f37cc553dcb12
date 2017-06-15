@@ -16,6 +16,24 @@
       "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b5d554_b1934f91",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-15T21:02:40Z",
+      "side": 1,
+      "message": "Here is how it works:\n\ncontainerRect.topLeft is position of container border box wrt viewport.\ntargetRect.topLeft is position of target border box wrt viewport.\n\nIf there is a scrollbar on the left, the different between the two is width of scrollbar.\n\nSpec defines container.clientLeft as container.borderLeft + container.scrollbarLeft\n\nTherefore, this must be true:\n\ncontainerBoundingRect.left - targetBoundingRect.left \u003d\u003d container.clientLeft\n\nIt works in Chrome, FF, Safari, fails in Edge.\n\nEdge is not spec-compliant, opened an issue https://developer.microsoft.com/en-us/microsoft-edge/platform/issues/12356453/",
+      "parentUuid": "52dd703c_694c7619",
+      "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
