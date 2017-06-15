@@ -143,6 +143,11 @@ class CONTENT_EXPORT ResourceScheduler {
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
 
+  // True if the scheduler should tag requests with a priority of net::MEDIUM as
+  // layout blocking during the initial loading phase before the <BODY> tag is
+  // parsed.
+  bool medium_priority_layout_blocking_;
+
   SEQUENCE_CHECKER(sequence_checker_);
 
   DISALLOW_COPY_AND_ASSIGN(ResourceScheduler);
