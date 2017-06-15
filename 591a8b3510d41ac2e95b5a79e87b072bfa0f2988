@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41d7fecc_c698fd6c",
+        "filename": "content/browser/service_worker/service_worker_fetch_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 690,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T18:00:14Z",
+      "side": 1,
+      "message": "probably using original_request-\u003etraffic_annotation() is the correct thing to do here? This is pretty much just loading the original request again, just with an extra http header set on the request.",
+      "revId": "591a8b3510d41ac2e95b5a79e87b072bfa0f2988",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
