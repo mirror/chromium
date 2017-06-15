@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c2ff027_423ef4d0",
+        "filename": "base/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-15T12:19:55Z",
+      "side": 1,
+      "message": "Maybe this block could be prepended with a comment saying something like \"these files use OS calls that aren\u0027t available in fuchsia. For some of these, we have dedicated_fuchsia files; for others we don\u0027t compile the code depending on them.\" so that it\u0027s clear these files still need to be ported. (And if it\u0027s a mix of \"not yet done\" and \"intentionally excluded\", this should probably be split into two blocks)",
+      "revId": "92e8b843f976049e5999c46f761fdc168f27574f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
