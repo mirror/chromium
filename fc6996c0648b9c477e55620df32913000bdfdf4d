@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "970f1f0f_e3f68412",
+        "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-15T00:34:16Z",
+      "side": 1,
+      "message": "I chatted offline w/ shimazu@. These records are grouped with the 3rd argument |this|, so the case I mentioned is also appropriately grouped.",
+      "parentUuid": "3f7cf0e3_c17b7f73",
+      "revId": "fc6996c0648b9c477e55620df32913000bdfdf4d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a3c8bd34_b74392c7",
         "filename": "content/browser/service_worker/service_worker_read_from_cache_job.cc",
         "patchSetId": 1
