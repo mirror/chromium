@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0fb5d276_d6eed043",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05f92309_978a5a08",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6cc102d7_3f67ce2e",
         "filename": "cc/layers/touch_action_region.cc",
         "patchSetId": 22
@@ -33,6 +51,24 @@
       "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22d6c0bc_120a4653",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "Done. static auto would not work, so I stuck with static const for the time being. Let me know if this isn\u0027t okay.",
+      "parentUuid": "6cc102d7_3f67ce2e",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8e1c0fd5_604e3506",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "This was a mistake on my part. It was supposed to be base/containers/flat_map.h. Changed.",
+      "parentUuid": "3334d613_826dd379",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bb6be74e_b3a6185b",
         "filename": "cc/layers/touch_action_region.h",
         "patchSetId": 22
@@ -67,6 +121,24 @@
       "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9326f023_811fe50f",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bb6be74e_b3a6185b",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4ce72649_bb8b63b0",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 22
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cb840e7_a2ce3f6e",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a615c080_58810c99",
         "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
         "patchSetId": 22
@@ -101,6 +191,24 @@
       "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7aa8d701_615f3cdb",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 10611,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-15T22:27:24Z",
+      "side": 1,
+      "message": "Done. I used std::move and touch_action_region \u003d TouchActionRegion() to solve this. Thanks for this catch.",
+      "parentUuid": "a615c080_58810c99",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
