@@ -50,6 +50,23 @@
       "revId": "09790d83d5f2fcca314a61dcecfbdf77158f38b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ff39e94_0651c835",
+        "filename": "cc/layers/touch_action_region.h",
+        "patchSetId": 23
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:43:32Z",
+      "side": 1,
+      "message": "Oh oh also you could put a TODO here that Region could be owned directly instead of in unique_ptr if Region supported efficient moving.\n\nCuz it should really do that one day.",
+      "revId": "09790d83d5f2fcca314a61dcecfbdf77158f38b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
