@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "a3a04eb3_b7fb4a82",
+        "filename": "base/process/kill_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-15T15:26:57Z",
+      "side": 1,
+      "message": "/*exit_code\u003d*/1, /*wait\u003d*/false\n\nPossibly overkill for the exit code, but I was unable to guess what the false meant.\n\nAll the other platforms wait for the process to exit. Is the plan to add that back later, or should Fuchsia be different here for some reason? In any case, a comment explaining why fuchsia behaves differently from all the other platforms is probably good.",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca339c07_da5583f2",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-15T15:26:57Z",
+      "side": 1,
+      "message": "Depending on how common this turns out, maybe we want to use https://cs.chromium.org/chromium/src/gpu/command_buffer/common/id_type.h?type\u003dcs\u0026l\u003d40 for ProcessHandle (and move id_type.h to base after all). For now, let\u0027s see how it goes, I suppose.",
+      "range": {
+        "startLine": 877,
+        "startChar": 5,
+        "endLine": 877,
+        "endChar": 16
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b817a3ae_6ac64642",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 3
@@ -13,6 +59,30 @@
       "writtenOn": "2017-06-15T00:17:30Z",
       "side": 1,
       "message": "(clang-format made me add this \"extra\" space to make the two comments line up, I guess.)",
+      "range": {
+        "startLine": 885,
+        "startChar": 7,
+        "endLine": 885,
+        "endChar": 8
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f87dbcd_d2e777d2",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-15T15:26:57Z",
+      "side": 1,
+      "message": "(#if is short enough that i\u0027d personally just zap these comments /shruggie)",
+      "parentUuid": "b817a3ae_6ac64642",
       "range": {
         "startLine": 885,
         "startChar": 7,
