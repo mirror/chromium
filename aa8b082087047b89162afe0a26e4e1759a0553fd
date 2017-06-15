@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e251f991_3254106c",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-15T19:20:33Z",
+      "side": 1,
+      "message": "Obsolete. Because I was using offsetTop, position:relative makes container be offsetParent.",
+      "parentUuid": "5ad2eecc_ed80408e",
+      "revId": "aa8b082087047b89162afe0a26e4e1759a0553fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5947c6b5_7c140c93",
         "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T15:18:41Z",
       "side": 1,
       "message": "Any reason not to use getElementById?",
+      "revId": "aa8b082087047b89162afe0a26e4e1759a0553fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feb2f8a5_e0be97b9",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-15T19:20:33Z",
+      "side": 1,
+      "message": "I prefer querySelector to getElementById because it is universal.\nWhat is the reason for using getElementById?",
+      "parentUuid": "5947c6b5_7c140c93",
       "revId": "aa8b082087047b89162afe0a26e4e1759a0553fd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
