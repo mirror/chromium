@@ -5,10 +5,13 @@
 package org.chromium.chrome.browser.media;
 
 import android.annotation.SuppressLint;
+import android.app.PictureInPictureParams;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Rect;
 import android.os.SystemClock;
 import android.support.annotation.Nullable;
+import android.util.Rational;
 
 import org.chromium.base.BuildInfo;
 import org.chromium.base.Callback;
@@ -170,8 +173,45 @@ public class PictureInPictureController {
             }
         });
 
-        // TODO(peconn): Use non-deprecated version once building with Android O.
-        activity.enterPictureInPictureMode();
+        Rect rect = webContents.getCurrentlyPlayingVideoSizes().get(0);
+        float videoAspectRatio = ((float) rect.width()) / ((float) rect.height());
+        int windowWidth = activity.getWindow().getDecorView().getWidth();
+        int windowHeight = activity.getWindow().getDecorView().getHeight();
+        float phoneAspectRatio = ((float) windowWidth) / ((float) windowHeight);
+
+        // The currently playing video size is the video frame size, not the on screen size.
+        // We know the video will be touching either the sides or the top and bottom of the screen,
+        // so we can work out the screen bounds of the video from this.
+        Rect bounds;
+        if (videoAspectRatio > phoneAspectRatio) {
+            // The video takes up the full width of the phone and there are black bars at the top
+            // and bottom.
+            int width = activity.getWindow().getDecorView().getWidth();
+            int height = (int) (activity.getWindow().getDecorView().getWidth() / videoAspectRatio);
+
+            // The video is touching the sides and is centered vertically.
+            int left = 0;
+            int top = (windowHeight - height) / 2;
+
+            bounds = new Rect(left, top, left + width, top + height);
+        } else {
+            // The video takes up the full height of the phone and there are black bars at the
+            // sides.
+            int width = (int) (activity.getWindow().getDecorView().getHeight() * videoAspectRatio);
+            int height = activity.getWindow().getDecorView().getHeight();
+
+            // The video is touching the top and bottom and is centered horizontally.
+            int left = (windowWidth - width) / 2;
+            int top = 0;
+
+            bounds = new Rect(left, top, left + width, top + height);
+        }
+
+        activity.enterPictureInPictureMode(
+                new PictureInPictureParams.Builder()
+                        .setAspectRatio(new Rational(bounds.width(), bounds.height()))
+                        .setSourceRectHint(bounds)
+                        .build());
 
         // Setup observers to dismiss the Activity on events that should end PiP.
         final Tab activityTab = activity.getActivityTab();
