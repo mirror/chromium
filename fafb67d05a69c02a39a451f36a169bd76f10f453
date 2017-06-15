@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cb12539_c08169ad",
+        "filename": "third_party/WebKit/Source/web/tests/LinkSelectionTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T23:17:30Z",
+      "side": 0,
+      "message": "This is a no-op, so I just deleted it. Similar for the other nullptr parameters.",
+      "range": {
+        "startLine": 132,
+        "startChar": 35,
+        "endLine": 132,
+        "endChar": 63
+      },
+      "revId": "fafb67d05a69c02a39a451f36a169bd76f10f453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "511c440b_673b95ce",
+        "filename": "third_party/WebKit/Source/web/tests/data/input_field_populated.html",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T23:17:30Z",
+      "side": 0,
+      "message": "Apparently no tests actually exercises that this script runs... so I deleted it. *shrug*",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "fafb67d05a69c02a39a451f36a169bd76f10f453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41adcaf9_07a17550",
+        "filename": "third_party/WebKit/Source/web/tests/data/input_field_populated.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T23:17:30Z",
+      "side": 0,
+      "message": "One test expects this \u003cscript\u003e block not to run, and was implicitly getting this before (since it called Initialize without setting enable_javascript to true).\n\nAs no tests actually depend on the script block executing, I just removed it instead.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 9
+      },
+      "revId": "fafb67d05a69c02a39a451f36a169bd76f10f453",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
