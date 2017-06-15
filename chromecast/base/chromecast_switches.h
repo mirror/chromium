@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/feature_list.h"
 #include "build/build_config.h"
 
 namespace switches {
@@ -66,6 +67,9 @@ extern const char kDesktopWindow1080p[];
 }  // namespace switches
 
 namespace chromecast {
+
+// chromecast Features.
+extern const base::Feature kEnableQuic;
 
 // Gets boolean value from switch |switch_string|.
 // --|switch_string| -> true
