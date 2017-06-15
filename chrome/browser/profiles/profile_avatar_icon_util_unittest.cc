@@ -107,72 +107,81 @@ TEST(ProfileInfoUtilTest, TitleBarIcon) {
   VerifyScaling(result2, size);
 }
 
-TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailSizeNoInitialSize) {
-  GURL initial_url(
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/photo.jpg");
-  const std::string expected_url =
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/s128-c/photo.jpg";
-
+void TestGetImageURLWithOptions(const char* initial_url,
+                                int size,
+                                bool no_silhouette,
+                                const char* expected_url) {
   GURL transformed_url;
-  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(
-      initial_url, 128, &transformed_url));
-
+  EXPECT_TRUE(profiles::GetImageURLWithOptions(
+      GURL(initial_url), size, no_silhouette, &transformed_url));
   EXPECT_EQ(transformed_url, GURL(expected_url));
 }
 
-TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailSizeSizeAlreadySpecified) {
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsNoInitialSize) {
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/photo.jpg", 128, false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s128-c/photo.jpg"));
+}
+
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsSizeAlreadySpecified) {
   // If there's already a size specified in the URL, it should be changed to the
   // specified size in the resulting URL.
-  GURL initial_url(
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/s64-c/photo.jpg");
-  const std::string expected_url =
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/s128-c/photo.jpg";
-
-  GURL transformed_url;
-  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(
-      initial_url, 128, &transformed_url));
-
-  EXPECT_EQ(transformed_url, GURL(expected_url));
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c/photo.jpg", 128,
+      false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s128-c/photo.jpg"));
 }
 
-TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailSizeSameSize) {
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsOtherSizeSpecified) {
+  // If there's already a size specified in the URL, it should be changed to the
+  // specified size in the resulting URL.
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s128-c/photo.jpg", 64,
+      false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c/photo.jpg"));
+}
+
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsSameSize) {
   // If there's already a size specified in the URL, and it's already the
   // requested size, true should be returned and the URL should remain
   // unchanged.
-  GURL initial_url(
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/s64-c/photo.jpg");
-  const std::string expected_url =
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/s64-c/photo.jpg";
-
-  GURL transformed_url;
-  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(
-      initial_url, 64, &transformed_url));
-
-  EXPECT_EQ(transformed_url, GURL(expected_url));
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c/photo.jpg", 64,
+      false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c/photo.jpg"));
 }
 
-TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailSizeNoFileNameInPath) {
-  GURL initial_url(
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/");
-  const std::string expected_url =
-      "https://example.com/--Abc/AAAAAAAAAAI/AAAAAAAAACQ/Efg/";
-
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsNoFileNameInPath) {
   // If there is no file path component in the URL path, we should fail the
   // modification, but return true since the URL is still potentially valid and
   // not modify the input URL.
-  GURL new_url;
-  EXPECT_TRUE(profiles::GetImageURLWithThumbnailSize(
-      initial_url, 64, &new_url));
-
-  EXPECT_EQ(new_url, GURL(expected_url));
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/", 128, false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/"));
 }
 
-TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailInvalidURL) {
-  GURL initial_url;
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsNoSilhouette) {
+  // If there's already a size specified in the URL, it should be changed to the
+  // specified size in the resulting URL.
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/photo.jpg", 64, true,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c-ns/photo.jpg"));
+}
 
+TEST(ProfileInfoUtilTest, GetImageURLWithOptionsSizeReplaceNoSilhouette) {
+  // If there's already a size specified in the URL, it should be changed to the
+  // specified size in the resulting URL.
+  EXPECT_NO_FATAL_FAILURE(TestGetImageURLWithOptions(
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s64-c-ns/photo.jpg", 128,
+      false,
+      "http://example.com/-A/AAAAAAAAAAI/AAAAAAAAACQ/B/s128-c/photo.jpg"));
+}
+
+TEST(ProfileInfoUtilTest, GetImageURLWithThumbnailShouldNotChangeURLIfInvalid) {
+  GURL initial_url;
   GURL new_url("http://example.com");
-  EXPECT_FALSE(profiles::GetImageURLWithThumbnailSize(
-      initial_url, 128, &new_url));
+  EXPECT_FALSE(
+      profiles::GetImageURLWithOptions(initial_url, 128, false, &new_url));
 
   // The new URL should be unchanged since the transformation failed.
   EXPECT_EQ(new_url, GURL("http://example.com"));

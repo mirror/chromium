@@ -41,9 +41,13 @@
 namespace {
 
 // Path format for specifying thumbnail's size.
-const char kThumbnailSizeFormat[] = "s%d-c";
-// Default thumbnail size.
-const int kDefaultThumbnailSize = 64;
+const char kThumbnailSizeOptionFormat[] = "s%d-c";
+// Path format for specifying thumbnail's size.
+const char kNoSilhouetteOption[] = "-ns";
+// Path componenets count for image URL format.
+const int kImageURLPathComponentsCount = 6;
+const int kImageURLPathComponentsCountWithOptions = 7;
+const int kImageURLPathOptionsComponentPosition = 5;
 // Separator of URL path components.
 const char kURLPathSeparator = '/';
 
@@ -510,49 +514,49 @@ bool IsDefaultAvatarIconUrl(const std::string& url, size_t* icon_index) {
   return false;
 }
 
-bool GetImageURLWithThumbnailSize(
-    const GURL& old_url, int size, GURL* new_url) {
+std::string BuildImageURLOptionsString(int thumbnail_size, bool no_silhouette) {
+  std::string result =
+      base::StringPrintf(kThumbnailSizeOptionFormat, thumbnail_size);
+  if (no_silhouette)
+    result += kNoSilhouetteOption;
+  return result;
+}
+
+bool GetImageURLWithOptions(const GURL& old_url,
+                            int size,
+                            bool no_silhouette,
+                            GURL* new_url) {
   DCHECK(new_url);
-  std::vector<std::string> components = base::SplitString(
-      old_url.path(), std::string(1, kURLPathSeparator),
-      base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  if (components.empty())
+  if (!old_url.is_valid())
     return false;
 
-  const std::string& old_path = old_url.path();
-  std::string default_size_component(
-      base::StringPrintf(kThumbnailSizeFormat, kDefaultThumbnailSize));
-  std::string new_size_component(
-      base::StringPrintf(kThumbnailSizeFormat, size));
+  std::vector<std::string> components =
+      base::SplitString(old_url.path(), std::string(1, kURLPathSeparator),
+                        base::KEEP_WHITESPACE, base::SPLIT_WANT_ALL);
 
-  size_t pos = old_path.find(default_size_component);
-  size_t end = std::string::npos;
-  if (pos != std::string::npos) {
-    // The default size is already specified in the URL so it needs to be
-    // replaced with the new size.
-    end = pos + default_size_component.size();
-  } else {
-    // The default size is not in the URL so try to insert it before the last
-    // component.
-    const std::string& file_name = old_url.ExtractFileName();
-    if (!file_name.empty()) {
-      pos = old_path.find(file_name);
-      end = pos - 1;
-    }
-  }
-
-  if (pos != std::string::npos) {
-    std::string new_path = old_path.substr(0, pos) + new_size_component +
-                           old_path.substr(end);
-    GURL::Replacements replacement;
-    replacement.SetPathStr(new_path);
-    *new_url = old_url.ReplaceComponents(replacement);
+  if (components.size() < kImageURLPathComponentsCount ||
+      components.size() > kImageURLPathComponentsCountWithOptions ||
+      components.back().empty()) {
+    *new_url = old_url;
     return new_url->is_valid();
   }
 
-  // We can't set the image size, just use the default size.
-  *new_url = old_url;
-  return true;
+  if (components.size() == kImageURLPathComponentsCount) {
+    components.insert(
+        components.begin() + kImageURLPathOptionsComponentPosition,
+        BuildImageURLOptionsString(size, no_silhouette));
+  } else {
+    DCHECK(components.size() == kImageURLPathComponentsCountWithOptions);
+    components.at(kImageURLPathOptionsComponentPosition) =
+        BuildImageURLOptionsString(size, no_silhouette);
+  }
+
+  std::string new_path =
+      base::JoinString(components, std::string(1, kURLPathSeparator));
+  GURL::Replacements replacement;
+  replacement.SetPathStr(new_path);
+  *new_url = old_url.ReplaceComponents(replacement);
+  return new_url->is_valid();
 }
 
 std::unique_ptr<base::ListValue> GetDefaultProfileAvatarIconsAndLabels() {
