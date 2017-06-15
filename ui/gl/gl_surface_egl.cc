@@ -21,6 +21,7 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/sys_info.h"
 #include "base/trace_event/trace_event.h"
+#include "base/trace_event/trace_event_argument.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gl/angle_platform_impl.h"
@@ -819,6 +820,11 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     vsync_provider_internal_ =
         base::MakeUnique<EGLSyncControlVSyncProvider>(surface_);
   }
+
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+    eglSurfaceAttrib(GetDisplay(), surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
+  }
+
   return true;
 }
 
@@ -842,6 +848,80 @@ bool NativeViewGLSurfaceEGL::IsOffscreen() {
   return false;
 }
 
+const int64_t kUmaDurationMaxMicros = base::Time::kMicrosecondsPerSecond / 5;
+const int kUmaDurationBucketCount = 100;
+#define LOCAL_HISTOGRAM_CUSTOM_TIMES_MICROS(name, sample)                     \
+  LOCAL_HISTOGRAM_CUSTOM_COUNTS(name, sample.InMicroseconds(),                \
+                              1, kUmaDurationMaxMicros, \
+                              kUmaDurationBucketCount);
+
+namespace {
+
+double nanoToMilli(double timestamp) {
+    return timestamp / base::Time::kNanosecondsPerMillisecond;
+}
+
+std::unique_ptr<base::trace_event::TracedValue> TimestampsAsValue(EGLnsecsANDROID *timestamps) {
+  std::unique_ptr<base::trace_event::TracedValue> state(
+      new base::trace_event::TracedValue());
+
+  size_t i = 0;
+  state->SetDouble("1_REQUESTED_PRESENT_TIME_____________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("2_RENDERING_COMPLETE_TIME____________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("3_COMPOSITION_LATCH_TIME_____________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("4_FIRST_COMPOSITION_START_TIME_______", nanoToMilli(timestamps[i++]));
+  state->SetDouble("5_LAST_COMPOSITION_START_TIME________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("6_FIRST_COMPOSITION_GPU_FINISHED_TIME", nanoToMilli(timestamps[i++]));
+  state->SetDouble("7_DISPLAY_PRESENT_TIME_______________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("8_DEQUEABLE_TIME_____________________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("9_READS_DONE_TIME____________________", nanoToMilli(timestamps[i++]));
+
+  return state;
+}
+
+std::unique_ptr<base::trace_event::TracedValue> SupportedAsValue(bool *supported) {
+  std::unique_ptr<base::trace_event::TracedValue> state(
+      new base::trace_event::TracedValue());
+
+  size_t i = 0;
+  state->SetBoolean("1_REQUESTED_PRESENT_TIME_____________", supported[i++]);
+  state->SetBoolean("2_RENDERING_COMPLETE_TIME____________", supported[i++]);
+  state->SetBoolean("3_COMPOSITION_LATCH_TIME_____________", supported[i++]);
+  state->SetBoolean("4_FIRST_COMPOSITION_START_TIME_______", supported[i++]);
+  state->SetBoolean("5_LAST_COMPOSITION_START_TIME________", supported[i++]);
+  state->SetBoolean("6_FIRST_COMPOSITION_GPU_FINISHED_TIME", supported[i++]);
+  state->SetBoolean("7_DISPLAY_PRESENT_TIME_______________", supported[i++]);
+  state->SetBoolean("8_DEQUEABLE_TIME_____________________", supported[i++]);
+  state->SetBoolean("9_READS_DONE_TIME____________________", supported[i++]);
+
+  return state;
+}
+
+std::unique_ptr<base::trace_event::TracedValue> TimingAsValue(EGLnsecsANDROID *timestamps) {
+  std::unique_ptr<base::trace_event::TracedValue> state(
+      new base::trace_event::TracedValue());
+
+  size_t i = 0;
+  state->SetDouble("1_COMPOSITE_DEADLINE___________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("2_COMPOSITE_INTERVAL___________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("3_COMPOSITE_TO_PRESENT_LATENCY_", nanoToMilli(timestamps[i++]));
+  state->SetDouble("4_NOW__________________________", nanoToMilli(timestamps[i++]));
+  return state;
+}
+
+std::unique_ptr<base::trace_event::TracedValue> TimestampsAsValue2(EGLnsecsANDROID *timestamps) {
+  std::unique_ptr<base::trace_event::TracedValue> state(
+      new base::trace_event::TracedValue());
+
+  size_t i = 0;
+  state->SetDouble("3_COMPOSITION_LATCH_TIME_________", nanoToMilli(timestamps[i++]));
+  state->SetDouble("6_LAST_COMPOSITION_START_TIME____", nanoToMilli(timestamps[i++]));
+
+  return state;
+}
+
+}
+
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
   TRACE_EVENT2("gpu", "NativeViewGLSurfaceEGL:RealSwapBuffers",
       "width", GetSize().width(),
@@ -852,10 +932,105 @@ gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {
     return gfx::SwapResult::SWAP_FAILED;
   }
 
+  EGLuint64KHR nextFrameId = 0;
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+      TRACE_EVENT0("gpu", "eglGetNextFrameIdANDROID");
+      if (!eglGetNextFrameIdANDROID(GetDisplay(), surface_, &nextFrameId)) {
+        TRACE_EVENT1("gpu", "eglGetNextFrameIdANDROID failed", "error", GetLastEGLErrorString());
+      } else {
+        TRACE_EVENT1("gpu", "eglGetNextFrameIdANDROID", "nextFrameId", nextFrameId);
+      }
+  }
+
   if (!eglSwapBuffers(GetDisplay(), surface_)) {
     DVLOG(1) << "eglSwapBuffers failed with error "
              << GetLastEGLErrorString();
     return gfx::SwapResult::SWAP_FAILED;
+  }
+
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+      TRACE_EVENT0("gpu", "eglGetFrameTimestampsANDROID");
+      const EGLint numSupportableTimestamps = 9;
+
+      frame_ids_.push_back(nextFrameId);
+      auto start = base::TimeTicks::Now();
+
+      bool supported[numSupportableTimestamps];
+      supported[0] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_REQUESTED_PRESENT_TIME_ANDROID);
+      supported[1] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_RENDERING_COMPLETE_TIME_ANDROID);
+      supported[2] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_COMPOSITION_LATCH_TIME_ANDROID);
+      supported[3] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_FIRST_COMPOSITION_START_TIME_ANDROID);
+      supported[4] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_LAST_COMPOSITION_START_TIME_ANDROID);
+      supported[5] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID);
+      supported[6] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_DISPLAY_PRESENT_TIME_ANDROID);
+      supported[7] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_DEQUEUE_READY_TIME_ANDROID);
+      supported[8] = eglGetFrameTimestampSupportedANDROID(GetDisplay(), surface_, EGL_READS_DONE_TIME_ANDROID);
+
+      auto mid = base::TimeTicks::Now();
+
+      // Get server timestamps.
+      const EGLint server_timestamps_count = 9;
+      EGLint server_timestamp_names[server_timestamps_count] = {
+        EGL_REQUESTED_PRESENT_TIME_ANDROID,
+        EGL_RENDERING_COMPLETE_TIME_ANDROID,
+        EGL_COMPOSITION_LATCH_TIME_ANDROID,
+        EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
+        EGL_LAST_COMPOSITION_START_TIME_ANDROID,
+        EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
+        EGL_DISPLAY_PRESENT_TIME_ANDROID,
+        EGL_DEQUEUE_READY_TIME_ANDROID,
+        EGL_READS_DONE_TIME_ANDROID,
+      };
+      const int framesAgoToGetServerTimestamps = 4;
+      EGLnsecsANDROID server_timestamps[server_timestamps_count] = { -2 };
+
+      if (frame_ids_.size() > framesAgoToGetServerTimestamps) {
+        if (!eglGetFrameTimestampsANDROID(
+            GetDisplay(), surface_, frame_ids_.front(), server_timestamps_count,
+            server_timestamp_names, server_timestamps)) {
+          TRACE_EVENT1("gpu", "eglGetFrameTimestampsANDROID failed", "error", GetLastEGLErrorString());
+        }
+        frame_ids_.erase(frame_ids_.begin());
+      }
+      auto end = base::TimeTicks::Now();
+
+      LOCAL_HISTOGRAM_CUSTOM_TIMES_MICROS("eglGetFrameTimestampsANDROID1", (mid - start));
+      LOCAL_HISTOGRAM_CUSTOM_TIMES_MICROS("eglGetFrameTimestampsANDROID2", (end - mid));
+      TRACE_EVENT2("gpu", "FrameStats", "timestamps", TimestampsAsValue(server_timestamps), "supported", SupportedAsValue(supported));
+
+      const EGLint compositor_timing_count = 3;
+      EGLint compositor_timing_names[compositor_timing_count] = {
+        EGL_COMPOSITE_DEADLINE_ANDROID,
+        EGL_COMPOSITE_INTERVAL_ANDROID,
+        EGL_COMPOSITE_TO_PRESENT_LATENCY_ANDROID,
+      };
+      EGLnsecsANDROID compositor_timing_values[compositor_timing_count + 1] = { -2 };
+      if (!eglGetCompositorTimingANDROID(
+          GetDisplay(), surface_, compositor_timing_count,
+          compositor_timing_names, compositor_timing_values)) {
+        TRACE_EVENT1("gpu", "eglGetCompositorTimingANDROID failed", "error", GetLastEGLErrorString());
+      }
+      compositor_timing_values[3] = (base::TimeTicks::Now() - base::TimeTicks()).InMicroseconds() * 1000;
+      TRACE_EVENT1("gpu", "CompositorTiming", "timing", TimingAsValue(compositor_timing_values));
+
+
+      for (int i = 0; i < 1; i++) {
+          // Get server timestamps.
+          const EGLint server_timestamps_count2 = 2;
+          EGLint server_timpstamp_names2[server_timestamps_count2] = {
+            EGL_COMPOSITION_LATCH_TIME_ANDROID,
+            EGL_LAST_COMPOSITION_START_TIME_ANDROID,
+          };
+          EGLnsecsANDROID server_timestamps2[server_timestamps_count2] = { 0 };
+          if (!eglGetFrameTimestampsANDROID(
+              GetDisplay(), surface_, frame_ids_.back(), server_timestamps_count2,
+              server_timpstamp_names2, server_timestamps2)) {
+            TRACE_EVENT1("gpu", "eglGetFrameTimestampsANDROID failed", "error", GetLastEGLErrorString());
+          }
+          TRACE_EVENT1("gpu", "FrameStats2", "timestamps", TimestampsAsValue2(server_timestamps2));
+      }
+  } else {
+      TRACE_EVENT0("gpu", "NoFrameStats");
   }
 
   return gfx::SwapResult::SWAP_ACK;
@@ -1084,6 +1259,11 @@ bool PbufferGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     eglDestroySurface(display, old_surface);
 
   surface_ = new_surface;
+
+  if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
+    eglSurfaceAttrib(display, surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
+  }
+
   return true;
 }
 
