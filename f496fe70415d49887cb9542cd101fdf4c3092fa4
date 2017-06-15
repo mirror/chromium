@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ce955ba9_e2a4c633",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-15T22:44:25Z",
+      "side": 1,
+      "message": "Thanks for all these thorough tests!",
+      "revId": "f496fe70415d49887cb9542cd101fdf4c3092fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "fe776c7b_ea086843",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-15T22:44:25Z",
+      "side": 1,
+      "message": "nit: maybe add a comment states that TriggerManagerTest opt-in users to extended reporting in StartUp by default.",
+      "revId": "f496fe70415d49887cb9542cd101fdf4c3092fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
