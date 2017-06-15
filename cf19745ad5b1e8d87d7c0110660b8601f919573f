@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "13e2068d_9c5555b3",
+        "filename": "base/process/kill_fuchsia.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-15T17:24:51Z",
+      "side": 1,
+      "message": "I looked at the 3 non-test calls and I thought it didn\u0027t really seem to make any sense to hopefully wait 2 more seconds before termination. 4 relevant references:\n\nhttps://cs.chromium.org/chromium/src/content/browser/child_process_launcher_helper.cc?rcl\u003d54d4504bd6a17d6bb7a8628446b9e0ef5c3a74cf\u0026l\u003d154 expresses shock that it could wait 2 seconds.\n\nhttps://cs.chromium.org/chromium/src/content/browser/child_process_launcher_helper_linux.cc?rcl\u003d54d4504bd6a17d6bb7a8628446b9e0ef5c3a74cf\u0026l\u003d130 calls Terminate() before calling this function (which just checks, waits, and then calls Terminate() again).\n\nhttps://cs.chromium.org/chromium/src/chrome/browser/extensions/api/messaging/native_message_process_host.cc?rcl\u003d54d4504bd6a17d6bb7a8628446b9e0ef5c3a74cf\u0026l\u003d77 is the only one that\u0027s debatable, but it doesn\u0027t look to me like waiting is necessary as it\u0027s just trying to tidy up.\n\nhttps://cs.chromium.org/chromium/src/components/storage_monitor/storage_monitor_linux.cc?rcl\u003ddf241829ec88d1a5aa0afc7238ea53d8d4f84b4e\u0026l\u003d210 waits for exit, Terminate()s and then calls this function, which would do that again.\n\nHaving said all that... it\u0027s confusing to have them be different.\n\nSince Mac already is documented (and I believe implemented) as potentially causing 2 seconds of blocking, I made Fuchsia do this too. This is trivial because the timeout on the wait can just be 2s.",
+      "parentUuid": "a3a04eb3_b7fb4a82",
+      "range": {
+        "startLine": 60,
+        "startChar": 20,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ca339c07_da5583f2",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-15T15:26:57Z",
       "side": 1,
       "message": "Depending on how common this turns out, maybe we want to use https://cs.chromium.org/chromium/src/gpu/command_buffer/common/id_type.h?type\u003dcs\u0026l\u003d40 for ProcessHandle (and move id_type.h to base after all). For now, let\u0027s see how it goes, I suppose.",
+      "range": {
+        "startLine": 877,
+        "startChar": 5,
+        "endLine": 877,
+        "endChar": 16
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad6ffda3_72599dc7",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-15T17:24:51Z",
+      "side": 1,
+      "message": "Aha, good idea. I could test wrapping mx_handle_t in a struct locally and see what breaks at least.",
+      "parentUuid": "ca339c07_da5583f2",
       "range": {
         "startLine": 877,
         "startChar": 5,
@@ -92,6 +140,30 @@
       "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b293cf3e_9d17586f",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 885,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-15T17:24:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9f87dbcd_d2e777d2",
+      "range": {
+        "startLine": 885,
+        "startChar": 7,
+        "endLine": 885,
+        "endChar": 8
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
