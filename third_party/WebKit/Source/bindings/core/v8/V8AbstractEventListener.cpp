@@ -52,6 +52,8 @@ V8AbstractEventListener::V8AbstractEventListener(bool is_attribute,
     : EventListener(kJSEventListenerType),
       listener_(nullptr),
       is_attribute_(is_attribute),
+      script_state_of_callback_context_(
+          ScriptState::From(isolate->GetIncumbentContext())),
       world_(world),
       isolate_(isolate),
       worker_global_scope_(nullptr) {
@@ -143,7 +145,17 @@ void V8AbstractEventListener::InvokeEventHandler(
     event_symbol.Set(global, js_event);
     try_catch.Reset();
 
-    return_value = CallListenerFunction(script_state, js_event, event);
+    {
+      // "prepare to run a callback", and
+      // https://html.spec.whatwg.org/multipage/webappapis.html#prepare-to-run-a-callback
+      // "clean up after running a callback"
+      // https://html.spec.whatwg.org/multipage/webappapis.html#clean-up-after-running-a-callback
+      v8::Context::Scope backup_incumbent(
+          script_state->GetContext(),
+          script_state_of_callback_context_->GetContext());
+      return_value = CallListenerFunction(script_state, js_event, event);
+    }
+
     if (try_catch.HasCaught())
       event->target()->UncaughtExceptionInEventHandler();
 

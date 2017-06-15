@@ -208,7 +208,8 @@ void V8Window::postMessageMethodCustom(
   // Incumbent Realm instead of the Current Realm, but currently we don't have
   // a way to retrieve the Incumbent Realm.  See also:
   // https://html.spec.whatwg.org/multipage/comms.html#dom-window-postmessage
-  LocalDOMWindow* source = CurrentDOMWindow(info.GetIsolate());
+  LocalDOMWindow* source =
+      ToLocalDOMWindow(info.GetIsolate()->GetIncumbentContext());
 
   DCHECK(window);
   UseCounter::Count(source->GetFrame(), WebFeature::kWindowPostMessage);
