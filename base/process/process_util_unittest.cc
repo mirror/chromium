@@ -28,6 +28,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/test/multiprocess_test.h"
+#include "base/test/scoped_task_scheduler.h"
 #include "base/test/test_timeouts.h"
 #include "base/third_party/dynamic_annotations/dynamic_annotations.h"
 #include "base/threading/platform_thread.h"
@@ -63,6 +64,9 @@
 #endif
 #if defined(OS_ANDROID)
 #include "third_party/lss/linux_syscall_support.h"
+#endif
+#if defined(OS_FUCHSIA)
+#include <magenta/syscalls.h>
 #endif
 
 using base::FilePath;
@@ -869,11 +873,24 @@ TEST_F(ProcessUtilTest, GetParentProcessId) {
 
 // TODO(port): port those unit tests.
 bool IsProcessDead(base::ProcessHandle child) {
+#if defined(OS_FUCHSIA)
+  // ProcessHandle is an mx_handle_t, not a pid on Fuchsia, so waitpid() doesn't
+  // make sense.
+  mx_signals_t signals;
+  // timeout of 0 to check for termination, but don't wait.
+  if (mx_object_wait_one(child, MX_TASK_TERMINATED, 0, &signals) == NO_ERROR) {
+    DCHECK(signals & MX_TASK_TERMINATED);
+    return true;
+  }
+  return false;
+
+#else
   // waitpid() will actually reap the process which is exactly NOT what we
   // want to test for.  The good thing is that if it can't find the process
   // we'll get a nice value for errno which we can test for.
   const pid_t result = HANDLE_EINTR(waitpid(child, NULL, WNOHANG));
   return result == -1 && errno == ECHILD;
+#endif
 }
 
 TEST_F(ProcessUtilTest, DelayedTermination) {
