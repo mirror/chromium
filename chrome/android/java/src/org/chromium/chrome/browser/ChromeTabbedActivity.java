@@ -1071,6 +1071,9 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                 RecordUserAction.record("MobileTabbedModeViewIntentFromApp");
             }
 
+            boolean fromLauncherShortcut = IntentUtils.safeGetBooleanExtra(
+                    intent, IntentHandler.EXTRA_INVOKED_FROM_SHORTCUT, false);
+
             if (getBottomSheet() != null) {
                 // If the bottom sheet new tab UI is showing and the tab open type is not
                 // already OPEN_NEW_TAB or OPEN_NEW_INCOGNITO_TAB, set the open type so that a real
@@ -1082,11 +1085,13 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
                             : TabOpenType.OPEN_NEW_TAB;
                 }
 
-                // Either a new tab is opening, a tab is being clobbered, or a tab is being brought
-                // to the front. In all scenarios, the bottom sheet should be closed.
+                // Either a new tab is opening, a tab is being clobbered, or a tab is being
+                // brought to the front. In all scenarios, the bottom sheet should be closed.
+                // If a new tab is being created from a launcher shortcut, close the panel without
+                // animation because the panel will be re-opened immediately.
                 getBottomSheet().getBottomSheetMetrics().setSheetCloseReason(
                         BottomSheetMetrics.CLOSED_BY_NAVIGATION);
-                getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, true);
+                getBottomSheet().setSheetState(BottomSheet.SHEET_STATE_PEEK, !fromLauncherShortcut);
             }
 
             // We send this intent so that we can enter WebVr presentation mode if needed. This
@@ -1094,8 +1099,6 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
             VrShellDelegate.onNewIntent(intent);
 
             TabModel tabModel = getCurrentTabModel();
-            boolean fromLauncherShortcut = IntentUtils.safeGetBooleanExtra(
-                    intent, IntentHandler.EXTRA_INVOKED_FROM_SHORTCUT, false);
             switch (tabOpenType) {
                 case REUSE_URL_MATCHING_TAB_ELSE_NEW_TAB:
                     // Used by the bookmarks application.

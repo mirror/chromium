@@ -158,7 +158,7 @@ public class IncognitoTabModel implements TabModel {
 
     @Override
     public int index() {
-        return mDelegateModel.index();
+        return mIsPendingTabAdd ? INVALID_TAB_INDEX : mDelegateModel.index();
     }
 
     @Override
@@ -252,6 +252,8 @@ public class IncognitoTabModel implements TabModel {
         } else {
             destroyIncognitoIfNecessary();
         }
+
+        for (TabModelObserver obs : mObservers) obs.pendingTabAdd(isPendingTabAdd);
     }
 
     @Override
