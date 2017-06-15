@@ -6,6 +6,7 @@
       "provides": {
         "gpu": [
           "content::mojom::FieldTrialRecorder",
+          "content::mojom::HistogramCollector",
           "media::mojom::AndroidOverlayProvider"
         ],
         "memory_instrumentation": [
@@ -26,8 +27,10 @@
           "blink::mojom::OffscreenCanvasProvider",
           "blink::mojom::PermissionService",
           "blink::mojom::WebSocket",
+          "content::mojom::BrowserHistogramProvider",
           "content::mojom::FieldTrialRecorder",
           "content::mojom::FrameSinkProvider",
+          "content::mojom::HistogramCollector",
           "content::mojom::MemoryCoordinatorHandle",
           "content::mojom::PushMessaging",
           "content::mojom::RendererHost",

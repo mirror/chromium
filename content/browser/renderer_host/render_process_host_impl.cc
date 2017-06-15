@@ -65,6 +65,7 @@
 #include "content/browser/blob_storage/chrome_blob_storage_context.h"
 #include "content/browser/broadcast_channel/broadcast_channel_provider.h"
 #include "content/browser/browser_child_process_host_impl.h"
+#include "content/browser/browser_histogram_provider.h"
 #include "content/browser/browser_main.h"
 #include "content/browser/browser_main_loop.h"
 #include "content/browser/browser_plugin/browser_plugin_message_filter.h"
@@ -82,7 +83,7 @@
 #include "content/browser/gpu/gpu_data_manager_impl.h"
 #include "content/browser/gpu/gpu_process_host.h"
 #include "content/browser/gpu/shader_cache_factory.h"
-#include "content/browser/histogram_message_filter.h"
+#include "content/browser/histogram_controller.h"
 #include "content/browser/image_capture/image_capture_impl.h"
 #include "content/browser/indexed_db/indexed_db_context_impl.h"
 #include "content/browser/indexed_db/indexed_db_dispatcher_host.h"
@@ -183,6 +184,7 @@
 #include "mojo/edk/embedder/embedder.h"
 #include "mojo/public/cpp/bindings/associated_interface_ptr.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "mojo/public/cpp/system/platform_handle.h"
 #include "net/url_request/url_request_context_getter.h"
 #include "ppapi/features/features.h"
 #include "services/resource_coordinator/public/cpp/resource_coordinator_interface.h"
@@ -950,6 +952,7 @@ RenderProcessHostImpl::RenderProcessHostImpl(
                       base::WaitableEvent::InitialState::NOT_SIGNALED),
 #endif
       renderer_host_binding_(this),
+      histogram_collector_binding_(this),
       instance_weak_factory_(
           new base::WeakPtrFactory<RenderProcessHostImpl>(this)),
       frame_sink_provider_(id_),
@@ -1436,7 +1439,6 @@ void RenderProcessHostImpl::CreateMessageFilters() {
   AddFilter(notification_message_filter_.get());
 
   AddFilter(new ProfilerMessageFilter(PROCESS_TYPE_RENDERER));
-  AddFilter(new HistogramMessageFilter());
 #if defined(OS_ANDROID)
   synchronous_compositor_filter_ =
       new SynchronousCompositorBrowserFilter(GetID());
@@ -1541,6 +1543,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   registry->AddInterface(
       base::Bind(&metrics::CreateSingleSampleMetricsProvider));
 
+  registry->AddInterface(
+      base::BindRepeating(&BrowserHistogramProvider::Bind,
+                          base::Unretained(&browser_histogram_provider_)));
+
   if (base::FeatureList::IsEnabled(features::kOffMainThreadFetch)) {
     scoped_refptr<ServiceWorkerContextWrapper> service_worker_context(
         static_cast<ServiceWorkerContextWrapper*>(
@@ -1568,6 +1574,10 @@ void RenderProcessHostImpl::RegisterMojoInterfaces() {
   AddUIThreadInterface(registry.get(),
                        base::Bind(&RenderProcessHostImpl::CreateRendererHost,
                                   base::Unretained(this)));
+  AddUIThreadInterface(
+      registry.get(),
+      base::Bind(&RenderProcessHostImpl::CreateHistogramCollector,
+                 base::Unretained(this)));
 
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableNetworkService)) {
@@ -1664,6 +1674,12 @@ void RenderProcessHostImpl::CreateRendererHost(
     const service_manager::BindSourceInfo& source_info,
     mojom::RendererHostRequest request) {
   renderer_host_binding_.Bind(std::move(request));
+}
+
+void RenderProcessHostImpl::CreateHistogramCollector(
+    const service_manager::BindSourceInfo& source_info,
+    mojom::HistogramCollectorRequest request) {
+  histogram_collector_binding_.Bind(std::move(request));
 }
 
 void RenderProcessHostImpl::CreateURLLoaderFactory(
@@ -3154,11 +3170,26 @@ void RenderProcessHostImpl::CreateSharedRendererHistogramAllocator() {
     metrics_allocator_.reset(new base::SharedPersistentMemoryAllocator(
         std::move(shm), GetID(), "RendererMetrics", /*readonly=*/false));
   }
+}
 
-  base::SharedMemoryHandle shm_handle =
-      metrics_allocator_->shared_memory()->handle().Duplicate();
-  Send(new ChildProcessMsg_SetHistogramMemory(
-      shm_handle, metrics_allocator_->shared_memory()->mapped_size()));
+void RenderProcessHostImpl::RegisterClient(
+    mojom::HistogramCollectorClientPtr client,
+    mojom::HistogramCollector::RegisterClientCallback cb) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+  CreateSharedRendererHistogramAllocator();
+
+  // Run the callback, then immediately register this client with the
+  // HistogramController. This ensures that the client will handle the callback
+  // before any data requests are made.
+  std::move(cb).Run(
+      metrics_allocator_
+          ? mojo::WrapSharedMemoryHandle(
+                metrics_allocator_->shared_memory()->handle().Duplicate(),
+                metrics_allocator_->shared_memory()->mapped_size(),
+                false /* read_only */)
+          : mojo::ScopedSharedBufferHandle());
+  HistogramController::GetInstance()->RegisterClient(std::move(client));
 }
 
 void RenderProcessHostImpl::ProcessDied(bool already_dead,

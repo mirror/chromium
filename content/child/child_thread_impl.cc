@@ -36,11 +36,11 @@
 #include "base/tracked_objects.h"
 #include "build/build_config.h"
 #include "components/tracing/child/child_trace_message_filter.h"
-#include "content/child/child_histogram_message_filter.h"
 #include "content/child/child_process.h"
 #include "content/child/child_resource_message_filter.h"
 #include "content/child/fileapi/file_system_dispatcher.h"
 #include "content/child/fileapi/webfilesystem_impl.h"
+#include "content/child/histogram_collector_client.h"
 #include "content/child/notifications/notification_dispatcher.h"
 #include "content/child/quota_dispatcher.h"
 #include "content/child/quota_message_filter.h"
@@ -472,7 +472,6 @@ void ChildThreadImpl::Init(const Options& options) {
       this, message_loop()->task_runner()));
   file_system_dispatcher_.reset(new FileSystemDispatcher());
 
-  histogram_message_filter_ = new ChildHistogramMessageFilter();
   resource_message_filter_ =
       new ChildResourceMessageFilter(resource_dispatcher());
 
@@ -486,7 +485,6 @@ void ChildThreadImpl::Init(const Options& options) {
   notification_dispatcher_ =
       new NotificationDispatcher(thread_safe_sender_.get());
 
-  channel_->AddFilter(histogram_message_filter_.get());
   channel_->AddFilter(resource_message_filter_.get());
   channel_->AddFilter(quota_message_filter_->GetFilter());
   channel_->AddFilter(notification_dispatcher_->GetFilter());
@@ -559,6 +557,11 @@ void ChildThreadImpl::Init(const Options& options) {
       connection_timeout = temp;
   }
 
+  if (service_manager_connection_) {
+    histogram_collector_client_ =
+        base::MakeUnique<HistogramCollectorClient>(GetConnector());
+  }
+
 #if defined(OS_MACOSX)
   if (base::CommandLine::InitializedForCurrentProcess() &&
       base::CommandLine::ForCurrentProcess()->HasSwitch(
@@ -586,7 +589,6 @@ ChildThreadImpl::~ChildThreadImpl() {
   IPC::Logging::GetInstance()->SetIPCSender(NULL);
 #endif
 
-  channel_->RemoveFilter(histogram_message_filter_.get());
   channel_->RemoveFilter(sync_message_filter_.get());
 
   // The ChannelProxy object caches a pointer to the IPC thread, so need to

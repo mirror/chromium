@@ -19,6 +19,7 @@
 #include "base/synchronization/waitable_event_watcher.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
+#include "content/common/histogram.mojom.h"
 #include "content/public/browser/browser_child_process_host.h"
 #include "content/public/browser/child_process_data.h"
 #include "content/public/common/child_process_host_delegate.h"
@@ -44,11 +45,12 @@ class ChildConnection;
 /// class because it lives on the UI thread.
 class CONTENT_EXPORT BrowserChildProcessHostImpl
     : public BrowserChildProcessHost,
+      public ChildProcessLauncher::Client,
       public NON_EXPORTED_BASE(ChildProcessHostDelegate),
 #if defined(OS_WIN)
       public base::win::ObjectWatcher::Delegate,
 #endif
-      public ChildProcessLauncher::Client {
+      public NON_EXPORTED_BASE(mojom::HistogramCollector) {
  public:
   BrowserChildProcessHostImpl(content::ProcessType process_type,
                               BrowserChildProcessHostDelegate* delegate,
@@ -129,14 +131,14 @@ class CONTENT_EXPORT BrowserChildProcessHostImpl
   // Creates the |metrics_allocator_|.
   void CreateMetricsAllocator();
 
-  // Passes the |metrics_allocator_|, if any, to the managed process. This
-  // requires the process to have been launched and the IPC channel to be
-  // available.
-  void ShareMetricsAllocatorToProcess();
-
   // ChildProcessLauncher::Client implementation.
   void OnProcessLaunched() override;
   void OnProcessLaunchFailed(int error_code) override;
+
+  // mojom::HistogramCollector implementation. Must be called on the IO thread.
+  void RegisterClient(
+      mojom::HistogramCollectorClientPtr client,
+      mojom::HistogramCollector::RegisterClientCallback cb) override;
 
   // Returns true if the process has successfully launched. Must only be called
   // on the IO thread.
