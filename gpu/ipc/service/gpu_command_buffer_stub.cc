@@ -254,7 +254,16 @@ GpuCommandBufferStub::GpuCommandBufferStub(
       previous_processed_num_(0),
       active_url_(init_params.active_url),
       active_url_hash_(base::Hash(active_url_.possibly_invalid_spec())),
-      wait_set_get_buffer_count_(0) {}
+      wait_set_get_buffer_count_(0) {
+  deschedule_after_swap_callback_ =
+      base::Bind(&GpuCommandBufferStub::OnDescheduleAfterSwap, base::Unretained(this));
+  // TODO(brianderson): Manage lifetime better.
+  post_reschedule_after_swap_callback_ =
+      base::Bind(&GpuCommandBufferStub::PostRescheduleAfterSwap, base::Unretained(this));
+  // Use WeakPtr since this is queued from another thread.
+  reschedule_after_swap_callback_ =
+      base::Bind(&GpuCommandBufferStub::OnRescheduleAfterSwap, AsWeakPtr());
+}
 
 GpuCommandBufferStub::~GpuCommandBufferStub() {
   Destroy();
@@ -792,6 +801,9 @@ bool GpuCommandBufferStub::Initialize(
   decoder_->SetRescheduleAfterFinishedCallback(
       base::Bind(&GpuCommandBufferStub::OnRescheduleAfterFinished,
                  base::Unretained(this)));
+  decoder_->SetSwapSchedulingCallbacks(deschedule_after_swap_callback_,
+      post_reschedule_after_swap_callback_);
+
 
   const size_t kSharedStateSize = sizeof(CommandBufferSharedState);
   if (!shared_state_shm->Map(kSharedStateSize)) {
@@ -976,7 +988,7 @@ void GpuCommandBufferStub::OnAsyncFlush(
   if (pre_state.get_offset != post_state.get_offset)
     ReportState();
 
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   GpuChannelManager* manager = channel_->gpu_channel_manager();
   manager->DidAccessGpu();
 #endif
@@ -1065,9 +1077,24 @@ void GpuCommandBufferStub::OnDescheduleUntilFinished() {
 
 void GpuCommandBufferStub::OnRescheduleAfterFinished() {
   DCHECK(!command_buffer_->scheduled());
-
   command_buffer_->SetScheduled(true);
   channel_->OnCommandBufferScheduled(this);
+}
+
+void GpuCommandBufferStub::OnDescheduleAfterSwap() {
+  DCHECK(command_buffer_->scheduled());
+  command_buffer_->SetScheduled(false);
+  channel_->OnCommandBufferDescheduled(this);
+}
+
+void GpuCommandBufferStub::PostRescheduleAfterSwap() {
+  channel_->task_runner()->PostTask(FROM_HERE, reschedule_after_swap_callback_);
+}
+
+void GpuCommandBufferStub::OnRescheduleAfterSwap() {
+   DCHECK(!command_buffer_->scheduled());
+   command_buffer_->SetScheduled(true);
+   channel_->OnCommandBufferScheduled(this);
 }
 
 bool GpuCommandBufferStub::OnWaitSyncToken(const SyncToken& sync_token) {

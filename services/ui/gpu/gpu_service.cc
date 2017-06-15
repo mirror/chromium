@@ -449,10 +449,10 @@ void GpuService::WakeUpGpu() {
                            base::Bind(&GpuService::WakeUpGpu, weak_ptr_));
     return;
   }
-#if defined(OS_ANDROID)
+#if defined(GPU_CHANNEL_MANAGER_WAKE_GPU)
   gpu_channel_manager_->WakeUpGpu();
 #else
-  NOTREACHED() << "WakeUpGpu() not supported on this platform.";
+  //NOTREACHED() << "WakeUpGpu() not supported on this platform.";
 #endif
 }
 

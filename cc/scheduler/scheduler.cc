@@ -779,41 +779,42 @@ bool Scheduler::ShouldRecoverMainLatency(
 bool Scheduler::ShouldRecoverImplLatency(
     const BeginFrameArgs& args,
     bool can_activate_before_deadline) const {
-  DCHECK(!settings_.using_synchronous_renderer_compositor);
+  return false;
+//  DCHECK(!settings_.using_synchronous_renderer_compositor);
 
-  if (!settings_.enable_latency_recovery)
-    return false;
+//  if (!settings_.enable_latency_recovery)
+//    return false;
 
-  // Disable impl thread latency recovery when using the unthrottled
-  // begin frame source since we will always get a BeginFrame before
-  // the swap ack and our heuristics below will not work.
-  if (begin_frame_source_ && !begin_frame_source_->IsThrottled())
-    return false;
+//  // Disable impl thread latency recovery when using the unthrottled
+//  // begin frame source since we will always get a BeginFrame before
+//  // the swap ack and our heuristics below will not work.
+//  if (begin_frame_source_ && !begin_frame_source_->IsThrottled())
+//    return false;
 
-  // If we are swap throttled at the BeginFrame, that means the impl thread is
-  // very likely in a high latency mode.
-  bool impl_thread_is_likely_high_latency = state_machine_.IsDrawThrottled();
-  if (!impl_thread_is_likely_high_latency)
-    return false;
+//  // If we are swap throttled at the BeginFrame, that means the impl thread is
+//  // very likely in a high latency mode.
+//  bool impl_thread_is_likely_high_latency = state_machine_.IsDrawThrottled();
+//  if (!impl_thread_is_likely_high_latency)
+//    return false;
 
-  // The deadline may be in the past if our draw time is too long.
-  bool can_draw_before_deadline = args.frame_time < args.deadline;
+//  // The deadline may be in the past if our draw time is too long.
+//  bool can_draw_before_deadline = args.frame_time < args.deadline;
 
-  // When prioritizing impl thread latency, the deadline doesn't wait
-  // for the main thread.
-  if (state_machine_.ImplLatencyTakesPriority())
-    return can_draw_before_deadline;
+//  // When prioritizing impl thread latency, the deadline doesn't wait
+//  // for the main thread.
+//  if (state_machine_.ImplLatencyTakesPriority())
+//    return can_draw_before_deadline;
 
-  // If we only have impl-side updates, the deadline doesn't wait for
-  // the main thread.
-  if (state_machine_.OnlyImplSideUpdatesExpected())
-    return can_draw_before_deadline;
+//  // If we only have impl-side updates, the deadline doesn't wait for
+//  // the main thread.
+//  if (state_machine_.OnlyImplSideUpdatesExpected())
+//    return can_draw_before_deadline;
 
-  // If we get here, we know the main thread is in a low-latency mode relative
-  // to the impl thread. In this case, only try to also recover impl thread
-  // latency if both the main and impl threads can run serially before the
-  // deadline.
-  return can_activate_before_deadline;
+//  // If we get here, we know the main thread is in a low-latency mode relative
+//  // to the impl thread. In this case, only try to also recover impl thread
+//  // latency if both the main and impl threads can run serially before the
+//  // deadline.
+//  return can_activate_before_deadline;
 }
 
 bool Scheduler::CanBeginMainFrameAndActivateBeforeDeadline(

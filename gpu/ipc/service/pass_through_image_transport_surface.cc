@@ -54,18 +54,27 @@ gfx::SwapResult PassThroughImageTransportSurface::SwapBuffers() {
   return result;
 }
 
-void PassThroughImageTransportSurface::SwapBuffersAsync(
-    const GLSurface::SwapCompletionCallback& callback) {
+void PassThroughImageTransportSurface::SwapBuffersAsync2(
+    const SwapCompletionCallback& complete_cb,
+    const base::Closure& deschedule_cb,
+    const base::Closure& reschedule_cb) {
   std::unique_ptr<std::vector<ui::LatencyInfo>> latency_info =
       StartSwapBuffers();
+
+  CHECK(!!deschedule_cb);
+  CHECK(!!reschedule_cb);
 
   // We use WeakPtr here to avoid manual management of life time of an instance
   // of this class. Callback will not be called once the instance of this class
   // is destroyed. However, this also means that the callback can be run on
   // the calling thread only.
-  gl::GLSurfaceAdapter::SwapBuffersAsync(base::Bind(
-      &PassThroughImageTransportSurface::FinishSwapBuffersAsync,
-      weak_ptr_factory_.GetWeakPtr(), base::Passed(&latency_info), callback));
+  gl::GLSurfaceAdapter::SwapBuffersAsync2(
+      base::Bind(
+          &PassThroughImageTransportSurface::FinishSwapBuffersAsync,
+          weak_ptr_factory_.GetWeakPtr(),
+          base::Passed(&latency_info), complete_cb),
+      deschedule_cb,
+      reschedule_cb);
 }
 
 gfx::SwapResult PassThroughImageTransportSurface::SwapBuffersWithBounds(

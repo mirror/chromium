@@ -742,20 +742,35 @@ NativeViewGLSurfaceEGL::NativeViewGLSurfaceEGL(
 #endif
 }
 
+constexpr bool kUseEglFrameEventListener = true;
+enum class SwapAckTime { BeforeSwap, AfterSwap, Latch, Present };
+constexpr enum SwapAckTime kSwapAckTime = SwapAckTime::AfterSwap;
+constexpr bool kEnableDescheduling = true; // false = never deschedule.
+constexpr bool kGpuReschedule = false; // false = reschedule when buffer can be dequeued.
+constexpr int kDequeueOnReadLockCount = 1; // 1 =  double buffering; 2 = triple buffering.
+
 static void frameEventCallback(void* userPointer, EGLint event, EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
-    //auto surface = static_cast<NativeViewGLSurfaceEGL*>(userPointer);
+    auto surface = static_cast<NativeViewGLSurfaceEGL*>(userPointer);
     const char* str = "UNKNOWN";
     switch (event) {
-        case EGL_TIMESTAMPS_ANDROID: str = "EGL_TIMESTAMPS_ANDROID"; break;
-        case EGL_REQUESTED_PRESENT_TIME_ANDROID: str = "EGL_REQUESTED_PRESENT_TIME_ANDROID"; break;
-        case EGL_RENDERING_COMPLETE_TIME_ANDROID: str = "EGL_RENDERING_COMPLETE_TIME_ANDROID"; break;
-        case EGL_COMPOSITION_LATCH_TIME_ANDROID: str = "EGL_COMPOSITION_LATCH_TIME_ANDROID"; break;
+        case EGL_RENDERING_COMPLETE_TIME_ANDROID: str = "EGL_RENDERING_COMPLETE_TIME_ANDROID";
+            surface->NotifyWritesDone(frame_number, timestamp);
+            break;
+        case EGL_COMPOSITION_LATCH_TIME_ANDROID: str = "EGL_COMPOSITION_LATCH_TIME_ANDROID";
+            surface->NotifyFrameLatch(frame_number, timestamp);
+            break;
         case EGL_FIRST_COMPOSITION_START_TIME_ANDROID: str = "EGL_FIRST_COMPOSITION_START_TIME_ANDROID"; break;
         case EGL_LAST_COMPOSITION_START_TIME_ANDROID: str = "EGL_LAST_COMPOSITION_START_TIME_ANDROID"; break;
         case EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID: str = "EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID"; break;
-        case EGL_DISPLAY_PRESENT_TIME_ANDROID: str = "EGL_DISPLAY_PRESENT_TIME_ANDROID"; break;
-        case EGL_DEQUEUE_READY_TIME_ANDROID: str = "EGL_DEQUEUE_READY_TIME_ANDROID"; break;
-        case EGL_READS_DONE_TIME_ANDROID: str = "EGL_READS_DONE_TIME_ANDROID"; break;
+        case EGL_DISPLAY_PRESENT_TIME_ANDROID: str = "EGL_DISPLAY_PRESENT_TIME_ANDROID";
+            surface->NotifyFramePresent(frame_number, timestamp);
+            break;
+        case EGL_DEQUEUE_READY_TIME_ANDROID: str = "EGL_DEQUEUE_READY_TIME_ANDROID";
+            surface->NotifyFrameDequeueReady(frame_number, timestamp);
+            break;
+        case EGL_READS_DONE_TIME_ANDROID: str = "EGL_READS_DONE_TIME_ANDROID";
+            surface->NotifyFrameReadsDone(frame_number, timestamp);
+            break;
     }
 
     TRACE_EVENT2("gpu", "FrameEvent", "event", str, "frame_number", frame_number);
@@ -845,19 +860,21 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
     eglSurfaceAttrib(GetDisplay(), surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
   }
 
-  const EGLint server_timestamps_count = 8;
-  EGLint server_timestamp_names[server_timestamps_count] = {
-    EGL_RENDERING_COMPLETE_TIME_ANDROID,
-    EGL_COMPOSITION_LATCH_TIME_ANDROID,
-    EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
-    EGL_LAST_COMPOSITION_START_TIME_ANDROID,
-    EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
-    EGL_DISPLAY_PRESENT_TIME_ANDROID,
-    EGL_DEQUEUE_READY_TIME_ANDROID,
-    EGL_READS_DONE_TIME_ANDROID,
-  };
-  eglSetFrameEventListenerANDROID(GetDisplay(), surface_, frameEventCallback,
-      static_cast<void*>(this), server_timestamps_count, server_timestamp_names);
+  if (kUseEglFrameEventListener) {
+    const EGLint server_timestamps_count = 8;
+    EGLint server_timestamp_names[server_timestamps_count] = {
+      EGL_RENDERING_COMPLETE_TIME_ANDROID,
+      EGL_COMPOSITION_LATCH_TIME_ANDROID,
+      EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
+      EGL_LAST_COMPOSITION_START_TIME_ANDROID,
+      EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
+      kSwapAckTime == SwapAckTime::Present ? EGL_DISPLAY_PRESENT_TIME_ANDROID : EGL_COMPOSITION_LATCH_TIME_ANDROID,
+      EGL_DEQUEUE_READY_TIME_ANDROID,
+      EGL_READS_DONE_TIME_ANDROID,
+    };
+    eglSetFrameEventListenerANDROID(GetDisplay(), surface_, frameEventCallback,
+        static_cast<void*>(this), server_timestamps_count, server_timestamp_names);
+  }
 
   return true;
 }
@@ -957,13 +974,152 @@ std::unique_ptr<base::trace_event::TracedValue> TimestampsAsValue2(EGLnsecsANDRO
 }
 
 
+
 bool NativeViewGLSurfaceEGL::SupportsAsyncSwap() {
   // TODO(brianderson): Check support of specific events.
   return g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps;
 }
 
-void NativeViewGLSurfaceEGL::SwapBuffersAsync(const SwapCompletionCallback& callback) {
-  callback.Run(SwapBuffers());
+void NativeViewGLSurfaceEGL::SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) {
+  {
+    base::AutoLock lock(pending_swap_acks_mutex_);
+    // Do this first in case this thread gets descheduled and the
+    // notification thread attempts to read from pending_swap_acks.
+    pending_swap_acks_.push_back(complete_cb);
+    gpu_writes_pending_count_++;
+    cpu_read_lock_count_++;
+    gpu_read_lock_count_++;
+  }
+
+  if (kSwapAckTime == SwapAckTime::BeforeSwap) {
+    SwapBuffersCompleteAsync();
+  }
+
+  const gfx::SwapResult result = SwapBuffers();
+
+  if (kEnableDescheduling) {
+    deschedule_callback_ = deschedule_cb;
+    reschedule_callback_ = reschedule_cb;
+    CHECK(!!deschedule_callback_);
+    CHECK(!!reschedule_callback_);
+  }
+
+  if (result == gfx::SwapResult::SWAP_ACK) {
+    if (kSwapAckTime == SwapAckTime::AfterSwap) {
+      SwapBuffersCompleteAsync();
+    }
+    // TODO: Fix this so it's only called to defer draws and not sync tokens, for example.
+    DeferDraws();
+  } else {
+    base::AutoLock lock(pending_swap_acks_mutex_);
+    pending_swap_acks_.pop_back();
+    gpu_writes_pending_count_--;
+    cpu_read_lock_count_--;
+    gpu_read_lock_count_--;
+    if (complete_cb) {
+      complete_cb.Run(result);
+    }
+  }
+}
+
+bool NativeViewGLSurfaceEGL::DeferDraws() {
+  if (!kEnableDescheduling || !deschedule_cb || !reschedule_cb) {
+    return false;
+  }
+
+  {
+    base::AutoLock lock(pending_swap_acks_mutex_);
+
+    if (!scheduled_) {
+      return true;
+    }
+
+    uint64_t read_lock_count =
+        kGpuReschedule ? gpu_read_lock_count_ : cpu_read_lock_count_;
+    scheduled_ = (gpu_writes_pending_count_ == 0 && read_lock_count <= kDequeueOnReadLockCount) || !deschedule_callback_;
+
+    if (scheduled_) {
+      return false;
+    }
+
+    deschedule_callback_.Run();
+  }
+  return true;
+}
+
+void NativeViewGLSurfaceEGL::SwapBuffersCompleteAsync() {
+  SwapCompletionCallback complete_cb;
+  {
+    base::AutoLock lock(pending_swap_acks_mutex_);
+    complete_cb = pending_swap_acks_.front();
+    pending_swap_acks_.erase(pending_swap_acks_.begin());
+  }
+
+  if (complete_cb) {
+    complete_cb.Run(gfx::SwapResult::SWAP_ACK);
+  }
+}
+
+void NativeViewGLSurfaceEGL::NotifyWritesDone(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
+  base::AutoLock lock(pending_swap_acks_mutex_);
+  gpu_writes_pending_count_--;
+
+  if (!kEnableDescheduling || scheduled_)
+    return;
+
+  uint64_t read_lock_count =
+      kGpuReschedule ? gpu_read_lock_count_ : cpu_read_lock_count_;
+
+  if (gpu_writes_pending_count_ == 0 && read_lock_count <= kDequeueOnReadLockCount) {
+    scheduled_ = true;
+    if (reschedule_callback_) {
+      reschedule_callback_.Run();
+    }
+  }
+}
+
+void NativeViewGLSurfaceEGL::NotifyFrameLatch(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
+  if (kSwapAckTime == SwapAckTime::Latch) {
+    SwapBuffersCompleteAsync();
+  }
+}
+
+void NativeViewGLSurfaceEGL::NotifyFramePresent(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
+  if (kSwapAckTime == SwapAckTime::Present) {
+    SwapBuffersCompleteAsync();
+  }
+}
+
+void NativeViewGLSurfaceEGL::NotifyFrameDequeueReady(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) { {
+    base::AutoLock lock(pending_swap_acks_mutex_);
+    cpu_read_lock_count_--;
+
+    if (!kEnableDescheduling || kGpuReschedule || scheduled_)
+      return;
+
+    if (gpu_writes_pending_count_ == 0 && cpu_read_lock_count_ == kDequeueOnReadLockCount) {
+      scheduled_ = true;
+      if (reschedule_callback_) {
+        reschedule_callback_.Run();
+      }
+    }
+  }
+
+}
+
+void NativeViewGLSurfaceEGL::NotifyFrameReadsDone(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
+  base::AutoLock lock(pending_swap_acks_mutex_);
+  gpu_read_lock_count_--;
+
+  if (!kEnableDescheduling || !kGpuReschedule || scheduled_)
+    return;
+
+  if (gpu_writes_pending_count_ == 0 && gpu_read_lock_count_ == kDequeueOnReadLockCount) {
+    scheduled_ = true;
+    if (reschedule_callback_) {
+      reschedule_callback_.Run();
+    }
+  }
 }
 
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {

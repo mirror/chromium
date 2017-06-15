@@ -72,8 +72,13 @@ unsigned int GLSurface::GetBackingFramebufferObject() {
   return 0;
 }
 
-void GLSurface::SwapBuffersAsync(const SwapCompletionCallback& callback) {
+void GLSurface::SwapBuffersAsync(const SwapCompletionCallback& complete_cb) {
   NOTREACHED();
+}
+
+void GLSurface::SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) {
+  NOTREACHED();
+  SwapBuffersAsync(complete_cb);
 }
 
 gfx::SwapResult GLSurface::SwapBuffersWithBounds(
@@ -252,9 +257,10 @@ gfx::SwapResult GLSurfaceAdapter::SwapBuffers() {
   return surface_->SwapBuffers();
 }
 
-void GLSurfaceAdapter::SwapBuffersAsync(
-    const SwapCompletionCallback& callback) {
-  surface_->SwapBuffersAsync(callback);
+void GLSurfaceAdapter::SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) {
+  CHECK(!!deschedule_cb);
+  CHECK(!!reschedule_cb);
+  surface_->SwapBuffersAsync2(complete_cb, deschedule_cb, reschedule_cb);
 }
 
 gfx::SwapResult GLSurfaceAdapter::SwapBuffersWithBounds(

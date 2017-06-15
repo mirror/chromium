@@ -423,6 +423,9 @@ bool InProcessCommandBuffer::InitializeOnGpuThread(
   decoder_->SetRescheduleAfterFinishedCallback(
       base::Bind(&InProcessCommandBuffer::RescheduleAfterFinishedOnGpuThread,
                  base::Unretained(this)));
+  NOTREACHED();
+//  decoder_->SetSwapSchedulingCallbacks(deschedule_after_swap_callback_,
+//      post_reschedule_after_swap_callback_);
 
   image_factory_ = params.image_factory;
 

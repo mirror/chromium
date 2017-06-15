@@ -16,6 +16,7 @@
 #include "base/command_line.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/synchronization/lock.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
 #include "ui/gfx/geometry/size.h"
@@ -100,10 +101,18 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
               float scale_factor,
               bool has_alpha) override;
   bool Recreate() override;
+  bool DeferDraws() override;
   bool IsOffscreen() override;
   bool SupportsAsyncSwap() override;
   gfx::SwapResult SwapBuffers() override;
-  void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
+  void SwapBuffersAsync2(const SwapCompletionCallback& complete_cb, const base::Closure& deschedule_cb, const base::Closure& reschedule_cb) override;
+  void SwapBuffersCompleteAsync();
+  void RescheduleAfterSwap();
+  void NotifyWritesDone(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
+  void NotifyFrameLatch(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
+  void NotifyFramePresent(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
+  void NotifyFrameDequeueReady(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
+  void NotifyFrameReadsDone(EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
   gfx::Size GetSize() override;
   EGLSurface GetHandle() override;
   bool SupportsPostSubBuffer() override;
@@ -147,6 +156,16 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
   std::vector<GLSurfaceOverlay> pending_overlays_;
 
   std::vector<EGLuint64KHR> frame_ids_;
+  base::Lock pending_swap_acks_mutex_;
+  std::vector<SwapCompletionCallback> pending_swap_acks_;
+
+  bool scheduled_ = true;
+  base::Closure deschedule_callback_;
+  base::Closure reschedule_callback_;
+
+  uint64_t gpu_writes_pending_count_ = 0;
+  uint64_t cpu_read_lock_count_ = 0;
+  uint64_t gpu_read_lock_count_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(NativeViewGLSurfaceEGL);
 };
