@@ -111,6 +111,7 @@ source_set("unit_tests") {
     "//components/offline_pages/core",
     "//components/offline_pages/core:switches",
     "//components/offline_pages/core:test_support",
+    "//components/version_info:channel",
     "//net:test_support",
     "//testing/gmock",
     "//testing/gtest",
