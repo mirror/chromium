@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "8184f165_4cf64915",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-15T02:47:00Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this be defined(OS_CHROME)?",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b2c9180d_9b16073a",
         "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-06-14T17:45:29Z",
       "side": 1,
       "message": "NOTREACHED();  // This function is supposed to be called only in ChromeOS.",
+      "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8f78682_fe0be995",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-15T02:47:00Z",
+      "side": 1,
+      "message": "I think you can put strings in NOTREACHED, like this:\n\nNOTREACHED() \u003c\u003c \": This function ... Chrome OS.\"\n\n(Also note there is a space between \"Chrome\" and \"OS\".)",
+      "parentUuid": "b2c9180d_9b16073a",
       "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
