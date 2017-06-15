@@ -60,6 +60,11 @@ class MediaEngagementContentsObserver : public content::WebContentsObserver {
 
   url::Origin committed_origin_;
 
+  // Checks whether the tab has recently produced any audio.
+  bool was_recently_audible_for_testing_ = false;
+  void set_was_recently_audible_for_testing(bool value);
+  bool WasRecentlyAudible() const;
+
   DISALLOW_COPY_AND_ASSIGN(MediaEngagementContentsObserver);
 };
 

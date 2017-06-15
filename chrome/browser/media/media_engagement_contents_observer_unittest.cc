@@ -28,6 +28,8 @@ class MediaEngagementContentsObserverTest
 
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
+
+    StopSimulatingAudioPlayback();
   }
 
   bool IsTimerRunning() const { return playback_timer_->IsRunning(); }
@@ -74,6 +76,16 @@ class MediaEngagementContentsObserverTest
 
   void SimulatePlaybackTimerFired() { playback_timer_->Fire(); }
 
+  void SimulateAudioPlayback() {
+    contents_observer_->set_was_recently_audible_for_testing(true);
+    EXPECT_TRUE(contents_observer_->WasRecentlyAudible());
+  }
+
+  void StopSimulatingAudioPlayback() {
+    contents_observer_->set_was_recently_audible_for_testing(false);
+    EXPECT_FALSE(contents_observer_->WasRecentlyAudible());
+  }
+
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
   MediaEngagementContentsObserver* contents_observer_;
@@ -118,8 +130,8 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   web_contents()->SetAudioMuted(true);
   EXPECT_FALSE(AreConditionsMet());
-
   web_contents()->SetAudioMuted(false);
+
   SimulateIsHidden();
   EXPECT_FALSE(AreConditionsMet());
 
@@ -168,12 +180,26 @@ TEST_F(MediaEngagementContentsObserverTest,
        SignificantPlaybackRecordedWhenTimerFires) {
   SimulatePlaybackStarted(0);
   SimulateIsVisible();
+  SimulateAudioPlayback();
   web_contents()->SetAudioMuted(false);
   EXPECT_TRUE(IsTimerRunning());
   EXPECT_FALSE(WasSignificantPlaybackRecorded());
 
   SimulatePlaybackTimerFired();
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
+}
+
+TEST_F(MediaEngagementContentsObserverTest,
+       SignificantPlaybackNotRecordedIfAudioSilent) {
+  SimulatePlaybackStarted(0);
+  SimulateIsVisible();
+  StopSimulatingAudioPlayback();
+  web_contents()->SetAudioMuted(false);
+  EXPECT_TRUE(IsTimerRunning());
+  EXPECT_FALSE(WasSignificantPlaybackRecorded());
+
+  SimulatePlaybackTimerFired();
+  EXPECT_FALSE(WasSignificantPlaybackRecorded());
 }
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {

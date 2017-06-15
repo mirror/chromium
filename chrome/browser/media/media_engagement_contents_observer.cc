@@ -91,6 +91,10 @@ void MediaEngagementContentsObserver::DidUpdateAudioMutingState(bool muted) {
 void MediaEngagementContentsObserver::OnSignificantMediaPlaybackTime() {
   DCHECK(!significant_playback_recorded_);
 
+  // Do not record significant playback if we never made any sound.
+  if (!WasRecentlyAudible())
+    return;
+
   significant_playback_recorded_ = true;
 
   if (committed_origin_.unique())
@@ -104,6 +108,16 @@ bool MediaEngagementContentsObserver::AreConditionsMet() const {
     return false;
 
   return !web_contents()->IsAudioMuted();
+}
+
+void MediaEngagementContentsObserver::set_was_recently_audible_for_testing(
+    bool value) {
+  was_recently_audible_for_testing_ = value;
+}
+
+bool MediaEngagementContentsObserver::WasRecentlyAudible() const {
+  return web_contents()->WasRecentlyAudible() ||
+         was_recently_audible_for_testing_;
 }
 
 void MediaEngagementContentsObserver::UpdateTimer() {
