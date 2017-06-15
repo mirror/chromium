@@ -22,6 +22,30 @@
       "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2fc478e_73f40e76",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-15T23:55:55Z",
+      "side": 1,
+      "message": "Since this method is now inkoked by virtual call from ozone_gpu_test_helper.cc, we need to make it visible and move it out of the private scope.",
+      "parentUuid": "5c671981_1cc5a2cb",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
