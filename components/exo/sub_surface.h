@@ -34,9 +34,9 @@ class SubSurface : public SurfaceDelegate, public SurfaceObserver {
   void SetPosition(const gfx::Point& position);
 
   // This removes sub-surface from the stack, and puts it back just above the
-  // reference surface, changing the z-order of the sub-surfaces. The reference
+  // sibiling surface, changing the z-order of the sub-surfaces. The sibiling
   // surface must be one of the sibling surfaces, or the parent surface.
-  void PlaceAbove(Surface* reference);
+  void PlaceAbove(Surface* sibiling);
 
   // This removes sub-surface from the stack, and puts it back just below the
   // sibling surface.
@@ -55,9 +55,15 @@ class SubSurface : public SurfaceDelegate, public SurfaceObserver {
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
 
+  const Surface* surface() const { return surface_; }
+  Surface* surface() { return surface_; }
+
+  const gfx::Point& position() const { return position_; }
+
  private:
   Surface* surface_;
   Surface* parent_;
+  gfx::Point position_;
   bool is_synchronized_ = true;
 
   DISALLOW_COPY_AND_ASSIGN(SubSurface);

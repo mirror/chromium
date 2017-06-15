@@ -7,6 +7,7 @@
 #include <utility>
 
 #include "base/callback_helpers.h"
+#include "base/containers/adapters.h"
 #include "base/logging.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
@@ -22,12 +23,13 @@
 #include "cc/surfaces/surface.h"
 #include "cc/surfaces/surface_manager.h"
 #include "components/exo/buffer.h"
+#include "components/exo/compositor_frame_sink_holder.h"
 #include "components/exo/pointer.h"
+#include "components/exo/sub_surface.h"
 #include "components/exo/surface_delegate.h"
 #include "components/exo/surface_observer.h"
 #include "third_party/khronos/GLES2/gl2.h"
 #include "ui/aura/client/aura_constants.h"
-#include "ui/aura/env.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/base/class_property.h"
@@ -56,22 +58,6 @@ DEFINE_UI_CLASS_PROPERTY_KEY(Surface*, kSurfaceKey, nullptr);
 // A property key to store whether the surface should only consume
 // stylus input events.
 DEFINE_UI_CLASS_PROPERTY_KEY(bool, kStylusOnlyKey, false);
-
-// Helper function that returns an iterator to the first entry in |list|
-// with |key|.
-template <typename T, typename U>
-typename T::iterator FindListEntry(T& list, U key) {
-  return std::find_if(list.begin(), list.end(),
-                      [key](const typename T::value_type& entry) {
-                        return entry.first == key;
-                      });
-}
-
-// Helper function that returns true if |list| contains an entry with |key|.
-template <typename T, typename U>
-bool ListContainsEntry(T& list, U key) {
-  return FindListEntry(list, key) != list.end();
-}
 
 // Helper function that returns true if |format| may have an alpha channel.
 // Note: False positives are allowed but false negatives are not.
@@ -185,46 +171,28 @@ class CustomWindowTargeter : public aura::WindowTargeter {
 ////////////////////////////////////////////////////////////////////////////////
 // Surface, public:
 
-Surface::Surface() : window_(new aura::Window(new CustomWindowDelegate(this))) {
+Surface::Surface() {
+  window_ = base::MakeUnique<aura::Window>(new CustomWindowDelegate(this));
   window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
   window_->SetName("ExoSurface");
   window_->SetProperty(kSurfaceKey, this);
-  window_->Init(ui::LAYER_SOLID_COLOR);
-  window_->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter));
+  window_->Init(ui::LAYER_NOT_DRAWN);
+  window_->SetEventTargeter(base::MakeUnique<CustomWindowTargeter>());
   window_->set_owned_by_parent(false);
-  window_->AddObserver(this);
-  aura::Env::GetInstance()->context_factory()->AddObserver(this);
-  compositor_frame_sink_holder_ = base::MakeUnique<CompositorFrameSinkHolder>(
-      this, window_->CreateCompositorFrameSink());
 }
 
 Surface::~Surface() {
-  aura::Env::GetInstance()->context_factory()->RemoveObserver(this);
   for (SurfaceObserver& observer : observers_)
     observer.OnSurfaceDestroying(this);
 
-  window_->RemoveObserver(this);
-  if (window_->layer()->GetCompositor())
-    window_->layer()->GetCompositor()->vsync_manager()->RemoveObserver(this);
-  window_->layer()->SetShowSolidColorContent();
-
-  frame_callbacks_.splice(frame_callbacks_.end(), pending_frame_callbacks_);
-  active_frame_callbacks_.splice(active_frame_callbacks_.end(),
-                                 frame_callbacks_);
   // Call all frame callbacks with a null frame time to indicate that they
   // have been cancelled.
-  for (const auto& frame_callback : active_frame_callbacks_)
+  for (const auto& frame_callback : pending_frame_callbacks_)
     frame_callback.Run(base::TimeTicks());
 
-  presentation_callbacks_.splice(presentation_callbacks_.end(),
-                                 pending_presentation_callbacks_);
-  swapping_presentation_callbacks_.splice(
-      swapping_presentation_callbacks_.end(), presentation_callbacks_);
-  swapped_presentation_callbacks_.splice(swapped_presentation_callbacks_.end(),
-                                         swapping_presentation_callbacks_);
   // Call all presentation callbacks with a null presentation time to indicate
   // that they have been cancelled.
-  for (const auto& presentation_callback : swapped_presentation_callbacks_)
+  for (const auto& presentation_callback : pending_presentation_callbacks_)
     presentation_callback.Run(base::TimeTicks(), base::TimeDelta());
 }
 
@@ -284,101 +252,106 @@ void Surface::SetBufferScale(float scale) {
   pending_state_.buffer_scale = scale;
 }
 
-void Surface::AddSubSurface(Surface* sub_surface) {
+void Surface::AddSubSurface(SubSurface* sub_surface) {
   TRACE_EVENT1("exo", "Surface::AddSubSurface", "sub_surface",
-               sub_surface->AsTracedValue());
+               sub_surface->surface()->AsTracedValue());
 
-  DCHECK(!sub_surface->window()->parent());
-  DCHECK(!sub_surface->window()->IsVisible());
-  window_->AddChild(sub_surface->window());
+  DCHECK(!sub_surface->surface()->window()->parent());
+  DCHECK(!sub_surface->surface()->window()->IsVisible());
+  window_->AddChild(sub_surface->surface()->window());
 
-  DCHECK(!ListContainsEntry(pending_sub_surfaces_, sub_surface));
-  pending_sub_surfaces_.push_back(std::make_pair(sub_surface, gfx::Point()));
+  DCHECK(std::find(sub_surfaces_.begin(), sub_surfaces_.end(), sub_surface) ==
+         sub_surfaces_.end());
+  DCHECK(std::find(pending_sub_surfaces_.begin(), pending_sub_surfaces_.end(),
+                   sub_surface) == pending_sub_surfaces_.end());
+
+  sub_surfaces_.push_back(sub_surface);
+  pending_sub_surfaces_.push_back(sub_surface);
   has_pending_layer_changes_ = true;
 }
 
-void Surface::RemoveSubSurface(Surface* sub_surface) {
+void Surface::RemoveSubSurface(SubSurface* sub_surface) {
   TRACE_EVENT1("exo", "Surface::RemoveSubSurface", "sub_surface",
-               sub_surface->AsTracedValue());
+               sub_surface->surface()->AsTracedValue());
 
-  window_->RemoveChild(sub_surface->window());
-  if (sub_surface->window()->IsVisible())
-    sub_surface->window()->Hide();
+  window_->RemoveChild(sub_surface->surface()->window());
+  if (sub_surface->surface()->window()->IsVisible())
+    sub_surface->surface()->window()->Hide();
 
-  DCHECK(ListContainsEntry(pending_sub_surfaces_, sub_surface));
-  pending_sub_surfaces_.erase(
-      FindListEntry(pending_sub_surfaces_, sub_surface));
+  auto it = std::find(sub_surfaces_.begin(), sub_surfaces_.end(), sub_surface);
+  DCHECK(it != sub_surfaces_.end());
+  sub_surfaces_.erase(it);
+
+  auto pending_it = std::find(pending_sub_surfaces_.begin(),
+                              pending_sub_surfaces_.end(), sub_surface);
+  DCHECK(pending_it != pending_sub_surfaces_.end());
+  pending_sub_surfaces_.erase(pending_it);
+
   has_pending_layer_changes_ = true;
 }
 
-void Surface::SetSubSurfacePosition(Surface* sub_surface,
-                                    const gfx::Point& position) {
-  TRACE_EVENT2("exo", "Surface::SetSubSurfacePosition", "sub_surface",
-               sub_surface->AsTracedValue(), "position", position.ToString());
-
-  auto it = FindListEntry(pending_sub_surfaces_, sub_surface);
-  DCHECK(it != pending_sub_surfaces_.end());
-  if (it->second == position)
-    return;
-  it->second = position;
-  has_pending_layer_changes_ = true;
-}
-
-void Surface::PlaceSubSurfaceAbove(Surface* sub_surface, Surface* reference) {
+void Surface::PlaceSubSurfaceAbove(SubSurface* sub_surface, Surface* sibling) {
   TRACE_EVENT2("exo", "Surface::PlaceSubSurfaceAbove", "sub_surface",
-               sub_surface->AsTracedValue(), "reference",
-               reference->AsTracedValue());
+               sub_surface->surface()->AsTracedValue(), "sibling",
+               sibling->AsTracedValue());
 
-  if (sub_surface == reference) {
+  if (sub_surface->surface() == sibling) {
     DLOG(WARNING) << "Client tried to place sub-surface above itself";
     return;
   }
 
   auto position_it = pending_sub_surfaces_.begin();
-  if (reference != this) {
-    position_it = FindListEntry(pending_sub_surfaces_, reference);
+  if (sibling != this) {
+    position_it = std::find_if(
+        pending_sub_surfaces_.begin(), pending_sub_surfaces_.end(),
+        [sibling](const SubSurface* v) { return v->surface() == sibling; });
     if (position_it == pending_sub_surfaces_.end()) {
-      DLOG(WARNING) << "Client tried to place sub-surface above a reference "
+      DLOG(WARNING) << "Client tried to place sub-surface above a sibling "
                        "surface that is neither a parent nor a sibling";
       return;
     }
-
     // Advance iterator to have |position_it| point to the sibling surface
-    // above |reference|.
+    // above |sibling|.
     ++position_it;
   }
 
-  DCHECK(ListContainsEntry(pending_sub_surfaces_, sub_surface));
-  auto it = FindListEntry(pending_sub_surfaces_, sub_surface);
+  auto it = std::find(pending_sub_surfaces_.begin(),
+                      pending_sub_surfaces_.end(), sub_surface);
+  DCHECK(it != pending_sub_surfaces_.end());
   if (it == position_it)
     return;
   pending_sub_surfaces_.splice(position_it, pending_sub_surfaces_, it);
   has_pending_layer_changes_ = true;
+  sub_surfaces_reordered_ = true;
 }
 
-void Surface::PlaceSubSurfaceBelow(Surface* sub_surface, Surface* sibling) {
+void Surface::PlaceSubSurfaceBelow(SubSurface* sub_surface, Surface* sibling) {
   TRACE_EVENT2("exo", "Surface::PlaceSubSurfaceBelow", "sub_surface",
-               sub_surface->AsTracedValue(), "sibling",
+               sub_surface->surface()->AsTracedValue(), "sibling",
                sibling->AsTracedValue());
 
-  if (sub_surface == sibling) {
+  if (sub_surface->surface() == sibling) {
     DLOG(WARNING) << "Client tried to place sub-surface below itself";
     return;
   }
 
-  auto sibling_it = FindListEntry(pending_sub_surfaces_, sibling);
+  auto sibling_it = std::find_if(
+      pending_sub_surfaces_.begin(), pending_sub_surfaces_.end(),
+      [sibling](const SubSurface* v) { return v->surface() == sibling; });
   if (sibling_it == pending_sub_surfaces_.end()) {
     DLOG(WARNING) << "Client tried to place sub-surface below a surface that "
                      "is not a sibling";
     return;
   }
 
-  DCHECK(ListContainsEntry(pending_sub_surfaces_, sub_surface));
-  auto it = FindListEntry(pending_sub_surfaces_, sub_surface);
+  auto it = std::find(pending_sub_surfaces_.begin(),
+                      pending_sub_surfaces_.end(), sub_surface);
+  DCHECK(it != pending_sub_surfaces_.end());
   if (it == sibling_it)
     return;
   pending_sub_surfaces_.splice(sibling_it, pending_sub_surfaces_, it);
   has_pending_layer_changes_ = true;
+  sub_surfaces_reordered_ = true;
 }
 
 void Surface::SetViewport(const gfx::Size& viewport) {
@@ -441,93 +414,98 @@ void Surface::Commit() {
   if (delegate_) {
     delegate_->OnSurfaceCommit();
   } else {
-    CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-    CommitSurfaceHierarchy();
-  }
-
-  if (current_begin_frame_ack_.sequence_number !=
-      cc::BeginFrameArgs::kInvalidFrameNumber) {
-    if (!current_begin_frame_ack_.has_damage) {
-      compositor_frame_sink_holder_->GetCompositorFrameSink()
-          ->DidNotProduceFrame(current_begin_frame_ack_);
-    }
-    current_begin_frame_ack_.sequence_number =
-        cc::BeginFrameArgs::kInvalidFrameNumber;
-    if (begin_frame_source_)
-      begin_frame_source_->DidFinishFrame(this);
+    // ShellSurface and Subsurface will not run below code.
   }
 }
 
-void Surface::CommitSurfaceHierarchy() {
-  DCHECK(needs_commit_surface_hierarchy_);
-  needs_commit_surface_hierarchy_ = false;
-  has_pending_layer_changes_ = false;
+void Surface::CommitSurfaceHierarchy(
+    const gfx::Point& origin,
+    cc::CompositorFrame* frame,
+    CompositorFrameSinkHolder* frame_sink_holder,
+    std::list<FrameCallback>* frame_callbacks,
+    std::list<PresentationCallback>* presentation_callbacks,
+    bool commit_if_necessary) {
+  const bool needs_commit =
+      commit_if_necessary && needs_commit_surface_hierarchy_;
+  if (needs_commit) {
+    needs_commit_surface_hierarchy_ = false;
+    has_pending_layer_changes_ = false;
 
-  state_ = pending_state_;
-  pending_state_.only_visible_on_secure_output = false;
+    state_ = pending_state_;
+    pending_state_.only_visible_on_secure_output = false;
 
-  // We update contents if Attach() has been called since last commit.
-  if (has_pending_contents_) {
-    has_pending_contents_ = false;
+    // We update contents if Attach() has been called since last commit.
+    if (has_pending_contents_) {
+      has_pending_contents_ = false;
 
-    current_buffer_ = std::move(pending_buffer_);
+      current_buffer_ = std::move(pending_buffer_);
 
-    UpdateResource(true);
+      UpdateResource(frame_sink_holder, true);
+    }
+
+    // Move pending frame callbacks to the end of frame_callbacks.
+    frame_callbacks->splice(frame_callbacks->end(), pending_frame_callbacks_);
+
+    // Move pending presentation callbacks to the end of presentation_callbacks.
+    presentation_callbacks->splice(presentation_callbacks->end(),
+                                   pending_presentation_callbacks_);
+
+    UpdateContentSize();
   }
-
-  // Move pending frame callbacks to the end of frame_callbacks_.
-  frame_callbacks_.splice(frame_callbacks_.end(), pending_frame_callbacks_);
-
-  // Move pending presentation callbacks to the end of presentation_callbacks_.
-  presentation_callbacks_.splice(presentation_callbacks_.end(),
-                                 pending_presentation_callbacks_);
-
-  UpdateSurface(false);
-
-  if (needs_commit_to_new_surface_) {
-    needs_commit_to_new_surface_ = false;
-    window_->layer()->SetFillsBoundsOpaquely(
-        !current_resource_has_alpha_ ||
-        state_.blend_mode == SkBlendMode::kSrc ||
-        state_.opaque_region.contains(
-            gfx::RectToSkIRect(gfx::Rect(content_size_))));
-  }
-
-  // Reset damage.
-  pending_damage_.setEmpty();
-  DCHECK(!current_resource_.id ||
-         compositor_frame_sink_holder_->HasReleaseCallbackForResource(
-             current_resource_.id));
 
   // Synchronize window hierarchy. This will position and update the stacking
   // order of all sub-surfaces after committing all pending state of sub-surface
   // descendants.
-  aura::Window* stacking_target = nullptr;
-  for (auto& sub_surface_entry : pending_sub_surfaces_) {
-    Surface* sub_surface = sub_surface_entry.first;
+  if (needs_commit && sub_surfaces_reordered_) {
+    sub_surfaces_.clear();
+    aura::Window* stacking_target = nullptr;
+    for (auto* sub_surface : pending_sub_surfaces_) {
+      Surface* surface = sub_surface->surface();
+      sub_surfaces_.push_back(sub_surface);
 
-    // Synchronsouly commit all pending state of the sub-surface and its
-    // decendents.
-    if (sub_surface->needs_commit_surface_hierarchy())
-      sub_surface->CommitSurfaceHierarchy();
+      // Synchronsouly commit all pending state of the sub-surface and its
+      // decendents.
+      surface->CommitSurfaceHierarchy(
+          origin + sub_surface->position().OffsetFromOrigin(), frame,
+          frame_sink_holder, frame_callbacks, presentation_callbacks,
+          commit_if_necessary);
 
-    // Enable/disable sub-surface based on if it has contents.
-    if (sub_surface->has_contents())
-      sub_surface->window()->Show();
-    else
-      sub_surface->window()->Hide();
+      // Move sub-surface to its new position in the stack.
+      if (stacking_target)
+        window_->StackChildBelow(surface->window(), stacking_target);
 
-    // Move sub-surface to its new position in the stack.
-    if (stacking_target)
-      window_->StackChildAbove(sub_surface->window(), stacking_target);
+      // Stack next sub-surface above this sub-surface.
+      stacking_target = surface->window();
 
-    // Stack next sub-surface above this sub-surface.
-    stacking_target = sub_surface->window();
-
-    // Update sub-surface position relative to surface origin.
-    sub_surface->window()->SetBounds(gfx::Rect(
-        sub_surface_entry.second, sub_surface->window()->layer()->size()));
+    }
+    sub_surfaces_reordered_ = false;
   }
+
+  // The top most subsurface is at the front of the RenderPass's quad_list,
+  // so we need composite subsurface in reversed order.
+  for (auto* sub_surface : base::Reversed(sub_surfaces_)) {
+    auto* surface = sub_surface->surface();
+    surface->CommitSurfaceHierarchy(
+        origin + sub_surface->position().OffsetFromOrigin(), frame,
+        frame_sink_holder, frame_callbacks, presentation_callbacks,
+        commit_if_necessary);
+
+    if (needs_commit) {
+      // Update sub-surface position relative to surface origin.
+      surface->window()->SetBounds(gfx::Rect(
+            sub_surface->position(), surface->window()->bounds().size()));
+    }
+  }
+
+  Composite(origin, frame, true);
+
+  // Reset damage.
+  if (needs_commit)
+    pending_damage_.setEmpty();
+
+  DCHECK(
+      !current_resource_.id ||
+      frame_sink_holder->HasReleaseCallbackForResource(current_resource_.id));
 }
 
 bool Surface::IsSynchronized() const {
@@ -605,54 +583,6 @@ std::unique_ptr<base::trace_event::TracedValue> Surface::AsTracedValue() const {
   return value;
 }
 
-void Surface::DidReceiveCompositorFrameAck() {
-  active_frame_callbacks_.splice(active_frame_callbacks_.end(),
-                                 frame_callbacks_);
-  swapping_presentation_callbacks_.splice(
-      swapping_presentation_callbacks_.end(), presentation_callbacks_);
-  UpdateNeedsBeginFrame();
-}
-
-void Surface::SetBeginFrameSource(cc::BeginFrameSource* begin_frame_source) {
-  if (needs_begin_frame_) {
-    DCHECK(begin_frame_source_);
-    begin_frame_source_->RemoveObserver(this);
-    needs_begin_frame_ = false;
-  }
-  begin_frame_source_ = begin_frame_source;
-  UpdateNeedsBeginFrame();
-}
-
-void Surface::UpdateNeedsBeginFrame() {
-  if (!begin_frame_source_)
-    return;
-
-  bool needs_begin_frame = !active_frame_callbacks_.empty();
-  if (needs_begin_frame == needs_begin_frame_)
-    return;
-
-  needs_begin_frame_ = needs_begin_frame;
-  if (needs_begin_frame_)
-    begin_frame_source_->AddObserver(this);
-  else
-    begin_frame_source_->RemoveObserver(this);
-}
-
-bool Surface::OnBeginFrameDerivedImpl(const cc::BeginFrameArgs& args) {
-  current_begin_frame_ack_ = cc::BeginFrameAck(
-      args.source_id, args.sequence_number, args.sequence_number, false);
-  while (!active_frame_callbacks_.empty()) {
-    active_frame_callbacks_.front().Run(args.frame_time);
-    active_frame_callbacks_.pop_front();
-  }
-  return true;
-}
-
-void Surface::CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces() {
-  if (HasLayerHierarchyChanged())
-    SetSurfaceHierarchyNeedsCommitToNewSurfaces();
-}
-
 bool Surface::IsStylusOnly() {
   return window_->GetProperty(kStylusOnlyKey);
 }
@@ -664,49 +594,16 @@ void Surface::SetStylusOnly() {
 ////////////////////////////////////////////////////////////////////////////////
 // ui::ContextFactoryObserver overrides:
 
-void Surface::OnLostResources() {
+void Surface::OnLostResources(CompositorFrameSinkHolder* frame_sink_holder) {
   if (!window_->GetSurfaceId().is_valid())
     return;
-  UpdateResource(false);
-  UpdateSurface(true);
+  UpdateResource(frame_sink_holder, false);
+  for (auto* sub_surface : pending_sub_surfaces_)
+    sub_surface->surface()->OnLostResources(frame_sink_holder);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// aura::WindowObserver overrides:
-
-void Surface::OnWindowAddedToRootWindow(aura::Window* window) {
-  window->layer()->GetCompositor()->vsync_manager()->AddObserver(this);
-}
-
-void Surface::OnWindowRemovingFromRootWindow(aura::Window* window,
-                                             aura::Window* new_root) {
-  window->layer()->GetCompositor()->vsync_manager()->RemoveObserver(this);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// ui::CompositorVSyncManager::Observer overrides:
-
-void Surface::OnUpdateVSyncParameters(base::TimeTicks timebase,
-                                      base::TimeDelta interval) {
-  // Use current time if platform doesn't provide an accurate timebase.
-  if (timebase.is_null())
-    timebase = base::TimeTicks::Now();
-
-  while (!swapped_presentation_callbacks_.empty()) {
-    swapped_presentation_callbacks_.front().Run(timebase, interval);
-    swapped_presentation_callbacks_.pop_front();
-  }
-
-  // VSync parameters updates are generated at the start of a new swap. Move
-  // the swapping presentation callbacks to swapped callbacks so they fire
-  // at the next VSync parameters update as that will contain the presentation
-  // time for the previous frame.
-  swapped_presentation_callbacks_.splice(swapped_presentation_callbacks_.end(),
-                                         swapping_presentation_callbacks_);
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// Buffer, private:
+// Surface, private:
 
 Surface::State::State() : input_region(SkIRect::MakeLargest()) {}
 
@@ -752,29 +649,11 @@ void Surface::BufferAttachment::Reset(base::WeakPtr<Buffer> buffer) {
   buffer_ = buffer;
 }
 
-bool Surface::HasLayerHierarchyChanged() const {
-  if (needs_commit_surface_hierarchy_ && has_pending_layer_changes_)
-    return true;
-
-  for (const auto& sub_surface_entry : pending_sub_surfaces_) {
-    if (sub_surface_entry.first->HasLayerHierarchyChanged())
-      return true;
-  }
-  return false;
-}
-
-void Surface::SetSurfaceHierarchyNeedsCommitToNewSurfaces() {
-  needs_commit_to_new_surface_ = true;
-  for (auto& sub_surface_entry : pending_sub_surfaces_) {
-    sub_surface_entry.first->SetSurfaceHierarchyNeedsCommitToNewSurfaces();
-  }
-}
-
-void Surface::UpdateResource(bool client_usage) {
+void Surface::UpdateResource(CompositorFrameSinkHolder* frame_sink_holder,
+                             bool client_usage) {
   if (current_buffer_.buffer() &&
       current_buffer_.buffer()->ProduceTransferableResource(
-          compositor_frame_sink_holder_.get(), next_resource_id_++,
-          state_.only_visible_on_secure_output, client_usage,
+          frame_sink_holder, state_.only_visible_on_secure_output, client_usage,
           &current_resource_)) {
     current_resource_has_alpha_ =
         FormatHasAlpha(current_buffer_.buffer()->GetFormat());
@@ -785,80 +664,33 @@ void Surface::UpdateResource(bool client_usage) {
   }
 }
 
-void Surface::UpdateSurface(bool full_damage) {
-  gfx::Size buffer_size = current_resource_.size;
-  gfx::SizeF scaled_buffer_size(
-      gfx::ScaleSize(gfx::SizeF(buffer_size), 1.0f / state_.buffer_scale));
-
-  gfx::Size layer_size;  // Size of the output layer, in DIP.
-  if (!state_.viewport.IsEmpty()) {
-    layer_size = state_.viewport;
-  } else if (!state_.crop.IsEmpty()) {
-    DLOG_IF(WARNING, !gfx::IsExpressibleAsInt(state_.crop.width()) ||
-                         !gfx::IsExpressibleAsInt(state_.crop.height()))
-        << "Crop rectangle size (" << state_.crop.size().ToString()
-        << ") most be expressible using integers when viewport is not set";
-    layer_size = gfx::ToCeiledSize(state_.crop.size());
-  } else {
-    layer_size = gfx::ToCeiledSize(scaled_buffer_size);
-  }
-
-  content_size_ = layer_size;
-  // We need update window_'s bounds with content size, because the
-  // CompositorFrameSink may not update the window's size base the size of
-  // the lastest submitted CompositorFrame.
-  window_->SetBounds(gfx::Rect(window_->bounds().origin(), content_size_));
-  // TODO(jbauman): Figure out how this interacts with the pixel size of
-  // CopyOutputRequests on the layer.
-  gfx::Size contents_surface_size = layer_size;
-
-  gfx::PointF uv_top_left(0.f, 0.f);
-  gfx::PointF uv_bottom_right(1.f, 1.f);
-  if (!state_.crop.IsEmpty()) {
-    uv_top_left = state_.crop.origin();
-
-    uv_top_left.Scale(1.f / scaled_buffer_size.width(),
-                      1.f / scaled_buffer_size.height());
-    uv_bottom_right = state_.crop.bottom_right();
-    uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
-                          1.f / scaled_buffer_size.height());
-  }
-
-  gfx::Rect damage_rect;
-  gfx::Rect output_rect = gfx::Rect(contents_surface_size);
-  if (full_damage) {
-    damage_rect = output_rect;
-  } else {
-    // pending_damage_ is in Surface coordinates.
-    damage_rect = gfx::SkIRectToRect(pending_damage_.getBounds());
-    damage_rect.Intersect(output_rect);
-  }
-
-  const int kRenderPassId = 1;
-  std::unique_ptr<cc::RenderPass> render_pass = cc::RenderPass::Create();
-  render_pass->SetNew(kRenderPassId, output_rect, damage_rect,
-                      gfx::Transform());
-
+void Surface::Composite(const gfx::Point& origin,
+                        cc::CompositorFrame* frame,
+                        bool full_damage) {
+  const std::unique_ptr<cc::RenderPass>& render_pass =
+      frame->render_pass_list.back();
+  gfx::Rect output_rect = gfx::Rect(origin, content_size_);
   gfx::Rect quad_rect = output_rect;
   cc::SharedQuadState* quad_state =
       render_pass->CreateAndAppendSharedQuadState();
-  quad_state->quad_layer_rect = gfx::Rect(contents_surface_size);
+  quad_state->quad_layer_rect = gfx::Rect(content_size_);
   quad_state->visible_quad_layer_rect = quad_rect;
   quad_state->opacity = state_.alpha;
 
-  cc::CompositorFrame frame;
-  // If we commit while we don't have an active BeginFrame, we acknowledge a
-  // manual one.
-  if (current_begin_frame_ack_.sequence_number ==
-      cc::BeginFrameArgs::kInvalidFrameNumber) {
-    current_begin_frame_ack_ = cc::BeginFrameAck::CreateManualAckWithDamage();
-  } else {
-    current_begin_frame_ack_.has_damage = true;
-  }
-  frame.metadata.begin_frame_ack = current_begin_frame_ack_;
-  frame.metadata.device_scale_factor = device_scale_factor_;
-
   if (current_resource_.id) {
+    gfx::PointF uv_top_left(0.f, 0.f);
+    gfx::PointF uv_bottom_right(1.f, 1.f);
+    if (!state_.crop.IsEmpty()) {
+      gfx::SizeF scaled_buffer_size(gfx::ScaleSize(
+          gfx::SizeF(current_resource_.size), 1.0f / state_.buffer_scale));
+      uv_top_left = state_.crop.origin();
+
+      uv_top_left.Scale(1.f / scaled_buffer_size.width(),
+                        1.f / scaled_buffer_size.height());
+      uv_bottom_right = state_.crop.bottom_right();
+      uv_bottom_right.Scale(1.f / scaled_buffer_size.width(),
+                            1.f / scaled_buffer_size.height());
+    }
     // Texture quad is only needed if buffer is not fully transparent.
     if (state_.alpha) {
       cc::TextureDrawQuad* texture_quad =
@@ -879,17 +711,38 @@ void Surface::UpdateSurface(bool full_damage) {
                            false, false, state_.only_visible_on_secure_output);
       if (current_resource_.is_overlay_candidate)
         texture_quad->set_resource_size_in_pixels(current_resource_.size);
-      frame.resource_list.push_back(current_resource_);
+      frame->resource_list.push_back(current_resource_);
     }
   } else {
     cc::SolidColorDrawQuad* solid_quad =
         render_pass->CreateAndAppendDrawQuad<cc::SolidColorDrawQuad>();
     solid_quad->SetNew(quad_state, quad_rect, quad_rect, SK_ColorBLACK, false);
   }
+}
 
-  frame.render_pass_list.push_back(std::move(render_pass));
-  compositor_frame_sink_holder_->GetCompositorFrameSink()
-      ->SubmitCompositorFrame(std::move(frame));
+void Surface::UpdateContentSize() {
+  gfx::Size buffer_size = current_resource_.size;
+  gfx::SizeF scaled_buffer_size(
+      gfx::ScaleSize(gfx::SizeF(buffer_size), 1.0f / state_.buffer_scale));
+
+  if (!state_.viewport.IsEmpty()) {
+    content_size_ = state_.viewport;
+  } else if (!state_.crop.IsEmpty()) {
+    DLOG_IF(WARNING, !gfx::IsExpressibleAsInt(state_.crop.width()) ||
+                         !gfx::IsExpressibleAsInt(state_.crop.height()))
+        << "Crop rectangle size (" << state_.crop.size().ToString()
+        << ") most be expressible using integers when viewport is not set";
+    content_size_ = gfx::ToCeiledSize(state_.crop.size());
+  } else {
+    content_size_ = gfx::ToCeiledSize(scaled_buffer_size);
+  }
+  window_->SetBounds(gfx::Rect(window_->bounds().origin(), content_size_));
+
+  // Enable/disable sub-surface based on if it has contents.
+  if (has_contents())
+    window_->Show();
+  else
+    window_->Hide();
 }
 
 }  // namespace exo

@@ -17,17 +17,16 @@ class CompositorFrameSink;
 }
 
 namespace exo {
-class Surface;
+class SurfaceTreeHost;
 
 // This class talks to MojoCompositorFrameSink and keeps track of references to
 // the contents of Buffers. It's keeped alive by references from
 // release_callbacks_. It's destroyed when its owning Surface is destroyed and
 // the last outstanding release callback is called.
-class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient,
-                                  public SurfaceObserver {
+class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient {
  public:
   CompositorFrameSinkHolder(
-      Surface* surface,
+      SurfaceTreeHost* surface_tree_host,
       std::unique_ptr<cc::CompositorFrameSink> frame_sink);
   ~CompositorFrameSinkHolder() override;
 
@@ -43,6 +42,8 @@ class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient,
     return weak_factory_.GetWeakPtr();
   }
 
+  int AllocateResourceId() { return ++last_resource_id_; }
+
   // Overridden from cc::CompositorFrameSinkClient:
   void SetBeginFrameSource(cc::BeginFrameSource* source) override;
   void ReclaimResources(const cc::ReturnedResourceArray& resources) override;
@@ -57,17 +58,17 @@ class CompositorFrameSinkHolder : public cc::CompositorFrameSinkClient,
       const gfx::Rect& viewport_rect,
       const gfx::Transform& transform) override {}
 
-  // Overridden from SurfaceObserver:
-  void OnSurfaceDestroying(Surface* surface) override;
-
  private:
 
   // A collection of callbacks used to release resources.
   using ResourceReleaseCallbackMap = base::flat_map<int, cc::ReleaseCallback>;
   ResourceReleaseCallbackMap release_callbacks_;
 
-  Surface* surface_;
+  SurfaceTreeHost* surface_tree_host_;
   std::unique_ptr<cc::CompositorFrameSink> frame_sink_;
+
+  // The next resource id the buffer will be attached to.
+  int last_resource_id_ = 0;
 
   base::WeakPtrFactory<CompositorFrameSinkHolder> weak_factory_;
 

@@ -21,10 +21,15 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/trace_event/trace_event.h"
 #include "base/trace_event/trace_event_argument.h"
+#include "cc/output/compositor_frame.h"
+#include "cc/output/compositor_frame_sink.h"
 #include "components/exo/surface.h"
+#include "components/exo/surface_tree_host.h"
 #include "ui/aura/client/aura_constants.h"
 #include "ui/aura/client/cursor_client.h"
+#include "ui/aura/env.h"
 #include "ui/aura/window.h"
+#include "ui/aura/window_delegate.h"
 #include "ui/aura/window_event_dispatcher.h"
 #include "ui/aura/window_targeter.h"
 #include "ui/aura/window_tree_host.h"
@@ -304,12 +309,13 @@ ShellSurface::ShellSurface(Surface* surface,
       container_(container) {
   WMHelper::GetInstance()->AddActivationObserver(this);
   WMHelper::GetInstance()->AddDisplayConfigurationObserver(this);
-  surface_->SetSurfaceDelegate(this);
   surface_->AddSurfaceObserver(this);
-  surface_->window()->Show();
   set_owned_by_client();
   if (parent_)
     parent_->AddObserver(this);
+
+  surface_tree_host_ = base::MakeUnique<SurfaceTreeHost>(this);
+  surface_tree_host_->AttachSurface(surface);
 }
 
 ShellSurface::ShellSurface(Surface* surface)
@@ -339,12 +345,8 @@ ShellSurface::~ShellSurface() {
   WMHelper::GetInstance()->RemoveDisplayConfigurationObserver(this);
   if (parent_)
     parent_->RemoveObserver(this);
-  if (surface_) {
-    if (scale_ != 1.0)
-      surface_->window()->SetTransform(gfx::Transform());
-    surface_->SetSurfaceDelegate(nullptr);
+  if (surface_)
     surface_->RemoveSurfaceObserver(this);
-  }
 }
 
 void ShellSurface::AcknowledgeConfigure(uint32_t serial) {
@@ -704,18 +706,18 @@ std::unique_ptr<base::trace_event::TracedValue> ShellSurface::AsTracedValue()
 // SurfaceDelegate overrides:
 
 void ShellSurface::OnSurfaceCommit() {
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-  surface_->CommitSurfaceHierarchy();
-
+  // TODO
   if (enabled() && !widget_) {
     // Defer widget creation until surface contains some contents.
     if (surface_->content_size().IsEmpty()) {
       Configure();
       return;
     }
-
     CreateShellSurfaceWidget(ui::SHOW_STATE_NORMAL);
   }
+
+  // If we commit while we don't have an active BeginFrame, we acknowledge a
+  // manual one.
 
   // Apply the accumulated pending origin offset to reflect acknowledged
   // configure requests.
@@ -765,7 +767,7 @@ void ShellSurface::OnSurfaceCommit() {
       gfx::Transform transform;
       DCHECK_NE(pending_scale_, 0.0);
       transform.Scale(1.0 / pending_scale_, 1.0 / pending_scale_);
-      surface_->window()->SetTransform(transform);
+      // surface_->window()->SetTransform(transform);
       scale_ = pending_scale_;
     }
 
@@ -904,7 +906,7 @@ gfx::Size ShellSurface::CalculatePreferredSize() const {
   if (!geometry_.IsEmpty())
     return geometry_.size();
 
-  return surface_ ? surface_->window()->layer()->size() : gfx::Size();
+  return surface_ ? surface_->content_size() : gfx::Size();
 }
 
 gfx::Size ShellSurface::GetMinimumSize() const {
@@ -1175,7 +1177,7 @@ void ShellSurface::CreateShellSurfaceWidget(ui::WindowShowState show_state) {
   window->SetName("ExoShellSurface");
   window->SetProperty(aura::client::kAccessibilityFocusFallsbackToWidgetKey,
                       false);
-  window->AddChild(surface_->window());
+  window->AddChild(surface_tree_host_->window());
   window->SetEventTargeter(base::WrapUnique(new CustomWindowTargeter(widget_)));
   SetApplicationId(window, application_id_);
   SetMainSurface(window, surface_);
@@ -1413,8 +1415,7 @@ bool ShellSurface::IsResizing() const {
 
 gfx::Rect ShellSurface::GetVisibleBounds() const {
   // Use |geometry_| if set, otherwise use the visual bounds of the surface.
-  return geometry_.IsEmpty() ? gfx::Rect(surface_->window()->layer()->size())
-                             : geometry_;
+  return geometry_.IsEmpty() ? gfx::Rect(surface_->content_size()) : geometry_;
 }
 
 gfx::Point ShellSurface::GetSurfaceOrigin() const {
@@ -1537,9 +1538,9 @@ void ShellSurface::UpdateSurfaceBounds() {
   gfx::Rect client_view_bounds =
       widget_->non_client_view()->frame_view()->GetBoundsForClientView();
 
-  surface_->window()->SetBounds(
+  surface_tree_host_->window()->SetBounds(
       gfx::Rect(GetSurfaceOrigin() + client_view_bounds.OffsetFromOrigin(),
-                surface_->window()->layer()->size()));
+                surface_->content_size()));
 }
 
 void ShellSurface::UpdateShadow() {
@@ -1582,7 +1583,7 @@ void ShellSurface::UpdateShadow() {
     gfx::Rect shadow_underlay_bounds = shadow_content_bounds_;
 
     if (shadow_underlay_bounds.IsEmpty()) {
-      shadow_underlay_bounds = gfx::Rect(surface_->window()->bounds().size());
+      shadow_underlay_bounds = gfx::Rect(surface_->content_size());
     } else if (shadow_underlay_in_surface_) {
       // Since the shadow underlay is positioned relative to the surface, its
       // origin corresponds to the shadow content position relative to the
@@ -1621,8 +1622,8 @@ void ShellSurface::UpdateShadow() {
       shadow_underlay_->layer()->SetColor(SK_ColorBLACK);
       DCHECK(shadow_underlay_->layer()->fills_bounds_opaquely());
       if (shadow_underlay_in_surface_) {
-        surface_->window()->AddChild(shadow_underlay());
-        surface_->window()->StackChildAtBottom(shadow_underlay());
+        surface_tree_host_->window()->AddChild(shadow_underlay());
+        surface_tree_host_->window()->StackChildAtBottom(shadow_underlay());
       } else {
         window->AddChild(shadow_underlay());
         window->StackChildAtBottom(shadow_underlay());
@@ -1668,7 +1669,7 @@ void ShellSurface::UpdateShadow() {
       window->AddChild(shadow_overlay());
 
       if (shadow_underlay_in_surface_) {
-        window->StackChildBelow(shadow_overlay(), surface_->window());
+        window->StackChildBelow(shadow_overlay(), surface_tree_host_->window());
       } else {
         window->StackChildAbove(shadow_overlay(), shadow_underlay());
       }

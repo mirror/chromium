@@ -78,6 +78,7 @@ Pointer::Pointer(PointerDelegate* delegate)
   auto* helper = WMHelper::GetInstance();
   helper->AddPreTargetHandler(this);
   helper->AddCursorObserver(this);
+  surface_tree_host_ = base::MakeUnique<SurfaceTreeHost>(this);
 }
 
 Pointer::~Pointer() {
@@ -109,22 +110,24 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
       return;
     }
     if (surface_) {
-      surface_->window()->SetTransform(gfx::Transform());
-      if (surface_->window()->parent())
-        surface_->window()->parent()->RemoveChild(surface_->window());
-      surface_->SetSurfaceDelegate(nullptr);
+      surface_tree_host_->DetachSurface();
+      surface_tree_host_->window()->SetTransform(gfx::Transform());
+      if (surface_tree_host_->window()->parent()) {
+        surface_tree_host_->window()->parent()->RemoveChild(
+            surface_tree_host_->window());
+      }
       surface_->RemoveSurfaceObserver(this);
     }
     surface_ = surface;
     if (surface_) {
-      surface_->SetSurfaceDelegate(this);
       surface_->AddSurfaceObserver(this);
+      surface_tree_host_->AttachSurface(surface_);
       // Note: Surface window needs to be added to the tree so we can take a
       // snapshot. Where in the tree is not important but we might as well use
       // the cursor container.
       WMHelper::GetInstance()
           ->GetPrimaryDisplayContainer(ash::kShellWindowId_MouseCursorContainer)
-          ->AddChild(surface_->window());
+          ->AddChild(surface_tree_host_->window());
     }
     cursor_changed = true;
   }
@@ -281,7 +284,6 @@ void Pointer::OnCursorDisplayChanged(const display::Display& display) {
 // SurfaceDelegate overrides:
 
 void Pointer::OnSurfaceCommit() {
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
   surface_->CommitSurfaceHierarchy();
 
   // Capture new cursor to reflect result of commit.
@@ -330,7 +332,9 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
   auto* helper = WMHelper::GetInstance();
   float scale = helper->GetDisplayInfo(display.id()).GetEffectiveUIScale() *
                 kCursorCaptureScale / display.device_scale_factor();
-  surface_->window()->SetTransform(gfx::GetScaleTransform(gfx::Point(), scale));
+
+  surface_tree_host_->window()->SetTransform(
+      gfx::GetScaleTransform(gfx::Point(), scale));
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateBitmapRequest(
@@ -338,7 +342,8 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
                      cursor_capture_weak_ptr_factory_.GetWeakPtr(), hotspot));
 
   request->set_source(cursor_capture_source_id_);
-  surface_->window()->layer()->RequestCopyOfOutput(std::move(request));
+  surface_tree_host_->window()->layer()->RequestCopyOfOutput(
+      std::move(request));
 }
 
 void Pointer::OnCursorCaptured(const gfx::Point& hotspot,

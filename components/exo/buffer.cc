@@ -409,10 +409,11 @@ Buffer::~Buffer() {}
 
 bool Buffer::ProduceTransferableResource(
     CompositorFrameSinkHolder* compositor_frame_sink_holder,
-    cc::ResourceId resource_id,
     bool secure_output_only,
     bool client_usage,
     cc::TransferableResource* resource) {
+  cc::ResourceId resource_id =
+      compositor_frame_sink_holder->AllocateResourceId();
   TRACE_EVENT0("exo", "Buffer::ProduceTransferableResource");
 
   DCHECK(attach_count_);
