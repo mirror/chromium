@@ -945,7 +945,6 @@ TEST_F(WebPluginContainerTest, ClippedRectsForIframedElement) {
   DCHECK(plugin_container_impl);
 
   IntRect window_rect, clip_rect, unobscured_rect;
-  Vector<IntRect> cut_out_rects;
   CalculateGeometry(plugin_container_impl, window_rect, clip_rect,
                     unobscured_rect);
   EXPECT_RECT_EQ(IntRect(20, 220, 40, 40), window_rect);
@@ -979,8 +978,6 @@ TEST_F(WebPluginContainerTest, ClippedRectsForSubpixelPositionedPlugin) {
   DCHECK(plugin_container_impl);
 
   IntRect window_rect, clip_rect, unobscured_rect;
-  Vector<IntRect> cut_out_rects;
-
   CalculateGeometry(plugin_container_impl, window_rect, clip_rect,
                     unobscured_rect);
   EXPECT_RECT_EQ(IntRect(0, 0, 40, 40), window_rect);
