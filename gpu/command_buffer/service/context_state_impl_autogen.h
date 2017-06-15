@@ -408,7 +408,12 @@ void ContextState::InitState(const ContextState* prev_state) const {
                           stencil_path_mask);
     glPixelStorei(GL_PACK_ALIGNMENT, pack_alignment);
     glPixelStorei(GL_UNPACK_ALIGNMENT, unpack_alignment);
+    DCHECK(glGetError() == GL_NO_ERROR);
     glPolygonOffset(polygon_offset_factor, polygon_offset_units);
+    LOG_IF(WARNING, glGetError() == GL_INVALID_FRAMEBUFFER_OPERATION)
+        << "glPolygonOffset sets a GL ERROR on Mali when no framebuffer is "
+           "bound. (crbug.com/35585033)";
+
     glSampleCoverage(sample_coverage_value, sample_coverage_invert);
     glScissor(scissor_x, scissor_y, scissor_width, scissor_height);
     glStencilFuncSeparate(GL_FRONT, stencil_front_func, stencil_front_ref,
