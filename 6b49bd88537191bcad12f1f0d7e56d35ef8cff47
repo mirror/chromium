@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44560591_9da337fb",
+        "filename": "components/offline_pages/core/prefetch/store/create_prefetch_items_command_sql.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "URLs must be unique within each namespace. It seems this is not being checked for here.",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0059133e_7054a2e2",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "nit: move into a constant.",
+      "range": {
+        "startLine": 132,
+        "startChar": 37,
+        "endLine": 132,
+        "endChar": 55
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4292fc6_44a7c168",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Not being called right now and should be lazily called when we first run an operation on the store.",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 33
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e106369f_2738fce1",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Not implemented.",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a82841_2abc24af",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Why go through the trouble of assigning the same status to each id? Do you intend on potentially having mixed statuses in the future?",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 78
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd417ea2_0ffaa7cc",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Item ownership is unclear here. How about returning a unique pointer to the item that would be null if it didn\u0027t exist?",
+      "range": {
+        "startLine": 31,
+        "startChar": 50,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af44967b_27381c8f",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "As this class depends on SQL it should be renamed to something else, like SqlCommand for instance, so that it is not taken as the same as the generic StoreCommand which is implementation independent.\n\nThey way I can see this being used is that concrete implementations would inherit from both the generic prefetch command and from this class. WDYT?",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "25c6ac39_91b2bcf6",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "I think there was the idea of not having the multi-thread code in the command to ease testing SQL executing in the very test thread. Can we replace the runner with a test one that executes in the same test thread?",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdd371b9_ab8aed37",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Because StoreCommand is named like that it seems more natural to name this DeletePrefetchItemsSqlCommand.",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "326e2906_ba5bc8e9",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "The constructor should not receive parameters to allow the factory to build \"empty\" commands that will only later receive the parameters they need to be executed. They should on the other hand receive the store pointer here so that tasks could execute them without depending on the specific store in use.",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ed9c381_92a35d9a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 1
@@ -191,6 +260,52 @@
     },
     {
       "key": {
+        "uuid": "92d75c45_dc9bb366",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "PrefetchSQLStore maybe?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fc385fe_63fc5baa",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "Not yet being called from anywhere.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f556a6c9_afc3027e",
         "filename": "components/offline_pages/core/prefetch/store/store_command.h",
         "patchSetId": 1
@@ -238,6 +353,29 @@
       "side": 1,
       "message": "Indeed, perhaps like a comment here and then codereview practice. Executor may retry N times and UMA results... We can also have a test for commands that applies them more tan once with rollback in between...",
       "parentUuid": "b4e80137_7b7ac0eb",
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72ebedb6_f24b0a0c",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-15T00:51:54Z",
+      "side": 1,
+      "message": "As this depends on Sql it should already be a SqlCommand or SqlStoreCommand.",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 9
+      },
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
