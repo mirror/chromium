@@ -7,7 +7,6 @@
 #include "ash/test/ash_test_views_delegate.h"
 #include "ash/test/content/test_shell_content_state.h"
 #include "base/memory/ptr_util.h"
-#include "content/public/browser/browser_thread.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/public/test/web_contents_tester.h"
 
@@ -44,6 +43,7 @@ std::string AshTestEnvironment::Get100PercentResourceFileName() {
   return "ash_test_resources_with_content_100_percent.pak";
 }
 
+//JAMES - is the thread bundle still needed?
 AshTestEnvironmentContent::AshTestEnvironmentContent()
     : thread_bundle_(base::MakeUnique<content::TestBrowserThreadBundle>()) {}
 
@@ -60,10 +60,6 @@ void AshTestEnvironmentContent::SetUp() {
 
 void AshTestEnvironmentContent::TearDown() {
   ShellContentState::DestroyInstance();
-}
-
-base::SequencedWorkerPool* AshTestEnvironmentContent::GetBlockingPool() {
-  return content::BrowserThread::GetBlockingPool();
 }
 
 std::unique_ptr<AshTestViewsDelegate>

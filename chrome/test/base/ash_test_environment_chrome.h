@@ -8,13 +8,13 @@
 #include "ash/test/ash_test_environment.h"
 #include "base/macros.h"
 
+//JAMES could this be shared with ash?
 class AshTestEnvironmentChrome : public ash::test::AshTestEnvironment {
  public:
   AshTestEnvironmentChrome();
   ~AshTestEnvironmentChrome() override;
 
   // AshTestEnvironment:
-  base::SequencedWorkerPool* GetBlockingPool() override;
   std::unique_ptr<ash::test::AshTestViewsDelegate> CreateViewsDelegate()
       override;
 
