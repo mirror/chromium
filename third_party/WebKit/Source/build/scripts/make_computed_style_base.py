@@ -32,7 +32,7 @@ ALIGNMENT_ORDER = [
     # Aligns like float
     'LengthBox', 'LengthSize', 'FloatSize', 'LengthPoint', 'Length', 'TextSizeAdjust', 'TabSize', 'float',
     # Aligns like int
-    'StyleColor', 'Color', 'LayoutUnit', 'LineClampValue', 'OutlineValue', 'unsigned', 'int',
+    'WebBlendMode', 'StyleColor', 'Color', 'LayoutUnit', 'LineClampValue', 'OutlineValue', 'unsigned', 'int',
     # Aligns like short
     'short',
     # Aligns like char

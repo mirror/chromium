@@ -1635,7 +1635,12 @@
     {
       name: "mix-blend-mode",
       name_for_methods: "BlendMode",
-      type_name: "blink::WebBlendMode",
+      type_name: "WebBlendMode",
+      field_size: 5,
+      field_template: "external",
+      field_group: "rare-non-inherited",
+      default_value: "kWebBlendModeNormal",
+      include_paths: ["public/platform/WebBlendMode.h"],
     },
     {
       name: "object-fit",
