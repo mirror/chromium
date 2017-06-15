@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f05ed10_6ad73c3d",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115784
+      },
+      "writtenOn": "2017-06-15T11:33:48Z",
+      "side": 1,
+      "message": "For this to be effective, you need to additionally annotate this class (and other derived, non-GC-mixin, ThreadedWorklet classes) with DECLARE_EAGER_FINALIZATION_OPERATOR_NEW().",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "19663e1dc06313c083dd486197f7a303b55f6577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
