@@ -1,0 +1,13 @@
+rootWebArea
+++genericContainer
+++++math
+++++++staticText name='a'
+++++++++inlineTextBox name='a'
+++++++staticText name='2'
+++++++++inlineTextBox name='2'
+++++++staticText name='+'
+++++++++inlineTextBox name='+'
+++++++staticText name='b'
+++++++++inlineTextBox name='b'
+++++++staticText name='2'
+++++++++inlineTextBox name='2'

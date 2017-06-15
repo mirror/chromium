@@ -1,0 +1,27 @@
+rootWebArea
+++genericContainer
+++++staticText name='invalid=true'
+++++++inlineTextBox name='invalid=true'
+++genericContainer
+++++staticText name='invalid=spelling'
+++++++inlineTextBox name='invalid=spelling'
+++genericContainer
+++++staticText name='invalid=grammar'
+++++++inlineTextBox name='invalid=grammar'
+++genericContainer
+++++staticText name='invalid=false'
+++++++inlineTextBox name='invalid=false'
+++genericContainer
+++++staticText name='invalid=<empty>'
+++++++inlineTextBox name='invalid=<empty>'
+++genericContainer
+++++staticText name='invalid=<default>'
+++++++inlineTextBox name='invalid=<default>'
+++genericContainer
+++++staticText name='invalid=unknown'
+++++++inlineTextBox name='invalid=unknown'
+++form
+++++textField
+++++++genericContainer
+++++++++staticText name='1234'
+++++++++++inlineTextBox name='1234'
