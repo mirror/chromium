@@ -186,6 +186,9 @@ int GpuMain(const MainFunctionParams& parameters) {
       SEM_FAILCRITICALERRORS |
       SEM_NOGPFAULTERRORBOX |
       SEM_NOOPENFILEERRORBOX);
+
+  // COM is used by some Windows Media Foundation calls made on this thread.
+  base::win::ScopedCOMInitializer com_initializer;
 #endif
 
   logging::SetLogMessageHandler(GpuProcessLogMessageHandler);
@@ -203,10 +206,9 @@ int GpuMain(const MainFunctionParams& parameters) {
         new base::MessageLoop(base::MessageLoop::TYPE_DEFAULT));
   } else {
 #if defined(OS_WIN)
-    // OK to use default non-UI message loop because all GPU windows run on
-    // dedicated thread.
-    main_message_loop.reset(
-        new base::MessageLoop(base::MessageLoop::TYPE_DEFAULT));
+    // The GpuMain thread is initialized as COM STA and must pump messages to
+    // handle any potential COM callbacks.
+    main_message_loop.reset(new base::MessageLoop(base::MessageLoop::TYPE_UI));
 #elif defined(USE_X11)
     // We need a UI loop so that we can grab the Expose events. See GLSurfaceGLX
     // and https://crbug.com/326995.
