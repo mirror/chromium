@@ -52,7 +52,7 @@ void ArcSessionRunner::RequestStart() {
   // previous RequestStop() call).
   DCHECK(!restart_timer_.IsRunning());
 
-  if (arc_session_) {
+  if (arc_session_ && state_ != State::STOPPED) {
     // In this case, RequestStop() was called, and before |arc_session_| had
     // finished stopping, RequestStart() was called. Do nothing in that case,
     // since when |arc_session_| does actually stop, OnSessionStopped() will
@@ -62,6 +62,22 @@ void ArcSessionRunner::RequestStart() {
     DCHECK_EQ(state_, State::STOPPED);
     StartArcSession();
   }
+}
+
+void ArcSessionRunner::RequestStartForLoginScreen() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(!arc_session_);
+  DCHECK_EQ(state_, State::STOPPED);
+  DCHECK(!restart_timer_.IsRunning());
+  arc_session_ = factory_.Run();
+  arc_session_->AddObserver(this);  // just for handling browser shutdown.
+  arc_session_->StartForLoginScreen();
+}
+
+void ArcSessionRunner::RequestStopForLoginScreen() {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  if (arc_session_)
+    arc_session_->StopForLoginScreen();
 }
 
 void ArcSessionRunner::RequestStop() {
@@ -132,12 +148,13 @@ void ArcSessionRunner::SetRestartDelayForTesting(
 void ArcSessionRunner::StartArcSession() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STOPPED);
-  DCHECK(!arc_session_);
   DCHECK(!restart_timer_.IsRunning());
 
   VLOG(1) << "Starting ARC instance";
-  arc_session_ = factory_.Run();
-  arc_session_->AddObserver(this);
+  if (!arc_session_) {
+    arc_session_ = factory_.Run();
+    arc_session_->AddObserver(this);
+  }
   state_ = State::STARTING;
   arc_session_->Start();
 }
