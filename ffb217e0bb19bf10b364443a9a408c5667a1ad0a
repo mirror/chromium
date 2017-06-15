@@ -34,6 +34,24 @@
       "revId": "ffb217e0bb19bf10b364443a9a408c5667a1ad0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e61e91be_c15a99de",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-15T17:05:48Z",
+      "side": 1,
+      "message": "Yeah, I think this only happens once and is guaranteed to happen after.  If it\u0027s good enough for TSAN, it\u0027s good enough for me.",
+      "parentUuid": "a0b98b22_f9d60410",
+      "revId": "ffb217e0bb19bf10b364443a9a408c5667a1ad0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
