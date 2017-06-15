@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "c8de5f0f_9f59ee61",
+        "filename": "base/process/process_util_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-15T22:08:04Z",
+      "side": 1,
+      "message": "ftr I tried this here https://chromium-review.googlesource.com/c/537775/, and other than this instance, it didn\u0027t catch any accidental uses of handle being converted to pid or other int.\n\nAnd it sprayed a lot of \"looking for logging overload of operator\u003c\u003c\" errors at me, so I don\u0027t think I\u0027ll do it.",
+      "parentUuid": "ad6ffda3_72599dc7",
+      "range": {
+        "startLine": 877,
+        "startChar": 5,
+        "endLine": 877,
+        "endChar": 16
+      },
+      "revId": "cf19745ad5b1e8d87d7c0110660b8601f919573f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b817a3ae_6ac64642",
         "filename": "base/process/process_util_unittest.cc",
         "patchSetId": 3
