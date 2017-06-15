@@ -50,16 +50,23 @@ gfx::Size RoundedImageView::CalculatePreferredSize() const {
 
 void RoundedImageView::OnPaint(gfx::Canvas* canvas) {
   View::OnPaint(canvas);
-  gfx::Rect image_bounds(size());
-  image_bounds.ClampToCenteredSize(GetPreferredSize());
-  image_bounds.Inset(GetInsets());
-  const SkScalar kRadius[8] = {
+  gfx::Rect content_bounds(size());
+  content_bounds.Inset(GetInsets());
+
+  // Draw in whole pixels. First scale, then round down, then divide by DSF to
+  // account for the canvas's image scale. Note we don't use
+  // UndoDeviceScaleFactor because the image needs to be drawn at the correct
+  // scale factor.
+  const float dsf = canvas->image_scale();
+  gfx::RectF image_bounds(gfx::ScaleToEnclosedRect(content_bounds, dsf));
+  image_bounds.Scale(1 / dsf);
+  const SkScalar kRadii[8] = {
       SkIntToScalar(corner_radius_[0]), SkIntToScalar(corner_radius_[0]),
       SkIntToScalar(corner_radius_[1]), SkIntToScalar(corner_radius_[1]),
       SkIntToScalar(corner_radius_[2]), SkIntToScalar(corner_radius_[2]),
       SkIntToScalar(corner_radius_[3]), SkIntToScalar(corner_radius_[3])};
   SkPath path;
-  path.addRoundRect(gfx::RectToSkRect(image_bounds), kRadius);
+  path.addRoundRect(gfx::RectFToSkRect(image_bounds), kRadii);
   cc::PaintFlags flags;
   flags.setAntiAlias(true);
   canvas->DrawImageInPath(resized_image_, image_bounds.x(), image_bounds.y(),
