@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dce7925e_b73e6cd7",
+        "filename": "base/threading/sequenced_worker_pool.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-15T20:49:22Z",
+      "side": 1,
+      "message": "tracking bug?",
+      "range": {
+        "startLine": 192,
+        "startChar": 57,
+        "endLine": 192,
+        "endChar": 59
+      },
+      "revId": "dc4654c0ccf8760cfc01df7ad1d4f55c6e1bb083",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
