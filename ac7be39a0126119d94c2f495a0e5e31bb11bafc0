@@ -72,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "f7e9975f_b5edd731",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-15T19:38:59Z",
+      "side": 1,
+      "message": "\u003e Yes, today its possible for this API to return a vector with nullptrs.\n\nDid you just answer yourself? :-)\n\nAnyway, if we want to continue with that behaviour we could do\n\n#if defined(USE_V4L2_JDA)\n    result.push_back(base::Bind(\u0026CreateV4L2JDA));\n#elif defined(USE_VAAPI_JDA)\n    result.push_back(base::Bind(\u0026CreateVaapiJDA));\n#else\n    result.push_back(base::Bind(\u0026CreateNullJDA));\n#endif\n\nand then add another factory function:\n\nstd::unique_ptr\u003cmedia::JpegDecodeAccelerator\u003e CreateNullJDA(\n    scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e /* io_task_runner */) {\n  return nullptr;\n}\n\nor similar to it.",
+      "parentUuid": "1fdc29d7_c53755a7",
+      "range": {
+        "startLine": 80,
+        "startChar": 33,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ac7be39a0126119d94c2f495a0e5e31bb11bafc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c0eb688_7e2a07a9",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h",
         "patchSetId": 2
