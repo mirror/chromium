@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d876fb88_f2613809",
+        "filename": "components/update_client/action_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-15T18:41:47Z",
+      "side": 1,
+      "message": "It is safe in our current design because these unretained objects are owned by ref-counted outer objects, which have UI thread affinity. The thread pools are destroyed before the UI thread.",
+      "parentUuid": "b66048bc_758b826e",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 55,
+        "endChar": 67
+      },
+      "revId": "530f017045a246dd9f3633ca341847373f5e7c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fc4429d4_91df24c3",
         "filename": "components/update_client/component.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "530f017045a246dd9f3633ca341847373f5e7c66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23844957_2723045d",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116033
+      },
+      "writtenOn": "2017-06-15T18:41:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc4429d4_91df24c3",
+      "range": {
+        "startLine": 58,
+        "startChar": 79,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "530f017045a246dd9f3633ca341847373f5e7c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
