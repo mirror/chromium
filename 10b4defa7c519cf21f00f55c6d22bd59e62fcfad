@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edcfad66_6dc69392",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-15T21:16:15Z",
+      "side": 1,
+      "message": "I don\u0027t see anything that guarantees that RequestGPUInfo() is not called multiple times, in which case all but one of the clients will hang.",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 40
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aed5243_fc08fc7a",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-15T21:16:15Z",
+      "side": 1,
+      "message": "Nit: RequestCallback is an overly generic name.",
+      "range": {
+        "startLine": 89,
+        "startChar": 8,
+        "endLine": 89,
+        "endChar": 23
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2051c017_54cfd5c6",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-15T21:16:15Z",
+      "side": 1,
+      "message": "Is there guaranteed to be at most one VideoCaptureGpuJpegDecoder? If not, this isn\u0027t correct (one will work, the rest will hang).",
+      "range": {
+        "startLine": 230,
+        "startChar": 10,
+        "endLine": 230,
+        "endChar": 24
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a394c0dd_dca443a9",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-15T21:16:15Z",
+      "side": 1,
+      "message": "Nit: Recommend DCHECK(!decode_cb_).",
+      "range": {
+        "startLine": 195,
+        "startChar": 2,
+        "endLine": 195,
+        "endChar": 35
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
