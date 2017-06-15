@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1e69206_887540cb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-15T04:01:41Z",
+      "side": 0,
+      "message": "Can we make this change in a separate CL?\n\nThis may change a web-exposed behavior since before this CL the unload handler (DispatchUnloadEvent()) is called before the focused frame is cleared but after this CL the unload handler is called after the focused frame is cleared.",
+      "revId": "c793296851294b7bd71384102b84487578af5208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f477f37c_b13e00b8",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-15T04:01:41Z",
+      "side": 0,
+      "message": "Do we have any DCHECK to check that WillDestroyScrollableArea() is certainly called?",
+      "revId": "c793296851294b7bd71384102b84487578af5208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
