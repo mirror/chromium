@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4617a869_41ef753d",
+        "filename": "content/browser/power_monitor_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T03:14:32Z",
+      "side": 1,
+      "message": "Ack. How about adding such comment here:\ncontent::NavigateToURL() blocks until the navigation finishes, meaning that the renderer process should have already connected to our Device Service after content::NavigateToURL() returned, so we need not to do such work for renderer process.\n\nBut,, now I\u0027m not fully sure whether it\u0027s true or not.. As different mojo message pipes can not keep ordering, even navigation has done, seems can\u0027t ensure that the connection request to Device Service has arrived?",
+      "parentUuid": "696abf7e_9ee696ce",
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a870b39e_7b5700aa",
         "filename": "content/shell/utility/shell_content_utility_client.cc",
         "patchSetId": 1
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-14T18:13:37Z",
       "side": 1,
       "message": "Is this code copied from the renderer test? If so, should we pull it out and put it in some common test location?",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39f93165_d885dcf5",
+        "filename": "content/shell/utility/shell_content_utility_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T03:14:32Z",
+      "side": 1,
+      "message": "Yeah I added an inline question about this before requesting review but seems it has not been published out.\nI\u0027m considering to put this class into //content/shell/common/power_monitor_test_impl.{cc,h}, because it\u0027s expected to be used only by ShellContentXXXXClient classes. WDYT? Thanks.",
+      "parentUuid": "a870b39e_7b5700aa",
       "range": {
         "startLine": 112,
         "startChar": 6,
