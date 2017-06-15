@@ -305,8 +305,7 @@ void ImageLoader::DoUpdateFromElement(BypassMainWorldBehavior bypass_behavior,
   if (!url.IsNull() && !url.IsEmpty()) {
     // Unlike raw <img>, we block mixed content inside of <picture> or
     // <img srcset>.
-    ResourceLoaderOptions resource_loader_options(kAllowStoredCredentials,
-                                                  kClientRequestedCredentials);
+    ResourceLoaderOptions resource_loader_options;
     resource_loader_options.initiator_info.name = GetElement()->localName();
     ResourceRequest resource_request(url);
     if (update_behavior == kUpdateForcedReload) {
@@ -407,8 +406,8 @@ void ImageLoader::UpdateFromElement(UpdateFromElementBehavior update_behavior,
   // funneling the main resource bytes into image_, so just create an
   // ImageResource to be populated later.
   if (loading_image_document_) {
-    ImageResource* image_resource = ImageResource::Create(
-        ResourceRequest(ImageSourceToKURL(element_->ImageSourceURL())));
+    ImageResource* image_resource = ImageResource::CreateFromURL(
+        ImageSourceToKURL(element_->ImageSourceURL()));
     image_resource->SetStatus(ResourceStatus::kPending);
     image_resource->NotifyStartLoad();
     SetImageForImageDocument(image_resource);

@@ -33,6 +33,7 @@
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/HashSet.h"
 #include "platform/wtf/text/StringHash.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
@@ -44,25 +45,28 @@ class CrossOriginPreflightResultCacheItem {
   USING_FAST_MALLOC(CrossOriginPreflightResultCacheItem);
 
  public:
-  explicit CrossOriginPreflightResultCacheItem(StoredCredentials credentials)
-      : absolute_expiry_time_(0), credentials_(credentials) {}
+  explicit CrossOriginPreflightResultCacheItem(
+      WebURLRequest::FetchCredentialsMode);
 
   bool Parse(const ResourceResponse&, String& error_description);
   bool AllowsCrossOriginMethod(const String&, String& error_description) const;
   bool AllowsCrossOriginHeaders(const HTTPHeaderMap&,
                                 String& error_description) const;
-  bool AllowsRequest(StoredCredentials,
+  bool AllowsRequest(WebURLRequest::FetchCredentialsMode,
                      const String& method,
                      const HTTPHeaderMap& request_headers) const;
 
  private:
   typedef HashSet<String, CaseFoldingHash> HeadersSet;
 
+  bool ShouldHandleCredentialsModeAsInclude(
+      WebURLRequest::FetchCredentialsMode);
+
   // FIXME: A better solution to holding onto the absolute expiration time might
   // be to start a timer for the expiration delta that removes this from the
   // cache when it fires.
   double absolute_expiry_time_;
-  StoredCredentials credentials_;
+  bool credentials_;
   HashSet<String> methods_;
   HeadersSet headers_;
 };
@@ -79,7 +83,7 @@ class CrossOriginPreflightResultCache {
                    std::unique_ptr<CrossOriginPreflightResultCacheItem>);
   bool CanSkipPreflight(const String& origin,
                         const KURL&,
-                        StoredCredentials,
+                        WebURLRequest::FetchCredentialsMode,
                         const String& method,
                         const HTTPHeaderMap& request_headers);
 
