@@ -16,6 +16,24 @@
       "revId": "aa7451397cb3ee6f58197b822dd4bf4b976c1352",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7fb4767_31e2a812",
+        "filename": "android_webview/apk/java/proguard.flags",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-15T01:57:17Z",
+      "side": 1,
+      "message": "Thanks. I originally tried \"implements android.webkit.WebViewFactoryProvider.Statics\" instead--Java class name syntax always trips me up. This is a better suggestion.",
+      "parentUuid": "7cbb09c6_ab5a4e93",
+      "revId": "aa7451397cb3ee6f58197b822dd4bf4b976c1352",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
