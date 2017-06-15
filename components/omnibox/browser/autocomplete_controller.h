@@ -193,6 +193,8 @@ class AutocompleteController : public AutocompleteProviderListener {
   void StopHelper(bool clear_result,
                   bool due_to_user_inactivity);
 
+  void StartServiceWorkerForURL(const GURL& url);
+
   AutocompleteControllerDelegate* delegate_;
 
   // The client passed to the providers.
@@ -233,6 +235,8 @@ class AutocompleteController : public AutocompleteProviderListener {
 
   // Timer used to tell the providers to Stop() searching for matches.
   base::OneShotTimer stop_timer_;
+
+  base::OneShotTimer start_service_worker_timer_;
 
   // Amount of time (in ms) between when the user stops typing and
   // when we send Stop() to every provider.  This is intended to avoid

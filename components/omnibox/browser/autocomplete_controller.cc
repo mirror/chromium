@@ -35,6 +35,7 @@
 #include "components/search_engines/template_url.h"
 #include "components/search_engines/template_url_service.h"
 #include "components/strings/grit/components_strings.h"
+#include "content/public/browser/service_worker_context.h"
 #include "ui/base/l10n/l10n_util.h"
 
 #if !defined(OS_IOS)
@@ -189,6 +190,9 @@ bool AutocompleteMatchHasCustomDescription(const AutocompleteMatch& match) {
       match.type == AutocompleteMatchType::SEARCH_SUGGEST_PROFILE;
 }
 
+void NoOpStartServiceWorkerCallback(
+    content::StartServiceWorkerForNavigationHintResult) {}
+
 }  // namespace
 
 AutocompleteController::AutocompleteController(
@@ -263,6 +267,7 @@ AutocompleteController::AutocompleteController(
 }
 
 AutocompleteController::~AutocompleteController() {
+  start_service_worker_timer_.Stop();
   // The providers may have tasks outstanding that hold refs to them.  We need
   // to ensure they won't call us back if they outlive us.  (Practically,
   // calling Stop() should also cancel those tasks and make it so that we hold
@@ -299,6 +304,7 @@ void AutocompleteController::Start(const AutocompleteInput& input) {
 
   expire_timer_.Stop();
   stop_timer_.Stop();
+  start_service_worker_timer_.Stop();
 
   // Start the new query.
   in_start_ = true;
@@ -647,6 +653,15 @@ void AutocompleteController::UpdateAssistedQueryStats(
                            autocompletions.c_str());
     match->destination_url = GURL(template_url->url_ref().ReplaceSearchTerms(
         *match->search_terms_args, template_url_service_->search_terms_data()));
+    if (index == 0) {
+      const int kStartServiceWorkerTimeMS = 500;
+      start_service_worker_timer_.Stop();
+      start_service_worker_timer_.Start(
+          FROM_HERE,
+          base::TimeDelta::FromMilliseconds(kStartServiceWorkerTimeMS),
+          base::Bind(&AutocompleteController::StartServiceWorkerForURL,
+                     base::Unretained(this), match->destination_url));
+    }
   }
 }
 
@@ -705,4 +720,13 @@ void AutocompleteController::StopHelper(bool clear_result,
     // touch the edit... this is all a mess and should be cleaned up :(
     NotifyChanged(false);
   }
+}
+
+void AutocompleteController::StartServiceWorkerForURL(const GURL& url) {
+  content::ServiceWorkerContext* context =
+      provider_client_->GetServiceWorkerContext(url);
+  if (!context)
+    return;
+  context->StartServiceWorkerForNavigationHint(
+      url, base::Bind(&NoOpStartServiceWorkerCallback));
 }

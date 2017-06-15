@@ -31,6 +31,7 @@
 #include "components/prefs/pref_service.h"
 #include "components/sync/driver/sync_service_utils.h"
 #include "content/public/browser/notification_service.h"
+#include "content/public/browser/storage_partition.h"
 #include "extensions/features/features.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 
@@ -290,4 +291,14 @@ void ChromeAutocompleteProviderClient::OnAutocompleteControllerResultReady(
       chrome::NOTIFICATION_AUTOCOMPLETE_CONTROLLER_RESULT_READY,
       content::Source<AutocompleteController>(controller),
       content::NotificationService::NoDetails());
+}
+
+content::ServiceWorkerContext*
+ChromeAutocompleteProviderClient::GetServiceWorkerContext(
+    const GURL& site_url) {
+  content::StoragePartition* partition =
+      content::BrowserContext::GetStoragePartitionForSite(profile_, site_url);
+  if (!partition)
+    return nullptr;
+  return partition->GetServiceWorkerContext();
 }

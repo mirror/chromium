@@ -19,6 +19,7 @@ include_rules = [
   "+components/toolbar",
   "+components/url_formatter",
   "+components/variations",
+  "+content/public/browser",
   "+extensions/common/constants.h",
   "+net",
   "+sql",

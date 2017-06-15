@@ -55,6 +55,8 @@ class ChromeAutocompleteProviderClient : public AutocompleteProviderClient {
   void PrefetchImage(const GURL& url) override;
   void OnAutocompleteControllerResultReady(
       AutocompleteController* controller) override;
+  content::ServiceWorkerContext* GetServiceWorkerContext(
+      const GURL& site_url) override;
 
  private:
   Profile* profile_;
