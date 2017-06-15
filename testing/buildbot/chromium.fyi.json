@@ -1861,6 +1861,21 @@
       }
     ]
   },
+  "ChromeOS amd64-generic Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
+  "ChromeOS daisy Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
+  "ChromeOS x86-generic Dummy Builder": {
+    "additional_compile_targets": [
+      "chrome"
+    ]
+  },
   "Chromium Mac 10.10 MacViews": {
     "gtest_tests": [
       {
