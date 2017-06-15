@@ -6,6 +6,7 @@
 
 #import "ios/chrome/browser/ui/payments/shipping_address_selection_mediator.h"
 
+#include "base/strings/sys_string_conversions.h"
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/payments/payment_request.h"
@@ -24,6 +25,7 @@ namespace {
 using ::payment_request_util::GetNameLabelFromAutofillProfile;
 using ::payment_request_util::GetShippingAddressLabelFromAutofillProfile;
 using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
+using ::payment_request_util::GetAddressNotificationLabelFromAutofillProfile;
 }  // namespace
 
 @interface ShippingAddressSelectionMediator ()
@@ -97,6 +99,10 @@ using ::payment_request_util::GetPhoneNumberLabelFromAutofillProfile;
     item.name = GetNameLabelFromAutofillProfile(*shippingAddress);
     item.address = GetShippingAddressLabelFromAutofillProfile(*shippingAddress);
     item.phoneNumber = GetPhoneNumberLabelFromAutofillProfile(*shippingAddress);
+    item.notification = GetAddressNotificationLabelFromAutofillProfile(
+        *_paymentRequest, *shippingAddress);
+    item.complete = !GetAddressNotificationLabelFromAutofillProfile(
+        *_paymentRequest, *shippingAddress);
     if (_paymentRequest->selected_shipping_profile() == shippingAddress)
       _selectedItemIndex = index;
 
