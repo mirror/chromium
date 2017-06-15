@@ -58,7 +58,6 @@
 #include "core/style/StyleOffsetRotation.h"
 #include "core/style/StyleReflection.h"
 #include "core/style/StyleSelfAlignmentData.h"
-#include "core/style/StyleTransformData.h"
 #include "core/style/TextSizeAdjust.h"
 #include "core/style/TransformOrigin.h"
 #include "platform/Length.h"
@@ -1259,10 +1258,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return EmptyTransformOperations();
   }
   const TransformOperations& Transform() const {
-    return rare_non_inherited_data_->transform_data_->operations_;
+    return rare_non_inherited_data_->transform_data_->transform_operations_;
   }
   void SetTransform(const TransformOperations& ops) {
-    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, operations_, ops);
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_,
+                   transform_operations_, ops);
   }
 
   // transform-origin (aka -webkit-transform-origin)
@@ -1270,10 +1270,11 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     return TransformOrigin(Length(50.0, kPercent), Length(50.0, kPercent), 0);
   }
   const TransformOrigin& GetTransformOrigin() const {
-    return rare_non_inherited_data_->transform_data_->origin_;
+    return rare_non_inherited_data_->transform_data_->transform_origin_;
   }
   void SetTransformOrigin(const TransformOrigin& o) {
-    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, origin_, o);
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, transform_origin_,
+                   o);
   }
 
   // transform-style (aka -webkit-transform-style)
@@ -3032,7 +3033,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
 
   // Filter/transform utility functions.
   bool Has3DTransform() const {
-    return rare_non_inherited_data_->transform_data_->operations_
+    return rare_non_inherited_data_->transform_data_->transform_operations_
                .Has3DOperation() ||
            (Translate() && Translate()->Z() != 0) ||
            (Rotate() && (Rotate()->X() != 0 || Rotate()->Y() != 0)) ||
@@ -3043,7 +3044,8 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
            HasCurrentTransformAnimation() || Translate() || Rotate() || Scale();
   }
   bool HasTransformOperations() const {
-    return !rare_non_inherited_data_->transform_data_->operations_.Operations()
+    return !rare_non_inherited_data_->transform_data_->transform_operations_
+                .Operations()
                 .IsEmpty();
   }
   ETransformStyle3D UsedTransformStyle3D() const {
