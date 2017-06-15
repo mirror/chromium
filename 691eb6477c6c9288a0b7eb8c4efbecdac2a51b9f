@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a93b38f_801a99da",
+        "filename": "third_party/WebKit/Tools/Scripts/common.vpython",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1109829
+      },
+      "writtenOn": "2017-06-15T17:16:05Z",
+      "side": 1,
+      "message": "nit: extra \"#\"?",
+      "range": {
+        "startLine": 11,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 1
+      },
+      "revId": "691eb6477c6c9288a0b7eb8c4efbecdac2a51b9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
