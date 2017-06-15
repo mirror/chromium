@@ -21,6 +21,9 @@ class LargeIconService;
 // TODO(crbug.com/694750): Most everything here can be moved to dispatcher.
 @protocol GoogleLandingDataSource
 
+// Gets the maximum number of most visited sites shown.
+@property(nonatomic, assign) NSUInteger maximumMostVisitedSitesShown;
+
 // Removes a blacklisted URL in both |_mostVisitedData|.
 - (void)removeBlacklistedURL:(const GURL&)url;
 

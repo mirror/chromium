@@ -156,14 +156,8 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 // Exposes view and methods to drive the doodle.
 @property(nonatomic, assign) id<LogoVendor> logoVendor;
 
-// |YES| if this consumer is incognito.
-@property(nonatomic, assign) BOOL isOffTheRecord;
-
 // |YES| if this consumer is has voice search enabled.
 @property(nonatomic, assign) BOOL voiceSearchIsEnabled;
-
-// Gets the maximum number of sites shown.
-@property(nonatomic, assign) NSUInteger maximumMostVisitedSitesShown;
 
 // Gets the text of a what's new promo.
 @property(nonatomic, retain) NSString* promoText;
@@ -238,12 +232,10 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 // Property declared in NewTabPagePanelProtocol.
 @synthesize delegate = _delegate;
 @synthesize dispatcher = _dispatcher;
-@synthesize isOffTheRecord = _isOffTheRecord;
 @synthesize logoIsShowing = _logoIsShowing;
 @synthesize promoText = _promoText;
 @synthesize promoIcon = _promoIcon;
 @synthesize promoCanShow = _promoCanShow;
-@synthesize maximumMostVisitedSitesShown = _maximumMostVisitedSitesShown;
 @synthesize tabCount = _tabCount;
 @synthesize canGoForward = _canGoForward;
 @synthesize canGoBack = _canGoBack;
@@ -873,7 +865,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
   // Phone always contains the maximum number of cells. Cells in excess of the
   // number of thumbnails are used solely for layout/sizing.
   if (!IsIPadIdiom())
-    return self.maximumMostVisitedSitesShown;
+    return self.dataSource.maximumMostVisitedSitesShown;
 
   return [self numberOfNonEmptyTilesShown];
 }
@@ -969,27 +961,25 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
                              IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWTAB)
                   action:action];
 
-    if (!self.isOffTheRecord) {
-      // Open in Incognito Tab.
-      action = ^{
-        base::scoped_nsobject<GoogleLandingViewController> strongSelf(
-            [weakSelf retain]);
-        if (!strongSelf)
-          return;
-        MostVisitedCell* cell = (MostVisitedCell*)sender.view;
-        [[strongSelf dataSource] logMostVisitedClick:index
-                                            tileType:cell.tileType];
-        [[strongSelf dispatcher] webPageOrderedOpen:url
-                                           referrer:web::Referrer()
-                                        inIncognito:YES
-                                       inBackground:NO
-                                           appendTo:kCurrentTab];
-      };
-      [_contextMenuCoordinator
-          addItemWithTitle:l10n_util::GetNSStringWithFixup(
-                               IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)
-                    action:action];
-    }
+    // Open in Incognito Tab.
+    action = ^{
+      base::scoped_nsobject<GoogleLandingViewController> strongSelf(
+          [weakSelf retain]);
+      if (!strongSelf)
+        return;
+      MostVisitedCell* cell = (MostVisitedCell*)sender.view;
+      [[strongSelf dataSource] logMostVisitedClick:index
+                                          tileType:cell.tileType];
+      [[strongSelf dispatcher] webPageOrderedOpen:url
+                                         referrer:web::Referrer()
+                                      inIncognito:YES
+                                     inBackground:NO
+                                         appendTo:kCurrentTab];
+    };
+    [_contextMenuCoordinator
+        addItemWithTitle:l10n_util::GetNSStringWithFixup(
+                             IDS_IOS_CONTENT_CONTEXT_OPENLINKNEWINCOGNITOTAB)
+                  action:action];
 
     // Remove the most visited url.
     NSString* title =
@@ -1218,7 +1208,7 @@ const CGFloat kShiftTilesDownAnimationDuration = 0.2;
 
 - (NSInteger)numberOfNonEmptyTilesShown {
   NSInteger numCells =
-      MIN([self numberOfItems], self.maximumMostVisitedSitesShown);
+      MIN([self numberOfItems], self.dataSource.maximumMostVisitedSitesShown);
   return MAX(numCells, [self numberOfColumns]);
 }
 

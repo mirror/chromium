@@ -145,6 +145,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 @synthesize dispatcher = _dispatcher;
 @synthesize webStateList = _webStateList;
 @synthesize freshMostVisitedData = _freshMostVisitedData;
+@synthesize maximumMostVisitedSitesShown = _maximumMostVisitedSitesShown;
 
 - (instancetype)initWithConsumer:(id<GoogleLandingConsumer>)consumer
                     browserState:(ios::ChromeBrowserState*)browserState
@@ -156,6 +157,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
     _browserState = browserState;
     _dispatcher = dispatcher;
     _webStateList = webStateList;
+    _maximumMostVisitedSitesShown = [GoogleLandingMediator maxSitesShown];
 
     _webStateListObserver = base::MakeUnique<WebStateListObserverBridge>(self);
     _webStateList->AddObserver(_webStateListObserver.get());
@@ -171,12 +173,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 }
 
 - (void)setUp {
-  [_consumer setIsOffTheRecord:_browserState->IsOffTheRecord()];
   [_consumer setVoiceSearchIsEnabled:ios::GetChromeBrowserProvider()
                                          ->GetVoiceSearchProvider()
                                          ->IsVoiceSearchEnabled()];
-  [_consumer
-      setMaximumMostVisitedSitesShown:[GoogleLandingMediator maxSitesShown]];
   [_consumer setTabCount:self.webStateList->count()];
   web::WebState* webState = _webStateList->GetActiveWebState();
   if (webState) {
@@ -204,7 +203,7 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   _mostVisitedObserverBridge.reset(
       new ntp_tiles::MostVisitedSitesObserverBridge(self));
   _mostVisitedSites->SetMostVisitedURLsObserver(
-      _mostVisitedObserverBridge.get(), [GoogleLandingMediator maxSitesShown]);
+      _mostVisitedObserverBridge.get(), self.maximumMostVisitedSitesShown);
 
   // Set up notifications;
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
