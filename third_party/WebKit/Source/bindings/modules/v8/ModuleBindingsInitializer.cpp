@@ -18,8 +18,10 @@ void InitPartialInterfacesInModules();
 void ModuleBindingsInitializer::Init() {
   RegisterInstallConditionalFeaturesForModules();
   InitPartialInterfacesInModules();
-  SerializedScriptValueFactory::Initialize(
-      new SerializedScriptValueForModulesFactory);
+
+  static constexpr SerializedScriptValueForModulesFactory ssv_factory;
+  SerializedScriptValueFactory::Initialize(ssv_factory);
+
   WasmResponseExtensions::Initialize(V8PerIsolateData::MainThreadIsolate());
 }
 
