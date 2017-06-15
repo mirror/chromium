@@ -582,8 +582,37 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
   if (!params.Url().IsValid())
     return kAbort;
 
-  resource_request.SetAllowStoredCredentials(
-      params.Options().allow_credentials == kAllowStoredCredentials);
+  RefPtr<SecurityOrigin> origin = params.Options().security_origin;
+  params.MutableOptions().cors_flag =
+      !origin || !origin->CanRequestNoSuborigin(params.Url());
+
+  if (params.Options().cors_handling_by_resource_fetcher ==
+      kEnableCORSHandlingByResourceFetcher) {
+    if (resource_request.GetFetchRequestMode() ==
+        WebURLRequest::kFetchRequestModeCORS) {
+      bool allow_stored_credentials = false;
+      switch (resource_request.GetFetchCredentialsMode()) {
+        case WebURLRequest::kFetchCredentialsModeOmit:
+          break;
+        case WebURLRequest::kFetchCredentialsModeSameOrigin:
+          allow_stored_credentials =
+              !params.Options().cors_flag ||
+              (origin &&
+               origin->HasSuboriginAndShouldAllowCredentialsFor(params.Url()));
+          break;
+        case WebURLRequest::kFetchCredentialsModeInclude:
+        case WebURLRequest::kFetchCredentialsModePassword:
+          allow_stored_credentials = true;
+          break;
+      }
+      resource_request.SetAllowStoredCredentials(allow_stored_credentials);
+    } else {
+      resource_request.SetAllowStoredCredentials(
+          resource_request.GetFetchCredentialsMode() !=
+          WebURLRequest::kFetchCredentialsModeOmit);
+    }
+  }
+
   return kContinue;
 }
 
@@ -975,12 +1004,41 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
     return false;
   }
 
-  if (!is_static_data &&
-      !params.Options().CanReuseRequest(existing_resource->Options())) {
+  if (is_static_data)
+    return true;
+
+  // Answers the question "can a separate request with these different options
+  // be re-used" (e.g. preload request) The safe (but possibly slow) answer is
+  // always false.
+
+  // dataBufferingPolicy differences are believed to be safe for re-use.
+  // FIXME: check allowCredentials.
+  // FIXME: check credentialsRequested.
+  // FIXME: check contentSecurityPolicyOption.
+  // initiatorInfo is purely informational and should be benign for re-use.
+  // requestInitiatorContext is benign (indicates document vs. worker)
+  if (params.Options().synchronous_policy !=
+      existing_resource->Options().synchronous_policy)
     return false;
+
+  if (params.Options().cors_handling_by_resource_fetcher ==
+          kDisableCORSHandlingByResourceFetcher &&
+      existing_resource->Options().cors_handling_by_resource_fetcher ==
+          kDisableCORSHandlingByResourceFetcher)
+    return true;
+
+  if (params.Options().cors_handling_by_resource_fetcher ==
+          kEnableCORSHandlingByResourceFetcher &&
+      existing_resource->Options().cors_handling_by_resource_fetcher ==
+          kEnableCORSHandlingByResourceFetcher &&
+      params.GetResourceRequest().GetFetchRequestMode() ==
+          existing_resource->GetResourceRequest().GetFetchRequestMode()) {
+    // securityOrigin has more complicated checks which callers are responsible
+    // for.
+    return true;
   }
 
-  return true;
+  return false;
 }
 
 ResourceFetcher::RevalidationPolicy
@@ -1066,8 +1124,8 @@ ResourceFetcher::DetermineRevalidationPolicy(
   // This helps with the case where the server sends back
   // "Access-Control-Allow-Origin: *" all the time, but some of the client's
   // requests are made without CORS and some with.
-  if (existing_resource->GetResourceRequest().AllowStoredCredentials() !=
-      request.AllowStoredCredentials()) {
+  if (existing_resource->GetResourceRequest().GetFetchCredentialsMode() !=
+      request.GetFetchCredentialsMode()) {
     RESOURCE_LOADING_DVLOG(1) << "ResourceFetcher::determineRevalidationPolicy "
                                  "reloading due to difference in credentials "
                                  "settings.";
