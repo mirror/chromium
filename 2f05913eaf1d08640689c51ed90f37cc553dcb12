@@ -52,6 +52,24 @@
       "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "058a6da6_56a64e18",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-15T22:06:43Z",
+      "side": 1,
+      "message": "TL;DR: We can\u0027t use constants because scrollbar position varies between browsers.\n\nThese tests try to assess how scrollbar visibility influences child\u0027s size and position.\n\nI\u0027d like to upstream tests to w-p-t, so I can\u0027t assume where scrollbars are (or whether\nthey are visible) in different writing modes. Edge always places scrollbars at inline_end, block_end, Safari never shows scrollbars. This is why in vertical writing modes, we can\u0027t \ntest against constants. There are no constants that work cross-browser.\n\nThe only place where constants work cross-browser is horizontal-tb.\n\nI\u0027d rephrase your question as: \n\"will these tests detect whether UA has failed to take scrollers into account when placing an element\"?\n\nI believe the answer is yes:\nSize tests depend on: offsetWidth and clientWidth to be truthful. This is true in all browsers today. If the UA uses container.offsetWidth as basis for client CSS width %ge resolution, tests will fail. And they do today in LayoutNG.\n\nPosition tests depend on getBoundingClientRect, clientTop, and clientLeft to be truthful. This holds for all browsers except Edge which fails clientTop/clientLeft. If UA ignores scrollbars when setting target\u0027s border rect, they will fail. And they do today in LayoutNG.",
+      "parentUuid": "4184774d_8f8bbaeb",
+      "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
