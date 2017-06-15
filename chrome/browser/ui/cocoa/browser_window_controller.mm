@@ -78,6 +78,7 @@
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_controller.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_strip_view.h"
 #import "chrome/browser/ui/cocoa/tabs/tab_view.h"
+#import "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h"
 #import "chrome/browser/ui/cocoa/toolbar/toolbar_controller.h"
 #include "chrome/browser/ui/cocoa/translate/translate_bubble_bridge_views.h"
 #import "chrome/browser/ui/cocoa/translate/translate_bubble_controller.h"
@@ -424,9 +425,15 @@ bool IsTabDetachingInFullscreenEnabled() {
     statusBubble_ = new StatusBubbleMac([self window], self);
 
     // This must be done after the view is added to the window since it relies
-    // on the window bounds to determine whether to show buttons or not.
-    if ([self hasToolbar])  // Do not create the buttons in popups.
+    // on the window bounds to determine whether to show buttons or not. The
+    // The app menu button also relies on the window to determine the color
+    // of the icon.
+    if ([self hasToolbar]) {  // Do not create the buttons in popups.
       [toolbarController_ createBrowserActionButtons];
+      AppToolbarButton* appMenuButton =
+          static_cast<AppToolbarButton*>([toolbarController_ appMenuButton]);
+      [appMenuButton updateAnimatedIconColor];
+    }
 
     extensionKeybindingRegistry_.reset(
         new ExtensionKeybindingRegistryCocoa(browser_->profile(),
@@ -1527,6 +1534,12 @@ bool IsTabDetachingInFullscreenEnabled() {
 - (void)onTabInsertedInForeground:(BOOL)inForeground {
   if ([self isInAnyFullscreenMode] && !inForeground)
     [[self fullscreenToolbarController] revealToolbarForTabStripChanges];
+
+  if (inForeground) {
+    AppToolbarButton* appMenuButton =
+        static_cast<AppToolbarButton*>([toolbarController_ appMenuButton]);
+    [appMenuButton animateIfPossible];
+  }
 }
 
 - (void)userChangedTheme {
