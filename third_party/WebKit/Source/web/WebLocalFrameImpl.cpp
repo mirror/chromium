@@ -1453,10 +1453,8 @@ bool WebLocalFrameImpl::GetPrintPresetOptionsForPlugin(
 }
 
 bool WebLocalFrameImpl::HasCustomPageSizeStyle(int page_index) {
-  return GetFrame()
-             ->GetDocument()
-             ->StyleForPage(page_index)
-             ->GetPageSizeType() != PageSizeType::kAuto;
+  return GetFrame()->GetDocument()->StyleForPage(page_index)->PageSizeType() !=
+         EPageSizeType::kAuto;
 }
 
 bool WebLocalFrameImpl::IsPageBoxVisible(int page_index) {
