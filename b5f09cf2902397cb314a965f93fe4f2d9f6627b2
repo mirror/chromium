@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7976022f_a407c954",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-15T12:09:13Z",
+      "side": 1,
+      "message": "Is it safe to assume that no caller will try to use the old BVC after calling this function?  Should the property document that the old BVC will be shut down and destroyed?",
+      "revId": "b5f09cf2902397cb314a965f93fe4f2d9f6627b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
