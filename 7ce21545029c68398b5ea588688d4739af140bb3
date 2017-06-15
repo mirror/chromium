@@ -22,6 +22,30 @@
       "revId": "7ce21545029c68398b5ea588688d4739af140bb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31956faf_defc1dae",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/server/getPrimaryServices/blocklisted-services.html",
+        "patchSetId": 9
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-15T03:16:50Z",
+      "side": 0,
+      "message": "\u003e I\u0027m not sure why we expected this one TO work before.\n\nThe service itself is not in the blocklist (it\u0027s characteristic is)[1] so it makes sense that we get it when we call getPrimaryServices(). I think we just added the service to that adapter because we were already using the adapter for blocklist tests.\n\n\u003e  But, in the new form of the test I\u0027m presuming it\u0027s omitted because HID is enough to verify that blocklist is working?\n\u003e \n\nIIRC the purpose of the test was to that only non-blocklisted services to show up even when we request access to all of the peripheral\u0027s services (including blocklisted ones). Omitting BlocklistTestServices shouldn\u0027t increase or decrease coverage.\n\n\u003e I think this was attempting to test that a dynamically added blocklist item would also be blocked correctly.\n\nI might be missing something but I don\u0027t think we test dynamically added blocklist items. All the blocklisted services/characteristics/descriptors are already in the blocklist[2] by the time tests run.\n\n\u003e Other browsers may not support dynamic blocklists -- so perhaps we shouldn\u0027t add that concept to the testing API. But, if you think it likely they all would then it would be nice to keep. Otherwise we loose a bit of testing coverage, though we do have unit test coverage for dynamically adding.\n\nSince this doesn\u0027t test dynamically added services, we aren\u0027t really loosing any coverage.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/bluetooth/bluetooth_blocklist.cc?type\u003dcs\u0026q\u003dbad1c9a2-9a5b-4015-8b60-1579bbbf2135\u0026sq\u003dpackage:chromium\u0026l\u003d174\n[2] https://cs.chromium.org/chromium/src/content/browser/bluetooth/bluetooth_blocklist.cc?type\u003dcs\u0026q\u003dbad1c9a2-9a5b-4015-8b60-1579bbbf2135\u0026sq\u003dpackage:chromium\u0026l\u003d164",
+      "parentUuid": "df154090_ab336b8e",
+      "range": {
+        "startLine": 19,
+        "startChar": 45,
+        "endLine": 19,
+        "endChar": 72
+      },
+      "revId": "7ce21545029c68398b5ea588688d4739af140bb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
