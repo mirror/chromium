@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f0ca9e_e120782f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T08:01:34Z",
+      "side": 1,
+      "message": "trailing space",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02f307fe_55c68db2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T08:01:34Z",
+      "side": 1,
+      "message": "Looks the limit is actually 10?",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "843d774b_19340662",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 358,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T08:01:34Z",
+      "side": 1,
+      "message": "should be kSubstituteCost and kInsertOrDeleteCost.",
+      "revId": "90af8c8ea637eaeda6c3582669017a71efe6e3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
