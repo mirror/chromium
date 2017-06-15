@@ -44,7 +44,7 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
 
   static CSSStyleSheetResource* Fetch(FetchParameters&, ResourceFetcher*);
   static CSSStyleSheetResource* CreateForTest(const ResourceRequest&,
-                                              const String& charset);
+                                              const CharsetRequest&);
 
   ~CSSStyleSheetResource() override;
   DECLARE_VIRTUAL_TRACE();
@@ -66,13 +66,13 @@ class CORE_EXPORT CSSStyleSheetResource final : public StyleSheetResource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest& charset) const override {
       return new CSSStyleSheetResource(request, options, charset);
     }
   };
   CSSStyleSheetResource(const ResourceRequest&,
                         const ResourceLoaderOptions&,
-                        const String& charset);
+                        const CharsetRequest&);
 
   bool CanUseSheet(MIMETypeCheck) const;
   void CheckNotify() override;

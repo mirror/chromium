@@ -10,6 +10,7 @@
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/CachedMetadata.h"
 #include "platform/loader/fetch/CachedMetadataHandler.h"
+#include "platform/wtf/text/TextEncoding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "v8/include/v8.h"
 
@@ -67,12 +68,14 @@ class V8ScriptRunnerTest : public ::testing::Test {
 
   void SetEmptyResource() {
     resource_request_ = ResourceRequest();
-    resource_ = ScriptResource::Create(resource_request_, "UTF-8");
+    resource_ = ScriptResource::CreateForTest(resource_request_,
+                                              CharsetRequest(UTF8Encoding()));
   }
 
   void SetResource() {
     resource_request_ = ResourceRequest(Url());
-    resource_ = ScriptResource::Create(resource_request_, "UTF-8");
+    resource_ = ScriptResource::CreateForTest(resource_request_,
+                                              CharsetRequest(UTF8Encoding()));
   }
 
   CachedMetadataHandler* CacheHandler() { return resource_->CacheHandler(); }
@@ -108,7 +111,8 @@ TEST_F(V8ScriptRunnerTest, parseOption) {
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
   ResourceRequest request(Url());
-  ScriptResource* another_resource = ScriptResource::Create(request, "UTF-16");
+  ScriptResource* another_resource = ScriptResource::CreateForTest(
+      request, CharsetRequest(UTF16LittleEndianEncoding()));
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForParserCache(another_resource->CacheHandler())));
 }
@@ -126,7 +130,8 @@ TEST_F(V8ScriptRunnerTest, codeOption) {
       CacheHandler()->GetCachedMetadata(TagForCodeCache(CacheHandler())));
   // The cached data is associated with the encoding.
   ResourceRequest request(Url());
-  ScriptResource* another_resource = ScriptResource::Create(request, "UTF-16");
+  ScriptResource* another_resource = ScriptResource::CreateForTest(
+      request, CharsetRequest(UTF16LittleEndianEncoding()));
   EXPECT_FALSE(CacheHandler()->GetCachedMetadata(
       TagForCodeCache(another_resource->CacheHandler())));
 }

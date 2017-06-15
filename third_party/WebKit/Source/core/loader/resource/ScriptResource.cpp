@@ -51,7 +51,7 @@ ScriptResource* ScriptResource::Fetch(FetchParameters& params,
 
 ScriptResource::ScriptResource(const ResourceRequest& resource_request,
                                const ResourceLoaderOptions& options,
-                               const String& charset)
+                               const CharsetRequest& charset)
     : TextResource(resource_request,
                    kScript,
                    options,
