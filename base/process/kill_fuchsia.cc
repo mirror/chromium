@@ -57,20 +57,7 @@ void EnsureProcessTerminated(Process process) {
     return;
   }
 
-  PostDelayedTaskWithTraits(
-      FROM_HERE,
-      {TaskPriority::BACKGROUND, TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN},
-      Bind(
-          [](Process process) {
-            mx_signals_t signals;
-            if (mx_object_wait_one(process.Handle(), MX_TASK_TERMINATED, 0,
-                                   &signals) == NO_ERROR) {
-              return;
-            }
-            process.Terminate(1, false);
-          },
-          Passed(&process)),
-      TimeDelta::FromSeconds(2));
+  process.Terminate(1, false);
 }
 
 }  // namespace base
