@@ -53,6 +53,7 @@ Network.RequestPreviewView = class extends Network.RequestContentView {
         this._emptyWidget.show(this.element);
         this._previewView = this._emptyWidget;
       }
+      this._previewViewHandledForTest(this._emptyWidget);
       return;
     }
     if (this._emptyWidget) {
