@@ -13,7 +13,7 @@ namespace base {
 
 Process::Process(ProcessHandle handle)
     : process_(handle), is_current_process_(false) {
-  CHECK_NE(handle, mx_process_self());
+  CHECK_NE(handle.raw(), mx_process_self());
 }
 
 Process::~Process() {
@@ -64,10 +64,11 @@ Process Process::OpenWithExtraPrivileges(ProcessId pid) {
 
 // static
 Process Process::DeprecatedGetProcessFromHandle(ProcessHandle handle) {
-  DCHECK_NE(handle, GetCurrentProcessHandle());
+  DCHECK_NE(handle.raw(), GetCurrentProcessHandle().raw());
   mx_handle_t out;
-  if (mx_handle_duplicate(handle, MX_RIGHT_SAME_RIGHTS, &out) != NO_ERROR) {
-    DLOG(ERROR) << "mx_handle_duplicate failed: " << handle;
+  if (mx_handle_duplicate(handle.raw(), MX_RIGHT_SAME_RIGHTS, &out) !=
+      NO_ERROR) {
+    DLOG(ERROR) << "mx_handle_duplicate failed: " << handle.raw();
     return Process();
   }
 
@@ -85,7 +86,7 @@ void Process::TerminateCurrentProcessImmediately(int exit_code) {
 }
 
 bool Process::IsValid() const {
-  return process_ != kNullProcessHandle || is_current();
+  return process_.raw() != kNullProcessHandle.raw() || is_current();
 }
 
 ProcessHandle Process::Handle() const {
@@ -100,8 +101,8 @@ Process Process::Duplicate() const {
     return Process();
 
   mx_handle_t out;
-  if (mx_handle_duplicate(process_, MX_RIGHT_SAME_RIGHTS, &out) != NO_ERROR) {
-    DLOG(ERROR) << "mx_handle_duplicate failed: " << process_;
+  if (mx_handle_duplicate(process_.raw(), MX_RIGHT_SAME_RIGHTS, &out) != NO_ERROR) {
+    DLOG(ERROR) << "mx_handle_duplicate failed: " << process_.raw();
     return Process();
   }
 
@@ -120,7 +121,7 @@ bool Process::is_current() const {
 void Process::Close() {
   is_current_process_ = false;
   if (IsValid()) {
-    mx_status_t status = mx_handle_close(process_);
+    mx_status_t status = mx_handle_close(process_.raw());
     DCHECK_EQ(status, NO_ERROR);
     process_ = kNullProcessHandle;
   }
@@ -128,10 +129,10 @@ void Process::Close() {
 
 bool Process::Terminate(int exit_code, bool wait) const {
   // exit_code isn't supportable.
-  mx_status_t status = mx_task_kill(process_);
+  mx_status_t status = mx_task_kill(process_.raw());
   if (status == NO_ERROR && wait) {
     mx_signals_t signals;
-    status = mx_object_wait_one(process_, MX_TASK_TERMINATED,
+    status = mx_object_wait_one(process_.raw(), MX_TASK_TERMINATED,
                                 mx_deadline_after(MX_SEC(60)), &signals);
     if (status != NO_ERROR) {
       DLOG(ERROR) << "Error waiting for process exit: " << status;
@@ -156,7 +157,7 @@ bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
   mx_time_t mxtimeout_nanos =
       timeout == TimeDelta::Max() ? MX_TIME_INFINITE : timeout.InNanoseconds();
   mx_signals_t signals_observed;
-  mx_status_t status = mx_object_wait_one(process_, MX_TASK_TERMINATED,
+  mx_status_t status = mx_object_wait_one(process_.raw(), MX_TASK_TERMINATED,
                                           mxtimeout_nanos, &signals_observed);
   *exit_code = -1;
   if (status != NO_ERROR && status != ERR_TIMED_OUT)
@@ -165,7 +166,7 @@ bool Process::WaitForExitWithTimeout(TimeDelta timeout, int* exit_code) const {
     return false;
 
   mx_info_process_t proc_info;
-  status = mx_object_get_info(process_, MX_INFO_PROCESS, &proc_info,
+  status = mx_object_get_info(process_.raw(), MX_INFO_PROCESS, &proc_info,
                               sizeof(proc_info), nullptr, nullptr);
   if (status != NO_ERROR)
     return status;

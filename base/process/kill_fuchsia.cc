@@ -14,19 +14,19 @@ namespace base {
 
 bool KillProcessGroup(ProcessHandle process_group_id) {
   // |process_group_id| is really a job on Fuchsia.
-  mx_status_t status = mx_task_kill(process_group_id);
+  mx_status_t status = mx_task_kill(process_group_id.raw());
   DLOG_IF(ERROR, status != NO_ERROR)
-      << "unable to terminate job " << process_group_id;
+      << "unable to terminate job " << process_group_id.raw();
   return status == NO_ERROR;
 }
 
 TerminationStatus GetTerminationStatus(ProcessHandle handle, int* exit_code) {
   mx_info_process_t process_info;
   mx_status_t status =
-      mx_object_get_info(handle, MX_INFO_PROCESS, &process_info,
+      mx_object_get_info(handle.raw(), MX_INFO_PROCESS, &process_info,
                          sizeof(process_info), nullptr, nullptr);
   if (status != NO_ERROR) {
-    DLOG(ERROR) << "unable to get termination status for " << handle;
+    DLOG(ERROR) << "unable to get termination status for " << handle.raw();
     *exit_code = 0;
     return TERMINATION_STATUS_NORMAL_TERMINATION;
   }
@@ -50,8 +50,8 @@ void EnsureProcessTerminated(Process process) {
   DCHECK(!process.is_current());
 
   mx_signals_t signals;
-  if (mx_object_wait_one(process.Handle(), MX_TASK_TERMINATED, 0, &signals) ==
-      NO_ERROR) {
+  if (mx_object_wait_one(process.Handle().raw(), MX_TASK_TERMINATED, 0,
+                         &signals) == NO_ERROR) {
     DCHECK(signals & MX_TASK_TERMINATED);
     // If already signaled, then the process is terminated.
     return;
@@ -63,8 +63,8 @@ void EnsureProcessTerminated(Process process) {
       Bind(
           [](Process process) {
             mx_signals_t signals;
-            if (mx_object_wait_one(process.Handle(), MX_TASK_TERMINATED, 0,
-                                   &signals) == NO_ERROR) {
+            if (mx_object_wait_one(process.Handle().raw(), MX_TASK_TERMINATED,
+                                   0, &signals) == NO_ERROR) {
               return;
             }
             process.Terminate(1, false);

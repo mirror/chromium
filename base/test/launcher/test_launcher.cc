@@ -103,8 +103,8 @@ Lock* GetLiveProcessesLock() {
   return lock;
 }
 
-std::map<ProcessHandle, CommandLine>* GetLiveProcesses() {
-  static auto* map = new std::map<ProcessHandle, CommandLine>;
+std::map<mx_handle_t, CommandLine>* GetLiveProcesses() {
+  static auto* map = new std::map<mx_handle_t, CommandLine>;
   return map;
 }
 
@@ -326,7 +326,8 @@ int LaunchChildTestProcessWithOptions(
       return -1;
 
     // TODO(rvargas) crbug.com/417532: Don't store process handles.
-    GetLiveProcesses()->insert(std::make_pair(process.Handle(), command_line));
+    GetLiveProcesses()->insert(
+        std::make_pair(process.Handle().raw(), command_line));
   }
 
   if (!launched_callback.is_null())
@@ -357,7 +358,7 @@ int LaunchChildTestProcessWithOptions(
     }
 #endif
 
-    GetLiveProcesses()->erase(process.Handle());
+    GetLiveProcesses()->erase(process.Handle().raw());
   }
 
   GetTestLauncherTracer()->RecordProcessExecution(

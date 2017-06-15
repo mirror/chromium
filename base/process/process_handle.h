@@ -32,7 +32,19 @@ typedef HANDLE UserTokenHandle;
 const ProcessHandle kNullProcessHandle = NULL;
 const ProcessId kNullProcessId = 0;
 #elif defined(OS_FUCHSIA)
-typedef mx_handle_t ProcessHandle;
+// This class is used during porting because on POSIX, pid_t is used as
+// ProcessHandle. Both mx_handle_t and pid_t are integral types, so it's easy to
+// mistakenly pass an mx_handle_t where a pid_t is expected.
+struct WrappedMxHandle {
+ public:
+  // Intentionally non-explicit.
+  WrappedMxHandle(mx_handle_t handle) : handle_(handle) {}
+  mx_handle_t raw() const { return handle_; }
+
+ private:
+  mx_handle_t handle_;
+};
+typedef WrappedMxHandle ProcessHandle;
 typedef mx_koid_t ProcessId;
 const ProcessHandle kNullProcessHandle = MX_HANDLE_INVALID;
 const ProcessId kNullProcessId = MX_KOID_INVALID;
