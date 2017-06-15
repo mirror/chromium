@@ -16,6 +16,24 @@
       "revId": "323c0994d65f145d4d84d770bf8136adff9de43c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a13b2ee0_33153387",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-15T19:07:29Z",
+      "side": 1,
+      "message": "We talked about this offline a bit and even investigated another approach handling this exclusively in the scroll tree. I think we sort of came back to special-casing this logic for viewport layers where the page scale layer is sandwiched between the inner container and inner scroll layers (with an optional translation-only overscroll elasticity layer).\n\nIn the latest patch I\u0027ve added DCHECKs in RegisterViewportLayers that the page scale layer is between the inner viewport layers. A few tests needed updating.",
+      "parentUuid": "fc5c32e1_6713b33c",
+      "revId": "323c0994d65f145d4d84d770bf8136adff9de43c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
