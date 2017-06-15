@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f861e5c3_ce3a286e",
+        "filename": "third_party/WebKit/Source/core/loader/PingLoader.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 234,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T10:48:33Z",
+      "side": 1,
+      "message": "Would you rename the variable too?\ns/cors_mode_/has_cors_enabled_/ or something similar",
+      "revId": "64cbfc23145da8acea2230caba2144a0aa7aa72a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
