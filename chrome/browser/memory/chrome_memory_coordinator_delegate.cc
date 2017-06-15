@@ -31,10 +31,10 @@ bool ChromeMemoryCoordinatorDelegate::CanSuspendBackgroundedRenderer(
 #endif
 }
 
-void ChromeMemoryCoordinatorDelegate::DiscardTab() {
+void ChromeMemoryCoordinatorDelegate::DiscardTab(bool allow_unsafe_shutdown) {
 #if !defined(OS_ANDROID)
   if (g_browser_process->GetTabManager())
-    g_browser_process->GetTabManager()->DiscardTab();
+    g_browser_process->GetTabManager()->DiscardTab(allow_unsafe_shutdown);
 #endif
 }
 

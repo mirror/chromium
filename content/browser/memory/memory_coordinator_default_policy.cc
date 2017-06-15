@@ -44,7 +44,7 @@ void MemoryCoordinatorDefaultPolicy::OnWarningCondition() {
 }
 
 void MemoryCoordinatorDefaultPolicy::OnCriticalCondition() {
-  coordinator_->DiscardTab();
+  coordinator_->DiscardTab(true /* allow_unsafe_shutdown */);
 
   // Prefer to purge memory from child processes than browser process because
   // we prioritize the brower process.
