@@ -29,6 +29,9 @@
 
 @property(nonatomic, assign) id<UrlLoader, OmniboxFocuser> dispatcher;
 
+// Get the maximum number of sites shown.
++ (NSUInteger)maxSitesShown;
+
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_NTP_GOOGLE_LANDING_VIEW_CONTROLLER_H_

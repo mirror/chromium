@@ -21,15 +21,8 @@
 // Exposes view and methods to drive the doodle.
 - (void)setLogoVendor:(id<LogoVendor>)logoVendor;
 
-// |YES| if this consumer is incognito.
-- (void)setIsOffTheRecord:(BOOL)isOffTheRecord;
-
 // |YES| if this consumer is has voice search enabled.
 - (void)setVoiceSearchIsEnabled:(BOOL)voiceSearchIsEnabled;
-
-// Sets the maximum number of sites shown.
-- (void)setMaximumMostVisitedSitesShown:
-    (NSUInteger)maximumMostVisitedSitesShown;
 
 // Sets the text of a what's new promo.
 - (void)setPromoText:(NSString*)promoText;
