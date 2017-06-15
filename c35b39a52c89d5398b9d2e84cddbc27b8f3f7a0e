@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e5a51f81_70de88fa",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T04:34:32Z",
+      "side": 1,
+      "message": "I think it\u0027s better. Done.",
+      "parentUuid": "90b92ac4_4bda4fa1",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09d91bcf_3fe28291",
         "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8420fd04_7083c635",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T04:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09d91bcf_3fe28291",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7a140119_3f6a1d29",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T04:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "641cb244_67b544b8",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "903d90fb_b522322f",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
         "patchSetId": 3
@@ -137,6 +191,24 @@
       "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d31b24c_6107c474",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T04:34:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "903d90fb_b522322f",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
