@@ -22,6 +22,30 @@
       "revId": "fd4dcb0230f08c92bcf2dfbcf9d9653c6fab96cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7fb3c774_8108a2b6",
+        "filename": "services/device/nfc/android/java/src/org/chromium/device/nfc/NfcMessageValidator.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-15T06:53:42Z",
+      "side": 1,
+      "message": "It was too restrictive, Web NFC, NFC forum specifications and platform implementations allow records with no data, for example:\n\nhttps://developer.android.com/reference/android/nfc/NdefRecord.html#createMime(java.lang.String, byte[])\nhttps://developer.android.com/reference/android/nfc/NdefRecord.html#createTextRecord(java.lang.String, java.lang.String)\n\nIt should be possible to do something like: navigator.nfc.push(\u0027\u0027);",
+      "parentUuid": "007f002e_94b8f2e5",
+      "range": {
+        "startLine": 39,
+        "startChar": 15,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "fd4dcb0230f08c92bcf2dfbcf9d9653c6fab96cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
