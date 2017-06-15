@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c46a32bf_413283d2",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-15T19:37:54Z",
+      "side": 1,
+      "message": "This variable goes out of scope when the @autoreleasepool block ends at line 50, so after that point we no longer have an AtExitManager.",
+      "revId": "ef344143929225c301200cc7687272a3490833fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
