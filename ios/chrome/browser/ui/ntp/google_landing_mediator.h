@@ -33,9 +33,6 @@ class ChromeBrowserState;
 // Stop listening to any observers and other cleanup functionality.
 - (void)shutdown;
 
-// Get the maximum number of sites shown.
-+ (NSUInteger)maxSitesShown;
-
 @end
 
 #endif  // IOS_CHROME_BROWSER_UI_NTP_GOOGLE_LANDING_MEDIATOR_H_

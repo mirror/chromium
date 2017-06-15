@@ -28,6 +28,7 @@
 #import "ios/chrome/browser/ui/commands/UIKit+ChromeExecuteCommand.h"
 #import "ios/chrome/browser/ui/commands/generic_chrome_command.h"
 #import "ios/chrome/browser/ui/ntp/google_landing_consumer.h"
+#import "ios/chrome/browser/ui/ntp/google_landing_view_controller.h"
 #import "ios/chrome/browser/ui/ntp/notification_promo_whats_new.h"
 #import "ios/chrome/browser/ui/toolbar/web_toolbar_controller.h"
 #import "ios/chrome/browser/ui/url_loader.h"
@@ -39,12 +40,6 @@
 #include "ios/web/public/web_state/web_state.h"
 
 using base::UserMetricsAction;
-
-namespace {
-
-const NSInteger kMaxNumMostVisitedFavicons = 8;
-
-}  // namespace
 
 @interface GoogleLandingMediator (UsedBySearchEngineObserver)
 // Check to see if the logo visibility should change.
@@ -171,12 +166,9 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
 }
 
 - (void)setUp {
-  [_consumer setIsOffTheRecord:_browserState->IsOffTheRecord()];
   [_consumer setVoiceSearchIsEnabled:ios::GetChromeBrowserProvider()
                                          ->GetVoiceSearchProvider()
                                          ->IsVoiceSearchEnabled()];
-  [_consumer
-      setMaximumMostVisitedSitesShown:[GoogleLandingMediator maxSitesShown]];
   [_consumer setTabCount:self.webStateList->count()];
   web::WebState* webState = _webStateList->GetActiveWebState();
   if (webState) {
@@ -204,7 +196,8 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
   _mostVisitedObserverBridge.reset(
       new ntp_tiles::MostVisitedSitesObserverBridge(self));
   _mostVisitedSites->SetMostVisitedURLsObserver(
-      _mostVisitedObserverBridge.get(), [GoogleLandingMediator maxSitesShown]);
+      _mostVisitedObserverBridge.get(),
+      [GoogleLandingViewController maxSitesShown]);
 
   // Set up notifications;
   NSNotificationCenter* defaultCenter = [NSNotificationCenter defaultCenter];
@@ -239,10 +232,6 @@ void SearchEngineObserver::OnTemplateURLServiceChanged() {
         SEARCH_ENGINE_GOOGLE;
   }
   [self.consumer setLogoIsShowing:showLogo];
-}
-
-+ (NSUInteger)maxSitesShown {
-  return kMaxNumMostVisitedFavicons;
 }
 
 #pragma mark - MostVisitedSitesObserving
