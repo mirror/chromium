@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64e572dc_e6cd0b71",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T17:12:18Z",
+      "side": 1,
+      "message": "It looks fine, with and without a doodle.",
+      "parentUuid": "5f131629_649a26df",
+      "revId": "efffd923b4bc3971b2493414168b13a58d13779f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "87b3d0f5_e98f2ac9",
         "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "efffd923b4bc3971b2493414168b13a58d13779f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8264316e_efc6f7e3",
+        "filename": "ios/chrome/browser/ui/ntp/new_tab_page_header_view.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T17:12:18Z",
+      "side": 1,
+      "message": "Ooops! Done.",
+      "parentUuid": "87b3d0f5_e98f2ac9",
+      "revId": "efffd923b4bc3971b2493414168b13a58d13779f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

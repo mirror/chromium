@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "91f6b45f_d40df3f3",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T17:12:18Z",
+      "side": 0,
+      "message": "As mentioned in the comment, the aspect will change in iPhone portrait to have the same constraints as iPhone landscape, making it more \"compact\". I have run the new version by pschaffner@.\nIt makes sense to avoid some jitter during orientation changes, and when ContentSuggestions is launched it will give it more exposure.",
+      "parentUuid": "e07b0e34_9cbe655b",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2fe56760_371a380e",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "e1f16eb7_0703f7c2",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T17:12:18Z",
+      "side": 0,
+      "message": "I did not see any bugs during my testing. I will send an email to the test team once I am done to have it tested.",
+      "parentUuid": "2fe56760_371a380e",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "652dfaf0_80d2982a",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "5932739a4e34f7480003f771264e3eb247685da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a368c92e_407438c6",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-15T17:12:18Z",
+      "side": 0,
+      "message": "It is called in -scrollViewDidScroll:. I did not see a situation where the shadow was wrong.",
+      "parentUuid": "652dfaf0_80d2982a",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
