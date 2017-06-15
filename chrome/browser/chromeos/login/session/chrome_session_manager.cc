@@ -5,6 +5,7 @@
 #include "chrome/browser/chromeos/login/session/chrome_session_manager.h"
 
 #include <memory>
+#include <string>
 
 #include "base/command_line.h"
 #include "base/logging.h"
@@ -194,6 +195,8 @@ void ChromeSessionManager::Initialize(
   if (parsed_command_line.HasSwitch(switches::kLoginManager) &&
       (!is_running_test || force_login_screen_in_test)) {
     VLOG(1) << "Starting Chrome with login/oobe screen.";
+    if (!is_running_test)
+      arc::ArcServiceLauncher::Get()->OnShowingLoginOobeSession();
     StartLoginOobeSession();
     return;
   }

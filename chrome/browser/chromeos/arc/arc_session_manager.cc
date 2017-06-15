@@ -614,7 +614,9 @@ void ArcSessionManager::RequestDisable() {
   DCHECK(profile_);
 
   if (!enable_requested_) {
-    VLOG(1) << "ARC is already disabled. Do nothing.";
+    VLOG(1) << "ARC is already disabled. "
+            << "Killing an instance for login screen (if any).";
+    arc_session_runner_->RequestStopForLoginScreen();
     return;
   }
   enable_requested_ = false;
@@ -1021,6 +1023,17 @@ void ArcSessionManager::ShowArcSupportHostError(
     support_host_->ShowError(error, should_show_send_feedback);
   for (auto& observer : observer_list_)
     observer.OnArcErrorShowRequested(error);
+}
+
+void ArcSessionManager::StartArcForLoginScreen() {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  DCHECK_EQ(State::STOPPED, state_);
+  // TODO(yusukes): Call
+  //   arc_session_runner_->RequestStartForLoginScreen();
+  // here once Chrome OS side is ready.
+
+  // --- for testing, remove this later ---
+  arc_session_runner_->RequestStartForLoginScreen();
 }
 
 std::ostream& operator<<(std::ostream& os,
