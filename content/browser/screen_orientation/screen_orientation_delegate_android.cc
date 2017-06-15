@@ -22,8 +22,7 @@ ScreenOrientationDelegateAndroid::~ScreenOrientationDelegateAndroid() {
 
 bool ScreenOrientationDelegateAndroid::FullScreenRequired(
     WebContents* web_contents) {
-  ContentViewCoreImpl* cvc =
-      ContentViewCoreImpl::FromWebContents(web_contents);
+  ContentViewCore* cvc = ContentViewCore::FromWebContents(web_contents);
   bool fullscreen_required = cvc ? cvc->IsFullscreenRequiredForOrientationLock()
                                  : true;
   return fullscreen_required;

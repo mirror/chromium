@@ -79,7 +79,7 @@ BrowserMediaPlayerManager* BrowserMediaPlayerManager::Create(
 
 #if !defined(USE_AURA)
 ContentViewCore* BrowserMediaPlayerManager::GetContentViewCore() const {
-  return ContentViewCoreImpl::FromWebContents(web_contents());
+  return ContentViewCore::FromWebContents(web_contents());
 }
 #endif
 

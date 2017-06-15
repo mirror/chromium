@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_IMPL_H_
-#define CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_IMPL_H_
+#ifndef CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_H_
+#define CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_H_
 
 #include <stdint.h>
 
@@ -20,7 +20,6 @@
 #include "content/browser/android/content_view_core_impl_observer.h"
 #include "content/browser/renderer_host/render_widget_host_view_android.h"
 #include "content/browser/web_contents/web_contents_impl.h"
-#include "content/public/browser/android/content_view_core.h"
 #include "content/public/browser/web_contents_observer.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/android/view_android.h"
@@ -38,28 +37,25 @@ namespace content {
 class GinJavaBridgeDispatcherHost;
 class RenderFrameHost;
 class RenderWidgetHostViewAndroid;
-struct ContextMenuParams;
 struct MenuItem;
 
-class ContentViewCoreImpl : public ContentViewCore,
-                            public WebContentsObserver {
+// TODO(jinsukkim): Rename this file to content_view_core.h
+class ContentViewCore : public WebContentsObserver {
  public:
-  static ContentViewCoreImpl* FromWebContents(WebContents* web_contents);
-  ContentViewCoreImpl(
+  static ContentViewCore* FromWebContents(WebContents* web_contents);
+  ContentViewCore(
       JNIEnv* env,
       const base::android::JavaRef<jobject>& obj,
       WebContents* web_contents,
       float dpi_scale,
       const base::android::JavaRef<jobject>& java_bridge_retained_object_set);
 
-  // ContentViewCore implementation.
-  base::android::ScopedJavaLocalRef<jobject> GetJavaObject() override;
-  WebContents* GetWebContents() const override;
-  ui::WindowAndroid* GetWindowAndroid() const override;
-  bool ShowSelectionMenu(const ContextMenuParams& params) override;
+  base::android::ScopedJavaLocalRef<jobject> GetJavaObject();
+  WebContents* GetWebContents() const;
+  ui::WindowAndroid* GetWindowAndroid() const;
 
-  void AddObserver(ContentViewCoreImplObserver* observer);
-  void RemoveObserver(ContentViewCoreImplObserver* observer);
+  void AddObserver(ContentViewCoreObserver* observer);
+  void RemoveObserver(ContentViewCoreObserver* observer);
 
   // --------------------------------------------------------------------------
   // Methods called from Java via JNI
@@ -245,7 +241,6 @@ class ContentViewCoreImpl : public ContentViewCore,
                        const gfx::Vector2dF& page_scale_factor_limits,
                        const gfx::SizeF& content_size,
                        const gfx::SizeF& viewport_size,
-                       const float content_offset,
                        const float top_shown_pix,
                        bool top_changed,
                        bool is_mobile_optimized_hint);
@@ -291,10 +286,6 @@ class ContentViewCoreImpl : public ContentViewCore,
   void SelectBetweenCoordinates(const gfx::PointF& base,
                                 const gfx::PointF& extent);
 
-  void OnShowUnhandledTapUIIfNeeded(int x_dip, int y_dip);
-  void OnSelectWordAroundCaretAck(bool did_select,
-                                  int start_adjust,
-                                  int end_adjust);
   void OnTouchDown(const base::android::ScopedJavaLocalRef<jobject>& event);
 
   ui::ViewAndroid* GetViewAndroid() const;
@@ -303,7 +294,7 @@ class ContentViewCoreImpl : public ContentViewCore,
   class ContentViewUserData;
 
   friend class ContentViewUserData;
-  ~ContentViewCoreImpl() override;
+  ~ContentViewCore() override;
 
   // WebContentsObserver implementation.
   void RenderViewReady() override;
@@ -356,7 +347,7 @@ class ContentViewCoreImpl : public ContentViewCore,
   float dpi_scale_;
 
   // Observer to notify of lifecyle changes.
-  base::ObserverList<ContentViewCoreImplObserver> observer_list_;
+  base::ObserverList<ContentViewCoreObserver> observer_list_;
 
   // The cache of device's current orientation set from Java side, this value
   // will be sent to Renderer once it is ready.
@@ -365,11 +356,11 @@ class ContentViewCoreImpl : public ContentViewCore,
   // Manages injecting Java objects.
   scoped_refptr<GinJavaBridgeDispatcherHost> java_bridge_dispatcher_host_;
 
-  DISALLOW_COPY_AND_ASSIGN(ContentViewCoreImpl);
+  DISALLOW_COPY_AND_ASSIGN(ContentViewCore);
 };
 
 bool RegisterContentViewCore(JNIEnv* env);
 
 }  // namespace content
 
-#endif  // CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_IMPL_H_
+#endif  // CONTENT_BROWSER_ANDROID_CONTENT_VIEW_CORE_H_

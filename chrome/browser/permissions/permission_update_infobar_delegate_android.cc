@@ -14,7 +14,6 @@
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
 #include "components/infobars/core/infobar.h"
-#include "content/public/browser/android/content_view_core.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/PermissionUpdateInfoBarDelegate_jni.h"
 #include "ui/android/window_android.h"
@@ -31,9 +30,8 @@ infobars::InfoBar* PermissionUpdateInfoBarDelegate::Create(
       << "Caller should check ShouldShowPermissionInfobar before creating the "
       << "infobar.";
 
-  content::ContentViewCore* cvc =
-      content::ContentViewCore::FromWebContents(web_contents);
-  ui::WindowAndroid* window_android = cvc->GetWindowAndroid();
+  ui::WindowAndroid* window_android =
+      web_contents->GetNativeView()->GetWindowAndroid();
 
   std::vector<std::string> permissions;
   int message_id = -1;
@@ -105,12 +103,7 @@ bool PermissionUpdateInfoBarDelegate::ShouldShowPermissionInfobar(
   if (!web_contents)
     return false;
 
-  content::ContentViewCore* cvc =
-      content::ContentViewCore::FromWebContents(web_contents);
-  if (!cvc || !cvc->GetWindowAndroid())
-    return false;
-  ui::WindowAndroid* window_android = cvc->GetWindowAndroid();
-
+  auto* window_android = web_contents->GetNativeView()->GetWindowAndroid();
   for (ContentSettingsType content_settings_type : content_settings_types) {
     std::vector<std::string> android_permissions;
     PrefServiceBridge::GetAndroidPermissionsForContentSetting(

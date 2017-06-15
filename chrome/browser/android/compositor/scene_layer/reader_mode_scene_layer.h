@@ -43,24 +43,23 @@ class ReaderModeSceneLayer : public SceneLayer {
       jint panel_icon_resource_id,
       jint close_icon_resource_id);
 
-  void Update(
-      JNIEnv* env,
-      const base::android::JavaParamRef<jobject>& object,
-      jfloat dp_to_px,
-      jfloat base_page_brightness,
-      jfloat base_page_offset,
-      const base::android::JavaParamRef<jobject>& jcontent_view_core,
-      jfloat panel_X,
-      jfloat panel_y,
-      jfloat panel_width,
-      jfloat panel_height,
-      jfloat bar_margin_side,
-      jfloat bar_height,
-      jfloat text_opacity,
-      jboolean bar_border_visible,
-      jfloat bar_border_height,
-      jboolean bar_shadow_visible,
-      jfloat bar_shadow_opacity);
+  void Update(JNIEnv* env,
+              const base::android::JavaParamRef<jobject>& object,
+              jfloat dp_to_px,
+              jfloat base_page_brightness,
+              jfloat base_page_offset,
+              const base::android::JavaParamRef<jobject>& jweb_contents,
+              jfloat panel_X,
+              jfloat panel_y,
+              jfloat panel_width,
+              jfloat panel_height,
+              jfloat bar_margin_side,
+              jfloat bar_height,
+              jfloat text_opacity,
+              jboolean bar_border_visible,
+              jfloat bar_border_height,
+              jboolean bar_shadow_visible,
+              jfloat bar_shadow_opacity);
 
   void SetContentTree(
       JNIEnv* env,

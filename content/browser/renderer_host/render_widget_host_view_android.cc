@@ -438,7 +438,7 @@ void RenderWidgetHostViewAndroid::OnContextLost() {
 
 RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
     RenderWidgetHostImpl* widget_host,
-    ContentViewCoreImpl* content_view_core)
+    ContentViewCore* content_view_core)
     : host_(widget_host),
       begin_frame_source_(nullptr),
       latest_confirmed_begin_frame_source_id_(0),
@@ -463,8 +463,8 @@ RenderWidgetHostViewAndroid::RenderWidgetHostViewAndroid(
       synchronous_compositor_client_(nullptr),
       frame_evictor_(new viz::FrameEvictor(this)),
       observing_root_window_(false),
-      prev_top_shown_pix_(0.f),
-      prev_bottom_shown_pix_(0.f),
+      prev_top_content_offset_pix_(0.f),
+      prev_bottom_content_offset_pix_(0.f),
       mouse_wheel_phase_handler_(widget_host, this),
       weak_ptr_factory_(this) {
   // Set the layer which will hold the content layer for this view. The content
@@ -638,7 +638,7 @@ void RenderWidgetHostViewAndroid::Hide() {
 }
 
 bool RenderWidgetHostViewAndroid::IsShowing() {
-  // ContentViewCoreImpl represents the native side of the Java
+  // ContentViewCore represents the native side of the Java
   // ContentViewCore.  It being NULL means that it is not attached
   // to the View system yet, so we treat this RWHVA as hidden.
   return is_showing_ && content_view_core_;
@@ -646,23 +646,25 @@ bool RenderWidgetHostViewAndroid::IsShowing() {
 
 void RenderWidgetHostViewAndroid::OnShowUnhandledTapUIIfNeeded(int x_dip,
                                                                int y_dip) {
-  if (!content_view_core_)
+  if (!selection_popup_controller_ || !content_view_core_)
     return;
   // Validate the coordinates are within the viewport.
+  // TODO(jinsukkim): Get viewport size from ViewAndroid.
   gfx::Size viewport_size = content_view_core_->GetViewportSizeDip();
   if (x_dip < 0 || x_dip > viewport_size.width() ||
       y_dip < 0 || y_dip > viewport_size.height())
     return;
-  content_view_core_->OnShowUnhandledTapUIIfNeeded(x_dip, y_dip);
+  selection_popup_controller_->OnShowUnhandledTapUIIfNeeded(
+      x_dip, y_dip, view_.GetDipScale());
 }
 
 void RenderWidgetHostViewAndroid::OnSelectWordAroundCaretAck(bool did_select,
                                                              int start_adjust,
                                                              int end_adjust) {
-  if (!content_view_core_)
+  if (!selection_popup_controller_)
     return;
-  content_view_core_->OnSelectWordAroundCaretAck(did_select, start_adjust,
-                                                 end_adjust);
+  selection_popup_controller_->OnSelectWordAroundCaretAck(
+      did_select, start_adjust, end_adjust);
 }
 
 gfx::Rect RenderWidgetHostViewAndroid::GetViewBounds() const {
@@ -1424,13 +1426,15 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   gesture_provider_.SetDoubleTapSupportForPageEnabled(!is_mobile_optimized);
 
   float dip_scale = view_.GetDipScale();
-  float top_controls_pix = frame_metadata.top_controls_height * dip_scale;
-  float top_shown_pix =
-      top_controls_pix * frame_metadata.top_controls_shown_ratio;
+  float top_controls_height_pix =
+      frame_metadata.top_controls_height * dip_scale;
+  float top_content_offset = frame_metadata.top_controls_height *
+                             frame_metadata.top_controls_shown_ratio;
+  float top_content_offset_pix = top_content_offset * dip_scale;
 
   if (ime_adapter_android_)
     ime_adapter_android_->UpdateFrameInfo(frame_metadata.selection.start,
-                                          dip_scale, top_shown_pix);
+                                          dip_scale, top_content_offset_pix);
 
   auto* wcax = GetWebContentsAccessibilityAndroid();
   if (wcax)
@@ -1458,25 +1462,30 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
   UpdateBackgroundColor(is_transparent ? SK_ColorTRANSPARENT
                                        : frame_metadata.root_background_color);
 
-  view_.set_content_offset(gfx::Vector2dF(0.0f,
-      frame_metadata.top_controls_height *
-          frame_metadata.top_controls_shown_ratio));
+  view_.SetContentOffset(top_content_offset);
+  view_.SetViewportSize(frame_metadata.scrollable_viewport_size);
 
-  bool top_changed = !FloatEquals(top_shown_pix, prev_top_shown_pix_);
+  bool top_changed =
+      !FloatEquals(top_content_offset_pix, prev_top_content_offset_pix_);
   if (top_changed) {
-    float translate = top_shown_pix - top_controls_pix;
-    view_.OnTopControlsChanged(translate, top_shown_pix);
-    prev_top_shown_pix_ = top_shown_pix;
+    float top_controls_offset_pix =
+        top_content_offset_pix - top_controls_height_pix;
+    view_.OnTopControlsChanged(top_controls_offset_pix, top_content_offset_pix);
+    prev_top_content_offset_pix_ = top_content_offset_pix;
   }
 
-  float bottom_controls_pix = frame_metadata.bottom_controls_height * dip_scale;
-  float bottom_shown_pix =
-      bottom_controls_pix * frame_metadata.bottom_controls_shown_ratio;
-  bool bottom_changed = !FloatEquals(bottom_shown_pix, prev_bottom_shown_pix_);
+  float bottom_controls_height_pix =
+      frame_metadata.bottom_controls_height * dip_scale;
+  float bottom_content_offset_pix =
+      bottom_controls_height_pix * frame_metadata.bottom_controls_shown_ratio;
+  bool bottom_changed =
+      !FloatEquals(bottom_content_offset_pix, prev_bottom_content_offset_pix_);
   if (bottom_changed) {
-    float translate = bottom_controls_pix - bottom_shown_pix;
-    view_.OnBottomControlsChanged(translate, bottom_shown_pix);
-    prev_bottom_shown_pix_ = bottom_shown_pix;
+    float bottom_controls_offset_pix =
+        bottom_controls_height_pix - bottom_content_offset_pix;
+    view_.OnBottomControlsChanged(bottom_controls_offset_pix,
+                                  bottom_content_offset_pix);
+    prev_bottom_content_offset_pix_ = bottom_content_offset_pix;
   }
 
   // All offsets and sizes are in CSS pixels.
@@ -1485,9 +1494,7 @@ void RenderWidgetHostViewAndroid::OnFrameMetadataUpdated(
       gfx::Vector2dF(frame_metadata.min_page_scale_factor,
                      frame_metadata.max_page_scale_factor),
       frame_metadata.root_layer_size, frame_metadata.scrollable_viewport_size,
-      frame_metadata.top_controls_height *
-          frame_metadata.top_controls_shown_ratio,
-      top_shown_pix, top_changed, is_mobile_optimized);
+      top_content_offset_pix, top_changed, is_mobile_optimized);
 }
 
 void RenderWidgetHostViewAndroid::ShowInternal() {
@@ -1889,6 +1896,15 @@ void RenderWidgetHostViewAndroid::SendGestureEvent(
   }
 }
 
+bool RenderWidgetHostViewAndroid::OnShowContextMenu(
+    const ContextMenuParams& params) {
+  if (!selection_popup_controller_)
+    return false;
+
+  return selection_popup_controller_->ShowSelectionMenu(params,
+                                                        GetTouchHandleHeight());
+}
+
 void RenderWidgetHostViewAndroid::ResolveTapDisambiguation(
     double timestamp_seconds,
     gfx::Point tap_viewport_offset,
@@ -1958,7 +1974,7 @@ cc::FrameSinkId RenderWidgetHostViewAndroid::GetFrameSinkId() {
 }
 
 void RenderWidgetHostViewAndroid::SetContentViewCore(
-    ContentViewCoreImpl* content_view_core) {
+    ContentViewCore* content_view_core) {
   DCHECK(!content_view_core || !content_view_core_ ||
          (content_view_core_ == content_view_core));
   StopObservingRootWindow();

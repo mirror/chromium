@@ -15,7 +15,7 @@ class Rect;
 }
 
 namespace content {
-class RenderWidgetHost;
+class WebContents;
 }
 
 namespace web_contents_delegate_android {
@@ -24,14 +24,13 @@ namespace web_contents_delegate_android {
 // bridge to a Java implementation.
 class ValidationMessageBubbleAndroid {
  public:
-  ValidationMessageBubbleAndroid(content::RenderWidgetHost* widget_host,
+  ValidationMessageBubbleAndroid(content::WebContents* web_contents,
                                  const gfx::Rect& anchor_in_screen,
                                  const base::string16& main_text,
                                  const base::string16& sub_text);
   virtual ~ValidationMessageBubbleAndroid();
-  virtual void SetPositionRelativeToAnchor(
-      content::RenderWidgetHost* widget_host,
-      const gfx::Rect& anchor_in_screen);
+  virtual void SetPositionRelativeToAnchor(content::WebContents* web_contents,
+                                           const gfx::Rect& anchor_in_screen);
 
  private:
   base::android::ScopedJavaGlobalRef<jobject> java_validation_message_bubble_;
