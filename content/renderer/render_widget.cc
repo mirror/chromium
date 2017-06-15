@@ -2186,7 +2186,6 @@ blink::WebScreenInfo RenderWidget::GetScreenInfo() {
 void RenderWidget::ShowUnhandledTapUIIfNeeded(const WebPoint& tapped_position,
                                               const WebNode& tapped_node,
                                               bool page_changed) {
-  DCHECK(input_handler_->handling_input_event());
   bool should_trigger = !page_changed && tapped_node.IsTextNode() &&
                         !tapped_node.IsContentEditable() &&
                         !tapped_node.IsInsideFocusableElementOrARIAWidget();
