@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ff06220_6fd81db0",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1065,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d671ba60_5aa5c342",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "73e8b185_f938340b",
         "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "54891878_ca02f27a",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1370,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ccfa2468_b83785cf",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a412ce7c_e15ff4b1",
         "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
         "patchSetId": 6
@@ -70,6 +106,24 @@
     },
     {
       "key": {
+        "uuid": "42e347bc_3a51d2b7",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1376,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a412ce7c_e15ff4b1",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7e074fd4_29b1d8ca",
         "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
         "patchSetId": 6
@@ -81,6 +135,24 @@
       "writtenOn": "2017-06-14T23:48:55Z",
       "side": 1,
       "message": "nit: add EXPECT_NE(devtools_instance, extension_b_instance); for completeness?",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a08870c4_f9bb7de4",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1379,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Formally, it is already complete, but I can do that for symmetry :)",
+      "parentUuid": "7e074fd4_29b1d8ca",
       "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "6c05f8e7_a5f73350",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1380,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c8c75b31_1d330e1c",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c2f72dcf_d961c4ea",
         "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
         "patchSetId": 6
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "7c42cad7_758ad2ab",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1419,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2f72dcf_d961c4ea",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8903c4c5_40c792b0",
         "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions-test.js",
         "patchSetId": 6
@@ -132,6 +240,24 @@
       "writtenOn": "2017-06-14T23:48:55Z",
       "side": 1,
       "message": "Since this isn\u0027t a real extension URL, we won\u0027t force a process swap unless we\u0027re in --site-per-process mode.  Are we forcing --site-per-process for these tests somewhere else? Or just relying on coverage by linux_site_isolation trybot (which is part of the CQ and runs layout tests with --site-per-process) and the Win/Linux site isolation FYI bots?",
+      "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2bf3e97_834398d6",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/extensions-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 1,
+      "message": "Layout test harness is now enabling site isolation for the oopif.test hosts. Landed here: https://chromium-review.googlesource.com/533897",
+      "parentUuid": "8903c4c5_40c792b0",
       "revId": "dd709a03d2cd19d714edf411dba463cecff3a3ac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

@@ -16,6 +16,24 @@
       "revId": "bd608208e501cb0572d4466e3e372c02b64c564c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc41f30d_350496c3",
+        "filename": "chrome/browser/devtools/devtools_sanity_browsertest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1366,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-15T17:43:49Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "c05b6a73_e33c37b8",
+      "revId": "bd608208e501cb0572d4466e3e372c02b64c564c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
