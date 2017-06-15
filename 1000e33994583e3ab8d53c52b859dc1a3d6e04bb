@@ -16,6 +16,47 @@
       "revId": "1000e33994583e3ab8d53c52b859dc1a3d6e04bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fa28c24_7b2078bd",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-15T06:42:42Z",
+      "side": 1,
+      "message": "The \"connector-\u003eClone()\" returns a std::unique_ptr\u003cconnector\u003e, it means someone must manage the new-cloned connector. If we pass a raw pointer to DriveUploader, DriveUploader still have to \"MakeUnique\" on the raw pointer.",
+      "parentUuid": "67957aa3_8b110735",
+      "revId": "1000e33994583e3ab8d53c52b859dc1a3d6e04bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4be02ea_4e86d2b9",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-15T06:42:42Z",
+      "side": 1,
+      "message": "Oh, here should be:\n \"connector \u003d raw_connector-\u003eClone();\"\n\nI\u0027ll change it in next patch.",
+      "range": {
+        "startLine": 289,
+        "startChar": 14,
+        "endLine": 289,
+        "endChar": 19
+      },
+      "revId": "1000e33994583e3ab8d53c52b859dc1a3d6e04bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
