@@ -1091,6 +1091,8 @@ Element* FocusController::NextFocusableElementInForm(Element* element,
   for (next_element = FindFocusableElement(focus_type, *next_element);
        next_element;
        next_element = FindFocusableElement(focus_type, *next_element)) {
+    if (!next_element->IsHTMLElement())
+      continue;
     if (ToHTMLElement(next_element)->isContentEditableForBinding() &&
         next_element->IsDescendantOf(form_owner))
       return next_element;
