@@ -28,8 +28,14 @@ class MOJO_CPP_BINDINGS_EXPORT SerializedHandleVector {
 
   size_t size() const { return handles_.size(); }
 
-  // Adds a handle to the handle list and returns its index for encoding.
-  Handle_Data AddHandle(mojo::ScopedHandle handle);
+  // Adds a handle to the handle list.
+  void AddHandle(mojo::ScopedHandle handle);
+
+  // Adds an interface to the list of handles and interface versions.
+  void AddInterface(mojo::ScopedHandle handle, uint32_t version);
+
+  void CopyNextSerializedHandle(Handle_Data* data);
+  void CopyNextSerializedInterface(Interface_Data* data);
 
   // Takes a handle from the list of serialized handle data.
   mojo::ScopedHandle TakeHandle(const Handle_Data& encoded_handle);
@@ -44,9 +50,20 @@ class MOJO_CPP_BINDINGS_EXPORT SerializedHandleVector {
   // Swaps all owned handles out with another Handle vector.
   void Swap(std::vector<mojo::ScopedHandle>* other);
 
+  Handle_Data last_serialized_handle() const {
+    DCHECK(!serialized_handles_.empty());
+    return Handle_Data{serialized_handles_.back()};
+  }
+
  private:
-  // Handles are owned by this object.
   std::vector<mojo::ScopedHandle> handles_;
+  std::vector<uint32_t> serialized_handles_;
+  std::vector<uint32_t> interface_versions_;
+
+  // An index into |serialized_handles_| corresponding to the next handle to
+  // copy out from CopyNextSerializedHandle or CopyNextSerializedInterface.
+  size_t next_serialized_handle_to_copy_ = 0;
+  size_t next_interface_version_to_copy_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(SerializedHandleVector);
 };

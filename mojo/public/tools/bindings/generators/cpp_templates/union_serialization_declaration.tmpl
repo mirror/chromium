@@ -23,7 +23,8 @@ struct Serializer<{{data_view}}, MaybeConstUserType> {
 {%- for field in union.fields %}
 {%-   set name = field.name %}
       case {{data_view}}::Tag::{{name|upper}}: {
-{%-   if field.kind|is_object_kind or field.kind|is_associated_kind %}
+{%-   if field.kind|is_object_kind or
+          field.kind|is_any_handle_or_interface_kind %}
 {%-     set kind = field.kind %}
 {%-     set serializer_type = kind|unmapped_type_for_serializer %}
         decltype(CallWithContext(Traits::{{name}}, input, custom_context))
@@ -35,6 +36,14 @@ struct Serializer<{{data_view}}, MaybeConstUserType> {
 {%-     else %}
         size += mojo::internal::PrepareToSerialize<{{serializer_type}}>(
             in_{{name}}, context);
+{%-       if kind|is_any_handle_or_interface_kind and
+              not kind|is_associated_kind and not kind|is_nullable_kind %}
+          MOJO_INTERNAL_DLOG_SERIALIZATION_WARNING(
+              !IsHandleOrInterfaceValid(
+                  context->handles.last_serialized_handle()),
+              mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_HANDLE,
+              "null {{name}} in {{union.name}}");
+{%-       endif %}
 {%-     endif %}
 {%-   endif %}
         break;
@@ -74,9 +83,15 @@ struct Serializer<{{data_view}}, MaybeConstUserType> {
 {%-   set kind = field.kind %}
 {%-   set serializer_type = kind|unmapped_type_for_serializer %}
       case {{data_view}}::Tag::{{field.name|upper}}: {
+{%-   if kind|is_any_handle_or_interface_kind and not kind|is_associated_kind %}
+        typename std::remove_reference<decltype(
+            CallWithContext(Traits::{{name}}, input, custom_context))>::type
+            in_{{name}};
+{%-   else %}
         decltype(CallWithContext(Traits::{{name}}, input, custom_context))
             in_{{name}} = CallWithContext(Traits::{{name}}, input,
                                           custom_context);
+{%-   endif %}
 {%-   if kind|is_object_kind %}
         typename decltype(result->data.f_{{name}})::BaseType* ptr;
 {%-     if kind|is_union_kind %}
@@ -101,14 +116,10 @@ struct Serializer<{{data_view}}, MaybeConstUserType> {
 {%-   elif kind|is_any_handle_or_interface_kind %}
         mojo::internal::Serialize<{{serializer_type}}>(
             in_{{name}}, &result->data.f_{{name}}, context);
-{%-     if not kind|is_nullable_kind %}
+{%-     if not kind|is_nullable_kind and kind|is_associated_kind %}
         MOJO_INTERNAL_DLOG_SERIALIZATION_WARNING(
             !mojo::internal::IsHandleOrInterfaceValid(result->data.f_{{name}}),
-{%-       if kind|is_associated_kind %}
             mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_INTERFACE_ID,
-{%-       else %}
-            mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_HANDLE,
-{%-       endif %}
             "invalid {{name}} in {{union.name}} union");
 {%-     endif %}
 

@@ -16,7 +16,7 @@
 #include "base/run_loop.h"
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "mojo/public/cpp/bindings/lib/message_builder.h"
+#include "mojo/public/cpp/bindings/message.h"
 #include "mojo/public/cpp/bindings/tests/message_queue.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -97,12 +97,13 @@ class ConnectorTest : public testing::Test {
 
   void TearDown() override {}
 
-  void AllocMessage(const char* text, Message* message) {
-    size_t payload_size = strlen(text) + 1;  // Plus null terminator.
-    internal::MessageBuilder builder(1, 0, payload_size, 0);
-    memcpy(builder.buffer()->Allocate(payload_size), text, payload_size);
-
-    *message = std::move(*builder.message());
+  void AllocMessage(const char* text,
+                    Message* message,
+                    std::vector<ScopedHandle> handles = {}) {
+    const size_t payload_size = strlen(text) + 1;  // Plus null terminator.
+    *message = Message(1, 0, payload_size, 0, std::move(handles));
+    memcpy(message->payload_buffer()->Allocate(payload_size), text,
+           payload_size);
   }
 
  protected:
@@ -304,17 +305,13 @@ TEST_F(ConnectorTest, MessageWithHandles) {
 
   const char kText[] = "hello world";
 
-  Message message1;
-  AllocMessage(kText, &message1);
-
   MessagePipe pipe;
-  message1.mutable_handles()->emplace_back(
-      ScopedHandle::From(std::move(pipe.handle0)));
+  Message message1;
+  std::vector<ScopedHandle> handles;
+  handles.emplace_back(ScopedHandle::From(std::move(pipe.handle0)));
+  AllocMessage(kText, &message1, std::move(handles));
 
   connector0.Accept(&message1);
-
-  // The message should have been transferred, releasing the handles.
-  EXPECT_TRUE(message1.handles()->empty());
 
   base::RunLoop run_loop;
   MessageAccumulator accumulator(run_loop.QuitClosure());

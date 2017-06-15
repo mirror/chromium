@@ -33,14 +33,12 @@ std::move(p_{{param.name}})
 {%- endmacro %}
 
 {%- macro build_message(struct, input_pattern, struct_display_name,
-                        serialization_context) -%}
+                        serialization_context, message) -%}
   {{struct_macros.serialize(struct, struct_display_name, input_pattern,
-                            "params", "builder.buffer()",
+                            "params", "%s.payload_buffer()"|format(message),
                             serialization_context)}}
-  ({{serialization_context}})->handles.Swap(
-      builder.message()->mutable_handles());
   ({{serialization_context}})->associated_endpoint_handles.swap(
-      *builder.message()->mutable_associated_endpoint_handles());
+      *{{message}}.mutable_associated_endpoint_handles());
 {%- endmacro %}
 
 {#--- Begin #}
@@ -159,16 +157,17 @@ bool {{class_name}}_{{method.name}}_ForwardToCallback::Accept(
 bool {{proxy_name}}::{{method.name}}(
     {{interface_macros.declare_sync_method_params("param_", method)}}) {
   mojo::internal::SerializationContext serialization_context;
-  {{struct_macros.get_serialized_size(params_struct, "param_%s",
-                                      "&serialization_context")}}
-
-  mojo::internal::MessageBuilder builder(
+  {{struct_macros.get_serialized_size(
+      params_struct, params_description, "param_%s", "&serialization_context")}}
+  std::vector<mojo::ScopedHandle> attached_handles;
+  serialization_context.handles.Swap(&attached_handles);
+  mojo::Message message(
       {{message_name}},
       mojo::Message::kFlagIsSync | mojo::Message::kFlagExpectsResponse,
-      size, serialization_context.associated_endpoint_count);
-
+      size, serialization_context.associated_endpoint_count,
+      std::move(attached_handles));
   {{build_message(params_struct, "param_%s", params_description,
-                  "&serialization_context")}}
+                  "&serialization_context", "message")}}
 
   bool result = false;
   std::unique_ptr<mojo::MessageReceiver> responder(
@@ -177,8 +176,7 @@ bool {{proxy_name}}::{{method.name}}(
 {%-     for param in method.response_parameters -%}
           , param_{{param.name}}
 {%-     endfor %}));
-  ignore_result(receiver_->AcceptWithResponder(builder.message(),
-                                               std::move(responder)));
+  ignore_result(receiver_->AcceptWithResponder(&message, std::move(responder)));
   return result;
 }
 {%-   endif %}
@@ -186,31 +184,31 @@ bool {{proxy_name}}::{{method.name}}(
 void {{proxy_name}}::{{method.name}}(
     {{interface_macros.declare_request_params("in_", method, use_once_callback)}}) {
   mojo::internal::SerializationContext serialization_context;
-  {{struct_macros.get_serialized_size(params_struct, "in_%s",
-                                      "&serialization_context")}}
+  {{struct_macros.get_serialized_size(
+      params_struct, params_description, "in_%s", "&serialization_context")}}
 
 {%- if method.response_parameters != None %}
   constexpr uint32_t kFlags = mojo::Message::kFlagExpectsResponse;
 {%- else %}
   constexpr uint32_t kFlags = 0;
 {%- endif %}
-  mojo::internal::MessageBuilder builder(
-      {{message_name}}, kFlags, size,
-      serialization_context.associated_endpoint_count);
-
+  std::vector<mojo::ScopedHandle> attached_handles;
+  serialization_context.handles.Swap(&attached_handles);
+  mojo::Message message({{message_name}}, kFlags, size,
+                        serialization_context.associated_endpoint_count,
+                        std::move(attached_handles));
   {{build_message(params_struct, "in_%s", params_description,
-                  "&serialization_context")}}
+                  "&serialization_context", "message")}}
 
 {%- if method.response_parameters != None %}
   std::unique_ptr<mojo::MessageReceiver> responder(
       new {{class_name}}_{{method.name}}_ForwardToCallback(
           std::move(callback)));
-  ignore_result(receiver_->AcceptWithResponder(builder.message(),
-                                               std::move(responder)));
+  ignore_result(receiver_->AcceptWithResponder(&message, std::move(responder)));
 {%- else %}
   // This return value may be ignored as false implies the Connector has
   // encountered an error, which will be visible through other means.
-  ignore_result(receiver_->Accept(builder.message()));
+  ignore_result(receiver_->Accept(&message));
 {%- endif %}
 }
 {%- endfor %}
@@ -275,19 +273,21 @@ void {{class_name}}_{{method.name}}_ProxyToResponder::Run(
     {{interface_macros.declare_responder_params(
         "in_", method.response_parameters, for_blink)}}) {
   mojo::internal::SerializationContext serialization_context;
-  {{struct_macros.get_serialized_size(response_params_struct, "in_%s",
-                                      "&serialization_context")}}
+  {{struct_macros.get_serialized_size(
+      response_params_struct, params_description, "in_%s",
+      "&serialization_context")}}
 
   uint32_t flags = (is_sync_ ? mojo::Message::kFlagIsSync : 0) |
                    mojo::Message::kFlagIsResponse;
-  mojo::internal::MessageBuilder builder(
-      {{message_name}}, flags, size,
-      serialization_context.associated_endpoint_count);
-  builder.message()->set_request_id(request_id_);
-
+  std::vector<mojo::ScopedHandle> attached_handles;
+  serialization_context.handles.Swap(&attached_handles);
+  mojo::Message message({{message_name}}, flags, size,
+                        serialization_context.associated_endpoint_count,
+                        std::move(attached_handles));
   {{build_message(response_params_struct, "in_%s", params_description,
-                  "&serialization_context")}}
-  ignore_result(responder_->Accept(builder.message()));
+                  "&serialization_context", "message")}}
+  message.set_request_id(request_id_);
+  ignore_result(responder_->Accept(&message));
   // TODO(darin): Accept() returning false indicates a malformed message, and
   // that may be good reason to close the connection. However, we don't have a
   // way to do that from here. We should add a way.

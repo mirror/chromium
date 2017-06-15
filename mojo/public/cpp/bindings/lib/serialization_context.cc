@@ -16,16 +16,31 @@ SerializedHandleVector::SerializedHandleVector() = default;
 
 SerializedHandleVector::~SerializedHandleVector() = default;
 
-Handle_Data SerializedHandleVector::AddHandle(mojo::ScopedHandle handle) {
-  Handle_Data data;
-  if (!handle.is_valid()) {
-    data.value = kEncodedInvalidHandleValue;
-  } else {
-    DCHECK_LT(handles_.size(), std::numeric_limits<uint32_t>::max());
-    data.value = static_cast<uint32_t>(handles_.size());
+void SerializedHandleVector::AddHandle(mojo::ScopedHandle handle) {
+  DCHECK_LT(handles_.size(), std::numeric_limits<uint32_t>::max());
+  if (handle.is_valid()) {
+    serialized_handles_.emplace_back(static_cast<uint32_t>(handles_.size()));
     handles_.emplace_back(std::move(handle));
+  } else {
+    serialized_handles_.emplace_back(kEncodedInvalidHandleValue);
   }
-  return data;
+}
+
+void SerializedHandleVector::AddInterface(mojo::ScopedHandle handle,
+                                          uint32_t version) {
+  AddHandle(std::move(handle));
+  interface_versions_.emplace_back(version);
+}
+
+void SerializedHandleVector::CopyNextSerializedHandle(Handle_Data* data) {
+  DCHECK_LT(next_serialized_handle_to_copy_, serialized_handles_.size());
+  data->value = serialized_handles_[next_serialized_handle_to_copy_++];
+}
+
+void SerializedHandleVector::CopyNextSerializedInterface(Interface_Data* data) {
+  CopyNextSerializedHandle(&data->handle);
+  DCHECK_LT(next_interface_version_to_copy_, interface_versions_.size());
+  data->version = interface_versions_[next_interface_version_to_copy_++];
 }
 
 mojo::ScopedHandle SerializedHandleVector::TakeHandle(

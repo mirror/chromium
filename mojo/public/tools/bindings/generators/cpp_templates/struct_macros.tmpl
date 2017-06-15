@@ -2,6 +2,8 @@
 
 {#  Computes the serialized size for the specified struct.
     |struct| is the struct definition.
+    |struct_display_name| is the display name for the struct that can be showed
+    in error/log messages, for example, "FooStruct", "FooMethod request".
     |input_field_pattern| should be a pattern that contains one string
     placeholder, for example, "input->%s", "p_%s". The placeholder will be
     substituted with struct field names to refer to the input fields.
@@ -16,11 +18,12 @@
     - method parameters/response parameters: the input is a list of
       arguments.
     It declares |size| of type size_t to store the resulting size. #}
-{%- macro get_serialized_size(struct, input_field_pattern, context,
-                              input_may_be_temp=False) -%}
+{%- macro get_serialized_size(struct, struct_display_name, input_field_pattern,
+                              context, input_may_be_temp=False) -%}
   size_t size = sizeof({{struct|get_qualified_name_for_kind(internal=True)}});
 {%-   for pf in struct.packed.packed_fields_in_ordinal_order
-          if pf.field.kind|is_object_kind or pf.field.kind|is_associated_kind %}
+          if pf.field.kind|is_object_kind or
+              pf.field.kind|is_any_handle_or_interface_kind %}
 {%-     set name = pf.field.name -%}
 {%-     set kind = pf.field.kind -%}
 {%-     set original_input_field = input_field_pattern|format(name) %}
@@ -37,6 +40,14 @@
 {%-     else %}
   size += mojo::internal::PrepareToSerialize<{{serializer_type}}>(
       {{input_field}}, {{context}});
+{%-       if kind|is_any_handle_or_interface_kind and
+              not kind|is_associated_kind and not kind|is_nullable_kind %}
+  MOJO_INTERNAL_DLOG_SERIALIZATION_WARNING(
+      !IsHandleOrInterfaceValid(
+          ({{context}})->handles.last_serialized_handle()),
+      mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_HANDLE,
+      "null {{name}} in {{struct_display_name}}");
+{%-       endif %}
 {%-     endif %}
 {%-   endfor %}
 {%- endmacro -%}
@@ -73,7 +84,13 @@
 {%-     set input_field = "in_%s"|format(name) if input_may_be_temp
                                                else original_input_field %}
 {%-     if input_may_be_temp %}
+{%-       if kind|is_any_handle_or_interface_kind
+              and not kind|is_associated_kind %}
+  typename std::remove_reference<decltype({{original_input_field}})>::type
+      in_{{name}};
+{%-       else %}
   decltype({{original_input_field}}) in_{{name}} = {{original_input_field}};
+{%-       endif %}
 {%-     endif %}
 {%-   endif %}
 
@@ -106,14 +123,10 @@
 {%-   elif kind|is_any_handle_or_interface_kind %}
   mojo::internal::Serialize<{{serializer_type}}>(
       {{input_field}}, &{{output}}->{{name}}, {{context}});
-{%-     if not kind|is_nullable_kind %}
+{%-     if not kind|is_nullable_kind and kind|is_associated_kind %}
   MOJO_INTERNAL_DLOG_SERIALIZATION_WARNING(
       !mojo::internal::IsHandleOrInterfaceValid({{output}}->{{name}}),
-{%-       if kind|is_associated_kind %}
       mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_INTERFACE_ID,
-{%-       else %}
-      mojo::internal::VALIDATION_ERROR_UNEXPECTED_INVALID_HANDLE,
-{%-       endif %}
       "invalid {{name}} in {{struct_display_name}}");
 {%-     endif %}
 
