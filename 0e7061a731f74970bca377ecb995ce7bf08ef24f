@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "ba7ae6b0_26a3b8e7",
+        "filename": "content/browser/power_monitor_browsertest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T13:23:08Z",
+      "side": 1,
+      "message": "Your reasoning makes sense to me, in which case we should for safety have a similar flow for the renderer process as we do for the utility process (note that if you Run() a RunLoop after it has had Quit() called on it, it just exits immediately.)",
+      "parentUuid": "4617a869_41ef753d",
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a870b39e_7b5700aa",
         "filename": "content/shell/utility/shell_content_utility_client.cc",
         "patchSetId": 1
@@ -72,6 +90,30 @@
       "side": 1,
       "message": "Yeah I added an inline question about this before requesting review but seems it has not been published out.\nI\u0027m considering to put this class into //content/shell/common/power_monitor_test_impl.{cc,h}, because it\u0027s expected to be used only by ShellContentXXXXClient classes. WDYT? Thanks.",
       "parentUuid": "a870b39e_7b5700aa",
+      "range": {
+        "startLine": 112,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 26
+      },
+      "revId": "0e7061a731f74970bca377ecb995ce7bf08ef24f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92567d48_f9acc51d",
+        "filename": "content/shell/utility/shell_content_utility_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T13:23:08Z",
+      "side": 1,
+      "message": "This makes sense to me.",
+      "parentUuid": "39f93165_d885dcf5",
       "range": {
         "startLine": 112,
         "startChar": 6,
