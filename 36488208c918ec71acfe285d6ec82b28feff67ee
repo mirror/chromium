@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f15dfde1_4c62835b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-15T01:26:32Z",
+      "side": 1,
+      "message": "The purpose of this metric is to estimate memory savings right? Do we know what percentage of GPU memory usage is for scrolling contents tiles so that we can estimate the potential memory saved? Should we be including the root layer since those tiles are used on all pages?",
+      "revId": "36488208c918ec71acfe285d6ec82b28feff67ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
