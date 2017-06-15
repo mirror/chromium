@@ -18,7 +18,6 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "base/task_scheduler/post_task.h"
-#include "base/threading/sequenced_worker_pool.h"
 #include "base/threading/thread_restrictions.h"
 #include "base/values.h"
 #include "build/build_config.h"
@@ -325,8 +324,7 @@ void InstallMockInterceptors(
   net::URLRequestFilter::GetInstance()->AddHostnameInterceptor(
       search_url.scheme(), search_url.host(),
       net::URLRequestMockHTTPJob::CreateInterceptorForSingleFile(
-          root_http.AppendASCII("title3.html"),
-          BrowserThread::GetBlockingPool()));
+          root_http.AppendASCII("title3.html")));
 }
 
 class ErrorPageTest : public InProcessBrowserTest {
