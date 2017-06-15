@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3c06af2_4efe859c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-15T14:24:28Z",
+      "side": 1,
+      "message": "is this have to be Integer but int?",
+      "range": {
+        "startLine": 39,
+        "startChar": 16,
+        "endLine": 39,
+        "endChar": 23
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "330a73f1_cdca8249",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentInstrument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-15T14:24:28Z",
+      "side": 1,
+      "message": "remove this interface since it is replaced by canMakePayment?",
+      "range": {
+        "startLine": 269,
+        "startChar": 19,
+        "endLine": 269,
+        "endChar": 30
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69731ed6_ec6cef36",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentInstrument.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 371,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-15T14:24:28Z",
+      "side": 1,
+      "message": "remove this interface since you have getCountry()?",
+      "range": {
+        "startLine": 371,
+        "startChar": 27,
+        "endLine": 371,
+        "endChar": 44
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b92dd6_ed80247c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/CardEditor.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-15T14:24:28Z",
+      "side": 1,
+      "message": "what if editing a complete card, the user could change the card number so as to change the card type, however matchesMerchantCardTypeExactly has not been updated.",
+      "range": {
+        "startLine": 369,
+        "startChar": 26,
+        "endLine": 369,
+        "endChar": 31
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20e9a8dd_e1c986a8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/PaymentRequestImpl.java",
+        "patchSetId": 10
+      },
+      "lineNbr": 1543,
+      "author": {
+        "id": 1129572
+      },
+      "writtenOn": "2017-06-15T14:24:28Z",
+      "side": 1,
+      "message": "if(mPendingInstruments.get(i).isAutofillInstrument())...?",
+      "range": {
+        "startLine": 1543,
+        "startChar": 12,
+        "endLine": 1543,
+        "endChar": 39
+      },
+      "revId": "6ba610c9837c6d63f6af7afe43797b5ecab52dd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
