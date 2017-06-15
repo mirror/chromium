@@ -196,6 +196,10 @@ void IDBRequestQueueItem::CancelLoading() {
   if (loader_) {
     loader_->Cancel();
     loader_ = nullptr;
+
+    // IDBRequestLoader::Cancel() should not call any of the EnqueueResponse
+    // variants.
+    DCHECK(!ready_);
   }
 
   // Mark this item as ready so the transaction's result queue can be drained.

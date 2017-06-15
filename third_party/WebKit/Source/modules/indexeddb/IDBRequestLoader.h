@@ -84,6 +84,14 @@ class IDBRequestLoader : public FileReaderLoaderClient {
 
   // The value being currently unwrapped.
   Vector<RefPtr<IDBValue>>::iterator current_value_;
+
+#if DCHECK_IS_ON()
+  // True after Start() is called.
+  bool started_ = false;
+
+  // True after Cancel() is called.
+  bool canceled_ = false;
+#endif  // DCHECK_IS_ON()
 };
 
 }  // namespace blink

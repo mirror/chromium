@@ -26,6 +26,11 @@ IDBRequestLoader::~IDBRequestLoader() {
 }
 
 void IDBRequestLoader::Start() {
+#if DCHECK_IS_ON()
+  DCHECK(!started_) << "Start() was already called";
+  canceled_ = true;
+#endif  // DCHECK_IS_ON()
+
   // TODO(pwnall): Start() / StartNextValue() unwrap large values sequentially.
   //               Consider parallelizing. The main issue is that the Blob reads
   //               will have to be throttled somewhere, and the extra complexity
@@ -35,6 +40,11 @@ void IDBRequestLoader::Start() {
 }
 
 void IDBRequestLoader::Cancel() {
+#if DCHECK_IS_ON()
+  DCHECK(started_) << "Cancel() called before Start()";
+  DCHECK(!canceled_) << "Cancel() was already called";
+  canceled_ = true;
+#endif  // DCHECK_IS_ON()
   loader_->Cancel();
 }
 
@@ -74,6 +84,11 @@ void IDBRequestLoader::DidReceiveDataForClient(const char* data,
 }
 
 void IDBRequestLoader::DidFinishLoading() {
+#if DCHECK_IS_ON()
+  DCHECK(!canceled_)
+      << "FileReaderLoader called DidFinishLoading() after it was Cancel()ed.";
+#endif  // DCHECK_IS_ON()
+
   *current_value_ = IDBValueUnwrapper::Unwrap(
       current_value_->Get(), SharedBuffer::AdoptVector(wrapped_data_));
   ++current_value_;
@@ -82,6 +97,11 @@ void IDBRequestLoader::DidFinishLoading() {
 }
 
 void IDBRequestLoader::DidFail(FileError::ErrorCode) {
+#if DCHECK_IS_ON()
+  DCHECK(!canceled_)
+      << "FileReaderLoader called DidFail() after it was Cancel()ed.";
+#endif  // DCHECK_IS_ON()
+
   ReportError();
 }
 
