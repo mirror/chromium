@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3e4aa39_51002595",
+        "filename": "device/vr/android/gvr/gvr_delegate.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002411
+      },
+      "writtenOn": "2017-06-15T16:47:11Z",
+      "side": 1,
+      "message": "Rename this function",
+      "range": {
+        "startLine": 33,
+        "startChar": 5,
+        "endLine": 33,
+        "endChar": 17
+      },
+      "revId": "1c38295538117bfcb59627ca0d2f7f9e80a982bd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
