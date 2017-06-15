@@ -22,6 +22,30 @@
       "revId": "846673ded11b79a1821f795f74c732ffa85cf174",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b632f62c_70b0512e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-15T19:00:17Z",
+      "side": 1,
+      "message": "Yes, it should only be called once. I added an assert.",
+      "parentUuid": "6e81cd7d_b7bf4f5f",
+      "range": {
+        "startLine": 52,
+        "startChar": 8,
+        "endLine": 52,
+        "endChar": 22
+      },
+      "revId": "846673ded11b79a1821f795f74c732ffa85cf174",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
