@@ -112,6 +112,7 @@ if (ios_sdk_path == "") {
   xcode_version_int = _ios_sdk_result.xcode_version_int
   xcode_build = _ios_sdk_result.xcode_build
   machine_os_build = _ios_sdk_result.machine_os_build
+
   if (use_ios_simulator) {
     # This is weird, but Xcode sets DTPlatformBuild to an empty field for
     # simulator builds.

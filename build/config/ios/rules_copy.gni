@@ -1328,168 +1328,45 @@ set_defaults("ios_framework_bundle") {
   configs = default_shared_library_configs
 }
 
-template("ios_xcuitest_test") {
-  _target_name = target_name
-  _xcuitest_runner_target = _target_name + "-Runner"
-  _xcuitest_target = _target_name
-  _xctrunner_path =
+template("ios_xcui_test") {
+  # needs to be removed and rethink how to pass deps.
+  forward_variables_from(invoker, "*")
+
+  testonly = true
+
+  xctrunner_path =
       "$ios_sdk_platform_path/Developer/Library/Xcode/Agents/XCTRunner.app"
 
-  _xcuitest_arch_loadable_target = _xcuitest_target + "_arch_loadable_module"
-  _xcuitest_lipo_loadable_target = _xcuitest_target + "_loadable_module"
+  _source_name = "$target_gen_dir/${target_name}_merged.plist"
 
-  loadable_module(_xcuitest_arch_loadable_target) {
-    forward_variables_from(invoker, [ "deps" ])
-    testonly = true
-
-    visibility = [ ":$_xcuitest_lipo_loadable_target($default_toolchain)" ]
-    if (current_toolchain != default_toolchain) {
-      visibility += [ ":$_xcuitest_target" ]
-    }
-
-    configs += [ "//build/config/ios:xctest_config" ]
-
-    output_dir = "$target_out_dir/$current_cpu"
-    output_name = _xcuitest_target
-    output_prefix_override = true
-    output_extension = ""
-  }
-
-  if (current_toolchain != default_toolchain) {
-    # For fat builds, only the default toolchain will generate a test bundle.
-    # For the other toolchains, the template is only used for building the
-    # arch-specific binary, thus the default target is just a group().
-    group(_xcuitest_target) {
-      forward_variables_from(invoker,
-                             [
-                               "visibility",
-                               "testonly",
-                             ])
-      public_deps = [
-        ":$_xcuitest_arch_loadable_target",
-      ]
-    }
-  } else {
-    _xcuitest_info_plist_target = _xcuitest_target + "_info_plist"
-    _xcuitest_info_plist_bundle = _xcuitest_target + "_info_plist_bundle"
-    ios_info_plist(_xcuitest_info_plist_target) {
-      visibility = [ ":$_xcuitest_info_plist_bundle" ]
-      info_plist = "//build/config/ios/Module-Info.plist"
-      executable_name = _xcuitest_target
-      extra_substitutions = [ "MODULE_NAME=$_xcuitest_target" ]
-    }
-
-    bundle_data(_xcuitest_info_plist_bundle) {
-      visibility = [ ":$_xcuitest_target" ]
-      public_deps = [
-        ":$_xcuitest_info_plist_target",
-      ]
-      sources = get_target_outputs(":$_xcuitest_info_plist_target")
-      outputs = [
-        "{{bundle_root_dir}}/Info.plist",
-      ]
-    }
-
-    lipo_binary(_xcuitest_lipo_loadable_target) {
-      forward_variables_from(invoker,
-                             [
-                               "configs",
-                               "testonly",
-                             ])
-      visibility = [ ":$_xcuitest_target" ]
-      output_name = _xcuitest_target
-      arch_binary_target = ":$_xcuitest_arch_loadable_target"
-      arch_binary_output = _xcuitest_target
-    }
-
-    _xcuitest_bundle = _xcuitest_target + "_bundle"
-    create_signed_bundle(_xcuitest_target) {
-      forward_variables_from(invoker, [ "enable_code_signing" ])
-
-      testonly = true
-      product_type = "com.apple.product-type.bundle.ui-testing"
-      bundle_extension = ".xctest"
-
-      output_name = _xcuitest_target
-      bundle_binary_target = ":$_xcuitest_lipo_loadable_target"
-      bundle_binary_output = _xcuitest_target
-
-      deps = [
-        ":$_xcuitest_info_plist_bundle",
-      ]
-    }
-
-    bundle_data(_xcuitest_bundle) {
-      testonly = true
-      visibility = [ ":$_xcuitest_runner_target" ]
-      public_deps = [
-        ":$_xcuitest_target",
-      ]
-      sources = [
-        "$root_out_dir/$_xcuitest_target.xctest",
-      ]
-      outputs = [
-        "{{bundle_plugins_dir}}/$_xcuitest_target.xctest",
-      ]
-    }
-  }
-
-  _xcuitest_runner_info_plist_merge_plist =
-      _xcuitest_runner_target + "_info_plist_merge_plist"
-  action(_xcuitest_runner_info_plist_merge_plist) {
+  action(target_name + "_merge_plist") {
     script = "//build/config/mac/plist_util.py"
 
     # NOTE: XCTRunnerAddition+Info.plist must come after $xctrunner_path/Info.plist
     # because it needs to override a few keys of the before one.
     sources = [
-      "$_xctrunner_path/Info.plist",
+      "$xctrunner_path/Info.plist",
       "//ios/chrome/app/resources/XCTRunnerAddition+Info.plist",
     ]
-
-    _output_name = "$target_gen_dir/${_xcuitest_runner_target}_merged.plist"
     outputs = [
-      _output_name,
+      _source_name,
     ]
     args = [
              "merge",
              "-f=xml1",
-             "-o=" + rebase_path(_output_name, root_build_dir),
+             "-o=" + rebase_path(_source_name, root_build_dir),
            ] + rebase_path(sources, root_build_dir)
   }
 
-  _xcuitest_runner_info_plist_target = _xcuitest_runner_target + "_info_plist"
-  _xcuitest_runner_info_plist_bundle =
-      _xcuitest_runner_target + "_info_plist_bundle"
+  _target_name = target_name
+  _test_runner_target = _target_name + "-Runner"
 
-  ios_info_plist(_xcuitest_runner_info_plist_target) {
-    visibility = [ ":$_xcuitest_runner_info_plist_bundle" ]
-    info_plist_target = ":$_xcuitest_runner_info_plist_merge_plist"
-    executable_name = "XCTRunner"
-    extra_substitutions = [
-      # Remember to add the auto management cert condition to everywhere applicable.
-      "CHROMIUM_BUNDLE_ID=$_xcuitest_runner_target",
-      "CHROMIUM_SHORT_NAME=$_target_name",
-    ]
-  }
-
-  bundle_data(_xcuitest_runner_info_plist_bundle) {
-    testonly = true
-    visibility = [ ":$_xcuitest_runner_target" ]
-    public_deps = [
-      ":$_xcuitest_runner_info_plist_target",
-    ]
-    sources = get_target_outputs(":$_xcuitest_runner_info_plist_target")
-    outputs = [
-      "{{bundle_root_dir}}/Info.plist",
-    ]
-  }
-
-  _xcuitest_runner_bundle = _xcuitest_runner_target + "_bundle"
-  bundle_data(_xcuitest_runner_bundle) {
+  bundle_data("runner_dep") {
     sources = [
-      "$_xctrunner_path/PkgInfo",
-      "$_xctrunner_path/XCTRunner",
-      "$_xctrunner_path/_CodeSignature",
+      "$xctrunner_path/Info.plist",
+      "$xctrunner_path/PkgInfo",
+      "$xctrunner_path/XCTRunner",
+      "$xctrunner_path/_CodeSignature",
     ]
 
     outputs = [
@@ -1497,9 +1374,7 @@ template("ios_xcuitest_test") {
     ]
   }
 
-  _xcuitest_runner_frameworks_bundle =
-      _xcuitest_runner_target + "_frameworks_bundle"
-  bundle_data(_xcuitest_runner_frameworks_bundle) {
+  bundle_data("runner_frameworks") {
     sources = [
       "$ios_sdk_platform_path/Developer/Library/Frameworks/XCTest.framework",
     ]
@@ -1509,27 +1384,21 @@ template("ios_xcuitest_test") {
     ]
   }
 
-  create_bundle(_xcuitest_runner_target) {
-    testonly = true
-
-    _bundle_root_dir = "$root_out_dir/$_xcuitest_runner_target" + ".app"
-
-    product_type = "com.apple.product-type.bundle.ui-testing"
+  create_bundle(_target_name) {
+    _bundle_root_dir = "$root_out_dir/$_test_runner_target" + ".app"
     bundle_root_dir = _bundle_root_dir
     bundle_resources_dir = _bundle_root_dir
     bundle_executable_dir = _bundle_root_dir
     bundle_plugins_dir = "$_bundle_root_dir/PlugIns"
 
     deps = [
-      ":$_xcuitest_bundle",
-      ":$_xcuitest_runner_bundle",
-      ":$_xcuitest_runner_frameworks_bundle",
-      ":$_xcuitest_runner_info_plist_bundle",
+      ":runner_dep",
+      ":runner_frameworks",
     ]
   }
 }
 
-set_defaults("ios_xcuitest_test") {
+set_defaults("ios_xcui_test") {
   configs = default_executable_configs
 }
 

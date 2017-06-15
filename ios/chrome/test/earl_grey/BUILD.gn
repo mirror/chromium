@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+import("//build/config/ios/rules.gni")
 import("//ios/chrome/test/earl_grey/chrome_ios_eg_test.gni")
 
 group("all_tests") {
@@ -17,6 +18,25 @@ group("all_tests") {
     ":ios_chrome_smoke_egtests",
     ":ios_chrome_ui_egtests",
     ":ios_chrome_web_egtests",
+    ":xcuitests",
+    ":xcuitests-Runner",
+  ]
+}
+
+source_set("xcuitests_sources") {
+  testonly = true
+  sources = [
+    "//xcuitest.m",
+  ]
+
+  configs += [ "//build/config/ios:xctest_config" ]
+  libs = [ "XCTest.framework" ]
+}
+
+ios_xcuitest_test("xcuitests") {
+  testonly = true
+  deps = [
+    ":xcuitests_sources",
   ]
 }
 

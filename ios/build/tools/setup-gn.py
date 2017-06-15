@@ -14,6 +14,8 @@ import sys
 import tempfile
 import ConfigParser
 
+import time
+
 try:
   import cStringIO as StringIO
 except ImportError:
@@ -342,7 +344,14 @@ def Main(args):
     os.makedirs(out_dir)
 
   GenerateXcodeProject(gn_path, args.root, out_dir, settings)
+
+  print "Finished generating xcode project"
+  print "generate build rules"
+
   GenerateGnBuildRules(gn_path, args.root, out_dir, settings)
+
+  print "Finished generating build rules"
+
 
 
 if __name__ == '__main__':

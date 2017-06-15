@@ -122,6 +122,7 @@ template("chrome_ios_eg_test") {
       "//ios/chrome/test/earl_grey:hooks",
       "//ios/testing:http_server_bundle_data",
     ]
+
     if (!defined(bundle_deps)) {
       bundle_deps = []
     }
