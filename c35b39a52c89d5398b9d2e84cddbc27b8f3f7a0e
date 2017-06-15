@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "90b92ac4_4bda4fa1",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-15T03:43:58Z",
+      "side": 1,
+      "message": "Having pondered this a little more, I expect a function named \"Can...\" to return a bool, so maybe make it \"CheckCanStart...\". Unfortunately of course this makes a long function name even longer. I\u0027m not adamant about this, however. WDYT?",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09d91bcf_3fe28291",
+        "filename": "third_party/WebKit/Source/core/animation/Animation.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-15T03:43:58Z",
+      "side": 1,
+      "message": "\"!code.Ok()\"?\nLikewise below.",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97e18488_42829dd0",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 3
@@ -69,6 +103,40 @@
       "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "641cb244_67b544b8",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-15T03:43:58Z",
+      "side": 1,
+      "message": "DCHECK(condition) instead of if (condition) NOTREACHED?",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "903d90fb_b522322f",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1144669
+      },
+      "writtenOn": "2017-06-15T03:43:58Z",
+      "side": 1,
+      "message": "I don\u0027t think these need to be given default values now that you have an explicit constructor.",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
