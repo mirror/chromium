@@ -2,57 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#import "chrome/browser/ui/cocoa/menu_button.h"
+
 #include "base/mac/scoped_nsobject.h"
 #import "chrome/browser/ui/cocoa/clickhold_button_cell.h"
-#import "chrome/browser/ui/cocoa/menu_button.h"
 #import "chrome/browser/ui/cocoa/test/cocoa_test_helper.h"
-
-@interface MenuButtonTestDelegate : NSObject<NSMenuDelegate> {
- @private
-  base::scoped_nsobject<NSMenu> menu_;
-  BOOL open_;
-  BOOL didOpen_;
-}
-- (BOOL)isOpen;
-- (BOOL)didOpen;
-@end
-
-@implementation MenuButtonTestDelegate
-- (id)initWithMenu:(NSMenu*)menu {
-  if ((self = [super init])) {
-    menu_.reset([menu retain]);
-  }
-  return self;
-}
-
-- (BOOL)isOpen {
-  return open_;
-}
-
-- (BOOL)didOpen {
-  return didOpen_;
-}
-
-- (void)menuWillOpen:(NSMenu*)menu {
-  EXPECT_EQ(menu_.get(), menu);
-  EXPECT_FALSE(open_);
-  open_ = YES;
-  didOpen_ = YES;
-  NSArray* modes = [NSArray arrayWithObjects:NSEventTrackingRunLoopMode,
-                                             NSDefaultRunLoopMode,
-                                             nil];
-  [menu performSelector:@selector(cancelTracking)
-             withObject:nil
-             afterDelay:0.1
-                inModes:modes];
-}
-
-- (void)menuDidClose:(NSMenu*)menu {
-  EXPECT_EQ(menu_.get(), menu);
-  EXPECT_TRUE(open_);
-  open_ = NO;
-}
-@end
+#import "chrome/browser/ui/cocoa/test/menu_test_observer.h"
 
 namespace {
 
@@ -99,7 +54,7 @@ class MenuButtonTest : public CocoaTest {
     return event;
   }
 
-  MenuButton* button_;
+  MenuButton* button_;  // Weak, owned by test_window().
 };
 
 TEST_VIEW(MenuButtonTest, button_);
@@ -117,22 +72,22 @@ TEST_F(MenuButtonTest, OpenOnClick) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   [button_ setOpenMenuOnClick:YES];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   // Should open the menu.
   [button_ performClick:nil];
 
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 // Test classic Mac menu behavior.
@@ -140,93 +95,93 @@ TEST_F(MenuButtonTest, DISABLED_OpenOnClickAndHold) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   [button_ setOpenMenuOnClick:YES];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   // Should open the menu.
   NSEvent* event = MouseEvent(NSLeftMouseDown);
   [test_window() sendEvent:event];
 
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 TEST_F(MenuButtonTest, OpenOnRightClick) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   [button_ setOpenMenuOnClick:YES];
   // Right click is enabled.
   [button_ setOpenMenuOnRightClick:YES];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   // Should open the menu.
   NSEvent* event = MouseEvent(NSRightMouseDown);
   [button_ rightMouseDown:event];
 
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 TEST_F(MenuButtonTest, DontOpenOnRightClickWithoutSetRightClick) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   [button_ setOpenMenuOnClick:YES];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   // Should not open the menu.
   NSEvent* event = MouseEvent(NSRightMouseDown);
   [button_ rightMouseDown:event];
 
-  EXPECT_FALSE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_FALSE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 
   // Should open the menu in this case.
   [button_ performClick:nil];
 
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 TEST_F(MenuButtonTest, OpenOnAccessibilityPerformAction) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   NSCell* buttonCell = [button_ cell];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   [button_ setOpenMenuOnClick:YES];
 
@@ -244,24 +199,24 @@ TEST_F(MenuButtonTest, OpenOnAccessibilityPerformAction) {
   EXPECT_TRUE([actionNames containsObject:NSAccessibilityPressAction]);
 
   [buttonCell accessibilityPerformAction:NSAccessibilityShowMenuAction];
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 TEST_F(MenuButtonTest, OpenOnAccessibilityPerformActionWithSetRightClick) {
   base::scoped_nsobject<NSMenu> menu(CreateMenu());
   ASSERT_TRUE(menu.get());
 
-  base::scoped_nsobject<MenuButtonTestDelegate> delegate(
-      [[MenuButtonTestDelegate alloc] initWithMenu:menu.get()]);
-  ASSERT_TRUE(delegate.get());
+  base::scoped_nsobject<MenuTestObserver> observer(
+      [[MenuTestObserver alloc] initWithMenu:menu.get()]);
+  ASSERT_TRUE(observer.get());
+  [observer setCloseAfterOpening:YES];
 
-  [menu setDelegate:delegate.get()];
   [button_ setAttachedMenu:menu];
   NSCell* buttonCell = [button_ cell];
 
-  EXPECT_FALSE([delegate isOpen]);
-  EXPECT_FALSE([delegate didOpen]);
+  EXPECT_FALSE([observer isOpen]);
+  EXPECT_FALSE([observer didOpen]);
 
   [button_ setOpenMenuOnClick:YES];
 
@@ -283,8 +238,8 @@ TEST_F(MenuButtonTest, OpenOnAccessibilityPerformActionWithSetRightClick) {
   EXPECT_TRUE([actionNames containsObject:NSAccessibilityShowMenuAction]);
 
   [buttonCell accessibilityPerformAction:NSAccessibilityShowMenuAction];
-  EXPECT_TRUE([delegate didOpen]);
-  EXPECT_FALSE([delegate isOpen]);
+  EXPECT_TRUE([observer didOpen]);
+  EXPECT_FALSE([observer isOpen]);
 }
 
 }  // namespace
