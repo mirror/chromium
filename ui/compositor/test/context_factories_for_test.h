@@ -20,6 +20,11 @@ void InitializeContextFactoryForTests(
     ui::ContextFactory** context_factory,
     ui::ContextFactoryPrivate** context_factory_private);
 
+// Inializes FrameSinkManagerHost by connecting to an in process
+// MojoFrameSinkManager for tests. Must be called after
+// InitializeContextFactoryForTests().
+void InitializeFrameSinkManagerHostForTests();
+
 void TerminateContextFactoryForTests();
 
 }  // namespace ui
