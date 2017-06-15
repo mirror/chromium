@@ -16,6 +16,24 @@
       "revId": "ffb217e0bb19bf10b364443a9a408c5667a1ad0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b98b22_f9d60410",
+        "filename": "cc/trees/layer_tree_host_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2775,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-15T16:05:12Z",
+      "side": 1,
+      "message": "This has something to do with this block that begins the commit process:\nhttps://cs.chromium.org/chromium/src/cc/trees/proxy_main.cc?type\u003dcs\u0026q\u003dDebugScopedSetMainThreadBlocked\u0026l\u003d252\n\nCode that accesses sent_gesture_ before this block is safe according to TSAN (e.g., ApplyViewportDeltas) but not code that is after this block (e.g., CommitComplete).",
+      "parentUuid": "15dba26a_7576a9a8",
+      "revId": "ffb217e0bb19bf10b364443a9a408c5667a1ad0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
