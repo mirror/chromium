@@ -1007,18 +1007,6 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
                    lengths);
   }
 
-  // image-orientation
-  static RespectImageOrientationEnum InitialRespectImageOrientation() {
-    return kDoNotRespectImageOrientation;
-  }
-  RespectImageOrientationEnum RespectImageOrientation() const {
-    return static_cast<RespectImageOrientationEnum>(
-        RespectImageOrientationInternal());
-  }
-  void SetRespectImageOrientation(RespectImageOrientationEnum v) {
-    SetRespectImageOrientationInternal(v);
-  }
-
   // -webkit-margin-before-collapse (aka -webkit-margin-top-collapse)
   static EMarginCollapse InitialMarginBeforeCollapse() {
     return EMarginCollapse::kCollapse;
