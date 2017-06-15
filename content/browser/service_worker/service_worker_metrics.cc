@@ -847,6 +847,7 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
     base::TimeDelta worker_start,
     base::TimeDelta response_start,
     EmbeddedWorkerStatus initial_worker_status,
+    StartSituation start_situation,
     ResourceType resource_type) {
   DCHECK_GE(worker_start.ToInternalValue(), 0);
   DCHECK_GE(response_start.ToInternalValue(), 0);
@@ -864,7 +865,15 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
   if (nav_preload_finished_first) {
     worker_wait_time = worker_start - response_start;
   }
+  const bool worker_start_occurred =
+      initial_worker_status != EmbeddedWorkerStatus::RUNNING;
+  const WorkerPreparationType preparation =
+      GetWorkerPreparationType(initial_worker_status, start_situation);
 
+  UMA_HISTOGRAM_ENUMERATION(
+      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
+      static_cast<int>(preparation),
+      static_cast<int>(WorkerPreparationType::NUM_TYPES));
   UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.NavPreload.ResponseTime_MainFrame",
                              response_start);
   UMA_HISTOGRAM_BOOLEAN("ServiceWorker.NavPreload.FinishedFirst_MainFrame",
@@ -876,8 +885,6 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
         "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame", worker_wait_time);
   }
 
-  const bool worker_start_occurred =
-      initial_worker_status != EmbeddedWorkerStatus::RUNNING;
   if (worker_start_occurred) {
     UMA_HISTOGRAM_MEDIUM_TIMES(
         "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
