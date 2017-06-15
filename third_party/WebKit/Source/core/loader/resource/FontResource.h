@@ -78,7 +78,7 @@ class CORE_EXPORT FontResource final : public Resource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest&) const override {
       return new FontResource(request, options);
     }
   };

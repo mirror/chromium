@@ -71,7 +71,7 @@ XSLStyleSheetResource* XSLStyleSheetResource::Fetch(FetchParameters& params,
 XSLStyleSheetResource::XSLStyleSheetResource(
     const ResourceRequest& resource_request,
     const ResourceLoaderOptions& options,
-    const String& charset)
+    const CharsetRequest& charset)
     : StyleSheetResource(resource_request,
                          kXSLStyleSheet,
                          options,

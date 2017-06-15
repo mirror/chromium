@@ -27,7 +27,7 @@ class LinkFetchResource final : public Resource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest&) const override {
       return new LinkFetchResource(request, GetType(), options);
     }
   };
