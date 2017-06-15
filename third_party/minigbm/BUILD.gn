@@ -17,6 +17,7 @@ declare_args() {
 if (!use_system_minigbm) {
   config("minigbm_config") {
     include_dirs = [ "src" ]
+    defines = [ "DRV_I915" ]
   }
 
   shared_library("minigbm") {

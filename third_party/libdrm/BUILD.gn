@@ -19,14 +19,21 @@ if (!use_system_libdrm) {
       "src",
       "src/include",
       "src/include/drm",
+      "src/intel",
     ]
     if (is_clang) {
       cflags = [ "-Wno-enum-conversion" ]
     }
+    defines = [ "HAVE_LIBDRM_ATOMIC_PRIMITIVES" ]
   }
 
   static_library("libdrm") {
     sources = [
+      "src/intel/intel_bufmgr.c",
+      "src/intel/intel_bufmgr_fake.c",
+      "src/intel/intel_bufmgr_gem.c",
+      "src/intel/intel_decode.c",
+      "src/intel/mm.c",
       "src/xf86drm.c",
       "src/xf86drmHash.c",
       "src/xf86drmMode.c",
