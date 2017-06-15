@@ -135,6 +135,8 @@ void MimeHandlerStreamManager::AddStream(
   DCHECK(result.second);
   embedder_observers_[view_id] = base::MakeUnique<EmbedderObserver>(
       this, view_id, frame_tree_node_id, render_process_id, render_frame_id);
+  for (auto& observer : observers_)
+    observer.OnStreamAdded(render_process_id, render_frame_id, view_id);
 }
 
 std::unique_ptr<StreamContainer> MimeHandlerStreamManager::ReleaseStream(
@@ -164,6 +166,16 @@ void MimeHandlerStreamManager::OnExtensionUnloaded(
     embedder_observers_.erase(view_id);
   }
   streams_by_extension_id_.erase(streams);
+}
+
+void MimeHandlerStreamManager::AddObserver(
+    MimeHandlerStreamManager::Observer* observer) {
+  observers_.AddObserver(observer);
+}
+
+void MimeHandlerStreamManager::RemoveObserver(
+    MimeHandlerStreamManager::Observer* observer) {
+  observers_.RemoveObserver(observer);
 }
 
 MimeHandlerStreamManager::EmbedderObserver::EmbedderObserver(

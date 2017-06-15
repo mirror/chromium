@@ -75,6 +75,7 @@ CONTENT_EXPORT extern const base::Feature kUseFeaturePolicyForPermissions;
 CONTENT_EXPORT extern const base::Feature kUseMojoAudioOutputStreamFactory;
 CONTENT_EXPORT extern const base::Feature kVibrateRequiresUserGesture;
 CONTENT_EXPORT extern const base::Feature kVrShell;
+CONTENT_EXPORT extern const base::Feature kWebAccessiblePdfExtension;
 CONTENT_EXPORT extern const base::Feature kWebAssembly;
 CONTENT_EXPORT extern const base::Feature kWebAssemblyStreaming;
 CONTENT_EXPORT extern const base::Feature kWebAssemblyTrapHandler;
