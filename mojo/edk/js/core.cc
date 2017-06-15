@@ -135,7 +135,7 @@ gin::Dictionary ReadMessage(const gin::Arguments& args,
                             MojoReadMessageFlags flags) {
   MojoMessageHandle message;
   MojoResult result =
-      MojoReadMessageNew(handle.value(), &message, MOJO_READ_MESSAGE_FLAG_NONE);
+      MojoReadMessage(handle.value(), &message, MOJO_READ_MESSAGE_FLAG_NONE);
   if (result != MOJO_RESULT_OK) {
     gin::Dictionary dictionary = gin::Dictionary::CreateEmpty(args.isolate());
     dictionary.Set("result", result);
