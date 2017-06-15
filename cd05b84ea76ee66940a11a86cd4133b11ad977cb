@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5a33c46_0edf8c3e",
+        "filename": "chrome/browser/ui/cocoa/menu_button_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T01:49:45Z",
+      "side": 1,
+      "message": "nit: import?",
+      "revId": "cd05b84ea76ee66940a11a86cd4133b11ad977cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e08d54d_8b27467c",
+        "filename": "chrome/browser/ui/cocoa/menu_button_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T01:49:45Z",
+      "side": 1,
+      "message": "nit: these. get()s are probably redundant -\u003e scoped_nsobject\u0027s conversion operator should take care of it",
+      "range": {
+        "startLine": 76,
+        "startChar": 32,
+        "endLine": 76,
+        "endChar": 49
+      },
+      "revId": "cd05b84ea76ee66940a11a86cd4133b11ad977cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9387df0_549011e0",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T01:49:45Z",
+      "side": 1,
+      "message": "Woah, I had no idea you didn\u0027t need to declare the data members separately. \u003c- TIL",
+      "range": {
+        "startLine": 11,
+        "startChar": 12,
+        "endLine": 11,
+        "endChar": 16
+      },
+      "revId": "cd05b84ea76ee66940a11a86cd4133b11ad977cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0def11a_5c24b7a8",
+        "filename": "chrome/browser/ui/cocoa/test/menu_test_observer.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T01:49:45Z",
+      "side": 1,
+      "message": "Does it work with a delay of 0? I guess it\u0027s not going to be flaky - just looks suspicious ;)",
+      "range": {
+        "startLine": 52,
+        "startChar": 31,
+        "endLine": 52,
+        "endChar": 0
+      },
+      "revId": "cd05b84ea76ee66940a11a86cd4133b11ad977cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e43f1ea_e617e2c7",
+        "filename": "chrome/browser/ui/cocoa/toolbar/reload_button_unittest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T01:49:45Z",
+      "side": 1,
+      "message": "nit: remove `.get()`?",
+      "range": {
+        "startLine": 25,
+        "startChar": 15,
+        "endLine": 25,
+        "endChar": 18
+      },
+      "revId": "cd05b84ea76ee66940a11a86cd4133b11ad977cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
