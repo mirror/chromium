@@ -1,0 +1,4 @@
+rootWebArea focusable readOnly location=(0, 0) size=(800, 600) pageLocation=(0, 0) pageSize=(800, 600) fontFamily='Times New Roman' htmlTag='#document' url='http://127.0.0.1:36204/accessibility/html/input-range.html' scrollX=0 scrollXMin=0 scrollXMax=0 scrollY=0 scrollYMin=0 scrollYMax=0 backgroundColor=-1 color=-16777216
+++genericContainer readOnly location=(8, 8) size=(784, 584) pageLocation=(8, 8) pageSize=(784, 584) display='block' htmlTag='body' backgroundColor=-1 color=-16777216
+++++slider focusable horizontal readOnly location=(10, 10) size=(129, 21) pageLocation=(10, 10) pageSize=(129, 21) display='inline-block' fontFamily='Arial' htmlTag='input' role='slider' value='5' backgroundColor=-1 color=-6449522 invalidState=1 actions=setValue
+++++++sliderThumb location=(62, 10) size=(12, 21) pageLocation=(62, 10) pageSize=(12, 21) color=-16777216
