@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09746270_e8d8cba1",
+        "filename": "components/download/internal/service_config_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T06:02:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f52ad15_7efea955",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 32
+      },
+      "revId": "5bf67fbef993dc4968570e84d33a28fc64a46872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4c11533_2a1e3806",
         "filename": "components/download/public/service_config.h",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-14T23:08:50Z",
       "side": 1,
       "message": "nit: ctor is not needed.",
+      "range": {
+        "startLine": 18,
+        "startChar": 2,
+        "endLine": 18,
+        "endChar": 28
+      },
+      "revId": "5bf67fbef993dc4968570e84d33a28fc64a46872",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ade35bf_83d4078f",
+        "filename": "components/download/public/service_config.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T06:02:09Z",
+      "side": 1,
+      "message": "Ah true if I remove DISALLOW_COPY_AND_ASSIGN I think!",
+      "parentUuid": "a4c11533_2a1e3806",
       "range": {
         "startLine": 18,
         "startChar": 2,
