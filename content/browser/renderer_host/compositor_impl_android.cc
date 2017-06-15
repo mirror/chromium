@@ -414,8 +414,9 @@ void Compositor::CreateContextProvider(
 }
 
 // static
-cc::SurfaceManager* CompositorImpl::GetSurfaceManager() {
-  return g_compositor_dependencies.Get().frame_sink_manager->surface_manager();
+cc::FrameSinkManager* CompositorImpl::GetFrameSinkManager() {
+  return g_compositor_dependencies.Get()
+      .frame_sink_manager->frame_sink_manager();
 }
 
 // static
@@ -447,7 +448,7 @@ CompositorImpl::CompositorImpl(CompositorClient* client,
       num_successive_context_creation_failures_(0),
       compositor_frame_sink_request_pending_(false),
       weak_factory_(this) {
-  GetSurfaceManager()->RegisterFrameSinkId(frame_sink_id_);
+  GetFrameSinkManager()->RegisterFrameSinkId(frame_sink_id_);
   DCHECK(client);
   DCHECK(root_window);
   DCHECK(root_window->GetLayer() == nullptr);
@@ -465,7 +466,7 @@ CompositorImpl::~CompositorImpl() {
   root_window_->SetLayer(nullptr);
   // Clean-up any surface references.
   SetSurface(NULL);
-  GetSurfaceManager()->InvalidateFrameSinkId(frame_sink_id_);
+  GetFrameSinkManager()->InvalidateFrameSinkId(frame_sink_id_);
 }
 
 bool CompositorImpl::IsForSubframe() {
@@ -573,7 +574,7 @@ void CompositorImpl::SetVisible(bool visible) {
     has_compositor_frame_sink_ = false;
     pending_frames_ = 0;
     if (display_) {
-      GetSurfaceManager()->UnregisterBeginFrameSource(
+      GetFrameSinkManager()->UnregisterBeginFrameSource(
           root_window_->GetBeginFrameSource());
     }
     display_.reset();
@@ -785,7 +786,7 @@ void CompositorImpl::InitializeDisplay(
     // TODO(danakj): Populate gpu_capabilities_ for VulkanContextProvider.
   }
 
-  cc::SurfaceManager* manager = GetSurfaceManager();
+  cc::FrameSinkManager* manager = GetFrameSinkManager();
   auto* task_runner = base::ThreadTaskRunnerHandle::Get().get();
   std::unique_ptr<cc::DisplayScheduler> scheduler(new cc::DisplayScheduler(
       root_window_->GetBeginFrameSource(), task_runner,
@@ -812,7 +813,7 @@ void CompositorImpl::InitializeDisplay(
 
   display_->SetVisible(true);
   display_->Resize(size_);
-  GetSurfaceManager()->RegisterBeginFrameSource(
+  GetFrameSinkManager()->RegisterBeginFrameSource(
       root_window_->GetBeginFrameSource(), frame_sink_id_);
   host_->SetCompositorFrameSink(std::move(compositor_frame_sink));
 }
@@ -882,8 +883,8 @@ cc::FrameSinkId CompositorImpl::GetFrameSinkId() {
 
 void CompositorImpl::AddChildFrameSink(const cc::FrameSinkId& frame_sink_id) {
   if (has_compositor_frame_sink_) {
-    GetSurfaceManager()->RegisterFrameSinkHierarchy(frame_sink_id_,
-                                                    frame_sink_id);
+    GetFrameSinkManager()->RegisterFrameSinkHierarchy(frame_sink_id_,
+                                                      frame_sink_id);
   } else {
     pending_child_frame_sink_ids_.insert(frame_sink_id);
   }
@@ -896,8 +897,8 @@ void CompositorImpl::RemoveChildFrameSink(
     pending_child_frame_sink_ids_.erase(it);
     return;
   }
-  GetSurfaceManager()->UnregisterFrameSinkHierarchy(frame_sink_id_,
-                                                    frame_sink_id);
+  GetFrameSinkManager()->UnregisterFrameSinkHierarchy(frame_sink_id_,
+                                                      frame_sink_id);
 }
 
 bool CompositorImpl::HavePendingReadbacks() {

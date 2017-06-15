@@ -35,7 +35,7 @@ class TraceEventSystemStatsMonitor;
 }  // namespace base
 
 namespace cc {
-class SurfaceManager;
+class FrameSinkManager;
 }
 
 namespace discardable_memory {
@@ -178,7 +178,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   // TODO(crbug.com/657959): This will be removed once there are no users, as
   // SurfaceManager is being moved out of process.
-  cc::SurfaceManager* GetSurfaceManager() const;
+  cc::FrameSinkManager* GetFrameSinkManager() const;
 #endif
 
   void StopStartupTracingTimer();
@@ -349,7 +349,7 @@ class CONTENT_EXPORT BrowserMainLoop {
   // access to |in_process_frame_sink_manager_| should happen via
   // |frame_sink_manager_host_| instead which uses Mojo. See
   // http://crbug.com/657959.
-  std::unique_ptr<viz::MojoFrameSinkManager> frame_sink_manager_;
+  std::unique_ptr<viz::MojoFrameSinkManager> mojo_frame_sink_manager_;
 #endif
 
   // DO NOT add members here. Add them to the right categories above.

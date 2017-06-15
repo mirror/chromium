@@ -19,7 +19,7 @@ namespace cc {
 class BeginFrameSource;
 class CompositorFrameSinkSupport;
 class Display;
-class SurfaceManager;
+class FrameSinkManager;
 }
 
 namespace viz {
@@ -35,7 +35,7 @@ class GpuRootCompositorFrameSink
  public:
   GpuRootCompositorFrameSink(
       GpuCompositorFrameSinkDelegate* delegate,
-      cc::SurfaceManager* surface_manager,
+      cc::FrameSinkManager* frame_sink_manager,
       const cc::FrameSinkId& frame_sink_id,
       std::unique_ptr<cc::Display> display,
       std::unique_ptr<cc::BeginFrameSource> begin_frame_source,

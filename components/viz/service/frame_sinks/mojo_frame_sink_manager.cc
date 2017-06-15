@@ -25,9 +25,9 @@ MojoFrameSinkManager::MojoFrameSinkManager(bool use_surface_references,
                    : cc::SurfaceManager::LifetimeType::SEQUENCES),
       display_provider_(display_provider),
       binding_(this) {
-  manager_.AddObserver(this);
+  manager_.AddSurfaceObserver(this);
   dependency_tracker_ = base::MakeUnique<cc::SurfaceDependencyTracker>(
-      &manager_, manager_.GetPrimaryBeginFrameSource());
+      manager_.surface_manager(), manager_.GetPrimaryBeginFrameSource());
   manager_.SetDependencyTracker(dependency_tracker_.get());
 }
 
@@ -35,7 +35,7 @@ MojoFrameSinkManager::~MojoFrameSinkManager() {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   manager_.SetDependencyTracker(nullptr);
   dependency_tracker_.reset();
-  manager_.RemoveObserver(this);
+  manager_.RemoveSurfaceObserver(this);
 }
 
 void MojoFrameSinkManager::BindPtrAndSetClient(
