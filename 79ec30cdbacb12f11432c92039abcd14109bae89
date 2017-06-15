@@ -22,6 +22,30 @@
       "revId": "79ec30cdbacb12f11432c92039abcd14109bae89",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ed0adcb_3703ff9e",
+        "filename": "base/win/com_init_check_hook.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-15T18:23:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "39ad2b64_3ec54f16",
+      "range": {
+        "startLine": 221,
+        "startChar": 18,
+        "endLine": 221,
+        "endChar": 19
+      },
+      "revId": "79ec30cdbacb12f11432c92039abcd14109bae89",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
