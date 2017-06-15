@@ -16,6 +16,24 @@
       "revId": "ecb16f779e0a0e3403a9f94ef046ba675f0ffc9b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eba9bab8_eb9b869a",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValueMappings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1140584
+      },
+      "writtenOn": "2017-06-15T01:15:43Z",
+      "side": 1,
+      "message": "Yup. Expect CL in five minutes. :P",
+      "parentUuid": "68ad2d91_4bd3142f",
+      "revId": "ecb16f779e0a0e3403a9f94ef046ba675f0ffc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
