@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba68ca9_14fd05f3",
+        "filename": "extensions/browser/lazy_background_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-15T15:01:27Z",
+      "side": 1,
+      "message": "Optional: if we friend the test, we don\u0027t even need this method, and can just access pending_tasks_.size() directly.  Alternatively, we could avoid friending the test but still add the common _for_testing() (which gives presubmit errors), and that way avoid accidentally using the class in ways we don\u0027t mean to in the test.  I\u0027m fine with either, but doing a combination seems a little odd.",
+      "revId": "e51e0dfe25ed56e9d3630e378f76455016241315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
