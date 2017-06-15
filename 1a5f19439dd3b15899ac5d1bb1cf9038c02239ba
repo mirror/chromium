@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "15bf9382_1d7f1077",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 10
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-15T22:42:24Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e75f2a88_bf415b11",
+      "range": {
+        "startLine": 94,
+        "startChar": 27,
+        "endLine": 94,
+        "endChar": 0
+      },
+      "revId": "1a5f19439dd3b15899ac5d1bb1cf9038c02239ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e70d945_b9992d2b",
         "filename": "device/bluetooth/test/fake_peripheral.cc",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "fb1070b3_531c54a6",
+        "filename": "device/bluetooth/test/fake_peripheral.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-15T22:42:24Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. Started thread on cxx and changed to SizeTToString.",
+      "parentUuid": "8e70d945_b9992d2b",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 45
+      },
+      "revId": "1a5f19439dd3b15899ac5d1bb1cf9038c02239ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "136f4fd8_4ec1b3ce",
         "filename": "device/bluetooth/test/fake_remote_gatt_service.h",
         "patchSetId": 10
@@ -68,6 +116,30 @@
       "revId": "1a5f19439dd3b15899ac5d1bb1cf9038c02239ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95a2678c_37c157b1",
+        "filename": "device/bluetooth/test/fake_remote_gatt_service.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-15T22:42:24Z",
+      "side": 1,
+      "message": "The objects themselves are owned by the service. Clients are not supposed to cache any pointers as they could be deleted at any time. Opened: http://crbug.com/733845",
+      "parentUuid": "136f4fd8_4ec1b3ce",
+      "range": {
+        "startLine": 38,
+        "startChar": 2,
+        "endLine": 38,
+        "endChar": 57
+      },
+      "revId": "1a5f19439dd3b15899ac5d1bb1cf9038c02239ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
