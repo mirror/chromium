@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e5491af_eb0c48fd",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1359,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-15T19:34:43Z",
+      "side": 1,
+      "message": "Let\u0027s explain what default means.",
+      "range": {
+        "startLine": 1359,
+        "startChar": 70,
+        "endLine": 1359,
+        "endChar": 77
+      },
+      "revId": "1645c9a260bf89cf99b4adfb5d9c12637869c3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1978c533_76d66093",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1729,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-15T19:34:43Z",
+      "side": 1,
+      "message": "Let\u0027s add a sentence which tells about successive requestIntercepted events for auth challenges with the same interceptionId.",
+      "revId": "1645c9a260bf89cf99b4adfb5d9c12637869c3fc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
