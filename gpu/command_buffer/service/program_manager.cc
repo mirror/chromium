@@ -876,6 +876,8 @@ void Program::UpdateUniforms() {
         }
       }
     }
+    // Prevent crash if context is already lost and glGetProgram misbehaves.
+    size = std::max(1, size);
 
     if (client_name.empty()) {
       // This happens only in cases where we do not have ANGLE or run unit tests
