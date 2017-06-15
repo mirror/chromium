@@ -74,7 +74,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
                          aura::Window* lost_active) override;
 
   // Kills a process on memory pressure.
-  void LowMemoryKill(const TabStatsList& tab_stats);
+  void LowMemoryKill(const TabStatsList& tab_stats, bool allow_unsafe_shutdown);
 
   // Returns oom_score_adj of a process if the score is cached by |this|.
   // If couldn't find the score in the cache, returns -1001 since the valid
@@ -96,7 +96,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 
   // Kills a tab. Returns true if the tab is killed successfully.
   // Virtual for unit testing.
-  virtual bool KillTab(int64_t tab_id);
+  virtual bool KillTab(int64_t tab_id, bool allow_unsafe_shutdown);
 
   // Get debugd client instance. Virtual for unit testing.
   virtual chromeos::DebugDaemonClient* GetDebugDaemonClient();
@@ -141,6 +141,7 @@ class TabManagerDelegate : public wm::ActivationChangeObserver,
 
   // Kills a process after getting all info of tabs and apps.
   void LowMemoryKillImpl(const TabStatsList& tab_list,
+                         bool allow_unsafe_shutdown,
                          const std::vector<arc::ArcProcess>& arc_processes);
 
   // Public interface to adjust OOM scores.

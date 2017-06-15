@@ -422,6 +422,7 @@ std::string ChromeURLs() {
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_LINUX)
 
 const char kAboutDiscardsRunCommand[] = "run";
+const char kAboutDiscardsAllowUnsafeCommand[] = "allow_unsafe";
 
 // Html output helper functions
 
@@ -486,13 +487,22 @@ std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
 #if defined(OS_CHROMEOS)
     str += base::StringPrintf(" (%d) ", it->oom_score);
 #endif
-    if (!it->is_discarded) {
-      str += base::StringPrintf(" <a href='%s%s/%" PRId64 "'>Discard</a>",
-                                chrome::kChromeUIDiscardsURL,
-                                kAboutDiscardsRunCommand, it->tab_contents_id);
-    }
     str += base::StringPrintf("&nbsp;&nbsp;(%d discards this session)",
                               it->discard_count);
+
+    if (!it->is_discarded) {
+      str += "<ul>";
+      str += base::StringPrintf("<li><a href='%s%s/%" PRId64
+                                "'>Discard (safely)</a></li>",
+                                chrome::kChromeUIDiscardsURL,
+                                kAboutDiscardsRunCommand, it->tab_contents_id);
+      str += base::StringPrintf(
+          "<li><a href='%s%s/%" PRId64
+          "?%s'>Discard (allow unsafe process shutdown)</a></li>",
+          chrome::kChromeUIDiscardsURL, kAboutDiscardsRunCommand,
+          it->tab_contents_id, kAboutDiscardsAllowUnsafeCommand);
+      str += "</ul>";
+    }
     titles.push_back(str);
   }
   return titles;
@@ -504,16 +514,24 @@ std::string AboutDiscards(const std::string& path) {
   resource_coordinator::TabManager* tab_manager =
       g_browser_process->GetTabManager();
 
-  std::vector<std::string> path_split = base::SplitString(
-      path, "/", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  if (path_split.size() == 2 && path_split[0] == kAboutDiscardsRunCommand &&
-      base::StringToInt64(path_split[1], &web_content_id)) {
-    tab_manager->DiscardTabById(web_content_id);
-    return BuildAboutDiscardsRunPage();
-  } else if (path_split.size() == 1 &&
-             path_split[0] == kAboutDiscardsRunCommand) {
-    tab_manager->DiscardTab();
-    return BuildAboutDiscardsRunPage();
+  std::vector<std::string> url_split =
+      base::SplitString(path, "?", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+  if (!url_split.empty()) {
+    bool allow_unsafe_shutdown =
+        (url_split.size() > 1 &&
+         url_split[1] == kAboutDiscardsAllowUnsafeCommand);
+
+    std::vector<std::string> path_split = base::SplitString(
+        url_split[0], "/", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
+    if (path_split.size() == 2 && path_split[0] == kAboutDiscardsRunCommand &&
+        base::StringToInt64(path_split[1], &web_content_id)) {
+      tab_manager->DiscardTabById(web_content_id, allow_unsafe_shutdown);
+      return BuildAboutDiscardsRunPage();
+    } else if (path_split.size() == 1 &&
+               path_split[0] == kAboutDiscardsRunCommand) {
+      tab_manager->DiscardTab(allow_unsafe_shutdown);
+      return BuildAboutDiscardsRunPage();
+    }
   }
 
   AppendHeader(&output, 0, "About discards");
@@ -537,9 +555,9 @@ std::string AboutDiscards(const std::string& path) {
   }
   output.append(base::StringPrintf("%d discards this session. ",
                                    tab_manager->discard_count()));
-  output.append(base::StringPrintf("<a href='%s%s'>Discard tab now</a>",
-                                   chrome::kChromeUIDiscardsURL,
-                                   kAboutDiscardsRunCommand));
+  output.append(base::StringPrintf(
+      "<a href='%s%s'>Discard tab now (safely)</a>",
+      chrome::kChromeUIDiscardsURL, kAboutDiscardsRunCommand));
 
   base::SystemMemoryInfoKB meminfo;
   base::GetSystemMemoryInfo(&meminfo);

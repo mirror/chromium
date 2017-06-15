@@ -105,7 +105,7 @@ class TestMemoryCoordinatorDelegate : public MemoryCoordinatorDelegate {
     return true;
   }
 
-  void DiscardTab() override { ++discard_tab_count_; }
+  void DiscardTab(bool allow_unsafe_shutdown) override { ++discard_tab_count_; }
 
   int discard_tab_count() const { return discard_tab_count_; }
 
@@ -525,7 +525,7 @@ TEST_F(MemoryCoordinatorImplTest, ForceSetMemoryCondition) {
 }
 
 TEST_F(MemoryCoordinatorImplTest, DiscardTab) {
-  coordinator_->DiscardTab();
+  coordinator_->DiscardTab(false /* allow_unsafe_shutdown */);
   EXPECT_EQ(1, coordinator_->GetDelegate()->discard_tab_count());
 }
 

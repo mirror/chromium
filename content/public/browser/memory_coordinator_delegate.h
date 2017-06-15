@@ -20,7 +20,7 @@ class CONTENT_EXPORT MemoryCoordinatorDelegate {
   // Requests to discard one tab. An implementation should select a low priority
   // tab to discard. If there is no tab that can be discarded, this doesn't take
   // effect.
-  virtual void DiscardTab() {}
+  virtual void DiscardTab(bool allow_unsafe_shutdown) {}
 };
 
 }  // namespace content
