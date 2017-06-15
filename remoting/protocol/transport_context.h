@@ -59,7 +59,6 @@ class TransportContext : public base::RefCountedThreadSafe<TransportContext> {
   void set_ice_config_url(const std::string& ice_config_url,
                           OAuthTokenGetter* oauth_token_getter) {
     DCHECK(!ice_config_url.empty());
-    DCHECK(!oauth_token_getter);
     ice_config_url_ = ice_config_url;
     oauth_token_getter_ = oauth_token_getter;
   }
