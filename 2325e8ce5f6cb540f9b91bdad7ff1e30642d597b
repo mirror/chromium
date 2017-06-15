@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5df3b03_44e721a4",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5718,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T12:57:38Z",
+      "side": 1,
+      "message": "I think this is reversed -- we want to count the usage when the header is *not* empty, right?",
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "876dd4f3_80d1ef78",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T12:57:38Z",
+      "side": 1,
+      "message": "Does this count more than once in a page view if the allow attribute is set multiple times, or on multiple frames? I think what we\u0027re looking for is a max-one-per-page-view counter, so we can tell what % of page views use the allow attribute at all.\n\nAlso, is this different than annotating the IDL for iframe#allow with a MeasureAs attribute?",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
