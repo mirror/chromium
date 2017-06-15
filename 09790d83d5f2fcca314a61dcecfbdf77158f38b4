@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14f085ec_3ef6da30",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:12:09Z",
+      "side": 1,
+      "message": "nit: prefer base::MakeUnique\u003cRegion\u003e() over \"new Region\" (from base/memory/ptr_util.h)\n\nIt\u0027s our http://en.cppreference.com/w/cpp/memory/unique_ptr/make_unique until we have that.",
+      "revId": "09790d83d5f2fcca314a61dcecfbdf77158f38b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f851f9d1_1ddf1434",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:12:09Z",
+      "side": 1,
+      "message": "does \u003ddefault not work for the move? the idea was to not have to copy the Region at all, just move the pointer to the Region. But this is allocating a new Region and copying to it. An rvalue ref means we can destroy the thing we\u0027re moving from, so stealing pointers is okay",
+      "revId": "09790d83d5f2fcca314a61dcecfbdf77158f38b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26fcee4d_6809e8a1",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:12:09Z",
+      "side": 1,
+      "message": "let\u0027s name it empty_region so it has some meaning",
+      "revId": "09790d83d5f2fcca314a61dcecfbdf77158f38b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

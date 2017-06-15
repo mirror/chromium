@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "9979154c_7d6035c0",
+        "filename": "cc/layers/touch_action_region.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:12:09Z",
+      "side": 1,
+      "message": "Oops that\u0027s my bad. auto is the type, I shouldn\u0027t have added the Region. It just lets you avoid writing the typename multiple times on the same line.\n\nSo it\u0027d be static const auto* region \u003d new Region;\n\nWhat you have is fine too, it\u0027s not like it\u0027s an onerous typename :)",
+      "parentUuid": "22d6c0bc_120a4653",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3334d613_826dd379",
         "filename": "cc/layers/touch_action_region.h",
         "patchSetId": 22
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "Done. I used std::move and touch_action_region \u003d TouchActionRegion() to solve this. Thanks for this catch.",
       "parentUuid": "a615c080_58810c99",
+      "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2761ef0e_21feb0a7",
+        "filename": "cc/trees/layer_tree_host_impl_unittest.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 10611,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T23:12:09Z",
+      "side": 1,
+      "message": "Cool, thanks. You may as well move() on the next call to SetTouchActionRegion too (or not move and just clear it for the previous one). I mean, these are unit tests I\u0027m not that concerned about us copying instead of moving for this 1-rect thing. But now they look funny with one moving and one not :P",
+      "parentUuid": "7aa8d701_615f3cdb",
       "revId": "bcb4da9c43022140df63ee0a94bfd118421640d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
