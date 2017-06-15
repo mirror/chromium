@@ -101,7 +101,9 @@ class GL_EXPORT NativeViewGLSurfaceEGL : public GLSurfaceEGL {
               bool has_alpha) override;
   bool Recreate() override;
   bool IsOffscreen() override;
+  bool SupportsAsyncSwap() override;
   gfx::SwapResult SwapBuffers() override;
+  void SwapBuffersAsync(const SwapCompletionCallback& callback) override;
   gfx::Size GetSize() override;
   EGLSurface GetHandle() override;
   bool SupportsPostSubBuffer() override;

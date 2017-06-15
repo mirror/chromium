@@ -329,7 +329,6 @@ typedef khronos_stime_nanoseconds_t EGLnsecsANDROID;
 typedef khronos_stime_nanoseconds_t EGLnsecsANDROID;
 #endif /* EGL_ANDROID_presentation_time */
 
-
 #ifndef EGL_ANDROID_get_frame_timestamps
 #define EGL_ANDROID_get_frame_timestamps 1
 #define EGL_TIMESTAMPS_ANDROID 0x3430
@@ -347,6 +346,7 @@ typedef khronos_stime_nanoseconds_t EGLnsecsANDROID;
 #define EGL_READS_DONE_TIME_ANDROID 0x343C
 #define EGL_TIMESTAMP_PENDING_ANDROID EGL_CAST(EGLnsecsANDROID, -2)
 #define EGL_TIMESTAMP_INVALID_ANDROID EGL_CAST(EGLnsecsANDROID, -1)
+typedef void (*EGLFrameEventCallback)(void* userPointer, EGLint event, EGLuint64KHR frame_number, EGLnsecsANDROID timestamp);
 #endif /* EGL_ANDROID_get_frame_timestamps */
 
 #ifndef GL_KHR_robustness

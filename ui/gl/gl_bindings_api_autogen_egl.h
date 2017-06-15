@@ -153,6 +153,12 @@ EGLBoolean eglReleaseTexImageFn(EGLDisplay dpy,
                                 EGLSurface surface,
                                 EGLint buffer) override;
 EGLBoolean eglReleaseThreadFn(void) override;
+EGLBoolean eglSetFrameEventListenerANDROIDFn(EGLDisplay dpy,
+                                             EGLSurface surface,
+                                             EGLFrameEventCallback callback,
+                                             void* userPointer,
+                                             EGLint numEvents,
+                                             EGLint* events) override;
 EGLBoolean eglStreamAttribKHRFn(EGLDisplay dpy,
                                 EGLStreamKHR stream,
                                 EGLenum attribute,

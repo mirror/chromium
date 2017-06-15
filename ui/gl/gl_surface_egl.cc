@@ -742,6 +742,26 @@ NativeViewGLSurfaceEGL::NativeViewGLSurfaceEGL(
 #endif
 }
 
+static void frameEventCallback(void* userPointer, EGLint event, EGLuint64KHR frame_number, EGLnsecsANDROID timestamp) {
+    //auto surface = static_cast<NativeViewGLSurfaceEGL*>(userPointer);
+    const char* str = "UNKNOWN";
+    switch (event) {
+        case EGL_TIMESTAMPS_ANDROID: str = "EGL_TIMESTAMPS_ANDROID"; break;
+        case EGL_REQUESTED_PRESENT_TIME_ANDROID: str = "EGL_REQUESTED_PRESENT_TIME_ANDROID"; break;
+        case EGL_RENDERING_COMPLETE_TIME_ANDROID: str = "EGL_RENDERING_COMPLETE_TIME_ANDROID"; break;
+        case EGL_COMPOSITION_LATCH_TIME_ANDROID: str = "EGL_COMPOSITION_LATCH_TIME_ANDROID"; break;
+        case EGL_FIRST_COMPOSITION_START_TIME_ANDROID: str = "EGL_FIRST_COMPOSITION_START_TIME_ANDROID"; break;
+        case EGL_LAST_COMPOSITION_START_TIME_ANDROID: str = "EGL_LAST_COMPOSITION_START_TIME_ANDROID"; break;
+        case EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID: str = "EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID"; break;
+        case EGL_DISPLAY_PRESENT_TIME_ANDROID: str = "EGL_DISPLAY_PRESENT_TIME_ANDROID"; break;
+        case EGL_DEQUEUE_READY_TIME_ANDROID: str = "EGL_DEQUEUE_READY_TIME_ANDROID"; break;
+        case EGL_READS_DONE_TIME_ANDROID: str = "EGL_READS_DONE_TIME_ANDROID"; break;
+    }
+
+    TRACE_EVENT2("gpu", "FrameEvent", "event", str, "frame_number", frame_number);
+    TRACE_EVENT2("gpu", "FrameEvent", "event", str, "timestamp", timestamp);
+}
+
 bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
   DCHECK(!surface_);
   format_ = format;
@@ -824,6 +844,20 @@ bool NativeViewGLSurfaceEGL::Initialize(GLSurfaceFormat format) {
   if (g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps) {
     eglSurfaceAttrib(GetDisplay(), surface_, EGL_TIMESTAMPS_ANDROID, EGL_TRUE);
   }
+
+  const EGLint server_timestamps_count = 8;
+  EGLint server_timestamp_names[server_timestamps_count] = {
+    EGL_RENDERING_COMPLETE_TIME_ANDROID,
+    EGL_COMPOSITION_LATCH_TIME_ANDROID,
+    EGL_FIRST_COMPOSITION_START_TIME_ANDROID,
+    EGL_LAST_COMPOSITION_START_TIME_ANDROID,
+    EGL_FIRST_COMPOSITION_GPU_FINISHED_TIME_ANDROID,
+    EGL_DISPLAY_PRESENT_TIME_ANDROID,
+    EGL_DEQUEUE_READY_TIME_ANDROID,
+    EGL_READS_DONE_TIME_ANDROID,
+  };
+  eglSetFrameEventListenerANDROID(GetDisplay(), surface_, frameEventCallback,
+      static_cast<void*>(this), server_timestamps_count, server_timestamp_names);
 
   return true;
 }
@@ -920,6 +954,16 @@ std::unique_ptr<base::trace_event::TracedValue> TimestampsAsValue2(EGLnsecsANDRO
   return state;
 }
 
+}
+
+
+bool NativeViewGLSurfaceEGL::SupportsAsyncSwap() {
+  // TODO(brianderson): Check support of specific events.
+  return g_driver_egl.ext.b_EGL_ANDROID_get_frame_timestamps;
+}
+
+void NativeViewGLSurfaceEGL::SwapBuffersAsync(const SwapCompletionCallback& callback) {
+  callback.Run(SwapBuffers());
 }
 
 gfx::SwapResult NativeViewGLSurfaceEGL::SwapBuffers() {

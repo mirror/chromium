@@ -103,6 +103,7 @@ void DriverEGL::InitializeStaticBindings() {
       GetGLProcAddress("eglReleaseTexImage"));
   fn.eglReleaseThreadFn = reinterpret_cast<eglReleaseThreadProc>(
       GetGLProcAddress("eglReleaseThread"));
+  fn.eglSetFrameEventListenerANDROIDFn = 0;
   fn.eglStreamAttribKHRFn = 0;
   fn.eglStreamConsumerAcquireKHRFn = 0;
   fn.eglStreamConsumerGLTextureExternalAttribsNVFn = 0;
@@ -279,6 +280,12 @@ void DriverEGL::InitializeExtensionBindings() {
     fn.eglQuerySurfacePointerANGLEFn =
         reinterpret_cast<eglQuerySurfacePointerANGLEProc>(
             GetGLProcAddress("eglQuerySurfacePointerANGLE"));
+  }
+
+  if (ext.b_EGL_ANDROID_get_frame_timestamps) {
+    fn.eglSetFrameEventListenerANDROIDFn =
+        reinterpret_cast<eglSetFrameEventListenerANDROIDProc>(
+            GetGLProcAddress("eglSetFrameEventListenerANDROID"));
   }
 
   if (ext.b_EGL_KHR_stream) {
@@ -634,6 +641,17 @@ EGLBoolean EGLApiBase::eglReleaseTexImageFn(EGLDisplay dpy,
 
 EGLBoolean EGLApiBase::eglReleaseThreadFn(void) {
   return driver_->fn.eglReleaseThreadFn();
+}
+
+EGLBoolean EGLApiBase::eglSetFrameEventListenerANDROIDFn(
+    EGLDisplay dpy,
+    EGLSurface surface,
+    EGLFrameEventCallback callback,
+    void* userPointer,
+    EGLint numEvents,
+    EGLint* events) {
+  return driver_->fn.eglSetFrameEventListenerANDROIDFn(
+      dpy, surface, callback, userPointer, numEvents, events);
 }
 
 EGLBoolean EGLApiBase::eglStreamAttribKHRFn(EGLDisplay dpy,
@@ -1080,6 +1098,19 @@ EGLBoolean TraceEGLApi::eglReleaseTexImageFn(EGLDisplay dpy,
 EGLBoolean TraceEGLApi::eglReleaseThreadFn(void) {
   TRACE_EVENT_BINARY_EFFICIENT0("gpu", "TraceGLAPI::eglReleaseThread")
   return egl_api_->eglReleaseThreadFn();
+}
+
+EGLBoolean TraceEGLApi::eglSetFrameEventListenerANDROIDFn(
+    EGLDisplay dpy,
+    EGLSurface surface,
+    EGLFrameEventCallback callback,
+    void* userPointer,
+    EGLint numEvents,
+    EGLint* events) {
+  TRACE_EVENT_BINARY_EFFICIENT0("gpu",
+                                "TraceGLAPI::eglSetFrameEventListenerANDROID")
+  return egl_api_->eglSetFrameEventListenerANDROIDFn(
+      dpy, surface, callback, userPointer, numEvents, events);
 }
 
 EGLBoolean TraceEGLApi::eglStreamAttribKHRFn(EGLDisplay dpy,
@@ -1741,6 +1772,23 @@ EGLBoolean DebugEGLApi::eglReleaseThreadFn(void) {
                  << "("
                  << ")");
   EGLBoolean result = egl_api_->eglReleaseThreadFn();
+  GL_SERVICE_LOG("GL_RESULT: " << result);
+  return result;
+}
+
+EGLBoolean DebugEGLApi::eglSetFrameEventListenerANDROIDFn(
+    EGLDisplay dpy,
+    EGLSurface surface,
+    EGLFrameEventCallback callback,
+    void* userPointer,
+    EGLint numEvents,
+    EGLint* events) {
+  GL_SERVICE_LOG("eglSetFrameEventListenerANDROID"
+                 << "(" << dpy << ", " << surface << ", " << callback << ", "
+                 << static_cast<const void*>(userPointer) << ", " << numEvents
+                 << ", " << static_cast<const void*>(events) << ")");
+  EGLBoolean result = egl_api_->eglSetFrameEventListenerANDROIDFn(
+      dpy, surface, callback, userPointer, numEvents, events);
   GL_SERVICE_LOG("GL_RESULT: " << result);
   return result;
 }

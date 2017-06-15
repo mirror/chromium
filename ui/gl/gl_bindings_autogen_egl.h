@@ -188,6 +188,13 @@ typedef EGLBoolean(GL_BINDING_CALL* eglReleaseTexImageProc)(EGLDisplay dpy,
                                                             EGLSurface surface,
                                                             EGLint buffer);
 typedef EGLBoolean(GL_BINDING_CALL* eglReleaseThreadProc)(void);
+typedef EGLBoolean(GL_BINDING_CALL* eglSetFrameEventListenerANDROIDProc)(
+    EGLDisplay dpy,
+    EGLSurface surface,
+    EGLFrameEventCallback callback,
+    void* userPointer,
+    EGLint numEvents,
+    EGLint* events);
 typedef EGLBoolean(GL_BINDING_CALL* eglStreamAttribKHRProc)(EGLDisplay dpy,
                                                             EGLStreamKHR stream,
                                                             EGLenum attribute,
@@ -307,6 +314,7 @@ struct ProcsEGL {
   eglQuerySurfacePointerANGLEProc eglQuerySurfacePointerANGLEFn;
   eglReleaseTexImageProc eglReleaseTexImageFn;
   eglReleaseThreadProc eglReleaseThreadFn;
+  eglSetFrameEventListenerANDROIDProc eglSetFrameEventListenerANDROIDFn;
   eglStreamAttribKHRProc eglStreamAttribKHRFn;
   eglStreamConsumerAcquireKHRProc eglStreamConsumerAcquireKHRFn;
   eglStreamConsumerGLTextureExternalAttribsNVProc
@@ -484,6 +492,13 @@ class GL_EXPORT EGLApi {
                                           EGLSurface surface,
                                           EGLint buffer) = 0;
   virtual EGLBoolean eglReleaseThreadFn(void) = 0;
+  virtual EGLBoolean eglSetFrameEventListenerANDROIDFn(
+      EGLDisplay dpy,
+      EGLSurface surface,
+      EGLFrameEventCallback callback,
+      void* userPointer,
+      EGLint numEvents,
+      EGLint* events) = 0;
   virtual EGLBoolean eglStreamAttribKHRFn(EGLDisplay dpy,
                                           EGLStreamKHR stream,
                                           EGLenum attribute,
@@ -587,6 +602,8 @@ class GL_EXPORT EGLApi {
   ::gl::g_current_egl_context->eglQuerySurfacePointerANGLEFn
 #define eglReleaseTexImage ::gl::g_current_egl_context->eglReleaseTexImageFn
 #define eglReleaseThread ::gl::g_current_egl_context->eglReleaseThreadFn
+#define eglSetFrameEventListenerANDROID \
+  ::gl::g_current_egl_context->eglSetFrameEventListenerANDROIDFn
 #define eglStreamAttribKHR ::gl::g_current_egl_context->eglStreamAttribKHRFn
 #define eglStreamConsumerAcquireKHR \
   ::gl::g_current_egl_context->eglStreamConsumerAcquireKHRFn
