@@ -80,7 +80,6 @@ const CGFloat kMaxConstraintConstantDiff = 5;
   toolbarView.frame = toolbarFrame;
   [toolbarView setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
 
-  [self setAutoresizingMask:UIViewAutoresizingFlexibleWidth];
   [self addSubview:[_toolbarController view]];
 }
 
@@ -157,8 +156,8 @@ const CGFloat kMaxConstraintConstantDiff = 5;
       kOmniboxImageBottomInset - 0.5);
 
   widthConstraint.constant = searchFieldNormalWidth - 2 * maxXInset * percent;
-  topMarginConstraint.constant =
-      content_suggestions::searchFieldTopMargin() + maxYOffset * percent;
+  //  topMarginConstraint.constant =
+  //      content_suggestions::searchFieldTopMargin() + maxYOffset * percent;
   heightConstraint.constant =
       content_suggestions::kSearchFieldHeight + 2 * maxYOffset * percent;
 
