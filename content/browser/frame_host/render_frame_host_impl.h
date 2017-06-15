@@ -787,6 +787,7 @@ class CONTENT_EXPORT RenderFrameHostImpl
   void OnFocusedNodeChanged(bool is_editable_element,
                             const gfx::Rect& bounds_in_frame_widget);
   void OnSetHasReceivedUserGesture();
+  void OnSetHasReceivedUserGestureBeforeNavigation(bool);
   void OnSetDevToolsFrameId(const std::string& devtools_frame_id);
 
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)

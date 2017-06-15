@@ -237,11 +237,17 @@ void RenderFrameProxy::SetReplicatedState(const FrameReplicationState& state) {
       state.has_potentially_trustworthy_unique_origin);
   web_frame_->SetReplicatedFeaturePolicyHeader(
       FeaturePolicyHeaderToWeb(state.feature_policy_header));
+  web_frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(
+      state.has_received_user_gesture_before_navigation);
   if (state.has_received_user_gesture)
     web_frame_->SetHasReceivedUserGesture();
 
   web_frame_->ResetReplicatedContentSecurityPolicy();
   OnAddContentSecurityPolicies(state.accumulated_csp_headers);
+}
+
+void RenderFrameProxy::OnSetHasReceivedUserGestureBeforeNavigation(bool value) {
+  web_frame_->SetDocumentHasReceivedUserGestureBeforeNavigation(value);
 }
 
 // Update the proxy's SecurityContext and FrameOwner with new sandbox flags
