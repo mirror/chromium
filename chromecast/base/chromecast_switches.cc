@@ -117,6 +117,17 @@ const char kDesktopWindow1080p[] = "desktop-window-1080p";
 
 namespace chromecast {
 
+// Begin Chromecast Features.
+
+// Enables the use of QUIC in Cast-specific URLRequestContextGetters. See
+// chromecast/browser/url_request_context_factory.cc for usage.
+// NOTE: This feature has a legacy name - do not use it as your convention.
+// Dashes, not underscores, should be used in Feature names.
+const base::Feature kEnableQuic{"enable_quic",
+                                base::FEATURE_DISABLED_BY_DEFAULT};
+
+// End Chromecast Features.
+
 bool GetSwitchValueBoolean(const std::string& switch_string,
                            const bool default_value) {
   const base::CommandLine* command_line =
