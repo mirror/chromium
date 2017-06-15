@@ -89,6 +89,9 @@ void FullscreenController::DidEnterFullscreen() {
         fullscreen->DidEnterFullscreen();
     }
   }
+
+  // TODO(foolip): If the top level browsing context (main frame) ends up with
+  // no fullscreen element, exit fullscreen again to recover.
 }
 
 void FullscreenController::DidExitFullscreen() {
@@ -101,33 +104,32 @@ void FullscreenController::DidExitFullscreen() {
 
   UpdatePageScaleConstraints(true);
 
-  // Set |m_state| so that any |exitFullscreen()| calls from within
-  // |Fullscreen::didExitFullscreen()| do not call
-  // |WebFrameClient::exitFullscreen()| again.
-  // TODO(foolip): Remove this when state changes and events are synchronized
-  // with animation frames. https://crbug.com/402376
-  state_ = State::kExitingFullscreen;
-
-  // Notify all local frames that we have exited fullscreen.
-  // TODO(foolip): This should only need to notify the topmost local roots. That
-  // doesn't currently work because |Fullscreen::m_currentFullScreenElement|
-  // isn't set for the topmost document when an iframe goes fullscreen, but can
-  // be done once |m_currentFullScreenElement| is gone and all state is in the
-  // fullscreen element stack. https://crbug.com/402421
-  for (Frame* frame = web_view_base_->GetPage()->MainFrame(); frame;
-       frame = frame->Tree().TraverseNext()) {
-    if (!frame->IsLocalFrame())
-      continue;
-    if (Document* document = ToLocalFrame(frame)->GetDocument()) {
-      if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
-        fullscreen->DidExitFullscreen();
-    }
-  }
-
   // We need to wait until style and layout are updated in order to properly
   // restore scroll offsets since content may not be overflowing in the same way
   // until they are.
   state_ = State::kNeedsScrollAndScaleRestore;
+
+  // Notify the topmost local frames that we have exited fullscreen.
+  // |Fullscreen::didExitFullscreen()| will take care of descendant frames.
+  for (Frame* frame = web_view_base_->GetPage()->MainFrame(); frame;) {
+    Frame* next_frame = frame->Tree().TraverseNext();
+
+    if (frame->IsRemoteFrame()) {
+      frame = next_frame;
+      continue;
+    }
+
+    DCHECK(frame->IsLocalRoot());
+    if (Document* document = ToLocalFrame(frame)->GetDocument()) {
+      if (Fullscreen* fullscreen = Fullscreen::FromIfExists(*document))
+        fullscreen->DidExitFullscreen();
+    }
+
+    // Skip over all descendant frames.
+    while (next_frame && next_frame->Tree().IsDescendantOf(frame))
+      next_frame = next_frame->Tree().TraverseNext();
+    frame = next_frame;
+  }
 }
 
 void FullscreenController::EnterFullscreen(LocalFrame& frame) {
@@ -193,7 +195,7 @@ void FullscreenController::FullscreenElementChanged(Element* from_element,
   RestoreBackgroundColorOverride();
 
   if (to_element) {
-    DCHECK(Fullscreen::IsCurrentFullScreenElement(*to_element));
+    DCHECK(Fullscreen::IsFullscreenElement(*to_element));
 
     if (isHTMLVideoElement(*to_element)) {
       HTMLVideoElement& video_element = toHTMLVideoElement(*to_element);
@@ -207,7 +209,7 @@ void FullscreenController::FullscreenElementChanged(Element* from_element,
   }
 
   if (from_element) {
-    DCHECK(!Fullscreen::IsCurrentFullScreenElement(*from_element));
+    DCHECK(!Fullscreen::IsFullscreenElement(*from_element));
 
     if (isHTMLVideoElement(*from_element)) {
       HTMLVideoElement& video_element = toHTMLVideoElement(*from_element);
