@@ -16,11 +16,15 @@ TextResource::TextResource(const ResourceRequest& resource_request,
                            const String& mime_type,
                            const CharsetRequest& charset)
     : Resource(resource_request, type, options),
+      charset_request_(charset),
       decoder_(TextResourceDecoder::Create(mime_type, charset)) {}
 
 TextResource::~TextResource() {}
 
 void TextResource::SetEncoding(const String& chs) {
+  if (charset_request_.AlwaysUseUTF8())
+    return;
+
   decoder_->SetEncoding(WTF::TextEncoding(chs),
                         TextResourceDecoder::kEncodingFromHTTPHeader);
 }
