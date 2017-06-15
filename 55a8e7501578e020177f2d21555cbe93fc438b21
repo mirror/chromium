@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "14c3f727_78b7e532",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-15T13:17:11Z",
+      "side": 1,
+      "message": "Do we need to preserve these? Are they used by anything?",
+      "range": {
+        "startLine": 579,
+        "startChar": 18,
+        "endLine": 579,
+        "endChar": 63
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7eb11b05_6f41f6d8",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-15T13:17:11Z",
+      "side": 1,
+      "message": "Google c style requires output variables to go last.",
+      "range": {
+        "startLine": 948,
+        "startChar": 43,
+        "endLine": 948,
+        "endChar": 58
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d58407a1_977a557d",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-15T13:17:11Z",
+      "side": 1,
+      "message": "While this is probably a good thing to try, it seems surprising to be in a path entitled \u0027Record UMA for background tab audio\u0027.  Consider splitting off into a different patch.",
+      "range": {
+        "startLine": 1273,
+        "startChar": 6,
+        "endLine": 1273,
+        "endChar": 33
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42407ef1_edc7955c",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-15T13:17:11Z",
+      "side": 1,
+      "message": "nit: Seems a bit pointless.",
+      "range": {
+        "startLine": 1243,
+        "startChar": 33,
+        "endLine": 1243,
+        "endChar": 34
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
