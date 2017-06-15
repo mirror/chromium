@@ -31,7 +31,7 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   WTF_MAKE_NONCOPYABLE(Worklet);
 
  public:
-  virtual ~Worklet() = default;
+  virtual ~Worklet();
 
   // Worklet.idl
   // addModule() imports ES6 module scripts.
