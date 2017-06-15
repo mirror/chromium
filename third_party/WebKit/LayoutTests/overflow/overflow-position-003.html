@@ -1,0 +1,43 @@
+<!doctype html>
+<script src="../resources/testharness.js"></script>
+<script src="../resources/testharnessreport.js"></script>
+<style>
+#container {
+  writing-mode: vertical-rl;
+  overflow: scroll;
+  position: relative;
+  border: 1px solid black;
+  width: 200px;
+  height: 100px;
+}
+#target {
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 255, 0, 0.3);
+}
+</style>
+<p>Overflow: child position and size + writing-mode: vertical-rl</p>
+<div id="container">
+  <div id="target">foo</div>
+</div>
+<script>
+
+var container = document.querySelector('#container');
+var target = document.querySelector('#target');
+
+test(function() {
+  assert_equals(target.offsetWidth, container.clientWidth, "width");
+  assert_equals(target.offsetHeight, container.clientHeight, "height");
+  assert_equals(target.offsetTop, 0, "top");
+  assert_equals(target.offsetLeft, 0, "left");
+}, "position with scrollbars");
+
+test(function() {
+  container.style.direction = "rtl";
+  assert_equals(target.offsetWidth, container.clientWidth, "width");
+  assert_equals(target.offsetHeight, container.clientHeight, "height");
+  assert_equals(target.offsetTop, 0, "top");
+  assert_equals(target.offsetLeft, 0, "left");
+}, "position with scrollbars + rtl");
+</script>
+
