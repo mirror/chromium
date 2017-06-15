@@ -81,33 +81,33 @@ GetNonlocalhostHistogramNames() {
           *new std::map<DomainType,
                         std::map<ResourceType, std::map<bool, std::string>>>();
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][true] =
-      "LocalNetworkRequests.PublicPage.PrivateRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.PrivateRequests.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][false] =
-          "LocalNetworkRequests.PublicPage.PrivateRequestCount.Failed";
+          "LocalNetworkRequests.PublicPage.PrivateRequests.Failed";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][true] =
-      "LocalNetworkRequests.PublicPage.RouterRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.RouterRequests.Successful";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][false] =
-      "LocalNetworkRequests.PublicPage.RouterRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.RouterRequests.Failed";
 
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][true] =
-      "LocalNetworkRequests.PrivatePage.PublicRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.PublicRequests.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][false] =
-          "LocalNetworkRequests.PrivatePage.PublicRequestCount.Failed";
+          "LocalNetworkRequests.PrivatePage.PublicRequests.Failed";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][true] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
+          "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
+          "LocalNetworkRequests.PrivatePage.SameSubnetRequests.Failed";
   kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE]
                              [RESOURCE_TYPE_LOCAL_DIFF_SUBNET][true] =
                                  "LocalNetworkRequests.PrivatePage."
-                                 "DifferentSubnetRequestCount.Successful";
+                                 "DifferentSubnetRequests.Successful";
   kNonlocalhostHistogramNames
       [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_DIFF_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.DifferentSubnetRequestCount.Failed";
+          "LocalNetworkRequests.PrivatePage.DifferentSubnetRequests.Failed";
 
   return kNonlocalhostHistogramNames;
 }
@@ -121,66 +121,46 @@ GetLocalhostHistogramNames() {
                         std::map<PortType, std::map<bool, std::string>>>();
 
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][true] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "WebRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][false] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "WebRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost.WebRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][true] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "DatabaseRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][false] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "DatabaseRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost.DbRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][true] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "PrinterRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][false] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "PrinterRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost.PrinterRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][true] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "DevelopmentRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][false] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "DevelopmentRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost.DevRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][true] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "OtherRequestCount.Successful";
+      "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][false] =
-      "LocalNetworkRequests.PublicPage.Localhost."
-      "OtherRequestCount.Failed";
+      "LocalNetworkRequests.PublicPage.Localhost.OtherRequests.Failed";
 
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "WebRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "WebRequestCount.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost.WebRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "DatabaseRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "DatabaseRequestCount.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost.DbRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "PrinterRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "PrinterRequestCount.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost.PrinterRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "DevelopmentRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "DevelopmentRequestCount.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost.DevRequests.Failed";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][true] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "OtherRequestCount.Successful";
+      "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Successful";
   kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][false] =
-      "LocalNetworkRequests.PrivatePage.Localhost."
-      "OtherRequestCount.Failed";
+      "LocalNetworkRequests.PrivatePage.Localhost.OtherRequests.Failed";
   return kLocalhostHistogramNames;
 }
 
