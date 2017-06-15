@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 import("//build/config/linux/pkg_config.gni")
+import("//ui/ozone/ozone.gni")
 
 assert(is_linux)
 
@@ -19,9 +20,19 @@ if (!use_system_libdrm) {
       "src",
       "src/include",
       "src/include/drm",
+      "src/intel",
     ]
+
+    if (ozone_platform_gbm) {
+      include_dirs += [ "src/intel" ]
+    }
+
     if (is_clang) {
       cflags = [ "-Wno-enum-conversion" ]
+    }
+
+    if (ozone_platform_gbm) {
+      defines = [ "HAVE_LIBDRM_ATOMIC_PRIMITIVES" ]
     }
   }
 
@@ -32,6 +43,16 @@ if (!use_system_libdrm) {
       "src/xf86drmMode.c",
       "src/xf86drmRandom.c",
     ]
+
+    if (ozone_platform_gbm) {
+      sources += [
+        "src/intel/intel_bufmgr.c",
+        "src/intel/intel_bufmgr_fake.c",
+        "src/intel/intel_bufmgr_gem.c",
+        "src/intel/intel_decode.c",
+        "src/intel/mm.c",
+      ]
+    }
 
     include_dirs = [
       "src",
