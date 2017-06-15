@@ -196,6 +196,24 @@
     },
     {
       "key": {
+        "uuid": "b9635da0_455b2ecf",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-15T00:46:15Z",
+      "side": 1,
+      "message": "Had a look, and I think it will be deterministic in that it\u0027s the order that the files are specified within BUILD.gn files. Agree sorting takes any doubt away though :)",
+      "parentUuid": "904afc1a_c86fc58e",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d2ff27d_14da2235",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 16
@@ -332,6 +350,24 @@
       "writtenOn": "2017-06-14T20:53:38Z",
       "side": 1,
       "message": "I guess you\u0027re switching this to allow regular JVM lookup so you don\u0027t have to update all the test entry points and have all the tests generate a registration function?\n\nI\u0027m not sure I like that; having tests rely on the same mechanism that the shipping binary (or at least the most restrictive one) uses seems like a good way to make sure the mechanism is working properly. Even though this change makes the chance of incorrect registration much lower...",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6b5f627_955cd8aa",
+        "filename": "testing/test.gni",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-15T00:46:15Z",
+      "side": 1,
+      "message": "One snag we hit with this new approach, is that the shared_library() target must have a direct dependency on all component()s that contain JNI. Otherwise, you get a linker error.\n\nThis came up for libchrome.so here:\nhttps://chromium-review.googlesource.com/c/527678/4/chrome/BUILD.gn\n\nI don\u0027t want to introduce this onus on our tests when it\u0027s easily avoidable anyways. If we did want to introduce it, then I think we should also enable relocation packing for our test apks, but I just don\u0027t think the value is there.",
+      "parentUuid": "6051b0b2_25ee4a06",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
