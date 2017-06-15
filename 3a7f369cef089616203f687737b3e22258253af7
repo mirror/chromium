@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64579380_46cfa32b",
+        "filename": "components/download/internal/entry_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-15T17:31:52Z",
+      "side": 1,
+      "message": "nit: const ref here as well.",
+      "range": {
+        "startLine": 25,
+        "startChar": 4,
+        "endLine": 25,
+        "endChar": 33
+      },
+      "revId": "3a7f369cef089616203f687737b3e22258253af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef22f9fa_8e421231",
+        "filename": "components/download/internal/entry_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-15T17:31:52Z",
+      "side": 1,
+      "message": "nit: This can be const std::set\u003c\u003e\u0026.",
+      "range": {
+        "startLine": 36,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 32
+      },
+      "revId": "3a7f369cef089616203f687737b3e22258253af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306a9812_b01671b6",
+        "filename": "components/download/internal/model_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-15T17:31:52Z",
+      "side": 1,
+      "message": "nit: const std::string\u0026 will be copied to the callback internal storage by default, so we probably don\u0027t need standalone_guid. \n\nhttps://cs.chromium.org/chromium/src/docs/callback.md?q\u003ddocs/callback.\u0026dr\u0026l\u003d349",
+      "range": {
+        "startLine": 66,
+        "startChar": 38,
+        "endLine": 66,
+        "endChar": 53
+      },
+      "revId": "3a7f369cef089616203f687737b3e22258253af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
