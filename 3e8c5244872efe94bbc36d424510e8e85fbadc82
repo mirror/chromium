@@ -22,6 +22,30 @@
       "revId": "3e8c5244872efe94bbc36d424510e8e85fbadc82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbfb176a_35f143e8",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-15T21:26:11Z",
+      "side": 1,
+      "message": "Are our callers OK with having non-opaque colors here?  A lot of theme colors are forced to be opaque, I\u0027m sort of surprised that alpha-blending actually works in all cases on this one.\n\nAs to the implementations being the same, see my latest suggestion in reply to our previous discussion.",
+      "parentUuid": "16bc7c53_5f58dd76",
+      "range": {
+        "startLine": 481,
+        "startChar": 13,
+        "endLine": 481,
+        "endChar": 21
+      },
+      "revId": "3e8c5244872efe94bbc36d424510e8e85fbadc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
