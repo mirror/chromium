@@ -810,6 +810,13 @@ class BLINK_EXPORT WebFrameClient {
     return WebURL();
   }
 
+  // Overwrites the given URL to use an HTML5 embed if possible.
+  // An empty URL is returned if the URL is not overriden.
+  virtual WebURL OverridePDFEmbedWithHTML(const WebURL& url,
+                                          const WebString& orig_mime_type) {
+    return WebURL();
+  }
+
   // Loading --------------------------------------------------------------
 
   virtual std::unique_ptr<blink::WebURLLoader> CreateURLLoader() {

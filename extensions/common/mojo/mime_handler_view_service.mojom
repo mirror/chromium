@@ -1,0 +1,17 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module extensions.mime_handler_view;
+
+interface MimeHandlerViewService {
+  // Registers a frame with MimeHandlerViewService to load the PDF resource at
+  // |resource_url|. If necessary, the browser will ask the renderer to start
+  // a resource load request for the PDF resource. |in_plugin_document| lets
+  // the browser know that the embedder of the navigating frame is a
+  // PluginDocument.
+  [Sync]
+  RegisterMimeHandlerViewFrame(int32 target_frame_routing_id,
+                          	   string resource_url,
+                          	   bool in_plugin_document) => (bool send_request);
+};

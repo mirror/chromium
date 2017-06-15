@@ -7,6 +7,7 @@
 #include "base/command_line.h"
 #include "base/metrics/field_trial.h"
 #include "chrome/browser/browser_process.h"
+#include "chrome/browser/browsing_data/browsing_data_helper.h"
 #include "chrome/browser/extensions/error_console/error_console.h"
 #include "chrome/browser/extensions/extension_service.h"
 #include "chrome/browser/extensions/window_controller.h"
@@ -21,9 +22,13 @@
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/web_contents.h"
+#include "content/public/common/content_features.h"
 #include "content/public/common/content_switches.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/extension_system.h"
+#include "extensions/browser/extension_util.h"
+#include "extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension_messages.h"
 #include "extensions/common/extension_urls.h"
@@ -41,6 +46,24 @@ ChromeExtensionWebContentsObserver::ChromeExtensionWebContentsObserver(
     : ExtensionWebContentsObserver(web_contents) {}
 
 ChromeExtensionWebContentsObserver::~ChromeExtensionWebContentsObserver() {}
+
+void ChromeExtensionWebContentsObserver::RenderFrameCreated(
+    content::RenderFrameHost* render_frame_host) {
+  bool web_accessible_pdf_extension =
+      base::FeatureList::IsEnabled(features::kWebAccessiblePdfExtension);
+
+  bool is_local_root = render_frame_host->IsCrossProcessSubframe();
+
+  bool is_pdf_extension = extensions::util::ForPDFExtension(
+      render_frame_host->GetSiteInstance()->GetSiteURL());
+
+  if (web_accessible_pdf_extension && is_local_root && is_pdf_extension) {
+    // TODO(ekaramad): Perhaps we need a more limited version of this call to
+    // allow chrome://resources only?
+    RenderViewCreated(render_frame_host->GetRenderViewHost());
+  }
+  ExtensionWebContentsObserver::RenderFrameCreated(render_frame_host);
+}
 
 void ChromeExtensionWebContentsObserver::RenderViewCreated(
     content::RenderViewHost* render_view_host) {

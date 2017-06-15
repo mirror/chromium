@@ -1030,6 +1030,12 @@ KURL LocalFrameClientImpl::OverrideFlashEmbedWithHTML(const KURL& url) {
   return web_frame_->Client()->OverrideFlashEmbedWithHTML(WebURL(url));
 }
 
+KURL LocalFrameClientImpl::OverridePDFEmbedWithHTML(const KURL& url,
+                                                    const String& mime_type) {
+  return web_frame_->Client()->OverridePDFEmbedWithHTML(WebURL(url),
+                                                        WebString(mime_type));
+}
+
 void LocalFrameClientImpl::SetHasReceivedUserGesture(bool received_previously) {
   // The client potentially needs to dispatch the event to other processes only
   // for the first time.
