@@ -15,7 +15,7 @@ SerializedScriptValueForModulesFactory::Create(
     v8::Isolate* isolate,
     v8::Local<v8::Value> value,
     const SerializedScriptValue::SerializeOptions& options,
-    ExceptionState& exception_state) {
+    ExceptionState& exception_state) const {
   TRACE_EVENT0("blink", "SerializedScriptValueFactory::create");
   V8ScriptValueSerializerForModules serializer(ScriptState::Current(isolate),
                                                options);
@@ -25,7 +25,7 @@ SerializedScriptValueForModulesFactory::Create(
 v8::Local<v8::Value> SerializedScriptValueForModulesFactory::Deserialize(
     SerializedScriptValue* value,
     v8::Isolate* isolate,
-    const SerializedScriptValue::DeserializeOptions& options) {
+    const SerializedScriptValue::DeserializeOptions& options) const {
   TRACE_EVENT0("blink", "SerializedScriptValueFactory::deserialize");
   V8ScriptValueDeserializerForModules deserializer(
       ScriptState::Current(isolate), value, options);

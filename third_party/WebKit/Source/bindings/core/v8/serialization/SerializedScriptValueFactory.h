@@ -14,14 +14,15 @@ namespace blink {
 
 class CORE_EXPORT SerializedScriptValueFactory {
   WTF_MAKE_NONCOPYABLE(SerializedScriptValueFactory);
-  USING_FAST_MALLOC(SerializedScriptValueFactory);
+  DISALLOW_NEW();
 
  public:
+  constexpr SerializedScriptValueFactory() {}
+
   // SerializedScriptValueFactory::initialize() should be invoked when Blink is
   // initialized, i.e. initialize() in WebKit.cpp.
-  static void Initialize(SerializedScriptValueFactory* new_factory) {
-    DCHECK(!instance_);
-    instance_ = new_factory;
+  static void Initialize(const SerializedScriptValueFactory& new_factory) {
+    instance_ = &new_factory;
   }
 
  protected:
@@ -38,27 +39,17 @@ class CORE_EXPORT SerializedScriptValueFactory {
       v8::Isolate*,
       v8::Local<v8::Value>,
       const SerializedScriptValue::SerializeOptions&,
-      ExceptionState&);
+      ExceptionState&) const;
 
   virtual v8::Local<v8::Value> Deserialize(
       SerializedScriptValue*,
       v8::Isolate*,
-      const SerializedScriptValue::DeserializeOptions&);
-
-  // Following methods are expected to be called in
-  // SerializedScriptValueFactory{ForModules}.
-  SerializedScriptValueFactory() {}
+      const SerializedScriptValue::DeserializeOptions&) const;
 
  private:
-  static SerializedScriptValueFactory& Instance() {
-    if (!instance_) {
-      NOTREACHED();
-      instance_ = new SerializedScriptValueFactory;
-    }
-    return *instance_;
-  }
+  static const SerializedScriptValueFactory& Instance() { return *instance_; }
 
-  static SerializedScriptValueFactory* instance_;
+  static const SerializedScriptValueFactory* instance_;
 };
 
 }  // namespace blink

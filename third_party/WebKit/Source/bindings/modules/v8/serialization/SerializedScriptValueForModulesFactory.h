@@ -12,23 +12,22 @@ namespace blink {
 
 class SerializedScriptValueForModulesFactory final
     : public SerializedScriptValueFactory {
-  USING_FAST_MALLOC(SerializedScriptValueForModulesFactory);
   WTF_MAKE_NONCOPYABLE(SerializedScriptValueForModulesFactory);
 
  public:
-  SerializedScriptValueForModulesFactory() : SerializedScriptValueFactory() {}
+  constexpr SerializedScriptValueForModulesFactory() {}
 
  protected:
   PassRefPtr<SerializedScriptValue> Create(
       v8::Isolate*,
       v8::Local<v8::Value>,
       const SerializedScriptValue::SerializeOptions&,
-      ExceptionState&) override;
+      ExceptionState&) const override;
 
   v8::Local<v8::Value> Deserialize(
       SerializedScriptValue*,
       v8::Isolate*,
-      const SerializedScriptValue::DeserializeOptions&) override;
+      const SerializedScriptValue::DeserializeOptions&) const override;
 };
 
 }  // namespace blink
