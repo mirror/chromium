@@ -1,7 +1,9 @@
 include_rules = [
+    # Only inside BLINK_IMPLEMENTATION
     "+core",
-    "+mojo/public",
     "+platform",
+
+    "+mojo/public",
     "+public/platform",
     "+public/web",
 ]
