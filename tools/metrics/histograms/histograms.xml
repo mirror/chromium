@@ -68009,6 +68009,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="ServiceWorker.NavPreload.WorkerPreparationType" units="ms">
+  <owner>falken@chromium.org</owner>
+  <summary>
+    The type of preparation needed for the browser to find and possibly start an
+    active worker to dispatch a FetchEvent for a main frame resource request,
+    when navigation preload also occurred.
+
+    This histogram is recorded when a navigation preload response is succesfully
+    forwarded to the service worker's fetch event (for the case mentioned
+    above), with the same restrictions numbered 1) through 3) as for
+    ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time. The sample is
+    only recorded to the appropriate suffixed histograms.
+  </summary>
+</histogram>
+
 <histogram name="ServiceWorker.NavPreload.WorkerWaitTime" units="ms">
   <owner>falken@chromium.org</owner>
   <summary>
@@ -89810,11 +89825,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram name="Media.Audio.InputStartupSuccessMac"/>
 </histogram_suffixes>
 
-<histogram_suffixes name="MainFrameNavigation" separator="_">
+<histogram_suffixes name="MainFrameOrSubFrame" separator="_">
   <suffix name="MainFrame" label="Main frame navigation."/>
+  <suffix name="SubFrame" label="Subframe page load."/>
   <affected-histogram name="ServiceWorker.NavPreload.ConcurrentTime"/>
   <affected-histogram name="ServiceWorker.NavPreload.FinishedFirst"/>
   <affected-histogram name="ServiceWorker.NavPreload.ResponseTime"/>
+  <affected-histogram name="ServiceWorker.NavPreload.WorkerPreparationType"/>
   <affected-histogram name="ServiceWorker.NavPreload.WorkerWaitTime"/>
 </histogram_suffixes>
 
@@ -94916,9 +94933,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <affected-histogram
       name="ServiceWorker.ActivatedWorkerPreparationForMainFrame.Time"/>
   <affected-histogram name="ServiceWorker.NavPreload.ConcurrentTime_MainFrame"/>
+  <affected-histogram name="ServiceWorker.NavPreload.ConcurrentTime_SubFrame"/>
   <affected-histogram name="ServiceWorker.NavPreload.FinishedFirst_MainFrame"/>
+  <affected-histogram name="ServiceWorker.NavPreload.FinishedFirst_SubFrame"/>
   <affected-histogram name="ServiceWorker.NavPreload.ResponseTime_MainFrame"/>
+  <affected-histogram name="ServiceWorker.NavPreload.ResponseTime_SubFrame"/>
   <affected-histogram name="ServiceWorker.NavPreload.WorkerWaitTime_MainFrame"/>
+  <affected-histogram name="ServiceWorker.NavPreload.WorkerWaitTime_SubFrame"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="SessionRestoreTabCountMemoryPressure" separator="_">
