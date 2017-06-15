@@ -10,4 +10,11 @@ RenderPageInfo::RenderPageInfo() {}
 
 RenderPageInfo::RenderPageInfo(const RenderPageInfo& other) = default;
 
+bool PrefetchURL::operator<(const PrefetchURL& other) const {
+  if (client_id == other.client_id)
+    return url < other.url;
+
+  return client_id < other.client_id;
+}
+
 }  // namespace offline_pages

@@ -114,6 +114,8 @@ struct PrefetchURL {
   PrefetchURL(const ClientId& client_id, const GURL& url)
       : client_id(client_id), url(url) {}
 
+  bool operator<(const PrefetchURL& other) const;
+
   // Client provided ID to allow the matching of URLs to the respective work
   // item in the prefetching system. It can be anything useful to identify the
   // page . It will not be used internally for de-duplication.

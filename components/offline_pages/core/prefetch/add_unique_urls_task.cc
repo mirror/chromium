@@ -19,6 +19,8 @@ AddUniqueUrlsTask::~AddUniqueUrlsTask() {}
 
 void AddUniqueUrlsTask::Run() {
   CHECK(prefetch_store_);
+
+  prefetch_store_->AddUniqueUrls(prefetch_urls_);
   TaskComplete();
 }
 

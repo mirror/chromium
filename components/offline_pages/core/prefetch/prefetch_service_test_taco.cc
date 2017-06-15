@@ -4,23 +4,24 @@
 
 #include "components/offline_pages/core/prefetch/prefetch_service_test_taco.h"
 
-#include "base/memory/ptr_util.h"
+#include <utility>
 
+#include "base/memory/ptr_util.h"
 #include "components/offline_pages/core/prefetch/offline_metrics_collector.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
-#include "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h"
 #include "components/offline_pages/core/prefetch/prefetch_gcm_handler.h"
 #include "components/offline_pages/core/prefetch/prefetch_in_memory_store.h"
 #include "components/offline_pages/core/prefetch/prefetch_service_impl.h"
 #include "components/offline_pages/core/prefetch/suggested_articles_observer.h"
 #include "components/offline_pages/core/prefetch/test_offline_metrics_collector.h"
+#include "components/offline_pages/core/prefetch/test_prefetch_dispatcher.h"
 #include "components/offline_pages/core/prefetch/test_prefetch_gcm_handler.h"
 
 namespace offline_pages {
 
 PrefetchServiceTestTaco::PrefetchServiceTestTaco() {
   metrics_collector_ = base::MakeUnique<TestOfflineMetricsCollector>();
-  dispatcher_ = base::MakeUnique<PrefetchDispatcherImpl>();
+  dispatcher_ = base::MakeUnique<TestPrefetchDispatcher>();
   gcm_handler_ = base::MakeUnique<TestPrefetchGCMHandler>();
   store_ = base::MakeUnique<PrefetchInMemoryStore>();
 }
@@ -64,4 +65,4 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
       std::move(suggested_articles_observer_));
 }
 
-}  // namespace offline_page
+}  // namespace offline_pages

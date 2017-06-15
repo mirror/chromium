@@ -10,4 +10,9 @@ PrefetchInMemoryStore::PrefetchInMemoryStore() = default;
 
 PrefetchInMemoryStore::~PrefetchInMemoryStore() = default;
 
+void PrefetchInMemoryStore::AddUniqueUrls(
+    const std::vector<PrefetchURL>& prefetch_urls) {
+  prefetch_urls_.insert(prefetch_urls.begin(), prefetch_urls.end());
+}
+
 }  // namespace offline_pages
