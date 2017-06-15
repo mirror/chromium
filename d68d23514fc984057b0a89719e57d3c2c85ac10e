@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1fbf90c_e09814fd",
+        "filename": "tools/perf/docs/apk_size_regressions.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-15T20:28:47Z",
+      "side": 1,
+      "message": "You\u0027ve lost the **bold** on this.\n\nAlso, I\u0027d prefer to leave it as the graph with just MonochromePublic for upstream alerts (since having two lines makes them harder to read.\n\nPerhaps let\u0027s include both links here, one for Monochrome and one for MonochromePublic?",
+      "range": {
+        "startLine": 60,
+        "startChar": 116,
+        "endLine": 60,
+        "endChar": 122
+      },
+      "revId": "d68d23514fc984057b0a89719e57d3c2c85ac10e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
