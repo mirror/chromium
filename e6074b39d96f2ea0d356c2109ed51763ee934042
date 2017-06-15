@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dbd14a35_014bca26",
+        "filename": "components/download/internal/scheduler/scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T00:24:29Z",
+      "side": 1,
+      "message": "Put these in Configuration and pass it in?  Also WindowEndTime should be relatively large (and/or based on the cancel time for the requests?).  Otherwise if they don\u0027t charge for 8 hours we just won\u0027t ever start our job if we\u0027re not running?",
+      "range": {
+        "startLine": 17,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 58
+      },
+      "revId": "e6074b39d96f2ea0d356c2109ed51763ee934042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
