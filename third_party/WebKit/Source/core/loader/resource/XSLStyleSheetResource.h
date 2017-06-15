@@ -51,13 +51,13 @@ class XSLStyleSheetResource final : public StyleSheetResource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest& charset) const override {
       return new XSLStyleSheetResource(request, options, charset);
     }
   };
   XSLStyleSheetResource(const ResourceRequest&,
                         const ResourceLoaderOptions&,
-                        const String& charset);
+                        const CharsetRequest&);
 
   void CheckNotify() override;
 

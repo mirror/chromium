@@ -55,7 +55,7 @@ class CORE_EXPORT DocumentResource final : public TextResource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest&) const override {
       return new DocumentResource(request, Resource::kSVGDocument, options);
     }
   };
