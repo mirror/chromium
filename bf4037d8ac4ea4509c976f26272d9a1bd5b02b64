@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c671981_1cc5a2cb",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000246
+      },
+      "writtenOn": "2017-06-15T22:53:50Z",
+      "side": 1,
+      "message": "This seems unnecessary?",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
