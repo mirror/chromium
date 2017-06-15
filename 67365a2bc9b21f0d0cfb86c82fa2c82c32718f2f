@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85700240_f2d57ce0",
+        "filename": "content/test/data/accessibility/aria/aria-atomic-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T05:54:35Z",
+      "side": 1,
+      "message": "This needs @BLINK-ALLOW:liveAtomic* or something like that",
+      "revId": "67365a2bc9b21f0d0cfb86c82fa2c82c32718f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b70b4c9_692c28df",
+        "filename": "content/test/data/accessibility/aria/aria-autocomplete-expected-blink.txt",
+        "patchSetId": 7
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T05:54:35Z",
+      "side": 1,
+      "message": "This needs a @BLINK-ALLOW for autocomplete",
+      "revId": "67365a2bc9b21f0d0cfb86c82fa2c82c32718f2f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
