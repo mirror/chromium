@@ -476,11 +476,8 @@ void LocalFrame::Detach(FrameDetachType type) {
 
   DomWindow()->FrameDestroyed();
 
-  // TODO: Page should take care of updating focus/scrolling instead of Frame.
-  // TODO: It's unclear as to why this is called more than once, but it is,
-  // so page() could be null.
-  if (GetPage() && GetPage()->GetFocusController().FocusedFrame() == this)
-    GetPage()->GetFocusController().SetFocusedFrame(nullptr);
+  if (page_->GetFocusController().FocusedFrame() == this)
+    page_->GetFocusController().SetFocusedFrame(nullptr);
 
   if (GetPage() && GetPage()->GetScrollingCoordinator() && view_)
     GetPage()->GetScrollingCoordinator()->WillDestroyScrollableArea(
