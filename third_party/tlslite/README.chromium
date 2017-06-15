@@ -1,7 +1,7 @@
 Name: tlslite
 URL: http://trevp.net/tlslite/
 Version: 0.4.8
-Security Critical: No
+Shipping: No
 License: Public domain and BSD
 
 Description: Python TLS implementation for use with test server.

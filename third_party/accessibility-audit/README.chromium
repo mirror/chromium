@@ -5,7 +5,7 @@ Version: 0
 Revision: 404ede0f2186682fbbef624141e76ec2b601317d
 License: Apache 2.0
 License File: LICENSE
-Security Critical: no
+Shipping: no
 
 Description:
 Library of accessibility-related testing and utility code.

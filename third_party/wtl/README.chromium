@@ -3,7 +3,7 @@ URL: http://wtl.sourceforge.net/
 Version: 8.0
 License: Microsoft Permissive License
 License File: Ms-PL.txt
-Security Critical: yes
+Shipping: yes
 
 With min and max replaced respectively with __min and __max. See below for an explanation.
 

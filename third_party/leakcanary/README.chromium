@@ -4,7 +4,7 @@ Version: 1.4-beta1
 Revision: 608ded739e036a3aa69db47ac43777dcee506f8e
 License: Apache 2.0
 License File: LICENSE
-Security Critical: no
+Shipping: no
 
 Description:
 A Java memory leak detection library for Android.

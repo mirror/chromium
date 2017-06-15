@@ -4,7 +4,7 @@ Version: 3.1.5
 Revision: f03b3cc126edc8d6a2d4466d227fb41a1b2c2a14
 License: Apache Version 2.0
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 
 Description:
 OCMock is an Objective-C implementation of mock objects. If you are unfamiliar

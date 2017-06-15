@@ -2,7 +2,7 @@ Name: Android Open Source Project - App Compat Library
 URL: https://android.googlesource.com/platform/frameworks/support
 Version: unknown
 License: Apache 2.0
-Security Critical: yes
+Shipping: yes
 
 Description:
 This is a modified copy of the swipe refresh layout widget (and its two

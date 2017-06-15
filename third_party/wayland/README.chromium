@@ -3,7 +3,7 @@ URL: http://wayland.freedesktop.org/
 Version: 6a18a87727c64719c68168568b9ab1e4d7c2d9c1
 License: MIT
 License File: src/COPYING
-Security Critical: yes
+Shipping: yes
 
 Description:
 Wayland is a protocol for a compositor to talk to its clients as well as a C

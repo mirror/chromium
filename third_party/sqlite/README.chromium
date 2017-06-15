@@ -2,7 +2,7 @@ Name: sqlite
 URL: http://sqlite.org/
 Version: 3.17.patched
 Included In Release: Yes
-Security Critical: Yes
+Shipping: Yes
 License: Public domain
 
 1) Managing differences between SQLite core and Chromium's version.

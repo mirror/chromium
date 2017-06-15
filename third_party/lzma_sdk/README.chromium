@@ -4,7 +4,7 @@ URL: http://www.7-zip.org/sdk.html
 Version: 15.14
 Date: 2015-12-31
 License: Public Domain
-Security Critical: yes
+Shipping: yes
 
 Description:
 This contains a part of LZMA SDK 15.14.

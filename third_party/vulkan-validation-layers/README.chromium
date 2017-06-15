@@ -5,7 +5,7 @@ URL: https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers
 SOURCE CODE: git clone https://github.com/KhronosGroup/Vulkan-LoaderAndValidationLayers.git
 Date: 06/07/2016
 Revision: d9da90d92748c37962766868f8b0354637672c2a
-Security Critical: no
+Shipping: no
 License: Apache 2.0
 License File: LICENSE.txt
 

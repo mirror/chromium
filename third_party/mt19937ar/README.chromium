@@ -3,7 +3,7 @@ URL: http://www.math.sci.hiroshima-u.ac.jp/~m-mat/MT/MT2002/emt19937ar.html
 Version: 0
 Date: 2002/1/26
 License: BSD
-Security Critical: yes
+Shipping: yes
 
 Description:
 This is Chrome's locally patched copy of Takuji Nishimura and Makoto

@@ -5,7 +5,7 @@ Version: 1.7.1
 RealVersion: git tag libva-1.7.1
 License: MIT
 License File: COPYING
-Security Critical: no
+Shipping: no
 
 Description:
 This library is used for interfacing with the Intel graphics driver for

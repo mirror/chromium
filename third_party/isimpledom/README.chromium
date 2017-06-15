@@ -3,7 +3,7 @@ Short Name: ISimpleDOM
 URL: http://developer.mozilla.org/en-US/docs/Accessibility/AT-APIs
 Version: unknown
 License: MPL 1.1/GPL 2.0/LGPL 2.1
-Security Critical: yes
+Shipping: yes
 
 Description:
   This directory contains the ISimpleDOM API, which is needed

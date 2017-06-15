@@ -3,7 +3,7 @@ URL: http://wayland.freedesktop.org/
 Version: 1.7
 License: MIT
 License File: src/COPYING
-Security Critical: yes
+Shipping: yes
 
 Description:
 wayland-protocols contains Wayland protocols that adds functionality not

@@ -5,7 +5,7 @@ License: BSD
 License File: LICENSE
 Version: 3.0.0-beta-3
 Revision: 3470b6895aa659b7559ed678e029a5338e535f14
-Security Critical: yes
+Shipping: yes
 
 Steps used to create the current version:
 1. Pull the release from https://github.com/google/protobuf/releases

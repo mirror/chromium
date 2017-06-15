@@ -5,7 +5,7 @@ Date: Dec 16, 2016
 Revision: 823a9504f237e4bb236cadf8b804ed27498e54fd
 License: Apache 2.0
 License File: NOT_SHIPPED
-Security Critical: No
+Shipping: No
 
 Description:
 Estimates the size of Google Play patches and the new gzipped APK. See README.md

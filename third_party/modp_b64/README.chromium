@@ -3,7 +3,7 @@ Short Name: stringencoders
 URL: https://github.com/client9/stringencoders
 Version: unknown
 License: BSD
-Security Critical: yes
+Shipping: yes
 
 Description:
 The modp_b64.c file was modified to remove the inclusion of modp's config.h

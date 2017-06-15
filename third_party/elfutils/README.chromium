@@ -1,7 +1,7 @@
 Name: elfutils
 URL: https://fedorahosted.org/releases/e/l/elfutils/0.158/elfutils-0.158.tar.bz2
 Version: 0.158
-Security Critical: no
+Shipping: no
 License: LGPL 3
 License File: NOT_SHIPPED
 

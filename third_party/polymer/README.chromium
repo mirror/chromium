@@ -5,7 +5,7 @@ Version: 1.9.1
 Revision: (see v1_0/components_summary.txt)
 License: BSD
 License File: LICENSE.polymer
-Security Critical: no
+Shipping: no
 
 Description:
 This directory contains a copy of the Polymer framework and some elements from

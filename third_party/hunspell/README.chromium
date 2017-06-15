@@ -3,7 +3,7 @@ URL: http://hunspell.sourceforge.net/
 Version: 1.6.0
 License: MPL 1.1/GPL 2.0/LGPL 2.1
 License File: COPYING.MPL
-Security Critical: yes
+Shipping: yes
 
 Description:
 This is a partial copy of Hunspell 1.6.0 with the following changes:

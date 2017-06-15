@@ -4,7 +4,7 @@ URL: http://cgit.freedesktop.org/~aplattner/nvidia-settings/
 Version: unknown
 Date: 2008
 License: MIT
-Security Critical: no
+Shipping: no
 
 Description:
 This package provides access to NVidia Control X Extension. It is used to determine the version of the NVIDIA driver in use.

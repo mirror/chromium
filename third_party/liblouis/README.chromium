@@ -5,7 +5,7 @@ Version: 2.6.0
 License: LGPL3 and GPL3
 License Android Compatible: No
 License File: LICENSE
-Security Critical: yes
+Shipping: yes
 
 Description:
 Liblouis is an open-source braille translator and back-translator. It

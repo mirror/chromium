@@ -2,7 +2,7 @@ Name: mesa
 Version: 9.0.3
 URL: http://www.mesa3d.org/
 License: MIT and LGPL v2
-Security Critical: Yes
+Shipping: Yes
 
 Description:
 This directory contains a copy of the Mesa sources with minor

@@ -2,7 +2,7 @@ Name: etc1
 Version: 0
 URL: https://source.android.com/
 License: Apache 2.0
-Security Critical: no
+Shipping: no
 
 Description:
 This directory contains an ETC1 encoding/decoding API.  The source derives from

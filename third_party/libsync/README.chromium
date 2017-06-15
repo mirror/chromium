@@ -2,7 +2,7 @@ Name: Android Explicit Synchronization
 URL: http://source.android.com
 Description: libsync helper library.
 Version: aa6cda6f638bd57d3a024f0d201f723a5c3bb875
-Security Critical: yes
+Shipping: yes
 License: Apache 2.0
 
 Modifications:

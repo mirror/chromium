@@ -2,7 +2,7 @@ Name: libjpeg
 URL: http://www.ijg.org/
 Version: 6b
 License: Custom license
-Security Critical: yes
+Shipping: yes
 License Android Compatible: yes
 
 Description:
