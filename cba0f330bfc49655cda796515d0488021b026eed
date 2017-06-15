@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af496635_48d00eb0",
+        "filename": "ios/chrome/app/spotlight/topsites_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T16:55:35Z",
+      "side": 1,
+      "message": "I went back and forth on this too when I started to clean up the GLVC.  I\u0027m fine with it if marq@ is.",
+      "revId": "cba0f330bfc49655cda796515d0488021b026eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
