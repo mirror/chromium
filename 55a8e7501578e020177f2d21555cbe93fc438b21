@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "39d45eeb_466b4016",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-06-15T13:28:02Z",
+      "side": 1,
+      "message": "I believe that they are easier to read than a trace event with a boolean parameter.",
+      "parentUuid": "14c3f727_78b7e532",
+      "range": {
+        "startLine": 579,
+        "startChar": 18,
+        "endLine": 579,
+        "endChar": 63
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7eb11b05_6f41f6d8",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf66c8c2_758f8442",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 948,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-06-15T13:28:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7eb11b05_6f41f6d8",
+      "range": {
+        "startLine": 948,
+        "startChar": 43,
+        "endLine": 948,
+        "endChar": 58
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "93ca4db1_cd677f69",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1273,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-06-15T13:28:02Z",
+      "side": 1,
+      "message": "That matches existing behaviour and is a result of a SetRendererBackground refactor.",
+      "parentUuid": "d58407a1_977a557d",
+      "range": {
+        "startLine": 1273,
+        "startChar": 6,
+        "endLine": 1273,
+        "endChar": 33
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42407ef1_edc7955c",
         "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c99e0420_b4eef3ed",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1150969
+      },
+      "writtenOn": "2017-06-15T13:28:02Z",
+      "side": 1,
+      "message": "No, this version shows the contents of a vector when a test fails.",
+      "parentUuid": "42407ef1_edc7955c",
+      "range": {
+        "startLine": 1243,
+        "startChar": 33,
+        "endLine": 1243,
+        "endChar": 34
+      },
+      "revId": "55a8e7501578e020177f2d21555cbe93fc438b21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
