@@ -27,11 +27,11 @@ const base::FilePath::CharType kMHTMLExtension[] = FILE_PATH_LITERAL("mhtml");
 
 void DeleteFileOnFileThread(const base::FilePath& file_path,
                             const base::Closure& callback) {
-  content::BrowserThread::PostTaskAndReply(
-      content::BrowserThread::FILE, FROM_HERE,
-      base::Bind(base::IgnoreResult(&base::DeleteFile), file_path,
-                 false /* recursive */),
-      callback);
+  content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::IO)
+      ->PostTaskAndReply(FROM_HERE,
+                         base::BindOnce(base::IgnoreResult(&base::DeleteFile),
+                                        file_path, false /* recursive */),
+                         callback);
 }
 }  // namespace
 
