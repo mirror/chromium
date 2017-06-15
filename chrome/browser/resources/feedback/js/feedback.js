@@ -339,7 +339,7 @@ function initialize() {
       takeScreenshot(function(screenshotCanvas) {
         // We've taken our screenshot, show the feedback page without any
         // further delay.
-        window.webkitRequestAnimationFrame(function() {
+        window.requestAnimationFrame(function() {
           resizeAppWindow();
         });
         chrome.app.window.current().show();
