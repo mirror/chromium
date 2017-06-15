@@ -113,6 +113,53 @@
       "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba0968f8_9ced29ef",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T11:27:50Z",
+      "side": 1,
+      "message": "I ran out of time today to play with this, but I think the setup we use for Permissions Prompts is closest to the pattern we should use for the first run bubble. See, e.g., https://cs.chromium.org/chromium/src/chrome/browser/ui/views/permission_bubble/permission_prompt_impl.h?type\u003dcs\u0026l\u003d43\n\nPermissionPromptImpl takes a Browser*, and we have files for showing views bubbles when that\u0027s either a BrowserWindowCocoa or a BrowserView.\n\nAnd.. in fact the anchor point is the same!\n\nPerhaps we can take the GetAnchorView/GetAnchorPoint member functions in those impl_foo.cc files  and make them global functions that take a Browser* and convert it into a views bubble anchor.",
+      "parentUuid": "ff4826a4_8665ea19",
+      "range": {
+        "startLine": 50,
+        "startChar": 29,
+        "endLine": 50,
+        "endChar": 55
+      },
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f282b5b_1b9a81a4",
+        "filename": "chrome/browser/ui/views/tab_dialogs_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T11:27:50Z",
+      "side": 1,
+      "message": "FirstRunBubble::ShowBubble(..) only needs a single Browser* argument. Args 2 and 3 three can be derived easily from the methods I mention above\n\nthe 4th arg is just browser-\u003ewindow()-\u003eGetNativeWindow()",
+      "range": {
+        "startLine": 55,
+        "startChar": 18,
+        "endLine": 55,
+        "endChar": 28
+      },
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
