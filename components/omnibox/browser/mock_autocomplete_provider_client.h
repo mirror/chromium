@@ -83,6 +83,10 @@ class MockAutocompleteProviderClient : public AutocompleteProviderClient {
   void set_template_url_service(std::unique_ptr<TemplateURLService> service) {
     template_url_service_ = std::move(service);
   }
+  content::ServiceWorkerContext* GetServiceWorkerContext(
+      const GURL& site_url) override {
+    return nullptr;
+  }
 
  private:
   std::unique_ptr<TemplateURLService> template_url_service_;
