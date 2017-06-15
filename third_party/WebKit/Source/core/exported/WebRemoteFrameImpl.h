@@ -93,6 +93,7 @@ class CORE_EXPORT WebRemoteFrameImpl final
       const WebString& header_value,
       WebContentSecurityPolicyType,
       WebContentSecurityPolicySource) override;
+  void SetDocumentHasReceivedUserGestureBeforeNavigation(bool) override;
   void ResetReplicatedContentSecurityPolicy() override;
   void SetReplicatedInsecureRequestPolicy(WebInsecureRequestPolicy) override;
   void SetReplicatedPotentiallyTrustworthyUniqueOrigin(bool) override;
