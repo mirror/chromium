@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0fbc50b6_c8487d73",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T19:01:17Z",
+      "side": 1,
+      "message": "Agreed and done!",
+      "parentUuid": "ae50c7fc_d04614b8",
+      "range": {
+        "startLine": 98,
+        "startChar": 43,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "603e78ef_7ec84945",
         "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "7102d607_5acb4af9",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T19:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "603e78ef_7ec84945",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5424a1e6_3ef96778",
         "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98718ad4_9dd12683",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T19:01:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5424a1e6_3ef96778",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

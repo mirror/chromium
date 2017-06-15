@@ -214,6 +214,30 @@
     },
     {
       "key": {
+        "uuid": "0491acf9_5596e273",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T19:01:17Z",
+      "side": 1,
+      "message": "Aah that\u0027s my bad for some reason I thought you were saying to make a util function in the profile comparator class not the payemnt_request_util class. Sorry about that. This makes sense--just fixed.",
+      "parentUuid": "b7596097_5aab89db",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 68
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e36e1d4_8cbe1de7",
         "filename": "ios/chrome/browser/ui/payments/cells/payments_has_editable_info_type.h",
         "patchSetId": 4
