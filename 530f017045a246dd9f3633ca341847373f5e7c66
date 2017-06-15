@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b66048bc_758b826e",
+        "filename": "components/update_client/action_runner.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-15T17:48:18Z",
+      "side": 1,
+      "message": "Remind me, is Unretained(this) safe during shutdown?",
+      "range": {
+        "startLine": 55,
+        "startChar": 57,
+        "endLine": 55,
+        "endChar": 67
+      },
+      "revId": "530f017045a246dd9f3633ca341847373f5e7c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4429d4_91df24c3",
+        "filename": "components/update_client/component.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1116066
+      },
+      "writtenOn": "2017-06-15T17:48:18Z",
+      "side": 1,
+      "message": "Can we use https://paste.googleplex.com/5661402064748544 instead? I tried to resolve the ambiguity of the edge from kUpdatingDiff and kRun. I also tried to be more consistent with the use of [foo?], success, and arrows.",
+      "range": {
+        "startLine": 58,
+        "startChar": 79,
+        "endLine": 58,
+        "endChar": 0
+      },
+      "revId": "530f017045a246dd9f3633ca341847373f5e7c66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
