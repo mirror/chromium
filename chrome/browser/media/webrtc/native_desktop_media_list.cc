@@ -7,9 +7,9 @@
 #include "base/hash.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/task_scheduler/post_task.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/media/webrtc/desktop_media_list_observer.h"
 #include "chrome/grit/generated_resources.h"
-#include "content/public/browser/browser_thread.h"
 #include "media/base/video_util.h"
 #include "third_party/libyuv/include/libyuv/scale_argb.h"
 #include "third_party/skia/include/core/SkBitmap.h"
@@ -31,7 +31,6 @@
 #include "ui/snapshot/snapshot_aura.h"
 #endif
 
-using content::BrowserThread;
 using content::DesktopMediaID;
 
 namespace {
@@ -99,6 +98,8 @@ class NativeDesktopMediaList::Worker
   void OnCaptureResult(webrtc::DesktopCapturer::Result result,
                        std::unique_ptr<webrtc::DesktopFrame> frame) override;
 
+  scoped_refptr<base::SequencedTaskRunner> main_task_runner_;
+
   base::WeakPtr<NativeDesktopMediaList> media_list_;
 
   DesktopMediaID::Type type_;
@@ -115,7 +116,10 @@ NativeDesktopMediaList::Worker::Worker(
     base::WeakPtr<NativeDesktopMediaList> media_list,
     DesktopMediaID::Type type,
     std::unique_ptr<webrtc::DesktopCapturer> capturer)
-    : media_list_(media_list), type_(type), capturer_(std::move(capturer)) {
+    : main_task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      media_list_(media_list),
+      type_(type),
+      capturer_(std::move(capturer)) {
   capturer_->Start(this);
 }
 
@@ -160,10 +164,9 @@ void NativeDesktopMediaList::Worker::Refresh(
         SourceDescription(DesktopMediaID(type_, sources[i].id), title));
   }
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::BindOnce(&NativeDesktopMediaList::RefreshForAuraWindows,
-                     media_list_, result));
+  main_task_runner_->PostTask(
+      FROM_HERE, base::BindOnce(&NativeDesktopMediaList::RefreshForAuraWindows,
+                                media_list_, result));
 }
 
 void NativeDesktopMediaList::Worker::RefreshThumbnails(
@@ -189,8 +192,8 @@ void NativeDesktopMediaList::Worker::RefreshThumbnails(
       if (it == image_hashes_.end() || it->second != frame_hash) {
         gfx::ImageSkia thumbnail =
             ScaleDesktopFrame(std::move(current_frame_), thumbnail_size);
-        BrowserThread::PostTask(
-            BrowserThread::UI, FROM_HERE,
+        main_task_runner_->PostTask(
+            FROM_HERE,
             base::BindOnce(&NativeDesktopMediaList::UpdateSourceThumbnail,
                            media_list_, id, thumbnail));
       }
@@ -199,8 +202,8 @@ void NativeDesktopMediaList::Worker::RefreshThumbnails(
 
   image_hashes_.swap(new_image_hashes);
 
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
+  main_task_runner_->PostTask(
+      FROM_HERE,
       base::BindOnce(&NativeDesktopMediaList::UpdateNativeThumbnailsFinished,
                      media_list_));
 }
