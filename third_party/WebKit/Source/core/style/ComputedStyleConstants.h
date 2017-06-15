@@ -180,8 +180,6 @@ enum ObjectFit {
   kObjectFitScaleDown
 };
 
-enum class EResize { kNone, kBoth, kHorizontal, kVertical };
-
 enum QuoteType { OPEN_QUOTE, CLOSE_QUOTE, NO_OPEN_QUOTE, NO_CLOSE_QUOTE };
 
 enum EAnimPlayState { kAnimPlayStatePlaying, kAnimPlayStatePaused };
