@@ -16,6 +16,24 @@
       "revId": "97d344f0a9e2c1c189920b88c65dce2d386819cf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71302cf2_c1305301",
+        "filename": "testing/iossim/iossim.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-15T15:39:10Z",
+      "side": 1,
+      "message": "Good question, I did a grep of all the usages of iossim in src/, and test_runner.py is the only place that uses this argument. I\u0027ll loop Sana in just to make sure.",
+      "parentUuid": "14c73ad8_c69dd795",
+      "revId": "97d344f0a9e2c1c189920b88c65dce2d386819cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
