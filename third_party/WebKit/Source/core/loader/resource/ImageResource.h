@@ -64,6 +64,7 @@ class CORE_EXPORT ImageResource final
 
   // TODO(hiroshige): Make create() test-only by refactoring ImageDocument.
   static ImageResource* Create(const ResourceRequest&);
+  static ImageResource* CreateFromURL(const KURL&);
 
   ~ImageResource() override;
 
