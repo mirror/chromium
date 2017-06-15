@@ -1,0 +1,326 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "64ea4d30_9b52caa9",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "While saying \"business weeks\" here isn\u0027t wrong, I think just stating \"weeks\" would work here (and everywhere) below and would be more succinct.",
+      "range": {
+        "startLine": 7,
+        "startChar": 57,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6006ac6c_649feb7a",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "WDYT about calling this just \"Schedule\" as the header for the graphic, and then adding a new header for the explanation of dates as \"Key Dates\"?",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddbb8005_89965870",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "The transparency doesn\u0027t seem to render in MD, so this is left with a checkered background.  Can we set the background to white and re-upload?  Also, if we could get rid of the blue boxes at the top that\u0027d be nice too.",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1756f541_701ee2b3",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "Since you have the days of the week listed on the picture, I think you can probably get rid of them here and below - this will also be super explicit when the calendar is made publicly accessible.",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f29b9fe1_d74d2ae2",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "Can we say \"milestone stabilization\" branch here?",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6102b49_63bcbbcb",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "This same disclaimer could probably be applied to the \"Stable Release\" milestone as well - perhaps we should just have a disclaimer somewhere that says \"all procedural dates like FF, branch are fixed, but release dates may flex depending on quality issues\" or something like that?",
+      "range": {
+        "startLine": 35,
+        "startChar": 70,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81613a22_d95419ac",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "I\u0027d move this to the end of the sentence.",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f27b9b_7346cb0c",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 59,
+        "startChar": 47,
+        "endLine": 59,
+        "endChar": 51
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96191afe_e48538dd",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this means - you\u0027re stating we define that schedule in advance and if we discover a massive bug in the 2% rollout, we can\u0027t cancel it?",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6168a30_215f5337",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "defined",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd71a367_2c53dd2d",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "schedule",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e728000_633963d9",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "I would just make this \"...to fix critical bugs detected...\" as \"very critical or high\" is a bit dissonant.",
+      "range": {
+        "startLine": 74,
+        "startChar": 46,
+        "endLine": 74,
+        "endChar": 79
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e7bfe68_6d206e9c",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "Let\u0027s tone this down a bit as it might worry users into thinking we have a lot of these (we don\u0027t).  I\u0027d recommend \"Except for extremely critical issues (e.g. security or privacy escalations), ...\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 73,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3900a288_69e1cf9e",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-15T17:59:49Z",
+      "side": 1,
+      "message": "initial build",
+      "range": {
+        "startLine": 77,
+        "startChar": 48,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
