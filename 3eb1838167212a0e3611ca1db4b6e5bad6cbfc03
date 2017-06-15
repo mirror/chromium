@@ -22,6 +22,30 @@
       "revId": "3eb1838167212a0e3611ca1db4b6e5bad6cbfc03",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c1a0ca9_8d962993",
+        "filename": "content/browser/download/save_package.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 326,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-15T16:41:07Z",
+      "side": 1,
+      "message": "I am fine with both. However, if this check fails, there are something very wrong about the logic in this class. Using CHECK allows us to get crash stats from canary and dev channel, so we can fix the issue before it goes to stable.",
+      "parentUuid": "2be5770d_60f44c46",
+      "range": {
+        "startLine": 326,
+        "startChar": 2,
+        "endLine": 326,
+        "endChar": 10
+      },
+      "revId": "3eb1838167212a0e3611ca1db4b6e5bad6cbfc03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
