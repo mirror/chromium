@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "1fdc29d7_c53755a7",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-15T19:12:20Z",
+      "side": 1,
+      "message": "Thanks for the review. One question here.\nIf we put CreateV4L2JDA() and CreateVaapiJDA() and their usage in preprocessor conditions, the vector would be empty for platforms that don\u0027t support JDAs. So does the case of this API returning a vector with nullptrs even arise? Yes, today its possible for this API to return a vector with nullptrs.",
+      "parentUuid": "6f8cb98c_fa4e18aa",
+      "range": {
+        "startLine": 80,
+        "startChar": 33,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ac7be39a0126119d94c2f495a0e5e31bb11bafc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6c0eb688_7e2a07a9",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h",
         "patchSetId": 2
