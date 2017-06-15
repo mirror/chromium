@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "81560db3_4b107acd",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-15T23:05:11Z",
+      "side": 1,
+      "message": "A little worried this will be annoying, but out of scope for the CL.",
+      "range": {
+        "startLine": 13,
+        "startChar": 17,
+        "endLine": 13,
+        "endChar": 32
+      },
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4ae2fd0a_acf483c7",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-15T23:05:11Z",
+      "side": 1,
+      "message": "(blank line)\n#include \u003cmemory\u003e\n\n[for unique_ptr]",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc2b9c9b_53665b92",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-15T23:05:11Z",
+      "side": 1,
+      "message": "Move to .mm",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0358c89b_b911f93a",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-15T23:05:11Z",
+      "side": 1,
+      "message": "Comment on when to call. Though can you do this via -awakeFromNib instead?",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

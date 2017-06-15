@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "1ec49c9a_5270fa73",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-15T23:05:11Z",
+      "side": 1,
+      "message": "Hm, I\u0027m curious what problem you hit. I suggested it because -[ToolbarController appMenuButton] is declared as returning |NSButton*|. It should be possible to return a more specific type (|AppToolbarButton*|) because the class hierarchy is:\n\nAppToolbarButton \u003c MenuButton \u003c ToolbarButton \u003c NSButton\n\nBut if this is a yak, feel free to not shave it, or to do so in another CL.",
+      "parentUuid": "fcbcbd53_cc2a4465",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1de04da_b65f2c45",
         "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
         "patchSetId": 7
