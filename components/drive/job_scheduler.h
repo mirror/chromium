@@ -20,6 +20,7 @@
 #include "components/drive/job_queue.h"
 #include "components/drive/service/drive_service_interface.h"
 #include "net/base/network_change_notifier.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 class PrefService;
 
@@ -66,7 +67,14 @@ class JobScheduler
   JobScheduler(PrefService* pref_service,
                EventLogger* logger,
                DriveServiceInterface* drive_service,
+               base::SequencedTaskRunner* blocking_task_runner,
+               service_manager::Connector* connector);
+
+  JobScheduler(PrefService* pref_service,
+               EventLogger* logger,
+               DriveServiceInterface* drive_service,
                base::SequencedTaskRunner* blocking_task_runner);
+
   ~JobScheduler() override;
 
   // JobListInterface overrides.

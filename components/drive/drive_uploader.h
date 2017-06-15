@@ -16,6 +16,7 @@
 #include "base/threading/thread_checker.h"
 #include "components/drive/service/drive_service_interface.h"
 #include "google_apis/drive/drive_api_error_codes.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 class GURL;
 
@@ -121,6 +122,11 @@ class DriveUploaderInterface {
 
 class DriveUploader : public DriveUploaderInterface {
  public:
+  DriveUploader(DriveServiceInterface* drive_service,
+                const scoped_refptr<base::TaskRunner>& blocking_task_runner,
+                service_manager::Connector* connector);
+
+  // Used only for testing purpose. No need to pass the connector.
   DriveUploader(DriveServiceInterface* drive_service,
                 const scoped_refptr<base::TaskRunner>& blocking_task_runner);
   ~DriveUploader() override;
@@ -232,6 +238,8 @@ class DriveUploader : public DriveUploaderInterface {
 
   scoped_refptr<base::TaskRunner> blocking_task_runner_;
   scoped_refptr<RefCountedBatchRequest> current_batch_request_;
+
+  service_manager::Connector* connector_;  // Not owned by this class.
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

@@ -11,13 +11,16 @@
 #include "base/callback.h"
 #include "base/files/file_util.h"
 #include "base/macros.h"
+#include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/task_runner_util.h"
 #include "components/drive/service/drive_service_interface.h"
-#include "content/public/browser/browser_thread.h"
-#include "device/power_save_blocker/power_save_blocker.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
+#include "device/wake_lock/public/interfaces/wake_lock_provider.mojom.h"
 #include "google_apis/drive/drive_api_parser.h"
+#include "mojo/public/cpp/bindings/interface_request.h"
+#include "services/device/public/interfaces/constants.mojom.h"
 
 using google_apis::CancelCallback;
 using google_apis::FileResource;
@@ -92,23 +95,27 @@ struct DriveUploader::UploadFileInfo {
   UploadFileInfo(const base::FilePath& local_path,
                  const std::string& content_type,
                  const UploadCompletionCallback& callback,
-                 const ProgressCallback& progress_callback)
+                 const ProgressCallback& progress_callback,
+                 service_manager::Connector* connector)
       : file_path(local_path),
         content_type(content_type),
         completion_callback(callback),
         progress_callback(progress_callback),
         content_length(0),
         next_start_position(-1),
-        power_save_blocker(new device::PowerSaveBlocker(
-            device::PowerSaveBlocker::kPowerSaveBlockPreventAppSuspension,
-            device::PowerSaveBlocker::kReasonOther,
-            "Upload in progress",
-            content::BrowserThread::GetTaskRunnerForThread(
-                content::BrowserThread::UI),
-            content::BrowserThread::GetTaskRunnerForThread(
-                content::BrowserThread::FILE))),
         cancelled(false),
-        weak_ptr_factory_(this) {}
+        weak_ptr_factory_(this) {
+    if (connector) {
+      device::mojom::WakeLockProviderPtr wake_lock_provider;
+      connector->BindInterface(device::mojom::kServiceName,
+                               mojo::MakeRequest(&wake_lock_provider));
+      wake_lock_provider->GetWakeLockWithoutContext(
+          device::mojom::WakeLockType::PreventAppSuspension,
+          device::mojom::WakeLockReason::ReasonOther, "Upload in progress",
+          mojo::MakeRequest(&wake_lock));
+      wake_lock->RequestWakeLock();
+    }
+  }
 
   ~UploadFileInfo() {
   }
@@ -148,7 +155,7 @@ struct DriveUploader::UploadFileInfo {
   int64_t next_start_position;
 
   // Blocks system suspend while upload is in progress.
-  std::unique_ptr<device::PowerSaveBlocker> power_save_blocker;
+  device::mojom::WakeLockPtr wake_lock;
 
   // Fields for implementing cancellation. |cancel_callback| is non-null if
   // there is an in-flight HTTP request. In that case, |cancell_callback| will
@@ -173,11 +180,19 @@ struct DriveUploader::UploadFileInfo {
 
 DriveUploader::DriveUploader(
     DriveServiceInterface* drive_service,
+    const scoped_refptr<base::TaskRunner>& blocking_task_runner,
+    service_manager::Connector* connector)
+    : drive_service_(drive_service),
+      blocking_task_runner_(blocking_task_runner),
+      connector_(connector),
+      weak_ptr_factory_(this) {}
+
+DriveUploader::DriveUploader(
+    DriveServiceInterface* drive_service,
     const scoped_refptr<base::TaskRunner>& blocking_task_runner)
     : drive_service_(drive_service),
       blocking_task_runner_(blocking_task_runner),
-      weak_ptr_factory_(this) {
-}
+      weak_ptr_factory_(this) {}
 
 DriveUploader::~DriveUploader() {}
 
@@ -197,8 +212,9 @@ CancelCallback DriveUploader::UploadNewFile(
   DCHECK(!callback.is_null());
 
   return StartUploadFile(
-      std::unique_ptr<UploadFileInfo>(new UploadFileInfo(
-          local_file_path, content_type, callback, progress_callback)),
+      std::unique_ptr<UploadFileInfo>(
+          new UploadFileInfo(local_file_path, content_type, callback,
+                             progress_callback, connector_)),
       base::Bind(&DriveUploader::CallUploadServiceAPINewFile,
                  weak_ptr_factory_.GetWeakPtr(), parent_resource_id, title,
                  options, current_batch_request_));
@@ -228,8 +244,9 @@ CancelCallback DriveUploader::UploadExistingFile(
   DCHECK(!callback.is_null());
 
   return StartUploadFile(
-      std::unique_ptr<UploadFileInfo>(new UploadFileInfo(
-          local_file_path, content_type, callback, progress_callback)),
+      std::unique_ptr<UploadFileInfo>(
+          new UploadFileInfo(local_file_path, content_type, callback,
+                             progress_callback, connector_)),
       base::Bind(&DriveUploader::CallUploadServiceAPIExistingFile,
                  weak_ptr_factory_.GetWeakPtr(), resource_id, options,
                  current_batch_request_));
@@ -247,7 +264,7 @@ CancelCallback DriveUploader::ResumeUploadFile(
   DCHECK(!callback.is_null());
 
   std::unique_ptr<UploadFileInfo> upload_file_info(new UploadFileInfo(
-      local_file_path, content_type, callback, progress_callback));
+      local_file_path, content_type, callback, progress_callback, connector_));
   upload_file_info->upload_location = upload_location;
 
   return StartUploadFile(std::move(upload_file_info),
