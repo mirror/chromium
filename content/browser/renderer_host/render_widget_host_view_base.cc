@@ -480,7 +480,7 @@ void RenderWidgetHostViewBase::RemoveObserver(
 }
 
 TouchSelectionControllerClientManager*
-RenderWidgetHostViewBase::touch_selection_controller_client_manager() {
+RenderWidgetHostViewBase::TouchSelectionControllerClientManager() {
   return nullptr;
 }
 
