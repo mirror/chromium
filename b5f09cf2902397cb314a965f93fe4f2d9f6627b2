@@ -16,6 +16,24 @@
       "revId": "b5f09cf2902397cb314a965f93fe4f2d9f6627b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ccfcc38_e99f7bd5",
+        "filename": "ios/chrome/browser/ui/main/browser_view_wrangler.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-15T12:26:27Z",
+      "side": 1,
+      "message": "The only callers are -deleteIncognitoTabModelState: and the tests. Moreover, BVW owns BVC and this is only reset when shutting down the app, so it is currently safe (BVW was added to split MainController).\n\nDocumentation currently reads:\n\n// Wrangler (a class in need of further refactoring) for handling the creation\n// and ownership of BrowserViewController instances and their associated\n// TabModels, and a few related methods.",
+      "parentUuid": "7976022f_a407c954",
+      "revId": "b5f09cf2902397cb314a965f93fe4f2d9f6627b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
