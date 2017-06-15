@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5c52666_9021e212",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-15T10:41:04Z",
+      "side": 1,
+      "message": "Please add TODO comment about the duplication.",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd105a2_aec4f737",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68012,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-15T10:41:04Z",
+      "side": 1,
+      "message": "enum\u003d\"ServiceWorkerPreparationType\"\n\nNot units\u003d\"ms\"",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81fff716_4ecd86a6",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 89837,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-15T10:41:04Z",
+      "side": 1,
+      "message": "Add \u003caffected-histogram name\u003d\"ServiceWorker.NavPreload.WorkerPreparationType\"/\u003e",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
