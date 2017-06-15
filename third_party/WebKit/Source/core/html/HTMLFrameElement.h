@@ -41,7 +41,7 @@ class HTMLFrameElement final : public HTMLFrameElementBase {
  private:
   explicit HTMLFrameElement(Document&);
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(AttachContext&) override;
 
   bool LayoutObjectIsNeeded(const ComputedStyle&) override;
   LayoutObject* CreateLayoutObject(const ComputedStyle&) override;

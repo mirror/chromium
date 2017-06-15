@@ -48,7 +48,7 @@ class CORE_EXPORT HTMLFrameElementBase : public HTMLFrameOwnerElement {
 
   InsertionNotificationRequest InsertedInto(ContainerNode*) override;
   void DidNotifySubtreeInsertionsToDocument() final;
-  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(AttachContext&) override;
 
   void SetScrollingMode(ScrollbarMode);
   void SetMarginWidth(int);

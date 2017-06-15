@@ -396,6 +396,7 @@ crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-143
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-144.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-145.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-146.xht [ Failure ]
+crbug.com/733609 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/floats-149.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-018.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-027.xht [ Failure ]
 crbug.com/635619 virtual/layout_ng/external/wpt/css/CSS2/floats-clear/margin-collapse-033.xht [ Failure ]
@@ -2683,7 +2684,6 @@ crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-flex-00
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-dynamic-table-001-inline.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-002.html [ Failure ]
 crbug.com/657748 external/wpt/css/css-display-3/display-contents-flex-003.html [ Failure ]
-crbug.com/657748 external/wpt/css/css-display-3/display-contents-computed-style.html [ Failure ]
 
 # ====== End of display: contents tests ======
 

@@ -988,27 +988,31 @@ Node* Node::CommonAncestor(const Node& other,
   return nullptr;
 }
 
-void Node::ReattachLayoutTree(const AttachContext& context) {
-  AttachContext reattach_context(context);
-  reattach_context.performing_reattach = true;
+void Node::ReattachLayoutTree(AttachContext& context) {
+  context.performing_reattach = true;
 
   // We only need to detach if the node has already been through
   // attachLayoutTree().
   if (GetStyleChangeType() < kNeedsReattachStyleChange)
-    DetachLayoutTree(reattach_context);
-  AttachLayoutTree(reattach_context);
+    DetachLayoutTree(context);
+  AttachLayoutTree(context);
 }
 
-void Node::AttachLayoutTree(const AttachContext&) {
+void Node::AttachLayoutTree(AttachContext& context) {
   DCHECK(GetDocument().InStyleRecalc() || IsDocumentNode());
   DCHECK(!GetDocument().Lifecycle().InDetach());
   DCHECK(NeedsAttach());
-  DCHECK(!GetLayoutObject() ||
-         (GetLayoutObject()->Style() &&
-          (GetLayoutObject()->Parent() || GetLayoutObject()->IsLayoutView())));
+
+  LayoutObject* layout_object = GetLayoutObject();
+  DCHECK(!layout_object ||
+         (layout_object->Style() &&
+          (layout_object->Parent() || layout_object->IsLayoutView())));
 
   ClearNeedsStyleRecalc();
   ClearNeedsReattachLayoutTree();
+
+  if (layout_object && !layout_object->IsFloatingOrOutOfFlowPositioned())
+    context.previous_in_flow = layout_object;
 
   if (AXObjectCache* cache = GetDocument().AxObjectCache())
     cache->UpdateCacheAfterNodeIsAttached(this);
@@ -1023,23 +1027,6 @@ void Node::DetachLayoutTree(const AttachContext& context) {
   SetLayoutObject(nullptr);
   SetStyleChange(kNeedsReattachStyleChange);
   ClearChildNeedsStyleInvalidation();
-}
-
-void Node::ReattachWhitespaceSiblingsIfNeeded(Text* start) {
-  ScriptForbiddenScope forbid_script_during_raw_iteration;
-  for (Node* sibling = start; sibling; sibling = sibling->nextSibling()) {
-    if (sibling->IsTextNode() && ToText(sibling)->ContainsOnlyWhitespace()) {
-      bool had_layout_object = !!sibling->GetLayoutObject();
-      ToText(sibling)->ReattachLayoutTreeIfNeeded();
-      // If sibling's layout object status didn't change we don't need to
-      // continue checking other siblings since their layout object status won't
-      // change either.
-      if (!!sibling->GetLayoutObject() == had_layout_object)
-        return;
-    } else if (sibling->GetLayoutObject()) {
-      return;
-    }
-  }
 }
 
 const ComputedStyle* Node::VirtualEnsureComputedStyle(

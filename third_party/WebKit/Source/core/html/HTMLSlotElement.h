@@ -74,9 +74,9 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   void LazyReattachDistributedNodesIfNeeded();
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) final;
+  void AttachLayoutTree(AttachContext&) final;
   void DetachLayoutTree(const AttachContext& = AttachContext()) final;
-  void RebuildDistributedChildrenLayoutTrees();
+  void RebuildDistributedChildrenLayoutTrees(WhitespaceAttacher&);
 
   void AttributeChanged(const AttributeModificationParams&) final;
 
