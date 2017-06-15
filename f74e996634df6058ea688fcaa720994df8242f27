@@ -22,6 +22,30 @@
       "revId": "f74e996634df6058ea688fcaa720994df8242f27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9873b316_299b5a8c",
+        "filename": "content/browser/web_contents/web_contents_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 3221,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T20:30:21Z",
+      "side": 1,
+      "message": "Sorry about that!  Confirming from our offline discussion.  This could be \"Cookies and User Authentication (if available)\"",
+      "parentUuid": "fc950ba8_618ba0af",
+      "range": {
+        "startLine": 3221,
+        "startChar": 17,
+        "endLine": 3221,
+        "endChar": 20
+      },
+      "revId": "f74e996634df6058ea688fcaa720994df8242f27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
