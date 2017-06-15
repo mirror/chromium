@@ -71,6 +71,30 @@
     },
     {
       "key": {
+        "uuid": "2146d649_5fc6c3cc",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-15T22:44:34Z",
+      "side": 1,
+      "message": "yes, you are right, I noticed that when working on second command.",
+      "parentUuid": "326e2906_ba5bc8e9",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3ed9c381_92a35d9a",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 1
