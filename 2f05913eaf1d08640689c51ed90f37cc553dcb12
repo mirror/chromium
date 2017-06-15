@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "52dd703c_694c7619",
+        "filename": "third_party/WebKit/LayoutTests/overflow/overflow-position-001.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-15T20:04:31Z",
+      "side": 1,
+      "message": "Wait, I\u0027m confused, in this case isn\u0027t targetOffset 0 but clientLeft 12 (on non-mac)? How does this work?",
+      "revId": "2f05913eaf1d08640689c51ed90f37cc553dcb12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
