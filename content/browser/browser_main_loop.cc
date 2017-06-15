@@ -1335,8 +1335,8 @@ void BrowserMainLoop::ShutdownThreadsAndCleanUp() {
 }
 
 #if !defined(OS_ANDROID)
-cc::SurfaceManager* BrowserMainLoop::GetSurfaceManager() const {
-  return frame_sink_manager_->surface_manager();
+cc::FrameSinkManager* BrowserMainLoop::GetFrameSinkManager() const {
+  return frame_sink_manager_->frame_sink_manager();
 }
 #endif
 

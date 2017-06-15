@@ -35,7 +35,7 @@ class TraceEventSystemStatsMonitor;
 }  // namespace base
 
 namespace cc {
-class SurfaceManager;
+class FrameSinkManager;
 }
 
 namespace discardable_memory {
@@ -178,7 +178,7 @@ class CONTENT_EXPORT BrowserMainLoop {
 
   // TODO(crbug.com/657959): This will be removed once there are no users, as
   // SurfaceManager is being moved out of process.
-  cc::SurfaceManager* GetSurfaceManager() const;
+  cc::FrameSinkManager* GetFrameSinkManager() const;
 #endif
 
   void StopStartupTracingTimer();

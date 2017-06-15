@@ -23,6 +23,7 @@ class SingleThreadTaskRunner;
 namespace cc {
 class CompositorFrameSinkSupport;
 class CopyOutputRequest;
+class FrameSinkManager;
 class OutputSurface;
 
 class TestCompositorFrameSinkClient {
@@ -112,7 +113,7 @@ class TestCompositorFrameSink : public CompositorFrameSink,
   FrameSinkId frame_sink_id_;
   // TODO(danakj): These don't need to be stored in unique_ptrs when
   // CompositorFrameSink is owned/destroyed on the compositor thread.
-  std::unique_ptr<SurfaceManager> surface_manager_;
+  std::unique_ptr<FrameSinkManager> frame_sink_manager_;
   std::unique_ptr<LocalSurfaceIdAllocator> local_surface_id_allocator_;
   LocalSurfaceId local_surface_id_;
   gfx::Size display_size_;

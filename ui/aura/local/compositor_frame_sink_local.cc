@@ -17,10 +17,10 @@ namespace aura {
 
 CompositorFrameSinkLocal::CompositorFrameSinkLocal(
     const cc::FrameSinkId& frame_sink_id,
-    cc::SurfaceManager* surface_manager)
+    cc::FrameSinkManager* frame_sink_manager)
     : cc::CompositorFrameSink(nullptr, nullptr, nullptr, nullptr),
       frame_sink_id_(frame_sink_id),
-      surface_manager_(surface_manager) {}
+      frame_sink_manager_(frame_sink_manager) {}
 
 CompositorFrameSinkLocal::~CompositorFrameSinkLocal() {}
 
@@ -32,7 +32,7 @@ bool CompositorFrameSinkLocal::BindToClient(
   thread_checker_ = base::MakeUnique<base::ThreadChecker>();
 
   support_ = cc::CompositorFrameSinkSupport::Create(
-      this, surface_manager_, frame_sink_id_, false /* is_root */,
+      this, frame_sink_manager_, frame_sink_id_, false /* is_root */,
       true /* handles_frame_sink_id_invalidation */,
       true /* needs_sync_points */);
   begin_frame_source_ = base::MakeUnique<cc::ExternalBeginFrameSource>(this);

@@ -6,12 +6,13 @@
 
 #include "cc/surfaces/compositor_frame_sink_support.h"
 #include "cc/surfaces/display.h"
+#include "cc/surfaces/frame_sink_manager.h"
 
 namespace viz {
 
 GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     GpuCompositorFrameSinkDelegate* delegate,
-    cc::SurfaceManager* surface_manager,
+    cc::FrameSinkManager* frame_sink_manager,
     const cc::FrameSinkId& frame_sink_id,
     std::unique_ptr<cc::Display> display,
     std::unique_ptr<cc::BeginFrameSource> begin_frame_source,
@@ -23,7 +24,7 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
     : delegate_(delegate),
       support_(cc::CompositorFrameSinkSupport::Create(
           this,
-          surface_manager,
+          frame_sink_manager,
           frame_sink_id,
           true /* is_root */,
           true /* handles_frame_sink_id_invalidation */,
@@ -43,13 +44,13 @@ GpuRootCompositorFrameSink::GpuRootCompositorFrameSink(
   compositor_frame_sink_private_binding_.set_connection_error_handler(
       base::Bind(&GpuRootCompositorFrameSink::OnPrivateConnectionLost,
                  base::Unretained(this)));
-  surface_manager->RegisterBeginFrameSource(display_begin_frame_source_.get(),
-                                            frame_sink_id);
-  display_->Initialize(this, surface_manager);
+  frame_sink_manager->RegisterBeginFrameSource(
+      display_begin_frame_source_.get(), frame_sink_id);
+  display_->Initialize(this, frame_sink_manager->surface_manager());
 }
 
 GpuRootCompositorFrameSink::~GpuRootCompositorFrameSink() {
-  support_->surface_manager()->UnregisterBeginFrameSource(
+  support_->frame_sink_manager()->UnregisterBeginFrameSource(
       display_begin_frame_source_.get());
 }
 
