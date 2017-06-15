@@ -11,7 +11,6 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
-#include "base/run_loop.h"
 #include "base/strings/string_util.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
@@ -24,6 +23,7 @@
 #include "components/history/core/browser/url_database.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
 using base::ASCIIToUTF16;
@@ -85,12 +85,12 @@ namespace predictors {
 class AutocompleteActionPredictorTest : public testing::Test {
  public:
   AutocompleteActionPredictorTest()
-      : profile_(new TestingProfile()), predictor_(nullptr) {}
+      : profile_(base::MakeUnique<TestingProfile>()), predictor_(nullptr) {}
 
   ~AutocompleteActionPredictorTest() override {
-    predictor_.reset(NULL);
-    profile_.reset(NULL);
-    base::RunLoop().RunUntilIdle();
+    predictor_ = nullptr;
+    profile_ = nullptr;
+    content::RunAllBlockingPoolTasksUntilIdle();
   }
 
   void SetUp() override {
@@ -99,9 +99,10 @@ class AutocompleteActionPredictorTest : public testing::Test {
         switches::kPrerenderFromOmniboxSwitchValueEnabled);
 
     ASSERT_TRUE(profile_->CreateHistoryService(true, false));
-    predictor_.reset(new AutocompleteActionPredictor(profile_.get()));
+    predictor_ = base::MakeUnique<AutocompleteActionPredictor>(profile_.get());
     predictor_->CreateLocalCachesFromDatabase();
     profile_->BlockUntilHistoryProcessesPendingRequests();
+    content::RunAllBlockingPoolTasksUntilIdle();
 
     ASSERT_TRUE(predictor_->initialized_);
     ASSERT_TRUE(db_cache()->empty());

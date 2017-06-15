@@ -5,9 +5,11 @@
 #ifndef CHROME_BROWSER_PREDICTORS_GLOWPLUG_KEY_VALUE_DATA_H_
 #define CHROME_BROWSER_PREDICTORS_GLOWPLUG_KEY_VALUE_DATA_H_
 
+#include <algorithm>
 #include <map>
 #include <memory>
 #include <string>
+#include <utility>
 #include <vector>
 
 #include "base/location.h"
@@ -86,7 +88,7 @@ GlowplugKeyValueData<T, Compare>::GlowplugKeyValueData(
 
 template <typename T, typename Compare>
 void GlowplugKeyValueData<T, Compare>::InitializeOnDBThread() {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::DB);
+  CHECK(tables_->GetTaskRunner()->RunsTasksInCurrentSequence());
   auto data_map = base::MakeUnique<std::map<std::string, T>>();
   tables_->ExecuteDBTaskOnDBThread(
       base::BindOnce(&GlowplugKeyValueTable<T>::GetAllData,

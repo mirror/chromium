@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/views/frame/test_with_browser_view.h"
 
 #include "base/memory/ptr_util.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "build/build_config.h"
 #include "chrome/browser/autocomplete/autocomplete_classifier_factory.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_provider_client.h"
@@ -82,7 +83,8 @@ void TestWithBrowserView::SetUp() {
 #endif
   testing_io_thread_state_.reset(new chrome::TestingIOThreadState());
   BrowserWithTestWindowTest::SetUp();
-  predictor_db_.reset(new predictors::PredictorDatabase(GetProfile()));
+  predictor_db_.reset(new predictors::PredictorDatabase(
+      GetProfile(), base::SequencedTaskRunnerHandle::Get()));
   browser_view_ = static_cast<BrowserView*>(browser()->window());
 }
 
