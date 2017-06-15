@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "788023c0_1bd4f60b",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-15T15:35:01Z",
+      "side": 1,
+      "message": "I\u0027ve added it to the FrameReplicationState to persist the bit for OOPIF. In terms of resetting has_received_user_gesture we could reset it in CommitProvisionalLoad although I am not quite sure why it isn\u0027t always being reset in DocumentAttached.",
+      "parentUuid": "d298a765_d36f1114",
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5b773d7_771d1b2c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 4
