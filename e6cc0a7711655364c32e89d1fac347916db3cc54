@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e27eae00_173452fc",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-15T15:10:57Z",
+      "side": 1,
+      "message": "mark enums as [Extensible], unless you are _really_ sure you won\u0027t ever ever add a new entry.",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 4
+      },
+      "revId": "e6cc0a7711655364c32e89d1fac347916db3cc54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d545fd1_6832cb51",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-15T15:10:57Z",
+      "side": 1,
+      "message": "It\u0027s customary to reserve @0 for Init(). See other .mojom files for examples.",
+      "range": {
+        "startLine": 40,
+        "startChar": 2,
+        "endLine": 40,
+        "endChar": 14
+      },
+      "revId": "e6cc0a7711655364c32e89d1fac347916db3cc54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
