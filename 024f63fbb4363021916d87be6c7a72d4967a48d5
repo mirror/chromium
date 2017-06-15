@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "311a78b9_99454cc2",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "I put it here because we need a follow-on CL to make the Aura manage do the same thing, in which case this will be a virtual-override, and then (I think) it needs to be here. So I thought I\u0027d put it here from the get-go ... unless you still want me to move it.",
+      "parentUuid": "d45e6566_f7437c3f",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db6a9240_db3a3707",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fee2b97_e378019c",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6a9240_db3a3707",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "aeb61522_261217bc",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6b7e632_4588ac4d",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a1364b5f_9ee7446e",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "9158e3c5_a6f126b0",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10237,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a1364b5f_9ee7446e",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "50c78485_879b9ff5",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-14T19:43:40Z",
       "side": 1,
       "message": "Are these timeouts creating a risk that the test will be flaky?  Or is there a reason that won\u0027t happen?",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fad5d4e7_f15c48ca",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10238,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Actually, I\u0027m using to the timeouts to try and avoid flake.\n\nThe timeout here is to guard against the gesture controller someday deciding to discard touches that come to close together ... and also this more closely mimics what a real user tap would look like.\n\nThe timeout in the LongPress function is essential as that gesture is *solely* determined by a delay between the touch down then up ... without the timeout, there\u0027s no GestureLongPress, just a GestureTap.",
+      "parentUuid": "50c78485_879b9ff5",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +194,24 @@
     },
     {
       "key": {
+        "uuid": "e20300ab_a5c1579f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10270,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "On a uint? We initialize it below before it\u0027s used, and I don\u0027t know if 0 is a valid frame number. Maybe could make it max_int?",
+      "parentUuid": "25def2ad_3d78899e",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "72ee8bfa_98690ffd",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -115,6 +223,24 @@
       "writtenOn": "2017-06-14T19:43:40Z",
       "side": 1,
       "message": "nit: Don\u0027t leave commented out code in place.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a45b5781_e213eed1",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10295,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Thanks for spotting, I planned to remove this then forgot.",
+      "parentUuid": "72ee8bfa_98690ffd",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "197b5785_07f5c9f7",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10321,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f54c15b1_0b63824e",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b48d8e00_f16ff64e",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-14T19:43:40Z",
       "side": 1,
       "message": "Maybe move this below the anonymous namespace?  Also, please document what the parameter controls.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c809040c_12dfd2fd",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10352,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "This will be redundant since we\u0027re removing the parameter anyways.",
+      "parentUuid": "b48d8e00_f16ff64e",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +351,24 @@
     },
     {
       "key": {
+        "uuid": "f25ab90c_ebbd2fe9",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10404,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2142a907_b739581e",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "eaf2736e_2d6a3efe",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -203,6 +383,24 @@
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c718ec94_cffcbd32",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10419,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eaf2736e_2d6a3efe",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -223,6 +421,24 @@
     },
     {
       "key": {
+        "uuid": "9faeea00_52259db4",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10467,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1ed904bc_98143f1c",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db667916_c9719601",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -234,6 +450,24 @@
       "writtenOn": "2017-06-14T19:43:40Z",
       "side": 1,
       "message": "Do we need to run the whole test twice (parameterized) for this, or can we just do an outside tap followed by an inside tap, possibly with some reset in between?  Just seeing if we can reduce some of the (large) overhead from running the test twice.",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e4af91e_e091ba71",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10476,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-15T12:25:09Z",
+      "side": 1,
+      "message": "In this case, I was keeping the tests separate for fear of flake due to back-to-back event sequences, but I\u0027ll see what I can do.",
+      "parentUuid": "db667916_c9719601",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
