@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "526a55d3_a41eec72",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1141609
+      },
+      "writtenOn": "2017-06-15T22:20:11Z",
+      "side": 1,
+      "message": "and then this can pull out in chromecast_features.cc",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 38
+      },
+      "revId": "68da6cc09be82bc2edca0103311b2274ae421a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "848eedad_63002207",
+        "filename": "chromecast/base/chromecast_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1141609
+      },
+      "writtenOn": "2017-06-15T22:20:11Z",
+      "side": 1,
+      "message": "Poking around other directories that use base::Feature, I see a lot of them put the features in a separate file, e.g. features.h or \u003cname\u003e_features.h, so maybe this should get separated out into chromecast_features.h?\n\nI also saw that a good number of places put the features inside a `namespace features` (similar to `namespace switches` for the switches)",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 39
+      },
+      "revId": "68da6cc09be82bc2edca0103311b2274ae421a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
