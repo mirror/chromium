@@ -5,9 +5,16 @@
 <script src="resources/mock-share-service.js"></script>
 <script>
 
+function getAbsoluteUrl(url) {
+  return new URL(url, location).toString();
+}
+
 share_test((t, webshare, mock) => {
-  mock.pushShareResult('384957', '[object Object]', '', webshare.ShareError.OK);
-  return callWithKeyDown(() => navigator.share({title: 384957, text: {}}));
+  // Expect that each of the non-string values is converted into a string. Even
+  // null is converted into the string 'null'. (This isn't good practice, but
+  // it's how Web IDL specifies conversion.)
+  mock.pushShareResult('384957', '[object Object]', getAbsoluteUrl('null'), webshare.ShareError.OK);
+  return callWithKeyDown(() => navigator.share({title: 384957, text: {}, url: null}));
 }, 'share of types other than string (expect implicitly converted to string)');
 
 </script>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<link rel="help" href="https://github.com/WICG/web-share/blob/master/docs/interface.md">
+<link rel="help" href="https://wicg.github.io/web-share/">
 <script src=../resources/testharness.js></script>
 <script src=../resources/testharnessreport.js></script>
 <script src=../resources/WebIDLParser.js></script>
@@ -10,9 +10,9 @@
 </script>
 <script type="text/plain" id="tested">
     dictionary ShareData {
-      DOMString? title;
-      DOMString? text;
-      DOMString? url;
+      USVString title;
+      USVString text;
+      USVString url;
     };
     partial interface Navigator {
       Promise<void> share(ShareData data);
