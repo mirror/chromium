@@ -295,7 +295,8 @@ public class AccountSigninView extends FrameLayout {
                         && (mAccountNames.isEmpty()
                                    || mAccountNames.get(accountToSelect)
                                               .equals(oldAccountNames.get(oldSelectedAccount)));
-                if (selectedAccountChanged) {
+                // The null check is for https://crbug.com/733117 .
+                if (selectedAccountChanged && mDelegate.getFragmentManager() != null) {
                     // Any dialogs that may have been showing are now invalid (they were created
                     // for the previously selected account).
                     ConfirmSyncDataStateMachine.cancelAllDialogs(mDelegate.getFragmentManager());
