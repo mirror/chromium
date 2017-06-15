@@ -22,6 +22,30 @@
       "revId": "19663e1dc06313c083dd486197f7a303b55f6577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0495be2b_5c136ea0",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorklet.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-15T12:04:09Z",
+      "side": 1,
+      "message": "I forgot about it but when do we need to add DECLARE_EAGER_FINALIZATION_OPERATOR_NEW()? There are only two call sites of the macro in the code base.\n\nhttps://cs.chromium.org/search/?q\u003dDECLARE_EAGER_FINALIZATION_OPERATOR_NEW\u0026sq\u003dpackage:chromium\u0026type\u003dcs",
+      "parentUuid": "9f05ed10_6ad73c3d",
+      "range": {
+        "startLine": 21,
+        "startChar": 2,
+        "endLine": 21,
+        "endChar": 18
+      },
+      "revId": "19663e1dc06313c083dd486197f7a303b55f6577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
