@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7169b94_52de02fb",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-15T11:30:42Z",
+      "side": 1,
+      "message": "I started to think this change might be wrong and even the current SharedMemoryTracker::GetDumpGUIDForTracing might be wrong.\n\nNow Create(Weak)SharedGlobalAllocatorDump creates a shared global dump with a given id, and the dump has:\n  absolute name: \u0027global/(id)\u0027\n  guid:           id\n\nI was misunderstanding that the new shared global dump would have a new generated id but this was not true. The dump uses the given id as it is.\n\nBTW, a local shm dump created at SharedMemoryTracker has:\n  absolute name: \u0027shared_memory/...\u0027\n  guid:          MemoryAllocatorDumpGuid(\u0027(process_id)/(abosolute_name)\u0027)\n\nOn the other hand, the local shm dump guid at ProcessMemoryDump is \n  guid:          MemoryAllocatorDumpGuid(\u0027shared_memory/...\u0027)\n\nThus, the two guids should be same but actually not. I think we should fix SharedMemoryTracker::GetDumpGUIDForTracing, or am I missing something?",
+      "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
