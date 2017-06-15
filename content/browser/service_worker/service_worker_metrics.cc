@@ -847,55 +847,95 @@ void ServiceWorkerMetrics::RecordNavigationPreloadResponse(
     base::TimeDelta worker_start,
     base::TimeDelta response_start,
     EmbeddedWorkerStatus initial_worker_status,
+    StartSituation start_situation,
     ResourceType resource_type) {
   DCHECK_GE(worker_start.ToInternalValue(), 0);
   DCHECK_GE(response_start.ToInternalValue(), 0);
   DCHECK(resource_type == RESOURCE_TYPE_MAIN_FRAME ||
          resource_type == RESOURCE_TYPE_SUB_FRAME);
   const bool is_main_frame = (resource_type == RESOURCE_TYPE_MAIN_FRAME);
-  // TODO(falken): Log sub-frame navigations also.
-  if (!is_main_frame) {
-    return;
-  }
   const bool nav_preload_finished_first = response_start < worker_start;
+  const bool worker_start_occurred =
+      initial_worker_status != EmbeddedWorkerStatus::RUNNING;
   const base::TimeDelta concurrent_time =
       nav_preload_finished_first ? response_start : worker_start;
   base::TimeDelta worker_wait_time;
   if (nav_preload_finished_first) {
     worker_wait_time = worker_start - response_start;
   }
+  const WorkerPreparationType preparation =
+      GetWorkerPreparationType(initial_worker_status, start_situation);
 
-  UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.NavPreload.ResponseTime_MainFrame",
-                             response_start);
-  UMA_HISTOGRAM_BOOLEAN("ServiceWorker.NavPreload.FinishedFirst_MainFrame",
-                        nav_preload_finished_first);
-  UMA_HISTOGRAM_MEDIUM_TIMES(
-      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame", concurrent_time);
-  if (nav_preload_finished_first) {
+  if (is_main_frame) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
+        static_cast<int>(preparation),
+        static_cast<int>(WorkerPreparationType::NUM_TYPES));
     UMA_HISTOGRAM_MEDIUM_TIMES(
-        "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame", worker_wait_time);
-  }
-
-  const bool worker_start_occurred =
-      initial_worker_status != EmbeddedWorkerStatus::RUNNING;
-  if (worker_start_occurred) {
+        "ServiceWorker.NavPreload.ResponseTime_MainFrame", response_start);
+    UMA_HISTOGRAM_BOOLEAN("ServiceWorker.NavPreload.FinishedFirst_MainFrame",
+                          nav_preload_finished_first);
     UMA_HISTOGRAM_MEDIUM_TIMES(
-        "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
-        "WorkerStartOccurred",
-        response_start);
-    UMA_HISTOGRAM_BOOLEAN(
-        "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
-        "WorkerStartOccurred",
-        nav_preload_finished_first);
-    UMA_HISTOGRAM_MEDIUM_TIMES(
-        "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_"
-        "WorkerStartOccurred",
-        concurrent_time);
+        "ServiceWorker.NavPreload.ConcurrentTime_MainFrame", concurrent_time);
     if (nav_preload_finished_first) {
       UMA_HISTOGRAM_MEDIUM_TIMES(
-          "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_"
-          "WorkerStartOccurred",
+          "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame",
           worker_wait_time);
+    }
+
+    if (worker_start_occurred) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
+          "WorkerStartOccurred",
+          response_start);
+      UMA_HISTOGRAM_BOOLEAN(
+          "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
+          "WorkerStartOccurred",
+          nav_preload_finished_first);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_"
+          "WorkerStartOccurred",
+          concurrent_time);
+      if (nav_preload_finished_first) {
+        UMA_HISTOGRAM_MEDIUM_TIMES(
+            "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_"
+            "WorkerStartOccurred",
+            worker_wait_time);
+      }
+    }
+  } else {
+    UMA_HISTOGRAM_ENUMERATION(
+        "ServiceWorker.NavPreload.WorkerPreparationType_SubFrame",
+        static_cast<int>(preparation),
+        static_cast<int>(WorkerPreparationType::NUM_TYPES));
+    UMA_HISTOGRAM_MEDIUM_TIMES("ServiceWorker.NavPreload.ResponseTime_SubFrame",
+                               response_start);
+    UMA_HISTOGRAM_BOOLEAN("ServiceWorker.NavPreload.FinishedFirst_SubFrame",
+                          nav_preload_finished_first);
+    UMA_HISTOGRAM_MEDIUM_TIMES(
+        "ServiceWorker.NavPreload.ConcurrentTime_SubFrame", concurrent_time);
+    if (nav_preload_finished_first) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavPreload.WorkerWaitTime_SubFrame", worker_wait_time);
+    }
+
+    if (worker_start_occurred) {
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavPreload.ResponseTime_SubFrame_WorkerStartOccurred",
+          response_start);
+      UMA_HISTOGRAM_BOOLEAN(
+          "ServiceWorker.NavPreload.FinishedFirst_SubFrame_WorkerStartOccurred",
+          nav_preload_finished_first);
+      UMA_HISTOGRAM_MEDIUM_TIMES(
+          "ServiceWorker.NavPreload.ConcurrentTime_SubFrame_"
+          "WorkerStartOccurred",
+          concurrent_time);
+      if (nav_preload_finished_first) {
+        UMA_HISTOGRAM_MEDIUM_TIMES(
+            "ServiceWorker.NavPreload.WorkerWaitTime_SubFrame_"
+            "WorkerStartOccurred",
+            worker_wait_time);
+      }
     }
   }
 }
