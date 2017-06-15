@@ -27224,6 +27224,16 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="LocalStorageContext.OpenResultAfter"
+    enum="LocalStorageOpenError">
+<!-- Name completed by histogram_suffixes name="LocalStorageContextOpenReasons" -->
+
+  <owner>mek@chromium.org</owner>
+  <summary>
+    The result of opening the LevelDB database that backs LocalStorage.
+  </summary>
+</histogram>
+
 <histogram name="LocalStorageContext.ReadVersionError" enum="LevelDBStatus">
   <owner>mek@chromium.org</owner>
   <summary>
@@ -89771,6 +89781,14 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
       label="Moderate purge was triggered on memory pressure."/>
   <suffix name="SizeLimitExceeded" label="Cache size exceeded limit."/>
   <affected-histogram name="LocalStorage.BrowserLocalStorageCachePurgedInKB"/>
+</histogram_suffixes>
+
+<histogram_suffixes name="LocalStorageContextOpenReasons" separator="">
+  <suffix name="CommitErrors" label="After too many commit errors."/>
+  <suffix name="OpenFailed" label="After opening the DB failed."/>
+  <suffix name="InvalidVersion" label="After an invalid version was read."/>
+  <suffix name="ReadError" label="After too many errors reading data."/>
+  <affected-histogram name="LocalStorageContext.OpenResultAfter"/>
 </histogram_suffixes>
 
 <histogram_suffixes name="LocalStorageSizes" separator="">
