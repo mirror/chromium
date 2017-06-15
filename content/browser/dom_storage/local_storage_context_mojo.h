@@ -56,6 +56,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // Like DeleteStorage(), but also deletes storage for all sub-origins.
   void DeleteStorageForPhysicalOrigin(const url::Origin& origin);
   void Flush();
+  void FlushOriginForTesting(const url::Origin& origin);
 
   // Used by content settings to alter the behavior around
   // what data to keep and what data to discard at shutdown.
@@ -126,6 +127,9 @@ class CONTENT_EXPORT LocalStorageContextMojo
   void OnGotStorageUsageForShutdown(std::vector<LocalStorageUsageInfo> usage);
   void OnShutdownComplete(leveldb::mojom::DatabaseError error);
 
+  void OnCommitResult(leveldb::mojom::DatabaseError error);
+  void OnReconnectedToDB();
+
   std::unique_ptr<service_manager::Connector> connector_;
   const base::FilePath subdirectory_;
 
@@ -147,7 +151,7 @@ class CONTENT_EXPORT LocalStorageContextMojo
 
   leveldb::mojom::LevelDBServicePtr leveldb_service_;
   leveldb::mojom::LevelDBDatabaseAssociatedPtr database_;
-  bool tried_to_recreate_ = false;
+  bool tried_to_recreate_during_open_ = false;
 
   std::vector<base::OnceClosure> on_database_opened_callbacks_;
 
@@ -158,6 +162,11 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // Used to access old data for migration.
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
   base::FilePath old_localstorage_path_;
+
+  // Counts consecutive commit errors. If this number reaches a threshold, the
+  // whole database is thrown away.
+  int commit_error_count_ = 0;
+  bool tried_to_recover_from_commit_errors_ = false;
 
   base::WeakPtrFactory<LocalStorageContextMojo> weak_ptr_factory_;
 };

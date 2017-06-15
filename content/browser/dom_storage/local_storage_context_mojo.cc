@@ -51,6 +51,10 @@ const uint8_t kMetaPrefix[] = {'M', 'E', 'T', 'A', ':'};
 const int64_t kMinSchemaVersion = 1;
 const int64_t kCurrentSchemaVersion = 1;
 
+// After this many consecutive commit errors we'll throw away the entire
+// database.
+const int kCommitErrorThreshold = 8;
+
 const char kStorageOpenHistogramName[] = "LocalStorageContext.OpenError";
 // These values are written to logs.  New enum values can be added, but existing
 // enums must never be renumbered or deleted and reused.
@@ -197,6 +201,8 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
           base::Bind(base::IgnoreResult(&sql::Connection::Delete),
                      sql_db_path()));
     }
+
+    context_->OnCommitResult(error);
   }
 
   void MigrateData(LevelDBWrapperImpl::ValueMapCallback callback) override {
@@ -308,6 +314,14 @@ void LocalStorageContextMojo::Flush() {
   }
   for (const auto& it : level_db_wrappers_)
     it.second->level_db_wrapper()->ScheduleImmediateCommit();
+}
+
+void LocalStorageContextMojo::FlushOriginForTesting(const url::Origin& origin) {
+  DCHECK_EQ(connection_state_, CONNECTION_FINISHED);
+  const auto& it = level_db_wrappers_.find(origin);
+  if (it == level_db_wrappers_.end())
+    return;
+  it->second->level_db_wrapper()->ScheduleImmediateCommit();
 }
 
 void LocalStorageContextMojo::ShutdownAndDelete() {
@@ -445,7 +459,6 @@ void LocalStorageContextMojo::RunWhenConnected(base::OnceClosure callback) {
 
 void LocalStorageContextMojo::InitiateConnection(bool in_memory_only) {
   DCHECK_EQ(connection_state_, CONNECTION_IN_PROGRESS);
-
   // Unit tests might not always have a Connector, use in-memory only if that
   // happens.
   if (!connector_) {
@@ -585,13 +598,16 @@ void LocalStorageContextMojo::OnGotDatabaseVersion(
 
 void LocalStorageContextMojo::OnConnectionFinished() {
   DCHECK_EQ(connection_state_, CONNECTION_IN_PROGRESS);
-
-  // We no longer need the file service; we've either transferred |directory_|
-  // to the leveldb service, or we got a file error and no more is possible.
-  directory_.reset();
-  file_system_.reset();
-  if (!database_)
+  if (!database_) {
+    directory_.reset();
+    file_system_.reset();
     leveldb_service_.reset();
+  }
+
+  // If connection was opened successfully, reset tried_to_recreate_during_open_
+  // to enable recreating the database on future errors.
+  if (database_)
+    tried_to_recreate_during_open_ = false;
 
   // |database_| should be known to either be valid or invalid by now. Run our
   // delayed bindings.
@@ -602,34 +618,38 @@ void LocalStorageContextMojo::OnConnectionFinished() {
 }
 
 void LocalStorageContextMojo::DeleteAndRecreateDatabase() {
-  // For now don't support deletion and recreation when already connected.
-  DCHECK_EQ(connection_state_, CONNECTION_IN_PROGRESS);
+  // We're about to set database_ to null, so delete and LevelDBWrappers
+  // that might still be using the old database.
+  level_db_wrappers_.clear();
+
+  // Reset state to be in progress of connecting. This will cause requests for
+  // LevelDBWrappers to be queued until the connection is complete.
+  connection_state_ = CONNECTION_IN_PROGRESS;
+  commit_error_count_ = 0;
+  database_ = nullptr;
 
   bool recreate_in_memory = false;
 
   // If tried to recreate database on disk already, try again but this time
   // in memory.
-  if (tried_to_recreate_ && !subdirectory_.empty()) {
+  if (tried_to_recreate_during_open_ && !subdirectory_.empty()) {
     recreate_in_memory = true;
-  } else if (tried_to_recreate_) {
+  } else if (tried_to_recreate_during_open_) {
     // Give up completely, run without any database.
-    database_ = nullptr;
     OnConnectionFinished();
     return;
   }
 
-  tried_to_recreate_ = true;
+  tried_to_recreate_during_open_ = true;
 
   // Unit tests might not have a bound file_service_, in which case there is
   // nothing to retry.
   if (!file_system_.is_bound()) {
-    database_ = nullptr;
     OnConnectionFinished();
     return;
   }
 
-  // Close and destroy database, and try again.
-  database_ = nullptr;
+  // Destroy database, and try again.
   if (directory_.is_bound()) {
     leveldb_service_->Destroy(
         std::move(directory_), "leveldb",
@@ -752,6 +772,31 @@ void LocalStorageContextMojo::OnGotStorageUsageForShutdown(
 void LocalStorageContextMojo::OnShutdownComplete(
     leveldb::mojom::DatabaseError error) {
   delete this;
+}
+
+void LocalStorageContextMojo::OnCommitResult(
+    leveldb::mojom::DatabaseError error) {
+  DCHECK_EQ(connection_state_, CONNECTION_FINISHED);
+  if (error == leveldb::mojom::DatabaseError::OK) {
+    commit_error_count_ = 0;
+    return;
+  }
+
+  commit_error_count_++;
+  if (commit_error_count_ > kCommitErrorThreshold) {
+    if (tried_to_recover_from_commit_errors_) {
+      // We already tried to recover from a high commit error rate before, but
+      // are still having problems: there isn't really anything left to try, so
+      // just ignore errors.
+      return;
+    }
+    tried_to_recover_from_commit_errors_ = true;
+
+    // Deleting LevelDBWrappers in here could cause more commits (and commit
+    // errors), but those commits won't reach OnCommitResult because the wrapper
+    // will have been deleted before the commit finishes.
+    DeleteAndRecreateDatabase();
+  }
 }
 
 }  // namespace content
