@@ -69,23 +69,21 @@ cdm::InitDataType ToCdmInitDataType(EmeInitDataType init_data_type) {
 CdmPromise::Exception ToMediaExceptionType(cdm::Error error) {
   switch (error) {
     case cdm::kNotSupportedError:
-      return CdmPromise::NOT_SUPPORTED_ERROR;
+      return CdmPromise::Exception::NOT_SUPPORTED_ERROR;
     case cdm::kInvalidStateError:
-      return CdmPromise::INVALID_STATE_ERROR;
+      return CdmPromise::Exception::INVALID_STATE_ERROR;
     case cdm::kInvalidAccessError:
-      return CdmPromise::INVALID_ACCESS_ERROR;
+      return CdmPromise::Exception::TYPE_ERROR;
     case cdm::kQuotaExceededError:
-      return CdmPromise::QUOTA_EXCEEDED_ERROR;
+      return CdmPromise::Exception::QUOTA_EXCEEDED_ERROR;
     case cdm::kUnknownError:
-      return CdmPromise::UNKNOWN_ERROR;
     case cdm::kClientError:
-      return CdmPromise::CLIENT_ERROR;
     case cdm::kOutputError:
-      return CdmPromise::OUTPUT_ERROR;
+      break;
   }
 
   NOTREACHED() << "Unexpected cdm::Error " << error;
-  return CdmPromise::UNKNOWN_ERROR;
+  return CdmPromise::Exception::NOT_SUPPORTED_ERROR;
 }
 
 CdmMessageType ToMediaMessageType(cdm::MessageType message_type) {
@@ -422,7 +420,7 @@ void CdmAdapter::Initialize(const base::FilePath& cdm_path,
                             std::unique_ptr<media::SimpleCdmPromise> promise) {
   cdm_.reset(CreateCdmInstance(key_system_, cdm_path));
   if (!cdm_) {
-    promise->reject(CdmPromise::INVALID_ACCESS_ERROR, 0,
+    promise->reject(CdmPromise::Exception::NOT_SUPPORTED_ERROR, 0,
                     "Unable to create CDM.");
     return;
   }
@@ -439,7 +437,7 @@ void CdmAdapter::SetServerCertificate(
 
   if (certificate.size() < limits::kMinCertificateLength ||
       certificate.size() > limits::kMaxCertificateLength) {
-    promise->reject(CdmPromise::INVALID_ACCESS_ERROR, 0,
+    promise->reject(CdmPromise::Exception::TYPE_ERROR, 0,
                     "Incorrect certificate.");
     return;
   }
