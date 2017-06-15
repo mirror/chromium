@@ -3,7 +3,7 @@ URL: http://bytebuddy.net/
 Version: 1.4.17
 License: Apache 2.0
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 Description:
 Byte Buddy is a code generation library for creating Java classes at runtime.
 

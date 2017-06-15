@@ -4,7 +4,7 @@ URL: http://google.github.io/snappy/
 Version: 1.1.4-head
 License: New BSD
 License File: src/COPYING
-Security Critical: yes
+Shipping: yes
 
 Description:
 Compression library used by LevelDB.

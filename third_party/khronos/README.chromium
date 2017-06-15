@@ -4,7 +4,7 @@ URL: http://www.khronos.org/registry
 Version: unknown
 Date: 2017-04-01
 License: MIT/X11, SGI Free Software License B
-Security Critical: no
+Shipping: no
 
 Description:
 This package contains header files for the EGL and OpenGL ES APIs from

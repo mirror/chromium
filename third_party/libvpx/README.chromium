@@ -3,7 +3,7 @@ URL: http://www.webmproject.org
 Version: v1.6.0
 License: BSD
 License File: source/libvpx/LICENSE
-Security Critical: yes
+Shipping: yes
 
 Date: Tuesday June 06 2017
 Branch: master

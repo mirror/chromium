@@ -6,7 +6,7 @@ Date: March 9, 2017
 Revision: 28d9d70090f1b18927f4554621648cc1922d6e05
 License: Apache 2.0
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 The library is not security critical because it is used for tests only.
 Do not link it into production code.
 

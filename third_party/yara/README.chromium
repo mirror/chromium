@@ -5,7 +5,7 @@ Date: (OPTIONAL if version is supplied) The date that the package was updated
 Revision: (OPTIONAL if version is supplied) The current revision of the package
 License: BSD 3-Clause
 License File: src/COPYING
-Security Critical: Yes
+Shipping: Yes
 
 Description: YARA is a tool aimed at (but not limited to) helping malware
 researchers to identify and classify malware samples. With YARA you can create

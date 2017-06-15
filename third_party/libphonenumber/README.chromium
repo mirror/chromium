@@ -5,7 +5,7 @@ Version: unknown
 Revision: a4da30df63a097d67e3c429ead6790ad91d36cf4
 License: Apache 2.0
 License File: LICENSE
-Security Critical: yes
+Shipping: yes
 
 This directory contains the source code of International Phone Number Library
 for C/C++.

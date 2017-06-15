@@ -4,7 +4,7 @@ Version: 1.2.0
 License: 2-clause or 3-clause BSD licensed, with the exception of bitvect, which is triple-licensed under the Artistic license, GPL, and LGPL
 License File: source/patched-yasm/COPYING
 License Android Compatible: yes
-Security Critical: no
+Shipping: no
 
 With these patches merged:
 * https://github.com/yasm/yasm/commit/a2cbb10ee1b90b73647667ac849c74d65761d412

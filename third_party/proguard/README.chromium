@@ -4,7 +4,7 @@ Version: 5.2.1
 Date: June 22, 2016
 License: GPL v2
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 
 Description:
 This directory includes proguard.jar to allow Chromium to shrink, optimize java

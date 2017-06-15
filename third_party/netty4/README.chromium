@@ -6,7 +6,7 @@ Version: 4.1.9.Final
 Date: March 10, 2017
 License: Apache 2.0
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 The library is not security critical because it is used for tests only.
 Do not link it into production code.
 

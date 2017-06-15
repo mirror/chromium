@@ -4,7 +4,7 @@ URL: https://code.google.com/p/jsr-305/
 Version: r51
 License: BSD 2-Clause License
 License File: src/ri/LICENSE
-Security Critical: no
+Shipping: no
 
 Description:
 This project contains reference implementations, test cases, and other

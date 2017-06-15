@@ -5,7 +5,7 @@ Revision: a12a34451a99cbbcad55d466940fd445171927fd
 License: Custom license "inspired by the BSD, Artistic, and IJG (Independent
          JPEG Group) licenses"
 License File: src/docs/FTL.TXT
-Security Critical: yes
+Shipping: yes
 License Android Compatible: yes
 
 Description:

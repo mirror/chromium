@@ -4,7 +4,7 @@ URL: https://chromium.googlesource.com/chromium/src/+/master/third_party/cachein
 Version: unknown
 License: Apache 2.0
 License File: src/google/cacheinvalidation/COPYING
-Security Critical: no
+Shipping: no
 
 Description:
 This is the API to talk to the Google Cache Invalidation service, used by the

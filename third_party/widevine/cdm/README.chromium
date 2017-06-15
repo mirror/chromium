@@ -1,7 +1,7 @@
 Name: Widevine CDM
 Version: 0
 License: Chromium
-Security Critical: yes
+Shipping: yes
 
 Description:
 This directory contains build files for integrating the Widevine CDM into

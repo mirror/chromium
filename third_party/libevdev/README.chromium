@@ -2,7 +2,7 @@ Name: libevdev
 URL: https://chromium.googlesource.com/chromiumos/platform/libevdev
 Version: 9f7a1961eb4726211e18abd147d5a11a4ea86744
 License: MIT
-Security Critical: yes
+Shipping: yes
 
 Description:
 The libevdev library (ChromeOS version).

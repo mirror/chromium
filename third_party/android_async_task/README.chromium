@@ -3,7 +3,7 @@ URL: https://chromium.googlesource.com/android_tools.git/+/master/sdk/sources/an
 Version: f4c36ad89b2696b37d9cd7ca7d984b691888b188
 License: Apache 2.0
 License File: LICENSE
-Security Critical: yes
+Shipping: yes
 
 Description:
 This contains a copy of Android sdk 23's AsyncTask.java.

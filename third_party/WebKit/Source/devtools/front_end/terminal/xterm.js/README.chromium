@@ -2,6 +2,6 @@ Name: Xterm.js is a terminal front-end component written in JavaScript that work
 Short Name: xterm.js
 URL: https://github.com/sourcelair/xterm.js
 License: MIT
-Security Critical: no
+Shipping: no
 
 This directory contains Chrome's version of xterm.js with tests, demo and some addons folders removed.

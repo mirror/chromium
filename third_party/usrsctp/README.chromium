@@ -5,7 +5,7 @@ Date: 4 Nov 2015
 Revision: ef6e3302205dbadf0584b712f53e48159be2dffb
 License: New BSD
 License File: LICENSE
-Security Critical: yes
+Shipping: yes
 
 Description:
 The usrsctplib provides implementation of SCTP protocol which fully supports

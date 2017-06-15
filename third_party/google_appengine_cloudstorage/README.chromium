@@ -2,10 +2,11 @@ Name: Google AppEngine Cloud Storage Python client
 Short Name: appengine-gcs-client
 URL: https://code.google.com/p/appengine-gcs-client/source
 Date: 2014-Feb-14
+Version: unknown
 Revision: trunk
 License: Apache 2.0
 License File: NOT_SHIPPED
-Security Critical: no
+Shipping: no
 
 Description:
 Python libraries to access Google Cloud Storage buckets from Google AppEngine

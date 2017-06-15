@@ -67,10 +67,10 @@ def _CheckThirdPartyReadmesUpdated(input_api, output_api):
     r'^Short Name: [a-zA-Z0-9_\-\.]+\r?$',
     input_api.re.IGNORECASE | input_api.re.MULTILINE)
   version_pattern = input_api.re.compile(
-    r'^Version: [a-zA-Z0-9_\-\.:]+\r?$',
+    r'^Version: [a-zA-Z0-9_\-\. :]+\r?$',
     input_api.re.IGNORECASE | input_api.re.MULTILINE)
   release_pattern = input_api.re.compile(
-    r'^Security Critical: (yes|no)\r?$',
+    r'^Shipping: (yes|no)\r?$',
     input_api.re.IGNORECASE | input_api.re.MULTILINE)
   license_pattern = input_api.re.compile(
     r'^License: (.+)\r?$',
@@ -101,9 +101,9 @@ def _CheckThirdPartyReadmesUpdated(input_api, output_api):
         [f]))
     if not release_pattern.search(contents):
       errors.append(output_api.PresubmitError(
-        'Third party README files should contain a \'Security Critical\'\n'
-        'field. This field specifies whether the package is built with\n'
-        'Chromium. Check README.chromium.template for details.',
+        'Third party README files should contain a \'Shipping\' field.\n'
+        'This field specifies whether the package is built and shipped\n'
+        'with Chromium. Check README.chromium.template for details.',
         [f]))
     license_match = license_pattern.search(contents)
     if not license_match:

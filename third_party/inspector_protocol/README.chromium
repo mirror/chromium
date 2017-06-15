@@ -5,7 +5,7 @@ Version: 0
 Revision: efefa86c3183d307f0a0e53bf568fe57c5b58849
 License: BSD
 License File: LICENSE
-Security Critical: no
+Shipping: no
 
 Description:
 WebKit/core/inspector uses these scripts to generate handlers from protocol
