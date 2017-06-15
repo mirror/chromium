@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cbd744c1_aed4fe6f",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-15T11:03:45Z",
+      "side": 1,
+      "message": "Eventually I hope we can go back to calling it ProcessMemoryDump when it really is the struct trait version of a ProcessMemoryDump. I have called it ProcessMemoryDumpSummary for now.",
+      "parentUuid": "ac36da09_cdb1631e",
+      "range": {
+        "startLine": 64,
+        "startChar": 7,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "e636cb8ccc591c111500251b7f3519aa26cf56f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e411cd2c_60676e00",
         "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "e636cb8ccc591c111500251b7f3519aa26cf56f5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6441070d_afcd8980",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-15T11:03:45Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e411cd2c_60676e00",
+      "range": {
+        "startLine": 71,
+        "startChar": 62,
+        "endLine": 71,
+        "endChar": 66
+      },
+      "revId": "e636cb8ccc591c111500251b7f3519aa26cf56f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
