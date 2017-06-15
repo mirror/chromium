@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "ffc290f1_d71a9b97",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-15T16:06:42Z",
+      "side": 1,
+      "message": "nit: I wonder if it might be nicer to expose something like\n\n  identity::mojom::IdentityManager* GetIdentityManager()\n\nwhich does the lazy initialization. Pretty common pattern. Maybe there was a reason not to do that in this case, but I don\u0027t recall.",
+      "revId": "d99d2375489a8fd8c723779587fa7d5dc05f6e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09e28f47_b45e00e4",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 5
