@@ -1,0 +1,5 @@
+rootWebArea
+++heading name='Image'
+++++staticText name='Image'
+++++++inlineTextBox name='Image'
+++image name='ImageAlt'

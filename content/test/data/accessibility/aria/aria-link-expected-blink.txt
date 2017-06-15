@@ -1,0 +1,4 @@
+rootWebArea
+++link name='ARIA Link'
+++++staticText name='ARIA Link'
+++++++inlineTextBox name='ARIA Link'

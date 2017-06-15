@@ -1,0 +1,16 @@
+rootWebArea
+++link name='InnerText0'
+++++staticText name='InnerText0'
+++++++inlineTextBox name='InnerText0'
+++link description='Title1' name='InnerText1' descriptionFrom=2
+++++staticText name='InnerText1'
+++++++inlineTextBox name='InnerText1'
+++link name='Title2'
+++++staticText name='InnerText2'
+++++++inlineTextBox name='InnerText2'
+++link name='LabelledBy3'
+++++staticText name='InnerText3'
+++++++inlineTextBox name='InnerText3'
+++link name='Title4'
+++link name='Label5'
+++link name='LabelledBy6'

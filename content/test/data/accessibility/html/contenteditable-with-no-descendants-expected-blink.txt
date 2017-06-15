@@ -1,0 +1,7 @@
+rootWebArea
+++genericContainer name='label'
+++genericContainer description='description' descriptionFrom=5
+++genericContainer name='title'
+++paragraph
+++++staticText name='description'
+++++++inlineTextBox name='description'

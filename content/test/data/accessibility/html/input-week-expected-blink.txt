@@ -1,0 +1,15 @@
+rootWebArea
+++genericContainer
+++++dateTime
+++++++genericContainer
+++++++++genericContainer
+++++++++++staticText name='Week '
+++++++++++++inlineTextBox name='Week '
+++++++++++spinButton description='Week' descriptionFrom=2
+++++++++++staticText name=', '
+++++++++++++inlineTextBox name=', '
+++++++++++spinButton description='Year' descriptionFrom=2
+++++++popUpButton haspopup
+++++++spinButton
+++++++++button
+++++++++button

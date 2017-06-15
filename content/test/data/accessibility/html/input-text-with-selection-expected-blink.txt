@@ -1,0 +1,6 @@
+rootWebArea
+++genericContainer
+++++textField
+++++++genericContainer
+++++++++staticText name='Selection'
+++++++++++inlineTextBox name='Selection'

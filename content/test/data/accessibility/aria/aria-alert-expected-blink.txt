@@ -1,0 +1,4 @@
+rootWebArea
+++alert
+++++staticText name='This test is for aria role="alert"'
+++++++inlineTextBox name='This test is for aria role="alert"'

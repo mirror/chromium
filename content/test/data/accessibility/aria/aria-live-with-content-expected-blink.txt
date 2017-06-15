@@ -1,0 +1,10 @@
+rootWebArea
+++marquee
+++++staticText name='Off'
+++++++inlineTextBox name='Off'
+++marquee
+++++staticText name='Polite'
+++++++inlineTextBox name='Polite'
+++marquee
+++++staticText name='Assertive'
+++++++inlineTextBox name='Assertive'
