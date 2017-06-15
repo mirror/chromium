@@ -72,8 +72,9 @@ class EVENTS_EXPORT MotionEventAndroid : public MotionEvent {
   // to a given point.
   std::unique_ptr<MotionEventAndroid> CreateFor(const gfx::PointF& point) const;
 
-  // Convenience method returning the pointer at index 0.
-  gfx::PointF GetPoint() const { return gfx::PointF(GetX(0), GetY(0)); }
+  // Convenience methods returning the pointer at index 0.
+  gfx::PointF GetPointF() const;
+  gfx::Point GetPoint() const;
 
   // ui::MotionEvent methods.
   uint32_t GetUniqueEventId() const override;

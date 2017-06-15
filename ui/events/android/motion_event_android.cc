@@ -274,6 +274,13 @@ std::unique_ptr<MotionEventAndroid> MotionEventAndroid::CreateFor(
   return event;
 }
 
+gfx::PointF MotionEventAndroid::GetPointF() const {
+  return gfx::PointF(GetX(0), GetY(0));
+}
+gfx::Point MotionEventAndroid::GetPoint() const {
+  return gfx::Point(gfx::ToRoundedInt(GetX(0)), gfx::ToRoundedInt(GetY(0)));
+}
+
 MotionEventAndroid::~MotionEventAndroid() {
 }
 
