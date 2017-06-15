@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "455362d6_b353a12a",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-15T09:02:45Z",
+      "side": 1,
+      "message": "We need to add EAGERLY_FINALIZE since this is touching on-heap objects, right?",
+      "revId": "f3b6e70d09efa96aa4b3e457af232cb6f34b8b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
