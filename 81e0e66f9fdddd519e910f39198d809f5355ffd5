@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f69d180_7f725556",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-15T18:27:58Z",
+      "side": 1,
+      "message": "nit \"is critically low and info_.alert_if_low is true\" or similar.",
+      "range": {
+        "startLine": 47,
+        "startChar": 30,
+        "endLine": 47,
+        "endChar": 33
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "126c495f_7b5cd101",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-15T18:27:58Z",
+      "side": 1,
+      "message": "nit: |charge_state| doesn\u0027t exist anymore",
+      "range": {
+        "startLine": 96,
+        "startChar": 45,
+        "endLine": 96,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e5b71372_11eefdfe",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-15T18:27:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure if hard-coding a 5 in here is the right thing to do. Consider the case of the 16x16 battery icon, which can render a distcint-looking icon at every 100/16 \u003d 6.25% change in charge percentage. But hard-coding a 5 here effectively requests a re-draw of the icon at every 5% change in charge percentage. As a result, when the battery is charging from empty, the icon appearance will not change until the battery hits the 10% charge level.",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
