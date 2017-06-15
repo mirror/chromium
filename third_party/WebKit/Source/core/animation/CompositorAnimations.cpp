@@ -265,11 +265,6 @@ CompositorAnimations::CanStartEffectOnCompositor(
             "modes other than 'replace'");
       }
 
-      if (!keyframe->GetAnimatableValue()) {
-        return FailureCode::NonActionable(
-            "Accelerated keyframe value could not be computed");
-      }
-
       // FIXME: Determine candidacy based on the CSSValue instead of a snapshot
       // AnimatableValue.
       switch (property.CssProperty()) {
@@ -299,10 +294,16 @@ CompositorAnimations::CanStartEffectOnCompositor(
           break;
         }
         default:
+          DCHECK(!IsCompositableProperty(property.CssProperty()));
           // any other types are not allowed to run on compositor.
-          return FailureCode::Actionable(
-              String("CSS property not supported: ") +
-              getPropertyName(property.CssProperty()));
+          StringBuilder builder;
+          builder.Append("CSS property not supported: ");
+          if (property.IsCSSCustomProperty()) {
+            builder.Append(property.CustomPropertyName());
+          } else {
+            builder.Append(getPropertyName(property.CssProperty()));
+          }
+          return FailureCode::Actionable(builder.ToString());
       }
     }
   }
