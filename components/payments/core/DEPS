@@ -6,7 +6,7 @@ include_rules = [
   "+components/metrics",
   "+components/pref_registry",
   "+components/strings",
-  "+components/ukm",
+  "+services/metrics/public",
   "+third_party/libaddressinput",
   "+third_party/libphonenumber",
   "+ui/base",

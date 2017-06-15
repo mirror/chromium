@@ -19,7 +19,7 @@ component("public") {
 
   public_deps = [
     "//base",
-    "//components/ukm/public/interfaces",
+    "//services/metrics/public/interfaces",
     "//url",
   ]
 
