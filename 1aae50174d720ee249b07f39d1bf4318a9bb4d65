@@ -22,6 +22,30 @@
       "revId": "1aae50174d720ee249b07f39d1bf4318a9bb4d65",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7671a917_0d139e61",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1141609
+      },
+      "writtenOn": "2017-06-15T21:17:08Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8f0aac0_b594db9e",
+      "range": {
+        "startLine": 216,
+        "startChar": 32,
+        "endLine": 216,
+        "endChar": 39
+      },
+      "revId": "1aae50174d720ee249b07f39d1bf4318a9bb4d65",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
