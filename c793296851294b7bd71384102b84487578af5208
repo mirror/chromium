@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6d17804_28f91657",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 483,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-15T04:47:14Z",
+      "side": 0,
+      "message": "OK, I will move this to another CL.",
+      "parentUuid": "c1e69206_887540cb",
+      "revId": "c793296851294b7bd71384102b84487578af5208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f477f37c_b13e00b8",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T04:01:41Z",
       "side": 0,
       "message": "Do we have any DCHECK to check that WillDestroyScrollableArea() is certainly called?",
+      "revId": "c793296851294b7bd71384102b84487578af5208",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87238006_ad71a119",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrame.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 486,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-15T04:47:14Z",
+      "side": 0,
+      "message": "It is called in LocalFrameView::Dispose.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/frame/LocalFrameView.cpp?l\u003d382\u0026rcl\u003d51a69bcf539116e6d8ab573dc9ca263a61023ec2\n\nAnd view is always disposed in Document::Shutdown.\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/dom/Document.cpp?l\u003d2560\u0026rcl\u003d51a69bcf539116e6d8ab573dc9ca263a61023ec2\n\nEspecially given that this code has never been executing, I don\u0027t feel the need to add any extra DCHECKs.",
+      "parentUuid": "f477f37c_b13e00b8",
       "revId": "c793296851294b7bd71384102b84487578af5208",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
