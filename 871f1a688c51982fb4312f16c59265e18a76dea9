@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "515ae991_7ef97f02",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T12:08:37Z",
+      "side": 1,
+      "message": "I believe NOT_TAINTED is expected here, because service worker fetches image from image_url which has the same origin with current frame.",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "70a7a4d8_585ed9df",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T12:08:37Z",
+      "side": 1,
+      "message": "This test can pass now, but I suppose TAINTED should be expected instead?\nBecause remote_image_url has different origin and our image object has no crossOrigin attribute.",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5eff208b_7fbbf088",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T12:08:37Z",
+      "side": 1,
+      "message": "Currently this test leads to a failure result NOT_TAINTED.\nBut it will succeed if I deleted the above test at line222-228 which has the same url with this test.\nIt\u0027s weird, seems service worker is caching the response??",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 22
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b2c67f1_cb6c0628",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-15T12:08:37Z",
+      "side": 1,
+      "message": "I do believe this test should expect the same result with the test at line215-221, but why they are different now? And the comments seems to be strange, this test is not setting \u0027no-cors\u0027.",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
