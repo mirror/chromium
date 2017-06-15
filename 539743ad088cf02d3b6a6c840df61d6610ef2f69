@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "0b893ca2_d2074918",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "I went an even simpler way and injected a data object that contains the information needed to populate requests directly.\n\nTests can use TestURLRequestContexts to do whatever they want.",
+      "parentUuid": "821d55e3_2c08eb09",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f19b558d_ed2feabf",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1952af72_435370ef",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f19b558d_ed2feabf",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bc07f11a_8913e81b",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -68,6 +104,24 @@
       "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "091f6350_cf72a356",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bc07f11a_8913e81b",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -105,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "8faf35e5_d23246da",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "I believe Instance ID code is caching the token.  If I don\u0027t hold onto it here I don\u0027t need to worry about token invalidation etc.  So I\u0027d prefer to just ask for the token each time.",
+      "parentUuid": "80912199_311dbf91",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a1756ca_629eee36",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 2
@@ -116,6 +188,30 @@
       "writtenOn": "2017-06-14T18:01:13Z",
       "side": 1,
       "message": "Is this never reset?\n\nNote not affecting this CL: To me it was very surprising that there was no \"sending\" of the message happening, until I found that the messages send themselves upon construction. Also the send-receive code is currently duplicated in each message. I think this could/should be improved but in another patch.",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 115,
+        "endChar": 24
+      },
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b3f1d15_3b600f5a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "Never reset, until another request comes in.  This will ultimately be owned by a task so the ownership will be clearer then.",
+      "parentUuid": "5a1756ca_629eee36",
       "range": {
         "startLine": 115,
         "startChar": 2,
@@ -142,6 +238,24 @@
       "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fc267d5_31d1625f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-15T17:59:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24306079_384f571b",
+      "revId": "539743ad088cf02d3b6a6c840df61d6610ef2f69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
