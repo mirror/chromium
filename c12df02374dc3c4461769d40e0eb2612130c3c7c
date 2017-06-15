@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccfc214a_011ed192",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T13:02:59Z",
+      "side": 1,
+      "message": "Can you add a comment here explaining what the parameters are, and which ones are optional? allow_attribute, in particular, only makes sense for fullscreen and paymentrequest. (It\u0027s fine to special-case them here, since they\u0027re mentioned in the feature policy spec, but we should point out that that parameter only exists for those features)",
+      "revId": "c12df02374dc3c4461769d40e0eb2612130c3c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d67391f_4f47254c",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T13:02:59Z",
+      "side": 1,
+      "message": "allowed_feature_name could just be \"feature_name\" to match the spec.",
+      "range": {
+        "startLine": 7,
+        "startChar": 13,
+        "endLine": 7,
+        "endChar": 33
+      },
+      "revId": "c12df02374dc3c4461769d40e0eb2612130c3c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "813da8c5_a10027f3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T13:02:59Z",
+      "side": 1,
+      "message": "expect_feature_enabled might be a better name here.\n\nBetter still might be to make this an implementation function, and define two other functions in this file: expect_feature_available(...) and expect_feature_unavailable(...) that call it with the right value for the boolean.",
+      "range": {
+        "startLine": 17,
+        "startChar": 10,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "c12df02374dc3c4461769d40e0eb2612130c3c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1bce1b15_062c687a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/relocate.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-15T13:02:59Z",
+      "side": 1,
+      "message": "This function could use a comment -- it\u0027s pretty straightforward, but something like\n\nAutomatically redirects the page to a new URL on load. Load this document with a URL like\n\"feature-policy/resources/relocate.html#http://example.com/\"\n\ncould be helpful for people to know why it\u0027s here.\n\nI\u0027m also thinking that \"relocate\" isn\u0027t the best name for this behaviour -- maybe \"redirect\" or \"set location\" would be a better term?",
+      "revId": "c12df02374dc3c4461769d40e0eb2612130c3c7c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
