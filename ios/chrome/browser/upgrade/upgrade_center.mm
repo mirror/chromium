@@ -214,7 +214,7 @@ class UpgradeInfoBarDismissObserver
   // Stores the clients of the upgrade center. These objectiveC objects are not
   // retained.
   std::set<id<UpgradeCenterClientProtocol>> clients_;
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   bool inCallback_;
 #endif
 }
@@ -290,7 +290,7 @@ class UpgradeInfoBarDismissObserver
 }
 
 - (void)unregisterClient:(id<UpgradeCenterClientProtocol>)client {
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   DCHECK(!inCallback_);
 #endif
   clients_.erase(client);
@@ -370,14 +370,14 @@ class UpgradeInfoBarDismissObserver
 
 - (void)showUpgradeInfoBars {
 // Add an infobar on all the open tabs.
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   inCallback_ = YES;
 #endif
   upgradeInfoBarIsVisible_ = YES;
   std::set<id<UpgradeCenterClientProtocol>>::iterator it;
   for (it = clients_.begin(); it != clients_.end(); ++it)
     [*it showUpgrade:self];
-#ifndef NDEBUG
+#if DCHECK_IS_ON()
   inCallback_ = NO;
 #endif
 
