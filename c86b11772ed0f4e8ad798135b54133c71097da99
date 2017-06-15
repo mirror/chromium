@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "163879af_3bfc6b63",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-15T01:46:36Z",
+      "side": 1,
+      "message": "These mirrors are dangerous - what happens if we update one but not the other?  Is there a reason to prefer this over the enum traits-style we use for other enums?",
+      "revId": "c86b11772ed0f4e8ad798135b54133c71097da99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
