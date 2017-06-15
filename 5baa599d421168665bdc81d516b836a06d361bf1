@@ -70,6 +70,24 @@
     },
     {
       "key": {
+        "uuid": "7962e919_76bdb1db",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T23:33:15Z",
+      "side": 1,
+      "message": "elly mentioned this on irc.. I said \"The few use cases I can think where [an Anchor View*] might be better than a offset from the top-left or top-right of the window are when Chrome Sync kicks in and does “Something” — installs an extension, or changes your ‘show home button’ setting. Pretty obscure. (also I’m fairly certain those kinds of triggers do not currently cause bubbles to reposition themselves)\"\n\nThere might also be a use case for RTL - having a View can get a Rect and pick a corner based on that.\n\nmsw might know more history about this.\n\nThere is also an maybe-bad use case I\u0027ve seen in extension code where it uses RTTI on the anchor View* class name to infer something about how the bubble was invoked..\n\n\n\nAnd I think it\u0027s not only the complication of anchoring to a Cocoa browser that is making anchor view harder to use. a View* isn\u0027t enough. We currently have to combine it with BubbleDialogDelegateView::anchor_view_insets() and  GetLayoutConstant(LOCATION_BAR_BUBBLE_ANCHOR_VERTICAL_INSET) *and* (at least for some bubbles) still have code to fallback on when the View* is nullptr (e.g. fullscreen, or popups, that are missing some Views in the parent window).\n\n\nOf course, a Rect alone doesn\u0027t satisfy re anchoring (e.g. on parent window resize). But we dealt with that for Cocoa with a `KeepBubbleAnchored` method - https://cs.chromium.org/chromium/src/chrome/browser/ui/cocoa/bubble_anchor_helper_views.h?type\u003dcs\u0026q\u003dkeepbubbleanchored\u0026l\u003d22 it just fixes the offset from the top-left or top-right of the window based on bubble_-\u003earrow(). We could possibly port that to work with a Widget* parent window as well as NSWindow, and rely on that rather than BubbleDialogDelegateView::OnAnchorBoundsChanged()",
+      "parentUuid": "96004906_3cbfcc07",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db14aaea_76e69012",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 1
