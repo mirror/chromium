@@ -30,7 +30,6 @@ import org.chromium.base.Callback;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.widget.ContextMenuDialog;
-import org.chromium.content.browser.RenderCoordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
     private ImageView mHeaderImageView;
     private Runnable mOnShareItemClicked;
     private View mPagerView;
-    private RenderCoordinates mRenderCoordinates;
+    private float mTopContentOffsetY;
 
     public TabularContextMenuUi(Runnable onShareItemClicked) {
         mOnShareItemClicked = onShareItemClicked;
@@ -101,7 +100,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
                 (TabularContextMenuViewPager) view.findViewById(R.id.custom_pager));
 
         final ContextMenuDialog dialog = new ContextMenuDialog(activity, R.style.DialogWhenLarge,
-                touchPointXPx, touchPointYPx, mPagerView, mRenderCoordinates);
+                touchPointXPx, touchPointYPx, mPagerView, mTopContentOffsetY);
         dialog.setContentView(view);
 
         return dialog;
@@ -289,11 +288,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         mCallback.onResult((int) id);
     }
 
-    /**
-     * Gives this class access to the render coordinates to allow access to the total size of the
-     * toolbar and tab strip.
-     */
-    public void setRenderCoordinates(RenderCoordinates renderCoordinates) {
-        mRenderCoordinates = renderCoordinates;
+    public void setTopContentOffsetY(float topContentOffsetY) {
+        mTopContentOffsetY = topContentOffsetY;
     }
 }

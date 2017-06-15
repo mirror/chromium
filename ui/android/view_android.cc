@@ -190,7 +190,7 @@ void ViewAndroid::SetAnchorRect(const JavaRef<jobject>& anchor,
 
   float dip_scale = GetDipScale();
   int left_margin = std::round(bounds.x() * dip_scale);
-  int top_margin = std::round((content_offset().y() + bounds.y()) * dip_scale);
+  int top_margin = std::round((content_offset() + bounds.y()) * dip_scale);
   JNIEnv* env = base::android::AttachCurrentThread();
   Java_ViewAndroidDelegate_setViewPosition(
       env, delegate, anchor, bounds.x(), bounds.y(), bounds.width(),
@@ -215,6 +215,12 @@ void ViewAndroid::RemoveChild(ViewAndroid* child) {
   DCHECK(it != children_.end());
   children_.erase(it);
   child->parent_ = nullptr;
+}
+
+void ViewAndroid::SetContentOffset(float content_offset) {
+  content_offset_ = content_offset;
+  if (parent_ != GetWindowAndroid())
+    parent_->SetContentOffset(content_offset);
 }
 
 WindowAndroid* ViewAndroid::GetWindowAndroid() const {
@@ -301,6 +307,16 @@ void ViewAndroid::OnPhysicalBackingSizeChanged(const gfx::Size& size) {
 
 gfx::Size ViewAndroid::GetPhysicalBackingSize() {
   return physical_size_;
+}
+
+void ViewAndroid::SetViewportSize(const gfx::SizeF& viewport_size) {
+  viewport_size_ = viewport_size;
+  if (parent_ != GetWindowAndroid())
+    parent_->SetViewportSize(viewport_size);
+}
+
+gfx::SizeF ViewAndroid::GetViewportSize() const {
+  return viewport_size_;
 }
 
 bool ViewAndroid::OnDragEvent(const DragEventAndroid& event) {

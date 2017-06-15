@@ -48,7 +48,7 @@ struct DidOverscrollParams;
 }
 
 namespace content {
-class ContentViewCoreImpl;
+class ContentViewCore;
 class ImeAdapterAndroid;
 class OverscrollControllerAndroid;
 class RenderWidgetHost;
@@ -58,6 +58,7 @@ class SynchronousCompositorHost;
 class SynchronousCompositorClient;
 class WebContentsAccessibilityAndroid;
 struct NativeWebKeyboardEvent;
+struct ContextMenuParams;
 
 // -----------------------------------------------------------------------------
 // See comments in render_widget_host_view.h about this class and its members.
@@ -70,13 +71,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       public viz::FrameEvictorClient,
       public StylusTextSelectorClient,
       public ui::TouchSelectionControllerClient,
-      public content::ContentViewCoreImplObserver,
+      public content::ContentViewCoreObserver,
       public content::TextInputManager::Observer,
       public ui::DelegatedFrameHostAndroid::Client,
       public cc::BeginFrameObserver {
  public:
   RenderWidgetHostViewAndroid(RenderWidgetHostImpl* widget,
-                              ContentViewCoreImpl* content_view_core);
+                              ContentViewCore* content_view_core);
   ~RenderWidgetHostViewAndroid() override;
 
   void Blur();
@@ -200,7 +201,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnActivityStopped() override;
   void OnActivityStarted() override;
 
-  // content::ContentViewCoreImplObserver implementation.
+  // content::ContentViewCoreObserver implementation.
   void OnContentViewCoreDestroyed() override;
   void OnAttachedToWindow() override;
   void OnDetachedFromWindow() override;
@@ -235,12 +236,13 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
   // Non-virtual methods
-  void SetContentViewCore(ContentViewCoreImpl* content_view_core);
+  void SetContentViewCore(ContentViewCore* content_view_core);
   SkColor GetCachedBackgroundColor() const;
   void SendKeyEvent(const NativeWebKeyboardEvent& event);
   void SendMouseEvent(const ui::MotionEventAndroid&, int action_button);
   void SendMouseWheelEvent(const blink::WebMouseWheelEvent& event);
   void SendGestureEvent(const blink::WebGestureEvent& event);
+  bool OnShowContextMenu(const ContextMenuParams& params);
   void ResolveTapDisambiguation(double timestamp_seconds,
                                 gfx::Point tap_viewport_offset,
                                 bool is_long_press);
@@ -370,8 +372,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // appearance of overscroll glow and the keyboard.
   bool is_in_vr_;
 
-  // ContentViewCoreImpl is our interface to the view system.
-  ContentViewCoreImpl* content_view_core_;
+  // ContentViewCore is our interface to the view system.
+  ContentViewCore* content_view_core_;
 
   ImeAdapterAndroid* ime_adapter_android_;
   SelectionPopupController* selection_popup_controller_;
@@ -423,8 +425,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // The last scroll offset of the view.
   gfx::Vector2dF last_scroll_offset_;
 
-  float prev_top_shown_pix_;
-  float prev_bottom_shown_pix_;
+  float prev_top_content_offset_pix_;
+  float prev_bottom_content_offset_pix_;
 
   cc::mojom::MojoCompositorFrameSinkClient* renderer_compositor_frame_sink_ =
       nullptr;

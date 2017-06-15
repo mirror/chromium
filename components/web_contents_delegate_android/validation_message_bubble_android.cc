@@ -5,47 +5,48 @@
 #include "components/web_contents_delegate_android/validation_message_bubble_android.h"
 
 #include "base/android/jni_string.h"
-#include "content/public/browser/android/content_view_core.h"
-#include "content/public/browser/render_view_host.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/ValidationMessageBubble_jni.h"
-#include "ui/gfx/geometry/rect.h"
+#include "ui/android/view_android.h"
+#include "ui/gfx/geometry/rect_f.h"
+#include "ui/gfx/geometry/size_conversions.h"
 
 using base::android::ConvertUTF16ToJavaString;
-using content::ContentViewCore;
-using content::RenderWidgetHost;
-
-namespace {
-
-base::android::ScopedJavaLocalRef<jobject> GetJavaContentViewCoreFrom(
-    RenderWidgetHost* widget_host) {
-  ContentViewCore* content_view_core =
-      ContentViewCore::FromWebContents(content::WebContents::FromRenderViewHost(
-          content::RenderViewHost::From(widget_host)));
-  if (!content_view_core)
-    return base::android::ScopedJavaLocalRef<jobject>();
-  return content_view_core->GetJavaObject();
-}
-}
+using content::WebContents;
 
 namespace web_contents_delegate_android {
+namespace {
+gfx::Rect ScaleToRoundedRect(const gfx::Rect& rect, float scale) {
+  gfx::RectF scaledRect(rect);
+  scaledRect.Scale(scale);
+  return gfx::Rect(gfx::ToRoundedInt(scaledRect.x()),
+                   gfx::ToRoundedInt(scaledRect.y()),
+                   gfx::ToRoundedInt(scaledRect.width()),
+                   gfx::ToRoundedInt(scaledRect.height()));
+}
+
+gfx::Size ScaleToRoundedSize(const gfx::SizeF& size, float scale) {
+  return gfx::ToRoundedSize(gfx::ScaleSize(size, scale));
+}
+}  // namespace
 
 ValidationMessageBubbleAndroid::ValidationMessageBubbleAndroid(
-    RenderWidgetHost* widget_host,
-    const gfx::Rect& anchor_in_root_view,
+    content::WebContents* web_contents,
+    const gfx::Rect& anchor_in_screen,
     const base::string16& main_text,
     const base::string16& sub_text) {
-  base::android::ScopedJavaLocalRef<jobject> java_content_view_core =
-      GetJavaContentViewCoreFrom(widget_host);
-  if (java_content_view_core.is_null())
-    return;
+  gfx::NativeView view = web_contents->GetNativeView();
+  float scale = view->GetDipScale();
+  // Convert to device pixel unit before passing to Java.
+  auto anchor = ScaleToRoundedRect(anchor_in_screen, scale);
+  auto viewport = ScaleToRoundedSize(view->GetViewportSize(), scale);
 
   JNIEnv* env = base::android::AttachCurrentThread();
   java_validation_message_bubble_.Reset(
       Java_ValidationMessageBubble_createAndShowIfApplicable(
-          env, java_content_view_core, anchor_in_root_view.x(),
-          anchor_in_root_view.y(), anchor_in_root_view.width(),
-          anchor_in_root_view.height(),
+          env, view->GetContainerView(), viewport.width(), viewport.height(),
+          view->content_offset() * scale, anchor.x(), anchor.y(),
+          anchor.width(), anchor.height(),
           ConvertUTF16ToJavaString(env, main_text),
           ConvertUTF16ToJavaString(env, sub_text)));
 }
@@ -58,18 +59,19 @@ ValidationMessageBubbleAndroid::~ValidationMessageBubbleAndroid() {
 }
 
 void ValidationMessageBubbleAndroid::SetPositionRelativeToAnchor(
-    RenderWidgetHost* widget_host, const gfx::Rect& anchor_in_root_view) {
-  base::android::ScopedJavaLocalRef<jobject> java_content_view_core =
-      GetJavaContentViewCoreFrom(widget_host);
-  if (java_content_view_core.is_null() ||
-      java_validation_message_bubble_.is_null()) {
-    return;
-  }
+    WebContents* web_contents,
+    const gfx::Rect& anchor_in_screen) {
+  gfx::NativeView view = web_contents->GetNativeView();
+  float scale = view->GetDipScale();
+  // Convert to device pixel unit before passing to Java.
+  auto anchor = ScaleToRoundedRect(anchor_in_screen, scale);
+  auto viewport = ScaleToRoundedSize(view->GetViewportSize(), scale);
 
   Java_ValidationMessageBubble_setPositionRelativeToAnchor(
       base::android::AttachCurrentThread(), java_validation_message_bubble_,
-      java_content_view_core, anchor_in_root_view.x(), anchor_in_root_view.y(),
-      anchor_in_root_view.width(), anchor_in_root_view.height());
+      view->GetContainerView(), viewport.width(), viewport.height(),
+      view->content_offset() * scale, anchor.x(), anchor.y(), anchor.width(),
+      anchor.height());
 }
 
 }  // namespace web_contents_delegate_android
