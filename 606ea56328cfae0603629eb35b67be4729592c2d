@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7e67203_ad874a4e",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-06-15T20:06:50Z",
+      "side": 1,
+      "message": "Note: I\u0027m going to add docs here before landing, just wanted to kick off the CQ.....",
+      "range": {
+        "startLine": 120,
+        "startChar": 19,
+        "endLine": 120,
+        "endChar": 20
+      },
+      "revId": "606ea56328cfae0603629eb35b67be4729592c2d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
