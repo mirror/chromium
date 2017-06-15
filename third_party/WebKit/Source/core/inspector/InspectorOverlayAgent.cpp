@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/InspectorOverlayAgent.h"
+#include "core/inspector/InspectorOverlayAgent.h"
 
 #include <memory>
 
@@ -57,6 +57,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/page/ChromeClient.h"
 #include "core/page/Page.h"
+#include "core/page/PageOverlay.h"
 #include "platform/ScriptForbiddenScope.h"
 #include "platform/graphics/Color.h"
 #include "platform/graphics/GraphicsContext.h"
@@ -65,7 +66,6 @@
 #include "public/platform/Platform.h"
 #include "public/platform/WebData.h"
 #include "v8/include/v8.h"
-#include "web/PageOverlay.h"
 
 namespace blink {
 

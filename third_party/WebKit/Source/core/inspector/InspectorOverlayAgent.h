@@ -31,6 +31,7 @@
 
 #include <v8-inspector.h>
 #include <memory>
+#include "core/CoreExport.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/InspectorHighlight.h"
 #include "core/inspector/InspectorOverlayHost.h"
@@ -58,7 +59,7 @@ class WebMouseEvent;
 class WebLocalFrameBase;
 class WebTouchEvent;
 
-class InspectorOverlayAgent final
+class CORE_EXPORT InspectorOverlayAgent final
     : public InspectorBaseAgent<protocol::Overlay::Metainfo>,
       public InspectorOverlayHost::Listener {
   WTF_MAKE_NONCOPYABLE(InspectorOverlayAgent);

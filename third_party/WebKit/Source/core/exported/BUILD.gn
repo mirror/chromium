@@ -23,6 +23,8 @@ blink_core_sources("exported") {
     "WebDataSourceImpl.cpp",
     "WebDataSourceImpl.h",
     "WebDateTimeSuggestion.cpp",
+    "WebDevToolsAgentImpl.cpp",
+    "WebDevToolsAgentImpl.h",
     "WebDocument.cpp",
     "WebElement.cpp",
     "WebElementCollection.cpp",

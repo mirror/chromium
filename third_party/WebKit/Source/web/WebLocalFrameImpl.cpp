@@ -124,6 +124,7 @@
 #include "core/exported/SharedWorkerRepositoryClientImpl.h"
 #include "core/exported/WebAssociatedURLLoaderImpl.h"
 #include "core/exported/WebDataSourceImpl.h"
+#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -230,10 +231,20 @@
 #include "public/web/WebSerializedScriptValue.h"
 #include "public/web/WebTreeScopeType.h"
 #include "skia/ext/platform_canvas.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebFrameWidgetImpl.h"
 
 namespace blink {
+
+namespace {
+
+// TODO(sashab): Merge this method with the duplicate in WebDevToolsAgentImpl.
+bool IsMainFrame(WebLocalFrameBase* frame) {
+  // TODO(dgozman): sometimes view->mainFrameImpl() does return null, even
+  // though |frame| is meant to be main frame.  See http://crbug.com/526162.
+  return frame->ViewImpl() && !frame->Parent();
+}
+
+}  // namespace
 
 static int g_frame_count = 0;
 
@@ -2022,6 +2033,12 @@ void WebLocalFrameImpl::SetDevToolsAgentClient(
     WebDevToolsAgentClient* dev_tools_client) {
   DCHECK(dev_tools_client);
   dev_tools_agent_ = WebDevToolsAgentImpl::Create(this, dev_tools_client);
+  // TODO(sashab): Move below logic back into WebDevToolsAgentImpl::Create once
+  // WebFrameWidgetImpl is in core/.
+  if (!IsMainFrame(this) && FrameWidget()) {
+    dev_tools_agent_->LayerTreeViewChanged(
+        ToWebFrameWidgetImpl(FrameWidget())->LayerTreeView());
+  }
 }
 
 WebDevToolsAgent* WebLocalFrameImpl::DevToolsAgent() {

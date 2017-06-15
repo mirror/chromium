@@ -26,9 +26,10 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/PageOverlay.h"
+#include "core/page/PageOverlay.h"
 
 #include <memory>
+#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/VisualViewport.h"
 #include "core/frame/WebFrameWidgetBase.h"
@@ -42,7 +43,6 @@
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/WebLayer.h"
 #include "public/web/WebViewClient.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 namespace blink {
 

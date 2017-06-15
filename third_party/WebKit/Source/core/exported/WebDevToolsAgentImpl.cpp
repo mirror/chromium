@@ -28,7 +28,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "web/WebDevToolsAgentImpl.h"
+#include "core/exported/WebDevToolsAgentImpl.h"
 
 #include <v8-inspector.h>
 #include <memory>
@@ -57,6 +57,7 @@
 #include "core/inspector/InspectorLogAgent.h"
 #include "core/inspector/InspectorMemoryAgent.h"
 #include "core/inspector/InspectorNetworkAgent.h"
+#include "core/inspector/InspectorOverlayAgent.h"
 #include "core/inspector/InspectorPageAgent.h"
 #include "core/inspector/InspectorResourceContainer.h"
 #include "core/inspector/InspectorResourceContentLoader.h"
@@ -89,8 +90,6 @@
 #include "public/platform/WebString.h"
 #include "public/web/WebDevToolsAgentClient.h"
 #include "public/web/WebSettings.h"
-#include "web/InspectorOverlayAgent.h"
-#include "web/WebFrameWidgetImpl.h"
 
 namespace blink {
 
@@ -234,12 +233,7 @@ WebDevToolsAgentImpl* WebDevToolsAgentImpl::Create(
     WebLocalFrameBase* frame,
     WebDevToolsAgentClient* client) {
   if (!IsMainFrame(frame)) {
-    WebDevToolsAgentImpl* agent =
-        new WebDevToolsAgentImpl(frame, client, false);
-    if (frame->FrameWidget())
-      agent->LayerTreeViewChanged(
-          ToWebFrameWidgetImpl(frame->FrameWidget())->LayerTreeView());
-    return agent;
+    return new WebDevToolsAgentImpl(frame, client, false);
   }
 
   WebViewBase* view = frame->ViewImpl();
@@ -658,9 +652,10 @@ void WebDevToolsAgentImpl::RunDebuggerTask(
 
   WebDevToolsAgentImpl* agent_impl =
       static_cast<WebDevToolsAgentImpl*>(webagent);
-  if (agent_impl->Attached())
+  if (agent_impl->Attached()) {
     agent_impl->DispatchMessageFromFrontend(session_id, descriptor->Method(),
                                             descriptor->Message());
+  }
 }
 
 void WebDevToolsAgent::InterruptAndDispatch(int session_id,

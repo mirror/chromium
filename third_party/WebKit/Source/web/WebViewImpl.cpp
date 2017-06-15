@@ -52,6 +52,7 @@
 #include "core/events/UIEventWithKeyState.h"
 #include "core/events/WebInputEventConversion.h"
 #include "core/events/WheelEvent.h"
+#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebFactory.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebRemoteFrameImpl.h"
@@ -90,6 +91,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
+#include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
@@ -169,10 +171,8 @@
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
 #include "web/DedicatedWorkerMessagingProxyProviderImpl.h"
-#include "web/PageOverlay.h"
 #include "web/PrerendererClientImpl.h"
 #include "web/StorageQuotaClientImpl.h"
-#include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
 #include "core/layout/LayoutThemeDefault.h"

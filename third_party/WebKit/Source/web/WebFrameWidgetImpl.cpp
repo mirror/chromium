@@ -41,6 +41,7 @@
 #include "core/editing/InputMethodController.h"
 #include "core/editing/PlainTextRange.h"
 #include "core/events/WebInputEventConversion.h"
+#include "core/exported/WebDevToolsAgentImpl.h"
 #include "core/exported/WebPluginContainerBase.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/exported/WebViewBase.h"
@@ -73,7 +74,6 @@
 #include "public/web/WebPlugin.h"
 #include "public/web/WebRange.h"
 #include "public/web/WebWidgetClient.h"
-#include "web/WebDevToolsAgentImpl.h"
 #include "web/WebPagePopupImpl.h"
 
 namespace blink {
