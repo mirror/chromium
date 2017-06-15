@@ -46,6 +46,52 @@
       "revId": "a72094fe3f53abf2f0b3d2b0346d4543422f7bc3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "432fcaa1_6f299c0d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T19:09:00Z",
+      "side": 1,
+      "message": "setMenuButtonHighlightDrawable(mHighlightingMenu); to set the highlight to the right state on inflate?",
+      "range": {
+        "startLine": 192,
+        "startChar": 8,
+        "endLine": 192,
+        "endChar": 32
+      },
+      "revId": "a72094fe3f53abf2f0b3d2b0346d4543422f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc88433_4b5dce13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/toolbar/ToolbarLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 696,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-15T19:09:00Z",
+      "side": 1,
+      "message": "if (mMenuButtonWrapper \u003d\u003d null) return; might be cleaner here?  That\u0027s what we\u0027re technically really checking.  Move this to setMenuButtonHighlightDrawable().",
+      "range": {
+        "startLine": 696,
+        "startChar": 8,
+        "endLine": 696,
+        "endChar": 38
+      },
+      "revId": "a72094fe3f53abf2f0b3d2b0346d4543422f7bc3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
