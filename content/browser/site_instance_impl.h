@@ -70,9 +70,11 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
     // priority, and otherwise one is selected randomly.
     REUSE_PENDING_OR_COMMITTED_SITE,
 
-    // By default, a new RenderProcessHost will be created unless the process
-    // limit has been reached. The RenderProcessHost reused will be chosen
-    // randomly and not based on the site.
+    // By default, if the SiteInstances is not for service worker and there are
+    // service worker only processes for the site, the newest process is reused
+    // to renderer the page. If none exests a new RenderProcessHost will be
+    // created unless the process limit has been reached. The RenderProcessHost
+    // reused will be chosen randomly and not based on the site.
     DEFAULT,
   };
 
@@ -82,6 +84,15 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   ProcessReusePolicy process_reuse_policy() const {
     return process_reuse_policy_;
   }
+
+  // Whethere the SiteInstance is created for a service worker. If this flag
+  // is true, when a new process is created for this SiteInstance, the process
+  // will be tracked as a service worker only process until reused by another
+  // SiteInstance which reuse policy is DEFAULT.
+  void set_is_for_service_worker(bool is_for_service_worker) {
+    is_for_service_worker_ = is_for_service_worker;
+  }
+  bool is_for_service_worker() const { return is_for_service_worker_; }
 
   // Returns the SiteInstance, related to this one, that should be used
   // for subframes when an oopif is required, but a dedicated process is not.
@@ -204,6 +215,9 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // The ProcessReusePolicy to use when creating a RenderProcessHost for this
   // SiteInstance.
   ProcessReusePolicy process_reuse_policy_;
+
+  // Whethere the SiteInstance is created for a service worker.
+  bool is_for_service_worker_;
 
   base::ObserverList<Observer, true> observers_;
 
