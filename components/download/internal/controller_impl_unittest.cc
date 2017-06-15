@@ -595,4 +595,8 @@ TEST_F(DownloadServiceControllerImplTest, OnDownloadUpdated) {
   EXPECT_EQ(Entry::State::ACTIVE, model_->Get(entry.guid)->state);
 }
 
+TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
+  // TODO(dtrainor): Build.
+}
+
 }  // namespace download
