@@ -49,6 +49,11 @@ class ArcSessionRunner : public ArcSession::Observer {
   // bridge becomes ready, registered Observer's OnSessionReady() is called.
   void RequestStart();
 
+  // Starts ...
+  void RequestStartForLoginScreen();
+  // Stops ...
+  void RequestStopForLoginScreen();
+
   // Stops the ARC service.
   void RequestStop();
 

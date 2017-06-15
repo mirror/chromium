@@ -33,6 +33,8 @@ class ArcServiceLauncher {
   // destroyed.
   void Shutdown();
 
+  // Called right before the login screen is shown.
+  void OnShowingLoginOobeSession();
   // Called when the main profile is initialized after user logs in.
   void OnPrimaryUserProfilePrepared(Profile* profile);
 

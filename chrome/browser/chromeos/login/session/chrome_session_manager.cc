@@ -70,6 +70,8 @@ void StartKioskSession() {
 
 // Starts the login/oobe screen.
 void StartLoginOobeSession() {
+  arc::ArcServiceLauncher::Get()->OnShowingLoginOobeSession();
+
   // State will be defined once out-of-box/login branching is complete.
   ShowLoginWizard(OobeScreen::SCREEN_UNKNOWN);
 

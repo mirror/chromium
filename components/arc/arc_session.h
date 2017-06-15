@@ -47,6 +47,11 @@ class ArcSession {
       const scoped_refptr<base::TaskRunner>& blocking_task_runner);
   virtual ~ArcSession();
 
+  // ...
+  virtual void StartForLoginScreen() = 0;
+  // ...
+  virtual void StopForLoginScreen() = 0;
+
   // Starts and bootstraps a connection with the instance. The Observer's
   // OnReady() will be called if the bootstrapping is successful, or
   // OnStopped() if it is not. Start() should not be called twice or more.

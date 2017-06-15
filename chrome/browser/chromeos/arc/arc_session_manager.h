@@ -204,6 +204,9 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   // This can be called only when ARC is running.
   void StopAndEnableArc();
 
+  // Starts ...
+  void StartArcForLoginScreen();
+
   ArcSupportHost* support_host() { return support_host_.get(); }
 
   // TODO(hidehiko): Get rid of the getter by migration between ArcAuthContext
