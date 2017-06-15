@@ -16,6 +16,24 @@
       "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f101ba76_53e0d9eb",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-15T20:33:43Z",
+      "side": 1,
+      "message": "Yeah I never realized this is a bug in SharedMemoryTracker and we cannot use the same guid for both local dump and global dump. I agree that this is actually an issue with ProcessMemoryDump interface that creates global dumps. It should handle the hashing better to avoid such trivial collision. But at the moment I am not sure how the UI deals with this issue. If the UI actually expects that the global dumps to have the same guid as given then it could end up being a large change in memory-infra side.\n\nSo, I\u0027d go for the safe option of fixing the SharedMemoryTracker::GetGlobalDumpGUIDForTracing( to be different from the local dump guid.\nIt should be an easy fix:\nlocal dumps have \"shared_memory/ID\"\nglobal dumps have \"shared_memory_global/ID\".\n\nSharedMemoryTracker::GetDumpGUIDForTracing and GetGlobalDumpGUIDForTracing will return different unique GUIDs.\n\n\nAs far as the current CL, we should land this any way. This does not depend on the change i suggested above and this CL does the right thing.",
+      "parentUuid": "c7169b94_52de02fb",
+      "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
