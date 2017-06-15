@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "dd6ffebe_3e0240c1",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-15T07:12:02Z",
+      "side": 1,
+      "message": "Sorry, I meant: Why not just pass content::ServiceManagerConnection::GetForProcess()-\u003eGetConnector()?",
+      "parentUuid": "0fa28c24_7b2078bd",
+      "revId": "1000e33994583e3ab8d53c52b859dc1a3d6e04bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a4be02ea_4e86d2b9",
         "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
         "patchSetId": 4
