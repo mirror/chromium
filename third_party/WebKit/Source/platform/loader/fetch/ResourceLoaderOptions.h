@@ -51,24 +51,14 @@ enum RequestInitiatorContext {
   kWorkerContext,
 };
 
-enum StoredCredentials {
-  kAllowStoredCredentials,
-  kDoNotAllowStoredCredentials
-};
-
-// APIs like XMLHttpRequest and EventSource let the user decide whether to send
-// credentials, but they're always sent for same-origin requests. Additional
-// information is needed to handle cross-origin redirects correctly.
-enum CredentialRequest {
-  kClientRequestedCredentials,
-  kClientDidNotRequestCredentials
-};
-
 enum SynchronousPolicy { kRequestSynchronously, kRequestAsynchronously };
 
-// A resource fetch can be marked as being CORS enabled. The loader must perform
-// an access check upon seeing the response.
-enum CORSEnabled { kNotCORSEnabled, kIsCORSEnabled };
+// Used by the DocumentThreadableLoader to turn off part of the CORS handling
+// logic in the ResourceFetcher to use its own CORS handling logic.
+enum CORSHandlingByResourceFetcher {
+  kDisableCORSHandlingByResourceFetcher,
+  kEnableCORSHandlingByResourceFetcher,
+};
 
 // Was the request generated from a "parser-inserted" element?
 // https://html.spec.whatwg.org/multipage/scripting.html#parser-inserted
@@ -83,44 +73,19 @@ struct ResourceLoaderOptions {
   USING_FAST_MALLOC(ResourceLoaderOptions);
 
  public:
-  ResourceLoaderOptions(StoredCredentials allow_credentials,
-                        CredentialRequest credentials_requested)
+  ResourceLoaderOptions()
       : data_buffering_policy(kBufferData),
-        allow_credentials(allow_credentials),
-        credentials_requested(credentials_requested),
         content_security_policy_option(kCheckContentSecurityPolicy),
         request_initiator_context(kDocumentContext),
         synchronous_policy(kRequestAsynchronously),
-        cors_enabled(kNotCORSEnabled),
+        cors_handling_by_resource_fetcher(kEnableCORSHandlingByResourceFetcher),
+        cors_flag(false),
         parser_disposition(kParserInserted),
         cache_aware_loading_enabled(kNotCacheAwareLoadingEnabled) {}
-
-  // Answers the question "can a separate request with these different options
-  // be re-used" (e.g. preload request) The safe (but possibly slow) answer is
-  // always false.
-  bool CanReuseRequest(const ResourceLoaderOptions& other) const {
-    // dataBufferingPolicy differences are believed to be safe for re-use.
-    // FIXME: check allowCredentials.
-    // FIXME: check credentialsRequested.
-    // FIXME: check contentSecurityPolicyOption.
-    // initiatorInfo is purely informational and should be benign for re-use.
-    // requestInitiatorContext is benign (indicates document vs. worker)
-    if (synchronous_policy != other.synchronous_policy)
-      return false;
-    return cors_enabled == other.cors_enabled;
-    // securityOrigin has more complicated checks which callers are responsible
-    // for.
-  }
 
   // When adding members, CrossThreadResourceLoaderOptionsData should be
   // updated.
   DataBufferingPolicy data_buffering_policy;
-
-  // Whether HTTP credentials and cookies are sent with the request.
-  StoredCredentials allow_credentials;
-
-  // Whether the client (e.g. XHR) wanted credentials in the first place.
-  CredentialRequest credentials_requested;
 
   ContentSecurityPolicyDisposition content_security_policy_option;
   FetchInitiatorInfo initiator_info;
@@ -128,7 +93,8 @@ struct ResourceLoaderOptions {
   SynchronousPolicy synchronous_policy;
 
   // If the resource is loaded out-of-origin, whether or not to use CORS.
-  CORSEnabled cors_enabled;
+  CORSHandlingByResourceFetcher cors_handling_by_resource_fetcher;
+  bool cors_flag;
 
   RefPtr<SecurityOrigin> security_origin;
   String content_security_policy_nonce;
@@ -143,13 +109,13 @@ struct CrossThreadResourceLoaderOptionsData {
   explicit CrossThreadResourceLoaderOptionsData(
       const ResourceLoaderOptions& options)
       : data_buffering_policy(options.data_buffering_policy),
-        allow_credentials(options.allow_credentials),
-        credentials_requested(options.credentials_requested),
         content_security_policy_option(options.content_security_policy_option),
         initiator_info(options.initiator_info),
         request_initiator_context(options.request_initiator_context),
         synchronous_policy(options.synchronous_policy),
-        cors_enabled(options.cors_enabled),
+        cors_handling_by_resource_fetcher(
+            options.cors_handling_by_resource_fetcher),
+        cors_flag(options.cors_flag),
         security_origin(options.security_origin
                             ? options.security_origin->IsolatedCopy()
                             : nullptr),
@@ -159,13 +125,15 @@ struct CrossThreadResourceLoaderOptionsData {
         cache_aware_loading_enabled(options.cache_aware_loading_enabled) {}
 
   operator ResourceLoaderOptions() const {
-    ResourceLoaderOptions options(allow_credentials, credentials_requested);
+    ResourceLoaderOptions options;
     options.data_buffering_policy = data_buffering_policy;
     options.content_security_policy_option = content_security_policy_option;
     options.initiator_info = initiator_info;
     options.request_initiator_context = request_initiator_context;
     options.synchronous_policy = synchronous_policy;
-    options.cors_enabled = cors_enabled;
+    options.cors_handling_by_resource_fetcher =
+        cors_handling_by_resource_fetcher;
+    options.cors_flag = cors_flag;
     options.security_origin = security_origin;
     options.content_security_policy_nonce = content_security_policy_nonce;
     options.integrity_metadata = integrity_metadata;
@@ -175,14 +143,15 @@ struct CrossThreadResourceLoaderOptionsData {
   }
 
   DataBufferingPolicy data_buffering_policy;
-  StoredCredentials allow_credentials;
-  CredentialRequest credentials_requested;
   ContentSecurityPolicyDisposition content_security_policy_option;
   CrossThreadFetchInitiatorInfoData initiator_info;
   RequestInitiatorContext request_initiator_context;
   SynchronousPolicy synchronous_policy;
-  CORSEnabled cors_enabled;
+
+  CORSHandlingByResourceFetcher cors_handling_by_resource_fetcher;
+  bool cors_flag;
   RefPtr<SecurityOrigin> security_origin;
+
   String content_security_policy_nonce;
   IntegrityMetadataSet integrity_metadata;
   ParserDisposition parser_disposition;
