@@ -69,7 +69,7 @@ CoordinatorImpl* CoordinatorImpl::GetInstance() {
 }
 
 CoordinatorImpl::CoordinatorImpl(service_manager::Connector* connector)
-    : failed_memory_dump_count_(0) {
+    : failed_memory_dump_count_(0), next_dump_id_(0) {
   process_map_ = base::MakeUnique<ProcessMap>(connector);
   DCHECK(!g_coordinator_impl);
   g_coordinator_impl = this;
@@ -94,10 +94,14 @@ void CoordinatorImpl::BindCoordinatorRequest(
 }
 
 void CoordinatorImpl::RequestGlobalMemoryDump(
-    const base::trace_event::MemoryDumpRequestArgs& args,
+    const base::trace_event::MemoryDumpRequestArgs& args_in,
     const RequestGlobalMemoryDumpCallback& callback) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   bool another_dump_already_in_progress = !queued_memory_dump_requests_.empty();
+
+  DCHECK_EQ(0u, args_in.dump_guid);
+  base::trace_event::MemoryDumpRequestArgs args = args_in;
+  args.dump_guid = ++next_dump_id_;
 
   // If this is a periodic or peak memory dump request and there already is
   // another request in the queue with the same level of detail, there's no
