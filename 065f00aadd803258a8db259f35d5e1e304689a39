@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae50c7fc_d04614b8",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T15:00:47Z",
+      "side": 1,
+      "message": "Shouldn\u0027t the DCHECK and the self.paymentRequest-\u003ebilling_profiles()[index] be moved to before the if/else statements?",
+      "range": {
+        "startLine": 98,
+        "startChar": 43,
+        "endLine": 99,
+        "endChar": 74
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "603e78ef_7ec84945",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T15:00:47Z",
+      "side": 1,
+      "message": "PaymentsIsSelectable maybe?",
+      "range": {
+        "startLine": 11,
+        "startChar": 10,
+        "endLine": 11,
+        "endChar": 32
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5424a1e6_3ef96778",
+        "filename": "ios/chrome/browser/ui/payments/cells/payments_is_selector_type.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T15:00:47Z",
+      "side": 1,
+      "message": "nit: I wouldn\u0027t mention contact info, address, payment method in the context of this protocol. To say \"Whether or not the selectable item has all the required information.\" is sufficient.",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 73
+      },
+      "revId": "065f00aadd803258a8db259f35d5e1e304689a39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

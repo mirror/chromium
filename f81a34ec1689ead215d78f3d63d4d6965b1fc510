@@ -190,6 +190,30 @@
     },
     {
       "key": {
+        "uuid": "b7596097_5aab89db",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1166499
+      },
+      "writtenOn": "2017-06-15T15:00:47Z",
+      "side": 1,
+      "message": "All chrome .mm files are Objective-C++ code. You\u0027d need to add another method almost identical to GetShippingAddressLabelFromAutofillProfile and the others in payment_request_util.mm that returns nil if the string is empty.\nI prefer we simply make a call to the method that returns a boolean for assigning to a boolean property. The implementation of these two methods are almost identical now, but that could potentially change.",
+      "parentUuid": "32c42ce2_2a75a38d",
+      "range": {
+        "startLine": 102,
+        "startChar": 26,
+        "endLine": 104,
+        "endChar": 68
+      },
+      "revId": "f81a34ec1689ead215d78f3d63d4d6965b1fc510",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0e36e1d4_8cbe1de7",
         "filename": "ios/chrome/browser/ui/payments/cells/payments_has_editable_info_type.h",
         "patchSetId": 4
