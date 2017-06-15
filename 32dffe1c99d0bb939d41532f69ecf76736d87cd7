@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a5e99a4_4bd1348e",
+        "filename": "tools/perf/contrib/cluster_telemetry/screenshot.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1128435
+      },
+      "writtenOn": "2017-06-15T17:44:16Z",
+      "side": 1,
+      "message": "This only work for live network case?",
+      "revId": "32dffe1c99d0bb939d41532f69ecf76736d87cd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
