@@ -397,7 +397,14 @@ config("cfi_flags") {
 }
 
 config("coverage_flags") {
-  cflags = []
+  cflags = [
+    "-fprofile-instr-generate",
+    "-fcoverage-mapping",
+    "-fno-use-cxa-atexit"  # Remove this line, and it'll fail.
+  ]
+  ldflags = [
+    "-fprofile-instr-generate",
+  ]
 
   if (use_sanitizer_coverage) {
     cflags += [
