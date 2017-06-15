@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b83be4e8_e1fd8289",
+        "filename": "cc/surfaces/compositor_frame_sink_support.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "I thought we didn\u0027t want CompositorFrameSinkSupport to access SurfaceManager directly. Do we?",
+      "parentUuid": "9848b295_622b1fe8",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eda1dd11_37ebea96",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da8200fb_894dfce9",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "Thanks for catching these.\nNot anymore. I started the patch a long time ago and a lot has changed since.\nIt\u0027s removed.",
+      "parentUuid": "eda1dd11_37ebea96",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "6d62950e_7c03706d",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7e165ecd_c6a7831d",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90481d0b_71cbcf66",
         "filename": "cc/surfaces/frame_sink_manager.h",
         "patchSetId": 9
@@ -67,6 +121,24 @@
       "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81bbf070_f9cd76fe",
+        "filename": "cc/surfaces/frame_sink_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "90481d0b_71cbcf66",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b65f03df_9c36713f",
+        "filename": "cc/surfaces/surface.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "960370bf_1b6b5b6c",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ad611df_e20f0192",
         "filename": "cc/surfaces/surface_manager.h",
         "patchSetId": 9
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-14T22:15:59Z",
       "side": 1,
       "message": "Do we need this now?",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcaa4f1e_88d256d9",
+        "filename": "cc/surfaces/surface_manager.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 170,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "It is used by FrameSinkManager in several DCHECKs. Do you want me to remove the DCHECKs?",
+      "parentUuid": "9ad611df_e20f0192",
       "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10fa1df7_db477328",
+        "filename": "content/browser/browser_main_loop.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1367,
+      "author": {
+        "id": 1179549
+      },
+      "writtenOn": "2017-06-15T20:04:27Z",
+      "side": 1,
+      "message": "frame_sink_manager_ is a MojoFrameSinkManager. I have renamed it to mojo_frame_sink_manager_.",
+      "parentUuid": "61089ffc_3a6bd9b2",
+      "revId": "cd1c94ccf96ae9014d0b79c4e04c0b658ef59e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
