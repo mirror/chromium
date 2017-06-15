@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "02271c91_ac9509fd",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T05:52:08Z",
+      "side": 1,
+      "message": "(Using DISALLOW_COPY_AND_ASSIGN requires an explicit default constructor since it mentions the copy constructor, and doing that disables the implicit default constructor)",
+      "parentUuid": "f86bf739_424a8dc6",
+      "range": {
+        "startLine": 20,
+        "startChar": 3,
+        "endLine": 20,
+        "endChar": 43
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "739696d1_ad6dbf0d",
         "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
         "patchSetId": 1
@@ -214,6 +238,30 @@
     },
     {
       "key": {
+        "uuid": "ff9978b5_51975683",
+        "filename": "chrome/browser/ui/cocoa/javascript_app_modal_dialog_bridge_views.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T05:52:08Z",
+      "side": 1,
+      "message": "doh - yeah I keep falling for this trap :/. \n\nauto factory \u003d base::WrapUnique\u003capp_modal::JavaScriptNativeDialogFactory\u003e(\n    ui::MaterialDesignController::IsSecondaryUiMaterial()\n        ? static_cast\u003capp_modal::JavaScriptNativeDialogFactory*\u003e(\n            new ChromeJavaScriptNativeDialogViewsFactory)\n        : new ChromeJavaScriptNativeDialogCocoaFactory);\n\nis probably the minimum to get this to work. but this that\u0027s getting pretty ugly. reset() is fine",
+      "parentUuid": "497d0ff6_236619c9",
+      "range": {
+        "startLine": 40,
+        "startChar": 22,
+        "endLine": 40,
+        "endChar": 62
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fead53e6_53152292",
         "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
         "patchSetId": 1
@@ -273,6 +321,30 @@
       "side": 1,
       "message": "I tried changing it to MODAL_TYPE_WINDOW. Everything seems to work, but there is behavior that people might find surprising: you can still use some window-level hotkeys and the window menu, which is not possible with the Cocoa type of modal. Clearly, there is some different type of modality at play here, but I\u0027m not sure if the behavior with MODAL_TYPE_WINDOW is expected or not.",
       "parentUuid": "64006028_820931c8",
+      "range": {
+        "startLine": 23,
+        "startChar": 37,
+        "endLine": 23,
+        "endChar": 70
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1a5092_0520c21e",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T05:52:08Z",
+      "side": 1,
+      "message": "The Cocoa dialog has other surprising behaviours - like you can\u0027t raise other windows, but you can still resize them - it\u0027s weird. Sheets have some other nice properties.",
+      "parentUuid": "bfe50558_7bbbe54c",
       "range": {
         "startLine": 23,
         "startChar": 37,
@@ -402,6 +474,30 @@
       "side": 1,
       "message": "It does create a sheet. Do you know how to get gmail to create a BeforeUnload? I can\u0027t seem to make one appear.",
       "parentUuid": "ff459400_6172720e",
+      "range": {
+        "startLine": 77,
+        "startChar": 22,
+        "endLine": 77,
+        "endChar": 51
+      },
+      "revId": "2929656b951d0062b0625af675f55aa60a08ff57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d83106fe_13780b7f",
+        "filename": "chrome/browser/ui/views/chrome_javascript_native_dialog_factory_views.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-15T05:52:08Z",
+      "side": 1,
+      "message": "If you start composing an email and \"pop out\" the reply you\u0027ll get a BeforeUnload when trying to close the main gmail tab.\n\nI tried it out with this CL patched in and it works pretty neat! Nicer than the Cocoa thing which prevents you raising other Chrome windows (including the gmail popup). But when views dialog is showing, the popup web contents interaction is still properly blocked, even though that window can be raised.",
+      "parentUuid": "2db053a7_670b5cc3",
       "range": {
         "startLine": 77,
         "startChar": 22,
