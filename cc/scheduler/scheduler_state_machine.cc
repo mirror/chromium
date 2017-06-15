@@ -1126,6 +1126,10 @@ bool SchedulerStateMachine::ShouldTriggerBeginImplFrameDeadlineImmediately()
   if (active_tree_needs_first_draw_)
     return true;
 
+  // TODO(eseckler): If the regular deadline is infinite, we should also
+  // trigger an immediate deadline if !needs_redraw and the main thread also
+  // doesn't have updates. Otherwise, we might block a proactive BeginFrame
+  // deadline indefinitely.
   if (!needs_redraw_)
     return false;
 

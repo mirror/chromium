@@ -326,6 +326,13 @@ TEST_F(DisplaySchedulerTest, SurfaceDamaged) {
   EXPECT_GE(now_src().NowTicks(),
             scheduler_.DesiredBeginFrameDeadlineTimeForTest());
   scheduler_.BeginFrameDeadlineForTest();
+
+  // Proactive BeginFrame has late deadline if no surface received the
+  // BeginFrame.
+  AdvanceTimeAndBeginFrameForTest(std::vector<SurfaceId>());
+  EXPECT_TRUE(scheduler_.inside_begin_frame_deadline_interval());
+  EXPECT_LT(now_src().NowTicks(),
+            scheduler_.DesiredBeginFrameDeadlineTimeForTest());
 }
 
 TEST_F(DisplaySchedulerTest, OutputSurfaceLost) {
