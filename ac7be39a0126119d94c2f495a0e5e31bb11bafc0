@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9141fdd7_1ed73ed4",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-15T15:05:00Z",
+      "side": 1,
+      "message": "Two-line body needs curly brackets {}",
+      "range": {
+        "startLine": 31,
+        "startChar": 13,
+        "endLine": 33,
+        "endChar": 44
+      },
+      "revId": "ac7be39a0126119d94c2f495a0e5e31bb11bafc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f8cb98c_fa4e18aa",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-15T15:05:00Z",
+      "side": 1,
+      "message": "CreateV4L2JDA() is CrOs + V4L2 specific, so I\u0027d just\nsandwich the whole method in l.25-35 in the preprocessor\ncondition\n#if defined(OS_CHROMEOS) \u0026\u0026 defined(USE_V4L2_CODEC) \u0026\u0026 \\\n    defined(ARCH_CPU_ARM_FAMILY)\n...\n#endif\nand do the same here. The same comments about CreateVaapiJDA.\n\n\nI see that the conditions are a bit cumbersome, so you could just \ndefine a helper prep. definition at the top of the file, e.g.:\n\n#if defined(OS_CHROMEOS) \u0026\u0026 defined(USE_V4L2_CODEC) \u0026\u0026 \\\n    defined(ARCH_CPU_ARM_FAMILY)\n#define ENABLE_V4L2_JDA\n#endif\n\nand use it to sandwich CreateV4L2JDA() and l.80. Same for\nVaapi. WDYT? The whole thing would greatly simplify the body of \nthose functions, e.g.:\n\n#if defined(USE_VAAPI_JDA)\nstd::unique_ptr\u003cmedia::JpegDecodeAccelerator\u003e CreateVaapiJDA(\n    scoped_refptr\u003cbase::SingleThreadTaskRunner\u003e io_task_runner) {\n  return base::MakeUnique\u003cmedia::VaapiJpegDecodeAccelerator\u003e(\n      std::move(io_task_runner));\n}\n#endif\n\nA note of caution: there\u0027s the non-zero probability that\nclients of this API rely on being returned a vector with\nnullptrs in platforms that don\u0027t support JDAs.  Keep that\nin mind if/when you carry out these suggestions.",
+      "range": {
+        "startLine": 80,
+        "startChar": 33,
+        "endLine": 80,
+        "endChar": 46
+      },
+      "revId": "ac7be39a0126119d94c2f495a0e5e31bb11bafc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0eb688_7e2a07a9",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-15T15:05:00Z",
+      "side": 1,
+      "message": "nit: s/__/_/ here and in the other 2 locations.",
+      "range": {
+        "startLine": 5,
+        "startChar": 57,
+        "endLine": 5,
+        "endChar": 59
+      },
+      "revId": "ac7be39a0126119d94c2f495a0e5e31bb11bafc0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
