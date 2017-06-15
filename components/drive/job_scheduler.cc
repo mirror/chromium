@@ -19,6 +19,7 @@
 #include "components/drive/event_logger.h"
 #include "components/prefs/pref_service.h"
 #include "google_apis/drive/drive_api_parser.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace drive {
 
@@ -175,6 +176,16 @@ struct JobScheduler::ResumeUploadParams {
   base::FilePath local_file_path;
   std::string content_type;
 };
+
+JobScheduler::JobScheduler(PrefService* pref_service,
+                           EventLogger* logger,
+                           DriveServiceInterface* drive_service,
+                           base::SequencedTaskRunner* blocking_task_runner,
+                           service_manager::Connector* connector)
+    : JobScheduler(pref_service, logger, drive_service, blocking_task_runner) {
+  uploader_.reset(
+      new DriveUploader(drive_service, blocking_task_runner, connector));
+}
 
 JobScheduler::JobScheduler(PrefService* pref_service,
                            EventLogger* logger,

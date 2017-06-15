@@ -28,6 +28,10 @@ namespace google_apis {
 struct UploadRangeResponse;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 namespace drive {
 class DriveServiceInterface;
 
@@ -121,6 +125,11 @@ class DriveUploaderInterface {
 
 class DriveUploader : public DriveUploaderInterface {
  public:
+  DriveUploader(DriveServiceInterface* drive_service,
+                const scoped_refptr<base::TaskRunner>& blocking_task_runner,
+                service_manager::Connector* connector);
+
+  // Used only for testing purpose. No need to pass the connector.
   DriveUploader(DriveServiceInterface* drive_service,
                 const scoped_refptr<base::TaskRunner>& blocking_task_runner);
   ~DriveUploader() override;
@@ -232,6 +241,8 @@ class DriveUploader : public DriveUploaderInterface {
 
   scoped_refptr<base::TaskRunner> blocking_task_runner_;
   scoped_refptr<RefCountedBatchRequest> current_batch_request_;
+
+  service_manager::Connector* connector_;  // Not owned by this class.
 
   // Note: This should remain the last member so it'll be destroyed and
   // invalidate its weak pointers before any other members are destroyed.

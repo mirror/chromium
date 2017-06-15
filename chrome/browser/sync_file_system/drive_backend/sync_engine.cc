@@ -52,6 +52,7 @@
 #include "components/signin/core/browser/signin_manager.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/storage_partition.h"
+#include "content/public/common/service_manager_connection.h"
 #include "extensions/browser/extension_system.h"
 #include "extensions/browser/extension_system_provider.h"
 #include "extensions/browser/extensions_browser_client.h"
@@ -59,6 +60,7 @@
 #include "google_apis/drive/drive_api_url_generator.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
 #include "net/url_request/url_request_context_getter.h"
+#include "services/service_manager/public/cpp/connector.h"
 #include "storage/browser/blob/scoped_file.h"
 #include "storage/common/fileapi/file_system_util.h"
 
@@ -275,8 +277,19 @@ void SyncEngine::Initialize() {
   std::unique_ptr<drive::DriveServiceInterface> drive_service =
       drive_service_factory_->CreateDriveService(
           token_service_, request_context_.get(), drive_task_runner_.get());
+
+  service_manager::Connector* connector = nullptr;
+  // Service manager connection might be not initialized in some testing
+  // contexts.
+  if (content::ServiceManagerConnection::GetForProcess()) {
+    DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+    connector =
+        content::ServiceManagerConnection::GetForProcess()->GetConnector();
+    DCHECK(connector);
+  }
   std::unique_ptr<drive::DriveUploaderInterface> drive_uploader(
-      new drive::DriveUploader(drive_service.get(), drive_task_runner_.get()));
+      new drive::DriveUploader(drive_service.get(), drive_task_runner_.get(),
+                               connector));
 
   InitializeInternal(std::move(drive_service), std::move(drive_uploader),
                      nullptr);
