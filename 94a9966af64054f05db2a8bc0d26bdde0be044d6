@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0088c9c2_aeaa99bc",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 542,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-15T22:41:41Z",
+      "side": 1,
+      "message": "I am sorry, this is a simple mistake while splitting my CLs. I will fix it.",
+      "parentUuid": "8e304782_745d94ed",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1e8acc3_7e2bde91",
         "filename": "components/drive/service/drive_api_service.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T09:26:01Z",
       "side": 1,
       "message": "If we are to use changes.list to get the largest change ID, isn\u0027t it possible to fetch ChangeList at the same time?\nWhy do we need to get the largest change ID first?",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbf1b44c_6ea33795",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1166720
+      },
+      "writtenOn": "2017-06-15T22:41:41Z",
+      "side": 1,
+      "message": "I agree with that idea for delta fetch.\nHowever as another use case, when doing the full fetch, it needs largest change ID at the moment to tell which change id should be requested in the next delta fetch. So we\u0027d be discarding all the Change resources except for the largest change ID, in the response of Changes:list. So it\u0027d be better to call it with field\u003d for efficiency.",
+      "parentUuid": "e1e8acc3_7e2bde91",
       "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
