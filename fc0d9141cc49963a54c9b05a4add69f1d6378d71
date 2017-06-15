@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a5cf7b1d_0a18e6df",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 579,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a3946c03_726bd257",
+      "range": {
+        "startLine": 579,
+        "startChar": 7,
+        "endLine": 579,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6f513ac0_df05645f",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9de8423b_8854db2f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 596,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Good point. Moved all the logic of resetting level_db_wrappers_ and changing connection_state_ to here, leaving just a DeleteAndRecreate call in OnCommitResult",
+      "parentUuid": "6f513ac0_df05645f",
+      "range": {
+        "startLine": 596,
+        "startChar": 40,
+        "endLine": 596,
+        "endChar": 51
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "29030849_36535b79",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 758,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Added a tried_to_recover_from_commit_errors_ bool to prevent this causing repeatedly deleting/recreating databases. I\u0027d rather not use tried_to_recreate_ (now called tried_to_recreate_during_open_) for both, as I do want to let it try recreating on commit errors even if for whatever reason we already recreated during the initial open.",
+      "parentUuid": "ac0941fc_13fd1cf8",
+      "range": {
+        "startLine": 758,
+        "startChar": 6,
+        "endLine": 758,
+        "endChar": 26
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ff1df5e1_4d3885cf",
         "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
         "patchSetId": 3
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "26098312_7af2339a",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 780,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s definitely the simplest to implement. Changed it to that for now. Although it might be a bit confusing that for some amount of time you can have pages in one renderer have a different view of localstorage from pages in another renderer. Probably acceptable though since if you get to this point you\u0027re already in a really bad state anyway.",
+      "parentUuid": "ff1df5e1_4d3885cf",
+      "range": {
+        "startLine": 780,
+        "startChar": 22,
+        "endLine": 780,
+        "endChar": 30
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4519b53e_32950c22",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 3
@@ -114,6 +210,30 @@
       "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "372f1615_c3963423",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1050,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Yeah, it took me a while to figure out the correct order of doing stuff and waiting for things to happen to test the expected behavior... I didn\u0027t get to cleaning this up more yet since I wasn\u0027t sure that the behavior I implemented was actually the desired behavior.\n\nNow it should be a lot more readable (I hope). Also the new behavior is in general easier to test.",
+      "parentUuid": "4519b53e_32950c22",
+      "range": {
+        "startLine": 1050,
+        "startChar": 47,
+        "endLine": 1050,
+        "endChar": 70
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "970ea0a6_d979a615",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1086,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2da461cc_4cc6cf59",
+      "range": {
+        "startLine": 1086,
+        "startChar": 22,
+        "endLine": 1086,
+        "endChar": 24
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c72b0ba7_203f4c93",
         "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
         "patchSetId": 3
@@ -183,6 +327,30 @@
       "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14af87e_0ca2ba0f",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1098,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "\u003e maybe EXPECT_TRUE(open_requests_.size() \u003d\u003d 2), i think the context should have started DeleteAndRecreate process, but we haven\u0027t yet satisfied it\u0027s open request\n\nNot sure that would be correct. The context should definitely have triggered destruction of the old database (added an assert for that), but there is no guarantee that destruction has finished yet, and thus no guarantee that open has started yet.\n\n\u003e maybe add expectations for LevelDBObserver too, one KeyAdded and 19 KeyChanges\n\nAdded the correct observer expectations at the end of the test. Although with the new behavior the observations that are sent aren\u0027t particularly interesting/other than the normal behavior, still makes sense to test it.",
+      "parentUuid": "c72b0ba7_203f4c93",
+      "range": {
+        "startLine": 1098,
+        "startChar": 2,
+        "endLine": 1098,
+        "endChar": 14
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "d4a1aba3_b28ba357",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1107,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "no longer applicable, since the wrapper will have disconnected by here in the new behavior",
+      "parentUuid": "0bef7ecc_4637d918",
+      "range": {
+        "startLine": 1107,
+        "startChar": 4,
+        "endLine": 1107,
+        "endChar": 15
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c7c9364_4e9a4d0f",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 3
@@ -229,6 +421,30 @@
       "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63d9ee16_0abb0c02",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "no longer applicable since I got rid of this code again now I\u0027m just deleting all LevelDBWrapperImpls when resetting the database, but yeah, that\u0027s a good point.",
+      "parentUuid": "9c7c9364_4e9a4d0f",
+      "range": {
+        "startLine": 77,
+        "startChar": 7,
+        "endLine": 77,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "52930e06_f5621297",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "64431e94_2f7f0233",
+      "range": {
+        "startLine": 433,
+        "startChar": 7,
+        "endLine": 433,
+        "endChar": 16
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25517302_f8d0ff96",
         "filename": "content/browser/leveldb_wrapper_impl.cc",
         "patchSetId": 3
@@ -275,6 +515,30 @@
       "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "762c50fb_c30fa444",
+        "filename": "content/browser/leveldb_wrapper_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-15T21:39:47Z",
+      "side": 1,
+      "message": "Yeah, not sure if just ignoring commit errors at this level is the right thing to do, although it is also what the old dom storage implementations did.",
+      "parentUuid": "25517302_f8d0ff96",
+      "range": {
+        "startLine": 485,
+        "startChar": 13,
+        "endLine": 485,
+        "endChar": 22
+      },
+      "revId": "fc0d9141cc49963a54c9b05a4add69f1d6378d71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
