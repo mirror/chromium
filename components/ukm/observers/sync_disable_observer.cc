@@ -44,9 +44,11 @@ bool SyncDisableObserver::AreAllProfilesEnabled() {
     return false;
   for (const auto& kv : previous_states_) {
     const SyncDisableObserver::SyncState& state = kv.second;
-    if (!state.history_enabled || !state.initialized ||
-        state.passphrase_protected)
-      return false;
+    DLOG(ERROR) << "SyncState:" << state.history_enabled << state.initialized
+                << state.passphrase_protected;
+    // if (!state.history_enabled || !state.initialized ||
+    //     state.passphrase_protected)
+    //   return false;
   }
   return true;
 }
