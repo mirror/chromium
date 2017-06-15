@@ -2049,6 +2049,12 @@ EGL_FUNCTIONS = [
   'names': ['eglReleaseThread'],
   'arguments': 'void', },
 { 'return_type': 'EGLBoolean',
+  'versions': [{ 'name': 'eglSetFrameEventListenerANDROID',
+                 'extensions': [
+                   'EGL_ANDROID_get_frame_timestamps'
+                 ] }],
+  'arguments': 'EGLDisplay dpy, EGLSurface surface, EGLFrameEventCallback callback, void* userPointer, EGLint numEvents, EGLint* events', },
+{ 'return_type': 'EGLBoolean',
   'versions': [{ 'name': 'eglStreamAttribKHR',
                  'extensions': ['EGL_KHR_stream'] }],
   'arguments':
