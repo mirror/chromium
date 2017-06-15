@@ -343,19 +343,20 @@ void TabManagerDelegate::ScheduleEarlyOomPrioritiesAdjustment() {
 
 // If able to get the list of ARC procsses, prioritize tabs and apps as a whole.
 // Otherwise try to kill tabs only.
-void TabManagerDelegate::LowMemoryKill(const TabStatsList& tab_list) {
+void TabManagerDelegate::LowMemoryKill(const TabStatsList& tab_list,
+                                       bool allow_unsafe_shutdown) {
   arc::ArcProcessService* arc_process_service = arc::ArcProcessService::Get();
   if (arc_process_service &&
-      arc_process_service->RequestAppProcessList(
-          base::Bind(&TabManagerDelegate::LowMemoryKillImpl,
-                     weak_ptr_factory_.GetWeakPtr(), tab_list))) {
+      arc_process_service->RequestAppProcessList(base::Bind(
+          &TabManagerDelegate::LowMemoryKillImpl,
+          weak_ptr_factory_.GetWeakPtr(), tab_list, allow_unsafe_shutdown))) {
     // LowMemoryKillImpl will be called asynchronously so nothing left to do.
     return;
   }
   // If the list of ARC processes is not available, call LowMemoryKillImpl
   // synchronously with an empty list of apps.
   std::vector<arc::ArcProcess> dummy_apps;
-  LowMemoryKillImpl(tab_list, dummy_apps);
+  LowMemoryKillImpl(tab_list, allow_unsafe_shutdown, dummy_apps);
 }
 
 int TabManagerDelegate::GetCachedOomScore(ProcessHandle process_handle) {
@@ -536,10 +537,10 @@ bool TabManagerDelegate::KillArcProcess(const int nspid) {
   return true;
 }
 
-bool TabManagerDelegate::KillTab(int64_t tab_id) {
+bool TabManagerDelegate::KillTab(int64_t tab_id, bool allow_unsafe_shutdown) {
   // Check |tab_manager_| is alive before taking tabs into consideration.
   return tab_manager_ && tab_manager_->CanDiscardTab(tab_id) &&
-         tab_manager_->DiscardTabById(tab_id);
+         tab_manager_->DiscardTabById(tab_id, allow_unsafe_shutdown);
 }
 
 chromeos::DebugDaemonClient* TabManagerDelegate::GetDebugDaemonClient() {
@@ -548,6 +549,7 @@ chromeos::DebugDaemonClient* TabManagerDelegate::GetDebugDaemonClient() {
 
 void TabManagerDelegate::LowMemoryKillImpl(
     const TabStatsList& tab_list,
+    bool allow_unsafe_shutdown,
     const std::vector<arc::ArcProcess>& arc_processes) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   VLOG(2) << "LowMemoryKillImpl";
@@ -614,7 +616,7 @@ void TabManagerDelegate::LowMemoryKillImpl(
       // So |estimated_memory_freed_kb| is an over-estimation.
       int estimated_memory_freed_kb =
           mem_stat_->EstimatedMemoryFreedKB(it->tab()->renderer_handle);
-      if (KillTab(tab_id)) {
+      if (KillTab(tab_id, allow_unsafe_shutdown)) {
         target_memory_to_free_kb -= estimated_memory_freed_kb;
         memory::MemoryKillsMonitor::LogLowMemoryKill("TAB",
                                                      estimated_memory_freed_kb);
