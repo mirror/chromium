@@ -507,9 +507,8 @@ TEST_F(TreeSynchronizerTest, SynchronizeCurrentlyScrollingNode) {
   ElementId scroll_element_id = ElementId(5);
   scroll_layer->SetElementId(scroll_element_id);
 
-  transient_scroll_layer->SetScrollClipLayerId(
-      transient_scroll_clip_layer->id());
-  scroll_layer->SetScrollClipLayerId(scroll_clip_layer->id());
+  transient_scroll_layer->SetScrollable();
+  scroll_layer->SetScrollable();
   host_->SetRootLayer(layer_tree_root);
   host_->BuildPropertyTreesForTesting();
   host_->CommitAndCreatePendingTree();
@@ -523,7 +522,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeCurrentlyScrollingNode) {
       host_impl->active_tree()->property_trees()->scroll_tree.Node(
           scroll_layer->scroll_tree_index());
   host_impl->active_tree()->SetCurrentlyScrollingNode(scroll_node);
-  transient_scroll_layer->SetScrollClipLayerId(Layer::INVALID_ID);
+  transient_scroll_layer->SetScrollable(false);
   host_->BuildPropertyTreesForTesting();
 
   host_impl->CreatePendingTree();
@@ -562,9 +561,8 @@ TEST_F(TreeSynchronizerTest, SynchronizeScrollTreeScrollOffsetMap) {
   ElementId transient_scroll_element_id = ElementId(7);
   transient_scroll_layer->SetElementId(transient_scroll_element_id);
 
-  transient_scroll_layer->SetScrollClipLayerId(
-      transient_scroll_clip_layer->id());
-  scroll_layer->SetScrollClipLayerId(scroll_clip_layer->id());
+  transient_scroll_layer->SetScrollable();
+  scroll_layer->SetScrollable();
   transient_scroll_layer->SetScrollOffset(gfx::ScrollOffset(1, 2));
   scroll_layer->SetScrollOffset(gfx::ScrollOffset(10, 20));
 
@@ -625,7 +623,7 @@ TEST_F(TreeSynchronizerTest, SynchronizeScrollTreeScrollOffsetMap) {
       scroll_tree.Node(scroll_layer_impl->scroll_tree_index()));
 
   // Make one layer unscrollable so that scroll tree topology changes
-  transient_scroll_layer->SetScrollClipLayerId(Layer::INVALID_ID);
+  transient_scroll_layer->SetScrollable(false);
   host_->BuildPropertyTreesForTesting();
 
   host_impl->CreatePendingTree();

@@ -297,9 +297,10 @@ TEST_F(ScrollbarLayerTest, ScrollOffsetSynchronization) {
 
   // Choose bounds to give max_scroll_offset = (30, 50).
   layer_tree_root->SetBounds(gfx::Size(70, 150));
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
+  scroll_layer->SetScrollable();
   scroll_layer->SetScrollOffset(gfx::ScrollOffset(10, 20));
   scroll_layer->SetBounds(gfx::Size(100, 200));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(70, 150));
   content_layer->SetBounds(gfx::Size(100, 200));
 
   layer_tree_host_->SetRootLayer(layer_tree_root);
@@ -322,6 +323,7 @@ TEST_F(ScrollbarLayerTest, ScrollOffsetSynchronization) {
                     cc_scrollbar_layer->clip_layer_length());
 
   layer_tree_root->SetBounds(gfx::Size(700, 1500));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(700, 1500));
   scroll_layer->SetBounds(gfx::Size(1000, 2000));
   scroll_layer->SetScrollOffset(gfx::ScrollOffset(100, 200));
   content_layer->SetBounds(gfx::Size(1000, 2000));
@@ -403,9 +405,10 @@ TEST_F(ScrollbarLayerTest, ThumbRect) {
       FakePaintedScrollbarLayer::Create(false, true, root_layer->element_id());
 
   root_layer->SetElementId(LayerIdToElementIdForTesting(root_layer->id()));
-  root_layer->SetScrollClipLayerId(root_clip_layer->id());
+  root_layer->SetScrollable();
   // Give the root-clip a size that will result in MaxScrollOffset = (80, 0).
   root_clip_layer->SetBounds(gfx::Size(20, 50));
+  root_layer->SetScrollContainerBounds(gfx::Size(20, 50));
   root_layer->SetBounds(gfx::Size(100, 50));
   content_layer->SetBounds(gfx::Size(100, 50));
 
@@ -612,6 +615,7 @@ TEST_F(ScrollbarLayerTest, LayerDrivenSolidColorDrawQuads) {
 
   // Choose layer bounds to give max_scroll_offset = (8, 8).
   layer_tree_root->SetBounds(gfx::Size(2, 2));
+  scroll_layer->SetScrollContainerBounds(gfx::Size(2, 2));
   scroll_layer->SetBounds(gfx::Size(10, 10));
 
   layer_tree_host_->UpdateLayers();
@@ -732,7 +736,7 @@ TEST_F(ScrollbarLayerTest, ScrollbarLayerPushProperties) {
   scoped_refptr<Layer> layer_tree_root = Layer::Create();
   scoped_refptr<Layer> scroll_layer = Layer::Create();
   scroll_layer->SetElementId(LayerIdToElementIdForTesting(scroll_layer->id()));
-  scroll_layer->SetScrollClipLayerId(layer_tree_root->id());
+  scroll_layer->SetScrollable();
   scoped_refptr<Layer> child1 = Layer::Create();
   scoped_refptr<Layer> scrollbar_layer;
   const bool kIsLeftSideVerticalScrollbar = false;
@@ -1004,7 +1008,7 @@ class ScrollbarLayerTestResourceCreationAndRelease : public ScrollbarLayerTest {
 
     scrollbar_layer->SetIsDrawable(true);
     scrollbar_layer->SetBounds(gfx::Size(100, 100));
-    layer_tree_root->SetScrollClipLayerId(root_clip_layer->id());
+    layer_tree_root->SetScrollable();
     layer_tree_root->SetScrollOffset(gfx::ScrollOffset(10, 20));
     layer_tree_root->SetBounds(gfx::Size(100, 200));
     content_layer->SetBounds(gfx::Size(100, 200));

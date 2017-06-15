@@ -227,6 +227,13 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
   void SetScrollable(bool scrollable = true);
   bool scrollable() const { return inputs_.scrollable; }
 
+  // TODO(pdr): Comment me and update scrollable/SetScrollable's comment.
+  // Consider removing scrollable and instead relying on bounds not being empty.
+  void SetScrollContainerBounds(const gfx::Size& bounds);
+  gfx::Size scroll_container_bounds() const {
+    return inputs_.scroll_container_bounds;
+  }
+
   void SetUserScrollable(bool horizontal, bool vertical);
   bool user_scrollable_horizontal() const {
     return inputs_.user_scrollable_horizontal;
@@ -576,6 +583,9 @@ class CC_EXPORT Layer : public base::RefCounted<Layer> {
     // transformed relative to this layer, defines the maximum scroll offset
     // for this layer.
     int scroll_clip_layer_id;
+
+    // TODO(pdr): Comment me and update the comment above scrollable, below.
+    gfx::Size scroll_container_bounds;
 
     // Indicates that this layer will need a scroll property node and that this
     // layer's bounds correspond to the scroll node's bounds.

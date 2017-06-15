@@ -312,6 +312,11 @@ class CC_EXPORT LayerImpl {
   void SetScrollable(bool scrollable = true);
   bool scrollable() const { return scrollable_; }
 
+  // TODO(pdr): Comment me and update scrollable/SetScrollable's comment.
+  // Consider removing scrollable and instead relying on bounds not being empty.
+  void SetScrollContainerBounds(const gfx::Size& bounds);
+  gfx::Size scroll_container_bounds() const { return scroll_container_bounds_; }
+
   void set_main_thread_scrolling_reasons(
       uint32_t main_thread_scrolling_reasons) {
     main_thread_scrolling_reasons_ = main_thread_scrolling_reasons;
@@ -485,6 +490,9 @@ class CC_EXPORT LayerImpl {
   // Properties synchronized from the associated Layer.
   gfx::Size bounds_;
   int scroll_clip_layer_id_;
+
+  // TODO(pdr): Comment this.
+  gfx::Size scroll_container_bounds_;
 
   gfx::Vector2dF offset_to_transform_parent_;
   uint32_t main_thread_scrolling_reasons_;

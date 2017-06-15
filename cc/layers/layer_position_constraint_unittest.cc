@@ -121,15 +121,15 @@ class LayerPositionConstraintTest : public testing::Test {
     inner_viewport_container_layer_->SetMasksToBounds(true);
     scroll_layer_->SetElementId(
         LayerIdToElementIdForTesting(scroll_layer_->id()));
-    scroll_layer_->SetScrollClipLayerId(inner_viewport_container_layer_->id());
+    scroll_layer_->SetScrollable();
     scroll_layer_->SetIsContainerForFixedPositionLayers(true);
 
     outer_viewport_container_layer_->SetMasksToBounds(true);
     child_->SetElementId(LayerIdToElementIdForTesting(child_->id()));
-    child_->SetScrollClipLayerId(outer_viewport_container_layer_->id());
+    child_->SetScrollable();
     grand_child_->SetElementId(
         LayerIdToElementIdForTesting(grand_child_->id()));
-    grand_child_->SetScrollClipLayerId(outer_viewport_container_layer_->id());
+    grand_child_->SetScrollable();
 
     grand_child_->AddChild(great_grand_child_);
     child_->AddChild(grand_child_);
@@ -1066,7 +1066,7 @@ TEST_F(LayerPositionConstraintTest,
   great_grand_child_->SetIsContainerForFixedPositionLayers(true);
   great_grand_child_->SetElementId(
       LayerIdToElementIdForTesting(great_grand_child_->id()));
-  great_grand_child_->SetScrollClipLayerId(root_->id());
+  great_grand_child_->SetScrollable();
   great_great_grand_child->SetPositionConstraint(fixed_to_top_left_);
 
   CommitAndUpdateImplPointers();
