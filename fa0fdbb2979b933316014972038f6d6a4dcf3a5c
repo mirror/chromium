@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84b99171_f23a7f1e",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-15T09:11:38Z",
+      "side": 1,
+      "message": "IIUC adding a key label to the create key is a new thing, and authorization key\u0027s label is still empty.\nDon\u0027t we need to have a comment like this one in DoMount?",
+      "revId": "fa0fdbb2979b933316014972038f6d6a4dcf3a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
