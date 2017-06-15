@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cc92a82b_75fa4fce",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T17:18:23Z",
+      "side": 1,
+      "message": "calling this ShowSelectionMenu is probably less confusing",
+      "range": {
+        "startLine": 1894,
+        "startChar": 34,
+        "endLine": 1894,
+        "endChar": 51
+      },
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e1c5b12_6d85adb6",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T17:18:23Z",
+      "side": 1,
+      "message": "by..?",
+      "range": {
+        "startLine": 273,
+        "startChar": 36,
+        "endLine": 273,
+        "endChar": 38
+      },
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46917a0f_1bc9ca6c",
+        "filename": "content/shell/browser/shell_web_contents_view_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T17:18:23Z",
+      "side": 1,
+      "message": "don\u0027t add os guards, just make the android one no-op",
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
