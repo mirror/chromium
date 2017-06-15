@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f8c2f17_8aa091d7",
+        "filename": "remoting/host/heartbeat_sender.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1000528
+      },
+      "writtenOn": "2017-06-15T20:58:45Z",
+      "side": 1,
+      "message": "I\u0027m not sure it\u0027s worth making these private. There was a discussion at https://groups.google.com/a/chromium.org/forum/#!topic/chromium-dev/XdsXTHy9lis about this, which didn\u0027t quite reach a conclusion, but the consensus seemed to be that reducing visibility when overriding is not worth it. I don\u0027t have a strong opinion; just wanted to draw your attention to it.",
+      "range": {
+        "startLine": 137,
+        "startChar": 79,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "5b73194da34eb42c9c7e7a7c468d8d9e84d8732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
