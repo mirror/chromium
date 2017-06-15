@@ -6,6 +6,7 @@ import logging
 import os
 import py_utils
 import time
+import urllib2
 
 from telemetry.page import legacy_page_test
 from telemetry.util import image_util
@@ -31,6 +32,17 @@ class Screenshot(legacy_page_test.LegacyPageTest):
       return
 
     time.sleep(self._wait_time)
+
+    req = urllib2.Request(tab.url)
+    try:
+      urllib2.urlopen(req)
+    except urllib2.HTTPError as error:
+      if error.code == 404:
+        logging.warning("Page returned HTTP 404")
+        return
+    except urllib2.URLError:
+      logging.warning("Page could not be loaded")
+      return
 
     if not os.path.exists(self._png_outdir):
       logging.info("Creating directory %s", self._png_outdir)
