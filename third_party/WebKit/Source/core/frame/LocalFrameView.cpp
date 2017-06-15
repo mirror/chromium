@@ -4397,8 +4397,12 @@ void LocalFrameView::UpdateScrollbars() {
 
   // Avoid drawing two sets of scrollbars when visual viewport is enabled.
   if (VisualViewportSuppliesScrollbars()) {
-    scrollbar_manager_.SetHasHorizontalScrollbar(false);
-    scrollbar_manager_.SetHasVerticalScrollbar(false);
+    if (scrollbar_manager_.HasHorizontalScrollbar() ||
+        scrollbar_manager_.HasVerticalScrollbar()) {
+      scrollbar_manager_.SetHasHorizontalScrollbar(false);
+      scrollbar_manager_.SetHasVerticalScrollbar(false);
+      ScrollbarExistenceDidChange();
+    }
     AdjustScrollOffsetFromUpdateScrollbars();
     return;
   }
