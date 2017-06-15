@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e785ce8_504be9a0",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-15T22:48:07Z",
+      "side": 1,
+      "message": "Alternatively we can check for equality of the new fields (including parent) before setting kChanged (like in the first version of this CL: https://chromium-review.googlesource.com/c/537813/1), but I would like to trust SetNeedsPaintProeprtyUpdate() first and see if there would be many over-invalidations without the equality check.",
+      "revId": "b009bc07858622a5a6db4c31c84ddc7ea93f0cd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
