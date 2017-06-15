@@ -228,6 +228,8 @@ class SafeBrowsingService : public base::RefCountedThreadSafe<
   std::unique_ptr<ServicesDelegate> services_delegate_;
 
  private:
+  FRIEND_TEST_ALL_PREFIXES(SafeBrowsingUIManagerTest_SubResource,
+                           VisibleSecurityStateChangedForUnsafeSubresource);
   friend class SafeBrowsingServiceFactoryImpl;
   friend struct content::BrowserThread::DeleteOnThread<
       content::BrowserThread::UI>;

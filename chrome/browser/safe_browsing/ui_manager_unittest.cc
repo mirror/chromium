@@ -6,9 +6,10 @@
 
 #include "base/run_loop.h"
 #include "chrome/browser/safe_browsing/safe_browsing_blocking_page.h"
-#include "chrome/browser/safe_browsing/safe_browsing_service.h"
+#include "chrome/browser/safe_browsing/test_safe_browsing_service.h"
 #include "chrome/browser/safe_browsing/ui_manager.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
+#include "chrome/test/base/testing_browser_process.h"
 #include "chrome/test/base/testing_profile.h"
 #include "components/safe_browsing/common/safe_browsing_prefs.h"
 #include "components/safe_browsing_db/util.h"
@@ -378,10 +379,31 @@ class TestSafeBrowsingBlockingPageFactory
 
 }  // namespace
 
+class SafeBrowsingUIManagerTest_SubResource : public SafeBrowsingUIManagerTest {
+  void SetUp() override {
+    // The difference here from SafeBrowsingUIManagerTest::SetUp is that we do
+    // not use any real threads, which seem to mess up the initialization of the
+    // SafeBrowsingService needed for these tests.
+    ChromeRenderViewHostTestHarness::SetUp();
+    SafeBrowsingUIManager::CreateWhitelistForTesting(web_contents());
+  }
+};
+
 // Tests that the WebContentsDelegate is notified of a visible security
 // state change when a blocking page is shown for a subresource.
-TEST_F(SafeBrowsingUIManagerTest,
+TEST_F(SafeBrowsingUIManagerTest_SubResource,
        VisibleSecurityStateChangedForUnsafeSubresource) {
+  safe_browsing::TestSafeBrowsingServiceFactory sb_service_factory;
+  auto* safe_browsing_service = sb_service_factory.CreateSafeBrowsingService();
+  // A profile was created already but SafeBrowsingService wasn't around to
+  // get notified of it, so include that notification now.
+  safe_browsing_service->AddPrefService(
+      Profile::FromBrowserContext(web_contents()->GetBrowserContext())
+          ->GetPrefs());
+  TestingBrowserProcess::GetGlobal()->SetSafeBrowsingService(
+      safe_browsing_service);
+  g_browser_process->safe_browsing_service()->Initialize();
+
   TestSafeBrowsingBlockingPageFactory factory;
   SafeBrowsingBlockingPage::RegisterFactory(&factory);
   SecurityStateWebContentsDelegate delegate;
