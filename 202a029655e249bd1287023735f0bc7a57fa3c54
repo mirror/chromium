@@ -34,6 +34,24 @@
       "revId": "202a029655e249bd1287023735f0bc7a57fa3c54",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726ecbdf_60f08879",
+        "filename": "third_party/WebKit/Source/platform/graphics/GraphicsContext.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T07:18:24Z",
+      "side": 1,
+      "message": "Ah, ok. In that case the bug must be in the change I made\nto Gradient. I think PaintFlags needs refColorFilter like\nSkPaint does.",
+      "parentUuid": "09b177e3_9182dea2",
+      "revId": "202a029655e249bd1287023735f0bc7a57fa3c54",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
