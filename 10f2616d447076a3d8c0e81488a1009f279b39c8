@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec812b4a_5325cb75",
+        "filename": "content/app/android/content_child_process_service_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "not needed here?",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7524a7b6_f5399a7e",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "how about pass delegate into a protected constructor, so serviceimpl can still be final? can still keep this class abstract",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02efdff1_42a8a31e",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "can you factor out this sort of changes?",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dcd29d49_61e15a9e",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "I suppose to be safe, you should catch any exceptions from loadNativeLibrary as well and treat it as failure as well?",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4758bed2_1c744106",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "this looks like old code",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81e465c8_fe5cc469",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 1,
+      "message": "this is from LibraryLoader.get? if you had new code, then that can\u0027t fail here anymore..",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

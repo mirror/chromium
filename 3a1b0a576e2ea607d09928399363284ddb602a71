@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1a02612_0e56fb1c",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 389,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T22:08:59Z",
+      "side": 0,
+      "message": "should call delegate.onConnectionSetup here and not move the notifyall here, to preserve behavior",
+      "revId": "3a1b0a576e2ea607d09928399363284ddb602a71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
