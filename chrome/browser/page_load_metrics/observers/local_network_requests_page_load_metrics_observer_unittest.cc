@@ -22,9 +22,7 @@
 #include "net/base/url_util.h"
 #include "url/gurl.h"
 
-namespace {
-
-} // namespace
+namespace {}  // namespace
 
 namespace internal {
 

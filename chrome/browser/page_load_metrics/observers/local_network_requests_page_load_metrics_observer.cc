@@ -56,7 +56,7 @@ static const std::map<uint16_t, PortType>& localhost_port_categories =
         {631, PortType::PORT_TYPE_PRINT},
         // TODO(uthakore): Add additional port mappings based on further study.
     };
-} // namespace
+}  // namespace
 
 namespace internal {
 
@@ -225,7 +225,7 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
     if (page_ip_address_.IsReserved()) {
       page_load_type_ = DOMAIN_TYPE_PRIVATE;
       static const uint8_t kReservedIPv4Prefixes[][2] = {
-        {10, 8}, {100, 10}, {169, 16}, {172, 12}, {192, 16}, {198, 15}};
+          {10, 8}, {100, 10}, {169, 16}, {172, 12}, {192, 16}, {198, 15}};
 
       for (const auto& entry : kReservedIPv4Prefixes) {
         if (page_ip_address_.bytes()[0] == entry[0]) {
