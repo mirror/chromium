@@ -94,13 +94,14 @@ class TabManager : public TabStripModelObserver {
 
   // Discards a tab to free the memory occupied by its renderer. The tab still
   // exists in the tab-strip; clicking on it will reload it.
-  void DiscardTab();
+  void DiscardTab(bool allow_unsafe_shutdown);
 
   // Discards a tab with the given unique ID. The tab still exists in the
   // tab-strip; clicking on it will reload it. Returns null if the tab cannot
   // be found or cannot be discarded. Otherwise returns the new web_contents
   // of the discarded tab.
-  content::WebContents* DiscardTabById(int64_t target_web_contents_id);
+  content::WebContents* DiscardTabById(int64_t target_web_contents_id,
+                                       bool allow_unsafe_shutdown);
 
   // Method used by the extensions API to discard tabs. If |contents| is null,
   // discards the least important tab using DiscardTab(). Otherwise discards
@@ -111,7 +112,7 @@ class TabManager : public TabStripModelObserver {
   // Log memory statistics for the running processes, then discards a tab.
   // Tab discard happens sometime later, as collecting the statistics touches
   // multiple threads and takes time.
-  void LogMemoryAndDiscardTab();
+  void LogMemoryAndDiscardTab(bool allow_unsafe_shutdown);
 
   // Log memory statistics for the running processes, then call the callback.
   void LogMemory(const std::string& title, const base::Closure& callback);
@@ -174,6 +175,9 @@ class TabManager : public TabStripModelObserver {
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, ReloadDiscardedTabContextMenu);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, TabManagerBasics);
   FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownSingleTabProcess);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, UnsafeFastShutdownSingleTabProcess);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownBlockedByProcessSharing);
+  FRIEND_TEST_ALL_PREFIXES(TabManagerTest, FastShutdownBlockedByUnloadHandler);
 
   // The time of the first purging after a renderer is backgrounded.
   // The initial value was chosen because most of users activate backgrounded
@@ -204,7 +208,7 @@ class TabManager : public TabStripModelObserver {
   void OnAutoDiscardableStateChange(content::WebContents* contents,
                                     bool is_auto_discardable);
 
-  static void PurgeMemoryAndDiscardTab();
+  static void PurgeMemoryAndDiscardTab(bool allow_unsafe_shutdown);
 
   // Returns true if the |url| represents an internal Chrome web UI page that
   // can be easily reloaded and hence makes a good choice to discard.
@@ -264,7 +268,9 @@ class TabManager : public TabStripModelObserver {
   // Does the actual discard by destroying the WebContents in |model| at |index|
   // and replacing it by an empty one. Returns the new WebContents or NULL if
   // the operation fails (return value used only in testing).
-  content::WebContents* DiscardWebContentsAt(int index, TabStripModel* model);
+  content::WebContents* DiscardWebContentsAt(int index,
+                                             TabStripModel* model,
+                                             bool allow_unsafe_shutdown);
 
   // Called by the memory pressure listener when the memory pressure rises.
   void OnMemoryPressure(
@@ -298,7 +304,7 @@ class TabManager : public TabStripModelObserver {
 
   // Implementation of DiscardTab. Returns null if no tab was discarded.
   // Otherwise returns the new web_contents of the discarded tab.
-  content::WebContents* DiscardTabImpl();
+  content::WebContents* DiscardTabImpl(bool allow_unsafe_shutdown);
 
   // Returns true if tabs can be discarded only once.
   bool CanOnlyDiscardOnce() const;

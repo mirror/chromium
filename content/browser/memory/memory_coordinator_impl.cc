@@ -340,9 +340,9 @@ void MemoryCoordinatorImpl::UpdateConditionIfNeeded(
   memory_condition_ = next_condition;
 }
 
-void MemoryCoordinatorImpl::DiscardTab() {
+void MemoryCoordinatorImpl::DiscardTab(bool allow_unsafe_shutdown) {
   if (delegate_)
-    delegate_->DiscardTab();
+    delegate_->DiscardTab(allow_unsafe_shutdown);
 }
 
 RenderProcessHost* MemoryCoordinatorImpl::GetRenderProcessHost(
