@@ -16,6 +16,46 @@
       "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0ce10c2_c3c4756e",
+        "filename": "gpu/command_buffer/service/program_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 879,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-15T23:37:52Z",
+      "side": 1,
+      "message": "If this comment is correct then shouldn\u0027t this refer to glGetActiveUniform?",
+      "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a84b359_a57bd4f9",
+        "filename": "gpu/command_buffer/service/program_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 880,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-15T23:37:52Z",
+      "side": 1,
+      "message": "Can this be done in a more principled way, rather than clamping size to 1? Could you instead check right after the glGetActiveUniform call whether size is 0, and just either continue, or abort the loop?\n\nI\u0027m surprised if the context is really being lost via KHR_robustness and that\u0027s really why size is invalid. Shouldn\u0027t the name of the uniform also be bogus (or not filled in at all) in that case, too?",
+      "range": {
+        "startLine": 880,
+        "startChar": 4,
+        "endLine": 880,
+        "endChar": 8
+      },
+      "revId": "148518fb1f381f06bc96d6c78e74490d7d24eeb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
