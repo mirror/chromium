@@ -364,6 +364,7 @@ void AshTestHelper::CreateShell() {
   bool enable_pixel_output = false;
   ui::InitializeContextFactoryForTests(enable_pixel_output, &context_factory,
                                        &context_factory_private);
+  ui::InitializeFrameSinkManagerHostForTests();
   ShellInitParams init_params;
   init_params.delegate = test_shell_delegate_;
   init_params.context_factory = context_factory;

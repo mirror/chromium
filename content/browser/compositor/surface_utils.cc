@@ -179,7 +179,10 @@ viz::FrameSinkManagerHost* GetFrameSinkManagerHost() {
 #if defined(OS_ANDROID)
   return CompositorImpl::GetFrameSinkManagerHost();
 #else
-  return BrowserMainLoop::GetInstance()->frame_sink_manager_host();
+  ImageTransportFactory* factory = ImageTransportFactory::GetInstance();
+  if (!factory)
+    return nullptr;
+  return factory->GetContextFactoryPrivate()->GetFrameSinkManagerHost();
 #endif
 }
 
