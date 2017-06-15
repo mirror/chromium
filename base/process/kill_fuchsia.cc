@@ -49,17 +49,15 @@ TerminationStatus GetTerminationStatus(ProcessHandle handle, int* exit_code) {
 void EnsureProcessTerminated(Process process) {
   DCHECK(!process.is_current());
 
-  // Wait for up to two seconds for the process to terminate, and then kill it
-  // forcefully if it hasn't already exited.
   mx_signals_t signals;
-  if (mx_object_wait_one(process.Handle(), MX_TASK_TERMINATED,
-                         mx_deadline_after(MX_SEC(2)), &signals) == NO_ERROR) {
+  if (mx_object_wait_one(process.Handle(), MX_TASK_TERMINATED, 0, &signals) ==
+      NO_ERROR) {
     DCHECK(signals & MX_TASK_TERMINATED);
     // If already signaled, then the process is terminated.
     return;
   }
 
-  process.Terminate(/*exit_code=*/1, /*wait=*/false);
+  process.Terminate(1, false);
 }
 
 }  // namespace base

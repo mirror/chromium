@@ -882,13 +882,13 @@ bool IsProcessDead(base::ProcessHandle child) {
     return true;
   }
   return false;
-#else
+#else   // defined(OS_FUCHSIA)
   // waitpid() will actually reap the process which is exactly NOT what we
   // want to test for.  The good thing is that if it can't find the process
   // we'll get a nice value for errno which we can test for.
   const pid_t result = HANDLE_EINTR(waitpid(child, NULL, WNOHANG));
   return result == -1 && errno == ECHILD;
-#endif
+#endif  // defined(OS_FUCHSIA)
 }
 
 TEST_F(ProcessUtilTest, DelayedTermination) {
