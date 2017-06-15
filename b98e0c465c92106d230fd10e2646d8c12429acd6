@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78456337_0fab1065",
+        "filename": "ui/events/android/motion_event_android.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-15T22:32:28Z",
+      "side": 1,
+      "message": "Use gfx::ToFlooredPoint from point_conversions.h instead.  It\u0027s best to use flooring instead of rounding most of the time (more predictable results).",
+      "revId": "b98e0c465c92106d230fd10e2646d8c12429acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9356243a_8eca59a6",
+        "filename": "ui/events/android/motion_event_android.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115852
+      },
+      "writtenOn": "2017-06-15T22:32:28Z",
+      "side": 1,
+      "message": "Arbitrary integer snapping of geometry is an antipattern so I don\u0027t want to encourage it with convenience methods.  Please snap it at the callsite instead.",
+      "revId": "b98e0c465c92106d230fd10e2646d8c12429acd6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
