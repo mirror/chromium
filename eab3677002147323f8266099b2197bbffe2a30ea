@@ -16,6 +16,24 @@
       "revId": "eab3677002147323f8266099b2197bbffe2a30ea",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ae30c23_74129eba",
+        "filename": "cc/layers/render_surface_impl.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-15T19:53:39Z",
+      "side": 1,
+      "message": "oh actually it should just be uncommented, I tried including layer_impl which lead to the circular include.\n\nI guess not failing compile because some other header also happen to to forward declare it",
+      "parentUuid": "44dae737_a75fabd0",
+      "revId": "eab3677002147323f8266099b2197bbffe2a30ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
