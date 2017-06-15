@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0354c68c_b011f1e2",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T23:49:48Z",
+      "side": 1,
+      "message": "It should be layout/WebFontRenderingLinux.cpp, or exported/WebFontRenderingLinux.cpp.",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d14da748_f6b8572f",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T23:49:48Z",
+      "side": 1,
+      "message": "It should be in platform/scroll/.",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "514c2682_8a7bdff5",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T23:49:48Z",
+      "side": 1,
+      "message": "It should be in core/editing/.",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69838ebd_f2ab0aa3",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T23:49:48Z",
+      "side": 1,
+      "message": "It should be layout/WebFontRenderingWin.cpp, or exported/WebFontRenderingWIn.cpp.",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

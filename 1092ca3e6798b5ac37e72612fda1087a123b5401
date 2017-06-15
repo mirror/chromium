@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "be698a7a_f923c468",
+        "filename": "third_party/WebKit/Source/web/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-15T23:49:48Z",
+      "side": 0,
+      "message": "Is it safe to remove this section?",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
