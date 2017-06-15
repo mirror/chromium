@@ -53,6 +53,7 @@ class PLATFORM_EXPORT SharedGpuContext {
   static SharedGpuContext* GetInstanceForCurrentThread();
 
   SharedGpuContext();
+  ~SharedGpuContext();
   void CreateContextProviderOnMainThread(WaitableEvent*);
   void CreateContextProviderIfNeeded();
 

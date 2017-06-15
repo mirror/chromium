@@ -7,6 +7,7 @@
 #include <stdint.h>
 
 #include "base/macros.h"
+#include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
 #include "build/build_config.h"
 #include "ipc/ipc_channel_handle.h"
@@ -39,6 +40,9 @@ class ManifestMessageFilter : public IPC::SyncMessageFilter {
   bool Send(IPC::Message* message) override {
     // Wait until set up is actually done.
     connected_event_.Wait();
+    base::Optional<base::MessageLoop> message_loop;
+    if (!base::SequencedTaskRunnerHandle::IsSet())
+      message_loop.emplace();
     return SyncMessageFilter::Send(message);
   }
 

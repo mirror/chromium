@@ -4,6 +4,7 @@
 
 #include "platform/graphics/gpu/SharedGpuContext.h"
 
+#include "base/message_loop/message_loop.h"
 #include "gpu/command_buffer/client/gles2_interface.h"
 #include "gpu/command_buffer/common/capabilities.h"
 #include "platform/CrossThreadFunctional.h"
@@ -24,6 +25,10 @@ SharedGpuContext::SharedGpuContext() : context_id_(kNoSharedContext) {
   CreateContextProviderIfNeeded();
 }
 
+SharedGpuContext::~SharedGpuContext() {
+  base::MessageLoop message_loop;
+  context_provider_.reset();
+}
 void SharedGpuContext::CreateContextProviderOnMainThread(
     WaitableEvent* waitable_event) {
   DCHECK(IsMainThread());

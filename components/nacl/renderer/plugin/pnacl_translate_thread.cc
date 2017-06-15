@@ -10,6 +10,7 @@
 #include <sstream>
 
 #include "base/logging.h"
+#include "base/message_loop/message_loop.h"
 #include "base/time/time.h"
 #include "components/nacl/renderer/plugin/plugin.h"
 #include "components/nacl/renderer/plugin/plugin_error.h"
@@ -168,6 +169,7 @@ ppapi::proxy::SerializedHandle PnaclTranslateThread::GetHandleForSubprocess(
 }
 
 void PnaclTranslateThread::CompileThread::Run() {
+  base::MessageLoop message_loop;
   pnacl_translate_thread_->DoCompile();
 }
 
@@ -286,6 +288,7 @@ void PnaclTranslateThread::DoCompile() {
 }
 
 void PnaclTranslateThread::LinkThread::Run() {
+  base::MessageLoop message_loop;
   pnacl_translate_thread_->DoLink();
 }
 
