@@ -936,7 +936,7 @@ function initKeyboardOverlayId(inputMethodId) {
     initDiamondKey();
   initLayout();
   update([], []);
-  window.webkitRequestAnimationFrame(function() {
+  window.requestAnimationFrame(function() {
     chrome.send('didPaint');
   });
 }
