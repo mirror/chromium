@@ -533,6 +533,10 @@ TEST_F(ServiceWorkerURLRequestJobTest,
       static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::RUNNING),
       1);
   histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
+      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::RUNNING),
+      1);
+  histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame", false, 1);
   histogram_tester.ExpectTotalCount(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
@@ -557,6 +561,11 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
       "NavigationPreloadEnabled",
+      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                           START_IN_EXISTING_PROCESS),
+      1);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
       static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
                            START_IN_EXISTING_PROCESS),
       1);
@@ -588,6 +597,11 @@ TEST_F(ServiceWorkerURLRequestJobTest,
                            START_IN_EXISTING_PROCESS),
       1);
   histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
+      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                           START_IN_EXISTING_PROCESS),
+      1);
+  histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame", true, 1);
   histogram_tester.ExpectUniqueSample(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
@@ -607,16 +621,16 @@ TEST_F(ServiceWorkerURLRequestJobTest, NavPreloadMetrics_WorkerFirst_SubFrame) {
   helper->Respond();
   base::RunLoop().RunUntilIdle();
 
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
-      "NavigationPreloadEnabled",
-      0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame", 0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
-      "StartWorkerExistingProcess",
-      0);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.WorkerPreparationType_SubFrame",
+      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                           START_IN_EXISTING_PROCESS),
+      1);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.FinishedFirst_SubFrame", false, 1);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.FinishedFirst_SubFrame_WorkerStartOccurred",
+      false, 1);
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest,
@@ -633,16 +647,16 @@ TEST_F(ServiceWorkerURLRequestJobTest,
   helper->Respond();
   base::RunLoop().RunUntilIdle();
 
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.ActivatedWorkerPreparationForMainFrame.Type_"
-      "NavigationPreloadEnabled",
-      0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame", 0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
-      "StartWorkerExistingProcess",
-      0);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.WorkerPreparationType_SubFrame",
+      static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                           START_IN_EXISTING_PROCESS),
+      1);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.FinishedFirst_SubFrame", true, 1);
+  histogram_tester.ExpectUniqueSample(
+      "ServiceWorker.NavPreload.FinishedFirst_SubFrame_WorkerStartOccurred",
+      true, 1);
 }
 
 TEST_F(ServiceWorkerURLRequestJobTest, CustomTimeout) {
