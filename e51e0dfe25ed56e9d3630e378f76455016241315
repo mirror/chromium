@@ -16,6 +16,24 @@
       "revId": "e51e0dfe25ed56e9d3630e378f76455016241315",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12a4bb0_b9d6ce64",
+        "filename": "extensions/browser/lazy_background_task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1001727
+      },
+      "writtenOn": "2017-06-15T17:29:01Z",
+      "side": 1,
+      "message": "I didn\u0027t want to keep this for_testing() as a public method.\nRemoved this method and using pending_tasks_.size() directly from the test.\nDone.",
+      "parentUuid": "6ba68ca9_14fd05f3",
+      "revId": "e51e0dfe25ed56e9d3630e378f76455016241315",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
