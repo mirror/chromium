@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68ad2d91_4bd3142f",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValueMappings.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 980,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-15T01:10:09Z",
+      "side": 1,
+      "message": "This will need a special case when generating :)",
+      "revId": "ecb16f779e0a0e3403a9f94ef046ba675f0ffc9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
