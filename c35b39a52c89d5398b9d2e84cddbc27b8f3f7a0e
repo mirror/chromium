@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15f07fe9_362e2e25",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 251,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T03:05:06Z",
+      "side": 1,
+      "message": "Not quite, SVG elements can have transform but they\u0027re not processed like HTML elements. Perhaps the name IsTransformApplicable() should be more specific.",
+      "parentUuid": "97e18488_42829dd0",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "42fa46b9_e96c11a2",
         "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee55842d_9f3e29e5",
+        "filename": "third_party/WebKit/Source/core/animation/CompositorAnimations.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1115859
+      },
+      "writtenOn": "2017-06-15T03:05:06Z",
+      "side": 1,
+      "message": "This should probably be NOTREACHED(). Will change in later patch.",
+      "parentUuid": "42fa46b9_e96c11a2",
+      "revId": "c35b39a52c89d5398b9d2e84cddbc27b8f3f7a0e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
