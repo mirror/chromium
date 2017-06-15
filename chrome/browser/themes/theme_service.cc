@@ -421,6 +421,9 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
   const int kNtpText = ThemeProperties::COLOR_NTP_TEXT;
   const int kLabelBackground =
       ThemeProperties::COLOR_SUPERVISED_USER_LABEL_BACKGROUND;
+  // The alpha value to apply to a given text color to derive a color for a
+  // separator on the same surface.
+  const SkAlpha kTextToSeparatorAlpha = 0x20;
   switch (id) {
     case ThemeProperties::COLOR_TOOLBAR_BUTTON_ICON:
       return color_utils::HSLShift(
@@ -472,16 +475,25 @@ SkColor ThemeService::GetDefaultColor(int id, bool incognito) const {
       if (UsingDefaultTheme())
         break;
       return GetColor(ThemeProperties::COLOR_BOOKMARK_TEXT, incognito);
+    case ThemeProperties::COLOR_TOOLBAR_BOTTOM_SEPARATOR:
+      if (UsingDefaultTheme())
+        break;
+      // Use 12.5% of bookmark text color as separator color.
+      return color_utils::AlphaBlend(
+          GetColor(ThemeProperties::COLOR_BOOKMARK_TEXT, incognito),
+          GetColor(ThemeProperties::COLOR_TOOLBAR, incognito),
+          kTextToSeparatorAlpha);
     case ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_BACKGROUND:
       if (UsingDefaultTheme())
         break;
       return GetColor(ThemeProperties::COLOR_TOOLBAR, incognito);
     case ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_SEPARATOR:
-      if (UsingDefaultTheme())
-        break;
-      // Use 50% of bookmark text color as separator color.
-      return SkColorSetA(
-          GetColor(ThemeProperties::COLOR_BOOKMARK_TEXT, incognito), 128);
+      // Use 12.5% of bookmark text color as separator color.
+      return color_utils::AlphaBlend(
+          GetColor(ThemeProperties::COLOR_BOOKMARK_TEXT, incognito),
+          GetColor(ThemeProperties::COLOR_DETACHED_BOOKMARK_BAR_BACKGROUND,
+                   incognito),
+          kTextToSeparatorAlpha);
     case ThemeProperties::COLOR_NTP_TEXT_LIGHT:
       return IncreaseLightness(GetColor(kNtpText, incognito), 0.40);
     case ThemeProperties::COLOR_TAB_THROBBER_SPINNING:
