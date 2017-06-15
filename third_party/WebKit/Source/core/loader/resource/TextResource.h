@@ -5,9 +5,10 @@
 #ifndef TextResource_h
 #define TextResource_h
 
-#include "core/CoreExport.h"
-#include "platform/loader/fetch/Resource.h"
 #include <memory>
+#include "core/CoreExport.h"
+#include "platform/loader/fetch/CharsetRequest.h"
+#include "platform/loader/fetch/Resource.h"
 
 namespace blink {
 
@@ -34,6 +35,7 @@ class CORE_EXPORT TextResource : public Resource {
   void SetEncoding(const String&) override;
 
  private:
+  const CharsetRequest charset_request_;
   std::unique_ptr<TextResourceDecoder> decoder_;
 };
 
