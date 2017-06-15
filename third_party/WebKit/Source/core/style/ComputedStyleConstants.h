@@ -180,7 +180,7 @@ enum ObjectFit {
   kObjectFitScaleDown
 };
 
-enum EResize { RESIZE_NONE, RESIZE_BOTH, RESIZE_HORIZONTAL, RESIZE_VERTICAL };
+enum class EResize { kNone, kBoth, kHorizontal, kVertical };
 
 enum QuoteType { OPEN_QUOTE, CLOSE_QUOTE, NO_OPEN_QUOTE, NO_CLOSE_QUOTE };
 
