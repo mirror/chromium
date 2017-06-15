@@ -158,6 +158,10 @@ component("core") {
     "CoreExport.h",
     "CoreInitializer.cpp",
     "CoreInitializer.h",
+    "linux/WebFontRendering.cpp",
+    "mac/WebScrollbarTheme.mm",
+    "mac/WebSubstringUtil.mm",
+    "win/WebFontRendering.cpp",
   ]
 
   configs -= core_config_remove
