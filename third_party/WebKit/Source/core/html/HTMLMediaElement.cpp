@@ -3459,7 +3459,7 @@ bool HTMLMediaElement::HasPendingActivity() const {
 }
 
 bool HTMLMediaElement::IsFullscreen() const {
-  return Fullscreen::IsCurrentFullScreenElement(*this);
+  return Fullscreen::IsFullscreenElement(*this);
 }
 
 void HTMLMediaElement::DidEnterFullscreen() {
