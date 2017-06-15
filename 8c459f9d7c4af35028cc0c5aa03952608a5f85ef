@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "7be72bcf_9602eb9f",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-15T15:50:33Z",
+      "side": 1,
+      "message": "Understood it was broken before too.  Lets move them to constants, thanks!",
+      "parentUuid": "12072d5a_cf86f2ba",
+      "revId": "8c459f9d7c4af35028cc0c5aa03952608a5f85ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5af816ca_ac0708d4",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.mm",
         "patchSetId": 5
