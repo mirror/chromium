@@ -234,6 +234,8 @@ class WebInputEvent {
     kBackButtonDown = 1 << 20,
     kForwardButtonDown = 1 << 21,
 
+    kFakeMouseMove = 1 << 22,
+
     // The set of non-stateful modifiers that specifically change the
     // interpretation of the key being pressed. For example; IsLeft,
     // IsRight, IsComposing don't change the meaning of the key

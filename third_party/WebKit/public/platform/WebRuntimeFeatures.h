@@ -160,6 +160,7 @@ class WebRuntimeFeatures {
   BLINK_PLATFORM_EXPORT static void EnableLocationHardReload(bool);
   BLINK_PLATFORM_EXPORT static void EnableRemotePlaybackBackend(bool);
   BLINK_PLATFORM_EXPORT static void EnableMediaCastOverlayButton(bool);
+  BLINK_PLATFORM_EXPORT static void EnableUpdateHoverPostLayout(bool);
 
  private:
   WebRuntimeFeatures();

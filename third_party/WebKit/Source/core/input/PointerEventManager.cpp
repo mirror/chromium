@@ -473,6 +473,9 @@ WebInputEventResult PointerEventManager::SendMousePointerEvent(
     const AtomicString& mouse_event_type,
     const WebMouseEvent& mouse_event,
     const Vector<WebMouseEvent>& coalesced_events) {
+  // Do not send the fake mouse move event to the DOM, because the mouse does
+  // not move.
+
   PointerEvent* pointer_event = pointer_event_factory_.Create(
       mouse_event_type, mouse_event, coalesced_events,
       frame_->GetDocument()->domWindow());
@@ -495,6 +498,13 @@ WebInputEventResult PointerEventManager::SendMousePointerEvent(
 
   EventTarget* effective_target = GetEffectiveTargetForPointerEvent(
       pointer_event_target, pointer_event->pointerId());
+
+  // Do not send the fake mouse move event to the DOM, because the mouse does
+  // not move.
+  if ((mouse_event_type == EventTypeNames::mousemove) &&
+      mouse_event.GetModifiers() & WebInputEvent::Modifiers::kFakeMouseMove) {
+    return WebInputEventResult::kNotHandled;
+  }
 
   WebInputEventResult result =
       DispatchPointerEvent(effective_target, pointer_event);
