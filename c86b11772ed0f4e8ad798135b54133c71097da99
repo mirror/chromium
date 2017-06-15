@@ -16,6 +16,58 @@
       "revId": "c86b11772ed0f4e8ad798135b54133c71097da99",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5f7d991_3bc130a7",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T06:41:58Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d also prefer not to do this because we use AXEvent, etc.\nin lots of other IPCs, and we change the set of enums frequently.\n\nI think what I\u0027d prefer instead is to just switch\nui/accessibility/ax_enums.idl to a ax_enums.mojom and switch\nto using those mojo-generated enums everywhere first. That should\nbe a purely mechanical change and will still work with IPCs and\nlet us migrate individual IPCs to mojo when ready.",
+      "parentUuid": "163879af_3bfc6b63",
+      "revId": "c86b11772ed0f4e8ad798135b54133c71097da99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f29157_edbc4c2e",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T06:41:58Z",
+      "side": 1,
+      "message": "These structs also change sometimes, and I see no\nreason they couldn\u0027t just be mojo.",
+      "revId": "c86b11772ed0f4e8ad798135b54133c71097da99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce36efb7_821dcb36",
+        "filename": "chrome/common/extensions/mojom/accessibility.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 395,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-15T06:41:58Z",
+      "side": 1,
+      "message": "These structs also change sometimes, and I see no\nreason they couldn\u0027t just be mojo.",
+      "revId": "c86b11772ed0f4e8ad798135b54133c71097da99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
