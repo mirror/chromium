@@ -63,7 +63,7 @@ class SafeBrowsingBlockingPageFactoryImpl
         Profile::FromBrowserContext(web_contents->GetBrowserContext())
             ->GetPrefs();
     bool is_extended_reporting_opt_in_allowed =
-        prefs->GetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed);
+        IsExtendedReportingOptInAllowed(*prefs);
     bool is_proceed_anyway_disabled =
         prefs->GetBoolean(prefs::kSafeBrowsingProceedAnywayDisabled);
 
@@ -116,14 +116,13 @@ SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
           CreateControllerClient(web_contents, unsafe_resources, ui_manager),
           display_options),
       threat_details_in_progress_(false) {
-  // Start computing threat details. They will be sent only
-  // if the user opts-in on the blocking page later.
-  // If there's more than one malicious resources, it means the user
-  // clicked through the first warning, so we don't prepare additional
-  // reports.
+  // Start computing threat details. Trigger Manager will decide if it's safe to
+  // begin collecting data at this time. The report will be sent only if the
+  // user opts-in on the blocking page later.
+  // If there's more than one malicious resources, it means the user clicked
+  // through the first warning, so we don't prepare additional reports.
   if (unsafe_resources.size() == 1 &&
-      ShouldReportThreatDetails(unsafe_resources[0].threat_type) &&
-      sb_error_ui()->CanShowExtendedReportingOption()) {
+      ShouldReportThreatDetails(unsafe_resources[0].threat_type)) {
     Profile* profile =
         Profile::FromBrowserContext(web_contents->GetBrowserContext());
     threat_details_in_progress_ =
@@ -132,7 +131,8 @@ SafeBrowsingBlockingPage::SafeBrowsingBlockingPage(
             ->StartCollectingThreatDetails(
                 web_contents, unsafe_resources[0], profile->GetRequestContext(),
                 HistoryServiceFactory::GetForProfile(
-                    profile, ServiceAccessType::EXPLICIT_ACCESS));
+                    profile, ServiceAccessType::EXPLICIT_ACCESS),
+                *profile->GetPrefs());
   }
 }
 
@@ -192,18 +192,20 @@ void SafeBrowsingBlockingPage::FinishThreatDetails(const base::TimeDelta& delay,
   if (!threat_details_in_progress_)
     return;
 
-  const bool enabled = sb_error_ui()->is_extended_reporting_enabled() &&
-                       sb_error_ui()->is_extended_reporting_opt_in_allowed();
-  if (!enabled)
-    return;
+  // Finish computing threat details. TriggerManager will decide if its safe to
+  // send the report.
+  bool report_sent =
+      g_browser_process->safe_browsing_service()
+          ->trigger_manager()
+          ->FinishCollectingThreatDetails(
+              web_contents(), delay, did_proceed, num_visits,
+              *Profile::FromBrowserContext(web_contents()->GetBrowserContext())
+                   ->GetPrefs());
 
-  controller()->metrics_helper()->RecordUserInteraction(
-      security_interstitials::MetricsHelper::EXTENDED_REPORTING_IS_ENABLED);
-  // Finish the malware details collection, send it over.
-  g_browser_process->safe_browsing_service()
-      ->trigger_manager()
-      ->FinishCollectingThreatDetails(web_contents(), delay, did_proceed,
-                                      num_visits);
+  if (report_sent) {
+    controller()->metrics_helper()->RecordUserInteraction(
+        security_interstitials::MetricsHelper::EXTENDED_REPORTING_IS_ENABLED);
+  }
 }
 
 // static
