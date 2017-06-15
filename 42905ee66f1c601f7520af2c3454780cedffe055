@@ -69,6 +69,52 @@
       "revId": "42905ee66f1c601f7520af2c3454780cedffe055",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03fd0d34_81fe9359",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4472,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T08:51:52Z",
+      "side": 1,
+      "message": "This isn\u0027t really needed. The notifications are owned, so there\u0027s no need to reset them when a TestWebFrameClient is destroyed--and in fact, doing so is problematic and breaks test expectations: the tests as originally written all used one stack-allocated client, which was never destroyed before the test ended.\n\nSo just don\u0027t bother with this cleanup in the destructor. It\u0027s a little bit weird (since Notification holds a frame pointer, so it\u0027s actually a pointer to a dead object sometimes)... but that was already true with the original code.",
+      "range": {
+        "startLine": 4472,
+        "startChar": 2,
+        "endLine": 4472,
+        "endChar": 60
+      },
+      "revId": "42905ee66f1c601f7520af2c3454780cedffe055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05278c1a_80977967",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 4490,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-15T08:51:52Z",
+      "side": 1,
+      "message": "I refactored how the test harness worked at one point and I guess I forgot to change this to use the new std::unique_ptr passing way.",
+      "range": {
+        "startLine": 4490,
+        "startChar": 56,
+        "endLine": 4490,
+        "endChar": 65
+      },
+      "revId": "42905ee66f1c601f7520af2c3454780cedffe055",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
