@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5296da99_d5975b6f",
+        "filename": "chrome/browser/ui/views/simple_message_box_views.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-15T22:40:22Z",
+      "side": 1,
+      "message": "New uses of the chrome:: namespace are banned (we\u0027re trying to kill that namespace); try to find a different way to do this than a global function.  For example, hoist SimpleMessageBoxViews\u0027 declaration to this file and have a public static Show() method; find an existing more narrow namespace to put this under; change the namespace for the stuff in simple_message_box.h to something more specific and add this to that; or move this declaration to that file under some kind of #if TOOLKIT_VIEWS.\n\nNone of these are perfect; I\u0027d probably do the first.",
+      "revId": "1f8212d88164752fb9093ca1d548298e8256d16c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
