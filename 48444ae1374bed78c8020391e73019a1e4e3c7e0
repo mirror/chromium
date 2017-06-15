@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "904a5e59_5e7586c4",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "naming",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a6bc841_857182f6",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "I would try to clean up this function. Probably consolidate all the string formatting to one place instead of appending bits and pieces.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6415b548_b284f359",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "I think you want to catch a general Exception here right?\n\nSince people can throw whatever they want inside repr if they overwrite it.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5abe6732_c1559602",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "I dont think this if is necessary, also, it seems to not work correctly in current state if there are 0 keys in self.internal.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "838d5a62_a4536a2b",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "to reduce indenting, I would use style of...\n\nif not event in (\"call\", \"return\"):\n  return None",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "905e290f_69722f87",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "What should behavior be if no to_include filters are specified?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45f99163_f83c04e8",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "Things like this, feel free to factor out filter logic into its own function to make things more readable. Also, remember this needs to work for everyone no matter how their Chromium checkout is set up.\n\nCan you filter by module name (pylib.utils.* for example) instead of filepath?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0f80353_ce7289de",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "Definitely look for a supported way to do this without having to write trace json data by hand.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "265fd89a_1a0fb641",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "With files in python, its strongly prefered to use...\n\nwith open(file, \u0027w\u0027) as f:\n  f.write()\n\nThis will ensure that close gets called. Its basically a clean way to write...\n\ntry:\n  #open\n  #write\nfinally:\n  #close",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "645b5ed9_6341ffe5",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "I dont think you need this condition. Simplify this code where you can.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "863cddff_ede56375",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "for arg_name in frame.f_code.co_varnames:",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "298f4722_c5178d77",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "I dont think I understand this. Probably need a clearer variable name here, and also I would return None in the else case just to be explicit.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e08573d_bef57d3e",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "Would be nice to have a StopInstrumeenting() function and also.\n\nMaybe a function decorated by @contextlib.contextmanager that calls start and stop",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97b0b0da_68e0d4c6",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "Some considerations and question....\n\nWhat happens if an Exception is raised? Does the \"return\" event still occur?\nWhat happens if someone uses py_trace_event outside of this?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "231431df_91549314",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "Probably simpler to have TraceFunction return a function. Kinda like... \n\ndef TraceFunction(include,exclude,output):\n  # Do stuff with args\n  def internal(frame,event,arg):\n    # implementation of actual trace function\n  return internal",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b67b831_9d319f86",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "when does traceFunc get called? Only when calling/returning from functions?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "416f30bc_6637098d",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1124979
+      },
+      "writtenOn": "2017-06-15T15:38:25Z",
+      "side": 1,
+      "message": "This is sweet that it takes so little code to get this running! I really like this.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
