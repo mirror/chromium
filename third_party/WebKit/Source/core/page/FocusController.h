@@ -131,6 +131,8 @@ class CORE_EXPORT FocusController final
   bool is_focused_;
   bool is_changing_focused_frame_;
   HeapHashSet<WeakMember<FocusChangedObserver>> focus_changed_observers_;
+
+  FRIEND_TEST_ALL_PREFIXES(FocusControllerTest, SVGFocusableElementInForm);
 };
 
 }  // namespace blink
