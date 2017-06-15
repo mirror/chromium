@@ -47,9 +47,17 @@ struct PlatformPrivateFootprint {
   uint64 private_bytes = 0;
 };
 
-struct OSMemDump {
+struct RawOSMemDump {
   uint32 resident_set_kb = 0;
   PlatformPrivateFootprint platform_private_footprint;
+};
+
+struct OSMemDump {
+  uint32 resident_set_kb = 0;
+
+  // This is roughly private, anonymous, non-discardable, resident or swapped
+  // memory in kilobytes. For more details, see https://goo.gl/3kPb9S.
+  uint32 private_footprint_kb = 0;
 };
 
 struct ChromeMemDump {
@@ -63,12 +71,12 @@ struct ChromeMemDump {
 // service (Coordinator) and the client library (ClientProcessImpl).
 struct RawProcessMemoryDump {
   ProcessType process_type;
-  OSMemDump os_dump;
+  RawOSMemDump os_dump;
   ChromeMemDump chrome_dump;
 
   // This is used only on Linux/CrOS to get around sandboxing.
   // See crbug.com/461788.
-  map<mojo.common.mojom.ProcessId, OSMemDump> extra_processes_dumps;
+  map<mojo.common.mojom.ProcessId, RawOSMemDump> extra_processes_dumps;
 };
 
 // This struct is used for the public-facing API
@@ -77,10 +85,6 @@ struct ProcessMemoryDump {
   ProcessType process_type;
   OSMemDump os_dump;
   ChromeMemDump chrome_dump;
-
-  // This is roughly private, anonymous, non-discardable, resident or swapped
-  // memory in kilobytes. For more details, see https://goo.gl/3kPb9S.
-  uint32 private_footprint = 0;
 };
 
 
