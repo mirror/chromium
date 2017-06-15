@@ -14,6 +14,9 @@ namespace cc {
 // capped into one bucket.
 static constexpr int kScrollerSizeLargestBucket = 200000;
 static constexpr int kScrollerSizeBucketCount = 50;
+// By setting the threshold to 50000 (250 * 200) we might affect roughly 50%
+// scrollers for memory saving. Meanwhile at most 4% scrolls may be slowed down.
+static constexpr int kSmallScrollerThreshold = 50000;
 
 }  // namespace cc
 

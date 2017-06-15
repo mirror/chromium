@@ -1261,6 +1261,12 @@ bool FrameLoader::ShouldClose(bool is_reload) {
       should_close = true;
   }
 
+  if (should_close) {
+    for (size_t i = 0; i < target_frames.size(); i++) {
+      target_frames[i]->View()->RecordScrollerSizeRelatedMetrics();
+    }
+  }
+
   return should_close;
 }
 

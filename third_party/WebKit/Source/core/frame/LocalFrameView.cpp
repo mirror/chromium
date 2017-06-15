@@ -2202,8 +2202,14 @@ void LocalFrameView::HandleLoadCompleted() {
   if (!NeedsLayout())
     ClearFragmentAnchor();
 
+  // RecordScrollerSizeRelatedMetrics();
+}
+
+void LocalFrameView::RecordScrollerSizeRelatedMetrics() const {
   if (!scrollable_areas_)
     return;
+  int total_size = 0;
+  int small_scroller_size = 0;
   for (const auto& scrollable_area : *scrollable_areas_) {
     if (!scrollable_area->IsPaintLayerScrollableArea())
       continue;
@@ -2215,11 +2221,28 @@ void LocalFrameView::HandleLoadCompleted() {
       CheckedNumeric<int> size =
           paint_layer_scrollable_area->VisibleContentRect().Width();
       size *= paint_layer_scrollable_area->VisibleContentRect().Height();
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "Event.Scroll.ScrollerSize.OnLoad",
-          size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
-          kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      int scroller_size = size.ValueOrDefault(std::numeric_limits<int>::max());
+      //UMA_HISTOGRAM_CUSTOM_COUNTS(
+      //    "Event.Scroll.ScrollerSize.OnLoad",
+      //    size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
+      //    kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+
+      // Not compilable without base::.
+      SingleSampleMetricsFactory::Get()
+          ->CreateCustomCountsMetric("Event.Scroll.ScrollerSize.OnLoad", 1,
+                                     kScrollerSizeLargestBucket,
+                                     kScrollerSizeBucketCount)
+          ->SetSample(scroller_size);
+      if (scroller_size <= kSmallScrollerThreshold)
+        small_scroller_size += scroller_size;
+      total_size += scroller_size;
     }
+  }
+  // This includes recording pages without small scrollers.
+  if (total_size > 0) {
+    UMA_HISTOGRAM_PERCENTAGE(
+        "Event.Scroll.ScrollerSize.SmallScrollerPercentage",
+        100.0f * small_scroller_size / total_size);
   }
 }
 

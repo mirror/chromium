@@ -267,6 +267,8 @@ class CORE_EXPORT LocalFrameView final
 
   void HandleLoadCompleted();
 
+  void RecordScrollerSizeRelatedMetrics() const;
+
   void UpdateDocumentAnnotatedRegions() const;
 
   void DidAttachDocument();
