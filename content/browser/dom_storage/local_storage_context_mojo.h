@@ -99,6 +99,10 @@ class CONTENT_EXPORT LocalStorageContextMojo
   void InitiateConnection(bool in_memory_only = false);
   void OnDirectoryOpened(filesystem::mojom::FileError err);
   void OnDatabaseOpened(bool in_memory, leveldb::mojom::DatabaseError status);
+  void OnDatabaseOpened2(
+      bool in_memory,
+      leveldb::mojom::DatabaseError status,
+      leveldb::mojom::LevelDBDatabaseAssociatedPtrInfo database);
   void OnGotDatabaseVersion(leveldb::mojom::DatabaseError status,
                             const std::vector<uint8_t>& value);
   void OnConnectionFinished();
@@ -146,7 +150,9 @@ class CONTENT_EXPORT LocalStorageContextMojo
   base::trace_event::MemoryAllocatorDumpGuid memory_dump_id_;
 
   leveldb::mojom::LevelDBServicePtr leveldb_service_;
-  leveldb::mojom::LevelDBDatabaseAssociatedPtr database_;
+  leveldb::mojom::LevelDBDatabase* database_;
+  leveldb::mojom::LevelDBDatabaseAssociatedPtr database_aptr_;
+  leveldb::mojom::LevelDBDatabasePtr database_ptr_;
   bool tried_to_recreate_ = false;
 
   std::vector<base::OnceClosure> on_database_opened_callbacks_;
@@ -158,6 +164,10 @@ class CONTENT_EXPORT LocalStorageContextMojo
   // Used to access old data for migration.
   scoped_refptr<DOMStorageTaskRunner> task_runner_;
   base::FilePath old_localstorage_path_;
+
+  // Used in case we're not using the file service.
+  scoped_refptr<base::SingleThreadTaskRunner> localstorage_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> leveldb_task_runner_;
 
   base::WeakPtrFactory<LocalStorageContextMojo> weak_ptr_factory_;
 };

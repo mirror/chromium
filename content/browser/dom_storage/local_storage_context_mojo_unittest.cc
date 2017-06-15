@@ -9,6 +9,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/test/scoped_feature_list.h"
 #include "components/filesystem/public/interfaces/file_system.mojom.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
@@ -18,6 +19,7 @@
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/local_storage_usage_info.h"
+#include "content/public/common/content_features.h"
 #include "content/public/test/test_browser_thread_bundle.h"
 #include "content/test/mock_leveldb_database.h"
 #include "mojo/public/cpp/bindings/associated_binding.h"
@@ -725,6 +727,8 @@ class LocalStorageContextMojoTestWithService
     ASSERT_TRUE(temp_path_.CreateUniqueTempDir());
     file::AssociateServiceUserIdWithUserDir(test_userid(),
                                             temp_path_.GetPath());
+    scoped_feature_list_.InitAndDisableFeature(
+        features::kBypassFileServiceForLocalStorage);
   }
 
   void TearDown() override {
@@ -772,6 +776,7 @@ class LocalStorageContextMojoTestWithService
  private:
   TestBrowserThreadBundle thread_bundle_;
   base::ScopedTempDir temp_path_;
+  base::test::ScopedFeatureList scoped_feature_list_;
 
   DISALLOW_COPY_AND_ASSIGN(LocalStorageContextMojoTestWithService);
 };

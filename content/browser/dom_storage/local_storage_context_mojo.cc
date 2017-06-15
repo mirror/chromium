@@ -11,7 +11,9 @@
 #include "base/single_thread_task_runner.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/stringprintf.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/trace_event/memory_dump_manager.h"
+#include "components/leveldb/leveldb_database_impl.h"
 #include "components/leveldb/public/cpp/util.h"
 #include "components/leveldb/public/interfaces/leveldb.mojom.h"
 #include "content/browser/dom_storage/dom_storage_area.h"
@@ -21,11 +23,15 @@
 #include "content/browser/leveldb_wrapper_impl.h"
 #include "content/common/dom_storage/dom_storage_types.h"
 #include "content/public/browser/local_storage_usage_info.h"
+#include "content/public/common/content_features.h"
+#include "mojo/public/cpp/bindings/strong_binding.h"
 #include "services/file/public/interfaces/constants.mojom.h"
 #include "services/service_manager/public/cpp/connector.h"
 #include "sql/connection.h"
 #include "storage/browser/quota/special_storage_policy.h"
 #include "third_party/leveldatabase/env_chromium.h"
+#include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
+#include "third_party/leveldatabase/src/include/leveldb/db.h"
 
 namespace content {
 
@@ -113,6 +119,63 @@ void AddDeleteOriginOperations(
   operations->push_back(std::move(item));
 }
 
+void OpenDatabase(
+    leveldb::mojom::LevelDBDatabaseRequest database,
+    const base::FilePath& path,
+    scoped_refptr<base::SingleThreadTaskRunner> reply_task_runner,
+    base::OnceCallback<void(leveldb::mojom::DatabaseError)> callback) {
+  leveldb::Options options;
+  options.create_if_missing = true;
+  options.max_open_files = 0;  // use minimum
+  // Default write_buffer_size is 4 MB but that might leave a 3.999
+  // memory allocation in RAM from a log file recovery.
+  options.write_buffer_size = 64 * 1024;
+
+  options.reuse_logs = leveldb_env::kDefaultLogReuseOptionValue;
+  options.compression = leveldb::kSnappyCompression;
+
+  auto env = base::MakeUnique<leveldb::EnvWrapper>(leveldb::Env::Default());
+  options.env = env.get();
+
+  leveldb::DB* db = nullptr;
+  leveldb::Status s =
+      leveldb::DB::Open(options, path.Append("leveldb").AsUTF8Unsafe(), &db);
+  if (s.ok()) {
+    mojo::MakeStrongBinding(
+        base::MakeUnique<leveldb::LevelDBDatabaseImpl>(
+            std::move(env), base::WrapUnique(db), base::nullopt),
+        std::move(database));
+  }
+  reply_task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(std::move(callback), leveldb::LeveldbStatusToError(s)));
+}
+
+void OpenInMemoryDatabase(
+    leveldb::mojom::LevelDBDatabaseRequest database,
+    scoped_refptr<base::SingleThreadTaskRunner> reply_task_runner,
+    base::OnceCallback<void(leveldb::mojom::DatabaseError)> callback) {
+  leveldb::Options options;
+  options.create_if_missing = true;
+  options.max_open_files = 0;  // Use minimum.
+
+  std::unique_ptr<leveldb::Env> env(
+      leveldb::NewMemEnv(leveldb::Env::Default()));
+  options.env = env.get();
+
+  leveldb::DB* db = nullptr;
+  leveldb::Status s = leveldb::DB::Open(options, "", &db);
+  if (s.ok()) {
+    mojo::MakeStrongBinding(
+        base::MakeUnique<leveldb::LevelDBDatabaseImpl>(
+            std::move(env), base::WrapUnique(db), base::nullopt),
+        std::move(database));
+  }
+  reply_task_runner->PostTask(
+      FROM_HERE,
+      base::BindOnce(std::move(callback), leveldb::LeveldbStatusToError(s)));
+}
+
 }  // namespace
 
 class LocalStorageContextMojo::LevelDBWrapperHolder
@@ -131,7 +194,7 @@ class LocalStorageContextMojo::LevelDBWrapperHolder
     const int kMaxCommitsPerHour = 60;
 
     level_db_wrapper_ = base::MakeUnique<LevelDBWrapperImpl>(
-        context_->database_.get(),
+        context_->database_,
         kDataPrefix + origin_.Serialize() + kOriginSeparator,
         kPerStorageAreaQuota + kPerStorageAreaOverQuotaAllowance,
         base::TimeDelta::FromSeconds(kCommitDefaultDelaySecs), kMaxBytesPerHour,
@@ -252,9 +315,10 @@ LocalStorageContextMojo::LocalStorageContextMojo(
                                          reinterpret_cast<uintptr_t>(this))),
       task_runner_(std::move(legacy_task_runner)),
       old_localstorage_path_(old_localstorage_path),
+      localstorage_task_runner_(std::move(task_runner)),
       weak_ptr_factory_(this) {
   base::trace_event::MemoryDumpManager::GetInstance()->RegisterDumpProvider(
-      this, "LocalStorage", task_runner);
+      this, "LocalStorage", localstorage_task_runner_);
 }
 
 void LocalStorageContextMojo::OpenLocalStorage(
@@ -355,7 +419,8 @@ void LocalStorageContextMojo::SetDatabaseForTesting(
     leveldb::mojom::LevelDBDatabaseAssociatedPtr database) {
   DCHECK_EQ(connection_state_, NO_CONNECTION);
   connection_state_ = CONNECTION_IN_PROGRESS;
-  database_ = std::move(database);
+  database_aptr_ = std::move(database);
+  database_ = database_aptr_.get();
   OnDatabaseOpened(true, leveldb::mojom::DatabaseError::OK);
 }
 
@@ -453,6 +518,37 @@ void LocalStorageContextMojo::InitiateConnection(bool in_memory_only) {
     return;
   }
 
+  if (base::FeatureList::IsEnabled(
+          features::kBypassFileServiceForLocalStorage)) {
+    if (!leveldb_task_runner_) {
+      leveldb_task_runner_ = base::CreateSingleThreadTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskShutdownBehavior::BLOCK_SHUTDOWN,
+           base::WithBaseSyncPrimitives()},
+          base::SingleThreadTaskRunnerThreadMode::DEDICATED);
+    }
+    if (!old_localstorage_path_.empty() && !in_memory_only) {
+      // We were given a subdirectory to write to, use a disk backed database.
+      leveldb_task_runner_->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &OpenDatabase, MakeRequest(&database_ptr_),
+              old_localstorage_path_, localstorage_task_runner_,
+              base::BindOnce(&LocalStorageContextMojo::OnDatabaseOpened,
+                             weak_ptr_factory_.GetWeakPtr(), true)));
+    } else {
+      // Use memory backed database.
+      leveldb_task_runner_->PostTask(
+          FROM_HERE,
+          base::BindOnce(
+              &OpenInMemoryDatabase, MakeRequest(&database_ptr_),
+              localstorage_task_runner_,
+              base::BindOnce(&LocalStorageContextMojo::OnDatabaseOpened,
+                             weak_ptr_factory_.GetWeakPtr(), true)));
+    }
+    database_ = database_ptr_.get();
+    return;
+  }
+
   if (!subdirectory_.empty() && !in_memory_only) {
     // We were given a subdirectory to write to. Get it and use a disk backed
     // database.
@@ -465,9 +561,10 @@ void LocalStorageContextMojo::InitiateConnection(bool in_memory_only) {
     // We were not given a subdirectory. Use a memory backed database.
     connector_->BindInterface(file::mojom::kServiceName, &leveldb_service_);
     leveldb_service_->OpenInMemory(
-        memory_dump_id_, MakeRequest(&database_),
+        memory_dump_id_, MakeRequest(&database_aptr_),
         base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                    weak_ptr_factory_.GetWeakPtr(), true));
+    database_ = database_aptr_.get();
   }
 }
 
@@ -503,9 +600,10 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   options->write_buffer_size = 64 * 1024;
   leveldb_service_->OpenWithOptions(
       std::move(options), std::move(directory_clone), "leveldb",
-      memory_dump_id_, MakeRequest(&database_),
+      memory_dump_id_, MakeRequest(&database_aptr_),
       base::Bind(&LocalStorageContextMojo::OnDatabaseOpened,
                  weak_ptr_factory_.GetWeakPtr(), false));
+  database_ = database_aptr_.get();
 }
 
 void LocalStorageContextMojo::OnDatabaseOpened(
@@ -614,6 +712,8 @@ void LocalStorageContextMojo::DeleteAndRecreateDatabase() {
   } else if (tried_to_recreate_) {
     // Give up completely, run without any database.
     database_ = nullptr;
+    database_ptr_ = nullptr;
+    database_aptr_ = nullptr;
     OnConnectionFinished();
     return;
   }
@@ -624,12 +724,16 @@ void LocalStorageContextMojo::DeleteAndRecreateDatabase() {
   // nothing to retry.
   if (!file_system_.is_bound()) {
     database_ = nullptr;
+    database_ptr_ = nullptr;
+    database_aptr_ = nullptr;
     OnConnectionFinished();
     return;
   }
 
   // Close and destroy database, and try again.
   database_ = nullptr;
+  database_ptr_ = nullptr;
+  database_aptr_ = nullptr;
   if (directory_.is_bound()) {
     leveldb_service_->Destroy(
         std::move(directory_), "leveldb",

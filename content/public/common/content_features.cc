@@ -35,6 +35,11 @@ const base::Feature kBrotliEncoding{"brotli-encoding",
 const base::Feature kBrowserSideNavigation{"browser-side-navigation",
                                            base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Bypasses the File service in the mojo localstorage implementation, and
+// instead connects directly to leveldb.
+const base::Feature kBypassFileServiceForLocalStorage{
+    "BypassFileServiceForLocalStorage", base::FEATURE_ENABLED_BY_DEFAULT};
+
 // If Canvas2D Image Chromium is allowed, this feature controls whether it is
 // enabled.
 const base::Feature kCanvas2DImageChromium{"Canvas2DImageChromium",
