@@ -27197,6 +27197,22 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Failed"
+  units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of failed requests made by a private page to public resources.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Successful"
+  units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a private page to public resources.
+  </summary>
+</histogram>
+
 <histogram name="LocalNetworkRequests.PrivatePage.SameSubnetRequests.Failed"
   units="requests">
   <owner>uthakore@chromium.org</owner>
@@ -27212,22 +27228,6 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   <summary>
     Number of successful requests made by a private page to local resources on
     the same subnet.
-  </summary>
-</histogram>
-
-<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Failed"
-  units="requests">
-  <owner>uthakore@chromium.org</owner>
-  <summary>
-    Number of failed requests made by a private page to public resources.
-  </summary>
-</histogram>
-
-<histogram name="LocalNetworkRequests.PrivatePage.PublicRequests.Successful"
-  units="requests">
-  <owner>uthakore@chromium.org</owner>
-  <summary>
-    Number of successful requests made by a private page to public resources.
   </summary>
 </histogram>
 
@@ -27347,21 +27347,21 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
-<histogram name="LocalNetworkRequests.PublicPage.RouterRequests.Successful"
-  units="requests">
-  <owner>uthakore@chromium.org</owner>
-  <summary>
-    Number of successful requests made by a public page to resources likely to
-    be routers.
-  </summary>
-</histogram>
-
 <histogram name="LocalNetworkRequests.PublicPage.RouterRequests.Failed"
   units="requests">
   <owner>uthakore@chromium.org</owner>
   <summary>
     Number of failed requests made by a public page to resources likely to be
     routers.
+  </summary>
+</histogram>
+
+<histogram name="LocalNetworkRequests.PublicPage.RouterRequests.Successful"
+  units="requests">
+  <owner>uthakore@chromium.org</owner>
+  <summary>
+    Number of successful requests made by a public page to resources likely to
+    be routers.
   </summary>
 </histogram>
 
