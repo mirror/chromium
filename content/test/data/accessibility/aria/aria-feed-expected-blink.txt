@@ -1,0 +1,8 @@
+rootWebArea
+++feed
+++++article
+++++++staticText name='First'
+++++++++inlineTextBox name='First'
+++++article
+++++++staticText name='Second'
+++++++++inlineTextBox name='Second'

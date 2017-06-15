@@ -1,0 +1,17 @@
+rootWebArea
+++list
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='grabbed-true '
+++++++++inlineTextBox name='grabbed-true '
+++++++image name='blue'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='grabbed-false '
+++++++++inlineTextBox name='grabbed-false '
+++++++image name='blue'
+++++listItem
+++++++listMarker name='•'
+++++++staticText name='grabbed-undefined '
+++++++++inlineTextBox name='grabbed-undefined '
+++++++image name='blue'

@@ -1,0 +1,19 @@
+rootWebArea
+++treeGrid
+++++row
+++++++cell name='Cell at level 1'
+++++++++staticText name='Cell at level 1'
+++++++++++inlineTextBox name='Cell at level 1'
+++++row
+++++++cell name='Cell at level 2'
+++++++++staticText name='Cell at level 2'
+++++++++++inlineTextBox name='Cell at level 2'
+++++column
+++++tableHeaderContainer
+++treeGrid
+++++row
+++++++cell name='Cell at level 1'
+++++++++staticText name='Cell at level 1'
+++++++++++inlineTextBox name='Cell at level 1'
+++++column
+++++tableHeaderContainer

@@ -189,6 +189,7 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   // Noisy, perhaps add later:
   //   editable, focus*, horizontal, linked, richlyEditable, vertical
   // Too flaky: hovered, offscreen
+  // States
   AddFilter(filters, "check*");
   AddFilter(filters, "descript*");
   AddFilter(filters, "invalid");
@@ -205,6 +206,17 @@ void DumpAccessibilityTreeTest::AddDefaultFilters(
   AddFilter(filters, "required");
   AddFilter(filters, "select*");
   AddFilter(filters, "visited");
+  // Other attributes
+  AddFilter(filters, "valueForRange");
+  AddFilter(filters, "minValueForRange");
+  AddFilter(filters, "maxValueForRange");
+  AddFilter(filters, "hierarchicalLevel");
+  AddFilter(filters, "aria**");  // ariaCurrentState, ariaInvalidValue, etc.
+  AddFilter(filters, "autoComplete*");
+  AddFilter(filters, "keyShortcuts*");
+  AddFilter(filters, "language*");
+  AddFilter(filters, "activedescendantId*");
+  AddFilter(filters, "autoComplete*");
 
   //
   // OS X

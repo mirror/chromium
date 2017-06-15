@@ -1,0 +1,6 @@
+rootWebArea
+++genericContainer
+++++textField
+++++++genericContainer
+++++++++staticText name='Search terms'
+++++++++++inlineTextBox name='Search terms'

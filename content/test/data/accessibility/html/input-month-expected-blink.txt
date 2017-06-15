@@ -1,0 +1,11 @@
+rootWebArea
+++genericContainer
+++++dateTime
+++++++genericContainer
+++++++++genericContainer
+++++++++++spinButton description='Month' descriptionFrom=2
+++++++++++spinButton description='Year' descriptionFrom=2
+++++++popUpButton haspopup
+++++++spinButton
+++++++++button
+++++++++button

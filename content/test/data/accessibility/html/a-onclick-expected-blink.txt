@@ -1,0 +1,7 @@
+rootWebArea
+++link name='link with no href but onclick'
+++++staticText name='link with no href but onclick'
+++++++inlineTextBox name='link with no href but onclick'
+++link name='link with no href and click handler added via script'
+++++staticText name='link with no href and click handler added via script'
+++++++inlineTextBox name='link with no href and click handler added via script'
