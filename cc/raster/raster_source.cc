@@ -246,12 +246,7 @@ bool RasterSource::PerformSolidColorAnalysis(const gfx::Rect& content_rect,
       gfx::ScaleToEnclosingRect(content_rect, 1.f / contents_scale);
 
   layer_rect.Intersect(gfx::Rect(size_));
-  skia::AnalysisCanvas canvas(layer_rect.width(), layer_rect.height());
-  canvas.translate(-layer_rect.x(), -layer_rect.y());
-  // Note that because no color conversion is applied to solid color analysis,
-  // the resulting solid color will be known to be sRGB.
-  RasterCommon(&canvas, &canvas);
-  return canvas.GetColorIfSolid(color);
+  return display_list_->GetColorIfSolidInRect(layer_rect, color);
 }
 
 void RasterSource::GetDiscardableImagesInRect(
