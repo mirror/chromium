@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "70a4b10c_2e8fc9ec",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T23:22:54Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e8dbacc_469b8b4b",
+      "range": {
+        "startLine": 29,
+        "startChar": 77,
+        "endLine": 29,
+        "endChar": 0
+      },
+      "revId": "23e9719638f3e33f8dc05270362b1a795a380e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "71c4a161_447c8c60",
         "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
         "patchSetId": 7
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-15T20:20:01Z",
       "side": 1,
       "message": "I thought we decided to use PaymentsProfileComparator::IsShippingComplete",
+      "revId": "23e9719638f3e33f8dc05270362b1a795a380e47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6f6eea_ab978ef4",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1161390
+      },
+      "writtenOn": "2017-06-15T23:22:54Z",
+      "side": 1,
+      "message": "Sorry about that, I misunderstood that earlier. Changed!",
+      "parentUuid": "71c4a161_447c8c60",
       "revId": "23e9719638f3e33f8dc05270362b1a795a380e47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
