@@ -162,6 +162,11 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<GpuArcVideoServiceHost>(arc_bridge_service));
 }
 
+void ArcServiceLauncher::OnShowingLoginOobeSession() {
+  DCHECK(arc_session_manager_);
+  arc_session_manager_->StartArcForLoginScreen();
+}
+
 void ArcServiceLauncher::OnPrimaryUserProfilePrepared(Profile* profile) {
   DCHECK(arc_service_manager_);
   DCHECK(arc_session_manager_);

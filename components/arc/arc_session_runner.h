@@ -45,11 +45,21 @@ class ArcSessionRunner : public ArcSession::Observer {
   void AddObserver(Observer* observer);
   void RemoveObserver(Observer* observer);
 
-  // Starts the ARC service, then it will connect the Mojo channel. When the
+  // Starts ARC instance, then it will connect the Mojo channel. When the
   // bridge becomes ready, registered Observer's OnSessionReady() is called.
   void RequestStart();
 
-  // Stops the ARC service.
+  // Starts ARC instance for login screen. This function can be called only
+  // when |state_| is STOPPED, and calling this function never changes the
+  // |state_|. OnSessionReady() will never be called either.
+  void RequestStartForLoginScreen();
+
+  // Stops the ARC instance for login screen if it exists. If it does not,
+  // the function is no-op. OnSessionStopped() will never be called either
+  // way.
+  void RequestStopForLoginScreen();
+
+  // Stops the ARC instance.
   void RequestStop();
 
   // OnShutdown() should be called when the browser is shutting down. This can
