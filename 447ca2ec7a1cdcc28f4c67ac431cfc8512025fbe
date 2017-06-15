@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ac9c950_a1b2f065",
+        "filename": "content/browser/compositor/surface_utils.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T20:51:18Z",
+      "side": 1,
+      "message": "This is ok for now, I think that getting this from BrowserMainLoop here is not the solution we want anyway. The one we want is for things that need the FSMH to have it passed to them instead of calling this function. And the places that pass it in for tests will do different things than in prod. ie dependency injection \u003e global methods.",
+      "revId": "447ca2ec7a1cdcc28f4c67ac431cfc8512025fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c6d0c9b_4b5f4b37",
+        "filename": "ui/compositor/test/context_factories_for_test.cc",
+        "patchSetId": 17
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T20:51:18Z",
+      "side": 1,
+      "message": "why doesn\u0027t InitializeContextFactoryForTests do this?",
+      "revId": "447ca2ec7a1cdcc28f4c67ac431cfc8512025fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3084548_ff84f83f",
+        "filename": "ui/compositor/test/context_factories_for_test.h",
+        "patchSetId": 17
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-15T20:51:18Z",
+      "side": 1,
+      "message": "typos:\nInitializes\nin-process",
+      "revId": "447ca2ec7a1cdcc28f4c67ac431cfc8512025fbe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
