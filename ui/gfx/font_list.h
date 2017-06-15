@@ -11,6 +11,7 @@
 #include "base/memory/ref_counted.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/gfx_export.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 

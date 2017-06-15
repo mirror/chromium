@@ -247,8 +247,9 @@ void Link::RecalculateFont() {
   const int style = font_list().GetFontStyle();
   const bool underline =
       underline_ || (HasFocus() && GetFocusStyle() == FocusStyle::UNDERLINE);
-  const int intended_style = (enabled() && underline) ?
-      (style | gfx::Font::UNDERLINE) : (style & ~gfx::Font::UNDERLINE);
+  const int intended_style = (enabled() && underline)
+                                 ? (style | gfx::TextStyle::UNDERLINE)
+                                 : (style & ~gfx::TextStyle::UNDERLINE);
 
   if (style != intended_style)
     Label::SetFontList(font_list().DeriveWithStyle(intended_style));

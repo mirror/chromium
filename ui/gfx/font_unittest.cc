@@ -11,6 +11,7 @@
 #include "build/build_config.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/gfx/font_names_testing.h"
+#include "ui/gfx/text_constants.h"
 
 #if defined(OS_WIN)
 #include "ui/gfx/platform_font_win.h"
@@ -58,7 +59,7 @@ TEST_F(FontTest, MAYBE_LoadArial) {
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_IOS)
   EXPECT_TRUE(cf.GetNativeFont());
 #endif
-  EXPECT_EQ(cf.GetStyle(), Font::NORMAL);
+  EXPECT_EQ(cf.GetStyle(), TextStyle::NORMAL);
   EXPECT_EQ(cf.GetFontSize(), 16);
   EXPECT_EQ(cf.GetFontName(), "Arial");
   EXPECT_EQ("arial", base::ToLowerASCII(cf.GetActualFontNameForTesting()));
@@ -71,11 +72,11 @@ TEST_F(FontTest, MAYBE_LoadArial) {
 #endif
 TEST_F(FontTest, MAYBE_LoadArialBold) {
   Font cf("Arial", 16);
-  Font bold(cf.Derive(0, Font::NORMAL, Font::Weight::BOLD));
+  Font bold(cf.Derive(0, TextStyle::NORMAL, Font::Weight::BOLD));
 #if defined(OS_WIN) || defined(OS_MACOSX) || defined(OS_IOS)
   EXPECT_TRUE(bold.GetNativeFont());
 #endif
-  EXPECT_EQ(bold.GetStyle(), Font::NORMAL);
+  EXPECT_EQ(bold.GetStyle(), TextStyle::NORMAL);
   EXPECT_EQ(bold.GetWeight(), Font::Weight::BOLD);
   EXPECT_EQ("arial", base::ToLowerASCII(cf.GetActualFontNameForTesting()));
 }
@@ -172,10 +173,10 @@ TEST_F(FontTest, MAYBE_DeriveFont) {
   Font cf("Arial", 8);
   const int kSizeDelta = 2;
   Font cf_underlined =
-      cf.Derive(0, cf.GetStyle() | gfx::Font::UNDERLINE, cf.GetWeight());
+      cf.Derive(0, cf.GetStyle() | gfx::TextStyle::UNDERLINE, cf.GetWeight());
   Font cf_underlined_resized = cf_underlined.Derive(
       kSizeDelta, cf_underlined.GetStyle(), cf_underlined.GetWeight());
-  EXPECT_EQ(cf.GetStyle() | gfx::Font::UNDERLINE,
+  EXPECT_EQ(cf.GetStyle() | gfx::TextStyle::UNDERLINE,
             cf_underlined_resized.GetStyle());
   EXPECT_EQ(cf.GetFontSize() + kSizeDelta, cf_underlined_resized.GetFontSize());
   EXPECT_EQ(cf.GetWeight(), cf_underlined_resized.GetWeight());

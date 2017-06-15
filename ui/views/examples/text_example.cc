@@ -207,8 +207,8 @@ void TextExample::ButtonPressed(Button* button, const ui::Event& event) {
   int style = text_view_->GetStyle();
   SetFlagFromCheckbox(multiline_checkbox_, &flags, gfx::Canvas::MULTI_LINE);
   SetFlagFromCheckbox(break_checkbox_, &flags, gfx::Canvas::CHARACTER_BREAK);
-  SetFlagFromCheckbox(italic_checkbox_, &style, gfx::Font::ITALIC);
-  SetFlagFromCheckbox(underline_checkbox_, &style, gfx::Font::UNDERLINE);
+  SetFlagFromCheckbox(italic_checkbox_, &style, gfx::TextStyle::ITALIC);
+  SetFlagFromCheckbox(underline_checkbox_, &style, gfx::TextStyle::UNDERLINE);
   text_view_->set_flags(flags);
   text_view_->SetStyle(style);
   text_view_->SchedulePaint();

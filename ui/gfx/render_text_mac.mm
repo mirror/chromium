@@ -95,7 +95,7 @@ namespace internal {
 sk_sp<SkTypeface> CreateSkiaTypeface(const Font& font,
                                      bool italic,
                                      Font::Weight weight) {
-  const Font::FontStyle style = italic ? Font::ITALIC : Font::NORMAL;
+  const TextStyle style = italic ? TextStyle::ITALIC : TextStyle::NORMAL;
   Font font_with_style = font.Derive(0, style, weight);
   if (!font_with_style.GetNativeFont())
     return nullptr;

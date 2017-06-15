@@ -31,6 +31,7 @@
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/font.h"
 #include "ui/gfx/font_render_params.h"
+#include "ui/gfx/text_constants.h"
 #include "ui/gfx/win/scoped_set_map_mode.h"
 
 namespace {
@@ -63,8 +64,8 @@ int AdjustFontSize(int lf_height, int size_delta) {
 
 // Sets style properties on |font_info| based on |font_style|.
 void SetLogFontStyle(int font_style, LOGFONT* font_info) {
-  font_info->lfUnderline = (font_style & gfx::Font::UNDERLINE) != 0;
-  font_info->lfItalic = (font_style & gfx::Font::ITALIC) != 0;
+  font_info->lfUnderline = (font_style & gfx::TextStyle::UNDERLINE) != 0;
+  font_info->lfItalic = (font_style & gfx::TextStyle::ITALIC) != 0;
 }
 
 gfx::Font::Weight ToGfxFontWeight(int weight) {
@@ -483,9 +484,9 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromGDI(
       std::max<int>(1, font_metrics.tmHeight - font_metrics.tmInternalLeading);
   int style = 0;
   if (font_metrics.tmItalic)
-    style |= Font::ITALIC;
+    style |= TextStyle::ITALIC;
   if (font_metrics.tmUnderlined)
-    style |= Font::UNDERLINE;
+    style |= TextStyle::UNDERLINE;
 
   return new HFontRef(font, font_size, height, baseline, cap_height,
                       ave_char_width, ToGfxFontWeight(font_metrics.tmWeight),
@@ -578,9 +579,9 @@ PlatformFontWin::HFontRef* PlatformFontWin::CreateHFontRefFromSkia(
 
   int style = 0;
   if (italic)
-    style |= Font::ITALIC;
+    style |= TextStyle::ITALIC;
   if (font_info.lfUnderline)
-    style |= Font::UNDERLINE;
+    style |= TextStyle::UNDERLINE;
 
   // DirectWrite may have substituted the GDI font name with a fallback
   // font. Ensure that it is updated here.

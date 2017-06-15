@@ -14,6 +14,7 @@
 #include "ui/gfx/font_render_params.h"
 #include "ui/gfx/linux_font_delegate.h"
 #include "ui/gfx/test/fontconfig_util_linux.h"
+#include "ui/gfx/text_constants.h"
 
 namespace gfx {
 
@@ -22,7 +23,9 @@ namespace gfx {
 class TestFontDelegate : public LinuxFontDelegate {
  public:
   TestFontDelegate()
-      : size_pixels_(0), style_(Font::NORMAL), weight_(Font::Weight::NORMAL) {}
+      : size_pixels_(0),
+        style_(TextStyle::NORMAL),
+        weight_(Font::Weight::NORMAL) {}
   ~TestFontDelegate() override {}
 
   void set_family(const std::string& family) { family_ = family; }
@@ -95,7 +98,7 @@ TEST_F(PlatformFontLinuxTest, DefaultFont) {
 #else
   test_font_delegate_.set_family("Arial");
   test_font_delegate_.set_size_pixels(13);
-  test_font_delegate_.set_style(Font::NORMAL);
+  test_font_delegate_.set_style(TextStyle::NORMAL);
   FontRenderParams params;
   params.antialiasing = false;
   params.hinting = FontRenderParams::HINTING_FULL;
@@ -104,7 +107,7 @@ TEST_F(PlatformFontLinuxTest, DefaultFont) {
   scoped_refptr<gfx::PlatformFontLinux> font(new gfx::PlatformFontLinux());
   EXPECT_EQ("Arial", font->GetFontName());
   EXPECT_EQ(13, font->GetFontSize());
-  EXPECT_EQ(gfx::Font::NORMAL, font->GetStyle());
+  EXPECT_EQ(gfx::TextStyle::NORMAL, font->GetStyle());
 #if !defined(OS_CHROMEOS)
   // On Linux, the FontRenderParams returned by the the delegate should be used.
   EXPECT_EQ(params.antialiasing, font->GetFontRenderParams().antialiasing);
@@ -118,14 +121,14 @@ TEST_F(PlatformFontLinuxTest, DefaultFont) {
 #else
   test_font_delegate_.set_family("Times New Roman");
   test_font_delegate_.set_size_pixels(15);
-  test_font_delegate_.set_style(gfx::Font::ITALIC);
+  test_font_delegate_.set_style(gfx::TextStyle::ITALIC);
   test_font_delegate_.set_weight(gfx::Font::Weight::BOLD);
 #endif
   PlatformFontLinux::ReloadDefaultFont();
   scoped_refptr<gfx::PlatformFontLinux> font2(new gfx::PlatformFontLinux());
   EXPECT_EQ("Times New Roman", font2->GetFontName());
   EXPECT_EQ(15, font2->GetFontSize());
-  EXPECT_NE(font2->GetStyle() & Font::ITALIC, 0);
+  EXPECT_NE(font2->GetStyle() & TextStyle::ITALIC, 0);
   EXPECT_EQ(gfx::Font::Weight::BOLD, font2->GetWeight());
 }
 

@@ -24,7 +24,7 @@ std::string BuildDescription(const std::vector<std::string>& families,
   std::string description = base::JoinString(families, ",");
   description += ",";
 
-  if (style & Font::ITALIC)
+  if (style & TextStyle::ITALIC)
     description += "Italic ";
   switch (weight) {
     case Font::Weight::THIN:
@@ -200,7 +200,8 @@ const std::vector<Font>& FontListImpl::GetFonts() const {
       DCHECK(!font_names[i].empty());
 
       Font font(font_names[i], font_size_);
-      if (font_style_ == Font::NORMAL && font_weight_ == Font::Weight::NORMAL)
+      if (font_style_ == TextStyle::NORMAL &&
+          font_weight_ == Font::Weight::NORMAL)
         fonts_.push_back(font);
       else
         fonts_.push_back(font.Derive(0, font_style_, font_weight_));
