@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ab8669dd_8583c29a",
+        "filename": "cc/base/rtree.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 138,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-15T00:53:17Z",
+      "side": 1,
+      "message": "In practice this doesn\u0027t live on anywhere and gets deleted immediately.  I just wanted to leave it in a good state.",
+      "parentUuid": "a4e1e59f_9b67eafd",
+      "revId": "557e9a901ae3f646aa32140da3329f554efc5165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f20347f7_f9a627e5",
         "filename": "cc/paint/discardable_image_map.cc",
         "patchSetId": 3
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "789cfdae_38ed7ae1",
+        "filename": "cc/paint/display_item_list.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-15T00:53:17Z",
+      "side": 1,
+      "message": "DISALLOW_COPY_AND_ASSIGN \u003c_\u003c\n\nI don\u0027t like DCHECK-but-also-do-things-if-it-would-have-failed, but I both wanted to DCHECK that the state was reasonable but also set every member just for obviousness.",
+      "parentUuid": "ae1cb0a3_21f4e45c",
+      "revId": "557e9a901ae3f646aa32140da3329f554efc5165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1d46da21_defd26c7",
         "filename": "cc/paint/paint_op_buffer.cc",
         "patchSetId": 3
@@ -64,6 +100,24 @@
       "writtenOn": "2017-06-15T00:31:47Z",
       "side": 1,
       "message": "Should we add a similar operator\u003d\u003d?",
+      "revId": "557e9a901ae3f646aa32140da3329f554efc5165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88911ca3_d2d64820",
+        "filename": "cc/paint/paint_op_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 567,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-15T00:53:17Z",
+      "side": 1,
+      "message": "Oh yeah, good thought, thanks!",
+      "parentUuid": "1d46da21_defd26c7",
       "revId": "557e9a901ae3f646aa32140da3329f554efc5165",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
