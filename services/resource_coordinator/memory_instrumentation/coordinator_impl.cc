@@ -194,7 +194,7 @@ void CoordinatorImpl::OnProcessMemoryDumpResponse(
     mojom::ClientProcess* client_process,
     uint64_t dump_guid,
     bool success,
-    mojom::ProcessMemoryDumpPtr process_memory_dump) {
+    mojom::ProcessMemoryDumpInternalPtr process_memory_dump) {
   DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
   auto it = pending_clients_for_current_dump_.find(client_process);
 

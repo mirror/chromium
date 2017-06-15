@@ -69,8 +69,8 @@ void ClientProcessImpl::OnProcessMemoryDumpDone(
     uint64_t dump_guid,
     bool success,
     const base::Optional<base::trace_event::MemoryDumpCallbackResult>& result) {
-  mojom::ProcessMemoryDumpPtr process_memory_dump(
-      mojom::ProcessMemoryDump::New());
+  mojom::ProcessMemoryDumpInternalPtr process_memory_dump(
+      mojom::ProcessMemoryDumpInternal::New());
   process_memory_dump->process_type = config_.process_type();
   if (result) {
     process_memory_dump->os_dump = result->os_dump;
