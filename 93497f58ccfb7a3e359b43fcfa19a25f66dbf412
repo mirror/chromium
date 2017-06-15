@@ -16,6 +16,24 @@
       "revId": "93497f58ccfb7a3e359b43fcfa19a25f66dbf412",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b790d7fa_1512d233",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/FetchParameters.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-15T01:01:41Z",
+      "side": 1,
+      "message": "Let me take this back. Just saw that the next CL address this.",
+      "parentUuid": "7bc7bb7f_7431dd43",
+      "revId": "93497f58ccfb7a3e359b43fcfa19a25f66dbf412",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
