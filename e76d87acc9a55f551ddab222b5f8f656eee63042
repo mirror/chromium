@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41c75861_c639f5f6",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-15T07:23:59Z",
+      "side": 0,
+      "message": "This is all due to the code previously assuming the OTR prefs exist as soon as the underlying profile does. This is no longer true so we wait for the OTR profile to be created before trying to monitor its prefs.",
+      "revId": "e76d87acc9a55f551ddab222b5f8f656eee63042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
