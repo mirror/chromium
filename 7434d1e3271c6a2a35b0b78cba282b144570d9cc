@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51dd5e80_a3f10f19",
+        "filename": "third_party/WebKit/Source/build/scripts/make_computed_style_base.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-16T02:05:05Z",
+      "side": 1,
+      "message": "You won\u0027t need this anymore.",
+      "revId": "7434d1e3271c6a2a35b0b78cba282b144570d9cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
