@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2ad6b361_4beddf2e",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "In tests, connector is set as nullptr now.\nDone.",
+      "parentUuid": "390f2c38_29a3f151",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "68fe806c_5276dc87",
         "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06ea6b15_53ae3cce",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Do you mean the check is done in some other file?\nAnyway, it is true that this class always run on UI thread.\nDone.",
+      "parentUuid": "68fe806c_5276dc87",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a6a8d2ef_06367a93",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c95bb9f_179da511",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "adcb64d4_02846426",
         "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
         "patchSetId": 6
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-16T06:33:26Z",
       "side": 1,
       "message": "From this code, it\u0027s not clear why we need to pass connector to the scheduler.\nInstead of connector, can\u0027t we pass WakeLockProvider?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0cd5cf6_3e86411a",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Thanks pointing out this.\nPassing WakeLockProvider needs \"std::move\u003cWakeLockProviderPtr\u003e\" all the way but it is more specific. While passing raw pointer of connector is much clean.\nI\u0027ll change it if you strongly feel passing WakeLockProviderPtr is much better?",
+      "parentUuid": "adcb64d4_02846426",
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "82831f7f_b0345b8c",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done as previous.",
+      "parentUuid": "c20531e9_ffcfe89f",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5df50ea_2b299a6f",
         "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
         "patchSetId": 6
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-16T06:33:26Z",
       "side": 1,
       "message": "Remove this check or move this to the top of this function.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83fe7456_c98f8a36",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "The DCHECK will fail in unittest. That\u0027s why I put it in the if() block.",
+      "parentUuid": "a5df50ea_2b299a6f",
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -118,6 +226,24 @@
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4f985cb_f05a9077",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64ccfd9c_fa789e44",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "0696d89d_b23684f8",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "387a72b3_ee1b8bdf",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ecccc31f_17e4bd57",
         "filename": "components/drive/job_scheduler.cc",
         "patchSetId": 6
@@ -172,6 +316,24 @@
     },
     {
       "key": {
+        "uuid": "00cf4e15_8d952f23",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ecccc31f_17e4bd57",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c7c70fd4_5eec80a8",
         "filename": "components/drive/job_scheduler.h",
         "patchSetId": 6
@@ -183,6 +345,24 @@
       "writtenOn": "2017-06-16T06:33:26Z",
       "side": 1,
       "message": "Can\u0027t we avoid having 2 ctors?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76fa5571_f026412c",
+        "filename": "components/drive/job_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-16T10:01:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "c7c70fd4_5eec80a8",
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
