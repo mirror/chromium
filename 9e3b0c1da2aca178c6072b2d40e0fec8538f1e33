@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bf8ee8ec_50889fa3",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-16T05:06:24Z",
+      "side": 1,
+      "message": "nit: currentyly -\u003e currently :)",
+      "revId": "9e3b0c1da2aca178c6072b2d40e0fec8538f1e33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
