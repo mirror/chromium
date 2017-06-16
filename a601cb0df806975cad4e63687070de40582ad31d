@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fc726351_88c9b4c9",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T22:38:28Z",
+      "side": 1,
+      "message": "I like this design. It\u0027s similar to the design of cc\u0027s property tree.",
+      "revId": "a601cb0df806975cad4e63687070de40582ad31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56be6422_6411aed6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T22:38:28Z",
+      "side": 1,
+      "message": "When you use these in PAC, can you DCHECK each of these?",
+      "revId": "a601cb0df806975cad4e63687070de40582ad31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac6e0b7a_e5fe7823",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintPropertyNode.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T22:38:28Z",
+      "side": 1,
+      "message": "Nit: make these private + friend PaintArtifactCompositor?",
+      "revId": "a601cb0df806975cad4e63687070de40582ad31d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
