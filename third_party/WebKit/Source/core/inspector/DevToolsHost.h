@@ -38,8 +38,8 @@ namespace blink {
 
 class ContextMenuItem;
 class FrontendMenuProvider;
-class InspectorFrontendClient;
 class LocalFrame;
+class WebDevToolsFrontendClient;
 
 class CORE_EXPORT DevToolsHost final
     : public GarbageCollectedFinalized<DevToolsHost>,
@@ -47,7 +47,7 @@ class CORE_EXPORT DevToolsHost final
   DEFINE_WRAPPERTYPEINFO();
 
  public:
-  static DevToolsHost* Create(InspectorFrontendClient* client,
+  static DevToolsHost* Create(WebDevToolsFrontendClient* client,
                               LocalFrame* frontend_frame) {
     return new DevToolsHost(client, frontend_frame);
   }
@@ -73,18 +73,16 @@ class CORE_EXPORT DevToolsHost final
 
   bool isUnderTest();
   bool isHostedMode();
-
   LocalFrame* FrontendFrame() { return frontend_frame_; }
-
   void ClearMenuProvider() { menu_provider_ = nullptr; }
 
  private:
   friend class FrontendMenuProvider;
 
-  DevToolsHost(InspectorFrontendClient*, LocalFrame* frontend_frame);
+  DevToolsHost(WebDevToolsFrontendClient*, LocalFrame* frontend_frame);
   void EvaluateScript(const String&);
 
-  InspectorFrontendClient* client_;
+  WebDevToolsFrontendClient* client_;
   Member<LocalFrame> frontend_frame_;
   Member<FrontendMenuProvider> menu_provider_;
 };
