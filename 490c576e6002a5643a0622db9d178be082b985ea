@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ea35def_bfa44ad7",
+        "filename": "third_party/WebKit/Source/core/inspector/DevToolsHost.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 232,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-16T23:09:11Z",
+      "side": 1,
+      "message": "I don\u0027t think this is a long-term solution either.",
+      "range": {
+        "startLine": 232,
+        "startChar": 8,
+        "endLine": 232,
+        "endChar": 16
+      },
+      "revId": "490c576e6002a5643a0622db9d178be082b985ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
