@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d42871d_6fe41ea3",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainterTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-16T00:14:56Z",
+      "side": 1,
+      "message": "Xianzhu, this expectation is failing with this patch in the SPv1 and RootLayerScrolls configuration. The reason is that this patch forces the root layer in RLS to be composited and have composited scrolling layers.\n\nWhen we go to paint the self_painting_layer LayoutObject, it\u0027s painted into the scrolling contents layer so in CompositedLayerMapping::PaintContents we set kPaintLayerPaintingSkipRootBackground. This causes us to avoid calling SetPreviousPaintPhaseDescendantBlockBackgroundsEmpty in PaintForegroundForFragments where without the patch we did call it since both foreground and background are painted into the same GraphicsLayer. \n\nI don\u0027t understand whether the behavior is broken in this case or if I just changed an assumption the test was making. Is it ok to skip this check for the RLS+SPv1 case? Or is there a modification to the check I should make. The test passes in SPv2.",
+      "range": {
+        "startLine": 605,
+        "startChar": 15,
+        "endLine": 605,
+        "endChar": 34
+      },
+      "revId": "685607b1785c221fe3b48c279373660469419e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
