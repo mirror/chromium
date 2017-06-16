@@ -131,6 +131,7 @@ class PreviewEliderLabel : public views::Label {
 std::unique_ptr<views::Button> CreatePaymentSheetRow(
     views::ButtonListener* listener,
     const base::string16& section_name,
+    const base::string16& accessible_content,
     std::unique_ptr<views::View> content_view,
     std::unique_ptr<views::View> extra_content_view,
     std::unique_ptr<views::View> trailing_button,
@@ -193,6 +194,10 @@ std::unique_ptr<views::Button> CreatePaymentSheetRow(
 
   layout->AddView(trailing_button.release());
 
+  row->SetAccessibleName(
+      l10n_util::GetStringFUTF16(IDS_PAYMENTS_ROW_ACCESSIBLE_NAME_FORMAT,
+                                 section_name, accessible_content));
+
   return std::move(row);
 }
 
@@ -254,6 +259,12 @@ class PaymentSheetRowBuilder {
     return *this;
   }
 
+  PaymentSheetRowBuilder& AccessibleContent(
+      const base::string16& accessible_content) {
+    accessible_content_ = accessible_content;
+    return *this;
+  }
+
   // Creates a clickable row to be displayed in the Payment Sheet. It contains
   // a section name and some content, followed by a chevron as a clickability
   // affordance. Both, either, or none of |content_view| and
@@ -276,7 +287,7 @@ class PaymentSheetRowBuilder {
         views::kSubmenuArrowIcon,
         color_utils::DeriveDefaultIconColor(label->enabled_color())));
     std::unique_ptr<views::Button> section = CreatePaymentSheetRow(
-        listener_, section_name_, std::move(content_view),
+        listener_, section_name_, accessible_content_, std::move(content_view),
         std::move(extra_content_view), std::move(chevron),
         /*clickable=*/true, /*extra_trailing_inset=*/true);
     section->set_tag(tag_);
@@ -310,10 +321,12 @@ class PaymentSheetRowBuilder {
       int n,
       const base::string16& button_string,
       bool button_enabled) {
+    DCHECK(accessible_content_.empty());
     std::unique_ptr<PreviewEliderLabel> content_view =
         base::MakeUnique<PreviewEliderLabel>(preview_text, format_string, n,
                                              STYLE_HINT);
     content_view->SetHorizontalAlignment(gfx::ALIGN_LEFT);
+    AccessibleContent(content_view->text());
     return CreateWithButton(std::move(content_view), button_string,
                             button_enabled);
   }
@@ -335,13 +348,14 @@ class PaymentSheetRowBuilder {
     button->SetFocusBehavior(views::View::FocusBehavior::ALWAYS);
     button->SetEnabled(button_enabled);
     return CreatePaymentSheetRow(
-        listener_, section_name_, std::move(content_view), nullptr,
-        std::move(button), /*clickable=*/false,
+        listener_, section_name_, accessible_content_, std::move(content_view),
+        nullptr, std::move(button), /*clickable=*/false,
         /*extra_trailing_inset=*/false, views::GridLayout::CENTER);
   }
 
   views::ButtonListener* listener_;
   base::string16 section_name_;
+  base::string16 accessible_content_;
   int tag_;
   int id_;
   DISALLOW_COPY_AND_ASSIGN(PaymentSheetRowBuilder);
@@ -610,14 +624,16 @@ PaymentSheetViewController::CreatePaymentSheetSummaryRow() {
 }
 
 std::unique_ptr<views::View>
-PaymentSheetViewController::CreateShippingSectionContent() {
+PaymentSheetViewController::CreateShippingSectionContent(
+    base::string16* accessible_content) {
+  DCHECK(accessible_content);
   autofill::AutofillProfile* profile = state()->selected_shipping_profile();
   if (!profile)
     return base::MakeUnique<views::Label>(base::string16());
 
   return GetShippingAddressLabelWithMissingInfo(
       AddressStyleType::SUMMARY, state()->GetApplicationLocale(), *profile,
-      *(state()->profile_comparator()));
+      *(state()->profile_comparator()), accessible_content);
 }
 
 // Creates the Shipping row, which contains a "Shipping address" label, the
@@ -634,7 +650,11 @@ std::unique_ptr<views::Button> PaymentSheetViewController::CreateShippingRow() {
   builder.Tag(PaymentSheetViewControllerTags::SHOW_SHIPPING_BUTTON);
   if (state()->selected_shipping_profile()) {
     builder.Id(DialogViewID::PAYMENT_SHEET_SHIPPING_ADDRESS_SECTION);
-    return builder.CreateWithChevron(CreateShippingSectionContent(), nullptr);
+    base::string16 accessible_content;
+    std::unique_ptr<views::View> content =
+        CreateShippingSectionContent(&accessible_content);
+    return builder.AccessibleContent(accessible_content)
+        .CreateWithChevron(std::move(content), nullptr);
   } else {
     builder.Id(DialogViewID::PAYMENT_SHEET_SHIPPING_ADDRESS_SECTION_BUTTON);
     if (state()->shipping_profiles().empty()) {
@@ -649,9 +669,10 @@ std::unique_ptr<views::Button> PaymentSheetViewController::CreateShippingRow() {
           GetShippingAddressLabelFormAutofillProfile(
               *state()->shipping_profiles()[0],
               state()->GetApplicationLocale());
-      return builder.CreateWithButton(truncated_content,
-                                      l10n_util::GetStringUTF16(IDS_CHOOSE),
-                                      /*button_enabled=*/true);
+      return builder.AccessibleContent(truncated_content)
+          .CreateWithButton(truncated_content,
+                            l10n_util::GetStringUTF16(IDS_CHOOSE),
+                            /*button_enabled=*/true);
     } else {
       base::string16 format = l10n_util::GetPluralStringFUTF16(
           IDS_PAYMENT_REQUEST_SHIPPING_ADDRESSES_PREVIEW,
@@ -739,13 +760,15 @@ PaymentSheetViewController::CreatePaymentMethodRow() {
 }
 
 std::unique_ptr<views::View>
-PaymentSheetViewController::CreateContactInfoSectionContent() {
+PaymentSheetViewController::CreateContactInfoSectionContent(
+    base::string16* accessible_content) {
   autofill::AutofillProfile* profile = state()->selected_contact_profile();
-  return profile
-             ? payments::GetContactInfoLabel(
-                   AddressStyleType::SUMMARY, state()->GetApplicationLocale(),
-                   *profile, *spec(), *(state()->profile_comparator()))
-             : base::MakeUnique<views::Label>(base::string16());
+  *accessible_content = base::string16();
+  return profile ? payments::GetContactInfoLabel(
+                       AddressStyleType::SUMMARY,
+                       state()->GetApplicationLocale(), *profile, *spec(),
+                       *(state()->profile_comparator()), accessible_content)
+                 : base::MakeUnique<views::Label>(base::string16());
 }
 
 // Creates the Contact Info row, which contains a "Contact info" label; the
@@ -763,8 +786,12 @@ PaymentSheetViewController::CreateContactInfoRow() {
   builder.Tag(PaymentSheetViewControllerTags::SHOW_CONTACT_INFO_BUTTON);
 
   if (state()->selected_contact_profile()) {
+    base::string16 accessible_content;
+    std::unique_ptr<views::View> content =
+        CreateContactInfoSectionContent(&accessible_content);
     return builder.Id(DialogViewID::PAYMENT_SHEET_CONTACT_INFO_SECTION)
-        .CreateWithChevron(CreateContactInfoSectionContent(), nullptr);
+        .AccessibleContent(accessible_content)
+        .CreateWithChevron(std::move(content), nullptr);
   } else {
     builder.Id(DialogViewID::PAYMENT_SHEET_CONTACT_INFO_SECTION_BUTTON);
     if (state()->contact_profiles().empty()) {
@@ -779,9 +806,10 @@ PaymentSheetViewController::CreateContactInfoRow() {
               {autofill::NAME_FULL, autofill::PHONE_HOME_WHOLE_NUMBER,
                autofill::EMAIL_ADDRESS},
               3, state()->GetApplicationLocale());
-      return builder.CreateWithButton(truncated_content,
-                                      l10n_util::GetStringUTF16(IDS_CHOOSE),
-                                      /*button_enabled=*/true);
+      return builder.AccessibleContent(truncated_content)
+          .CreateWithButton(truncated_content,
+                            l10n_util::GetStringUTF16(IDS_CHOOSE),
+                            /*button_enabled=*/true);
     } else {
       base::string16 preview =
           state()->contact_profiles()[0]->ConstructInferredLabel(
@@ -827,12 +855,14 @@ PaymentSheetViewController::CreateShippingOptionRow() {
 
     if (selected_option) {
       // 1.2 Show the selected shipping option.
+      base::string16 accessible_content;
       std::unique_ptr<views::View> option_row_content =
           CreateShippingOptionLabel(
               selected_option,
               spec()->GetFormattedCurrencyAmount(selected_option->amount),
-              /*emphasize_label=*/false);
+              /*emphasize_label=*/false, &accessible_content);
       return builder.Id(DialogViewID::PAYMENT_SHEET_SHIPPING_OPTION_SECTION)
+          .AccessibleContent(accessible_content)
           .CreateWithChevron(std::move(option_row_content), nullptr);
     } else {
       // 1.3 There are options, none are selected: show the enabled Choose
