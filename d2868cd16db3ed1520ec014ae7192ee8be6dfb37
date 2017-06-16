@@ -16,6 +16,24 @@
       "revId": "d2868cd16db3ed1520ec014ae7192ee8be6dfb37",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d3d96c8_15554095",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializerImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T17:06:28Z",
+      "side": 1,
+      "message": "+1, core/frame seems like the right place.",
+      "parentUuid": "10bf1c3e_efda788c",
+      "revId": "d2868cd16db3ed1520ec014ae7192ee8be6dfb37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
