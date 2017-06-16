@@ -16,6 +16,7 @@ include_rules = [
     "+base/metrics/histogram_base.h",
     "+base/metrics/histogram_macros.h",
     "+base/metrics/histogram_samples.h",
+    "+base/metrics/single_sample_metrics.h",
     "+base/metrics/sparse_histogram.h",
     "+base/numerics/safe_conversions.h",
     "+base/single_thread_task_runner.h",

@@ -52,6 +52,7 @@
 #include "platform/graphics/GraphicsLayerClient.h"
 #include "platform/scroll/ScrollTypes.h"
 #include "platform/scroll/Scrollbar.h"
+#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "platform/scroll/SmoothScrollSequencer.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/AutoReset.h"
@@ -266,6 +267,8 @@ class CORE_EXPORT LocalFrameView final
   void InvalidateBackgroundAttachmentFixedObjects();
 
   void HandleLoadCompleted();
+
+  void RecordScrollerSizeRelatedMetrics() const;
 
   void UpdateDocumentAnnotatedRegions() const;
 
@@ -1232,6 +1235,11 @@ class CORE_EXPORT LocalFrameView final
   Member<PrintContext> print_context_;
 
   FRIEND_TEST_ALL_PREFIXES(WebViewTest, DeviceEmulationResetScrollbars);
+
+  // To report metrics upon leaving the page, we should use SingleSampleMetric
+  // to overcome the fast shutdown problem.
+  std::unique_ptr<SingleSampleMetric> scroller_size_metric_;
+  std::unique_ptr<SingleSampleMetric> scroller_size_percentage_metric_;
 };
 
 inline void LocalFrameView::IncrementVisuallyNonEmptyCharacterCount(
