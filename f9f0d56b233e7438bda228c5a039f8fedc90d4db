@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb79b3f0_42fb73c1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T05:39:43Z",
+      "side": 1,
+      "message": ".cc",
+      "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83075bab_a524fdf2",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T05:39:43Z",
+      "side": 1,
+      "message": "connector is NOT thread- or sequence-safe.\n\nyou can still initialize the TLS coordinator lazily here (i.e. call MakeRequest from any thread), but you need to post to the main thread to call connector_-\u003eBindInterface.",
+      "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "56c16c91_b1d2e880",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T05:39:43Z",
+      "side": 1,
+      "message": "nit: should this be a OnceCallback?",
+      "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
