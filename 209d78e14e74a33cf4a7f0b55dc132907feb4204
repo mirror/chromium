@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "128f6748_d76373d5",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "This request was issued by a main frame navigation.",
+      "range": {
+        "startLine": 102,
+        "startChar": 23,
+        "endLine": 102,
+        "endChar": 25
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a1fca32d_e30e429e",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "Navigating chrome (by clicking on a link, bookmark, history item, using session restore, etc).",
+      "range": {
+        "startLine": 103,
+        "startChar": 21,
+        "endLine": 103,
+        "endChar": 22
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51198cb5_13cba5eb",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "URL, any form data submitted by the navigating page, possibly the URL of the referring webpage, user-agent.  How complete is this supposed to be?",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa92942f_0116c5e1",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 108,
+        "startChar": 12,
+        "endLine": 108,
+        "endChar": 27
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "866a94c1_ed588702",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "The main one",
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e4aa3af_a547d487",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "None",
+      "range": {
+        "startLine": 110,
+        "startChar": 26,
+        "endLine": 110,
+        "endChar": 0
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb4cffa_6cef02c0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:21:02Z",
+      "side": 1,
+      "message": "Without this type of request, Chrome would be unable to navigate to websites.",
+      "range": {
+        "startLine": 116,
+        "startChar": 43,
+        "endLine": 116,
+        "endChar": 44
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
