@@ -30,6 +30,15 @@ class CONTENT_EXPORT WebMouseEventBuilder {
           blink::WebPointerProperties::PointerType::kMouse);
 };
 
+class CONTENT_EXPORT WebTouchEventBuilder {
+ public:
+  static blink::WebTouchEvent Build(
+      NSEvent* event,
+      NSView* view,
+      blink::WebPointerProperties::PointerType pointerType =
+          blink::WebPointerProperties::PointerType::kTouch);
+};
+
 class CONTENT_EXPORT WebMouseWheelEventBuilder {
  public:
   static blink::WebMouseWheelEvent Build(NSEvent* event,
