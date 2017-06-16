@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "890bae1a_0117ac94",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-06-16T04:58:49Z",
+      "side": 1,
+      "message": "Using Persistent on stack seems weird. Maybe use HeapHashSet\u003cWeakMember\u003cResourceFinishObserver\u003e\u003e* instead?",
+      "revId": "01bcc9b69a4063963214a017ef5d4b2494aeb925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f587f5a4_d62fc6f6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1115933
+      },
+      "writtenOn": "2017-06-16T04:58:49Z",
+      "side": 1,
+      "message": "tzik, Could we improve ParamStorageTraits to catch this sort of error?",
+      "revId": "01bcc9b69a4063963214a017ef5d4b2494aeb925",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
