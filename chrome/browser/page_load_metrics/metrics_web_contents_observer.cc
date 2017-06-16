@@ -592,7 +592,8 @@ MetricsWebContentsObserver::NotifyAbortedProvisionalLoadsNewNavigation(
 void MetricsWebContentsObserver::OnTimingUpdated(
     content::RenderFrameHost* render_frame_host,
     const mojom::PageLoadTiming& timing,
-    const mojom::PageLoadMetadata& metadata) {
+    const mojom::PageLoadMetadata& metadata,
+    const std::vector<blink::WebFeature>& new_features) {
   // We may receive notifications from frames that have been navigated away
   // from. We simply ignore them.
   if (GetMainFrame(render_frame_host) != web_contents()->GetMainFrame()) {
@@ -618,8 +619,8 @@ void MetricsWebContentsObserver::OnTimingUpdated(
   if (error)
     return;
 
-  committed_load_->metrics_update_dispatcher()->UpdateMetrics(render_frame_host,
-                                                              timing, metadata);
+  committed_load_->metrics_update_dispatcher()->UpdateMetrics(
+      render_frame_host, timing, metadata, new_features);
 }
 
 void MetricsWebContentsObserver::OnUpdateTimingOverIPC(
