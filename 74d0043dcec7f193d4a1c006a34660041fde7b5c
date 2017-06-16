@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c119b5e_cb4aab4e",
+        "filename": "third_party/WebKit/Source/platform/wtf/PassRefPtr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T20:49:38Z",
+      "side": 0,
+      "message": "SkRefCnt doesn\u0027t appear to be used anymore in Blink (and probably we should just remove all references to it from Blink).\n\nIf preferred, I\u0027m happy to leave this in for now... but it doesn\u0027t seem useful anymore.",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "74d0043dcec7f193d4a1c006a34660041fde7b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

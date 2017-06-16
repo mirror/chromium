@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76f306e2_6f235981",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefPtr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T20:49:38Z",
+      "side": 1,
+      "message": "Seems reasonable for there to be a move conversion constructor to match the PassRefPtr overload below.\n\nIronically enough, the comment on lines 64-65 appears to be slightly out of date \u003d)",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 28
+      },
+      "revId": "6fd78c0c9e4b7a01745bdda6514101cf7ecc7748",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
