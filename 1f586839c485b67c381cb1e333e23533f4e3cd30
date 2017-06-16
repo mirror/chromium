@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea68ec2a_3450b1b0",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-16T02:02:21Z",
+      "side": 1,
+      "message": "We can probably remove this class as well and move the statics somewhere if you think it\u0027s worth it.",
+      "revId": "1f586839c485b67c381cb1e333e23533f4e3cd30",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
