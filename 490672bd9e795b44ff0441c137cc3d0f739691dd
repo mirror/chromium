@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "28baf836_dbd7b231",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-16T00:32:09Z",
+      "side": 1,
+      "message": "Yeah, it\u0027s the right direction.",
+      "parentUuid": "2fdfc7dd_33849615",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "514c2682_8a7bdff5",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 2
