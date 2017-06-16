@@ -16,6 +16,24 @@
       "revId": "2a967728526fee4da2a54bff4971d8c40401ede0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3442006a_96578f95",
+        "filename": "media/audio/audio_input_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002285
+      },
+      "writtenOn": "2017-06-16T12:53:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cb659a28_ad7c5235",
+      "revId": "2a967728526fee4da2a54bff4971d8c40401ede0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
