@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f4378ff0_c2e9b873",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Changing it to weeks as per our offline discussion",
+      "parentUuid": "64ea4d30_9b52caa9",
+      "range": {
+        "startLine": 7,
+        "startChar": 57,
+        "endLine": 7,
+        "endChar": 65
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6006ac6c_649feb7a",
         "filename": "docs/process/release_cycle.md",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76515371_9f609fb5",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Makes sense! Done",
+      "parentUuid": "6006ac6c_649feb7a",
+      "range": {
+        "startLine": 10,
+        "startChar": 3,
+        "endLine": 10,
+        "endChar": 27
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6485ea5a_0945ecb5",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddbb8005_89965870",
+      "range": {
+        "startLine": 12,
+        "startChar": 0,
+        "endLine": 12,
+        "endChar": 53
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1756f541_701ee2b3",
         "filename": "docs/process/release_cycle.md",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76814264_07fe89a4",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1756f541_701ee2b3",
+      "range": {
+        "startLine": 16,
+        "startChar": 21,
+        "endLine": 16,
+        "endChar": 34
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "632fa172_9343b540",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f29b9fe1_d74d2ae2",
+      "range": {
+        "startLine": 27,
+        "startChar": 4,
+        "endLine": 27,
+        "endChar": 17
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d6102b49_63bcbbcb",
         "filename": "docs/process/release_cycle.md",
         "patchSetId": 2
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-15T17:59:49Z",
       "side": 1,
       "message": "This same disclaimer could probably be applied to the \"Stable Release\" milestone as well - perhaps we should just have a disclaimer somewhere that says \"all procedural dates like FF, branch are fixed, but release dates may flex depending on quality issues\" or something like that?",
+      "range": {
+        "startLine": 35,
+        "startChar": 70,
+        "endLine": 37,
+        "endChar": 10
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3ba139f_4909d1ae",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "I added a note right below the schedule. Let me know if we can put it somewhere else",
+      "parentUuid": "d6102b49_63bcbbcb",
       "range": {
         "startLine": 35,
         "startChar": 70,
@@ -160,6 +304,30 @@
       "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c37952f3_ac67e388",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81613a22_d95419ac",
+      "range": {
+        "startLine": 44,
+        "startChar": 55,
+        "endLine": 45,
+        "endChar": 12
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "c170c870_4e16d092",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Yes we can cancel it and push a new version. We don\u0027t just have control over the rollout percentage. So we can\u0027t decide to go from 1% on day 1 to 100% on day 2. We have to follow this already defined pattern.",
+      "parentUuid": "96191afe_e48538dd",
+      "range": {
+        "startLine": 66,
+        "startChar": 26,
+        "endLine": 67,
+        "endChar": 43
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d6168a30_215f5337",
         "filename": "docs/process/release_cycle.md",
         "patchSetId": 2
@@ -229,6 +421,30 @@
       "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a32b014_add13b32",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d6168a30_215f5337",
+      "range": {
+        "startLine": 73,
+        "startChar": 20,
+        "endLine": 73,
+        "endChar": 30
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -278,6 +494,54 @@
     },
     {
       "key": {
+        "uuid": "180b8782_957baf3b",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3e728000_633963d9",
+      "range": {
+        "startLine": 74,
+        "startChar": 46,
+        "endLine": 74,
+        "endChar": 79
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2beed3d0_ef8fef67",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd71a367_2c53dd2d",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 38
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8e7bfe68_6d206e9c",
         "filename": "docs/process/release_cycle.md",
         "patchSetId": 2
@@ -289,6 +553,30 @@
       "writtenOn": "2017-06-15T17:59:49Z",
       "side": 1,
       "message": "Let\u0027s tone this down a bit as it might worry users into thinking we have a lot of these (we don\u0027t).  I\u0027d recommend \"Except for extremely critical issues (e.g. security or privacy escalations), ...\"",
+      "range": {
+        "startLine": 75,
+        "startChar": 73,
+        "endLine": 76,
+        "endChar": 36
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114b30af_de17a643",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "That is right!",
+      "parentUuid": "8e7bfe68_6d206e9c",
       "range": {
         "startLine": 75,
         "startChar": 73,
@@ -321,6 +609,30 @@
       "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6303720b_8a11c438",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1133889
+      },
+      "writtenOn": "2017-06-16T00:12:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3900a288_69e1cf9e",
+      "range": {
+        "startLine": 77,
+        "startChar": 48,
+        "endLine": 77,
+        "endChar": 77
+      },
+      "revId": "06ec116c11e92cd6cc5743d10b78080b42122cde",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
