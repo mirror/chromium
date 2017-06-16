@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "da72ad04_8229c464",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-16T00:32:29Z",
+      "side": 1,
+      "message": "Have I misunderstood the macros? But I see the definition is sequence_checker_ instead of my_sequence_checker_.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 37,
+        "endChar": 54
+      },
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3e45f4e7_b7cbe058",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-16T00:32:29Z",
+      "side": 1,
+      "message": "Should we add the same sequence_checker_ here?",
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d802cee_1cca1c9e",
         "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.h",
         "patchSetId": 1
@@ -31,6 +71,29 @@
       "side": 1,
       "message": "This line declares sequence checker. DCHECK_CALLED_ON_VALID_SEQUENCE() statements verify that the the code is called is executed on the right sequence.",
       "parentUuid": "8d802cee_1cca1c9e",
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dccc988d_75b5f326",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-16T00:32:29Z",
+      "side": 1,
+      "message": "I do not see the comment of deprecating BrowserThread::UI. Will the entire BrowserThread class be deprecated?",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 19
+      },
       "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
