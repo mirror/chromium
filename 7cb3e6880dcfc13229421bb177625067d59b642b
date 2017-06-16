@@ -46,6 +46,23 @@
       "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a671b4_cafe9e0d",
+        "filename": "components/filesystem/directory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-06-16T17:32:20Z",
+      "side": 1,
+      "message": "I believe that OS_POSIX is *not* defined when building for CrOS.",
+      "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
