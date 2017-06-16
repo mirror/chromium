@@ -203,12 +203,14 @@ const base::Feature kMaterialDesignIncognitoNTP{
 #endif
 };
 
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#if !defined(OS_IOS)
 // Enables media content bitstream remoting, an optimization that can activate
 // during Cast Tab Mirroring.
 const base::Feature kMediaRemoting{"MediaRemoting",
                                    base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // !defined(OS_IOS)
 
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 // If enabled, replaces the <extensionview> controller in the route details view
 // of the Media Router dialog with the controller bundled with the WebUI
 // resources.

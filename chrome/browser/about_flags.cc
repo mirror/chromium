@@ -2689,9 +2689,9 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kCrossProcessGuestViewIsolationName,
      flag_descriptions::kCrossProcessGuestViewIsolationDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kGuestViewCrossProcessFrames)},
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#if !defined(OS_IOS)
     {"media-remoting", flag_descriptions::kMediaRemotingName,
-     flag_descriptions::kMediaRemotingDescription, kOsDesktop,
+     flag_descriptions::kMediaRemotingDescription, kOsDesktop | kOsAndroid,
      FEATURE_VALUE_TYPE(features::kMediaRemoting)},
 #endif
 #if defined(OS_ANDROID)

@@ -109,8 +109,11 @@ extern const base::Feature kAcknowledgeNtpOverrideOnDeactivate;
 
 extern const base::Feature kMaterialDesignIncognitoNTP;
 
-#if !defined(OS_ANDROID) && !defined(OS_IOS)
+#if !defined(OS_IOS)
 extern const base::Feature kMediaRemoting;
+#endif  // !defined(OS_IOS)
+
+#if !defined(OS_ANDROID) && !defined(OS_IOS)
 extern const base::Feature kMediaRouterUIRouteController;
 #endif  // !defined(OS_ANDROID) && !defined(OS_IOS)
 
