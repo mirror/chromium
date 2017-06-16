@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8f2ff717_60f927b1",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-16T13:33:10Z",
+      "side": 1,
+      "message": "I hope to use mock everywhere and eliminate JSON completely, but I\u0027ve started this CL before the mock existed. In the other added tests the mock was necessary, while these tests I would like to consider together with all other tests using JSON.",
+      "parentUuid": "92f528af_1dc9f6ff",
+      "range": {
+        "startLine": 1053,
+        "startChar": 2,
+        "endLine": 1053,
+        "endChar": 20
+      },
+      "revId": "a63aea09522a3dc2450b57dd4a8d0585a9786ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b58e3f0_50b32727",
         "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
         "patchSetId": 7
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-16T13:20:35Z",
       "side": 1,
       "message": "Create a helper for this?\n\nThis repeats quite a bit and does not reveal anything about expectations, interaction, etc.",
+      "range": {
+        "startLine": 1129,
+        "startChar": 2,
+        "endLine": 1135,
+        "endChar": 53
+      },
+      "revId": "a63aea09522a3dc2450b57dd4a8d0585a9786ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da62a323_b29cb203",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-16T13:33:10Z",
+      "side": 1,
+      "message": "I would prefer lo leave it as it is for now. I am going to use mock fetcher everywhere and in the end it may be reasonable to have a helper with even more code. Thus, I would like to get working tests for now and then refactor everything at once.",
+      "parentUuid": "1b58e3f0_50b32727",
       "range": {
         "startLine": 1129,
         "startChar": 2,
