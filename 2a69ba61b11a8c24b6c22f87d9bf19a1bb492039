@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b5e5b42_8130f5ce",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-16T04:34:08Z",
+      "side": 1,
+      "message": "Nit: You seem to have duplicate text in your description o.O",
+      "revId": "2a69ba61b11a8c24b6c22f87d9bf19a1bb492039",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
