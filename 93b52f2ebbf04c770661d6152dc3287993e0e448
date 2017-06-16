@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3f263137_9bd3a766",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-16T13:34:17Z",
+      "side": 0,
+      "message": "johnme@, would you mind reviewing the changes related to this, that you just added in https://codereview.chromium.org/2904263002/? It\u0027s a problem that this synchronously calls DidEnterFullscreen(), because the real implementation always has an IPC in between, and doing it synchronously means that we end up delaying to a microtask in Fullscreen::DidEnterFullscreen(), code that was added in this CL.\n\nI\u0027ve replaced it with the sequence of calls that would normally happen inlined into the tests. However, if this was intended to verify that the EnterFullscreen/ExitFullscreen lines in MediaControlsRotateToFullscreenDelegate::OnScreenOrientationChange() exist, then the tests no longer do. If there\u0027s other coverage that\u0027s probably OK, otherwise another approach would be to here post a task to call DidEnterFullscreen() and ServiceScriptedAnimations() so that the event ends up fired.\n\nWDTY?",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
