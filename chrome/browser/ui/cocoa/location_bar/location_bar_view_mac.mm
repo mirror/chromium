@@ -22,6 +22,7 @@
 #include "chrome/browser/translate/chrome_translate_client.h"
 #include "chrome/browser/translate/translate_service.h"
 #include "chrome/browser/ui/autofill/save_card_bubble_controller_impl.h"
+#include "chrome/browser/ui/browser_dialogs.h"
 #include "chrome/browser/ui/browser_list.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
 #import "chrome/browser/ui/cocoa/content_settings/content_setting_bubble_cocoa.h"
@@ -657,6 +658,10 @@ void LocationBarViewMac::ShowFirstRunBubbleInternal() {
   const NSPoint kOffset = NSMakePoint(
       info_bubble::kBubbleArrowXOffset,
       NSHeight([field_ frame]) / 2.0 - info_bubble::kBubbleArrowHeight);
+  if (ui::MaterialDesignController::IsSecondaryUiMaterial()) {
+    chrome::ShowFirstRunBubbleViews(browser_);
+    return;
+  }
   [FirstRunBubbleController showForView:field_
                                  offset:kOffset
                                 browser:browser_
