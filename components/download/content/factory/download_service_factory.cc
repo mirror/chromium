@@ -49,7 +49,7 @@ DownloadService* CreateDownloadService(
   auto controller = base::MakeUnique<ControllerImpl>(
       config.get(), std::move(client_set), std::move(driver), std::move(model),
       std::move(device_status_listener), std::move(scheduler),
-      std::move(task_scheduler));
+      std::move(task_scheduler), background_task_runner, files_storage_dir);
   return new DownloadServiceImpl(std::move(config), std::move(controller));
 }
 

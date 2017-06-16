@@ -252,7 +252,11 @@ Entry ProtoConversions::EntryFromProto(const protodb::Entry& proto) {
       SchedulingParamsFromProto(proto.scheduling_params());
   entry.request_params = RequestParamsFromProto(proto.request_params());
   entry.state = RequestStateFromProto(proto.state());
+  entry.target_file_path = base::FilePath(proto.target_file_path());
   entry.create_time = base::Time::FromInternalValue(proto.create_time());
+  entry.completion_time =
+      base::Time::FromInternalValue(proto.completion_time());
+
   return entry;
 }
 
@@ -265,7 +269,9 @@ protodb::Entry ProtoConversions::EntryToProto(const Entry& entry) {
                           proto.mutable_scheduling_params());
   RequestParamsToProto(entry.request_params, proto.mutable_request_params());
   proto.set_state(RequestStateToProto(entry.state));
+  proto.set_target_file_path(entry.target_file_path.value());
   proto.set_create_time(entry.create_time.ToInternalValue());
+  proto.set_completion_time(entry.completion_time.ToInternalValue());
 
   return proto;
 }
