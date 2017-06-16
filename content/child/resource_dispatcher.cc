@@ -42,6 +42,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
+#include "net/traffic_annotation/network_traffic_annotation.h"
 
 namespace content {
 
@@ -667,11 +668,28 @@ int ResourceDispatcher::StartAsync(
         loading_task_runner ? loading_task_runner : thread_task_runner_;
     std::unique_ptr<URLLoaderClientImpl> client(
         new URLLoaderClientImpl(request_id, this, task_runner));
+    net::NetworkTrafficAnnotationTag traffic_annotation =
+        net::DefineNetworkTrafficAnnotation("blink_resource_loader", R"(
+        semantics {
+          sender: "Blink Resource Loader"
+          description:
+            "Loading resources in blink."
+          trigger: "..."
+          data: "..."
+          destination: WEBSITE/GOOGLE_OWNED_SERVICE/OTHER/LOCAL
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting: "This feature cannot be disabled."
+          policy_exception_justification:
+            "Not implemented, this is a core feature of Chrome."
+        })");
     std::unique_ptr<ThrottlingURLLoader> url_loader =
         ThrottlingURLLoader::CreateLoaderAndStart(
             url_loader_factory, std::move(throttles), routing_id, request_id,
             mojom::kURLLoadOptionNone, std::move(request), client.get(),
-            net::MutableNetworkTrafficAnnotationTag(NO_TRAFFIC_ANNOTATION_YET),
+            net::MutableNetworkTrafficAnnotationTag(traffic_annotation),
             std::move(task_runner));
     pending_requests_[request_id]->url_loader = std::move(url_loader);
     pending_requests_[request_id]->url_loader_client = std::move(client);
