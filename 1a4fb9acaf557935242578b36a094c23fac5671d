@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d07bc9c_3631dc79",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T00:53:08Z",
+      "side": 1,
+      "message": "nit: Pretty sure this happens today already. The deadline is set to frame_time + interval when we\u0027re in this mode. The deadline is only extended indefinitely when commit has completed and wait_for_ready_to_draw_ is set to true.",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7fa0a62_1c109abc",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T00:53:08Z",
+      "side": 1,
+      "message": "nit: Rename these to current_source_id \u0026 current_sequence_number",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0dc981d_d9b6f746",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T00:53:08Z",
+      "side": 1,
+      "message": "How about changing the condition above to:\nif (state.last_args.IsValid() \u0026\u0026 state.last_args.source_id !\u003d source_id)\n  continue;\n\nWe want to consider surfaces which have a different BFS as ready. However, surfaces with the same BFS should not be considered ready unless they have ack\u0027d the current or newer begin frame (sequence number check should be \u003e\u003d instead of \u003d\u003d).\n\nSurfaces which don\u0027t have valid args i.e. in between OnSurfaceCreated and OnSurfaceDamaged would have to be handled. We should call OnSurfaceDamageExpected when creating surfaces in CFSSupport so that doesn\u0027t happen.\n\nThat should allow us to get rid of any_surface_received_begin_frame. The transitions for has_pending_surfaces become easier to understand in that case i.e. it goes from true to false once in a frame.",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8215630e_c77fd9bc",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T00:53:08Z",
+      "side": 1,
+      "message": "We don\u0027t need !needs_draw_ here because DesiredBeginFrameDeadlineTime already checks that and sets the deadline to frame_time + interval like in cc scheduler. I guess you\u0027re concerned about infinite deadlines for flush pipeline mode? Let\u0027s cross that bridge when we get there :)",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
