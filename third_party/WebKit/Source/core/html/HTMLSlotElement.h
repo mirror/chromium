@@ -110,11 +110,69 @@ class CORE_EXPORT HTMLSlotElement final : public HTMLElement {
 
   void EnqueueSlotChangeEvent();
 
+  void LazyReattachDistributedNodesNaive();
+
+  static void LazyReattachDistributedNodesByDynamicProgramming(
+      const HeapVector<Member<Node>>&,
+      const HeapVector<Member<Node>>&);
+
   HeapVector<Member<Node>> assigned_nodes_;
   HeapVector<Member<Node>> distributed_nodes_;
   HeapVector<Member<Node>> old_distributed_nodes_;
   HeapHashMap<Member<const Node>, size_t> distributed_indices_;
   bool slotchange_event_enqueued_ = false;
+
+  // TODO(hayato): Move this to more appropriate directory (e.g. wtp), if there
+  // is more than one clients
+  template <typename Container, typename CostTable, typename BackRefTable>
+  static void FillEditDistanceDynamicProgrammingTable(
+      const Container& seq1,
+      const Container& seq2,
+      CostTable& cost_table,
+      BackRefTable& back_ref_table) {
+    const size_t rows = seq1.size();
+    const size_t columns = seq2.size();
+
+    DCHECK_GT(cost_table.size(), rows);
+    DCHECK_GT(cost_table[0].size(), columns);
+    DCHECK_GT(back_ref_table.size(), rows);
+    DCHECK_GT(back_ref_table[0].size(), columns);
+
+    const int kSubstituteCost = 2;
+    const int kInsertOrDeleteCost = 1;
+
+    for (size_t r = 0; r <= rows; ++r)
+      cost_table[r][0] = r * kInsertOrDeleteCost;
+    for (size_t c = 0; c <= columns; ++c)
+      cost_table[0][c] = c * kInsertOrDeleteCost;
+
+    for (size_t r = 1; r <= rows; ++r) {
+      for (size_t c = 1; c <= columns; ++c) {
+        // For (r-1, c-1) -> (r, c)
+        int min_cost = cost_table[r - 1][c - 1] +
+                       (seq1[r - 1] == seq2[c - 1] ? 0 : kSubstituteCost);
+        auto back_ref = std::make_pair(r - 1, c - 1);
+
+        // For (r-1, c) -> (r, c)
+        int cost = cost_table[r - 1][c] + kInsertOrDeleteCost;
+        if (cost < min_cost) {
+          min_cost = cost;
+          back_ref = std::make_pair(r - 1, c);
+        }
+
+        // For (r, c-1) -> (r, c)
+        cost = cost_table[r][c - 1] + kInsertOrDeleteCost;
+        if (cost < min_cost) {
+          min_cost = cost;
+          back_ref = std::make_pair(r, c - 1);
+        }
+        cost_table[r][c] = min_cost;
+        back_ref_table[r][c] = back_ref;
+      }
+    }
+  }
+
+  friend class HTMLSlotElementTest;
 };
 
 }  // namespace blink
