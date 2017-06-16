@@ -22,6 +22,30 @@
       "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a19c0802_a85f38d2",
+        "filename": "components/filesystem/directory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T17:31:04Z",
+      "side": 1,
+      "message": "I\u0027ll let Chris answer this.. in https://codereview.chromium.org/710373002 he (effectively) changed a !defined(OS_WIN) into a defined(OS_POSIX), so I\u0027m not sure what the correct flag is...",
+      "parentUuid": "fcec6e54_0d96c78f",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 20
+      },
+      "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
