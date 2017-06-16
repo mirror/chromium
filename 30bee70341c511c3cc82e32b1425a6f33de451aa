@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6b072335_452eae5b",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-16T15:18:27Z",
+      "side": 1,
+      "message": "I don\u0027t think it\u0027s okay to use a dummy instance here; what if the parameters are imported types? Is this what\u0027s causing the output to change maybe?",
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7180abe_c18c11b6",
+        "filename": "base/android/jni_generator/testNatives.golden",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-16T15:18:27Z",
+      "side": 1,
+      "message": "The golden test output shouldn\u0027t change; these class names are wrong now.",
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
