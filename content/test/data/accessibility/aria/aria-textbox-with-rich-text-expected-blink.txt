@@ -1,0 +1,12 @@
+rootWebArea
+++textField
+++++heading name='TextBox1'
+++++++staticText name='TextBox1'
+++++++++inlineTextBox name='TextBox1'
+++textField
+++++heading name='TextBox2'
+++++++staticText name='TextBox2'
+++++++++inlineTextBox name='TextBox2'
+++++paragraph
+++++++staticText name='Some text.'
+++++++++inlineTextBox name='Some text.'
