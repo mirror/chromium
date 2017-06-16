@@ -19,6 +19,15 @@ ValidatingCombobox::ValidatingCombobox(
   SetFocusBehavior(FocusBehavior::ALWAYS);
 }
 
+ValidatingCombobox::ValidatingCombobox(
+    ui::ComboboxModel* model,
+    std::unique_ptr<ValidationDelegate> delegate)
+    : Combobox(model), delegate_(std::move(delegate)) {
+  // No need to remove observer on owned model.
+  this->model()->AddObserver(this);
+  SetFocusBehavior(FocusBehavior::ALWAYS);
+}
+
 ValidatingCombobox::~ValidatingCombobox() {}
 
 void ValidatingCombobox::OnBlur() {
