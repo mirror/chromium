@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e8e4cb5_2b7c7df2",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:58:12Z",
+      "side": 1,
+      "message": "static cast? Also, you can just change current_item_ to a size_t (as it represents an array index)",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687c1e78_f5f0da00",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:58:12Z",
+      "side": 1,
+      "message": "Definitely report this somehow, now or future, and probably add an UMA metric for it. This could be the metric on all blobs that break (so have a error type for streaming issues), or just on this.",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd69930a_ac7a9496",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:58:12Z",
+      "side": 1,
+      "message": "I needed to do the AddRefProcess to get this to work unfortunately.",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dcb1f8e_be22a67d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobBytesProvider.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:58:12Z",
+      "side": 1,
+      "message": "std::move result",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19c8b093_9ddc654c",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:58:12Z",
+      "side": 1,
+      "message": "We should be able to handle the bytes provider stuff on the IPC thread, as the bytes ownership is basically passed. This would be super fast too! No thread hop.",
+      "revId": "dc4e59e3c3a5db34a23b16a754f1e76a4e373181",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
