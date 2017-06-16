@@ -8,12 +8,12 @@
 
 #include "base/bind.h"
 #include "base/bind_helpers.h"
+#include "base/command_line.h"
 #include "base/files/file_util.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/sequenced_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
-
 #include "components/update_client/component.h"
 #include "components/update_client/update_client.h"
 
@@ -73,10 +73,38 @@ void ActionRunner::Unpack() {
 void ActionRunner::UnpackComplete(const ComponentUnpacker::Result& result) {
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
 
-  // TODO(sorin): invoke the command runner here. For now, just return
-  // canned values for the unit test.
-  base::DeleteFile(result.unpack_path, true);
-  main_task_runner_->PostTask(FROM_HERE, base::Bind(run_complete_, true, 1, 2));
+  if (result.error == UnpackerError::kNone) {
+    task_runner_->PostTask(
+        FROM_HERE,
+        base::Bind(&ActionRunner::RunCommand, base::Unretained(this),
+                   base::ConstRef(MakeCommandLine(result.unpack_path))));
+    return;
+  }
+
+  DCHECK(!base::DirectoryExists(result.unpack_path));
+
+  main_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(run_complete_, false, static_cast<int>(result.error),
+                 result.extended_error));
 }
+
+#if !defined(OS_WIN)
+
+void ActionRunner::RunCommand(const base::CommandLine& command_line) {
+  DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
+  main_task_runner_->PostTask(FROM_HERE,
+                              base::Bind(run_complete_, false, -1, 0));
+}
+
+base::CommandLine ActionRunner::MakeCommandLine(
+    const base::FilePath& unpack_path) const {
+  return base::CommandLine();
+}
+
+}  // namespace update_client
+
+#endif  // OS_WIN
 
 }  // namespace update_client
