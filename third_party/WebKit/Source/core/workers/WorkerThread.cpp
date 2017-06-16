@@ -58,6 +58,7 @@
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/text/WTFString.h"
+#include "public/platform/Platform.h"
 
 namespace blink {
 
@@ -291,6 +292,10 @@ bool WorkerThread::IsForciblyTerminated() {
   }
   NOTREACHED() << static_cast<int>(exit_code_);
   return false;
+}
+
+InterfaceProvider* WorkerThread::GetInterfaceProvider() {
+  return Platform::Current()->GetInterfaceProvider();
 }
 
 WorkerThread::WorkerThread(ThreadableLoadingContext* loading_context,
