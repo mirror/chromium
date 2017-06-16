@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f0991cbd_b5627ed7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/snippets/SnippetArticleViewHolder.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-16T16:26:46Z",
+      "side": 1,
+      "message": "We have a `cancelImageFetch()` call at the beginning of `setThumbnail()`, is this one useful? If `setThumbnail()` is only called when we bind the view holder, I\u0027d say that cancelling the image fetch straight from the bind method would be clearer as far as resource management goes.",
+      "revId": "17ffe163a48b35014cc983a3381355cdbf5ea8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2274b965_de861499",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegate.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-16T16:26:46Z",
+      "side": 1,
+      "message": "this needs a bit more documentation IMO. Add @Nullable and explain that it\u0027s the web content of the current active tab associated to this delegate\u0027s host, if there is one.",
+      "range": {
+        "startLine": 31,
+        "startChar": 48,
+        "endLine": 31,
+        "endChar": 59
+      },
+      "revId": "17ffe163a48b35014cc983a3381355cdbf5ea8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7ee9ade_6f4bb7a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/SuggestionsUiDelegateImpl.java",
+        "patchSetId": 15
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1123275
+      },
+      "writtenOn": "2017-06-16T16:26:46Z",
+      "side": 1,
+      "message": "active tab can be null. e.g. new tab in chrome home",
+      "range": {
+        "startLine": 72,
+        "startChar": 21,
+        "endLine": 72,
+        "endChar": 33
+      },
+      "revId": "17ffe163a48b35014cc983a3381355cdbf5ea8ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
