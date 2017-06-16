@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "839a2b93_fe2b9962",
+        "filename": "services/service_manager/background/background_service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T14:46:50Z",
+      "side": 1,
+      "message": "OS_IOS is defined in build/build_config.h. I suppose the file is indirectly included here, but this may break at any time. Could you \"include what you use\" to avoid risk of breakage?",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b67d474_50d96391",
         "filename": "services/service_manager/background/background_service_manager.h",
         "patchSetId": 8
@@ -25,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "6b8aad08_21866da9",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T14:46:50Z",
+      "side": 1,
+      "message": "OS_IOS is defined in build/build_config.h. I suppose the file is indirectly included here, but this may break at any time. Could you \"include what you use\" to avoid risk of breakage?",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 11
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9e279e8_ac4d11f0",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T14:46:50Z",
+      "side": 1,
+      "message": "OS_IOS is defined in build/build_config.h. I suppose the file is indirectly included here, but this may break at any time. Could you \"include what you use\" to avoid risk of breakage?",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "15d9d68e_dd4adb85",
         "filename": "services/service_manager/service_manager.h",
         "patchSetId": 8
@@ -41,6 +110,29 @@
         "startChar": 0,
         "endLine": 31,
         "endChar": 74
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb9c2d28_b5788ff2",
+        "filename": "services/service_manager/standalone/context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T14:46:50Z",
+      "side": 1,
+      "message": "OS_IOS is defined in build/build_config.h. I suppose the file is indirectly included here, but this may break at any time. Could you \"include what you use\" to avoid risk of breakage?",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 19
       },
       "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
