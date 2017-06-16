@@ -8,6 +8,6 @@
  * Prints the message.
  * @param {String} msg - The message to print.
  */
-function print(msg) {  // eslint-disable-line no-unused-vars
-  document.getElementById('result').innerHTML = msg;
+function print(msg) { // eslint-disable-line no-unused-vars
+  $('result').innerHTML = msg;
 }
