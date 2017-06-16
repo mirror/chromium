@@ -55,7 +55,8 @@ class ProfileListViewController : public PaymentRequestSheetController {
   // Returns a representation of the given profile appropriate for display
   // in this context.
   virtual std::unique_ptr<views::View> GetLabel(
-      autofill::AutofillProfile* profile) = 0;
+      autofill::AutofillProfile* profile,
+      base::string16* accessible_string) = 0;
 
   virtual void SelectProfile(autofill::AutofillProfile* profile) = 0;
 
