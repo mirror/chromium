@@ -5,6 +5,7 @@
 #include "chrome/browser/android/web_contents_factory.h"
 
 #include "base/android/jni_android.h"
+#include "base/trace_event/trace_event.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -21,6 +22,7 @@ static ScopedJavaLocalRef<jobject> CreateWebContents(
     jboolean incognito,
     jboolean initially_hidden,
     jboolean initialize_renderer) {
+  TRACE_EVENT0("browser", "CreateWebContents");
   Profile* profile = g_browser_process->profile_manager()->GetLastUsedProfile();
   if (incognito)
     profile = profile->GetOffTheRecordProfile();

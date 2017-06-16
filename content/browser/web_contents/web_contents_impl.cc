@@ -282,6 +282,7 @@ FrameTreeNode* FindOpener(const WebContents::CreateParams& params) {
 }  // namespace
 
 WebContents* WebContents::Create(const WebContents::CreateParams& params) {
+  TRACE_EVENT0("browser", "WebContents::Create");
   return WebContentsImpl::CreateWithOpener(params, FindOpener(params));
 }
 
@@ -525,6 +526,7 @@ WebContentsImpl::WebContentsImpl(BrowserContext* browser_context)
       showing_context_menu_(false),
       loading_weak_factory_(this),
       weak_factory_(this) {
+  TRACE_EVENT0("browser", "WebContentsImpl::WebContentsImpl");
   frame_tree_.SetFrameRemoveListener(
       base::Bind(&WebContentsImpl::OnFrameRemoved,
                  base::Unretained(this)));
@@ -688,7 +690,10 @@ WebContentsImpl* WebContentsImpl::CreateWithOpener(
     // bit to true.
     new_contents->is_subframe_ = true;
   }
-  new_contents->Init(params);
+  {
+    TRACE_EVENT0("browser", "new_contents->Init");
+    new_contents->Init(params);
+  }
   return new_contents;
 }
 
@@ -1648,6 +1653,7 @@ WebContents* WebContentsImpl::GetWebContents() {
 }
 
 void WebContentsImpl::Init(const WebContents::CreateParams& params) {
+  TRACE_EVENT0("browser", "WebContentsImpl::Init");
   // This is set before initializing the render manager since
   // RenderFrameHostManager::Init calls back into us via its delegate to ask if
   // it should be hidden.
@@ -1662,8 +1668,11 @@ void WebContentsImpl::Init(const WebContents::CreateParams& params) {
           params.main_frame_widget_routing_id != MSG_ROUTING_NONE));
 
   scoped_refptr<SiteInstance> site_instance = params.site_instance;
-  if (!site_instance)
+  if (!site_instance) {
+    TRACE_EVENT0("browser", "calling SiteInstance::Create");
+
     site_instance = SiteInstance::Create(params.browser_context);
+  }
 
   // A main RenderFrameHost always has a RenderWidgetHost, since it is always a
   // local root by definition.

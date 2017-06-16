@@ -700,6 +700,8 @@ void RenderFrameHostManager::DidCreateNavigationRequest(
 // PlzNavigate
 RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
     const NavigationRequest& request) {
+  TRACE_EVENT0("renderer_host",
+               "RenderFrameHostManager::GetFrameHostForNavigation");
   CHECK(IsBrowserSideNavigationEnabled());
 
   SiteInstance* current_site_instance = render_frame_host_->GetSiteInstance();
@@ -725,6 +727,8 @@ RenderFrameHostImpl* RenderFrameHostManager::GetFrameHostForNavigation(
   // Reuse the current RenderFrameHost if its SiteInstance matches the
   // navigation's.
   bool no_renderer_swap = current_site_instance == dest_site_instance.get();
+  TRACE_EVENT1("renderer_host", "no_renderer_swap", "no_renderer_swap",
+               no_renderer_swap);
 
   if (frame_tree_node_->IsMainFrame()) {
     // Renderer-initiated main frame navigations that may require a
@@ -1206,6 +1210,10 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
     bool dest_is_restore,
     bool dest_is_view_source_mode,
     bool was_server_redirect) {
+  TRACE_EVENT2("renderer_host",
+               "RenderFrameHostManager::GetSiteInstanceForNavigation",
+               "dest_url", dest_url.spec(), "ShouldTransitionCrossSite",
+               ShouldTransitionCrossSite());
   // On renderer-initiated navigations, when the frame initiating the navigation
   // and the frame being navigated differ, |source_instance| is set to the
   // SiteInstance of the initiating frame. |dest_instance| is present on session
@@ -1234,15 +1242,23 @@ RenderFrameHostManager::GetSiteInstanceForNavigation(
       render_frame_host_->GetSiteInstance()->GetSiteURL();
   bool current_is_view_source_mode = current_entry ?
       current_entry->IsViewSourceMode() : dest_is_view_source_mode;
-  bool force_swap = ShouldSwapBrowsingInstancesForNavigation(
-      current_effective_url,
-      current_is_view_source_mode,
-      dest_instance,
-      SiteInstanceImpl::GetEffectiveURL(browser_context, dest_url),
-      dest_is_view_source_mode);
+  bool force_swap;
+  {
+    TRACE_EVENT0("renderer_host",
+                 "calling ShouldSwapBrowsingInstancesForNavigation");
+    force_swap = ShouldSwapBrowsingInstancesForNavigation(
+        current_effective_url, current_is_view_source_mode, dest_instance,
+        SiteInstanceImpl::GetEffectiveURL(browser_context, dest_url),
+        dest_is_view_source_mode);
+    TRACE_EVENT1("renderer_host",
+                 "ShouldSwapBrowsingInstancesForNavigation result",
+                 "force_swap", force_swap);
+  }
   SiteInstanceDescriptor new_instance_descriptor =
       SiteInstanceDescriptor(current_instance);
+
   if (ShouldTransitionCrossSite() || force_swap) {
+    TRACE_EVENT0("renderer_host", "calling DetermineSiteInstanceForURL");
     new_instance_descriptor = DetermineSiteInstanceForURL(
         dest_url, source_instance, current_instance, dest_instance, transition,
         dest_is_restore, dest_is_view_source_mode, force_swap,
@@ -1289,6 +1305,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     bool dest_is_view_source_mode,
     bool force_browsing_instance_swap,
     bool was_server_redirect) {
+  TRACE_EVENT0("renderer_host",
+               "RenderFrameHostManager::DetermineSiteInstanceForURL");
   SiteInstanceImpl* current_instance_impl =
       static_cast<SiteInstanceImpl*>(current_instance);
   NavigationControllerImpl& controller =
@@ -1302,14 +1320,19 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
       CHECK(!dest_instance->IsRelatedSiteInstance(
                 render_frame_host_->GetSiteInstance()));
     }
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 1");
     return SiteInstanceDescriptor(dest_instance);
   }
 
   // If a swap is required, we need to force the SiteInstance AND
   // BrowsingInstance to be different ones, using CreateForURL.
-  if (force_browsing_instance_swap)
+  if (force_browsing_instance_swap) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 2");
     return SiteInstanceDescriptor(browser_context, dest_url,
                                   SiteInstanceRelation::UNRELATED);
+  }
 
   // (UGLY) HEURISTIC, process-per-site only:
   //
@@ -1324,6 +1347,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kProcessPerSite) &&
       ui::PageTransitionCoreTypeIs(transition, ui::PAGE_TRANSITION_GENERATED)) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 3");
     return SiteInstanceDescriptor(current_instance_impl);
   }
 
@@ -1338,6 +1363,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
         frame_tree_node_->parent()->current_frame_host()->GetSiteInstance();
     if (parent_site_instance->GetSiteURL().SchemeIs(kChromeUIScheme) &&
         dest_url.SchemeIs(kChromeUIScheme)) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 4");
       return SiteInstanceDescriptor(parent_site_instance);
     }
   }
@@ -1363,6 +1390,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
         RenderProcessHostImpl::GetProcessHostForSite(browser_context, dest_url);
     if (current_instance_impl->HasRelatedSiteInstance(dest_url) ||
         use_process_per_site) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 5");
       return SiteInstanceDescriptor(browser_context, dest_url,
                                     SiteInstanceRelation::RELATED);
     }
@@ -1371,22 +1400,30 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     // not want to use the |current_instance_impl| if it has no site, since it
     // will have a RenderProcessHost of PRIV_NORMAL. Create a new SiteInstance
     // for this URL instead (with the correct process type).
-    if (current_instance_impl->HasWrongProcessForURL(dest_url))
+    if (current_instance_impl->HasWrongProcessForURL(dest_url)) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 6");
       return SiteInstanceDescriptor(browser_context, dest_url,
                                     SiteInstanceRelation::RELATED);
+    }
 
     // View-source URLs must use a new SiteInstance and BrowsingInstance.
     // TODO(nasko): This is the same condition as later in the function. This
     // should be taken into account when refactoring this method as part of
     // http://crbug.com/123007.
-    if (dest_is_view_source_mode)
+    if (dest_is_view_source_mode) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 7");
       return SiteInstanceDescriptor(browser_context, dest_url,
                                     SiteInstanceRelation::UNRELATED);
+    }
 
     // If we are navigating from a blank SiteInstance to a WebUI, make sure we
     // create a new SiteInstance.
     if (WebUIControllerFactoryRegistry::GetInstance()->UseWebUIForURL(
             browser_context, dest_url)) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 8");
       return SiteInstanceDescriptor(browser_context, dest_url,
                                     SiteInstanceRelation::UNRELATED);
     }
@@ -1407,8 +1444,12 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     // See http://crbug.com/386542.
     if (dest_is_restore &&
         GetContentClient()->browser()->ShouldAssignSiteForURL(dest_url)) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 9");
       current_instance_impl->SetSite(dest_url);
     }
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 10");
 
     return SiteInstanceDescriptor(current_instance_impl);
   }
@@ -1425,6 +1466,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   // compare the entry's URL to the last committed entry's URL.
   NavigationEntry* current_entry = controller.GetLastCommittedEntry();
   if (interstitial_page_) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 11");
     // The interstitial is currently the last committed entry, but we want to
     // compare against the last non-interstitial entry.
     current_entry = controller.GetEntryAtOffset(-1);
@@ -1438,6 +1481,8 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   if (current_entry &&
       current_entry->IsViewSourceMode() != dest_is_view_source_mode &&
       !IsRendererDebugURL(dest_url)) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 12");
     return SiteInstanceDescriptor(browser_context, dest_url,
                                   SiteInstanceRelation::UNRELATED);
   }
@@ -1457,28 +1502,42 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   bool dest_is_data_or_about = dest_url == about_srcdoc ||
                                dest_url == about_blank ||
                                dest_url.scheme() == url::kDataScheme;
-  if (source_instance && dest_is_data_or_about && !was_server_redirect)
+  if (source_instance && dest_is_data_or_about && !was_server_redirect) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 13");
     return SiteInstanceDescriptor(source_instance);
+  }
 
   // Use the current SiteInstance for same site navigations.
-  if (IsCurrentlySameSite(render_frame_host_.get(), dest_url))
+  if (IsCurrentlySameSite(render_frame_host_.get(), dest_url)) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 14");
     return SiteInstanceDescriptor(render_frame_host_->GetSiteInstance());
+  }
 
   if (SiteIsolationPolicy::IsTopDocumentIsolationEnabled()) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 15");
     // TODO(nick): Looking at the main frame and openers is required for TDI
     // mode, but should be safe to enable unconditionally.
     if (!frame_tree_node_->IsMainFrame()) {
       RenderFrameHostImpl* main_frame =
           frame_tree_node_->frame_tree()->root()->current_frame_host();
-      if (IsCurrentlySameSite(main_frame, dest_url))
+      if (IsCurrentlySameSite(main_frame, dest_url)) {
+        TRACE_EVENT0("renderer_host",
+                     "RenderFrameHostManager::DetermineSiteInstanceForURL 16");
         return SiteInstanceDescriptor(main_frame->GetSiteInstance());
+      }
     }
 
     if (frame_tree_node_->opener()) {
       RenderFrameHostImpl* opener_frame =
           frame_tree_node_->opener()->current_frame_host();
-      if (IsCurrentlySameSite(opener_frame, dest_url))
+      if (IsCurrentlySameSite(opener_frame, dest_url)) {
+        TRACE_EVENT0("renderer_host",
+                     "RenderFrameHostManager::DetermineSiteInstanceForURL 17");
         return SiteInstanceDescriptor(opener_frame->GetSiteInstance());
+      }
     }
   }
 
@@ -1486,12 +1545,18 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
       SiteIsolationPolicy::IsTopDocumentIsolationEnabled() &&
       !SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
                                                          dest_url)) {
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 18");
     if (GetContentClient()
             ->browser()
             ->ShouldFrameShareParentSiteInstanceDespiteTopDocumentIsolation(
                 dest_url, current_instance)) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 19");
       return SiteInstanceDescriptor(render_frame_host_->GetSiteInstance());
     }
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 20");
 
     // This is a cross-site subframe of a non-isolated origin, so place this
     // frame in the default subframe site instance.
@@ -1511,11 +1576,17 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
     bool dest_url_requires_dedicated_process =
         SiteInstanceImpl::DoesSiteRequireDedicatedProcess(browser_context,
                                                           dest_url);
+    TRACE_EVENT0("renderer_host",
+                 "RenderFrameHostManager::DetermineSiteInstanceForURL 21");
     if (!parent->GetSiteInstance()->RequiresDedicatedProcess() &&
         !dest_url_requires_dedicated_process) {
+      TRACE_EVENT0("renderer_host",
+                   "RenderFrameHostManager::DetermineSiteInstanceForURL 22");
       return SiteInstanceDescriptor(parent->GetSiteInstance());
     }
   }
+  TRACE_EVENT0("renderer_host",
+               "RenderFrameHostManager::DetermineSiteInstanceForURL 23");
 
   // Start the new renderer in a new SiteInstance, but in the current
   // BrowsingInstance.
