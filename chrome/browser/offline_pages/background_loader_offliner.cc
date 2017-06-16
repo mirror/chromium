@@ -130,7 +130,8 @@ BackgroundLoaderOffliner::BackgroundLoaderOffliner(
       weak_ptr_factory_(this) {
   DCHECK(offline_page_model_);
   DCHECK(browser_context_);
-  load_termination_listener_->set_offliner(this);
+  if (load_termination_listener_)
+    load_termination_listener_->set_offliner(this);
 }
 
 BackgroundLoaderOffliner::~BackgroundLoaderOffliner() {}
@@ -336,6 +337,8 @@ void BackgroundLoaderOffliner::DidFinishNavigation(
                         static_cast<int>(navigation_handle->GetNetErrorCode()));
     page_load_state_ = RETRIABLE;
   } else {
+    if (!navigation_handle->GetResponseHeaders())
+      return;
     int status_code = navigation_handle->GetResponseHeaders()->response_code();
     // 2XX and 3XX are ok because they indicate success or redirection.
     // We track 301 because it's MOVED_PERMANENTLY and usually accompanies an
