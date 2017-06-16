@@ -20,7 +20,14 @@ constexpr base::TimeDelta kDefaultRestartDelay =
 ArcSessionRunner::ArcSessionRunner(const ArcSessionFactory& factory)
     : restart_delay_(kDefaultRestartDelay),
       factory_(factory),
-      weak_ptr_factory_(this) {}
+      weak_ptr_factory_(this) {
+  // Create an |arc_session_| object so that it can pre-start ARC instance as
+  // needed. However, do NOT add |this| as an observer of the |arc_session_|
+  // yet because |this| (and more importantly, c/b/chromeos/arc/ objects) have
+  // zero interest in the status of the session e.g. termination/crash of the
+  // instance.
+  arc_session_ = factory_.Run();
+}
 
 ArcSessionRunner::~ArcSessionRunner() {
   DCHECK(thread_checker_.CalledOnValidThread());
@@ -52,7 +59,7 @@ void ArcSessionRunner::RequestStart() {
   // previous RequestStop() call).
   DCHECK(!restart_timer_.IsRunning());
 
-  if (arc_session_) {
+  if (arc_session_ && state_ != State::STOPPED) {
     // In this case, RequestStop() was called, and before |arc_session_| had
     // finished stopping, RequestStart() was called. Do nothing in that case,
     // since when |arc_session_| does actually stop, OnSessionStopped() will
@@ -64,12 +71,16 @@ void ArcSessionRunner::RequestStart() {
   }
 }
 
-void ArcSessionRunner::RequestStop() {
+void ArcSessionRunner::RequestStop(bool always_stop_session) {
   DCHECK(thread_checker_.CalledOnValidThread());
 
-  // Consecutive RequestStop() call. Do nothing.
-  if (!run_requested_)
+  if (!run_requested_) {
+    // Call Stop() to stop an instance for login screen (if any.) If this is
+    // just a consecutive RequestStop() call, Stop() does nothing.
+    if (always_stop_session && arc_session_)
+      arc_session_->Stop();
     return;
+  }
 
   VLOG(1) << "Session ended";
   run_requested_ = false;
@@ -104,6 +115,10 @@ void ArcSessionRunner::OnShutdown() {
   if (arc_session_) {
     DCHECK_NE(state_, State::STOPPED);
     state_ = State::STOPPING;
+    // Make sure |this| is registered as an observer. If the session is only
+    // used for login screen. |this| hasn't been registered.
+    arc_session_->RemoveObserver(this);
+    arc_session_->AddObserver(this);
     arc_session_->OnShutdown();
   }
   // ArcSession::OnShutdown() invokes OnSessionStopped() synchronously.
@@ -132,11 +147,11 @@ void ArcSessionRunner::SetRestartDelayForTesting(
 void ArcSessionRunner::StartArcSession() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK_EQ(state_, State::STOPPED);
-  DCHECK(!arc_session_);
   DCHECK(!restart_timer_.IsRunning());
 
   VLOG(1) << "Starting ARC instance";
-  arc_session_ = factory_.Run();
+  if (!arc_session_)
+    arc_session_ = factory_.Run();
   arc_session_->AddObserver(this);
   state_ = State::STARTING;
   arc_session_->Start();

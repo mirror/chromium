@@ -50,7 +50,8 @@ class ArcSessionRunner : public ArcSession::Observer {
   void RequestStart();
 
   // Stops the ARC service.
-  void RequestStop();
+  // TODO(yusukes): Remove the parameter.
+  void RequestStop(bool always_stop_session);
 
   // OnShutdown() should be called when the browser is shutting down. This can
   // only be called on the thread that this class was created on. We assume that
