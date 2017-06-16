@@ -8,6 +8,7 @@
 #include <iterator>
 
 #include "base/strings/string_util.h"
+#include "base/strings/utf_string_conversion_utils.h"
 #include "base/strings/utf_string_conversions.h"
 #include "base/third_party/icu/icu_utf.h"
 #include "ui/events/event.h"
@@ -126,6 +127,21 @@ bool CharacterComposer::FilterKeyPressSequenceMode(const KeyEvent& event) {
   // Key press is not a part of composition.
   compose_buffer_.pop_back();  // Remove the keypress added this time.
   if (!compose_buffer_.empty()) {
+    // Check for Windows-style composition fallback: If the dead key encodes
+    // a printable ASCII character, output that followed by the new keypress.
+    // (This could be extended to allow any printable Unicode character in
+    // the dead key, and/or for longer sequences, but there is no current use
+    // for that, so we keep it simple.)
+    if (event.GetDomKey().IsCharacter() && (compose_buffer_.size() == 1) &&
+        (compose_buffer_[0].IsDeadKey())) {
+      int32_t dead_character = compose_buffer_[0].ToDeadKeyCombiningCharacter();
+      if (dead_character >= 0x20 && dead_character <= 0x7E) {
+        composed_character_.clear();
+        base::WriteUnicodeCharacter(dead_character, &composed_character_);
+        base::WriteUnicodeCharacter(event.GetDomKey().ToCharacter(),
+                                    &composed_character_);
+      }
+    }
     compose_buffer_.clear();
     return true;
   }
