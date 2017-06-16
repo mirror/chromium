@@ -24,8 +24,9 @@ public class ContextMenuParams {
         public static final int MEDIA_TYPE_IMAGE = 1;
         public static final int MEDIA_TYPE_VIDEO = 2;
         public static final int MEDIA_TYPE_AUDIO = 3;
-        public static final int MEDIA_TYPE_FILE = 4;
-        public static final int MEDIA_TYPE_PLUGIN = 5;
+        public static final int MEDIA_TYPE_CANVAS = 4;
+        public static final int MEDIA_TYPE_FILE = 5;
+        public static final int MEDIA_TYPE_PLUGIN = 6;
     }
 
     private final String mPageUrl;
