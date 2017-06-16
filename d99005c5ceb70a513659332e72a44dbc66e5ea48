@@ -16,6 +16,24 @@
       "revId": "d99005c5ceb70a513659332e72a44dbc66e5ea48",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5d0dc6c_4707b2ba",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-16T20:51:47Z",
+      "side": 1,
+      "message": "This code path does not work and is disabled in this CL, I should just remove the code for now...",
+      "parentUuid": "8b76b85f_56b55df6",
+      "revId": "d99005c5ceb70a513659332e72a44dbc66e5ea48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
