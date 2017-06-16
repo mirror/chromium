@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1210e8ec_b0715204",
+        "filename": "components/offline_pages/core/prefetch/store/create_prefetch_items_command_sql.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "I was not aware of that and that can be added. I think one way to enforce it will be integrity constraints of the database. I\u0027ll look into it.",
+      "parentUuid": "44560591_9da337fb",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 52
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0059133e_7054a2e2",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
         "patchSetId": 2
@@ -71,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "94dee728_4e7e21e8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c4292fc6_44a7c168",
+      "range": {
+        "startLine": 143,
+        "startChar": 23,
+        "endLine": 143,
+        "endChar": 33
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e106369f_2738fce1",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
         "patchSetId": 2
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "7606318a_b23326f8",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Removed, after SQLCommandExecutor happened.",
+      "parentUuid": "e106369f_2738fce1",
+      "range": {
+        "startLine": 65,
+        "startChar": 7,
+        "endLine": 65,
+        "endChar": 21
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "28a82841_2abc24af",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
         "patchSetId": 2
@@ -105,6 +177,30 @@
       "writtenOn": "2017-06-15T00:51:54Z",
       "side": 1,
       "message": "Why go through the trouble of assigning the same status to each id? Do you intend on potentially having mixed statuses in the future?",
+      "range": {
+        "startLine": 72,
+        "startChar": 12,
+        "endLine": 72,
+        "endChar": 78
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a95a9d33_7cfa3106",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "In general that is the case now. I can leave the collection empty, or assign store error to every entry. So far we were doing it this way, but we can simplify.",
+      "parentUuid": "28a82841_2abc24af",
       "range": {
         "startLine": 72,
         "startChar": 12,
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "5257242c_7dc2fa6b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "I don\u0027t see this as unclear ownership. This approach works regardless of how PrefetchItem is handled at the caller too. Return type indicates whether anything was read or not, which makes it suitable for:\n\nPrefetchItem item;\nif (GetPrefetchItemByOfflineIdSync(\u0026item)) {\n ...\n\nOR\n\nstd::unique_ptr\u003cPrefetchItem\u003e item;\nif (GetPrefetchItemByOfflineIdSync(item.get()) {",
+      "parentUuid": "fd417ea2_0ffaa7cc",
+      "range": {
+        "startLine": 31,
+        "startChar": 50,
+        "endLine": 31,
+        "endChar": 54
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af44967b_27381c8f",
         "filename": "components/offline_pages/core/prefetch/store/store_command.h",
         "patchSetId": 2
@@ -160,6 +280,30 @@
       "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82f58196_10eaf1e6",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "This is gone now.",
+      "parentUuid": "af44967b_27381c8f",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "6b49bd88537191bcad12f1f0d7e56d35ef8cff47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

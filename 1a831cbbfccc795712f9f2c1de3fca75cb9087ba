@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "8b1d10b1_34508011",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "This has been handled by extracting SQLCommandExecutor",
+      "parentUuid": "25c6ac39_91b2bcf6",
+      "range": {
+        "startLine": 73,
+        "startChar": 2,
+        "endLine": 73,
+        "endChar": 29
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cdd371b9_ab8aed37",
         "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaef822b_6cb606c4",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdd371b9_ab8aed37",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 35
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -92,6 +140,30 @@
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad599f51_7ed5803c",
+        "filename": "components/offline_pages/core/prefetch/store/delete_prefetch_items_command_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2146d649_5fc6c3cc",
+      "range": {
+        "startLine": 25,
+        "startChar": 34,
+        "endLine": 25,
+        "endChar": 45
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -307,6 +379,30 @@
     },
     {
       "key": {
+        "uuid": "8da88d1d_8c4771c9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "This is a working title and the whole class might be removed. I need it tentatively.",
+      "parentUuid": "92d75c45_dc9bb366",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 18
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1fc385fe_63fc5baa",
         "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
         "patchSetId": 1
@@ -318,6 +414,30 @@
       "writtenOn": "2017-06-15T00:51:54Z",
       "side": 1,
       "message": "Not yet being called from anywhere.",
+      "range": {
+        "startLine": 67,
+        "startChar": 7,
+        "endLine": 67,
+        "endChar": 17
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be2e0731_a8e7616b",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Correct. See comment above.",
+      "parentUuid": "1fc385fe_63fc5baa",
       "range": {
         "startLine": 67,
         "startChar": 7,
@@ -383,6 +503,24 @@
     },
     {
       "key": {
+        "uuid": "9e5441b4_73f08d14",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "Calling N times will work with the updated pattern. I\u0027ll keep this comment unresolved to make sure to get back to that.",
+      "parentUuid": "1984c76f_8e301f33",
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72ebedb6_f24b0a0c",
         "filename": "components/offline_pages/core/prefetch/store/store_command.h",
         "patchSetId": 1
@@ -403,6 +541,30 @@
       "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c82391ea_ae4087cf",
+        "filename": "components/offline_pages/core/prefetch/store/store_command.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-16T04:47:43Z",
+      "side": 1,
+      "message": "This one is gone now.",
+      "parentUuid": "72ebedb6_f24b0a0c",
+      "range": {
+        "startLine": 25,
+        "startChar": 6,
+        "endLine": 25,
+        "endChar": 9
+      },
+      "revId": "1a831cbbfccc795712f9f2c1de3fca75cb9087ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
