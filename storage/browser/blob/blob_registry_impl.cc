@@ -1,0 +1,46 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#include "storage/browser/blob/blob_registry_impl.h"
+
+#include "storage/browser/blob/blob_impl.h"
+#include "storage/browser/blob/blob_storage_context.h"
+
+namespace storage {
+
+BlobRegistryImpl::BlobRegistryImpl(BlobStorageContext* context)
+    : context_(context), weak_ptr_factory_(this) {}
+
+BlobRegistryImpl::~BlobRegistryImpl() {}
+
+void BlobRegistryImpl::Bind(mojom::BlobRegistryRequest request) {
+  bindings_.AddBinding(this, std::move(request), false);
+}
+
+void BlobRegistryImpl::Register(mojom::BlobRequest blob,
+                                const std::string& uuid,
+                                const std::string& content_type,
+                                const std::string& content_disposition,
+                                std::vector<mojom::DataElementPtr> elements,
+                                RegisterCallback callback) {
+  if (uuid.empty() || context_->registry().HasEntry(uuid)) {
+    bindings_.ReportBadMessage("Invalid UUID passed to BlobRegistry::Register");
+    return;
+  }
+
+  std::unique_ptr<BlobDataHandle> handle =
+      context_->AddBrokenBlob(uuid, content_type, content_disposition,
+                              BlobStatus::ERR_SOURCE_DIED_IN_TRANSIT);
+  BlobImpl::Create(std::move(handle), std::move(blob));
+  std::move(callback).Run();
+}
+
+void BlobRegistryImpl::GetBlobFromUUID(mojom::BlobRequest blob,
+                                       const std::string& uuid) {
+  std::unique_ptr<BlobDataHandle> handle = context_->GetBlobDataFromUUID(uuid);
+  if (handle)
+    BlobImpl::Create(std::move(handle), std::move(blob));
+}
+
+}  // namespace storage
