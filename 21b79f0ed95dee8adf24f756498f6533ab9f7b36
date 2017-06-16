@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "771e05ff_5d047077",
+        "filename": "content/browser/devtools/devtools_io_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-16T17:21:59Z",
+      "side": 1,
+      "message": "std::unique_ptr\u003cstd::string\u003e",
+      "range": {
+        "startLine": 32,
+        "startChar": 49,
+        "endLine": 32,
+        "endChar": 60
+      },
+      "revId": "21b79f0ed95dee8adf24f756498f6533ab9f7b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cc393bd_17aedc29",
+        "filename": "content/browser/devtools/devtools_io_context.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-16T17:21:59Z",
+      "side": 1,
+      "message": "explicit",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 10
+      },
+      "revId": "21b79f0ed95dee8adf24f756498f6533ab9f7b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b51536ab_c951203c",
+        "filename": "content/browser/devtools/protocol/io_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-16T17:21:59Z",
+      "side": 1,
+      "message": "Forgot std::move here?",
+      "range": {
+        "startLine": 60,
+        "startChar": 24,
+        "endLine": 60,
+        "endChar": 28
+      },
+      "revId": "21b79f0ed95dee8adf24f756498f6533ab9f7b36",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
