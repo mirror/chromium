@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "17dc8acb_1d3d4074",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-16T18:10:36Z",
+      "side": 1,
+      "message": "Got you.",
+      "parentUuid": "154a8648_e71a07f9",
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d802cee_1cca1c9e",
         "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.h",
         "patchSetId": 1
@@ -154,6 +172,30 @@
       "side": 1,
       "message": "Good point, I misunderstood what\u0027s being deprecated. Reverted this file.",
       "parentUuid": "dccc988d_75b5f326",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 19
+      },
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8eddb549_b7e30e34",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1196069
+      },
+      "writtenOn": "2017-06-16T18:10:36Z",
+      "side": 1,
+      "message": "Indeed my comment more likes a question instead of a suggestion. :)\nI prefer your change: it makes the behavior of this class more reliable even it\u0027s not created in UI thread, though I have not seen the possibility. But it\u0027s up to you.",
+      "parentUuid": "9323e4b6_402c0ddc",
       "range": {
         "startLine": 167,
         "startChar": 2,
