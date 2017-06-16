@@ -16,6 +16,24 @@
       "revId": "a305da4dde47f5147a280a40c987ea3a652bd87d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "007984c2_327cf41f",
+        "filename": "chrome/test/data/payments/util.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-16T19:16:23Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "58e10195_823bebdf",
+      "revId": "a305da4dde47f5147a280a40c987ea3a652bd87d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
