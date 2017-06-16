@@ -96,7 +96,6 @@ class WebRtcImageCaptureBrowserTest
       return true;
     }
 #endif
-
     GURL url(embedded_test_server()->GetURL(kImageCaptureHtmlFile));
     NavigateToURL(shell(), url);
 
@@ -104,6 +103,8 @@ class WebRtcImageCaptureBrowserTest
       DVLOG(1) << "No video device; skipping test...";
       return true;
     }
+
+    LookupAndLogNameAndIdOfFirstCamera();
 
     std::string result;
     if (!ExecuteScriptAndExtractString(shell(), command, &result))

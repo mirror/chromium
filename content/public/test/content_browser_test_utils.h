@@ -91,6 +91,8 @@ void WaitForAppModalDialog(Shell* window);
 // Extends the ToRenderFrameHost mechanism to content::Shells.
 RenderFrameHost* ConvertToRenderFrameHost(Shell* shell);
 
+void LookupAndLogNameAndIdOfFirstCamera();
+
 // Used to wait for a new Shell window to be created. Instantiate this object
 // before the operation that will create the window.
 class ShellAddedObserver {

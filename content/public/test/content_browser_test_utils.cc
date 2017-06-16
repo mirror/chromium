@@ -9,6 +9,9 @@
 #include "base/path_service.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_restrictions.h"
+#include "content/browser/browser_main_loop.h"
+#include "content/browser/renderer_host/media/media_stream_manager.h"
+#include "content/browser/renderer_host/media/video_capture_manager.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/notification_source.h"
 #include "content/public/browser/web_contents.h"
@@ -107,6 +110,37 @@ void WaitForAppModalDialog(Shell* window) {
 
 RenderFrameHost* ConvertToRenderFrameHost(Shell* shell) {
   return shell->web_contents()->GetMainFrame();
+}
+
+// This must be invoked from the test method body, because at the time of
+// invocation of SetUp() the BrowserMainLoop does not yet exist.
+void LookupAndLogNameAndIdOfFirstCamera() {
+  MediaStreamManager* media_stream_manager =
+      BrowserMainLoop::GetInstance()->media_stream_manager();
+  base::RunLoop run_loop;
+  BrowserThread::PostTask(
+      content::BrowserThread::IO, FROM_HERE,
+      base::Bind(
+          [](MediaStreamManager* media_stream_manager,
+             base::Closure quit_closure) {
+            media_stream_manager->video_capture_manager()->EnumerateDevices(
+                base::Bind(
+                    [](base::Closure quit_closure,
+                       const media::VideoCaptureDeviceDescriptors&
+                           descriptors) {
+                      if (descriptors.empty()) {
+                        LOG(WARNING) << "No camera found";
+                        return;
+                      }
+                      LOG(INFO)
+                          << "Using camera " << descriptors[0].display_name
+                          << " (" << descriptors[0].model_id << ")";
+                      quit_closure.Run();
+                    },
+                    quit_closure));
+          },
+          media_stream_manager, run_loop.QuitClosure()));
+  run_loop.Run();
 }
 
 ShellAddedObserver::ShellAddedObserver()
