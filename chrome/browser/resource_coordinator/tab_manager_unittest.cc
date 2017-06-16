@@ -31,6 +31,7 @@
 #include "content/public/browser/web_contents.h"
 #include "content/public/test/mock_render_process_host.h"
 #include "content/public/test/web_contents_tester.h"
+#include "content/test/test_web_contents.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "url/gurl.h"
 
@@ -104,7 +105,11 @@ enum TestIndicies {
 class TabManagerTest : public ChromeRenderViewHostTestHarness {
  public:
   WebContents* CreateWebContents() {
-    return WebContents::Create(WebContents::CreateParams(profile()));
+    content::TestWebContents* web_contents =
+        content::TestWebContents::Create(profile(), nullptr);
+    // Commit an URL to allow discarding.
+    web_contents->NavigateAndCommit(GURL("https://www.example.com"));
+    return web_contents;
   }
 };
 
@@ -243,9 +248,18 @@ TEST_F(TabManagerTest, IsInternalPage) {
 TEST_F(TabManagerTest, DiscardWebContentsAt) {
   TabManager tab_manager;
 
+  // Create a tab strip in a visible and active window.
   TabStripDummyDelegate delegate;
   TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(&tab_manager);
+
+  TabManager::BrowserInfo browser_info;
+  browser_info.tab_strip_model = &tabstrip;
+  browser_info.window_is_active = true;
+  browser_info.window_is_minimized = false;
+  browser_info.window_bounds = gfx::Rect();
+  browser_info.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info);
 
   // Fill it with some tabs.
   WebContents* contents1 = CreateWebContents();
@@ -285,12 +299,6 @@ TEST_F(TabManagerTest, DiscardWebContentsAt) {
 
   // Activating the tab should clear its discard state.
   tabstrip.ActivateTabAt(0, true /* user_gesture */);
-  ASSERT_EQ(2, tabstrip.count());
-  EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
-  EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
-
-  // Don't discard active tab.
-  tab_manager.DiscardWebContentsAt(0, &tabstrip);
   ASSERT_EQ(2, tabstrip.count());
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(0)));
   EXPECT_FALSE(tab_manager.IsTabDiscarded(tabstrip.GetWebContentsAt(1)));
@@ -453,6 +461,9 @@ TEST_F(TabManagerTest, ShouldPurgeAtDefaultTime) {
   // Wait 1 day and verify that the tab is still be purged.
   test_clock.Advance(base::TimeDelta::FromHours(24));
   EXPECT_FALSE(tab_manager.ShouldPurgeNow(test_contents));
+
+  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
+  tabstrip.CloseAllTabs();
 }
 
 TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
@@ -460,8 +471,14 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   TabStripDummyDelegate delegate;
   TabStripModel tabstrip(&delegate, profile());
   tabstrip.AddObserver(&tab_manager);
-  tab_manager.test_tab_strip_models_.push_back(
-      TabManager::TestTabStripModel(&tabstrip, false /* !is_app */));
+
+  TabManager::BrowserInfo browser_info;
+  browser_info.tab_strip_model = &tabstrip;
+  browser_info.window_is_active = true;
+  browser_info.window_is_minimized = false;
+  browser_info.window_bounds = gfx::Rect();
+  browser_info.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info);
 
   base::SimpleTestTickClock test_clock;
   tab_manager.set_test_tick_clock(&test_clock);
@@ -490,6 +507,93 @@ TEST_F(TabManagerTest, ActivateTabResetPurgeState) {
   // Activate tab2. Tab2's PurgeAndSuspend state should be NOT_PURGED.
   tabstrip.ActivateTabAt(1, true /* user_gesture */);
   EXPECT_FALSE(tab_manager.GetWebContentsData(tab2)->is_purged());
+
+  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
+  tabstrip.CloseAllTabs();
+}
+
+// Verify that DiscardTab() can discard every tab in a window covered by another
+// window and in a minimized window but cannot discard a selected tab in a
+// visible window.
+TEST_F(TabManagerTest, DiscardTabWithNonVisibleTabs) {
+  TabManager tab_manager;
+  TabStripDummyDelegate delegate;
+
+  // Create 3 TabStripModels.
+  TabStripModel tab_strip1(&delegate, profile());
+  tab_strip1.AppendWebContents(CreateWebContents(), true);
+  tab_strip1.AppendWebContents(CreateWebContents(), false);
+
+  TabStripModel tab_strip2(&delegate, profile());
+  tab_strip2.AppendWebContents(CreateWebContents(), true);
+  tab_strip2.AppendWebContents(CreateWebContents(), false);
+
+  TabStripModel tab_strip3(&delegate, profile());
+  tab_strip3.AppendWebContents(CreateWebContents(), true);
+  tab_strip3.AppendWebContents(CreateWebContents(), false);
+
+  // Add the 3 TabStripModels to the TabManager.
+  // The window for |tab_strip1| covers the window for |tab_strip2|. The window
+  // for |tab_strip3| is minimized.
+  TabManager::BrowserInfo browser_info1;
+  browser_info1.tab_strip_model = &tab_strip1;
+  browser_info1.window_is_active = true;
+  browser_info1.window_is_minimized = false;
+  browser_info1.window_bounds = gfx::Rect(0, 0, 100, 100);
+  browser_info1.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info1);
+
+  TabManager::BrowserInfo browser_info2;
+  browser_info2.tab_strip_model = &tab_strip2;
+  browser_info2.window_is_active = false;
+  browser_info2.window_is_minimized = false;
+  browser_info2.window_bounds = gfx::Rect(10, 10, 50, 50);
+  browser_info2.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info2);
+
+  TabManager::BrowserInfo browser_info3;
+  browser_info3.tab_strip_model = &tab_strip3;
+  browser_info3.window_is_active = false;
+  browser_info3.window_is_minimized = true;
+  browser_info3.window_bounds = gfx::Rect();
+  browser_info3.browser_is_app = false;
+  tab_manager.test_browser_info_list_.push_back(browser_info3);
+
+  // Non-selected tabs in non-visible windows are discarded first.
+  tab_manager.DiscardTab();
+  tab_manager.DiscardTab();
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(0)));
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(1)));
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(1)));
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(1)));
+
+  // Selected tabs in non-visible windows are discarded next.
+  tab_manager.DiscardTab();
+  tab_manager.DiscardTab();
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(0)));
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(1)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(1)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(1)));
+
+  // Non-selected tab in visible window is last to be discarded. Selected tab in
+  // visible window is never discarded.
+  tab_manager.DiscardTab();
+  tab_manager.DiscardTab();
+  EXPECT_FALSE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip1.GetWebContentsAt(1)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip2.GetWebContentsAt(1)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(0)));
+  EXPECT_TRUE(tab_manager.IsTabDiscarded(tab_strip3.GetWebContentsAt(1)));
+
+  // Tabs with a committed URL must be closed explicitly to avoid DCHECK errors.
+  tab_strip1.CloseAllTabs();
+  tab_strip2.CloseAllTabs();
+  tab_strip3.CloseAllTabs();
 }
 
 }  // namespace resource_coordinator

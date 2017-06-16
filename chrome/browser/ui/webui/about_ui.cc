@@ -476,6 +476,8 @@ std::vector<std::string> GetHtmlTabDescriptorsForDiscardPage() {
     std::string str;
     str.reserve(4096);
     str += "<b>";
+    str += it->is_selected ? "[Selected] " : "";
+    str += it->is_in_visible_window ? "[Visible Window] " : "";
     str += it->is_app ? "[App] " : "";
     str += it->is_internal_page ? "[Internal] " : "";
     str += it->is_media ? "[Media] " : "";
