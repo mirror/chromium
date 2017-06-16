@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5859a6c1_4c60284f",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 331,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "Can we also report |has_cdm| so we can query EME playback UKM stats?",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b501ae8_d093afd5",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "We probably want to plumb a boolean (e.g. is_hw_decoder) out of our media pipeline so that we don\u0027t to use GVD constant here. The current solution won\u0027t work when we switch to VDAv2, and |is_hw_decoder| can also be useful for media capabilities, e.g. to determine power efficiency.",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e2dddb1_16b4a4ad",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "Per offline standup, do you plan to split this into reporting individual flags/fields? If so, probably we can merge this with add meta data so that we don\u0027t have to build the UKM in two phases...",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1653c1d_691b4a5d",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "hmm, it\u0027s a bit odd that we don\u0027t return the returned UkmEntryBuilder here. There must be a reason, but isn\u0027t obvious to readers.",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98b2caa5_0b1f8f53",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 573,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "ISTM \"id\" is not necessary, it\u0027s really an enum instead an ID...",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da351c19_f0b4e431",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 644,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T19:43:04Z",
+      "side": 1,
+      "message": "ditto, it\u0027s not obvious why we don\u0027t want to add metadata to UKM in this case...",
+      "revId": "3c5124de6965e8a496c54821c7ae53ba5a3f1eb3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
