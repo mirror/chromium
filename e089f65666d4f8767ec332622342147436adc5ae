@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4623ff63_58f74dd4",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T18:03:00Z",
+      "side": 1,
+      "message": "No longer needed?",
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "872a83e0_c0ffb706",
+        "filename": "net/test/url_request/url_request_mock_http_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T18:03:00Z",
+      "side": 1,
+      "message": "Need post_traits.h, too.",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc779f7b_b2071daf",
+        "filename": "net/test/url_request/url_request_mock_http_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T18:03:00Z",
+      "side": 1,
+      "message": "No longer needed",
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
