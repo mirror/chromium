@@ -28,6 +28,31 @@ enum OptionFlag : ubyte (bit_flags) {
   IS_MATCH_CASE,
 }
 
+// The options controlling whether or not to activate filtering for subresources
+// of documents that match the URL pattern of the rule.
+// TODO(pkalinnikov): This can be removed by keeping track of it in a separate
+// IndexedRuleset.
+enum ActivationType : ubyte (bit_flags) {
+  DOCUMENT,      // Disable all rules on the page.
+  GENERIC_BLOCK,  // Disable generic URL rules on the page.
+}
+
+// The types of subresource requests that a URL rule should be applied to.
+enum ElementType : ushort (bit_flags) {
+  OTHER,
+  SCRIPT,
+  IMAGE,
+  STYLESHEET,
+  OBJECT,
+  XMLHTTPREQUEST,
+  SUBDOCUMENT,
+  PING,
+  MEDIA,
+  FONT,
+  POPUP,
+  WEBSOCKET,
+}
+
 // The flat representation of a single URL rule. For more details regarding the
 // fields please see the comments to url_pattern_index::proto::UrlRule.
 table UrlRule {
@@ -36,10 +61,10 @@ table UrlRule {
 
   // A bitmask of element types, same as proto::UrlRule::element_types. Enables
   // all element types except POPUP by default.
-  // Note: Keep it equal to ELEMENT_TYPE_ALL-ELEMENT_TYPE_POPUP for compactness.
+  // Note: Keep it equal to ElementType_ALL-ElementType_POPUP for compactness.
   element_types : ushort = 6143;
 
-  // A bitmask of activation types, same as proto::UrlRule::activation_types.
+  // A bitmask of ActivationType.
   // Disables all activation types by default.
   activation_types : ubyte = 0;
 
@@ -52,11 +77,18 @@ table UrlRule {
   anchor_right : AnchorType = NONE;
 
   // The list of domains to be included/excluded from the filter's affected set.
+  // Kept sorted for fast matching.
   domains_included : [string];
   domains_excluded : [string];
 
   // A URL pattern in the format defined by |url_pattern_type|.
   url_pattern : string;
+
+  // An id which uniquely identifies the Url Rule. This is not used by all clients.
+  id : uint;
+
+  // Rule priority. This is not used by all clients.
+  priority : uint;
 }
 
 // Contains an N-gram (acting as a key in a hash table) and a list of URL rules

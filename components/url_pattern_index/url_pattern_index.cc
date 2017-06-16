@@ -6,6 +6,7 @@
 
 #include <algorithm>
 #include <limits>
+#include <map>
 #include <string>
 
 #include "base/logging.h"
@@ -24,6 +25,50 @@ namespace {
 using FlatStringOffset = flatbuffers::Offset<flatbuffers::String>;
 using FlatDomains = flatbuffers::Vector<FlatStringOffset>;
 using FlatDomainsOffset = flatbuffers::Offset<FlatDomains>;
+
+const std::map<proto::ActivationType, flat::ActivationType>
+    kActivationMaskPairs = {
+        {proto::ACTIVATION_TYPE_UNSPECIFIED, flat::ActivationType_NONE},
+        {proto::ACTIVATION_TYPE_DOCUMENT, flat::ActivationType_DOCUMENT},
+        // ELEMHIDE is not supported.
+        {proto::ACTIVATION_TYPE_ELEMHIDE, flat::ActivationType_NONE},
+        // GENERICHIDE is not supported.
+        {proto::ACTIVATION_TYPE_GENERICHIDE, flat::ActivationType_NONE},
+        {proto::ACTIVATION_TYPE_GENERICBLOCK,
+         flat::ActivationType_GENERIC_BLOCK},
+};
+
+const std::map<proto::ElementType, flat::ElementType> kElementMaskPairs = {
+    {proto::ELEMENT_TYPE_UNSPECIFIED, flat::ElementType_NONE},
+    {proto::ELEMENT_TYPE_OTHER, flat::ElementType_OTHER},
+    {proto::ELEMENT_TYPE_SCRIPT, flat::ElementType_SCRIPT},
+    {proto::ELEMENT_TYPE_IMAGE, flat::ElementType_IMAGE},
+    {proto::ELEMENT_TYPE_STYLESHEET, flat::ElementType_STYLESHEET},
+    {proto::ELEMENT_TYPE_OBJECT, flat::ElementType_OBJECT},
+    {proto::ELEMENT_TYPE_XMLHTTPREQUEST, flat::ElementType_XMLHTTPREQUEST},
+    // Normally we can not distinguish between the main plugin resource and any
+    // other loads it makes. We treat them both as OBJECT requests.
+    {proto::ELEMENT_TYPE_OBJECT_SUBREQUEST, flat::ElementType_OBJECT},
+    {proto::ELEMENT_TYPE_SUBDOCUMENT, flat::ElementType_SUBDOCUMENT},
+    {proto::ELEMENT_TYPE_PING, flat::ElementType_PING},
+    {proto::ELEMENT_TYPE_MEDIA, flat::ElementType_MEDIA},
+    {proto::ELEMENT_TYPE_FONT, flat::ElementType_FONT},
+    // Filterning popups is not supported.
+    {proto::ELEMENT_TYPE_POPUP, flat::ElementType_NONE},
+    {proto::ELEMENT_TYPE_WEBSOCKET, flat::ElementType_WEBSOCKET},
+};
+
+flat::ActivationType ProtoToFlatActivationType(proto::ActivationType type) {
+  auto it = kActivationMaskPairs.find(type);
+  DCHECK(it != kActivationMaskPairs.end());
+  return it->second;
+}
+
+flat::ElementType ProtoToFlatElementType(proto::ElementType type) {
+  auto it = kElementMaskPairs.find(type);
+  DCHECK(it != kElementMaskPairs.end());
+  return it->second;
+}
 
 base::StringPiece ToStringPiece(const flatbuffers::String* string) {
   DCHECK(string);
@@ -142,6 +187,9 @@ class UrlRuleFlatBufferConverter {
   }
 
   bool InitializeOptions() {
+    static_assert(flat::OptionFlag_ANY <= std::numeric_limits<uint8_t>::max(),
+                  "Option flags can not be stored in uint8_t.");
+
     if (rule_.semantics() == proto::RULE_SEMANTICS_WHITELIST) {
       options_ |= flat::OptionFlag_IS_WHITELIST;
     } else if (rule_.semantics() != proto::RULE_SEMANTICS_BLACKLIST) {
@@ -170,33 +218,44 @@ class UrlRuleFlatBufferConverter {
   }
 
   bool InitializeElementTypes() {
-    static_assert(
-        proto::ELEMENT_TYPE_ALL <= std::numeric_limits<uint16_t>::max(),
-        "Element types can not be stored in uint16_t.");
-    element_types_ = static_cast<uint16_t>(rule_.element_types());
+    static_assert(flat::ElementType_ANY <= std::numeric_limits<uint16_t>::max(),
+                  "Element types can not be stored in uint16_t.");
 
-    // Note: Normally we can not distinguish between the main plugin resource
-    // and any other loads it makes. We treat them both as OBJECT requests.
-    if (element_types_ & proto::ELEMENT_TYPE_OBJECT_SUBREQUEST)
-      element_types_ |= proto::ELEMENT_TYPE_OBJECT;
+// Ensure all proto::ElementType(s) are mapped in |kElementMaskPairs|.
+#if DCHECK_IS_ON()
+    uint16_t mask = 0;
+    for (const auto& pair : kElementMaskPairs)
+      mask |= pair.first;
+    DCHECK_EQ(proto::ELEMENT_TYPE_ALL, mask);
+#endif  // DCHECK_IS_ON()
 
-    // Ignore unknown element types.
-    element_types_ &= proto::ELEMENT_TYPE_ALL;
-    // Filtering popups is not supported.
-    element_types_ &= ~proto::ELEMENT_TYPE_POPUP;
+    element_types_ = flat::ElementType_NONE;
+
+    for (const auto& pair : kElementMaskPairs)
+      if (rule_.element_types() & pair.first)
+        element_types_ |= pair.second;
 
     return true;
   }
 
   bool InitializeActivationTypes() {
     static_assert(
-        proto::ACTIVATION_TYPE_ALL <= std::numeric_limits<uint8_t>::max(),
+        flat::ActivationType_ANY <= std::numeric_limits<uint8_t>::max(),
         "Activation types can not be stored in uint8_t.");
-    activation_types_ = static_cast<uint8_t>(rule_.activation_types());
 
-    // Only the following activation types are supported, ignore the others.
-    activation_types_ &=
-        proto::ACTIVATION_TYPE_DOCUMENT | proto::ACTIVATION_TYPE_GENERICBLOCK;
+// Ensure all proto::ActivationType(s) are mapped in |kActivationMaskPairs|.
+#if DCHECK_IS_ON()
+    uint16_t mask = 0;
+    for (const auto& pair : kActivationMaskPairs)
+      mask |= pair.first;
+    DCHECK_EQ(proto::ACTIVATION_TYPE_ALL, mask);
+#endif  // DCHECK_IS_ON()
+
+    activation_types_ = flat::ActivationType_NONE;
+
+    for (const auto& pair : kActivationMaskPairs)
+      if (rule_.activation_types() & pair.first)
+        activation_types_ |= pair.second;
 
     return true;
   }
@@ -440,12 +499,16 @@ bool DoesRuleFlagsMatch(const flat::UrlRule& rule,
   DCHECK((element_type == proto::ELEMENT_TYPE_UNSPECIFIED) !=
          (activation_type == proto::ACTIVATION_TYPE_UNSPECIFIED));
 
+  flat::ElementType flat_element_type = ProtoToFlatElementType(element_type);
+  flat::ActivationType flat_activation_type =
+      ProtoToFlatActivationType(activation_type);
+
   if (element_type != proto::ELEMENT_TYPE_UNSPECIFIED &&
-      !(rule.element_types() & element_type)) {
+      !(rule.element_types() & flat_element_type)) {
     return false;
   }
   if (activation_type != proto::ACTIVATION_TYPE_UNSPECIFIED &&
-      !(rule.activation_types() & activation_type)) {
+      !(rule.activation_types() & flat_activation_type)) {
     return false;
   }
 
