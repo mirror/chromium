@@ -298,8 +298,6 @@ cast_test_group_list("cast_test_lists") {
 
   additional_options = [ "--ozone-platform=headless --test-launcher-bot-mode" ]
 
-  build_tests = true
-
   test_groups = [ ":cast_tests" ]
 
   if (chromecast_branding != "public") {
