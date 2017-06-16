@@ -23,6 +23,10 @@
 
 class PrefService;
 
+namespace service_manager {
+class Connector;
+}
+
 namespace drive {
 
 class EventLogger;
@@ -66,7 +70,9 @@ class JobScheduler
   JobScheduler(PrefService* pref_service,
                EventLogger* logger,
                DriveServiceInterface* drive_service,
-               base::SequencedTaskRunner* blocking_task_runner);
+               base::SequencedTaskRunner* blocking_task_runner,
+               service_manager::Connector* connector = nullptr);
+
   ~JobScheduler() override;
 
   // JobListInterface overrides.
