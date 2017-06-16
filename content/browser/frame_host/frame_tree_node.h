@@ -351,6 +351,7 @@ class CONTENT_EXPORT FrameTreeNode {
   FrameTreeNodeBlameContext& blame_context() { return blame_context_; }
 
   void OnSetHasReceivedUserGesture();
+  void OnSetHasReceivedUserGestureBeforeNavigation(bool);
 
  private:
   FRIEND_TEST_ALL_PREFIXES(SitePerProcessFeaturePolicyBrowserTest,

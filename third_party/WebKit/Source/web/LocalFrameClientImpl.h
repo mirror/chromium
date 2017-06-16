@@ -239,6 +239,8 @@ class LocalFrameClientImpl final : public LocalFrameClient {
 
   std::unique_ptr<WebURLLoader> CreateURLLoader() override;
 
+  void SetHasReceivedUserGestureBeforeNavigation(bool) override;
+
   service_manager::InterfaceProvider* GetInterfaceProvider() override;
 
   void AnnotatedRegionsChanged() override;

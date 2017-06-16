@@ -176,6 +176,11 @@ unsigned WebRemoteFrameImpl::UnloadListenerCount() const {
   return 0;
 }
 
+void WebRemoteFrameImpl::SetDocumentHasReceivedUserGestureBeforeNavigation(
+    bool value) {
+  GetFrame()->SetDocumentHasReceivedUserGestureBeforeNavigation(value);
+}
+
 WebLocalFrame* WebRemoteFrameImpl::CreateLocalChild(
     WebTreeScopeType scope,
     const WebString& name,

@@ -256,6 +256,8 @@ class CORE_EXPORT FrameLoader final {
   std::unique_ptr<TracedValue> ToTracedValue() const;
   void TakeObjectSnapshot() const;
 
+  bool ShouldPersistUserGestureValue(String);
+
   DocumentLoader* CreateDocumentLoader(const ResourceRequest&,
                                        const FrameLoadRequest&,
                                        FrameLoadType,

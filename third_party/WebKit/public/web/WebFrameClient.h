@@ -281,6 +281,10 @@ class BLINK_EXPORT WebFrameClient {
   // Called the first time this frame is the target of a user gesture.
   virtual void SetHasReceivedUserGesture() {}
 
+  // Called when this frame has had a user gesture on a previous page of the
+  // same origin.
+  virtual void SetHasReceivedUserGestureBeforeNavigation(bool value) {}
+
   // Notification of the devtools id for this frame.
   virtual void SetDevToolsFrameId(const blink::WebString& devtools_frame_id) {}
 

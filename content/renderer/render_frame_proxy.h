@@ -184,6 +184,7 @@ class CONTENT_EXPORT RenderFrameProxy
   void OnSetFocusedFrame();
   void OnWillEnterFullscreen();
   void OnSetHasReceivedUserGesture();
+  void OnSetHasReceivedUserGestureBeforeNavigation(bool);
 
   // The routing ID by which this RenderFrameProxy is known.
   const int routing_id_;
