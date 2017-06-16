@@ -33,6 +33,40 @@
       "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c927b258_0f1c365f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-16T03:46:26Z",
+      "side": 1,
+      "message": "Nit, spelling--heuristic; grammar--reattaching",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e902bb_b095fd59",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-16T03:46:26Z",
+      "side": 1,
+      "message": "Since you just reattach or not, why do you need to compute both halves of this? Won\u0027t it be symmetric?",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
