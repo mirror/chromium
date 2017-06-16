@@ -40,6 +40,7 @@
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceLoadingLog.h"
 #include "platform/network/HTTPParsers.h"
+#include "platform/weborigin/KURL.h"
 #include "platform/weborigin/SecurityViolationReportingPolicy.h"
 #include "platform/wtf/CurrentTime.h"
 #include "platform/wtf/StdLibExtras.h"
@@ -193,11 +194,16 @@ bool ImageResource::CanUseCacheValidator() const {
   return Resource::CanUseCacheValidator();
 }
 
-ImageResource* ImageResource::Create(const ResourceRequest& request) {
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+ImageResource* ImageResource::Create(ResourceRequest& request) {
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
+  ResourceLoaderOptions options;
   return new ImageResource(request, options,
                            ImageResourceContent::CreateNotStarted(), false);
+}
+
+ImageResource* ImageResource::CreateFromURL(const KURL& url) {
+  ResourceRequest request(url);
+  return Create(request);
 }
 
 ImageResource::ImageResource(const ResourceRequest& resource_request,

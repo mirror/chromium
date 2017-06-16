@@ -123,8 +123,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
 
   // Start by calling startLoad() directly, rather than via requestResource().
   // This shouldn't crash.
-  fetcher->StartLoad(
-      RawResource::Create(ResourceRequest(secure_url), Resource::kRaw));
+  fetcher->StartLoad(RawResource::Create(secure_url, Resource::kRaw));
 }
 
 TEST_F(ResourceFetcherTest, UseExistingResource) {
@@ -151,8 +150,7 @@ TEST_F(ResourceFetcherTest, UseExistingResource) {
 
 TEST_F(ResourceFetcherTest, Vary) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
+  Resource* resource = RawResource::Create(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
   response.SetURL(url);
@@ -219,8 +217,7 @@ TEST_F(ResourceFetcherTest, VaryOnBack) {
       ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
 
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
+  Resource* resource = RawResource::Create(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
   response.SetURL(url);
@@ -325,8 +322,8 @@ TEST_F(ResourceFetcherTest, DontReuseMediaDataUrl) {
       ResourceFetcher::Create(Context(), Context()->GetTaskRunner());
   ResourceRequest request(KURL(kParsedURLString, "data:text/html,foo"));
   request.SetRequestContext(WebURLRequest::kRequestContextVideo);
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
+  ResourceLoaderOptions options;
   options.data_buffering_policy = kDoNotBufferData;
   options.initiator_info.name = FetchInitiatorTypeNames::internal;
   FetchParameters fetch_params(request, options);
@@ -702,8 +699,7 @@ TEST_F(ResourceFetcherTest, SpeculativePreloadShouldBePromotedToLinkePreload) {
 
 TEST_F(ResourceFetcherTest, Revalidate304) {
   KURL url(kParsedURLString, "http://127.0.0.1:8000/foo.html");
-  Resource* resource =
-      RawResource::Create(ResourceRequest(url), Resource::kRaw);
+  Resource* resource = RawResource::Create(url, Resource::kRaw);
   GetMemoryCache()->Add(resource);
   ResourceResponse response;
   response.SetURL(url);
