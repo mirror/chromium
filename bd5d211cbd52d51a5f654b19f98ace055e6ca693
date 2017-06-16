@@ -152,6 +152,30 @@
       "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "261065fc_1594cd7c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-16T05:17:21Z",
+      "side": 1,
+      "message": "Oh, I meant to say that your suggestion would require what I\u0027m deleting from this CL (in intercept_navigation_throttle.c) or something of a similar logic be added back here. That makes me think this change (posting on UI thread) is reasonable (or at least simpler) for the purpose of this CL. Let me have your thought again.",
+      "parentUuid": "090489c6_f267131b",
+      "range": {
+        "startLine": 252,
+        "startChar": 25,
+        "endLine": 252,
+        "endChar": 44
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
