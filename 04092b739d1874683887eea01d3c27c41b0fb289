@@ -1,0 +1,362 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2de203dd_e488fa9d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "This block is correct and also follows Chrome style guide about doing early returns to not do indents, etc.\n\nIt\u0027s just a little bit unclear that if someone later adds more to this method, that we really wanted it be like that.\n\nSo just to be crystal clear on messaging, maybe either:\nA) Move the startMonitoring() into the if-block\nB) Extract this whole new section into a new private method: maybeStartMonitoringForScreenshots()\n\nI think I like the latter better.",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "52de59b7_379a9212",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Is it OK to call stopMonitoring() multiple times without starting first?\nThat\u0027ll happen in other types of activities as it is now, since there\u0027s no guard here.",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5504b918_fa0cc7a7",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: Maybe mention that callers should use @{link ScreenshotMonitor#create(ScreenshotMonitorDelegate)} to create an instance?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2a76127_d3266d96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: @VisibleForTesting",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa60d617_92fb0773",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: I think I\u0027d use stronger words.\n\"This must only be accessed on the UI thread.\"",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de48f77b_67632b02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Tiny nit: \"instantiation of the\" or \"instantiating the\"",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92d582e_741131f6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: @VisibleForTesting",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb7f89aa_19ae6534",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Is there a bug filed for this?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5933d9_47830a6f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: @VisibleForTesting",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a492a156_856dff28",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: Add a comment about only accessing this on the UI thread.",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "352201f3_28f00456",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Nit: @VisibleForTesting",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b163829_b1a1a78b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Is it OK to call startMonitoring() twice or should we bail out if we are already monitoring?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5677febf_a2da4b0c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "This might lead to multiple calls to stopWatching if the caller is not behaving nicely.\nDo we want to ensure we only call as many times as we have called start? I.e. bail out if we\u0027re not currently monitoring?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d226aa42_156b76a8",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Secondly, you\u0027re accessing and setting this from different threads. AtomicInteger maybe?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "574f84c6_3d714f84",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "I\u0027m not sure if this naming makes sense any more after the refactoring. Technically, you don\u0027t know that you have to be in the foreground for this code to work. This particular counter means that you are currently monitoring the directory.",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a36fed1_4a5a831c",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "You\u0027re accessing and setting this from different threads. AtomicInteger maybe?",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ffe0c3f_1e738f38",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Could you assert that this call is invoked on the UI thread here?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3177d5ff_c4bf6ace",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "You\u0027re not consistent in how you\u0027re accessing this member I think. Each test does it\u0027s own thing.",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb89e766_62f2d58b",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "If you used AtomicInteger you can read this on the test thread. But you\u0027d still need to wait for /something/ to ensure the task has finished, so maybe use an object.wait/notify or a semaphore in the test method that you poke from this runnable instead?\n\nsame for some of the other places as well",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0164c8e_9ddee578",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002237
+      },
+      "writtenOn": "2017-06-16T17:16:11Z",
+      "side": 1,
+      "message": "Could you add a test that show the intent of what should happen if callers call startMonitoring() twice or stopMonitoring() twice?",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
