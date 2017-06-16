@@ -33,6 +33,7 @@
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/loader/ThreadableLoadingContext.h"
 #include "core/workers/ParentFrameTaskRunners.h"
+#include "core/workers/WorkerCachedScriptsManager.h"
 #include "core/workers/WorkerThreadLifecycleObserver.h"
 #include "platform/LifecycleNotifier.h"
 #include "platform/WaitableEvent.h"
@@ -190,6 +191,12 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // out of this class.
   virtual bool IsOwningBackingThread() const { return true; }
 
+  // Returns the cached scripts manager. If the scripts should be fetched from
+  // the network, it's enough to return nullptr.
+  virtual WorkerCachedScriptsManager* CreateCachedScriptsManager() {
+    return nullptr;
+  }
+
  private:
   friend class WorkerThreadTest;
   FRIEND_TEST_ALL_PREFIXES(WorkerThreadTest,
@@ -243,6 +250,10 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   void ForciblyTerminateExecution(const MutexLocker&, ExitCode);
 
   void InitializeSchedulerOnWorkerThread(WaitableEvent*);
+  void RequestMainScript(std::unique_ptr<WorkerThreadStartupData>);
+  void OnMainScriptReady(std::unique_ptr<WorkerThreadStartupData>,
+                         String,
+                         std::unique_ptr<Vector<char>>);
   void InitializeOnWorkerThread(std::unique_ptr<WorkerThreadStartupData>);
   void PrepareForShutdownOnWorkerThread();
   void PerformShutdownOnWorkerThread();
@@ -289,6 +300,8 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   // Created on the main thread, passed to the worker thread but should kept
   // being accessed only on the main thread.
   CrossThreadPersistent<ThreadableLoadingContext> loading_context_;
+
+  WorkerCachedScriptsManager* cached_scripts_manager_;
 
   WorkerReportingProxy& worker_reporting_proxy_;
 

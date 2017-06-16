@@ -30,10 +30,11 @@
 #ifndef ServiceWorkerThread_h
 #define ServiceWorkerThread_h
 
+#include <memory>
 #include "core/frame/csp/ContentSecurityPolicy.h"
 #include "core/workers/WorkerThread.h"
 #include "modules/ModulesExport.h"
-#include <memory>
+#include "modules/serviceworkers/ServiceWorkerCachedScriptsManager.h"
 
 namespace blink {
 
@@ -41,7 +42,9 @@ class WorkerThreadStartupData;
 
 class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
  public:
-  ServiceWorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);
+  ServiceWorkerThread(ThreadableLoadingContext*,
+                      WorkerReportingProxy&,
+                      std::unique_ptr<ServiceWorkerCachedScriptsManager>);
   ~ServiceWorkerThread() override;
 
   WorkerBackingThread& GetWorkerBackingThread() override {
@@ -53,7 +56,10 @@ class MODULES_EXPORT ServiceWorkerThread final : public WorkerThread {
   WorkerOrWorkletGlobalScope* CreateWorkerGlobalScope(
       std::unique_ptr<WorkerThreadStartupData>) override;
 
+  WorkerCachedScriptsManager* CreateCachedScriptsManager() override;
+
  private:
+  std::unique_ptr<ServiceWorkerCachedScriptsManager> cached_scripts_manager_;
   std::unique_ptr<WorkerBackingThread> worker_backing_thread_;
 };
 

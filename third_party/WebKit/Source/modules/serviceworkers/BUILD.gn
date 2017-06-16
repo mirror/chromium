@@ -30,6 +30,8 @@ blink_modules_sources("serviceworkers") {
     "RespondWithObserver.h",
     "ServiceWorker.cpp",
     "ServiceWorker.h",
+    "ServiceWorkerCachedScriptsManager.cpp",
+    "ServiceWorkerCachedScriptsManager.h",
     "ServiceWorkerClient.cpp",
     "ServiceWorkerClient.h",
     "ServiceWorkerClients.cpp",

@@ -33,6 +33,7 @@
 #include <memory>
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerThreadStartupData.h"
+#include "modules/serviceworkers/ServiceWorkerCachedScriptsManager.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScope.h"
 #include "platform/wtf/PtrUtil.h"
 
@@ -40,8 +41,10 @@ namespace blink {
 
 ServiceWorkerThread::ServiceWorkerThread(
     ThreadableLoadingContext* loading_context,
-    WorkerReportingProxy& worker_reporting_proxy)
+    WorkerReportingProxy& worker_reporting_proxy,
+    std::unique_ptr<ServiceWorkerCachedScriptsManager> cached_scripts_manager)
     : WorkerThread(loading_context, worker_reporting_proxy),
+      cached_scripts_manager_(std::move(cached_scripts_manager)),
       worker_backing_thread_(
           WorkerBackingThread::Create("ServiceWorker Thread")) {}
 
@@ -49,6 +52,10 @@ ServiceWorkerThread::~ServiceWorkerThread() {}
 
 void ServiceWorkerThread::ClearWorkerBackingThread() {
   worker_backing_thread_ = nullptr;
+}
+
+WorkerCachedScriptsManager* ServiceWorkerThread::CreateCachedScriptsManager() {
+  return cached_scripts_manager_.get();
 }
 
 WorkerOrWorkletGlobalScope* ServiceWorkerThread::CreateWorkerGlobalScope(

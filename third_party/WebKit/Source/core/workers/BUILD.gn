@@ -51,6 +51,8 @@ blink_core_sources("workers") {
     "Worker.h",
     "WorkerBackingThread.cpp",
     "WorkerBackingThread.h",
+    "WorkerCachedScriptsManager.cpp",
+    "WorkerCachedScriptsManager.h",
     "WorkerClients.cpp",
     "WorkerClients.h",
     "WorkerContentSettingsClient.cpp",

@@ -39,6 +39,7 @@
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
+#include "core/workers/WorkerCachedScriptsManager.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
 #include "core/workers/WorkerReportingProxy.h"
@@ -124,6 +125,15 @@ void WorkerThread::Start(std::unique_ptr<WorkerThreadStartupData> startup_data,
                       CrossThreadUnretained(this),
                       CrossThreadUnretained(&waitable_event)));
   waitable_event.Wait();
+
+  cached_scripts_manager_ = CreateCachedScriptsManager();
+  if (cached_scripts_manager_) {
+    GetWorkerBackingThread().BackingThread().PostTask(
+        BLINK_FROM_HERE, CrossThreadBind(&WorkerThread::RequestMainScript,
+                                         CrossThreadUnretained(this),
+                                         WTF::Passed(std::move(startup_data))));
+    return;
+  }
 
   GetWorkerBackingThread().BackingThread().PostTask(
       BLINK_FROM_HERE, CrossThreadBind(&WorkerThread::InitializeOnWorkerThread,
@@ -437,6 +447,23 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
       WTF::MakeUnique<scheduler::WorkerGlobalScopeScheduler>(
           web_thread_for_worker.GetWorkerScheduler());
   waitable_event->Signal();
+}
+
+void WorkerThread::RequestMainScript(
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+  cached_scripts_manager_->GetScriptTextAndMetaData(
+      startup_data->script_url_,
+      WTF::Bind(&WorkerThread::OnMainScriptReady, WTF::Unretained(this),
+                WTF::Passed(std::move(startup_data))));
+}
+
+void WorkerThread::OnMainScriptReady(
+    std::unique_ptr<WorkerThreadStartupData> startup_data,
+    String source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data) {
+  startup_data->source_code_ = std::move(source_code);
+  startup_data->cached_meta_data_ = std::move(cached_meta_data);
+  InitializeOnWorkerThread(std::move(startup_data));
 }
 
 void WorkerThread::InitializeOnWorkerThread(

@@ -46,6 +46,7 @@
 #include "core/loader/WorkerFetchContext.h"
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ParentFrameTaskRunners.h"
+#include "core/workers/WorkerCachedScriptsManager.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerContentSettingsClient.h"
 #include "core/workers/WorkerGlobalScope.h"
@@ -465,7 +466,8 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   worker_global_scope_proxy_ =
       ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_);
   worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
-      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_);
+      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_,
+      nullptr);
 
   // We have a dummy document here for loading but it doesn't really represent
   // the document/frame of associated document(s) for this worker. Here we
