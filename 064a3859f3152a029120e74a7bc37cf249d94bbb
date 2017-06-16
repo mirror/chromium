@@ -86,6 +86,24 @@
       "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "072bb43c_5cd62c27",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T01:49:54Z",
+      "side": 1,
+      "message": "Well, it\u0027ll leave the pointer set to nullptr rather than containing the object ;)\n\nOr are you arguing that that\u0027ll just provoke a nice friendly deref-null, so it\u0027s pretty benign..?\n\nHint: We may have code that implicitly relies on this behaviour, already.",
+      "parentUuid": "df1d2709_6fa79b0f",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
