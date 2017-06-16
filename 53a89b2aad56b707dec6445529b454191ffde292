@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "af5f26cb_1c703824",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-16T17:12:37Z",
+      "side": 1,
+      "message": "Good idea!\nI actually prefer ensureModel() pattern because\nI\u0027m not sure whether onCreateInputConnection() and other critical calls will or will not be called inside View\u0027s constructor in some cases (e.g. in case we switch to auto focus model).\n\nAlso, with this I can safely remove the below three calls.",
+      "parentUuid": "0aecb7db_076d36c6",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb28cdf7_b3b3fcfe",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-16T00:52:56Z",
       "side": 1,
       "message": "or does the model have enough methods in the delegate to have it do this inside of it\u0027s own constructor?",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6145ad34_090a61b6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-16T17:12:37Z",
+      "side": 1,
+      "message": "As I switched to ensureModel() pattern, I don\u0027t need to call these methods.",
+      "parentUuid": "eb28cdf7_b3b3fcfe",
       "range": {
         "startLine": 51,
         "startChar": 15,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "d5246744_6346db2a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-16T17:12:37Z",
+      "side": 1,
+      "message": "N/A because I\u0027ve switched to ensureModel() pattern.",
+      "parentUuid": "f6709c01_895a0d76",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b7d7e77a_e29e33f8",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
         "patchSetId": 2
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "cdd691bb_c71dfba6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-16T17:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b7d7e77a_e29e33f8",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "454c98f8_1cfa7969",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
         "patchSetId": 2
@@ -114,6 +210,30 @@
       "revId": "53a89b2aad56b707dec6445529b454191ffde292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a07b8d8_3a43502d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116193
+      },
+      "writtenOn": "2017-06-16T17:12:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "454c98f8_1cfa7969",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
