@@ -6,6 +6,7 @@ package org.chromium.chrome.browser.payments;
 
 import android.app.ProgressDialog;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Pair;
 
 import org.chromium.base.Callback;
@@ -299,10 +300,7 @@ public class AddressEditor
         if (mAdminAreasLoaded) return;
         mAdminAreasLoaded = true;
 
-        // If Chrome can't get admin areas from the server or there is no admin area on the server,
-        // then use the text field.
-        // Otherwise, use the dropdown list.
-        if (adminAreas == null || adminAreas.length == 0) {
+        if (!contains(adminAreas, mProfile.getRegion())) {
             mAddressFields.put(AddressField.ADMIN_AREA, EditorFieldModel.createTextInput());
         } else {
             mAddressFields.put(AddressField.ADMIN_AREA, EditorFieldModel.createDropdown());
@@ -331,6 +329,14 @@ public class AddressEditor
                     mProfile.getCountryCode(), mProfile.getLanguageCode(), adminAreas);
             mEditorDialog.show(mEditor);
         }
+    }
+
+    private static boolean contains(String[] haystack, String needle) {
+        if (haystack == null) return false;
+        for (int i = 0; i < haystack.length; ++i) {
+            if (TextUtils.equals(haystack[i], needle)) return true;
+        }
+        return false;
     }
 
     /** Requests the list of admin areas. */
