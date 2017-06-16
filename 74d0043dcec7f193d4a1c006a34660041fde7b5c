@@ -22,6 +22,30 @@
       "revId": "74d0043dcec7f193d4a1c006a34660041fde7b5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e538216_1f29b7af",
+        "filename": "third_party/WebKit/Source/platform/wtf/PassRefPtr.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T21:49:44Z",
+      "side": 0,
+      "message": "Ah I lied, this is still used. Restoring...",
+      "parentUuid": "6c119b5e_cb4aab4e",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 35
+      },
+      "revId": "74d0043dcec7f193d4a1c006a34660041fde7b5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
