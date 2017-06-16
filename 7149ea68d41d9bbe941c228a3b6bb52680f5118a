@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e974a540_11639a7a",
+        "filename": "chrome/test/data/payments/util.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T18:45:39Z",
+      "side": 1,
+      "message": "I am not sure if you want do change this one. The usage of $() assumes that your code can use https://cs.chromium.org/chromium/src/ui/webui/resources/js/util.js?l\u003d12. Is that file already loaded by the time this code executes?\n\nFWIW, I turned off this check for a bunch of directories that could not use src/ui/webui/resources/js/util.js at https://codereview.chromium.org/2921783003. You might want to do the same here (either inline or by adding an .eslintrc.js in this folder to overwrite the global one).",
+      "revId": "7149ea68d41d9bbe941c228a3b6bb52680f5118a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
