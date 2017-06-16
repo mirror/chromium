@@ -16,6 +16,24 @@
       "revId": "bbb0147ab4ce9d66dcd8da44d850975d97e324a7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85d7116e_189da0bf",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T23:30:26Z",
+      "side": 1,
+      "message": "Moved to the Windows-only section of media_switches.h/cc. Since other features there do not contain \"Win\" in their name, I kept that convention.\n\nDone.",
+      "parentUuid": "f5cef67d_eea3bab4",
+      "revId": "bbb0147ab4ce9d66dcd8da44d850975d97e324a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
