@@ -1,0 +1,191 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "390f2c38_29a3f151",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 272,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible to inject fake implementations for tests?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68fe806c_5276dc87",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "This check is already done above.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c95bb9f_179da511",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this DCHECK is needed.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adcb64d4_02846426",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "From this code, it\u0027s not clear why we need to pass connector to the scheduler.\nInstead of connector, can\u0027t we pass WakeLockProvider?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c20531e9_ffcfe89f",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Isn\u0027t it possible to inject fake implementation for tests?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5df50ea_2b299a6f",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Remove this check or move this to the top of this function.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64ccfd9c_fa789e44",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "I don\u0027t think this DCHECK is needed.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7bf3220_bb2551a1",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Instead of Connector, how about passing WakeLockProvider to be more specific?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "387a72b3_ee1b8bdf",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Instead of having two ctors, how about passing nullptr , or injecting a fake implementation?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecccc31f_17e4bd57",
+        "filename": "components/drive/job_scheduler.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Please don\u0027t construct DriveUploader twice.",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7c70fd4_5eec80a8",
+        "filename": "components/drive/job_scheduler.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:33:26Z",
+      "side": 1,
+      "message": "Can\u0027t we avoid having 2 ctors?",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
