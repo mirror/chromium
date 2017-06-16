@@ -30,6 +30,7 @@
 
 #include "core/html/HTMLSlotElement.h"
 
+#include <array>
 #include "core/HTMLNames.h"
 #include "core/dom/NodeTraversal.h"
 #include "core/dom/StyleChangeReason.h"
@@ -46,6 +47,10 @@
 namespace blink {
 
 using namespace HTMLNames;
+
+namespace {
+constexpr size_t kDistributedNodesSizeLimitInTable = 16;
+}
 
 inline HTMLSlotElement::HTMLSlotElement(Document& document)
     : HTMLElement(slotTag, document) {
@@ -319,16 +324,75 @@ void HTMLSlotElement::UpdateDistributedNodesWithFallback() {
   }
 }
 
+void HTMLSlotElement::LazyReattachDistributedNodesByDynamicProgramming(
+    const HeapVector<Member<Node>>& nodes1,
+    const HeapVector<Member<Node>>& nodes2) {
+  // Use dynamic programming to minimize the number of nodes being reattached.
+  using CostTable =
+      std::array<std::array<int, kDistributedNodesSizeLimitInTable>,
+                 kDistributedNodesSizeLimitInTable>;
+  using BackRef = std::pair<size_t, size_t>;
+  using BackRefTable =
+      std::array<std::array<BackRef, kDistributedNodesSizeLimitInTable>,
+                 kDistributedNodesSizeLimitInTable>;
+
+  CostTable cost_table;
+  BackRefTable back_ref_table;
+  FillEditDistanceDynamicProgrammingTable(nodes1, nodes2, cost_table,
+                                          back_ref_table);
+
+  size_t r = nodes1.size();
+  size_t c = nodes2.size();
+  while (r > 0 && c > 0) {
+    BackRef back_ref = back_ref_table[r][c];
+    if (back_ref == std::make_pair(r - 1, c - 1)) {
+      if (nodes1[r - 1] != nodes2[c - 1]) {
+        nodes1[r - 1]->LazyReattachIfAttached();
+        nodes2[c - 1]->LazyReattachIfAttached();
+      }
+    } else if (back_ref == std::make_pair(r - 1, c)) {
+      nodes1[r - 1]->LazyReattachIfAttached();
+    } else {
+      DCHECK(back_ref == std::make_pair(r, c - 1));
+      nodes2[c - 1]->LazyReattachIfAttached();
+    }
+    std::tie(r, c) = back_ref;
+  }
+  if (r > 0) {
+    for (size_t i = 0; i < r; ++i)
+      nodes1[i]->LazyReattachIfAttached();
+  } else if (c > 0) {
+    for (size_t i = 0; i < c; ++i)
+      nodes2[i]->LazyReattachIfAttached();
+  }
+}
+
 void HTMLSlotElement::LazyReattachDistributedNodesIfNeeded() {
-  // TODO(hayato): Figure out an exact condition where reattach is required
-  if (old_distributed_nodes_ != distributed_nodes_) {
-    for (auto& node : old_distributed_nodes_)
-      node->LazyReattachIfAttached();
-    for (auto& node : distributed_nodes_)
-      node->LazyReattachIfAttached();
-    probe::didPerformSlotDistribution(this);
+  if (old_distributed_nodes_ == distributed_nodes_)
+    return;
+  probe::didPerformSlotDistribution(this);
+
+  const size_t rows = old_distributed_nodes_.size();
+  const size_t columns = distributed_nodes_.size();
+
+  if (rows > kDistributedNodesSizeLimitInTable ||
+      columns > kDistributedNodesSizeLimitInTable) {
+    // Since DP takes O(N^2), we don't use DP if the size is larger than the
+    // pre-defined limit.
+    LazyReattachDistributedNodesNaive();
+  } else {
+    LazyReattachDistributedNodesByDynamicProgramming(old_distributed_nodes_,
+                                                     distributed_nodes_);
   }
   old_distributed_nodes_.clear();
+}
+
+void HTMLSlotElement::LazyReattachDistributedNodesNaive() {
+  // TODO(hayato): Use some heuristic to avoid reattaching all nodes
+  for (auto& node : old_distributed_nodes_)
+    node->LazyReattachIfAttached();
+  for (auto& node : distributed_nodes_)
+    node->LazyReattachIfAttached();
 }
 
 void HTMLSlotElement::DidSlotChange(SlotChangeType slot_change_type) {
