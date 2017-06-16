@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60c3e868_2dc61010",
+        "filename": "chrome/browser/metrics/chrome_metrics_service_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 964,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-16T14:58:09Z",
+      "side": 1,
+      "message": "maybe this is personal style but I don\u0027t love this relies on the case logic of falling through. Kind of prefer having an explicit \nmetrics_service_-\u003eOnApplicationNotIdle();\n      break;\nup to you",
+      "range": {
+        "startLine": 964,
+        "startChar": 29,
+        "endLine": 964,
+        "endChar": 30
+      },
+      "revId": "bece86b664dc6499b52bfe3b27b508b10f124008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29e24890_0972a1a4",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-16T14:58:09Z",
+      "side": 1,
+      "message": "7",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 17
+      },
+      "revId": "bece86b664dc6499b52bfe3b27b508b10f124008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "faced72f_d1bc024e",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-16T14:58:09Z",
+      "side": 1,
+      "message": "I think it would be good if we can add another test verifying the logic of adding a non-syncing profile as well. Can put as TODO for now since this isn\u0027t related to the current bug.\n\nSimilar with guest profiles.",
+      "range": {
+        "startLine": 58,
+        "startChar": 8,
+        "endLine": 58,
+        "endChar": 12
+      },
+      "revId": "bece86b664dc6499b52bfe3b27b508b10f124008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f2edc91_59e62af5",
+        "filename": "components/metrics_services_manager/metrics_services_manager_client.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-16T14:58:09Z",
+      "side": 1,
+      "message": "nit comment",
+      "range": {
+        "startLine": 57,
+        "startChar": 46,
+        "endLine": 57,
+        "endChar": 0
+      },
+      "revId": "bece86b664dc6499b52bfe3b27b508b10f124008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
