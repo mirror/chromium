@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "eb5898c0_83c98cf2",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-without-user-gesture.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:16:40Z",
+      "side": 1,
+      "message": "Would you like to buy a verb?",
+      "range": {
+        "startLine": 7,
+        "startChar": 57,
+        "endLine": 7,
+        "endChar": 74
+      },
+      "revId": "2656c349f4d785117c8b7ebc90709073e71dfa80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
