@@ -82,17 +82,23 @@ using bookmarks::BookmarkNode;
       [self bookmarkModel]->expanded_state_tracker()->GetExpandedNodes()];
 }
 
+- (void)windowWillClose:(NSNotification*)notification {
+  // Force the current field editor to resign the first responder so that it'll
+  // be removed from the view hierarchy and its delegate be set to nil.
+  [[self window] endEditingFor:nil];
+  [super windowWillClose:notification];
+}
+
 - (id)windowWillReturnFieldEditor:(NSWindow*)sender toObject:(id)obj {
   if (obj == urlField_) {
     if (!urlFieldEditor_)
       urlFieldEditor_.reset([[DialogTextFieldEditor alloc] init]);
-
-    return urlFieldEditor_.autorelease();
+    return urlFieldEditor_.get();
   } else if (obj == nameTextField_) {
     if (!nameFieldEditor_)
       nameFieldEditor_.reset([[DialogTextFieldEditor alloc] init]);
 
-    return nameFieldEditor_.autorelease();
+    return nameFieldEditor_.get();
   }
 
   return nil;
