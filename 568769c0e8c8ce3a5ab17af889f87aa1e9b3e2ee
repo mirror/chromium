@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b95047a2_9e741522",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 89652,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-06-16T16:02:22Z",
+      "side": 1,
+      "message": "Do you want to fix this suffix down in IndexedDBLevelDBErrnoMethods as well?",
+      "range": {
+        "startLine": 89652,
+        "startChar": 16,
+        "endLine": 89652,
+        "endChar": 26
+      },
+      "revId": "568769c0e8c8ce3a5ab17af889f87aa1e9b3e2ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
