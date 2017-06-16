@@ -125,6 +125,7 @@ void DrawHighlight(gfx::Canvas* canvas,
       flags);
 }
 
+#if 0
 // Returns whether the favicon for the given URL should be colored according to
 // the browser theme.
 bool ShouldThemifyFaviconForUrl(const GURL& url) {
@@ -133,6 +134,7 @@ bool ShouldThemifyFaviconForUrl(const GURL& url) {
          url.host() != chrome::kChromeUIUberHost &&
          url.host() != chrome::kChromeUIAppLauncherPageHost;
 }
+#endif
 
 // Returns a path corresponding to the tab's content region inside the outer
 // stroke.
@@ -394,9 +396,11 @@ bool Tab::ThrobberView::CanProcessEventsWithinSubtree() const {
 
 void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
   const TabRendererData::NetworkState state = owner_->data().network_state;
+/*
   if (state == TabRendererData::NETWORK_STATE_NONE ||
       state == TabRendererData::NETWORK_STATE_ERROR)
     return;
+*/
 
   const ui::ThemeProvider* tp = GetThemeProvider();
   const gfx::Rect bounds = GetLocalBounds();
@@ -469,7 +473,7 @@ Tab::Tab(TabController* controller, gfx::AnimationContainer* container)
       std::unique_ptr<views::ViewTargeter>(new views::ViewTargeter(this)));
 
   throbber_ = new ThrobberView(this);
-  throbber_->SetVisible(false);
+ // throbber_->SetVisible(false);
   AddChildView(throbber_);
 
   alert_indicator_button_ = new AlertIndicatorButton(this);
@@ -570,6 +574,7 @@ void Tab::SetData(const TabRendererData& data) {
 }
 
 void Tab::UpdateLoadingAnimation(TabRendererData::NetworkState state) {
+/*
   if (state == data_.network_state &&
       (state == TabRendererData::NETWORK_STATE_NONE ||
        state == TabRendererData::NETWORK_STATE_ERROR)) {
@@ -577,7 +582,7 @@ void Tab::UpdateLoadingAnimation(TabRendererData::NetworkState state) {
     // do nothing. Otherwise we need to advance the animation frame.
     return;
   }
-
+*/
   data_.network_state = state;
   AdvanceLoadingAnimation();
 }
@@ -1272,6 +1277,8 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
   if (bounds.IsEmpty())
     return;
 
+return;
+/*
   // Throbber will do its own painting.
   if (data().network_state != TabRendererData::NETWORK_STATE_NONE &&
       data().network_state != TabRendererData::NETWORK_STATE_ERROR) {
@@ -1304,9 +1311,11 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
                          bounds.x(), bounds.y(), bounds.width(),
                          bounds.height(), false);
   }
+*/
 }
 
 void Tab::AdvanceLoadingAnimation() {
+/*
   const TabRendererData::NetworkState state = data().network_state;
   if (state == TabRendererData::NETWORK_STATE_NONE ||
       state == TabRendererData::NETWORK_STATE_ERROR) {
@@ -1315,6 +1324,7 @@ void Tab::AdvanceLoadingAnimation() {
     ScheduleIconPaint();
     return;
   }
+*/
 
   // Since the throbber can animate for a long time, paint to a separate layer
   // when possible to reduce repaint overhead.
