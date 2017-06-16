@@ -1,0 +1,188 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "af1b0463_bbf9e728",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "Can you add another bullet point with a single sentence describing no release weeks and how they push out the schedule?",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 14,
+        "endChar": 31
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b8e111_b8cc3265",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "For the public docs, let\u0027s eliminate this - folks will ping us if they have to update strings, and it\u0027s probably good to discourage this practice in general.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 26,
+        "endChar": 0
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a23602e_51cd201d",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "We don\u0027t really define the \"branch stabilization period\" (and doing so would add extra complexity) so I\u0027d vote to just remove this.",
+      "range": {
+        "startLine": 37,
+        "startChar": 34,
+        "endLine": 38,
+        "endChar": 21
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb237758_8b7c98c1",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "We can get rid of this now that you have the disclaimer above.",
+      "range": {
+        "startLine": 38,
+        "startChar": 56,
+        "endLine": 39,
+        "endChar": 76
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7fdb89_102ebd76",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "I\u0027d vote to remove this, as described above we don\u0027t give a formal definition to \"branch stabilization period\" and really people just need to ensure disabled tests are fixed by this point - the fact that it occurs during this period is implied.",
+      "range": {
+        "startLine": 40,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 40
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "245f47c0_7ce5e6eb",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "Remove.",
+      "range": {
+        "startLine": 55,
+        "startChar": 12,
+        "endLine": 55,
+        "endChar": 17
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ddce9e4_5f3936ec",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "nit: lower case s",
+      "range": {
+        "startLine": 75,
+        "startChar": 2,
+        "endLine": 75,
+        "endChar": 3
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ae01847_2a0ae723",
+        "filename": "docs/process/release_cycle.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116609
+      },
+      "writtenOn": "2017-06-16T21:59:33Z",
+      "side": 1,
+      "message": "Add schedule, i.e. \"normal release schedule to...\"",
+      "range": {
+        "startLine": 76,
+        "startChar": 7,
+        "endLine": 76,
+        "endChar": 17
+      },
+      "revId": "917455b48dcb17b7729d4ab40c1d062fdaa5811c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
