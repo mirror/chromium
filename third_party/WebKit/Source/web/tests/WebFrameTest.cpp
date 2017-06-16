@@ -1988,19 +1988,14 @@ TEST_F(WebFrameTest,
 }
 
 TEST_F(WebFrameTest, FrameOwnerPropertiesMargin) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->GetSettings()->SetJavaScriptEnabled(true);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* root = view->MainFrame()->ToWebRemoteFrame();
-  root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
   WebFrameOwnerProperties properties;
   properties.margin_width = 11;
   properties.margin_height = 22;
   WebLocalFrameBase* local_frame = FrameTestHelpers::CreateLocalChild(
-      root, "frameName", nullptr, nullptr, nullptr, properties);
+      *helper.RemoteMainFrame(), "frameName", properties);
 
   RegisterMockedHttpURLLoad("frame_owner_properties.html");
   FrameTestHelpers::LoadFrame(local_frame,
@@ -2018,25 +2013,18 @@ TEST_F(WebFrameTest, FrameOwnerPropertiesMargin) {
   // Expect scrollbars to be enabled by default.
   EXPECT_NE(nullptr, frame_view->HorizontalScrollbar());
   EXPECT_NE(nullptr, frame_view->VerticalScrollbar());
-
-  view->Close();
 }
 
 TEST_F(WebFrameTest, FrameOwnerPropertiesScrolling) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->GetSettings()->SetJavaScriptEnabled(true);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* root = view->MainFrame()->ToWebRemoteFrame();
-  root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
   WebFrameOwnerProperties properties;
   // Turn off scrolling in the subframe.
   properties.scrolling_mode =
       WebFrameOwnerProperties::ScrollingMode::kAlwaysOff;
   WebLocalFrameBase* local_frame = FrameTestHelpers::CreateLocalChild(
-      root, "frameName", nullptr, nullptr, nullptr, properties);
+      *helper.RemoteMainFrame(), "frameName", properties);
 
   RegisterMockedHttpURLLoad("frame_owner_properties.html");
   FrameTestHelpers::LoadFrame(local_frame,
@@ -2052,8 +2040,6 @@ TEST_F(WebFrameTest, FrameOwnerPropertiesScrolling) {
       static_cast<WebLocalFrameBase*>(local_frame)->GetFrameView();
   EXPECT_EQ(nullptr, frame_view->HorizontalScrollbar());
   EXPECT_EQ(nullptr, frame_view->VerticalScrollbar());
-
-  view->Close();
 }
 
 TEST_P(ParameterizedWebFrameTest,
@@ -4458,7 +4444,7 @@ class ContextLifetimeTestWebFrameClient
       WebSandboxFlags sandbox_flags,
       const WebParsedFeaturePolicy& container_policy,
       const WebFrameOwnerProperties&) override {
-    return CreateLocalChild(parent, scope,
+    return CreateLocalChild(*parent, scope,
                             WTF::MakeUnique<ContextLifetimeTestWebFrameClient>(
                                 create_notifications_, release_notifications_));
   }
@@ -7410,7 +7396,7 @@ class TestCachePolicyWebFrameClient
       const WebParsedFeaturePolicy&,
       const WebFrameOwnerProperties& frame_owner_properties) override {
     child_clients_.emplace_back();
-    return CreateLocalChild(parent, scope, &child_clients_.back());
+    return CreateLocalChild(*parent, scope, &child_clients_.back());
   }
 
   void WillSendRequest(WebURLRequest& request) override {
@@ -7678,7 +7664,7 @@ class TestHistoryWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
                                   WebSandboxFlags,
                                   const WebParsedFeaturePolicy&,
                                   const WebFrameOwnerProperties&) {
-    return CreateLocalChild(parent, scope, &child_client_);
+    return CreateLocalChild(*parent, scope, &child_client_);
   }
 
   TestHistoryChildWebFrameClient& ChildClient() { return child_client_; }
@@ -8801,18 +8787,14 @@ TEST_P(ParameterizedWebFrameTest, ThemeColor) {
 // Make sure that an embedder-triggered detach with a remote frame parent
 // doesn't leave behind dangling pointers.
 TEST_P(ParameterizedWebFrameTest, EmbedderTriggeredDetachWithRemoteMainFrame) {
-  // FIXME: Refactor some of this logic into WebViewHelper to make it easier to
-  // write tests with a top-level remote frame.
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
   WebLocalFrame* child_frame =
-      FrameTestHelpers::CreateLocalChild(view->MainFrame()->ToWebRemoteFrame());
+      FrameTestHelpers::CreateLocalChild(*helper.RemoteMainFrame());
 
   // Purposely keep the LocalFrame alive so it's the last thing to be destroyed.
   Persistent<Frame> child_core_frame = WebFrame::ToCoreFrame(*child_frame);
-  view->Close();
+  helper.Reset();
   child_core_frame.Clear();
 }
 
@@ -8843,10 +8825,8 @@ TEST_F(WebFrameSwapTest, SwapMainFrame) {
       WebRemoteFrame::Create(WebTreeScopeType::kDocument, nullptr);
   MainFrame()->Swap(remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
-  FrameTestHelpers::TestWebWidgetClient web_widget_client;
-  WebFrameWidget::Create(&web_widget_client, local_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   remote_frame->Swap(local_frame);
 
   // Finally, make sure an embedder triggered load in the local frame swapped
@@ -8872,8 +8852,8 @@ TEST_F(WebFrameSwapTest, ValidateSizeOnRemoteToLocalMainFrameSwap) {
 
   remote_frame->View()->Resize(size);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   remote_frame->Swap(local_frame);
 
   // Verify that the size that was set with a remote main frame is correct
@@ -8951,8 +8931,8 @@ TEST_F(WebFrameSwapTest, SwapFirstChild) {
   SwapAndVerifyFirstChildConsistency("local->remote", MainFrame(),
                                      remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   SwapAndVerifyFirstChildConsistency("remote->local", MainFrame(), local_frame);
 
   // FIXME: This almost certainly fires more load events on the iframe element
@@ -8993,8 +8973,8 @@ TEST_F(WebFrameSwapTest, SwapMiddleChild) {
   SwapAndVerifyMiddleChildConsistency("local->remote", MainFrame(),
                                       remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   SwapAndVerifyMiddleChildConsistency("remote->local", MainFrame(),
                                       local_frame);
 
@@ -9031,8 +9011,8 @@ TEST_F(WebFrameSwapTest, SwapLastChild) {
       WebRemoteFrame::Create(WebTreeScopeType::kDocument, &remote_frame_client);
   SwapAndVerifyLastChildConsistency("local->remote", MainFrame(), remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   SwapAndVerifyLastChildConsistency("remote->local", MainFrame(), local_frame);
 
   // FIXME: This almost certainly fires more load events on the iframe element
@@ -9057,9 +9037,8 @@ TEST_F(WebFrameSwapTest, DetachProvisionalFrame) {
   SwapAndVerifyMiddleChildConsistency("local->remote", MainFrame(),
                                       remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
   WebLocalFrameBase* provisional_frame =
-      CreateProvisional(&client, remote_frame);
+      FrameTestHelpers::CreateProvisional(*remote_frame);
 
   // The provisional frame should have a local frame owner.
   FrameOwner* owner = provisional_frame->GetFrame()->Owner();
@@ -9106,12 +9085,11 @@ TEST_F(WebFrameSwapTest, SwapParentShouldDetachChildren) {
   EXPECT_TRUE(target_frame);
 
   // Create child frames in the target frame before testing the swap.
-  FrameTestHelpers::TestWebRemoteFrameClient remote_frame_client2;
   WebRemoteFrame* child_remote_frame =
-      FrameTestHelpers::CreateRemoteChild(remote_frame, &remote_frame_client2);
+      FrameTestHelpers::CreateRemoteChild(*remote_frame);
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   SwapAndVerifySubframeConsistency("remote->local", target_frame, local_frame);
 
   // FIXME: This almost certainly fires more load events on the iframe element
@@ -9141,11 +9119,9 @@ TEST_F(WebFrameSwapTest, SwapPreservesGlobalContext) {
   ASSERT_TRUE(original_window->IsObject());
 
   // Make sure window reference stays the same when swapping to a remote frame.
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   WebFrame* target_frame = MainFrame()->FirstChild()->NextSibling();
   target_frame->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> remote_window = MainFrame()->ExecuteScriptAndReturnValue(
       WebScriptSource("document.querySelector('#frame2').contentWindow;"));
   EXPECT_TRUE(original_window->StrictEquals(remote_window));
@@ -9157,8 +9133,8 @@ TEST_F(WebFrameSwapTest, SwapPreservesGlobalContext) {
 
   // Now check that remote -> local works too, since it goes through a different
   // code path.
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   remote_frame->Swap(local_frame);
   v8::Local<v8::Value> local_window = MainFrame()->ExecuteScriptAndReturnValue(
       WebScriptSource("document.querySelector('#frame2').contentWindow;"));
@@ -9180,11 +9156,9 @@ TEST_F(WebFrameSwapTest, SetTimeoutAfterSwap) {
       WebScriptSource("savedSetTimeout = window[0].setTimeout"));
 
   // Swap the frame to a remote frame.
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   WebFrame* target_frame = MainFrame()->FirstChild();
   target_frame->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
 
   // Invoking setTimeout should throw a security error.
   {
@@ -9217,17 +9191,15 @@ TEST_F(WebFrameSwapTest, SwapInitializesGlobal) {
       WebScriptSource("saved = window[2]"));
   ASSERT_TRUE(last_child->IsObject());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   WebFrameTest::LastChild(MainFrame())->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> remote_window_top =
       MainFrame()->ExecuteScriptAndReturnValue(WebScriptSource("saved.top"));
   EXPECT_TRUE(remote_window_top->IsObject());
   EXPECT_TRUE(window_top->StrictEquals(remote_window_top));
 
-  FrameTestHelpers::TestWebFrameClient client;
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   remote_frame->Swap(local_frame);
   v8::Local<v8::Value> local_window_top =
       MainFrame()->ExecuteScriptAndReturnValue(WebScriptSource("saved.top"));
@@ -9240,10 +9212,8 @@ TEST_F(WebFrameSwapTest, SwapInitializesGlobal) {
 TEST_F(WebFrameSwapTest, RemoteFramesAreIndexable) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   LastChild(MainFrame())->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> remote_window =
       MainFrame()->ExecuteScriptAndReturnValue(WebScriptSource("window[2]"));
   EXPECT_TRUE(remote_window->IsObject());
@@ -9258,10 +9228,8 @@ TEST_F(WebFrameSwapTest, RemoteFramesAreIndexable) {
 TEST_F(WebFrameSwapTest, RemoteFrameLengthAccess) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   LastChild(MainFrame())->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> remote_window_length =
       MainFrame()->ExecuteScriptAndReturnValue(
           WebScriptSource("window[2].length"));
@@ -9274,13 +9242,11 @@ TEST_F(WebFrameSwapTest, RemoteFrameLengthAccess) {
 TEST_F(WebFrameSwapTest, RemoteWindowNamedAccess) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  // FIXME: Once OOPIF unit test infrastructure is in place, test that named
-  // window access on a remote window works. For now, just test that accessing
-  // a named property doesn't crash.
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  // TODO(dcheng): Once OOPIF unit test infrastructure is in place, test that
+  // named window access on a remote window works. For now, just test that
+  // accessing a named property doesn't crash.
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   LastChild(MainFrame())->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> remote_window_property =
       MainFrame()->ExecuteScriptAndReturnValue(
           WebScriptSource("window[2].foo"));
@@ -9292,10 +9258,8 @@ TEST_F(WebFrameSwapTest, RemoteWindowNamedAccess) {
 TEST_F(WebFrameSwapTest, RemoteWindowToString) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   LastChild(MainFrame())->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   v8::Local<v8::Value> to_string_result =
       MainFrame()->ExecuteScriptAndReturnValue(
           WebScriptSource("Object.prototype.toString.call(window[2])"));
@@ -9311,13 +9275,11 @@ TEST_F(WebFrameSwapTest, RemoteWindowToString) {
 TEST_F(WebFrameSwapTest, FramesOfRemoteParentAreIndexable) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_parent_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_parent_frame = FrameTestHelpers::CreateRemote();
   MainFrame()->Swap(remote_parent_frame);
-  remote_parent_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
 
   WebLocalFrame* child_frame =
-      FrameTestHelpers::CreateLocalChild(remote_parent_frame);
+      FrameTestHelpers::CreateLocalChild(*remote_parent_frame);
   FrameTestHelpers::LoadFrame(child_frame, base_url_ + "subframe-hello.html");
 
   v8::Local<v8::Value> window =
@@ -9343,13 +9305,11 @@ TEST_F(WebFrameSwapTest, FramesOfRemoteParentAreIndexable) {
 TEST_F(WebFrameSwapTest, FrameElementInFramesWithRemoteParent) {
   v8::HandleScope scope(v8::Isolate::GetCurrent());
 
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_parent_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_parent_frame = FrameTestHelpers::CreateRemote();
   MainFrame()->Swap(remote_parent_frame);
-  remote_parent_frame->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
 
   WebLocalFrame* child_frame =
-      FrameTestHelpers::CreateLocalChild(remote_parent_frame);
+      FrameTestHelpers::CreateLocalChild(*remote_parent_frame);
   FrameTestHelpers::LoadFrame(child_frame, base_url_ + "subframe-hello.html");
 
   v8::Local<v8::Value> frame_element = child_frame->ExecuteScriptAndReturnValue(
@@ -9390,9 +9350,7 @@ class RemoteToLocalSwapWebFrameClient
 // exists in the same process, such that we create the RemoteFrame before the
 // first navigation occurs.
 TEST_F(WebFrameSwapTest, HistoryCommitTypeAfterNewRemoteToLocalSwap) {
-  FrameTestHelpers::TestWebRemoteFrameClient remote_frame_client;
-  WebRemoteFrame* remote_frame =
-      WebRemoteFrame::Create(WebTreeScopeType::kDocument, &remote_frame_client);
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote();
   WebFrame* target_frame = MainFrame()->FirstChild();
   ASSERT_TRUE(target_frame);
   target_frame->Swap(remote_frame);
@@ -9400,14 +9358,14 @@ TEST_F(WebFrameSwapTest, HistoryCommitTypeAfterNewRemoteToLocalSwap) {
   ASSERT_EQ(MainFrame()->FirstChild(), remote_frame);
 
   RemoteToLocalSwapWebFrameClient client(remote_frame);
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame, &client);
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "subframe-hello.html");
   EXPECT_EQ(kWebInitialCommitInChildFrame, client.HistoryCommitType());
 
   // Manually reset to break WebViewHelper's dependency on the stack allocated
   // TestWebFrameClient.
   Reset();
-  remote_frame->Close();
 }
 
 // The commit type should be Standard if we are swapping a RemoteFrame to a
@@ -9424,7 +9382,8 @@ TEST_F(WebFrameSwapTest, HistoryCommitTypeAfterExistingRemoteToLocalSwap) {
   ASSERT_EQ(MainFrame()->FirstChild(), remote_frame);
 
   RemoteToLocalSwapWebFrameClient client(remote_frame);
-  WebLocalFrame* local_frame = CreateProvisional(&client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame, &client);
   local_frame->SetCommittedFirstRealLoad();
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "subframe-hello.html");
   EXPECT_EQ(kWebStandardCommit, client.HistoryCommitType());
@@ -9451,7 +9410,7 @@ class RemoteNavigationClient
 
 TEST_F(WebFrameSwapTest, NavigateRemoteFrameViaLocation) {
   RemoteNavigationClient client;
-  WebRemoteFrame* remote_frame = client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote(&client);
   WebFrame* target_frame = MainFrame()->FirstChild();
   ASSERT_TRUE(target_frame);
   target_frame->Swap(remote_frame);
@@ -9473,10 +9432,9 @@ TEST_F(WebFrameSwapTest, NavigateRemoteFrameViaLocation) {
 
 TEST_F(WebFrameSwapTest, WindowOpenOnRemoteFrame) {
   RemoteNavigationClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
+  WebRemoteFrame* remote_frame = FrameTestHelpers::CreateRemote(
+      &remote_client, SecurityOrigin::CreateFromString("http://127.0.0.1"));
   MainFrame()->FirstChild()->Swap(remote_frame);
-  remote_frame->SetReplicatedOrigin(
-      WebSecurityOrigin::CreateFromString("http://127.0.0.1"));
 
   ASSERT_TRUE(MainFrame()->FirstChild()->IsWebRemoteFrame());
   LocalDOMWindow* main_window =
@@ -9517,18 +9475,12 @@ TEST_F(WebFrameTest, WindowOpenRemoteClose) {
 
   // Create a remote window that will be closed later in the test.
   RemoteWindowCloseClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient frame_client;
-  WebRemoteFrameImpl* web_remote_frame = frame_client.GetFrame();
+  FrameTestHelpers::WebViewHelper popup;
+  popup.InitializeRemote(nullptr, nullptr, &view_client);
+  popup.RemoteMainFrame()->SetOpener(main_web_view.LocalMainFrame());
 
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(web_remote_frame);
-  view->MainFrame()->SetOpener(main_web_view.WebView()->MainFrame());
-  web_remote_frame->SetReplicatedOrigin(
-      WebSecurityOrigin::CreateFromString("http://127.0.0.1"));
-
-  LocalFrame* local_frame = ToLocalFrame(
-      WebFrame::ToCoreFrame(*main_web_view.WebView()->MainFrame()));
-  RemoteFrame* remote_frame = web_remote_frame->GetFrame();
+  LocalFrame* local_frame = main_web_view.LocalMainFrame()->GetFrame();
+  RemoteFrame* remote_frame = popup.RemoteMainFrame()->GetFrame();
 
   // Attempt to close the window, which should fail as it isn't opened
   // by a script.
@@ -9539,60 +9491,47 @@ TEST_F(WebFrameTest, WindowOpenRemoteClose) {
   remote_frame->GetPage()->SetOpenedByDOM();
   remote_frame->DomWindow()->close(local_frame->GetDocument());
   EXPECT_TRUE(view_client.Closed());
-
-  view->Close();
 }
 
 TEST_F(WebFrameTest, NavigateRemoteToLocalWithOpener) {
   FrameTestHelpers::WebViewHelper main_web_view;
   main_web_view.Initialize();
-  WebFrame* main_frame = main_web_view.WebView()->MainFrame();
+  WebLocalFrame* main_frame = main_web_view.LocalMainFrame();
 
   // Create a popup with a remote frame and set its opener to the main frame.
-  FrameTestHelpers::TestWebViewClient popup_view_client;
-  WebView* popup_view =
-      WebView::Create(&popup_view_client, kWebPageVisibilityStateVisible);
-  FrameTestHelpers::TestWebRemoteFrameClient popup_remote_client;
-  WebRemoteFrame* popup_remote_frame = popup_remote_client.GetFrame();
-  popup_view->SetMainFrame(popup_remote_frame);
+  FrameTestHelpers::WebViewHelper popup_helper;
+  popup_helper.InitializeRemote(
+      nullptr, SecurityOrigin::CreateFromString("http://foo.com"));
+  WebRemoteFrame* popup_remote_frame = popup_helper.RemoteMainFrame();
   popup_remote_frame->SetOpener(main_frame);
-  popup_remote_frame->SetReplicatedOrigin(
-      WebSecurityOrigin::CreateFromString("http://foo.com"));
   EXPECT_FALSE(main_frame->GetSecurityOrigin().CanAccess(
-      popup_view->MainFrame()->GetSecurityOrigin()));
+      popup_remote_frame->GetSecurityOrigin()));
 
   // Do a remote-to-local swap in the popup.
-  FrameTestHelpers::TestWebFrameClient popup_local_client;
   WebLocalFrame* popup_local_frame =
-      CreateProvisional(&popup_local_client, popup_remote_frame);
+      FrameTestHelpers::CreateProvisional(*popup_remote_frame);
   popup_remote_frame->Swap(popup_local_frame);
 
   // The initial document created during the remote-to-local swap should have
   // inherited its opener's SecurityOrigin.
   EXPECT_TRUE(main_frame->GetSecurityOrigin().CanAccess(
-      popup_view->MainFrame()->GetSecurityOrigin()));
-
-  popup_view->Close();
+      popup_helper.LocalMainFrame()->GetSecurityOrigin()));
 }
 
 TEST_F(WebFrameTest, SwapWithOpenerCycle) {
   // First, create a remote main frame with itself as the opener.
-  FrameTestHelpers::TestWebViewClient view_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebRemoteFrame* remote_frame = remote_client.GetFrame();
-  view->SetMainFrame(remote_frame);
-  remote_frame->SetOpener(remote_frame);
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
+  WebRemoteFrame* remote_frame = helper.RemoteMainFrame();
+  helper.RemoteMainFrame()->SetOpener(remote_frame);
 
   // Now swap in a local frame. It shouldn't crash.
-  FrameTestHelpers::TestWebFrameClient local_client;
-  WebLocalFrame* local_frame = CreateProvisional(&local_client, remote_frame);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateProvisional(*remote_frame);
   remote_frame->Swap(local_frame);
 
   // And the opener cycle should still be preserved.
   EXPECT_EQ(local_frame, local_frame->Opener());
-
-  view->Close();
 }
 
 class CommitTypeWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
@@ -9615,23 +9554,22 @@ class CommitTypeWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
 };
 
 TEST_P(ParameterizedWebFrameTest, RemoteFrameInitialCommitType) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  remote_client.GetFrame()->SetReplicatedOrigin(
-      WebSecurityOrigin::CreateFromString(WebString::FromUTF8(base_url_)));
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote(nullptr, SecurityOrigin::CreateFromString(
+                                       WebString::FromUTF8(base_url_)));
 
   // If an iframe has a remote main frame, ensure the inital commit is correctly
   // identified as WebInitialCommitInChildFrame.
   CommitTypeWebFrameClient child_frame_client;
   WebLocalFrame* child_frame = FrameTestHelpers::CreateLocalChild(
-      view->MainFrame()->ToWebRemoteFrame(), "frameName", &child_frame_client);
+      *helper.RemoteMainFrame(), "frameName", WebFrameOwnerProperties(),
+      nullptr, &child_frame_client);
   RegisterMockedHttpURLLoad("foo.html");
   FrameTestHelpers::LoadFrame(child_frame, base_url_ + "foo.html");
   EXPECT_EQ(kWebInitialCommitInChildFrame,
             child_frame_client.HistoryCommitType());
-  view->Close();
+
+  helper.Reset();
 }
 
 class GestureEventTestWebWidgetClient
@@ -9649,23 +9587,20 @@ class GestureEventTestWebWidgetClient
 };
 
 TEST_P(ParameterizedWebFrameTest, FrameWidgetTest) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  view->SetMainFrame(remote_client.GetFrame());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
   GestureEventTestWebWidgetClient child_widget_client;
   WebLocalFrame* child_frame = FrameTestHelpers::CreateLocalChild(
-      view->MainFrame()->ToWebRemoteFrame(), WebString(), nullptr,
-      &child_widget_client);
+      *helper.RemoteMainFrame(), WebString(), WebFrameOwnerProperties(),
+      nullptr, nullptr, &child_widget_client);
 
-  view->Resize(WebSize(1000, 1000));
+  helper.WebView()->Resize(WebSize(1000, 1000));
 
   child_frame->FrameWidget()->HandleInputEvent(FatTap(20, 20));
   EXPECT_TRUE(child_widget_client.DidHandleGestureEvent());
 
-  view->Close();
+  helper.Reset();
 }
 
 class MockDocumentThreadableLoaderClient
@@ -9718,16 +9653,11 @@ TEST_P(ParameterizedWebFrameTest, LoaderOriginAccess) {
 }
 
 TEST_P(ParameterizedWebFrameTest, DetachRemoteFrame) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  FrameTestHelpers::TestWebRemoteFrameClient child_frame_client;
-  WebRemoteFrame* child_frame = FrameTestHelpers::CreateRemoteChild(
-      view->MainFrame()->ToWebRemoteFrame(), &child_frame_client);
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
+  WebRemoteFrame* child_frame =
+      FrameTestHelpers::CreateRemoteChild(*helper.RemoteMainFrame());
   child_frame->Detach();
-  view->Close();
-  child_frame->Close();
 }
 
 class TestConsoleMessageWebFrameClient
@@ -9900,20 +9830,18 @@ TEST_P(DeviceEmulationTest, PointerAndHoverTypes) {
 }
 
 TEST_P(ParameterizedWebFrameTest, CreateLocalChildWithPreviousSibling) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* parent = view->MainFrame()->ToWebRemoteFrame();
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
+  WebRemoteFrame* parent = helper.RemoteMainFrame();
 
   WebLocalFrame* second_frame(
-      FrameTestHelpers::CreateLocalChild(parent, "name2"));
+      FrameTestHelpers::CreateLocalChild(*parent, "name2"));
   WebLocalFrame* fourth_frame(FrameTestHelpers::CreateLocalChild(
-      parent, "name4", nullptr, nullptr, second_frame));
+      *parent, "name4", WebFrameOwnerProperties(), second_frame));
   WebLocalFrame* third_frame(FrameTestHelpers::CreateLocalChild(
-      parent, "name3", nullptr, nullptr, second_frame));
+      *parent, "name3", WebFrameOwnerProperties(), second_frame));
   WebLocalFrame* first_frame(
-      FrameTestHelpers::CreateLocalChild(parent, "name1"));
+      FrameTestHelpers::CreateLocalChild(*parent, "name1"));
 
   EXPECT_EQ(first_frame, parent->FirstChild());
   EXPECT_EQ(nullptr, PreviousSibling(first_frame));
@@ -9933,40 +9861,30 @@ TEST_P(ParameterizedWebFrameTest, CreateLocalChildWithPreviousSibling) {
   EXPECT_EQ(parent, second_frame->Parent());
   EXPECT_EQ(parent, third_frame->Parent());
   EXPECT_EQ(parent, fourth_frame->Parent());
-
-  view->Close();
 }
 
 TEST_P(ParameterizedWebFrameTest, SendBeaconFromChildWithRemoteMainFrame) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->GetSettings()->SetJavaScriptEnabled(true);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* root = view->MainFrame()->ToWebRemoteFrame();
-  root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
-  WebLocalFrame* local_frame = FrameTestHelpers::CreateLocalChild(root);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateLocalChild(*helper.RemoteMainFrame());
 
   // Finally, make sure an embedder triggered load in the local frame swapped
   // back in works.
   RegisterMockedHttpURLLoad("send_beacon.html");
   RegisterMockedHttpURLLoad("reload_post.html");  // url param to sendBeacon()
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "send_beacon.html");
-
-  view->Close();
 }
 
 TEST_P(ParameterizedWebFrameTest,
        FirstPartyForCookiesFromChildWithRemoteMainFrame) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* root = view->MainFrame()->ToWebRemoteFrame();
-  root->SetReplicatedOrigin(SecurityOrigin::Create(ToKURL(not_base_url_)));
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote(nullptr,
+                          SecurityOrigin::Create(ToKURL(not_base_url_)));
 
-  WebLocalFrame* local_frame = FrameTestHelpers::CreateLocalChild(root);
+  WebLocalFrame* local_frame =
+      FrameTestHelpers::CreateLocalChild(*helper.RemoteMainFrame());
 
   RegisterMockedHttpURLLoad("foo.html");
   FrameTestHelpers::LoadFrame(local_frame, base_url_ + "foo.html");
@@ -9977,51 +9895,37 @@ TEST_P(ParameterizedWebFrameTest,
   EXPECT_EQ(WebURL(ToKURL(not_base_url_)),
             local_frame->GetDocument().FirstPartyForCookies());
   SchemeRegistry::RemoveURLSchemeAsFirstPartyWhenTopLevel("http");
-
-  view->Close();
 }
 
 // See https://crbug.com/525285.
 TEST_P(ParameterizedWebFrameTest,
        RemoteToLocalSwapOnMainFrameInitializesCoreFrame) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* remote_root = view->MainFrame()->ToWebRemoteFrame();
-  remote_root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
-  FrameTestHelpers::CreateLocalChild(remote_root);
+  FrameTestHelpers::CreateLocalChild(*helper.RemoteMainFrame());
 
   // Do a remote-to-local swap of the top frame.
-  FrameTestHelpers::TestWebFrameClient local_client;
-  WebLocalFrame* local_root = CreateProvisional(&local_client, remote_root);
-  FrameTestHelpers::TestWebWidgetClient web_widget_client;
-  WebFrameWidget::Create(&web_widget_client, local_root);
-  remote_root->Swap(local_root);
+  WebLocalFrame* local_root =
+      FrameTestHelpers::CreateProvisional(*helper.RemoteMainFrame());
+  helper.RemoteMainFrame()->Swap(local_root);
 
   // Load a page with a child frame in the new root to make sure this doesn't
   // crash when the child frame invokes setCoreFrame.
   RegisterMockedHttpURLLoad("single_iframe.html");
   RegisterMockedHttpURLLoad("visible_iframe.html");
   FrameTestHelpers::LoadFrame(local_root, base_url_ + "single_iframe.html");
-
-  view->Close();
 }
 
 // See https://crbug.com/628942.
 TEST_P(ParameterizedWebFrameTest, SuspendedPageLoadWithRemoteMainFrame) {
-  // Prepare a page with a remote main frame.
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* remote_root = view->MainFrame()->ToWebRemoteFrame();
-  remote_root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
+  WebRemoteFrameBase* remote_root = helper.RemoteMainFrame();
 
   // Check that ScopedPageSuspender properly triggers deferred loading for
   // the current Page.
-  Page* page = WebFrame::ToCoreFrame(*remote_root)->GetPage();
+  Page* page = remote_root->GetFrame()->GetPage();
   EXPECT_FALSE(page->Suspended());
   {
     ScopedPageSuspender suspender;
@@ -10031,11 +9935,11 @@ TEST_P(ParameterizedWebFrameTest, SuspendedPageLoadWithRemoteMainFrame) {
 
   // Repeat this for a page with a local child frame, and ensure that the
   // child frame's loads are also suspended.
-  WebLocalFrame* web_local_child =
-      FrameTestHelpers::CreateLocalChild(remote_root);
+  WebLocalFrameBase* web_local_child =
+      FrameTestHelpers::CreateLocalChild(*remote_root);
   RegisterMockedHttpURLLoad("foo.html");
   FrameTestHelpers::LoadFrame(web_local_child, base_url_ + "foo.html");
-  LocalFrame* local_child = ToWebLocalFrameBase(web_local_child)->GetFrame();
+  LocalFrame* local_child = web_local_child->GetFrame();
   EXPECT_FALSE(page->Suspended());
   EXPECT_FALSE(
       local_child->GetDocument()->Fetcher()->Context().DefersLoading());
@@ -10048,8 +9952,6 @@ TEST_P(ParameterizedWebFrameTest, SuspendedPageLoadWithRemoteMainFrame) {
   EXPECT_FALSE(page->Suspended());
   EXPECT_FALSE(
       local_child->GetDocument()->Fetcher()->Context().DefersLoading());
-
-  view->Close();
 }
 
 class OverscrollWebViewClient : public FrameTestHelpers::TestWebViewClient {
@@ -10465,7 +10367,7 @@ class WebFrameVisibilityChangeTest : public WebFrameTest {
     frame_ =
         web_view_helper_.InitializeAndLoad(base_url_ + "single_iframe.html")
             ->MainFrameImpl();
-    web_remote_frame_ = RemoteFrameClient()->GetFrame();
+    web_remote_frame_ = FrameTestHelpers::CreateRemote(&remote_frame_client_);
   }
 
   ~WebFrameVisibilityChangeTest() {}
@@ -10478,11 +10380,10 @@ class WebFrameVisibilityChangeTest : public WebFrameTest {
 
   void SwapLocalFrameToRemoteFrame() {
     LastChild(MainFrame())->Swap(RemoteFrame());
-    RemoteFrame()->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
   }
 
   WebLocalFrame* MainFrame() { return frame_; }
-  WebRemoteFrameImpl* RemoteFrame() { return web_remote_frame_; }
+  WebRemoteFrameBase* RemoteFrame() { return web_remote_frame_; }
   TestWebRemoteFrameClientForVisibility* RemoteFrameClient() {
     return &remote_frame_client_;
   }
@@ -10491,7 +10392,7 @@ class WebFrameVisibilityChangeTest : public WebFrameTest {
   TestWebRemoteFrameClientForVisibility remote_frame_client_;
   FrameTestHelpers::WebViewHelper web_view_helper_;
   WebLocalFrame* frame_;
-  Persistent<WebRemoteFrameImpl> web_remote_frame_;
+  Persistent<WebRemoteFrameBase> web_remote_frame_;
 };
 
 TEST_F(WebFrameVisibilityChangeTest, RemoteFrameVisibilityChange) {
@@ -11951,7 +11852,7 @@ TEST_F(WebFrameTest, NoLoadingCompletionCallbacksInDetach) {
         WebSandboxFlags sandbox_flags,
         const WebParsedFeaturePolicy& container_policy,
         const WebFrameOwnerProperties&) override {
-      return CreateLocalChild(parent, scope, &child_client_);
+      return CreateLocalChild(*parent, scope, &child_client_);
     }
 
     LoadingObserverFrameClient& ChildClient() { return child_client_; }
@@ -12007,17 +11908,12 @@ class ShowVirtualKeyboardObserverWidgetClient
 
 TEST_F(WebFrameTest, ShowVirtualKeyboardOnElementFocus) {
   FrameTestHelpers::WebViewHelper web_view_helper;
-  WebViewBase* web_view = web_view_helper.Initialize();
-  WebRemoteFrameImpl* remote_frame = static_cast<WebRemoteFrameImpl*>(
-      WebRemoteFrame::Create(WebTreeScopeType::kDocument, nullptr));
-  web_view->SetMainFrame(remote_frame);
-  RefPtr<SecurityOrigin> unique_origin = SecurityOrigin::CreateUnique();
-  remote_frame->GetFrame()->GetSecurityContext()->SetSecurityOrigin(
-      unique_origin);
+  web_view_helper.InitializeRemote();
 
   ShowVirtualKeyboardObserverWidgetClient web_widget_client;
   WebLocalFrameBase* local_frame = FrameTestHelpers::CreateLocalChild(
-      remote_frame, "child", nullptr, &web_widget_client);
+      *web_view_helper.RemoteMainFrame(), "child", WebFrameOwnerProperties(),
+      nullptr, nullptr, &web_widget_client);
 
   RegisterMockedHttpURLLoad("input_field_default.html");
   FrameTestHelpers::LoadFrame(local_frame,
@@ -12033,7 +11929,6 @@ TEST_F(WebFrameTest, ShowVirtualKeyboardOnElementFocus) {
   // Verify that the right WebWidgetClient has been notified.
   EXPECT_TRUE(web_widget_client.DidShowVirtualKeyboard());
 
-  remote_frame->Close();
   web_view_helper.Reset();
 }
 
@@ -12116,22 +12011,16 @@ TEST_F(WebFrameTest, ContextMenuDataSelectedText) {
 }
 
 TEST_F(WebFrameTest, LocalFrameWithRemoteParentIsTransparent) {
-  FrameTestHelpers::TestWebViewClient view_client;
-  FrameTestHelpers::TestWebRemoteFrameClient remote_client;
-  WebView* view = WebView::Create(&view_client, kWebPageVisibilityStateVisible);
-  view->GetSettings()->SetJavaScriptEnabled(true);
-  view->SetMainFrame(remote_client.GetFrame());
-  WebRemoteFrame* root = view->MainFrame()->ToWebRemoteFrame();
-  root->SetReplicatedOrigin(SecurityOrigin::CreateUnique());
+  FrameTestHelpers::WebViewHelper helper;
+  helper.InitializeRemote();
 
-  WebLocalFrameBase* local_frame = FrameTestHelpers::CreateLocalChild(root);
+  WebLocalFrameBase* local_frame =
+      FrameTestHelpers::CreateLocalChild(*helper.RemoteMainFrame());
   FrameTestHelpers::LoadFrame(local_frame, "data:text/html,some page");
 
   // Local frame with remote parent should have transparent baseBackgroundColor.
   Color color = local_frame->GetFrameView()->BaseBackgroundColor();
   EXPECT_EQ(Color::kTransparent, color);
-
-  view->Close();
 }
 
 class TestFallbackWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
@@ -12151,7 +12040,7 @@ class TestFallbackWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
       const WebParsedFeaturePolicy& container_policy,
       const WebFrameOwnerProperties& frameOwnerProperties) override {
     DCHECK(child_client_);
-    return CreateLocalChild(parent, scope, child_client_);
+    return CreateLocalChild(*parent, scope, child_client_);
   }
 
   WebNavigationPolicy DecidePolicyForNavigation(

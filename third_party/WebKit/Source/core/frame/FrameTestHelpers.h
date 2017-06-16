@@ -92,41 +92,48 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type,
                                const IntPoint&,
                                int modifiers);
 
-// Helper for creating a local child frame of a local parent frame. The supplied
-// TestWebFrameClient will not self-delete when the frame is detached.
-WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
+// Helpers for creating frames for test purposes. All methods that accept raw
+// pointer client arguments allow nullptr as a valid argument; if a client
+// pointer is null, the test framework will automatically create and manage the
+// lifetime of that client interface. Otherwise, the caller is responsible for
+// ensuring that non-null clients outlive the created frame.
+
+// Helper for creating a local child frame of a local parent frame.
+WebLocalFrameBase* CreateLocalChild(WebLocalFrame& parent,
                                     WebTreeScopeType,
                                     TestWebFrameClient* = nullptr);
 
-// Similar; however, ownership of the TestWebFrameClient is transferred to
-// itself; the TestWebFrameClient will self-delete when the frame is detached.
-WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
+// Similar, but unlike the overload which takes the client as a raw pointer,
+// ownership of the TestWebFrameClient is transferred to the test framework.
+// TestWebFrameClient may not be null.
+WebLocalFrameBase* CreateLocalChild(WebLocalFrame& parent,
                                     WebTreeScopeType,
                                     std::unique_ptr<TestWebFrameClient>);
 
-WebLocalFrameBase* CreateProvisional(TestWebFrameClient*,
-                                     WebRemoteFrame* old_frame);
+// Helper for creating a provisional local frame that can replace a remote
+// frame.
+WebLocalFrameBase* CreateProvisional(WebRemoteFrame& old_frame,
+                                     TestWebFrameClient* = nullptr);
 
-// Calls WebRemoteFrame::CreateLocalChild, but with some arguments prefilled
-// with default test values (i.e. with a default |client| or |properties| and/or
-// with a precalculated |uniqueName|).
+// Helper for creating a remote frame. Generally used when creating a remote
+// frame to swap into the frame tree.
+WebRemoteFrameImpl* CreateRemote(TestWebRemoteFrameClient* = nullptr,
+                                 RefPtr<SecurityOrigin> = nullptr);
+
+// Helper for creating a local child frame of a remote parent frame.
 WebLocalFrameBase* CreateLocalChild(
-    WebRemoteFrame* parent,
+    WebRemoteFrame& parent,
     const WebString& name = WebString(),
-    TestWebFrameClient* = nullptr,
-    WebWidgetClient* = nullptr,
+    const WebFrameOwnerProperties& = WebFrameOwnerProperties(),
     WebFrame* previous_sibling = nullptr,
-    const WebFrameOwnerProperties& = WebFrameOwnerProperties());
-WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame* parent,
-                                      TestWebRemoteFrameClient*,
-                                      const WebString& name = WebString());
+    TestWebFrameClient* = nullptr,
+    WebWidgetClient* = nullptr);
 
-// Helpers for unit tests with parameterized WebSettings overrides.
-typedef void (*SettingOverrideFunction)(WebSettings*);
-class SettingOverrider {
- public:
-  virtual void OverrideSettings(WebSettings*) = 0;
-};
+// Helper for creating a remote child frame of a remote parent frame.
+WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
+                                      const WebString& name = WebString(),
+                                      RefPtr<SecurityOrigin> = nullptr,
+                                      TestWebRemoteFrameClient* = nullptr);
 
 // Forces to use mocked overlay scrollbars instead of the default native theme
 // scrollbars to avoid crash in Chromium code when it tries to load UI
@@ -221,12 +228,16 @@ class WebViewHelper {
   WTF_MAKE_NONCOPYABLE(WebViewHelper);
 
  public:
-  WebViewHelper(SettingOverrider* = 0);
+  WebViewHelper();
   ~WebViewHelper();
 
-  // Creates and initializes the WebView. Implicitly calls reset() first. If
-  // a WebFrameClient or a WebViewClient are passed in, they must outlive the
-  // WebViewHelper.
+  // Helpers for creating the main frame. All methods that accept raw
+  // pointer client arguments allow nullptr as a valid argument; if a client
+  // pointer is null, the test framework will automatically create and manage
+  // the lifetime of that client interface. Otherwise, the caller is responsible
+  // for ensuring that non-null clients outlive the created frame.
+
+  // Creates and initializes the WebView with a main WebLocalFrame.
   WebViewBase* InitializeWithOpener(
       WebFrame* opener,
       TestWebFrameClient* = nullptr,
@@ -234,20 +245,27 @@ class WebViewHelper {
       TestWebWidgetClient* = nullptr,
       void (*update_settings_func)(WebSettings*) = nullptr);
 
-  // Same as initializeWithOpener(), but always sets the opener to null.
+  // Same as InitializeWithOpener(), but always sets the opener to null.
   WebViewBase* Initialize(TestWebFrameClient* = nullptr,
                           TestWebViewClient* = nullptr,
                           TestWebWidgetClient* = nullptr,
                           void (*update_settings_func)(WebSettings*) = 0);
 
-  // Same as initialize() but also performs the initial load of the url. Only
+  // Same as Initialize() but also performs the initial load of the url. Only
   // returns once the load is complete.
   WebViewBase* InitializeAndLoad(
       const std::string& url,
       TestWebFrameClient* = nullptr,
       TestWebViewClient* = nullptr,
       TestWebWidgetClient* = nullptr,
-      void (*update_settings_func)(WebSettings*) = 0);
+      void (*update_settings_func)(WebSettings*) = nullptr);
+
+  // Creates and initializes the WebView with a main WebRemoteFrame. Passing
+  // nullptr as the SecurityOrigin results in a frame with a unique security
+  // origin.
+  WebViewBase* InitializeRemote(TestWebRemoteFrameClient* = nullptr,
+                                RefPtr<SecurityOrigin> = nullptr,
+                                TestWebViewClient* = nullptr);
 
   void Resize(WebSize);
 
@@ -259,8 +277,10 @@ class WebViewHelper {
   WebRemoteFrameBase* RemoteMainFrame();
 
  private:
+  TestWebWidgetClient* InitializeWebView(TestWebViewClient*,
+                                         TestWebWidgetClient*);
+
   WebViewBase* web_view_;
-  SettingOverrider* setting_overrider_;
   UseMockScrollbarSettings mock_scrollbar_settings_;
   // Non-null if the WebViewHelper owns the TestWebViewClient.
   std::unique_ptr<TestWebViewClient> owned_test_web_view_client_;
@@ -309,7 +329,8 @@ class TestWebFrameClient : public WebFrameClient {
   // If set to a non-null value, self-deletes on frame detach.
   std::unique_ptr<TestWebFrameClient> self_owned_;
 
-  // This is null from when the client is created until it is initialized.
+  // This is null from when the client is created until it is initialized with
+  // Bind().
   WebLocalFrame* frame_ = nullptr;
 };
 
@@ -320,7 +341,11 @@ class TestWebRemoteFrameClient : public WebRemoteFrameClient {
  public:
   TestWebRemoteFrameClient();
 
-  WebRemoteFrameImpl* GetFrame() const { return frame_; }
+  WebRemoteFrame* Frame() const { return frame_; }
+  // Pass ownership of the TestWebFrameClient to |self_owned| here if the
+  // TestWebRemoteFrameClient should delete itself on frame detach.
+  void Bind(WebRemoteFrame*,
+            std::unique_ptr<TestWebRemoteFrameClient> self_owned = nullptr);
 
   // WebRemoteFrameClient overrides:
   void FrameDetached(DetachType) override;
@@ -330,7 +355,12 @@ class TestWebRemoteFrameClient : public WebRemoteFrameClient {
                           WebDOMMessageEvent) override {}
 
  private:
-  Persistent<WebRemoteFrameImpl> const frame_;
+  // If set to a non-null value, self-deletes on frame detach.
+  std::unique_ptr<TestWebRemoteFrameClient> self_owned_;
+
+  // This is null from when the client is created until it is initialized with
+  // Bind().
+  WebRemoteFrame* frame_ = nullptr;
 };
 
 }  // namespace FrameTestHelpers

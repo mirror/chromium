@@ -142,7 +142,7 @@ WebMouseEvent CreateMouseEvent(WebInputEvent::Type type,
   return result;
 }
 
-WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
+WebLocalFrameBase* CreateLocalChild(WebLocalFrame& parent,
                                     WebTreeScopeType scope,
                                     TestWebFrameClient* client) {
   std::unique_ptr<TestWebFrameClient> owned_client;
@@ -150,25 +150,26 @@ WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
     owned_client = WTF::MakeUnique<TestWebFrameClient>();
     client = owned_client.get();
   }
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
+  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent.CreateLocalChild(
       scope, client, client->GetInterfaceProviderForTesting(), nullptr));
   client->Bind(frame, std::move(owned_client));
   return frame;
 }
 
 WebLocalFrameBase* CreateLocalChild(
-    WebLocalFrame* parent,
+    WebLocalFrame& parent,
     WebTreeScopeType scope,
     std::unique_ptr<TestWebFrameClient> self_owned) {
+  DCHECK(self_owned);
   TestWebFrameClient* client = self_owned.get();
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
+  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent.CreateLocalChild(
       scope, client, self_owned->GetInterfaceProviderForTesting(), nullptr));
   client->Bind(frame, std::move(self_owned));
   return frame;
 }
 
-WebLocalFrameBase* CreateProvisional(TestWebFrameClient* client,
-                                     WebRemoteFrame* old_frame) {
+WebLocalFrameBase* CreateProvisional(WebRemoteFrame& old_frame,
+                                     TestWebFrameClient* client) {
   std::unique_ptr<TestWebFrameClient> owned_client;
   if (!client) {
     owned_client = WTF::MakeUnique<TestWebFrameClient>();
@@ -176,48 +177,73 @@ WebLocalFrameBase* CreateProvisional(TestWebFrameClient* client,
   }
   WebLocalFrameBase* frame =
       ToWebLocalFrameBase(WebLocalFrame::CreateProvisional(
-          client, client->GetInterfaceProviderForTesting(), nullptr, old_frame,
+          client, client->GetInterfaceProviderForTesting(), nullptr, &old_frame,
           WebSandboxFlags::kNone));
   client->Bind(frame, std::move(owned_client));
   return frame;
 }
 
-WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
+WebRemoteFrameImpl* CreateRemote(TestWebRemoteFrameClient* client,
+                                 RefPtr<SecurityOrigin> security_origin) {
+  std::unique_ptr<TestWebRemoteFrameClient> owned_client;
+  if (!client) {
+    owned_client = WTF::MakeUnique<TestWebRemoteFrameClient>();
+    client = owned_client.get();
+  }
+  auto* frame = WebRemoteFrameImpl::Create(WebTreeScopeType::kDocument, client);
+  client->Bind(frame, std::move(owned_client));
+  if (!security_origin)
+    security_origin = SecurityOrigin::CreateUnique();
+  frame->GetFrame()->GetSecurityContext()->SetReplicatedOrigin(
+      std::move(security_origin));
+  return frame;
+}
+
+WebLocalFrameBase* CreateLocalChild(WebRemoteFrame& parent,
                                     const WebString& name,
-                                    TestWebFrameClient* client,
-                                    WebWidgetClient* widget_client,
+                                    const WebFrameOwnerProperties& properties,
                                     WebFrame* previous_sibling,
-                                    const WebFrameOwnerProperties& properties) {
+                                    TestWebFrameClient* client,
+                                    WebWidgetClient* widget_client) {
   std::unique_ptr<TestWebFrameClient> owned_client;
   if (!client) {
     owned_client = WTF::MakeUnique<TestWebFrameClient>();
     client = owned_client.get();
   }
 
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
+  auto* frame = ToWebLocalFrameBase(parent.CreateLocalChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone, client,
       client->GetInterfaceProviderForTesting(), nullptr, previous_sibling,
       WebParsedFeaturePolicy(), properties, nullptr));
-
   client->Bind(frame, std::move(owned_client));
-
   if (!widget_client)
     widget_client = DefaultWebWidgetClient();
   WebFrameWidget::Create(widget_client, frame);
-
   return frame;
 }
 
-WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame* parent,
-                                      TestWebRemoteFrameClient* client,
-                                      const WebString& name) {
-  return ToWebRemoteFrameImpl(parent->CreateRemoteChild(
+WebRemoteFrameImpl* CreateRemoteChild(WebRemoteFrame& parent,
+                                      const WebString& name,
+                                      RefPtr<SecurityOrigin> security_origin,
+                                      TestWebRemoteFrameClient* client) {
+  std::unique_ptr<TestWebRemoteFrameClient> owned_client;
+  if (!client) {
+    owned_client = WTF::MakeUnique<TestWebRemoteFrameClient>();
+    client = owned_client.get();
+  }
+
+  auto* frame = ToWebRemoteFrameImpl(parent.CreateRemoteChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone,
       WebParsedFeaturePolicy(), client, nullptr));
+  client->Bind(frame, std::move(owned_client));
+  if (!security_origin)
+    security_origin = SecurityOrigin::CreateUnique();
+  frame->GetFrame()->GetSecurityContext()->SetReplicatedOrigin(
+      std::move(security_origin));
+  return frame;
 }
 
-WebViewHelper::WebViewHelper(SettingOverrider* setting_overrider)
-    : web_view_(nullptr), setting_overrider_(setting_overrider) {}
+WebViewHelper::WebViewHelper() : web_view_(nullptr) {}
 
 WebViewHelper::~WebViewHelper() {
   Reset();
@@ -231,34 +257,16 @@ WebViewBase* WebViewHelper::InitializeWithOpener(
     void (*update_settings_func)(WebSettings*)) {
   Reset();
 
+  web_widget_client = InitializeWebView(web_view_client, web_widget_client);
+  if (update_settings_func)
+    update_settings_func(web_view_->GetSettings());
+
   std::unique_ptr<TestWebFrameClient> owned_web_frame_client;
   if (!web_frame_client) {
     owned_web_frame_client = WTF::MakeUnique<TestWebFrameClient>();
     web_frame_client = owned_web_frame_client.get();
   }
-  if (!web_view_client) {
-    owned_test_web_view_client_ = WTF::MakeUnique<TestWebViewClient>();
-    web_view_client = owned_test_web_view_client_.get();
-  }
-  if (!web_widget_client)
-    web_widget_client = web_view_client->WidgetClient();
-  web_view_ = static_cast<WebViewBase*>(
-      WebView::Create(web_view_client, kWebPageVisibilityStateVisible));
-  web_view_->GetSettings()->SetJavaScriptEnabled(true);
-  web_view_->GetSettings()->SetPluginsEnabled(true);
-  // Enable (mocked) network loads of image URLs, as this simplifies
-  // the completion of resource loads upon test shutdown & helps avoid
-  // dormant loads trigger Resource leaks for image loads.
-  //
-  // Consequently, all external image resources must be mocked.
-  web_view_->GetSettings()->SetLoadsImagesAutomatically(true);
-  if (update_settings_func)
-    update_settings_func(web_view_->GetSettings());
-  if (setting_overrider_)
-    setting_overrider_->OverrideSettings(web_view_->GetSettings());
-  web_view_->SetDeviceScaleFactor(
-      web_view_client->GetScreenInfo().device_scale_factor);
-  web_view_->SetDefaultPageScaleLimits(1, 4);
+
   WebLocalFrame* frame = WebLocalFrameBase::Create(
       WebTreeScopeType::kDocument, web_frame_client,
       web_frame_client->GetInterfaceProviderForTesting(), nullptr, opener);
@@ -297,6 +305,32 @@ WebViewBase* WebViewHelper::InitializeAndLoad(
   return WebView();
 }
 
+WebViewBase* WebViewHelper::InitializeRemote(
+    TestWebRemoteFrameClient* web_remote_frame_client,
+    RefPtr<SecurityOrigin> security_origin,
+    TestWebViewClient* web_view_client) {
+  Reset();
+
+  InitializeWebView(web_view_client, nullptr);
+
+  std::unique_ptr<TestWebRemoteFrameClient> owned_web_remote_frame_client;
+  if (!web_remote_frame_client) {
+    owned_web_remote_frame_client = WTF::MakeUnique<TestWebRemoteFrameClient>();
+    web_remote_frame_client = owned_web_remote_frame_client.get();
+  }
+
+  WebRemoteFrameImpl* frame = WebRemoteFrameImpl::Create(
+      WebTreeScopeType::kDocument, web_remote_frame_client);
+  web_remote_frame_client->Bind(frame,
+                                std::move(owned_web_remote_frame_client));
+  web_view_->SetMainFrame(frame);
+  if (!security_origin)
+    security_origin = SecurityOrigin::CreateUnique();
+  frame->GetFrame()->GetSecurityContext()->SetReplicatedOrigin(
+      std::move(security_origin));
+  return web_view_;
+}
+
 void WebViewHelper::Reset() {
   if (web_view_) {
     DCHECK(!TestWebFrameClient::IsLoading());
@@ -319,6 +353,32 @@ void WebViewHelper::Resize(WebSize size) {
   WebView()->Resize(size);
   EXPECT_FALSE(test_web_view_client_->AnimationScheduled());
   test_web_view_client_->ClearAnimationScheduled();
+}
+
+TestWebWidgetClient* WebViewHelper::InitializeWebView(
+    TestWebViewClient* web_view_client,
+    TestWebWidgetClient* web_widget_client) {
+  if (!web_view_client) {
+    owned_test_web_view_client_ = WTF::MakeUnique<TestWebViewClient>();
+    web_view_client = owned_test_web_view_client_.get();
+  }
+  if (!web_widget_client)
+    web_widget_client = web_view_client->WidgetClient();
+  web_view_ = static_cast<WebViewBase*>(
+      WebView::Create(web_view_client, kWebPageVisibilityStateVisible));
+  web_view_->GetSettings()->SetJavaScriptEnabled(true);
+  web_view_->GetSettings()->SetPluginsEnabled(true);
+  // Enable (mocked) network loads of image URLs, as this simplifies
+  // the completion of resource loads upon test shutdown & helps avoid
+  // dormant loads trigger Resource leaks for image loads.
+  //
+  // Consequently, all external image resources must be mocked.
+  web_view_->GetSettings()->SetLoadsImagesAutomatically(true);
+  web_view_->SetDeviceScaleFactor(
+      web_view_client->GetScreenInfo().device_scale_factor);
+  web_view_->SetDefaultPageScaleLimits(1, 4);
+
+  return web_widget_client;
 }
 
 int TestWebFrameClient::loads_in_progress_ = 0;
@@ -349,7 +409,7 @@ WebLocalFrame* TestWebFrameClient::CreateChildFrame(
     WebSandboxFlags sandbox_flags,
     const WebParsedFeaturePolicy& container_policy,
     const WebFrameOwnerProperties& frame_owner_properties) {
-  return CreateLocalChild(parent, scope);
+  return CreateLocalChild(*parent, scope);
 }
 
 void TestWebFrameClient::DidStartLoading(bool) {
@@ -361,13 +421,20 @@ void TestWebFrameClient::DidStopLoading() {
   --loads_in_progress_;
 }
 
-TestWebRemoteFrameClient::TestWebRemoteFrameClient()
-    : frame_(WebRemoteFrameImpl::Create(WebTreeScopeType::kDocument,
-                                        this,
-                                        nullptr)) {}
+TestWebRemoteFrameClient::TestWebRemoteFrameClient() {}
+
+void TestWebRemoteFrameClient::Bind(
+    WebRemoteFrame* frame,
+    std::unique_ptr<TestWebRemoteFrameClient> self_owned) {
+  DCHECK(!frame_);
+  DCHECK(!self_owned || self_owned.get() == this);
+  frame_ = frame;
+  self_owned_ = std::move(self_owned);
+}
 
 void TestWebRemoteFrameClient::FrameDetached(DetachType type) {
   frame_->Close();
+  self_owned_.reset();
 }
 
 WebLayerTreeView* TestWebViewClient::InitializeLayerTreeView() {
