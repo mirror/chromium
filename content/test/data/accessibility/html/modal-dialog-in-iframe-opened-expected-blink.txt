@@ -3,7 +3,3 @@ rootWebArea
 ++++staticText name='Test for modal dialog opened in an iframe. '
 ++++++inlineTextBox name='Test for modal dialog opened in an iframe. '
 ++++iframe
-++++++rootWebArea
-++++++++dialog
-++++++++++staticText name='Text in the dialog.'
-++++++++++++inlineTextBox name='Text in the dialog.'
