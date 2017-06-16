@@ -73,6 +73,7 @@ ControllerImpl::ControllerImpl(
       device_status_listener_(std::move(device_status_listener)),
       scheduler_(std::move(scheduler)),
       task_scheduler_(std::move(task_scheduler)),
+      initializing_internals_(false),
       weak_ptr_factory_(this) {}
 
 ControllerImpl::~ControllerImpl() = default;
@@ -80,6 +81,7 @@ ControllerImpl::~ControllerImpl() = default;
 void ControllerImpl::Initialize() {
   DCHECK(!startup_status_.Complete());
 
+  initializing_internals_ = true;
   driver_->Initialize(this);
   model_->Initialize(this);
 }
@@ -263,9 +265,13 @@ void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
   Entry* entry = model_->Get(download.guid);
 
   if (!entry) {
-    // TODO(xingliu): Log non download service initiated downloads.
+    HandleExternalDownload(download.guid, true);
     return;
   }
+
+  // We should not get a created download during our initialization.  We should
+  // be up and alive if we have new downloads we own.
+  DCHECK(!initializing_internals_);
 
   download::Client* client = clients_->GetClient(entry->client);
   DCHECK(client);
@@ -279,34 +285,47 @@ void ControllerImpl::OnDownloadCreated(const DriverEntry& download) {
 
 void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
   Entry* entry = model_->Get(download.guid);
-  if (!entry)
+  if (!entry) {
+    HandleExternalDownload(download.guid, false);
     return;
+  }
 
   // TODO(dtrainor): Add retry logic here.  Connect to restart code for tracking
   // number of retries.
 
+  // TODO(dtrainor, xingliu): We probably have to prevent cancel calls from
+  // coming through here as we remove downloads (especially through
+  // initialization).
   HandleCompleteDownload(CompletionType::FAIL, download.guid);
 }
 
 void ControllerImpl::OnDownloadSucceeded(const DriverEntry& download,
                                          const base::FilePath& path) {
   Entry* entry = model_->Get(download.guid);
-  if (!entry)
+  if (!entry) {
+    HandleExternalDownload(download.guid, false);
     return;
+  }
 
+  // We should not get a complete download during our initialization.  We should
+  // be up and alive if we have active downloads we own.
+  DCHECK(!initializing_internals_);
   HandleCompleteDownload(CompletionType::SUCCEED, download.guid);
 }
 
 void ControllerImpl::OnDownloadUpdated(const DriverEntry& download) {
   Entry* entry = model_->Get(download.guid);
-  if (!entry)
+  if (!entry) {
+    HandleExternalDownload(download.guid, !download.paused);
     return;
+  }
 
   DCHECK_EQ(download.state, DriverEntry::State::IN_PROGRESS);
 
-  download::Client* client = clients_->GetClient(entry->client);
-  if (client)
-    client->OnDownloadUpdated(download.guid, download.bytes_downloaded);
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadUpdated,
+                            weak_ptr_factory_.GetWeakPtr(), entry->client,
+                            download.guid, download.bytes_downloaded));
 }
 
 void ControllerImpl::OnModelReady(bool success) {
@@ -379,14 +398,27 @@ void ControllerImpl::AttemptToFinalizeSetup() {
   }
 
   device_status_listener_->Start(this);
+  PollActiveDriverDownloads();
   CancelOrphanedRequests();
   ResolveInitialRequestStates();
-  UpdateDriverStates();
   NotifyClientsOfStartup();
+
+  initializing_internals_ = false;
+
+  UpdateDriverStates();
   ProcessScheduledTasks();
 
   // Pull the initial straw if active downloads haven't reach maximum.
   ActivateMoreDownloads();
+}
+
+void ControllerImpl::PollActiveDriverDownloads() {
+  std::set<std::string> guids = driver_->GetActiveDownloads();
+
+  for (auto guid : guids) {
+    if (!model_->Get(guid))
+      externally_active_downloads_.insert(guid);
+  }
 }
 
 void ControllerImpl::CancelOrphanedRequests() {
@@ -399,9 +431,9 @@ void ControllerImpl::CancelOrphanedRequests() {
   }
 
   for (const auto& guid : guids_to_remove) {
-    model_->Remove(guid);
     // TODO(xingliu): Use file monitor to delete the files.
     driver_->Remove(guid);
+    model_->Remove(guid);
   }
 }
 
@@ -525,6 +557,14 @@ void ControllerImpl::UpdateDriverStates() {
 }
 
 void ControllerImpl::UpdateDriverState(const Entry& entry) {
+  if (initializing_internals_)
+    return;
+
+  if (entry.state != Entry::State::ACTIVE &&
+      entry.state != Entry::State::PAUSED) {
+    return;
+  }
+
   // This method will need to figure out what to do with a failed download and
   // either a) restart it or b) fail the download.
 
@@ -533,35 +573,23 @@ void ControllerImpl::UpdateDriverState(const Entry& entry) {
   bool meets_device_criteria = device_status_listener_->CurrentDeviceStatus()
                                    .MeetsCondition(entry.scheduling_params)
                                    .MeetsRequirements();
-  switch (entry.state) {
-    case Entry::State::ACTIVE:
-      if (!meets_device_criteria) {
-        driver_->Pause(entry.guid);
-        break;
-      }
-      // Start or resume the download if it should be running.
-      if (!driver_entry.has_value()) {
-        driver_->Start(entry.request_params, entry.guid,
-                       NO_TRAFFIC_ANNOTATION_YET);
-        break;
-      }
-      if (driver_entry->state != DriverEntry::State::IN_PROGRESS) {
-        driver_->Resume(entry.guid);
-      }
-      break;
-    case Entry::State::PAUSED:
-      // Pause the in progress downloads that should not be running.
-      if (driver_entry.has_value() &&
-          driver_entry->state == DriverEntry::State::IN_PROGRESS) {
-        driver_->Pause(entry.guid);
-      }
-      break;
-    case Entry::State::AVAILABLE:  // Intentional fallthrough.
-    case Entry::State::NEW:        // Intentional fallthrough.
-    case Entry::State::COMPLETE:   // Intentional fallthrough.
-      break;
-    default:
-      NOTREACHED();
+  bool force_pause =
+      !externally_active_downloads_.empty() &&
+      entry.scheduling_params.priority != SchedulingParams::Priority::UI;
+  bool entry_paused = entry.state == Entry::State::PAUSED;
+
+  bool pause_driver = entry_paused || force_pause || !meets_device_criteria;
+
+  if (pause_driver) {
+    if (driver_entry.has_value())
+      driver_->Pause(entry.guid);
+  } else {
+    if (driver_entry.has_value()) {
+      driver_->Resume(entry.guid);
+    } else {
+      driver_->Start(entry.request_params, entry.guid,
+                     NO_TRAFFIC_ANNOTATION_YET);
+    }
   }
 }
 
@@ -638,6 +666,9 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
+  if (initializing_internals_)
+    return;
+
   // TODO(xingliu): Check the configuration to throttle downloads.
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
@@ -650,6 +681,28 @@ void ControllerImpl::ActivateMoreDownloads() {
                             device_status_listener_->CurrentDeviceStatus());
   }
   scheduler_->Reschedule(model_->PeekEntries());
+}
+
+void ControllerImpl::HandleExternalDownload(const std::string& guid,
+                                            bool active) {
+  if (active) {
+    externally_active_downloads_.insert(guid);
+  } else {
+    externally_active_downloads_.erase(guid);
+  }
+
+  UpdateDriverStates();
+}
+
+void ControllerImpl::SendOnDownloadUpdated(DownloadClient client_id,
+                                           const std::string& guid,
+                                           uint64_t bytes_downloaded) {
+  if (!model_->Get(guid))
+    return;
+
+  auto* client = clients_->GetClient(client_id);
+  DCHECK(client);
+  client->OnDownloadUpdated(guid, bytes_downloaded);
 }
 
 void ControllerImpl::SendOnDownloadSucceeded(DownloadClient client_id,
