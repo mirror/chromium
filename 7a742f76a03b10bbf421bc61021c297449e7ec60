@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ac248d6_f597d579",
+        "filename": "components/cronet/url_request_context_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-16T23:41:02Z",
+      "side": 1,
+      "message": "Can this be replaced with std::vector\u003cQuicHint\u003e ?\nIs the std::unique_ptr\u003c\u003e needed?",
+      "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b503200c_843cc4ff",
+        "filename": "components/cronet/url_request_context_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-16T23:41:02Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
