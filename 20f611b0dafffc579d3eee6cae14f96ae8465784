@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2f56b03_33984ff1",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-16T23:13:14Z",
+      "side": 1,
+      "message": "Lets add a short comment here explaining that we expect this to be null only in test harness.",
+      "range": {
+        "startLine": 133,
+        "startChar": 6,
+        "endLine": 133,
+        "endChar": 32
+      },
+      "revId": "20f611b0dafffc579d3eee6cae14f96ae8465784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "84fe1933_5673d5d0",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-16T23:13:14Z",
+      "side": 1,
+      "message": "when does this happen?",
+      "range": {
+        "startLine": 340,
+        "startChar": 28,
+        "endLine": 340,
+        "endChar": 46
+      },
+      "revId": "20f611b0dafffc579d3eee6cae14f96ae8465784",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
