@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2a75ac03_aeb425f2",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1123929
+      },
+      "writtenOn": "2017-06-16T20:46:46Z",
+      "side": 1,
+      "message": "nit: you could use const auto\u0026 here for brevity and avoiding a copy.",
+      "revId": "8f27cc78efd575ce0e22f6574a0b1ad2168a64b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
