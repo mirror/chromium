@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "31ffcbee_a8483dab",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T14:36:45Z",
+      "side": 1,
+      "message": "if (profile-\u003eGetPrefServiceTaskRunner()) {\n\nOtherwise, we have to ask ourselves if it is possible that |pref_service_enabled| is true but the pref service TaskRunner hasn\u0027t been initialized yet.",
+      "range": {
+        "startLine": 480,
+        "startChar": 6,
+        "endLine": 480,
+        "endChar": 31
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c227bdde_ddb062b1",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T14:36:45Z",
+      "side": 1,
+      "message": "The IO thread is the one that receives IPCs. Is it guaranteed that you don\u0027t miss updates coming from other processes if you don\u0027t wait for it?",
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "02106c3f_066da785",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1124,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T14:36:45Z",
+      "side": 1,
+      "message": "{base::TaskShutdownBehavior::BLOCK_SHUTDOWN,                         base::TaskPriority::USER_VISIBLE} is the recommended syntax\n\nhttps://cs.chromium.org/chromium/src/base/task_scheduler/post_task.h?l\u003d47",
+      "range": {
+        "startLine": 1123,
+        "startChar": 8,
+        "endLine": 1124,
+        "endChar": 59
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
