@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8d802cee_1cca1c9e",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1126869
+      },
+      "writtenOn": "2017-06-16T00:23:22Z",
+      "side": 1,
+      "message": "Just curious: will base::SequencedTaskRunner do the same thing here, instead of adding CHECKER all the places?",
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
