@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "197ae20c_dd586990",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-16T20:09:50Z",
+      "side": 1,
+      "message": "Does LayoutUnit vertical(box-\u003e...()); work? anyway, this is fine",
+      "revId": "4e96583274783f6e6ec1c6adb639666d556ab5f3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
