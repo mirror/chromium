@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "08549cae_698d2601",
+        "filename": "content/browser/renderer_host/render_widget_host_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1894,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-16T04:15:53Z",
+      "side": 1,
+      "message": "Done (OnShowContextMenu was from aura)",
+      "parentUuid": "cc92a82b_75fa4fce",
+      "range": {
+        "startLine": 1894,
+        "startChar": 34,
+        "endLine": 1894,
+        "endChar": 51
+      },
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4e1c5b12_6d85adb6",
         "filename": "content/browser/web_contents/web_contents_view_android.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-15T17:18:23Z",
       "side": 1,
       "message": "by..?",
+      "range": {
+        "startLine": 273,
+        "startChar": 36,
+        "endLine": 273,
+        "endChar": 38
+      },
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e5cc001_d1f42d45",
+        "filename": "content/browser/web_contents/web_contents_view_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-16T04:15:53Z",
+      "side": 1,
+      "message": "Duh. Completed the sentence.",
+      "parentUuid": "4e1c5b12_6d85adb6",
       "range": {
         "startLine": 273,
         "startChar": 36,
@@ -62,6 +110,24 @@
       "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87c688fb_99a10358",
+        "filename": "content/shell/browser/shell_web_contents_view_delegate.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-16T04:15:53Z",
+      "side": 1,
+      "message": "Done. Instead I need to deal with a build error for unused private field |web_contents_| on Android. Added a comment since I couldn\u0027t find an appropriate macro (ALLOW_UNUSED_LOCAL came close but |web_contents_| is not a local variable..).",
+      "parentUuid": "46917a0f_1bc9ca6c",
+      "revId": "514d68daf0196ba1ae63e67e11bdfd14b2ee4e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
