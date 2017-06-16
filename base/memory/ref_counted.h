@@ -250,6 +250,10 @@ class RefCounted : public subtle::RefCountedBase {
 
   void Release() const {
     if (subtle::RefCountedBase::Release()) {
+      // Prune the static code paths which simulate the destruction of |this|.
+      // Refcounting should prevent any use-after-free errors from occurring.
+      ANALYZER_ASSUME_TRUE(false);
+
       delete static_cast<const T*>(this);
     }
   }
@@ -506,13 +510,21 @@ class scoped_refptr {
   }
 
   scoped_refptr<T>& operator=(scoped_refptr<T>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
+    T* old_ptr = ptr_;
+    ptr_ = r.get();
+    r.ptr_ = nullptr;
+    if (old_ptr)
+      Release(old_ptr);
     return *this;
   }
 
   template <typename U>
   scoped_refptr<T>& operator=(scoped_refptr<U>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
+    T* old_ptr = ptr_;
+    ptr_ = r.get();
+    r.ptr_ = nullptr;
+    if (old_ptr)
+      Release(old_ptr);
     return *this;
   }
 
