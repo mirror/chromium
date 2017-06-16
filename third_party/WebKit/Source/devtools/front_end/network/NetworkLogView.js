@@ -360,6 +360,26 @@ Network.NetworkLogView = class extends UI.VBox {
   }
 
   /**
+   * @param {!SDK.NetworkRequest} request
+   */
+  static async _copyResponse(request) {
+    var contentData = await request.contentData();
+    var content = contentData.content;
+    if (contentData.encoded) {
+      content = Common.ContentProvider.contentAsDataURL(
+          contentData.content, request.mimeType, contentData.encoded, contentData.encoded ? 'utf-8' : null);
+    }
+    InspectorFrontendHost.copyText(content || '');
+  }
+
+  /**
+   * @param {!SDK.NetworkRequest} request
+   */
+  static _copyResponseHeaders(request) {
+    InspectorFrontendHost.copyText(request.responseHeadersText);
+  }
+
+  /**
    * @param {?string} groupKey
    */
   _setGrouping(groupKey) {
@@ -1106,11 +1126,13 @@ Network.NetworkLogView = class extends UI.VBox {
       if (request.requestHeadersText())
         copyMenu.appendItem(Common.UIString('Copy request headers'), this._copyRequestHeaders.bind(this, request));
 
-      if (request.responseHeadersText)
-        copyMenu.appendItem(Common.UIString('Copy response headers'), this._copyResponseHeaders.bind(this, request));
+      if (request.responseHeadersText) {
+        copyMenu.appendItem(
+            Common.UIString('Copy response headers'), Network.NetworkLogView._copyResponseHeaders.bind(null, request));
+      }
 
       if (request.finished)
-        copyMenu.appendItem(Common.UIString('Copy response'), this._copyResponse.bind(this, request));
+        copyMenu.appendItem(Common.UIString('Copy response'), Network.NetworkLogView._copyResponse.bind(null, request));
 
       if (Host.isWin()) {
         copyMenu.appendItem(Common.UIString('Copy as cURL (cmd)'), this._copyCurlCommand.bind(this, request, 'win'));
@@ -1202,28 +1224,6 @@ Network.NetworkLogView = class extends UI.VBox {
    */
   _copyRequestHeaders(request) {
     InspectorFrontendHost.copyText(request.requestHeadersText());
-  }
-
-  /**
-   * @param {!SDK.NetworkRequest} request
-   */
-  _copyResponse(request) {
-    /**
-     * @param {?string} content
-     */
-    function callback(content) {
-      if (request.contentEncoded)
-        content = request.asDataURL();
-      InspectorFrontendHost.copyText(content || '');
-    }
-    request.requestContent().then(callback);
-  }
-
-  /**
-   * @param {!SDK.NetworkRequest} request
-   */
-  _copyResponseHeaders(request) {
-    InspectorFrontendHost.copyText(request.responseHeadersText);
   }
 
   /**
