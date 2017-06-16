@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b879c448_898055c6",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-06-16T22:34:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "94d8ac2d_8c4bdc0a",
+      "revId": "6b0a1ff640590fa71fa81aa4c98de07011557392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "68e22b2c_21563db2",
         "filename": "services/service_manager/public/cpp/binder_registry.h",
         "patchSetId": 3
