@@ -114,3 +114,7 @@ IOSChromeMetricsServicesManagerClient::GetMetricsStateManager() {
   }
   return metrics_state_manager_.get();
 }
+
+bool IOSChromeMetricsServicesManagerClient::IsIncognitoSessionActive() {
+  return ::IsOffTheRecordSessionActive();
+}
