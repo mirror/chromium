@@ -54,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "03fd057b_f8ebe811",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2594,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T06:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f22f5ccf_45f4b460",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74d6541f_de3c8acb",
         "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
         "patchSetId": 14
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "e49fae4a_892fb5c2",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T06:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "596bbb46_61d1a27f",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "307e4c2d_e633e4c7",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
         "patchSetId": 14
@@ -153,6 +189,24 @@
       "writtenOn": "2017-06-16T05:54:12Z",
       "side": 1,
       "message": "nit: prefer early return style (if (!hasSlotableChild()) return;) here?",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a643abc_1c903b4e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T06:45:01Z",
+      "side": 1,
+      "message": "Hmm. I don\u0027t think early return is worth here.",
+      "parentUuid": "307e4c2d_e633e4c7",
       "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -176,6 +230,24 @@
     },
     {
       "key": {
+        "uuid": "6d2eecca_1d6774c6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T06:45:01Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6f5cda64_eabe44a1",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41bb0646_47e32ead",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
         "patchSetId": 14
@@ -190,6 +262,24 @@
       "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e1c62ae_c98e2c6a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T06:45:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "41bb0646_47e32ead",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
