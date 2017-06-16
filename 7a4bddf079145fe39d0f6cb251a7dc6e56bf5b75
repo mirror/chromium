@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7c790e51_077f1306",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "there are few enough callers of this method that i\u0027d prefer updating the call site, rather than specifying a default argument here. can we update the call sites instead?",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a96bfe8_8b23c0b4",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "style guide discourages this:\nhttps://google.github.io/styleguide/cppguide.html#Aliases\n\n\"Don\u0027t put an alias in your public API just to save typing in the implementation; do so only if you intend it to be used by your clients.\"\n\ncan we use the full names in the header, and move the typedefs to the cc file?",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0aef15d9_15c0e5b7",
+        "filename": "chrome/browser/page_load_metrics/observers/use_counter_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "thanks for the tests! in addition, let\u0027s add a few browsertests in page_load_metrics_browsertest.cc. cases worth testing:\n1. features observed in the main frame are recorded\n2. features observed in a child frame are recorded\n3. features observed in multiple frames are only counted once.",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f26976b2_bcb5aafe",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_observer.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 397,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "let\u0027s add a comment noting that this reports features observed across all frames.",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7e0dd40_9b2e4a6a",
+        "filename": "chrome/browser/page_load_metrics/page_load_metrics_update_dispatcher.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "same - let\u0027s update call sites to specify this arg, rather than using a default here",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acb98ab6_71a748ae",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 5725,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-16T18:59:32Z",
+      "side": 1,
+      "message": "let\u0027s also note that this tracks feature usage across all frames in a page",
+      "revId": "7a4bddf079145fe39d0f6cb251a7dc6e56bf5b75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
