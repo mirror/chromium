@@ -34,6 +34,24 @@
       "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0772eddd_f43d8ae1",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-16T04:54:37Z",
+      "side": 1,
+      "message": "Hmm, your suggestion will fix the cyclic ownership edges, but |local_shm_guid| is still wrong even after you change the global dump to be \u0027shared_memory_global/ID\u0027. I think we should fix |local_shm_guid| first. IIUC the root cause is wrong |local_shm_guid|, not wrong |global_shm_guid|.\n\nInstead of generating an ID from a string directly, should we get a GUID from a dump, like |GetOrCreateAllocatorDump(name)-\u003eguid()| for |local_shm_guid|?\n\nIn long term, it\u0027d be better if we could have a better API for dumps to avoid such this things.",
+      "parentUuid": "f101ba76_53e0d9eb",
+      "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
