@@ -30,6 +30,7 @@ public class ChannelDefinitions {
     public static final String CHANNEL_ID_DOWNLOADS = "downloads";
     public static final String CHANNEL_ID_INCOGNITO = "incognito";
     public static final String CHANNEL_ID_MEDIA = "media";
+    public static final String CHANNEL_ID_SCREENCAPTURE = "screencapture";
     // TODO(crbug.com/700377): Deprecate the 'sites' channel.
     public static final String CHANNEL_ID_SITES = "sites";
     public static final String CHANNEL_ID_PREFIX_SITES = "web:";
@@ -40,7 +41,7 @@ public class ChannelDefinitions {
      * the set of channels returned by {@link #getStartupChannelIds()} or
      * {@link #getLegacyChannelIds()} changes.
      */
-    static final int CHANNELS_VERSION = 0;
+    static final int CHANNELS_VERSION = 1;
 
     /**
      * To define a new channel, add the channel ID to this StringDef and add a new entry to
@@ -49,7 +50,7 @@ public class ChannelDefinitions {
      * Predefined Channels.MAP, and add the ID to the LEGACY_CHANNELS_ID array below.
      */
     @StringDef({CHANNEL_ID_BROWSER, CHANNEL_ID_DOWNLOADS, CHANNEL_ID_INCOGNITO, CHANNEL_ID_MEDIA,
-            CHANNEL_ID_SITES})
+            CHANNEL_ID_SCREENCAPTURE, CHANNEL_ID_SITES})
     @Retention(RetentionPolicy.SOURCE)
     public @interface ChannelId {}
 
@@ -84,6 +85,10 @@ public class ChannelDefinitions {
                     new PredefinedChannel(CHANNEL_ID_MEDIA,
                             org.chromium.chrome.R.string.notification_category_media,
                             NotificationManager.IMPORTANCE_LOW, CHANNEL_GROUP_ID_GENERAL));
+            map.put(CHANNEL_ID_SCREENCAPTURE,
+                    new PredefinedChannel(CHANNEL_ID_SCREENCAPTURE,
+                            org.chromium.chrome.R.string.notification_category_screencapture,
+                            NotificationManager.IMPORTANCE_HIGH, CHANNEL_GROUP_ID_GENERAL));
             map.put(CHANNEL_ID_SITES,
                     new PredefinedChannel(CHANNEL_ID_SITES,
                             org.chromium.chrome.R.string.notification_category_sites,
