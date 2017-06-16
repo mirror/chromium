@@ -443,7 +443,7 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
   // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
   // Android.
   virtual TouchSelectionControllerClientManager*
-  touch_selection_controller_client_manager();
+  TouchSelectionControllerClientManager();
 
   // Exposed for testing.
   virtual bool IsChildFrameForTesting() const;

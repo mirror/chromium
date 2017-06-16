@@ -73,7 +73,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   // TouchSelectionControllerClientManager::Observer implementation.
   void OnManagerWillDestroy(
-      TouchSelectionControllerClientManager* manager) override;
+      class TouchSelectionControllerClientManager* manager) override;
 
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;

@@ -56,6 +56,7 @@ class RenderWidgetHostImpl;
 class SelectionPopupController;
 class SynchronousCompositorHost;
 class SynchronousCompositorClient;
+class TouchSelectionControllerClientManagerAndroid;
 class WebContentsAccessibilityAndroid;
 struct NativeWebKeyboardEvent;
 
@@ -93,6 +94,10 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
 
   void AddDestructionObserver(DestructionObserver* connector);
   void RemoveDestructionObserver(DestructionObserver* connector);
+
+  ui::TouchSelectionController* touch_selection_controller() {
+    return touch_selection_controller_.get();
+  }
 
   // RenderWidgetHostView implementation.
   bool OnMessageReceived(const IPC::Message& msg) override;
@@ -181,6 +186,8 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
       const gfx::Point& point,
       RenderWidgetHostViewBase* target_view,
       gfx::Point* transformed_point) override;
+  class TouchSelectionControllerClientManager*
+  TouchSelectionControllerClientManager() override;
 
   // ui::ViewClient implementation.
   bool OnTouchEvent(const ui::MotionEventAndroid& m,
@@ -303,6 +310,11 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Exposed for tests.
   cc::SurfaceId SurfaceIdForTesting() const override;
 
+  ui::TouchSelectionControllerClient*
+  GetSelectionControllerClientManagerForTesting();
+  void SetSelectionControllerClientForTesting(
+      std::unique_ptr<ui::TouchSelectionControllerClient> client);
+
  private:
   void RunAckCallbacks();
 
@@ -409,6 +421,12 @@ class CONTENT_EXPORT RenderWidgetHostViewAndroid
   // Manages selection handle rendering and manipulation.
   // This will always be NULL if |content_view_core_| is NULL.
   std::unique_ptr<ui::TouchSelectionController> touch_selection_controller_;
+  std::unique_ptr<ui::TouchSelectionControllerClient>
+      touch_selection_controller_client_for_test_;
+  // Keeps track of currently active touch selection controller clients (some
+  // may be representing out-of-process iframes).
+  std::unique_ptr<TouchSelectionControllerClientManagerAndroid>
+      touch_selection_controller_client_manager_;
 
   // Bounds to use if we have no backing ContentViewCore
   gfx::Rect default_bounds_;
