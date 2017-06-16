@@ -104,6 +104,24 @@
       "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a756f54_5b1c312b",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T01:55:15Z",
+      "side": 1,
+      "message": "The conclusion from the last thread was that we shouldn\u0027t guard against self-moves explicitly, and self-moves should leave the object in a valid state.\n\nThere\u0027s no null deref in this code -- you\u0027re just left with a scoped_refptr pointing to null, which is perfectly valid.",
+      "parentUuid": "072bb43c_5cd62c27",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
