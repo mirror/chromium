@@ -35,7 +35,7 @@ function ccBuy() {  // eslint-disable-line no-unused-vars
         {requestShipping: true});
     request.show()
         .then(function(resp) {
-          return resp.complete('success')
+          return resp.complete('success');
         }).then(function() {
           print(JSON.stringify(resp, undefined, 2));
         }).catch(function(error) {
@@ -46,7 +46,7 @@ function ccBuy() {  // eslint-disable-line no-unused-vars
         // No changes in price based on shipping address change.
         resolve(details);
       }));
-    })
+    });
   } catch (error) {
     print(error.message);
   }
