@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "282025ed_ebdbb2b2",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:20:23Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that we need to explicit media:: here\njust because //media has some tradition of writing the \nanonymous namespace for file-static functions outside\nof the main namespace (different from //content where\nanonymous namespaces go inside namespace content). Sigh.",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba62da1b_1fdcc42f",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:20:23Z",
+      "side": 1,
+      "message": "Heh I was just thinking about adding some near-trivial unittest\nfor the discussion we had about (*), so I checked the unittest file\ngpu_jpeg_decode_accelerator_unittest.cc, just to see that the\nassociated test video_decode_accelerator_service_unittest [1]\nseems not to be compiled nor linked from other code areas :?\nSomething to think about for the associated \nhttps://crrev.com/c/525672 CL -- seems like the unittests could \nbe further pumped up (possible in follow up CLs).\n\n\n(*) something like: TEST_F() {\n // compare the size of GetAcceleratorFactories() \n // to either 0, 1, 2 or whatever depending on which\n // platform we\u0027re in, probably with some #if statements.\n}\n\n[1] https://cs.chromium.org/chromium/src/media/gpu/BUILD.gn?type\u003dcs\u0026q\u003dgpu_jpeg_decode_accelerator_unittest.cc\u0026l\u003d562",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 3
+      },
+      "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
