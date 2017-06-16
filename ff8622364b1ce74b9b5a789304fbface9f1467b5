@@ -16,6 +16,24 @@
       "revId": "ff8622364b1ce74b9b5a789304fbface9f1467b5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fab8098_62edc694",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-16T18:51:10Z",
+      "side": 1,
+      "message": "Oh, no. It needs to check whether we\u0027re still in the tab switcher. Fixed.",
+      "parentUuid": "f72864a4_4ec03c02",
+      "revId": "ff8622364b1ce74b9b5a789304fbface9f1467b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
