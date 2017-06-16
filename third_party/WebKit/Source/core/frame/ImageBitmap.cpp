@@ -36,18 +36,6 @@ constexpr const char* kRec2020ImageBitmapColorSpaceConversion = "rec2020";
 
 namespace {
 
-struct ParsedOptions {
-  bool flip_y = false;
-  bool premultiply_alpha = true;
-  bool should_scale_input = false;
-  unsigned resize_width = 0;
-  unsigned resize_height = 0;
-  IntRect crop_rect;
-  SkFilterQuality resize_quality = kLow_SkFilterQuality;
-  CanvasColorParams color_params;
-  bool color_canvas_extensions_enabled = false;
-};
-
 ParsedOptions DefaultOptions() {
   return ParsedOptions();
 }
@@ -474,6 +462,7 @@ static PassRefPtr<StaticBitmapImage> CropImageAndApplyColorSpaceConversion(
 ImageBitmap::ImageBitmap(ImageElementBase* image,
                          Optional<IntRect> crop_rect,
                          Document* document,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   RefPtr<Image> input = image->CachedImage()->GetImage();
   ParsedOptions parsed_options =
@@ -535,6 +524,7 @@ ImageBitmap::ImageBitmap(ImageElementBase* image,
 ImageBitmap::ImageBitmap(HTMLVideoElement* video,
                          Optional<IntRect> crop_rect,
                          Document* document,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   IntSize player_size;
   if (video->GetWebMediaPlayer())
@@ -588,6 +578,7 @@ ImageBitmap::ImageBitmap(HTMLVideoElement* video,
 
 ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   DCHECK(canvas->IsPaintable());
   RefPtr<Image> input;
@@ -625,6 +616,7 @@ ImageBitmap::ImageBitmap(HTMLCanvasElement* canvas,
 
 ImageBitmap::ImageBitmap(OffscreenCanvas* offscreen_canvas,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   SourceImageStatus status;
   RefPtr<Image> input = offscreen_canvas->GetSourceImageForCanvas(
@@ -697,6 +689,7 @@ static sk_sp<SkImage> ScaleSkImage(sk_sp<SkImage> sk_image,
 
 ImageBitmap::ImageBitmap(ImageData* data,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   ParsedOptions parsed_options =
       ParseOptions(options, crop_rect, data->BitmapSourceSize());
@@ -817,6 +810,7 @@ ImageBitmap::ImageBitmap(ImageData* data,
 
 ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   RefPtr<Image> input = bitmap->BitmapImage();
   if (!input)
@@ -837,6 +831,7 @@ ImageBitmap::ImageBitmap(ImageBitmap* bitmap,
 
 ImageBitmap::ImageBitmap(RefPtr<StaticBitmapImage> image,
                          Optional<IntRect> crop_rect,
+                         ScriptPromiseResolver* resolver,
                          const ImageBitmapOptions& options) {
   bool origin_clean = image->OriginClean();
   ParsedOptions parsed_options =
@@ -890,45 +885,52 @@ ImageBitmap::~ImageBitmap() {}
 ImageBitmap* ImageBitmap::Create(ImageElementBase* image,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(image, crop_rect, document, options);
+  return new ImageBitmap(image, crop_rect, document, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLVideoElement* video,
                                  Optional<IntRect> crop_rect,
                                  Document* document,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(video, crop_rect, document, options);
+  return new ImageBitmap(video, crop_rect, document, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(HTMLCanvasElement* canvas,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(canvas, crop_rect, options);
+  return new ImageBitmap(canvas, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(OffscreenCanvas* offscreen_canvas,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(offscreen_canvas, crop_rect, options);
+  return new ImageBitmap(offscreen_canvas, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageData* data,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(data, crop_rect, options);
+  return new ImageBitmap(data, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(ImageBitmap* bitmap,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(bitmap, crop_rect, options);
+  return new ImageBitmap(bitmap, crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image,
                                  Optional<IntRect> crop_rect,
+                                 ScriptPromiseResolver* resolver,
                                  const ImageBitmapOptions& options) {
-  return new ImageBitmap(std::move(image), crop_rect, options);
+  return new ImageBitmap(std::move(image), crop_rect, resolver, options);
 }
 
 ImageBitmap* ImageBitmap::Create(PassRefPtr<StaticBitmapImage> image) {
@@ -1006,8 +1008,10 @@ ScriptPromise ImageBitmap::CreateImageBitmap(ScriptState* script_state,
     return ScriptPromise();
   if (!IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
-  return ImageBitmapSource::FulfillImageBitmap(
-      script_state, Create(this, crop_rect, options));
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  ImageBitmap::Create(this, crop_rect, resolver, options);
+  return promise;
 }
 
 PassRefPtr<Image> ImageBitmap::GetSourceImageForCanvas(

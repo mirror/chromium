@@ -577,7 +577,7 @@ TEST_F(CanvasRenderingContext2DTest, NoLayerPromotionUnderImageSizeRatioLimit) {
   Optional<IntRect> crop_rect = IntRect(IntPoint(0, 0), source_size);
   // Go through an ImageBitmap to avoid triggering a display list fallback
   ImageBitmap* source_image_bitmap =
-      ImageBitmap::Create(source_canvas, crop_rect, default_options);
+      ImageBitmap::Create(source_canvas, crop_rect, nullptr, default_options);
 
   Context2d()->drawImage(GetScriptState(), source_image_bitmap, 0, 0, 1, 1, 0,
                          0, 1, 1, exception_state);
@@ -611,7 +611,7 @@ TEST_F(CanvasRenderingContext2DTest, LayerPromotionOverImageSizeRatioLimit) {
   Optional<IntRect> crop_rect = IntRect(IntPoint(0, 0), source_size);
   // Go through an ImageBitmap to avoid triggering a display list fallback
   ImageBitmap* source_image_bitmap =
-      ImageBitmap::Create(source_canvas, crop_rect, default_options);
+      ImageBitmap::Create(source_canvas, crop_rect, nullptr, default_options);
 
   Context2d()->drawImage(GetScriptState(), source_image_bitmap, 0, 0, 1, 1, 0,
                          0, 1, 1, exception_state);
@@ -826,10 +826,10 @@ TEST_F(CanvasRenderingContext2DTest, ImageResourceLifetime) {
     Optional<IntRect> crop_rect =
         IntRect(0, 0, canvas->width(), canvas->height());
     ImageBitmap* image_bitmap_from_canvas =
-        ImageBitmap::Create(canvas, crop_rect, default_options);
+        ImageBitmap::Create(canvas, crop_rect, nullptr, default_options);
     crop_rect = IntRect(0, 0, 20, 20);
-    image_bitmap_derived = ImageBitmap::Create(image_bitmap_from_canvas,
-                                               crop_rect, default_options);
+    image_bitmap_derived = ImageBitmap::Create(
+        image_bitmap_from_canvas, crop_rect, nullptr, default_options);
   }
   CanvasContextCreationAttributes attributes;
   CanvasRenderingContext2D* context = static_cast<CanvasRenderingContext2D*>(
@@ -1140,7 +1140,8 @@ TEST_F(CanvasRenderingContext2DTest, ImageBitmapColorSpaceConversion) {
         static_cast<ColorSpaceConversion>(i);
     ImageBitmapOptions options =
         PrepareBitmapOptionsAndSetRuntimeFlags(color_space_conversion);
-    ImageBitmap* image_bitmap = ImageBitmap::Create(canvas, crop_rect, options);
+    ImageBitmap* image_bitmap =
+        ImageBitmap::Create(canvas, crop_rect, nullptr, options);
     SkImage* converted_image =
         image_bitmap->BitmapImage()->ImageForCurrentFrame().get();
 
