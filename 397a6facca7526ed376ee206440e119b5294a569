@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0cffe7bf_d11e1eff",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T23:00:47Z",
+      "side": 1,
+      "message": "nit: shall we also #include \u003cset\u003e ?",
+      "revId": "397a6facca7526ed376ee206440e119b5294a569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ecc53dd9_064675d9",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T23:00:47Z",
+      "side": 1,
+      "message": "This can happen, as long as we don\u0027t initialize driver and model one after another.",
+      "range": {
+        "startLine": 274,
+        "startChar": 2,
+        "endLine": 274,
+        "endChar": 35
+      },
+      "revId": "397a6facca7526ed376ee206440e119b5294a569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88671b11_34edd8fe",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T23:00:47Z",
+      "side": 1,
+      "message": "same here.",
+      "range": {
+        "startLine": 312,
+        "startChar": 1,
+        "endLine": 312,
+        "endChar": 35
+      },
+      "revId": "397a6facca7526ed376ee206440e119b5294a569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f764ab39_153410db",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 560,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T23:00:47Z",
+      "side": 1,
+      "message": "nit: Maybe this can be a DCHECK, since this only calls after both model and driver initialized.",
+      "range": {
+        "startLine": 560,
+        "startChar": 6,
+        "endLine": 560,
+        "endChar": 28
+      },
+      "revId": "397a6facca7526ed376ee206440e119b5294a569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f81f0ce_4f46a676",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T23:00:47Z",
+      "side": 1,
+      "message": "nit: Sets",
+      "range": {
+        "startLine": 169,
+        "startChar": 5,
+        "endLine": 169,
+        "endChar": 8
+      },
+      "revId": "397a6facca7526ed376ee206440e119b5294a569",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
