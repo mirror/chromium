@@ -12,6 +12,7 @@
 #include "platform/WebTaskRunner.h"
 #include "platform/graphics/OffscreenCanvasPlaceholder.h"
 #include "platform/graphics/gpu/SharedGpuContext.h"
+#include "platform/scheduler/child/web_scheduler.h"
 #include "platform/wtf/typed_arrays/ArrayBuffer.h"
 #include "platform/wtf/typed_arrays/Uint8Array.h"
 #include "public/platform/InterfaceProvider.h"
@@ -57,7 +58,11 @@ OffscreenCanvasFrameDispatcherImpl::OffscreenCanvasFrameDispatcherImpl(
         mojo::MakeRequest(&provider));
 
     cc::mojom::blink::MojoCompositorFrameSinkClientPtr client;
-    binding_.Bind(mojo::MakeRequest(&client));
+    binding_.Bind(mojo::MakeRequest(&client), blink::Platform::Current()
+                                                  ->CurrentThread()
+                                                  ->Scheduler()
+                                                  ->CompositorTaskRunner()
+                                                  ->ToSingleThreadTaskRunner());
     provider->CreateCompositorFrameSink(frame_sink_id_, std::move(client),
                                         mojo::MakeRequest(&sink_));
   }
@@ -210,12 +215,15 @@ void OffscreenCanvasFrameDispatcherImpl::PostImageToPlaceholder(
   RefPtr<WebTaskRunner> dispatcher_task_runner =
       Platform::Current()->CurrentThread()->GetWebTaskRunner();
 
-  Platform::Current()->MainThread()->GetWebTaskRunner()->PostTask(
-      BLINK_FROM_HERE,
-      CrossThreadBind(UpdatePlaceholderImage, this->CreateWeakPtr(),
-                      WTF::Passed(std::move(dispatcher_task_runner)),
-                      placeholder_canvas_id_, std::move(image),
-                      next_resource_id_));
+  Platform::Current()
+      ->MainThread()
+      ->Scheduler()
+      ->CompositorTaskRunner()
+      ->PostTask(BLINK_FROM_HERE,
+                 CrossThreadBind(UpdatePlaceholderImage, this->CreateWeakPtr(),
+                                 WTF::Passed(std::move(dispatcher_task_runner)),
+                                 placeholder_canvas_id_, std::move(image),
+                                 next_resource_id_));
 }
 
 void OffscreenCanvasFrameDispatcherImpl::DispatchFrame(
