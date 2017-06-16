@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "84d281cb_ae051ec8",
+        "filename": "third_party/WebKit/Source/core/workers/WorkerThread.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T22:33:37Z",
+      "side": 1,
+      "message": "nit: Maybe it\u0027s worth adding a TODO and linking to a bug which expresses the intent to give workers their own host-side provider backend instead of sharing a global thing.",
+      "revId": "57207e9006a443602ecc60c4889fd71bf1d75cd1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
