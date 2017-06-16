@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f5f1fcc5_b39bd3c0",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-16T17:47:02Z",
+      "side": 1,
+      "message": "This CL is introducing the concept of \"debit\" and \"prepaid\" cards into some parts of the UI. It\u0027s best to be consistent everywhere and not call something \"credit card\" when it could be a \"debit card\" or \"prepaid card\" now.",
+      "parentUuid": "1873b852_682a6fa0",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e9c2b779_cfff8bfa",
         "filename": "chrome/test/data/payments/debit.js",
         "patchSetId": 13
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "bc03cbd5_17f4bcd9",
+        "filename": "chrome/test/data/payments/debit.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-16T17:47:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9c2b779_cfff8bfa",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6a52cf95_2cc09e43",
         "filename": "chrome/test/data/payments/debit.js",
         "patchSetId": 13
@@ -50,6 +86,24 @@
       "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8250e3f_a755d566",
+        "filename": "chrome/test/data/payments/debit.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1002114
+      },
+      "writtenOn": "2017-06-16T17:47:02Z",
+      "side": 1,
+      "message": "I\u0027ve been using `eslintrc -c google --env browser,es6` through my vimrc. This config comes from https://github.com/google/eslint-config-google. I\u0027ve removed the no-unused-vars comment.",
+      "parentUuid": "6a52cf95_2cc09e43",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
