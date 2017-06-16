@@ -54,6 +54,19 @@ void HotwordAudioHistoryHandler::UpdateLocalPreference(
 
 void HotwordAudioHistoryHandler::GetAudioHistoryEnabled(
     const HotwordAudioHistoryCallback& callback) {
+// Please add network traffic annotation if you want to remove this #if.
+//
+// Although HotwordAudioHistory is only used in Chrome OS, an object of
+// HotwordService is created on other platforms and the following call sequence
+// reaches this function: HotwordService::HotwordService ->
+// HotwordService::SetAudioHistoryHandler ->
+// HotwordAudioHistoryHandler::UpdateAudioHistoryState ->
+// HotwordAudioHistoryHandler::GetAudioHistoryEnabled.
+// But actual usage of HotwordAudioHistory is done after it is enabled using
+// HotwordAudioHistoryHandler::SetAudioHistoryEnabled, therefore we can safely
+// put a NOTREACHED macro in SetAudioHistoryEnabled for non-ChromeOS usages,
+// and leave here to return the default value.
+#if defined(OS_CHROMEOS)
   history::WebHistoryService* web_history = GetWebHistory();
   if (web_history) {
     web_history->GetAudioHistoryEnabled(
@@ -61,6 +74,9 @@ void HotwordAudioHistoryHandler::GetAudioHistoryEnabled(
                    weak_ptr_factory_.GetWeakPtr(), callback),
         NO_PARTIAL_TRAFFIC_ANNOTATION_YET);
   } else {
+#else
+  {
+#endif  // defined(OS_CHROMEOS)
     // If web_history is null, the user is not signed in. Set the opt-in value
     // to the last known value and run the callback with false for success.
     PrefService* prefs = profile_->GetPrefs();
@@ -71,6 +87,8 @@ void HotwordAudioHistoryHandler::GetAudioHistoryEnabled(
 void HotwordAudioHistoryHandler::SetAudioHistoryEnabled(
     const bool enabled,
     const HotwordAudioHistoryCallback& callback) {
+// Please add network traffic annotation if you want to remove this #if.
+#if defined(OS_CHROMEOS)
   history::WebHistoryService* web_history = GetWebHistory();
   if (web_history) {
     web_history->SetAudioHistoryEnabled(
@@ -84,6 +102,10 @@ void HotwordAudioHistoryHandler::SetAudioHistoryEnabled(
     PrefService* prefs = profile_->GetPrefs();
     callback.Run(false, prefs->GetBoolean(prefs::kHotwordAudioLoggingEnabled));
   }
+#else
+  NOTREACHED()
+      << ": This functions is supposed to be called only in Chrome OS.";
+#endif  // defined(OS_CHROMEOS)
 }
 
 void HotwordAudioHistoryHandler::GetAudioHistoryComplete(
