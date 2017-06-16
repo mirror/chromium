@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "5b7e34e4_73278515",
+        "filename": "components/drive/service/drive_api_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T06:50:25Z",
+      "side": 1,
+      "message": "Sorry, I still don\u0027t understand what you mean:\n- What is the benefit of performing 2 requests for largest change ID and change list, instead of doing 1 request for both at the same time?\n- How is full fetch different from delta fetch?",
+      "parentUuid": "bbf1b44c_6ea33795",
+      "revId": "94a9966af64054f05db2a8bc0d26bdde0be044d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7e27d122_85528206",
         "filename": "components/drive/service/drive_service_interface.h",
         "patchSetId": 5
