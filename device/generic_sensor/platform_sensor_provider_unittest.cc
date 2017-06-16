@@ -48,7 +48,7 @@ class TestSensorCreateCallback {
 class PlatformSensorTestClient : public PlatformSensor::Client {
  public:
   PlatformSensorTestClient()
-      : notification_suspended_(false),
+      : suspended_(false),
         sensor_reading_changed_(false),
         sensor_error_(false) {}
 
@@ -58,15 +58,16 @@ class PlatformSensorTestClient : public PlatformSensor::Client {
   }
 
   // PlatformSensor::Client override.
-  void OnSensorReadingChanged() override { sensor_reading_changed_ = true; }
+  void OnSensorReadingChanged() override {
+    if (!suspended_)
+      sensor_reading_changed_ = true;
+  }
 
   void OnSensorError() override { sensor_error_ = true; }
 
-  bool IsNotificationSuspended() override { return notification_suspended_; }
+  bool IsSuspended() override { return suspended_; }
 
-  void set_notification_suspended(bool value) {
-    notification_suspended_ = value;
-  }
+  void set_suspended(bool value) { suspended_ = value; }
 
   void SetSensor(scoped_refptr<PlatformSensor> sensor) {
     sensor_ = sensor;
@@ -79,7 +80,7 @@ class PlatformSensorTestClient : public PlatformSensor::Client {
 
  private:
   scoped_refptr<PlatformSensor> sensor_;
-  bool notification_suspended_;
+  bool suspended_;
   bool sensor_reading_changed_;
   bool sensor_error_;
 };
@@ -282,7 +283,7 @@ TEST_F(PlatformSensorProviderTest, TestNotificationSuspended) {
     clients.push_back(std::move(client));
   }
 
-  clients.front()->set_notification_suspended(true);
+  clients.front()->set_suspended(true);
   fake_sensor->NotifySensorReadingChanged();
   fake_sensor->NotifySensorError();
   for (auto const& client : clients) {
@@ -295,7 +296,7 @@ TEST_F(PlatformSensorProviderTest, TestNotificationSuspended) {
     EXPECT_TRUE(client->sensor_error());
   }
 
-  clients.front()->set_notification_suspended(false);
+  clients.front()->set_suspended(false);
   fake_sensor->NotifySensorReadingChanged();
   fake_sensor->NotifySensorError();
   for (auto const& client : clients) {
@@ -348,14 +349,14 @@ TEST_F(PlatformSensorProviderTest, TestUpdateSensorOneClient) {
   PlatformSensorConfiguration config(30);
   fake_sensor->StartListening(sensor_client_.get(), config);
 
-  sensor_client_->set_notification_suspended(true);
-  EXPECT_TRUE(sensor_client_->IsNotificationSuspended());
+  sensor_client_->set_suspended(true);
+  EXPECT_TRUE(sensor_client_->IsSuspended());
 
   fake_sensor->UpdateSensor();
   EXPECT_FALSE(fake_sensor->started());
 
-  sensor_client_->set_notification_suspended(false);
-  EXPECT_FALSE(sensor_client_->IsNotificationSuspended());
+  sensor_client_->set_suspended(false);
+  EXPECT_FALSE(sensor_client_->IsSuspended());
 
   fake_sensor->UpdateSensor();
   EXPECT_TRUE(fake_sensor->started());
@@ -390,18 +391,18 @@ TEST_F(PlatformSensorProviderTest, TestUpdateSensorManyClients) {
     fake_sensor->StartListening(client.get(), config);
   }
 
-  sensor_client_->set_notification_suspended(true);
-  EXPECT_TRUE(sensor_client_->IsNotificationSuspended());
+  sensor_client_->set_suspended(true);
+  EXPECT_TRUE(sensor_client_->IsSuspended());
   for (const auto& client : clients)
-    EXPECT_FALSE(client->IsNotificationSuspended());
+    EXPECT_FALSE(client->IsSuspended());
 
   fake_sensor->UpdateSensor();
   EXPECT_TRUE(fake_sensor->started());
 
-  sensor_client_->set_notification_suspended(false);
-  EXPECT_FALSE(sensor_client_->IsNotificationSuspended());
+  sensor_client_->set_suspended(false);
+  EXPECT_FALSE(sensor_client_->IsSuspended());
   for (const auto& client : clients)
-    EXPECT_FALSE(client->IsNotificationSuspended());
+    EXPECT_FALSE(client->IsSuspended());
 
   fake_sensor->UpdateSensor();
   EXPECT_TRUE(fake_sensor->started());
