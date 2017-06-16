@@ -54,6 +54,11 @@ class PageLoadMetricsObserverTestHarness
   void SimulateTimingUpdate(const mojom::PageLoadTiming& timing);
   void SimulateTimingAndMetadataUpdate(const mojom::PageLoadTiming& timing,
                                        const mojom::PageLoadMetadata& metadata);
+  void SimulateFeaturesUpdate(const std::vector<blink::WebFeature>& features);
+  void SimulateTimingAndMetadataAndFeaturesUpdate(
+      const mojom::PageLoadTiming& timing,
+      const mojom::PageLoadMetadata& metadata,
+      const std::vector<blink::WebFeature>& features);
 
   // Simulates a loaded resource.
   void SimulateLoadedResource(const ExtraRequestCompleteInfo& info);
