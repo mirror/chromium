@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "37f0cbc4_c4731dd6",
+        "filename": "chrome/browser/extensions/api/identity/identity_get_auth_token_function.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-16T10:02:10Z",
+      "side": 1,
+      "message": "There was no reason, and I agree that that pattern is better. Changed.",
+      "parentUuid": "ffc290f1_d71a9b97",
+      "revId": "d99d2375489a8fd8c723779587fa7d5dc05f6e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09e28f47_b45e00e4",
         "filename": "services/identity/identity_manager.cc",
         "patchSetId": 5
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-15T15:59:50Z",
       "side": 1,
       "message": "I think you may use signin_manager_-\u003eGetAuthenticatedAccountInfo().gaia_id, but that actually requires an additional call to account_tracker_-\u003eFindAccountInfoByGaiaId().\n\nI think I prefer the current implementation though.",
+      "range": {
+        "startLine": 83,
+        "startChar": 26,
+        "endLine": 83,
+        "endChar": 72
+      },
+      "revId": "d99d2375489a8fd8c723779587fa7d5dc05f6e99",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11bcc36c_045e67f9",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-16T10:02:10Z",
+      "side": 1,
+      "message": "Yeah. Leaving the comment for information but removed the TODO, since there\u0027s nothing to do.",
+      "parentUuid": "09e28f47_b45e00e4",
       "range": {
         "startLine": 83,
         "startChar": 26,
