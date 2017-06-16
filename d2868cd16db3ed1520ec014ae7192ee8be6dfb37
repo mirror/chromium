@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "10bf1c3e_efda788c",
+        "filename": "third_party/WebKit/Source/core/exported/WebFrameSerializerImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-16T06:49:31Z",
+      "side": 1,
+      "message": "Since this is not an implementation of a public API, I might want to move this to core/frame/ though.",
+      "revId": "d2868cd16db3ed1520ec014ae7192ee8be6dfb37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
