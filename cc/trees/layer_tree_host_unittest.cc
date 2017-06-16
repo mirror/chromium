@@ -813,7 +813,7 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
         break;
       case 2:
         // child_ should create a scroll node.
-        child_->SetScrollClipLayerId(root_->id());
+        child_->SetScrollable();
         break;
       case 3:
         // child_ should create a clip node.
@@ -823,7 +823,7 @@ class LayerTreeHostTestPushNodeOwnerToNodeIdMap : public LayerTreeHostTest {
         // child_ should not create any property tree node.
         child_->SetMasksToBounds(false);
         child_->SetForceRenderSurfaceForTesting(false);
-        child_->SetScrollClipLayerId(Layer::INVALID_ID);
+        child_->SetScrollable(false);
     }
   }
 
@@ -2742,7 +2742,6 @@ class ViewportDeltasAppliedDuringPinch : public LayerTreeHostTest {
 
     scoped_refptr<Layer> pinch = Layer::Create();
     pinch->SetBounds(gfx::Size(500, 500));
-    pinch->SetScrollClipLayerId(root_clip->id());
     pinch->SetIsContainerForFixedPositionLayers(true);
     page_scale_layer->AddChild(pinch);
     root_clip->AddChild(page_scale_layer);
@@ -4771,8 +4770,7 @@ class LayerTreeHostTestElasticOverscroll : public LayerTreeHostTest {
     scoped_refptr<Layer> overscroll_elasticity_layer = Layer::Create();
     scoped_refptr<Layer> page_scale_layer = Layer::Create();
     scoped_refptr<Layer> inner_viewport_scroll_layer = Layer::Create();
-    inner_viewport_scroll_layer->SetScrollClipLayerId(
-        inner_viewport_container_layer->id());
+    inner_viewport_scroll_layer->SetScrollable();
     inner_viewport_scroll_layer->SetIsContainerForFixedPositionLayers(true);
 
     root_layer_->AddChild(inner_viewport_container_layer);
@@ -6196,7 +6194,7 @@ class LayerTreeHostTestCrispUpAfterPinchEnds : public LayerTreeHostTest {
 
     scoped_refptr<Layer> pinch = Layer::Create();
     pinch->SetBounds(gfx::Size(500, 500));
-    pinch->SetScrollClipLayerId(root_clip->id());
+    pinch->SetScrollable();
     pinch->SetIsContainerForFixedPositionLayers(true);
     page_scale_layer->AddChild(pinch);
     root_clip->AddChild(page_scale_layer);
@@ -6503,7 +6501,7 @@ class LayerTreeHostTestContinuousDrawWhenCreatingVisibleTiles
 
     scoped_refptr<Layer> pinch = Layer::Create();
     pinch->SetBounds(gfx::Size(500, 500));
-    pinch->SetScrollClipLayerId(root_clip->id());
+    pinch->SetScrollable();
     pinch->SetIsContainerForFixedPositionLayers(true);
     page_scale_layer->AddChild(pinch);
     root_clip->AddChild(page_scale_layer);
@@ -6909,7 +6907,7 @@ class LayerTreeTestMaskLayerForSurfaceWithContentRectNotAtOrigin
     CreateVirtualViewportLayers(root.get(), outer_viewport_scroll_layer,
                                 gfx::Size(50, 50), gfx::Size(50, 50),
                                 layer_tree_host());
-    outer_viewport_scroll_layer->scroll_clip_layer()->SetMasksToBounds(true);
+    layer_tree_host()->outer_viewport_container_layer()->SetMasksToBounds(true);
     outer_viewport_scroll_layer->AddChild(content_layer);
 
     client_.set_bounds(root->bounds());
@@ -7333,37 +7331,36 @@ class LayerTreeTestPageScaleFlags : public LayerTreeTest {
     // -root
     //   -pre page scale
     //   -page scale
-    //     -page scale child1
+    //     -inner viewport scroll
     //       -page scale grandchild
-    //     -page scale child2
     //   -post page scale
 
     scoped_refptr<Layer> root = Layer::Create();
     scoped_refptr<Layer> pre_page_scale = Layer::Create();
     scoped_refptr<Layer> page_scale = Layer::Create();
-    scoped_refptr<Layer> page_scale_child1 = Layer::Create();
+    scoped_refptr<Layer> inner_viewport_scroll = Layer::Create();
     scoped_refptr<Layer> page_scale_grandchild = Layer::Create();
-    scoped_refptr<Layer> page_scale_child2 = Layer::Create();
     scoped_refptr<Layer> post_page_scale = Layer::Create();
 
     root->AddChild(pre_page_scale);
     root->AddChild(page_scale);
     root->AddChild(post_page_scale);
 
-    page_scale->AddChild(page_scale_child1);
-    page_scale->AddChild(page_scale_child2);
-    page_scale_child1->AddChild(page_scale_grandchild);
+    page_scale->AddChild(inner_viewport_scroll);
+    inner_viewport_scroll->AddChild(page_scale_grandchild);
+    inner_viewport_scroll->SetIsContainerForFixedPositionLayers(true);
 
     layer_tree_host()->SetRootLayer(root);
     LayerTreeTest::SetupTree();
 
     LayerTreeHost::ViewportLayers viewport_layers;
+    viewport_layers.inner_viewport_container = root;
     viewport_layers.page_scale = page_scale;
+    viewport_layers.inner_viewport_scroll = inner_viewport_scroll;
     layer_tree_host()->RegisterViewportLayers(viewport_layers);
 
     affected_by_page_scale_.push_back(page_scale->id());
-    affected_by_page_scale_.push_back(page_scale_child1->id());
-    affected_by_page_scale_.push_back(page_scale_child2->id());
+    affected_by_page_scale_.push_back(inner_viewport_scroll->id());
     affected_by_page_scale_.push_back(page_scale_grandchild->id());
 
     not_affected_by_page_scale_.push_back(root->id());
