@@ -19,9 +19,12 @@ class DevToolsFileWatcher {
   using WatchCallback = base::Callback<void(const std::vector<std::string>&,
                                             const std::vector<std::string>&,
                                             const std::vector<std::string>&)>;
-  explicit DevToolsFileWatcher(const WatchCallback& callback);
+  DevToolsFileWatcher();
   ~DevToolsFileWatcher();
 
+  // All methods except for constructor expect to be called on one sequence with
+  // IO enabled.
+  void Initialize(WatchCallback callback);
   void AddWatch(const base::FilePath& path);
   void RemoveWatch(const base::FilePath& path);
 
@@ -29,11 +32,11 @@ class DevToolsFileWatcher {
   class SharedFileWatcher;
   static SharedFileWatcher* s_shared_watcher_;
 
-  void InitSharedWatcher();
   void FileChanged(const base::FilePath&, int);
 
   scoped_refptr<SharedFileWatcher> shared_watcher_;
   WatchCallback callback_;
+
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileWatcher);
 };
 

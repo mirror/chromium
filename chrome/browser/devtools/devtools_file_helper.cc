@@ -15,6 +15,8 @@
 #include "base/md5.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/task_scheduler/lazy_task_runner.h"
+#include "base/task_scheduler/post_task.h"
 #include "base/value_conversions.h"
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/devtools/devtools_file_watcher.h"
@@ -59,6 +61,14 @@ base::LazyInstance<base::FilePath>::Leaky
 
 typedef Callback<void(const base::FilePath&)> SelectedCallback;
 typedef Callback<void(void)> CanceledCallback;
+
+base::SequencedTaskRunner* file_task_runner() {
+  static constexpr base::TaskTraits kImplTaskTraits = {
+      base::MayBlock(), base::TaskPriority::BACKGROUND};
+  static base::LazySequencedTaskRunner s_file_task_runner =
+      LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER(kImplTaskTraits);
+  return s_file_task_runner.Get().get();
+}
 
 class SelectFileDialog : public ui::SelectFileDialog::Listener,
                          public base::RefCounted<SelectFileDialog> {
@@ -120,14 +130,14 @@ class SelectFileDialog : public ui::SelectFileDialog::Listener,
 };
 
 void WriteToFile(const base::FilePath& path, const std::string& content) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   DCHECK(!path.empty());
 
   base::WriteFile(path, content.c_str(), content.length());
 }
 
 void AppendToFile(const base::FilePath& path, const std::string& content) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
+  base::ThreadRestrictions::AssertIOAllowed();
   DCHECK(!path.empty());
 
   base::AppendToFile(path, content.c_str(), content.size());
@@ -215,8 +225,8 @@ DevToolsFileHelper::DevToolsFileHelper(WebContents* web_contents,
 }
 
 DevToolsFileHelper::~DevToolsFileHelper() {
-  BrowserThread::DeleteSoon(BrowserThread::FILE, FROM_HERE,
-                            file_watcher_.release());
+  if (file_watcher_)
+    file_task_runner()->DeleteSoon(FROM_HERE, std::move(file_watcher_));
 }
 
 void DevToolsFileHelper::Save(const std::string& url,
@@ -275,8 +285,8 @@ void DevToolsFileHelper::Append(const std::string& url,
   if (it == saved_files_.end())
     return;
   callback.Run();
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                          BindOnce(&AppendToFile, it->second, content));
+  file_task_runner()->PostTask(FROM_HERE,
+                               BindOnce(&AppendToFile, it->second, content));
 }
 
 void DevToolsFileHelper::SaveAsFileSelected(const std::string& url,
@@ -292,8 +302,8 @@ void DevToolsFileHelper::SaveAsFileSelected(const std::string& url,
   files_map->SetWithoutPathExpansion(base::MD5String(url),
                                      base::CreateFilePathValue(path));
   callback.Run();
-  BrowserThread::PostTask(BrowserThread::FILE, FROM_HERE,
-                          BindOnce(&WriteToFile, path, content));
+  file_task_runner()->PostTask(FROM_HERE,
+                               BindOnce(&WriteToFile, path, content));
 }
 
 void DevToolsFileHelper::AddFileSystem(
@@ -308,23 +318,11 @@ void DevToolsFileHelper::AddFileSystem(
     select_file_dialog->Show(ui::SelectFileDialog::SELECT_FOLDER,
                              base::FilePath());
   } else {
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
+    file_task_runner()->PostTask(
+        FROM_HERE,
         BindOnce(&DevToolsFileHelper::CheckProjectFileExistsAndAddFileSystem,
                  weak_factory_.GetWeakPtr(), show_info_bar_callback,
                  base::FilePath::FromUTF8Unsafe(file_system_path)));
-  }
-}
-
-void DevToolsFileHelper::CheckProjectFileExistsAndAddFileSystem(
-    const ShowInfoBarCallback& show_info_bar_callback,
-    const base::FilePath& path) {
-  DCHECK_CURRENTLY_ON(BrowserThread::FILE);
-  if (base::PathExists(path.Append(FILE_PATH_LITERAL(".devtools")))) {
-    BrowserThread::PostTask(
-        BrowserThread::UI, FROM_HERE,
-        BindOnce(&DevToolsFileHelper::InnerAddFileSystem,
-                 weak_factory_.GetWeakPtr(), show_info_bar_callback, path));
   }
 }
 
@@ -387,12 +385,16 @@ DevToolsFileHelper::GetFileSystems() {
   file_system_paths_ = GetAddedFileSystemPaths(profile_);
   std::vector<FileSystem> file_systems;
   if (!file_watcher_) {
-    file_watcher_.reset(new DevToolsFileWatcher(base::Bind(
-        &DevToolsFileHelper::FilePathsChanged, weak_factory_.GetWeakPtr())));
+    file_watcher_.reset(new DevToolsFileWatcher());
+    file_task_runner()->PostTask(
+        FROM_HERE, BindOnce(&DevToolsFileWatcher::Initialize,
+                            base::Unretained(file_watcher_.get()),
+                            Bind(&DevToolsFileHelper::DispatchFilePathsChanged,
+                                 weak_factory_.GetWeakPtr())));
     pref_change_registrar_.Add(
         prefs::kDevToolsFileSystemPaths,
-        base::Bind(&DevToolsFileHelper::FileSystemPathsSettingChanged,
-                   base::Unretained(this)));
+        Bind(&DevToolsFileHelper::FileSystemPathsSettingChanged,
+             base::Unretained(this)));
   }
   for (auto file_system_path : file_system_paths_) {
     base::FilePath path = base::FilePath::FromUTF8Unsafe(file_system_path);
@@ -401,10 +403,10 @@ DevToolsFileHelper::GetFileSystems() {
                                                    file_system_id,
                                                    file_system_path);
     file_systems.push_back(filesystem);
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
-        BindOnce(&DevToolsFileWatcher::AddWatch,
-                 base::Unretained(file_watcher_.get()), path));
+    file_task_runner()->PostTask(
+        FROM_HERE,
+        base::BindOnce(&DevToolsFileWatcher::AddWatch,
+                       base::Unretained(file_watcher_.get()), std::move(path)));
   }
   return file_systems;
 }
@@ -440,10 +442,10 @@ void DevToolsFileHelper::FileSystemPathsSettingChanged() {
                                                      file_system_id,
                                                      file_system_path);
       delegate_->FileSystemAdded(filesystem);
-      BrowserThread::PostTask(
-          BrowserThread::FILE, FROM_HERE,
+      file_task_runner()->PostTask(
+          FROM_HERE,
           BindOnce(&DevToolsFileWatcher::AddWatch,
-                   base::Unretained(file_watcher_.get()), path));
+                   base::Unretained(file_watcher_.get()), std::move(path)));
     } else {
       remaining.erase(file_system_path);
     }
@@ -453,10 +455,10 @@ void DevToolsFileHelper::FileSystemPathsSettingChanged() {
   for (auto file_system_path : remaining) {
     delegate_->FileSystemRemoved(file_system_path);
     base::FilePath path = base::FilePath::FromUTF8Unsafe(file_system_path);
-    BrowserThread::PostTask(
-        BrowserThread::FILE, FROM_HERE,
+    file_task_runner()->PostTask(
+        FROM_HERE,
         BindOnce(&DevToolsFileWatcher::RemoveWatch,
-                 base::Unretained(file_watcher_.get()), path));
+                 base::Unretained(file_watcher_.get()), std::move(path)));
   }
 }
 
@@ -464,5 +466,30 @@ void DevToolsFileHelper::FilePathsChanged(
     const std::vector<std::string>& changed_paths,
     const std::vector<std::string>& added_paths,
     const std::vector<std::string>& removed_paths) {
+  DCHECK_CURRENTLY_ON(BrowserThread::UI);
   delegate_->FilePathsChanged(changed_paths, added_paths, removed_paths);
+}
+
+// static
+void DevToolsFileHelper::DispatchFilePathsChanged(
+    const base::WeakPtr<DevToolsFileHelper>& self,
+    const std::vector<std::string>& changed_paths,
+    const std::vector<std::string>& added_paths,
+    const std::vector<std::string>& removed_paths) {
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          BindOnce(&DevToolsFileHelper::FilePathsChanged, self,
+                                   changed_paths, added_paths, removed_paths));
+}
+
+// static
+void DevToolsFileHelper::CheckProjectFileExistsAndAddFileSystem(
+    const base::WeakPtr<DevToolsFileHelper>& self,
+    const ShowInfoBarCallback& show_info_bar_callback,
+    const base::FilePath& path) {
+  base::ThreadRestrictions::AssertIOAllowed();
+  if (!base::PathExists(path.Append(FILE_PATH_LITERAL(".devtools"))))
+    return;
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          BindOnce(&DevToolsFileHelper::InnerAddFileSystem,
+                                   self, show_info_bar_callback, path));
 }

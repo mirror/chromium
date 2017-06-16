@@ -128,9 +128,6 @@ class DevToolsFileHelper {
   void InnerAddFileSystem(
       const ShowInfoBarCallback& show_info_bar_callback,
       const base::FilePath& path);
-  void CheckProjectFileExistsAndAddFileSystem(
-      const ShowInfoBarCallback& show_info_bar_callback,
-      const base::FilePath& path);
   void AddUserConfirmedFileSystem(
       const base::FilePath& path,
       bool allowed);
@@ -139,6 +136,17 @@ class DevToolsFileHelper {
                         const std::vector<std::string>& added_paths,
                         const std::vector<std::string>& removed_paths);
 
+  // Methods below run on file sequence.
+  static void CheckProjectFileExistsAndAddFileSystem(
+      const base::WeakPtr<DevToolsFileHelper>& self,
+      const ShowInfoBarCallback& show_info_bar_callback,
+      const base::FilePath& path);
+  static void DispatchFilePathsChanged(
+      const base::WeakPtr<DevToolsFileHelper>& self,
+      const std::vector<std::string>& changed_paths,
+      const std::vector<std::string>& added_paths,
+      const std::vector<std::string>& removed_paths);
+
   content::WebContents* web_contents_;
   Profile* profile_;
   DevToolsFileHelper::Delegate* delegate_;
@@ -146,6 +154,10 @@ class DevToolsFileHelper {
   PathsMap saved_files_;
   PrefChangeRegistrar pref_change_registrar_;
   std::set<std::string> file_system_paths_;
+
+  // file_watcher_ should be accessed only on file task sequence.
+  // note different instances should use same task tunner due to
+  // DevToolsFileWatcher implementation.
   std::unique_ptr<DevToolsFileWatcher> file_watcher_;
   base::WeakPtrFactory<DevToolsFileHelper> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileHelper);
