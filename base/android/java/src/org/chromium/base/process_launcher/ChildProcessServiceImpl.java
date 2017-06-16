@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.app;
+package org.chromium.base.process_launcher;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.os.Process;
 import android.os.RemoteException;
+import android.util.SparseArray;
 
 import org.chromium.base.BaseSwitches;
 import org.chromium.base.CommandLine;
@@ -21,10 +22,6 @@ import org.chromium.base.Log;
 import org.chromium.base.annotations.JNINamespace;
 import org.chromium.base.annotations.MainDex;
 import org.chromium.base.annotations.SuppressFBWarnings;
-import org.chromium.base.process_launcher.FileDescriptorInfo;
-import org.chromium.base.process_launcher.ICallbackInt;
-import org.chromium.base.process_launcher.IChildProcessService;
-import org.chromium.content.browser.ChildProcessConstants;
 
 import java.util.concurrent.Semaphore;
 
@@ -35,7 +32,7 @@ import javax.annotation.concurrent.GuardedBy;
  * object of {@link ChildProcessServiceImpl}.
  * It makes it possible for other consumer services (such as WebAPKs) to reuse that logic.
  */
-@JNINamespace("content")
+@JNINamespace("base::android")
 @MainDex
 public class ChildProcessServiceImpl {
     private static final String MAIN_THREAD_NAME = "ChildProcessMain";
@@ -84,7 +81,6 @@ public class ChildProcessServiceImpl {
     private final Semaphore mActivitySemaphore = new Semaphore(1);
 
     public ChildProcessServiceImpl(ChildProcessServiceDelegate delegate) {
-        KillChildUncaughtExceptionHandler.maybeInstallHandler();
         mDelegate = delegate;
     }
 
@@ -148,29 +144,34 @@ public class ChildProcessServiceImpl {
     // The ClassLoader for the host context.
     private ClassLoader mHostClassLoader;
 
+    private static boolean markServiceUsed() {
+        if (sCreateCalled) {
+            return true;
+        }
+        sCreateCalled = true;
+        return false;
+    }
     /**
      * Loads Chrome's native libraries and initializes a ChildProcessServiceImpl.
      * @param context The application context.
      * @param hostContext The host context the library should be loaded with (i.e. Chrome).
      */
-    @SuppressFBWarnings("ST_WRITE_TO_STATIC_FROM_INSTANCE_METHOD") // For sCreateCalled check.
     public void create(final Context context, final Context hostContext) {
         mHostClassLoader = hostContext.getClassLoader();
         Log.i(TAG, "Creating new ChildProcessService pid=%d", Process.myPid());
-        if (sCreateCalled) {
+        if (markServiceUsed()) {
             throw new RuntimeException("Illegal child process reuse.");
         }
-        sCreateCalled = true;
-
-        mDelegate.onServiceCreated();
 
         // Initialize the context for the application that owns this ChildProcessServiceImpl object.
         ContextUtils.initApplicationContext(context);
 
+        mDelegate.onServiceCreated();
+
         mMainThread = new Thread(new Runnable() {
             @Override
             @SuppressFBWarnings("DM_EXIT")
-            public void run()  {
+            public void run() {
                 try {
                     // CommandLine must be initialized before everything else.
                     synchronized (mMainThread) {
@@ -182,7 +183,7 @@ public class ChildProcessServiceImpl {
                     CommandLine.init(mCommandLineParams);
 
                     if (CommandLine.getInstance().hasSwitch(
-                            BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
+                                BaseSwitches.RENDERER_WAIT_FOR_JAVA_DEBUGGER)) {
                         android.os.Debug.waitForDebugger();
                     }
 
@@ -207,18 +208,29 @@ public class ChildProcessServiceImpl {
                         }
                     }
 
+                    SparseArray<String> idsToKeys = mDelegate.getFileDescriptorsIdsToKeys();
+
                     int[] fileIds = new int[mFdInfos.length];
+                    String[] keys = new String[mFdInfos.length];
                     int[] fds = new int[mFdInfos.length];
                     long[] regionOffsets = new long[mFdInfos.length];
                     long[] regionSizes = new long[mFdInfos.length];
                     for (int i = 0; i < mFdInfos.length; i++) {
                         FileDescriptorInfo fdInfo = mFdInfos[i];
-                        fileIds[i] = fdInfo.id;
+                        String key = idsToKeys != null ? idsToKeys.get(fdInfo.id) : null;
+                        if (key != null) {
+                            keys[i] = key;
+                        } else {
+                            // Set an empty key so native code does not have to check for jnull when
+                            // doing JNI conversions.
+                            keys[i] = "";
+                            fileIds[i] = fdInfo.id;
+                        }
                         fds[i] = fdInfo.fd.detachFd();
                         regionOffsets[i] = fdInfo.offset;
                         regionSizes[i] = fdInfo.size;
                     }
-                    nativeRegisterFileDescriptors(fileIds, fds, regionOffsets, regionSizes);
+                    nativeRegisterFileDescriptors(keys, fileIds, fds, regionOffsets, regionSizes);
 
                     mDelegate.onBeforeMain();
                     if (mActivitySemaphore.tryAcquire()) {
@@ -310,7 +322,7 @@ public class ChildProcessServiceImpl {
      * files.
      */
     private static native void nativeRegisterFileDescriptors(
-            int[] id, int[] fd, long[] offset, long[] size);
+            String[] keys, int[] id, int[] fd, long[] offset, long[] size);
 
     /**
      * Force the child process to exit.
