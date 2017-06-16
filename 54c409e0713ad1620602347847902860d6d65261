@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "df57b372_1a94e05d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/page_info/PageInfoPopup.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1144344
+      },
+      "writtenOn": "2017-06-16T22:18:11Z",
+      "side": 1,
+      "message": "Good call!",
+      "revId": "54c409e0713ad1620602347847902860d6d65261",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
