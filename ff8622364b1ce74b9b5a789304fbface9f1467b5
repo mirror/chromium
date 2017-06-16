@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f72864a4_4ec03c02",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/widget/bottomsheet/BottomSheetNewTabController.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 169,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T18:33:16Z",
+      "side": 1,
+      "message": "This works because when we close the ntp we are always in the tab switcher right?",
+      "revId": "ff8622364b1ce74b9b5a789304fbface9f1467b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
