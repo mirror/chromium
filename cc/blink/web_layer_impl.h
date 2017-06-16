@@ -60,6 +60,7 @@ class CC_BLINK_EXPORT WebLayerImpl : public NON_EXPORTED_BASE(blink::WebLayer) {
   void RemoveAllChildren() override;
   void SetBounds(const blink::WebSize& bounds) override;
   blink::WebSize Bounds() const override;
+  // TODO(pdr): Add SetScrollContainerBounds.
   void SetMasksToBounds(bool masks_to_bounds) override;
   bool MasksToBounds() const override;
   void SetMaskLayer(blink::WebLayer* mask) override;
@@ -91,7 +92,6 @@ class CC_BLINK_EXPORT WebLayerImpl : public NON_EXPORTED_BASE(blink::WebLayer) {
   bool HasTickingAnimationForTesting() override;
   void SetScrollPosition(blink::WebFloatPoint position) override;
   blink::WebFloatPoint ScrollPosition() const override;
-  void SetScrollClipLayer(blink::WebLayer* clip_layer) override;
   bool Scrollable() const override;
   void SetUserScrollable(bool horizontal, bool vertical) override;
   bool UserScrollableHorizontal() const override;

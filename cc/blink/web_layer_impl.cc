@@ -226,14 +226,6 @@ blink::WebFloatPoint WebLayerImpl::ScrollPosition() const {
                               layer_->scroll_offset().y());
 }
 
-void WebLayerImpl::SetScrollClipLayer(WebLayer* clip_layer) {
-  if (!clip_layer) {
-    layer_->SetScrollClipLayerId(Layer::INVALID_ID);
-    return;
-  }
-  layer_->SetScrollClipLayerId(clip_layer->Id());
-}
-
 bool WebLayerImpl::Scrollable() const {
   return layer_->scrollable();
 }
