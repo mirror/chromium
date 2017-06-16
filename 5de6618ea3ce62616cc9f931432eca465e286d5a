@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9aaf9d77_adae148a",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1115884
+      },
+      "writtenOn": "2017-06-16T21:42:38Z",
+      "side": 1,
+      "message": "Nit: could make this \"const\" if you want.",
+      "range": {
+        "startLine": 263,
+        "startChar": 20,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "5de6618ea3ce62616cc9f931432eca465e286d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
