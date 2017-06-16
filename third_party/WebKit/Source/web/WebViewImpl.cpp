@@ -106,6 +106,7 @@
 #include "modules/encryptedmedia/MediaKeysController.h"
 #include "modules/speech/SpeechRecognitionClientProxy.h"
 #include "modules/storage/StorageNamespaceController.h"
+#include "modules/storage/StorageQuotaClientImpl.h"
 #include "modules/webdatabase/DatabaseClient.h"
 #include "modules/webgl/WebGLRenderingContext.h"
 #include "platform/ContextMenu.h"
@@ -171,7 +172,6 @@
 #include "web/DedicatedWorkerMessagingProxyProviderImpl.h"
 #include "web/PageOverlay.h"
 #include "web/PrerendererClientImpl.h"
-#include "web/StorageQuotaClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
