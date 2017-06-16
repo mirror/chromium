@@ -153,7 +153,8 @@ void SubresourceFilterAgent::DidCommitProvisionalLoad(
                          AsWeakPtr()));
 
       auto ruleset = ruleset_dealer_->GetRuleset();
-      DCHECK(ruleset);
+      CHECK(ruleset);
+      CHECK(ruleset->data());
       auto filter = base::MakeUnique<WebDocumentSubresourceFilterImpl>(
           url::Origin(url), activation_state_for_next_commit_,
           std::move(ruleset), std::move(first_disallowed_load_callback));
