@@ -518,6 +518,7 @@ const char kWebglDraftExtensionsDescription[] =
     "Enabling this option allows web applications to access the WebGL "
     "Extensions that are still in draft status.";
 
+#if !defined(OS_LINUX) || defined(OS_CHROMEOS)
 const char kWebrtcHwDecodingName[] = "WebRTC hardware video decoding";
 
 const char kWebrtcHwDecodingDescription[] =
@@ -527,6 +528,7 @@ const char kWebrtcHwEncodingName[] = "WebRTC hardware video encoding";
 
 const char kWebrtcHwEncodingDescription[] =
     "Support in WebRTC for encoding video streams using platform hardware.";
+#endif
 
 const char kWebrtcHwH264EncodingName[] = "WebRTC hardware h264 video encoding";
 
@@ -934,6 +936,12 @@ const char kTetherDescription[] =
 
 #endif  // defined(OS_CHROMEOS)
 
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+const char kAcceleratedVideoName[] = "Hardware-accelerated video";
+const char kAcceleratedVideoDescription[] =
+    "Hardware-accelerated video where VA-API driver is installed on the"
+    "system.";
+#endif
 const char kAcceleratedVideoDecodeName[] = "Hardware-accelerated video decode";
 
 const char kAcceleratedVideoDecodeDescription[] =
@@ -1496,7 +1504,7 @@ const char kAppWindowCyclingDescription[] =
 
 #endif  // defined(OS_MACOSX)
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
 
 const char kAcceleratedMjpegDecodeName[] =
     "Hardware-accelerated mjpeg decode for captured frame";
@@ -1505,7 +1513,7 @@ const char kAcceleratedMjpegDecodeDescription[] =
     "Enable hardware-accelerated mjpeg decode for captured frame where "
     "available.";
 
-#endif  // defined(OS_CHROMEOS)
+#endif  // defined(OS_CHROMEOS) || defined(OS_LINUX)
 
 const char kSimplifiedFullscreenUiName[] =
     "Simplified full screen / mouse lock UI.";

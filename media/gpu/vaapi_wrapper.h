@@ -233,10 +233,12 @@ class MEDIA_GPU_EXPORT VaapiWrapper
     ~LazyProfileInfos();
     std::vector<ProfileInfo> GetSupportedProfileInfosForCodecMode(
         CodecMode mode);
+    scoped_refptr<VaapiWrapper> GetVaapiWrapper();
     bool IsProfileSupported(CodecMode mode, VAProfile va_profile);
 
    private:
     std::vector<ProfileInfo> supported_profiles_[kCodecModeMax];
+    scoped_refptr<VaapiWrapper> vaapi_wrapper_;
   };
 
   class VADisplayState {
