@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4e21778b_4d13f992",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T21:53:18Z",
+      "side": 1,
+      "message": "nit: We probably need to revisit this to see if any other embedder will cancel the download.",
+      "range": {
+        "startLine": 461,
+        "startChar": 35,
+        "endLine": 461,
+        "endChar": 44
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8816c3fa_1b8f4069",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T21:53:18Z",
+      "side": 1,
+      "message": "nit: We also remove the history if download fails in HandleCompleteDownload, is it better just remove it there?",
+      "range": {
+        "startLine": 513,
+        "startChar": 12,
+        "endLine": 513,
+        "endChar": 41
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef2a94b0_abc5fb0a",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T21:53:18Z",
+      "side": 1,
+      "message": "nit: Maybe add a comment here to describe it\u0027s only used to post task on the same thread.",
+      "range": {
+        "startLine": 163,
+        "startChar": 39,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c53cdb8_d12a5adc",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-16T21:53:18Z",
+      "side": 1,
+      "message": "nit: Maybe const auto\u0026.",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
