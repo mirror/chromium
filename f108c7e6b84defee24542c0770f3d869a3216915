@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "282240d0_4670f768",
+        "filename": "mojo/public/cpp/bindings/tests/report_bad_message_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:39:29Z",
+      "side": 1,
+      "message": "I am a little concerned about this restriction (i.e., mojo bindings objects must only be destroyed when a message loop is present if they deal with sync calls -- is that accurate?).\n\nWe may not see a lot of issues because there aren\u0027t a lot of sync calls. But it is a subtle restriction and seems unfortunate.\n\nDoes the following solution make sense:\n- add a ref for the SyncHandleRegistry in SequenceLocalStorageSlot; clean this ref up when the sequence is destroyed (not sure whether this is possible with the current API, haven\u0027t checked);\n- when a SyncHandleRegistry is destroyed, don\u0027t touch SequenceLocalStorageSlot, because the sequence must already be gone.",
+      "parentUuid": "338bd542_34ae0a0d",
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1145149e_e52dff3e",
         "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
         "patchSetId": 6
