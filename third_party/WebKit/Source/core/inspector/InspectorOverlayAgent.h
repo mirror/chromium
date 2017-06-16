@@ -47,6 +47,7 @@
 namespace blink {
 
 class Color;
+class GraphicsLayer;
 class InspectedFrames;
 class InspectorDOMAgent;
 class LocalFrame;
@@ -123,6 +124,7 @@ class InspectorOverlayAgent final
   String EvaluateInOverlayForTest(const String&);
   void PaintOverlay();
   void LayoutOverlay();
+  bool IsInspectorLayer(GraphicsLayer*);
 
  private:
   class InspectorOverlayChromeClient;
