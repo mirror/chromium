@@ -42,6 +42,70 @@
     },
     {
       "key": {
+        "uuid": "627a2ce7_42b1d22d",
+        "filename": "chrome/browser/browser_process_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T15:37:36Z",
+      "side": 1,
+      "message": "If updates coming from other processes are that late I think it\u0027s racing anyways (i.e. the IPC could be received after the RunDownCounter probe is posted).\n\nOn a similar note, do we even need to join the pref_service_task_runner? Feels we only ought to make sure we flushed to disk one last time with the \"clean shutdown\" bit and that happens on the io_task_runner.",
+      "parentUuid": "c227bdde_ddb062b1",
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b11405c5_77a687a7",
+        "filename": "chrome/browser/profiles/off_the_record_profile_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 459,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T15:37:36Z",
+      "side": 1,
+      "message": "profile_-\u003eGetPrefServiceTaskRunner() ?",
+      "range": {
+        "startLine": 459,
+        "startChar": 9,
+        "endLine": 459,
+        "endChar": 16
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "239ea58e_2f047b06",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 262,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T15:37:36Z",
+      "side": 1,
+      "message": "Is this definition required? I\u0027d expect Profile to already be a virtual class with some undefined methods, feels weird to have a definition here which no one uses.",
+      "range": {
+        "startLine": 259,
+        "startChar": 0,
+        "endLine": 262,
+        "endChar": 0
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "02106c3f_066da785",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 6
@@ -58,6 +122,52 @@
         "startChar": 8,
         "endLine": 1124,
         "endChar": 59
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e36fa7d5_0774f229",
+        "filename": "chrome/browser/profiles/profile_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 236,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T15:37:36Z",
+      "side": 1,
+      "message": "pref_service_task_runnner_\n\n(since there are others and a clear name makes this less confusing)",
+      "range": {
+        "startLine": 236,
+        "startChar": 43,
+        "endLine": 236,
+        "endChar": 61
+      },
+      "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88c37fd5_b9c93b80",
+        "filename": "chrome/test/base/testing_profile.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1054,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T15:37:36Z",
+      "side": 1,
+      "message": "Add NOTIMPLEMENTED() above to show that this could be made better but no user of TestingProfile currently cares.",
+      "range": {
+        "startLine": 1054,
+        "startChar": 9,
+        "endLine": 1054,
+        "endChar": 16
       },
       "revId": "19c619d0b093eaf675119261907656dbcc5c3fb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
