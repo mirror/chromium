@@ -1272,6 +1272,7 @@ source_set("unit_tests") {
     "html/HTMLMediaElementTest.cpp",
     "html/HTMLOutputElementTest.cpp",
     "html/HTMLSelectElementTest.cpp",
+    "html/HTMLSlotElementTest.cpp",
     "html/HTMLTableRowElementTest.cpp",
     "html/HTMLTextAreaElementTest.cpp",
     "html/HTMLVideoElementPersistentTest.cpp",
