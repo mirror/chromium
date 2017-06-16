@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fdbaf217_020ee70d",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-16T16:43:36Z",
+      "side": 1,
+      "message": "Do you need to do this file too?",
+      "revId": "b5bf3b2d343d5655622f83f1e66d45949f600a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
