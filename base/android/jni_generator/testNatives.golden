@@ -251,7 +251,7 @@ static const JNINativeMethod kMethodsTestJni[] = {
     },
     { "nativeGetStateAsByteArray",
 "("
-"Landroid/view/View;"
+"Lorg/chromium/example/jni_generator/View;"
 ")"
 "[B",
     reinterpret_cast<void*>(Java_org_chromium_TestJni_nativeGetStateAsByteArray)
@@ -301,7 +301,7 @@ static const JNINativeMethod kMethodsTestJni[] = {
 "[Ljava/lang/String;"
 "Ljava/lang/String;"
 ")"
-"Landroid/graphics/Bitmap;",
+"Lorg/chromium/example/jni_generator/Bitmap;",
     reinterpret_cast<void*>(Java_org_chromium_TestJni_nativeQueryBitmap) },
     { "nativeGotOrientation",
 "("

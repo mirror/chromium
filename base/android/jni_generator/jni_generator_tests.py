@@ -20,7 +20,6 @@ import unittest
 import jni_generator
 from jni_generator import CalledByNative
 from jni_generator import IsMainDexJavaClass
-from jni_generator import JniParams
 from jni_generator import NativeMethod
 from jni_generator import Param
 
@@ -152,9 +151,9 @@ class TestGenerator(unittest.TestCase):
             double alpha, double beta, double gamma);
     private static native Throwable nativeMessWithJavaException(Throwable e);
     """
-    jni_generator.JniParams.SetFullyQualifiedClass(
+    jni_params = jni_generator.JniParams(
         'org/chromium/example/jni_generator/SampleForTests')
-    jni_generator.JniParams.ExtractImportsAndInnerClasses(test_data)
+    jni_params.ExtractImportsAndInnerClasses(test_data)
     natives = jni_generator.ExtractNatives(test_data, 'int')
     golden_natives = [
         NativeMethod(return_type='int', static=False,
@@ -282,7 +281,8 @@ class TestGenerator(unittest.TestCase):
     ]
     self.assertListEquals(golden_natives, natives)
     h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             natives, [], [], TestOptions())
+                                             natives, [], [], jni_params,
+                                             TestOptions())
     self.assertGoldenTextEquals(h.GetContent())
 
   def testInnerClassNatives(self):
@@ -300,8 +300,10 @@ class TestGenerator(unittest.TestCase):
                      type='function')
     ]
     self.assertListEquals(golden_natives, natives)
+    jni_params = jni_generator.JniParams('')
     h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             natives, [], [], TestOptions())
+                                             natives, [], [], jni_params,
+                                             TestOptions())
     self.assertGoldenTextEquals(h.GetContent())
 
   def testInnerClassNativesMultiple(self):
@@ -327,8 +329,10 @@ class TestGenerator(unittest.TestCase):
                      type='function')
     ]
     self.assertListEquals(golden_natives, natives)
+    jni_params = jni_generator.JniParams('')
     h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             natives, [], [], TestOptions())
+                                             natives, [], [], jni_params,
+                                             TestOptions())
     self.assertGoldenTextEquals(h.GetContent())
 
   def testInnerClassNativesBothInnerAndOuter(self):
@@ -353,8 +357,10 @@ class TestGenerator(unittest.TestCase):
                      type='function')
     ]
     self.assertListEquals(golden_natives, natives)
+    jni_params = jni_generator.JniParams('')
     h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             natives, [], [], TestOptions())
+                                             natives, [], [], jni_params,
+                                             TestOptions())
     self.assertGoldenTextEquals(h.GetContent())
 
   def testCalledByNatives(self):
@@ -447,8 +453,8 @@ class TestGenerator(unittest.TestCase):
     @CalledByNative
     public List<Bitmap.CompressFormat> getCompressFormatList();
     """
-    jni_generator.JniParams.SetFullyQualifiedClass('org/chromium/Foo')
-    jni_generator.JniParams.ExtractImportsAndInnerClasses(test_data)
+    jni_params = jni_generator.JniParams('org/chromium/Foo')
+    jni_params.ExtractImportsAndInnerClasses(test_data)
     called_by_natives = jni_generator.ExtractCalledByNatives(test_data)
     golden_called_by_natives = [
         CalledByNative(
@@ -677,9 +683,9 @@ class TestGenerator(unittest.TestCase):
         ),
     ]
     self.assertListEquals(golden_called_by_natives, called_by_natives)
-    h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             [], called_by_natives, [],
-                                             TestOptions())
+    h = jni_generator.InlHeaderFileGenerator(
+        '', 'org/chromium/TestJni', [], called_by_natives, [], jni_params,
+        TestOptions())
     self.assertGoldenTextEquals(h.GetContent())
 
   def testCalledByNativeParseError(self):
@@ -909,28 +915,27 @@ class Foo {
   }
 }
     """
-    jni_generator.JniParams.SetFullyQualifiedClass(
-        'org/chromium/content/app/Foo')
-    jni_generator.JniParams.ExtractImportsAndInnerClasses(import_header)
+    jni_params = jni_generator.JniParams('org/chromium/content/app/Foo')
+    jni_params.ExtractImportsAndInnerClasses(import_header)
     self.assertTrue('Lorg/chromium/content/common/ISandboxedProcessService' in
-                    jni_generator.JniParams._imports)
+                    jni_params._imports)
     self.assertTrue('Lorg/chromium/Bar/Zoo' in
-                    jni_generator.JniParams._imports)
+                    jni_params._imports)
     self.assertTrue('Lorg/chromium/content/app/Foo$BookmarkNode' in
-                    jni_generator.JniParams._inner_classes)
+                    jni_params._inner_classes)
     self.assertTrue('Lorg/chromium/content/app/Foo$PasswordListObserver' in
-                    jni_generator.JniParams._inner_classes)
+                    jni_params._inner_classes)
     self.assertEquals('Lorg/chromium/content/app/ContentMain$Inner;',
-                      jni_generator.JniParams.JavaToJni('ContentMain.Inner'))
+                      jni_params.JavaToJni('ContentMain.Inner'))
     self.assertRaises(SyntaxError,
-                      jni_generator.JniParams.JavaToJni,
-                      'AnException')
+                      jni_params.JavaToJni, 'AnException')
 
   def testJniParamsJavaToJni(self):
-    self.assertTextEquals('I', JniParams.JavaToJni('int'))
-    self.assertTextEquals('[B', JniParams.JavaToJni('byte[]'))
+    jni_params = jni_generator.JniParams('')
+    self.assertTextEquals('I', jni_params.JavaToJni('int'))
+    self.assertTextEquals('[B', jni_params.JavaToJni('byte[]'))
     self.assertTextEquals(
-        '[Ljava/nio/ByteBuffer;', JniParams.JavaToJni('java/nio/ByteBuffer[]'))
+        '[Ljava/nio/ByteBuffer;', jni_params.JavaToJni('java/nio/ByteBuffer[]'))
 
   def testNativesLong(self):
     test_options = TestOptions()
@@ -938,7 +943,8 @@ class Foo {
     test_data = """"
     private native void nativeDestroy(long nativeChromeBrowserProvider);
     """
-    jni_generator.JniParams.ExtractImportsAndInnerClasses(test_data)
+    jni_params = jni_generator.JniParams('')
+    jni_params.ExtractImportsAndInnerClasses(test_data)
     natives = jni_generator.ExtractNatives(test_data, test_options.ptr_type)
     golden_natives = [
         NativeMethod(return_type='void', static=False, name='Destroy',
@@ -951,7 +957,8 @@ class Foo {
     ]
     self.assertListEquals(golden_natives, natives)
     h = jni_generator.InlHeaderFileGenerator('', 'org/chromium/TestJni',
-                                             natives, [], [], test_options)
+                                             natives, [], [], jni_params,
+                                             test_options)
     self.assertGoldenTextEquals(h.GetContent())
 
   def testMainDexFile(self):
