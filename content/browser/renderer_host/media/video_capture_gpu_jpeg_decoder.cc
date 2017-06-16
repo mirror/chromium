@@ -54,15 +54,21 @@ void VideoCaptureGpuJpegDecoder::Initialize() {
   bool is_platform_supported =
       base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kUseFakeJpegDecodeAccelerator);
-#if defined(OS_CHROMEOS)
-  // Non-ChromeOS platforms do not support HW JPEG decode now. Do not establish
-  // gpu channel to avoid introducing overhead.
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
+  // Non-ChromeOS or Non-Linux platforms do not support HW JPEG decode now. Do
+  // not establish gpu channel to avoid introducing overhead.
   is_platform_supported = true;
 #endif
 
   if (!is_platform_supported ||
+#if defined(OS_LINUX)
+      !base::CommandLine::ForCurrentProcess()->HasSwitch(
+          switches::kEnableAcceleratedMjpegDecode)
+#else
       base::CommandLine::ForCurrentProcess()->HasSwitch(
-          switches::kDisableAcceleratedMjpegDecode)) {
+          switches::kDisableAcceleratedMjpegDecode)
+#endif
+          ) {
     decoder_status_ = FAILED;
     RecordInitDecodeUMA_Locked();
     return;
