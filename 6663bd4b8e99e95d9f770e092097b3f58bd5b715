@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "53f2ec29_3ca22116",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-16T12:06:38Z",
+      "side": 1,
+      "message": "Add a comment with a link on where these values came from.",
+      "range": {
+        "startLine": 47,
+        "startChar": 36,
+        "endLine": 47,
+        "endChar": 40
+      },
+      "revId": "6663bd4b8e99e95d9f770e092097b3f58bd5b715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59489eb2_24264732",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-16T12:06:38Z",
+      "side": 1,
+      "message": "DCHECK_EQ(kImageURLPathComponentsCountWithOptions, components.size());",
+      "range": {
+        "startLine": 549,
+        "startChar": 10,
+        "endLine": 549,
+        "endChar": 11
+      },
+      "revId": "6663bd4b8e99e95d9f770e092097b3f58bd5b715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "503c6d07_6f4e32f3",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-16T12:06:38Z",
+      "side": 1,
+      "message": "Here and everywhere else: Add /* no_silhouette */ next to false:\nfalse /* no_silhouette */,",
+      "range": {
+        "startLine": 140,
+        "startChar": 6,
+        "endLine": 140,
+        "endChar": 11
+      },
+      "revId": "6663bd4b8e99e95d9f770e092097b3f58bd5b715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af013a53_0ce7b2e4",
+        "filename": "chrome/browser/profiles/profile_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1115972
+      },
+      "writtenOn": "2017-06-16T12:06:38Z",
+      "side": 1,
+      "message": "Ditto for argument name for false.",
+      "range": {
+        "startLine": 166,
+        "startChar": 25,
+        "endLine": 166,
+        "endChar": 39
+      },
+      "revId": "6663bd4b8e99e95d9f770e092097b3f58bd5b715",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
