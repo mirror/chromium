@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92f528af_1dc9f6ff",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1053,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-16T13:20:35Z",
+      "side": 1,
+      "message": "Why the first two tests do not use mock_fetcher?",
+      "range": {
+        "startLine": 1053,
+        "startChar": 2,
+        "endLine": 1053,
+        "endChar": 20
+      },
+      "revId": "a63aea09522a3dc2450b57dd4a8d0585a9786ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b58e3f0_50b32727",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 1135,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-16T13:20:35Z",
+      "side": 1,
+      "message": "Create a helper for this?\n\nThis repeats quite a bit and does not reveal anything about expectations, interaction, etc.",
+      "range": {
+        "startLine": 1129,
+        "startChar": 2,
+        "endLine": 1135,
+        "endChar": 53
+      },
+      "revId": "a63aea09522a3dc2450b57dd4a8d0585a9786ff0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
