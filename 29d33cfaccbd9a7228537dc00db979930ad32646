@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "13ef4e83_a2854e40",
+        "filename": "content/browser/webrtc/webrtc_image_capture_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-06-16T22:33:24Z",
+      "side": 0,
+      "message": "Keep the space?",
+      "revId": "29d33cfaccbd9a7228537dc00db979930ad32646",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
