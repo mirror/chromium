@@ -1,5 +1,5 @@
 rootWebArea htmlTag='#document'
-++heading htmlTag='h1' name='Image'
+++heading htmlTag='h1' name='Image' hierarchicalLevel=1
 ++++staticText name='Image'
 ++++++inlineTextBox name='Image'
 ++image htmlTag='img' name='ImageAlt'
