@@ -69,6 +69,24 @@
       "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a161e85_1086ec21",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T04:33:12Z",
+      "side": 1,
+      "message": "Correction: We can\u0027t use FindSlotByName here because it might return a wrong result, based on the current tree status.\nWe *should* use GetCachedFirstSlotWithoutAccessingNodeTree here because what we are interested in the status of the tree before DOM mutation (slot insertion or slot removal) happened.",
+      "parentUuid": "62bcdecf_cda25140",
+      "revId": "8fb49685642d6a8af76beb57f8d8df05eabd9de1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
