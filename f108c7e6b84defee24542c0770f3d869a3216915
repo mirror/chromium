@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "338bd542_34ae0a0d",
+        "filename": "mojo/public/cpp/bindings/tests/report_bad_message_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:04:28Z",
+      "side": 1,
+      "message": "\u003e IIUC, we need to ensure things like |proxy_| and |impl_| to be destructed before |message_loop| right?\n\nYes.\n\u003e \n\u003e Will this restriction cause trouble during message_loop/thread/process shutdown in non-testing code?\n\nI don\u0027t think it should cause any more trouble than would already exist. Mojo bindings should either be cleaned up by the time the message loop is destroyed or they\u0027re probably going to leak.\n\nThis may make some Chrome IPC to mojo conversions trickier. One of the problematic SyncMessageFilter uses I found is that GLES2Implementation sends sync IPCs in its destructor; it\u0027s eventually owned by a thread-local which is destructed after the MessageLoop is gone.",
+      "parentUuid": "171bc41c_c8ef81c5",
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1145149e_e52dff3e",
         "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
         "patchSetId": 6
@@ -39,6 +57,30 @@
       "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0214ef86_39dd7ce9",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:04:28Z",
+      "side": 1,
+      "message": "No, only on other threads.",
+      "parentUuid": "1145149e_e52dff3e",
+      "range": {
+        "startLine": 264,
+        "startChar": 27,
+        "endLine": 264,
+        "endChar": 62
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "af441d9d_63f3b141",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:04:28Z",
+      "side": 1,
+      "message": "The subclass is templated so a non-templated base makes the runner helper function simpler.",
+      "parentUuid": "bc15005c_6a908b0e",
+      "range": {
+        "startLine": 394,
+        "startChar": 6,
+        "endLine": 394,
+        "endChar": 33
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f0ee961f_6096e5d4",
         "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
         "patchSetId": 6
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "784aaebc_c23d4e61",
+        "filename": "mojo/public/cpp/bindings/tests/sync_method_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f0ee961f_6096e5d4",
+      "range": {
+        "startLine": 434,
+        "startChar": 6,
+        "endLine": 434,
+        "endChar": 53
+      },
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d394d029_d5c63f5c",
         "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
         "patchSetId": 6
@@ -102,6 +192,24 @@
       "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e9b1ded_62c85f0b",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-16T00:04:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d394d029_d5c63f5c",
+      "revId": "f108c7e6b84defee24542c0770f3d869a3216915",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
