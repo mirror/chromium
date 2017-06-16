@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "953f95fd_b8c8c7eb",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_importer.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-16T22:03:23Z",
+      "side": 1,
+      "message": "What would be the difference between doing `git checkout` and running `git revert --no-commit`? I guess you\u0027d need to make sure the revert only reverts changes in external/wpt by only adding those and committing them. The revert option seems a bit more precise, but I haven\u0027t thought it through super deeply.",
+      "revId": "001ea7f2b5c80086ad44af4e7853b7c2a405f776",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
