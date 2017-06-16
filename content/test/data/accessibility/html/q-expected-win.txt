@@ -1,7 +1,7 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_PARAGRAPH
-++++ROLE_SYSTEM_STATICTEXT name='This is '
-++++ROLE_SYSTEM_STATICTEXT name='"'
-++++ROLE_SYSTEM_STATICTEXT name='Chromium Blink'
-++++ROLE_SYSTEM_STATICTEXT name='"'
-++++ROLE_SYSTEM_STATICTEXT name=' based browser.'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_PARAGRAPH language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='This is ' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='"' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='Chromium Blink' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='"' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name=' based browser.' language:en-US

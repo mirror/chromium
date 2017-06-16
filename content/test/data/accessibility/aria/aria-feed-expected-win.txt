@@ -1,6 +1,6 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++ROLE_SYSTEM_GROUPING xml-roles:feed
-++++ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE xml-roles:article
-++++++ROLE_SYSTEM_STATICTEXT name='First'
-++++ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE xml-roles:article
-++++++ROLE_SYSTEM_STATICTEXT name='Second'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++ROLE_SYSTEM_GROUPING xml-roles:feed language:en-US
+++++ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE xml-roles:article language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='First' language:en-US
+++++ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE xml-roles:article language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Second' language:en-US

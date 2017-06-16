@@ -1,16 +1,16 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_HEADING name='ARIA Heading 1' xml-roles:heading level:1
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 1'
-++IA2_ROLE_HEADING name='ARIA Heading 2' xml-roles:heading level:2
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 2'
-++IA2_ROLE_HEADING name='ARIA Heading 3' xml-roles:heading level:3
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 3'
-++IA2_ROLE_HEADING name='ARIA Heading 4' xml-roles:heading level:4
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 4'
-++IA2_ROLE_HEADING name='ARIA Heading 5' xml-roles:heading level:5
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 5'
-++IA2_ROLE_HEADING name='ARIA Heading 6' xml-roles:heading level:6
-++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 6'
-++IA2_ROLE_SECTION
-++++IA2_ROLE_HEADING name='Heading' xml-roles:heading
-++++++ROLE_SYSTEM_STATICTEXT name='Heading'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 1' xml-roles:heading level:1 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 1' language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 2' xml-roles:heading level:2 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 2' language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 3' xml-roles:heading level:3 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 3' language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 4' xml-roles:heading level:4 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 4' language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 5' xml-roles:heading level:5 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 5' language:en-US
+++IA2_ROLE_HEADING name='ARIA Heading 6' xml-roles:heading level:6 language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='ARIA Heading 6' language:en-US
+++IA2_ROLE_SECTION language:en-US
+++++IA2_ROLE_HEADING name='Heading' xml-roles:heading language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Heading' language:en-US

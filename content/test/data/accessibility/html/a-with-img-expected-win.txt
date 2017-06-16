@@ -1,16 +1,16 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_SECTION
-++++ROLE_SYSTEM_LINK name='Link with image at start.' FOCUSABLE
-++++++ROLE_SYSTEM_GRAPHIC name='Link' READONLY
-++++++ROLE_SYSTEM_STATICTEXT name=' with image at start.'
-++++ROLE_SYSTEM_LINK name='Link with image in the middle.' FOCUSABLE
-++++++ROLE_SYSTEM_STATICTEXT name='Link with '
-++++++ROLE_SYSTEM_GRAPHIC name='image' READONLY
-++++++ROLE_SYSTEM_STATICTEXT name=' in the middle.'
-++++ROLE_SYSTEM_LINK name='Link with broken in the middle.' FOCUSABLE
-++++++ROLE_SYSTEM_STATICTEXT name='Link with '
-++++++ROLE_SYSTEM_GRAPHIC name='broken' READONLY
-++++++ROLE_SYSTEM_STATICTEXT name=' in the middle.'
-++++ROLE_SYSTEM_LINK name='Link with image at the end' FOCUSABLE
-++++++ROLE_SYSTEM_STATICTEXT name='Link with image at the '
-++++++ROLE_SYSTEM_GRAPHIC name='end' READONLY
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_SECTION language:en-US
+++++ROLE_SYSTEM_LINK name='Link with image at start.' FOCUSABLE language:en-US language:en-US
+++++++ROLE_SYSTEM_GRAPHIC name='Link' READONLY language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' with image at start.' language:en-US
+++++ROLE_SYSTEM_LINK name='Link with image in the middle.' FOCUSABLE language:en-US language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Link with ' language:en-US
+++++++ROLE_SYSTEM_GRAPHIC name='image' READONLY language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' in the middle.' language:en-US
+++++ROLE_SYSTEM_LINK name='Link with broken in the middle.' FOCUSABLE language:en-US language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Link with ' language:en-US
+++++++ROLE_SYSTEM_GRAPHIC name='broken' READONLY language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' in the middle.' language:en-US
+++++ROLE_SYSTEM_LINK name='Link with image at the end' FOCUSABLE language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Link with image at the ' language:en-US
+++++++ROLE_SYSTEM_GRAPHIC name='end' READONLY language:en-US
