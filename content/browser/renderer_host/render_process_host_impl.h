@@ -20,6 +20,8 @@
 #include "base/process/process.h"
 #include "base/single_thread_task_runner.h"
 #include "base/synchronization/waitable_event.h"
+#include "base/time/time.h"
+#include "base/timer/timer.h"
 #include "build/build_config.h"
 #include "content/browser/child_process_launcher.h"
 #include "content/browser/dom_storage/session_storage_namespace_impl.h"
@@ -29,6 +31,7 @@
 #include "content/browser/webrtc/webrtc_eventlog_host.h"
 #include "content/common/associated_interface_registry_impl.h"
 #include "content/common/associated_interfaces.mojom.h"
+#include "content/common/child_process_crasher.mojom.h"
 #include "content/common/content_export.h"
 #include "content/common/indexed_db/indexed_db.mojom.h"
 #include "content/common/media/renderer_audio_output_stream_factory.mojom.h"
@@ -135,6 +138,7 @@ class CONTENT_EXPORT RenderProcessHostImpl
   StoragePartition* GetStoragePartition() const override;
   bool Shutdown(int exit_code, bool wait) override;
   bool FastShutdownIfPossible() override;
+  void TerminateHungRenderProcess() override;
   base::ProcessHandle GetHandle() const override;
   bool IsReady() const override;
   BrowserContext* GetBrowserContext() const override;
@@ -500,6 +504,18 @@ class CONTENT_EXPORT RenderProcessHostImpl
         BrowserThread::GetTaskRunnerForThread(BrowserThread::UI));
   }
 
+  // Represents the result of a renderer termination by
+  // TerminateHungRenderProcess.
+  enum class TerminationStatus {
+    kTerminatedItself = 0,
+    kTerminatedForcibly,
+    kMaxValue,
+  };
+
+  mojom::CrashKeysPtr CollectCrashKeysForHungRenderer();
+  void ReportTerminationStatus(TerminationStatus status);
+  void OnHungRendererTerminationTimedOut();
+
   std::unique_ptr<mojo::edk::OutgoingBrokerClientInvitation>
       broker_client_invitation_;
 
@@ -690,6 +706,12 @@ class CONTENT_EXPORT RenderProcessHostImpl
   mojom::RouteProviderAssociatedPtr remote_route_provider_;
   mojom::RendererAssociatedPtr renderer_interface_;
   mojo::Binding<mojom::RendererHost> renderer_host_binding_;
+  mojom::ChildProcessCrasherPtr crasher_interface_;
+
+  // Used by TerminateHungRenderProcess(). |termination_timer_| is in running
+  // state while a termination request is in-flight.
+  base::TimeTicks termination_request_start_time_;
+  base::OneShotTimer termination_timer_;
 
   // Tracks active audio streams within the render process; used to determine if
   // if a process should be backgrounded.

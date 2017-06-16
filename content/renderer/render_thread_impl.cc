@@ -61,6 +61,7 @@
 #include "content/child/appcache/appcache_frontend_impl.h"
 #include "content/child/blob_storage/blob_message_filter.h"
 #include "content/child/child_histogram_message_filter.h"
+#include "content/child/child_process_crasher_impl.h"
 #include "content/child/child_resource_message_filter.h"
 #include "content/child/db_message_filter.h"
 #include "content/child/indexed_db/indexed_db_dispatcher.h"
@@ -762,6 +763,9 @@ void RenderThreadImpl::Init(
                          base::ThreadTaskRunnerHandle::Get());
   registry->AddInterface(base::Bind(&EmbeddedWorkerInstanceClientImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
+  registry->AddInterface(
+      base::Bind(&ChildProcessCrasherImpl::Create, GetIOTaskRunner()),
+      GetIOTaskRunner());
   GetServiceManagerConnection()->AddConnectionFilter(
       base::MakeUnique<SimpleConnectionFilter>(std::move(registry)));
 
