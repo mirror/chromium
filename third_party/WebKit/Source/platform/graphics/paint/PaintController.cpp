@@ -669,14 +669,9 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
       current_cached_subsequence_begin_index_in_new_list_)
     return;
 
-  static FloatRect infinite_float_rect(LayoutRect::InfiniteIntRect());
-  if (!new_chunk.id) {
-    // This chunk is not cacheable, so always invalidate the whole chunk.
-    AddRasterInvalidation(
-        new_display_item_list_[new_chunk.begin_index].Client(), new_chunk,
-        infinite_float_rect, PaintInvalidationReason::kFull);
+  // Uncacheable chunk will be invalidated in ContentLayerClientImpl.
+  if (!new_chunk.id)
     return;
-  }
 
   // Try to match old chunk sequentially first.
   const auto& old_chunks = current_paint_artifact_.PaintChunks();
@@ -712,10 +707,6 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
       }
     }
   }
-
-  // We reach here because the chunk is new.
-  AddRasterInvalidation(new_chunk.id->client, new_chunk, infinite_float_rect,
-                        PaintInvalidationReason::kAppeared);
 }
 
 void PaintController::AddRasterInvalidation(const DisplayItemClient& client,
