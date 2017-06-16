@@ -33,6 +33,24 @@
       "revId": "f496fe70415d49887cb9542cd101fdf4c3092fa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21996c71_b04bfd99",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 202,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-16T15:57:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe776c7b_ea086843",
+      "revId": "f496fe70415d49887cb9542cd101fdf4c3092fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
