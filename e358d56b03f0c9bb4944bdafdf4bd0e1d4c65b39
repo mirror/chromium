@@ -22,6 +22,30 @@
       "revId": "e358d56b03f0c9bb4944bdafdf4bd0e1d4c65b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06c8e2a9_b64712b0",
+        "filename": "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1002546
+      },
+      "writtenOn": "2017-06-16T17:37:49Z",
+      "side": 0,
+      "message": "Thanks for the feedback!  I\u0027m still a bit confused about one thing, I thought that File IO had to happen on the IO thread, not on a generic background thread.  Am I OK using a generic background thread to delete a file?",
+      "parentUuid": "9e7b143d_bbae052b",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "e358d56b03f0c9bb4944bdafdf4bd0e1d4c65b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
