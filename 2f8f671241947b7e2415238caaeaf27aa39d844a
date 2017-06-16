@@ -1,0 +1,602 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "42136545_a30871af",
+        "filename": "components/download/content/internal/download_driver_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Is this the temporary file path?  Should we call it temporary_physical_file_path?",
+      "range": {
+        "startLine": 49,
+        "startChar": 8,
+        "endLine": 49,
+        "endChar": 25
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28dc41d4_e4e438ed",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Pass this in in case we have to mock it for tests?  Then you can avoid passing in the background_task_runner too.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 60,
+        "endChar": 72
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0b264e5_f1e0a94e",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Remove?  Add an else and put a TODO for xingliu@ to tie into his scheduler?  I guess for that task we\u0027ll just say activatemoredownloads() or something.",
+      "range": {
+        "startLine": 219,
+        "startChar": 4,
+        "endLine": 219,
+        "endChar": 52
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cb2aeb_27815899",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Can we DCHECK(Entry::State::COMPLETED, entry-\u003estate);?",
+      "range": {
+        "startLine": 225,
+        "startChar": 8,
+        "endLine": 225,
+        "endChar": 36
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4062045_135cedf9",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Should we just give it a big list of valid file paths?",
+      "range": {
+        "startLine": 409,
+        "startChar": 41,
+        "endLine": 409,
+        "endChar": 64
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c790c701_b046f078",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "download_file_dir?",
+      "range": {
+        "startLine": 53,
+        "startChar": 28,
+        "endLine": 53,
+        "endChar": 40
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ec56faa_319ede12",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "const?  download_file_dir_?",
+      "range": {
+        "startLine": 152,
+        "startChar": 2,
+        "endLine": 152,
+        "endChar": 16
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d4867b7_832b92a6",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Can we flesh out some tests for this?  Something like:\n\nOrphanedFileDeletion\nTimedOutFileDeletion\n\nFor the orphaned ones also validate that the temporary driver file is removed too?\n\nJust validate that the file_monitor is called with the right parameters?  That\u0027s why mocking it might make sense.",
+      "range": {
+        "startLine": 57,
+        "startChar": 6,
+        "endLine": 57,
+        "endChar": 39
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c86675f8_988645c4",
+        "filename": "components/download/internal/driver_entry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "while the file is downloading, as it may download to a temporary path.",
+      "range": {
+        "startLine": 59,
+        "startChar": 24,
+        "endLine": 59,
+        "endChar": 25
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5535fb82_4cac0de2",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Can you move this down near the other IO thread task?",
+      "range": {
+        "startLine": 46,
+        "startChar": 18,
+        "endLine": 46,
+        "endChar": 53
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cecc04b_c5d62e73",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Can we just always have a reason?",
+      "range": {
+        "startLine": 94,
+        "startChar": 4,
+        "endLine": 94,
+        "endChar": 25
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b10e3af4_467b5fed",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "delete_by_external?",
+      "range": {
+        "startLine": 98,
+        "startChar": 10,
+        "endLine": 98,
+        "endChar": 26
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee8e7266_ce84d6d9",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Does the reason matter here?",
+      "range": {
+        "startLine": 101,
+        "startChar": 6,
+        "endLine": 101,
+        "endChar": 54
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ab61e12_aeae3153",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "num_delete_by_client",
+      "range": {
+        "startLine": 121,
+        "startChar": 32,
+        "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26d071f3_56716447",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Do we want the reason here too?  We don\u0027t have to actually use it inside the Log() method, but might as well pass it in?",
+      "range": {
+        "startLine": 125,
+        "startChar": 33,
+        "endLine": 125,
+        "endChar": 50
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17fc9322_f7ae7349",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Is it worth just having something like:\n\nstats::LogFileCleanupStatus(reason, attempted_cleanups, failed_cleanups, external_cleanups)?  Then inside that method just DCHECK_NE(FileCleanupReason::CLEANUP_BY_CLIENT, reason) to make sure nobody passes in an internally-only used clean up reason?\n\nThen we can do whatever we want with the histogram internally?",
+      "range": {
+        "startLine": 115,
+        "startChar": 2,
+        "endLine": 126,
+        "endChar": 3
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cf5636e_032d9089",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "COMPLETE now :(",
+      "range": {
+        "startLine": 130,
+        "startChar": 39,
+        "endLine": 130,
+        "endChar": 47
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9deb7498_fb30eab9",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "file cleanup methods",
+      "range": {
+        "startLine": 29,
+        "startChar": 39,
+        "endLine": 29,
+        "endChar": 40
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aa1f324_2d87ae43",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "virtual",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 16
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7571a739_fd77ecb4",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "DeleteUnassociatedFiles",
+      "range": {
+        "startLine": 40,
+        "startChar": 7,
+        "endLine": 40,
+        "endChar": 30
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4c5ddab_79d1516a",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "DeleteFilesForTimedOutEntries",
+      "range": {
+        "startLine": 45,
+        "startChar": 22,
+        "endLine": 45,
+        "endChar": 47
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0e6efd1_6e1e971e",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "const?",
+      "range": {
+        "startLine": 60,
+        "startChar": 2,
+        "endLine": 60,
+        "endChar": 16
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2168c274_da927b93",
+        "filename": "components/download/internal/file_monitor.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "const and put above near download_dir_?",
+      "range": {
+        "startLine": 62,
+        "startChar": 2,
+        "endLine": 62,
+        "endChar": 17
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7edde8d1_93991e12",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "Doesn\u0027t ORPHANED mean no longer associated with a valid client?\n\nI think we want like:\nTIMEOUT - our timeout.\nORPHANED - on startup when we detect no valid client anymore.\nUNKNOWN - on startup when we don\u0027t know what the file is (doesn\u0027t belong to an entry or driver entry).\n\nEXTERNAL - cleaned up externally.  comment that this isn\u0027t meant to be used by callers to log and will be used internally to the stats class (if you make the other log changes i suggested).",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 85,
+        "endChar": 15
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dcb247a_20317e0a",
+        "filename": "components/download/internal/test/entry_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "const\u0026 here too?",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2e2c7ad_0c6978dc",
+        "filename": "components/download/internal/test/entry_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T21:33:55Z",
+      "side": 1,
+      "message": "const\u0026 on both?",
+      "range": {
+        "startLine": 38,
+        "startChar": 17,
+        "endLine": 38,
+        "endChar": 27
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
