@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "88174b17_7bcdbc3e",
+        "filename": "base/logging.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-16T18:06:14Z",
+      "side": 1,
+      "message": "Done, but we use C-style casts for voidification elsewhere in logging.h.",
+      "parentUuid": "72a5acc8_0acae844",
+      "range": {
+        "startLine": 321,
+        "startChar": 34,
+        "endLine": 321,
+        "endChar": 40
+      },
+      "revId": "5c68200e4b23dfb073d6f8be6fccecc6e2c0f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "59c42b83_505e86c3",
         "filename": "base/memory/ref_counted.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "5c68200e4b23dfb073d6f8be6fccecc6e2c0f0b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c765f87_07c611fd",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 516,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-16T18:06:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "59c42b83_505e86c3",
+      "range": {
+        "startLine": 516,
+        "startChar": 40,
+        "endLine": 516,
+        "endChar": 43
+      },
+      "revId": "5c68200e4b23dfb073d6f8be6fccecc6e2c0f0b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
