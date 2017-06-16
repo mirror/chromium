@@ -13,11 +13,20 @@
 
 class ReaderModeInfoBarDelegate;
 
+namespace content {
+class WebContents;
+}  // namespace content
+
 class ReaderModeInfoBar : public InfoBarAndroid {
  public:
   explicit ReaderModeInfoBar(
-      std::unique_ptr<ReaderModeInfoBarDelegate> delegate);
+      std::unique_ptr<ReaderModeInfoBarDelegate> delegate,
+      content::WebContents* web_contents);
   ~ReaderModeInfoBar() override;
+
+  base::android::ScopedJavaLocalRef<jobject> GetTab(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
 
  protected:
   infobars::InfoBarDelegate* GetDelegate();
@@ -28,6 +37,8 @@ class ReaderModeInfoBar : public InfoBarAndroid {
       JNIEnv* env) override;
 
  private:
+  content::WebContents* web_contents_;
+
   DISALLOW_COPY_AND_ASSIGN(ReaderModeInfoBar);
 };
 

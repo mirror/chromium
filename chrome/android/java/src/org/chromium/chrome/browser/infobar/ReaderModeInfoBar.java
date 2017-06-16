@@ -14,7 +14,6 @@ import org.chromium.base.annotations.CalledByNative;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel;
 import org.chromium.chrome.browser.compositor.bottombar.OverlayPanel.StateChangeReason;
-import org.chromium.chrome.browser.dom_distiller.ReaderModeManager;
 import org.chromium.chrome.browser.tab.Tab;
 
 /**
@@ -22,9 +21,6 @@ import org.chromium.chrome.browser.tab.Tab;
  * {@link OverlayPanel} implementation when Chrome Home is enabled.
  */
 public class ReaderModeInfoBar extends InfoBar {
-    /** A handle to the {@link ReaderModeManager} to trigger page navigations. */
-    private static ReaderModeManager sManager;
-
     /**
      * Default constructor.
      */
@@ -51,7 +47,8 @@ public class ReaderModeInfoBar extends InfoBar {
         prompt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sManager.navigateToReaderMode();
+                if (getTab() == null || getTab().getActivity() == null) return;
+                getTab().getActivity().getReaderModeManager().navigateToReaderMode();
             }
         });
 
@@ -61,17 +58,24 @@ public class ReaderModeInfoBar extends InfoBar {
     @Override
     public void onCloseButtonClicked() {
         super.onCloseButtonClicked();
-        sManager.onClosed(StateChangeReason.CLOSE_BUTTON);
+        if (getTab() == null || getTab().getActivity() == null) return;
+        getTab().getActivity().getReaderModeManager().onClosed(StateChangeReason.CLOSE_BUTTON);
     }
 
     /**
      * Create and show the Reader Mode {@link InfoBar}.
      * @param tab The tab that the {@link InfoBar} should be shown in.
-     * @param manager The {@link ReaderModeManager} for this instance of Chrome.
      */
-    public static void showReaderModeInfoBar(Tab tab, ReaderModeManager manager) {
-        sManager = manager;
+    public static void showReaderModeInfoBar(Tab tab) {
         nativeCreate(tab);
+    }
+
+    /**
+     * @return The tab that this infobar is operating on.
+     */
+    private Tab getTab() {
+        if (getNativeInfoBarPtr() == 0) return null;
+        return nativeGetTab(getNativeInfoBarPtr());
     }
 
     /**
@@ -83,4 +87,5 @@ public class ReaderModeInfoBar extends InfoBar {
     }
 
     private static native void nativeCreate(Tab tab);
+    private native Tab nativeGetTab(long nativeReaderModeInfoBar);
 }

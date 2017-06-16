@@ -32,8 +32,9 @@ class ReaderModeInfoBarDelegate : public infobars::InfoBarDelegate {
 };
 
 ReaderModeInfoBar::ReaderModeInfoBar(
-    std::unique_ptr<ReaderModeInfoBarDelegate> delegate)
-    : InfoBarAndroid(std::move(delegate)) {}
+    std::unique_ptr<ReaderModeInfoBarDelegate> delegate,
+    content::WebContents* web_contents)
+    : InfoBarAndroid(std::move(delegate)), web_contents_(web_contents) {}
 
 ReaderModeInfoBar::~ReaderModeInfoBar() {}
 
@@ -46,16 +47,25 @@ ScopedJavaLocalRef<jobject> ReaderModeInfoBar::CreateRenderInfoBar(
   return Java_ReaderModeInfoBar_create(env);
 }
 
+base::android::ScopedJavaLocalRef<jobject> ReaderModeInfoBar::GetTab(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  DCHECK(web_contents_);
+
+  return TabAndroid::FromWebContents(web_contents_)->GetJavaObject();
+}
+
 void ReaderModeInfoBar::ProcessButton(int action) {}
 
 void Create(JNIEnv* env,
             const JavaParamRef<jclass>& j_caller,
             const JavaParamRef<jobject>& j_tab) {
-  InfoBarService* service = InfoBarService::FromWebContents(
-      TabAndroid::GetNativeTab(env, j_tab)->web_contents());
+  content::WebContents* web_contents =
+      TabAndroid::GetNativeTab(env, j_tab)->web_contents();
+  InfoBarService* service = InfoBarService::FromWebContents(web_contents);
 
   service->AddInfoBar(base::MakeUnique<ReaderModeInfoBar>(
-      base::MakeUnique<ReaderModeInfoBarDelegate>()));
+      base::MakeUnique<ReaderModeInfoBarDelegate>(), web_contents));
 }
 
 bool RegisterReaderModeInfoBar(JNIEnv* env) {
