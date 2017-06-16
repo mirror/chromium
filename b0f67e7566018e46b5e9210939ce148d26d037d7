@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ae11c334_aac88e21",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-16T22:36:50Z",
+      "side": 1,
+      "message": "nit: Threat type and threat source mismatching. This combination probably won\u0027t happen.",
+      "revId": "b0f67e7566018e46b5e9210939ce148d26d037d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "022c4fbf_face0193",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1144209
+      },
+      "writtenOn": "2017-06-16T22:36:50Z",
+      "side": 1,
+      "message": "Should REMOTE maps to ANDROID_SAFETYNET?\nvakh@ should know better.",
+      "revId": "b0f67e7566018e46b5e9210939ce148d26d037d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
