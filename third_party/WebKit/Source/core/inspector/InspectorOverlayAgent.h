@@ -31,6 +31,7 @@
 
 #include <v8-inspector.h>
 #include <memory>
+#include "core/CoreExport.h"
 #include "core/inspector/InspectorBaseAgent.h"
 #include "core/inspector/InspectorHighlight.h"
 #include "core/inspector/InspectorOverlayHost.h"
@@ -47,6 +48,7 @@
 namespace blink {
 
 class Color;
+class GraphicsLayer;
 class InspectedFrames;
 class InspectorDOMAgent;
 class LocalFrame;
@@ -58,7 +60,7 @@ class WebMouseEvent;
 class WebLocalFrameBase;
 class WebTouchEvent;
 
-class InspectorOverlayAgent final
+class CORE_EXPORT InspectorOverlayAgent final
     : public InspectorBaseAgent<protocol::Overlay::Metainfo>,
       public InspectorOverlayHost::Listener {
   WTF_MAKE_NONCOPYABLE(InspectorOverlayAgent);
@@ -123,6 +125,7 @@ class InspectorOverlayAgent final
   String EvaluateInOverlayForTest(const String&);
   void PaintOverlay();
   void LayoutOverlay();
+  bool IsInspectorLayer(GraphicsLayer*);
 
  private:
   class InspectorOverlayChromeClient;
