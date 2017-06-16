@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f9e63737_dbc517f1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 461,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e21778b_4d13f992",
+      "range": {
+        "startLine": 461,
+        "startChar": 35,
+        "endLine": 461,
+        "endChar": 44
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8816c3fa_1b8f4069",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-16T21:53:18Z",
       "side": 1,
       "message": "nit: We also remove the history if download fails in HandleCompleteDownload, is it better just remove it there?",
+      "range": {
+        "startLine": 513,
+        "startChar": 12,
+        "endLine": 513,
+        "endChar": 41
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d81b02_f71766bf",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 513,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T22:46:21Z",
+      "side": 1,
+      "message": "Talked offline.",
+      "parentUuid": "8816c3fa_1b8f4069",
       "range": {
         "startLine": 513,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "a02e43de_b2af1d80",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef2a94b0_abc5fb0a",
+      "range": {
+        "startLine": 163,
+        "startChar": 39,
+        "endLine": 163,
+        "endChar": 56
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c53cdb8_d12a5adc",
         "filename": "components/download/internal/controller_impl_unittest.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b53b8179_a29b946a",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T22:46:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1c53cdb8_d12a5adc",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 12
+      },
+      "revId": "8b56ad0372f5581156c42e2e903792b3568a185c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
