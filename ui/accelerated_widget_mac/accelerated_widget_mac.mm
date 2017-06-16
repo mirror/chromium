@@ -20,6 +20,7 @@
 
 @interface CALayer (PrivateAPI)
 - (void)setContentsChanged;
+@property BOOL allowsHitTesting;
 @end
 
 namespace ui {
