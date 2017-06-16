@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1873b852_682a6fa0",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 13
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T17:29:15Z",
+      "side": 1,
+      "message": "Are the changes in this file orthogonal to the rest of the changes in this CL. AFAIU settings_strings.grdp is used solely for chrome://settings, which is otherwise not affected by this CL.",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9c2b779_cfff8bfa",
+        "filename": "chrome/test/data/payments/debit.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T17:29:15Z",
+      "side": 1,
+      "message": "!PaymentRequest",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a52cf95_2cc09e43",
+        "filename": "chrome/test/data/payments/debit.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T17:29:15Z",
+      "side": 1,
+      "message": "Which .eslintrc.js is forcing you to add this disable comment? The top level one at https://cs.chromium.org/chromium/src/.eslintrc.js?q\u003d.eslintrc.js\u0026sq\u003dpackage:chromium\u0026dr\u0026l\u003d12 does not enforce no-unused-vars to begin with.",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
