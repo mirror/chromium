@@ -67,9 +67,6 @@ class MediaGalleriesDialogViews : public MediaGalleriesDialog,
 
   typedef std::map<MediaGalleryPrefId, MediaGalleryCheckboxView*> CheckboxMap;
 
-  // MediaGalleriesDialog implementation:
-  void AcceptDialogForTesting() override;
-
   void InitChildViews();
 
   // Adds a checkbox or updates an existing checkbox. Returns true if a new one
