@@ -7,6 +7,7 @@
 
 #include <string>
 
+#include "base/feature_list.h"
 #include "build/build_config.h"
 
 namespace switches {
