@@ -208,7 +208,7 @@ class ConnectTestApp : public Service,
       base::MessageLoop::current()->QuitWhenIdle();
   }
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   mojo::BindingSet<test::mojom::StandaloneApp> standalone_bindings_;
   mojo::BindingSet<test::mojom::BlockedInterface> blocked_bindings_;

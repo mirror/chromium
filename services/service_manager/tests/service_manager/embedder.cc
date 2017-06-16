@@ -72,7 +72,7 @@ class Embedder : public service_manager::Service,
   }
 
   std::unique_ptr<service_manager::ServiceContext> context_;
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistry<> registry_;
   mojo::BindingSet<service_manager::mojom::ServiceFactory>
       service_factory_bindings_;
 

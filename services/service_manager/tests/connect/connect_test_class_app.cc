@@ -80,7 +80,7 @@ class ConnectTestClassApp : public Service,
 
   void HandleInterfaceClose() { refs_.pop_back(); }
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   mojo::BindingSet<test::mojom::ClassInterface> class_interface_bindings_;
   ServiceContextRefFactory ref_factory_;

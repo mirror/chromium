@@ -17,7 +17,7 @@ namespace service_manager {
 
 namespace {
 
-using ServiceNameToBinderRegistryMap = std::map<std::string, BinderRegistry>;
+using ServiceNameToBinderRegistryMap = std::map<std::string, BinderRegistry<>>;
 
 base::LazyInstance<std::unique_ptr<ServiceNameToBinderRegistryMap>>::Leaky
     g_overridden_binder_registries = LAZY_INSTANCE_INITIALIZER;
@@ -25,7 +25,7 @@ base::LazyInstance<std::unique_ptr<ServiceNameToBinderRegistryMap>>::Leaky
 // Returns the overridden binder registry which intercepts interface bind
 // requests to all |service_name| service instances, returns nullptr if no such
 // one.
-BinderRegistry* GetGlobalBinderRegistryForService(
+BinderRegistry<>* GetGlobalBinderRegistryForService(
     const std::string& service_name) {
   const auto& registries = g_overridden_binder_registries.Get();
   if (registries) {
@@ -46,7 +46,7 @@ BinderRegistry* GetGlobalBinderRegistryForService(
 void ServiceContext::SetGlobalBinderForTesting(
     const std::string& service_name,
     const std::string& interface_name,
-    const BinderRegistry::Binder& binder,
+    const BinderRegistry<>::Binder& binder,
     const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
   if (!g_overridden_binder_registries.Get()) {
     g_overridden_binder_registries.Get() =
@@ -132,7 +132,7 @@ void ServiceContext::OnBindInterface(
   // Acknowledge the request regardless of whether it's accepted.
   callback.Run();
 
-  BinderRegistry* global_registry =
+  BinderRegistry<>* global_registry =
       GetGlobalBinderRegistryForService(identity_.name());
   if (global_registry && global_registry->CanBindInterface(interface_name)) {
     // Just use the binder overridden globally.

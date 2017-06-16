@@ -84,7 +84,7 @@ class PackagedApp : public service_manager::Service,
     }
   }
 
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistry<> registry_;
   mojo::BindingSet<service_manager::test::mojom::LifecycleControl> bindings_;
 
   // Run when this object's connection to the service manager is closed.
@@ -160,7 +160,7 @@ class Package : public service_manager::ForwardingService,
 
   service_manager::test::AppClient app_client_;
   int service_manager_connection_refcount_ = 0;
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistry<> registry_;
   mojo::BindingSet<service_manager::mojom::ServiceFactory> bindings_;
 
   using ServiceContextMap =

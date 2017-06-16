@@ -79,7 +79,7 @@ class ServiceManagerTestClient : public test::ServiceTestClient,
   service_manager::Identity target_identity_;
   std::unique_ptr<base::RunLoop> wait_for_target_identity_loop_;
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::Binding<test::mojom::CreateInstanceTest> binding_;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceManagerTestClient);

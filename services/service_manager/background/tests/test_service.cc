@@ -44,7 +44,7 @@ class TestClient : public Service,
 
   void Quit() override { context()->RequestQuit(); }
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<mojom::TestService> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(TestClient);

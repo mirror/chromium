@@ -61,7 +61,7 @@ class ShutdownClientApp : public Service,
     callback.Run();
   }
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<mojom::ShutdownTestClientController> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownClientApp);
