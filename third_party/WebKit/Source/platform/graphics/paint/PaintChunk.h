@@ -53,11 +53,9 @@ struct PaintChunk {
 
   // Check if a new PaintChunk (this) created in the latest paint matches an old
   // PaintChunk created in the previous paint.
-  bool Matches(const PaintChunk& old) const {
-    return Matches(old.id ? &*old.id : nullptr);
-  }
+  bool Matches(const PaintChunk& old) const { return Matches(old.id); }
 
-  bool Matches(const Id* other_id) const {
+  bool Matches(const Optional<Id>& other_id) const {
     // A PaintChunk without an id doesn't match any other PaintChunks.
     if (!id || !other_id)
       return false;
