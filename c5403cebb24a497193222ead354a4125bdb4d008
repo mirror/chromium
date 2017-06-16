@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96f2e1b2_82953408",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T23:27:11Z",
+      "side": 1,
+      "message": "|proxy_| isn\u0027t a parameter to the calls, and you don\u0027t mention |proxy_| when describing the corresponding methods on |filter|.\n\nI think it\u0027s sufficient to describe these as result handlers for calls made on the UI thread, which hand-off to the IPC filter on the IO thread.",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "01324513_8c044c29",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T23:27:11Z",
+      "side": 1,
+      "message": "Why are these called on the UI thread? Aren\u0027t they IPC handlers?",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c68cc773_49fcd1f2",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T23:27:11Z",
+      "side": 1,
+      "message": "nit: Can we rephrase this to match similar comments in the codebase, or remove it?",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
