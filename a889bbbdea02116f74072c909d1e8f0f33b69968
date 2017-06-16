@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f920814f_daa408df",
+        "filename": "content/browser/power_monitor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-16T13:13:55Z",
+      "side": 1,
+      "message": "nit: these can be OnceClosures instead of Closures. Then you\u0027ll do std::move(renderer_bound_closure_).Run();",
+      "revId": "a889bbbdea02116f74072c909d1e8f0f33b69968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
