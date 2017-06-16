@@ -16,6 +16,24 @@
       "revId": "ef344143929225c301200cc7687272a3490833fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8767cd7_324712c7",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-16T01:06:53Z",
+      "side": 1,
+      "message": "Sorry if I asked a stupid question, but at_exit is a local variable that lives on stack, how can it be gone before the main function returns?",
+      "parentUuid": "c46a32bf_413283d2",
+      "revId": "ef344143929225c301200cc7687272a3490833fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
