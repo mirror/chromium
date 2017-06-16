@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acdef69c_ffae4c7c",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 276,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-16T15:00:04Z",
+      "side": 1,
+      "message": "device.id should be converted with base::Uint64ToString.",
+      "revId": "7d049dcfaa3cd42973199cae9365ed59f6b2ac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2c34bcf9_a9cff28e",
+        "filename": "media/audio/cras/audio_manager_cras.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-16T15:00:04Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 287,
+        "startChar": 13,
+        "endLine": 287,
+        "endChar": 19
+      },
+      "revId": "7d049dcfaa3cd42973199cae9365ed59f6b2ac6d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
