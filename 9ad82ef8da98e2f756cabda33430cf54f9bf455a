@@ -157,6 +157,24 @@
       "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4cab0a9_df2b58fd",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T05:11:23Z",
+      "side": 1,
+      "message": "Thanks, but I am afraid that your understanding about how DP works is wrong.\n\n\u003e For example you model insert costing 1, delete costing 1, and replace costing 2 and then consider three moves (horizontal, vertical, diagonal). However you could just consider (horizontal, vertical) and model replace with two moves--delete-insert--instead of a separate kind of diagonal move?\n\nNo, you are forgetting zero-cost move in diagonal.\n\n\u003e Similarly you fill out the entire N*M array but it doesn\u0027t matter if you do a replace as delete-then-insert or as insert-then-delete so you should be able to compute only half of the matrix and get the same result.\n\nNo. There are N*M states which should be considered.",
+      "parentUuid": "35b83b4a_2ea5a626",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
