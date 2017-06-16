@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea4cc584_f2cd7023",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-16T21:41:52Z",
+      "side": 1,
+      "message": "Seems like it\u0027s all 2-core linux?",
+      "revId": "a8470e9f7a6e8682b00f95887b58d2f48e16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "518842b1_582cbd15",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-16T21:41:52Z",
+      "side": 1,
+      "message": "#else #endif.",
+      "revId": "a8470e9f7a6e8682b00f95887b58d2f48e16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
