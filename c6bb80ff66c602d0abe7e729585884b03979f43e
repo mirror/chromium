@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "368bb7ea_5fda946f",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 496,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-16T07:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5c52666_9021e212",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7dd105a2_aec4f737",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "f3f5d752_f59dcb65",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 68012,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-16T07:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7dd105a2_aec4f737",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "81fff716_4ecd86a6",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 2
@@ -50,6 +86,24 @@
       "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47e1133f_ae5d7b67",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 2
+      },
+      "lineNbr": 89837,
+      "author": {
+        "id": 1000128
+      },
+      "writtenOn": "2017-06-16T07:55:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81fff716_4ecd86a6",
+      "revId": "c6bb80ff66c602d0abe7e729585884b03979f43e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
