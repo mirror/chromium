@@ -15,6 +15,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "base/memory/weak_ptr.h"
+#include "base/sequenced_task_runner.h"
 #include "base/strings/string16.h"
 #include "components/prefs/pref_change_registrar.h"
 
@@ -23,6 +24,7 @@ class Profile;
 
 namespace base {
 class FilePath;
+class SequencedTaskRunner;
 }
 
 namespace content {
@@ -128,9 +130,6 @@ class DevToolsFileHelper {
   void InnerAddFileSystem(
       const ShowInfoBarCallback& show_info_bar_callback,
       const base::FilePath& path);
-  void CheckProjectFileExistsAndAddFileSystem(
-      const ShowInfoBarCallback& show_info_bar_callback,
-      const base::FilePath& path);
   void AddUserConfirmedFileSystem(
       const base::FilePath& path,
       bool allowed);
@@ -138,6 +137,12 @@ class DevToolsFileHelper {
   void FilePathsChanged(const std::vector<std::string>& changed_paths,
                         const std::vector<std::string>& added_paths,
                         const std::vector<std::string>& removed_paths);
+
+  // These should only be called on the file sequence.
+  static void CheckProjectFileExistsAndAddFileSystem(
+      base::WeakPtr<DevToolsFileHelper> self,
+      ShowInfoBarCallback show_info_bar_callback,
+      base::FilePath path);
 
   content::WebContents* web_contents_;
   Profile* profile_;
@@ -147,6 +152,7 @@ class DevToolsFileHelper {
   PrefChangeRegistrar pref_change_registrar_;
   std::set<std::string> file_system_paths_;
   std::unique_ptr<DevToolsFileWatcher> file_watcher_;
+  scoped_refptr<base::SequencedTaskRunner> file_task_runner_;
   base::WeakPtrFactory<DevToolsFileHelper> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileHelper);
 };

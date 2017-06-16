@@ -9,9 +9,11 @@
 
 #include "base/callback.h"
 #include "base/macros.h"
+#include "base/sequence_checker.h"
 
 namespace base {
 class FilePath;
+class SequencedTaskRunner;
 }
 
 class DevToolsFileWatcher {
@@ -19,11 +21,15 @@ class DevToolsFileWatcher {
   using WatchCallback = base::Callback<void(const std::vector<std::string>&,
                                             const std::vector<std::string>&,
                                             const std::vector<std::string>&)>;
-  explicit DevToolsFileWatcher(const WatchCallback& callback);
+  DevToolsFileWatcher(
+      WatchCallback callback,
+      scoped_refptr<base::SequencedTaskRunner> callback_task_runner);
   ~DevToolsFileWatcher();
 
-  void AddWatch(const base::FilePath& path);
-  void RemoveWatch(const base::FilePath& path);
+  void AddWatch(base::FilePath path);
+  void RemoveWatch(base::FilePath path);
+
+  static base::SequencedTaskRunner* impl_task_runner();
 
  private:
   class SharedFileWatcher;
@@ -34,6 +40,8 @@ class DevToolsFileWatcher {
 
   scoped_refptr<SharedFileWatcher> shared_watcher_;
   WatchCallback callback_;
+  scoped_refptr<base::SequencedTaskRunner> client_task_runner_;
+
   DISALLOW_COPY_AND_ASSIGN(DevToolsFileWatcher);
 };
 
