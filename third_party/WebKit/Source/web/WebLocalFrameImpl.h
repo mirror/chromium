@@ -428,10 +428,10 @@ class WEB_EXPORT WebLocalFrameImpl final
   void SetFrameWidget(WebFrameWidgetBase*) override;
 
   // DevTools front-end bindings.
-  void SetDevToolsFrontend(WebDevToolsFrontendImpl* frontend) override {
+  void SetDevToolsFrontend(WebDevToolsFrontendImpl* frontend) {
     web_dev_tools_frontend_ = frontend;
   }
-  WebDevToolsFrontendImpl* DevToolsFrontend() override {
+  WebDevToolsFrontendImpl* DevToolsFrontend() {
     return web_dev_tools_frontend_;
   }
 
