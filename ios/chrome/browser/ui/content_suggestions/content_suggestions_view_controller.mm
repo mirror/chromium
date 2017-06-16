@@ -271,6 +271,16 @@ BOOL ShouldCellsBeFullWidth(UITraitCollection* collection) {
   }
   return [UIColor whiteColor];
 }
+- (CGSize)collectionView:(UICollectionView*)collectionView
+                             layout:
+                                 (UICollectionViewLayout*)collectionViewLayout
+    referenceSizeForHeaderInSection:(NSInteger)section {
+  if (section == 0)
+    return CGSizeMake(0, 270);
+  return [super collectionView:collectionView
+                               layout:collectionViewLayout
+      referenceSizeForHeaderInSection:section];
+}
 
 - (BOOL)collectionView:(nonnull UICollectionView*)collectionView
     shouldHideItemBackgroundAtIndexPath:(nonnull NSIndexPath*)indexPath {
