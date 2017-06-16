@@ -88,6 +88,24 @@
     },
     {
       "key": {
+        "uuid": "88bac0a9_125fb713",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-16T18:40:51Z",
+      "side": 1,
+      "message": "Anchoring to a view has some pluses compared to anchoring to a point:\n\n* Can automatically handle views moving around\n* Can make it easier to set the highlight state of the anchored view automatically when opening/closing the window\n* Important for both RTL and for cases when the anchored view gets near the edge of the screen, so we understand how to flip the window around and still anchor it in a way that looks correct (usually outer-edge-of-window aligned with outer-edge-of-anchor-view)\n\nThe first two (but not the third) are also pluses compared to anchoring to a rect.\n\nAnd unifying on any mechanism, regardless of mechanism, is a plus in terms of \"have just one right way to do it and make it work well\".\n\nThe extension code thing you mention sounds icky to me offhand, but I haven\u0027t looked.\n\nThe insets stuff seems like it would be an issue with any anchoring method; it\u0027s basically accounting for things like arrows, shadows, and borders around the anchored window.  The presence of those wouldn\u0027t depend on whether we\u0027re anchoring to a point or a view.\n\nThe case of anchoring to null is an interesting one, because in that case presumably we always want some similar fallback (e.g. anchor to window top?).  I would think that moving to an anchor point for everything wouldn\u0027t really help this because you\u0027d still have to compute the different point in this kind of case.\n\nSo it still seems to me like unifying on \"anchor to a view\" is not worse than today, though as you note it fails to make everything perfectly simple.",
+      "parentUuid": "7962e919_76bdb1db",
+      "revId": "5baa599d421168665bdc81d516b836a06d361bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db14aaea_76e69012",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 1
