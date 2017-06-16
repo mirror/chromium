@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "07d38896_16bd7858",
+        "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-16T18:04:04Z",
+      "side": 1,
+      "message": "This would release FakeChromeUserManager and along with all the User objects it creates. FakeChromeUserManager::AddUser leaves a User* in ProfileHelper and we might hit use-after-free.",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 81,
+        "endChar": 0
+      },
+      "revId": "8cc8364aa80254a9cff2a4f2fc12967756119011",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e35b50bf_90f6fa59",
         "filename": "chrome/browser/chromeos/authpolicy/auth_policy_credentials_manager_unittest.cc",
         "patchSetId": 4
