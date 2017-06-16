@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c30b161_a845c1e5",
+        "filename": "chrome/browser/ui/views/frame/test_with_browser_view.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1194993
+      },
+      "writtenOn": "2017-06-16T16:08:08Z",
+      "side": 0,
+      "message": "There is another PredictorDatabase that is created as KeyedService for the profile. Creation of two databases attached to the same profile leads to the fact that sqlite file is accessed from two different sequences -\u003e race. It was okay before this change because all PredictorDatabases used the single DB thread.\n\nTestWithBrowserView class doesn\u0027t use predictor_db_ so it should be safe to delete it.",
+      "range": {
+        "startLine": 43,
+        "startChar": 56,
+        "endLine": 43,
+        "endChar": 0
+      },
+      "revId": "a99720924b64953e3ea601cee5086b71f1a33950",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
