@@ -10,6 +10,7 @@
 #include <stddef.h>
 
 #include "base/command_line.h"
+#include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/metrics/histogram_macros.h"
 #include "base/single_thread_task_runner.h"
@@ -35,6 +36,15 @@ namespace media {
 const char kVidPrefix[] = "vid_";  // Also contains '\0'.
 const char kPidPrefix[] = "pid_";  // Also contains '\0'.
 const size_t kVidPidSize = 4;
+
+// Controls whether or not we enable code paths accessing controls exposed by
+// video capture devices in the context of capturing still images. Note, that
+// several webcam drivers have shown issues when accessing these controls,
+// resulting in symptoms such as video capture outputting blank images or
+// images with incorrect settings for things like zoom, white balance, contrast,
+// focus, etc.
+const base::Feature kImageCaptureControls{"ImageCaptureControls",
+                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Avoid enumerating and/or using certain devices due to they provoking crashes
 // or any other reason (http://crbug.com/378494). This enum is defined for the
@@ -426,7 +436,9 @@ std::unique_ptr<VideoCaptureDevice> VideoCaptureDeviceFactoryWin::CreateDevice(
       device.reset();
   } else if (device_descriptor.capture_api ==
              VideoCaptureApi::WIN_DIRECT_SHOW) {
-    device.reset(new VideoCaptureDeviceWin(device_descriptor));
+    device.reset(new VideoCaptureDeviceWin(
+        device_descriptor,
+        base::FeatureList::IsEnabled(kImageCaptureControls));
     DVLOG(1) << " DirectShow Device: " << device_descriptor.display_name;
     if (!static_cast<VideoCaptureDeviceWin*>(device.get())->Init())
       device.reset();
