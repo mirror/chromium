@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d0be6fb_fb1457e0",
+        "filename": "chrome/browser/ui/views/payments/payment_request_item_list.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T20:05:48Z",
+      "side": 1,
+      "message": "\"which should never be nullptr\"",
+      "revId": "22814b2d7e7f895d9227e7102df49a222d3a6dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cce86cb5_9722afa5",
+        "filename": "chrome/browser/ui/views/payments/payment_sheet_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 330,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T20:05:48Z",
+      "side": 1,
+      "message": "Can you do return AccessibleContent(...).CreateWithButton(...);",
+      "revId": "22814b2d7e7f895d9227e7102df49a222d3a6dd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
