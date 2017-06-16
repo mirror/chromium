@@ -8,6 +8,7 @@
 #include <memory>
 
 #include "base/metrics/histogram_macros.h"
+#include "base/stl_util.h"
 #include "net/quic/core/crypto/cert_compressor.h"
 #include "net/quic/core/crypto/chacha20_poly1305_encrypter.h"
 #include "net/quic/core/crypto/channel_id.h"
@@ -189,7 +190,7 @@ QuicCryptoClientConfig::CachedState::SetServerConfig(
 }
 
 void QuicCryptoClientConfig::CachedState::InvalidateServerConfig() {
-  server_config_.clear();
+  base::STLClearObject(&server_config_);
   scfg_.reset();
   SetProofInvalid();
   std::queue<QuicConnectionId> empty_queue;
@@ -227,12 +228,12 @@ void QuicCryptoClientConfig::CachedState::SetProof(
 }
 
 void QuicCryptoClientConfig::CachedState::Clear() {
-  server_config_.clear();
-  source_address_token_.clear();
-  certs_.clear();
-  cert_sct_.clear();
-  chlo_hash_.clear();
-  server_config_sig_.clear();
+  base::STLClearObject(&server_config_);
+  base::STLClearObject(&source_address_token_);
+  base::STLClearObject(&certs_);
+  base::STLClearObject(&cert_sct_);
+  base::STLClearObject(&chlo_hash_);
+  base::STLClearObject(&server_config_sig_);
   server_config_valid_ = false;
   proof_verify_details_.reset();
   scfg_.reset();
@@ -244,10 +245,10 @@ void QuicCryptoClientConfig::CachedState::Clear() {
 
 void QuicCryptoClientConfig::CachedState::ClearProof() {
   SetProofInvalid();
-  certs_.clear();
-  cert_sct_.clear();
-  chlo_hash_.clear();
-  server_config_sig_.clear();
+  base::STLClearObject(&certs_);
+  base::STLClearObject(&cert_sct_);
+  base::STLClearObject(&chlo_hash_);
+  base::STLClearObject(&server_config_sig_);
 }
 
 void QuicCryptoClientConfig::CachedState::SetProofValid() {
