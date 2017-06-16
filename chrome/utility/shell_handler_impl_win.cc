@@ -12,14 +12,17 @@
 #include "base/memory/ptr_util.h"
 #include "base/path_service.h"
 #include "base/scoped_native_library.h"
+#include "base/strings/string16.h"
 #include "base/win/scoped_bstr.h"
 #include "base/win/scoped_com_initializer.h"
 #include "base/win/scoped_comptr.h"
 #include "base/win/scoped_variant.h"
 #include "base/win/shortcut.h"
+#include "base/win/win_util.h"
 #include "chrome/installer/util/install_util.h"
 #include "content/public/utility/utility_thread.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
+#include "ui/base/win/open_file_name_win.h"
 
 namespace {
 
@@ -229,4 +232,61 @@ void ShellHandlerImpl::IsPinnedToTaskbar(
   IsPinnedToTaskbarHelper helper;
   bool is_pinned_to_taskbar = helper.GetResult();
   callback.Run(!helper.error_occured(), is_pinned_to_taskbar);
+}
+
+void ShellHandlerImpl::CallGetOpenFileName(
+    uint32_t owner,
+    uint32_t flags,
+    const std::vector<std::tuple<base::string16, base::string16>>& filters,
+    const base::FilePath& initial_directory,
+    const base::FilePath& filename,
+    const CallGetOpenFileNameCallback& callback) {
+  ui::win::OpenFileName open_file_name(
+      reinterpret_cast<HWND>(base::win::Uint32ToHandle(owner)), flags);
+
+  open_file_name.SetInitialSelection(initial_directory, filename);
+  open_file_name.SetFilters(filters);
+
+  base::FilePath directory;
+  std::vector<base::FilePath> filenames;
+  if (::GetOpenFileName(open_file_name.GetOPENFILENAME()))
+    open_file_name.GetResult(&directory, &filenames);
+
+  if (!filenames.empty()) {
+    callback.Run(directory, filenames);
+  } else {
+    callback.Run(base::FilePath(), std::vector<base::FilePath>());
+  }
+}
+
+void ShellHandlerImpl::CallGetSaveFileName(
+    uint32_t owner,
+    uint32_t flags,
+    const std::vector<std::tuple<base::string16, base::string16>>& filters,
+    uint32_t one_based_filter_index,
+    const base::FilePath& initial_directory,
+    const base::FilePath& suggested_filename,
+    const base::FilePath& default_extension,
+    const CallGetSaveFileNameCallback& callback) {
+  ui::win::OpenFileName open_file_name(
+      reinterpret_cast<HWND>(base::win::Uint32ToHandle(owner)), flags);
+
+  open_file_name.SetInitialSelection(initial_directory, suggested_filename);
+  open_file_name.SetFilters(filters);
+  open_file_name.GetOPENFILENAME()->nFilterIndex = one_based_filter_index;
+  open_file_name.GetOPENFILENAME()->lpstrDefExt =
+      default_extension.value().c_str();
+
+  if (::GetSaveFileName(open_file_name.GetOPENFILENAME())) {
+    callback.Run(base::FilePath(open_file_name.GetOPENFILENAME()->lpstrFile),
+                 open_file_name.GetOPENFILENAME()->nFilterIndex);
+    return;
+  }
+
+  // Zero means the dialog was closed, otherwise we had an error.
+  DWORD error_code = ::CommDlgExtendedError();
+  if (error_code)
+    NOTREACHED() << "::GetSaveFileName() failed: error code " << error_code;
+
+  callback.Run(base::FilePath(), 0);
 }
