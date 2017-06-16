@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ad6cf7e_07c8d637",
+        "filename": "cc/layers/layer_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:11:23Z",
+      "side": 1,
+      "message": "nit: \"!transform_node-\u003eelement_id\" instead of \"transform_node-\u003eelement_id !\u003d ElementId()\"",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed604be7_10c698aa",
+        "filename": "cc/layers/layer_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:11:23Z",
+      "side": 1,
+      "message": "Can you remove LayerImpl::TransformAnimationBoundsForBox? This was the only callsite.",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c50446b_a65945bc",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:11:23Z",
+      "side": 1,
+      "message": "Is this only for the animation subsystem?",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5226e978_7543f3f9",
+        "filename": "cc/trees/transform_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:11:23Z",
+      "side": 1,
+      "message": "elemnet_id -\u003e element_id",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

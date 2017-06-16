@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "22c50309_5c0b496f",
+        "filename": "cc/layers/layer_utils.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:11:23Z",
+      "side": 0,
+      "message": "Can you remove LayerImpl::HasTransformAnimationThatInflatesBounds? This was the only callsite.",
+      "revId": "998ec642b28daafb02f595e639a6cd601bdc24a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
