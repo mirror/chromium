@@ -16,6 +16,24 @@
       "revId": "fa0fdbb2979b933316014972038f6d6a4dcf3a5c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "12ecd951_8cb792c9",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1000172
+      },
+      "writtenOn": "2017-06-16T06:56:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84b99171_f23a7f1e",
+      "revId": "fa0fdbb2979b933316014972038f6d6a4dcf3a5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
