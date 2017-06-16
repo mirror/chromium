@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6281cfb9_f28eb3e8",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-16T21:09:44Z",
+      "side": 1,
+      "message": "The function sits here because I want to group the internal functions together. If it\u0027s not necessary, I can move it up.",
+      "parentUuid": "f634520e_00266a09",
+      "range": {
+        "startLine": 289,
+        "startChar": 6,
+        "endLine": 289,
+        "endChar": 26
+      },
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6b072335_452eae5b",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f1be2e1_6fd891ad",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-16T21:09:44Z",
+      "side": 1,
+      "message": "jni_params is passed in as an input now.",
+      "parentUuid": "6b072335_452eae5b",
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "738ba82e_b8850483",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1173,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-16T21:09:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c761e75c_74a0fc1d",
+      "range": {
+        "startLine": 1173,
+        "startChar": 51,
+        "endLine": 1173,
+        "endChar": 57
+      },
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ac47362_98bf0556",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23715ead_4dbd077c",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 1240,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-16T21:09:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ac47362_98bf0556",
+      "range": {
+        "startLine": 1240,
+        "startChar": 38,
+        "endLine": 1240,
+        "endChar": 53
+      },
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -120,6 +210,24 @@
       "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1099cefc_710754fd",
+        "filename": "base/android/jni_generator/testNatives.golden",
+        "patchSetId": 3
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-16T21:09:44Z",
+      "side": 1,
+      "message": "Add imports to testNatives so we don\u0027t need to change the .golden file now.",
+      "parentUuid": "aa32a814_35071f0a",
+      "revId": "30bee70341c511c3cc82e32b1425a6f33de451aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
