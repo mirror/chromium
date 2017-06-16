@@ -22,6 +22,30 @@
       "revId": "64f8be71c43be69aa628fb7a8a4377c87242491e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1864fb4d_fc05575c",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-16T22:59:36Z",
+      "side": 1,
+      "message": "This is by design. We only case about the cases where we actually call |initialize_module| below. If we don\u0027t call it, the CDM instance will not be created at all, and then we don\u0027t care about VMP status.",
+      "parentUuid": "57ab09bf_2616e7e9",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 31
+      },
+      "revId": "64f8be71c43be69aa628fb7a8a4377c87242491e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
