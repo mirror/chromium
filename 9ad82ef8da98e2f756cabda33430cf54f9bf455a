@@ -139,6 +139,24 @@
       "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35b83b4a_2ea5a626",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1106664
+      },
+      "writtenOn": "2017-06-16T04:52:57Z",
+      "side": 1,
+      "message": "I think this code could be simpler by exploiting the structure of your problem.\n\nFor example you model insert costing 1, delete costing 1, and replace costing 2 and then consider three moves (horizontal, vertical, diagonal). However you could just consider (horizontal, vertical) and model replace with two moves--delete-insert--instead of a separate kind of diagonal move?\n\nSimilarly you fill out the entire N*M array but it doesn\u0027t matter if you do a replace as delete-then-insert or as insert-then-delete so you should be able to compute only half of the matrix and get the same result.",
+      "parentUuid": "f6ce098b_efc51b3c",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
