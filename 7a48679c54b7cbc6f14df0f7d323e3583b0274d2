@@ -69,6 +69,24 @@
       "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0906d675_4b43f051",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T19:36:01Z",
+      "side": 1,
+      "message": "Referring to content:: in base/ wouldn\u0027t be completely new: https://cs.chromium.org/chromium/src/base/threading/thread_restrictions.h?l\u003d34",
+      "parentUuid": "e8270915_2718aa64",
+      "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
