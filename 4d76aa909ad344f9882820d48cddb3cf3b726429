@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70725e44_d367f75b",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-16T22:42:01Z",
+      "side": 1,
+      "message": "Can we just move these into media/filters? Then you can avoid the filters_common and thus issues around having source_sets depended on by two places.",
+      "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22284321_439284fb",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-16T22:42:01Z",
+      "side": 1,
+      "message": "The problem is this I think? It should be a source_set, we only want one top level component. By making this a component it becomes it\u0027s own shared library; which has an impact on where statics are initialized.",
+      "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
