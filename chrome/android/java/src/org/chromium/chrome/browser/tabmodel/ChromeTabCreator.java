@@ -112,6 +112,7 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
                     : parent.getDelegateFactory();
             Tab tab;
             if (asyncParams != null && asyncParams.getTabToReparent() != null) {
+                TraceEvent.begin("ChromeTabCreator.createNewTab 1");
                 type = TabLaunchType.FROM_REPARENTING;
                 openInForeground = true;
 
@@ -119,7 +120,9 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
                 tab = params.getTabToReparent();
                 tab.attachAndFinishReparenting(
                         mActivity, createDefaultTabDelegateFactory(), params);
+                TraceEvent.end("ChromeTabCreator.createNewTab 1");
             } else if (asyncParams != null && asyncParams.getWebContents() != null) {
+                TraceEvent.begin("ChromeTabCreator.createNewTab 2");
                 openInForeground = true;
                 WebContents webContents = asyncParams.getWebContents();
                 // A WebContents was passed through the Intent.  Create a new Tab to hold it.
@@ -136,18 +139,23 @@ public class ChromeTabCreator extends TabCreatorManager.TabCreator {
                         webContents, mTabContentManager, delegateFactory, !openInForeground, false);
                 tab.setParentIntent(parentIntent);
                 webContents.resumeLoadingCreatedWebContents();
+                TraceEvent.end("ChromeTabCreator.createNewTab 2");
             } else if (!openInForeground && SysUtils.isLowEndDevice()) {
+                TraceEvent.begin("ChromeTabCreator.createNewTab 3");
                 // On low memory devices the tabs opened in background are not loaded automatically
                 // to preserve resources (cpu, memory, strong renderer binding) for the foreground
                 // tab.
                 tab = Tab.createTabForLazyLoad(mActivity, mIncognito, mNativeWindow, type,
                         parentId, loadUrlParams);
                 tab.initialize(null, mTabContentManager, delegateFactory, !openInForeground, false);
+                TraceEvent.end("ChromeTabCreator.createNewTab 3");
             } else {
+                TraceEvent.begin("ChromeTabCreator.createNewTab 4");
                 tab = Tab.createLiveTab(Tab.INVALID_TAB_ID, mActivity, mIncognito,
                         mNativeWindow, type, parentId, !openInForeground);
                 tab.initialize(null, mTabContentManager, delegateFactory, !openInForeground, false);
                 tab.loadUrl(loadUrlParams);
+                TraceEvent.end("ChromeTabCreator.createNewTab 4");
             }
             tab.getTabRedirectHandler().updateIntent(intent);
 

@@ -16,6 +16,7 @@
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host_factory.h"
 #include "content/public/browser/web_ui_controller_factory.h"
+#include "base/debug/stack_trace.h"
 #include "content/public/common/url_constants.h"
 #include "net/base/registry_controlled_domains/registry_controlled_domain.h"
 
@@ -134,6 +135,9 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
 void SiteInstanceImpl::SetSite(const GURL& url) {
   TRACE_EVENT2("navigation", "SiteInstanceImpl::SetSite",
                "site id", id_, "url", url.possibly_invalid_spec());
+
+               	 base::debug::StackTrace().Print();
+
   // A SiteInstance's site should not change.
   // TODO(creis): When following links or script navigations, we can currently
   // render pages from other sites in this SiteInstance.  This will eventually
