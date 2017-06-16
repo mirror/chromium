@@ -462,9 +462,13 @@ blink_core_sources("layout") {
       "LayoutThemeFontProviderWin.cpp",
       "LayoutThemeWin.cpp",
       "LayoutThemeWin.h",
+      "WebFontRenderingWin.cpp",
     ]
   } else {  # Not Windows.
-    sources += [ "LayoutThemeFontProviderDefault.cpp" ]
+    sources += [
+      "LayoutThemeFontProviderDefault.cpp",
+      "WebFontRenderingDefault.cpp",
+    ]
   }
 
   if (is_linux) {
