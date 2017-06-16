@@ -41,6 +41,8 @@ bool ContentBrowserClient::IsBrowserStartupComplete() {
   return true;
 }
 
+bool ContentBrowserClient::SetBrowserStartupIsCompleteForTesting() {}
+
 WebContentsViewDelegate* ContentBrowserClient::GetWebContentsViewDelegate(
     WebContents* web_contents) {
   return nullptr;
