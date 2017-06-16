@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70c46f67_57abed02",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "Should this be conditioned on the current network quality?",
+      "range": {
+        "startLine": 658,
+        "startChar": 19,
+        "endLine": 658,
+        "endChar": 51
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a067a94_cc22fb4f",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "s/medium_priority_layout_blocking_/|medium_priority_layout_blocking_|/",
+      "range": {
+        "startLine": 661,
+        "startChar": 9,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86a0e7f5_466cd6ec",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "s/before a \u003cBODY\u003e tag is encountered/if |has_html_body_| is false/",
+      "range": {
+        "startLine": 951,
+        "startChar": 14,
+        "endLine": 951,
+        "endChar": 48
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16c87714_2bb3e3bb",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "Make it a const bool?",
+      "range": {
+        "startLine": 952,
+        "startChar": 7,
+        "endLine": 952,
+        "endChar": 39
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd383a82_c7c9d262",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "Can this be const?",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 6
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "620186e4_14117f94",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "s/finch/field trial/\nhere and below.",
+      "range": {
+        "startLine": 334,
+        "startChar": 7,
+        "endLine": 334,
+        "endChar": 12
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af0b2861_18a76867",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-16T00:14:07Z",
+      "side": 1,
+      "message": "It\u0027s not clear what exactly this is checking, and how these checks are tied to the kMediumPriorityLayoutBlocking feature. e.g., the test above does not have the feature enabled, and ~verifies the same results. May be add a comment?",
+      "range": {
+        "startLine": 347,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 14
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
