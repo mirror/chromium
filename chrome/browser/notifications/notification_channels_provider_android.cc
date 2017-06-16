@@ -17,6 +17,7 @@
 #include "components/content_settings/core/browser/host_content_settings_map.h"
 #include "components/content_settings/core/common/content_settings.h"
 #include "components/content_settings/core/common/content_settings_pattern.h"
+#include "content/public/browser/browser_thread.h"
 #include "jni/NotificationSettingsBridge_jni.h"
 #include "url/gurl.h"
 #include "url/origin.h"
@@ -125,7 +126,8 @@ NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid()
 NotificationChannelsProviderAndroid::NotificationChannelsProviderAndroid(
     std::unique_ptr<NotificationChannelsBridge> bridge)
     : bridge_(std::move(bridge)),
-      should_use_channels_(bridge_->ShouldUseChannelSettings()) {}
+      should_use_channels_(bridge_->ShouldUseChannelSettings()),
+      weak_factory_(this) {}
 
 NotificationChannelsProviderAndroid::~NotificationChannelsProviderAndroid() =
     default;
@@ -140,6 +142,21 @@ NotificationChannelsProviderAndroid::GetRuleIterator(
     return nullptr;
   }
   std::vector<NotificationChannel> channels = bridge_->GetChannels();
+  if (channels != cached_channels_) {
+    // This const_cast allows us to notify observers from here that content
+    // settings have changed, without removing all the const qualifiers from the
+    // call hierarchy. This is justified since content settings can change at
+    // any time anyway.
+    auto* provider = const_cast<NotificationChannelsProviderAndroid*>(this);
+    content::BrowserThread::GetTaskRunnerForThread(content::BrowserThread::UI)
+        ->PostTask(
+            FROM_HERE,
+            base::BindOnce(
+                &NotificationChannelsProviderAndroid::NotifyObservers,
+                provider->weak_factory_.GetWeakPtr(), ContentSettingsPattern(),
+                ContentSettingsPattern(), content_type, std::string()));
+    provider->cached_channels_ = channels;
+  }
   return channels.empty()
              ? nullptr
              : base::MakeUnique<ChannelsRuleIterator>(std::move(channels));
@@ -182,6 +199,8 @@ bool NotificationChannelsProviderAndroid::SetWebsiteSetting(
       NOTREACHED();
       break;
   }
+  NotifyObservers(primary_pattern, secondary_pattern, content_type,
+                  resource_identifier);
   return true;
 }
 
