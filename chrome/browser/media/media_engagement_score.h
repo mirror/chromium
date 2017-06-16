@@ -49,6 +49,9 @@ class MediaEngagementScore {
     return last_media_playback_time_;
   }
 
+  // Calculate the score as per the formula in the design doc.
+  static double CalculateScore(int visits, int media_playbacks);
+
  private:
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementScoreTest, PartiallyEmptyDictionary);
   FRIEND_TEST_ALL_PREFIXES(MediaEngagementScoreTest, PopulatedDictionary);
