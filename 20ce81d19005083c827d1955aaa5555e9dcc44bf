@@ -22,6 +22,30 @@
       "revId": "20ce81d19005083c827d1955aaa5555e9dcc44bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0690a65_a842c16a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-16T05:25:04Z",
+      "side": 1,
+      "message": "This code is executed only on first run. So it cannot have any effect except for the first run.\n\nOn the first run chrome normally creates the parent directory as well, so it should be already in the cache when PathExists() is called here, so even in that case performance impact should be minimal.",
+      "parentUuid": "d5774b48_78e6cc5f",
+      "range": {
+        "startLine": 1176,
+        "startChar": 15,
+        "endLine": 1176,
+        "endChar": 25
+      },
+      "revId": "20ce81d19005083c827d1955aaa5555e9dcc44bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
