@@ -336,6 +336,19 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
   // returned if the URL is not overriden.
   virtual KURL OverrideFlashEmbedWithHTML(const KURL&) { return KURL(); }
 
+  // OVerwrites the given URL to redirect the navigation to the corresponding
+  // handler for PDF resources.
+  virtual KURL OverridePDFEmbedWithHTML(const KURL&, const String&) {
+    return KURL();
+  }
+
+  // Returns an object used to implement custom javascript API fro a plugin.
+  virtual v8::Local<v8::Object> GetScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      Frame& frame) {
+    return v8::Local<v8::Object>();
+  }
+
   virtual BlameContext* GetFrameBlameContext() { return nullptr; }
 
   virtual service_manager::InterfaceProvider* GetInterfaceProvider() {

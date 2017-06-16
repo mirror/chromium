@@ -1160,6 +1160,35 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+blink::WebURL RenderFrameImpl::OverridePDFEmbedWithHTML(
+    const blink::WebURL& url,
+    const blink::WebString& original_mime_type) {
+  if (original_mime_type.Utf8() == "application/x-google-chrome-pdf") {
+    // TODO(ekaramad): This mime type detection is not done right here. We
+    // probably have to get the information from browser the same way as
+    // CreatePlugin codepath. We also need to make sure the <embed> inside PDF
+    // extension is not interpreted as a text/pdf or application/pdf mime type
+    // (to avoid trying to load the extension instead).
+    return blink::WebURL();
+  }
+
+#if BUILDFLAG(ENABLE_PLUGINS)
+  WebPluginInfo info;
+  std::string mime_type;
+  bool found = false;
+  Send(new FrameHostMsg_GetPluginInfo(routing_id_, url,
+                                      frame_->Top()->GetSecurityOrigin(), "",
+                                      &found, &info, &mime_type));
+  if (!found)
+    return blink::WebURL();
+
+  return GetContentClient()->renderer()->OverridePDFEmbedWithHTML(this, url,
+                                                                  mime_type);
+#else
+  return blink::WebURL();
+#endif
+}
+
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
@@ -6710,6 +6739,14 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader() {
 void RenderFrameImpl::DraggableRegionsChanged() {
   for (auto& observer : observers_)
     observer.DraggableRegionsChanged();
+}
+
+v8::Local<v8::Object> RenderFrameImpl::GetScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  DCHECK_EQ(frame->Parent(), GetWebFrame());
+  return GetContentClient()->renderer()->GetScriptableObjectForPluginFrame(
+      isolate, frame);
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {

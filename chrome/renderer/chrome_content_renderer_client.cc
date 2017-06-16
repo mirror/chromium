@@ -1595,6 +1595,31 @@ GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
   return corrected_url.ReplaceComponents(r);
 }
 
+GURL ChromeContentRendererClient::OverridePDFEmbedWithHTML(
+    content::RenderFrame* render_frame,
+    const GURL& url,
+    const std::string& orig_mime_type) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::OverridePDFEmbedWithHTML(
+      url, orig_mime_type);
+#else
+  return GURL();
+#endif
+}
+
+v8::Local<v8::Object>
+ChromeContentRendererClient::GetScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetScriptableObjectForPluginFrame(
+      isolate, frame);
+#else
+  return content::ContentRendererClient::GetScriptableObjectForPluginFrame(
+      isolate, frame);
+#endif
+}
+
 std::unique_ptr<base::TaskScheduler::InitParams>
 ChromeContentRendererClient::GetTaskSchedulerInitParams() {
   return task_scheduler_util::

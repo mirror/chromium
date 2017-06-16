@@ -237,6 +237,8 @@ source_set("browser_sources") {
     "load_monitoring_extension_host_queue.h",
     "management_policy.cc",
     "management_policy.h",
+    "mime_handler_view/mime_handler_view_service.cc",
+    "mime_handler_view/mime_handler_view_service.h",
     "mojo/keep_alive_impl.cc",
     "mojo/keep_alive_impl.h",
     "mojo/service_registration.cc",

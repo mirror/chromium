@@ -73,6 +73,12 @@ class ChromeExtensionsRendererClient
       const std::string& mime_type,
       const GURL& original_url);
 
+  static GURL OverridePDFEmbedWithHTML(const GURL& complete_url,
+                                       const std::string& mime_type);
+  static v8::Local<v8::Object> GetScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame);
+
   void RunScriptsAtDocumentStart(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentEnd(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentIdle(content::RenderFrame* render_frame);

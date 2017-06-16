@@ -241,6 +241,11 @@ class CONTENT_EXPORT RenderFrameImpl
   // Overwrites the given URL to use an HTML5 embed if possible.
   blink::WebURL OverrideFlashEmbedWithHTML(const blink::WebURL& url) override;
 
+  // Overwrites the given URL to use an HTML5 embed if possible.
+  blink::WebURL OverridePDFEmbedWithHTML(
+      const blink::WebURL& url,
+      const blink::WebString& original_mime_type) override;
+
   ~RenderFrameImpl() override;
 
   // Called by RenderWidget when meaningful layout has happened.
@@ -670,6 +675,9 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::WebPageVisibilityState VisibilityState() const override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override;
   void DraggableRegionsChanged() override;
+  v8::Local<v8::Object> GetScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(

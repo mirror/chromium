@@ -5,9 +5,11 @@
 #include "extensions/browser/extension_util.h"
 
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/site_instance.h"
 #include "extensions/browser/extension_prefs.h"
 #include "extensions/browser/extension_registry.h"
+#include "extensions/common/constants.h"
 #include "extensions/common/features/behavior_feature.h"
 #include "extensions/common/features/feature.h"
 #include "extensions/common/features/feature_provider.h"
@@ -93,6 +95,11 @@ content::StoragePartition* GetStoragePartitionForExtensionId(
       content::BrowserContext::GetStoragePartitionForSite(browser_context,
                                                           site_url);
   return storage_partition;
+}
+
+bool ForPDFExtension(const GURL& url) {
+  return url.scheme() == extensions::kExtensionScheme &&
+         url.host() == extension_misc::kPdfExtensionId;
 }
 
 }  // namespace util
