@@ -38,6 +38,7 @@ struct CC_EXPORT ScrollNode {
 
   // Size of the clipped area, not including non-overlay scrollbars. Overlay
   // scrollbars do not affect the clipped area.
+  // TODO(pdr): Rename this to scroll_container_bounds.
   gfx::Size scroll_clip_layer_bounds;
 
   // Bounds of the overflow scrolling area.
