@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72c9a89c_93896d11",
+        "filename": "media/mojo/services/mojo_media_drm_storage.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-16T13:50:53Z",
+      "side": 1,
+      "message": "As I see, multiple SavePersistentSession() calls is a possibility. In that case, this will not work. So, we need to maintain a queue of |save_persistent_session_cb|s? What do you suggest?",
+      "range": {
+        "startLine": 48,
+        "startChar": 70,
+        "endLine": 48,
+        "endChar": 0
+      },
+      "revId": "688ed1dcdc7c426ac86462fc6f4830fa8036ff33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
