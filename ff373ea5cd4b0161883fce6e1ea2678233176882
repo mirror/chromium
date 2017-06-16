@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9eda4162_a710ee17",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 7
+      },
+      "lineNbr": 243,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-16T22:23:01Z",
+      "side": 1,
+      "message": "Thoughts? This is a little more obviously thread-safe. cbrubaker confirmed it should be okay to use a TrustManager on multiple threads. KeyStore.getInstance(KeyStore.getDefaultType()) returns a KeyStore that doesn\u0027t lock on mutations or anything, but now we don\u0027t mutate it.\n\nHilariously, this is what Android\u0027s TrustManagerImpl was doing anyway. On all but the magic AndroidCAStore KeyStore, tmf.init would just query all the certificates on creation and stash them in memory. So the old version of the CL was safe, but I think this is more obvious.\n\nAs a bonus, we don\u0027t waste time querying a no-op TrustManager when not in tests!",
+      "revId": "ff373ea5cd4b0161883fce6e1ea2678233176882",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
