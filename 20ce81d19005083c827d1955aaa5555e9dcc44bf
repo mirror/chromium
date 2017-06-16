@@ -46,6 +46,30 @@
       "revId": "20ce81d19005083c827d1955aaa5555e9dcc44bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c0da42a_1303ca0a",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-06-16T17:34:42Z",
+      "side": 1,
+      "message": "Ah, yes! Sorry, I missed the IsChromeFirstRun() check above.",
+      "parentUuid": "a0690a65_a842c16a",
+      "range": {
+        "startLine": 1176,
+        "startChar": 15,
+        "endLine": 1176,
+        "endChar": 25
+      },
+      "revId": "20ce81d19005083c827d1955aaa5555e9dcc44bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
