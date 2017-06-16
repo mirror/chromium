@@ -128,6 +128,30 @@
       "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f700932f_42c29a7f",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-16T19:28:22Z",
+      "side": 1,
+      "message": "That makes sense -- thanks, Rick.\n\nkHTMLIFrameElementAllowfullscreenAttributeSetAfterContentLoad (k59d?) was a special case, since it was only to be counted in very specific circumstances, so I didn\u0027t consider it an example to emulate here.",
+      "parentUuid": "cd0fad39_d7c01f20",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
