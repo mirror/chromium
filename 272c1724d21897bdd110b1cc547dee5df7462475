@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "552c00a6_810a9e26",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_coordinator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-16T08:19:36Z",
+      "side": 1,
+      "message": "No action needed: you could also do:\nDCHECK([paymentItem conformsToProtocol:@protocol(PaymentsIsSelectable)]);\n(It\u0027s slower I think. In a DCHECK it\u0027s not really an issue though.)",
+      "range": {
+        "startLine": 92,
+        "startChar": 10,
+        "endLine": 92,
+        "endChar": 21
+      },
+      "revId": "272c1724d21897bdd110b1cc547dee5df7462475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf80498_de8240fc",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator.mm",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-16T08:19:36Z",
+      "side": 1,
+      "message": "Nit: remove empty line.",
+      "revId": "272c1724d21897bdd110b1cc547dee5df7462475",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
