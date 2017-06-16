@@ -25,6 +25,29 @@
     },
     {
       "key": {
+        "uuid": "5f609ffd_abda225c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1134722
+      },
+      "writtenOn": "2017-06-16T22:12:52Z",
+      "side": 1,
+      "message": "nit: extract to a constant to clarify what this is?",
+      "range": {
+        "startLine": 142,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f7c947c2_b4671b6f",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 5
