@@ -34,6 +34,24 @@
       "revId": "ef344143929225c301200cc7687272a3490833fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "039c8b21_303ce7e1",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T08:41:26Z",
+      "side": 1,
+      "message": "In C++ the variable lifetime is scoped to the block where it is defined. The @autorelease {} is a new block (in C++ terms, not an Objective-C block) and thus the lifetime of the variable is reduced since it is in a smaller block (it used to be destroyed at the end of the main method, it is now destroyed at the end of the @autoreleasepool {}).\n\nSee those page for the rules of lifetime of objects and scoping rules in C++:\n\nhttp://en.cppreference.com/w/cpp/language/scope\nhttp://en.cppreference.com/w/cpp/language/lifetime\n\nI think you should be able to fix by introducing an additional @autorelease {} block, but at this point, it is probably better to split the function in multiple methods, each of them with an @autoreleasepool.\n\nnamespace {\n\nNSString* const kUIApplicationDelegateInfoKey \u003d @\"UIApplicationDelegate\";\n\nvoid StartCrashController() {\n  @autoreleasepool {\n    std::string channel_string \u003d GetChannelString();\n\n    RegisterChromeIOSCrashKeys();\n    base::debug::SetCrashKeyValue(crash_keys::kChannel, channel_string);\n    breakpad_helper::Start(channel_string);\n  }\n}\n\nvoid SetTextDirectionIfPseudoRTLEnabled() {\n  @autoreleasepool {\n    NSUserDefaults* standard_defaults \u003d [NSUserDefaults standardUserDefaults];\n    if ([standard_defaults boolForKey:@\"EnablePseudoRTL\"]) {\n      [standard_defaults registerDefaults:@{ @\"AppleTextDirection\": @\"YES\" } }];\n  }\n}\n\nint RunUIApplicationMain(int argc, char* argv[]) {\n  @autoreleasepool {\n    NSString* delegate_class_name \u003d [[NSBundle mainBundle]\n        objectForInfoDictionaryKey:kUIApplicationDelegateInfoKey];\n    CHECK(delegate_class_name);\n\n    return UIApplicationMain(argc, argv, nil, delegate_class_name);\n  }\n}\n\n}  // namespace\n\nint main(int argc, char* argv[]) {\n  IOSChromeMain::InitStartTime();\n\n  // Set NSUserDefaults keys to force pseudo-RTL if needed.\n  SetTextDirectionIfPseudoRTLEnabled();\n\n  // Create this here since it\u0027s needed to start the crash handler.\n  base::AtExitManager at_exit;\n\n  // The Crash Controller is started here even if the user opted out since we\n  // don\u0027t have yet preferences. Later on it is stopped if the user opted out.\n  // In any case reports are not sent if the user opted out.\n  StartCrashController();\n\n  // Always ignore SIGPIPE.  We check the return value of write().\n  CHECK_NE(SIG_ERR, signal(SIGPIPE, SIG_IGN));\n\n  return RunUIApplicationMain(argc, argv);\n}\n\nAnother option is to move the definition of the base::AtExitManager code setting the user defaults for @\"EnablePseudoRTL\". Since this is only setting some state for the system, it can be done after the construction of the AtExitManager.",
+      "parentUuid": "a8767cd7_324712c7",
+      "revId": "ef344143929225c301200cc7687272a3490833fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
