@@ -46,6 +46,29 @@
       "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6872fb7c_7f2a712e",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1107749
+      },
+      "writtenOn": "2017-06-16T15:46:46Z",
+      "side": 1,
+      "message": "Right now this happens as a result of a posted event on the ui_task_runner inside DrmGpuPlatformSupportHost::OnGpuProcessLaunched(). I think this is the underlying issue you\u0027re seeing.\n\nAs a posted event this would happen much later, after RenderingHelper::Setup() runs. The issue with this is that the resize event in RenderingHelper::Setup() at line ~286 (platform_window_delegate_-\u003eplatform_window()-\u003eSetBounds(...)) will be a no-op since the channel to the GPU isn\u0027t established, so the DrmWindow resize on the GPU side never happens.\n\nI\u0027m thinking that you\u0027d just need to run the ui_task_runner here to drain any pending requests.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 26
+      },
+      "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
