@@ -166,7 +166,7 @@ gfx::Path GetFillPath(float scale, const gfx::Size& size, float endcap_width) {
 gfx::Path GetBorderPath(float scale,
                         bool unscale_at_end,
                         bool extend_to_top,
-                        const gfx::Size& size,
+                        const gfx::Size& size,  // Bazinga.
                         float endcap_width) {
   const float top = scale - 1;
   const float right = size.width() * scale;
