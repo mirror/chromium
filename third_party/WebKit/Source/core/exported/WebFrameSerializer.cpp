@@ -35,6 +35,7 @@
 #include "core/dom/Document.h"
 #include "core/dom/Element.h"
 #include "core/dom/shadow/ElementShadow.h"
+#include "core/exported/WebFrameSerializerImpl.h"
 #include "core/exported/WebRemoteFrameImpl.h"
 #include "core/frame/Frame.h"
 #include "core/frame/FrameSerializer.h"
@@ -75,7 +76,6 @@
 #include "public/web/WebFrame.h"
 #include "public/web/WebFrameSerializerCacheControlPolicy.h"
 #include "public/web/WebFrameSerializerClient.h"
-#include "web/WebFrameSerializerImpl.h"
 
 namespace blink {
 
