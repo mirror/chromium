@@ -120,6 +120,30 @@
     },
     {
       "key": {
+        "uuid": "4461c6e7_33370725",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T17:02:45Z",
+      "side": 1,
+      "message": "if (item.data-\u003elength() \u003d\u003d 0) wouldn\u0027t make sense outside the switch statement, as item.data is only non-null for kData items. I could probably move if (item.length \u003d\u003d 0) outside the switch statement, if we\u0027re certain that item.length is actually non-zero for all non-zero length kData items. I believe that is the case (since for Data items length is set to kUntilEndOfFile), but I don\u0027t know if I missed a subtle codepath somewhere. Currently nothing is relying on any particular value of item.length for data items.",
+      "parentUuid": "890c480a_0ad76915",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667fb072_f12fd3cb",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 4
@@ -167,6 +191,24 @@
       "side": 1,
       "message": "Interesting. sgtm. Maybe we could build some sort of \u0027const state\u0027 notion into mojo where it would pass this state to both sides of the pipe (so you can construct a blob with a uuid, and have that memory allocated and available on both sides). Anyways, future stuff that we can think about later.",
       "parentUuid": "6a975649_7c86c98d",
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "bf04e7ae_0fe0390d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T17:02:45Z",
+      "side": 1,
+      "message": "Association some data with a MessagePipeHandle is definitely something that exists (or will exist) I believe, which we could at least use to cache the UUID or some other data with the pipe. You can\u0027t always rely on the data being there (for example when pipes are fused, or other similar tricks), but we should definitely be able to use that to optimize some of the common cases. So yeah, definitely something to keep in mind for future stuff.",
+      "parentUuid": "fe2e799e_fb36dec5",
       "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
