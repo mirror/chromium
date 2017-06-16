@@ -454,6 +454,11 @@ Profile::ExitType OffTheRecordProfileImpl::GetLastSessionExitType() {
   return profile_->GetLastSessionExitType();
 }
 
+scoped_refptr<base::SequencedTaskRunner>
+OffTheRecordProfileImpl::GetPrefServiceTaskRunner() {
+  return nullptr;
+}
+
 #if defined(OS_CHROMEOS)
 void OffTheRecordProfileImpl::ChangeAppLocale(const std::string& locale,
                                               AppLocaleChangedVia) {
