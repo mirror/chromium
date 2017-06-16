@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d839bcb7_a658de27",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 592,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good idea! I\u0027ve added the latter.",
+      "parentUuid": "2de203dd_e488fa9d",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "52de59b7_379a9212",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4eab8815_883c5498",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ChromeTabbedActivity.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Yes, it is OK to call it without starting first.",
+      "parentUuid": "52de59b7_379a9212",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "5ed7295e_93ac4bd0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good idea. Done.",
+      "parentUuid": "5504b918_fa0cc7a7",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a2a76127_d3266d96",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "b9e1c907_6ef2c42d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2a76127_d3266d96",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa60d617_92fb0773",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -84,6 +156,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4b347c2_c0289e40",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aa60d617_92fb0773",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +200,30 @@
     },
     {
       "key": {
+        "uuid": "5d6c2b1d_8a52a7bb",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "de48f77b_67632b02",
+      "range": {
+        "startLine": 30,
+        "startChar": 7,
+        "endLine": 30,
+        "endChar": 24
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d92d582e_741131f6",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -124,6 +238,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "444a3400_00c5956e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d92d582e_741131f6",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -144,6 +276,24 @@
     },
     {
       "key": {
+        "uuid": "b219b231_fad908c0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "The bug is filed now.",
+      "parentUuid": "cb7f89aa_19ae6534",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc5933d9_47830a6f",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -158,6 +308,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89e0a53_b2997e9b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc5933d9_47830a6f",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -178,6 +346,24 @@
     },
     {
       "key": {
+        "uuid": "f5c6ea17_1b0fd55a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a492a156_856dff28",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "352201f3_28f00456",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -192,6 +378,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14b12dfb_fd2cdd0b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "352201f3_28f00456",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -212,6 +416,24 @@
     },
     {
       "key": {
+        "uuid": "e287af40_b9255430",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "mFileObserver.startWatching() will have no effect if monitoring is already started so it should be fine.",
+      "parentUuid": "1b163829_b1a1a78b",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5677febf_a2da4b0c",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
         "patchSetId": 5
@@ -226,6 +448,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a2f780_2d5c166c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitor.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "stopWatching() will have no effect if monitoring is already stopped so we don\u0027t need to check how many times start has been called already.",
+      "parentUuid": "5677febf_a2da4b0c",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -269,6 +509,48 @@
     },
     {
       "key": {
+        "uuid": "bb03e9cb_397e9085",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Changed to mWatchingCount.",
+      "parentUuid": "574f84c6_3d714f84",
+      "range": {
+        "startLine": 42,
+        "startChar": 19,
+        "endLine": 42,
+        "endChar": 43
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "e07ed572_158bd778",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "d226aa42_156b76a8",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a36fed1_4a5a831c",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
         "patchSetId": 5
@@ -292,6 +574,30 @@
     },
     {
       "key": {
+        "uuid": "7027b9f1_580ed7be",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Ah! Done.",
+      "parentUuid": "1a36fed1_4a5a831c",
+      "range": {
+        "startLine": 56,
+        "startChar": 19,
+        "endLine": 56,
+        "endChar": 41
+      },
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ffe0c3f_1e738f38",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
         "patchSetId": 5
@@ -306,6 +612,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf843909_1dda66d9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good point! Done.",
+      "parentUuid": "4ffe0c3f_1e738f38",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -326,6 +650,24 @@
     },
     {
       "key": {
+        "uuid": "c112b99f_53d59f2a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "mScreenshotShowUiCount is now accessed only on the test thread.",
+      "parentUuid": "3177d5ff_c4bf6ace",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb89e766_62f2d58b",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
         "patchSetId": 5
@@ -343,6 +685,24 @@
     },
     {
       "key": {
+        "uuid": "7367e695_dbddd74a",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good idea! The calls that need the UI thread to finish execution are moved into separate methods (that uses a semaphore) as you\u0027ve suggested.",
+      "parentUuid": "fb89e766_62f2d58b",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e0164c8e_9ddee578",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
         "patchSetId": 5
@@ -357,6 +717,24 @@
       "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e246cd81_6660d76d",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/feature_engagement_tracker/ScreenshotMonitorTest.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-16T22:52:16Z",
+      "side": 1,
+      "message": "Good idea. I\u0027ve added tests that call either twice and call one twice before the other.",
+      "parentUuid": "e0164c8e_9ddee578",
+      "revId": "04092b739d1874683887eea01d3c27c41b0fb289",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
