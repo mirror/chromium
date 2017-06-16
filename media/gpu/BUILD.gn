@@ -225,6 +225,8 @@ component("gpu") {
         "android/codec_wrapper.h",
         "android/media_codec_video_decoder.cc",
         "android/media_codec_video_decoder.h",
+        "android/video_frame_factory.cc",
+        "android/video_frame_factory.h",
       ]
     }
 
@@ -476,6 +478,9 @@ source_set("android_video_decode_accelerator_unittests") {
         "android/codec_image_unittest.cc",
         "android/codec_wrapper_unittest.cc",
         "android/media_codec_video_decoder_unittest.cc",
+        "android/mock_video_frame_factory.cc",
+        "android/mock_video_frame_factory.h",
+        "android/video_frame_factory_unittest.cc",
       ]
     }
     deps = [
