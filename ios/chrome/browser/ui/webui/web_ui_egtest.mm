@@ -81,7 +81,7 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 
 // Tests that chrome://version renders and contains correct version number and
 // user agent string.
-- (void)testVersion {
+- (void)DISABLED_testVersion {
   LoadWebUIUrl(kChromeUIVersionHost);
 
   // Verify that app version is present on the page.
@@ -95,7 +95,7 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 }
 
 // Tests that chrome://physical-web renders and the page title is present.
-- (void)testPhysicalWeb {
+- (void)DISABLED_testPhysicalWeb {
   // Enable the Physical Web via Chrome variation.
   base::FieldTrialList::CreateFieldTrial("PhysicalWebEnabled", "Enabled");
 
@@ -109,6 +109,7 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 
 // Tests that clicking on a link for a native page from chrome://chrome-urls
 // navigates to that page.
+// TODO(crbug.com/734079): Re-enable this test.
 - (void)testChromeURLNavigateToNativePage {
   LoadWebUIUrl(kChromeUIChromeURLsHost);
 
@@ -124,6 +125,7 @@ id<GREYMatcher> WaitForOmniboxText(std::string text) {
 
 // Tests that back navigation functions properly after navigation via anchor
 // click.
+// TODO(crbug.com/734079): Re-enable this test.
 - (void)testChromeURLBackNavigationFromAnchorClick {
   LoadWebUIUrl(kChromeUIChromeURLsHost);
 
