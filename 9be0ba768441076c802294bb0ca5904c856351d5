@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fda97126_0bb047c0",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-16T19:58:17Z",
+      "side": 1,
+      "message": "layout -\u003e layout_object",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ee27907_6737e557",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-16T19:58:17Z",
+      "side": 1,
+      "message": "auto*. better yet, ComputedStyle*",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fd5dbbd_6e247cec",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-16T19:58:17Z",
+      "side": 1,
+      "message": "auto* or LayoutBox*",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee0fe59d_bf18127e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-16T19:58:17Z",
+      "side": 1,
+      "message": "I think this makes more sense as:\n\n  LayoutUnit vertical \u003d box-\u003eVerticalScrollbarWidth();",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
