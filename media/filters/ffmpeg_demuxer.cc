@@ -1555,6 +1555,7 @@ void FFmpegDemuxer::LogMetadata(AVFormatContext* avctx,
       const AudioDecoderConfig& audio_config = stream->audio_decoder_config();
       params.SetString("audio_codec_name" + suffix,
                        GetCodecName(audio_parameters->codec_id));
+      params.SetInteger("audio_codec_id" + suffix, audio_config.codec());
       params.SetInteger("audio_channels_count" + suffix,
                         audio_parameters->channels);
       params.SetString("audio_sample_format" + suffix,
@@ -1571,6 +1572,7 @@ void FFmpegDemuxer::LogMetadata(AVFormatContext* avctx,
       const VideoDecoderConfig& video_config = stream->video_decoder_config();
       params.SetString("video_codec_name" + suffix,
                        GetCodecName(video_parameters->codec_id));
+      params.SetInteger("video_codec_id" + suffix, video_config.codec());
       params.SetInteger("width" + suffix, video_parameters->width);
       params.SetInteger("height" + suffix, video_parameters->height);
 

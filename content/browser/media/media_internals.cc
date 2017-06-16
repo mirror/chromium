@@ -330,8 +330,8 @@ class MediaInternals::MediaInternalsUMAHandler {
     bool video_decoder_changed = false;
     bool has_cdm = false;
     bool is_incognito = false;
-    std::string audio_codec_name;
-    std::string video_codec_name;
+    media::AudioCodec audio_codec = media::kUnknownAudioCodec;
+    media::VideoCodec video_codec = media::kUnknownVideoCodec;
     std::string video_decoder;
     GURL origin_url;
     WatchTimeInfo watch_time_info;
@@ -370,7 +370,27 @@ class MediaInternals::MediaInternalsUMAHandler {
     base::UmaHistogramCounts100(key.as_string(), underflow_count);
   }
 
-  void RecordWatchTimeWithFilter(
+  void AddDefaultMetadataToUkm(const PipelineInfo& player_info,
+                               std::unique_ptr<ukm::UkmEntryBuilder> builder) {
+    if (!builder)
+      return;
+
+    if (player_info.audio_codec != media::kUnknownAudioCodec)
+      builder->AddMetric("AudioCodec", player_info.audio_codec);
+
+    if (player_info.video_codec != media::kUnknownVideoCodec)
+      builder->AddMetric("VideoCodec", player_info.video_codec);
+
+    if (!player_info.video_decoder.empty()) {
+      builder->AddMetric(
+          "UsedHardwareVideoDecode",
+          player_info.video_decoder == media::GpuVideoDecoder::kDecoderName);
+    }
+
+    builder->AddMetric("LastPipelineStatus", player_info.last_pipeline_status);
+  }
+
+  std::unique_ptr<ukm::UkmEntryBuilder> RecordWatchTimeWithFilter(
       const GURL& url,
       WatchTimeInfo* watch_time_info,
       const base::flat_set<base::StringPiece>& watch_time_filter) {
@@ -401,18 +421,21 @@ class MediaInternals::MediaInternalsUMAHandler {
 
       it = watch_time_info->erase(it);
     }
+
+    return builder;
   }
 
   enum class FinalizeType { EVERYTHING, POWER_ONLY, CONTROLS_ONLY };
-  void FinalizeWatchTime(bool has_video,
-                         const GURL& url,
-                         int* underflow_count,
-                         WatchTimeInfo* watch_time_info,
-                         FinalizeType finalize_type) {
+  std::unique_ptr<ukm::UkmEntryBuilder> FinalizeWatchTime(
+      bool has_video,
+      const GURL& url,
+      int* underflow_count,
+      WatchTimeInfo* watch_time_info,
+      FinalizeType finalize_type) {
     // |url| may come from an untrusted source, so ensure it's valid before
     // trying to use it for watch time logging.
     if (!url.is_valid())
-      return;
+      return nullptr;
 
     switch (finalize_type) {
       case FinalizeType::EVERYTHING:
@@ -430,9 +453,8 @@ class MediaInternals::MediaInternalsUMAHandler {
         }
         *underflow_count = 0;
 
-        RecordWatchTimeWithFilter(url, watch_time_info,
-                                  base::flat_set<base::StringPiece>());
-        break;
+        return RecordWatchTimeWithFilter(url, watch_time_info,
+                                         base::flat_set<base::StringPiece>());
       case FinalizeType::POWER_ONLY:
         RecordWatchTimeWithFilter(url, watch_time_info, watch_time_power_keys_);
         break;
@@ -441,6 +463,7 @@ class MediaInternals::MediaInternalsUMAHandler {
                                   watch_time_controls_keys_);
         break;
     }
+    return nullptr;
   }
 
   // Key is player id.
@@ -547,13 +570,17 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
       if (event.params.HasKey("found_video_stream")) {
         event.params.GetBoolean("found_video_stream", &player_info.has_video);
       }
-      if (event.params.HasKey("audio_codec_name")) {
-        event.params.GetString("audio_codec_name",
-                               &player_info.audio_codec_name);
+      if (event.params.HasKey("audio_codec_id")) {
+        int audio_codec = 0;
+        event.params.GetInteger("audio_codec_id", &audio_codec);
+        if (audio_codec <= media::kAudioCodecMax && audio_codec >= 0)
+          player_info.audio_codec = static_cast<media::AudioCodec>(audio_codec);
       }
-      if (event.params.HasKey("video_codec_name")) {
-        event.params.GetString("video_codec_name",
-                               &player_info.video_codec_name);
+      if (event.params.HasKey("video_codec_id")) {
+        int video_codec = 0;
+        event.params.GetInteger("video_codec_id", &video_codec);
+        if (video_codec <= media::kVideoCodecMax && video_codec >= 0)
+          player_info.video_codec = static_cast<media::VideoCodec>(video_codec);
       }
       if (event.params.HasKey("video_decoder")) {
         std::string previous_video_decoder(player_info.video_decoder);
@@ -602,10 +629,12 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
         DCHECK(event.params.GetBoolean(media::kWatchTimeFinalize,
                                        &should_finalize) &&
                should_finalize);
-        FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                          &player_info.underflow_count,
-                          &player_info.watch_time_info,
-                          FinalizeType::EVERYTHING);
+        AddDefaultMetadataToUkm(
+            player_info,
+            FinalizeWatchTime(player_info.has_video, player_info.origin_url,
+                              &player_info.underflow_count,
+                              &player_info.watch_time_info,
+                              FinalizeType::EVERYTHING));
       } else {
         if (event.params.HasKey(media::kWatchTimeFinalizePower)) {
           bool should_finalize;
@@ -639,10 +668,12 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
         break;
 
       ReportUMAForPipelineStatus(it->second);
-      FinalizeWatchTime(it->second.has_video, it->second.origin_url,
-                        &it->second.underflow_count,
-                        &(it->second.watch_time_info),
-                        FinalizeType::EVERYTHING);
+      AddDefaultMetadataToUkm(
+          it->second,
+          FinalizeWatchTime(it->second.has_video, it->second.origin_url,
+                            &it->second.underflow_count,
+                            &(it->second.watch_time_info),
+                            FinalizeType::EVERYTHING));
       player_info_map.erase(it);
     }
     default:
@@ -656,11 +687,11 @@ std::string MediaInternals::MediaInternalsUMAHandler::GetUMANameForAVStream(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   static const char kPipelineUmaPrefix[] = "Media.PipelineStatus.AudioVideo.";
   std::string uma_name = kPipelineUmaPrefix;
-  if (player_info.video_codec_name == "vp8") {
+  if (player_info.video_codec == media::kCodecVP8) {
     uma_name += "VP8.";
-  } else if (player_info.video_codec_name == "vp9") {
+  } else if (player_info.video_codec == media::kCodecVP9) {
     uma_name += "VP9.";
-  } else if (player_info.video_codec_name == "h264") {
+  } else if (player_info.video_codec == media::kCodecH264) {
     uma_name += "H264.";
   } else {
     return uma_name + "Other";
@@ -744,9 +775,12 @@ void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
   auto it = players_it->second.begin();
   while (it != players_it->second.end()) {
     ReportUMAForPipelineStatus(it->second);
-    FinalizeWatchTime(it->second.has_video, it->second.origin_url,
-                      &it->second.underflow_count,
-                      &(it->second.watch_time_info), FinalizeType::EVERYTHING);
+    AddDefaultMetadataToUkm(
+        it->second,
+        FinalizeWatchTime(it->second.has_video, it->second.origin_url,
+                          &it->second.underflow_count,
+                          &(it->second.watch_time_info),
+                          FinalizeType::EVERYTHING));
     players_it->second.erase(it++);
   }
   renderer_info_.erase(players_it);

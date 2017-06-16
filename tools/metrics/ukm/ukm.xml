@@ -332,6 +332,7 @@ be describing additional metrics about the same event.
   <metric name="Audio.NativeControlsOff"/>
   <metric name="Audio.NativeControlsOn"/>
   <metric name="Audio.SRC"/>
+  <metric name="AudioCodec"/>
   <metric name="AudioVideo.AC"/>
   <metric name="AudioVideo.All"/>
   <metric name="AudioVideo.Background.AC"/>
@@ -346,6 +347,9 @@ be describing additional metrics about the same event.
   <metric name="AudioVideo.NativeControlsOff"/>
   <metric name="AudioVideo.NativeControlsOn"/>
   <metric name="AudioVideo.SRC"/>
+  <metric name="LastPipelineStatus"/>
+  <metric name="UsedHardwareVideoDecode"/>
+  <metric name="VideoCodec"/>
 </event>
 
 <event name="PageLoad" singular="True">
