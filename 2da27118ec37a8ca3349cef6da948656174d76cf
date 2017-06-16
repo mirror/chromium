@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "56e72c69_ee18249a",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-16T19:51:55Z",
+      "side": 1,
+      "message": "The thread returned by CurrentThread could be a worker thread. I don\u0027t think we have a compositor TQ on those threads.  I think you need to either add compositor TQs to worker threads, or only do this trick when we\u0027re on the main thread. Besides, I don\u0027t think this particular call site is critical for perf: it only affects the first frame.",
+      "range": {
+        "startLine": 62,
+        "startChar": 52,
+        "endLine": 62,
+        "endChar": 65
+      },
+      "revId": "2da27118ec37a8ca3349cef6da948656174d76cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
