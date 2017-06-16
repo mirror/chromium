@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "712b0aa4_f60bd99d",
+        "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-16T07:03:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8184f165_4cf64915",
+      "range": {
+        "startLine": 58,
+        "startChar": 12,
+        "endLine": 58,
+        "endChar": 20
+      },
+      "revId": "7c0d89b04c06a46c2c45b13695073322c4357b87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b2c9180d_9b16073a",
         "filename": "chrome/browser/search/hotword_audio_history_handler.cc",
         "patchSetId": 1
