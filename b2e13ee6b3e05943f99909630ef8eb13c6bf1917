@@ -46,6 +46,30 @@
       "revId": "b2e13ee6b3e05943f99909630ef8eb13c6bf1917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75aecc7d_56aa8c04",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-16T21:57:42Z",
+      "side": 1,
+      "message": "Hahaha. Okay, it happens to be safe but probably shouldn\u0027t be done this way. I\u0027ll get you a better implementation...",
+      "parentUuid": "ad8779df_b1bc30ab",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 46
+      },
+      "revId": "b2e13ee6b3e05943f99909630ef8eb13c6bf1917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
