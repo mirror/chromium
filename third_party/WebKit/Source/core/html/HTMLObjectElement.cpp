@@ -319,6 +319,14 @@ void HTMLObjectElement::UpdatePluginInternal() {
   if (!overriden_url.IsEmpty()) {
     url = url_ = overriden_url.GetString();
     service_type = service_type_ = "text/html";
+  } else {
+    overriden_url =
+        GetDocument().GetFrame()->Loader().Client()->OverridePDFEmbedWithHTML(
+            GetDocument().CompleteURL(url_), service_type_);
+    if (!overriden_url.IsEmpty()) {
+      url_ = overriden_url.GetString();
+      service_type_ = "application/pdf";
+    }
   }
 
   if (!HasValidClassId() ||

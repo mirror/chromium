@@ -61,6 +61,7 @@
           "extensions::KeepAlive",
           "extensions::mime_handler::MimeHandlerService",
           "extensions::mojom::InlineInstall",
+          "extensions::mime_handler_view::MimeHandlerViewService",
           "media_router::mojom::MediaRouter",
           "page_load_metrics::mojom::PageLoadMetrics",
           "password_manager::mojom::CredentialManager",
