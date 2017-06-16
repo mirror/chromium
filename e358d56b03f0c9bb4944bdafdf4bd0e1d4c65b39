@@ -46,6 +46,30 @@
       "revId": "e358d56b03f0c9bb4944bdafdf4bd0e1d4c65b39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "380c8426_1e6e8cff",
+        "filename": "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:21:14Z",
+      "side": 0,
+      "message": "Actually, no, the IO thread is poorly named as it\u0027s strictly forbidden to do file I/O on it (it will choke on AssertIOAllowed()..). It\u0027s meant for network IO and IPC IO.\n\nFile I/O is allowed on any task scheduler thread with the base::MayBlock() trait (and so was it on deprecated BrowserThreads like BrowserThread::FILE, etc. and the deprecated BlockingPool()).",
+      "parentUuid": "06c8e2a9_b64712b0",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "e358d56b03f0c9bb4944bdafdf4bd0e1d4c65b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
