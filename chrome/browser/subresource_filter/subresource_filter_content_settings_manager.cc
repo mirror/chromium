@@ -123,6 +123,9 @@ SubresourceFilterContentSettingsManager::GetSiteMetadata(
 void SubresourceFilterContentSettingsManager::SetSiteMetadata(
     const GURL& url,
     std::unique_ptr<base::DictionaryValue> dict) {
+  if (!base::FeatureList::IsEnabled(
+          subresource_filter::kSafeBrowsingSubresourceFilterExperimentalUI))
+    return;
   settings_map_->SetWebsiteSettingDefaultScope(
       url, GURL(), ContentSettingsType::CONTENT_SETTINGS_TYPE_ADS_DATA,
       std::string(), std::move(dict));
