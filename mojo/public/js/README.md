@@ -141,10 +141,14 @@ the service side sends back a response. It is rejected if the interface is
 disconnected.
 
 ### Connection Errors
-If there are no remaining messages available on a pipe and the remote end has
-been closed, a connection error will be triggered on the local end. Connection
-errors may also be triggered by automatic forced local pipe closure due to
-*e.g.* a validation error when processing a received message.
+If there are no remaining messages available for a pipe endpoint and the pipe
+has broken, a connection error will be triggered on the pipe endpoint.
+Connection errors may be triggered by:
+* Mojo system-level causes: process terminated, resource exhausted, etc.
+* The bindings close the pipe due to a validation error when processing a
+  received message.
+* The peer endpoint is closed. For example, the remote side is a bound interface
+  pointer and it is destroyed.
 
 Regardless of the underlying cause, when a connection error is encountered on
 a binding endpoint, that endpoint's **connection error handler** (if set) is
