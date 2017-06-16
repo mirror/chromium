@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d3ab4d38_a42e98b3",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003006
+      },
+      "writtenOn": "2017-06-16T01:21:55Z",
+      "side": 1,
+      "message": "It\u0027s probably worth updating this comment to say something like:\nIncremental linking doesn\u0027t work when the ILK file gets too large. The ILK file size seems to be related to the size of all the object files in the link. 64-bit debug builds with MSVC and clang builds with full symbols produce large object files, so we disable incremental linking in those configurations.",
+      "revId": "c10035e36cbb68fbbb75f64616279a5843a23e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
