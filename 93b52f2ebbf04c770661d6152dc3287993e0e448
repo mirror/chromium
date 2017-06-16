@@ -22,6 +22,30 @@
       "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "babfad22_b3e64eef",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-06-16T18:25:44Z",
+      "side": 0,
+      "message": "Yes, this is designed to ensure that the Enter/ExitFullscreen lines in MediaControlsRotateToFullscreenDelegate get called.\n\nThere\u0027s some coverage for that in MediaControlsRotateToFullscreenDelegateTest, using the same mechanism of calling DidEnter/ExitFullscreen (synchronously) in a MockChromeClient (since the web layer which normally does that part isn\u0027t available in these tests), but it\u0027d be best to cover it here too.\n\nPosting a task from here to call DidEnter/ExitFullscreen sounds like the cleanest solution (with a corresponding `testing::RunPendingTasks();` in the tests if necessary).",
+      "parentUuid": "3f263137_9bd3a766",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
