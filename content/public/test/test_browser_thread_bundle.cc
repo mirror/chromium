@@ -12,6 +12,7 @@
 #include "base/test/scoped_async_task_scheduler.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/common/content_client.h"
 #include "content/public/test/test_browser_thread.h"
 #include "content/public/test/test_utils.h"
 
@@ -155,6 +156,10 @@ void TestBrowserThreadBundle::CreateThreads() {
   }
 
   threads_created_ = true;
+
+  // Consider startup complete such that after-startup-tasks always run in
+  // the scope of the test they were posted from (http://crbug.com/732018).
+  GetContentClient()->browser()->SetBrowserStartupIsCompleteForTesting();
 }
 
 }  // namespace content
