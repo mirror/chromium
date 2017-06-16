@@ -51,7 +51,82 @@ class WTF_EXPORT ArrayBufferContents {
   // Most clients would want to use ArrayBufferContents::createData, which
   // allocates memory and specifies the correct deleter.
   using DataDeleter = void (*)(void* data);
-  using DataHandle = std::unique_ptr<void, DataDeleter>;
+
+  enum class AllocationKind { kNormal, kReservation };
+
+  class DataHandle {
+    void* allocation_base_;
+    size_t allocation_length_;
+
+    void* data_;
+    size_t data_length_;
+
+    AllocationKind kind_;
+    DataDeleter deleter_;
+
+    DISALLOW_COPY_AND_ASSIGN(DataHandle);
+
+   public:
+    DataHandle(void* data, DataDeleter deleter)
+        : allocation_base_(data),
+          allocation_length_(0),
+          data_(data),
+          data_length_(0),
+          kind_(AllocationKind::kNormal),
+          deleter_(deleter) {}
+    DataHandle(void* allocation_base,
+               size_t allocation_length,
+               void* data,
+               size_t data_length,
+               AllocationKind kind,
+               DataDeleter deleter)
+        : allocation_base_(allocation_base),
+          allocation_length_(allocation_length),
+          data_(data),
+          data_length_(data_length),
+          kind_(kind),
+          deleter_(deleter) {}
+    // Move constructor
+    DataHandle(DataHandle&& other) { *this = std::move(other); }
+    ~DataHandle() {
+      if (!allocation_base_)
+        return;
+      switch (kind_) {
+        case AllocationKind::kNormal: {
+          DCHECK(allocation_base_ == data_);
+          DCHECK(deleter_);
+          deleter_(data_);
+          return;
+        }
+        case AllocationKind::kReservation: {
+          ReleaseReservedMemory(allocation_base_, allocation_length_);
+          return;
+        }
+      }
+    }
+
+    // Move operator
+    DataHandle& operator=(DataHandle&& other) {
+      allocation_base_ = other.allocation_base_;
+      allocation_length_ = other.allocation_length_;
+      data_ = other.data_;
+      data_length_ = other.data_length_;
+      kind_ = other.kind_;
+      deleter_ = other.deleter_;
+      other.allocation_base_ = nullptr;
+      return *this;
+    }
+
+    void* AllocationBase() const { return allocation_base_; }
+    size_t AllocationLength() const { return allocation_length_; }
+
+    void* Data() const { return data_; }
+    size_t DataLength() const { return data_length_; }
+
+    AllocationKind AllocationKind() const { return kind_; }
+
+    operator bool() const { return allocation_base_; }
+  };
 
   enum InitializationPolicy { kZeroInitialize, kDontInitialize };
 
@@ -93,7 +168,9 @@ class WTF_EXPORT ArrayBufferContents {
   void CopyTo(ArrayBufferContents& other);
 
   static void* AllocateMemoryOrNull(size_t, InitializationPolicy);
+  static void* ReserveMemory(size_t);
   static void FreeMemory(void*);
+  static void ReleaseReservedMemory(void*, size_t);
   static DataHandle CreateDataHandle(size_t, InitializationPolicy);
   static void Initialize(
       AdjustAmountOfExternalAllocatedMemoryFunction function) {
@@ -132,8 +209,8 @@ class WTF_EXPORT ArrayBufferContents {
     void Adopt(DataHandle, unsigned size_in_bytes, SharingType is_shared);
     void CopyMemoryFrom(const DataHolder& source);
 
-    const void* Data() const { return data_.get(); }
-    void* Data() { return data_.get(); }
+    const void* Data() const { return data_.Data(); }
+    void* Data() { return data_.Data(); }
     unsigned SizeInBytes() const { return size_in_bytes_; }
     bool IsShared() const { return is_shared_ == kShared; }
 
