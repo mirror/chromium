@@ -34,6 +34,24 @@
       "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4d3259a_b62564bc",
+        "filename": "third_party/WebKit/Source/web/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T02:20:50Z",
+      "side": 0,
+      "message": "OK, now I\u0027m thinking that this |sources_assignment_filter| thing must automatically assign anthing in android/linux/mac/win dirs to get into the appropriate build.  And so the override was to tell Android to also pick up the linux/WebFontRendering.cpp file.\n\nSo the change I have made is to duplicate linux/WebFontRendering.cpp into core/layout/WebFontRendering[Android|Linux] and then include each into the respective build.  This matches the pattern currently used in https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/BUILD.gn?l\u003d470\u0026rcl\u003d5c1806ffc432d6cecec9ea2480066f738bda84bf",
+      "parentUuid": "63fb159d_3896414d",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
