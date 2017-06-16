@@ -162,9 +162,9 @@ TEST_F(URLResponseBodyConsumerTest, ReceiveData) {
   int request_id = SetUpRequestPeer(std::move(request), &context);
   mojo::DataPipe data_pipe(CreateDataPipeOptions());
 
-  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+  auto consumer = URLResponseBodyConsumer::CreateForTesting(
       request_id, dispatcher_.get(), std::move(data_pipe.consumer_handle),
-      message_loop_.task_runner()));
+      message_loop_.task_runner());
 
   mojo::ScopedDataPipeProducerHandle writer =
       std::move(data_pipe.producer_handle);
@@ -187,9 +187,9 @@ TEST_F(URLResponseBodyConsumerTest, OnCompleteThenClose) {
   int request_id = SetUpRequestPeer(std::move(request), &context);
   mojo::DataPipe data_pipe(CreateDataPipeOptions());
 
-  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+  auto consumer = URLResponseBodyConsumer::CreateForTesting(
       request_id, dispatcher_.get(), std::move(data_pipe.consumer_handle),
-      message_loop_.task_runner()));
+      message_loop_.task_runner());
 
   consumer->OnComplete(ResourceRequestCompletionStatus());
   mojo::ScopedDataPipeProducerHandle writer =
@@ -222,9 +222,9 @@ TEST_F(URLResponseBodyConsumerTest, OnCompleteThenCloseWithAsyncRelease) {
   int request_id = SetUpRequestPeer(std::move(request), &context);
   mojo::DataPipe data_pipe(CreateDataPipeOptions());
 
-  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+  auto consumer = URLResponseBodyConsumer::CreateForTesting(
       request_id, dispatcher_.get(), std::move(data_pipe.consumer_handle),
-      message_loop_.task_runner()));
+      message_loop_.task_runner());
 
   consumer->OnComplete(ResourceRequestCompletionStatus());
   mojo::ScopedDataPipeProducerHandle writer =
@@ -254,9 +254,9 @@ TEST_F(URLResponseBodyConsumerTest, CloseThenOnComplete) {
   int request_id = SetUpRequestPeer(std::move(request), &context);
   mojo::DataPipe data_pipe(CreateDataPipeOptions());
 
-  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+  auto consumer = URLResponseBodyConsumer::CreateForTesting(
       request_id, dispatcher_.get(), std::move(data_pipe.consumer_handle),
-      message_loop_.task_runner()));
+      message_loop_.task_runner());
 
   ResourceRequestCompletionStatus status;
   status.error_code = net::ERR_FAILED;
@@ -297,9 +297,9 @@ TEST_F(URLResponseBodyConsumerTest, TooBigChunkShouldBeSplit) {
   result = mojo::EndWriteDataRaw(writer.get(), size);
   ASSERT_EQ(MOJO_RESULT_OK, result);
 
-  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+  auto consumer = URLResponseBodyConsumer::CreateForTesting(
       request_id, dispatcher_.get(), std::move(data_pipe.consumer_handle),
-      message_loop_.task_runner()));
+      message_loop_.task_runner());
 
   Run(&context);
   EXPECT_EQ(std::string(kMaxNumConsumedBytesInTask, 'a'), context.data);

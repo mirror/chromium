@@ -35,6 +35,13 @@ class CONTENT_EXPORT URLResponseBodyConsumer final
       int request_id,
       ResourceDispatcher* resource_dispatcher,
       mojo::ScopedDataPipeConsumerHandle handle,
+      bool is_deferred,
+      scoped_refptr<base::SingleThreadTaskRunner> task_runner);
+
+  static scoped_refptr<URLResponseBodyConsumer> CreateForTesting(
+      int request_id,
+      ResourceDispatcher* resource_dispatcher,
+      mojo::ScopedDataPipeConsumerHandle handle,
       scoped_refptr<base::SingleThreadTaskRunner> task_runner);
 
   // Sets the completion status. The completion status is dispatched to the
@@ -78,7 +85,7 @@ class CONTENT_EXPORT URLResponseBodyConsumer final
   bool has_received_completion_ = false;
   bool has_been_cancelled_ = false;
   bool has_seen_end_of_data_;
-  bool is_deferred_ = false;
+  bool is_deferred_;
   bool is_in_on_readable_ = false;
 
   DISALLOW_COPY_AND_ASSIGN(URLResponseBodyConsumer);

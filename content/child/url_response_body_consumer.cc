@@ -44,6 +44,7 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
     int request_id,
     ResourceDispatcher* resource_dispatcher,
     mojo::ScopedDataPipeConsumerHandle handle,
+    bool is_deferred,
     scoped_refptr<base::SingleThreadTaskRunner> task_runner)
     : request_id_(request_id),
       resource_dispatcher_(resource_dispatcher),
@@ -52,11 +53,29 @@ URLResponseBodyConsumer::URLResponseBodyConsumer(
                       mojo::SimpleWatcher::ArmingPolicy::MANUAL,
                       task_runner),
       task_runner_(task_runner),
-      has_seen_end_of_data_(!handle_.is_valid()) {
+      has_seen_end_of_data_(!handle_.is_valid()),
+      is_deferred_(is_deferred) {
   handle_watcher_.Watch(
       handle_.get(), MOJO_HANDLE_SIGNAL_READABLE,
       base::Bind(&URLResponseBodyConsumer::OnReadable, base::Unretained(this)));
-  handle_watcher_.ArmOrNotify();
+
+  if (!is_deferred)
+    OnReadable(MOJO_RESULT_OK);
+}
+
+scoped_refptr<URLResponseBodyConsumer>
+URLResponseBodyConsumer::CreateForTesting(
+    int request_id,
+    ResourceDispatcher* resource_dispatcher,
+    mojo::ScopedDataPipeConsumerHandle handle,
+    scoped_refptr<base::SingleThreadTaskRunner> task_runner) {
+  scoped_refptr<URLResponseBodyConsumer> consumer(new URLResponseBodyConsumer(
+      request_id, resource_dispatcher, std::move(handle), true,
+      std::move(task_runner)));
+
+  consumer->is_deferred_ = false;
+  consumer->handle_watcher_.ArmOrNotify();
+  return consumer;
 }
 
 URLResponseBodyConsumer::~URLResponseBodyConsumer() {}

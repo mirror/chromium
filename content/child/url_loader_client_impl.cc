@@ -162,10 +162,9 @@ void URLLoaderClientImpl::OnStartLoadingResponseBody(
     mojo::ScopedDataPipeConsumerHandle body) {
   DCHECK(!body_consumer_);
   DCHECK(has_received_response_);
-  body_consumer_ = new URLResponseBodyConsumer(
-      request_id_, resource_dispatcher_, std::move(body), task_runner_);
-  if (is_deferred_)
-    body_consumer_->SetDefersLoading();
+  body_consumer_ =
+      new URLResponseBodyConsumer(request_id_, resource_dispatcher_,
+                                  std::move(body), is_deferred_, task_runner_);
 }
 
 void URLLoaderClientImpl::OnComplete(
