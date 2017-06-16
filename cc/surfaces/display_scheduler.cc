@@ -138,7 +138,10 @@ bool DisplayScheduler::UpdateHasPendingSurfaces() {
     return false;
 
   bool old_value = has_pending_surfaces_;
+  bool any_surface_received_begin_frame = false;
 
+  uint32_t current_source_id = current_begin_frame_args_.source_id;
+  uint64_t current_sequence_number = current_begin_frame_args_.sequence_number;
   for (const std::pair<SurfaceId, SurfaceBeginFrameState>& entry :
        surface_states_) {
     const SurfaceId& surface_id = entry.first;
@@ -147,16 +150,17 @@ bool DisplayScheduler::UpdateHasPendingSurfaces() {
     // Surface is ready if it hasn't received the current BeginFrame or receives
     // BeginFrames from a different source and thus likely belongs to a
     // different surface hierarchy.
-    uint32_t source_id = current_begin_frame_args_.source_id;
-    uint64_t sequence_number = current_begin_frame_args_.sequence_number;
-    if (!state.last_args.IsValid() || state.last_args.source_id != source_id ||
-        state.last_args.sequence_number != sequence_number) {
+    if (!state.last_args.IsValid() ||
+        state.last_args.source_id != current_source_id ||
+        state.last_args.sequence_number != current_sequence_number) {
       continue;
     }
 
+    any_surface_received_begin_frame = true;
+
     // Surface is ready if it has acknowledged the current BeginFrame.
-    if (state.last_ack.source_id == source_id &&
-        state.last_ack.sequence_number == sequence_number) {
+    if (state.last_ack.source_id == current_source_id &&
+        state.last_ack.sequence_number == current_sequence_number) {
       continue;
     }
 
@@ -172,10 +176,15 @@ bool DisplayScheduler::UpdateHasPendingSurfaces() {
                          surface_id.ToString());
     return has_pending_surfaces_ != old_value;
   }
-  has_pending_surfaces_ = false;
-  TRACE_EVENT_INSTANT1("cc", "DisplayScheduler::UpdateHasPendingSurfaces",
-                       TRACE_EVENT_SCOPE_THREAD, "has_pending_surfaces",
-                       has_pending_surfaces_);
+
+  // We extend the deadline if no surface received the current BeginFrame. This
+  // way, we can still use the current BeginFrame in case a surface receives it
+  // as a missed BeginFrame later (but before its deadline).
+  has_pending_surfaces_ = !any_surface_received_begin_frame;
+  TRACE_EVENT_INSTANT2(
+      "cc", "DisplayScheduler::UpdateHasPendingSurfaces",
+      TRACE_EVENT_SCOPE_THREAD, "has_pending_surfaces", has_pending_surfaces_,
+      "any_surface_received_begin_frame", any_surface_received_begin_frame);
   return has_pending_surfaces_ != old_value;
 }
 
