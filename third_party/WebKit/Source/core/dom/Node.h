@@ -72,7 +72,6 @@ template <typename NodeType>
 class StaticNodeTypeList;
 using StaticNodeList = StaticNodeTypeList<Node>;
 class StyleChangeReasonForTracing;
-class Text;
 class WebMouseEvent;
 class WebPluginContainerBase;
 
@@ -635,8 +634,10 @@ class CORE_EXPORT Node : public EventTarget {
   struct AttachContext {
     STACK_ALLOCATED();
     ComputedStyle* resolved_style = nullptr;
+    LayoutObject* previous_in_flow = nullptr;
     bool performing_reattach = false;
     bool clear_invalidation = false;
+    bool use_previous_in_flow = false;
 
     AttachContext() {}
   };
@@ -645,14 +646,18 @@ class CORE_EXPORT Node : public EventTarget {
   // applied to the node and creates an appropriate LayoutObject which will be
   // inserted into the tree (except when the style has display: none). This
   // makes the node visible in the LocalFrameView.
-  virtual void AttachLayoutTree(const AttachContext& = AttachContext());
+  virtual void AttachLayoutTree(AttachContext&);
 
   // Detaches the node from the layout tree, making it invisible in the rendered
   // view. This method will remove the node's layout object from the layout tree
   // and delete it.
   virtual void DetachLayoutTree(const AttachContext& = AttachContext());
 
-  void ReattachLayoutTree(const AttachContext& = AttachContext());
+  void ReattachLayoutTree() {
+    AttachContext context;
+    ReattachLayoutTree(context);
+  }
+  void ReattachLayoutTree(AttachContext&);
   void LazyReattachIfAttached();
 
   // Returns true if recalcStyle should be called on the object, if there is
@@ -928,8 +933,6 @@ class CORE_EXPORT Node : public EventTarget {
   void RemovedEventListener(const AtomicString& event_type,
                             const RegisteredEventListener&) override;
   DispatchEventResult DispatchEventInternal(Event*) override;
-
-  static void ReattachWhitespaceSiblingsIfNeeded(Text* start);
 
   bool HasRareData() const { return GetFlag(kHasRareDataFlag); }
 

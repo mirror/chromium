@@ -345,7 +345,7 @@ class CORE_EXPORT HTMLInputElement
 
   void CopyNonAttributePropertiesFromElement(const Element&) final;
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) final;
+  void AttachLayoutTree(AttachContext&) final;
 
   void AppendToFormData(FormData&) final;
   String ResultForDialogSubmit() final;
