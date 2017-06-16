@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cf1b6f8d_53437309",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "I removed the todos and added the device names reported in https://crbug.com/722038",
+      "parentUuid": "e258293d_884bd423",
+      "range": {
+        "startLine": 69,
+        "startChar": 7,
+        "endLine": 69,
+        "endChar": 11
+      },
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3733971_43c97d52",
         "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "adff79de_4fa50269",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f3733971_43c97d52",
+      "range": {
+        "startLine": 70,
+        "startChar": 13,
+        "endLine": 70,
+        "endChar": 21
+      },
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "7e57871e_0c72648b",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff5dcc2e_49b1e463",
+      "range": {
+        "startLine": 74,
+        "startChar": 7,
+        "endLine": 74,
+        "endChar": 11
+      },
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11d73c0e_dec142f0",
         "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "7c11519e_a093f7a4",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11d73c0e_dec142f0",
+      "range": {
+        "startLine": 145,
+        "startChar": 0,
+        "endLine": 146,
+        "endChar": 13
+      },
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "958be344_f424f407",
         "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
         "patchSetId": 1
@@ -105,6 +201,24 @@
       "writtenOn": "2017-06-10T00:09:18Z",
       "side": 1,
       "message": "We should have a blacklist enumeration here as well.\nIt\u0027s ok to land it in another CL, but then please \nadd a TODO linked to the 722038 bug.",
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0182b105_647634a9",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "Added the TODO.\nDone.",
+      "parentUuid": "958be344_f424f407",
       "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -131,6 +245,30 @@
       "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa2c42c7_62620a40",
+        "filename": "media/capture/video/win/video_capture_device_win.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-16T22:22:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0dd2d30_453860e8",
+      "range": {
+        "startLine": 68,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 10
+      },
+      "revId": "b64cc9aed4ee2a251c2ebc98fef933aee5ba601b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
