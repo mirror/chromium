@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d41bab75_66fd2b91",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:16:36Z",
+      "side": 1,
+      "message": "I made it layout/WebFontRenderingDefault.cpp since it looks like it is used by linux and android.",
+      "parentUuid": "0354c68c_b011f1e2",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d14da748_f6b8572f",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1a6ed3d_f9a465c6",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d14da748_f6b8572f",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8a273ce4_1141914b",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "514c2682_8a7bdff5",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "69838ebd_f2ab0aa3",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b10a63f_56481f0f",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:16:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "69838ebd_f2ab0aa3",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
