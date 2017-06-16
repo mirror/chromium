@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0a530380_8d7d247e",
+        "filename": "chrome/test/data/payments/util.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T21:20:32Z",
+      "side": 1,
+      "message": "Minor nit: I don\u0027t think you need the eslint-disable-line comment anymore, because the config you added already overrides the global config.",
+      "revId": "2b33f6b059f7c28ca1e54799967e3ce7315dde78",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
