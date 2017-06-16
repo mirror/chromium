@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57ab09bf_2616e7e9",
+        "filename": "content/ppapi_plugin/ppapi_thread.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-16T22:52:29Z",
+      "side": 1,
+      "message": "kInitVerificationFailed will not get reported. Should this call happen after each of InitVerifciation() calls instead?",
+      "range": {
+        "startLine": 484,
+        "startChar": 6,
+        "endLine": 484,
+        "endChar": 31
+      },
+      "revId": "64f8be71c43be69aa628fb7a8a4377c87242491e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
