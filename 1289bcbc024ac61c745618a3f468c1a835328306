@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3093fcca_e301c5f8",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12242,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-16T21:18:52Z",
+      "side": 1,
+      "message": "FrameTreeHelpers should probably provide a way to create local frames and inject them into the DOM.",
+      "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbe68c37_4b20af42",
+        "filename": "third_party/WebKit/Source/web/tests/WebFrameTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 12260,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-16T21:18:52Z",
+      "side": 1,
+      "message": "This is another thing that FrameTreeHelpers could do -- create the local frame a swap the Remote.",
+      "revId": "1289bcbc024ac61c745618a3f468c1a835328306",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
