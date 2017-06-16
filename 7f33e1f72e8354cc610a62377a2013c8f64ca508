@@ -69,6 +69,24 @@
       "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fbd2c0a7_f49f4767",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T23:01:49Z",
+      "side": 1,
+      "message": "Ah right, this was because we were crashing renderers when a blob died during transit. Hm... in the ideal world, we could do a bad message, but before we\u0027re fully mojo-ified, we shouldn\u0027t crash tabs.",
+      "parentUuid": "a314fda2_b9005430",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
