@@ -70,6 +70,30 @@
       "revId": "317b71f7056beec5e4d142d66a658b3ac9502603",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f11a8fa0_6f792c7d",
+        "filename": "content/browser/devtools/devtools_url_request_interceptor.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-16T07:44:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d20607f3_2fb1b8e1",
+      "range": {
+        "startLine": 78,
+        "startChar": 0,
+        "endLine": 78,
+        "endChar": 66
+      },
+      "revId": "317b71f7056beec5e4d142d66a658b3ac9502603",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
