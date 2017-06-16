@@ -299,8 +299,28 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
                                      origin, temp_path, connection_count));
 
   BrowserContext* context = web_contents->GetBrowserContext();
-  BrowserContext::GetDownloadManager(context)->DownloadUrl(
-      std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("indexed_db_internals_handler", R"(
+        semantics {
+          sender: "Indexed DB Internals"
+          description:
+            "This is an internal Chrome webpage that displays debug "
+            "information about IndexedDB usage and data, used by developers."
+          trigger: "When a user navigates to chrome://indexeddb-internals/."
+          data: "None."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "This feature cannot be disabled by settings, but it's only "
+            "triggered by navigating to the specified URL."
+          policy_exception_justification:
+            "Not implemented. Indexed DB is Chrome's internal local data "
+            "storage.
+        })");
+  BrowserContext::GetDownloadManager(context)->DownloadUrl(std::move(dl_params),
+                                                           traffic_annotation);
 }
 
 // The entire purpose of this class is to delete the temp file after

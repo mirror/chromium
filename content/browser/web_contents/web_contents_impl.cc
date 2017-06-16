@@ -3209,8 +3209,28 @@ void WebContentsImpl::SaveFrameWithHeaders(const GURL& url,
       params->add_request_header(pair[0], pair[1]);
     }
   }
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("download_web_contents_frame", R"(
+        semantics {
+          sender: "Save Page Action"
+          description:
+            "Saves the given frame's URL to the local file system."
+          trigger:
+            "The user has triggered a save operation on the frame through a "
+            "context menu or other mechanism."
+          data: "Cookies and User Authentication (if available)."
+          destination: WEBSITE
+        }
+        policy {
+          cookies_allowed: true
+          cookies_store: "user"
+          setting:
+            "This feature cannot be disabled by settings, but it's is only "
+            "triggered by user request."
+          policy_exception_justification: "Not implemented."
+        })");
   BrowserContext::GetDownloadManager(GetBrowserContext())
-      ->DownloadUrl(std::move(params), NO_TRAFFIC_ANNOTATION_YET);
+      ->DownloadUrl(std::move(params), traffic_annotation);
 }
 
 void WebContentsImpl::GenerateMHTML(
