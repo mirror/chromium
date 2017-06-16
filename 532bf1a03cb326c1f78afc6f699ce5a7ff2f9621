@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff00542f_f1c287ab",
+        "filename": "third_party/WebKit/Source/platform/fonts/opentype/VariableFontCheck.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115871
+      },
+      "writtenOn": "2017-06-16T17:58:41Z",
+      "side": 1,
+      "message": "Would it be simpler for this to just be\n\ntypeface-\u003egetTableSize(SkFontTableTag(SkSetFourByteTag(\u0027f\u0027, \u0027v\u0027, \u0027a\u0027, \u0027r\u0027))) !\u003d 0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "532bf1a03cb326c1f78afc6f699ce5a7ff2f9621",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
