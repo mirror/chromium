@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "51fa42dc_98330858",
+        "filename": "content/browser/gpu/gpu_process_host.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 761,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-16T11:10:43Z",
+      "side": 1,
+      "message": "Thanks for pointing this out. I didn\u0027t consider RequestGPUInfo() for multiple clients. \nWe can use a queue/vector of |request_cb|s here? Please suggest.",
+      "parentUuid": "edcfad66_6dc69392",
+      "range": {
+        "startLine": 761,
+        "startChar": 4,
+        "endLine": 761,
+        "endChar": 40
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8aed5243_fc08fc7a",
         "filename": "content/browser/gpu/gpu_process_host.h",
         "patchSetId": 10
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-15T21:16:15Z",
       "side": 1,
       "message": "Is there guaranteed to be at most one VideoCaptureGpuJpegDecoder? If not, this isn\u0027t correct (one will work, the rest will hang).",
+      "range": {
+        "startLine": 230,
+        "startChar": 10,
+        "endLine": 230,
+        "endChar": 24
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3403882d_8039c173",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-16T11:10:43Z",
+      "side": 1,
+      "message": "\u003e\u003e\u003e Is there guaranteed to be at most one VideoCaptureGpuJpegDecoder?\nI don\u0027t think so. mcasas@, can you please confirm this?\n\n\u003e\u003e\u003e If not, this isn\u0027t correct (one will work, the rest will hang)\nYou say this because we are not handling multiple RequestGpuInfo() calls in GpuProcessHost i.e. previous |request_cb|s will be lost, right?",
+      "parentUuid": "2051c017_54cfd5c6",
       "range": {
         "startLine": 230,
         "startChar": 10,
