@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "6cb09458_972c6f79",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-16T01:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ae2fd0a_acf483c7",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dc2b9c9b_53665b92",
         "filename": "chrome/browser/ui/cocoa/animated_icon.h",
         "patchSetId": 10
@@ -59,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "fe7e0785_00c42ca2",
+        "filename": "chrome/browser/ui/cocoa/animated_icon.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-16T01:46:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dc2b9c9b_53665b92",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0358c89b_b911f93a",
         "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
         "patchSetId": 10
@@ -70,6 +106,24 @@
       "writtenOn": "2017-06-15T23:05:11Z",
       "side": 1,
       "message": "Comment on when to call. Though can you do this via -awakeFromNib instead?",
+      "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07be17d1_5524aa9d",
+        "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-16T01:46:20Z",
+      "side": 1,
+      "message": "Good point. No, but I can throw it in viewDidMoveToWindow :)",
+      "parentUuid": "0358c89b_b911f93a",
       "revId": "2d9b0d6cf99be57d206b5b7a0204c5919f118716",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

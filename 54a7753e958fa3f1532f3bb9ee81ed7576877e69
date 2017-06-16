@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "36111491_07d7beb5",
+        "filename": "chrome/browser/ui/cocoa/app_menu/app_menu_controller.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-16T01:46:20Z",
+      "side": 1,
+      "message": "It\u0027s not much of a problem, I just need to import app_toolbar_button.h in all of the classes that use it. I can do it on another CL, but I don\u0027t want to do it here since that\u0027s rather out of scope.",
+      "parentUuid": "1ec49c9a_5270fa73",
+      "revId": "54a7753e958fa3f1532f3bb9ee81ed7576877e69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b1de04da_b65f2c45",
         "filename": "chrome/browser/ui/cocoa/toolbar/app_toolbar_button.h",
         "patchSetId": 7
