@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f616b5e_a0558a09",
+        "filename": "storage/browser/blob/blob_registry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:17:09Z",
+      "side": 1,
+      "message": "can you explain what the bool ContextType is serving?",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4932046a_b0475ff9",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:17:09Z",
+      "side": 1,
+      "message": "check bad_messages_ not empty?",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
