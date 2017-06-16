@@ -16,6 +16,24 @@
       "revId": "c10035e36cbb68fbbb75f64616279a5843a23e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaed2cbc_039b40ee",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-16T01:43:01Z",
+      "side": 1,
+      "message": "You need to keep the is_clang bit after is_win, we don\u0027t want this on non-win. And it\u0027s related to exports somehow, so we only need this if is_component with clang too I think. Replacing is_debug with symol_level \u003e 1 is fine but should be done independent of clang. So just change the 64 bit check to (64 || clang).\n\nAlso, is this only on tot or also on pinned? If only tot, do we understand what grew?",
+      "parentUuid": "d3ab4d38_a42e98b3",
+      "revId": "c10035e36cbb68fbbb75f64616279a5843a23e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
