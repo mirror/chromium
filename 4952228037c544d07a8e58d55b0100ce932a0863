@@ -1,0 +1,118 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080397fe_ca9d6077",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/payments/AutofillPaymentApp.java",
+        "patchSetId": 11
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "a comment wouldn\u0027t hurt to explain what\u0027s going on here",
+      "range": {
+        "startLine": 205,
+        "startChar": 11,
+        "endLine": 205,
+        "endChar": 14
+      },
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419655d3_0bd5f420",
+        "filename": "chrome/browser/ui/views/payments/payment_method_view_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "We use ALIGN_TO_LEFT elsewhere, can you investigate which is best?\n\nhttps://cs.chromium.org/search/?q\u003dSetHorizontalalignment+file:payments\u0026type\u003dcs",
+      "range": {
+        "startLine": 163,
+        "startChar": 37,
+        "endLine": 163,
+        "endChar": 50
+      },
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8aef5ca_7b9d818a",
+        "filename": "chrome/browser/ui/views/payments/payment_request_browsertest_base.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 454,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "see line 434",
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ff5095_82d48156",
+        "filename": "chrome/browser/ui/views/payments/profile_list_view_controller.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "ASCII art would be nice because this is getting complex",
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e56ddade_c73f68fb",
+        "filename": "components/payments/content/payment_request.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "is this important enough to merge to M60?",
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9d89658_b9203c71",
+        "filename": "components/payments/content/payment_request_spec.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-16T13:22:32Z",
+      "side": 1,
+      "message": "add a TODO to move the parsing of types to this function.",
+      "revId": "4952228037c544d07a8e58d55b0100ce932a0863",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
