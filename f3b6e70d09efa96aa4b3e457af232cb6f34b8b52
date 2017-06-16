@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a9d0bb53_1019a0d1",
+        "filename": "third_party/WebKit/Source/core/workers/Worklet.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-16T01:41:01Z",
+      "side": 1,
+      "message": "Yeah, that\u0027s right. Moved the macro from AnimationWorklet/AudioWorklet to Worklet.",
+      "parentUuid": "455362d6_b353a12a",
+      "revId": "f3b6e70d09efa96aa4b3e457af232cb6f34b8b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "18730722_7b3de8c6",
         "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorklet.h",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f3b6e70d09efa96aa4b3e457af232cb6f34b8b52",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "055eb91f_de5012c9",
+        "filename": "third_party/WebKit/Source/modules/compositorworker/AnimationWorklet.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-16T01:41:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "18730722_7b3de8c6",
+      "revId": "f3b6e70d09efa96aa4b3e457af232cb6f34b8b52",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
