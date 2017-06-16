@@ -111,6 +111,7 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
   auto throttle = ongoing_activation_throttles_.find(navigation_handle);
   std::unique_ptr<AsyncDocumentSubresourceFilter> filter;
   if (throttle != ongoing_activation_throttles_.end()) {
+    CHECK(throttle->second);
     filter = throttle->second->ReleaseFilter();
     ongoing_activation_throttles_.erase(throttle);
   }
