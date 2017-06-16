@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40436c58_47a1a95e",
+        "filename": "content/common/frame_messages.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 1458,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T16:43:09Z",
+      "side": 1,
+      "message": "Sorry for the churn, but Nasko had a good point: if we\u0027re swapping processes, we shouldn\u0027t need to persist the user gesture \u003d/\n\nSo I guess this should be reverted to how it originally looked (i.e. no replication).\n\nIt\u0027s possible implementation details of this will change in the future, but we (the OOPIF) team will be responsible for fixing it up then.",
+      "range": {
+        "startLine": 1454,
+        "startChar": 0,
+        "endLine": 1458,
+        "endChar": 37
+      },
+      "revId": "70462000b12b8f2580186219decce7219aadd1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10272ddf_9182f638",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T16:43:09Z",
+      "side": 1,
+      "message": "Similarly, I\u0027m uncertain that this does the right thing if the URL is a blob, about, filesystem, or otherwise special URL.\n\nIt seems the right place to do this should be around https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/loader/DocumentLoader.cpp?rcl\u003dbe9206e0f9f62cb4b9a4159a63b88ff4d0f7fc09\u0026l\u003d1040, where we do have the previous Document\u0027s security origin, as well as the new Document\u0027s security origin.",
+      "range": {
+        "startLine": 1036,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 5
+      },
+      "revId": "70462000b12b8f2580186219decce7219aadd1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da33d57c_67490f36",
+        "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 1495,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T16:43:09Z",
+      "side": 1,
+      "message": "As mentioned, I think this should be using the document\u0027s SecurityOrigin.",
+      "range": {
+        "startLine": 1495,
+        "startChar": 23,
+        "endLine": 1495,
+        "endChar": 58
+      },
+      "revId": "70462000b12b8f2580186219decce7219aadd1b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
