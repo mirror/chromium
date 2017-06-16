@@ -94,15 +94,9 @@ class UI_ANDROID_EXPORT ViewAndroid {
   ViewAndroid();
   virtual ~ViewAndroid();
 
-  // The content offset is in CSS pixels, and is used to translate
-  // snapshots to the correct part of the view.
-  void set_content_offset(const gfx::Vector2dF& content_offset) {
-    content_offset_ = content_offset;
-  }
+  void SetContentOffset(float content_offset);
 
-  gfx::Vector2dF content_offset() const {
-    return content_offset_;
-  }
+  float content_offset() const { return content_offset_; }
 
   // Returns the window at the root of this hierarchy, or |null|
   // if disconnected.
@@ -143,6 +137,8 @@ class UI_ANDROID_EXPORT ViewAndroid {
   void OnBottomControlsChanged(float bottom_controls_offset,
                                float bottom_content_offset);
   int GetSystemWindowInsetBottom();
+  void SetViewportSize(const gfx::SizeF& viewport_size);
+  gfx::SizeF GetViewportSize() const;
 
   ScopedAnchorView AcquireAnchorView();
   void SetAnchorRect(const base::android::JavaRef<jobject>& anchor,
@@ -215,9 +211,13 @@ class UI_ANDROID_EXPORT ViewAndroid {
   // the passed events should be processed by the view.
   LayoutParams layout_params_;
 
+  // In device pixel.
   gfx::Size physical_size_;
 
-  gfx::Vector2dF content_offset_;  // in CSS pixel.
+  // In CSS pixel.
+  gfx::SizeF viewport_size_;  // viewport size from frame update.
+  float content_offset_;      // y content offset from the top.
+
   std::unique_ptr<EventForwarder> event_forwarder_;
 
   DISALLOW_COPY_AND_ASSIGN(ViewAndroid);
