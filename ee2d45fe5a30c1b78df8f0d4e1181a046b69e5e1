@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1b8cf0b0_c6e5c579",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-16T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e0874c28_1b735701",
+      "range": {
+        "startLine": 544,
+        "startChar": 38,
+        "endLine": 544,
+        "endChar": 0
+      },
+      "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a05f0518_9bb47f32",
         "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d831481a_142bd280",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 549,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-16T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a05f0518_9bb47f32",
+      "range": {
+        "startLine": 549,
+        "startChar": 9,
+        "endLine": 549,
+        "endChar": 0
+      },
+      "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4420ba2d_60ad2708",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-16T09:56:07Z",
+      "side": 1,
+      "message": "For UseCounter, I needed the document. Though, dropping UseCounter makes things easier.",
+      "parentUuid": "81928968_7b3d54a0",
+      "range": {
+        "startLine": 551,
+        "startChar": 64,
+        "endLine": 551,
+        "endChar": 0
+      },
+      "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0dc81af5_bdfd1958",
         "filename": "third_party/WebKit/public/platform/UseCounterFeature.def",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-09T19:30:35Z",
       "side": 1,
       "message": "Is this really appropriate to group under UseCounter?  I think of UseCounter as measuring what web features are used, rather than measuring error conditions.  Do I misunderstand the intent behind UseCounter?",
+      "range": {
+        "startLine": 1555,
+        "startChar": 37,
+        "endLine": 1555,
+        "endChar": 0
+      },
+      "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90d1410b_fbdd99ac",
+        "filename": "third_party/WebKit/public/platform/UseCounterFeature.def",
+        "patchSetId": 1
+      },
+      "lineNbr": 1555,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-16T09:56:07Z",
+      "side": 1,
+      "message": "That\u0027s the original intent but it has changed a bit. My goal was to be able to differentiate errors per page load because some websites might trigger many errors and it would have been interesting to see the difference. This said, happy to drop this for now and figure something out if it sounds needed.",
+      "parentUuid": "0dc81af5_bdfd1958",
       "range": {
         "startLine": 1555,
         "startChar": 37,
@@ -114,6 +210,30 @@
       "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34e49db8_34827f31",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 28977,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-16T09:56:07Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "887bb218_1c69455e",
+      "range": {
+        "startLine": 28977,
+        "startChar": 39,
+        "endLine": 28977,
+        "endChar": 0
+      },
+      "revId": "ee2d45fe5a30c1b78df8f0d4e1181a046b69e5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
