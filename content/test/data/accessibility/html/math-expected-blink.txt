@@ -1,0 +1,13 @@
+rootWebArea
+++genericContainer
+++++math innerHtml='<newline>    <mrow><newline>      <msup><mi>a</mi><mn>2</mn></msup><newline>      <mo>+</mo><newline>      <msup><mi>b</mi><mn>2</mn></msup><newline>    </mrow><newline> '
+++++++staticText name='a'
+++++++++inlineTextBox name='a'
+++++++staticText name='2'
+++++++++inlineTextBox name='2'
+++++++staticText name='+'
+++++++++inlineTextBox name='+'
+++++++staticText name='b'
+++++++++inlineTextBox name='b'
+++++++staticText name='2'
+++++++++inlineTextBox name='2'

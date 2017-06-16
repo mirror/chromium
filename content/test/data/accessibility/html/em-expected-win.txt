@@ -1,5 +1,5 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_SECTION
-++++ROLE_SYSTEM_STATICTEXT name='One word is '
-++++ROLE_SYSTEM_STATICTEXT name='emphasized'
-++++ROLE_SYSTEM_STATICTEXT name='.'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_SECTION language:en-US language:en-US language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='One word is ' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='emphasized' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='.' language:en-US

@@ -1,0 +1,16 @@
+rootWebArea
+++genericContainer
+++++audio
+++++++genericContainer
+++++++++toolbar horizontal description='audio' name='audio' descriptionFrom=1
+++++++++++toolbar horizontal description='audio' name='audio' descriptionFrom=1
+++++++++++++button description='begin playback' name='play' descriptionFrom=1
+++++++++++++staticText name='0:00'
+++++++++++++++inlineTextBox name='0:00'
+++++++++++++staticText name='/ 0:00'
+++++++++++++++inlineTextBox name='/ 0:00'
+++++++++++++slider horizontal description='audio time scrubber' descriptionFrom=1
+++++++++++++++sliderThumb
+++++++++++++button description='mute audio track' name='mute' descriptionFrom=1
+++++++++++++unknown description='media control' name='media control' descriptionFrom=1
+++++++++++++button description='media control' name='download media' descriptionFrom=1

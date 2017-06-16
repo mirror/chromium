@@ -1,5 +1,5 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_PARAGRAPH xml-roles:main
-++++ROLE_SYSTEM_STATICTEXT name='This is main element.'
-++IA2_ROLE_PARAGRAPH xml-roles:main
-++++ROLE_SYSTEM_STATICTEXT name='This is an ARIA role main.'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_PARAGRAPH xml-roles:main language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='This is main element.' language:en-US
+++IA2_ROLE_PARAGRAPH xml-roles:main language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='This is an ARIA role main.' language:en-US

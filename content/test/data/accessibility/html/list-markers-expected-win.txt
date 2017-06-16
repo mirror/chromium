@@ -1,17 +1,17 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++ROLE_SYSTEM_LIST READONLY
-++++ROLE_SYSTEM_LISTITEM READONLY
-++++++ROLE_SYSTEM_STATICTEXT name='•'
-++++++ROLE_SYSTEM_STATICTEXT name='First item properly groups itself despite '
-++++++ROLE_SYSTEM_STATICTEXT name='bolded'
-++++++ROLE_SYSTEM_STATICTEXT name=' text.'
-++++ROLE_SYSTEM_LISTITEM READONLY
-++++++ROLE_SYSTEM_STATICTEXT name='•'
-++++++ROLE_SYSTEM_STATICTEXT name='This should also be '
-++++++ROLE_SYSTEM_STATICTEXT name='seen'
-++++++ROLE_SYSTEM_STATICTEXT name=' as a group.'
-++++ROLE_SYSTEM_LISTITEM READONLY
-++++++ROLE_SYSTEM_STATICTEXT name='•'
-++++++ROLE_SYSTEM_STATICTEXT name='Some '
-++++++ROLE_SYSTEM_STATICTEXT name='more'
-++++++ROLE_SYSTEM_STATICTEXT name=' text.'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++ROLE_SYSTEM_LIST READONLY language:en-US
+++++ROLE_SYSTEM_LISTITEM READONLY language:en-US language:en-US language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='•' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='First item properly groups itself despite ' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='bolded' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' text.' language:en-US
+++++ROLE_SYSTEM_LISTITEM READONLY language:en-US language:en-US language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='•' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='This should also be ' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='seen' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' as a group.' language:en-US
+++++ROLE_SYSTEM_LISTITEM READONLY language:en-US language:en-US language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='•' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='Some ' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='more' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name=' text.' language:en-US

@@ -1,17 +1,17 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE invalid:true invalid:spelling invalid:grammar invalid:false invalid:unknown invalid:false
-++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=true' invalid:false
-++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=spelling' invalid:false
-++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=grammar' invalid:false
-++IA2_ROLE_SECTION invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=false' invalid:false
-++IA2_ROLE_SECTION invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=<empty>' invalid:false
-++IA2_ROLE_SECTION invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=<default>' invalid:false
-++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false
-++++ROLE_SYSTEM_STATICTEXT name='invalid=unknown' invalid:false
-++IA2_ROLE_FORM invalid:true
-++++ROLE_SYSTEM_TEXT FOCUSABLE IA2_STATE_INVALID_ENTRY invalid:true
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE invalid:true language:en-US invalid:spelling language:en-US invalid:grammar language:en-US invalid:false language:en-US invalid:unknown language:en-US invalid:false language:en-US
+++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=true' invalid:false language:en-US
+++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=spelling' invalid:false language:en-US
+++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=grammar' invalid:false language:en-US
+++IA2_ROLE_SECTION invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=false' invalid:false language:en-US
+++IA2_ROLE_SECTION invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=<empty>' invalid:false language:en-US
+++IA2_ROLE_SECTION invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=<default>' invalid:false language:en-US
+++IA2_ROLE_SECTION IA2_STATE_INVALID_ENTRY invalid:false language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='invalid=unknown' invalid:false language:en-US
+++IA2_ROLE_FORM invalid:true language:en-US
+++++ROLE_SYSTEM_TEXT FOCUSABLE IA2_STATE_INVALID_ENTRY invalid:true language:en-US
