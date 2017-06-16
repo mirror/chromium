@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c9c37e06_ebfd312a",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 672,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "Blink resource loading",
+      "range": {
+        "startLine": 672,
+        "startChar": 47,
+        "endLine": 672,
+        "endChar": 48
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f02060c9_3e2d6349",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 674,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "blink::ResourceLoader",
+      "range": {
+        "startLine": 674,
+        "startChar": 19,
+        "endLine": 674,
+        "endChar": 20
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5ac7ea7_64a9bde4",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 675,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "Resource loading in blink",
+      "range": {
+        "startLine": 675,
+        "startChar": 23,
+        "endLine": 675,
+        "endChar": 24
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "209b5588_bc8d3e98",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "Not a specific feature, but most resource loading blink makes fall in this category.",
+      "range": {
+        "startLine": 676,
+        "startChar": 19,
+        "endLine": 676,
+        "endChar": 20
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "136606f3_77da761e",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 677,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "Arbitrary data including image, script, document, text, etc.",
+      "range": {
+        "startLine": 677,
+        "startChar": 19,
+        "endLine": 677,
+        "endChar": 20
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e0a9f9_0dc5def2",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 681,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "true",
+      "range": {
+        "startLine": 681,
+        "startChar": 27,
+        "endLine": 681,
+        "endChar": 32
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8869a8ff_b1a0f770",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "user",
+      "range": {
+        "startLine": 682,
+        "startChar": 26,
+        "endLine": 682,
+        "endChar": 27
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77c77446_ae2b89c5",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 683,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "N/A",
+      "range": {
+        "startLine": 683,
+        "startChar": 22,
+        "endLine": 683,
+        "endChar": 23
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6715098_99bd3978",
+        "filename": "content/child/resource_dispatcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 689,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-16T11:25:15Z",
+      "side": 1,
+      "message": "This is a core feature of the web and Chrome is useless without this feature.",
+      "range": {
+        "startLine": 689,
+        "startChar": 10,
+        "endLine": 689,
+        "endChar": 40
+      },
+      "revId": "b76e5413035921b75ed80af649722ba820073f20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
