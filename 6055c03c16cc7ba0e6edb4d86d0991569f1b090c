@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "87dd700a_f4f1d6da",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-16T16:16:12Z",
+      "side": 1,
+      "message": "I had it that way but... As I understand it, if I call a member function via Bind() with a WeakPtr as the second arg, it\u0027ll dereference that weak ptr right when the callback is invoked -- the weak ptr will become the |this| ptr.  What I want is for it to pass the weak ptr to the IO then UI thread, and only actually dereference the ptr on the UI thread.\n\nSo I\u0027m explicitly passing the weak ptr through the static function to avoid dereferencing.  I\u0027m not completely confident that does what I want, but I think the alternative does not. Lemme know what you think.\n\nOh, and it needs to be a member function (rather than in an anonymous namespace) since it has to access the private OnWhitelistCheckDone() method.",
+      "parentUuid": "88e28bb7_fb3abcfc",
+      "revId": "6055c03c16cc7ba0e6edb4d86d0991569f1b090c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f24b116c_9798c0c6",
         "filename": "components/safe_browsing/password_protection/password_protection_request.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "6055c03c16cc7ba0e6edb4d86d0991569f1b090c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62216fbc_e8c1b1f4",
+        "filename": "components/safe_browsing/password_protection/password_protection_request.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-16T16:16:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f24b116c_9798c0c6",
+      "revId": "6055c03c16cc7ba0e6edb4d86d0991569f1b090c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
