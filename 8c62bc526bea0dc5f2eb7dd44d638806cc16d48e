@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "77474d36_916d981c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/infobar/ReaderModeInfoBar.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1115894
+      },
+      "writtenOn": "2017-06-16T18:10:18Z",
+      "side": 1,
+      "message": "Do you ever actually use this for anything other than getting the ReaderModeManager?  Does it make sense to make this return that instead?",
+      "range": {
+        "startLine": 76,
+        "startChar": 16,
+        "endLine": 76,
+        "endChar": 22
+      },
+      "revId": "8c62bc526bea0dc5f2eb7dd44d638806cc16d48e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
