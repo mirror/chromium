@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "648e89f3_100e3a9d",
+        "filename": "storage/public/interfaces/quota.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001349
+      },
+      "writtenOn": "2017-06-16T19:32:42Z",
+      "side": 1,
+      "message": "Wrap arguments to 80 cols?",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 21
+      },
+      "revId": "c1ef4b02752fe0b647abbf05ced17c464f8c38b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
