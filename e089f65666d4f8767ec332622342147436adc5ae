@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7348b5a7_ab1e47be",
+        "filename": "chrome/browser/captive_portal/captive_portal_browsertest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T19:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4623ff63_58f74dd4",
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "872a83e0_c0ffb706",
         "filename": "net/test/url_request/url_request_mock_http_job.cc",
         "patchSetId": 5
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "e015104f_4b3c3db8",
+        "filename": "net/test/url_request/url_request_mock_http_job.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T19:42:32Z",
+      "side": 1,
+      "message": "No, those are implementation dependencies of post_task.h and as such the includes are provided by it. Otherwise every user of the API would have to include multiple headers for basic operations. Avoiding includes that require multiple includes to function was a specific requirement request from jam@. Other headers in //base do the same thing (e.g. http://crbug.com/618793).\n\nSo you\u0027d include task_traits.h if you were explicitly storing them but just to pass them inline to a post_task.h API you don\u0027t have to (same with TaskRunner includes, etc.).",
+      "parentUuid": "872a83e0_c0ffb706",
+      "range": {
+        "startLine": 13,
+        "startChar": 30,
+        "endLine": 13,
+        "endChar": 39
+      },
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc779f7b_b2071daf",
         "filename": "net/test/url_request/url_request_mock_http_job.h",
         "patchSetId": 5
@@ -56,6 +98,24 @@
       "revId": "e089f65666d4f8767ec332622342147436adc5ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66d66f08_36d12324",
+        "filename": "net/test/url_request/url_request_mock_http_job.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T19:42:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc779f7b_b2071daf",
+      "revId": "e089f65666d4f8767ec332622342147436adc5ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
