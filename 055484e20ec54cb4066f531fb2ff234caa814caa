@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b67d474_50d96391",
+        "filename": "services/service_manager/background/background_service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-06-16T13:58:54Z",
+      "side": 1,
+      "message": "Why is this include needed? If it compiles on iOS without it, this means it is not needed by the header file in the first place... Or am I missing something? Should this include be moved into the places that are including it instead of here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 74
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15d9d68e_dd4adb85",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115986
+      },
+      "writtenOn": "2017-06-16T13:58:54Z",
+      "side": 1,
+      "message": "Same here.",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
