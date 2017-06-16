@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7a427ad5_a1dd38ee",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-16T08:10:11Z",
+      "side": 1,
+      "message": "nit: Who are we here? \"this node is\" (in a v1 shadow tree) enough?",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d85f69d9_5f1b7225",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2593,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-16T08:10:11Z",
+      "side": 1,
+      "message": "nit: typo caluculated -\u003e calculated\nnit: it is -\u003e they are (they \u003d assigned nodes)",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a96a9e75_6ab5d60a",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-16T08:10:11Z",
+      "side": 1,
+      "message": "nit: \"Slot\" redundant?  could be kRemvoed/kRenamed since they are used with SlotMutationType::\nexplicitly.",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
