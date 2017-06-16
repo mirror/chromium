@@ -10,6 +10,7 @@
 #include <memory>
 #include <tuple>
 #include <utility>
+#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
@@ -267,7 +268,9 @@ class NaClIPCAdapter::RewrittenMessage {
 
   int Read(NaClImcTypedMsgHdr* msg);
 
-  void AddDescriptor(NaClDescWrapper* desc) { descs_.push_back(desc); }
+  void AddDescriptor(NaClDescWrapper* desc) {
+    descs_.push_back(std::unique_ptr<NaClDescWrapper>(desc));
+  }
 
   size_t desc_count() const { return descs_.size(); }
 
@@ -280,7 +283,7 @@ class NaClIPCAdapter::RewrittenMessage {
   size_t data_read_cursor_;
 
   // Wrapped descriptors for transfer to untrusted code.
-  ScopedVector<NaClDescWrapper> descs_;
+  std::vector<std::unique_ptr<NaClDescWrapper>> descs_;
 };
 
 NaClIPCAdapter::RewrittenMessage::RewrittenMessage()
@@ -320,7 +323,7 @@ int NaClIPCAdapter::RewrittenMessage::Read(NaClImcTypedMsgHdr* msg) {
     msg->ndesc_length = desc_count;
     for (nacl_abi_size_t i = 0; i < desc_count; i++) {
       // Copy the NaClDesc to the buffer and add a ref so it won't be freed
-      // when we clear our ScopedVector.
+      // when we clear our vector.
       msg->ndescv[i] = descs_[i]->desc();
       NaClDescRef(descs_[i]->desc());
     }
