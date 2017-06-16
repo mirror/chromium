@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "54730b5d_4639c389",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T04:10:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "57f0ca9e_e120782f",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "02f307fe_55c68db2",
         "filename": "/COMMIT_MSG",
         "patchSetId": 9
@@ -33,6 +51,24 @@
       "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bd8e23b_42fe3860",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T04:10:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f307fe_55c68db2",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "479ea891_4f053945",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T04:10:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c927b258_0f1c365f",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "06e902bb_b095fd59",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
         "patchSetId": 9
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-16T03:46:26Z",
       "side": 1,
       "message": "Since you just reattach or not, why do you need to compute both halves of this? Won\u0027t it be symmetric?",
+      "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ce098b_efc51b3c",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T04:10:35Z",
+      "side": 1,
+      "message": "Could you be specific? I can\u0027t understand what your point is?",
+      "parentUuid": "06e902bb_b095fd59",
       "revId": "9ad82ef8da98e2f756cabda33430cf54f9bf455a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
