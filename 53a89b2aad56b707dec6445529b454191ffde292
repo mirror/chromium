@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0aecb7db_076d36c6",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T00:52:56Z",
+      "side": 1,
+      "message": "I don\u0027t know if it is any better, but we could remove all the null checks and do something like:\n\nensureModel();\n... do action ...\n\nThen the model would be lazily created as needed and available for any calls.  I don\u0027t think it really matters one way or another to be honest and probably makes the code harder to read.",
+      "range": {
+        "startLine": 48,
+        "startChar": 8,
+        "endLine": 48,
+        "endChar": 14
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb28cdf7_b3b3fcfe",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T00:52:56Z",
+      "side": 1,
+      "message": "or does the model have enough methods in the delegate to have it do this inside of it\u0027s own constructor?",
+      "range": {
+        "startLine": 51,
+        "startChar": 15,
+        "endLine": 51,
+        "endChar": 33
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6709c01_895a0d76",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditText.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T00:52:56Z",
+      "side": 1,
+      "message": "should we only do the null checks in methods marked @Override?  By the point we are calling our own methods, we should be init\u0027d right?\n\nAgain, the current implementation makes it easier to read probably, so no need to rock the boat.",
+      "range": {
+        "startLine": 66,
+        "startChar": 12,
+        "endLine": 66,
+        "endChar": 18
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b7d7e77a_e29e33f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T00:52:56Z",
+      "side": 1,
+      "message": "for these, I think it is nicer to do:\n\n/** see TextView#getText */\n\nThen the javadoc would work regardless of where you were.",
+      "range": {
+        "startLine": 20,
+        "startChar": 15,
+        "endLine": 20,
+        "endChar": 16
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "454c98f8_1cfa7969",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/omnibox/AutocompleteEditTextModelBase.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T00:52:56Z",
+      "side": 1,
+      "message": "javadoc these?",
+      "range": {
+        "startLine": 49,
+        "startChar": 4,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "53a89b2aad56b707dec6445529b454191ffde292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
