@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2a268b8c_0bdcd63d",
+        "filename": "components/download/content/download_driver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Yes. Here is from the doc :\n  // Removes the download from the views and history. If the download was\n  // in-progress or interrupted, then the intermediate file will also be\n  // deleted.",
+      "parentUuid": "f46bc8b2_93ab2c1c",
+      "range": {
+        "startLine": 149,
+        "startChar": 4,
+        "endLine": 149,
+        "endChar": 15
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e5a5949b_649adbb3",
         "filename": "components/download/content/download_driver_impl.cc",
         "patchSetId": 4
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-05T18:18:21Z",
       "side": 1,
       "message": "Would it make sense for the caller to just have a helper to do this and keep it out of the interface?  We could basically just call Find(...) in a loop on the caller with the GUID.  That keeps the concept of Entry out of here as well.",
+      "range": {
+        "startLine": 161,
+        "startChar": 25,
+        "endLine": 161,
+        "endChar": 41
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc4a2835_58d106b1",
+        "filename": "components/download/content/download_driver_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Yea, that sounds better. This function is unnecessary.",
+      "parentUuid": "e5a5949b_649adbb3",
       "range": {
         "startLine": 161,
         "startChar": 25,
@@ -416,6 +464,30 @@
     },
     {
       "key": {
+        "uuid": "e4528ef4_8ffed4b2",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "This is the directory where we store the files. We have a separate directory to store the db.\nCall it files_dir or download_dir ?",
+      "parentUuid": "3e703ce7_c62568e9",
+      "range": {
+        "startLine": 44,
+        "startChar": 28,
+        "endLine": 44,
+        "endChar": 31
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a292055c_772777a1",
         "filename": "components/download/internal/controller_impl.h",
         "patchSetId": 4
@@ -427,6 +499,30 @@
       "writtenOn": "2017-06-05T18:18:21Z",
       "side": 1,
       "message": "Add a comment stating what is saved here.  Maybe a clearer var name",
+      "range": {
+        "startLine": 108,
+        "startChar": 17,
+        "endLine": 108,
+        "endChar": 26
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9dd4f87e_f9ea86df",
+        "filename": "components/download/internal/controller_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "download_dir_ ?",
+      "parentUuid": "a292055c_772777a1",
       "range": {
         "startLine": 108,
         "startChar": 17,
@@ -508,6 +604,30 @@
     },
     {
       "key": {
+        "uuid": "9170653f_38d47915",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e695f80_65aeddc1",
+      "range": {
+        "startLine": 44,
+        "startChar": 41,
+        "endLine": 44,
+        "endChar": 42
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9995861_426f6e18",
         "filename": "components/download/internal/file_monitor.h",
         "patchSetId": 4
@@ -554,6 +674,30 @@
     },
     {
       "key": {
+        "uuid": "3a80ae49_80f90e46",
+        "filename": "components/download/internal/proto/entry.proto",
+        "patchSetId": 4
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "35a7d17f_ffa90285",
+      "range": {
+        "startLine": 48,
+        "startChar": 17,
+        "endLine": 48,
+        "endChar": 32
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "24a0e95f_6d25d1c7",
         "filename": "components/download/internal/stats.h",
         "patchSetId": 4
@@ -577,6 +721,30 @@
     },
     {
       "key": {
+        "uuid": "c862531b_916b4b10",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24a0e95f_6d25d1c7",
+      "range": {
+        "startLine": 65,
+        "startChar": 11,
+        "endLine": 65,
+        "endChar": 28
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0d3a622_d5fa1211",
         "filename": "components/download/internal/stats.h",
         "patchSetId": 4
@@ -588,6 +756,30 @@
       "writtenOn": "2017-06-05T18:18:21Z",
       "side": 1,
       "message": "Should this be separate?  This isn\u0027t really a reason why we\u0027re cleaning up the files.",
+      "range": {
+        "startLine": 77,
+        "startChar": 2,
+        "endLine": 78,
+        "endChar": 19
+      },
+      "revId": "62f708aca153a23299752ed0ea74dadd7265120c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10547791_4d2df470",
+        "filename": "components/download/internal/stats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1145120
+      },
+      "writtenOn": "2017-06-16T01:05:38Z",
+      "side": 1,
+      "message": "Yes, this probably doesnt belong here.",
+      "parentUuid": "a0d3a622_d5fa1211",
       "range": {
         "startLine": 77,
         "startChar": 2,
