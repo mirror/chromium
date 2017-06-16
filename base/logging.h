@@ -318,7 +318,7 @@ inline constexpr bool AnalyzerAssumeTrue(bool arg) {
   return arg || AnalyzerNoReturn();
 }
 
-#define ANALYZER_ASSUME_TRUE(arg) ::logging::AnalyzerAssumeTrue(!!(arg))
+#define ANALYZER_ASSUME_TRUE(arg) (void)::logging::AnalyzerAssumeTrue(!!(arg))
 
 #else  // !defined(__clang_analyzer__)
 
