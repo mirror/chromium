@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8b8f462f_7ef432ad",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-16T22:02:35Z",
+      "side": 1,
+      "message": "Hm, I changed this to OS_POSIX, but note that it only matters for Chrome OS anyways, as starting \nabove normal prio threads isn\u0027t allowed on the other systems.",
+      "parentUuid": "ea4cc584_f2cd7023",
+      "revId": "a8470e9f7a6e8682b00f95887b58d2f48e16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "518842b1_582cbd15",
         "filename": "media/audio/audio_device_thread.cc",
         "patchSetId": 3
@@ -33,6 +51,24 @@
       "revId": "a8470e9f7a6e8682b00f95887b58d2f48e16af57",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464a691d_15b7d04b",
+        "filename": "media/audio/audio_device_thread.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-16T22:02:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "518842b1_582cbd15",
+      "revId": "a8470e9f7a6e8682b00f95887b58d2f48e16af57",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
