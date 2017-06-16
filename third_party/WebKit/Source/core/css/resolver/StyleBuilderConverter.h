@@ -112,6 +112,8 @@ class StyleBuilderConverter {
                                                         const CSSValue&);
   template <typename T>
   static T ConvertLineWidth(StyleResolverState&, const CSSValue&);
+  template <typename T>
+  static T ConvertBorderWidth(StyleResolverState&, const CSSValue&);
   static Length ConvertLength(const StyleResolverState&, const CSSValue&);
   static UnzoomedLength ConvertUnzoomedLength(const StyleResolverState&,
                                               const CSSValue&);
@@ -253,6 +255,33 @@ T StyleBuilderConverter::ConvertLineWidth(StyleResolverState& state,
       primitive_value.ComputeLength<double>(state.CssToLengthConversionData());
   if (result > 0.0 && result < 1.0)
     return 1.0;
+  return clampTo<T>(RoundForImpreciseConversion<T>(result),
+                    defaultMinimumForClamp<T>(), defaultMaximumForClamp<T>());
+}
+
+template <typename T>
+T StyleBuilderConverter::ConvertBorderWidth(StyleResolverState& state,
+                                            const CSSValue& value) {
+  if (value.IsIdentifierValue()) {
+    CSSValueID value_id = ToCSSIdentifierValue(value).GetValueID();
+    if (value_id == CSSValueThin)
+      return 1;
+    if (value_id == CSSValueMedium)
+      return 3;
+    if (value_id == CSSValueThick)
+      return 5;
+    NOTREACHED();
+    return 0;
+  }
+  const CSSPrimitiveValue& primitive_value = ToCSSPrimitiveValue(value);
+  // FIXME: We are moving to use the full page zoom implementation to handle
+  // high-dpi.  In that case specyfing a border-width of less than 1px would
+  // result in a border that is one device pixel thick.  With this change that
+  // would instead be rounded up to 2 device pixels.  Consider clamping it to
+  // device pixels or zoom adjusted CSS pixels instead of raw CSS pixels.
+  // Reference crbug.com/485650 and crbug.com/382483
+  double result =
+      primitive_value.ComputeLength<double>(state.CssToLengthConversionData());
   return clampTo<T>(RoundForImpreciseConversion<T>(result),
                     defaultMinimumForClamp<T>(), defaultMaximumForClamp<T>());
 }
