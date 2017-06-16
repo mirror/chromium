@@ -7,18 +7,25 @@
 #include <utility>
 
 #include "base/bind.h"
+#include "content/public/browser/render_frame_host.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/process_manager.h"
 
 namespace extensions {
 
 // static
-void KeepAliveImpl::Create(content::BrowserContext* context,
-                           const Extension* extension,
-                           const service_manager::BindSourceInfo& source_info,
-                           KeepAliveRequest request) {
+void KeepAliveImpl::Create(const service_manager::BindSourceInfo& source_info,
+                           KeepAliveRequest request,
+                           content::RenderFrameHost* render_frame_host) {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host);
+  ExtensionWebContentsObserver* observer =
+      ExtensionWebContentsObserver::GetForWebContents(web_contents);
+  const Extension* extension = GetExtensionFromFrame(render_frame_host, false);
+
   // Owns itself.
-  new KeepAliveImpl(context, extension, std::move(request));
+  new KeepAliveImpl(render_frame_host->GetProcess()->GetBrowserContext(),
+                    extension, std::move(request));
 }
 
 KeepAliveImpl::KeepAliveImpl(content::BrowserContext* context,

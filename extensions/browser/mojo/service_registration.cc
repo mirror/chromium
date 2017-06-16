@@ -41,29 +41,38 @@ bool ExtensionHasPermission(const Extension* extension,
       ->IsAvailable(permission_name, extension, context, extension->url())
       .is_available();
 }
+
+template <typename Interface>
+void BindCallback(base::Callback<void(const service_manager::BindSourceInfo >
+                                          &mojo::InterfaceRequest<Interface>,
+                                      content::RenderFrameHost*)> callback,
+                  const service_manager::BindSourceInfo& source_info,
+                  mojo::InterfaceRequest<Interface> request,
+                  content::RenderFrameHost* render_frame_host) {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host);
+  ExtensionWebContentsObserver* observer =
+      ExtensionWebContentsObserver::GetForWebContents(web_contents);
+  const Extension* extension = GetExtensionFromFrame(render_frame_host, false);
+  if (ExtensionHasPermission(extension, render_frame_host->GetProcess(),
+                             "displaySource")) {
+    callback.Run(source_info, std::move(request), render_frame_host);
+  }
+}
+
 #endif
 
 }  // namespace
 
-void RegisterServicesForFrame(content::RenderFrameHost* render_frame_host,
-                              const Extension* extension) {
-  DCHECK(extension);
-
-  service_manager::BinderRegistry* registry =
-      render_frame_host->GetInterfaceRegistry();
-  registry->AddInterface(base::Bind(
-      KeepAliveImpl::Create,
-      render_frame_host->GetProcess()->GetBrowserContext(), extension));
-
+void AddInterfacesForFrameRegistry(Registry* registry) {
+  registry->AddInterface(base::Bind(KeepAliveImpl::Create));
 #if BUILDFLAG(ENABLE_WIFI_DISPLAY)
-  if (ExtensionHasPermission(extension, render_frame_host->GetProcess(),
-                             "displaySource")) {
-    registry->AddInterface(
-        base::Bind(WiFiDisplaySessionServiceImpl::BindToRequest,
-                   render_frame_host->GetProcess()->GetBrowserContext()));
-    registry->AddInterface(
-        base::Bind(WiFiDisplayMediaServiceImpl::BindToRequest));
-  }
+  registry->AddInterface(
+      base::Bind(&BindCallback<extensions::WiFiDisplaySessionServiceImpl>,
+                 base::Bind(&WiFiDisplaySessionServiceImpl::BindToRequest)));
+  registry->AddInterface(
+      base::Bind(&BindCallback<extensions::WiFiDisplaySessionServiceImpl>,
+                 base::Bind(&WiFiDisplayMediaServiceImpl::BindToRequest)));
 #endif
 }
 

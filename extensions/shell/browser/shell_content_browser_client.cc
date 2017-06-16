@@ -263,6 +263,21 @@ ShellContentBrowserClient::GetNavigationUIData(
   return base::MakeUnique<ShellNavigationUIData>(navigation_handle);
 }
 
+void ShellContentBrowserClient::BindInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  if (frame_interfaces_.empty())
+    AddInterfacesForFrameRegistry(&frame_interfaces_);
+
+  if (frame_interfaces_.CanBindInterface(interface_name)) {
+    frame_interfaces_.BindInterface(source_info, interface_name,
+                                    std::move(interface_pipe),
+                                    render_frame_host);
+  }
+}
+
 ShellBrowserMainParts* ShellContentBrowserClient::CreateShellBrowserMainParts(
     const content::MainFunctionParams& parameters,
     ShellBrowserMainDelegate* browser_main_delegate) {

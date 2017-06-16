@@ -186,10 +186,6 @@ class ExtensionsBrowserClient {
   virtual void RegisterExtensionFunctions(
       ExtensionFunctionRegistry* registry) const = 0;
 
-  // Registers Mojo services for a RenderFrame.
-  virtual void RegisterMojoServices(content::RenderFrameHost* render_frame_host,
-                                    const Extension* extension) const = 0;
-
   // Creates a RuntimeAPIDelegate responsible for handling extensions
   // management-related events such as update and installation on behalf of the
   // core runtime API implementation.
