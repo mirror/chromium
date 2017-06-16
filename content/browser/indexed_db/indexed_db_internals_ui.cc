@@ -285,8 +285,29 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   const GURL url = GURL(FILE_PATH_LITERAL("file://") + zip_path.value());
   WebContents* web_contents = web_ui()->GetWebContents();
+  net::NetworkTrafficAnnotationTag traffic_annotation =
+      net::DefineNetworkTrafficAnnotation("indexed_db_internals_handler", R"(
+        semantics {
+          sender: "Indexed DB Internals"
+          description:
+            "This is an internal Chrome webpage that displays debug "
+            "information about IndexedDB usage and data, used by developers."
+          trigger: "When a user navigates to chrome://indexeddb-internals/."
+          data: "None."
+          destination: LOCAL
+        }
+        policy {
+          cookies_allowed: false
+          setting:
+            "This feature cannot be disabled by settings, but it's only "
+            "triggered by navigating to the specified URL."
+          policy_exception_justification:
+            "Not implemented. Indexed DB is Chrome's internal local data "
+            "storage.
+        })");
   std::unique_ptr<DownloadUrlParameters> dl_params(
-      DownloadUrlParameters::CreateForWebContentsMainFrame(web_contents, url));
+      DownloadUrlParameters::CreateForWebContentsMainFrame(web_contents, url,
+                                                           traffic_annotation));
   const GURL referrer(web_contents->GetLastCommittedURL());
   dl_params->set_referrer(content::Referrer::SanitizeForRequest(
       url, content::Referrer(referrer, blink::kWebReferrerPolicyDefault)));
@@ -300,7 +321,7 @@ void IndexedDBInternalsUI::OnDownloadDataReady(
 
   BrowserContext* context = web_contents->GetBrowserContext();
   BrowserContext::GetDownloadManager(context)->DownloadUrl(
-      std::move(dl_params), NO_TRAFFIC_ANNOTATION_YET);
+      std::move(dl_params));
 }
 
 // The entire purpose of this class is to delete the temp file after
