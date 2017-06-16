@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7a754b9b_ad543bcf",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T16:52:36Z",
+      "side": 1,
+      "message": "That\u0027s actually what I had in an earlier patch-set; Primiano made a fair point that since we only have a single flag, it\u0027s a load of additional complexity for no benefit.\n\nFolding this together into bad_flags feels like it\u0027ll create a load of boilerplate since I think we\u0027ll want the two cases to have different messages - bad_flags is for flags which will take effect but which are not advised for general use, conditional_flags is for flags which may or may not take effect.\n\nI\u0027ve reverted to the list-of-conditional-flags approach (sorry Primiano ;) but put the dialog creation in a helper to make things a little more readable. It does have the side-effect that \"bad\" flags will now also display with their value, if any; I don\u0027t _think_ that should be a problem?",
+      "parentUuid": "a20351d2_f20a2e31",
+      "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "550c1731_cbecc967",
         "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-05T18:20:06Z",
       "side": 1,
       "message": "Is attaching the value important?  Like, in some builds, --enable-heap-profiling\u003dx will be allowed but \u003dy won\u0027t?  Because if not I\u0027d avoid this.",
+      "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4e44702_05e22349",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T16:52:36Z",
+      "side": 1,
+      "message": "Yes - originally I just showed the flag, but it is actually the case that we only support --enable-heap-profiling\u003dtask-profiler if task profiling is enabled.  If task profiling isn\u0027t available then we\u0027d still support \"native\" profiling mode.\n\nWe might be able to simplify the heap profiling options to avoid that, or we could simply rephrase the warning text to allow for us saying just which flag is broken, and not bothering to include the value.",
+      "parentUuid": "550c1731_cbecc967",
       "revId": "bd1d77d11078d8c0345907bf1fab9987697e8675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
