@@ -64,7 +64,7 @@ class Parent : public service_manager::Service,
     base::MessageLoop::current()->QuitWhenIdle();
   }
 
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistry<> registry_;
   mojo::BindingSet<service_manager::test::mojom::Parent> parent_bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(Parent);

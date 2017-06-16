@@ -159,7 +159,7 @@ class ProvidedService : public Service,
   const std::string title_;
   mojom::ServiceRequest request_;
   test::mojom::ExposedInterfacePtr caller_;
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   mojo::BindingSet<test::mojom::BlockedInterface> blocked_bindings_;
   mojo::BindingSet<test::mojom::UserIdTest> user_id_test_bindings_;
@@ -240,7 +240,7 @@ class ConnectTestService : public Service,
 
   std::vector<std::unique_ptr<Service>> delegates_;
   mojo::BindingSet<mojom::ServiceFactory> service_factory_bindings_;
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<test::mojom::ConnectTestService> bindings_;
   std::list<std::unique_ptr<ProvidedService>> provided_services_;
 

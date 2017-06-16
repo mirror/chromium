@@ -42,7 +42,7 @@ class ShutdownServiceApp : public Service, public mojom::ShutdownTestService {
     bindings_.AddBinding(this, std::move(request));
   }
 
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<mojom::ShutdownTestService> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(ShutdownServiceApp);

@@ -124,7 +124,7 @@ class ConnectTest : public test::ServiceTest,
     }
 
     ConnectTest* connect_test_;
-    BinderRegistry registry_;
+    BinderRegistry<> registry_;
 
     DISALLOW_COPY_AND_ASSIGN(TestService);
   };

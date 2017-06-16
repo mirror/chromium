@@ -51,7 +51,7 @@ class Target : public service_manager::Service,
     callback.Run(context()->identity().instance());
   }
 
-  service_manager::BinderRegistry registry_;
+  service_manager::BinderRegistry<> registry_;
   mojo::BindingSet<ConnectTestService> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(Target);

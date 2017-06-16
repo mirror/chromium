@@ -48,7 +48,7 @@ class AppClient : public Service,
   void BindingLost();
 
   ServiceRunner* runner_ = nullptr;
-  BinderRegistry registry_;
+  BinderRegistry<> registry_;
   mojo::BindingSet<mojom::LifecycleControl> bindings_;
 
   DISALLOW_COPY_AND_ASSIGN(AppClient);
