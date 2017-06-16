@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "042086a8_1f4bac5e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-16T18:44:51Z",
+      "side": 1,
+      "message": "Are you sure the min/max is not the other way around?  This seems like it\u0027s equivalent to just max(3, 0.3 * num_cores), since that\u0027s always less than 8.",
+      "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b88daab_9395793a",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-16T18:44:51Z",
+      "side": 1,
+      "message": "I\u0027m not an expert on this class, but it seems strange to me to friend a content/ test in base/.  Would it work instead to create a public method with a ForTesting() suffix for getting the max concurrent tasks?",
+      "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
