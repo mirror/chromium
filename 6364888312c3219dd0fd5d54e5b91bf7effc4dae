@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fe1fff37_dd1777a8",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/getPhotoSettings.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "582bb9e2_1e86dec0",
+      "range": {
+        "startLine": 13,
+        "startChar": 67,
+        "endLine": 13,
+        "endChar": 68
+      },
+      "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "79dae86e_9149ddb9",
         "filename": "third_party/WebKit/LayoutTests/imagecapture/getPhotoSettings.html",
         "patchSetId": 10
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e77f9253_6dae1418",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/getPhotoSettings.html",
+        "patchSetId": 10
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:37:55Z",
+      "side": 1,
+      "message": "It could be, but I think it\u0027s clearer this way w.r.t. testing\nthe returned values in l.36-37.",
+      "parentUuid": "79dae86e_9149ddb9",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 10
+      },
+      "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a04cb721_2ea29afe",
         "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
         "patchSetId": 10
@@ -62,6 +110,24 @@
       "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ddd0d4f_7c9bfe8c",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:37:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a04cb721_2ea29afe",
+      "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -85,6 +151,30 @@
       "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc7a98a5_92257bb4",
+        "filename": "third_party/WebKit/Source/modules/imagecapture/ImageCapture.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 643,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:37:55Z",
+      "side": 1,
+      "message": "Done all of them.",
+      "parentUuid": "3a4c1e06_1947b4a6",
+      "range": {
+        "startLine": 643,
+        "startChar": 2,
+        "endLine": 643,
+        "endChar": 44
+      },
+      "revId": "6364888312c3219dd0fd5d54e5b91bf7effc4dae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
