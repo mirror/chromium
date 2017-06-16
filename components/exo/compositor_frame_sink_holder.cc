@@ -6,7 +6,7 @@
 
 #include "cc/output/compositor_frame_sink.h"
 #include "cc/resources/returned_resource.h"
-#include "components/exo/surface.h"
+#include "components/exo/surface_tree_host.h"
 
 namespace exo {
 
@@ -14,19 +14,16 @@ namespace exo {
 // CompositorFrameSinkHolder, public:
 
 CompositorFrameSinkHolder::CompositorFrameSinkHolder(
-    Surface* surface,
+    SurfaceTreeHost* surface_tree_host,
     std::unique_ptr<cc::CompositorFrameSink> frame_sink)
-    : surface_(surface),
+    : surface_tree_host_(surface_tree_host),
       frame_sink_(std::move(frame_sink)),
       weak_factory_(this) {
-  surface_->AddSurfaceObserver(this);
   frame_sink_->BindToClient(this);
 }
 
 CompositorFrameSinkHolder::~CompositorFrameSinkHolder() {
   frame_sink_->DetachFromClient();
-  if (surface_)
-    surface_->RemoveSurfaceObserver(this);
 
   // Release all resources which aren't returned from CompositorFrameSink.
   for (auto& callback : release_callbacks_)
@@ -50,8 +47,8 @@ void CompositorFrameSinkHolder::SetResourceReleaseCallback(
 
 void CompositorFrameSinkHolder::SetBeginFrameSource(
     cc::BeginFrameSource* source) {
-  if (surface_)
-    surface_->SetBeginFrameSource(source);
+  if (surface_tree_host_)
+    surface_tree_host_->SetBeginFrameSource(source);
 }
 
 void CompositorFrameSinkHolder::ReclaimResources(
@@ -67,16 +64,8 @@ void CompositorFrameSinkHolder::ReclaimResources(
 }
 
 void CompositorFrameSinkHolder::DidReceiveCompositorFrameAck() {
-  if (surface_)
-    surface_->DidReceiveCompositorFrameAck();
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// SurfaceObserver overrides:
-
-void CompositorFrameSinkHolder::OnSurfaceDestroying(Surface* surface) {
-  surface_->RemoveSurfaceObserver(this);
-  surface_ = nullptr;
+  if (surface_tree_host_)
+    surface_tree_host_->DidReceiveCompositorFrameAck();
 }
 
 }  // namespace exo
