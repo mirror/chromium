@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fb24f7b_c3e444ab",
+        "filename": "gpu/ipc/service/pass_through_image_transport_surface.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T01:16:17Z",
+      "side": 1,
+      "message": "nit: The descheduler/reschedule calls can be exposed on ImageTransportSurfaceDelegate which is GpuCommandBufferStub.",
+      "range": {
+        "startLine": 59,
+        "startChar": 25,
+        "endLine": 59,
+        "endChar": 38
+      },
+      "revId": "fd0a275935d239882074a5c863042472bc5c7bae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
