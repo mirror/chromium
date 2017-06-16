@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b3809210_8296ca38",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "Why is this include needed?",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f7c947c2_b4671b6f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "nit: request_name_for_logging",
+      "range": {
+        "startLine": 149,
+        "startChar": 23,
+        "endLine": 149,
+        "endChar": 35
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8a3a9a2b_f3336895",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "Can you use GetStringFromPrefetchRequestStatus and GetStringRenderPageInfoList?",
+      "range": {
+        "startLine": 156,
+        "startChar": 9,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5690161c_8dcbed18",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "I like this approach.\n\nIs it better to define this as struct?",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "baf031f3_6281790c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "nit: please add \"const \u0026\".",
+      "range": {
+        "startLine": 49,
+        "startChar": 34,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cc6ff0f_62a73e50",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "DidPrefetchRequest?",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "428d9cd7_4ffa3633",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-16T00:00:10Z",
+      "side": 1,
+      "message": "Please include the header file.",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
