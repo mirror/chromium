@@ -53,6 +53,24 @@
     },
     {
       "key": {
+        "uuid": "3de594b2_1979f04a",
+        "filename": "cc/trees/property_tree_builder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-16T23:14:51Z",
+      "side": 1,
+      "message": "Yes, I think so. The additional use-case I added is also only for\nanimations.",
+      "parentUuid": "4c50446b_a65945bc",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5226e978_7543f3f9",
         "filename": "cc/trees/transform_node.cc",
         "patchSetId": 6
@@ -67,6 +85,24 @@
       "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63cf85a3_0417f86f",
+        "filename": "cc/trees/transform_node.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-16T23:14:51Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5226e978_7543f3f9",
+      "revId": "9780bc3bc669c3cbc1786e184d88caf6a7605511",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
