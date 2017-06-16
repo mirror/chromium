@@ -16,6 +16,24 @@
       "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd776a57_b80c3f71",
+        "filename": "chrome/browser/media/webrtc/desktop_media_list_ash.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-16T00:25:36Z",
+      "side": 1,
+      "message": "This line declares sequence checker. DCHECK_CALLED_ON_VALID_SEQUENCE() statements verify that the the code is called is executed on the right sequence.",
+      "parentUuid": "8d802cee_1cca1c9e",
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
