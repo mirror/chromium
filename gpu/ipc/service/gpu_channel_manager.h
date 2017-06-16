@@ -32,6 +32,10 @@
 #include "ui/gl/gl_surface.h"
 #include "url/gurl.h"
 
+#if defined(OS_ANDROID)
+#include "base/android/application_status_listener.h"
+#endif
+
 namespace gl {
 class GLShareGroup;
 }
@@ -140,6 +144,8 @@ class GPU_EXPORT GpuChannelManager {
 #if defined(OS_ANDROID)
   void ScheduleWakeUpGpu();
   void DoWakeUpGpu();
+
+  void OnApplicationStateChange(base::android::ApplicationState state);
 #endif
 
   // These objects manage channels to individual renderer processes. There is
@@ -178,6 +184,8 @@ class GPU_EXPORT GpuChannelManager {
   // transport surfaces.
   base::TimeTicks last_gpu_access_time_;
   base::TimeTicks begin_wake_up_time_;
+
+  base::android::ApplicationStatusListener application_status_listener_;
 #endif
 
   // Set during intentional GPU process shutdown.
