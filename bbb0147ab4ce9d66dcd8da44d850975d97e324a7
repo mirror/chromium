@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f5cef67d_eea3bab4",
+        "filename": "media/capture/video/win/video_capture_device_factory_win.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1123894
+      },
+      "writtenOn": "2017-06-16T22:44:59Z",
+      "side": 1,
+      "message": "We should move this to a common location, i.e. media_switches.h. We might want to enable it for test and would need the header file. Also, the name should reflect the platform if this is going to be used by Win only.",
+      "revId": "bbb0147ab4ce9d66dcd8da44d850975d97e324a7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
