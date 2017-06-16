@@ -11,6 +11,7 @@
 #include "base/test/test_discardable_memory_allocator.h"
 #include "base/test/test_suite.h"
 #include "build/build_config.h"
+#include "mojo/edk/embedder/embedder.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "ui/base/resource/resource_bundle.h"
 #include "ui/base/ui_base_paths.h"
@@ -30,6 +31,8 @@ class AppListTestSuite : public base::TestSuite {
   void Initialize() override {
     base::CommandLine* command_line = base::CommandLine::ForCurrentProcess();
     command_line->AppendSwitchASCII(kTestType, "applist");
+
+    mojo::edk::Init();
 
     gl::GLSurfaceTestSupport::InitializeOneOff();
     base::TestSuite::Initialize();
