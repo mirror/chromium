@@ -10,6 +10,10 @@
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/notification_service_impl.h"
 
+#if defined(OS_WIN)
+#include "base/win/scoped_com_initializer.h"
+#endif
+
 namespace content {
 
 class TestBrowserThreadImpl : public BrowserThreadImpl {
@@ -24,6 +28,10 @@ class TestBrowserThreadImpl : public BrowserThreadImpl {
   ~TestBrowserThreadImpl() override { Stop(); }
 
   void Init() override {
+#if defined(OS_WIN)
+    com_initializer_.reset(new base::win::ScopedCOMInitializer());
+#endif
+
     notification_service_.reset(new NotificationServiceImpl);
     BrowserThreadImpl::Init();
   }
@@ -34,6 +42,10 @@ class TestBrowserThreadImpl : public BrowserThreadImpl {
   }
 
  private:
+#if defined(OS_WIN)
+  std::unique_ptr<base::win::ScopedCOMInitializer> com_initializer_;
+#endif
+
   std::unique_ptr<NotificationService> notification_service_;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserThreadImpl);
