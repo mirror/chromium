@@ -16,6 +16,24 @@
       "revId": "b5bf3b2d343d5655622f83f1e66d45949f600a47",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e51bbc8_ae3e86c9",
+        "filename": "chrome/common/crash_keys.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1128437
+      },
+      "writtenOn": "2017-06-16T20:08:43Z",
+      "side": 1,
+      "message": "chrome_crash_reporter_client_win.cc is only used in these targets: //chrome_elf:crash, //chrome/test:test_support and //nacl/broker:nacl64_crash_reporter_client.\n\nGiven that the crash keys I\u0027m adding are for GPU process only, I don\u0027t think it needs to be added to those targets.\n\nThe other lists are for android webview and chromecast. Given that the crash key is temporary and that I\u0027m not really looking at crashes on those platforms, I don\u0027t think we should add it there either.\n\n(Unless I\u0027m missing something.)",
+      "parentUuid": "fdbaf217_020ee70d",
+      "revId": "b5bf3b2d343d5655622f83f1e66d45949f600a47",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
