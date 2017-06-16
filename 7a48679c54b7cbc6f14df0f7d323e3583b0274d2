@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9c2a6655_f4d402fb",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T19:33:56Z",
+      "side": 1,
+      "message": "Formula is here: https://cs.chromium.org/chromium/src/base/task_scheduler/initialization_util.cc?dr\u0026l\u003d19",
+      "parentUuid": "042086a8_1f4bac5e",
+      "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9b88daab_9395793a",
         "filename": "base/task_scheduler/task_scheduler.h",
         "patchSetId": 10
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T18:44:51Z",
       "side": 1,
       "message": "I\u0027m not an expert on this class, but it seems strange to me to friend a content/ test in base/.  Would it work instead to create a public method with a ForTesting() suffix for getting the max concurrent tasks?",
+      "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8270915_2718aa64",
+        "filename": "base/task_scheduler/task_scheduler.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-16T19:33:56Z",
+      "side": 1,
+      "message": "I would prefer not to do that, because we don\u0027t want to allow any test to get the number of threads in TaskScheduler like we allow any test to call TaskScheduler::FlushForTesting/JoinForTesting. The reason why we don\u0027t want to allow any test to use to get the number of threads in TaskScheduler is because in future versions of TaskScheduler that use OS thread pool support, we might not be able to get that value. It will be easier to remove one call site in BrowserMainLoopTest than tons of calls spread across the codebase.",
+      "parentUuid": "9b88daab_9395793a",
       "revId": "7a48679c54b7cbc6f14df0f7d323e3583b0274d2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
