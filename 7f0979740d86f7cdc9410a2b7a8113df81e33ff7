@@ -52,6 +52,24 @@
       "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4a88de54_3f1bdc6e",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-16T06:04:23Z",
+      "side": 1,
+      "message": "Oh wow, yes. I just got the second part of your comment.\n\nAre you saying, it should actually be: \nSharedMemoryTracker::GetOrCreateAllocatoDumpForTracing (pmd, UnguessableToken) {\n  return pmd-\u003eGetOrCreateAllocatorDump(name);\n}\nyes this makes sense.\n\nWell we have an api for this issue: AddSuballocation, which takes a string instead of guid and creates a child dump. But I am not sure we can use it in this case since global dumps are involved.",
+      "parentUuid": "0772eddd_f43d8ae1",
+      "revId": "7f0979740d86f7cdc9410a2b7a8113df81e33ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
