@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "046ca2f9_36cd2f70",
+        "filename": "cc/trees/layer_tree_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1110037
+      },
+      "writtenOn": "2017-06-16T23:18:24Z",
+      "side": 0,
+      "message": "This is from https://chromium.googlesource.com/chromium/src/+/56f35ff950a6c04776212d9934c57c23f189cb73 but I don\u0027t think it\u0027s used any more. I grepped for scroll_offset_y and could not find any modern usage.",
+      "revId": "2686bd4a727bac50184816783714608802468c0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
