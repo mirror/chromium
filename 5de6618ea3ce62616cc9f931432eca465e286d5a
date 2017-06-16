@@ -22,6 +22,30 @@
       "revId": "5de6618ea3ce62616cc9f931432eca465e286d5a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "5f29702d_e747f360",
+        "filename": "third_party/WebKit/Source/modules/indexeddb/IDBRequest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1163599
+      },
+      "writtenOn": "2017-06-16T22:04:00Z",
+      "side": 1,
+      "message": "Done.\n\nIn general, I think that we\u0027re not as rigorous w.r.t. local variable constness as we are with class members. Do you think it\u0027s worth const-ing local variables where it applies? If so, I can adjust my coding style accordingly.",
+      "parentUuid": "9aaf9d77_adae148a",
+      "range": {
+        "startLine": 263,
+        "startChar": 20,
+        "endLine": 263,
+        "endChar": 37
+      },
+      "revId": "5de6618ea3ce62616cc9f931432eca465e286d5a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
