@@ -14,6 +14,9 @@ namespace device {
 
 namespace {
 
+const char kPositionUnavailableErrorMessage[] =
+    "Geolocation information is unavailable";
+
 // Geoposition error codes for reporting in UMA.
 enum GeopositionErrorCode {
   // NOTE: Do not renumber these as that would confuse interpretation of
@@ -76,7 +79,7 @@ GeolocationServiceImpl::~GeolocationServiceImpl() {
     if (!current_position_.valid) {
       current_position_.error_code = mojom::Geoposition::ErrorCode(
           GEOPOSITION_ERROR_CODE_POSITION_UNAVAILABLE);
-      current_position_.error_message.clear();
+      current_position_.error_message = kPositionUnavailableErrorMessage;
     }
     ReportCurrentPosition();
   }
@@ -127,8 +130,17 @@ void GeolocationServiceImpl::QueryNextPosition(
 
   position_callback_ = std::move(callback);
 
-  if (has_position_to_report_)
+  if (has_position_to_report_) {
     ReportCurrentPosition();
+    return;
+  }
+
+  if (!current_position_.valid) {
+    current_position_.error_code = mojom::Geoposition::ErrorCode(
+        GEOPOSITION_ERROR_CODE_POSITION_UNAVAILABLE);
+    current_position_.error_message = kPositionUnavailableErrorMessage;
+    ReportCurrentPosition();
+  }
 }
 
 void GeolocationServiceImpl::SetOverride(const Geoposition& position) {

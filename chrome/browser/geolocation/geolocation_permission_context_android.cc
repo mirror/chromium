@@ -147,15 +147,6 @@ void GeolocationPermissionContextAndroid::RequestPermission(
     const GURL& requesting_frame_origin,
     bool user_gesture,
     const BrowserPermissionCallback& callback) {
-  if (!IsLocationAccessPossible(web_contents, requesting_frame_origin,
-                                user_gesture)) {
-    PermissionDecided(id, requesting_frame_origin,
-                      web_contents->GetLastCommittedURL().GetOrigin(),
-                      user_gesture, callback, false /* persist */,
-                      CONTENT_SETTING_BLOCK);
-    return;
-  }
-
   GURL embedding_origin = web_contents->GetLastCommittedURL().GetOrigin();
   ContentSetting content_setting =
       GeolocationPermissionContext::GetPermissionStatus(
@@ -174,7 +165,17 @@ void GeolocationPermissionContextAndroid::RequestPermission(
                 ::HandleUpdateAndroidPermissions,
             weak_factory_.GetWeakPtr(), id, requesting_frame_origin,
             embedding_origin, callback));
+    return;
+  }
 
+  if (!IsLocationAccessPossible(web_contents, requesting_frame_origin,
+                                user_gesture)) {
+    PermissionDecided(id, requesting_frame_origin,
+                      web_contents->GetLastCommittedURL().GetOrigin(),
+                      user_gesture, callback, false /* persist */,
+                      content_setting == CONTENT_SETTING_ALLOW
+                          ? CONTENT_SETTING_ALLOW
+                          : CONTENT_SETTING_BLOCK);
     return;
   }
 
@@ -223,7 +224,7 @@ void GeolocationPermissionContextAndroid::NotifyPermissionSet(
     if (IsInLocationSettingsBackOff(is_default_search)) {
       FinishNotifyPermissionSet(id, requesting_origin, embedding_origin,
                                 callback, false /* persist */,
-                                CONTENT_SETTING_BLOCK);
+                                CONTENT_SETTING_ALLOW);
       LogLocationSettingsMetric(
           kLocationSettingsSuppressMetricBase, is_default_search,
           LocationSettingsBackOffLevel(is_default_search));
@@ -245,7 +246,7 @@ void GeolocationPermissionContextAndroid::NotifyPermissionSet(
     if (tab && !tab->IsUserInteractable()) {
       FinishNotifyPermissionSet(id, requesting_origin, embedding_origin,
                                 callback, false /* persist */,
-                                CONTENT_SETTING_BLOCK);
+                                CONTENT_SETTING_ALLOW);
       // This case should be very rare, so just pretend it was a denied prompt
       // for metrics purposes.
       LogLocationSettingsMetric(
@@ -467,7 +468,6 @@ void GeolocationPermissionContextAndroid::OnLocationSettingsDialogShown(
                               is_default_search,
                               LocationSettingsBackOffLevel(is_default_search));
     UpdateLocationSettingsBackOff(is_default_search);
-    content_setting = CONTENT_SETTING_BLOCK;
     persist = false;
   }
 
