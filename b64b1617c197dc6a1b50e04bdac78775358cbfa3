@@ -340,6 +340,30 @@
       "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "748a15ea_a9d95245",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T19:39:17Z",
+      "side": 1,
+      "message": "Renamed to AttachHandles",
+      "parentUuid": "1782ddd1_447f7d30",
+      "range": {
+        "startLine": 279,
+        "startChar": 14,
+        "endLine": 279,
+        "endChar": 37
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
