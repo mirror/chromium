@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d2d92c42_1a256a6b",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/signin/AccountSigninView.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-16T10:41:11Z",
+      "side": 1,
+      "message": "Nit: maybe expand this comment a bit more with details from the bug. Also, nitty nit: no space before period.",
+      "range": {
+        "startLine": 298,
+        "startChar": 65,
+        "endLine": 298,
+        "endChar": 66
+      },
+      "revId": "058fb5008dacc7f80f11288bb87af48ccd582c9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
