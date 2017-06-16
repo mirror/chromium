@@ -5,11 +5,16 @@
 #ifndef ScrollerSizeMetrics_h
 #define ScrollerSizeMetrics_h
 
+#include "base/metrics/histogram_macros.h"
+#include "base/metrics/single_sample_metrics.h"
 #include "cc/input/scroller_size_metrics.h"
 
 namespace blink {
+using base::SingleSampleMetric;
+using base::SingleSampleMetricsFactory;
 using cc::kScrollerSizeLargestBucket;
 using cc::kScrollerSizeBucketCount;
+using cc::kSmallScrollerThreshold;
 }
 
 #endif  // ScrollerSizeMetrics_h

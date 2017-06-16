@@ -128,7 +128,6 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/scroll/ScrollAnimatorBase.h"
 #include "platform/scroll/ScrollbarTheme.h"
-#include "platform/scroll/ScrollerSizeMetrics.h"
 #include "platform/text/TextStream.h"
 #include "platform/wtf/CheckedNumeric.h"
 #include "platform/wtf/CurrentTime.h"
@@ -344,6 +343,15 @@ void LocalFrameView::Init() {
   if (frame_->Owner() &&
       frame_->Owner()->ScrollingMode() == kScrollbarAlwaysOff)
     SetCanHaveScrollbars(false);
+
+  scroller_size_metric_ =
+      SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
+          "Event.Scroll.ScrollerSize.OnLoad", 1, kScrollerSizeLargestBucket,
+          kScrollerSizeBucketCount);
+
+  scroller_size_percentage_metric_ =
+      SingleSampleMetricsFactory::Get()->CreateCustomCountsMetric(
+          "Event.Scroll.ScrollerSize.SmallScrollerPercentage", 1, 100, 101);
 }
 
 void LocalFrameView::SetupRenderThrottling() {
@@ -2202,24 +2210,53 @@ void LocalFrameView::HandleLoadCompleted() {
   if (!NeedsLayout())
     ClearFragmentAnchor();
 
+  RecordScrollerSizeRelatedMetrics();
+}
+
+void LocalFrameView::RecordScrollerSizeRelatedMetrics() const {
   if (!scrollable_areas_)
     return;
+  int total_size = 0;
+  int small_scroller_size = 0;
   for (const auto& scrollable_area : *scrollable_areas_) {
     if (!scrollable_area->IsPaintLayerScrollableArea())
       continue;
     PaintLayerScrollableArea* paint_layer_scrollable_area =
         ToPaintLayerScrollableArea(scrollable_area);
     if (paint_layer_scrollable_area->ScrollsOverflow() &&
-        !paint_layer_scrollable_area->Layer()->IsRootLayer() &&
         paint_layer_scrollable_area->VisibleContentRect().Size().Area() > 0) {
       CheckedNumeric<int> size =
           paint_layer_scrollable_area->VisibleContentRect().Width();
       size *= paint_layer_scrollable_area->VisibleContentRect().Height();
-      UMA_HISTOGRAM_CUSTOM_COUNTS(
-          "Event.Scroll.ScrollerSize.OnLoad",
-          size.ValueOrDefault(std::numeric_limits<int>::max()), 1,
-          kScrollerSizeLargestBucket, kScrollerSizeBucketCount);
+      int scroller_size = size.ValueOrDefault(std::numeric_limits<int>::max());
+
+      if (!paint_layer_scrollable_area->Layer()->IsRootLayer())
+        scroller_size_metric_->SetSample(scroller_size);
+
+      DocumentLifecycle::LifecycleState state =
+          paint_layer_scrollable_area->Layer()
+              ->Compositor()
+              ->Lifecycle()
+              .GetState();
+      // We only want to record small scrollers that are about to be composited.
+      // Note that this function is invoked at both page load and unload but the
+      // metrics we use here only record to UMA once upon page unload. So we can
+      // keep all small scrollers upon page load and exclude non-composited ones
+      // upon unload. However, in the event of fast shutdown this function
+      // doesn't get invoked in which case we will just record all small
+      // scrollers.
+      if (scroller_size <= kSmallScrollerThreshold &&
+          (state <= DocumentLifecycle::LifecycleState::kInCompositingUpdate ||
+           paint_layer_scrollable_area->NeedsCompositedScrolling())) {
+        small_scroller_size += scroller_size;
+      }
+      total_size += scroller_size;
     }
+  }
+  // This includes recording pages without small scrollers.
+  if (total_size > 0) {
+    scroller_size_percentage_metric_->SetSample(100.f * small_scroller_size /
+                                                total_size);
   }
 }
 
