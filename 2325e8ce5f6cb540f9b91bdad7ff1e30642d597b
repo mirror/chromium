@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "99909cf6_c8df8419",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-16T19:11:16Z",
+      "side": 1,
+      "message": "nit: s/entry/entries/",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 15
+      },
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a5df3b03_44e721a4",
         "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
         "patchSetId": 1
@@ -13,6 +36,24 @@
       "writtenOn": "2017-06-15T12:57:38Z",
       "side": 1,
       "message": "I think this is reversed -- we want to count the usage when the header is *not* empty, right?",
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bab969ac_57c27561",
+        "filename": "third_party/WebKit/Source/core/dom/Document.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 5718,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-16T19:11:16Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "a5df3b03_44e721a4",
       "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -54,6 +95,30 @@
       "side": 1,
       "message": "Yes. It counts one per page.\n@rbyers, please correct me if I am wrong. \nRick mentioned that IDL is not enough. I forgot the reason though.",
       "parentUuid": "876dd4f3_80d1ef78",
+      "range": {
+        "startLine": 194,
+        "startChar": 4,
+        "endLine": 194,
+        "endChar": 14
+      },
+      "revId": "2325e8ce5f6cb540f9b91bdad7ff1e30642d597b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd0fad39_d7c01f20",
+        "filename": "third_party/WebKit/Source/core/html/HTMLIFrameElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1000112
+      },
+      "writtenOn": "2017-06-16T19:11:16Z",
+      "side": 1,
+      "message": "Yeah Count has max-one-per-page-view semantics (using the supplied Document to get to the Page instance where this is tracked).\n\nMeasuring in the IDL I believe will cover only the case of JavaScript accessing the property via the DOM API, not AFAIK the common case of the attribute being set in HTML (but you should verify by hand that the counter is indeed working).  See the case above for the kHTMLIFrameElementAllowfullscreenAttributeSetAfterContentLoad counter as another example.",
+      "parentUuid": "95ba9e6b_9f690ba1",
       "range": {
         "startLine": 194,
         "startChar": 4,
