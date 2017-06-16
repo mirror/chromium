@@ -9,7 +9,9 @@
 #include <memory>
 
 #include "base/macros.h"
+#include "base/memory/weak_ptr.h"
 #include "base/optional.h"
+#include "base/sequenced_task_runner.h"
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/entry.h"
@@ -24,6 +26,7 @@ namespace download {
 
 class ClientSet;
 class DownloadDriver;
+class FileMonitor;
 class Model;
 class Scheduler;
 
@@ -38,13 +41,16 @@ class ControllerImpl : public Controller,
                        public DeviceStatusListener::Observer {
  public:
   // |config| is externally owned and must be guaranteed to outlive this class.
-  ControllerImpl(Configuration* config,
-                 std::unique_ptr<ClientSet> clients,
-                 std::unique_ptr<DownloadDriver> driver,
-                 std::unique_ptr<Model> model,
-                 std::unique_ptr<DeviceStatusListener> device_status_listener,
-                 std::unique_ptr<Scheduler> scheduler,
-                 std::unique_ptr<TaskScheduler> task_scheduler);
+  ControllerImpl(
+      Configuration* config,
+      std::unique_ptr<ClientSet> clients,
+      std::unique_ptr<DownloadDriver> driver,
+      std::unique_ptr<Model> model,
+      std::unique_ptr<DeviceStatusListener> device_status_listener,
+      std::unique_ptr<Scheduler> scheduler,
+      std::unique_ptr<TaskScheduler> task_scheduler,
+      const scoped_refptr<base::SequencedTaskRunner>& background_task_runner,
+      const base::FilePath& download_dir);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -93,6 +99,9 @@ class ControllerImpl : public Controller,
   // Client in |clients_|.
   void CancelOrphanedRequests();
 
+  // Cleans up any files that are left on the disk without any entries.
+  void CleanupUnassociatedFiles();
+
   // Fixes any discrepancies in state between |model_| and |driver_|.  Meant to
   // resolve state issues during startup.
   void ResolveInitialRequestStates();
@@ -114,6 +123,7 @@ class ControllerImpl : public Controller,
   // the other internal states appropriately.
   void PullCurrentRequestStatus();
 
+  void RemoveEntriesFromModel(const std::vector<Entry*>& entries);
   void HandleStartDownloadResponse(DownloadClient client,
                                    const std::string& guid,
                                    DownloadParams::StartResult result);
@@ -139,6 +149,9 @@ class ControllerImpl : public Controller,
 
   Configuration* config_;
 
+  // The directory in which the downloaded files are stored.
+  base::FilePath download_dir_;
+
   // Owned Dependencies.
   std::unique_ptr<ClientSet> clients_;
   std::unique_ptr<DownloadDriver> driver_;
@@ -146,11 +159,14 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
   std::unique_ptr<Scheduler> scheduler_;
   std::unique_ptr<TaskScheduler> task_scheduler_;
+  std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
   StartupStatus startup_status_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
   std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
+
+  base::WeakPtrFactory<ControllerImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(ControllerImpl);
 };

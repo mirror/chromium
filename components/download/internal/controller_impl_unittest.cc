@@ -11,6 +11,7 @@
 #include "base/guid.h"
 #include "base/macros.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_util.h"
 #include "base/test/test_simple_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/client_set.h"
@@ -31,6 +32,8 @@ using testing::_;
 namespace download {
 
 namespace {
+
+const char kDownloadDirPath[] = "/test/downloads/";
 
 class MockTaskScheduler : public TaskScheduler {
  public:
@@ -96,7 +99,8 @@ class DownloadServiceControllerImplTest : public testing::Test {
     controller_ = base::MakeUnique<ControllerImpl>(
         config_.get(), std::move(client_set), std::move(driver),
         std::move(model), std::move(device_status_listener),
-        std::move(scheduler), std::move(task_scheduler));
+        std::move(scheduler), std::move(task_scheduler), task_runner_,
+        base::FilePath(kDownloadDirPath));
   }
 
  protected:
@@ -252,6 +256,12 @@ TEST_F(DownloadServiceControllerImplTest, AddDownloadAccepted) {
 
   // TODO(dtrainor): Compare the full DownloadParams with the full Entry.
   store_->TriggerUpdate(true);
+
+  std::vector<Entry> entries = store_->updated_entries();
+  Entry entry = entries[0];
+  DCHECK_EQ(entry.client, DownloadClient::TEST);
+  EXPECT_TRUE(base::StartsWith(entry.target_file_path.value(), kDownloadDirPath,
+                               base::CompareCase::SENSITIVE));
 
   task_runner_->RunUntilIdle();
 }

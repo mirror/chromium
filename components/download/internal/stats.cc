@@ -38,5 +38,9 @@ void LogDownloadCompletion(CompletionType type) {
   // TODO(xingliu): Log completion.
 }
 
+void LogFileCleanupStatus(FileCleanupReason status, int count) {
+  // TODO(shaktisahu): Log |status| and |count|.
+}
+
 }  // namespace stats
 }  // namespace download
