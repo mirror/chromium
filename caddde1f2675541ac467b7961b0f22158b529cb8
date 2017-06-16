@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2882cb7b_0beb554c",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T15:46:26Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 17,
+        "startChar": 64,
+        "endLine": 17,
+        "endChar": 66
+      },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "726094fd_6fa411c7",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T15:46:26Z",
+      "side": 1,
+      "message": "This will eventually allow you to handle any state mismatch if we somehow get out of sync during a shutdown.  You should be able to compare the outstanding guids with whatever your persistence layer holds.",
+      "range": {
+        "startLine": 20,
+        "startChar": 64,
+        "endLine": 20,
+        "endChar": 66
+      },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e83932b_fe254c52",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T15:46:26Z",
+      "side": 1,
+      "message": "These are getting rolled into OnDownloadFailed(const std::string\u0026 guid, FailureReason reason).  Sorry for the refactoring noise!",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 46,
+        "endChar": 0
+      },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "046c2a4e_8ab661bc",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T15:46:26Z",
+      "side": 1,
+      "message": "\u003d default",
+      "range": {
+        "startLine": 22,
+        "startChar": 42,
+        "endLine": 22,
+        "endChar": 44
+      },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23abc71e_c8e2cdbd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-16T15:46:26Z",
+      "side": 1,
+      "message": "Not necessary right now, but calling this before the service is initialized will fail (that might be a good StartResult we should add in the code actually).  You might also want to check the Status of the DownloadService, which will also tell you if it\u0027s currently initializing, failed to initialize, or is ready.",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 43
+      },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
