@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d9fada74_f420ee99",
+        "filename": "services/resource_coordinator/public/interfaces/memory_instrumentation/memory_instrumentation.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-16T10:18:12Z",
+      "side": 1,
+      "message": "Maybe you can add some markers in this file of the form:\n\n// Common structs (public + internal)\n...\n// These structs are internal only (only for the communication between the service and the ClientProcess library)\n...\n// These structs are public\n...\n\n(either here or in one of the next cls)",
+      "range": {
+        "startLine": 48,
+        "startChar": 2,
+        "endLine": 49,
+        "endChar": 0
+      },
+      "revId": "81d579eb19982ca0fa6654c1416963e3e01ca597",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
