@@ -22,6 +22,30 @@
       "revId": "9b783a043a2c58aebf6890e00c31d04539c7e1c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed3707cb_988ebf35",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-types.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-16T01:40:02Z",
+      "side": 1,
+      "message": "OK. Doing this in the previous CL https://chromium-review.googlesource.com/c/536383/.",
+      "parentUuid": "52b9e54a_b0f0745c",
+      "range": {
+        "startLine": 17,
+        "startChar": 78,
+        "endLine": 17,
+        "endChar": 82
+      },
+      "revId": "9b783a043a2c58aebf6890e00c31d04539c7e1c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
