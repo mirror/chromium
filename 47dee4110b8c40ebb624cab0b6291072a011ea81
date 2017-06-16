@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9772e90_314f064c",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 658,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Yes, it should be. Can the experimental framework be used to set the condition each session?",
+      "parentUuid": "70c46f67_57abed02",
+      "range": {
+        "startLine": 658,
+        "startChar": 19,
+        "endLine": 658,
+        "endChar": 51
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1a067a94_cc22fb4f",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "60fe77cd_127097f3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 661,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1a067a94_cc22fb4f",
+      "range": {
+        "startLine": 661,
+        "startChar": 9,
+        "endLine": 661,
+        "endChar": 41
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "6f1d48b0_d86aad6e",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "86a0e7f5_466cd6ec",
+      "range": {
+        "startLine": 951,
+        "startChar": 14,
+        "endLine": 951,
+        "endChar": 48
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "16c87714_2bb3e3bb",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 3
@@ -91,6 +163,30 @@
       "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d6fcb49_07fb41ce",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 952,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Okay",
+      "parentUuid": "16c87714_2bb3e3bb",
+      "range": {
+        "startLine": 952,
+        "startChar": 7,
+        "endLine": 952,
+        "endChar": 39
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "fd6977fe_ece6e8ff",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "It can be, although it will not follow the style of the other experiments (like priority_requests_delayable_). Should probably fix those as well.",
+      "parentUuid": "cd383a82_c7c9d262",
+      "range": {
+        "startLine": 149,
+        "startChar": 2,
+        "endLine": 149,
+        "endChar": 6
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "620186e4_14117f94",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 3
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "fc460a51_508f9746",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 334,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "620186e4_14117f94",
+      "range": {
+        "startLine": 334,
+        "startChar": 7,
+        "endLine": 334,
+        "endChar": 12
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "af0b2861_18a76867",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 3
@@ -160,6 +304,30 @@
       "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9b12cec_4ca38686",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1212994
+      },
+      "writtenOn": "2017-06-16T00:37:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "af0b2861_18a76867",
+      "range": {
+        "startLine": 347,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 14
+      },
+      "revId": "47dee4110b8c40ebb624cab0b6291072a011ea81",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
