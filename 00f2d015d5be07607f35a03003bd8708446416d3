@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "07a92165_ade708e3",
+        "filename": "android_webview/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 212,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-16T20:08:15Z",
+      "side": 1,
+      "message": "To not break downstream, let\u0027s add a new target here:\n\njava_group(\"stub_assets\") {\n  deps \u003d [\":license_assets\"]\n}",
+      "range": {
+        "startLine": 212,
+        "startChar": 16,
+        "endLine": 212,
+        "endChar": 30
+      },
+      "revId": "00f2d015d5be07607f35a03003bd8708446416d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
