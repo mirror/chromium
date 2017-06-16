@@ -22,6 +22,30 @@
       "revId": "b2e13ee6b3e05943f99909630ef8eb13c6bf1917",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad8779df_b1bc30ab",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1001604
+      },
+      "writtenOn": "2017-06-16T21:54:10Z",
+      "side": 1,
+      "message": "Hrm, yeah, that doesn\u0027t look safe. It\u0027s using a BouncyCastle implementation that doesn\u0027t look. Maybe a read/write lock, with the test store verifications taking a read lock and this taking a write lock? We don\u0027t actually care about performance here. Just don\u0027t want thread contention in the actual binary.",
+      "parentUuid": "57135b61_9887f5ef",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 46
+      },
+      "revId": "b2e13ee6b3e05943f99909630ef8eb13c6bf1917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
