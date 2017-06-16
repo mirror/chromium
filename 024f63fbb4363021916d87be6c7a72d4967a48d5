@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c1e87212_7ece2e95",
+        "filename": "content/browser/renderer_host/input/touch_selection_controller_client_manager_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-16T22:23:40Z",
+      "side": 1,
+      "message": "If you think that change is imminent, then it should be ok leave it here.\n\n(In general, we should probably write what makes sense at the time and update it as the needs/uses change, in case the future plans change.)",
+      "parentUuid": "311a78b9_99454cc2",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "db6a9240_db3a3707",
         "filename": "content/browser/renderer_host/render_widget_host_view_android.h",
         "patchSetId": 7
@@ -177,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "b80c8715_b1434a1f",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10238,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-16T22:23:40Z",
+      "side": 1,
+      "message": "Ok.  As long as we\u0027re not assuming some other task will finish in that time, and just using it to exceed a minimum delay for recognizing the gesture, that seems fine.",
+      "parentUuid": "fad5d4e7_f15c48ca",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25def2ad_3d78899e",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 7
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "On a uint? We initialize it below before it\u0027s used, and I don\u0027t know if 0 is a valid frame number. Maybe could make it max_int?",
       "parentUuid": "25def2ad_3d78899e",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "a9b73eb6_4d308771",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10270,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-16T22:23:40Z",
+      "side": 1,
+      "message": "Ah, didn\u0027t notice it was unsigned.  Yeah, I was just hoping to avoid leaving it unassigned if possible.  Even 0 would be better than garbage, in case future code somehow references it before the first assignment.",
+      "parentUuid": "e20300ab_a5c1579f",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -468,6 +522,24 @@
       "side": 1,
       "message": "In this case, I was keeping the tests separate for fear of flake due to back-to-back event sequences, but I\u0027ll see what I can do.",
       "parentUuid": "db667916_c9719601",
+      "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0965a03b_84154d7c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 10476,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-16T22:23:40Z",
+      "side": 1,
+      "message": "Hmm, if there\u0027s no actual event to wait for (vs inserting a 2 second delay), then it\u0027s probably not worth doing them back-to-back.  That will almost certainly be flaky.\n\nSorry for the hassle-- the parameterized approach should work, once we document what the parameter means.",
+      "parentUuid": "5e4af91e_e091ba71",
       "revId": "024f63fbb4363021916d87be6c7a72d4967a48d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
