@@ -37,6 +37,8 @@ class ControllerImpl : public Controller,
                        public Model::Client,
                        public DeviceStatusListener::Observer {
  public:
+  using StateCountMap = std::map<Entry::State, uint32_t>;
+
   // |config| is externally owned and must be guaranteed to outlive this class.
   ControllerImpl(Configuration* config,
                  std::unique_ptr<ClientSet> clients,
@@ -151,6 +153,9 @@ class ControllerImpl : public Controller,
   StartupStatus startup_status_;
   std::map<std::string, DownloadParams::StartCallback> start_callbacks_;
   std::map<DownloadTaskType, TaskFinishedCallback> task_finished_callbacks_;
+
+  // Total number of entries in each entry state.
+  StateCountMap entries_states_;
 
   DISALLOW_COPY_AND_ASSIGN(ControllerImpl);
 };

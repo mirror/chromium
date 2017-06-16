@@ -25,10 +25,18 @@ namespace download {
 namespace {
 
 // Helper function to transit the state of |entry| to |new_state|.
-void TransitTo(Entry* entry, Entry::State new_state, Model* model) {
+void TransitTo(Entry* entry,
+               Entry::State new_state,
+               Model* model,
+               ControllerImpl::StateCountMap& entries_states) {
   DCHECK(entry);
   if (entry->state == new_state)
     return;
+
+  entries_states[entry->state]--;
+  DCHECK_GE(entries_states[entry->state], 0u);
+  entries_states[new_state]++;
+
   entry->state = new_state;
   model->Update(*entry);
 }
@@ -130,7 +138,7 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
     return;
   }
 
-  TransitTo(entry, Entry::State::PAUSED, model_.get());
+  TransitTo(entry, Entry::State::PAUSED, model_.get(), entries_states_);
   UpdateDriverState(*entry);
 
   // Pausing a download may yield a concurrent slot to start a new download, and
@@ -147,7 +155,7 @@ void ControllerImpl::ResumeDownload(const std::string& guid) {
   if (entry->state != Entry::State::PAUSED)
     return;
 
-  TransitTo(entry, Entry::State::ACTIVE, model_.get());
+  TransitTo(entry, Entry::State::ACTIVE, model_.get(), entries_states_);
   UpdateDriverState(*entry);
 
   ActivateMoreDownloads();
@@ -330,7 +338,7 @@ void ControllerImpl::OnItemAdded(bool success,
   Entry* entry = model_->Get(guid);
   DCHECK(entry);
   DCHECK_EQ(Entry::State::NEW, entry->state);
-  TransitTo(entry, Entry::State::AVAILABLE, model_.get());
+  TransitTo(entry, Entry::State::AVAILABLE, model_.get(), entries_states_);
 
   ActivateMoreDownloads();
 }
@@ -452,7 +460,10 @@ void ControllerImpl::UpdateDriverState(const Entry& entry) {
 }
 
 void ControllerImpl::PullCurrentRequestStatus() {
-  // TODO(dtrainor): Implement.
+  // Count the number of entries in each states.
+  for (auto* const entry : model_->PeekEntries()) {
+    entries_states_[entry->state]++;
+  }
 }
 
 void ControllerImpl::NotifyClientsOfStartup() {
@@ -516,7 +527,7 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
     // TODO(dtrainor): PostTask this instead of putting it inline.
     client->OnDownloadSucceeded(guid, base::FilePath(),
                                 driver_entry->bytes_downloaded);
-    TransitTo(entry, Entry::State::COMPLETE, model_.get());
+    TransitTo(entry, Entry::State::COMPLETE, model_.get(), entries_states_);
   } else {
     client->OnDownloadFailed(guid, FailureReasonFromCompletionType(type));
     model_->Remove(guid);
@@ -526,13 +537,20 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
-  // TODO(xingliu): Check the configuration to throttle downloads.
+  // Check the configuration to throttle number of downloads.
+  uint32_t paused_count = entries_states_[Entry::State::PAUSED];
+  uint32_t active_count = entries_states_[Entry::State::ACTIVE];
+  if (config_->max_concurrent_downloads <= paused_count + active_count ||
+      config_->max_running_downloads <= active_count) {
+    return;
+  }
+
   Entry* next = scheduler_->Next(
       model_->PeekEntries(), device_status_listener_->CurrentDeviceStatus());
 
   while (next) {
     DCHECK_EQ(Entry::State::AVAILABLE, next->state);
-    TransitTo(next, Entry::State::ACTIVE, model_.get());
+    TransitTo(next, Entry::State::ACTIVE, model_.get(), entries_states_);
     UpdateDriverState(*next);
     next = scheduler_->Next(model_->PeekEntries(),
                             device_status_listener_->CurrentDeviceStatus());
