@@ -361,8 +361,8 @@ void VisualViewport::CreateLayerTree() {
       GetPage().GetSettings().GetMainFrameClipsContent());
   inner_viewport_container_layer_->SetSize(FloatSize(size_));
 
-  inner_viewport_scroll_layer_->PlatformLayer()->SetScrollClipLayer(
-      inner_viewport_container_layer_->PlatformLayer());
+  inner_viewport_scroll_layer_->PlatformLayer()->SetScrollContainerBounds(
+      size_);
   inner_viewport_scroll_layer_->PlatformLayer()->SetUserScrollable(true, true);
   if (MainFrame()) {
     if (Document* document = MainFrame()->GetDocument()) {
