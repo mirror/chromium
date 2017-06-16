@@ -63,6 +63,24 @@
       "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "6827a57d_18a22add",
+        "filename": "components/filesystem/directory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T17:38:53Z",
+      "side": 1,
+      "message": "So would that explain the unexplained corruption rate on CrOS with the reuse manifest flag? (i.e. on CrOS ChromiumEnv isn\u0027t always properly flushing the manifest?)",
+      "parentUuid": "11a671b4_cafe9e0d",
+      "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
