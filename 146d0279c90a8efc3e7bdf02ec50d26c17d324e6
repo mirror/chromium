@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21be4404_7539e9db",
+        "filename": "chrome/browser/net/file_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-16T15:12:12Z",
+      "side": 1,
+      "message": "Is this the right header?  base/task_scheduler/post_task.h for CreateSequencedTaskRunnerWithTraits and base/task_scheduler/task_traits.h for the argument it takes.\n\nbase/task_runner_util.h doesn\u0027t look needed, since that just has some PostTaskAndReply methods.",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "146d0279c90a8efc3e7bdf02ec50d26c17d324e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
