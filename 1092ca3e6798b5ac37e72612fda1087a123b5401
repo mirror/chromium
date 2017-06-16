@@ -16,6 +16,24 @@
       "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63fb159d_3896414d",
+        "filename": "third_party/WebKit/Source/web/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:19:44Z",
+      "side": 0,
+      "message": "I\u0027m pretty sure that it is safe.  This section appears to only be adding a file into sources which already exists there.  When this section was first added, the linux/WebFontRendering.cpp file was not part of \u0027sources\u0027.\nhttps://codereview.chromium.org/561173006",
+      "parentUuid": "be698a7a_f923c468",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

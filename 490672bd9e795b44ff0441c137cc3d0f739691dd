@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3679a8df_c60c3fb5",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-16T00:19:44Z",
+      "side": 1,
+      "message": "This file includes public/web/mac/WebScrollbarTheme.h, which is not allowed from platform/scroll DEPS.  Should I change deps, or move this somewhere else?",
+      "parentUuid": "c1a6ed3d_f9a465c6",
+      "revId": "490672bd9e795b44ff0441c137cc3d0f739691dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "514c2682_8a7bdff5",
         "filename": "third_party/WebKit/Source/core/BUILD.gn",
         "patchSetId": 2
