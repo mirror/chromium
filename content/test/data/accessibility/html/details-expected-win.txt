@@ -1,9 +1,9 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++ROLE_SYSTEM_GROUPING
-++++ROLE_SYSTEM_PUSHBUTTON name='details tag' COLLAPSED FOCUSABLE
-++++++ROLE_SYSTEM_STATICTEXT name='details tag'
-++ROLE_SYSTEM_GROUPING
-++++ROLE_SYSTEM_PUSHBUTTON name='details tag open' EXPANDED FOCUSABLE
-++++++ROLE_SYSTEM_STATICTEXT name='details tag open'
-++++IA2_ROLE_PARAGRAPH
-++++++ROLE_SYSTEM_STATICTEXT name='The details tag with open specifies that the details should be visible (open) to the user.'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++ROLE_SYSTEM_GROUPING language:en-US
+++++ROLE_SYSTEM_PUSHBUTTON name='details tag' COLLAPSED FOCUSABLE language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='details tag' language:en-US
+++ROLE_SYSTEM_GROUPING language:en-US
+++++ROLE_SYSTEM_PUSHBUTTON name='details tag open' EXPANDED FOCUSABLE language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='details tag open' language:en-US
+++++IA2_ROLE_PARAGRAPH language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='The details tag with open specifies that the details should be visible (open) to the user.' language:en-US

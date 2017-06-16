@@ -1,6 +1,6 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_SECTION
-++++IA2_ROLE_TEXT_FRAME
-++++++ROLE_SYSTEM_STATICTEXT
-++++++++ROLE_SYSTEM_STATICTEXT name='ruby text'
-++++++ROLE_SYSTEM_STATICTEXT name='ruby base'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_SECTION language:en-US
+++++IA2_ROLE_TEXT_FRAME language:en-US language:en-US
+++++++ROLE_SYSTEM_STATICTEXT language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='ruby text' language:en-US
+++++++ROLE_SYSTEM_STATICTEXT name='ruby base' language:en-US

@@ -1,7 +1,5 @@
-# The spec states that <wbr> should have a role of AXGroup, but that seems
-# wrong, so we assume this is correct.
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_SECTION
-++++ROLE_SYSTEM_STATICTEXT name='Supercali'
-++++ROLE_SYSTEM_STATICTEXT name='fragilistic'
-++++ROLE_SYSTEM_STATICTEXT name='expialidocious'
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_SECTION language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='Supercali' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='fragilistic' language:en-US
+++++ROLE_SYSTEM_STATICTEXT name='expialidocious' language:en-US

@@ -1,5 +1,5 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++IA2_ROLE_SECTION
-++++ROLE_SYSTEM_GRAPHIC name='pipe' READONLY xml-roles:img
-++++ROLE_SYSTEM_GRAPHIC name='' READONLY xml-roles:img
-++++ROLE_SYSTEM_GRAPHIC name='  ' READONLY xml-roles:img
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++IA2_ROLE_SECTION language:en-US
+++++ROLE_SYSTEM_GRAPHIC name='pipe' READONLY xml-roles:img language:en-US
+++++ROLE_SYSTEM_GRAPHIC name='' READONLY xml-roles:img language:en-US
+++++ROLE_SYSTEM_GRAPHIC name='  ' READONLY xml-roles:img language:en-US

@@ -1,20 +1,20 @@
-ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE
-++ROLE_SYSTEM_TABLE
-++++ROLE_SYSTEM_ROW
-++++++ROLE_SYSTEM_COLUMNHEADER name='Browser'
-++++++++ROLE_SYSTEM_STATICTEXT name='Browser'
-++++++ROLE_SYSTEM_COLUMNHEADER name='Rendering Engine'
-++++++++ROLE_SYSTEM_STATICTEXT name='Rendering Engine'
-++++ROLE_SYSTEM_ROW
-++++++ROLE_SYSTEM_CELL name='Chrome'
-++++++++ROLE_SYSTEM_STATICTEXT name='Chrome'
-++++++ROLE_SYSTEM_CELL name='Blink'
-++++++++ROLE_SYSTEM_STATICTEXT name='Blink'
-++++ROLE_SYSTEM_ROW
-++++++ROLE_SYSTEM_CELL name='Safari'
-++++++++ROLE_SYSTEM_STATICTEXT name='Safari'
-++++++ROLE_SYSTEM_CELL name='WebKit'
-++++++++ROLE_SYSTEM_STATICTEXT name='WebKit'
-++++ROLE_SYSTEM_COLUMN
-++++ROLE_SYSTEM_COLUMN
-++++IA2_ROLE_SECTION
+ROLE_SYSTEM_DOCUMENT READONLY FOCUSABLE language:en-US
+++ROLE_SYSTEM_TABLE language:en-US language:en-US
+++++ROLE_SYSTEM_ROW language:en-US
+++++++ROLE_SYSTEM_COLUMNHEADER name='Browser' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='Browser' language:en-US
+++++++ROLE_SYSTEM_COLUMNHEADER name='Rendering Engine' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='Rendering Engine' language:en-US
+++++ROLE_SYSTEM_ROW language:en-US
+++++++ROLE_SYSTEM_CELL name='Chrome' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='Chrome' language:en-US
+++++++ROLE_SYSTEM_CELL name='Blink' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='Blink' language:en-US
+++++ROLE_SYSTEM_ROW language:en-US
+++++++ROLE_SYSTEM_CELL name='Safari' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='Safari' language:en-US
+++++++ROLE_SYSTEM_CELL name='WebKit' language:en-US
+++++++++ROLE_SYSTEM_STATICTEXT name='WebKit' language:en-US
+++++ROLE_SYSTEM_COLUMN language:en-US
+++++ROLE_SYSTEM_COLUMN language:en-US
+++++IA2_ROLE_SECTION language:en-US
