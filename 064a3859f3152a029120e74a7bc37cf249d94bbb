@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "cda2bb20_ac51b64b",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T01:44:43Z",
+      "side": 1,
+      "message": "This is an actual move operator, while the overload below is not. See http://en.cppreference.com/w/cpp/language/move_assignment\n\n(We could/probably should omit \u003cT\u003e here)",
+      "parentUuid": "d92882a0_f7729062",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d2884335_7daeab43",
         "filename": "base/memory/ref_counted.h",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-16T01:36:23Z",
       "side": 1,
       "message": "This looks like it\u0027ll break in the move-to-self case (which I appreciate is a strange edge-case, but...), which the temporary+swap manages to work-around.\n\nPerhaps we should just special-case move-to-self?",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df1d2709_6fa79b0f",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T01:44:43Z",
+      "side": 1,
+      "message": "Eh. I\u0027m OK with this. I don\u0027t think we should special-case it, as long as it doesn\u0027t do anything illegal.",
+      "parentUuid": "d2884335_7daeab43",
       "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
