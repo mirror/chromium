@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "79ab8da9_fa503ed0",
+        "filename": "testing/buildbot/chromium.fyi.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 10140,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-16T02:35:37Z",
+      "side": 1,
+      "message": "This seems silly, but matches all the others in this file (below).",
+      "range": {
+        "startLine": 10140,
+        "startChar": 39,
+        "endLine": 10140,
+        "endChar": 45
+      },
+      "revId": "8cd498e874c93253e14b67d7c96d489bfb1a3109",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
