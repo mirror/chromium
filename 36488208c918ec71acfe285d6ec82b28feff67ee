@@ -16,6 +16,24 @@
       "revId": "36488208c918ec71acfe285d6ec82b28feff67ee",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b579b5_1e0b3164",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 2234,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-16T16:15:47Z",
+      "side": 1,
+      "message": "We do know how much GPU memory we allocate for tiles. But I don\u0027t think there is a formula indicating the percentage in general. Maybe we can try to use the total effective GPU memory to measure the percentage? Not sure whether that\u0027s feasible or necessary. After all, the total GPU memory we use may depend on user behaviors. \n\nAt first I was worried that including root layer may introduce noise upon analyzing the results. On second thought, including the root layer may be a good idea. Actually, we allocate ~4.94MB memory for a root layer of size 1440 * 900 and ~1.15MB for that of size 412 * 732. With the current threshold 50000px, we allocate ~0.2MB for the \"largest\" small scroller and 0.07MB~0.1MB for most of other small scrollers. As a result, we may be expecting possible up to 17% \"tile\" memory save. My only concern is that in cases that we have a large screen(root layer) and several small scrollers, we may expect \u003c1% memory save. In that case, would people argue that the improvement is neglectable? Like we\u0027ve already allocated ~8MB for non-small scrolelrs, we can afford another 0.08MB for small scrollers. I think we should try to reduce the memory as much as possible but maybe there are other opinions. WDYT?",
+      "parentUuid": "f15dfde1_4c62835b",
+      "revId": "36488208c918ec71acfe285d6ec82b28feff67ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
