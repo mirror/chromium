@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7bb74f9_b24374a2",
+        "filename": "third_party/WebKit/Source/web/WebFrameWidgetImpl.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T23:40:21Z",
+      "side": 1,
+      "message": "Instead, I sprinkled in a bunch of asserts to make sure it\u0027s not misused.",
+      "range": {
+        "startLine": 90,
+        "startChar": 0,
+        "endLine": 91,
+        "endChar": 63
+      },
+      "revId": "d2c4f64b1751d0c5f433b08030c106b33ff90cdd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

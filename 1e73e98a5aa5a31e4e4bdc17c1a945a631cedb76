@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c5b7313a_f2b090d9",
+        "filename": "components/plugins/renderer/webview_plugin.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-16T23:40:21Z",
+      "side": 0,
+      "message": "I removed these comments, since the difference shouldn\u0027t be visible to consumers of Blink anymore.",
+      "range": {
+        "startLine": 265,
+        "startChar": 0,
+        "endLine": 266,
+        "endChar": 58
+      },
+      "revId": "1e73e98a5aa5a31e4e4bdc17c1a945a631cedb76",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
