@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "084a2683_d2fd5be2",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/content-security-policy/embedded-enforcement/required_csp-header.html",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-16T09:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "082e4159_772f5e84",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9e701422_73631dca",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 2
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "1fe5faf8_79a5439f",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1722,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-16T09:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e701422_73631dca",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d62aff7c_0ce06512",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
         "patchSetId": 2
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-14T10:27:50Z",
       "side": 1,
       "message": "Do you need a loop here? There should one and only one entry, as per line 1719 above, so `policy-\u003epolicies_[0]-\u003eReportEndpoints().size()` should be enough, right?",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f4fd7de_50c9a547",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1723,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-16T09:20:03Z",
+      "side": 1,
+      "message": "I don\u0027t think it makes much of a difference performance-wise and I wanted the checks to be independent of each other. If somehow in the future the policy count check changes it might be easy to miss that the next statement needs to be made into a loop.",
+      "parentUuid": "d62aff7c_0ce06512",
       "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "83a8ccc6_0a1d8b09",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicy.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1725,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-16T09:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0584fcbf_e6f669b5",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b538c90c_b4b5c215",
         "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40fb4bb7_cbb2c99e",
+        "filename": "third_party/WebKit/Source/core/frame/csp/ContentSecurityPolicyTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 1271,
+      "author": {
+        "id": 1212278
+      },
+      "writtenOn": "2017-06-16T09:20:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b538c90c_b4b5c215",
+      "revId": "66b3d51e8e17de0b8578f8395c01cb4a434dd910",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
