@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "d747dafe_5b815093",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-16T21:39:11Z",
+      "side": 1,
+      "message": "Hmm. There\u0027s a border stroke around the location bar. Why don\u0027t we just match that? Looks reasonable on all the themes I tested. Yes, on dark themes it is barely visible, but that matches the classic theme with incognito.",
+      "parentUuid": "ec455fc0_08eaf2a5",
+      "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87afec3b_d51c0275",
         "filename": "chrome/browser/themes/theme_service.cc",
         "patchSetId": 3

@@ -46,6 +46,30 @@
       "revId": "3e8c5244872efe94bbc36d424510e8e85fbadc82",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b70f52f_352bc713",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 481,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-16T21:39:11Z",
+      "side": 1,
+      "message": "\u003e Are our callers OK with having non-opaque colors here?  A lot of theme colors are forced to be opaque, I\u0027m sort of surprised that alpha-blending actually works in all cases on this one.\n\nyes, the separator is painted on top of the background.",
+      "parentUuid": "fbfb176a_35f143e8",
+      "range": {
+        "startLine": 481,
+        "startChar": 13,
+        "endLine": 481,
+        "endChar": 21
+      },
+      "revId": "3e8c5244872efe94bbc36d424510e8e85fbadc82",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
