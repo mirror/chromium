@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94d8ac2d_8c4bdc0a",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T17:33:31Z",
+      "side": 1,
+      "message": "You\u0027ll want to remove the EXPORT tag now that it\u0027s templatized type. I am pretty sure this will cause link failures on Windows",
+      "revId": "6b0a1ff640590fa71fa81aa4c98de07011557392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68e22b2c_21563db2",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T17:33:31Z",
+      "side": 1,
+      "message": "And I believe you\u0027ll want to explicitly export this specialization. I don\u0027t know the correct form for this, but I think you just want to add a line below that \u0027s something like:\n\nclass SERVICE_MANAGER_PUBLIC_CPP_EXPORT BinderRegistryWithParams\u003c\u003e;",
+      "revId": "6b0a1ff640590fa71fa81aa4c98de07011557392",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
