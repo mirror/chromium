@@ -6,6 +6,7 @@
 
 #include "components/exo/notification_surface_manager.h"
 #include "components/exo/surface.h"
+#include "components/exo/surface_tree_host.h"
 #include "ui/aura/window.h"
 #include "ui/aura/window_delegate.h"
 #include "ui/base/cursor/cursor.h"
@@ -74,8 +75,9 @@ NotificationSurface::NotificationSurface(NotificationSurfaceManager* manager,
       surface_(surface),
       notification_key_(notification_key),
       window_(new aura::Window(new CustomWindowDelegate(surface))) {
-  surface_->SetSurfaceDelegate(this);
   surface_->AddSurfaceObserver(this);
+  surface_tree_host_ = base::MakeUnique<SurfaceTreeHost>(this);
+  surface_tree_host_->AttachSurface(surface);
 
   window_->SetType(aura::client::WINDOW_TYPE_CONTROL);
   window_->SetName("ExoNotificationSurface");
@@ -83,15 +85,14 @@ NotificationSurface::NotificationSurface(NotificationSurfaceManager* manager,
   window_->set_owned_by_parent(false);
 
   // TODO(xiyuan): Fix after Surface no longer has an aura::Window.
-  window_->AddChild(surface_->window());
-  surface_->window()->Show();
+  window_->AddChild(surface_tree_host_->window());
+  surface_tree_host_->window()->Show();
 }
 
 NotificationSurface::~NotificationSurface() {
-  if (surface_) {
-    surface_->SetSurfaceDelegate(nullptr);
+  if (surface_)
     surface_->RemoveSurfaceObserver(this);
-  }
+
   if (added_to_manager_)
     manager_->RemoveSurface(this);
 }
@@ -101,9 +102,6 @@ gfx::Size NotificationSurface::GetSize() const {
 }
 
 void NotificationSurface::OnSurfaceCommit() {
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-  surface_->CommitSurfaceHierarchy();
-
   gfx::Rect bounds = window_->bounds();
   if (bounds.size() != surface_->content_size()) {
     bounds.set_size(surface_->content_size());

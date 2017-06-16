@@ -19,13 +19,13 @@ SubSurface::SubSurface(Surface* surface, Surface* parent)
   surface_->SetSurfaceDelegate(this);
   surface_->AddSurfaceObserver(this);
   parent_->AddSurfaceObserver(this);
-  parent_->AddSubSurface(surface_);
+  parent_->AddSubSurface(this);
 }
 
 SubSurface::~SubSurface() {
   if (surface_) {
     if (parent_)
-      parent_->RemoveSubSurface(surface_);
+      parent_->RemoveSubSurface(this);
     surface_->SetSurfaceDelegate(nullptr);
     surface_->RemoveSurfaceObserver(this);
   }
@@ -36,26 +36,25 @@ SubSurface::~SubSurface() {
 void SubSurface::SetPosition(const gfx::Point& position) {
   TRACE_EVENT1("exo", "SubSurface::SetPosition", "position",
                position.ToString());
-
   if (!parent_ || !surface_)
     return;
 
-  parent_->SetSubSurfacePosition(surface_, position);
+  position_ = position;
 }
 
-void SubSurface::PlaceAbove(Surface* reference) {
-  TRACE_EVENT1("exo", "SubSurface::PlaceAbove", "reference",
-               reference->AsTracedValue());
+void SubSurface::PlaceAbove(Surface* sibling) {
+  TRACE_EVENT1("exo", "SubSurface::PlaceAbove", "sibling",
+               sibling->AsTracedValue());
 
   if (!parent_ || !surface_)
     return;
 
-  if (reference == surface_) {
+  if (sibling == surface_) {
     DLOG(WARNING) << "Client tried to place sub-surface above itself";
     return;
   }
 
-  parent_->PlaceSubSurfaceAbove(surface_, reference);
+  parent_->PlaceSubSurfaceAbove(this, sibling);
 }
 
 void SubSurface::PlaceBelow(Surface* sibling) {
@@ -70,7 +69,7 @@ void SubSurface::PlaceBelow(Surface* sibling) {
     return;
   }
 
-  parent_->PlaceSubSurfaceBelow(surface_, sibling);
+  parent_->PlaceSubSurfaceBelow(this, sibling);
 }
 
 void SubSurface::SetCommitBehavior(bool synchronized) {
@@ -96,8 +95,9 @@ void SubSurface::OnSurfaceCommit() {
   if (IsSurfaceSynchronized())
     return;
 
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-  surface_->CommitSurfaceHierarchy();
+  NOTIMPLEMENTED();
+  // surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
+  // surface_->CommitSurfaceHierarchy();
 }
 
 bool SubSurface::IsSurfaceSynchronized() const {
@@ -116,11 +116,12 @@ void SubSurface::OnSurfaceDestroying(Surface* surface) {
   surface->RemoveSurfaceObserver(this);
   if (surface == parent_) {
     parent_ = nullptr;
+    position_ = gfx::Point();
     return;
   }
   DCHECK(surface == surface_);
   if (parent_)
-    parent_->RemoveSubSurface(surface_);
+    parent_->RemoveSubSurface(this);
   surface_ = nullptr;
 }
 
