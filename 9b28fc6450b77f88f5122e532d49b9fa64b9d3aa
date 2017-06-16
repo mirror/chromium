@@ -1,0 +1,211 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c660548_25d6e55b",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "These should be DCHECKs",
+      "range": {
+        "startLine": 81,
+        "startChar": 2,
+        "endLine": 81,
+        "endChar": 7
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "95f30af4_db8fa5a9",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_table.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 224,
+        "startChar": 25,
+        "endLine": 224,
+        "endChar": 39
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b8e55d_075a7599",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "This shouldn\u0027t be required per the members being destroyed from last to first.",
+      "range": {
+        "startLine": 93,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 48
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bcbf4cee_91fe688c",
+        "filename": "chrome/browser/predictors/loading_predictor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 51,
+        "startChar": 0,
+        "endLine": 52,
+        "endChar": 46
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a29b0524_af79cd0a",
+        "filename": "chrome/browser/predictors/loading_stats_collector_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 61,
+        "endChar": 46
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b92d781_981ff530",
+        "filename": "chrome/browser/predictors/predictor_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "Comments could use rewording s/DB thread/DB sequence/ ?",
+      "range": {
+        "startLine": 91,
+        "startChar": 0,
+        "endLine": 92,
+        "endChar": 77
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce9f0f08_29a5b97e",
+        "filename": "chrome/browser/predictors/predictor_database_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 39,
+        "startChar": 63,
+        "endLine": 39,
+        "endChar": 77
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eea9c605_1cb25ca4",
+        "filename": "chrome/browser/predictors/predictor_table_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "Looks like callers of this merely use it directly and don\u0027t need a ref? Return a base::SequencedTaskRunner* instead to avoid unnecessary refcount bumps?",
+      "range": {
+        "startLine": 16,
+        "startChar": 0,
+        "endLine": 16,
+        "endChar": 40
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1fa8d284_95adf218",
+        "filename": "chrome/browser/predictors/predictor_table_base.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T18:14:15Z",
+      "side": 1,
+      "message": "std::move",
+      "range": {
+        "startLine": 22,
+        "startChar": 22,
+        "endLine": 22,
+        "endChar": 36
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
