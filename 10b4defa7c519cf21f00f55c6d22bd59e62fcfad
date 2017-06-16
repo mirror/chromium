@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "310256c9_9239824c",
+        "filename": "content/browser/renderer_host/media/video_capture_gpu_jpeg_decoder.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-16T15:06:40Z",
+      "side": 1,
+      "message": "\u003e \u003e\u003e\u003e Is there guaranteed to be at most one VideoCaptureGpuJpegDecoder?\n\u003e I don\u0027t think so. mcasas@, can you please confirm this?\n\u003e \n\nThere will be usually at most one JDA (it\u0027s tied to a silicon IP core),\nbut nothing prevents a system from having more: like having several cameras \n_and using them simultaneously_, it\u0027s unusual on desktop but not impossible.  \n\n\u003e \u003e\u003e\u003e If not, this isn\u0027t correct (one will work, the rest will hang)\n\u003e You say this because we are not handling multiple RequestGpuInfo() calls in GpuProcessHost i.e. previous |request_cb|s will be lost, right?\n\nAs a general comment (which might or might not apply here :-), \nI\u0027d say that if ToT does not support a feature (e.g. having \nseveral JDAs) or has some implied assumption, the easiest course \nof action for this CL is to make it explicit via DCHECKs, \nstatic_assert()s, explicit if() handling, comments and, if \nneeded, TODO+bugs for later addressing.",
+      "parentUuid": "3403882d_8039c173",
+      "range": {
+        "startLine": 230,
+        "startChar": 10,
+        "endLine": 230,
+        "endChar": 24
+      },
+      "revId": "10b4defa7c519cf21f00f55c6d22bd59e62fcfad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a394c0dd_dca443a9",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.cc",
         "patchSetId": 10
