@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb3b4612_b50a70c1",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Why do we check that \"cursor_ + Align(num_bytes)\" doesn\u0027t overflow as uintptr_t, instead of size_t?\nAnd we only DCHECK that cursor_ \u003c size_. If we expect careless callers might call this method in a way that cause overflow, they might make calls that result in cursor_ \u003e\u003d size_, right?",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72e98317_330bd291",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Previously we guaranteed that the return memory is zero-filled. Otherwise, we might have bytes (mostly the padding between meaningful fields) sent with their original value to other processes.\n\nAnd I notice on line 18 it still says the buffer is zero-initialized. Is it intended?\n\nWDYT?",
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2ea5fa8_8d867ee0",
+        "filename": "mojo/public/cpp/bindings/lib/fixed_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Is this the same as the one above?",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f9b32b_aac2b39b",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Strictly speaking this is not part of the header. Does it make sense to move this part into the if-statement on line 103?",
+      "range": {
+        "startLine": 86,
+        "startChar": 48,
+        "endLine": 86,
+        "endChar": 62
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0741c413_4d013fb8",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "nit: can we pass the class member fields as output directly?",
+      "range": {
+        "startLine": 187,
+        "startChar": 32,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9a5113cd_19f7c4dd",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Why does |num_handles| need to be initialized but not the others?",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21845947_5135a7dd",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T18:08:38Z",
+      "side": 1,
+      "message": "Out of curiosity: what does serialized mean here? Have these handles been put into some serialized state before passing into this method?",
+      "range": {
+        "startLine": 279,
+        "startChar": 14,
+        "endLine": 279,
+        "endChar": 37
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
