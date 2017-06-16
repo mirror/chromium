@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1277733f_9d7e8760",
+        "filename": "device/generic_sensor/platform_sensor_provider_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-16T19:35:38Z",
+      "side": 1,
+      "message": "We probably still want to set sensor_reading_changed_ in order to test whether an event is delivered while the sensor is suspended.",
+      "range": {
+        "startLine": 62,
+        "startChar": 4,
+        "endLine": 62,
+        "endChar": 20
+      },
+      "revId": "052cb38fa378a3da0f3b054ac464b9e1947ea548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9cb2ed8_4d4a1e6d",
+        "filename": "device/generic_sensor/public/interfaces/sensor.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-16T19:35:38Z",
+      "side": 1,
+      "message": "I suggest ConfigureReadingChangeNotifications(bool enabled) instead, with a comment saying that it defaults to enabled. The reason for this is that eventually we will want to be able to toggle these notifications on and off in SensorProxy depending on whether an Observer wants them as eventually //content/renderer/device_sensors will be implemented in Blink based on SensorProxy.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 37
+      },
+      "revId": "052cb38fa378a3da0f3b054ac464b9e1947ea548",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
