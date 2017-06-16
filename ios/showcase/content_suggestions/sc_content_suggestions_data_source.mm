@@ -103,6 +103,9 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       }
       return items;
     }
+    case ContentSuggestionsSectionLogo: {
+      return @[];
+    }
     case ContentSuggestionsSectionUnknown:
       return @[];
   }

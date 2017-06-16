@@ -16,6 +16,7 @@
 #include "components/reading_list/core/reading_list_model.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/browser_state/chrome_browser_state.h"
+#import "ios/chrome/browser/content_suggestions/content_suggestions_header_controller.h"
 #import "ios/chrome/browser/content_suggestions/content_suggestions_mediator.h"
 #include "ios/chrome/browser/favicon/ios_chrome_large_icon_service_factory.h"
 #import "ios/chrome/browser/metrics/new_tab_page_uma.h"
@@ -31,6 +32,7 @@
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_commands.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
+#import "ios/chrome/browser/ui/ntp/google_landing_mediator.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
 #import "ios/chrome/browser/ui/url_loader.h"
 #include "ios/chrome/grit/ios_strings.h"
@@ -43,7 +45,8 @@
 #error "This file requires ARC support."
 #endif
 
-@interface ContentSuggestionsCoordinator ()<ContentSuggestionsCommands>
+@interface ContentSuggestionsCoordinator ()<ContentSuggestionsCommands,
+                                            ContentSuggestionsMediatorDelegate>
 
 @property(nonatomic, strong) AlertCoordinator* alertCoordinator;
 @property(nonatomic, strong) UINavigationController* navigationController;
@@ -51,6 +54,9 @@
     ContentSuggestionsViewController* suggestionsViewController;
 @property(nonatomic, strong)
     ContentSuggestionsMediator* contentSuggestionsMediator;
+@property(nonatomic, strong)
+    ContentSuggestionsHeaderController* headerController;
+@property(nonatomic, strong) GoogleLandingMediator* googleLandingMediator;
 
 // Opens the |URL| in a new tab |incognito| or not.
 - (void)openNewTabWithURL:(const GURL&)URL incognito:(BOOL)incognito;
@@ -70,6 +76,10 @@
 @synthesize URLLoader = _URLLoader;
 @synthesize visible = _visible;
 @synthesize contentSuggestionsMediator = _contentSuggestionsMediator;
+@synthesize headerController = _headerController;
+@synthesize googleLandingMediator = _googleLandingMediator;
+@synthesize webStateList = _webStateList;
+@synthesize dispatcher = _dispatcher;
 
 - (void)start {
   if (self.visible || !self.browserState) {
@@ -92,6 +102,16 @@
              mostVisitedSite:IOSMostVisitedSitesFactory::NewForBrowserState(
                                  self.browserState)];
   self.contentSuggestionsMediator.commandHandler = self;
+  self.contentSuggestionsMediator.delegate = self;
+
+  self.headerController = [[ContentSuggestionsHeaderController alloc] init];
+  self.headerController.readingListModel =
+      ReadingListModelFactory::GetForBrowserState(self.browserState);
+  self.googleLandingMediator =
+      [[GoogleLandingMediator alloc] initWithConsumer:self.headerController
+                                         browserState:self.browserState
+                                           dispatcher:self.dispatcher
+                                         webStateList:self.webStateList];
 
   self.suggestionsViewController = [[ContentSuggestionsViewController alloc]
       initWithStyle:CollectionViewControllerStyleDefault
@@ -120,6 +140,9 @@
   self.navigationController = nil;
   self.contentSuggestionsMediator = nil;
   self.alertCoordinator = nil;
+  self.headerController = nil;
+  [self.googleLandingMediator shutdown];
+  self.googleLandingMediator = nil;
   _visible = NO;
 }
 
@@ -311,6 +334,13 @@
 - (void)dismissContextMenu {
   [self.alertCoordinator stop];
   self.alertCoordinator = nil;
+}
+
+#pragma mark - ContentSuggestionsMediatorDelegate
+
+- (UIView*)headerView {
+  return [self.headerController
+      viewForWidth:self.suggestionsViewController.view.frame.size.width];
 }
 
 #pragma mark - Private
