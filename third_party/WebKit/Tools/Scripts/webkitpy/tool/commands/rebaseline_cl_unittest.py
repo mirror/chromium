@@ -120,6 +120,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         return_code = self.command.execute(self.command_options(), [], self.tool)
         self.assertEqual(return_code, 0)
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/missing.html\n',
             'INFO: Rebaselining one/slow-fail.html\n',
@@ -142,6 +143,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         # is in the list of failed tests, but not in the list of files modified
         # in the given CL; it should be included because all_tests is set to True.
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/text-fail.html\n',
         ])
@@ -162,6 +164,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         return_code = self.command.execute(self.command_options(), [], self.tool)
         self.assertEqual(return_code, 0)
         self.assertLog([
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/text-fail.html\n',
         ])
 
@@ -176,6 +179,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
         self.assertEqual(return_code, 0)
         self.assertLog([
             'WARNING: No retry summary available for build Build(builder_name=\'MOCK Try Win\', build_number=5000).\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n',
             'INFO: Rebaselining one/missing.html\n',
             'INFO: Rebaselining one/slow-fail.html\n',
@@ -314,6 +318,7 @@ class RebaselineCLTest(BaseTestCase, LoggingTestCase):
             'INFO:   MOCK Try Win\n',
             'INFO: For one/flaky-fail.html:\n',
             'INFO: Using Build(builder_name=\'MOCK Try Linux\', build_number=6000) to supply results for test-win-win7.\n',
+            'ERROR: Manifest not found at /test.checkout/LayoutTests/external/wpt/MANIFEST.json. See http://crbug.com/698294\n',
             'INFO: Rebaselining one/flaky-fail.html\n'
         ])
 

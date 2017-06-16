@@ -1,0 +1,12 @@
+This is a testharness.js-based test.
+PASS DOMMatrix constructor with string argument in worker 
+FAIL DOMMatrix stringifier in worker (2d identity) assert_equals: expected "[object DOMMatrix]" but got "matrix(1, 0, 0, 1, 0, 0)"
+FAIL DOMMatrix stringifier in worker (3d identity) assert_equals: expected "[object DOMMatrix]" but got "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)"
+FAIL DOMMatrix stringifier in worker (non-finite values) assert_equals: expected "[object DOMMatrix]" but got "matrix(1, 0, 0, nan, inf, -inf)"
+PASS DOMMatrixReadOnly constructor with string argument in worker 
+FAIL DOMMatrixReadOnly stringifier in worker (2d identity) assert_equals: expected "[object DOMMatrixReadOnly]" but got "matrix(1, 0, 0, 1, 0, 0)"
+FAIL DOMMatrixReadOnly stringifier in worker (3d identity) assert_equals: expected "[object DOMMatrixReadOnly]" but got "matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1)"
+FAIL DOMMatrixReadOnly stringifier in worker (non-finite values) assert_equals: expected "[object DOMMatrixReadOnly]" but got "matrix(1, 0, 0, nan, inf, -inf)"
+FAIL DOMMatrix setMatrixValue in worker assert_false: on prototype expected false got true
+Harness: the test ran to completion.
+
