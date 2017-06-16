@@ -316,6 +316,30 @@
       "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1782ddd1_447f7d30",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-16T19:15:08Z",
+      "side": 1,
+      "message": "Because the handles are not \"serialized\" when passed into this method, I would vote for simply calling this method \"AttachHandles\", or maybe more explicit about the perf implication: \"ReallocateAndAttachHandles\".",
+      "parentUuid": "306d9352_07a13471",
+      "range": {
+        "startLine": 279,
+        "startChar": 14,
+        "endLine": 279,
+        "endChar": 37
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
