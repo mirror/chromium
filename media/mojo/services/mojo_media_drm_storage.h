@@ -23,21 +23,26 @@ class MEDIA_MOJO_EXPORT MojoMediaDrmStorage
 
   // MediaDrmStorage implementation:
   void Initialize(const url::Origin& origin) final;
-  void OnProvisioned(ResultCB result_cb) final;
+  void OnProvisioned(ResultCB on_provisioned_cb) final;
   void SavePersistentSession(const std::string& session_id,
                              const SessionData& session_data,
-                             ResultCB result_cb) final;
+                             ResultCB save_persistent_session_cb) final;
   void LoadPersistentSession(
       const std::string& session_id,
       LoadPersistentSessionCB load_persistent_session_cb) final;
   void RemovePersistentSession(const std::string& session_id,
-                               ResultCB result_cb) final;
+                               ResultCB remove_persistent_session_cb) final;
 
  private:
-  void OnResult(ResultCB result_cb, bool success);
+  void OnResult(bool success);
   void OnPersistentSessionLoaded(
-      LoadPersistentSessionCB load_persistent_session_cb,
       mojom::SessionDataPtr session_data);
+  void OnConnectionError();
+
+  ResultCB on_provisioned_cb_;
+  ResultCB save_persistent_session_cb_;
+  LoadPersistentSessionCB load_persistent_session_cb_;
+  ResultCB remove_persistent_session_cb_;
 
   mojom::MediaDrmStoragePtr media_drm_storage_ptr_;
   base::WeakPtrFactory<MojoMediaDrmStorage> weak_factory_;
