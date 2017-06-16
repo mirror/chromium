@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "18098d84_3c156dab",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-16T17:36:23Z",
+      "side": 1,
+      "message": "Reworded",
+      "parentUuid": "ec85f135_4b95d0e8",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d92882a0_f7729062",
         "filename": "base/memory/ref_counted.h",
         "patchSetId": 3
@@ -48,6 +66,24 @@
       "side": 1,
       "message": "This is an actual move operator, while the overload below is not. See http://en.cppreference.com/w/cpp/language/move_assignment\n\n(We could/probably should omit \u003cT\u003e here)",
       "parentUuid": "d92882a0_f7729062",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f643bf8_644c8b6a",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-16T17:36:23Z",
+      "side": 1,
+      "message": "Done. Didn\u0027t know I could ever specify templates w/o type qualifiers.",
+      "parentUuid": "cda2bb20_ac51b64b",
       "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -119,6 +155,24 @@
       "side": 1,
       "message": "The conclusion from the last thread was that we shouldn\u0027t guard against self-moves explicitly, and self-moves should leave the object in a valid state.\n\nThere\u0027s no null deref in this code -- you\u0027re just left with a scoped_refptr pointing to null, which is perfectly valid.",
       "parentUuid": "072bb43c_5cd62c27",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "608f1e07_68d16fc6",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-16T17:36:23Z",
+      "side": 1,
+      "message": "+1 dcheng",
+      "parentUuid": "4a756f54_5b1c312b",
       "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
