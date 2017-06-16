@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "141b7406_f42e435a",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-16T23:14:50Z",
+      "side": 0,
+      "message": "We no longer have these trace events in the service :(",
+      "range": {
+        "startLine": 65,
+        "startChar": 2,
+        "endLine": 68,
+        "endChar": 54
+      },
+      "revId": "be4a86320929678e92afd45929b8fb316c0c56ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

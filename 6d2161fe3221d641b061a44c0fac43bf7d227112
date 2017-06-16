@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e9ab0b07_6b0940d8",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-16T23:14:50Z",
+      "side": 1,
+      "message": "can we have a dummy callback to record TRACE_EVENTs at start and end of dumps?\nI don\u0027t remember but it might be used in tracing benchmark to track the global dump duration.\nEven otherwise it is useful to see the duration in traces.\n\nThinking more, maybe this should be added to the coordinator_impl since we do not have protection against queuing here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
