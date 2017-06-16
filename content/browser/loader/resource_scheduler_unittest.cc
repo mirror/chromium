@@ -57,6 +57,8 @@ const char kPrioritySupportedRequestsDelayable[] =
 const char kNetworkSchedulerYielding[] = "NetworkSchedulerYielding";
 const int kMaxRequestsBeforeYielding = 5;  // sync with .cc.
 
+const char kMediumPriorityLayoutBlocking[] = "MediumPriorityLayoutBlocking";
+
 class TestRequest : public ResourceThrottle::Delegate {
  public:
   TestRequest(std::unique_ptr<net::URLRequest> url_request,
@@ -322,6 +324,78 @@ TEST_F(ResourceSchedulerTest, MediumDoesNotBlockCriticalComplete) {
   EXPECT_FALSE(lowest2->started());
 
   scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(lowest2->started());
+}
+
+TEST_F(ResourceSchedulerTest, MediumLayoutBlockingOneLowUntilCriticalComplete) {
+  // kMediumPriorityLayoutBlocking determines if net::MEDIUM priority requests
+  // must be considered as layout blocking before the HTML body is parsed. This
+  // is part of a field trial.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(kMediumPriorityLayoutBlocking, "");
+  InitializeScheduler();
+
+  std::unique_ptr<TestRequest> medium(
+      NewRequest("http://host/low", net::MEDIUM));
+  std::unique_ptr<TestRequest> lowest(
+      NewRequest("http://host/lowest", net::LOWEST));
+  std::unique_ptr<TestRequest> lowest2(
+      NewRequest("http://host/lowest", net::LOWEST));
+
+  // Only one request with priority net::LOWEST should start because net::MEDIUM
+  // priority should be considered as layout blocking.
+  EXPECT_TRUE(medium->started());
+  EXPECT_TRUE(lowest->started());
+  EXPECT_FALSE(lowest2->started());
+
+  // Completion of the net::MEDIUM priority request must not result in starting
+  // of net::LOWEST priority requests because the page is still the layout
+  // blocking phase because the HTML body has not yet been parsed.
+  medium.reset();
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(lowest2->started());
+
+  // Once the HTML body is parsed and the net::MEDIUM priority request has
+  // reached completion, a second request with priority net::LOWEST can be
+  // started because the page is out of the layout blocking phase.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(lowest2->started());
+}
+
+TEST_F(ResourceSchedulerTest, MediumLayoutBlockingOneLowUntilBodyInserted) {
+  // kMediumPriorityLayoutBlocking determines if net::MEDIUM priority requests
+  // must be considered as layout blocking before the HTML body is parsed. This
+  // is part of a field trial.
+  base::test::ScopedFeatureList scoped_feature_list;
+  scoped_feature_list.InitFromCommandLine(kMediumPriorityLayoutBlocking, "");
+  InitializeScheduler();
+
+  std::unique_ptr<TestRequest> medium(
+      NewRequest("http://host/low", net::MEDIUM));
+  std::unique_ptr<TestRequest> lowest(
+      NewRequest("http://host/lowest", net::LOWEST));
+  std::unique_ptr<TestRequest> lowest2(
+      NewRequest("http://host/lowest", net::LOWEST));
+
+  // Only one request with priority net::LOWEST should start because net::MEDIUM
+  // priority should be considered as layout blocking.
+  EXPECT_TRUE(medium->started());
+  EXPECT_TRUE(lowest->started());
+  EXPECT_FALSE(lowest2->started());
+
+  // The second request with priority net::LOWEST should not start after the
+  // HTML body has been parsed if the net::MEDIUM priority request is still
+  // in-flight.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+  base::RunLoop().RunUntilIdle();
+  EXPECT_FALSE(lowest2->started());
+
+  // Once the HTML body is parsed and the net::MEDIUM priority request has
+  // reached completion, a second request with priority net::LOWEST can be
+  // started because the page is out of the layout blocking phase.
+  medium.reset();
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(lowest2->started());
 }

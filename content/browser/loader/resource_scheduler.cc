@@ -53,6 +53,14 @@ const base::Feature kNetworkSchedulerYielding{
 const char kMaxRequestsBeforeYieldingParam[] = "MaxRequestsBeforeYieldingParam";
 const int kMaxRequestsBeforeYieldingDefault = 5;
 
+// When kMediumPriorityLayoutBlocking is enabled, requests with a priority of
+// net::MEDIUM are also tagged as layout blocking, instead of only the requests
+// with a priority greater than net::MEDIUM. The effect is that some JS files
+// seen before the HTML body are marked as layout blocking too instead of just
+// CSS.
+const base::Feature kMediumPriorityLayoutBlocking{
+    "MediumPriorityLayoutBlocking", base::FEATURE_DISABLED_BY_DEFAULT};
+
 enum StartMode {
   START_SYNC,
   START_ASYNC
@@ -387,7 +395,8 @@ class ResourceScheduler::Client {
  public:
   Client(bool priority_requests_delayable,
          bool yielding_scheduler_enabled,
-         int max_requests_before_yielding)
+         int max_requests_before_yielding,
+         bool medium_priority_layout_blocking)
       : is_loaded_(false),
         has_html_body_(false),
         using_spdy_proxy_(false),
@@ -399,6 +408,7 @@ class ResourceScheduler::Client {
         did_scheduler_yield_(false),
         yielding_scheduler_enabled_(yielding_scheduler_enabled),
         max_requests_before_yielding_(max_requests_before_yielding),
+        medium_priority_layout_blocking_(medium_priority_layout_blocking),
         weak_ptr_factory_(this) {}
 
   ~Client() {}
@@ -637,11 +647,18 @@ class ResourceScheduler::Client {
       // If a request is already marked as layout-blocking make sure to keep the
       // attribute across redirects.
       attributes |= kAttributeLayoutBlocking;
-    } else if (!has_html_body_ &&
+    } else if (!medium_priority_layout_blocking_ && !has_html_body_ &&
                request->url_request()->priority() >
-               kLayoutBlockingPriorityThreshold) {
+                   kLayoutBlockingPriorityThreshold) {
       // Requests that are above the non_delayable threshold before the HTML
       // body has been parsed are inferred to be layout-blocking.
+      attributes |= kAttributeLayoutBlocking;
+    } else if (medium_priority_layout_blocking_ && !has_html_body_ &&
+               request->url_request()->priority() ==
+                   kLayoutBlockingPriorityThreshold) {
+      // Requests that have a priority of net::MEDIUM are inferred as layout
+      // blocking before the HTML body has been parsed if
+      // |medium_priority_layout_blocking_| is set to true.
       attributes |= kAttributeLayoutBlocking;
     } else if (request->url_request()->priority() <
                kDelayablePriorityThreshold) {
@@ -930,6 +947,10 @@ class ResourceScheduler::Client {
   // The number of requests that can start before yielding.
   int max_requests_before_yielding_;
 
+  // If requests with a priority of net::MEDIUM should be tagged as layout
+  // blocking if |has_html_body_| is false.
+  const bool medium_priority_layout_blocking_;
+
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
 
@@ -941,7 +962,9 @@ ResourceScheduler::ResourceScheduler()
       max_requests_before_yielding_(base::GetFieldTrialParamByFeatureAsInt(
           kNetworkSchedulerYielding,
           kMaxRequestsBeforeYieldingParam,
-          kMaxRequestsBeforeYieldingDefault)) {}
+          kMaxRequestsBeforeYieldingDefault)),
+      medium_priority_layout_blocking_(
+          base::FeatureList::IsEnabled(kMediumPriorityLayoutBlocking)) {}
 
 ResourceScheduler::~ResourceScheduler() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -999,9 +1022,9 @@ void ResourceScheduler::OnClientCreated(int child_id,
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
-  Client* client =
-      new Client(priority_requests_delayable_, yielding_scheduler_enabled_,
-                 max_requests_before_yielding_);
+  Client* client = new Client(
+      priority_requests_delayable_, yielding_scheduler_enabled_,
+      max_requests_before_yielding_, medium_priority_layout_blocking_);
   client_map_[client_id] = client;
 }
 
