@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d264b8c4_cf59bf47",
+        "filename": "ios/chrome/browser/ui/webui/web_ui_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T15:07:24Z",
+      "side": 1,
+      "message": "Add here:\n\n// TODO(crbug.com/734079): Re-enable this test.",
+      "range": {
+        "startLine": 84,
+        "startChar": 8,
+        "endLine": 84,
+        "endChar": 28
+      },
+      "revId": "004ca2fd0dd315d0d6eae32286456713cf37e010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5089595_697065dd",
+        "filename": "ios/chrome/browser/ui/webui/web_ui_egtest.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1116027
+      },
+      "writtenOn": "2017-06-16T15:07:24Z",
+      "side": 1,
+      "message": "Add here too:\n\n// TODO(crbug.com/734079): Re-enable this test.",
+      "range": {
+        "startLine": 98,
+        "startChar": 8,
+        "endLine": 98,
+        "endChar": 32
+      },
+      "revId": "004ca2fd0dd315d0d6eae32286456713cf37e010",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
