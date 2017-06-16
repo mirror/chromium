@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec85f135_4b95d0e8",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 253,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T01:36:23Z",
+      "side": 1,
+      "message": "Do you mean \"Prune static analysis paths which...\"?",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d92882a0_f7729062",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T01:36:23Z",
+      "side": 1,
+      "message": "nit: What does this specialization provide that the more general case below does not?",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2884335_7daeab43",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 525,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T01:36:23Z",
+      "side": 1,
+      "message": "This looks like it\u0027ll break in the move-to-self case (which I appreciate is a strange edge-case, but...), which the temporary+swap manages to work-around.\n\nPerhaps we should just special-case move-to-self?",
+      "revId": "064a3859f3152a029120e74a7bc37cf249d94bbb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
