@@ -54,6 +54,8 @@ class MetricsServicesManagerClient {
   // Whether the metrics services should record but not report metrics.
   virtual bool OnlyDoMetricsRecording() = 0;
 
+  virtual bool IsIncognitoSessionActive() = 0;
+
   // Update the running state of metrics services managed by the embedder, for
   // example, crash reporting.
   virtual void UpdateRunningServices(bool may_record, bool may_upload) {}
