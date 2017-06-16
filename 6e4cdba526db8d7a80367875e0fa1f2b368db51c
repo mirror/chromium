@@ -320,6 +320,24 @@
     },
     {
       "key": {
+        "uuid": "a85da17c_4d9fffdb",
+        "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-16T12:36:40Z",
+      "side": 1,
+      "message": "You mean just \"enums\" as opposed to \"enum class\"? I think it should, at least I\u0027m aware of this before C++11. Of course, the code does not define if the passed value is actually not in the enum range, which can happen more easily with old enums (due to implicit casting). But then I would argue that having a default: is just papering the real problem over.",
+      "parentUuid": "09fb8fb5_49980ae4",
+      "revId": "6e4cdba526db8d7a80367875e0fa1f2b368db51c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "144e43d9_5ce296d1",
         "filename": "components/password_manager/core/browser/password_form_ukm_recorder.cc",
         "patchSetId": 1
