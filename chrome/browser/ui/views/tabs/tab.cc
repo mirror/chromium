@@ -13,6 +13,7 @@
 #include "base/macros.h"
 #include "base/metrics/user_metrics.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/time/time.h"
 #include "build/build_config.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_recorder.h"
@@ -354,17 +355,23 @@ class Tab::TabCloseButton : public views::ImageButton,
 // ThrobberView
 //
 // A Layer-backed view for updating a waiting or loading tab throbber.
-class Tab::ThrobberView : public views::View {
+class Tab::ThrobberView : public views::View,
+                          public ui::CompositorAnimationObserver {
  public:
   explicit ThrobberView(Tab* owner);
 
   // Resets the times tracking when the throbber changes state.
   void ResetStartTimes();
 
- private:
   // views::View:
-  bool CanProcessEventsWithinSubtree() const override;
+  void SetVisible(bool visible) override;
   void OnPaint(gfx::Canvas* canvas) override;
+
+  // ui::CompositorAnimationObserver
+  void OnAnimationStep(base::TimeTicks timestamp) override;
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override;
+
+ private:
 
   Tab* owner_;  // Weak. Owns |this|.
 
@@ -380,7 +387,9 @@ class Tab::ThrobberView : public views::View {
   DISALLOW_COPY_AND_ASSIGN(ThrobberView);
 };
 
-Tab::ThrobberView::ThrobberView(Tab* owner) : owner_(owner) {}
+Tab::ThrobberView::ThrobberView(Tab* owner) : owner_(owner) {
+  set_can_process_events_within_subtree(false);
+}
 
 void Tab::ThrobberView::ResetStartTimes() {
   waiting_start_time_ = base::TimeTicks();
@@ -388,15 +397,14 @@ void Tab::ThrobberView::ResetStartTimes() {
   waiting_state_ = gfx::ThrobberWaitingState();
 }
 
-bool Tab::ThrobberView::CanProcessEventsWithinSubtree() const {
-  return false;
-}
-
 void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
   const TabRendererData::NetworkState state = owner_->data().network_state;
+#if 0
   if (state == TabRendererData::NETWORK_STATE_NONE ||
-      state == TabRendererData::NETWORK_STATE_ERROR)
+      state == TabRendererData::NETWORK_STATE_ERROR) {
     return;
+  }
+#endif
 
   const ui::ThemeProvider* tp = GetThemeProvider();
   const gfx::Rect bounds = GetLocalBounds();
@@ -421,6 +429,33 @@ void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
         base::TimeTicks::Now() - loading_start_time_, &waiting_state_);
   }
 }
+
+void Tab::ThrobberView::SetVisible(bool visible) {
+visible = true;
+ // const bool visibility_changed = visible != views::View::visible();
+  views::View::SetVisible(visible);
+
+  auto* widget = GetWidget();
+  auto* compositor = widget ? widget->GetCompositor() : nullptr;
+  if (!compositor)
+    return;
+
+  bool observing = compositor->HasAnimationObserver(this);
+
+  if (visible) {
+    if (!observing)
+      compositor->AddAnimationObserver(this);
+  } else {
+    if (observing)
+      compositor->RemoveAnimationObserver(this);
+  }
+}
+
+void Tab::ThrobberView::OnAnimationStep(base::TimeTicks timestamp) {
+  SchedulePaint();
+}
+
+void Tab::ThrobberView::OnCompositingShuttingDown(ui::Compositor* compositor) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Tab, public:
@@ -1273,10 +1308,9 @@ void Tab::PaintIcon(gfx::Canvas* canvas) {
     return;
 
   // Throbber will do its own painting.
-  if (data().network_state != TabRendererData::NETWORK_STATE_NONE &&
-      data().network_state != TabRendererData::NETWORK_STATE_ERROR) {
+  if (throbber_->visible())
     return;
-  }
+
   // Ensure that |favicon_| is created.
   if (favicon_.isNull()) {
     ui::ResourceBundle* rb = &ui::ResourceBundle::GetSharedInstance();
