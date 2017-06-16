@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0f0aa51a_f688d9af",
+        "filename": "ui/accessibility/ax_tree_combiner.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1147299
+      },
+      "writtenOn": "2017-06-16T23:23:58Z",
+      "side": 1,
+      "message": "This is the magic ID I\u0027m talking about. Glancing over the docs, I can\u0027t actually tell if this is defined behavior...if no value for the given key exists, then operator[] is supposed to construct and insert a new value, but what does that mean for primitive types? Will it always be initialized to 0, or is the value undefined? Furthermore, what happens if a node ID is actually 0? This code looks like it\u0027ll replace it.",
+      "range": {
+        "startLine": 74,
+        "startChar": 6,
+        "endLine": 74,
+        "endChar": 26
+      },
+      "revId": "49b905bf5cf66b1b5ac62e1dcddf7b32af99d5e1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
