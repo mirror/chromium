@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd2b2123_99b1455a",
+        "filename": "storage/browser/blob/blob_registry_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T22:42:39Z",
+      "side": 1,
+      "message": "Ah, nothing. That was a leftover from an earlier patch when I was still trying to work out how to best add BadMessage support to mojo::BindingSet (at that time it required a non-void context type).",
+      "parentUuid": "2f616b5e_a0558a09",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4932046a_b0475ff9",
         "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T22:17:09Z",
       "side": 1,
       "message": "check bad_messages_ not empty?",
+      "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a314fda2_b9005430",
+        "filename": "storage/browser/blob/blob_registry_impl_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-16T22:42:39Z",
+      "side": 1,
+      "message": "Should that be the expected behavior? Currently I\u0027m trying to mimic the behavior of BlobHostMsg_IncrementRefCount, where invalid UUIDs are just silently ignored. Of course in this case it\u0027s a bit weird that that then leaves a BlobPtr that doesn\u0027t get connected.",
+      "parentUuid": "4932046a_b0475ff9",
       "revId": "7f33e1f72e8354cc610a62377a2013c8f64ca508",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
