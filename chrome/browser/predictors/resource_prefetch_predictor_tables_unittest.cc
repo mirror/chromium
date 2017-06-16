@@ -7,14 +7,14 @@
 #include <utility>
 #include <vector>
 
-#include "base/message_loop/message_loop.h"
-#include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
+#include "base/threading/sequenced_task_runner_handle.h"
 #include "chrome/browser/predictors/loading_test_util.h"
 #include "chrome/browser/predictors/predictor_database.h"
 #include "chrome/browser/predictors/resource_prefetch_predictor_tables.h"
 #include "chrome/test/base/testing_profile.h"
 #include "content/public/test/test_browser_thread_bundle.h"
+#include "content/public/test/test_utils.h"
 #include "net/base/request_priority.h"
 #include "sql/statement.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -34,7 +34,7 @@ class ResourcePrefetchPredictorTablesTest : public testing::Test {
   void SetUp() override;
   void TearDown() override;
 
-  void DeleteAllData() const;
+  void DeleteAllData();
   void GetAllData(PrefetchDataMap* url_resource_data,
                   PrefetchDataMap* host_resource_data,
                   RedirectDataMap* url_redirect_data,
@@ -50,6 +50,7 @@ class ResourcePrefetchPredictorTablesTest : public testing::Test {
   void TestDeleteAllData();
 
   content::TestBrowserThreadBundle thread_bundle_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   TestingProfile profile_;
   std::unique_ptr<PredictorDatabase> db_;
   scoped_refptr<ResourcePrefetchPredictorTables> tables_;
@@ -113,9 +114,10 @@ class ResourcePrefetchPredictorTablesReopenTest
 };
 
 ResourcePrefetchPredictorTablesTest::ResourcePrefetchPredictorTablesTest()
-    : db_(new PredictorDatabase(&profile_)),
+    : task_runner_(base::SequencedTaskRunnerHandle::Get()),
+      db_(base::MakeUnique<PredictorDatabase>(&profile_, task_runner_)),
       tables_(db_->resource_prefetch_tables()) {
-  base::RunLoop().RunUntilIdle();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 ResourcePrefetchPredictorTablesTest::~ResourcePrefetchPredictorTablesTest() {
@@ -124,12 +126,13 @@ ResourcePrefetchPredictorTablesTest::~ResourcePrefetchPredictorTablesTest() {
 void ResourcePrefetchPredictorTablesTest::SetUp() {
   DeleteAllData();
   InitializeSampleData();
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 void ResourcePrefetchPredictorTablesTest::TearDown() {
   tables_ = nullptr;
-  db_.reset();
-  base::RunLoop().RunUntilIdle();
+  db_ = nullptr;
+  content::RunAllBlockingPoolTasksUntilIdle();
 }
 
 void ResourcePrefetchPredictorTablesTest::TestGetAllData() {
@@ -546,7 +549,7 @@ void ResourcePrefetchPredictorTablesTest::AddKey(OriginDataMap* m,
   m->insert(*it);
 }
 
-void ResourcePrefetchPredictorTablesTest::DeleteAllData() const {
+void ResourcePrefetchPredictorTablesTest::DeleteAllData() {
   tables_->ExecuteDBTaskOnDBThread(
       base::BindOnce(&GlowplugKeyValueTable<PrefetchData>::DeleteAllData,
                      base::Unretained(tables_->url_resource_table())));
@@ -812,8 +815,8 @@ void ResourcePrefetchPredictorTablesTest::InitializeSampleData() {
 }
 
 void ResourcePrefetchPredictorTablesTest::ReopenDatabase() {
-  db_.reset(new PredictorDatabase(&profile_));
-  base::RunLoop().RunUntilIdle();
+  db_ = base::MakeUnique<PredictorDatabase>(&profile_, task_runner_);
+  content::RunAllBlockingPoolTasksUntilIdle();
   tables_ = db_->resource_prefetch_tables();
 }
 

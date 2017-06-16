@@ -74,7 +74,8 @@ class AutocompleteActionPredictorTable : public PredictorTableBase {
  private:
   friend class PredictorDatabaseInternal;
 
-  AutocompleteActionPredictorTable();
+  explicit AutocompleteActionPredictorTable(
+      scoped_refptr<base::SequencedTaskRunner> db_task_runner);
   ~AutocompleteActionPredictorTable() override;
 
   // PredictorTableBase methods (DB thread).

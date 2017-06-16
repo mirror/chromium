@@ -9,6 +9,10 @@
 #include "base/memory/ref_counted.h"
 #include "base/synchronization/cancellation_flag.h"
 
+namespace base {
+class SequencedTaskRunner;
+}
+
 namespace sql {
 class Connection;
 }
@@ -21,8 +25,12 @@ namespace predictors {
 // related functions need to happen in the database thread.
 class PredictorTableBase
     : public base::RefCountedThreadSafe<PredictorTableBase> {
+ public:
+  scoped_refptr<base::SequencedTaskRunner> GetTaskRunner();
+
  protected:
-  PredictorTableBase();
+  explicit PredictorTableBase(
+      scoped_refptr<base::SequencedTaskRunner> db_task_runner);
   virtual ~PredictorTableBase();
 
   // DB thread functions.
@@ -40,6 +48,7 @@ class PredictorTableBase
 
   friend class base::RefCountedThreadSafe<PredictorTableBase>;
 
+  scoped_refptr<base::SequencedTaskRunner> db_task_runner_;
   sql::Connection* db_;
 
   DISALLOW_COPY_AND_ASSIGN(PredictorTableBase);

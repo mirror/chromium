@@ -424,8 +424,8 @@ void ResourcePrefetchPredictor::StartInitialization() {
       std::move(url_redirect_data), std::move(host_redirect_data),
       std::move(manifest_data), std::move(origin_data));
 
-  BrowserThread::PostTaskAndReply(BrowserThread::DB, FROM_HERE, std::move(task),
-                                  std::move(reply));
+  tables_->GetTaskRunner()->PostTaskAndReply(FROM_HERE, std::move(task),
+                                             std::move(reply));
 }
 
 void ResourcePrefetchPredictor::RecordURLRequest(
