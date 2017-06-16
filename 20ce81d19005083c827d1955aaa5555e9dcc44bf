@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5774b48_78e6cc5f",
+        "filename": "chrome/browser/chrome_browser_main.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1176,
+      "author": {
+        "id": 1139794
+      },
+      "writtenOn": "2017-06-16T00:57:15Z",
+      "side": 1,
+      "message": "This will impact the startup time. Can we offload the creation into a background thread that works before loading of the extensions?",
+      "range": {
+        "startLine": 1176,
+        "startChar": 15,
+        "endLine": 1176,
+        "endChar": 25
+      },
+      "revId": "20ce81d19005083c827d1955aaa5555e9dcc44bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
