@@ -329,6 +329,7 @@ bool String16ToIntImpl(const StringPiece16& input, VALUE* output) {
 }  // namespace
 
 std::string IntToString(int value) {
+  // return std::to_string(value);
   return IntToStringT<std::string, int>::IntToString(value);
 }
 
@@ -361,6 +362,7 @@ string16 Uint64ToString16(uint64_t value) {
 }
 
 std::string SizeTToString(size_t value) {
+  // return std::to_string(value);
   return IntToStringT<std::string, size_t>::IntToString(value);
 }
 

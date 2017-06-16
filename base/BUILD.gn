@@ -1802,6 +1802,7 @@ test("base_perftests") {
 
     # "test/run_all_unittests.cc",
     "json/json_perftest.cc",
+    "strings/string_number_conversions_perftest.cc",
     "threading/thread_perftest.cc",
   ]
   deps = [
