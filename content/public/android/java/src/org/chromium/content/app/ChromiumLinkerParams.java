@@ -28,35 +28,26 @@ public class ChromiumLinkerParams implements Parcelable {
     // registered in the service process.
     public final String mTestRunnerClassNameForTesting;
 
-    // If mTestRunnerClassNameForTesting is not empty, the Linker implementation
-    // to force for testing.
-    public final int mLinkerImplementationForTesting;
-
     public ChromiumLinkerParams(long baseLoadAddress, boolean waitForSharedRelro) {
         mBaseLoadAddress = baseLoadAddress;
         mWaitForSharedRelro = waitForSharedRelro;
         mTestRunnerClassNameForTesting = null;
-        mLinkerImplementationForTesting = 0;
     }
 
     /**
      * Use this constructor to create a LinkerParams instance for testing.
      */
-    public ChromiumLinkerParams(long baseLoadAddress,
-                                boolean waitForSharedRelro,
-                                String testRunnerClassName,
-                                int linkerImplementation) {
+    public ChromiumLinkerParams(
+            long baseLoadAddress, boolean waitForSharedRelro, String testRunnerClassName) {
         mBaseLoadAddress = baseLoadAddress;
         mWaitForSharedRelro = waitForSharedRelro;
         mTestRunnerClassNameForTesting = testRunnerClassName;
-        mLinkerImplementationForTesting = linkerImplementation;
     }
 
     ChromiumLinkerParams(Parcel in) {
         mBaseLoadAddress = in.readLong();
         mWaitForSharedRelro = in.readInt() != 0;
         mTestRunnerClassNameForTesting = in.readString();
-        mLinkerImplementationForTesting = in.readInt();
     }
 
     @Override
@@ -69,7 +60,6 @@ public class ChromiumLinkerParams implements Parcelable {
         dest.writeLong(mBaseLoadAddress);
         dest.writeInt(mWaitForSharedRelro ? 1 : 0);
         dest.writeString(mTestRunnerClassNameForTesting);
-        dest.writeInt(mLinkerImplementationForTesting);
     }
 
     public static final Parcelable.Creator<ChromiumLinkerParams> CREATOR =
@@ -90,8 +80,8 @@ public class ChromiumLinkerParams implements Parcelable {
     public String toString() {
         return String.format(Locale.US,
                 "LinkerParams(baseLoadAddress:0x%x, waitForSharedRelro:%s, "
-                        + "testRunnerClassName:%s, linkerImplementation:%d",
+                        + "testRunnerClassName:%s",
                 mBaseLoadAddress, Boolean.toString(mWaitForSharedRelro),
-                mTestRunnerClassNameForTesting, mLinkerImplementationForTesting);
+                mTestRunnerClassNameForTesting);
     }
 }
