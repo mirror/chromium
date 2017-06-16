@@ -22,6 +22,30 @@
       "revId": "dfc43ae0cffc8cccf674727cb0c958e9626618bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b155881_92a3e2f4",
+        "filename": "ui/accessibility/ax_tree_combiner_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-16T21:31:15Z",
+      "side": 1,
+      "message": "No, and actually all three of these lines are irrelevant -\nthe test crashes (without the fix) with an uninitialized\nAXTreeUpdate.\n\nI got rid of those lines so the test is minimal.",
+      "parentUuid": "62f92598_ae90a1bf",
+      "range": {
+        "startLine": 199,
+        "startChar": 17,
+        "endLine": 199,
+        "endChar": 18
+      },
+      "revId": "dfc43ae0cffc8cccf674727cb0c958e9626618bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
