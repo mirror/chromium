@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6a61f68b_59163d8f",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T23:01:01Z",
+      "side": 1,
+      "message": "nit: Must outlive *all* URLRequestJobs?",
+      "revId": "9fc10c6734f4149b4c2a4f7618317c7780785e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b99f5e14_fe01f262",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-16T23:01:01Z",
+      "side": 1,
+      "message": "nit: Can we remove this nullptr? WeakPtr\u0027s default ctor is null, I think?",
+      "revId": "9fc10c6734f4149b4c2a4f7618317c7780785e86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
