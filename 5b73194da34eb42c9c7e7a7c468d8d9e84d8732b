@@ -22,6 +22,30 @@
       "revId": "5b73194da34eb42c9c7e7a7c468d8d9e84d8732b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76f2abdb_6dd5a430",
+        "filename": "remoting/host/heartbeat_sender.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-16T00:20:58Z",
+      "side": 1,
+      "message": "From my reading this thread I think there was more support for hiding interface implementation, particularly for Observer classes.",
+      "parentUuid": "1f8c2f17_8aa091d7",
+      "range": {
+        "startLine": 137,
+        "startChar": 79,
+        "endLine": 137,
+        "endChar": 0
+      },
+      "revId": "5b73194da34eb42c9c7e7a7c468d8d9e84d8732b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
