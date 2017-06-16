@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de0d1386_b4f03cd9",
+        "filename": "cc/scheduler/scheduler_state_machine.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1129,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-16T13:59:57Z",
+      "side": 1,
+      "message": "I\u0027m thinking of a BeginFrameArgs with e.g. deadline \u003d interval \u003d UINTXX_MAX, as we would be using in headless. Maybe it\u0027s actually more a flush_pipeline feature than an infinite-deadline feature. Removed the TODO for now, we can think about it in a future patch :)",
+      "parentUuid": "3d07bc9c_3631dc79",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e7fa0a62_1c109abc",
         "filename": "cc/surfaces/display_scheduler.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4fae82a_c3c6238b",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-16T13:59:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e7fa0a62_1c109abc",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +95,30 @@
     },
     {
       "key": {
+        "uuid": "2af24f53_3390244d",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-16T13:59:57Z",
+      "side": 1,
+      "message": "I think that wouldn\u0027t quite be what we want.\n\nGenerally, surfaces that didn\u0027t receive the current BeginFrame are likely idle (needs_begin_frames \u003d false), and should be considered ready. They shouldn\u0027t block the early deadline (particularly if there\u0027s damage from some other surface, and probably also if another other surface has responded with a no-damage ack).\n\nThis is really rather just a work-around for proactive BeginFrames. (.. and I\u0027m also not sure if there\u0027s any benefit to these proactive BeginFrames in the DisplayScheduler at all really - which is why I figured removing them may be simpler than this extend-the-deadline work-around.)\n\nRegarding OnSurfaceCreated - it is only ever called when the surface has damage already anyway. So I think calling OnSurfaceDamageExpected probably isn\u0027t beneficial there - it would just add an additional unnecessary loop through UpdateHasPendingSurfaces(), I believe.",
+      "parentUuid": "b0dc981d_d9b6f746",
+      "range": {
+        "startLine": 158,
+        "startChar": 4,
+        "endLine": 158,
+        "endChar": 37
+      },
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8215630e_c77fd9bc",
         "filename": "cc/surfaces/display_scheduler.cc",
         "patchSetId": 2
@@ -73,6 +133,24 @@
       "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5baa83c5_c4b8cd40",
+        "filename": "cc/surfaces/display_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 185,
+      "author": {
+        "id": 1173914
+      },
+      "writtenOn": "2017-06-16T13:59:57Z",
+      "side": 1,
+      "message": "has_pending_surfaces_ also affects whether the early deadline (base::TimeTicks()) will be taken or not. And I think we should still trigger an early deadline if no surface needed the BeginFrame, but we still have a draw pending. There\u0027s actually a test that fails if I remove \"\u0026\u0026 !needs_draw\" here.\n\nGot rid of the TODO for now - we can address that later.",
+      "parentUuid": "8215630e_c77fd9bc",
+      "revId": "1a4fb9acaf557935242578b36a094c23fac5671d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
