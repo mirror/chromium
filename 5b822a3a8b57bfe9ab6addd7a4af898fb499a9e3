@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0e7d38e_0469511e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/RawResource.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1222349
+      },
+      "writtenOn": "2017-06-16T03:56:57Z",
+      "side": 1,
+      "message": "There may be a problem here, the data transmitted before was from begin to end, and now is segment by segment.",
+      "revId": "5b822a3a8b57bfe9ab6addd7a4af898fb499a9e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
