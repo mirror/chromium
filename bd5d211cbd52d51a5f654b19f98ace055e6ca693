@@ -176,6 +176,30 @@
       "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3aed648a_bb7325ae",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-16T16:33:18Z",
+      "side": 1,
+      "message": "I think this change is fine, so let\u0027s go with it.\n\nShould we add some documentation to the javadoc in this class to let people know about the constraints and when it is ok to delete something and when not?",
+      "parentUuid": "261065fc_1594cd7c",
+      "range": {
+        "startLine": 252,
+        "startChar": 25,
+        "endLine": 252,
+        "endChar": 44
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
