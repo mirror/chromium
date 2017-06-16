@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aab159d5_a48d28db",
+        "filename": "chromecast/base/chromecast_switches.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-06-16T14:51:41Z",
+      "side": 1,
+      "message": "Moved them to the existing cast_features.cc",
+      "parentUuid": "526a55d3_a41eec72",
+      "range": {
+        "startLine": 185,
+        "startChar": 0,
+        "endLine": 188,
+        "endChar": 38
+      },
+      "revId": "68da6cc09be82bc2edca0103311b2274ae421a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "848eedad_63002207",
         "filename": "chromecast/base/chromecast_switches.h",
         "patchSetId": 3
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-15T22:20:11Z",
       "side": 1,
       "message": "Poking around other directories that use base::Feature, I see a lot of them put the features in a separate file, e.g. features.h or \u003cname\u003e_features.h, so maybe this should get separated out into chromecast_features.h?\n\nI also saw that a good number of places put the features inside a `namespace features` (similar to `namespace switches` for the switches)",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 72,
+        "endChar": 39
+      },
+      "revId": "68da6cc09be82bc2edca0103311b2274ae421a86",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac306911_4134bcaa",
+        "filename": "chromecast/base/chromecast_switches.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129958
+      },
+      "writtenOn": "2017-06-16T14:51:41Z",
+      "side": 1,
+      "message": "I used media_switches.h as a guideline, but that seems to be a less-commonly used convention. I will move these to cast_features.h. \n\nAs for the feature namespace, files are not consistent across Chrome. Some declare Features in ::features, others in ::foo::features. I\u0027d prefer to keep them in the chromecast namespace, for two reasons: \n  1) Prevent collisions in internal code with the feature namespace.\n  2) Make conditional statements as brief as possible.",
+      "parentUuid": "848eedad_63002207",
       "range": {
         "startLine": 69,
         "startChar": 4,
