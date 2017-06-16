@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8ab38779_b7fc1d03",
+        "filename": "ash/login/ui/login_pin_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-16T16:16:24Z",
+      "side": 1,
+      "message": "nit: callback_forward.h -\u003e callback.h\n\nBecause we store callbacks as members so we should include real header so that compiler knows the sizes to allocate.",
+      "range": {
+        "startLine": 9,
+        "startChar": 10,
+        "endLine": 9,
+        "endChar": 33
+      },
+      "revId": "6fe54740aff49ae9b8002a871887eee6939b7ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc7ef65_1892f50e",
+        "filename": "ash/login/ui/login_pin_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-16T16:16:24Z",
+      "side": 1,
+      "message": "nit: LoginPinView* const since |view_| would not change.",
+      "revId": "6fe54740aff49ae9b8002a871887eee6939b7ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68df84a6_37dd3494",
+        "filename": "ash/login/ui/login_pin_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-16T16:16:24Z",
+      "side": 1,
+      "message": "nit: document ownership.\ne.g. // Owned by test widget view hierarchy",
+      "revId": "6fe54740aff49ae9b8002a871887eee6939b7ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20ef02a1_ddbbcd43",
+        "filename": "ash/login/ui/login_pin_view_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-16T16:16:24Z",
+      "side": 1,
+      "message": "Why backspace button uses bounds() but other buttons use GetBoundsInScreen()?",
+      "range": {
+        "startLine": 92,
+        "startChar": 47,
+        "endLine": 92,
+        "endChar": 53
+      },
+      "revId": "6fe54740aff49ae9b8002a871887eee6939b7ab1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
