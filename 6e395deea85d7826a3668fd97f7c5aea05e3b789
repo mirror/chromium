@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "474653f6_ff57d0db",
+        "filename": "third_party/WebKit/Source/platform/image-decoders/ImageDecoder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1217339
+      },
+      "writtenOn": "2017-06-16T11:01:20Z",
+      "side": 1,
+      "message": "Platform.h is needed only for this constant and it is quite a big file.\nHow do you think, is it possible to move ImageDecoder::kNoDecodedImageByteLimit constant definition from this header to a ImageDecoder.cpp file?",
+      "revId": "6e395deea85d7826a3668fd97f7c5aea05e3b789",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
