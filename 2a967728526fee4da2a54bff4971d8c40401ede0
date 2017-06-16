@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb659a28_ad7c5235",
+        "filename": "media/audio/audio_input_controller.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1001148
+      },
+      "writtenOn": "2017-06-16T10:49:21Z",
+      "side": 1,
+      "message": "nit:\nstatic const char kLogStringPrefix[] \u003d \"AIC::DoClose:\";",
+      "revId": "2a967728526fee4da2a54bff4971d8c40401ede0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
