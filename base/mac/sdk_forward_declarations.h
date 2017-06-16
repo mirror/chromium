@@ -252,6 +252,23 @@ BASE_EXPORT extern NSString* const CIDetectorTypeText;
     (NSAttributedString*)attributedStringValue;
 @end
 
+typedef NS_ENUM(NSInteger, NSTouchType) {
+  NSTouchTypeDirect,    // A direct touch from a finger (on a screen)
+  NSTouchTypeIndirect,  // An indirect touch (not a screen)
+};
+
+typedef NS_OPTIONS(NSUInteger, NSTouchTypeMask) {
+  NSTouchTypeMaskDirect =
+      (1 << NSTouchTypeDirect),  // A direct touch from a finger (on a screen)
+  NSTouchTypeMaskIndirect =
+      (1 << NSTouchTypeIndirect),  // An indirect touch (not a screen)
+};
+
+@interface NSView (NSTouchBar)
+/* Defaults to NSTouchTypeDirect if linked on or after 10_12, 0 otherwise */
+@property NSTouchTypeMask allowedTouchTypes;
+@end
+
 #endif  // MAC_OS_X_VERSION_10_12_1
 
 // ----------------------------------------------------------------------------

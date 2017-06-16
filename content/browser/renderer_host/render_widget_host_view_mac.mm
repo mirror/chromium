@@ -1755,7 +1755,12 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
   self = [super initWithFrame:NSZeroRect];
   if (self) {
-    self.acceptsTouchEvents = YES;
+    if ([self respondsToSelector:@selector(setAllowedTouchTypes:)]) {
+      self.allowedTouchTypes = NSTouchTypeMaskDirect | NSTouchTypeMaskIndirect;
+    } else {
+      self.acceptsTouchEvents = YES;
+    }
+
     editCommand_helper_.reset(new RenderWidgetHostViewMacEditCommandHelper);
     editCommand_helper_->AddEditingSelectorsToClass([self class]);
 
@@ -1816,6 +1821,11 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                            consumed:(BOOL)consumed {
   [responderDelegate_ rendererHandledGestureScrollEvent:event
                                                consumed:consumed];
+}
+
+- (void)touchesBeganWithEvent:(NSEvent*)event {
+  LOG(ERROR) << "Render widget host view mac touch";
+  [responderDelegate_ touchesBeganWithEvent:event];
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
@@ -2390,10 +2400,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
 - (void)touchesMovedWithEvent:(NSEvent*)event {
   [responderDelegate_ touchesMovedWithEvent:event];
-}
-
-- (void)touchesBeganWithEvent:(NSEvent*)event {
-  [responderDelegate_ touchesBeganWithEvent:event];
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent*)event {

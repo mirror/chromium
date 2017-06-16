@@ -442,8 +442,10 @@ void Navigate(NavigateParams* params) {
   }
 
   params->browser = GetBrowserForDisposition(params);
-  if (!params->browser)
+
+  if (!params->browser) {
     return;
+  }
 
 #if defined(USE_ASH)
   if (source_browser && source_browser != params->browser) {

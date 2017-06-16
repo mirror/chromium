@@ -914,6 +914,10 @@ bool BrowserView::ShouldHideUIForFullscreen() const {
   if (immersive_mode_controller_->IsEnabled())
     return false;
 
+  if (browser_->is_type_popup) {
+    return true;
+  }
+
   return IsFullscreen();
 }
 

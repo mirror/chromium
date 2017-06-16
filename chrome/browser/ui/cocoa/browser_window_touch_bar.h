@@ -22,12 +22,23 @@ class Browser;
 // True if the current page is starred. Used by star touch bar button.
 @property(nonatomic, assign) BOOL isStarred;
 
+@property(nonatomic, assign) BOOL isErrorPage;
+
+@property(nonatomic, assign) NSView* touchbarView;
+
+// Returns a touch bar item identifier for the given |touchBarId| and |itemId|.
 // Designated initializer.
 - (instancetype)initWithBrowser:(Browser*)browser
         browserWindowController:(BrowserWindowController*)bwc;
 
 // Creates and returns a touch bar for the browser window.
 - (NSTouchBar*)makeTouchBar;
+
+- (void)displayViewInTouchbar:(NSView*)view;
+
+@end
+
+@interface TouchBarView : NSView
 
 @end
 

@@ -19,6 +19,7 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_command_controller.h"
 #import "chrome/browser/ui/cocoa/browser_window_controller.h"
+#import "chrome/browser/ui/cocoa/fast_resize_view.h"
 #import "chrome/browser/ui/cocoa/omnibox/omnibox_view_mac.h"
 #include "chrome/browser/ui/exclusive_access/exclusive_access_manager.h"
 #include "chrome/browser/ui/exclusive_access/fullscreen_controller.h"
@@ -43,6 +44,11 @@
 #include "ui/gfx/paint_vector_icon.h"
 #include "ui/vector_icons/vector_icons.h"
 
+//@interface NSView (NSTouchBar)
+///* Defaults to NSTouchTypeDirect if linked on or after 10_12, 0 otherwise */
+//@property NSTouchTypeMask allowedTouchTypes;
+//@end
+
 namespace {
 
 // The touch bar actions that are being recorded in a histogram. These values
@@ -56,7 +62,8 @@ enum TouchBarAction {
   SEARCH,
   STAR,
   NEW_TAB,
-  TOUCH_BAR_ACTION_COUNT
+  TOUCH_BAR_ACTION_COUNT,
+  SLIDER
 };
 
 // Touch bar identifiers.
@@ -72,6 +79,7 @@ NSString* const kStarTouchId = @"BOOKMARK";
 NSString* const kNewTabTouchId = @"NEW-TAB";
 NSString* const kExitFullscreenTouchId = @"EXIT-FULLSCREEN";
 NSString* const kFullscreenOriginLabelTouchId = @"FULLSCREEN-ORIGIN-LABEL";
+NSString* const kSliderId = @"SLIDER";
 
 // The button indexes in the back and forward segment control.
 const int kBackSegmentIndex = 0;
@@ -105,6 +113,21 @@ NSButton* CreateTouchBarButton(const gfx::VectorIcon& icon,
       [NSButton buttonWithImage:CreateNSImageFromIcon(icon, color)
                          target:owner
                          action:@selector(executeCommand:)];
+
+  button.tag = command;
+  [button setAccessibilityLabel:l10n_util::GetNSString(tooltip_id)];
+  return button;
+}
+
+NSButton* CreateTouchBarButton_(const gfx::VectorIcon& icon,
+                                BrowserWindowTouchBar* owner,
+                                int command,
+                                int tooltip_id,
+                                SkColor color = kTouchBarDefaultIconColor) {
+  NSButton* button = [NSButton buttonWithTitle:@"C"
+                                        target:owner
+                                        action:@selector(executeCommand:)];
+
   button.tag = command;
   [button setAccessibilityLabel:l10n_util::GetNSString(tooltip_id)];
   return button;
@@ -186,10 +209,26 @@ class HomePrefNotificationBridge {
 - (NSView*)searchTouchBarView;
 @end
 
+@implementation TouchBarView : NSView
+
+- (void)touchesBeganWithEvent:(NSEvent*)event {
+  LOG(ERROR) << "browser window touch bar Touch";
+}
+
+@end
+
 @implementation BrowserWindowTouchBar
 
 @synthesize isPageLoading = isPageLoading_;
 @synthesize isStarred = isStarred_;
+@synthesize isErrorPage = isErrorPage_;
+@synthesize touchbarView = touchbarView_;
+
++ (NSString*)identifierForTouchBarId:(NSString*)touchBarId
+                              itemId:(NSString*)itemId {
+  return
+      [NSString stringWithFormat:@"%@-%@", GetTouchBarId(touchBarId), itemId];
+}
 
 - (instancetype)initWithBrowser:(Browser*)browser
         browserWindowController:(BrowserWindowController*)bwc {
@@ -214,15 +253,23 @@ class HomePrefNotificationBridge {
   if (!base::FeatureList::IsEnabled(features::kBrowserTouchBar))
     return nil;
 
+  if (touchbarView_ && isErrorPage_) {
+    base::scoped_nsobject<NSTouchBar> touchBar(
+        [[NSClassFromString(@"NSTouchBar") alloc] init]);
+    [touchBar setDelegate:self];
+    [touchBar setDefaultItemIdentifiers:@[ @"WebContent" ]];
+    return touchBar.autorelease();
+  }
+
   // When in tab fullscreen, we should show a touch bar containing only
   // items associated with that mode. Since the toolbar is hidden, only
   // the option to exit fullscreen should show up.
   if ([bwc_ isFullscreenForTabContentOrExtension])
     return [self createTabFullscreenTouchBar];
 
-  base::scoped_nsobject<NSTouchBar> touchBar([[ui::NSTouchBar() alloc] init]);
-  [touchBar
-      setCustomizationIdentifier:ui::GetTouchBarId(kBrowserWindowTouchBarId)];
+  base::scoped_nsobject<NSTouchBar> touchBar(
+      [[NSClassFromString(@"NSTouchBar") alloc] init]);
+  [touchBar setCustomizationIdentifier:GetTouchBarId(kBrowserWindowTouchBarId)];
   [touchBar setDelegate:self];
 
   NSMutableArray* customIdentifiers = [NSMutableArray arrayWithCapacity:7];
@@ -230,16 +277,18 @@ class HomePrefNotificationBridge {
 
   NSArray* touchBarItems = @[
     kBackForwardTouchId, kReloadOrStopTouchId, kHomeTouchId, kSearchTouchId,
-    kStarTouchId, kNewTabTouchId
+    kStarTouchId, kNewTabTouchId, kSliderId
   ];
 
   for (NSString* item in touchBarItems) {
     NSString* itemIdentifier =
-        ui::GetTouchBarItemId(kBrowserWindowTouchBarId, item);
+        [BrowserWindowTouchBar identifierForTouchBarId:kBrowserWindowTouchBarId
+                                                itemId:item];
     [customIdentifiers addObject:itemIdentifier];
-
     // Don't add the home button if it's not shown in the toolbar.
-    if (showHomeButton_.GetValue() || ![item isEqualTo:kHomeTouchId])
+    if (showHomeButton_.GetValue() ||
+        !([item isEqualTo:kHomeTouchId] || [item isEqualTo:kSliderId]) ||
+        (isErrorPage_ && [item isEqualTo:kSliderId]))
       [defaultIdentifiers addObject:itemIdentifier];
   }
 
@@ -251,14 +300,17 @@ class HomePrefNotificationBridge {
   return touchBar.autorelease();
 }
 
-- (NSTouchBarItem*)touchBar:(NSTouchBar*)touchBar
-      makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
+- (NSCustomTouchBarItem*)touchBar:(NSTouchBar*)touchBar
+            makeItemForIdentifier:(NSTouchBarItemIdentifier)identifier {
   if (!touchBar)
     return nil;
 
-  base::scoped_nsobject<NSCustomTouchBarItem> touchBarItem(
-      [[ui::NSCustomTouchBarItem() alloc] initWithIdentifier:identifier]);
-  if ([identifier hasSuffix:kBackForwardTouchId]) {
+  base::scoped_nsobject<NSCustomTouchBarItem> touchBarItem([[NSClassFromString(
+      @"NSCustomTouchBarItem") alloc] initWithIdentifier:identifier]);
+
+  if ([@"WebContent" isEqualToString:identifier]) {
+    [touchBarItem setView:touchbarView_];
+  } else if ([identifier hasSuffix:kBackForwardTouchId]) {
     [touchBarItem setView:[self backOrForwardTouchBarView]];
     [touchBarItem setCustomizationLabel:
                       l10n_util::GetNSString(
@@ -305,15 +357,10 @@ class HomePrefNotificationBridge {
     content::WebContents* contents =
         browser_->tab_strip_model()->GetActiveWebContents();
 
-    if (!contents)
-      return nil;
-
-    // Strip the trailing slash.
-    url::Parsed parsed;
-    base::string16 displayText = url_formatter::FormatUrl(
-        contents->GetLastCommittedURL(),
-        url_formatter::kFormatUrlOmitTrailingSlashOnBareHostname,
-        net::UnescapeRule::SPACES, &parsed, nullptr, nullptr);
+    base::string16 displayText = base::ASCIIToUTF16(originUrl.spec());
+    base::scoped_nsobject<NSMutableAttributedString> attributedString(
+        [[NSMutableAttributedString alloc]
+            initWithString:base::SysUTF16ToNSString(displayText)]);
 
     base::scoped_nsobject<NSMutableAttributedString> attributedString(
         [[NSMutableAttributedString alloc]
@@ -332,6 +379,13 @@ class HomePrefNotificationBridge {
         setView:[NSTextField labelWithAttributedString:attributedString.get()]];
   } else if ([identifier hasSuffix:kExitFullscreenTouchId]) {
     return nil;
+  } else if ([identifier hasSuffix:kSliderId]) {
+    [touchBarItem
+        setView:CreateTouchBarButton_(kNewTabMacTouchbarIcon, self, IDC_NEW_TAB,
+                                      IDS_TOOLTIP_NEW_TAB)];
+    [touchBarItem
+        setCustomizationLabel:l10n_util::GetNSString(
+                                  IDS_TOUCH_BAR_NEW_TAB_CUSTOMIZATION_LABEL)];
   }
 
   return touchBarItem.autorelease();
