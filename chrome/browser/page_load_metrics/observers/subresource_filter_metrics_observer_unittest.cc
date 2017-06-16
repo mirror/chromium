@@ -73,15 +73,19 @@ class SubresourceFilterMetricsObserverTest
     simulator->Start();
     // Simulate an activation notification.
     content::NavigationHandle* handle = simulator->GetNavigationHandle();
+    subresource_filter::Configuration::ActivationOptions options;
     if (handle->GetURL() == kDefaultTestUrlWithActivation) {
+      options.activation_level = subresource_filter::ActivationLevel::ENABLED;
       observer_manager_->NotifyPageActivationComputed(
-          handle, subresource_filter::ActivationDecision::ACTIVATED,
+          handle, subresource_filter::ActivationDecision::ACTIVATED, options,
           subresource_filter::ActivationState(
               subresource_filter::ActivationLevel::ENABLED));
     } else {
+      options.activation_level = subresource_filter::ActivationLevel::ENABLED;
       observer_manager_->NotifyPageActivationComputed(
           handle,
           subresource_filter::ActivationDecision::ACTIVATION_CONDITIONS_NOT_MET,
+          options,
           subresource_filter::ActivationState(
               subresource_filter::ActivationLevel::DISABLED));
     }

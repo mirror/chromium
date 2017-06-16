@@ -38,6 +38,7 @@ class TestSubresourceFilterObserver : public SubresourceFilterObserver,
   void OnPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
+      const Configuration::ActivationOptions& activation_options,
       const ActivationState& activation_state) override;
   void OnSubframeNavigationEvaluated(
       content::NavigationHandle* navigation_handle,

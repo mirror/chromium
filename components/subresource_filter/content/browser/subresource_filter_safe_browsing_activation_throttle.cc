@@ -147,8 +147,7 @@ void SubresourceFilterSafeBrowsingActivationThrottle::NotifyResult() {
   auto* driver_factory = ContentSubresourceFilterDriverFactory::FromWebContents(
       navigation_handle()->GetWebContents());
   DCHECK(driver_factory);
-  if (driver_factory->GetActivationOptionsForLastCommittedPageLoad()
-          .should_whitelist_site_on_reload &&
+  if (driver_factory->throttle_manager()->ShouldWhitelistSiteOnReload() &&
       NavigationIsPageReload(navigation_handle())) {
     // Whitelist this host for the current as well as subsequent navigations.
     client_->WhitelistInCurrentWebContents(navigation_handle()->GetURL());

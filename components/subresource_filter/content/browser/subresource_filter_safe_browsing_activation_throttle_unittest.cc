@@ -164,6 +164,7 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
 
   void SetUp() override {
     content::RenderViewHostTestHarness::SetUp();
+    NavigateAndCommit(GURL("https://test.com"));
     Configure();
     test_io_task_runner_ = new base::TestMockTimeTaskRunner();
     // Note: Using NiceMock to allow uninteresting calls and suppress warnings.
@@ -181,7 +182,6 @@ class SubresourceFilterSafeBrowsingActivationThrottleTest
     ContentSubresourceFilterDriverFactory::CreateForWebContents(
         RenderViewHostTestHarness::web_contents(), client_.get());
     fake_safe_browsing_database_ = new FakeSafeBrowsingDatabaseManager();
-    NavigateAndCommit(GURL("https://test.com"));
     Observe(RenderViewHostTestHarness::web_contents());
 
     observer_ = base::MakeUnique<TestSubresourceFilterObserver>(

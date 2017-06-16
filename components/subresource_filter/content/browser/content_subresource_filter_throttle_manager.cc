@@ -27,11 +27,6 @@
 
 namespace subresource_filter {
 
-bool ContentSubresourceFilterThrottleManager::Delegate::
-    AllowStrongPopupBlocking() {
-  return false;
-}
-
 ContentSubresourceFilterThrottleManager::
     ContentSubresourceFilterThrottleManager(
         Delegate* delegate,
@@ -121,6 +116,7 @@ void ContentSubresourceFilterThrottleManager::DidFinishNavigation(
     current_committed_load_has_notified_disallowed_load_ = false;
     statistics_.reset();
     if (filter) {
+      DCHECK(activation_options_for_last_committed_load_);
       statistics_ =
           base::MakeUnique<PageLoadStatistics>(filter->activation_state());
       if (filter->activation_state().enable_logging) {
@@ -175,9 +171,12 @@ bool ContentSubresourceFilterThrottleManager::OnMessageReceived(
 void ContentSubresourceFilterThrottleManager::OnPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
+    const Configuration::ActivationOptions& activation_options,
     const ActivationState& activation_state) {
   DCHECK(navigation_handle->IsInMainFrame());
   DCHECK(!navigation_handle->HasCommitted());
+  activation_options_for_last_committed_load_ =
+      base::MakeUnique<Configuration::ActivationOptions>(activation_options);
   // Do not notify the throttle if activation is disabled.
   if (activation_state.activation_level == ActivationLevel::DISABLED)
     return;
@@ -213,10 +212,24 @@ bool ContentSubresourceFilterThrottleManager::ShouldDisallowNewWindow() {
   const ActivationState state = it->second->activation_state();
   // This should trigger the standard popup blocking UI, so don't force the
   // subresource filter specific UI here.
+  DCHECK(activation_options_for_last_committed_load_);
   return state.activation_level == ActivationLevel::ENABLED &&
          !state.filtering_disabled_for_document &&
          !state.generic_blocking_rules_disabled &&
-         delegate_->AllowStrongPopupBlocking();
+         activation_options_for_last_committed_load_
+             ->should_strengthen_popup_blocker;
+}
+
+bool ContentSubresourceFilterThrottleManager::ShouldWhitelistSiteOnReload()
+    const {
+  auto it = activated_frame_hosts_.find(web_contents()->GetMainFrame());
+  if (it == activated_frame_hosts_.end())
+    return false;
+  const ActivationState state = it->second->activation_state();
+  DCHECK(activation_options_for_last_committed_load_);
+  return state.activation_level == ActivationLevel::ENABLED &&
+         activation_options_for_last_committed_load_
+             ->should_whitelist_site_on_reload;
 }
 
 std::unique_ptr<SubframeNavigationFilteringThrottle>
@@ -264,9 +277,14 @@ ContentSubresourceFilterThrottleManager::GetParentFrameFilter(
 }
 
 void ContentSubresourceFilterThrottleManager::MaybeCallFirstDisallowedLoad() {
-  if (current_committed_load_has_notified_disallowed_load_)
+  if (current_committed_load_has_notified_disallowed_load_ ||
+      activation_options_for_last_committed_load_
+          ->should_suppress_notifications) {
     return;
-  delegate_->OnFirstSubresourceLoadDisallowed();
+  }
+  delegate_->OnFirstSubresourceLoadDisallowed(
+      activation_options_for_last_committed_load_->activation_level ==
+      ActivationLevel::ENABLED);
   current_committed_load_has_notified_disallowed_load_ = true;
 }
 

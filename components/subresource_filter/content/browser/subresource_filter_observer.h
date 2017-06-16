@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_SUBRESOURCE_FILTER_OBSERVER_H_
 #define COMPONENTS_SUBRESOURCE_FILTER_CONTENT_BROWSER_SUBRESOURCE_FILTER_OBSERVER_H_
 
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/common/activation_decision.h"
 #include "components/subresource_filter/core/common/load_policy.h"
 
@@ -31,6 +32,7 @@ class SubresourceFilterObserver {
   virtual void OnPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
+      const Configuration::ActivationOptions& activation_options,
       const ActivationState& activation_state) {}
 
   // Called before navigation commit, either at the WillStartRequest stage or

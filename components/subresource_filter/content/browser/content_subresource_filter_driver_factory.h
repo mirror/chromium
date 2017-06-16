@@ -50,18 +50,8 @@ class ContentSubresourceFilterDriverFactory
       ActivationDecision activation_decision,
       Configuration::ActivationOptions matched_options);
 
-  // Returns the |ActivationOptions| for the current main frame
-  // document. Do not rely on this API, it is only temporary.
-  // TODO(csharrison): Remove this and |activation_options_| in place of adding
-  // |should_suppress_notifications| on ActivationState.
-  const Configuration::ActivationOptions&
-  GetActivationOptionsForLastCommittedPageLoad() const {
-    return activation_options_;
-  }
-
   // ContentSubresourceFilterThrottleManager::Delegate:
-  void OnFirstSubresourceLoadDisallowed() override;
-  bool AllowStrongPopupBlocking() override;
+  void OnFirstSubresourceLoadDisallowed(bool visibility) override;
 
   ContentSubresourceFilterThrottleManager* throttle_manager() {
     return throttle_manager_.get();
@@ -76,33 +66,11 @@ class ContentSubresourceFilterDriverFactory
   // content::WebContentsObserver:
   void DidStartNavigation(
       content::NavigationHandle* navigation_handle) override;
-  void DidFinishNavigation(
-      content::NavigationHandle* navigation_handle) override;
 
   // Must outlive this class.
   SubresourceFilterClient* client_;
 
   std::unique_ptr<ContentSubresourceFilterThrottleManager> throttle_manager_;
-
-  // The activation decision corresponding to the most recently _started_
-  // non-same-document navigation in the main frame.
-  //
-  // The value is reset to ActivationDecision::UNKNOWN at the start of each such
-  // navigation, and will not be assigned until the navigation successfully
-  // reaches the WillProcessResponse stage (or successfully finishes if
-  // throttles are not invoked). This means that after a cancelled or otherwise
-  // unsuccessful navigation, the value will be left at UNKNOWN indefinitely.
-  ActivationDecision activation_decision_ =
-      ActivationDecision::ACTIVATION_DISABLED;
-
-  // The activation options corresponding to the most recently _committed_
-  // non-same-document navigation in the main frame.
-  //
-  // The value corresponding to the previous such navigation will be retained,
-  // and the new value not assigned until a subsequent navigation successfully
-  // reaches the WillProcessResponse stage (or successfully finishes if
-  // throttles are not invoked).
-  Configuration::ActivationOptions activation_options_;
 
   DISALLOW_COPY_AND_ASSIGN(ContentSubresourceFilterDriverFactory);
 };

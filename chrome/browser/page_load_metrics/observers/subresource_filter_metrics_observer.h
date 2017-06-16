@@ -108,6 +108,8 @@ class SubresourceFilterMetricsObserver
   void OnPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       subresource_filter::ActivationDecision activation_decision,
+      const subresource_filter::Configuration::ActivationOptions&
+          activation_options,
       const subresource_filter::ActivationState& activation_state) override;
 
   void OnGoingAway(const page_load_metrics::mojom::PageLoadTiming& timing,

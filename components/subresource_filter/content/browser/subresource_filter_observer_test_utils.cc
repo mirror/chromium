@@ -27,6 +27,7 @@ void TestSubresourceFilterObserver::OnSubresourceFilterGoingAway() {
 void TestSubresourceFilterObserver::OnPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
+    const Configuration::ActivationOptions& activation_options,
     const ActivationState& activation_state) {
   DCHECK(navigation_handle->IsInMainFrame());
   page_activations_[navigation_handle->GetURL()] = activation_decision;

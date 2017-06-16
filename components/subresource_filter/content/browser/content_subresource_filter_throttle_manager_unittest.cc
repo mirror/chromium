@@ -18,6 +18,7 @@
 #include "components/subresource_filter/content/browser/async_document_subresource_filter.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer_manager.h"
 #include "components/subresource_filter/content/common/subresource_filter_messages.h"
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/common/activation_level.h"
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "components/subresource_filter/core/common/proto/rules.pb.h"
@@ -91,10 +92,13 @@ class MockPageStateActivationThrottle : public content::NavigationThrottle {
       auto it = mock_page_activations_.find(navigation_handle()->GetURL());
       if (it != mock_page_activations_.end()) {
         // The throttle manager does not use the activation decision.
+        Configuration::ActivationOptions options;
+        options.activation_level = it->second.activation_level;
         SubresourceFilterObserverManager::FromWebContents(
             navigation_handle()->GetWebContents())
-            ->NotifyPageActivationComputed(
-                navigation_handle(), ActivationDecision::UNKNOWN, it->second);
+            ->NotifyPageActivationComputed(navigation_handle(),
+                                           ActivationDecision::UNKNOWN, options,
+                                           it->second);
       }
     }
     return content::NavigationThrottle::PROCEED;
@@ -273,8 +277,9 @@ class ContentSubresourceFilterThrottleManagerTest
   }
 
   // ContentSubresourceFilterThrottleManager::Delegate:
-  void OnFirstSubresourceLoadDisallowed() override {
-    ++disallowed_notification_count_;
+  void OnFirstSubresourceLoadDisallowed(bool visibility) override {
+    if (visibility)
+      ++disallowed_notification_count_;
   }
 
  private:

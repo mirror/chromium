@@ -8,6 +8,7 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer.h"
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/common/activation_decision.h"
 #include "components/subresource_filter/core/common/load_policy.h"
 #include "content/public/browser/web_contents_user_data.h"
@@ -38,6 +39,7 @@ class SubresourceFilterObserverManager
   void NotifyPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
+      const Configuration::ActivationOptions& activation_options,
       const ActivationState& activation_state);
 
   void NotifySubframeNavigationEvaluated(

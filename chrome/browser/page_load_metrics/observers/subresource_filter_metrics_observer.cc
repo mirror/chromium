@@ -329,6 +329,8 @@ void SubresourceFilterMetricsObserver::OnSubresourceFilterGoingAway() {
 void SubresourceFilterMetricsObserver::OnPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     subresource_filter::ActivationDecision activation_decision,
+    const subresource_filter::Configuration::ActivationOptions&
+        activation_options,
     const subresource_filter::ActivationState& activation_state) {
   // Make sure we don't get notifications from subsequent navigations.
   if (navigation_handle != navigation_handle_)

@@ -14,6 +14,7 @@
 #include "base/scoped_observer.h"
 #include "components/subresource_filter/content/browser/subresource_filter_observer.h"
 #include "components/subresource_filter/content/browser/verified_ruleset_dealer.h"
+#include "components/subresource_filter/core/browser/subresource_filter_features.h"
 #include "components/subresource_filter/core/common/activation_decision.h"
 #include "components/subresource_filter/core/common/activation_state.h"
 #include "content/public/browser/web_contents_observer.h"
@@ -56,8 +57,7 @@ class ContentSubresourceFilterThrottleManager
    public:
     // The embedder may be interested in displaying UI to the user when the
     // first load is disallowed for a given page load.
-    virtual void OnFirstSubresourceLoadDisallowed() {}
-    virtual bool AllowStrongPopupBlocking();
+    virtual void OnFirstSubresourceLoadDisallowed(bool visibility) {}
   };
 
   ContentSubresourceFilterThrottleManager(
@@ -83,6 +83,8 @@ class ContentSubresourceFilterThrottleManager
   // window.
   bool ShouldDisallowNewWindow();
 
+  bool ShouldWhitelistSiteOnReload() const;
+
   VerifiedRuleset::Handle* ruleset_handle_for_testing() {
     return ruleset_handle_.get();
   }
@@ -104,6 +106,7 @@ class ContentSubresourceFilterThrottleManager
   void OnPageActivationComputed(
       content::NavigationHandle* navigation_handle,
       ActivationDecision activation_decision,
+      const Configuration::ActivationOptions& activation_options,
       const ActivationState& activation_state) override;
 
  private:
@@ -155,6 +158,8 @@ class ContentSubresourceFilterThrottleManager
   // notified the delegate that a subresource was disallowed. The callback
   // should only be called at most once per main frame load.
   bool current_committed_load_has_notified_disallowed_load_ = false;
+  std::unique_ptr<Configuration::ActivationOptions>
+      activation_options_for_last_committed_load_;
 
   // These members outlive this class.
   VerifiedRulesetDealer::Handle* dealer_handle_;

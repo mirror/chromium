@@ -32,10 +32,11 @@ void SubresourceFilterObserverManager::RemoveObserver(
 void SubresourceFilterObserverManager::NotifyPageActivationComputed(
     content::NavigationHandle* navigation_handle,
     ActivationDecision activation_decision,
+    const Configuration::ActivationOptions& activation_options,
     const ActivationState& activation_state) {
   for (auto& observer : observers_) {
     observer.OnPageActivationComputed(navigation_handle, activation_decision,
-                                      activation_state);
+                                      activation_options, activation_state);
   }
 }
 

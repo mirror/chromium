@@ -70,58 +70,38 @@ void ContentSubresourceFilterDriverFactory::NotifyPageActivationComputed(
   if (navigation_handle->GetNetErrorCode() != net::OK)
     return;
 
-  activation_decision_ = activation_decision;
-  activation_options_ = matched_options;
   DCHECK_NE(activation_decision, ActivationDecision::UNKNOWN);
 
   // ACTIVATION_DISABLED implies DISABLED activation level.
   DCHECK(activation_decision != ActivationDecision::ACTIVATION_DISABLED ||
-         activation_options_.activation_level == ActivationLevel::DISABLED);
-  ActivationState state = ActivationState(activation_options_.activation_level);
+         matched_options.activation_level == ActivationLevel::DISABLED);
+  ActivationState state = ActivationState(matched_options.activation_level);
   state.measure_performance = ShouldMeasurePerformanceForPageLoad(
-      activation_options_.performance_measurement_rate);
+      matched_options.performance_measurement_rate);
 
   // TODO(csharrison): Also use metadata returned from the safe browsing filter,
   // when it is available to set enable_logging. Add tests for this behavior.
   state.enable_logging =
-      activation_options_.activation_level == ActivationLevel::ENABLED &&
-      !activation_options_.should_suppress_notifications &&
+      matched_options.activation_level == ActivationLevel::ENABLED &&
+      !matched_options.should_suppress_notifications &&
       base::FeatureList::IsEnabled(
           kSafeBrowsingSubresourceFilterExperimentalUI);
 
   SubresourceFilterObserverManager::FromWebContents(web_contents())
       ->NotifyPageActivationComputed(navigation_handle, activation_decision,
-                                     state);
+                                     matched_options, state);
 }
 
-void ContentSubresourceFilterDriverFactory::OnFirstSubresourceLoadDisallowed() {
-  if (activation_options_.should_suppress_notifications)
-    return;
-  client_->ToggleNotificationVisibility(activation_options_.activation_level ==
-                                        ActivationLevel::ENABLED);
-}
-
-bool ContentSubresourceFilterDriverFactory::AllowStrongPopupBlocking() {
-  return activation_options_.should_strengthen_popup_blocker;
+void ContentSubresourceFilterDriverFactory::OnFirstSubresourceLoadDisallowed(
+    bool visibility) {
+  client_->ToggleNotificationVisibility(visibility);
 }
 
 void ContentSubresourceFilterDriverFactory::DidStartNavigation(
     content::NavigationHandle* navigation_handle) {
   if (navigation_handle->IsInMainFrame() &&
       !navigation_handle->IsSameDocument()) {
-    activation_decision_ = ActivationDecision::UNKNOWN;
     client_->ToggleNotificationVisibility(false);
-  }
-}
-
-void ContentSubresourceFilterDriverFactory::DidFinishNavigation(
-    content::NavigationHandle* navigation_handle) {
-  if (navigation_handle->IsInMainFrame() &&
-      !navigation_handle->IsSameDocument() &&
-      activation_decision_ == ActivationDecision::UNKNOWN &&
-      navigation_handle->HasCommitted()) {
-    activation_decision_ = ActivationDecision::ACTIVATION_DISABLED;
-    activation_options_ = Configuration::ActivationOptions();
   }
 }
 
