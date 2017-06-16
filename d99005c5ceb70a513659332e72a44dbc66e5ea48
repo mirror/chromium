@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8b76b85f_56b55df6",
+        "filename": "third_party/WebKit/Source/platform/graphics/OffscreenCanvasFrameDispatcherImpl.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-16T16:30:03Z",
+      "side": 1,
+      "message": "I\u0027m not sure I fully understand why we do this copy. Can you explain?",
+      "revId": "d99005c5ceb70a513659332e72a44dbc66e5ea48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
