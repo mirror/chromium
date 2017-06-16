@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f78f277_5a680406",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120879
+      },
+      "writtenOn": "2017-06-16T18:43:46Z",
+      "side": 1,
+      "message": "None of us will look twice if the anonymous namespace is moved inside the media namespace; I didn\u0027t do a count but I believe that the majority of new files in //media follow the same practice as //content.",
+      "parentUuid": "282025ed_ebdbb2b2",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba62da1b_1fdcc42f",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
         "patchSetId": 3
