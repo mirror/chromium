@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80650ae3_c6929a34",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-16T20:30:35Z",
+      "side": 1,
+      "message": "deps +\u003d [\":whitelist_checker_client_unittest\"] might work and would be better.",
+      "range": {
+        "startLine": 412,
+        "startChar": 5,
+        "endLine": 412,
+        "endChar": 38
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1252b252_957c7848",
+        "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-16T20:30:35Z",
+      "side": 1,
+      "message": "can we just delete it here?",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 8
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a89d9c1_8f748eed",
+        "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-16T20:30:35Z",
+      "side": 1,
+      "message": "You probably don\u0027t need this client (or SaveArg it) since you are not using it later.",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
