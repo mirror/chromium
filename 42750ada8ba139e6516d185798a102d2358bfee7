@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b41b0743_e64f423c",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-16T09:36:36Z",
+      "side": 1,
+      "message": "I think you can revert this.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 13,
+        "endChar": 35
+      },
+      "revId": "42750ada8ba139e6516d185798a102d2358bfee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb00af8_21fd188b",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-16T09:36:36Z",
+      "side": 1,
+      "message": "What keeps us from doing that now?\n\nAlternatively, as a first step in that direction, could we add a dedicated method for this? That way callers have to explicitly say they want to get the dummy OTR prefs and don\u0027t rely on the implicit behavior.",
+      "range": {
+        "startLine": 1004,
+        "startChar": 23,
+        "endLine": 1005,
+        "endChar": 11
+      },
+      "revId": "42750ada8ba139e6516d185798a102d2358bfee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
