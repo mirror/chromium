@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ce8cef37_97f96799",
+        "filename": "content/app/android/content_child_process_service_delegate.cc",
+        "patchSetId": 13
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "ec812b4a_5325cb75",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7524a7b6_f5399a7e",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessService.java",
         "patchSetId": 13
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T22:08:59Z",
       "side": 1,
       "message": "how about pass delegate into a protected constructor, so serviceimpl can still be final? can still keep this class abstract",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ae98375_de5ab4ac",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessService.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "7524a7b6_f5399a7e",
       "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "87951dd0_d39d7192",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "Removed.",
+      "parentUuid": "02efdff1_42a8a31e",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dcd29d49_61e15a9e",
         "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
         "patchSetId": 13
@@ -67,6 +121,24 @@
       "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c315a60d_b07bb953",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ChildProcessServiceImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 195,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "dcd29d49_61e15a9e",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "c559a678_2cddd958",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "Oh yeah. Went through the current ChildProcessServiceImpl and made sure the code was the new one.",
+      "parentUuid": "4758bed2_1c744106",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "81e465c8_fe5cc469",
         "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
         "patchSetId": 13
@@ -101,6 +191,24 @@
       "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e107a9_71833047",
+        "filename": "content/public/android/java/src/org/chromium/content/app/ContentChildProcessServiceDelegate.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-16T22:18:28Z",
+      "side": 1,
+      "message": "initialize() can still throw.",
+      "parentUuid": "81e465c8_fe5cc469",
+      "revId": "10f2616d447076a3d8c0e81488a1009f279b39c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
