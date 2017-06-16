@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e7b143d_bbae052b",
+        "filename": "chrome/browser/android/offline_pages/offline_page_mhtml_archiver.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001534
+      },
+      "writtenOn": "2017-06-16T14:04:26Z",
+      "side": 0,
+      "message": "BrowserThread::FILE is the thing we want to get rid of not BrowserThread::PostTaskAndReply() (my bad hadn\u0027t realized BrowserThread::FOO could be misinterpreted as those other methods).\n\nWhat the existing code was doing is post a task to the file thread and then run |callback| back on the current sequence (e.g. IO thread if that is the calling thread in your case -- ref. SequencedTaskRunnerHandle::Get())\n\nSo what you want here is to include base/task_scheduler/post_task.h and use:\n\nbase::PostTaskAndReplyWithTraits(FROM_HERE, {base::MayBlock(), base::TaskPriority::BACKGROUND}, base::Bind(...), callback);",
+      "range": {
+        "startLine": 31,
+        "startChar": 6,
+        "endLine": 31,
+        "endChar": 34
+      },
+      "revId": "e358d56b03f0c9bb4944bdafdf4bd0e1d4c65b39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
