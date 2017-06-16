@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "5d345d1e_12193abb",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "I would prefer to DCHECK in both cases, but there isn\u0027t a safe-numeric way to DCHECK only AFAICT?",
+      "parentUuid": "fb3b4612_b50a70c1",
+      "range": {
+        "startLine": 39,
+        "startChar": 21,
+        "endLine": 39,
+        "endChar": 26
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e98317_330bd291",
         "filename": "mojo/public/cpp/bindings/lib/buffer.h",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19cdc7d8_179337e6",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "I\u0027ll fix the comment above. The implementation actually did *not* make this guarantee before and still doesn\u0027t.\n\nWe do zero the memory, but we do it in advance and it\u0027s a detail of Message rather than Buffer.",
+      "parentUuid": "72e98317_330bd291",
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "bfd353e8_393a119a",
+        "filename": "mojo/public/cpp/bindings/lib/fixed_buffer.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "This one brings in std::nullptr_t, whereas the one above does not. Though I guess the one above should be redundant then. Removed.",
+      "parentUuid": "c2ea5fa8_8d867ee0",
+      "range": {
+        "startLine": 10,
+        "startChar": 10,
+        "endLine": 10,
+        "endChar": 17
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f9b32b_aac2b39b",
         "filename": "mojo/public/cpp/bindings/lib/message.cc",
         "patchSetId": 3
@@ -85,6 +151,30 @@
       "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e48b5c04_ea93b574",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f9b32b_aac2b39b",
+      "range": {
+        "startLine": 86,
+        "startChar": 48,
+        "endLine": 86,
+        "endChar": 62
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "cfe83de1_a2eef554",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0741c413_4d013fb8",
+      "range": {
+        "startLine": 187,
+        "startChar": 32,
+        "endLine": 187,
+        "endChar": 48
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a5113cd_19f7c4dd",
         "filename": "mojo/public/cpp/bindings/lib/message.cc",
         "patchSetId": 3
@@ -134,6 +248,30 @@
     },
     {
       "key": {
+        "uuid": "cc4f5ca3_f2ef3b88",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "Documented in MojoGetSeralizedMessageContents documentation. It\u0027s the only one that is both an input and output parameter, since you have to provide your own handle storage as a caller.",
+      "parentUuid": "9a5113cd_19f7c4dd",
+      "range": {
+        "startLine": 199,
+        "startChar": 2,
+        "endLine": 201,
+        "endChar": 27
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21845947_5135a7dd",
         "filename": "mojo/public/cpp/bindings/lib/message.cc",
         "patchSetId": 3
@@ -145,6 +283,30 @@
       "writtenOn": "2017-06-16T18:08:38Z",
       "side": 1,
       "message": "Out of curiosity: what does serialized mean here? Have these handles been put into some serialized state before passing into this method?",
+      "range": {
+        "startLine": 279,
+        "startChar": 14,
+        "endLine": 279,
+        "endChar": 37
+      },
+      "revId": "b64b1617c197dc6a1b50e04bdac78775358cbfa3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "306d9352_07a13471",
+        "filename": "mojo/public/cpp/bindings/lib/message.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-16T18:35:18Z",
+      "side": 1,
+      "message": "It\u0027s \"serialized\" in the context of Mojo system message APIs. The handles are not in any special state when passed in here, but they will be serialized into the message by this call. We could always dropped the \"Serialized\" if it\u0027s confusing. Open to suggestions!",
+      "parentUuid": "21845947_5135a7dd",
       "range": {
         "startLine": 279,
         "startChar": 14,
