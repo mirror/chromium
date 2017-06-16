@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "447ec95a_c4885a0f",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-16T21:36:30Z",
+      "side": 1,
+      "message": "I added this so that maybe we can reuse this in the discardable image gathering as well. We can certainly update it to meet the needs.\n\nIf we\u0027re not going to use it for anything other than solid color analysis, then I can merge this with the solid color analyzer and devirtualize it.",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2771497_8202c1c3",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-16T21:36:30Z",
+      "side": 1,
+      "message": "These functions are mostly copy paste from AnalysisCanvas.",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "291808ee_c34ae556",
+        "filename": "cc/paint/solid_color_analyzer.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-16T21:36:30Z",
+      "side": 1,
+      "message": "We actually do more work in the AnalysisCanvas to handle savelayers more, but I think that\u0027s pretty useless work since we early out after 1 draw op anyway, so it really only catches cases where we have a save layer, since draw op, restore and nothing else.. I think that\u0027s pretty uncommon.",
+      "revId": "5ed11ccbdf9359130fea2461089a044ed4624c03",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
