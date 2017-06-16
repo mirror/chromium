@@ -838,9 +838,16 @@ AppLoadedInTabSource ClassifyAppLoadedInTabSource(
 }
 #endif  // BUILDFLAG(ENABLE_EXTENSIONS)
 
-void CreateUsbDeviceManager(RenderFrameHost* render_frame_host,
-                            const service_manager::BindSourceInfo& source_info,
-                            device::mojom::UsbDeviceManagerRequest request) {
+void CreateUsbDeviceManager(const service_manager::BindSourceInfo& source_info,
+                            device::mojom::UsbDeviceManagerRequest request,
+                            content::RenderFrameHost* render_frame_host) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (render_frame_host->GetSiteInstance()->GetSiteURL().SchemeIs(
+          extensions::kExtensionScheme)) {
+    return;
+  }
+#endif
+
   WebContents* web_contents =
       WebContents::FromRenderFrameHost(render_frame_host);
   if (!web_contents) {
@@ -854,9 +861,16 @@ void CreateUsbDeviceManager(RenderFrameHost* render_frame_host,
 }
 
 void CreateWebUsbChooserService(
-    RenderFrameHost* render_frame_host,
     const service_manager::BindSourceInfo& source_info,
-    device::mojom::UsbChooserServiceRequest request) {
+    device::mojom::UsbChooserServiceRequest request,
+    content::RenderFrameHost* render_frame_host) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  if (render_frame_host->GetSiteInstance()->GetSiteURL().SchemeIs(
+          extensions::kExtensionScheme)) {
+    return;
+  }
+#endif
+
   WebContents* web_contents =
       WebContents::FromRenderFrameHost(render_frame_host);
   if (!web_contents) {
@@ -1603,26 +1617,37 @@ void MaybeAppendBlinkSettingsSwitchForFieldTrial(
 }
 
 #if defined(OS_ANDROID)
+template <typename Interface>
+void ForwardJavaInterface(const service_manager::BindSourceInfo& source_info,
+                          mojo::InterfaceRequest<Interface> request,
+                          content::RenderFrameHost* render_frame_host) {
+  render_frame_host->GetJavaInterfaces()->GetInterface(std::move(request));
+}
+
 void ForwardInstalledAppProviderRequest(
-    base::WeakPtr<service_manager::InterfaceProvider> interface_provider,
     const service_manager::BindSourceInfo& source_info,
-    blink::mojom::InstalledAppProviderRequest request) {
-  if (!interface_provider ||
+    blink::mojom::InstalledAppProviderRequest request,
+    content::RenderFrameHost* render_frame_host) {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(opener);
+  if (!web_contents ||
       ChromeOriginTrialPolicy().IsFeatureDisabled("InstalledApp")) {
     return;
   }
-  interface_provider->GetInterface(std::move(request));
+  render_frame_host->GetJavaInterfaces()->GetInterface(std::move(request));
 }
 
 void ForwardShareServiceRequest(
-    base::WeakPtr<service_manager::InterfaceProvider> interface_provider,
     const service_manager::BindSourceInfo& source_info,
-    blink::mojom::ShareServiceRequest request) {
-  if (!interface_provider ||
+    blink::mojom::ShareServiceRequest request,
+    content::RenderFrameHost* render_frame_host) {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(opener);
+  if (!web_contents ||
       ChromeOriginTrialPolicy().IsFeatureDisabled("WebShare")) {
     return;
   }
-  interface_provider->GetInterface(std::move(request));
+  render_frame_host->GetJavaInterfaces()->GetInterface(std::move(request));
 }
 #endif
 
@@ -2995,79 +3020,22 @@ void ChromeContentBrowserClient::ExposeInterfacesToMediaService(
 #endif  // BUILDFLAG(ENABLE_MOJO_MEDIA)
 }
 
-void ChromeContentBrowserClient::ExposeInterfacesToFrame(
-    service_manager::BinderRegistry* registry,
-    content::RenderFrameHost* render_frame_host) {
-  if (base::FeatureList::IsEnabled(features::kWebUsb)
-#if BUILDFLAG(ENABLE_EXTENSIONS)
-      &&
-      !render_frame_host->GetSiteInstance()->GetSiteURL().SchemeIs(
-          extensions::kExtensionScheme)
-#endif
-          ) {
-    registry->AddInterface(
-        base::Bind(&CreateUsbDeviceManager, render_frame_host));
-    registry->AddInterface(
-        base::Bind(&CreateWebUsbChooserService, render_frame_host));
+void ChromeContentBrowserClient::BindInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle interface_pipe) {
+  if (frame_interfaces_.empty())
+    InitFrameInterfaces();
+
+  if (frame_interfaces_parameterized_.CanBindInterface(interface_name)) {
+    frame_interfaces_parameterized_.BindInterface(source_info, interface_name,
+                                                  std::move(interface_pipe),
+                                                  render_frame_host);
+  } else if (frame_interfaces_.CanBindInterface(interface_name)) {
+    frame_interfaces_.BindInterface(source_info, interface_name,
+                                    std::move(interface_pipe));
   }
-
-  registry->AddInterface<bluetooth::mojom::AdapterFactory>(
-      base::Bind(&bluetooth::AdapterFactory::Create));
-
-  if (!render_frame_host->GetParent()) {
-    // Register mojo CredentialManager interface only for main frame.
-    registry->AddInterface(
-        base::Bind(&ChromePasswordManagerClient::BindCredentialManager,
-                   render_frame_host));
-    // Register mojo ContentTranslateDriver interface only for main frame.
-    registry->AddInterface(base::Bind(
-        &ChromeTranslateClient::BindContentTranslateDriver, render_frame_host));
-  }
-
-  registry->AddInterface(
-      base::Bind(&autofill::ContentAutofillDriverFactory::BindAutofillDriver,
-                 render_frame_host));
-
-  registry->AddInterface(
-      base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
-                     BindPasswordManagerDriver,
-                 render_frame_host));
-
-  registry->AddInterface(
-      base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
-                     BindSensitiveInputVisibilityService,
-                 render_frame_host));
-
-#if defined(OS_ANDROID)
-  registry->AddInterface(
-      render_frame_host->GetJavaInterfaces()
-          ->CreateInterfaceFactory<payments::mojom::PaymentRequest>());
-  registry->AddInterface(
-      base::Bind(&ForwardInstalledAppProviderRequest,
-                 render_frame_host->GetJavaInterfaces()->GetWeakPtr()));
-  content::WebContents* web_contents =
-      content::WebContents::FromRenderFrameHost(render_frame_host);
-  if (web_contents) {
-    registry->AddInterface(
-        base::Bind(&ForwardShareServiceRequest,
-                   web_contents->GetJavaInterfaces()->GetWeakPtr()));
-  }
-#else
-  if (base::FeatureList::IsEnabled(features::kWebPayments)) {
-    content::WebContents* web_contents =
-        content::WebContents::FromRenderFrameHost(render_frame_host);
-    if (web_contents) {
-      registry->AddInterface(base::Bind(payments::CreatePaymentRequest,
-                                        render_frame_host, web_contents));
-    }
-  }
-#endif
-
-#if defined(OS_LINUX) || defined(OS_WIN)
-  if (!ChromeOriginTrialPolicy().IsFeatureDisabled("WebShare")) {
-    registry->AddInterface(base::Bind(&ShareServiceImpl::Create));
-  }
-#endif
 }
 
 void ChromeContentBrowserClient::BindInterfaceRequest(
@@ -3384,6 +3352,53 @@ void ChromeContentBrowserClient::OverridePageVisibilityState(
       prerender_manager->IsWebContentsPrerendering(web_contents, nullptr)) {
     *visibility_state = blink::kWebPageVisibilityStatePrerender;
   }
+}
+
+void ChromeContentBrowserClient::InitFrameInterfaces() {
+  if (base::FeatureList::IsEnabled(features::kWebUsb)) {
+    frame_interfaces_parameterized_.AddInterface(
+        base::Bind(&CreateUsbDeviceManager));
+    frame_interfaces_parameterized_.AddInterface(
+        base::Bind(&CreateWebUsbChooserService));
+  }
+
+  frame_interfaces_.AddInterface<bluetooth::mojom::AdapterFactory>(
+      base::Bind(&bluetooth::AdapterFactory::Create));
+
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&ChromePasswordManagerClient::BindCredentialManager));
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&ChromeTranslateClient::BindContentTranslateDriver));
+
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&autofill::ContentAutofillDriverFactory::BindAutofillDriver));
+
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
+                     BindPasswordManagerDriver));
+
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&password_manager::ContentPasswordManagerDriverFactory::
+                     BindSensitiveInputVisibilityService));
+
+#if defined(OS_ANDROID)
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&ForwardJavaInterface<payments::mojom::PaymentRequest>));
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&ForwardInstalledAppProviderRequest));
+  frame_interfaces_parameterized_.AddInterface(
+      base::Bind(&ForwardShareServiceRequest));
+#else
+  if (base::FeatureList::IsEnabled(features::kWebPayments)) {
+    frame_interfaces_parameterized_.AddInterface(
+        base::Bind(&payments::CreatePaymentRequest));
+  }
+#endif
+
+#if defined(OS_LINUX) || defined(OS_WIN)
+  if (!ChromeOriginTrialPolicy().IsFeatureDisabled("WebShare"))
+    frame_interfaces_.AddInterface(base::Bind(&ShareServiceImpl::Create));
+#endif
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)
