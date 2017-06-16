@@ -144,6 +144,7 @@ class ProfileImpl : public Profile {
   bool WasCreatedByVersionOrLater(const std::string& version) override;
   void SetExitType(ExitType exit_type) override;
   ExitType GetLastSessionExitType() override;
+  scoped_refptr<base::SequencedTaskRunner> GetPrefServiceTaskRunner() override;
 
 #if defined(OS_CHROMEOS)
   void ChangeAppLocale(const std::string& locale, AppLocaleChangedVia) override;
@@ -232,6 +233,7 @@ class ProfileImpl : public Profile {
   // first.
   scoped_refptr<user_prefs::PrefRegistrySyncable> pref_registry_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> prefs_;
+  scoped_refptr<base::SequencedTaskRunner> prefs_task_runner_;
   std::unique_ptr<sync_preferences::PrefServiceSyncable> otr_prefs_;
   ProfileImplIOData::Handle io_data_;
 #if BUILDFLAG(ENABLE_EXTENSIONS)

@@ -256,6 +256,10 @@ bool Profile::IsSystemProfile() const {
   return is_system_profile_;
 }
 
+scoped_refptr<base::SequencedTaskRunner> Profile::GetPrefServiceTaskRunner() {
+  return nullptr;
+}
+
 bool Profile::IsNewProfile() {
   // The profile has been shut down if the prefs were loaded from disk, unless
   // first-run autoimport wrote them and reloaded the pref service.
