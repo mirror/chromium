@@ -34,6 +34,24 @@
       "revId": "c10035e36cbb68fbbb75f64616279a5843a23e00",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "341f2545_fb7e8248",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1222289
+      },
+      "writtenOn": "2017-06-16T02:11:32Z",
+      "side": 1,
+      "message": "Good catch, Nico. Those parentheses are not where I intended them to be.",
+      "parentUuid": "eaed2cbc_039b40ee",
+      "revId": "c10035e36cbb68fbbb75f64616279a5843a23e00",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
