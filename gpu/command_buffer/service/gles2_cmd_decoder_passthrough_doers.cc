@@ -3763,7 +3763,12 @@ error::Error GLES2DecoderPassthroughImpl::DoSwapInterval(GLint interval) {
 }
 
 error::Error GLES2DecoderPassthroughImpl::DoFlushDriverCachesCHROMIUM() {
-  NOTIMPLEMENTED();
+  // On Adreno Android devices we need to use a workaround to force caches to
+  // clear.
+  if (feature_info_->workarounds().unbind_egl_context_to_flush_driver_caches) {
+    context_->ReleaseCurrent(nullptr);
+    context_->MakeCurrent(surface_.get());
+  }
   return error::kNoError;
 }
 
