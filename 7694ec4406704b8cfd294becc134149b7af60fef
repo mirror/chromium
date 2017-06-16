@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "505bf0bf_3e06fe57",
+        "filename": "chrome/test/vr/perf/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c147d3c3_a0c9779b",
+      "range": {
+        "startLine": 38,
+        "startChar": 7,
+        "endLine": 38,
+        "endChar": 18
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "513f7385_0745fcb2",
         "filename": "chrome/test/vr/perf/vr_perf_test.py",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "be025171_1054cedc",
+        "filename": "chrome/test/vr/perf/vr_perf_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "513f7385_0745fcb2",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590b8111_a4d9e867",
         "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
         "patchSetId": 3
@@ -68,6 +116,30 @@
       "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3a528a3_96069214",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590b8111_a4d9e867",
+      "range": {
+        "startLine": 154,
+        "startChar": 20,
+        "endLine": 154,
+        "endChar": 37
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "27f3b111_a9c2f66d",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 171,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ff46a299_10236ab9",
+      "range": {
+        "startLine": 171,
+        "startChar": 2,
+        "endLine": 171,
+        "endChar": 7
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "314ae677_e08c811c",
         "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
         "patchSetId": 3
@@ -137,6 +233,30 @@
       "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69420de5_3cadef42",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "314ae677_e08c811c",
+      "range": {
+        "startLine": 174,
+        "startChar": 14,
+        "endLine": 174,
+        "endChar": 15
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "f96ffb63_be02787e",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "1. Done\n2. Done\n3. The current value for blocked frame submission is a list of total missed submissions in each 1-second timeframe, most of which are 0. I\u0027ve changed it to be the total number of frame submissions blocked during the entire test period.\n4. Agreed, added another chart counting the total number of missed vsyncs.\n\nHere\u0027s a new example dashboard https://chromeperf.appspot.com/report?sid\u003d3aa3725885e78035b7234c0a2800501712d1f0cef7e792cb3c87888f754006ca\n\nI\u0027ve also redone the chart generation code to use function pointers and loops instead of manually adding each trace since the addition of the new charts made the code too long.",
+      "parentUuid": "bc054c4a_7931fb87",
+      "range": {
+        "startLine": 82,
+        "startChar": 6,
+        "endLine": 82,
+        "endChar": 24
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d7c6a1d_7a79d33f",
         "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test_config.py",
         "patchSetId": 3
@@ -221,6 +365,24 @@
       "writtenOn": "2017-06-15T21:07:48Z",
       "side": 1,
       "message": "This file is identical to latency_test_config.py, it is better to merge into one.",
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "99ba8661_b5547e44",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vrcore_fps_test_config.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1163549
+      },
+      "writtenOn": "2017-06-16T16:54:41Z",
+      "side": 1,
+      "message": "I believe that would require moving both run_*_test.py files to the top-level perf directory since they\u0027d both need to import it and relative imports are only supported if you run the python file as a package (python -m). There\u0027s nothing wrong with moving the files up a directory, although I would personally prefer keeping all latency and fps related files separate unless you think moving the files is preferable.",
+      "parentUuid": "8d7c6a1d_7a79d33f",
       "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
