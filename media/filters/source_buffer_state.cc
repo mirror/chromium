@@ -594,9 +594,14 @@ bool SourceBufferState::OnNewConfigs(
           return false;
         }
         audio_streams_[track_id] = stream;
-        media_log_->SetBooleanProperty("found_audio_stream", true);
-        media_log_->SetStringProperty("audio_codec_name",
-                                      GetCodecName(audio_config.codec()));
+        std::unique_ptr<MediaLogEvent> metadata_event =
+            media_log_->CreateEvent(MediaLogEvent::PROPERTY_CHANGE);
+        metadata_event->params.SetBoolean("found_audio_stream", true);
+        metadata_event->params.SetString("audio_codec_name",
+                                         GetCodecName(audio_config.codec()));
+        metadata_event->params.SetInteger("audio_codec_id",
+                                          audio_config.codec());
+        media_log_->AddEvent(std::move(metadata_event));
       } else {
         if (audio_streams_.size() > 1) {
           auto it = audio_streams_.find(track_id);
@@ -650,9 +655,14 @@ bool SourceBufferState::OnNewConfigs(
           return false;
         }
         video_streams_[track_id] = stream;
-        media_log_->SetBooleanProperty("found_video_stream", true);
-        media_log_->SetStringProperty("video_codec_name",
-                                      GetCodecName(video_config.codec()));
+        std::unique_ptr<MediaLogEvent> metadata_event =
+            media_log_->CreateEvent(MediaLogEvent::PROPERTY_CHANGE);
+        metadata_event->params.SetBoolean("found_video_stream", true);
+        metadata_event->params.SetString("video_codec_name",
+                                         GetCodecName(video_config.codec()));
+        metadata_event->params.SetInteger("video_codec_id",
+                                          video_config.codec());
+        media_log_->AddEvent(std::move(metadata_event));
       } else {
         if (video_streams_.size() > 1) {
           auto it = video_streams_.find(track_id);
