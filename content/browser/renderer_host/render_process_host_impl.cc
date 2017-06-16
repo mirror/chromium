@@ -21,6 +21,7 @@
 #include "base/debug/alias.h"
 #include "base/debug/crash_logging.h"
 #include "base/debug/dump_without_crashing.h"
+#include "base/debug/stack_trace.h"
 #include "base/feature_list.h"
 #include "base/files/file.h"
 #include "base/lazy_instance.h"
@@ -955,6 +956,10 @@ RenderProcessHostImpl::RenderProcessHostImpl(
           new base::WeakPtrFactory<RenderProcessHostImpl>(this)),
       frame_sink_provider_(id_),
       weak_factory_(this) {
+  TRACE_EVENT0("renderer_host", "RenderProcessHostImpl::RenderProcessHostImpl");
+
+  base::debug::StackTrace().Print();
+
   widget_helper_ = new RenderWidgetHelper();
 
   ChildProcessSecurityPolicyImpl::GetInstance()->Add(GetID());
@@ -3087,6 +3092,13 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
   const GURL site_url = site_instance->GetSiteURL();
   SiteInstanceImpl::ProcessReusePolicy process_reuse_policy =
       site_instance->process_reuse_policy();
+  TRACE_EVENT2("renderer_host",
+               "RenderProcessHostImpl::GetProcessHostForSiteInstance",
+               "site_url", site_url.spec(), "process_reuse_policy",
+               static_cast<int>(process_reuse_policy));
+  LOG(ERROR) << "GetProcessHostForSiteInstance policy:"
+             << static_cast<int>(process_reuse_policy) << " site:\"" << site_url
+             << "\"";
   bool is_for_guests_only = site_url.SchemeIs(kGuestScheme);
   RenderProcessHost* render_process_host = nullptr;
 
@@ -3119,6 +3131,7 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Otherwise (or if that fails), create a new one.
   if (!render_process_host) {
+    LOG(ERROR) << "  create a new process for site:" << site_url;
     if (g_render_process_host_factory_) {
       render_process_host =
           g_render_process_host_factory_->CreateRenderProcessHost(
