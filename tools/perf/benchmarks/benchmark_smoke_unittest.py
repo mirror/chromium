@@ -28,6 +28,7 @@ from benchmarks import kraken
 from benchmarks import octane
 from benchmarks import rasterize_and_record_micro
 from benchmarks import speedometer
+from benchmarks import speedometer2
 from benchmarks import v8_browsing
 
 
@@ -93,6 +94,7 @@ _BLACK_LIST_TEST_MODULES = {
     octane,  # Often fails & take long time to timeout on cq bot.
     rasterize_and_record_micro,  # Always fails on cq bot.
     speedometer,  # Takes 101 seconds.
+    speedometer2,  # Takes 99 seconds
     jetstream,  # Take 206 seconds.
     kraken,  # Flaky on Android, crbug.com/626174.
     v8_browsing, # Flaky on Android, crbug.com/628368.
