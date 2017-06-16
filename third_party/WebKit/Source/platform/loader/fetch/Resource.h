@@ -320,8 +320,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void WillReloadAfterDiskCacheMiss() {}
 
   // TODO(shaochuan): This is for saving back the actual ResourceRequest sent
-  // in ResourceFetcher::startLoad() for retry in cache-aware loading, remove
-  // once ResourceRequest is not modified in startLoad(). crbug.com/632580
+  // in ResourceFetcher::StartLoad() for retry in cache-aware loading, remove
+  // once ResourceRequest is not modified in StartLoad(). crbug.com/632580
   void SetResourceRequest(const ResourceRequest& resource_request) {
     resource_request_ = resource_request;
   }

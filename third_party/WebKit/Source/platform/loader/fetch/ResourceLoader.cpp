@@ -72,9 +72,24 @@ ResourceLoader::~ResourceLoader() {}
 DEFINE_TRACE(ResourceLoader) {
   visitor->Trace(fetcher_);
   visitor->Trace(resource_);
+  FetchDispatcher::Client::Trace(visitor);
 }
 
-void ResourceLoader::Start(const ResourceRequest& request) {
+void ResourceLoader::Start() {
+  const ResourceRequest& request = resource_->GetResourceRequest();
+  ActivateCacheAwareLoadingIfNeeded(request);
+  FetchDispatcher::ThrottleOption option =
+      resource_->Options().synchronous_policy == kRequestSynchronously
+          ? FetchDispatcher::ThrottleOption::kCanNotBeThrottled
+          : FetchDispatcher::ThrottleOption::kCanBeThrottled;
+  fetcher_->Dispatcher().Request(this, option);
+}
+
+void ResourceLoader::OnRequestGranted() {
+  Issue(resource_->GetResourceRequest());
+}
+
+void ResourceLoader::Issue(const ResourceRequest& request) {
   DCHECK(!loader_);
 
   if (resource_->Options().synchronous_policy == kRequestSynchronously &&
@@ -83,13 +98,13 @@ void ResourceLoader::Start(const ResourceRequest& request) {
     return;
   }
 
-  loader_ = fetcher_->Context().CreateURLLoader(request);
+  loader_ = Context().CreateURLLoader(request);
   DCHECK(loader_);
   loader_->SetDefersLoading(Context().DefersLoading());
 
   if (is_cache_aware_loading_activated_) {
     // Override cache policy for cache-aware loading. If this request fails, a
-    // reload with original request will be triggered in didFail().
+    // reload with original request will be triggered in DidFail().
     ResourceRequest cache_aware_request(request);
     cache_aware_request.SetCachePolicy(WebCachePolicy::kReturnCacheDataIfValid);
     loader_->LoadAsynchronously(WrappedResourceRequest(cache_aware_request),
@@ -107,7 +122,7 @@ void ResourceLoader::Restart(const ResourceRequest& request) {
   CHECK_EQ(resource_->Options().synchronous_policy, kRequestAsynchronously);
 
   loader_.reset();
-  Start(request);
+  Issue(request);
 }
 
 void ResourceLoader::SetDefersLoading(bool defers) {
@@ -426,6 +441,7 @@ void ResourceLoader::DidFinishLoading(double finish_time,
   resource_->SetDecodedBodyLength(decoded_body_length);
 
   loader_.reset();
+  CHECK(fetcher_->Dispatcher().Release(this));
 
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(),
@@ -455,6 +471,7 @@ void ResourceLoader::HandleError(const ResourceError& error) {
   }
 
   loader_.reset();
+  CHECK(fetcher_->Dispatcher().Release(this));
 
   network_instrumentation::EndResourceLoad(
       resource_->Identifier(), network_instrumentation::RequestOutcome::kFail);
@@ -507,6 +524,7 @@ void ResourceLoader::RequestSynchronously(const ResourceRequest& request) {
 
 void ResourceLoader::Dispose() {
   loader_ = nullptr;
+  CHECK(!fetcher_->Dispatcher().Release(this));
 }
 
 void ResourceLoader::ActivateCacheAwareLoadingIfNeeded(
