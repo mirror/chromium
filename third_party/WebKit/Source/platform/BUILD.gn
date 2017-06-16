@@ -467,6 +467,7 @@ component("platform") {
     "audio/mac/FFTFrameMac.cpp",
     "bindings/ActiveScriptWrappable.cpp",
     "bindings/ActiveScriptWrappable.h",
+    "bindings/CallbacksReference.h",
     "bindings/ConditionalFeatures.cpp",
     "bindings/ConditionalFeatures.h",
     "bindings/DOMDataStore.h",
