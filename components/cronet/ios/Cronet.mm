@@ -5,13 +5,13 @@
 #import "components/cronet/ios/Cronet.h"
 
 #include <memory>
+#include <vector>
 
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/mac/bundle_locations.h"
 #include "base/mac/scoped_block.h"
 #include "base/memory/ptr_util.h"
-#include "base/memory/scoped_vector.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/synchronization/lock.h"
 #include "components/cronet/ios/accept_languages_table.h"
@@ -26,6 +26,8 @@ namespace {
 
 class CronetHttpProtocolHandlerDelegate;
 
+using QuicHintVector =
+    std::vector<std::unique_ptr<cronet::URLRequestContextConfig::QuicHint>>;
 // Currently there is one and only one instance of CronetEnvironment,
 // which is leaked at the shutdown. We should consider allowing multiple
 // instances if that makes sense in the future.
@@ -36,7 +38,7 @@ BOOL gHttp2Enabled = YES;
 BOOL gQuicEnabled = NO;
 cronet::URLRequestContextConfig::HttpCacheType gHttpCache =
     cronet::URLRequestContextConfig::HttpCacheType::DISK;
-ScopedVector<cronet::URLRequestContextConfig::QuicHint> gQuicHints;
+QuicHintVector gQuicHints;
 NSString* gExperimentalOptions = @"{}";
 NSString* gUserAgent = nil;
 BOOL gUserAgentPartial = NO;
@@ -166,8 +168,9 @@ class CronetHttpProtocolHandlerDelegate
 
 + (void)addQuicHint:(NSString*)host port:(int)port altPort:(int)altPort {
   [self checkNotStarted];
-  gQuicHints.push_back(new cronet::URLRequestContextConfig::QuicHint(
-      base::SysNSStringToUTF8(host), port, altPort));
+  gQuicHints.push_back(
+      base::MakeUnique<cronet::URLRequestContextConfig::QuicHint>(
+          base::SysNSStringToUTF8(host), port, altPort));
 }
 
 + (void)setExperimentalOptions:(NSString*)experimentalOptions {
@@ -226,7 +229,7 @@ class CronetHttpProtocolHandlerDelegate
   gChromeNet.Get()->set_http_cache(gHttpCache);
   gChromeNet.Get()->set_ssl_key_log_file_name(
       base::SysNSStringToUTF8(gSslKeyLogFileName));
-  for (const auto* quicHint : gQuicHints) {
+  for (const auto& quicHint : gQuicHints) {
     gChromeNet.Get()->AddQuicHint(quicHint->host, quicHint->port,
                                   quicHint->alternate_port);
   }
