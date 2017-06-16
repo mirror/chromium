@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fcec6e54_0d96c78f",
+        "filename": "components/filesystem/directory_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 254,
+      "author": {
+        "id": 1115904
+      },
+      "writtenOn": "2017-06-16T17:27:50Z",
+      "side": 1,
+      "message": "Maybe !defined(OS_WIN) instead, to highlight that this is valid on things that aren\u0027t windows?",
+      "range": {
+        "startLine": 254,
+        "startChar": 12,
+        "endLine": 254,
+        "endChar": 20
+      },
+      "revId": "7cb3e6880dcfc13229421bb177625067d59b642b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
