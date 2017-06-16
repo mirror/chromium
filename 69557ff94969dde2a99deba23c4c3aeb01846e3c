@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dc157720_cd365299",
+        "filename": "base/cpu.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1001934
+      },
+      "writtenOn": "2017-06-16T23:46:13Z",
+      "side": 1,
+      "message": "Can you fix this up to be !defined(COMPILER_MSVC) while we are here?",
+      "revId": "69557ff94969dde2a99deba23c4c3aeb01846e3c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
