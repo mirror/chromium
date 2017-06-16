@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e7ec45f5_c9f3d25a",
+        "filename": "chromeos/login/auth/cryptohome_authenticator.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-16T07:15:45Z",
+      "side": 1,
+      "message": "It\u0027s interesting that the comment in DoMount() says cryptohomes created by the current code have keys with labels, but cryptohomd\u0027s impl in platform2/cryptohome/service.cc never uses the label.\n\nProbably we should fix service.cc (either by using the provided label when creating cryptohomes, or removing label realted code), but regarding this CL, lg.",
+      "revId": "c390a486f928c3c4b6b97d99bb263f5cda8f4cb9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
