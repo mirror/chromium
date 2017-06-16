@@ -7,6 +7,7 @@
 #include "base/strings/sys_string_conversions.h"
 #include "base/time/time.h"
 #include "components/strings/grit/components_strings.h"
+#import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_data_sink.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_image_fetcher.h"
 #import "ios/chrome/browser/ui/content_suggestions/identifier/content_suggestion_identifier.h"
@@ -103,6 +104,9 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       }
       return items;
     }
+    case ContentSuggestionsSectionLogo: {
+      return @[];
+    }
     case ContentSuggestionsSectionUnknown:
       return @[];
   }
@@ -128,6 +132,10 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
 }
 
 - (void)dismissSuggestion:(ContentSuggestionIdentifier*)suggestionIdentifier {
+}
+
+- (UIView*)headerView {
+  return nil;
 }
 
 #pragma mark - ContentSuggestionsImageFetcher

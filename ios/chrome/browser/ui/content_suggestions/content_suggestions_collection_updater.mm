@@ -14,6 +14,7 @@
 #import "ios/chrome/browser/ui/collection_view/collection_view_controller.h"
 #import "ios/chrome/browser/ui/collection_view/collection_view_model.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_footer_item.h"
+#import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_text_item.h"
 #import "ios/chrome/browser/ui/content_suggestions/cells/suggested_content.h"
 #import "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_utils.h"
@@ -43,6 +44,7 @@ typedef NS_ENUM(NSInteger, ItemType) {
   ItemTypeEmpty,
   ItemTypeReadingList,
   ItemTypeMostVisited,
+  ItemTypePromo,
   ItemTypeUnknown,
 };
 
@@ -52,6 +54,7 @@ typedef NS_ENUM(NSInteger, SectionIdentifier) {
   SectionIdentifierArticles = kSectionIdentifierEnumZero,
   SectionIdentifierReadingList,
   SectionIdentifierMostVisited,
+  SectionIdentifierLogo,
   SectionIdentifierDefault,
 };
 
@@ -71,7 +74,7 @@ ContentSuggestionType ContentSuggestionTypeForItemType(NSInteger type) {
   return ContentSuggestionTypeEmpty;
 }
 
-// Returns the section identifier corresponding to the section |info|.
+// Returns the item type corresponding to the section |info|.
 ItemType ItemTypeForInfo(ContentSuggestionsSectionInformation* info) {
   switch (info.sectionID) {
     case ContentSuggestionsSectionArticles:
@@ -80,6 +83,8 @@ ItemType ItemTypeForInfo(ContentSuggestionsSectionInformation* info) {
       return ItemTypeReadingList;
     case ContentSuggestionsSectionMostVisited:
       return ItemTypeMostVisited;
+    case ContentSuggestionsSectionLogo:
+      return ItemTypePromo;
 
     case ContentSuggestionsSectionUnknown:
       return ItemTypeUnknown;
@@ -96,6 +101,8 @@ SectionIdentifier SectionIdentifierForInfo(
       return SectionIdentifierReadingList;
     case ContentSuggestionsSectionMostVisited:
       return SectionIdentifierMostVisited;
+    case ContentSuggestionsSectionLogo:
+      return SectionIdentifierLogo;
 
     case ContentSuggestionsSectionUnknown:
       return SectionIdentifierDefault;
@@ -362,7 +369,11 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
     self.sectionInfoBySectionIdentifier[@(sectionIdentifier)] = sectionInfo;
     [addedSectionIdentifiers addIndex:sectionIdentifier];
 
-    [self addHeaderIfNeeded:sectionInfo];
+    if (sectionIdentifier == SectionIdentifierLogo) {
+      [self addLogoHeader];
+    } else {
+      [self addHeaderIfNeeded:sectionInfo];
+    }
     [self addFooterIfNeeded:sectionInfo];
   }
 
@@ -498,6 +509,18 @@ addSuggestionsToModel:(NSArray<CSCollectionViewItem*>*)suggestions
     [self.collectionViewController.collectionViewModel
                        setHeader:header
         forSectionWithIdentifier:sectionIdentifier];
+  }
+}
+
+- (void)addLogoHeader {
+  if (![self.collectionViewController.collectionViewModel
+          headerForSectionWithIdentifier:SectionIdentifierLogo]) {
+    ContentSuggestionsHeaderItem* header =
+        [[ContentSuggestionsHeaderItem alloc] initWithType:ItemTypeHeader];
+    header.view = self.dataSource.headerView;
+    [self.collectionViewController.collectionViewModel
+                       setHeader:header
+        forSectionWithIdentifier:SectionIdentifierLogo];
   }
 }
 
