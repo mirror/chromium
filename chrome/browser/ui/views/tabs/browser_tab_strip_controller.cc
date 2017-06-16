@@ -317,11 +317,7 @@ void BrowserTabStripController::UpdateLoadingAnimations() {
   // before we've applied an update from the model (Browser::TabInsertedAt may
   // be processed before us and invokes this).
   for (int i = 0, tab_count = tabstrip_->tab_count(); i < tab_count; ++i) {
-    if (model_->ContainsIndex(i)) {
-      Tab* tab = tabstrip_->tab_at(i);
-      WebContents* contents = model_->GetWebContentsAt(i);
-      tab->UpdateLoadingAnimation(TabContentsNetworkState(contents));
-    }
+    tabstrip_->tab_at(i)->StepLoadingAnimation();
   }
 }
 
