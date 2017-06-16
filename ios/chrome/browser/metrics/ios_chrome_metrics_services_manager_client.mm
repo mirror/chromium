@@ -114,3 +114,10 @@ IOSChromeMetricsServicesManagerClient::GetMetricsStateManager() {
   }
   return metrics_state_manager_.get();
 }
+
+bool IOSChromeMetricsServicesManagerClient::IsIncognitoSessionActive() {
+  // return ::IsOffTheRecordSessionActive();
+  // TODO(holte): Conservatively set to true until we can ensure it gets
+  // re-queried when an incognito tab is opened.  This effectively disables UKM.
+  return true;
+}
