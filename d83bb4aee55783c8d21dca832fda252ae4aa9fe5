@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "70661556_c4a90cd7",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000303
+      },
+      "writtenOn": "2017-06-16T08:58:13Z",
+      "side": 0,
+      "message": "I guess this part is not really up to date?? Removed for now. Please let me know if this shouldn\u0027t be removed.",
+      "range": {
+        "startLine": 164,
+        "startChar": 0,
+        "endLine": 176,
+        "endChar": 55
+      },
+      "revId": "d83bb4aee55783c8d21dca832fda252ae4aa9fe5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
