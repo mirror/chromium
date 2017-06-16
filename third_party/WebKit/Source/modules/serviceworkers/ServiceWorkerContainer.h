@@ -103,6 +103,7 @@ class MODULES_EXPORT ServiceWorkerContainer final
 
   DEFINE_ATTRIBUTE_EVENT_LISTENER(controllerchange);
   DEFINE_ATTRIBUTE_EVENT_LISTENER(message);
+  DEFINE_ATTRIBUTE_EVENT_LISTENER(messageerror);
 
  private:
   ServiceWorkerContainer(ExecutionContext*, NavigatorServiceWorker*);
