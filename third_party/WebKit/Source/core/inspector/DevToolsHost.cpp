@@ -29,18 +29,21 @@
 
 #include "core/inspector/DevToolsHost.h"
 
+#include "bindings/core/v8/ScriptController.h"
 #include "bindings/core/v8/V8BindingForCore.h"
+#include "bindings/core/v8/V8DevToolsHost.h"
 #include "bindings/core/v8/V8ScriptRunner.h"
 #include "core/clipboard/Pasteboard.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/dom/UserGestureIndicator.h"
 #include "core/events/Event.h"
 #include "core/events/EventTarget.h"
+#include "core/exported/WebViewBase.h"
 #include "core/frame/LocalDOMWindow.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/LocalFrameView.h"
+#include "core/frame/WebLocalFrameBase.h"
 #include "core/html/parser/TextResourceDecoder.h"
-#include "core/inspector/InspectorFrontendClient.h"
 #include "core/layout/LayoutTheme.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/ContextMenuController.h"
@@ -56,6 +59,7 @@
 #include "platform/loader/fetch/ResourceFetcher.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/loader/fetch/ResourceResponse.h"
+#include "public/web/WebDevToolsFrontendClient.h"
 
 namespace blink {
 
@@ -109,11 +113,27 @@ class FrontendMenuProvider final : public ContextMenuProvider {
   Vector<ContextMenuItem> items_;
 };
 
-DevToolsHost::DevToolsHost(InspectorFrontendClient* client,
+DevToolsHost::DevToolsHost(WebDevToolsFrontendClient* client,
                            LocalFrame* frontend_frame)
     : client_(client),
       frontend_frame_(frontend_frame),
-      menu_provider_(nullptr) {}
+      menu_provider_(nullptr) {
+  frontend_frame->GetPage()->SetDefaultPageScaleLimits(1.f, 1.f);
+
+  v8::Isolate* isolate = v8::Isolate::GetCurrent();
+  // Use higher limit for DevTools isolate so that it does not OOM when
+  // profiling large heaps.
+  isolate->IncreaseHeapLimitForDebugging();
+  ScriptState* script_state = ToScriptStateForMainWorld(frontend_frame_);
+  DCHECK(script_state);
+  ScriptState::Scope scope(script_state);
+
+  v8::Local<v8::Object> global = script_state->GetContext()->Global();
+  v8::Local<v8::Value> devtools_host_obj =
+      ToV8(this, global, script_state->GetIsolate());
+  DCHECK(!devtools_host_obj.IsEmpty());
+  global->Set(V8AtomicString(isolate, "DevToolsHost"), devtools_host_obj);
+}
 
 DevToolsHost::~DevToolsHost() {
   DCHECK(!client_);
@@ -207,8 +227,10 @@ void DevToolsHost::ShowContextMenu(LocalFrame* target_frame,
       FrontendMenuProvider::Create(this, items);
   menu_provider_ = menu_provider;
   float zoom = target_frame->PageZoomFactor();
-  if (client_)
-    client_->ShowContextMenu(target_frame, x * zoom, y * zoom, menu_provider);
+
+  WebLocalFrameBase::FromFrame(target_frame)
+      ->ViewImpl()
+      ->ShowContextMenuAtPoint(x * zoom, y * zoom, menu_provider);
 }
 
 String DevToolsHost::getSelectionBackgroundColor() {

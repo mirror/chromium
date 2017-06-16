@@ -31,7 +31,6 @@
 #ifndef WebDevToolsFrontendImpl_h
 #define WebDevToolsFrontendImpl_h
 
-#include "core/inspector/InspectorFrontendClient.h"
 #include "platform/heap/Handle.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Noncopyable.h"
@@ -41,29 +40,19 @@
 namespace blink {
 
 class DevToolsHost;
-class WebLocalFrameBase;
+class WebLocalFrameImpl;
 
-class WebDevToolsFrontendImpl final : public WebDevToolsFrontend,
-                                      public InspectorFrontendClient {
+class WebDevToolsFrontendImpl final : public WebDevToolsFrontend {
   WTF_MAKE_NONCOPYABLE(WebDevToolsFrontendImpl);
 
  public:
-  WebDevToolsFrontendImpl(WebLocalFrameBase*, WebDevToolsFrontendClient*);
+  WebDevToolsFrontendImpl(WebLocalFrameImpl*, WebDevToolsFrontendClient*);
   ~WebDevToolsFrontendImpl() override;
 
-  void DidClearWindowObject(WebLocalFrameBase*);
-
-  void SendMessageToEmbedder(const WTF::String&) override;
-
-  bool IsUnderTest() override;
-
-  void ShowContextMenu(LocalFrame*,
-                       float x,
-                       float y,
-                       ContextMenuProvider*) override;
+  void DidClearWindowObject(WebLocalFrameImpl*);
 
  private:
-  Persistent<WebLocalFrameBase> web_frame_;
+  Persistent<WebLocalFrameImpl> web_frame_;
   WebDevToolsFrontendClient* client_;
   Persistent<DevToolsHost> devtools_host_;
 };

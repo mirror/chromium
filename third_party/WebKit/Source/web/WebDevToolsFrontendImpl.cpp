@@ -30,32 +30,23 @@
 
 #include "web/WebDevToolsFrontendImpl.h"
 
-#include "bindings/core/v8/ScriptController.h"
-#include "bindings/core/v8/V8BindingForCore.h"
-#include "bindings/core/v8/V8DevToolsHost.h"
-#include "core/exported/WebViewBase.h"
-#include "core/frame/LocalFrame.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/inspector/DevToolsHost.h"
-#include "core/page/Page.h"
-#include "public/platform/WebSecurityOrigin.h"
 #include "public/platform/WebString.h"
-#include "public/web/WebDevToolsFrontendClient.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
 WebDevToolsFrontend* WebDevToolsFrontend::Create(
     WebLocalFrame* frame,
     WebDevToolsFrontendClient* client) {
-  return new WebDevToolsFrontendImpl(ToWebLocalFrameBase(frame), client);
+  return new WebDevToolsFrontendImpl(ToWebLocalFrameImpl(frame), client);
 }
 
 WebDevToolsFrontendImpl::WebDevToolsFrontendImpl(
-    WebLocalFrameBase* web_frame,
+    WebLocalFrameImpl* web_frame,
     WebDevToolsFrontendClient* client)
     : web_frame_(web_frame), client_(client) {
   web_frame_->SetDevToolsFrontend(this);
-  web_frame_->GetFrame()->GetPage()->SetDefaultPageScaleLimits(1.f, 1.f);
 }
 
 WebDevToolsFrontendImpl::~WebDevToolsFrontendImpl() {
@@ -63,44 +54,12 @@ WebDevToolsFrontendImpl::~WebDevToolsFrontendImpl() {
     devtools_host_->DisconnectClient();
 }
 
-void WebDevToolsFrontendImpl::DidClearWindowObject(WebLocalFrameBase* frame) {
+void WebDevToolsFrontendImpl::DidClearWindowObject(WebLocalFrameImpl* frame) {
   if (web_frame_ != frame)
     return;
-  v8::Isolate* isolate = v8::Isolate::GetCurrent();
-  // Use higher limit for DevTools isolate so that it does not OOM when
-  // profiling large heaps.
-  isolate->IncreaseHeapLimitForDebugging();
-  ScriptState* script_state = ToScriptStateForMainWorld(web_frame_->GetFrame());
-  DCHECK(script_state);
-  ScriptState::Scope scope(script_state);
-
   if (devtools_host_)
     devtools_host_->DisconnectClient();
-  devtools_host_ = DevToolsHost::Create(this, web_frame_->GetFrame());
-  v8::Local<v8::Object> global = script_state->GetContext()->Global();
-  v8::Local<v8::Value> devtools_host_obj =
-      ToV8(devtools_host_.Get(), global, script_state->GetIsolate());
-  DCHECK(!devtools_host_obj.IsEmpty());
-  global->Set(V8AtomicString(isolate, "DevToolsHost"), devtools_host_obj);
-}
-
-void WebDevToolsFrontendImpl::SendMessageToEmbedder(const String& message) {
-  if (client_)
-    client_->SendMessageToEmbedder(message);
-}
-
-bool WebDevToolsFrontendImpl::IsUnderTest() {
-  return client_ ? client_->IsUnderTest() : false;
-}
-
-void WebDevToolsFrontendImpl::ShowContextMenu(
-    LocalFrame* target_frame,
-    float x,
-    float y,
-    ContextMenuProvider* menu_provider) {
-  WebLocalFrameBase::FromFrame(target_frame)
-      ->ViewImpl()
-      ->ShowContextMenuAtPoint(x, y, menu_provider);
+  devtools_host_ = DevToolsHost::Create(client_, web_frame_->GetFrame());
 }
 
 }  // namespace blink

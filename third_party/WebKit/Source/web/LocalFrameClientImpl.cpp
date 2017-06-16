@@ -109,6 +109,7 @@
 #include "v8/include/v8.h"
 #include "web/WebDevToolsAgentImpl.h"
 #include "web/WebDevToolsFrontendImpl.h"
+#include "web/WebLocalFrameImpl.h"
 
 namespace blink {
 
@@ -151,10 +152,10 @@ bool IsBackForwardNavigationInProgress(LocalFrame* local_frame) {
 
 }  // namespace
 
-LocalFrameClientImpl::LocalFrameClientImpl(WebLocalFrameBase* frame)
+LocalFrameClientImpl::LocalFrameClientImpl(WebLocalFrameImpl* frame)
     : web_frame_(frame) {}
 
-LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameBase* frame) {
+LocalFrameClientImpl* LocalFrameClientImpl::Create(WebLocalFrameImpl* frame) {
   return new LocalFrameClientImpl(frame);
 }
 
@@ -194,7 +195,7 @@ void LocalFrameClientImpl::DispatchDidClearWindowObjectInMainWorld() {
   // FIXME: when extensions go out of process, this whole concept stops working.
   WebDevToolsFrontendImpl* dev_tools_frontend =
       web_frame_->Top()->IsWebLocalFrame()
-          ? ToWebLocalFrameBase(web_frame_->Top())->DevToolsFrontend()
+          ? ToWebLocalFrameImpl(web_frame_->Top())->DevToolsFrontend()
           : nullptr;
   if (dev_tools_frontend)
     dev_tools_frontend->DidClearWindowObject(web_frame_);
