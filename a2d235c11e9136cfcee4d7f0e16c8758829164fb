@@ -104,6 +104,24 @@
       "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1b25f3a0_8fbdcc9d",
+        "filename": "chrome/test/data/payments/debit.js",
+        "patchSetId": 13
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115893
+      },
+      "writtenOn": "2017-06-16T18:03:40Z",
+      "side": 1,
+      "message": "I see. FYI we now have ESLint available in Chromium itself (as a result of crbug.com/720034), and it is run as part of the PRESUBMIT (not for all folders yet though). Adding new checks in the global config is bit tedious (need to fix all violations first), which is why that config is trivial for now, but you should be able to add a per-folder config that is more strict easier.",
+      "parentUuid": "a8250e3f_a755d566",
+      "revId": "a2d235c11e9136cfcee4d7f0e16c8758829164fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
