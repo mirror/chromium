@@ -12,26 +12,29 @@ from webkitpy.w3c.chromium_commit_mock import MockChromiumCommit
 
 class TestImporterTest(LoggingTestCase):
 
-    def test_abort_on_exportable_commits(self):
+    # TODO(qyearsley): Add unit tests for the main method.
+
+    def test_revert_changes_in_exportable_commits(self):
         host = MockHost()
         importer = TestImporter(host)
+        chromium_wpt_dir = 'third_party/WebKit/LayoutTests/external/wpt/'
         importer.exportable_but_not_exported_commits = lambda _: [
-            MockChromiumCommit(host, position='refs/heads/master@{#431915}')
+            MockChromiumCommit(
+                host, position='refs/heads/master@{#431915}',
+                changed_files=[chromium_wpt_dir + 'x/one.html',
+                               chromium_wpt_dir + 'x/two.html']),
+            MockChromiumCommit(
+                host, position='refs/heads/master@{#431918}',
+                changed_files=[chromium_wpt_dir + 'y/test-helper.js']),
         ]
-        importer.checkout_is_okay = lambda _: True
-        return_code = importer.main(['wpt'])
-        self.assertEqual(return_code, 0)
-        self.assertLog([
-            'INFO: Cloning repo: https://chromium.googlesource.com/external/w3c/web-platform-tests.git\n',
-            'INFO: Local path: /mock-checkout/third_party/WebKit/LayoutTests/wpt\n',
-            'INFO: There were exportable but not-yet-exported commits:\n',
-            'INFO: Commit: https://fake-chromium-commit-viewer.org/+/5e9a83004a\n',
-            'INFO: Modified files in wpt directory in this commit:\n',
-            'INFO:   third_party/WebKit/LayoutTests/external/wpt/one.html\n',
-            'INFO:   third_party/WebKit/LayoutTests/external/wpt/two.html\n',
-            'INFO: Aborting import to prevent clobbering these commits.\n',
-            'INFO: Deleting temp repo directory /mock-checkout/third_party/WebKit/LayoutTests/wpt.\n',
-        ])
+        importer.revert_changes_in_exportable_commits('/tmp/wpt')
+        self.assertEqual(
+            host.executive.calls,
+            [
+                ['git', 'checkout', 'HEAD', '/mock-checkout/' + chromium_wpt_dir + 'x/one.html'],
+                ['git', 'checkout', 'HEAD', '/mock-checkout/' + chromium_wpt_dir + 'x/two.html'],
+                ['git', 'checkout', 'HEAD', '/mock-checkout/' + chromium_wpt_dir + 'y/test-helper.js'],
+            ])
 
     def test_update_test_expectations(self):
         host = MockHost()

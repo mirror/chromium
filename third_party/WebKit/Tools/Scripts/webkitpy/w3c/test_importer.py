@@ -61,29 +61,15 @@ class TestImporter(object):
         dest_dir_name = WPT_DEST_NAME
         repo_url = WPT_REPO_URL
 
-        # TODO(qyearsley): Simplify this to use LocalWPT.fetch when csswg-test
-        # is merged into web-platform-tests (crbug.com/706118).
+        # TODO(qyearsley): Simplify this to use LocalWPT.fetch.
+        # This might require GitHub credentials.
         temp_repo_path = self.finder.path_from_layout_tests(dest_dir_name)
         _log.info('Cloning repo: %s', repo_url)
         _log.info('Local path: %s', temp_repo_path)
         self.run(['git', 'clone', repo_url, temp_repo_path])
 
         if not options.ignore_exportable_commits:
-            commits = self.exportable_but_not_exported_commits(temp_repo_path)
-            if commits:
-                # If there are exportable commits, then there's no more work
-                # to do for now. This isn't really an error case; we expect
-                # to hit this case some of the time.
-
-                _log.info('There were exportable but not-yet-exported commits:')
-                for commit in commits:
-                    _log.info('Commit: %s', commit.url())
-                    _log.info('Modified files in wpt directory in this commit:')
-                    for path in commit.filtered_changed_files():
-                        _log.info('  %s', path)
-                _log.info('Aborting import to prevent clobbering these commits.')
-                self.clean_up_temp_repo(temp_repo_path)
-                return 0
+            self.revert_changes_in_exportable_commits(temp_repo_path)
 
         import_commit = self.update(dest_dir_name, temp_repo_path, options.revision)
 
@@ -145,6 +131,38 @@ class TestImporter(object):
             return False
 
         return True
+
+    def revert_changes_in_exportable_commits(self, wpt_path):
+        """Reverts changes to any files in exportable-but-not-exported commits.
+
+        This is done so that we can go ahead with an import even when there
+        are exportable changes that haven't yet been upstreamed, without
+        undoing these exportable changes.
+
+        In most cases, if we avoid importing files that were changed ,
+        then we will avoid squashing these
+
+        Logs messages, but doesn't return anything.
+        """
+        commits = self.exportable_but_not_exported_commits(wpt_path)
+        if not commits:
+            return
+        all_modified_files = set()
+        # If there are exportable commits, then there's no more work
+        # to do for now. This isn't really an error case; we expect
+        # to hit this case some of the time.
+        _log.info('There were exportable but not-yet-exported commits:')
+        for commit in commits:
+            _log.info('Commit: %s', commit.url())
+            _log.info('Modified files in wpt directory in this commit:')
+            modified_files = commit.filtered_changed_files()
+            for path in modified_files:
+                _log.info('  %s', path)
+                all_modified_files.add(self.finder.path_from_chromium_base(path))
+        for path in all_modified_files:
+            if self.fs.exists(path):
+                self.fs.remove(path)
+            self.run(['git', 'checkout', 'HEAD', path])
 
     def exportable_but_not_exported_commits(self, wpt_path):
         """Checks for commits that might be overwritten by importing.
