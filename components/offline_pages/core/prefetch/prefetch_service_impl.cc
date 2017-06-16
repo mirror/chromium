@@ -57,6 +57,9 @@ OfflineEventLogger* PrefetchServiceImpl::GetLogger() {
   return &logger_;
 }
 
+void PrefetchServiceImpl::OnDownloadCompleted(const std::string& download_id,
+                                              bool success) {}
+
 void PrefetchServiceImpl::Shutdown() {
   suggested_articles_observer_.reset();
 }
