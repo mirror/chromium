@@ -22,6 +22,30 @@
       "revId": "146d0279c90a8efc3e7bdf02ec50d26c17d324e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c83007b0_7309ae85",
+        "filename": "chrome/browser/net/file_downloader.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-16T15:19:38Z",
+      "side": 1,
+      "message": "It\u0027s needed for some existing base::PostTaskAndReplyWithResult calls in this file. Before, it was included transitively via browser_thread.h.\ntask_traits.h should be added though - done.",
+      "parentUuid": "21be4404_7539e9db",
+      "range": {
+        "startLine": 11,
+        "startChar": 15,
+        "endLine": 11,
+        "endChar": 31
+      },
+      "revId": "146d0279c90a8efc3e7bdf02ec50d26c17d324e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
