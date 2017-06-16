@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "738e5221_ee52d012",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 429,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-16T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fda97126_0bb047c0",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4ee27907_6737e557",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6180e639_5f70fdab",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 431,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-16T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ee27907_6737e557",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8158f977_ceec2065",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 433,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-16T20:08:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5fd5dbbd_6e247cec",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee0fe59d_bf18127e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
         "patchSetId": 2
@@ -67,6 +121,24 @@
       "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "425666c7_dfedef20",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 434,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-16T20:08:42Z",
+      "side": 1,
+      "message": "Done. Need explicit conversion because Width() is an int.",
+      "parentUuid": "ee0fe59d_bf18127e",
+      "revId": "9be0ba768441076c802294bb0ca5904c856351d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
