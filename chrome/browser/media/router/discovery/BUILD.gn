@@ -57,4 +57,9 @@ static_library("discovery") {
       "discovery_network_monitor.h",
     ]
   }
+
+  if (is_win) {
+    libs = [ "wlanapi.lib" ]
+    ldflags = [ "/DELAYLOAD:wlanapi.dll" ]
+  }
 }
