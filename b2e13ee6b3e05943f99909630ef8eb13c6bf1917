@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57135b61_9887f5ef",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 524,
+      "author": {
+        "id": 1002844
+      },
+      "writtenOn": "2017-06-16T20:23:36Z",
+      "side": 1,
+      "message": "this modifies sTestKeyStore while existing verifiers might be accessing it (through mTestTrustManager), is that also safe?",
+      "range": {
+        "startLine": 524,
+        "startChar": 0,
+        "endLine": 524,
+        "endChar": 46
+      },
+      "revId": "b2e13ee6b3e05943f99909630ef8eb13c6bf1917",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
