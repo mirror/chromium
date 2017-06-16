@@ -144,6 +144,30 @@
     },
     {
       "key": {
+        "uuid": "f50b8712_37e95485",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1001917
+      },
+      "writtenOn": "2017-06-16T22:21:07Z",
+      "side": 1,
+      "message": "There\u0027s a duplication of the length here - and I\u0027m surprised that data items have that length - shouldn\u0027t it match data-\u003elength()?\n\nIf we have a data item that\u0027s \u003e 128KB, then we\u0027re not putting it in the data array, so we\u0027d be using the item.length.\n\nWhat about using the item.length all the time, and then if item.data is present, check (or dcheck) that the lengths match. WDYT?",
+      "parentUuid": "4461c6e7_33370725",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "667fb072_f12fd3cb",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 4
