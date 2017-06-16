@@ -22,11 +22,13 @@
 
 #include "core/CoreExport.h"
 #include "platform/heap/Handle.h"
+#include "platform/wtf/Functional.h"
 #include "platform/wtf/text/AtomicString.h"
 
 namespace blink {
 
 class Frame;
+class LocalFrame;
 
 class CORE_EXPORT FrameTree final {
   WTF_MAKE_NONCOPYABLE(FrameTree);
@@ -57,6 +59,68 @@ class CORE_EXPORT FrameTree final {
   Frame* ScopedChild(const AtomicString& name) const;
   unsigned ScopedChildCount() const;
   void InvalidateScopedChildCount();
+
+  // Iterates over the Frame subtree starting at |root|.
+  class CORE_EXPORT Iterator {
+    STACK_ALLOCATED();
+
+   public:
+    Iterator(Frame* root,
+             std::unique_ptr<WTF::Function<bool(Frame*)>> should_skip_frame =
+                 nullptr)
+        : root_(root),
+          current_frame_(root),
+          should_skip_frame_(std::move(should_skip_frame)) {}
+
+    Iterator& operator++();
+    bool operator==(const Iterator&) const;
+    bool operator!=(const Iterator&) const;
+    operator bool() const;
+
+    Frame* operator*() { return current_frame_; }
+    Frame* operator->() { return current_frame_; }
+
+   protected:
+    Member<const Frame> root_;
+    Member<Frame> current_frame_;
+    std::unique_ptr<WTF::Function<bool(Frame*)>> should_skip_frame_;
+  };
+
+  // Specializes iterator to only iterate over local frames.
+  class CORE_EXPORT LocalFrameIterator : public Iterator {
+    STACK_ALLOCATED();
+
+   public:
+    LocalFrameIterator(Frame* root,
+                       std::unique_ptr<WTF::Function<bool(Frame*)>>
+                           should_skip_frame = nullptr)
+        : Iterator(root, std::move(should_skip_frame)) {}
+
+    LocalFrameIterator& operator++();
+    LocalFrame* operator*();
+    LocalFrame* operator->();
+  };
+
+  class CORE_EXPORT LocalRootRange {
+    STACK_ALLOCATED();
+
+   public:
+    LocalFrameIterator begin();
+    LocalFrameIterator end();
+
+   private:
+    friend class FrameTree;
+    LocalRootRange(LocalFrame* root) : root_(root) {}
+
+    Member<LocalFrame> root_;
+  };
+
+  // Provides an iterator for |this_frame_|'s subtree.
+  Iterator begin();
+  Iterator end();
+
+  // Provides a range for LocalFrames within this subtree's local root.
+  LocalRootRange GetLocalRootRange();
 
   DECLARE_TRACE();
 
