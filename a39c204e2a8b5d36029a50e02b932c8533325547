@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9451442e_ea6a8d2d",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2588,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T08:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a427ad5_a1dd38ee",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d85f69d9_5f1b7225",
         "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
         "patchSetId": 15
@@ -33,6 +51,24 @@
       "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23e8ed95_e75d6cd6",
+        "filename": "third_party/WebKit/Source/core/dom/Node.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 2593,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T08:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d85f69d9_5f1b7225",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "d9deb6cf_11c02970",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T08:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ee733d4_a3b81e65",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a96a9e75_6ab5d60a",
         "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
         "patchSetId": 15
@@ -67,6 +121,24 @@
       "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69ab5fee_9a7116f5",
+        "filename": "third_party/WebKit/Source/core/dom/shadow/SlotAssignment.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-16T08:58:21Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a96a9e75_6ab5d60a",
+      "revId": "a39c204e2a8b5d36029a50e02b932c8533325547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
