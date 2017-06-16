@@ -829,14 +829,6 @@
       field_size: 1,
       default_value: "false",
     },
-    {
-      name: "HasCompositorProxy",
-      field_template: "storage_only",
-      type_name: "bool",
-      field_group: "rare-non-inherited",
-      field_size: 1,
-      default_value: "false",
-    },
     // Style adjustment for appearance is disabled when certain properties are set.
     {
       name: "HasAuthorBackground",
