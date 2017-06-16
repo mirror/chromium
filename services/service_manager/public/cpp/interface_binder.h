@@ -35,7 +35,7 @@ class CallbackBinder : public InterfaceBinder {
                                            mojo::InterfaceRequest<Interface>)>;
 
   CallbackBinder(const BindCallback& callback,
-                 const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+                 const scoped_refptr<base::SequencedTaskRunner>& task_runner)
       : callback_(callback), task_runner_(task_runner) {}
   ~CallbackBinder() override {}
 
@@ -61,7 +61,7 @@ class CallbackBinder : public InterfaceBinder {
   }
 
   const BindCallback callback_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   DISALLOW_COPY_AND_ASSIGN(CallbackBinder);
 };
 
@@ -73,10 +73,10 @@ class GenericCallbackBinder : public InterfaceBinder {
 
   GenericCallbackBinder(
       const BindCallback& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
   GenericCallbackBinder(
       const base::Callback<void(mojo::ScopedMessagePipeHandle)>& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner);
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner);
   ~GenericCallbackBinder() override;
 
  private:
@@ -91,7 +91,7 @@ class GenericCallbackBinder : public InterfaceBinder {
                           mojo::ScopedMessagePipeHandle client_handle);
 
   const BindCallback callback_;
-  scoped_refptr<base::SingleThreadTaskRunner> task_runner_;
+  scoped_refptr<base::SequencedTaskRunner> task_runner_;
   DISALLOW_COPY_AND_ASSIGN(GenericCallbackBinder);
 };
 

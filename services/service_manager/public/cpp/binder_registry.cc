@@ -14,7 +14,7 @@ BinderRegistry::~BinderRegistry() {}
 void BinderRegistry::AddInterface(
     const std::string& interface_name,
     const base::Callback<void(mojo::ScopedMessagePipeHandle)>& callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner) {
   SetInterfaceBinder(interface_name, base::MakeUnique<GenericCallbackBinder>(
                                          callback, task_runner));
 }
@@ -22,7 +22,7 @@ void BinderRegistry::AddInterface(
 void BinderRegistry::AddInterface(
     const std::string& interface_name,
     const Binder& binder_callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner) {
   SetInterfaceBinder(interface_name, base::MakeUnique<GenericCallbackBinder>(
                                          binder_callback, task_runner));
 }
