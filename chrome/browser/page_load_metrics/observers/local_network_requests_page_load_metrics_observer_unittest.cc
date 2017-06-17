@@ -4,68 +4,90 @@
 
 #include "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h"
 
-#include <regex>
-#include <string>
-#include <utility>
+//#include <regex>
+//#include <string>
+//#include <utility>
+#include <vector>
 
-#include "base/feature_list.h"
-#include "base/logging.h"
+//#include "base/feature_list.h"
+//#include "base/logging.h"
 #include "base/memory/ptr_util.h"
-#include "base/strings/string_util.h"
+#include "base/metrics/metrics_hashes.h"
+//#include "base/strings/string_util.h"
 #include "base/test/histogram_tester.h"
-#include "chrome/browser/browser_process.h"
+//#include "chrome/browser/browser_process.h"
 #include "chrome/browser/page_load_metrics/metrics_web_contents_observer.h"
 #include "chrome/browser/page_load_metrics/observers/page_load_metrics_observer_test_harness.h"
-#include "chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer_unittest.cc"
+//#include
+//"chrome/browser/page_load_metrics/observers/ukm_page_load_metrics_observer_unittest.cc"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
 #include "chrome/browser/page_load_metrics/page_load_tracker.h"
-#include "components/ukm/public/ukm_entry_builder.h"
-#include "components/ukm/public/ukm_recorder.h"
+#include "chrome/test/base/testing_browser_process.h"
+#include "components/ukm/test_ukm_recorder.h"
+#include "components/ukm/ukm_source.h"
+#include "content/common/frame_messages.h"
+#include "content/common/navigation_gesture.h"
+#include "content/test/test_render_frame_host.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_address.h"
-#include "net/base/url_util.h"
+//#include "net/base/url_util.h"
 #include "ui/base/page_transition_types.h"
 #include "url/gurl.h"
+
+struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 
 namespace internal {
 
 typedef struct {
-  const char url[];
-  const char host_ip[];
+  char* url;
+  char* host_ip;
   uint16_t port;
 } PageAddressInfo;
 
 static const PageAddressInfo
-    kPublicPage = {"https://foo.com/", "216.58.195.78", 443},
-    kPublicPageIPv6 = {"https://google.com/", "2607:f8b0:4005:809::200e", 443},
-    kPrivatePage = {"http://test.local/", "192.168.10.123", 80},
-    kLocalhostPage = {"http://localhost:8080/", "127.0.0.1", 8080},
-    kLocalhostPageIPv6 = {"http://[::1]/", "::1", 80},
-    kPublicRequest1 = {"http://bar.com/", "100.150.200.250", 80},
-    kPublicRequest2 = {"https://www.baz.com/", "192.10.20.30", 443},
-    kSameSubnetRequest = {"http://test2.local/", "192.168.10.200", 9000},
-    kDiffSubnetRequest1 = {"http://10.0.10.200/", "10.0.10.200", 80},
-    kDiffSubnetRequest2 = {"http://172.16.0.85/", "172.16.0.85", 8181},
-    kLocalhostRequest1 = {"http://localhost:8080/", "127.0.0.1", 8080},  // WEB
-    kLocalhostRequest2 = {"http://127.0.1.1:3306/", "127.0.1.1", 3306},  // DB
-    kLocalhostRequest3 = {"http://localhost:515/", "127.0.2.1", 515},  // PRINT
-    kLocalhostRequest4 = {"http://127.100.150.200:9000/", "127.100.150.200",
-                          9000},  // DEV
-    kLocalhostRequest5 = {"http://127.0.0.1:9876/", "127.0.0.1",
+    kPublicPage = {(char*)"https://foo.com/", (char*)"216.58.195.78", 443},
+    kPublicPageIPv6 = {(char*)"https://google.com/",
+                       (char*)"[2607:f8b0:4005:809::200e]", 443},
+    kPrivatePage = {(char*)"http://test.local/", (char*)"192.168.10.123", 80},
+    kLocalhostPage = {(char*)"http://localhost:8080/", (char*)"127.0.0.1",
+                      8080},
+    kLocalhostPageIPv6 = {(char*)"http://[::1]/", (char*)"[::1]", 80},
+    kPublicRequest1 = {(char*)"http://bar.com/", (char*)"100.150.200.250", 80},
+    kPublicRequest2 = {(char*)"https://www.baz.com/", (char*)"192.10.20.30",
+                       443},
+    kSameSubnetRequest = {(char*)"http://test2.local/", (char*)"192.168.10.200",
+                          9000},
+    kDiffSubnetRequest1 = {(char*)"http://10.0.10.200/", (char*)"10.0.10.200",
+                           80},
+    kDiffSubnetRequest2 = {(char*)"http://172.16.0.85/", (char*)"172.16.0.85",
+                           8181},
+    kLocalhostRequest1 = {(char*)"http://localhost:8080/", (char*)"127.0.0.1",
+                          8080},  // WEB
+    kLocalhostRequest2 = {(char*)"http://127.0.1.1:3306/", (char*)"127.0.1.1",
+                          3306},  // DB
+    kLocalhostRequest3 = {(char*)"http://localhost:515/", (char*)"127.0.2.1",
+                          515},  // PRINT
+    kLocalhostRequest4 = {(char*)"http://127.100.150.200:9000/",
+                          (char*)"127.100.150.200", 9000},  // DEV
+    kLocalhostRequest5 = {(char*)"http://127.0.0.1:9876/", (char*)"127.0.0.1",
                           9876},  // OTHER
-    kRouterRequest1 = {"http://10.0.0.1/", "10.0.0.1", 80},
-    kRouterRequest2 = {"https://192.168.10.1/", "192.168.10.1", 443};
+    kRouterRequest1 = {(char*)"http://10.0.0.1/", (char*)"10.0.0.1", 80},
+    kRouterRequest2 = {(char*)"https://192.168.10.1/", (char*)"192.168.10.1",
+                       443};
 
-const char kSameSubnetURLSuffix[] = "index.html";
+// const char kSameSubnetURLSuffix[] = "index.html";
 
 }  // namespace internal
 
 class LocalNetworkRequestsPageLoadMetricsObserverTest
-    : UkmPageLoadMetricsObserverTest {
+    :  // public UkmPageLoadMetricsObserverTest,
+       public page_load_metrics::PageLoadMetricsObserverTestHarness {
  protected:
   void RegisterObservers(page_load_metrics::PageLoadTracker* tracker) override {
-    tracker->AddObserver(test_local_network_requests_observer_);
+    tracker->AddObserver(
+        base::MakeUnique<LocalNetworkRequestsPageLoadMetricsObserver>());
+    TestingBrowserProcess::GetGlobal()->SetUkmRecorder(&test_ukm_recorder_);
   }
 
   void SetUp() override {
@@ -74,9 +96,12 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
 
   void SimulateNavigateAndCommit(const internal::PageAddressInfo& page) {
     GURL url(page.url);
-    HostPortPair socket_address(page.host_ip, page.port);
-    content::RenderFrameHostTester* rfh_tester =
-        content::RenderFrameHostTester::For(main_rfh());
+    net::HostPortPair socket_address(page.host_ip, page.port);
+    content::TestRenderFrameHost* rfh_tester =
+        static_cast<content::TestRenderFrameHost*>(
+            content::RenderFrameHostTester::For(main_rfh()));
+
+    rfh_tester->SimulateNavigationStart(url);
 
     FrameHostMsg_DidCommitProvisionalLoad_Params params;
     params.nav_entry_id = 0;
@@ -91,6 +116,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     params.http_status_code = 200;
     params.socket_address = socket_address;
     params.original_request_url = url;
+    params.page_state = content::PageState::CreateFromURL(url);
 
     rfh_tester->SendNavigateWithParams(&params);
   }
@@ -107,21 +133,21 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
   void SimulateLoadedResource(const internal::PageAddressInfo& resource,
                               const int net_error) {
     page_load_metrics::ExtraRequestCompleteInfo request_info(
-        GURL(resource.url), HostPortPair(resource.host_ip, resource.port),
+        GURL(resource.url), net::HostPortPair(resource.host_ip, resource.port),
         -1 /* frame_tree_node_id */, true /*was_cached*/,
         1024 * 20 /* raw_body_bytes */, 0 /* original_network_content_length */,
         nullptr /* data_reduction_proxy_data */,
         content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, net_error);
 
-    SimulateLoadedResource(request_info);
+    PageLoadMetricsObserverTestHarness::SimulateLoadedResource(request_info);
   }
 
   void NavigateToPageAndLoadResources(
       const internal::PageAddressInfo& page,
-      const std::vector<internal::PageAddressInfo&>& resources,
+      const std::vector<internal::PageAddressInfo>& resources,
       const std::vector<bool>& resource_succeeded) {
     SimulateNavigateAndCommit(page);
-    for (int i = 0; i < resources.size(); ++i) {
+    for (size_t i = 0; i < resources.size(); ++i) {
       if (resource_succeeded[i]) {
         SimulateLoadedSuccessfulResource(resources[i]);
       } else {
@@ -129,11 +155,6 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
       }
     }
     DeleteContents();
-
-    // Also perform the basic UKM checks on the source reported to UKM.
-    EXPECT_EQ(1ul, ukm_source_count());
-    const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
-    EXPECT_EQ(GURL(page.url), source->url());
   }
 
   // Helper functions to verify that particular slices of UMA histograms are
@@ -182,11 +203,48 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     }
   }
 
- private:
-  LocalNetworkRequestsPageLoadMetricsObserver
-      test_local_network_requests_observer_;
+  // Copied from UkmPageLoadMetricsObserverTest
 
-}
+  size_t ukm_source_count() { return test_ukm_recorder_.sources_count(); }
+
+  size_t ukm_entry_count() { return test_ukm_recorder_.entries_count(); }
+
+  const ukm::UkmSource* GetUkmSourceForUrl(const char* url) {
+    return test_ukm_recorder_.GetSourceForUrl(url);
+  }
+
+  const ukm::mojom::UkmEntry* GetUkmEntry(size_t entry_index) {
+    return test_ukm_recorder_.GetEntry(entry_index);
+  }
+
+  std::vector<const ukm::mojom::UkmEntry*> GetUkmEntriesForSourceID(
+      ukm::SourceId source_id) {
+    std::vector<const ukm::mojom::UkmEntry*> entries;
+    for (size_t i = 0; i < ukm_entry_count(); ++i) {
+      const ukm::mojom::UkmEntry* entry = GetUkmEntry(i);
+      if (entry->source_id == source_id)
+        entries.push_back(entry);
+    }
+    return entries;
+  }
+
+  static bool HasMetric(const char* name,
+                        const ukm::mojom::UkmEntry* entry) WARN_UNUSED_RESULT {
+    return ukm::TestUkmRecorder::FindMetric(entry, name) != nullptr;
+  }
+
+  static void ExpectMetric(const char* name,
+                           int64_t expected_value,
+                           const ukm::mojom::UkmEntry* entry) {
+    const ukm::mojom::UkmMetric* metric =
+        ukm::TestUkmRecorder::FindMetric(entry, name);
+    EXPECT_NE(nullptr, metric) << "Failed to find metric: " << name;
+    EXPECT_EQ(expected_value, metric->value);
+  }
+
+ private:
+  ukm::TestUkmRecorder test_ukm_recorder_;
+};
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, NoMetrics) {
   EXPECT_EQ(0ul, ukm_source_count());
@@ -198,17 +256,19 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, NoMetrics) {
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageIPv6PublicRequests) {
-  // Navigate to a public page with an IPv6 address and make only public
-  // resource requests.
-  SimulateNavigateAndCommit(kPublicPageIPv6);
+  const internal::PageAddressInfo page = internal::kPublicPageIPv6;
+  // Navigate to a public page and make only public resource requests.
+  NavigateToPageAndLoadResources(
+      page, {internal::kPublicRequest1, internal::kPublicPageIPv6},
+      {true, true});
 
-  // Should only generate a domain type UKM entry and nothing else.
+  // Should generate only a domain type UKM entry and nothing else.
   EXPECT_EQ(1ul, ukm_source_count());
-  const ukm::UkmSource* source = GetUkmSourceForUrl(kPublicPageIPv6.url);
-  EXPECT_EQ(GURL(kPublicPageIPv6.url), source->url());
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+  EXPECT_EQ(GURL(page.url), source->url());
 
   EXPECT_EQ(1ul, ukm_entry_count());
-  ukm::mojom::UkmEntry* entry = GetUkmEntriesForSourceID(source->id())[0];
+  auto* entry = GetUkmEntriesForSourceID(source->id())[0];
   EXPECT_EQ(entry->source_id, source->id());
   EXPECT_EQ(entry->event_hash,
             base::HashMetricName(internal::kUkmPageLoadEventName));
@@ -216,24 +276,26 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   ExpectMetric(internal::kUkmDomainTypeName,
                static_cast<int>(DOMAIN_TYPE_PUBLIC), entry);
 
-  SimulateLoadedSuccessfulResource(kPublicRequest1);
-  DeleteContents();
-
-  // Should still have generated only the domain type UKM entry.
-  EXPECT_EQ(1ul, ukm_entry_count());
   ExpectHistogramsEmpty(true);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPagePublicRequests) {
+  const internal::PageAddressInfo page = internal::kPublicPage;
   // Navigate to a public page and make only public resource requests.
   NavigateToPageAndLoadResources(
-      kPublicPage, {{kPublicRequest1, kPublicRequest2, kPublicPageIPv6}},
-      {{true, true, true}});
+      page,
+      {internal::kPublicRequest1, internal::kPublicRequest2,
+       internal::kPublicPageIPv6},
+      {true, true, true});
 
-  // Should only generate a domain type UKM entry and nothing else.
+  // Should generate only a domain type UKM entry and nothing else.
+  EXPECT_EQ(1ul, ukm_source_count());
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+  EXPECT_EQ(GURL(page.url), source->url());
+
   EXPECT_EQ(1ul, ukm_entry_count());
-  ukm::mojom::UkmEntry* entry = GetUkmEntriesForSourceID(source->id())[0];
+  auto* entry = GetUkmEntriesForSourceID(source->id())[0];
   EXPECT_EQ(entry->source_id, source->id());
   EXPECT_EQ(entry->event_hash,
             base::HashMetricName(internal::kUkmPageLoadEventName));
@@ -244,32 +306,263 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   ExpectHistogramsEmpty(true);
 }
 
-/*
+TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
+       PrivatePageSelfRequests) {
+  const internal::PageAddressInfo page = internal::kPrivatePage;
+  // Navigate to a private page and make resource requests only to the page
+  // itself.
+  NavigateToPageAndLoadResources(page, {page}, {true});
+
+  // Should generate only a domain type UKM entry and nothing else.
+  EXPECT_EQ(1ul, ukm_source_count());
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+  EXPECT_EQ(GURL(page.url), source->url());
+
+  EXPECT_EQ(1ul, ukm_entry_count());
+  auto* entry = GetUkmEntriesForSourceID(source->id())[0];
+  EXPECT_EQ(entry->source_id, source->id());
+  EXPECT_EQ(entry->event_hash,
+            base::HashMetricName(internal::kUkmPageLoadEventName));
+  EXPECT_FALSE(entry->metrics.empty());
+  ExpectMetric(internal::kUkmDomainTypeName,
+               static_cast<int>(DOMAIN_TYPE_PRIVATE), entry);
+
+  ExpectHistogramsEmpty(true);
+}
+
+TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageNoRequests) {
+  const internal::PageAddressInfo page = internal::kPrivatePage;
+  // Navigate to a private page and make no resource requests.
+  NavigateToPageAndLoadResources(page, {{}}, {{}});
+
+  // Should generate only a domain type UKM entry and nothing else.
+  EXPECT_EQ(1ul, ukm_source_count());
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+  EXPECT_EQ(GURL(page.url), source->url());
+
+  EXPECT_EQ(1ul, ukm_entry_count());
+  auto* entry = GetUkmEntriesForSourceID(source->id())[0];
+  EXPECT_EQ(entry->source_id, source->id());
+  EXPECT_EQ(entry->event_hash,
+            base::HashMetricName(internal::kUkmPageLoadEventName));
+  EXPECT_FALSE(entry->metrics.empty());
+  ExpectMetric(internal::kUkmDomainTypeName,
+               static_cast<int>(DOMAIN_TYPE_PRIVATE), entry);
+
+  ExpectHistogramsEmpty(true);
+}
+
+TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPage) {
+  const internal::PageAddressInfo page = internal::kLocalhostPage;
+  // Navigate to a localhost page and make some arbitrary resource requests.
+  NavigateToPageAndLoadResources(
+      page,
+      {internal::kPublicRequest1, internal::kPublicRequest2,
+       internal::kSameSubnetRequest, internal::kLocalhostRequest5},
+      {true, false, true, true});
+
+  // Should generate no UKM entries or UMA histograms.
+  EXPECT_EQ(0ul, ukm_source_count());
+  EXPECT_EQ(0ul, ukm_entry_count());
+
+  ExpectHistogramsEmpty(true);
+}
+
+TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPageIPv6) {
+  const internal::PageAddressInfo page = internal::kLocalhostPageIPv6;
+  // Navigate to a localhost page with an IPv6 address and make some arbitrary
+  // resource requests.
+  NavigateToPageAndLoadResources(
+      page,
+      {internal::kLocalhostRequest1, internal::kLocalhostRequest2,
+       internal::kLocalhostRequest3, internal::kLocalhostRequest4},
+      {false, true, false, true});
+
+  // Should generate no UKM entries or UMA histograms.
+  EXPECT_EQ(0ul, ukm_source_count());
+  EXPECT_EQ(0ul, ukm_entry_count());
+
+  ExpectHistogramsEmpty(false);
+}
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PrivatePageSelfRequests) {}
-TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageNoRequests) {
+       PublicPageAllSuccessfulRequests) {
+  // Navigate to a public page with an IPv6 address.
+  SimulateNavigateAndCommit(internal::kPublicPageIPv6);
+
+  // Should generate only a domain type UKM entry by this point.
+  EXPECT_EQ(1ul, ukm_source_count());
+  const ukm::UkmSource* source =
+      GetUkmSourceForUrl(internal::kPublicPageIPv6.url);
+
+  EXPECT_EQ(GURL(internal::kPublicPageIPv6.url), source->url());
+
+  EXPECT_EQ(1ul, ukm_entry_count());
+  auto* entry = GetUkmEntriesForSourceID(source->id())[0];
+  EXPECT_EQ(entry->source_id, source->id());
+  EXPECT_EQ(entry->event_hash,
+            base::HashMetricName(internal::kUkmPageLoadEventName));
+  EXPECT_FALSE(entry->metrics.empty());
+  ExpectMetric(internal::kUkmDomainTypeName,
+               static_cast<int>(DOMAIN_TYPE_PUBLIC), entry);
+
+  // Make all of the types of requests, with all being successful.
+  std::vector<internal::PageAddressInfo> requests = {
+      internal::kPublicRequest1,     internal::kPublicRequest2,
+      internal::kSameSubnetRequest,  internal::kDiffSubnetRequest1,
+      internal::kDiffSubnetRequest2, internal::kLocalhostRequest1,
+      internal::kLocalhostRequest2,  internal::kLocalhostRequest3,
+      internal::kLocalhostRequest4,  internal::kLocalhostRequest5,
+      internal::kRouterRequest1,     internal::kRouterRequest2};
+  for (auto request : requests) {
+    SimulateLoadedSuccessfulResource(request);
+  }
+  DeleteContents();
+
+  // Should now have generated UKM entries for each of the types of resources
+  // requested except for public resources.
+  EXPECT_EQ(11ul, ukm_entry_count());
+
+  // TODO(uthakore): Finish verification (code below)
+
+  //ExpectHistogramsEmpty(true);
 }
-TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPage) {}
-TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPageIPv6) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PublicPageAllSuccessfulRequests) {}
+       PrivatePageAllSuccessfulRequests) {
+/*
+  const internal::PageAddressInfo page = internal::k__X__Page;
+  // Navigate to a __X__ page and make __Y__ resource requests.
+  NavigateToPageAndLoadResources(page, {}, {});
+
+  // Should now have generated UKM entries for each of the types of resources
+  // requested except for __Z__ resources.
+  EXPECT_EQ(1ul, ukm_source_count());
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+  EXPECT_EQ(GURL(page.url), source->url());
+
+  struct  // TODO(uthakore): define struct of resource type, port type
+          // (optional), success count, failed count
+      expected_values;  // list of values, sorted by IP address
+
+  EXPECT_EQ(________, ukm_entry_count());
+  auto entries = GetUkmEntriesForSourceID(source->id());
+  for (auto* entry : entries) {
+    EXPECT_EQ(entry->source_id, source->id());
+    EXPECT_EQ(
+        entry->event_hash,
+        base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
+    EXPECT_FALSE(entry->metrics.empty());
+
+    std::vector<UkmMetricPtr> metrics = entry->metrics;
+    EXPECT_EQ(metrics[0]->metric_hash,
+              base::HashMetricName(internal::kUkmResourceTypeName));
+    if (metrics[0]->value == static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
+      ExpectMetric(internal::kUkmPortTypeName, expected_values___________,
+                   entry);
+      ExpectMetric(internal::kUkmSuccessfulCountName,
+                   expected_values___________, entry);
+      histogram_tester().ExpectTotalCount(____________, ____);
+      ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
+                   entry);
+      histogram_tester().ExpectTotalCount(____________, ____);
+    } else {
+      EXPECT_EQ(metrics.size(), 3);
+      auto resource_type = static_cast<ResourceType>(metrics[0]->value);
+      ExpectMetric(internal::kUkmSuccessfulCountName,
+                   expected_values___________, entry);
+      histogram_tester().ExpectTotalCount(____________, ____);
+      ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
+                   entry);
+      histogram_tester().ExpectTotalCount(____________, ____);
+    }
+  }
+
+  // ExpectHistogramsEmpty(true);
+*/
+}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PrivatePageAllSuccessfulRequests) {}
-TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PrivatePageAllFailedRequests) {}
+       PrivatePageAllFailedRequests) {
+  /*  const internal::PageAddressInfo page = internal::k__X__Page;
+    // Navigate to a __X__ page and make __Y__ resource requests.
+    NavigateToPageAndLoadResources(page, {}, {});
+
+    // Should now have generated UKM entries for each of the types of resources
+    // requested except for __Z__ resources.
+    EXPECT_EQ(1ul, ukm_source_count());
+    const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+    EXPECT_EQ(GURL(page.url), source->url());
+
+    std::map<ResourceType, std::pair<uint32_t, uint32_t>>
+        expected_resource_values = {};
+    std::map<PortType, std::pair<uint32_t, uint32_t>> expected_port_values = {};
+
+    EXPECT_EQ(________, ukm_entry_count());
+    auto entries = GetUkmEntriesForSourceID(source->id());
+    for (auto* entry : entries) {
+      EXPECT_EQ(entry->source_id, source->id());
+      EXPECT_EQ(
+          entry->event_hash,
+          base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
+      EXPECT_FALSE(entry->metrics.empty());
+
+      std::vector<UkmMetricPtr> metrics = entry->metrics;
+      EXPECT_EQ(metrics[0]->metric_hash,
+                base::HashMetricName(internal::kUkmResourceTypeName));
+      if (metrics[0]->value == static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
+        EXPECT_EQ(metrics.size(), 4);
+        EXPECT_EQ(metrics[1]->metric_hash,
+                  base::HashMetricName(internal::kUkmPortTypeName));
+        auto port_type = static_cast<PortType>(metrics[1]->value);
+
+        metrics[2];  // should be Successful Count
+        metrics[3];  // should be Failed Count
+      } else {
+        EXPECT_EQ(metrics.size(), 3);
+        auto resource_type = static_cast<ResourceType>(metrics[0]->value);
+        ExpectMetric(internal::kUkmSuccessfulCountName,
+    expected_resource_values[resource_type].first, entry);
+        ExpectMetric(internal::kUkmFailedCountName,
+    expected_resource_values[resource_type].second, entry);
+
+        metrics[1];  // should be Successful Count
+        metrics[2];  // should be Failed Count
+      }
+      histogram_tester().ExpectTotalCount(port.second.at(status), 0);
+    }
+  */
+}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageMixedStatusRequests) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageRequestIpInUrlAndSocketAddress) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageRequestIpInUrlOnly) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageRequestIpNotPresent) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PublicPageNoCommit) {}
+
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageFailedLoad) {
+  std::vector<internal::PageAddressInfo> temp = {
+      internal::kPublicPage,         internal::kPublicPageIPv6,
+      internal::kPrivatePage,        internal::kLocalhostPage,
+      internal::kLocalhostPageIPv6,  internal::kPublicRequest1,
+      internal::kPublicRequest2,     internal::kSameSubnetRequest,
+      internal::kDiffSubnetRequest1, internal::kDiffSubnetRequest2,
+      internal::kLocalhostRequest1,  internal::kLocalhostRequest2,
+      internal::kLocalhostRequest3,  internal::kLocalhostRequest4,
+      internal::kLocalhostRequest5,  internal::kRouterRequest1,
+      internal::kRouterRequest2};
+  EXPECT_EQ(temp.size(), 17u);
 }
 
+/*
 TEST_F(UkmPageLoadMetricsObserverTest, Basic) {
   // PageLoadTiming with all recorded metrics other than FMP. This allows us to
   // verify both that all metrics are logged, and that we don't log metrics that
