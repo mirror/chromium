@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2408e90a_80c2ca3c",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-17T17:48:38Z",
+      "side": 1,
+      "message": "You can mention 720045",
+      "revId": "1cd01000d068c54e4669e3d7254bdd6cb58ae64c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
