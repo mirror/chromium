@@ -15,7 +15,6 @@ class WebViewBase;
 class WebLocalFrameBase;
 class WebViewClient;
 class WebFrameClient;
-class InterfaceProvider;
 class InterfaceRegistry;
 class WebFrame;
 enum class WebTreeScopeType;
@@ -33,7 +32,6 @@ class CORE_EXPORT WebFactory {
   virtual WebLocalFrameBase* CreateWebLocalFrameBase(
       WebTreeScopeType,
       WebFrameClient*,
-      blink::InterfaceProvider*,
       blink::InterfaceRegistry*,
       WebFrame* opener = nullptr) const = 0;
 

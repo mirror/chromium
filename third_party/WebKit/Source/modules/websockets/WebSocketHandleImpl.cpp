@@ -16,6 +16,7 @@
 #include "platform/wtf/text/WTFString.h"
 #include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 namespace {
@@ -37,6 +38,18 @@ WebSocketHandleImpl::~WebSocketHandleImpl() {
 }
 
 void WebSocketHandleImpl::Initialize(InterfaceProvider* interface_provider) {
+  NETWORK_DVLOG(1) << this << " initialize(...)";
+
+  DCHECK(!websocket_);
+  interface_provider->GetInterface(mojo::MakeRequest(&websocket_));
+
+  websocket_.set_connection_error_with_reason_handler(
+      ConvertToBaseCallback(WTF::Bind(&WebSocketHandleImpl::OnConnectionError,
+                                      WTF::Unretained(this))));
+}
+
+void WebSocketHandleImpl::Initialize(
+    service_manager::InterfaceProvider* interface_provider) {
   NETWORK_DVLOG(1) << this << " initialize(...)";
 
   DCHECK(!websocket_);
