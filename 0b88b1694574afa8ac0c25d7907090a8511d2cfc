@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a49f9ecf_4fa32c0e",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1124674
+      },
+      "writtenOn": "2017-06-17T00:48:04Z",
+      "side": 1,
+      "message": "Is each metric here actually only reported once per PageLoad?\nWhat if you have multiple media items with different codecs?",
+      "range": {
+        "startLine": 306,
+        "startChar": 28,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
