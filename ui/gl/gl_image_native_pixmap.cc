@@ -127,9 +127,16 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
                                      gfx::BufferFormat format) {
   DCHECK(!pixmap_);
   if (pixmap->GetEGLClientBuffer()) {
-    EGLint attrs[] = {EGL_IMAGE_PRESERVED_KHR, EGL_TRUE, EGL_NONE};
+    std::vector<EGLint> attrs;
+    attrs.push_back(EGL_IMAGE_PRESERVED_KHR);
+    attrs.push_back(EGL_TRUE);
+    if (has_image_flush_external_) {
+      attrs.push_back(EGL_IMAGE_EXTERNAL_FLUSH_EXT);
+      attrs.push_back(EGL_TRUE);
+    }
+    attrs.push_back(EGL_NONE);
     if (!GLImageEGL::Initialize(EGL_NATIVE_PIXMAP_KHR,
-                                pixmap->GetEGLClientBuffer(), attrs)) {
+                                pixmap->GetEGLClientBuffer(), &attrs[0])) {
       return false;
     }
   } else if (pixmap->AreDmaBufFdsValid()) {
@@ -182,6 +189,10 @@ bool GLImageNativePixmap::Initialize(gfx::NativePixmap* pixmap,
         attrs.push_back(kLinuxDrmModifiers[attrs_plane] + 1);
         attrs.push_back(static_cast<uint32_t>(modifier >> 32));
       }
+    }
+    if (has_image_flush_external_) {
+      attrs.push_back(EGL_IMAGE_EXTERNAL_FLUSH_EXT);
+      attrs.push_back(EGL_TRUE);
     }
     attrs.push_back(EGL_NONE);
 
