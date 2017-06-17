@@ -12,6 +12,7 @@
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/numerics/math_util.h"
 #include "base/task_scheduler/post_task.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/android/vr_shell/fps_meter.h"
@@ -1389,7 +1390,8 @@ void VrShellGl::DrawLaser(const gfx::Transform& render_matrix) {
   mat.matrix().postScale(kLaserWidth, laser_length, 1);
 
   // Tip back 90 degrees to flat, pointing at the scene.
-  const gfx::Quaternion quat(gfx::Vector3dF(1.0f, 0.0f, 0.0f), -M_PI / 2);
+  const gfx::Quaternion quat(gfx::Vector3dF(1.0f, 0.0f, 0.0f),
+                             -base::kPiFloat / 2);
   gfx::Transform rotation_mat(quat);
   mat = rotation_mat * mat;
 
@@ -1404,7 +1406,7 @@ void VrShellGl::DrawLaser(const gfx::Transform& render_matrix) {
   gfx::Transform transform;
   for (int i = 0; i < faces; i++) {
     // Rotate around Z.
-    const float angle = M_PI * 2 * i / faces;
+    const float angle = base::kPiFloat * 2 * i / faces;
     const gfx::Quaternion rot({0.0f, 0.0f, 1.0f}, angle);
     face_transform = beam_direction_mat * gfx::Transform(rot) * mat;
 

@@ -4,12 +4,11 @@
 
 #include "chrome/browser/android/vr_shell/ui_scene.h"
 
-#define _USE_MATH_DEFINES  // For M_PI in MSVC.
-#include <cmath>
 #include <utility>
 #include <vector>
 
 #include "base/memory/ptr_util.h"
+#include "base/numerics/math_util.h"
 #include "base/values.h"
 #include "chrome/browser/android/vr_shell/animation.h"
 #include "chrome/browser/android/vr_shell/easing.h"
@@ -116,7 +115,8 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   element->set_id(0);
   element->set_size({1000, 1000, 1});
   element->set_scale({3, 3, 1});
-  element->set_rotation(gfx::Quaternion(gfx::Vector3dF(0, 0, 1), M_PI / 2));
+  element->set_rotation(
+      gfx::Quaternion(gfx::Vector3dF(0, 0, 1), base::kPiDouble / 2));
   element->set_translation({6, 1, 0});
   scene.AddUiElement(std::move(element));
 
@@ -126,7 +126,8 @@ TEST(UiScene, ParentTransformAppliesToChild) {
   element->set_parent_id(0);
   element->set_size({1, 1, 1});
   element->set_scale({2, 2, 1});
-  element->set_rotation(gfx::Quaternion(gfx::Vector3dF(0, 0, 1), M_PI / 2));
+  element->set_rotation(
+      gfx::Quaternion(gfx::Vector3dF(0, 0, 1), base::kPiDouble / 2));
   element->set_translation({3, 0, 0});
   scene.AddUiElement(std::move(element));
   const UiElement* child = scene.GetUiElementById(1);

@@ -4,17 +4,11 @@
 
 #include "device/sensors/sensor_manager_chromeos.h"
 
-#include <math.h>
-
+#include "base/numerics/math_util.h"
 #include "chromeos/accelerometer/accelerometer_reader.h"
 #include "chromeos/accelerometer/accelerometer_types.h"
 #include "device/sensors/device_sensors_consts.h"
 #include "ui/gfx/geometry/vector3d_f.h"
-
-namespace {
-// Conversion ratio from radians to degrees.
-const double kRad2deg = 180.0 / M_PI;
-}
 
 namespace device {
 
@@ -145,8 +139,8 @@ void SensorManagerChromeOS::GenerateOrientationEvent(double x,
   // y = -cos(gamma) * sin(beta)
   // z = cos(beta) * cos(gamma)
   // With only accelerometer alpha cannot be provided.
-  double beta = kRad2deg * atan2(data.y(), data.z());
-  double gamma = kRad2deg * asin(-data.x());
+  double beta = base::RadToDeg(atan2(data.y(), data.z()));
+  double gamma = base::RadToDeg(asin(-data.x()));
 
   // Convert beta and gamma to fit the intervals in the specification. Beta is
   // [-180, 180) and gamma is [-90, 90).
