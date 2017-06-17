@@ -46,6 +46,9 @@ class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
   PrefetchGCMHandler* GetPrefetchGCMHandler() override;
   PrefetchStore* GetPrefetchStore() override;
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
+  void OnDownloadServiceReady() override;
+  void OnDownloadCompleted(const std::string& download_id,
+                           bool success) override;
 
   // KeyedService implementation.
   void Shutdown() override {}
@@ -112,6 +115,15 @@ SuggestedArticlesObserver*
 PrefetchDispatcherTest::GetSuggestedArticlesObserver() {
   NOTREACHED();
   return nullptr;
+}
+
+void PrefetchDispatcherTest::OnDownloadServiceReady() {
+  NOTREACHED();
+}
+
+void PrefetchDispatcherTest::OnDownloadCompleted(const std::string& download_id,
+                                                 bool success) {
+  NOTREACHED();
 }
 
 void PrefetchDispatcherTest::PumpLoop() {

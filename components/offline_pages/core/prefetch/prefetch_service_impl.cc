@@ -57,6 +57,15 @@ OfflineEventLogger* PrefetchServiceImpl::GetLogger() {
   return &logger_;
 }
 
+void PrefetchServiceImpl::OnDownloadServiceReady() {
+  // TODO(jianli): To hook up with PrefetchDownloader.
+}
+
+void PrefetchServiceImpl::OnDownloadCompleted(const std::string& download_id,
+                                              bool success) {
+  // TODO(jianli): To hook up with PrefetchDownloader.
+}
+
 void PrefetchServiceImpl::Shutdown() {
   suggested_articles_observer_.reset();
 }

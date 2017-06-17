@@ -35,6 +35,12 @@ class PrefetchService : public KeyedService {
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.
   virtual SuggestedArticlesObserver* GetSuggestedArticlesObserver() = 0;
+
+  // Called when the download service is ready.
+  virtual void OnDownloadServiceReady() = 0;
+  // Called when the archive download succeeds or fails.
+  virtual void OnDownloadCompleted(const std::string& download_id,
+                                   bool success) = 0;
 };
 
 }  // namespace offline_pages

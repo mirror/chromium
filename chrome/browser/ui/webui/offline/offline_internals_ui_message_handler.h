@@ -23,6 +23,7 @@ class PrefetchService;
 enum class GetRequestsResult;
 class GeneratePageBundleRequest;
 class GetOperationRequest;
+class PrefetchDownloader;
 }
 
 namespace offline_internals {
@@ -82,6 +83,9 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
   // Sends and processes a request to get the info about an operation.
   void HandleGetOperation(const base::ListValue* args);
 
+  // Downloads an archive.
+  void HandleDownloadArchive(const base::ListValue* args);
+
   // Callback for async GetAllPages calls.
   void HandleStoredPagesCallback(
       std::string callback_id,
@@ -109,12 +113,6 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
       const std::string& operation_name,
       const std::vector<offline_pages::RenderPageInfo>& pages);
 
-  // Callback for GetOperation calls.
-  void HandleGetOperationCallback(
-      std::string callback_id,
-      offline_pages::PrefetchRequestStatus status,
-      const std::vector<offline_pages::RenderPageInfo>& pages);
-
   // Offline page model to call methods on.
   offline_pages::OfflinePageModel* offline_page_model_;
 
@@ -127,6 +125,7 @@ class OfflineInternalsUIMessageHandler : public content::WebUIMessageHandler {
   std::unique_ptr<offline_pages::GeneratePageBundleRequest>
       generate_page_bundle_request_;
   std::unique_ptr<offline_pages::GetOperationRequest> get_operation_request_;
+  std::unique_ptr<offline_pages::PrefetchDownloader> prefetch_downloader_;
 
   // Factory for creating references in callbacks.
   base::WeakPtrFactory<OfflineInternalsUIMessageHandler> weak_ptr_factory_;

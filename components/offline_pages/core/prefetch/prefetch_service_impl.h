@@ -34,6 +34,9 @@ class PrefetchServiceImpl : public PrefetchService {
   PrefetchStore* GetPrefetchStore() override;
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
   OfflineEventLogger* GetLogger() override;
+  void OnDownloadServiceReady() override;
+  void OnDownloadCompleted(const std::string& download_id,
+                           bool success) override;
 
   // KeyedService implementation:
   void Shutdown() override;
