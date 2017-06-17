@@ -38,7 +38,7 @@ void* Buffer::Allocate(size_t num_bytes) {
   cursor_ = base::checked_cast<size_t>(safe_result.ValueOrDie());
   if (cursor_ > size_) {
     NOTREACHED();
-    cursor_ -= base::checked_cast<size_t>(safe_result.ValueOrDie());
+    cursor_ = block_start;
     return nullptr;
   }
   DCHECK_LE(cursor_, size_);
