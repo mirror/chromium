@@ -3935,7 +3935,13 @@ INSTANTIATE_TEST_CASE_P(WebViewScrollGuestContent,
                         WebViewScrollGuestContentTest,
                         testing::Values(false));
 
-IN_PROC_BROWSER_TEST_P(WebViewScrollGuestContentTest, ScrollGuestContent) {
+#if defined(OS_WIN)
+#define MAYBE_ScrollGuestContents DISABLED_ScrollGuestContents
+#else
+#define MAYBE_ScrollGuestContents ScrollGuestContents
+#endif
+IN_PROC_BROWSER_TEST_P(WebViewScrollGuestContentTest,
+                       MAYBE_ScrollGuestContent) {
   LoadAppWithGuest("web_view/scrollable_embedder_and_guest");
 
   content::WebContents* embedder_contents = GetEmbedderWebContents();
