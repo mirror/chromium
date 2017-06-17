@@ -2,6 +2,103 @@
   "comments": [
     {
       "key": {
+        "uuid": "fcb7e078_8a83054d",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 709,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "nit: Maybe we should make PipelineInfo a class, which will automatically call ReportAllMetrics() on destruction.",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cdabe87a_931c31f1",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "This is reported in a for loop, what would happen to our metrics when we have multiple |audio_codec_id| events?",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c2cdd1_23287bfe",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "Now we have codec ID, do we still need |audio_codec_name| above? You should always be able to call GetCodecName() to get the name from ID.\n\nIf we stop reporting |audio_codec_name|, then we can just s/audio_codec_id/audio_codec.",
+      "range": {
+        "startLine": 1558,
+        "startChar": 25,
+        "endLine": 1558,
+        "endChar": 39
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b526f76_637c09c5",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1575,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 1575,
+        "startChar": 13,
+        "endLine": 1575,
+        "endChar": 23
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc9ac9bc_989a1890",
+        "filename": "media/filters/source_buffer_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "Not related to this CL: Isn\u0027t a non-unknown audio codec equivalent to |found_audio_stream|?",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a49f9ecf_4fa32c0e",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 6
@@ -43,6 +140,80 @@
         "endLine": 306,
         "endChar": 44
       },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba686315_720502da",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "How hard is it to add more metrics to this UKM in the future?",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87065f00_facece6c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "It seems you can add \u003csummary\u003e for each metric. This would be a great way for readers to understand what each value mean. For example, we need to note WatchTime is in millisecond.",
+      "range": {
+        "startLine": 315,
+        "startChar": 16,
+        "endLine": 315,
+        "endChar": 26
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27080284_12b6c30b",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "Would it be possible to calculate MeanTimeBetweenRebuffers from WatchTime and RebuffersCount?",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "089d51f4_d1d2eaaa",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-17T04:41:55Z",
+      "side": 1,
+      "message": "Should these always be true (or approximately true)?\n\nWatchTime \u003d WatchTime.NativeControlsOn + WatchTime.NativeControlsOff\nWatchTime \u003d WatchTime.AC + WatchTime.Battery\nWatchTime.Background \u003d WatchTime.Background.AC + WatchTime.Background.Battery\n\nIf so, does it make sense to only report metrics like:\nWatchTime\nNativeControlsPercentage\nBackgroundPercetage\nBatteryPercentage\nBackgroundBatteryPercentage",
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
