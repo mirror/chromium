@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba70738_8ff3b296",
+        "filename": "third_party/WebKit/Source/web/WebFrameWidgetImpl.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-17T01:22:19Z",
+      "side": 1,
+      "message": "nit: no \u0027d\u0027 in self-reference?  also below",
+      "revId": "c5c34033d8ba6a69d05f3dfdee190336e913a3c4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
