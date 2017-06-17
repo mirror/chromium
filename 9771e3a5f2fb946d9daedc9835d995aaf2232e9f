@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bdb1f1aa_7582f7ef",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T00:23:16Z",
+      "side": 1,
+      "message": "Can you make NetworkRequest to provide requestContent method and do all this logic internally so you don\u0027t need to switch across classes.",
+      "revId": "9771e3a5f2fb946d9daedc9835d995aaf2232e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
