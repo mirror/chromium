@@ -59,11 +59,11 @@
 #include "platform/weborigin/SecurityOrigin.h"
 #include "platform/wtf/Functional.h"
 #include "platform/wtf/PtrUtil.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebSocketHandshakeThrottle.h"
 #include "public/platform/WebTraceLocation.h"
 #include "public/platform/WebURL.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -245,14 +245,13 @@ bool DocumentWebSocketChannel::Connect(const KURL& url,
 
   // TODO(kinuko): document() should return nullptr if we don't
   // have valid document/frame that returns non-empty interface provider.
-  if (GetDocument() && GetDocument()->GetFrame() &&
-      GetDocument()->GetFrame()->GetInterfaceProvider() !=
-          InterfaceProvider::GetEmptyInterfaceProvider()) {
+  if (GetDocument() && GetDocument()->GetFrame()) {
     // Initialize the WebSocketHandle with the frame's InterfaceProvider to
     // provide the WebSocket implementation with context about this frame.
     // This is important so that the browser can show UI associated with
     // the WebSocket (e.g., for certificate errors).
-    handle_->Initialize(GetDocument()->GetFrame()->GetInterfaceProvider());
+    handle_->Initialize(
+        GetDocument()->GetFrame()->Client()->GetInterfaceProvider());
   } else {
     handle_->Initialize(Platform::Current()->GetInterfaceProvider());
   }

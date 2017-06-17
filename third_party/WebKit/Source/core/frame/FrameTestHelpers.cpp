@@ -150,8 +150,8 @@ WebLocalFrameBase* CreateLocalChild(WebLocalFrame* parent,
     owned_client = WTF::MakeUnique<TestWebFrameClient>();
     client = owned_client.get();
   }
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
-      scope, client, client->GetInterfaceProviderForTesting(), nullptr));
+  WebLocalFrameBase* frame =
+      ToWebLocalFrameBase(parent->CreateLocalChild(scope, client, nullptr));
   client->Bind(frame, std::move(owned_client));
   return frame;
 }
@@ -161,8 +161,8 @@ WebLocalFrameBase* CreateLocalChild(
     WebTreeScopeType scope,
     std::unique_ptr<TestWebFrameClient> self_owned) {
   TestWebFrameClient* client = self_owned.get();
-  WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
-      scope, client, self_owned->GetInterfaceProviderForTesting(), nullptr));
+  WebLocalFrameBase* frame =
+      ToWebLocalFrameBase(parent->CreateLocalChild(scope, client, nullptr));
   client->Bind(frame, std::move(self_owned));
   return frame;
 }
@@ -176,8 +176,7 @@ WebLocalFrameBase* CreateProvisional(TestWebFrameClient* client,
   }
   WebLocalFrameBase* frame =
       ToWebLocalFrameBase(WebLocalFrame::CreateProvisional(
-          client, client->GetInterfaceProviderForTesting(), nullptr, old_frame,
-          WebSandboxFlags::kNone));
+          client, nullptr, old_frame, WebSandboxFlags::kNone));
   client->Bind(frame, std::move(owned_client));
   return frame;
 }
@@ -196,8 +195,8 @@ WebLocalFrameBase* CreateLocalChild(WebRemoteFrame* parent,
 
   WebLocalFrameBase* frame = ToWebLocalFrameBase(parent->CreateLocalChild(
       WebTreeScopeType::kDocument, name, WebSandboxFlags::kNone, client,
-      client->GetInterfaceProviderForTesting(), nullptr, previous_sibling,
-      WebParsedFeaturePolicy(), properties, nullptr));
+      nullptr, previous_sibling, WebParsedFeaturePolicy(), properties,
+      nullptr));
 
   client->Bind(frame, std::move(owned_client));
 
@@ -261,8 +260,7 @@ WebViewBase* WebViewHelper::InitializeWithOpener(
       web_view_client->GetScreenInfo().device_scale_factor);
   web_view_->SetDefaultPageScaleLimits(1, 4);
   WebLocalFrame* frame = WebLocalFrameBase::Create(
-      WebTreeScopeType::kDocument, web_frame_client,
-      web_frame_client->GetInterfaceProviderForTesting(), nullptr, opener);
+      WebTreeScopeType::kDocument, web_frame_client, nullptr, opener);
   web_frame_client->Bind(frame, std::move(owned_web_frame_client));
   web_view_->SetMainFrame(frame);
 
@@ -327,7 +325,8 @@ void WebViewHelper::Resize(WebSize size) {
 
 int TestWebFrameClient::loads_in_progress_ = 0;
 
-TestWebFrameClient::TestWebFrameClient() {}
+TestWebFrameClient::TestWebFrameClient()
+    : interface_provider_(new service_manager::InterfaceProvider()) {}
 
 void TestWebFrameClient::Bind(WebLocalFrame* frame,
                               std::unique_ptr<TestWebFrameClient> self_owned) {

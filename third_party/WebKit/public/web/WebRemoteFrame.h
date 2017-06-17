@@ -15,7 +15,6 @@
 namespace blink {
 
 enum class WebTreeScopeType;
-class InterfaceProvider;
 class InterfaceRegistry;
 class WebFrameClient;
 class WebLayer;
@@ -37,7 +36,6 @@ class WebRemoteFrame : public WebFrame {
                                           const WebString& name,
                                           WebSandboxFlags,
                                           WebFrameClient*,
-                                          blink::InterfaceProvider*,
                                           blink::InterfaceRegistry*,
                                           WebFrame* previous_sibling,
                                           const WebParsedFeaturePolicy&,
