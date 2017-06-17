@@ -1711,6 +1711,16 @@ void WebMediaPlayerImpl::DataSourceInitialized(bool success) {
   DVLOG(1) << __func__;
   DCHECK(main_task_runner_->BelongsToCurrentThread());
 
+  if (observer_) {
+    if (success && data_source_) {
+      observer_->OnDataSourceInitialized(
+          data_source_->GetUrlAfterRedirects(),
+          data_source_->DidPassCORSAccessCheck());
+    } else {
+      observer_->OnDataSourceInitialized(GURL(), false);
+    }
+  }
+
 #if defined(OS_ANDROID)
   // We can't play HLS URLs with WebMediaPlayerImpl, so in cases where they are
   // encountered, instruct the HTML media element to use the MediaPlayerRenderer

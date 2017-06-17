@@ -51,7 +51,9 @@ void RunNotifyInitialAvailabilityTask(ExecutionContext* context,
   (*task)();
 }
 
-WebURL GetAvailabilityUrl(const WebURL& source) {
+WebURL GetAvailabilityUrl(const WebURL& source,
+                          bool did_pass_cors_access_check,
+                          bool audio_video_supported) {
   if (source.IsEmpty() || !source.IsValid())
     return WebURL();
 
@@ -60,12 +62,16 @@ WebURL GetAvailabilityUrl(const WebURL& source) {
   // encoded string representation of a JSON structure with various information
   // about the media element's source that looks like this:
   // {
-  //   "sourceUrl": "<source url>",
+  //   "sourceUrl": <string>,
+  //   "corsCheck": <boolean>,
+  //   "audioVideoSupported": <boolean>
   // }
-  // TODO(avayvod): add and fill more info to the JSON structure, like the
-  // frame URL, audio/video codec info, the result of the CORS check, etc.
+  // TODO(avayvod): add the frame URL.
   std::unique_ptr<JSONObject> source_info = JSONObject::Create();
   source_info->SetString("sourceUrl", source.GetString());
+  source_info->SetBoolean("corsCheck", did_pass_cors_access_check);
+  source_info->SetBoolean("audioVideoSupported", audio_video_supported);
+
   CString json_source_info = source_info->ToJSONString().Utf8();
   String encoded_source_info =
       WTF::Base64URLEncode(json_source_info.data(), json_source_info.length());
@@ -349,13 +355,15 @@ void RemotePlayback::PromptCancelled() {
   prompt_promise_resolver_ = nullptr;
 }
 
-void RemotePlayback::SourceChanged(const WebURL& source) {
+void RemotePlayback::SourceChanged(const WebURL& source,
+                                   bool did_pass_cors_access_check,
+                                   bool audio_video_supported) {
   DCHECK(RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled());
 
   WebURL current_url =
       availability_urls_.IsEmpty() ? WebURL() : availability_urls_[0];
-  WebURL new_url = GetAvailabilityUrl(source);
-
+  WebURL new_url = GetAvailabilityUrl(source, did_pass_cors_access_check,
+                                      audio_video_supported);
   if (new_url == current_url)
     return;
 
