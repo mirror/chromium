@@ -1074,4 +1074,30 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
 }
 
+TEST_F(DownloadServiceControllerImplTest, CancelTimeTest) {
+  Entry entry1 = test::BuildBasicEntry();
+  entry1.state = Entry::State::ACTIVE;
+  entry1.create_time = base::Time::Now() - base::TimeDelta::FromSeconds(10);
+  entry1.scheduling_params.cancel_time =
+      base::Time::Now() - base::TimeDelta::FromSeconds(5);
+
+  Entry entry2 = test::BuildBasicEntry();
+  entry2.state = Entry::State::COMPLETE;
+  entry2.create_time = base::Time::Now() - base::TimeDelta::FromSeconds(10);
+  entry2.scheduling_params.cancel_time =
+      base::Time::Now() - base::TimeDelta::FromSeconds(2);
+  std::vector<Entry> entries = {entry1, entry2};
+
+  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
+
+  controller_->Initialize();
+  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
+  driver_->MakeReady();
+  task_runner_->RunUntilIdle();
+
+  // At startup, timed out entries should be killed.
+  std::vector<Entry*> updated_entries = model_->PeekEntries();
+  EXPECT_EQ(1u, updated_entries.size());
+}
+
 }  // namespace download
