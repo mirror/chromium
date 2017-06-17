@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d95ab2f_ae331cb1",
+        "filename": "ui/gl/test/gl_image_test_template.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-17T19:01:23Z",
+      "side": 1,
+      "message": "Maybe we should assert that glGetError is GL_NO_ERROR? Or Flush could return a bool that we check.",
+      "revId": "102b65725981d928b90edf27e3422c3c16ada660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
