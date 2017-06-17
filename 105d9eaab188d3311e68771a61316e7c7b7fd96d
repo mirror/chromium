@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fab50ec_49fd8414",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5213,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-17T00:12:01Z",
+      "side": 1,
+      "message": "Nit: This would be shorter, and read better.  Bracketed text optional (I\u0027d remove it):\n\n[The ]--foo-bar[ flag] is not implemented[ in this build].",
+      "revId": "105d9eaab188d3311e68771a61316e7c7b7fd96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dfc71e4d_28e0b5b7",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-17T00:12:01Z",
+      "side": 1,
+      "message": "Nit: Parallel structure suggests |conditional_flag| for the loop index.",
+      "revId": "105d9eaab188d3311e68771a61316e7c7b7fd96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
