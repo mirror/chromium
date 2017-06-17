@@ -50,6 +50,7 @@
 #include "public/web/WebRemoteFrameClient.h"
 #include "public/web/WebSettings.h"
 #include "public/web/WebViewClient.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace blink {
 
@@ -293,9 +294,8 @@ class TestWebFrameClient : public WebFrameClient {
 
   static bool IsLoading() { return loads_in_progress_ > 0; }
 
-  // Tests can override the virtual method below to mock the interface provider.
-  virtual blink::InterfaceProvider* GetInterfaceProviderForTesting() {
-    return nullptr;
+  service_manager::InterfaceProvider* GetInterfaceProvider() override {
+    return interface_provider_.get();
   }
 
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override {
@@ -308,6 +308,10 @@ class TestWebFrameClient : public WebFrameClient {
 
   // If set to a non-null value, self-deletes on frame detach.
   std::unique_ptr<TestWebFrameClient> self_owned_;
+
+  // Use service_manager::InterfaceProvider::TestApi to provide test interfaces
+  // through this client.
+  std::unique_ptr<service_manager::InterfaceProvider> interface_provider_;
 
   // This is null from when the client is created until it is initialized.
   WebLocalFrame* frame_ = nullptr;
