@@ -341,6 +341,10 @@ class TimeBase {
     return TimeClass(std::numeric_limits<int64_t>::max());
   }
 
+  static TimeClass Min() {
+    return TimeClass(std::numeric_limits<int64_t>::min());
+  }
+
   // For serializing only. Use FromInternalValue() to reconstitute. Please don't
   // use this and do arithmetic on it, as it is more error prone than using the
   // provided operators.
