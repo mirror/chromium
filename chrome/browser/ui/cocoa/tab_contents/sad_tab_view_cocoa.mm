@@ -6,7 +6,6 @@
 
 #import "base/mac/foundation_util.h"
 #include "components/grit/components_scaled_resources.h"
-#import "third_party/google_toolbox_for_mac/src/AppKit/GTMUILocalizerAndLayoutTweaker.h"
 #import "ui/base/cocoa/controls/blue_label_button.h"
 #import "ui/base/cocoa/controls/hyperlink_text_view.h"
 #include "ui/base/l10n/l10n_util_mac.h"
@@ -29,16 +28,6 @@ const CGFloat kTabMargin = 13;
 // Maximum margin on top.
 const CGFloat kMaxTopMargin = 130;
 
-NSTextField* MakeLabelTextField(NSRect frame) {
-  // Not a scoped_nsobject for easy property access.
-  NSTextField* ret = [[[NSTextField alloc] initWithFrame:frame] autorelease];
-  ret.autoresizingMask = NSViewWidthSizable;
-  ret.editable = NO;
-  ret.drawsBackground = NO;
-  ret.bezeled = NO;
-  return ret;
-}
-
 }  // namespace
 
 @interface SadTabContainerView : NSView
@@ -55,7 +44,7 @@ NSTextField* MakeLabelTextField(NSRect frame) {
 
 @implementation SadTabView {
   NSView* container_;
-  NSTextField* message_;
+  NSTextView* message_;
   HyperlinkTextView* help_;
   NSButton* button_;
   chrome::SadTab* sadTab_;
@@ -78,8 +67,13 @@ NSTextField* MakeLabelTextField(NSRect frame) {
     icon.frameSize = iconImage.size;
     [container_ addSubview:icon];
 
-    NSTextField* title = MakeLabelTextField(
-        NSMakeRect(0, NSMaxY(icon.frame) + kIconTitleSpacing, 0, 0));
+    NSTextField* title = [[[NSTextField alloc]
+        initWithFrame:NSMakeRect(0, NSMaxY(icon.frame) + kIconTitleSpacing, 0,
+                                 0)] autorelease];
+    title.autoresizingMask = NSViewWidthSizable;
+    title.editable = NO;
+    title.drawsBackground = NO;
+    title.bezeled = NO;
     title.font = [NSFont systemFontOfSize:24];
     title.textColor =
         [NSColor colorWithCalibratedWhite:38.0f / 255.0f alpha:1.0];
@@ -99,13 +93,43 @@ NSTextField* MakeLabelTextField(NSRect frame) {
     NSColor* messageColor =
         [NSColor colorWithCalibratedWhite:81.0f / 255.0f alpha:1.0];
 
-    message_ = MakeLabelTextField(NSMakeRect(0, NSMaxY(title.frame), 0, 0));
-    message_.frameOrigin =
-        NSMakePoint(0, NSMaxY(title.frame) + kTitleMessageSpacing);
-    base::mac::ObjCCast<NSCell>(message_.cell).wraps = YES;
+    message_ = [[[NSTextView alloc]
+        initWithFrame:NSMakeRect(0, NSMaxY(title.frame) + kTitleMessageSpacing,
+                                 NSWidth(container_.bounds), 0)] autorelease];
+    message_.editable = NO;
+    message_.selectable = NO;
+    message_.drawsBackground = NO;
+    message_.autoresizingMask = NSViewWidthSizable;
+    message_.string = l10n_util::GetNSString(sadTab->GetMessage());
+
+    if (int subMessage = sadTab->GetSubMessage(0)) {
+      NSTextList* textList =
+          [[[NSTextList alloc] initWithMarkerFormat:@"{disc}" options:0]
+              autorelease];
+      NSMutableParagraphStyle* paragraphStyle =
+          [[[NSParagraphStyle defaultParagraphStyle] mutableCopy] autorelease];
+      paragraphStyle.textLists = @[ textList ];
+      paragraphStyle.paragraphSpacingBefore = messageFont.capHeight;
+      paragraphStyle.headIndent =
+          static_cast<NSTextTab*>(paragraphStyle.tabStops[1]).location;
+
+      NSMutableString* subMessageString = [NSMutableString string];
+      for (int i = 0; subMessage; subMessage = sadTab->GetSubMessage(++i)) {
+        [subMessageString appendFormat:@"\n\t%@\t%@",
+                                       [textList markerForItemNumber:i],
+                                       l10n_util::GetNSString(subMessage)];
+      }
+      [message_.textStorage
+          appendAttributedString:[[[NSAttributedString alloc]
+                                     initWithString:subMessageString
+                                         attributes:@{
+                                           NSParagraphStyleAttributeName :
+                                               paragraphStyle
+                                         }] autorelease]];
+    }
     message_.font = messageFont;
     message_.textColor = messageColor;
-    message_.stringValue = l10n_util::GetNSString(sadTab->GetMessage());
+    [message_ sizeToFit];
     [container_ addSubview:message_];
 
     NSString* helpLinkTitle =
@@ -161,9 +185,6 @@ NSTextField* MakeLabelTextField(NSRect frame) {
 
   // Set the container's size first because text wrapping depends on its width.
   container_.frameSize = containerSize;
-
-  // |message_| can wrap to variable number of lines.
-  [GTMUILocalizerAndLayoutTweaker sizeToFitFixedWidthTextField:message_];
 
   help_.frameOrigin =
       NSMakePoint(0, NSMaxY(message_.frame) + kMessageLinkSpacing);
