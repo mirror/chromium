@@ -425,61 +425,61 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // TODO(uthakore): Finish verification (code below)
 
-  //ExpectHistogramsEmpty(true);
+  // ExpectHistogramsEmpty(true);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PrivatePageAllSuccessfulRequests) {
-/*
-  const internal::PageAddressInfo page = internal::k__X__Page;
-  // Navigate to a __X__ page and make __Y__ resource requests.
-  NavigateToPageAndLoadResources(page, {}, {});
+  /*
+    const internal::PageAddressInfo page = internal::k__X__Page;
+    // Navigate to a __X__ page and make __Y__ resource requests.
+    NavigateToPageAndLoadResources(page, {}, {});
 
-  // Should now have generated UKM entries for each of the types of resources
-  // requested except for __Z__ resources.
-  EXPECT_EQ(1ul, ukm_source_count());
-  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
-  EXPECT_EQ(GURL(page.url), source->url());
+    // Should now have generated UKM entries for each of the types of resources
+    // requested except for __Z__ resources.
+    EXPECT_EQ(1ul, ukm_source_count());
+    const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+    EXPECT_EQ(GURL(page.url), source->url());
 
-  struct  // TODO(uthakore): define struct of resource type, port type
-          // (optional), success count, failed count
-      expected_values;  // list of values, sorted by IP address
+    struct  // TODO(uthakore): define struct of resource type, port type
+            // (optional), success count, failed count
+        expected_values;  // list of values, sorted by IP address
 
-  EXPECT_EQ(________, ukm_entry_count());
-  auto entries = GetUkmEntriesForSourceID(source->id());
-  for (auto* entry : entries) {
-    EXPECT_EQ(entry->source_id, source->id());
-    EXPECT_EQ(
-        entry->event_hash,
-        base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
-    EXPECT_FALSE(entry->metrics.empty());
+    EXPECT_EQ(________, ukm_entry_count());
+    auto entries = GetUkmEntriesForSourceID(source->id());
+    for (auto* entry : entries) {
+      EXPECT_EQ(entry->source_id, source->id());
+      EXPECT_EQ(
+          entry->event_hash,
+          base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
+      EXPECT_FALSE(entry->metrics.empty());
 
-    std::vector<UkmMetricPtr> metrics = entry->metrics;
-    EXPECT_EQ(metrics[0]->metric_hash,
-              base::HashMetricName(internal::kUkmResourceTypeName));
-    if (metrics[0]->value == static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
-      ExpectMetric(internal::kUkmPortTypeName, expected_values___________,
-                   entry);
-      ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values___________, entry);
-      histogram_tester().ExpectTotalCount(____________, ____);
-      ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
-                   entry);
-      histogram_tester().ExpectTotalCount(____________, ____);
-    } else {
-      EXPECT_EQ(metrics.size(), 3);
-      auto resource_type = static_cast<ResourceType>(metrics[0]->value);
-      ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values___________, entry);
-      histogram_tester().ExpectTotalCount(____________, ____);
-      ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
-                   entry);
-      histogram_tester().ExpectTotalCount(____________, ____);
+      std::vector<UkmMetricPtr> metrics = entry->metrics;
+      EXPECT_EQ(metrics[0]->metric_hash,
+                base::HashMetricName(internal::kUkmResourceTypeName));
+      if (metrics[0]->value == static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
+        ExpectMetric(internal::kUkmPortTypeName, expected_values___________,
+                     entry);
+        ExpectMetric(internal::kUkmSuccessfulCountName,
+                     expected_values___________, entry);
+        histogram_tester().ExpectTotalCount(____________, ____);
+        ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
+                     entry);
+        histogram_tester().ExpectTotalCount(____________, ____);
+      } else {
+        EXPECT_EQ(metrics.size(), 3);
+        auto resource_type = static_cast<ResourceType>(metrics[0]->value);
+        ExpectMetric(internal::kUkmSuccessfulCountName,
+                     expected_values___________, entry);
+        histogram_tester().ExpectTotalCount(____________, ____);
+        ExpectMetric(internal::kUkmFailedCountName, expected_values___________,
+                     entry);
+        histogram_tester().ExpectTotalCount(____________, ____);
+      }
     }
-  }
 
-  // ExpectHistogramsEmpty(true);
-*/
+    // ExpectHistogramsEmpty(true);
+  */
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
