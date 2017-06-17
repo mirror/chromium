@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "38df17e5_eb659b34",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2313a159_7354fc5b",
+      "range": {
+        "startLine": 29,
+        "startChar": 2,
+        "endLine": 29,
+        "endChar": 13
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cd8dc64_fa62ea17",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -45,6 +69,30 @@
       "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8b5e41c_14a6473f",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cd8dc64_fa62ea17",
+      "range": {
+        "startLine": 33,
+        "startChar": 2,
+        "endLine": 33,
+        "endChar": 13
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "df27f7e1_1b591591",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6fe77cdf_a347367f",
+      "range": {
+        "startLine": 99,
+        "startChar": 4,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9beeb89b_8ee372ad",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4df5ec7_1987aeef",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9beeb89b_8ee372ad",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 107,
+        "endChar": 10
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "c71fce62_2028bf15",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done. The existed run_loop.QuitClosure() returns base::Closure. So I \"bindOnce\" the runloop.Quit() by myself.",
+      "parentUuid": "131c732e_e94514bd",
+      "range": {
+        "startLine": 115,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 49
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590cea21_b2e81f7c",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "ba068d86_bf518ab6",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590cea21_b2e81f7c",
+      "range": {
+        "startLine": 124,
+        "startChar": 4,
+        "endLine": 124,
+        "endChar": 15
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "35c30697_d093f912",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-16T15:13:46Z",
       "side": 1,
       "message": "EXPECT_DOUBLE_EQ(30.0, params-\u003edefault_configuration.frequency());",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 67
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42599031_0b74d630",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "All Done.",
+      "parentUuid": "35c30697_d093f912",
       "range": {
         "startLine": 126,
         "startChar": 4,
@@ -180,6 +348,24 @@
     },
     {
       "key": {
+        "uuid": "b8433694_f8d7d3e1",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8af184b3_31b29a8e",
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1d10a8b1_1b99d360",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -191,6 +377,30 @@
       "writtenOn": "2017-06-16T15:13:46Z",
       "side": 1,
       "message": "It\u0027s not strictly necessary to do this on the IO thread since we\u0027re single-threaded during SetUp().",
+      "range": {
+        "startLine": 226,
+        "startChar": 0,
+        "endLine": 227,
+        "endChar": 51
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b7232c9_b14fbfb4",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 227,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Yup, it is true.\nThe only reason is there are many thread_checker in Generic Sensor code, so I have to setup them in IO thread.",
+      "parentUuid": "1d10a8b1_1b99d360",
       "range": {
         "startLine": 226,
         "startChar": 0,
@@ -226,6 +436,30 @@
     },
     {
       "key": {
+        "uuid": "97a5e056_e5192302",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "All Done.",
+      "parentUuid": "813b0083_60be75c3",
+      "range": {
+        "startLine": 242,
+        "startChar": 2,
+        "endLine": 242,
+        "endChar": 35
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "74ffd5e0_224af6dc",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -237,6 +471,30 @@
       "writtenOn": "2017-06-16T15:13:46Z",
       "side": 1,
       "message": "Here, and below, the usual style for creating multiple RunLoops in a test is to put each in their own scope:\n\n{\n  base::RunLoop run_loop;\n  client_1-\u003eSetCheckValueCallback(base::Bind(\u0026CheckValue, 48.0));\n  client_1-\u003eSetQuitClosure(run_loop.QuitClosure());\n  run_loop.Run();\n}",
+      "range": {
+        "startLine": 352,
+        "startChar": 0,
+        "endLine": 355,
+        "endChar": 19
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "58f7f5ae_e4eeecc6",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 355,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Thanks! All done.",
+      "parentUuid": "74ffd5e0_224af6dc",
       "range": {
         "startLine": 352,
         "startChar": 0,
@@ -272,6 +530,30 @@
     },
     {
       "key": {
+        "uuid": "3a5b4134_4703066f",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Yeah, running in parallel is interesting. Thanks!\nBased on previous comments, we changed the parameter type of TestSensorClient::SetQuitClosure() from \"base::Closure\" to \"base::OnceClosure\", while the BarrierClosure returns a \"base::RepeatingClosure\".\n\nSo I add another member \"barrier_closure_\", and client can SetBarrierClosure().\nthe SensorReadingChanged() looks like:\n117   void SensorReadingChanged() override {                                                                  \n118     UpdateReadingData();\n119     if (check_value_)\n120       std::move(check_value_).Run(GetReadingValue());\n121     if (quit_closure_)\n122       std::move(quit_closure_).Run();\n123     if (barrier_closure_)\n124       barrier_closure_.Run();\n125   }\n\nDone. PTAL on the changed code.",
+      "parentUuid": "00949f51_2cf6d26d",
+      "range": {
+        "startLine": 359,
+        "startChar": 27,
+        "endLine": 359,
+        "endChar": 51
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52f5a9f6_7afcb58f",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
@@ -283,6 +565,30 @@
       "writtenOn": "2017-06-16T15:13:46Z",
       "side": 1,
       "message": "This doesn\u0027t actually give the CheckValue callback configured above time to have the possibility of running because the AddConfiguration success callback is executed before the task posted to report the reading change is executed.",
+      "range": {
+        "startLine": 547,
+        "startChar": 43,
+        "endLine": 547,
+        "endChar": 65
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb07269_4f871b41",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 547,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-17T11:17:14Z",
+      "side": 1,
+      "message": "Like the comments explains at the top of this test case, the AddConfiguration() was called twice consecutively, so if there is an un-expected SensorReadingChanged(), it must happen before the second CheckSuccess callback.",
+      "parentUuid": "52f5a9f6_7afcb58f",
       "range": {
         "startLine": 547,
         "startChar": 43,
