@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7b925ea3_d1a95f0c",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-17T10:58:46Z",
+      "side": 1,
+      "message": "Fine idea, but the mojo utility client does not currently work with a sequenced task runner.  That\u0027ll get fixed soon, but it is not there yet.",
+      "parentUuid": "2de7993a_ea92e9b9",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "bbcc2fe1500f1b5c6bd5175c0c93f77aec57e080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae191b6_aea5274a",
         "filename": "chrome/common/BUILD.gn",
         "patchSetId": 3
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "87c20a11_90db54e8",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-17T10:58:46Z",
+      "side": 1,
+      "message": "\u003e Either also move conflicts/module_event_sink_win.mojom or don\u0027t bother with this. IMO it\u0027s not worth it but I don\u0027t have a strong opinion.\n\nMore an IPC security thing.  Moved conflicts/module_event_sink_win.mojom into this group too, and we\u0027ll see if the bots like it.",
+      "parentUuid": "9ae191b6_aea5274a",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 13
+      },
+      "revId": "bbcc2fe1500f1b5c6bd5175c0c93f77aec57e080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b4de7f3_d0e91849",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 3
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-16T19:03:00Z",
       "side": 1,
       "message": "After looking this up again, this should say \"of the filter selected by the user\". My original comment was wrong.",
+      "range": {
+        "startLine": 41,
+        "startChar": 66,
+        "endLine": 42,
+        "endChar": 56
+      },
+      "revId": "bbcc2fe1500f1b5c6bd5175c0c93f77aec57e080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aec60d7c_8846f353",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 3
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1109754
+      },
+      "writtenOn": "2017-06-17T10:58:46Z",
+      "side": 1,
+      "message": "\u003e After looking this up again, this should say \"of the filter selected by the user\". My original comment was wrong.\n\nChanged the comment to use the suggested text.",
+      "parentUuid": "9b4de7f3_d0e91849",
       "range": {
         "startLine": 41,
         "startChar": 66,
