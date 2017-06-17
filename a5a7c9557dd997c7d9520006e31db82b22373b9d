@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "526c4e55_3a96c6e2",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-17T16:57:41Z",
+      "side": 1,
+      "message": "- Is it because base::CheckedNumeric\u003csize_t\u003e is not supported that we would like to do this cast to uintptr_t?\n\n- I feel that the original code (without using base::CheckedNumeric) is correct given that we only need DCHECK-level assurance. Why it is not sufficient?",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 51
+      },
+      "revId": "a5a7c9557dd997c7d9520006e31db82b22373b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "364a571d_5d63bfac",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-17T16:57:41Z",
+      "side": 1,
+      "message": "Here we are supposed to recover |cursor_| to its previous value, right? Then it should be |block_start|. The current code will make it 0. That will corrupt memory if there are subsequent calls to Allocate().",
+      "revId": "a5a7c9557dd997c7d9520006e31db82b22373b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
