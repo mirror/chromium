@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "38c3d3c3_1c2c6011",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "It would be nice to add an interface-level comment that this is for browser -\u003e ARC++ container communication: it\u0027s implied by the comments and naming convention, but not everyone is familiar with the convention.",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c6e850d_b2762cfc",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "Please use the TaskScheduler API + base::Callback.",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fc0d7d5_73960fbc",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "Please follow Google C++ naming conventions in this code: it should be filesystem_uuid, device_label, etc.",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa3031cf_db549a35",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "What guarantee is there that these enum values match?",
+      "range": {
+        "startLine": 94,
+        "startChar": 17,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5478d055_16d31c58",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "DLOG",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 7
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee33ec60_f2fa1ab8",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "Similarly, what guarantee is there these enums match? We should just typemap the enums.",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73496d84_3df62acb",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-17T22:24:28Z",
+      "side": 1,
+      "message": "std::future is in the banned list.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
