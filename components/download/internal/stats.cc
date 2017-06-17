@@ -38,5 +38,17 @@ void LogDownloadCompletion(CompletionType type) {
   // TODO(xingliu): Log completion.
 }
 
+void LogFileCleanupStatus(FileCleanupReason reason,
+                          int attempted_cleanups,
+                          int failed_cleanups,
+                          int external_cleanups) {
+  DCHECK_NE(FileCleanupReason::EXTERNAL, reason);
+  // TODO(shaktisahu): Log |status| and |count|.
+}
+
+void LogFileDeletionFailed(int count) {
+  // TODO(shaktisahu): Log |count|.
+}
+
 }  // namespace stats
 }  // namespace download

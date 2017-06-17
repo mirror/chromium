@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "base/optional.h"
+#include "base/sequenced_task_runner.h"
 #include "components/download/internal/controller.h"
 #include "components/download/internal/download_driver.h"
 #include "components/download/internal/entry.h"
@@ -24,6 +25,7 @@ namespace download {
 
 class ClientSet;
 class DownloadDriver;
+class FileMonitor;
 class Model;
 class Scheduler;
 
@@ -44,7 +46,9 @@ class ControllerImpl : public Controller,
                  std::unique_ptr<Model> model,
                  std::unique_ptr<DeviceStatusListener> device_status_listener,
                  std::unique_ptr<Scheduler> scheduler,
-                 std::unique_ptr<TaskScheduler> task_scheduler);
+                 std::unique_ptr<TaskScheduler> task_scheduler,
+                 std::unique_ptr<FileMonitor> file_monitor,
+                 const base::FilePath& download_file_dir);
   ~ControllerImpl() override;
 
   // Controller implementation.
@@ -93,6 +97,9 @@ class ControllerImpl : public Controller,
   // Client in |clients_|.
   void CancelOrphanedRequests();
 
+  // Cleans up any files that are left on the disk without any entries.
+  void CleanupUnknownFiles();
+
   // Fixes any discrepancies in state between |model_| and |driver_|.  Meant to
   // resolve state issues during startup.
   void ResolveInitialRequestStates();
@@ -137,7 +144,13 @@ class ControllerImpl : public Controller,
   // reached maximum.
   void ActivateMoreDownloads();
 
+  // Schedules a cleanup task in future based on status of entries.
+  void ScheduleCleanupTask();
+
   Configuration* config_;
+
+  // The directory in which the downloaded files are stored.
+  const base::FilePath download_file_dir_;
 
   // Owned Dependencies.
   std::unique_ptr<ClientSet> clients_;
@@ -146,6 +159,7 @@ class ControllerImpl : public Controller,
   std::unique_ptr<DeviceStatusListener> device_status_listener_;
   std::unique_ptr<Scheduler> scheduler_;
   std::unique_ptr<TaskScheduler> task_scheduler_;
+  std::unique_ptr<FileMonitor> file_monitor_;
 
   // Internal state.
   StartupStatus startup_status_;

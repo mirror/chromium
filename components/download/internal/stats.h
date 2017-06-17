@@ -74,6 +74,26 @@ enum class ScheduledTaskStatus {
   COMPLETED_NORMALLY = 2,
 };
 
+// Enum used by UMA metrics to track various types of cleanup actions taken by
+// the service.
+enum class FileCleanupReason {
+  // The file was deleted by the service after timeout.
+  TIMEOUT = 0,
+
+  // The database entry for the file was found not associated with any
+  // registered client.
+  ORPHANED = 1,
+
+  // At startup, the file was found not being associated with any model entry or
+  // driver entry.
+  UNKNOWN = 2,
+
+  // The file was cleaned up externally. Shouldn't be used by callers to log as
+  // it will be used only internally by the Stats class.
+  EXTERNAL = 3,
+
+};
+
 // Logs the results of starting up the Controller.  Will log each failure reason
 // if |status| contains more than one initialization failure.
 void LogControllerStartupStatus(const StartupStatus& status);
@@ -95,6 +115,12 @@ void LogScheduledTaskStatus(DownloadTaskType task_type,
 
 // Logs download completion event.
 void LogDownloadCompletion(CompletionType type);
+
+// Logs statistics about the reasons of a file cleanup.
+void LogFileCleanupStatus(FileCleanupReason reason,
+                          int attempted_cleanups,
+                          int failed_cleanups,
+                          int external_cleanups);
 
 }  // namespace stats
 }  // namespace download
