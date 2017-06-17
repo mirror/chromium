@@ -28,6 +28,7 @@
 #include "net/base/load_flags.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_server_properties.h"
+#include "net/nqe/network_quality_provider.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_context.h"
 #include "url/scheme_host_port.h"
@@ -52,6 +53,13 @@ const base::Feature kNetworkSchedulerYielding{
     "NetworkSchedulerYielding", base::FEATURE_DISABLED_BY_DEFAULT};
 const char kMaxRequestsBeforeYieldingParam[] = "MaxRequestsBeforeYieldingParam";
 const int kMaxRequestsBeforeYieldingDefault = 5;
+
+// When the effective connection type is detected to lie within the thresholds
+// of the experiment, this feature will override the value of the maximum number
+// of delayable requests allowed in flight as specified by
+// |kMaxNumDelayableRequestsPerClient|.
+const base::Feature kMaxDelayableRequestsNetworkOverride{
+    "MaxDelayableRequestsNetworkOverride", base::FEATURE_DISABLED_BY_DEFAULT};
 
 enum StartMode {
   START_SYNC,
@@ -387,7 +395,10 @@ class ResourceScheduler::Client {
  public:
   Client(bool priority_requests_delayable,
          bool yielding_scheduler_enabled,
-         int max_requests_before_yielding)
+         int max_requests_before_yielding,
+         bool max_delayable_requests_network_override,
+         LatencyRangeRequestCountMap
+             max_delayable_requests_network_override_params)
       : is_loaded_(false),
         has_html_body_(false),
         using_spdy_proxy_(false),
@@ -399,6 +410,10 @@ class ResourceScheduler::Client {
         did_scheduler_yield_(false),
         yielding_scheduler_enabled_(yielding_scheduler_enabled),
         max_requests_before_yielding_(max_requests_before_yielding),
+        max_delayable_requests_network_override_(
+            max_delayable_requests_network_override),
+        max_delayable_requests_network_override_params_(
+            max_delayable_requests_network_override_params),
         weak_ptr_factory_(this) {}
 
   ~Client() {}
@@ -678,6 +693,15 @@ class ResourceScheduler::Client {
     return false;
   }
 
+  int GetNumberOfDelayableRequestsForLatency(int64_t rtt) const {
+    for (auto& param : max_delayable_requests_network_override_params_) {
+      if (param.first.first <= rtt && param.first.second >= rtt) {
+        return param.second;
+      }
+    }
+    return kMaxNumDelayableRequestsPerClient;
+  }
+
   void StartRequest(ScheduledResourceRequest* request,
                     StartMode start_mode,
                     RequestStartTrigger trigger) {
@@ -773,8 +797,35 @@ class ResourceScheduler::Client {
     if (!RequestAttributesAreSet(request->attributes(), kAttributeDelayable))
       return ShouldStartOrYieldRequest();
 
-    if (in_flight_delayable_count_ >= kMaxNumDelayableRequestsPerClient)
-      return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    // Delayable requests.
+    if (max_delayable_requests_network_override_) {
+      // Based on the observed latency, the maximum delayable requests allowed
+      // in-flight must be chosen based on the experiment parameters.
+      size_t max_delayable_requests_per_client =
+          kMaxNumDelayableRequestsPerClient;
+
+      // Get the effective connection type
+      const net::HttpNetworkSession::Context* network_session_context =
+          url_request.context()->GetNetworkSessionContext();
+
+      if (network_session_context) {
+        base::Optional<base::TimeDelta> rtt =
+            network_session_context->network_quality_provider
+                ->GetTransportRTT();
+        if (rtt.has_value()) {
+          max_delayable_requests_per_client =
+              GetNumberOfDelayableRequestsForLatency(
+                  rtt.value().InMilliseconds());
+        }
+      }
+      if (in_flight_delayable_count_ >= max_delayable_requests_per_client)
+        return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    } else {
+      // Limit the maximum number of delayable requests allowed per client to
+      // |kMaxNumDelayableRequestsPerClient|.
+      if (in_flight_delayable_count_ >= kMaxNumDelayableRequestsPerClient)
+        return DO_NOT_START_REQUEST_AND_STOP_SEARCHING;
+    }
 
     if (ShouldKeepSearching(host_port_pair)) {
       // There may be other requests for other hosts that may be allowed,
@@ -930,6 +981,15 @@ class ResourceScheduler::Client {
   // The number of requests that can start before yielding.
   int max_requests_before_yielding_;
 
+  // Whether or not the maximum number of delayable requests should be
+  // overridden for the specified latency ranges.
+  const bool max_delayable_requests_network_override_;
+
+  // A map that specifies the number of maximum delayable requests allowed in
+  // flight for a given latency range.
+  const LatencyRangeRequestCountMap
+      max_delayable_requests_network_override_params_;
+
   base::WeakPtrFactory<ResourceScheduler::Client> weak_ptr_factory_;
 };
 
@@ -941,7 +1001,11 @@ ResourceScheduler::ResourceScheduler()
       max_requests_before_yielding_(base::GetFieldTrialParamByFeatureAsInt(
           kNetworkSchedulerYielding,
           kMaxRequestsBeforeYieldingParam,
-          kMaxRequestsBeforeYieldingDefault)) {}
+          kMaxRequestsBeforeYieldingDefault)),
+      max_delayable_requests_network_override_(
+          base::FeatureList::IsEnabled(kMaxDelayableRequestsNetworkOverride)),
+      max_delayable_requests_network_override_params_(
+          GetMaxDelayableRequestsExperimentConfig()) {}
 
 ResourceScheduler::~ResourceScheduler() {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
@@ -999,9 +1063,10 @@ void ResourceScheduler::OnClientCreated(int child_id,
   ClientId client_id = MakeClientId(child_id, route_id);
   DCHECK(!base::ContainsKey(client_map_, client_id));
 
-  Client* client =
-      new Client(priority_requests_delayable_, yielding_scheduler_enabled_,
-                 max_requests_before_yielding_);
+  Client* client = new Client(
+      priority_requests_delayable_, yielding_scheduler_enabled_,
+      max_requests_before_yielding_, max_delayable_requests_network_override_,
+      max_delayable_requests_network_override_params_);
   client_map_[client_id] = client;
 }
 
@@ -1148,6 +1213,41 @@ void ResourceScheduler::ReprioritizeRequest(net::URLRequest* request,
 ResourceScheduler::ClientId ResourceScheduler::MakeClientId(
     int child_id, int route_id) {
   return (static_cast<ResourceScheduler::ClientId>(child_id) << 32) | route_id;
+}
+
+ResourceScheduler::LatencyRangeRequestCountMap
+ResourceScheduler::GetMaxDelayableRequestsExperimentConfig() {
+  const std::string kLatencyLowerBoundBase = "LatencyLowerBound";
+  const std::string kLatencyUpperBoundBase = "LatencyUpperBound";
+  const std::string kMaxDelayableRequestsBase = "MaxDelayableRequests";
+
+  LatencyRangeRequestCountMap result;
+  int i = 1;
+  bool got_valid_param = true;
+
+  while (got_valid_param) {
+    int64_t lower_bound_value, upper_bound_value;
+    size_t max_delayable_requests;
+
+    if (base::StringToInt64(base::GetFieldTrialParamValueByFeature(
+                                kMaxDelayableRequestsNetworkOverride,
+                                kLatencyLowerBoundBase + std::to_string(i)),
+                            &lower_bound_value) &&
+        base::StringToInt64(base::GetFieldTrialParamValueByFeature(
+                                kMaxDelayableRequestsNetworkOverride,
+                                kLatencyUpperBoundBase + std::to_string(i)),
+                            &upper_bound_value) &&
+        base::StringToSizeT(base::GetFieldTrialParamValueByFeature(
+                                kMaxDelayableRequestsNetworkOverride,
+                                kMaxDelayableRequestsBase + std::to_string(i)),
+                            &max_delayable_requests)) {
+      result[LatencyRange(lower_bound_value, upper_bound_value)] =
+          max_delayable_requests;
+    } else {
+      got_valid_param = false;
+    }
+  }
+  return result;
 }
 
 }  // namespace content

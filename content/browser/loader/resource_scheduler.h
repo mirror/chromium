@@ -121,6 +121,8 @@ class CONTENT_EXPORT ResourceScheduler {
   typedef int64_t ClientId;
   typedef std::map<ClientId, Client*> ClientMap;
   typedef std::set<ScheduledResourceRequest*> RequestSet;
+  typedef std::pair<int64_t, int64_t> LatencyRange;
+  typedef std::map<LatencyRange, size_t> LatencyRangeRequestCountMap;
 
   // Called when a ScheduledResourceRequest is destroyed.
   void RemoveRequest(ScheduledResourceRequest* request);
@@ -130,6 +132,10 @@ class CONTENT_EXPORT ResourceScheduler {
 
   // Returns the client for the given |child_id| and |route_id| combo.
   Client* GetClient(int child_id, int route_id);
+
+  // Returns the experimental config for the experiment
+  // |kMaxDelayableRequestsNetworkOverride|.
+  LatencyRangeRequestCountMap GetMaxDelayableRequestsExperimentConfig();
 
   ClientMap client_map_;
   RequestSet unowned_requests_;
@@ -142,6 +148,12 @@ class CONTENT_EXPORT ResourceScheduler {
   // start resource requests.
   bool yielding_scheduler_enabled_;
   int max_requests_before_yielding_;
+
+  // True if the scheduler should override the maximum number of delayable
+  // requests if the network latency lies in one of the given ranges.
+  const bool max_delayable_requests_network_override_;
+  const LatencyRangeRequestCountMap
+      max_delayable_requests_network_override_params_;
 
   SEQUENCE_CHECKER(sequence_checker_);
 
