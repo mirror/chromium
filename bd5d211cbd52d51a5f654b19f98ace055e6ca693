@@ -200,6 +200,30 @@
       "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "069239d7_1d2432f8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/tab/InterceptNavigationDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-17T12:10:17Z",
+      "side": 1,
+      "message": "I made a summary and put it in the Javadoc.",
+      "parentUuid": "3aed648a_bb7325ae",
+      "range": {
+        "startLine": 252,
+        "startChar": 25,
+        "endLine": 252,
+        "endChar": 44
+      },
+      "revId": "bd5d211cbd52d51a5f654b19f98ace055e6ca693",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
