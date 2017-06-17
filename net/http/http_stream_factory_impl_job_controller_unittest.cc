@@ -23,6 +23,9 @@
 #include "net/http/http_stream_factory_impl_request.h"
 #include "net/http/http_stream_factory_test_util.h"
 #include "net/log/net_log_with_source.h"
+#include "net/log/test_net_log.h"
+#include "net/log/test_net_log_entry.h"
+#include "net/log/test_net_log_util.h"
 #include "net/proxy/mock_proxy_resolver.h"
 #include "net/proxy/proxy_config_service_fixed.h"
 #include "net/proxy/proxy_info.h"
@@ -1880,6 +1883,54 @@ TEST_F(JobControllerLimitMultipleH2Requests, H1NegotiatedForFirstRequest) {
   EXPECT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
   EXPECT_TRUE(first_socket->AllReadDataConsumed());
   EXPECT_FALSE(second_socket->AllReadDataConsumed());
+}
+
+// Tests that HTTP/2 throttling logic only applies to non-QUIC jobs.
+TEST_F(HttpStreamFactoryImplJobControllerTest, QuicJobNotThrottled) {
+  quic_data_ = base::MakeUnique<test::MockQuicData>();
+  quic_data_->AddWrite(client_maker_.MakeInitialSettingsPacket(1, nullptr));
+  quic_data_->AddRead(ASYNC, OK);
+  tcp_data_ = base::MakeUnique<SequencedSocketData>(nullptr, 0, nullptr, 0);
+  tcp_data_->set_connect_data(MockConnect(ASYNC, OK));
+  auto ssl_data = base::MakeUnique<SSLSocketDataProvider>(ASYNC, OK);
+  ssl_data->next_proto = kProtoHTTP2;
+  session_deps_.socket_factory->AddSSLSocketDataProvider(ssl_data.get());
+
+  HttpRequestInfo request_info;
+  request_info.method = "GET";
+  request_info.url = GURL("https://www.google.com");
+
+  Initialize(request_info);
+
+  SpdySessionPoolPeer pool_peer(session_->spdy_session_pool());
+  pool_peer.SetEnableSendingInitialData(false);
+
+  url::SchemeHostPort server(request_info.url);
+  // Sets server supports QUIC.
+  AlternativeService alternative_service(kProtoQUIC, server.host(), 443);
+  SetAlternativeService(request_info, alternative_service);
+
+  // Sets server support HTTP/2.
+  session_->http_server_properties()->SetSupportsSpdy(server, true);
+
+  BoundTestNetLog log;
+  request_ =
+      job_controller_->Start(&request_delegate_, nullptr, log.bound(),
+                             HttpStreamRequest::HTTP_STREAM, DEFAULT_PRIORITY);
+  EXPECT_TRUE(job_controller_->main_job());
+  EXPECT_TRUE(job_controller_->alternative_job());
+
+  // |alternative_job| succeeds and should report status to |request_delegate_|.
+  EXPECT_CALL(request_delegate_, OnStreamReadyImpl(_, _, _));
+  TestNetLogEntry::List entries;
+  log.GetEntries(&entries);
+  EXPECT_FALSE(LogContainsEntryWithType(
+      entries, 0, NetLogEventType::HTTP_STREAM_JOB_THROTTLED));
+
+  base::RunLoop().RunUntilIdle();
+  request_.reset();
+  VerifyBrokenAlternateProtocolMapping(request_info, false);
+  EXPECT_TRUE(HttpStreamFactoryImplPeer::IsJobControllerDeleted(factory_));
 }
 
 class HttpStreamFactoryImplJobControllerMisdirectedRequestRetry
