@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "11dec945_0458e6e7",
+        "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-17T17:15:34Z",
+      "side": 1,
+      "message": "Good point. It was uintptr_t because cursor_ was uintptr_t when I started writing the patch, and I completely overlooked the fact that this was no longer useful :)\n\nAlso I used CheckedNumeric because I\u0027ve been encouraged to use it instead of manually doing checks for overflow and size constraints, but I agree that there\u0027s no compelling reason to change the previous behavior. I\u0027ll revert these changes.",
+      "parentUuid": "526c4e55_3a96c6e2",
+      "range": {
+        "startLine": 36,
+        "startChar": 42,
+        "endLine": 36,
+        "endChar": 51
+      },
+      "revId": "a5a7c9557dd997c7d9520006e31db82b22373b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "364a571d_5d63bfac",
         "filename": "mojo/public/cpp/bindings/lib/buffer.cc",
         "patchSetId": 4
