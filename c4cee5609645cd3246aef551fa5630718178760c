@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d91170e8_bced4933",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T01:17:37Z",
+      "side": 1,
+      "message": "_previewViewPromise",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7d5cd63d_d9f9d44c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T01:17:37Z",
+      "side": 1,
+      "message": "Can you plz get rid of this. You can just sniff on _showPreviewView in tests",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b488d89_40e1ba38",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T01:17:37Z",
+      "side": 1,
+      "message": "nit: new Set([...])",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
