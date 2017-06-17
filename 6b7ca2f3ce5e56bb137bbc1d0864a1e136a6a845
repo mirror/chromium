@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "d0733e52_83abb07e",
+        "filename": "components/safe_browsing_db/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-17T00:31:07Z",
+      "side": 1,
+      "message": "Hmm, there are no other *_unittest.cc\u0027s in the deps, here or in other unit_test_* targets.  Shall we switch them all to deps instead of sources?",
+      "parentUuid": "80650ae3_c6929a34",
+      "range": {
+        "startLine": 412,
+        "startChar": 5,
+        "endLine": 412,
+        "endChar": 38
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1252b252_957c7848",
         "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
         "patchSetId": 6
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "66ba9bcf_e5a5ed53",
+        "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-17T00:31:07Z",
+      "side": 1,
+      "message": "By calling OnCheckWhitelistUrlResult(), I\u0027m testing that the callback runs, so we shouldn\u0027t just delete it. I don\u0027t know how to verify that it was deleted though, other that wait for some bot to detect a leak. I added a comment so the reader doesn\u0027t wonder if we need to delete the ptr here.",
+      "parentUuid": "1252b252_957c7848",
+      "range": {
+        "startLine": 99,
+        "startChar": 2,
+        "endLine": 99,
+        "endChar": 8
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1a89d9c1_8f748eed",
         "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
         "patchSetId": 6
@@ -68,6 +116,30 @@
       "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d7cb64f_b721b3a7",
+        "filename": "components/safe_browsing_db/whitelist_checker_client_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1122060
+      },
+      "writtenOn": "2017-06-17T00:31:07Z",
+      "side": 1,
+      "message": "Good catch, fixed.",
+      "parentUuid": "1a89d9c1_8f748eed",
+      "range": {
+        "startLine": 103,
+        "startChar": 38,
+        "endLine": 103,
+        "endChar": 39
+      },
+      "revId": "6b7ca2f3ce5e56bb137bbc1d0864a1e136a6a845",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
