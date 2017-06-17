@@ -5376,11 +5376,18 @@ LayoutRect LayoutBox::LayoutOverflowRectForPropagation() const {
     // positioning and transforms to it, and then convert it back.
     FlipForWritingMode(rect);
 
-    if (has_transform)
-      rect = Layer()->CurrentTransform().MapRect(rect);
+    LayoutSize container_offset;
 
     if (IsInFlowPositioned())
-      rect.Move(OffsetForInFlowPosition());
+      container_offset = OffsetForInFlowPosition();
+
+    if (ShouldUseTransformFromContainer(Container())) {
+      TransformationMatrix t;
+      GetTransformFromContainer(Container(), container_offset, t);
+      rect = t.MapRect(rect);
+    } else {
+      rect.Move(container_offset);
+    }
 
     // Now we need to flip back.
     FlipForWritingMode(rect);
