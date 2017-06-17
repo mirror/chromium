@@ -38,6 +38,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chromeos/chromeos_switches.h"
+#include "chromeos/disks/disk_mount_manager.h"
 #include "components/arc/arc_service_manager.h"
 #include "components/arc/arc_session.h"
 #include "components/arc/arc_session_runner.h"
@@ -126,8 +127,8 @@ void ArcServiceLauncher::Initialize() {
       base::MakeUnique<ArcMetricsService>(arc_bridge_service));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcNetHostImpl>(arc_bridge_service));
-  arc_service_manager_->AddService(
-      base::MakeUnique<ArcObbMounterBridge>(arc_bridge_service));
+  arc_service_manager_->AddService(base::MakeUnique<ArcObbMounterBridge>(
+      arc_bridge_service, chromeos::disks::DiskMountManager::GetInstance()));
   arc_service_manager_->AddService(
       base::MakeUnique<ArcPolicyBridge>(arc_bridge_service));
   arc_service_manager_->AddService(
