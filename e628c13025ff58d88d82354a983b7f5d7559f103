@@ -108,6 +108,24 @@
     },
     {
       "key": {
+        "uuid": "d0ed14f7_50874abf",
+        "filename": "chrome/browser/themes/theme_service.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-17T00:08:24Z",
+      "side": 1,
+      "message": "It seems reasonable for these two things to be the same.\n\nIt does make me concerned about how that color is computed, though.  Right now it\u0027s black with alpha \u003d 0x4d.  On a black toolbar that line is entirely invisible.\n\nIf we instead computed both of these colors as COLOR_TOOLBAR_BUTTON_ICON with alpha \u003d 0x7a, we\u0027d get the same result as today for the location bar border in the non-incognito default theme.  The location bar border would become light rather than dark in the incognito theme, which personally I kind of like, but we\u0027d maybe want a designer\u0027s OK.\n\nAnother route would be to use black as the base color unless the toolbar background is really dark, and use the toolbar button color (with alpha \u003d 0x4d?) otherwise.\n\nYet another route would be to try and run (location bar foreground color, toolbar background color) through the \"get separator color\" logic and see what it comes up with.\n\nI\u0027m going to give you LGTM for now so you have the freedom to move forward without being blocked on me endlessly, but it seems worth playing with the ideas above a little bit in hopes of getting better results on really dark themes.",
+      "parentUuid": "d747dafe_5b815093",
+      "revId": "e628c13025ff58d88d82354a983b7f5d7559f103",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87afec3b_d51c0275",
         "filename": "chrome/browser/themes/theme_service.cc",
         "patchSetId": 3
