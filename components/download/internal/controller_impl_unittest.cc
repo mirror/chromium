@@ -92,6 +92,8 @@ class DownloadServiceControllerImplTest : public testing::Test {
     auto driver = base::MakeUnique<test::TestDownloadDriver>();
     auto store = base::MakeUnique<test::TestStore>();
     config_ = base::MakeUnique<Configuration>();
+    config_->max_concurrent_downloads = 5;
+    config_->max_running_downloads = 5;
 
     client_ = client.get();
     driver_ = driver.get();
@@ -483,7 +485,7 @@ TEST_F(DownloadServiceControllerImplTest, Pause) {
 }
 
 TEST_F(DownloadServiceControllerImplTest, Resume) {
-  // Setupd download service test data.
+  // Setup download service test data.
   Entry entry1 = test::BuildBasicEntry();
   Entry entry2 = test::BuildBasicEntry();
   entry1.state = Entry::State::PAUSED;
@@ -827,6 +829,33 @@ TEST_F(DownloadServiceControllerImplTest, StartupRecovery) {
   EXPECT_EQ(base::nullopt, driver_->Find(entries[22].guid));
   EXPECT_EQ(base::nullopt, driver_->Find(entries[23].guid));
   EXPECT_EQ(base::nullopt, driver_->Find(entries[24].guid));
+}
+
+// Ensures no more downloads are activated if the number of downloads exceeds
+// the max download configuration.
+TEST_F(DownloadServiceControllerImplTest, ThrottlingConfig) {
+  Entry entry1 = test::BuildBasicEntry(Entry::State::AVAILABLE);
+  Entry entry2 = test::BuildBasicEntry(Entry::State::ACTIVE);
+  std::vector<Entry> entries = {entry1, entry2};
+
+  EXPECT_CALL(*client_, OnServiceInitialized(_)).Times(1);
+
+  // Throttle to only one running download.
+  config_->max_concurrent_downloads = 1u;
+  config_->max_running_downloads = 1u;
+
+  // Setup the controller.
+  controller_->Initialize();
+  store_->TriggerInit(true, base::MakeUnique<std::vector<Entry>>(entries));
+  store_->AutomaticallyTriggerAllFutureCallbacks(true);
+
+  // Exceeded the throttling configuration, nothing should be called.
+  EXPECT_CALL(*scheduler_, Next(_, _)).Times(0);
+  EXPECT_CALL(*scheduler_, Reschedule(_)).Times(0);
+  driver_->MakeReady();
+  task_runner_->RunUntilIdle();
+
+  EXPECT_EQ(Entry::State::AVAILABLE, model_->Get(entry1.guid)->state);
 }
 
 }  // namespace download
