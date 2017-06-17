@@ -166,6 +166,7 @@ mojom("arc_bindings") {
     "common/video_encode_accelerator.mojom",
     "common/voice_interaction_arc_home.mojom",
     "common/voice_interaction_framework.mojom",
+    "common/volume_mounter.mojom",
     "common/wallpaper.mojom",
   ]
 
