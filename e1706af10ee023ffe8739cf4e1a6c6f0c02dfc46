@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "298080ab_ee6bc97e",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 608,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-17T00:02:40Z",
+      "side": 1,
+      "message": "typo: \"process of\"",
+      "range": {
+        "startLine": 608,
+        "startChar": 26,
+        "endLine": 608,
+        "endChar": 35
+      },
+      "revId": "e1706af10ee023ffe8739cf4e1a6c6f0c02dfc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da209c8b_cd3947a4",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 774,
+      "author": {
+        "id": 1115965
+      },
+      "writtenOn": "2017-06-17T00:02:40Z",
+      "side": 1,
+      "message": "Should we delete but not recreate at this point and/or stop trying to commit changes? Maybe have a WrapperImpl::ResetDatabase() method that nulls out the ptr and delete\u0027s any pending commit_batch in there. I think that would prevent it from even trying to commit. And when creating new wrappers, give them null database_ ptrs.\n\nWell, then again, I guess we could be able to read w/o being able to write, so we wouldn\u0027t want to null it.",
+      "revId": "e1706af10ee023ffe8739cf4e1a6c6f0c02dfc46",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
