@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "26529d1f_0d6120fa",
+        "filename": "components/feature_engagement_tracker/public/feature_list.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1003325
+      },
+      "writtenOn": "2017-06-17T00:37:48Z",
+      "side": 1,
+      "message": "The prevailing style for preprocessor macros with #elifs is to omit the closing comment here, since it doesn\u0027t scale with the number of #(el)ifs. I\u0027d be fine with that here.",
+      "range": {
+        "startLine": 73,
+        "startChar": 8,
+        "endLine": 73,
+        "endChar": 31
+      },
+      "revId": "1e9050613bf1c434c74c1115dfd5ba1f28baa4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
