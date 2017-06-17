@@ -22,6 +22,30 @@
       "revId": "5db057f12635664f3c3694de42d245466838dede",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d82aa00_2f30c464",
+        "filename": "chrome/browser/devtools/devtools_file_watcher.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 199,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-17T00:13:35Z",
+      "side": 1,
+      "message": "I would either have to make destructor public, which I\u0027d like to avoid, or implement a traits for this class (DeleteHelper\u003cT\u003e::DoDelete), which is kinda more code.",
+      "parentUuid": "ec8e35bd_1b86414e",
+      "range": {
+        "startLine": 199,
+        "startChar": 22,
+        "endLine": 199,
+        "endChar": 30
+      },
+      "revId": "5db057f12635664f3c3694de42d245466838dede",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
