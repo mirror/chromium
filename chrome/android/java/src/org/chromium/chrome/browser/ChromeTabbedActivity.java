@@ -341,7 +341,7 @@ public class ChromeTabbedActivity extends ChromeActivity implements OverviewMode
         private boolean openNtpBottomSheet(String url) {
             if (getBottomSheet() != null && NewTabPage.isNTPUrl(url)) {
                 if (!mUIInitialized) {
-                    assert mDelayedInitialTabBehaviorDuringUiInit == null;
+                    // assert mDelayedInitialTabBehaviorDuringUiInit == null;
                     mDelayedInitialTabBehaviorDuringUiInit = new Runnable() {
                         @Override
                         public void run() {

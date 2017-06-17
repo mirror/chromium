@@ -202,6 +202,10 @@ extern const base::Feature kInstantTethering;
 
 extern const base::Feature kPageLoadMetricsMojofication;
 
+#if defined(OS_ANDROID)
+extern const base::Feature kSpannableInlineAutocomplete;
+#endif
+
 bool PrefServiceEnabled();
 
 // DON'T ADD RANDOM STUFF HERE. Put it in the main section above in

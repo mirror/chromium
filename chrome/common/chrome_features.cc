@@ -382,6 +382,12 @@ const base::Feature kInstantTethering{"InstantTethering",
 const base::Feature kPageLoadMetricsMojofication{
     "PLMMojofication", base::FEATURE_DISABLED_BY_DEFAULT};
 
+#if defined(OS_ANDROID)
+// Enables or disables spannable inline autocomplete.
+const base::Feature kSpannableInlineAutocomplete{
+    "SpannableInlineAutocomplete", base::FEATURE_DISABLED_BY_DEFAULT};
+#endif  // defined (OS_ANDROID)
+
 bool PrefServiceEnabled() {
   return base::FeatureList::IsEnabled(features::kPrefService) ||
 #if BUILDFLAG(ENABLE_PACKAGE_MASH_SERVICES)
