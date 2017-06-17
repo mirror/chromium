@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8f2e3280_5f6efba5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "15ddd972_5af9bc0f",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "53c8e14a_0e87405b",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4faf9079_c3c6ebce",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 165,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "53c8e14a_0e87405b",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "76c6b431_cccecea8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "67307b56_5ca60f6d",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aeed4cf2_fd54fc7b",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33a9352c_f393e48a",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aeed4cf2_fd54fc7b",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "7531e677_fa7b58ec",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 440,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "50275e7e_8c7788cb",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b9f9db47_729da8fd",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df363bd2_c85a38e5",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 450,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "I believe we still use Infinity for empty flamecharts. I can clean it up later.",
+      "parentUuid": "b9f9db47_729da8fd",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "602d8961_d92871d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/ChartViewport.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 480,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9087515_97ce0f8e",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a8ea6af_58ca58ba",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
         "patchSetId": 1
@@ -135,6 +261,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "555e56f5_f24b492c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7a8ea6af_58ca58ba",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "63f815dc_64432b23",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Probably yes, I\u0027ll try to address it in a follow up patch.",
+      "parentUuid": "62574e9b_b1715eee",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ec9c98b9_7015f8c0",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
         "patchSetId": 1
@@ -169,6 +331,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e95a640_57235a09",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ec9c98b9_7015f8c0",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "0582b0b7_50c2e4b9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 258,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "187ae0fb_185e6c97",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc22e6e8_41b63aac",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
         "patchSetId": 1
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "90954396_5ac262c1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 665,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fc22e6e8_41b63aac",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b32bf11_3d8b2448",
         "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
         "patchSetId": 1
@@ -220,6 +436,24 @@
       "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb6e19d8_1021333b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/perf_ui/FlameChart.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1300,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-17T02:12:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b32bf11_3d8b2448",
+      "revId": "db4e20f3fa4be72201598bc6d96cec85b6accd10",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
