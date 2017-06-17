@@ -56,6 +56,11 @@ struct PLATFORM_EXPORT RasterInvalidationTracking {
   // Records under-invalidated pixels in dark red, accumulated.
   sk_sp<PaintRecord> under_invalidation_record;
 
+  void AddInvalidation(const RasterInvalidationInfo& info) {
+    invalidations.push_back(info);
+    invalidation_region_since_last_paint.Unite(info.rect);
+  }
+
   // Compares the last recording against |new_record|, by rastering both into
   // bitmaps. If there are any differences outside of invalidated regions,
   // the corresponding pixels in under_invalidation_record will be drawn in

@@ -80,8 +80,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
     return extra_data_for_testing_.get();
   }
 
-  void ResetTrackedRasterInvalidations();
-  bool HasTrackedRasterInvalidations() const;
+  void SetTracksRasterInvalidations(bool);
 
   std::unique_ptr<JSONObject> LayersAsJSON(LayerTreeFlags) const;
 
@@ -106,6 +105,7 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
     // applied by the compositor, and more properties will be applied internally
     // to the chunks as Skia commands.
     void Upcast(const PropertyTreeState&);
+
     FloatRect bounds;
     Vector<const PaintChunk*> paint_chunks;
     bool known_to_be_opaque;
@@ -145,12 +145,6 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   static bool CanDecompositeEffect(const EffectPaintPropertyNode*,
                                    const PendingLayer&);
 
-  static IntRect MapRasterInvalidationRectFromChunkToLayer(
-      const FloatRect&,
-      const PaintChunk&,
-      const PendingLayer&,
-      const gfx::Vector2dF& layer_offset);
-
   // Builds a leaf layer that represents a single paint chunk.
   // Note: cc::Layer API assumes the layer bounds start at (0, 0), but the
   // bounding box of a paint chunk does not necessarily start at (0, 0) (and
@@ -168,8 +162,9 @@ class PLATFORM_EXPORT PaintArtifactCompositor {
   // Finds a client among the current vector of clients that matches the paint
   // chunk's id, or otherwise allocates a new one.
   std::unique_ptr<ContentLayerClientImpl> ClientForPaintChunk(
-      const PaintChunk&,
-      const PaintArtifact&);
+      const PaintChunk&);
+
+  bool tracks_raster_invalidations_;
 
   scoped_refptr<cc::Layer> root_layer_;
   std::unique_ptr<WebLayer> web_layer_;
