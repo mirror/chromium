@@ -22,6 +22,30 @@
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b1c8c1a_b03cfc0c",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-17T01:16:23Z",
+      "side": 1,
+      "message": "No, I misunderstood this then. I though it was for once per source id. There may be many of these in a given page. Will change with the next upload. Thanks!",
+      "parentUuid": "a49f9ecf_4fa32c0e",
+      "range": {
+        "startLine": 306,
+        "startChar": 28,
+        "endLine": 306,
+        "endChar": 44
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
