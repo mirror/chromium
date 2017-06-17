@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5dd0cd02_5f86516a",
+        "filename": "ui/base/ime/chromeos/character_composer_sequences.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-06-17T00:51:06Z",
+      "side": 1,
+      "message": "Not sure whether this cl well considers the cases like this?\nDead\u003c\u0027\u003e \u003c\u0027\u003e ----\u003e \u003c\u0027\u0027\u003e",
+      "range": {
+        "startLine": 4954,
+        "startChar": 0,
+        "endLine": 4954,
+        "endChar": 20
+      },
+      "revId": "543be0c3871fc7965f7ed10508e38516a4773451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
