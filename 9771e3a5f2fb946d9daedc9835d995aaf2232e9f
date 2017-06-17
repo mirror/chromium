@@ -16,6 +16,24 @@
       "revId": "9771e3a5f2fb946d9daedc9835d995aaf2232e9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f15009b_f1694ff3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/extensions/ExtensionServer.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 497,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-17T01:35:46Z",
+      "side": 1,
+      "message": "It is a ContentProvider... I need to optionally decode it but the only way to do that is to use contentData() which has weather the data is encoded or not in the result.",
+      "parentUuid": "bdb1f1aa_7582f7ef",
+      "revId": "9771e3a5f2fb946d9daedc9835d995aaf2232e9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
