@@ -207,6 +207,14 @@ std::string SysInfo::GetAndroidBuildID() {
   return std::string(os_build_id_str);
 }
 
+std::string SysInfo::GetTimeZoneID() {
+  char zone_id[PROP_VALUE_MAX];
+  // When an device is not set up, the timezone wouldn't be set up, either.
+  return __system_property_get("persist.sys.timezone", zone_id) != 0
+             ? std::string(zone_id)
+             : std::string("Etc/UTC");
+}
+
 int SysInfo::DalvikHeapSizeMB() {
   static int heap_size = GetDalvikHeapSizeMB();
   return heap_size;
