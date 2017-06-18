@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0afb741_5c07f5d0",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-18T19:26:35Z",
+      "side": 1,
+      "message": "Changing the function name touch_selection_controller_client_manager() to TouchSelectionControllerClientManager() means we now have a function name, as well as parameter references, both using the identifier TouchSelectionControllerClientManager in the same scope (i.e. RenderWidgetHostViewAndroid). So to disambiguate, we need to put \"class\" in front of the occurrences that are parameters.\n\nAnother way to solve this is to change the function name to GetTouchSelectionControllerClientManager(), although the name was already so long I was reluctant to make it longer than needed.\n\nI\u0027ll mount a separate CL to do this, as it seems to be just complicating things here, and we should resolve it asap.",
+      "parentUuid": "d000e860_bd5fe2d0",
+      "revId": "32d743e225e7101fb42f11a8c7debc85bac079d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "069d7d9d_2b945602",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 11
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T22:23:40Z",
       "side": 1,
       "message": "Can you add a comment showing an example of a conversion, so we know what the string is expected to look like?",
+      "revId": "32d743e225e7101fb42f11a8c7debc85bac079d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b43d8fe8_aa8e4f6c",
+        "filename": "content/browser/site_per_process_browsertest.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 10351,
+      "author": {
+        "id": 1212389
+      },
+      "writtenOn": "2017-06-18T19:26:35Z",
+      "side": 1,
+      "message": "I have no idea what the JSON string looks like, as we\u0027re just using JS JSON.stringify() in the existing file touch_selection.html. But I\u0027ll dump some out and add the comment to the next patch.",
+      "parentUuid": "069d7d9d_2b945602",
       "revId": "32d743e225e7101fb42f11a8c7debc85bac079d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
