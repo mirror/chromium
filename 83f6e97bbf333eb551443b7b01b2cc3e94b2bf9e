@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0e16fc07_6e9a21ec",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransferItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-18T15:59:12Z",
+      "side": 1,
+      "message": "Can this happen?",
+      "revId": "83f6e97bbf333eb551443b7b01b2cc3e94b2bf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13bad8e5_2bab1317",
+        "filename": "third_party/WebKit/Source/core/clipboard/DataTransferItem.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-18T15:59:12Z",
+      "side": 1,
+      "message": "It\u0027s unfortunate that we have to manually write callback_.erase... but yeah I don\u0027t have any alternative idea.",
+      "revId": "83f6e97bbf333eb551443b7b01b2cc3e94b2bf9e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
