@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a749557_9a705d52",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "I think we\u0027re working on the assumption that there will be a relatively small number of these and that sorting will be cheap. If the list grew large we might need to revisit.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4df098f2_4c167410",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "nit: The last sentence is a little hand-wavy as a full justification so I would just omit it. But I would add an acknowledgement that this isn\u0027t an ideal solution but that removing all the const qualifiers is costly and not ideal either. Optionally you can note that the const-cast is safe because we should never create a const NotificationChannelsProviderAndroid.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "342160f9_a0b35fd1",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "Technically we could know which patterns have changed and pass them in but since multiple could have changed I think this is ok.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3266a576_780fe652",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "Technically we could know which patterns have changed and pass them in but since multiple could have changed I think this is ok.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f58432e4_5899e5bc",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "Technically we could know which patterns have changed and pass them in but since multiple could have changed I think this is ok.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2e3e260_a106a61c",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "Technically we could know which patterns have changed and pass them in but since multiple could have changed I think this is ok.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e5cf047_7615ddbb",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 160,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T23:39:47Z",
+      "side": 1,
+      "message": "Technically we could know which patterns have changed and pass them in but since multiple could have changed I think this is ok.",
+      "revId": "b97b9060615a0d91b1f11e8b8557417b1348d579",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
