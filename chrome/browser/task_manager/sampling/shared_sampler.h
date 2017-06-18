@@ -42,6 +42,7 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   // when the refresh is done on the worker thread.
   // These callbacks are passed via RegisterCallbacks.
   struct Results {
+    base::Optional<int64_t> hard_faults_per_second;
     base::Optional<int> idle_wakeups_per_second;
     base::Optional<int64_t> physical_bytes;
     base::Optional<base::Time> start_time;
@@ -80,6 +81,7 @@ class SharedSampler : public base::RefCountedThreadSafe<SharedSampler> {
   // Contains all results of refresh for a single process.
   struct RefreshResult {
     base::ProcessId process_id;
+    int64_t hard_faults_per_second;
     int idle_wakeups_per_second;
     int64_t physical_bytes;
     base::Time start_time;

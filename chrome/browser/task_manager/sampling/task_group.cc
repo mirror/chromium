@@ -101,6 +101,7 @@ TaskGroup::TaskGroup(
 #if !defined(DISABLE_NACL)
       nacl_debug_stub_port_(nacl::kGdbDebugStubPortUnknown),
 #endif  // !defined(DISABLE_NACL)
+      hard_faults_per_second_(-1),
       idle_wakeups_per_second_(-1),
 #if defined(OS_LINUX)
       open_fd_count_(-1),
@@ -330,6 +331,10 @@ void TaskGroup::OnSamplerRefreshDone(SharedSampler::Results results) {
   if (results.cpu_time) {
     cpu_time_ = *results.cpu_time;
     OnBackgroundRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
+  }
+  if (results.hard_faults_per_second) {
+    hard_faults_per_second_ = *results.hard_faults_per_second;
+    OnBackgroundRefreshTypeFinished(REFRESH_TYPE_HARD_FAULTS);
   }
   if (results.idle_wakeups_per_second) {
     OnIdleWakeupsRefreshDone(*results.idle_wakeups_per_second);
