@@ -16,6 +16,11 @@ namespace base {
 // case it will return an empty string.
 BASE_I18N_EXPORT std::string CountryCodeForCurrentTimezone();
 
+#if defined(OS_ANDROID)
+// Return an ICU timezone created from the host timezone.
+BASE_I18N_EXPORT std::string GetDefaultTimeZoneId();
+#endif
+
 }  // namespace base
 
 #endif  // BASE_I18N_TIMEZONE_H_

@@ -37,7 +37,10 @@ source_set("time_zone_monitor") {
       "android/time_zone_monitor_jni_registrar.cc",
       "android/time_zone_monitor_jni_registrar.h",
     ]
-    deps += [ ":time_zone_monitor_jni_headers" ]
+    deps += [
+      ":time_zone_monitor_jni_headers",
+      "//base::i18n",
+    ]
   }
 
   if (is_win) {

@@ -15,6 +15,11 @@
 #include "base/strings/utf_string_conversions.h"
 #include "third_party/icu/source/i18n/unicode/timezone.h"
 
+#if defined(OS_ANDROID)
+#include <sys/system_properties.h>
+#include "base/logging.h"
+#endif
+
 namespace base {
 
 namespace {
@@ -614,5 +619,14 @@ std::string CountryCodeForCurrentTimezone() {
   return TimezoneMap::GetInstance()->CountryCodeForTimezone(
       id.toUTF8String(olson_code));
 }
+
+#if defined(OS_ANDROID)
+std::string GetDefaultTimeZoneId() {
+  char value[PROP_VALUE_MAX + 1];
+  int length = __system_property_get("persist.sys.timezone", value);
+  DCHECK(length != 0);
+  return std::string(value, length);
+}
+#endif
 
 }  // namespace base
