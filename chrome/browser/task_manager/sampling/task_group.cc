@@ -125,19 +125,13 @@ TaskGroup::TaskGroup(
                                       weak_ptr_factory_.GetWeakPtr())));
   worker_thread_sampler_.swap(sampler);
 
-  shared_sampler_->RegisterCallbacks(
-      process_id_, base::Bind(&TaskGroup::OnIdleWakeupsRefreshDone,
-                              weak_ptr_factory_.GetWeakPtr()),
-      base::Bind(&TaskGroup::OnPhysicalMemoryUsageRefreshDone,
-                 weak_ptr_factory_.GetWeakPtr()),
-      base::Bind(&TaskGroup::OnStartTimeRefreshDone,
-                 weak_ptr_factory_.GetWeakPtr()),
-      base::Bind(&TaskGroup::OnCpuTimeRefreshDone,
-                 weak_ptr_factory_.GetWeakPtr()));
+  shared_sampler_->RegisterCallback(
+      process_id_,
+      base::Bind(&TaskGroup::OnSamplerRefreshDone, base::Unretained(this)));
 }
 
 TaskGroup::~TaskGroup() {
-  shared_sampler_->UnregisterCallbacks(process_id_);
+  shared_sampler_->UnregisterCallback(process_id_);
 }
 
 void TaskGroup::AddTask(Task* task) {
@@ -283,34 +277,20 @@ void TaskGroup::OnRefreshNaClDebugStubPortDone(int nacl_debug_stub_port) {
 }
 #endif  // !defined(DISABLE_NACL)
 
+#if defined(OS_LINUX)
+void TaskGroup::OnOpenFdCountRefreshDone(int open_fd_count) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  open_fd_count_ = open_fd_count;
+  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_FD_COUNT);
+}
+#endif  // defined(OS_LINUX)
+
 void TaskGroup::OnCpuRefreshDone(double cpu_usage) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
   cpu_usage_ = cpu_usage;
   OnBackgroundRefreshTypeFinished(REFRESH_TYPE_CPU);
-}
-
-void TaskGroup::OnStartTimeRefreshDone(base::Time start_time) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  start_time_ = start_time;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_START_TIME);
-}
-
-void TaskGroup::OnCpuTimeRefreshDone(base::TimeDelta cpu_time) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  cpu_time_ = cpu_time;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
-}
-
-void TaskGroup::OnPhysicalMemoryUsageRefreshDone(int64_t physical_bytes) {
-#if defined(OS_WIN)
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  memory_usage_.physical_bytes = physical_bytes;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
-#endif  // OS_WIN
 }
 
 void TaskGroup::OnMemoryUsageRefreshDone(MemoryUsageStats memory_usage) {
@@ -326,6 +306,13 @@ void TaskGroup::OnMemoryUsageRefreshDone(MemoryUsageStats memory_usage) {
 #endif // OS_WIN
 }
 
+void TaskGroup::OnProcessPriorityDone(bool is_backgrounded) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  is_backgrounded_ = is_backgrounded;
+  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_PRIORITY);
+}
+
 void TaskGroup::OnIdleWakeupsRefreshDone(int idle_wakeups_per_second) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
@@ -333,20 +320,26 @@ void TaskGroup::OnIdleWakeupsRefreshDone(int idle_wakeups_per_second) {
   OnBackgroundRefreshTypeFinished(REFRESH_TYPE_IDLE_WAKEUPS);
 }
 
-#if defined(OS_LINUX)
-void TaskGroup::OnOpenFdCountRefreshDone(int open_fd_count) {
+void TaskGroup::OnSamplerRefreshDone(SharedSampler::Results results) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  open_fd_count_ = open_fd_count;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_FD_COUNT);
-}
-#endif  // defined(OS_LINUX)
-
-void TaskGroup::OnProcessPriorityDone(bool is_backgrounded) {
-  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
-  is_backgrounded_ = is_backgrounded;
-  OnBackgroundRefreshTypeFinished(REFRESH_TYPE_PRIORITY);
+  if (results.start_time) {
+    start_time_ = *results.start_time;
+    OnBackgroundRefreshTypeFinished(REFRESH_TYPE_START_TIME);
+  }
+  if (results.cpu_time) {
+    cpu_time_ = *results.cpu_time;
+    OnBackgroundRefreshTypeFinished(REFRESH_TYPE_CPU_TIME);
+  }
+  if (results.idle_wakeups_per_second) {
+    OnIdleWakeupsRefreshDone(*results.idle_wakeups_per_second);
+  }
+#if defined(OS_WIN)
+  if (results.physical_bytes) {
+    memory_usage_.physical_bytes = *results.physical_bytes;
+    OnBackgroundRefreshTypeFinished(REFRESH_TYPE_PHYSICAL_MEMORY);
+  }
+#endif  // OS_WIN
 }
 
 void TaskGroup::OnBackgroundRefreshTypeFinished(int64_t finished_refresh_type) {
