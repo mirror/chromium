@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ad2ba2cc_d80c57b3",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1115935
+      },
+      "writtenOn": "2017-06-18T19:45:16Z",
+      "side": 1,
+      "message": "for consistency, I\u0027d move this up into the namespace too.",
+      "range": {
+        "startLine": 151,
+        "startChar": 39,
+        "endLine": 151,
+        "endChar": 64
+      },
+      "revId": "f40a400e7ef6a1ffacc1b7675d026a211913a035",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
