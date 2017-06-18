@@ -148,6 +148,9 @@ class BASE_EXPORT SysInfo {
   // Returns the Android build ID.
   static std::string GetAndroidBuildID();
 
+  // Returns the Olson timezone Id
+  static std::string GetTimeZoneID();
+
   static int DalvikHeapSizeMB();
   static int DalvikHeapGrowthLimitMB();
 #endif  // defined(OS_ANDROID)
