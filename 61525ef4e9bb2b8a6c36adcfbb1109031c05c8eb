@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626deeba_b5424a00",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-18T09:14:36Z",
+      "side": 1,
+      "message": "This boilerplate appears in a lot of places... my plan is to clean this up in a future CL.\n\nauto owned_client \u003d CreateDefaultIfNeeded(client);",
+      "range": {
+        "startLine": 197,
+        "startChar": 0,
+        "endLine": 200,
+        "endChar": 3
+      },
+      "revId": "61525ef4e9bb2b8a6c36adcfbb1109031c05c8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b25b12cb_c8f8704c",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-18T09:14:36Z",
+      "side": 1,
+      "message": "This is the main limitation: for CreateRemoteChild() and WebViewHelper::InitializeRemote(), we can set the security origin because we initialize the internal core RemoteFrame as well.\n\nHowever, when we create a remote frame to swap into the tree, it\u0027s not initialized until it\u0027s swapped into the tree.\n\nI may try to clean this up in a followup CL by changing this to CreateRemoteAndSwap(), though that would make it a little oddly inconsistent with the other helpers.\n\n(lfg@ points out that creating a child for a local parent vs a remote parent is also different though, so maybe it\u0027s not that bad)",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 121,
+        "endChar": 33
+      },
+      "revId": "61525ef4e9bb2b8a6c36adcfbb1109031c05c8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de0a985b_6c64cb7a",
+        "filename": "third_party/WebKit/Source/core/frame/FrameTestHelpers.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-18T09:14:36Z",
+      "side": 1,
+      "message": "I tried to rearrange arguments to:\n- have a consistent ordering\n- have an ordering where the last few parameters often don\u0027t need to be specified.\n\nI will likely try to remove some of these parameters in a followup (for example, I\u0027m not sure any code actually passes a non-null security origin for CreateRemoteChild below)",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 131,
+        "endChar": 36
+      },
+      "revId": "61525ef4e9bb2b8a6c36adcfbb1109031c05c8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "595e7c5c_8e081295",
+        "filename": "third_party/WebKit/Source/web/tests/RootScrollerTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-18T09:14:36Z",
+      "side": 1,
+      "message": "Another possibility would have been to use InitializeRemote(), but that would require changing the test harness to make it possible to initialize a remote main frame instead.\n\nInstead, it\u0027s easy enough to just do the swap here.",
+      "range": {
+        "startLine": 679,
+        "startChar": 2,
+        "endLine": 680,
+        "endChar": 11
+      },
+      "revId": "61525ef4e9bb2b8a6c36adcfbb1109031c05c8eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
