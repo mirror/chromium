@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "50c2ec1c_ce475f14",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T22:57:01Z",
+      "side": 1,
+      "message": "Should this really be SYNCABLE? We don\u0027t sync other engagement heuristics.\n\nPlease go input from privacy (msramek@). This will also need to be hooked up to Clear Browsing Data to get deleted properly.",
+      "revId": "5707bedbd4a1589e81cd0d50ce071eeaf910c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d93cc74a_fff211d1",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-18T22:57:01Z",
+      "side": 1,
+      "message": "This should go before CONTENT_SETTINGS_NUM... (which should probably be renamed now).",
+      "revId": "5707bedbd4a1589e81cd0d50ce071eeaf910c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
