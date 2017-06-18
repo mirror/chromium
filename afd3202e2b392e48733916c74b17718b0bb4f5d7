@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "091809d3_5c899474",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/getPhotoSettings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-18T23:51:42Z",
+      "side": 1,
+      "message": "nit: quotes in JavaScript code are inconsistent.  This line use single quotes, and the next line use double quotes.",
+      "revId": "afd3202e2b392e48733916c74b17718b0bb4f5d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
