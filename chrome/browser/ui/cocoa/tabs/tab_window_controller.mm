@@ -161,6 +161,10 @@
   [super dealloc];
 }
 
+- (NSVisualEffectView*)visualEffectView {
+  return visualEffectView_;
+}
+
 - (NSView*)tabStripBackgroundView {
   return tabStripBackgroundView_;
 }
@@ -437,13 +441,17 @@
   if (hasTitleBar)
     return;
 
-  visualEffectView_.reset(
-      [[nsVisualEffectViewClass alloc]
-          initWithFrame:[tabStripBackgroundView_ frame]]);
+  NSView* visualEffectWrapperView = [[[NSView alloc]
+      initWithFrame:[tabStripBackgroundView_ frame]] autorelease];
+
+  visualEffectView_.reset([[nsVisualEffectViewClass alloc]
+      initWithFrame:visualEffectWrapperView.bounds]);
   DCHECK(visualEffectView_);
 
-  [visualEffectView_ setAutoresizingMask:
-      [tabStripBackgroundView_ autoresizingMask]];
+  [visualEffectWrapperView
+      setAutoresizingMask:[tabStripBackgroundView_ autoresizingMask]];
+  [visualEffectView_
+      setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
   [tabStripBackgroundView_
       setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
 
@@ -459,10 +467,12 @@
   [visualEffectView_ setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
   [visualEffectView_ setState:NSVisualEffectStateFollowsWindowActiveState];
 
+  [visualEffectWrapperView addSubview:visualEffectView_];
+
   if (chrome::ShouldUseFullSizeContentView()) {
-    [[window contentView] addSubview:visualEffectView_];
+    [[window contentView] addSubview:visualEffectWrapperView];
   } else {
-    [rootView addSubview:visualEffectView_
+    [rootView addSubview:visualEffectWrapperView
               positioned:NSWindowBelow
               relativeTo:nil];
   }
