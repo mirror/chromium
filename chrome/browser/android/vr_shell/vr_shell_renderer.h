@@ -12,12 +12,12 @@
 #include "base/macros.h"
 #include "chrome/browser/android/vr_shell/ui_element_renderer.h"
 #include "chrome/browser/android/vr_shell/vr_controller_model.h"
+#include "ui/gfx/geometry/size.h"
 #include "ui/gfx/transform.h"
 #include "ui/gl/gl_bindings.h"
 
 namespace vr_shell {
 
-// TODO(tiborg): set background color through JS API.
 constexpr float kFogBrightness = 0.57f;
 
 enum ShaderID {
@@ -104,14 +104,16 @@ class ExternalTexturedQuadRenderer : public BaseQuadRenderer {
   // Draw the content rect in the texture quad.
   void Draw(int texture_data_handle,
             const gfx::Transform& view_proj_matrix,
-            const gfx::RectF& copy_rect,
-            float opacity);
+            const gfx::Size& texture_size,
+            float opacity,
+            float corner_radius);
 
  private:
   GLuint model_view_proj_matrix_handle_;
-  GLuint copy_rect_uniform_handle_;
+  GLuint tex_size_uniform_handle_;
   GLuint tex_uniform_handle_;
   GLuint opacity_handle_;
+  GLuint corner_radius_uniform_handle_;
 
   DISALLOW_COPY_AND_ASSIGN(ExternalTexturedQuadRenderer);
 };

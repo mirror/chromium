@@ -172,6 +172,14 @@ class UiElement : public WorldRectangle {
   float opacity() const { return opacity_; }
   void set_opacity(float opacity) { opacity_ = opacity; }
 
+  // The corner radius of the object. Analgous to CSS's border-radius. This is
+  // intended to be used with textured elements and its units are in physical
+  // pixels of that texture.
+  float corner_radius() const { return corner_radius_; }
+  void set_corner_radius(float corner_radius) {
+    corner_radius_ = corner_radius;
+  }
+
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity() const { return computed_opacity_; }
   void set_computed_opacity(float computed_opacity) {
@@ -281,6 +289,9 @@ class UiElement : public WorldRectangle {
 
   // The opacity of the object (between 0.0 and 1.0).
   float opacity_ = 1.0f;
+
+  // The corner radius of the object. Analogous to CSS's border-radius.
+  float corner_radius_ = 0.0f;
 
   // The computed opacity, incorporating opacity of parent objects.
   float computed_opacity_ = 1.0f;
