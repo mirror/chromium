@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "85ed189a_dcd73e86",
+        "filename": "third_party/WebKit/Source/core/dom/ClassicPendingScript.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "Now we can remove this include.",
+      "range": {
+        "startLine": 11,
+        "startChar": 1,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7bba291_e24db881",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptLoader.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 615,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "If we call TryStream() and thus StartStreamingIfPossible() in QueueScriptForExecution(), then can we remove this StartStreamingIfPossible() call here?\n\n(I\u0027m not so sure whether ScriptLoader here should call StartStreamingIfPossible() or ScriptRunner should.)",
+      "range": {
+        "startLine": 615,
+        "startChar": 21,
+        "endLine": 615,
+        "endChar": 45
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d06b3b6d_a183a752",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "Isn\u0027t it cleaner if we move this check inside StartStreamingIfPossible()?\n(ScriptLoader will be more independent from streaming)",
+      "range": {
+        "startLine": 299,
+        "startChar": 2,
+        "endLine": 299,
+        "endChar": 44
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea32bc74_194f1ba4",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 303,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "(Perhaps a separate issue) Can we avoid use of |document_| here, i.e. use the Document of ScriptLoader, not of ScriptRunner. This is because I\u0027d like to allow ScriptRunner and ScriptLoader to belong to different documents in the future (Issue 721914).",
+      "range": {
+        "startLine": 303,
+        "startChar": 6,
+        "endLine": 303,
+        "endChar": 15
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62d3e179_20ec4587",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "Memo: this Persistent might cause a reference cycle that cannot be collected unless streaming is finished, i.e.\nScriptRunner -(Member)-\u003e ScriptLoader -(Member)-\u003e ClassicPendingScript -(unique_ptr)-\u003e WTF::Function -(Persistent)-\u003e ScriptRunner.\nProbably we\u0027ll have to break the cycle (by using WeakPersistent here? not sure).",
+      "range": {
+        "startLine": 305,
+        "startChar": 16,
+        "endLine": 305,
+        "endChar": 36
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cef4bde_4a1bcdf7",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "I think it\u0027s better to hard-code to |in_order_scripts_to_execute_soon_|, because ExecuteFirstTaskFromQueue() cannot be applied to anything else.",
+      "range": {
+        "startLine": 83,
+        "startChar": 33,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6dcdacd_79e81e37",
+        "filename": "third_party/WebKit/Source/core/dom/ScriptRunner.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-18T23:46:11Z",
+      "side": 1,
+      "message": "ditto.",
+      "range": {
+        "startLine": 85,
+        "startChar": 31,
+        "endLine": 85,
+        "endChar": 63
+      },
+      "revId": "270fd34ba5b801aae81510146e9176769cfb3f72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
