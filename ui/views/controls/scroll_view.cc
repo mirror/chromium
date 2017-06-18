@@ -394,6 +394,7 @@ void ScrollView::Layout() {
   viewport_bounds.set_width(viewport_bounds.width() - vert_sb_layout_width);
   // Update the bounds right now so the inner views can fit in it.
   contents_viewport_->SetBoundsRect(viewport_bounds);
+  // TODO(pdr): Set the content layer's scroll container bounds.
 
   // Give |contents_| a chance to update its bounds if it depends on the
   // viewport.
@@ -464,6 +465,7 @@ void ScrollView::Layout() {
 
   // Update to the real client size with the visible scrollbars.
   contents_viewport_->SetBoundsRect(viewport_bounds);
+  // TODO(pdr): Set the content layer's scroll container bounds.
   if (should_layout_contents && contents_)
     contents_->Layout();
 
