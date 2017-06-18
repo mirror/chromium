@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a6679892_429d659c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 5
+      },
+      "lineNbr": 5213,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-18T04:03:30Z",
+      "side": 1,
+      "message": "Agreed - thanks for the suggestion.",
+      "parentUuid": "2fab50ec_49fd8414",
+      "revId": "105d9eaab188d3311e68771a61316e7c7b7fd96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dfc71e4d_28e0b5b7",
         "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "105d9eaab188d3311e68771a61316e7c7b7fd96d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74121524_dcb9d142",
+        "filename": "chrome/browser/ui/startup/bad_flags_prompt.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001385
+      },
+      "writtenOn": "2017-06-18T04:03:30Z",
+      "side": 1,
+      "message": "Good point; actually makes the code read more naturally with |conditional_flag|, too, IMO. \\o/",
+      "parentUuid": "dfc71e4d_28e0b5b7",
+      "revId": "105d9eaab188d3311e68771a61316e7c7b7fd96d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
