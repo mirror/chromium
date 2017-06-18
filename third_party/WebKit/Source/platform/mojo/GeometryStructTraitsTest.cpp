@@ -79,10 +79,13 @@ class GeometryStructTraitsTest
     NOTREACHED();
   }
 
+  // Mojo bindings depend on SequencedTaskRunnerHandle being set.
+  // |message_loop_| provides that so it must be created before and destroyed
+  // after any mojo bindings.
+  base::MessageLoop message_loop_;
+
   mojo::BindingSet<gfx::mojom::blink::GeometryTraitsTestService>
       traits_test_bindings_;
-
-  base::MessageLoop message_loop_;
 
   DISALLOW_COPY_AND_ASSIGN(GeometryStructTraitsTest);
 };
