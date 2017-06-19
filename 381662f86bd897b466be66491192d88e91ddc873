@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f611089c_0589554b",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T06:00:32Z",
+      "side": 1,
+      "message": "Let\u0027s call this in StartDownload() in case there are any downloads we can cancel?",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 26
+      },
+      "revId": "381662f86bd897b466be66491192d88e91ddc873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87332ea2_cd813f3f",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 741,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T06:00:32Z",
+      "side": 1,
+      "message": "Eh might as well make this if block look like the one in KillTimedOutDownloads() (!\u003d complete, group the conditions together).  Will be easier to read both then.",
+      "range": {
+        "startLine": 739,
+        "startChar": 4,
+        "endLine": 741,
+        "endChar": 70
+      },
+      "revId": "381662f86bd897b466be66491192d88e91ddc873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06dd8fe1_4fb1e480",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 764,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T06:00:32Z",
+      "side": 1,
+      "message": "Ah shoot this is exposing a cleanup bug I think?  I\u0027d put this in the failure case in HandleCompleteDownload and add a TODO to handle the case where we crash before the model write happens and we have no driver entry.",
+      "range": {
+        "startLine": 764,
+        "startChar": 6,
+        "endLine": 764,
+        "endChar": 35
+      },
+      "revId": "381662f86bd897b466be66491192d88e91ddc873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b5839bcd_70104f79",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1077,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T06:00:32Z",
+      "side": 1,
+      "message": "Can you add a case to DownloadCompletionTest and remove the TODO at the top?",
+      "range": {
+        "startLine": 1077,
+        "startChar": 0,
+        "endLine": 1077,
+        "endChar": 59
+      },
+      "revId": "381662f86bd897b466be66491192d88e91ddc873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
