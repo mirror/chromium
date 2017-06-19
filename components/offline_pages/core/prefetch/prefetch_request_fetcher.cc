@@ -6,6 +6,8 @@
 
 #include "base/logging.h"
 #include "base/memory/ptr_util.h"
+#include "components/offline_pages/core/offline_page_feature.h"
+#include "components/variations/variations_associated_data.h"
 #include "google_apis/google_api_keys.h"
 #include "net/base/load_flags.h"
 #include "net/base/url_util.h"
@@ -20,11 +22,8 @@
 namespace offline_pages {
 
 namespace {
-
+const char kOfflinePagesBackend[] = "offline_pages_backend";
 const char kPrefetchServer[] = "https://offlinepages-pa.googleapis.com/";
-const char kPrefetchStagingServer[] =
-    "https://staging-offlinepages-pa.sandbox.googleapis.com/";
-
 // Used in all offline prefetch request URLs to specify API Key.
 const char kApiKeyName[] = "key";
 
@@ -32,13 +31,24 @@ const char kApiKeyName[] = "key";
 // proto format.
 const char kRequestContentType[] = "application/x-protobuf";
 
+GURL GetFetchEndpoint() {
+  GURL endpoint = GURL(variations::GetVariationParamValueByFeature(
+      offline_pages::kPrefetchingOfflinePagesFeature, kOfflinePagesBackend));
+
+  // |is_valid| returns false for bad URLs and also for empty URLs.
+  if (endpoint.is_valid()) {
+    return endpoint;
+  }
+
+  return GURL(kPrefetchServer);
+}
+
 GURL CompleteURL(const std::string& url_path, version_info::Channel channel) {
   bool is_stable_channel = channel == version_info::Channel::STABLE;
-  GURL server_url(is_stable_channel ? kPrefetchServer : kPrefetchStagingServer);
 
   GURL::Replacements replacements;
   replacements.SetPathStr(url_path);
-  GURL url = server_url.ReplaceComponents(replacements);
+  GURL url = GetFetchEndpoint().ReplaceComponents(replacements);
 
   std::string api_key = is_stable_channel ? google_apis::GetAPIKey()
                                           : google_apis::GetNonStableAPIKey();
