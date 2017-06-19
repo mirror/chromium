@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cbc966ac_21051e9f",
+        "filename": "base/time/time.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 345,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-19T18:55:34Z",
+      "side": 1,
+      "message": "This is correct, but unfortunately it seems to be inconsistent with other buggy \"min\" code. Seems that others have been using \"-max()\" to mean \"min()\" for some reason. I suppose they might not have been thinking of how 2\u0027s compliment works (maybe they should be cc\u0027ed on this for edu purposes?). Would you mind fixing the other code (i.e., simple replace of all \"-max()\" to \"min()\")? FWICT, it seems to be an issue at these locations:\n\ntime.h: L214, L226, L674, L675, L691, L692\ntime.cc: L114, L126\ntime_unittest.cc: There are \"MAX\" and \"Overflow\" tests that seem to continue with this faulty assumption.",
+      "range": {
+        "startLine": 345,
+        "startChar": 21,
+        "endLine": 345,
+        "endChar": 56
+      },
+      "revId": "15e70d474ac92cf2496a8ca6894107e88596e21d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
