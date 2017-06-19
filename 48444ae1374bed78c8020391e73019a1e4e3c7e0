@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb4094e6_d12ca637",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "904a5e59_5e7586c4",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a6bc841_857182f6",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "I would try to clean up this function. Probably consolidate all the string formatting to one place instead of appending bits and pieces.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17a62263_d17cb512",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "I decided to do it differently -- do the safe conversion upon adding, and then for repr, just repr the dictionary. That makes more sense, I think, and it means I don\u0027t have to do the string construction manually at all.",
+      "parentUuid": "8a6bc841_857182f6",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "2bfc9028_677b0a49",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6415b548_b284f359",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5abe6732_c1559602",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "I dont think this if is necessary, also, it seems to not work correctly in current state if there are 0 keys in self.internal.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "413e0caa_7430070f",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Oh heh yeah, the string length would be 1; but that shouldn\u0027t matter now!",
+      "parentUuid": "5abe6732_c1559602",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b9b3f901_3527d92e",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "838d5a62_a4536a2b",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "905e290f_69722f87",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "What should behavior be if no to_include filters are specified?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bb95523_12b73638",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Good question... probably include all by default?",
+      "parentUuid": "905e290f_69722f87",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "32448699_a124bbf0",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "45f99163_f83c04e8",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c0f80353_ce7289de",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -135,6 +261,24 @@
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "982d9c9f_c9654784",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0f80353_ce7289de",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -155,6 +299,24 @@
     },
     {
       "key": {
+        "uuid": "f30223e6_d36a0d2b",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "265fd89a_1a0fb641",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "645b5ed9_6341ffe5",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -166,6 +328,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "I dont think you need this condition. Simplify this code where you can.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e68513f_cd4fdadb",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Ah, it\u0027s a little complicated (that\u0027s why I called this \"trickery\" in the design doc). co_varnames contains all the variable names in the frame; some of them are local variables, not arguments. But the arguments will always be the first, meaning the first co_argcount, of them.\n\nI should document it, I guess :P",
+      "parentUuid": "645b5ed9_6341ffe5",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +369,24 @@
     },
     {
       "key": {
+        "uuid": "27540072_0a9b0a43",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "see above",
+      "parentUuid": "863cddff_ede56375",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "298f4722_c5178d77",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -200,6 +398,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "I dont think I understand this. Probably need a clearer variable name here, and also I would return None in the else case just to be explicit.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b029b597_1b48ac17",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Added some documentation",
+      "parentUuid": "298f4722_c5178d77",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -223,6 +439,24 @@
     },
     {
       "key": {
+        "uuid": "64dd95db_13d02b2d",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4e08573d_bef57d3e",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "97b0b0da_68e0d4c6",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -234,6 +468,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "Some considerations and question....\n\nWhat happens if an Exception is raised? Does the \"return\" event still occur?\nWhat happens if someone uses py_trace_event outside of this?",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63fca09_5b374dc5",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Yes, I believe the return event should does occur when there\u0027s an exception.\n\nI think other uses of py_trace_event, including the already-implemented tracing, don\u0027t do anything; there\u0027s a \"Tracing is already running\" warning near the beginning of the test run, I think because the second call to trace_enable doesn\u0027t do anything.",
+      "parentUuid": "97b0b0da_68e0d4c6",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -257,6 +509,24 @@
     },
     {
       "key": {
+        "uuid": "f6ee9ca6_880c045e",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "231431df_91549314",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b67b831_9d319f86",
         "filename": "build/android/pylib/utils/instrumentation_tracing.py",
         "patchSetId": 2
@@ -274,6 +544,24 @@
     },
     {
       "key": {
+        "uuid": "a1884df1_bf2eefcc",
+        "filename": "build/android/pylib/utils/instrumentation_tracing.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": "The global trace function, which is set by sys.settrace, is called for every function call event. The local trace function, which is returned by the global trace function when it handles a call event, gets called for \"line,\" \"return,\" and \"exception\" events; but ours ignores everything except \"return\"",
+      "parentUuid": "5b67b831_9d319f86",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "416f30bc_6637098d",
         "filename": "build/android/test_runner.py",
         "patchSetId": 2
@@ -285,6 +573,24 @@
       "writtenOn": "2017-06-15T15:38:25Z",
       "side": 1,
       "message": "This is sweet that it takes so little code to get this running! I really like this.",
+      "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "884483e9_828fbabf",
+        "filename": "build/android/test_runner.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 934,
+      "author": {
+        "id": 1215026
+      },
+      "writtenOn": "2017-06-19T17:54:23Z",
+      "side": 1,
+      "message": ":D",
+      "parentUuid": "416f30bc_6637098d",
       "revId": "48444ae1374bed78c8020391e73019a1e4e3c7e0",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
