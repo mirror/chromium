@@ -103,7 +103,7 @@ void MediaStreamRemoteVideoSource::RemoteVideoSourceDelegate::OnFrame(
   const base::TimeTicks render_time =
       base::TimeTicks() + incoming_timestamp + time_diff_;
 
-  TRACE_EVENT1("webrtc", "RemoteVideoSourceDelegate::RenderFrame",
+  TRACE_EVENT1("webrtc.chromium", "RemoteVideoSourceDelegate::RenderFrame",
                "Ideal Render Instant", render_time.ToInternalValue());
 
   CHECK_NE(media::kNoTimestamp, incoming_timestamp);
@@ -162,7 +162,8 @@ void MediaStreamRemoteVideoSource::
 RemoteVideoSourceDelegate::DoRenderFrameOnIOThread(
     const scoped_refptr<media::VideoFrame>& video_frame) {
   DCHECK(io_task_runner_->BelongsToCurrentThread());
-  TRACE_EVENT0("webrtc", "RemoteVideoSourceDelegate::DoRenderFrameOnIOThread");
+  TRACE_EVENT0("webrtc.chromium",
+               "RemoteVideoSourceDelegate::DoRenderFrameOnIOThread");
   // TODO(hclam): Give the estimated capture time.
   frame_callback_.Run(video_frame, base::TimeTicks());
 }
