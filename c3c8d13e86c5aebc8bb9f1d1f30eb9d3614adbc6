@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "a0edee03_1f8d28e6",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Hmm, as noted in LoadRequest(), we should fix the credentials flag to be set based on same-origin-ness even for \"no-cors\" mode in the future, but it should be done by using the response tainting.\n\nSo, yes, I\u0027d take your suggestion and let it set only when non-\"no-cors\"  mode is in use.",
+      "parentUuid": "ed27f7a5_52a0995f",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c0dd04a5_32ba6620",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
         "patchSetId": 34
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "090ab584_7c40e4e7",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0dd04a5_32ba6620",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "22e7177b_92e37e74",
         "filename": "third_party/WebKit/Source/core/loader/TextTrackLoader.cpp",
         "patchSetId": 34
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-19T07:43:24Z",
       "side": 1,
       "message": "TextTrackLoader doesn\u0027t user ThreadableLoader, so |cors_flag_| is always same as |cors_handling_by_resource_fetcher|, right?",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f18df6e_3fa106f0",
+        "filename": "third_party/WebKit/Source/core/loader/TextTrackLoader.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Fixed to only see GetResourceRequest().",
+      "parentUuid": "22e7177b_92e37e74",
       "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "ed75c29c_3f7356b5",
+        "filename": "third_party/WebKit/Source/core/loader/private/CrossOriginPreflightResultCache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Added a comment.",
+      "parentUuid": "e1fb41cc_6420ee02",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "92ee4560_1517b6ca",
         "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
         "patchSetId": 34
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "66760bf8_3d97ac6e",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ee4560_1517b6ca",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "07d65728_02004214",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 34
@@ -101,6 +191,24 @@
       "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2eda14d_d1e90d89",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "07d65728_02004214",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

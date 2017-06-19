@@ -145,6 +145,24 @@
       "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061dcfa7_d7757bcb",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderOptions.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T10:17:17Z",
+      "side": 1,
+      "message": "Right! Fixed.",
+      "parentUuid": "28476a34_819c8a15",
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
