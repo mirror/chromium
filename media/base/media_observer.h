@@ -56,6 +56,10 @@ class MEDIA_EXPORT MediaObserver {
   virtual void OnPlaying() = 0;
   virtual void OnPaused() = 0;
 
+  // Called when the data source is asynchronously initialized.
+  virtual void OnDataSourceInitialized(const GURL& url_after_redirects,
+                                       bool did_pass_cors_access_check) = 0;
+
   // Set the MediaObserverClient.
   virtual void SetClient(MediaObserverClient* client) = 0;
 };

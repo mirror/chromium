@@ -86,7 +86,9 @@ class MODULES_EXPORT RemotePlayback final
   void AvailabilityChanged(WebRemotePlaybackAvailability) override;
   void PromptCancelled() override;
   bool RemotePlaybackAvailable() const override;
-  void SourceChanged(const WebURL&) override;
+  void SourceChanged(const WebURL&,
+                     bool did_pass_cors_access_check,
+                     bool audio_video_supported) override;
 
   // ScriptWrappable implementation.
   bool HasPendingActivity() const final;
