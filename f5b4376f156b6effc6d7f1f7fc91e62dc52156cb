@@ -2,6 +2,46 @@
   "comments": [
     {
       "key": {
+        "uuid": "9d0a47c3_346f6e40",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-19T16:06:32Z",
+      "side": 1,
+      "message": "Could consider making these different bullets for each sub-ordering",
+      "range": {
+        "startLine": 34,
+        "startChar": 3,
+        "endLine": 41,
+        "endChar": 16
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf77ecad_1209ab5a",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-19T16:06:32Z",
+      "side": 1,
+      "message": "The overview seems a bit lengthy, and includes similar content to the intro in the beginning. Maybe it could be condensed?",
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "284b78ef_1d9dec6e",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -41,6 +81,46 @@
         "startChar": 0,
         "endLine": 121,
         "endChar": 49
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f3f5f50_66a78c73",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-19T16:06:32Z",
+      "side": 1,
+      "message": "It might be more helpful to include this section closer to the \"Using Chrome Variations during runtime\" section since they go hand-in-hand",
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2b27d746_9e6ce4cf",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1211567
+      },
+      "writtenOn": "2017-06-19T16:06:32Z",
+      "side": 1,
+      "message": "might also want to include a bullet on the max # of days (3650)?",
+      "range": {
+        "startLine": 332,
+        "startChar": 70,
+        "endLine": 332,
+        "endChar": 77
       },
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
