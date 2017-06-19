@@ -1223,6 +1223,12 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kContextualSearchUrlActionsName,
      flag_descriptions::kContextualSearchUrlActionsDescription, kOsAndroid,
      FEATURE_VALUE_TYPE(chrome::android::kContextualSearchUrlActions)},
+    {"delay-showing-search-provider-default-logo",
+     flag_descriptions::kDelayShowingSearchProviderDefaultLogoName,
+     flag_descriptions::kDelayShowingSearchProviderDefaultLogoDescription,
+     kOsAndroid,
+     FEATURE_VALUE_TYPE(
+         chrome::android::kDelayShowingSearchProviderDefaultLogo)},
 #endif  // OS_ANDROID
     {"show-autofill-type-predictions",
      flag_descriptions::kShowAutofillTypePredictionsName,

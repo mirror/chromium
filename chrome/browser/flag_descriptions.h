@@ -877,6 +877,9 @@ extern const char kContextualSearchUrlActionsDescription[];
 extern const char kContextualSearchName[];
 extern const char kContextualSearchDescription[];
 
+extern const char kDelayShowingSearchProviderDefaultLogoName[];
+extern const char kDelayShowingSearchProviderDefaultLogoDescription[];
+
 extern const char kEnableAndroidPayIntegrationV1Name[];
 extern const char kEnableAndroidPayIntegrationV1Description[];
 
