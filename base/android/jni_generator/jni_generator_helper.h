@@ -30,6 +30,11 @@
 #define JNI_GENERATOR_EXPORT extern "C" __attribute__((visibility("default")))
 #endif
 
+// Used to export JNI registration functions.
+#if defined(COMPONENT_BUILD)
+#define JNI_REGISTRATION_EXPORT __attribute__((visibility("default")))
+#endif
+
 namespace jni_generator {
 
 inline void HandleRegistrationError(JNIEnv* env,
