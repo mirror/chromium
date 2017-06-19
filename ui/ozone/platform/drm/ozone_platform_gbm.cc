@@ -206,7 +206,8 @@ class OzonePlatformGbm : public OzonePlatform {
     // complete.
     // using_mojo_ = args.connector != nullptr;
 
-    gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
+    if (base::ThreadTaskRunnerHandle::IsSet())
+      gpu_task_runner_ = base::ThreadTaskRunnerHandle::Get();
     InterThreadMessagingProxy* itmp;
     if (using_mojo_ || single_process_) {
       itmp = mus_thread_proxy_.get();
