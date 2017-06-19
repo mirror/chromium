@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "7d63478e_0950402d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-19T05:14:44Z",
+      "side": 1,
+      "message": "I though the size is okay, but this can be marginal, as you said.\nIt might be safe to allocate this to heap. Let me do it.",
+      "parentUuid": "3d759486_fdaadaea",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "af381f15_aaf0a25a",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
         "patchSetId": 17
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "8841505b_d8a0af72",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-19T05:14:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "af381f15_aaf0a25a",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "27cc4d66_604a3774",
         "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
         "patchSetId": 17
@@ -50,6 +86,24 @@
       "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba7486f1_8cdfdf36",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-19T05:14:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "27cc4d66_604a3774",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
