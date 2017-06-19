@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5fca2a8b_964b2f41",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb044a06_40077272",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "afb25fff_45225bdc",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21362bcb_b2506e01",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "afb25fff_45225bdc",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8b7f669e_beff71d0",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05cfa559_68707bec",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a83b31dc_fff3023c",
         "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
         "patchSetId": 1
@@ -67,6 +121,24 @@
       "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c08996b5_ea116b08",
+        "filename": "chrome/browser/extensions/api/dial/dial_api.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 348,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a83b31dc_fff3023c",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "b3f211d4_c0187525",
+        "filename": "chrome/browser/extensions/api/dial/dial_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "It\u0027s currently cleared in SetUpOnMainThread but TearDown makes much more sense.  Done.",
+      "parentUuid": "0cf0663d_6b282bcc",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "935a9168_857c082f",
         "filename": "chrome/browser/extensions/api/dial/dial_apitest.cc",
         "patchSetId": 1
@@ -101,6 +191,24 @@
       "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4db78dc_fa7ef9aa",
+        "filename": "chrome/browser/extensions/api/dial/dial_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "935a9168_857c082f",
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -124,6 +232,30 @@
       "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cf9268_16817813",
+        "filename": "chrome/common/extensions/api/dial.idl",
+        "patchSetId": 1
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1215804
+      },
+      "writtenOn": "2017-06-19T21:04:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2309b65f_c1b19caf",
+      "range": {
+        "startLine": 39,
+        "startChar": 0,
+        "endLine": 39,
+        "endChar": 1
+      },
+      "revId": "0fdad48d7f26f948bfb2462f84e4c30f288d29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
