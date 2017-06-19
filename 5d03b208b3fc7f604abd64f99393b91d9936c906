@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78868517_54e84756",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5213,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-19T22:53:37Z",
+      "side": 1,
+      "message": "Complaint:\n\"An event\" is vague.  What event?\n\nResolution: it\u0027s fine keeping this action description as-is because it fits with the other in product help user actions.",
+      "range": {
+        "startLine": 5213,
+        "startChar": 37,
+        "endLine": 5213,
+        "endChar": 42
+      },
+      "revId": "5d03b208b3fc7f604abd64f99393b91d9936c906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f0fac0ee_aa8f190e",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 5282,
+      "author": {
+        "id": 1001310
+      },
+      "writtenOn": "2017-06-19T22:53:37Z",
+      "side": 1,
+      "message": "This description sounds like it\u0027s emitted programmatically, not in response to a direct user action.  In these cases, we prefer you either don\u0027t emit an action for it (depending on how often it\u0027s triggered) or at least mark it as not user initiated.",
+      "range": {
+        "startLine": 5282,
+        "startChar": 14,
+        "endLine": 5282,
+        "endChar": 27
+      },
+      "revId": "5d03b208b3fc7f604abd64f99393b91d9936c906",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
