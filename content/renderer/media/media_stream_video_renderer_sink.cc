@@ -64,7 +64,7 @@ class MediaStreamVideoRendererSink::FrameDeliverer {
                     base::TimeTicks /*current_time*/) {
     DCHECK(io_thread_checker_.CalledOnValidThread());
     DCHECK(frame);
-    TRACE_EVENT_INSTANT1("webrtc",
+    TRACE_EVENT_INSTANT1("webrtc.chromium",
                          "MediaStreamVideoRendererSink::"
                          "FrameDeliverer::OnVideoFrame",
                          TRACE_EVENT_SCOPE_THREAD, "timestamp",
