@@ -7,8 +7,13 @@
 #include "base/macros.h"
 #include "base/message_loop/message_loop.h"
 #include "base/threading/thread.h"
+#include "build/build_config.h"
 #include "content/browser/browser_thread_impl.h"
 #include "content/browser/notification_service_impl.h"
+
+#if defined(OS_WIN)
+#include "base/win/scoped_com_initializer.h"
+#endif
 
 namespace content {
 
@@ -24,16 +29,27 @@ class TestBrowserThreadImpl : public BrowserThreadImpl {
   ~TestBrowserThreadImpl() override { Stop(); }
 
   void Init() override {
+#if defined(OS_WIN)
+    com_initializer_.reset(new base::win::ScopedCOMInitializer());
+#endif
+
     notification_service_.reset(new NotificationServiceImpl);
     BrowserThreadImpl::Init();
   }
 
   void CleanUp() override {
-    notification_service_.reset();
     BrowserThreadImpl::CleanUp();
+    notification_service_.reset();
+#if defined(OS_WIN)
+    com_initializer_.reset();
+#endif
   }
 
  private:
+#if defined(OS_WIN)
+  std::unique_ptr<base::win::ScopedCOMInitializer> com_initializer_;
+#endif
+
   std::unique_ptr<NotificationService> notification_service_;
 
   DISALLOW_COPY_AND_ASSIGN(TestBrowserThreadImpl);
