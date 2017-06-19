@@ -14,6 +14,7 @@ class OfflineMetricsCollector;
 class PrefetchDispatcher;
 class PrefetchGCMHandler;
 class PrefetchService;
+class PrefetchNetworkRequestFactory;
 class SuggestedArticlesObserver;
 
 // The taco class acts as a wrapper around the prefetch service making
@@ -35,10 +36,18 @@ class PrefetchServiceTestTaco {
 
   // These methods must be called before CreatePrefetchService() is invoked.
   // If called after they will CHECK().
+  //
+  // Default type: TestOfflineMetricsCollector.
   void SetOfflineMetricsCollector(
       std::unique_ptr<OfflineMetricsCollector> metrics_collector);
+  // Default type: TestPrefetchDispatcher.
   void SetPrefetchDispatcher(std::unique_ptr<PrefetchDispatcher> dispatcher);
+  // Default type: TestPrefetchGCMHandler.
   void SetPrefetchGCMHandler(std::unique_ptr<PrefetchGCMHandler> gcm_handler);
+  // Default type: TestNetworkRequestFactory.
+  void SetPrefetchNetworkRequestFactory(
+      std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory);
+  // Defaults to |nullptr|.
   void SetSuggestedArticlesObserver(
       std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer);
 
@@ -58,6 +67,7 @@ class PrefetchServiceTestTaco {
   std::unique_ptr<OfflineMetricsCollector> metrics_collector_;
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> gcm_handler_;
+  std::unique_ptr<PrefetchNetworkRequestFactory> network_request_factory_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
 
   std::unique_ptr<PrefetchService> prefetch_service_;
