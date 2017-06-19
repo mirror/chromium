@@ -105,6 +105,7 @@ using content::TextInputClientMac;
 using content::WebContents;
 using content::WebGestureEventBuilder;
 using content::WebMouseEventBuilder;
+// using content::WebTouchEventBuilder;
 using content::WebMouseWheelEventBuilder;
 using blink::WebInputEvent;
 using blink::WebMouseEvent;
@@ -1768,7 +1769,12 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 - (id)initWithRenderWidgetHostViewMac:(RenderWidgetHostViewMac*)r {
   self = [super initWithFrame:NSZeroRect];
   if (self) {
-    self.acceptsTouchEvents = YES;
+    if ([self respondsToSelector:@selector(setAllowedTouchTypes:)]) {
+      self.allowedTouchTypes = NSTouchTypeMaskDirect | NSTouchTypeMaskIndirect;
+    } else {
+      self.acceptsTouchEvents = YES;
+    }
+
     editCommand_helper_.reset(new RenderWidgetHostViewMacEditCommandHelper);
     editCommand_helper_->AddEditingSelectorsToClass([self class]);
 
@@ -1829,6 +1835,60 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
                            consumed:(BOOL)consumed {
   [responderDelegate_ rendererHandledGestureScrollEvent:event
                                                consumed:consumed];
+}
+
+- (void)touchesBeganWithEvent:(NSEvent*)theEvent {
+  NSEventType type = [theEvent type];
+
+  if (type == 37) {
+    // Synthesize Mouse Event.
+    blink::WebMouseEvent::Button button = blink::WebMouseEvent::Button::kLeft;
+    blink::WebInputEvent::Type event_type = blink::WebInputEvent::kMouseDown;
+    int click_count = 0;
+
+    int modifiers = 0;
+    modifiers |= blink::WebInputEvent::kLeftButtonDown;
+    blink::WebMouseEvent event(event_type, modifiers, [theEvent timestamp]);
+    event.click_count = click_count;
+    event.button = button;
+
+    event.pointer_type = blink::WebPointerProperties::PointerType::kMouse;
+    event.id = [theEvent deviceID];
+
+    // Move to a function in web input event builders mac.
+    NSPoint screen_local = ui::ConvertPointFromWindowToScreen(
+        [self window], [theEvent locationInWindow]);
+    NSScreen* primary_screen = ([[NSScreen screens] count] > 0)
+                                   ? [[NSScreen screens] firstObject]
+                                   : nil;
+    // Flip y conditionally.
+    event.SetPositionInScreen(
+        screen_local.x,
+        primary_screen ? [primary_screen frame].size.height - screen_local.y
+                       : screen_local.y);
+
+    NSPoint content_local =
+        [self convertPoint:[theEvent locationInWindow] fromView:nil];
+    // Flip y.
+    event.SetPositionInWidget(content_local.x,
+                              [self frame].size.height - content_local.y);
+
+    event.movement_x = [theEvent deltaX];
+    event.movement_y = [theEvent deltaY];
+
+    ui::LatencyInfo latency_info(ui::SourceEventType::OTHER);
+    latency_info.AddLatencyNumber(ui::INPUT_EVENT_LATENCY_UI_COMPONENT, 0, 0);
+    if (renderWidgetHostView_->ShouldRouteEvent(event)) {
+      renderWidgetHostView_->render_widget_host_->delegate()
+          ->GetInputEventRouter()
+          ->RouteMouseEvent(renderWidgetHostView_.get(), &event, latency_info);
+    } else {
+      renderWidgetHostView_->ProcessMouseEvent(event, latency_info);
+    }
+
+    LOG(ERROR) << "Render widget host view mac touch";
+    [responderDelegate_ touchesBeganWithEvent:theEvent];
+  }
 }
 
 - (BOOL)respondsToSelector:(SEL)selector {
@@ -2398,10 +2458,6 @@ void RenderWidgetHostViewMac::OnDisplayMetricsChanged(
 
 - (void)touchesMovedWithEvent:(NSEvent*)event {
   [responderDelegate_ touchesMovedWithEvent:event];
-}
-
-- (void)touchesBeganWithEvent:(NSEvent*)event {
-  [responderDelegate_ touchesBeganWithEvent:event];
 }
 
 - (void)touchesCancelledWithEvent:(NSEvent*)event {

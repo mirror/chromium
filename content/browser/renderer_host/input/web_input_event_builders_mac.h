@@ -10,6 +10,7 @@
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "third_party/WebKit/public/platform/WebKeyboardEvent.h"
 #include "third_party/WebKit/public/platform/WebMouseWheelEvent.h"
+#include "third_party/WebKit/public/platform/WebTouchEvent.h"
 
 @class NSEvent;
 @class NSView;
@@ -29,6 +30,15 @@ class CONTENT_EXPORT WebMouseEventBuilder {
       blink::WebPointerProperties::PointerType pointerType =
           blink::WebPointerProperties::PointerType::kMouse);
 };
+
+// class CONTENT_EXPORT WebTouchEventBuilder {
+// public:
+//  static blink::WebTouchEvent Build(
+//      NSEvent* event,
+//      NSView* view,
+//      blink::WebPointerProperties::PointerType pointerType =
+//          blink::WebPointerProperties::PointerType::kTouch);
+//};
 
 class CONTENT_EXPORT WebMouseWheelEventBuilder {
  public:

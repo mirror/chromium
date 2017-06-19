@@ -450,7 +450,7 @@ bool BrowserWindowCocoa::IsFullscreen() const {
 }
 
 bool BrowserWindowCocoa::IsFullscreenBubbleVisible() const {
-  return false;  // Currently only called from toolkit-views page_info.
+  return false;  //  only called from toolkit-views page_info.
 }
 
 void BrowserWindowCocoa::MaybeShowNewBackShortcutBubble(bool forward) {
@@ -468,6 +468,15 @@ LocationBar* BrowserWindowCocoa::GetLocationBar() const {
 
 void BrowserWindowCocoa::SetFocusToLocationBar(bool select_all) {
   [controller_ focusLocationBar:select_all ? YES : NO];
+}
+
+void BrowserWindowCocoa::DisplayViewInTouchbar(content::WebContents* contents) {
+  NSView* view = contents->GetNativeView();
+  [controller_ displayViewInTouchbar:view];
+}
+
+void BrowserWindowCocoa::UpdateErrorPageState(bool is_error_page) {
+  [controller_ setIsErrorPage:is_error_page];
 }
 
 void BrowserWindowCocoa::UpdateReloadStopState(bool is_loading, bool force) {

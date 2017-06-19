@@ -247,6 +247,20 @@ blink::WebKeyboardEvent WebKeyboardEventBuilder::Build(NSEvent* event) {
   return result;
 }
 
+// WebTouchEvent --------------------------------------------------------------
+
+// blink::WebTouchEvent WebTouchEventBuilder::Build(
+//   NSEvent* event,
+//   NSView* view,
+//   blink::WebPointerProperties::PointerType pointerType) {
+//  blink::WebInputEvent::Type event_type =
+//    blink::WebInputEvent::Type::kTouch;
+//  blink::WebTouchEvent result(event_type, ModifiersFromEvent(event),
+//                              [event timestamp]);
+//  result.pointer_type = pointerType;
+//  return result;
+//}
+
 // WebMouseEvent --------------------------------------------------------------
 
 blink::WebMouseEvent WebMouseEventBuilder::Build(
