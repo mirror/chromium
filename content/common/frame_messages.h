@@ -456,6 +456,7 @@ IPC_STRUCT_BEGIN(FrameHostMsg_OpenURL_Params)
   IPC_STRUCT_MEMBER(bool, should_replace_current_entry)
   IPC_STRUCT_MEMBER(bool, user_gesture)
   IPC_STRUCT_MEMBER(bool, is_history_navigation_in_new_child)
+  IPC_STRUCT_MEMBER(bool, is_from_untrusted_event)
 IPC_STRUCT_END()
 
 IPC_STRUCT_BEGIN(FrameHostMsg_DownloadUrl_Params)

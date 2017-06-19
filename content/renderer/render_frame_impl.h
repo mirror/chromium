@@ -979,7 +979,8 @@ class CONTENT_EXPORT RenderFrameImpl
       const Referrer& referrer,
       blink::WebNavigationPolicy policy,
       bool should_replace_current_entry,
-      bool is_history_navigation_in_new_child);
+      bool is_history_navigation_in_new_child,
+      bool is_from_untrusted_event);
 
   // Performs a navigation in the frame. This provides a unified function for
   // the current code path and the browser-side navigation path (in
@@ -1393,6 +1394,7 @@ class CONTENT_EXPORT RenderFrameImpl
     bool replaces_current_history_item;
     bool history_navigation_in_new_child_frame;
     bool client_redirect;
+    bool from_untrusted_event;
     bool cache_disabled;
     blink::WebFormElement form;
     blink::WebSourceLocation source_location;
