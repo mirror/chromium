@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccde5ca8_92aa5786",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-19T15:21:30Z",
+      "side": 1,
+      "message": "For a callback, we should mention what it is expected to return: a boolean; true if the feature is enabled in the current document, or if it should throw an exception, or send a postMessage.",
+      "range": {
+        "startLine": 10,
+        "startChar": 34,
+        "endLine": 10,
+        "endChar": 42
+      },
+      "revId": "686a41e8b7ce18a4ef734c3714986a58e7d6774e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9590e6eb_58e9886a",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-19T15:21:30Z",
+      "side": 1,
+      "message": "nit: typo",
+      "range": {
+        "startLine": 11,
+        "startChar": 60,
+        "endLine": 11,
+        "endChar": 67
+      },
+      "revId": "686a41e8b7ce18a4ef734c3714986a58e7d6774e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5441eafe_35978fd3",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-19T15:21:30Z",
+      "side": 1,
+      "message": "nit: typo (description)",
+      "range": {
+        "startLine": 46,
+        "startChar": 48,
+        "endLine": 46,
+        "endChar": 66
+      },
+      "revId": "686a41e8b7ce18a4ef734c3714986a58e7d6774e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "77ddc105_f4ff64f8",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/feature-policy/resources/featurepolicy.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1137849
+      },
+      "writtenOn": "2017-06-19T15:21:30Z",
+      "side": 1,
+      "message": "ditto",
+      "range": {
+        "startLine": 50,
+        "startChar": 50,
+        "endLine": 50,
+        "endChar": 68
+      },
+      "revId": "686a41e8b7ce18a4ef734c3714986a58e7d6774e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
