@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bce5e2ac_fef05ecf",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T21:39:00Z",
+      "side": 1,
+      "message": "Say a little more about what situations this matters in. Something like: when percent columns meet or exceed 100% and there are remaining columns, the other browsers just use an artificially high max width, so we do too. Include a link to the github issue you filed.\n\nAnd move the comment to the first place you employ this logic.",
+      "range": {
+        "startLine": 270,
+        "startChar": 15,
+        "endLine": 270,
+        "endChar": 16
+      },
+      "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9cc923d_04fc9ebc",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T21:39:00Z",
+      "side": 1,
+      "message": "For what situations is this necessary? When percent columns \u003e\u003d 100% but max_non_percent is 0 it is supposed to remain 0? Is that right?",
+      "range": {
+        "startLine": 297,
+        "startChar": 8,
+        "endLine": 297,
+        "endChar": 23
+      },
+      "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
