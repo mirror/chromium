@@ -42,6 +42,40 @@
     },
     {
       "key": {
+        "uuid": "db6a79e1_8cedd00a",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-19T10:17:07Z",
+      "side": 1,
+      "message": "Could you comment that you preserved @0 for Init() in future?",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "03986ac0_5feb1fa8",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-19T10:17:07Z",
+      "side": 1,
+      "message": "In general, please destruct/teardown fields/members etc in the reverse order of the initialization, if there is no special reasons.\n\nSo, in this case, please;\n\nDiskMountManager::GetInstance()-\u003eRemoveObserver(this);\narc_bridge_service()-\u003eobb_mounter()-\u003eRemoveObserver(this);",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c6e850d_b2762cfc",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -89,6 +123,23 @@
     },
     {
       "key": {
+        "uuid": "c297ec46_5835ba44",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-19T10:17:07Z",
+      "side": 1,
+      "message": "Please VLOG here.",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fc0d7d5_73960fbc",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -124,6 +175,30 @@
       "side": 1,
       "message": "FYI you can refer the style guide for more detailed rules https://google.github.io/styleguide/cppguide.html#General_Naming_Rules\n\nAlso, you can refer http://www.chromium.org/developers/coding-style to know which style you should follow when coding for Chromium project.",
       "parentUuid": "5fc0d7d5_73960fbc",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b712b592_8073235e",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-19T10:17:07Z",
+      "side": 1,
+      "message": "(off topic): Also, here is another useful resource to know Chrome\u0027s coding culture.\nhttps://www.chromium.org/developers/coding-style/cpp-dos-and-donts",
+      "parentUuid": "d8a37a70_d47bd3ff",
       "range": {
         "startLine": 89,
         "startChar": 14,
