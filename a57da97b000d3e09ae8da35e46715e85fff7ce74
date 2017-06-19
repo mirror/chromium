@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f523aca5_ac8e035f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115863
+      },
+      "writtenOn": "2017-06-19T03:54:32Z",
+      "side": 1,
+      "message": "nit: do we need this DCHECK?",
+      "revId": "a57da97b000d3e09ae8da35e46715e85fff7ce74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
