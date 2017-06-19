@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57f270de_3d770ece",
+        "filename": "chrome/browser/extensions/api/identity/identity_signin_flow.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:03:52Z",
+      "side": 1,
+      "message": "Ken, it struck me that there\u0027s a failure mode here where the expected event occurs before the Identity Service processes the request to add the client as an observer. Is it common practice to have these types of registration methods have empty callbacks for this reason in your experience?",
+      "revId": "7828f16eac9bc87fef8a83940b4229b86f7380c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22977f4c_b208a56f",
+        "filename": "services/identity/identity_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:03:52Z",
+      "side": 1,
+      "message": "Mihai, there\u0027s something a little subtle here: IdentityManager needs to die before the //components/signin classes that it\u0027s relying on, but there\u0027s currently no real way to enforce this. In the long term IdentityManager will construct these objects internally so it won\u0027t be a problem, but that\u0027s a long while away of course. In the meantime I\u0027m thinking that what makes the most sense is to add a way for IdentityManager to hook into \"//components/signin shutdown\" so that it can shut itself down at the start of that process. Does that make sense to you? If so, where do you think the hook point to add would be? Basically, we\u0027d want something as close to the beginning of shutdown of all these classes as possible.",
+      "range": {
+        "startLine": 79,
+        "startChar": 2,
+        "endLine": 79,
+        "endChar": 16
+      },
+      "revId": "7828f16eac9bc87fef8a83940b4229b86f7380c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
