@@ -103,10 +103,12 @@ public class LocationUtils {
      *
      * <p>The callback is guaranteed to be called unless the user never replies to the prompt
      * dialog, which in practice happens very infrequently since the dialog is modal.
+     *
+     * TODO(wnwen): Add back @LocationSettingsDialogOutcome when type annotations are allowed.
      */
     public void promptToEnableSystemLocationSetting(
             @LocationSettingsDialogContext int promptContext, WindowAndroid window,
-            @LocationSettingsDialogOutcome Callback<Integer> callback) {
+            Callback<Integer> callback) {
         callback.onResult(LocationSettingsDialogOutcome.NO_PROMPT);
     }
 
