@@ -34,6 +34,24 @@
       "revId": "ae035233a686b96cf72ef869e220de12c62a6ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1315e320_16a9a2c7",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-19T23:42:52Z",
+      "side": 1,
+      "message": "I don\u0027t see how this was useful to debug this issue, since if CommitProperties fails for a missing/invalid property, it must fail for any value of test_only.\n\nUp to you if you want to keep it.",
+      "parentUuid": "0a1b331e_c762e72a",
+      "revId": "ae035233a686b96cf72ef869e220de12c62a6ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
