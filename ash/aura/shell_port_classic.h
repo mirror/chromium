@@ -12,7 +12,6 @@
 #include "ash/display/window_tree_host_manager.h"
 #include "ash/shell_port.h"
 #include "base/macros.h"
-#include "base/observer_list.h"
 
 namespace ash {
 
@@ -21,8 +20,7 @@ class PointerWatcherAdapter;
 
 // Implementation of ShellPort for classic ash/aura. See ash/README.md for more
 // details.
-class ASH_EXPORT ShellPortClassic : public ShellPort,
-                                    public WindowTreeHostManager::Observer {
+class ASH_EXPORT ShellPortClassic : public ShellPort {
  public:
   ShellPortClassic();
   ~ShellPortClassic() override;
@@ -71,8 +69,6 @@ class ASH_EXPORT ShellPortClassic : public ShellPort,
   CreateImmersiveFullscreenController() override;
   std::unique_ptr<KeyboardUI> CreateKeyboardUI() override;
   std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() override;
-  void AddDisplayObserver(WmDisplayObserver* observer) override;
-  void RemoveDisplayObserver(WmDisplayObserver* observer) override;
   void AddPointerWatcher(views::PointerWatcher* watcher,
                          views::PointerWatcherEventTypes events) override;
   void RemovePointerWatcher(views::PointerWatcher* watcher) override;
@@ -92,14 +88,7 @@ class ASH_EXPORT ShellPortClassic : public ShellPort,
   std::unique_ptr<AcceleratorController> CreateAcceleratorController() override;
 
  private:
-  // WindowTreeHostManager::Observer:
-  void OnDisplayConfigurationChanging() override;
-  void OnDisplayConfigurationChanged() override;
-
   std::unique_ptr<PointerWatcherAdapter> pointer_watcher_adapter_;
-
-  bool added_display_observer_ = false;
-  base::ObserverList<WmDisplayObserver> display_observers_;
 
   std::unique_ptr<AcceleratorControllerDelegateAura>
       accelerator_controller_delegate_;
