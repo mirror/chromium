@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "1037f247_aaf5035b",
+        "filename": ".repo/repo",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T08:14:49Z",
+      "side": 1,
+      "message": "What\u0027s this?\nShouldn\u0027t this be removed?",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "38c3d3c3_1c2c6011",
         "filename": "components/arc/common/volume_mounter.mojom",
         "patchSetId": 6
@@ -48,6 +65,30 @@
     },
     {
       "key": {
+        "uuid": "05161992_f0503418",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T08:14:49Z",
+      "side": 1,
+      "message": "FYI you can refer https://chromium.googlesource.com/chromium/src/+/master/docs/threading_and_tasks.md to know how to use TaskScheduler.",
+      "parentUuid": "3c6e850d_b2762cfc",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5fc0d7d5_73960fbc",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -59,6 +100,30 @@
       "writtenOn": "2017-06-17T22:24:28Z",
       "side": 1,
       "message": "Please follow Google C++ naming conventions in this code: it should be filesystem_uuid, device_label, etc.",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a37a70_d47bd3ff",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T08:14:49Z",
+      "side": 1,
+      "message": "FYI you can refer the style guide for more detailed rules https://google.github.io/styleguide/cppguide.html#General_Naming_Rules\n\nAlso, you can refer http://www.chromium.org/developers/coding-style to know which style you should follow when coding for Chromium project.",
+      "parentUuid": "5fc0d7d5_73960fbc",
       "range": {
         "startLine": 89,
         "startChar": 14,
@@ -140,6 +205,23 @@
     },
     {
       "key": {
+        "uuid": "bd973c2a_56eee4cd",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T08:14:49Z",
+      "side": 1,
+      "message": "Sorry for being unclear, I said Android side OBB mounter library should be renamed and shared by OBB code and volume mount code to avoid duplicating bridge proxy initialization code, but on Chrome side, there is no benefit in doing that.\n\nPlease put this code in a separate class, preferably in a new directory rather than putting the new code in obb_mounter directory.",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "73496d84_3df62acb",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
         "patchSetId": 6
@@ -151,6 +233,30 @@
       "writtenOn": "2017-06-17T22:24:28Z",
       "side": 1,
       "message": "std::future is in the banned list.",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efcf8a56_bbad9cfd",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T08:14:49Z",
+      "side": 1,
+      "message": "FYI you can refer https://chromium-cpp.appspot.com/ to know which C++ feature is allowed in Chromium project.",
+      "parentUuid": "73496d84_3df62acb",
       "range": {
         "startLine": 64,
         "startChar": 2,
