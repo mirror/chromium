@@ -46,6 +46,30 @@
       "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3412568_9352a6b7",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T11:51:47Z",
+      "side": 0,
+      "message": "I\u0027ve gone that route now, a smaller change, and `testing::RunPendingTasks();` isn\u0027t necessary because it\u0027s already called in a helper that these tests use.",
+      "parentUuid": "babfad22_b3e64eef",
+      "range": {
+        "startLine": 75,
+        "startChar": 28,
+        "endLine": 75,
+        "endChar": 39
+      },
+      "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
