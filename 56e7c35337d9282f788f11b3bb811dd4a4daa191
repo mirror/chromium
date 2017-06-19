@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ac0715a9_e11bbd44",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-19T18:51:53Z",
+      "side": 1,
+      "message": "Yes. SkippedCache() is now checked at line 43. Now if SkippedCache() is true, and we have current_chunk_id_, we\u0027ll use current_chunk_id_ and set cacheable to kUncacheable. Actually which id is used just affects client_debug_name in raster invalidation tracking. PaintChunk::Matched() is still equivalent to before.",
+      "parentUuid": "9d152615_dd4ffc20",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23c2a3be_cdfdf1a5",
         "filename": "third_party/WebKit/Source/platform/testing/PaintPrinters.cpp",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5f9b3a65_664dbf73",
+        "filename": "third_party/WebKit/Source/platform/testing/PaintPrinters.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-19T18:51:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "23c2a3be_cdfdf1a5",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
