@@ -42,6 +42,30 @@
     },
     {
       "key": {
+        "uuid": "24164652_a53c7b1f",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T17:35:38Z",
+      "side": 1,
+      "message": "FWIW, I really hate browser_dialogs.h because it seems like a random bag-o-globals; if there\u0027s anything that scopes this kind of functionality better then yay.  (If there isn\u0027t, then it\u0027s still better to consolidate the duplicated code as Trent suggests, but I hope someday we can just kill browser_dialogs.h.)",
+      "parentUuid": "8ab39206_3988ad28",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc0d9a1_59ba57c6",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 3
