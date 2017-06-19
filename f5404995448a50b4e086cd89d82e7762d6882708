@@ -22,6 +22,30 @@
       "revId": "f5404995448a50b4e086cd89d82e7762d6882708",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d6a2ba_faab9cf0",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-19T10:24:42Z",
+      "side": 1,
+      "message": "The first parameter name is just \"status\". In my view, it does not add any new information - the matcher already makes it clear that this is status.\n\nI\u0027ve added seconds argument comments everywhere.",
+      "parentUuid": "5645a92e_55f7dca8",
+      "range": {
+        "startLine": 759,
+        "startChar": 10,
+        "endLine": 759,
+        "endChar": 33
+      },
+      "revId": "f5404995448a50b4e086cd89d82e7762d6882708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
