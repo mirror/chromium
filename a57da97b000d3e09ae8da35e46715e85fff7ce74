@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4517361e_1b6984c2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-19T04:39:02Z",
+      "side": 1,
+      "message": "BTW what do we need config.property_location_configuration in the first place?\n\nYou\u0027re assuming that the caller site properly passes an instance object or a prototype object to instance_or_prototype. It looks wasteful to ask the caller site to set config.property_location_configuration...?",
+      "parentUuid": "f523aca5_ac8e035f",
+      "revId": "a57da97b000d3e09ae8da35e46715e85fff7ce74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e62f082f_7ba1faee",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 2
