@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "917e6ca6_38b141d9",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "With this formatting, it\u0027s hard to follow which comment lines up with which value.",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9655696b_a421d33e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaUrlResolver.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Do you also check the Content-Type: header?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ad80bf1a_292e7500",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Should this check and the ones at L150 go first (as they don\u0027t require map lookups)?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e59a201_62dbf241",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Should this get reported as SOURCE_NOT_SUPPORTED?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab7d2a7a_e79405f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Collections.emptyList() here and elsewhere",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "845b4666_ec08ab13",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Do you need to clean up the DiscoveryCallback below even when this is null?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "941353c7_a31904aa",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "I think all the methods in this class convert a sourceId to a FlingingMediaSource (or silently fail).  I wonder if the API should be taking a FlingingMediaSource instead of a sourceId (or is that mandated by the MediaRouteProvider API).",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45c05e63_5e946fb8",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaRouteProvider.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Is this a TODO(XXX): implement?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "426b8682_070c8c0f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "s/String/URL/?",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "766cba17_583952f2",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/router/cast/flinging/FlingingMediaSource.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:49:45Z",
+      "side": 1,
+      "message": "Can you use \"Url\" consistently to name URLs?\n\ngetUrl()\ngetContentUrl()",
+      "revId": "749ee85d3c4c0d8fafc2911f7b6098f7b8dfb4be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
