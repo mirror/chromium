@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "96eb8faa_ae6b95f2",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 255,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-19T17:00:15Z",
+      "side": 1,
+      "message": "Is this ever true? Seems like on desktop, it probably won\u0027t be (but maybe on WebView?) - anyway, if it is ever true, seems fine, but if this is always false, we should just post a task rather than checking...",
+      "range": {
+        "startLine": 255,
+        "startChar": 21,
+        "endLine": 255,
+        "endChar": 43
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b950fd38_9ca6ea52",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1132399
+      },
+      "writtenOn": "2017-06-19T17:00:15Z",
+      "side": 1,
+      "message": "I think this seems good - I\u0027m assuming that if WebGL and non-WebGL need to be in the same share-group, this will be accounted for when we later re-create the non-webgl contexts... I would double check a WebGL test case and make sure resuming / re-creating the other contexts works as expected (the WebGL stuff is preserved / still works).",
+      "range": {
+        "startLine": 266,
+        "startChar": 19,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
