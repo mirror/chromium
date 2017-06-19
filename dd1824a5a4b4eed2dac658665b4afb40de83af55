@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ceacbce_77db4b7a",
+        "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-19T22:43:09Z",
+      "side": 1,
+      "message": "It looks like most of the call sites already check whether the instance is valid before calling this? Two options:\n1) We could remove the checks from all the callsites and just keep the check centralized here\n2) If you think it\u0027s better to have the checks at the callsites, we could change the DCHECK to a CHECK to ensure we\u0027ve caught them all.\n\nI think (1) might be simpler and achieve the same thing.",
+      "revId": "dd1824a5a4b4eed2dac658665b4afb40de83af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5899117b_4f36cb46",
+        "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-19T22:43:09Z",
+      "side": 1,
+      "message": "Same as above",
+      "revId": "dd1824a5a4b4eed2dac658665b4afb40de83af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
