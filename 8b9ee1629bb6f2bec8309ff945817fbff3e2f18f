@@ -22,6 +22,30 @@
       "revId": "8b9ee1629bb6f2bec8309ff945817fbff3e2f18f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57b54ae9_3c854da5",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefVector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-06-19T06:51:45Z",
+      "side": 1,
+      "message": "Yeah, you are totally right.",
+      "parentUuid": "62ef4b1e_513da00d",
+      "range": {
+        "startLine": 24,
+        "startChar": 37,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "8b9ee1629bb6f2bec8309ff945817fbff3e2f18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
