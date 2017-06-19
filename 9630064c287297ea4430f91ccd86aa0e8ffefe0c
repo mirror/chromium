@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "391d5d13_51c2e712",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-19T08:25:26Z",
+      "side": 1,
+      "message": "Is there any particular reason not to just run |utility_process_mojo_client_| on the UI thread and use sync IPCs?",
+      "range": {
+        "startLine": 174,
+        "startChar": 46,
+        "endLine": 174,
+        "endChar": 48
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1650463_17d34800",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-19T08:25:26Z",
+      "side": 1,
+      "message": "Can we use a real HWND or HANDLE type here?",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a02fad8_44bada53",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-19T08:25:26Z",
+      "side": 1,
+      "message": "This should be a String16.",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 66
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
