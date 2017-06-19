@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9f0dedbf_9c7e2712",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-19T15:42:11Z",
+      "side": 1,
+      "message": "Is this change still necessary?",
+      "revId": "7029711fde93b2e0c408a3e669e1bf8a698855a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
