@@ -5,6 +5,7 @@
 #include "chrome/browser/policy/policy_helpers.h"
 
 #include "build/build_config.h"
+#include "extensions/common/constants.h"
 #include "net/base/net_errors.h"
 #include "url/gurl.h"
 
@@ -28,7 +29,7 @@ bool OverrideBlacklistForURL(const GURL& url, bool* block, int* reason) {
   }
 
   // Don't block internal pages and extensions.
-  if (url.SchemeIs("chrome") || url.SchemeIs("chrome-extension")) {
+  if (url.SchemeIs("chrome") || url.SchemeIs(extensions::kExtensionScheme)) {
     return false;
   }
 

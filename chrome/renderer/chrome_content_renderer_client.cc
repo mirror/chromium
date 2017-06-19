@@ -22,6 +22,7 @@
 #include "base/values.h"
 #include "build/build_config.h"
 #include "chrome/common/channel_info.h"
+#include "chrome/common/chrome_constants.h"
 #include "chrome/common/chrome_content_client.h"
 #include "chrome/common/chrome_features.h"
 #include "chrome/common/chrome_isolated_world_ids.h"
@@ -1014,7 +1015,7 @@ bool ChromeContentRendererClient::IsNaClAllowed(
 #if BUILDFLAG(ENABLE_EXTENSIONS)
   bool is_extension_from_webstore = extension && extension->from_webstore();
 
-  bool is_invoked_by_extension = app_url.SchemeIs("chrome-extension");
+  bool is_invoked_by_extension = app_url.SchemeIs(extensions::kExtensionScheme);
   bool is_invoked_by_hosted_app = extension &&
       extension->is_hosted_app() &&
       extension->web_extent().MatchesURL(app_url);
