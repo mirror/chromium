@@ -16,6 +16,24 @@
       "revId": "afd3202e2b392e48733916c74b17718b0bb4f5d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddcd0a95_30e77c7c",
+        "filename": "third_party/WebKit/LayoutTests/imagecapture/getPhotoSettings.html",
+        "patchSetId": 12
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-19T13:22:00Z",
+      "side": 1,
+      "message": "Hmm you\u0027re right. This also affects other files in this folder, so\nI\u0027ll do it in a follow up CL.",
+      "parentUuid": "091809d3_5c899474",
+      "revId": "afd3202e2b392e48733916c74b17718b0bb4f5d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
