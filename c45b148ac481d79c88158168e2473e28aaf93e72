@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb0ab818_a4b5440d",
+        "filename": "content/browser/generic_sensor_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T19:42:19Z",
+      "side": 1,
+      "message": "nit: Please name this variable.",
+      "range": {
+        "startLine": 66,
+        "startChar": 43,
+        "endLine": 66,
+        "endChar": 47
+      },
+      "revId": "c45b148ac481d79c88158168e2473e28aaf93e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4ad76e6_e7ced342",
+        "filename": "device/generic_sensor/platform_sensor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T19:42:19Z",
+      "side": 1,
+      "message": "I prefer the old name. The convention I\u0027ve observed is that a function named \"NotifyFoo\" is the one that iterates over a list of clients and calls \"OnFoo\" on each of them.",
+      "range": {
+        "startLine": 34,
+        "startChar": 17,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "c45b148ac481d79c88158168e2473e28aaf93e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4f85dcb_00fd7400",
+        "filename": "device/generic_sensor/platform_sensor.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T19:42:19Z",
+      "side": 1,
+      "message": "It doesn\u0027t seem like PlatformSensor does anything with this method other than choosing to not call NotifySensorReadingChanged(). This means we are doing virtual function calls instead of just one. It seems like a lot of extra work for something that could be checked inside a client\u0027s implementation of NotifySensorReadingChanged().",
+      "revId": "c45b148ac481d79c88158168e2473e28aaf93e72",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
