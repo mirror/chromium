@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e58aa493_a5747973",
+        "filename": "cc/paint/paint_op_buffer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 894,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-19T23:36:40Z",
+      "side": 1,
+      "message": "With this block commented out, the perf numbers are:\n*RESULT solid_color_analysis: 0,0 256x256\u003d 592745.5625 runs/s\n*RESULT solid_color_analysis: 0,1792 256x256\u003d 268644.71875 runs/s\n*RESULT solid_color_analysis: 0,3840 256x256\u003d 181341.09375 runs/s\n\nWith this patch (ie not commented out):\n*RESULT solid_color_analysis: 0,0 256x256\u003d 576763.875 runs/s\n*RESULT solid_color_analysis: 0,1792 256x256\u003d 442461.25 runs/s\n*RESULT solid_color_analysis: 0,3840 256x256\u003d 521178.4375 runs/s",
+      "revId": "b26e106646e676b7ea8c2e49634c228bba8adcc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
