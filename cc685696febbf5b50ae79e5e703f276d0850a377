@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "cdf875fb_3ee8acab",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-19T22:44:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bce5e2ac_fef05ecf",
+      "range": {
+        "startLine": 270,
+        "startChar": 15,
+        "endLine": 270,
+        "endChar": 16
+      },
+      "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9cc923d_04fc9ebc",
         "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T21:39:00Z",
       "side": 1,
       "message": "For what situations is this necessary? When percent columns \u003e\u003d 100% but max_non_percent is 0 it is supposed to remain 0? Is that right?",
+      "range": {
+        "startLine": 297,
+        "startChar": 8,
+        "endLine": 297,
+        "endChar": 23
+      },
+      "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3cd991e_c79ca9a9",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-19T22:44:41Z",
+      "side": 1,
+      "message": "Yes, that is right! For example, for a table with a row containing one 100% width cell, the max_non_percent is 0 and the remaining percent is 0.",
+      "parentUuid": "c9cc923d_04fc9ebc",
       "range": {
         "startLine": 297,
         "startChar": 8,
