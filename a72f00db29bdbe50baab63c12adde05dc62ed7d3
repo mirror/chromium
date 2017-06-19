@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a33f333a_d8ca340b",
+        "filename": "chrome/browser/safe_browsing/ui_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "I am a bit puzzled by the problem and the comment is a bit in the \"I don\u0027t understand it but this seems to work\" direction. Are you sure you want to go this way?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "88cfb74d_6f5dfc77",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "Can you explain in which cases this is not the case? I guess this setting is controlled by enterprise policy?\nIs this about SBER version 1 (before Scout) or Scout or both?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "683b0dda_b3c72658",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "While you are in this code. Do you want to explain the word \"Scout\"?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63e54718_4646a6ac",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "how about a forward declaration here? (class PrefService;)",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "695bb0eb_1286d022",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "\"the user did not opt-in to...\" ?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2ceb31e_7d097280",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "The common pattern is to have a function RegisterPrefs that takes care of this. See for example https://cs.chromium.org/chromium/src/components/rappor/rappor_prefs.h\n\nI think that it would be cleaner to extract the registration out of Profile::RegisterProfilePrefs(...) into safe_browsing::RegisterProfilePrefs(...) and override the settings as appropriate here.",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2aaf1c5c_502a5fb1",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "Optional: This may be a bit confusing because calling CreateWebContents() after CreateIncognitoWebContents() does not do what one would expect. Also, I guess, the browser_context_ is shared with the WebContents instances.\n\nMaybe add a DCHECK that CreateWebContents() is not called after CreateIncognitoWebContents()?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9b169a84_397d74a6",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-19T20:04:02Z",
+      "side": 1,
+      "message": "I lost track of the combinations... Is it useful to test a situation where SBER1 and Scout are inconsistent? Can kSafeBrowsingExtendedReportingEnabled or kSafeBrowsingScoutReportingEnabled be true while kSafeBrowsingExtendedReportingOptInAllowed is false?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
