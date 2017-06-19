@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "469453d5_e370472b",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-19T14:35:41Z",
+      "side": 1,
+      "message": "Do you want to update comments to describe arguments and result?",
+      "range": {
+        "startLine": 15,
+        "startChar": 13,
+        "endLine": 15,
+        "endChar": 20
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb49fd39_8e92d8df",
+        "filename": "ios/PRESUBMIT.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-19T14:35:41Z",
+      "side": 1,
+      "message": "Should this be something like this?:\nreturn [_CheckBugInToDo(input_api, output_api)]",
+      "range": {
+        "startLine": 42,
+        "startChar": 17,
+        "endLine": 42,
+        "endChar": 32
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c4256cb_604b26ab",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-19T14:35:41Z",
+      "side": 1,
+      "message": "From Style Guide: \"Use imports for packages and modules only\":\nhttps://google.github.io/styleguide/pyguide.html?showone\u003dImports#Imports",
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9cbcb14_25a874bb",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-19T14:35:41Z",
+      "side": 1,
+      "message": "From Style Guide: \"Imports should be on separate lines.\"\nhttps://google.github.io/styleguide/pyguide.html?showone\u003dImports_formatting#Imports_formatting",
+      "range": {
+        "startLine": 12,
+        "startChar": 26,
+        "endLine": 12,
+        "endChar": 32
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8a11d8f_ee30109f",
+        "filename": "ios/PRESUBMIT_test.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1123009
+      },
+      "writtenOn": "2017-06-19T14:35:41Z",
+      "side": 1,
+      "message": "nit: Do you want to add comments?",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 25
+      },
+      "revId": "0812d34913c866e5830f63826ac42d117e611088",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
