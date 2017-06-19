@@ -51,11 +51,19 @@ class ShellDelegateMus : public ShellDelegate {
   void SetTouchscreenEnabledInPrefs(bool enabled,
                                     bool use_local_state) override;
   void UpdateTouchscreenStatusFromPrefs() override;
+#if defined(USE_OZONE)
+  ui::InputDeviceControllerClient* GetInputDeviceControllerClient() override;
+#endif
 
  private:
   // |connector_| may be null in tests.
   service_manager::Connector* connector_;
   ImeController stub_ime_controller_;
+
+#if defined(USE_OZONE)
+  std::unique_ptr<ui::InputDeviceControllerClient>
+      input_device_controller_client_;
+#endif
 
   DISALLOW_COPY_AND_ASSIGN(ShellDelegateMus);
 };
