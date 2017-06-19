@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4669cde6_cb6f789a",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 28
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-19T07:25:41Z",
+      "side": 1,
+      "message": "OnIncognitoProfileCreated(profile-\u003eGetOffTheRecordPrefs()) should always work.",
+      "revId": "417f4b0486e89c0eb895e0d0dd7c1e56d7a49e17",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
