@@ -139,6 +139,8 @@ void RecordExtendedReportingPrefChanged(
 }  // namespace
 
 namespace prefs {
+const char kSafeBrowsingExtendedReportingOptInAllowed[] =
+    "safebrowsing.extended_reporting_opt_in_allowed";
 const char kSafeBrowsingExtendedReportingEnabled[] =
     "safebrowsing.extended_reporting_enabled";
 const char kSafeBrowsingScoutReportingEnabled[] =
@@ -292,6 +294,10 @@ void InitializeSafeBrowsingPrefs(PrefService* prefs) {
       prefs->ClearPref(prefs::kSafeBrowsingSawInterstitialScoutReporting);
     }
   }
+}
+
+bool IsExtendedReportingOptInAllowed(const PrefService& prefs) {
+  return prefs.GetBoolean(prefs::kSafeBrowsingExtendedReportingOptInAllowed);
 }
 
 bool IsExtendedReportingEnabled(const PrefService& prefs) {
