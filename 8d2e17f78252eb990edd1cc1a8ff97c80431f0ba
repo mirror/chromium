@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "68503a75_6f68c68a",
+        "filename": "third_party/WebKit/Source/core/dom/AXObject.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-19T06:43:58Z",
+      "side": 1,
+      "message": "Can we move the macro to platform/wtf/Assertions.h?",
+      "revId": "8d2e17f78252eb990edd1cc1a8ff97c80431f0ba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
