@@ -2,6 +2,57 @@
   "comments": [
     {
       "key": {
+        "uuid": "02f2b4c3_b42ded48",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/full-screen-stacking-context.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T15:19:13Z",
+      "side": 1,
+      "message": "nit: while you are at it, you could remove these whitespaces?",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a766374b_81c75879",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/full-screen-stacking-context.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T15:19:13Z",
+      "side": 1,
+      "message": "... and here",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8698fcd5_6706e839",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T15:19:13Z",
+      "side": 1,
+      "message": "This looks awfully like `Simulate...`. Is there some duplication?",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1974c72b_bda3ae50",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
         "patchSetId": 15
@@ -46,6 +97,23 @@
       "revId": "6a3d2234531423da81498c81e29122f903f88400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "b4ce2c51_fd599005",
+        "filename": "third_party/WebKit/Source/web/ChromeClientImpl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T15:19:13Z",
+      "side": 1,
+      "message": "nit: here and other places, I would say \"new\" and \"old\" instead of \"from\" and \"to\".",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

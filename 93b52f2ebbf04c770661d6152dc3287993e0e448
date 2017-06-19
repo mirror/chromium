@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "05035d62_2d796c74",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/api/document-fullscreen-element.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T15:19:13Z",
+      "side": 0,
+      "message": "There is TODO explaining why it is removed but I will assume it\u0027s like the others, right?",
+      "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3f263137_9bd3a766",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
         "patchSetId": 13
