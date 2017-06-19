@@ -16,6 +16,24 @@
       "revId": "04c374307571463fd7611dde06c19f8cb50dd4ce",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3444213_ed173b2a",
+        "filename": "content/renderer/media/mojo_audio_output_ipc.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1201454
+      },
+      "writtenOn": "2017-06-19T17:36:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1846a8e8_83729e7c",
+      "revId": "04c374307571463fd7611dde06c19f8cb50dd4ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
