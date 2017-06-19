@@ -16,6 +16,24 @@
       "revId": "cba0f330bfc49655cda796515d0488021b026eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bd35575_db85cd81",
+        "filename": "ios/chrome/app/spotlight/topsites_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-19T10:49:40Z",
+      "side": 1,
+      "message": "I don\u0027t understand why exposing this from the view controller is preferable. The mediator seems like a better place for it.",
+      "parentUuid": "af496635_48d00eb0",
+      "revId": "cba0f330bfc49655cda796515d0488021b026eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
