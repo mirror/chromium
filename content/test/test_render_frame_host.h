@@ -154,6 +154,7 @@ class TestRenderFrameHost : public RenderFrameHostImpl,
   int32_t ComputeNextPageID();
 
   void SimulateWillStartRequest(ui::PageTransition transition);
+  void SimulateWillProcessResponse();
 
   TestRenderFrameHostCreationObserver child_creation_observer_;
 
