@@ -70,6 +70,30 @@
       "revId": "8cf42c6bec38d078b86a8d7444194827ed245349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "468fa747_cc3d9a30",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-19T15:15:11Z",
+      "side": 1,
+      "message": "Thanks, I added a CHECK(false) where the other CancelJobs() is called.",
+      "parentUuid": "153ddd7c_bc5fd87f",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "8cf42c6bec38d078b86a8d7444194827ed245349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
