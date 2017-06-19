@@ -41,6 +41,9 @@
 #endif  // defined(TARGET_OS_IPHONE) && TARGET_OS_IPHONE
 #elif defined(__linux__)
 #define OS_LINUX 1
+#if !defined(OS_CHROMEOS)
+#define OS_DESKTOP_LINUX 1
+#endif
 // include a system header to pull in features.h for glibc/uclibc macros.
 #include <unistd.h>
 #if defined(__GLIBC__) && !defined(__UCLIBC__)
