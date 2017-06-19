@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5105a96c_06504cc1",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-19T20:44:26Z",
+      "side": 1,
+      "message": "Can you add an inlined comment on which platform call requires a higher API level?",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 29
+      },
+      "revId": "c718d513aba4c32198bf4938b3699f025ebe1564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
