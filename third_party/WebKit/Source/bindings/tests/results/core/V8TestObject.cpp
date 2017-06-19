@@ -3777,8 +3777,8 @@ static void limitedWithEmptyMissingInvalidAttributeAttributeGetter(const v8::Fun
 
 static void RuntimeCallStatsCounterAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
-  RuntimeCallTimerScope timer_scope(runtime_call_stats,
-                                    RuntimeCallStats::CounterId::kRuntimeCallStatsCounterAttribute_Getter);
+  RUNTIME_CALL_TIMER_SCOPE(timer_scope, runtime_call_stats,
+                           RuntimeCallStats::CounterId::kRuntimeCallStatsCounterAttribute_Getter);
 
   v8::Local<v8::Object> holder = info.Holder();
 
@@ -3789,8 +3789,8 @@ static void RuntimeCallStatsCounterAttributeAttributeGetter(const v8::FunctionCa
 
 static void RuntimeCallStatsCounterAttributeAttributeSetter(v8::Local<v8::Value> v8Value, const v8::FunctionCallbackInfo<v8::Value>& info) {
   RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
-  RuntimeCallTimerScope timer_scope(runtime_call_stats,
-                                    RuntimeCallStats::CounterId::kRuntimeCallStatsCounterAttribute_Setter);
+  RUNTIME_CALL_TIMER_SCOPE(timer_scope, runtime_call_stats,
+                           RuntimeCallStats::CounterId::kRuntimeCallStatsCounterAttribute_Setter);
   v8::Isolate* isolate = info.GetIsolate();
   ALLOW_UNUSED_LOCAL(isolate);
 
@@ -3811,8 +3811,8 @@ static void RuntimeCallStatsCounterAttributeAttributeSetter(v8::Local<v8::Value>
 
 static void RuntimeCallStatsCounterReadOnlyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
-  RuntimeCallTimerScope timer_scope(runtime_call_stats,
-                                    RuntimeCallStats::CounterId::kRuntimeCallStatsCounterReadOnlyAttribute_Getter);
+  RUNTIME_CALL_TIMER_SCOPE(timer_scope, runtime_call_stats,
+                           RuntimeCallStats::CounterId::kRuntimeCallStatsCounterReadOnlyAttribute_Getter);
 
   v8::Local<v8::Object> holder = info.Holder();
 
@@ -9252,8 +9252,8 @@ static void newObjectTestInterfaceMethodMethod(const v8::FunctionCallbackInfo<v8
 
 static void RuntimeCallStatsCounterMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
   RuntimeCallStats* runtime_call_stats = RuntimeCallStats::From(info.GetIsolate());
-  RuntimeCallTimerScope timer_scope(runtime_call_stats,
-                                    RuntimeCallStats::CounterId::kRuntimeCallStatsCounterMethod);
+  RUNTIME_CALL_TIMER_SCOPE(timer_scope, runtime_call_stats,
+                           RuntimeCallStats::CounterId::kRuntimeCallStatsCounterMethod);
 
   TestObject* impl = V8TestObject::toImpl(info.Holder());
 

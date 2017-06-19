@@ -1195,6 +1195,9 @@ void RenderThreadImpl::InitializeWebKit(
       renderer_scheduler_.get(), GetConnector()->GetWeakPtr()));
   blink::Initialize(blink_platform_impl_.get());
 
+  if (command_line.HasSwitch(switches::kDumpBlinkRuntimeCallStats))
+    blink::EnableRuntimeCallStats();
+
   v8::Isolate* isolate = blink::MainThreadIsolate();
   isolate->SetCreateHistogramFunction(CreateHistogram);
   isolate->SetAddHistogramSampleFunction(AddHistogramSample);
