@@ -24,6 +24,7 @@
 #include "components/rappor/rappor_service_impl.h"
 #include "components/variations/service/variations_service.h"
 #include "components/variations/variations_associated_data.h"
+#include "components/variations/variations_switches.h"
 #include "components/version_info/version_info.h"
 #include "content/public/browser/browser_thread.h"
 
@@ -249,7 +250,7 @@ bool ChromeMetricsServicesManagerClient::IsMetricsReportingEnabled() {
 bool ChromeMetricsServicesManagerClient::OnlyDoMetricsRecording() {
   const base::CommandLine* cmdline = base::CommandLine::ForCurrentProcess();
   return cmdline->HasSwitch(switches::kMetricsRecordingOnly) ||
-         cmdline->HasSwitch(switches::kEnableBenchmarking);
+         cmdline->HasSwitch(variations::switches::kEnableBenchmarking);
 }
 
 #if defined(OS_WIN)
