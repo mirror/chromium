@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c20dc612_0d5903c8",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:42:50Z",
+      "side": 1,
+      "message": "Yes, I also wanted to avoid addSubview:nil.\nChanged it to be compatible with setHeaderView:nil.",
+      "parentUuid": "7038ea5f_8070c12b",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4146de4_3e02c407",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.mm",
         "patchSetId": 5
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "b7a63c6e_3bec6be6",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a4146de4_3e02c407",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5a859d9a_03234214",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h",
         "patchSetId": 5
@@ -50,6 +86,24 @@
       "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c241ed8_f14fa835",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:42:50Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "5a859d9a_03234214",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -76,6 +130,30 @@
     },
     {
       "key": {
+        "uuid": "58876b72_4cd279dd",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026431cf_c45f7e75",
+      "range": {
+        "startLine": 520,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 21
+      },
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e4692408_a6a5de14",
         "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
         "patchSetId": 5
@@ -96,6 +174,30 @@
       "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "381ff95d_4effd4c8",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:42:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4692408_a6a5de14",
+      "range": {
+        "startLine": 273,
+        "startChar": 1,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
