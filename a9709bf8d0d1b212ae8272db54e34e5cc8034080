@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a62ebbdd_1476fc26",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T08:39:59Z",
+      "side": 1,
+      "message": "So this is kind of awkward. Because Create() currently accepts the argument by rvalue reference, this is actually safe: the argument isn\u0027t moved out until inside the body of Create().\n\nHowever, since the usual convention is to pass by value, this would be unsafe anywhere else.\n\nSo...\n1. Write out the clearly safe way, even though it\u0027s necessary?\n2. Keep the original code but add move(), relying on internal implementation details?\n\nI think 1 is is more obviously safe to the reader and will optimize to the same thing.",
+      "range": {
+        "startLine": 190,
+        "startChar": 25,
+        "endLine": 190,
+        "endChar": 62
+      },
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
