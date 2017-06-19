@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "e4a3a683_b903559d",
+        "filename": "ui/ozone/platform/drm/host/drm_gpu_platform_support_host.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-19T02:48:40Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a2fc478e_73f40e76",
+      "range": {
+        "startLine": 43,
+        "startChar": 7,
+        "endLine": 43,
+        "endChar": 27
+      },
+      "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6872fb7c_7f2a712e",
         "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
         "patchSetId": 5
@@ -60,6 +84,30 @@
       "writtenOn": "2017-06-16T15:46:46Z",
       "side": 1,
       "message": "Right now this happens as a result of a posted event on the ui_task_runner inside DrmGpuPlatformSupportHost::OnGpuProcessLaunched(). I think this is the underlying issue you\u0027re seeing.\n\nAs a posted event this would happen much later, after RenderingHelper::Setup() runs. The issue with this is that the resize event in RenderingHelper::Setup() at line ~286 (platform_window_delegate_-\u003eplatform_window()-\u003eSetBounds(...)) will be a no-op since the channel to the GPU isn\u0027t established, so the DrmWindow resize on the GPU side never happens.\n\nI\u0027m thinking that you\u0027d just need to run the ui_task_runner here to drain any pending requests.",
+      "range": {
+        "startLine": 123,
+        "startChar": 2,
+        "endLine": 125,
+        "endChar": 26
+      },
+      "revId": "bf4037d8ac4ea4509c976f26272d9a1bd5b02b64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1681f5c5_8c47e236",
+        "filename": "ui/ozone/public/ozone_gpu_test_helper.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-19T02:48:40Z",
+      "side": 1,
+      "message": "Hi Daniel,\n\nI may be misinterpreting what you said, but do you mean the call to OnChannelEstablished() here should be replaced by a call to the ui_task_runner in order to make sure pending events are processed at this time?\n\nThis would not solve the core of the problem, since the event would still wrongly be queued into the GPU process queue (FakeGpuProcessHost::InitOnIO() calls OnGpuProcessLaunched() with the GPU task runner instead of the UI one).\n\nI have tried to substitute the GPU task runner with ui_task_runner there, but display still doesn\u0027t show up. I only had success with the current revert.",
+      "parentUuid": "6872fb7c_7f2a712e",
       "range": {
         "startLine": 123,
         "startChar": 2,
