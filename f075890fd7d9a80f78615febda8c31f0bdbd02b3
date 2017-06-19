@@ -22,6 +22,30 @@
       "revId": "f075890fd7d9a80f78615febda8c31f0bdbd02b3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e1f223d_001e4665",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-19T15:42:17Z",
+      "side": 0,
+      "message": "NSTextView resizes itself (NSTextField can\u0027t).",
+      "parentUuid": "92cda2af_484386fe",
+      "range": {
+        "startLine": 166,
+        "startChar": 3,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "f075890fd7d9a80f78615febda8c31f0bdbd02b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

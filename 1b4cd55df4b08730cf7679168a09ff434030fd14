@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "431f5b9a_88d186bc",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-19T15:42:17Z",
+      "side": 1,
+      "message": "That\u0027s the current behavior (it just needs to be explicit with NSTextView), but now that you mention it, it would probably be nicer if it could be copied and pasted. I just changed that, and put the title and message in the same text view so that they can be selected together. Mind taking another look?",
+      "parentUuid": "51389e93_a1ec95b1",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 23
+      },
+      "revId": "1b4cd55df4b08730cf7679168a09ff434030fd14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a50f45b6_76d1a819",
         "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T12:06:17Z",
       "side": 1,
       "message": "I think that we prefer scoped_nsobject\u003c\u003e to autorelease",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 25
+      },
+      "revId": "1b4cd55df4b08730cf7679168a09ff434030fd14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14a545fa_a8e9ab79",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1160249
+      },
+      "writtenOn": "2017-06-19T15:42:17Z",
+      "side": 1,
+      "message": "I could switch to it, but it breaks dot notation for properties :/. Thoughts?",
+      "parentUuid": "a50f45b6_76d1a819",
       "range": {
         "startLine": 108,
         "startChar": 14,
