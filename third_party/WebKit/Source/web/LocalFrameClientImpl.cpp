@@ -539,6 +539,7 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
     NavigationPolicy policy,
     bool replaces_current_history_item,
     bool is_client_redirect,
+    bool is_from_untrusted_event,
     HTMLFormElement* form,
     ContentSecurityPolicyDisposition
         should_check_main_world_content_security_policy) {
@@ -560,6 +561,7 @@ NavigationPolicy LocalFrameClientImpl::DecidePolicyForNavigation(
   navigation_info.extra_data = ds ? ds->GetExtraData() : nullptr;
   navigation_info.replaces_current_history_item = replaces_current_history_item;
   navigation_info.is_client_redirect = is_client_redirect;
+  navigation_info.is_from_untrusted_event = is_from_untrusted_event;
   navigation_info.should_check_main_world_content_security_policy =
       should_check_main_world_content_security_policy ==
               kCheckContentSecurityPolicy

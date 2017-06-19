@@ -327,6 +327,7 @@ class BLINK_EXPORT WebFrameClient {
     bool replaces_current_history_item;
     bool is_history_navigation_in_new_child_frame;
     bool is_client_redirect;
+    bool is_from_untrusted_event;
     WebFormElement form;
     bool is_cache_disabled;
     WebSourceLocation source_location;
@@ -346,6 +347,7 @@ class BLINK_EXPORT WebFrameClient {
           replaces_current_history_item(false),
           is_history_navigation_in_new_child_frame(false),
           is_client_redirect(false),
+          is_from_untrusted_event(false),
           is_cache_disabled(false),
           should_check_main_world_content_security_policy(
               kWebContentSecurityPolicyDispositionCheck),
