@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "35470c88_d87ce903",
+        "filename": "third_party/WebKit/Source/core/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-19T20:36:52Z",
+      "side": 1,
+      "message": "https://luci-logdog.appspot.com/v/?s\u003dchromium%2Fbb%2Ftryserver.chromium.win%2Fwin_clang%2F252976%2F%2B%2Frecipes%2Fsteps%2Fcompile__with_patch_%2F0%2Fstdout\n\n[43895/49404] LINK(DLL) blink_core.dll blink_core.dll.lib blink_core.dll.pdb\nFAILED: blink_core.dll blink_core.dll.lib blink_core.dll.pdb \nE:/b/depot_tools/python276_bin/python.exe ../../build/toolchain/win/tool_wrapper.py link-wrapper environment.x64 False link.exe /nologo /IMPLIB:./blink_core.dll.lib /DLL /OUT:./blink_core.dll /PDB:./blink_core.dll.pdb @./blink_core.dll.rsp\nLINK : fatal error LNK1210: exceeded internal ILK size limit; link with /INCREMENTAL:NO\n\nThat bot does debug builds with symbol_level \u003d\u003d 1. So I guess we need to keep is_debug instead of symbol_level \u003e 1.",
+      "range": {
+        "startLine": 211,
+        "startChar": 42,
+        "endLine": 211,
+        "endChar": 48
+      },
+      "revId": "4666202b6397cea02becc1a6a6c071d17ad46afa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
