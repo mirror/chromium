@@ -46,6 +46,30 @@
       "revId": "6e7816e11308696395f74d5cd333d95a181acfd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f043e8ab_e583db05",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T22:57:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d52e5d83_26525313",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "6e7816e11308696395f74d5cd333d95a181acfd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
