@@ -59,6 +59,48 @@
     },
     {
       "key": {
+        "uuid": "e6553b14_e185471a",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T21:20:47Z",
+      "side": 1,
+      "message": "AudioCodecName may include codecs we don\u0027t even know about. See how FFmpegDemuxer uses the entirety of the codec list known to ffmpeg for reporting UMA values, where as we only have ids for some of those.",
+      "parentUuid": "23c2cdd1_23287bfe",
+      "range": {
+        "startLine": 1558,
+        "startChar": 25,
+        "endLine": 1558,
+        "endChar": 39
+      },
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef66b4eb_892a6753",
+        "filename": "media/filters/ffmpeg_demuxer.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1558,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T21:20:47Z",
+      "side": 1,
+      "message": "Yeah, that is a worry. I\u0027m wondering if we need a different finalization mechanism for this. I.e. report aggregate watch time whenever audio codec or video codec changes; that way we can map each UKM entry to set of properties that were valid at the time of record.\n\nI\u0027ll keep thinking about it and see what I can come up with. We have the same problem with the hardware decoding parameter which may vary. If we do this, then MediaInternals needs to start doing its own watch time filtering (\u003c 7 seconds).\n\nI know chcunningham@ has been talking about making some of these codec and decoder name changes more explicit events in the pipeline. If we have that we could use that mechanism to signal to the watch time reporter and let it handle all of this.",
+      "parentUuid": "cdabe87a_931c31f1",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b526f76_637c09c5",
         "filename": "media/filters/ffmpeg_demuxer.cc",
         "patchSetId": 6
@@ -93,6 +135,24 @@
       "writtenOn": "2017-06-17T04:41:55Z",
       "side": 1,
       "message": "Not related to this CL: Isn\u0027t a non-unknown audio codec equivalent to |found_audio_stream|?",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27737d5f_e7fa55f0",
+        "filename": "media/filters/source_buffer_state.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T21:20:47Z",
+      "side": 1,
+      "message": "Yeah good point, we can drop this.",
+      "parentUuid": "fc9ac9bc_989a1890",
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -203,6 +263,24 @@
     },
     {
       "key": {
+        "uuid": "51a66932_ca7f3c57",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T21:20:47Z",
+      "side": 1,
+      "message": "See below.",
+      "parentUuid": "27080284_12b6c30b",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "089d51f4_d1d2eaaa",
         "filename": "tools/metrics/ukm/ukm.xml",
         "patchSetId": 6
@@ -214,6 +292,24 @@
       "writtenOn": "2017-06-17T04:41:55Z",
       "side": 1,
       "message": "Should these always be true (or approximately true)?\n\nWatchTime \u003d WatchTime.NativeControlsOn + WatchTime.NativeControlsOff\nWatchTime \u003d WatchTime.AC + WatchTime.Battery\nWatchTime.Background \u003d WatchTime.Background.AC + WatchTime.Background.Battery\n\nIf so, does it make sense to only report metrics like:\nWatchTime\nNativeControlsPercentage\nBackgroundPercetage\nBatteryPercentage\nBackgroundBatteryPercentage",
+      "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "32fbf523_0f52710a",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 329,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T21:20:47Z",
+      "side": 1,
+      "message": "I thought about that, or at least for MTBR I did, but I think making these calculation based would restrict the ability to perform queries on the data set. Consider if you want to run a query summing watch time for a given type. It\u0027s possible this is trivial with our query tooling, but I\u0027m not sure.\n\nAlso consider that we are logging int64_t values, so reporting percentages with some accuracy would require scaling the percentage by whatever number of decimal points we deem appropriate. Given the size of our values for total watch time even a small precision loss is a ton of missed watch time.",
+      "parentUuid": "089d51f4_d1d2eaaa",
       "revId": "0b88b1694574afa8ac0c25d7907090a8511d2cfc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
