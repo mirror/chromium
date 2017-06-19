@@ -29,7 +29,7 @@ namespace {
 
 const TimeDelta kMs = TimeDelta::FromMilliseconds(1);
 const MemoryPeakDetector::Config kConfigNoCallbacks(
-    1 /* polling_interval_ms */,
+    1000 /* polling_interval_ms */,
     60000 /* min_time_between_peaks_ms */,
     false /* enable_verbose_poll_tracing */
     );
@@ -367,6 +367,7 @@ TEST_F(MemoryPeakDetectorTest, StartStopQuickly) {
   const TimeTicks tstart = TimeTicks::Now();
   for (int i = 0; i < 5; i++) {
     peak_detector_->Start(kConfigNoCallbacks);
+    PlatformThread::Sleep(TimeDelta::FromMilliseconds(5));
     peak_detector_->Stop();
   }
   peak_detector_->Start(kConfigNoCallbacks);
