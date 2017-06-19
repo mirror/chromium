@@ -63,7 +63,7 @@ class CORE_EXPORT ImageResource final
   static ImageResource* Fetch(FetchParameters&, ResourceFetcher*);
 
   // TODO(hiroshige): Make Create() test-only by refactoring ImageDocument.
-  static ImageResource* Create(const ResourceRequest&);
+  static ImageResource* Create(ResourceRequest&);
   static ImageResource* CreateForTest(const KURL&);
 
   ~ImageResource() override;
