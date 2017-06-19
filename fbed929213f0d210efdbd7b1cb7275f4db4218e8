@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5a0cb24d_94bd7c6b",
+        "filename": "content/renderer/fetchers/manifest_fetcher.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T05:53:11Z",
+      "side": 1,
+      "message": "Yeah, definitely. I\u0027ve drafted it at https://docs.google.com/document/d/1Iso_WSAUY_KKXWr9X3niEf1eu9Z_o5Gesp_P4xmJRDw/edit#heading\u003dh.y41pbmsby9tf. Will put it into the commit message too maybe as a shorter summary.",
+      "parentUuid": "db423c11_6237faa5",
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e1a38543_8ac58eb8",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
         "patchSetId": 31
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "62090cee_59588f98",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T05:53:11Z",
+      "side": 1,
+      "message": "This is because LoadRequest modifies it.",
+      "parentUuid": "e1a38543_8ac58eb8",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 19
+      },
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09284d7a_70195573",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
         "patchSetId": 31
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-19T03:18:47Z",
       "side": 1,
       "message": "Would you add a comment that this corresponds to a \"CORS flag\" concept in https://fetch.spec.whatwg.org/#fetching algorithms?",
+      "range": {
+        "startLine": 196,
+        "startChar": 18,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19149141_6f36ed11",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-19T05:53:11Z",
+      "side": 1,
+      "message": "Done. Added the same comment to the ResourceLoaderOptions, too.",
+      "parentUuid": "09284d7a_70195573",
       "range": {
         "startLine": 196,
         "startChar": 18,
