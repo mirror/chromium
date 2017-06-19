@@ -16,6 +16,24 @@
       "revId": "e63628bfea2ae1a03f7afadd604b367e75e892e4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5decb3eb_27312f57",
+        "filename": "content/public/test/content_browser_test_utils.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-19T16:44:39Z",
+      "side": 1,
+      "message": "Moved comment from .cc to here (where it should have been in the first place). Thanks.\n\nDone.",
+      "parentUuid": "a0d74e9d_b503f9f9",
+      "revId": "e63628bfea2ae1a03f7afadd604b367e75e892e4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
