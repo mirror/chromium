@@ -16,6 +16,24 @@
       "revId": "d15835a06c095b7fdd4aa44f02aaa6a9533038de",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b84ca132_6a168ee1",
+        "filename": "ash/wm/maximize_mode/touchpad_and_keyboard_disabler_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T17:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8919f58c_21ea4f60",
+      "revId": "d15835a06c095b7fdd4aa44f02aaa6a9533038de",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -440,6 +440,24 @@
     },
     {
       "key": {
+        "uuid": "f1891ed6_624697d9",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T17:38:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e7df16c_f2e36352",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6750ef01_5af25c0d",
         "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
         "patchSetId": 3
@@ -487,6 +505,24 @@
       "side": 1,
       "message": "You would keep the exiting TestDelegate and have two test classes:\n\nclass TouchpadDisablerTest : public test::AshTestBase() {\n  ...setup...\n\n protected:\n  \n  int enable_count_ \u003d 0;\n  int disable_count_ \u003d 0;\n  bool delegate_destroyed_ \u003d false;\n}\n\nand class TouchpadDisablerTest2 : public testing::Test {\n  ...setup...\n\n int enable_count_ \u003d 0;\n int disable_count_ \u003d 0;\n bool delegate_destroyed_ \u003d false;\n}\n\nwhich would result in one copy/paste between Test1 and Test2.\n\nAlternately, how about:\n\nTestHelper helper;\nTouchpadDisabler* disabled \u003d new TouchpadDisabled(helper.MakeDelegate());\n\nor\n\nTestHelper helper;\nhelper.CreateTouchpadDisabler();\n\nHaving a struct that does that much work in the constructor just feels weird.",
       "parentUuid": "fc2321db_b5c3f0b3",
+      "revId": "c8386b7239a3d10a86167144713b50171037b13e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "564f23c6_f789b4b8",
+        "filename": "ash/wm/maximize_mode/touchpad_disabler_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T17:38:46Z",
+      "side": 1,
+      "message": "I went with a mix of what you asked for here and what we talked about. Hopefully you like it.",
+      "parentUuid": "7ee103d8_e3cadf31",
       "revId": "c8386b7239a3d10a86167144713b50171037b13e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
