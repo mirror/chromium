@@ -141,11 +141,11 @@ const WTF::TextEncoding& TextResourceDecoder::DefaultEncoding(
 }
 
 TextResourceDecoder::TextResourceDecoder(
-    const String& mime_type,
+    ContentType content_type,
     const WTF::TextEncoding& specified_default_encoding,
     EncodingDetectionOption encoding_detection_option,
     const KURL& hint_url)
-    : content_type_(DetermineContentType(mime_type)),
+    : content_type_(content_type),
       encoding_(DefaultEncoding(content_type_, specified_default_encoding)),
       source_(kDefaultEncoding),
       hint_encoding_(0),
@@ -178,12 +178,12 @@ TextResourceDecoder::TextResourceDecoder(
 }
 
 std::unique_ptr<TextResourceDecoder> TextResourceDecoder::Create(
-    const String& mime_type,
+    ContentType content_type,
     const CharsetRequest& charset_request) {
   if (charset_request.AlwaysUseUTF8())
     return CreateAlwaysUseUTF8ForText();
 
-  return Create(mime_type, charset_request.Encoding());
+  return Create(content_type, charset_request.Encoding());
 }
 
 TextResourceDecoder::~TextResourceDecoder() {}

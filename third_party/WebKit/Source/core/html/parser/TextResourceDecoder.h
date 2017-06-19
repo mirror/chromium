@@ -50,29 +50,37 @@ class CORE_EXPORT TextResourceDecoder {
     kEncodingFromParentFrame
   };
 
+  enum ContentType {
+    kPlainTextContent,
+    kHTMLContent,
+    kXMLContent,
+    kCSSContent
+  };  // PlainText only checks for BOM.
+
   static std::unique_ptr<TextResourceDecoder> Create(
-      const String& mime_type,
+      ContentType content_type,
       const WTF::TextEncoding& default_encoding = WTF::TextEncoding()) {
-    return WTF::WrapUnique(new TextResourceDecoder(
-        mime_type, default_encoding, kUseContentAndBOMBasedDetection, KURL()));
+    return WTF::WrapUnique(
+        new TextResourceDecoder(content_type, default_encoding,
+                                kUseContentAndBOMBasedDetection, KURL()));
   }
 
   static std::unique_ptr<TextResourceDecoder> CreateWithAutoDetection(
-      const String& mime_type,
+      ContentType content_type,
       const WTF::TextEncoding& default_encoding,
       const KURL& url) {
-    return WTF::WrapUnique(new TextResourceDecoder(mime_type, default_encoding,
-                                                   kUseAllAutoDetection, url));
+    return WTF::WrapUnique(new TextResourceDecoder(
+        content_type, default_encoding, kUseAllAutoDetection, url));
   }
 
   // Corresponds to utf-8 decode in Encoding spec:
   // https://encoding.spec.whatwg.org/#utf-8-decode.
   static std::unique_ptr<TextResourceDecoder> CreateAlwaysUseUTF8ForText() {
     return WTF::WrapUnique(new TextResourceDecoder(
-        "plain/text", UTF8Encoding(), kAlwaysUseUTF8ForText, KURL()));
+        kPlainTextContent, UTF8Encoding(), kAlwaysUseUTF8ForText, KURL()));
   }
 
-  static std::unique_ptr<TextResourceDecoder> Create(const String& mime_type,
+  static std::unique_ptr<TextResourceDecoder> Create(ContentType,
                                                      const CharsetRequest&);
 
   ~TextResourceDecoder();
@@ -95,6 +103,8 @@ class CORE_EXPORT TextResourceDecoder {
   bool SawError() const { return saw_error_; }
   size_t CheckForBOM(const char*, size_t);
 
+  static ContentType DetermineContentType(const String& mime_type);
+
  protected:
   // TextResourceDecoder does three kind of encoding detection:
   // 1. By BOM,
@@ -116,19 +126,12 @@ class CORE_EXPORT TextResourceDecoder {
     kAlwaysUseUTF8ForText
   };
 
-  TextResourceDecoder(const String& mime_type,
+  TextResourceDecoder(ContentType,
                       const WTF::TextEncoding& default_encoding,
                       EncodingDetectionOption,
                       const KURL& hint_url);
 
  private:
-  enum ContentType {
-    kPlainTextContent,
-    kHTMLContent,
-    kXMLContent,
-    kCSSContent
-  };  // PlainText only checks for BOM.
-  static ContentType DetermineContentType(const String& mime_type);
   static const WTF::TextEncoding& DefaultEncoding(
       ContentType,
       const WTF::TextEncoding& default_encoding);

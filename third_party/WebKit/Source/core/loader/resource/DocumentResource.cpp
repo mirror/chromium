@@ -45,7 +45,7 @@ DocumentResource::DocumentResource(const ResourceRequest& request,
     : TextResource(request,
                    type,
                    options,
-                   "application/xml",
+                   TextResourceDecoder::kXMLContent,
                    CharsetRequest()) {
   // FIXME: We'll support more types to support HTMLImports.
   DCHECK_EQ(type, kSVGDocument);
