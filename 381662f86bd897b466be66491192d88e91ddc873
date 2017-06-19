@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "a64ceabe_98057062",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 436,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T20:00:14Z",
+      "side": 1,
+      "message": "Oh sorry I meant in addition to this call site.  I don\u0027t think OnItemAdded() is a good place because we\u0027ll early-out before then if we have too many downloads going.",
+      "parentUuid": "1cddd7f9_8e36c481",
+      "range": {
+        "startLine": 436,
+        "startChar": 2,
+        "endLine": 436,
+        "endChar": 26
+      },
+      "revId": "381662f86bd897b466be66491192d88e91ddc873",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87332ea2_cd813f3f",
         "filename": "components/download/internal/controller_impl.cc",
         "patchSetId": 1
