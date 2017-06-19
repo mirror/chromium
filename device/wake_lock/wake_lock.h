@@ -34,6 +34,8 @@ class WakeLock : public mojom::WakeLock {
   void RequestWakeLock() override;
   void CancelWakeLock() override;
   void AddClient(mojom::WakeLockRequest request) override;
+  void ChangeType(mojom::WakeLockType type,
+                  ChangeTypeCallback callback) override;
   void HasWakeLockForTests(HasWakeLockForTestsCallback callback) override;
 
  protected:
@@ -43,9 +45,11 @@ class WakeLock : public mojom::WakeLock {
   virtual void UpdateWakeLock();
   virtual void CreateWakeLock();
   virtual void RemoveWakeLock();
+  virtual void SwapWakeLock();
 
   void OnConnectionError();
 
+  int num_clients_;
   mojom::WakeLockType type_;
   mojom::WakeLockReason reason_;
   std::unique_ptr<std::string> description_;
