@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082d076c_ed15cee7",
+        "filename": "chrome/browser/predictors/autocomplete_action_predictor_table.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T15:02:10Z",
+      "side": 1,
+      "message": "since \u0027DB sequence\u0027 is not a globally established term, this description becomes more confusing :(\n\nMaybe refer to the \u0027DB sequence of the PredictorTableBase\u0027 in various descriptions of the classes?\n\n... or we could make a class alias for our subdirectory to be able to refer to it more comfortably, like: PredictorTableTaskSequence?\n\nup to you what to choose among the two above.",
+      "range": {
+        "startLine": 35,
+        "startChar": 7,
+        "endLine": 35,
+        "endChar": 18
+      },
+      "revId": "2c3c85a448cd9e38482219b08ef74df4d5cb2fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4873ed89_3371e04e",
+        "filename": "chrome/browser/predictors/predictor_table_base.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T15:02:10Z",
+      "side": 1,
+      "message": "nit: s/in PredictorTableBase constructor/to the constructor of this class/",
+      "range": {
+        "startLine": 26,
+        "startChar": 47,
+        "endLine": 27,
+        "endChar": 14
+      },
+      "revId": "2c3c85a448cd9e38482219b08ef74df4d5cb2fab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
