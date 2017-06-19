@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "32012489_7607b418",
+        "filename": ".repo/repo",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1037f247_aaf5035b",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "38c3d3c3_1c2c6011",
         "filename": "components/arc/common/volume_mounter.mojom",
         "patchSetId": 6
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "8e09b6dc_679a443b",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38c3d3c3_1c2c6011",
+      "range": {
+        "startLine": 40,
+        "startChar": 10,
+        "endLine": 40,
+        "endChar": 31
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db6a79e1_8cedd00a",
         "filename": "components/arc/common/volume_mounter.mojom",
         "patchSetId": 6
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "2eea79de_e37a17d8",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db6a79e1_8cedd00a",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "03986ac0_5feb1fa8",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -73,6 +133,24 @@
       "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e12cb41b_431e54c4",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "03986ac0_5feb1fa8",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -123,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "7362e911_5c9c2f93",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c6e850d_b2762cfc",
+      "range": {
+        "startLine": 49,
+        "startChar": 2,
+        "endLine": 50,
+        "endChar": 77
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c297ec46_5835ba44",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -137,6 +239,24 @@
       "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c95ab6c3_8b33910e",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Is there a rule on what verbosity_level needs to be set on VLOG in chrome?\nDone.",
+      "parentUuid": "c297ec46_5835ba44",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -211,6 +331,30 @@
     },
     {
       "key": {
+        "uuid": "61b4055a_b6b60ef1",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b712b592_8073235e",
+      "range": {
+        "startLine": 89,
+        "startChar": 14,
+        "endLine": 89,
+        "endChar": 20
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aa3031cf_db549a35",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -231,6 +375,30 @@
       "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f90267f_fdff7c59",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done. Added traits.",
+      "parentUuid": "aa3031cf_db549a35",
+      "range": {
+        "startLine": 94,
+        "startChar": 17,
+        "endLine": 94,
+        "endChar": 48
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -257,6 +425,30 @@
     },
     {
       "key": {
+        "uuid": "415d3480_6887087a",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5478d055_16d31c58",
+      "range": {
+        "startLine": 101,
+        "startChar": 4,
+        "endLine": 101,
+        "endChar": 7
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ee33ec60_f2fa1ab8",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
         "patchSetId": 6
@@ -280,6 +472,30 @@
     },
     {
       "key": {
+        "uuid": "3f078894_819dbd91",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done. Added traits.",
+      "parentUuid": "ee33ec60_f2fa1ab8",
+      "range": {
+        "startLine": 105,
+        "startChar": 6,
+        "endLine": 105,
+        "endChar": 37
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd973c2a_56eee4cd",
         "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
         "patchSetId": 6
@@ -294,6 +510,24 @@
       "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85fc1cf3_e66cb1d9",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bd973c2a_56eee4cd",
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -341,6 +575,30 @@
       "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d871fe92_fd612687",
+        "filename": "components/arc/obb_mounter/arc_obb_mounter_bridge.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-19T16:25:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "efcf8a56_bbad9cfd",
+      "range": {
+        "startLine": 64,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 13
+      },
+      "revId": "4a7b4850729ada20e11aa1fab51bfa2e8f1e4147",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
