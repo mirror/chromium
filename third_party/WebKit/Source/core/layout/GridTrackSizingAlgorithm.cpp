@@ -5,10 +5,13 @@
 #include "core/layout/GridTrackSizingAlgorithm.h"
 
 #include "core/layout/Grid.h"
+#include "core/layout/GridLayoutAndSizingHelperFunctions.h"
 #include "core/layout/LayoutGrid.h"
 #include "platform/LengthFunctions.h"
 
 namespace blink {
+
+using blink::GridLayoutAndSzingHelperFunctions;
 
 class GridSizingData;
 
@@ -125,31 +128,6 @@ class DefiniteSizeStrategy final : public GridTrackSizingAlgorithmStrategy {
     return false;
   }
 };
-
-// TODO(svillar): Repeated in LayoutGrid.
-LayoutUnit GridTrackSizingAlgorithmStrategy::ComputeMarginLogicalSizeForChild(
-    MarginDirection for_direction,
-    const LayoutGrid* grid,
-    const LayoutBox& child) {
-  if (!child.StyleRef().HasMargin())
-    return LayoutUnit();
-
-  bool is_row_axis = for_direction == kInlineDirection;
-  LayoutUnit margin_start;
-  LayoutUnit margin_end;
-  LayoutUnit logical_size =
-      is_row_axis ? child.LogicalWidth() : child.LogicalHeight();
-  Length margin_start_length = is_row_axis ? child.StyleRef().MarginStart()
-                                           : child.StyleRef().MarginBefore();
-  Length margin_end_length = is_row_axis ? child.StyleRef().MarginEnd()
-                                         : child.StyleRef().MarginAfter();
-  child.ComputeMarginsForDirection(
-      for_direction, grid, child.ContainingBlockLogicalWidthForContent(),
-      logical_size, margin_start, margin_end, margin_start_length,
-      margin_end_length);
-
-  return margin_start + margin_end;
-}
 
 bool GridTrackSizingAlgorithmStrategy::
     HasOverrideContainingBlockContentSizeForChild(
@@ -307,11 +285,9 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MinContentForChild(
     // FIXME: It's unclear if we should return the intrinsic width or the
     // preferred width.
     // See http://lists.w3.org/Archives/Public/www-style/2013Jan/0245.html
-    LayoutUnit margin_logical_width =
-        child.NeedsLayout() ? ComputeMarginLogicalSizeForChild(
-                                  kInlineDirection, GetLayoutGrid(), child)
-                            : child.MarginLogicalWidth();
-    return child.MinPreferredLogicalWidth() + margin_logical_width;
+    return child.MinPreferredLogicalWidth() +
+           GridLayoutAndSzingHelperFunctions::MarginLogicalWidthForChild(
+               *GetLayoutGrid(), child);
   }
 
   if (Direction() == kForColumns && !AvailableSpace()) {
@@ -344,11 +320,9 @@ LayoutUnit GridTrackSizingAlgorithmStrategy::MaxContentForChild(
     // FIXME: It's unclear if we should return the intrinsic width or the
     // preferred width.
     // See http://lists.w3.org/Archives/Public/www-style/2013Jan/0245.html
-    LayoutUnit margin_logical_width =
-        child.NeedsLayout() ? ComputeMarginLogicalSizeForChild(
-                                  kInlineDirection, GetLayoutGrid(), child)
-                            : child.MarginLogicalWidth();
-    return child.MaxPreferredLogicalWidth() + margin_logical_width;
+    return child.MaxPreferredLogicalWidth() +
+           GridLayoutAndSzingHelperFunctions::MarginLogicalWidthForChild(
+               *GetLayoutGrid(), child);
   }
 
   if (UpdateOverrideContainingBlockContentSizeForChild(child,
@@ -434,14 +408,13 @@ LayoutUnit DefiniteSizeStrategy::MinLogicalWidthForChild(
     LayoutBox& child,
     Length child_min_size,
     GridTrackSizingDirection child_inline_direction) const {
-  LayoutUnit margin_logical_width = ComputeMarginLogicalSizeForChild(
-      kInlineDirection, GetLayoutGrid(), child);
   return child.ComputeLogicalWidthUsing(
              kMinSize, child_min_size,
              OverrideContainingBlockContentSizeForChild(child,
                                                         child_inline_direction),
              GetLayoutGrid()) +
-         margin_logical_width;
+         GridLayoutAndSzingHelperFunctions::MarginLogicalWidthForChild(
+             *GetLayoutGrid(), child);
 }
 
 void DefiniteSizeStrategy::LayoutGridItemForMinSizeComputation(
