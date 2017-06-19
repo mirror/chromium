@@ -258,6 +258,8 @@ def interface_context(interface, interfaces):
     # TODO(peria): Generate the target list from 'Window' and 'HTMLDocument'.
     needs_runtime_enabled_installer = v8_class_name in [
         'V8Window', 'V8HTMLDocument', 'V8Document', 'V8Node', 'V8EventTarget']
+    if needs_runtime_enabled_installer:
+        header_includes.add('bindings/core/v8/V8DOMConfiguration.h')
 
     context = {
         'context_enabled_feature_name': context_enabled_feature_name(interface),  # [ContextEnabled]

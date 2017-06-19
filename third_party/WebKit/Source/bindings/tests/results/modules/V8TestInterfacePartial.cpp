@@ -508,6 +508,7 @@ void V8TestInterfacePartial::initialize() {
   V8TestInterface::updateWrapperTypeInfo(
       &V8TestInterfacePartial::installV8TestInterfaceTemplate,
       nullptr,
+      nullptr,
       V8TestInterfacePartial::preparePrototypeAndInterfaceObject);
   V8TestInterface::registerVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::voidMethodPartialOverloadMethod);
   V8TestInterface::registerStaticVoidMethodPartialOverloadMethodForPartialInterface(&TestInterfaceImplementationPartialV8Internal::staticVoidMethodPartialOverloadMethod);

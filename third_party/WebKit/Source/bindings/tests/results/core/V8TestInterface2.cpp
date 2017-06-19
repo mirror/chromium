@@ -686,16 +686,15 @@ InstallTemplateFunction V8TestInterface2::installV8TestInterface2TemplateFunctio
     &V8TestInterface2::installV8TestInterface2Template;
 
 void V8TestInterface2::updateWrapperTypeInfo(
-    InstallTemplateFunction installTemplateFunction,
-    InstallRuntimeEnabledFunction installRuntimeEnabledFunction,
-    PreparePrototypeAndInterfaceObjectFunction preparePrototypeAndInterfaceObjectFunction) {
-  ALLOW_UNUSED_LOCAL(installRuntimeEnabledFunction);
-
+    InstallTemplateFunction install_template_function,
+    InstallRuntimeEnabledFunction install_runtime_enabled_on_instance_function,
+    InstallRuntimeEnabledFunction install_runtime_enabled_on_prototype_function,
+    PreparePrototypeAndInterfaceObjectFunction prepare_prototype_and_interface_object_function) {
   V8TestInterface2::installV8TestInterface2TemplateFunction =
-      installTemplateFunction;
-  if (preparePrototypeAndInterfaceObjectFunction) {
+      install_template_function;
+  if (prepare_prototype_and_interface_object_function) {
     V8TestInterface2::wrapperTypeInfo.prepare_prototype_and_interface_object_function =
-        preparePrototypeAndInterfaceObjectFunction;
+        prepare_prototype_and_interface_object_function;
   }
 }
 

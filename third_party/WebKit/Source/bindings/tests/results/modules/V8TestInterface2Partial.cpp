@@ -102,6 +102,7 @@ void V8TestInterface2Partial::initialize() {
   V8TestInterface2::updateWrapperTypeInfo(
       &V8TestInterface2Partial::installV8TestInterface2Template,
       nullptr,
+      nullptr,
       nullptr);
 }
 
