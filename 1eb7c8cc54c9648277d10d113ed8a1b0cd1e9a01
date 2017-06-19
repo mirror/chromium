@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dfc81016_a52aa7f2",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 0,
+      "message": "This is because now we don\u0027t care whether two transform nodes are ancestor-descendant; SourceToDestinationRect will always succeed (except for hard failures that there is no invertible path between the two nodes). LocalToAncestorVisualRect still cares about clip/effect, but also loosened transform node relationship.\n\nSo now the test verifies these function indeed convert between sibling spaces correctly, instead of verifying the failures.\n\nIf you\u0027re asking why test expectation becomes literal constants instead of derived value, I don\u0027t feel strongly about either way. Will change them back if you prefer.",
+      "parentUuid": "a04566a6_e1763da5",
+      "revId": "1eb7c8cc54c9648277d10d113ed8a1b0cd1e9a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea7e1a22_906863e5",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-19T17:00:48Z",
       "side": 0,
       "message": "What happened to this expectation?",
+      "revId": "1eb7c8cc54c9648277d10d113ed8a1b0cd1e9a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e270a94_e6a381ad",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 0,
+      "message": "Becomes redundant to GeometryMapperTest.SiblingTransforms above (line #637), thus removed.",
+      "parentUuid": "ea7e1a22_906863e5",
       "revId": "1eb7c8cc54c9648277d10d113ed8a1b0cd1e9a01",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

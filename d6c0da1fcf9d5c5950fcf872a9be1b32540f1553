@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "ba22719d_ebaf2b6d",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "Not really. #23 allows the two nodes being non-coplanar as long as both have invertible projection. I think #23 describes the intention better -- projecting source plane to screen then project back. #26 feels more like a failover.",
+      "parentUuid": "611204c9_d8575c14",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0c69830c_130b5062",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3bb20ad4_bc6c3af6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "Acknowledged. Writing it right now.",
+      "parentUuid": "0c69830c_130b5062",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "a781061e_0789227b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3f72e18_e6ff3b50",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3971375a_01c74a31",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 2
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-19T17:00:48Z",
       "side": 1,
       "message": "Why the changes here?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b9b593b_008b21d6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "I made a design trade-off that SourceToDestinationProjectionInternal could fail if either source-to-LCA or destination-to-LCA being singular, despite we only invert destination-to-LCA. I have to do this because otherwise when the \"checkpoint\" mismatch, we\u0027ll need to examine tree hierarchy to determine which failure mode it is.\n\nI think it\u0027s not worth to determine which failure mode because an element can\u0027t paint either way, and returning empty rect with success should be the right response.",
+      "parentUuid": "3971375a_01c74a31",
       "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +176,24 @@
     },
     {
       "key": {
+        "uuid": "61d7da50_900d0b7f",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "It\u0027s the only user, I think it may be slightly faster just inline it.\nActually if you feel strongly about it, I should add a constexpr constructor to FloatClipRect to eliminate this DEFINE_STATIC_LOCAL nonsense.",
+      "parentUuid": "ee35771b_21b7f082",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cbc4a116_908f8499",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
         "patchSetId": 2
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "c86cc531_8453ea97",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "Acknowledged. Actually I should comment what everything means and their invariants.",
+      "parentUuid": "cbc4a116_908f8499",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "11fd7cbd_b468d3df",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
         "patchSetId": 2
@@ -132,6 +240,24 @@
       "writtenOn": "2017-06-19T17:00:48Z",
       "side": 1,
       "message": "Document exactly what the checkpoint is (highest flat and invertible ancestor).\nActually, how about changing the name of this method to something that directly\nindicates that?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6321eb32_2fd7dd9b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-19T21:21:28Z",
+      "side": 1,
+      "message": "Yes I should. Naming variables is hard! :\u003e\nI\u0027m thinking something like plane_root.",
+      "parentUuid": "11fd7cbd_b468d3df",
       "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
