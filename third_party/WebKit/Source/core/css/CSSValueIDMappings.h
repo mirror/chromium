@@ -41,6 +41,12 @@ inline ETextCombine CssValueIDToPlatformEnum(CSSValueID v) {
 }
 
 template <>
+inline EColumnSpan CssValueIDToPlatformEnum(CSSValueID v) {
+  DCHECK_NE(v, CSSValueNone);
+  return detail::cssValueIDToPlatformEnumGenerated<EColumnSpan>(v);
+}
+
+template <>
 inline ETextAlign CssValueIDToPlatformEnum(CSSValueID v) {
   if (v == CSSValueWebkitAuto)  // Legacy -webkit-auto. Eqiuvalent to start.
     return ETextAlign::kStart;
