@@ -4,12 +4,16 @@
 
 package org.chromium.chrome.test;
 
+import static org.chromium.chrome.test.BottomSheetTestRule.ENABLE_CHROME_HOME;
+
 import android.support.v7.widget.RecyclerView;
 
 import org.chromium.base.ThreadUtils;
 import org.chromium.base.test.util.CallbackHelper;
+import org.chromium.base.test.util.CommandLineFlags;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.ChromeFeatureList;
+import org.chromium.chrome.browser.ChromeSwitches;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet;
 import org.chromium.chrome.browser.widget.bottomsheet.BottomSheet.BottomSheetContent;
@@ -20,6 +24,8 @@ import org.chromium.chrome.test.util.browser.RecyclerViewTestUtils;
 /**
  * Junit4 rule for tests testing the Chrome Home bottom sheet.
  */
+@CommandLineFlags.Add({ENABLE_CHROME_HOME, ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
+        SuggestionsBottomSheetTestRule.DISABLE_NETWORK_PREDICTION_FLAG})
 public class BottomSheetTestRule extends ChromeTabbedActivityTestRule {
     /** An observer used to record events that occur with respect to the bottom sheet. */
     public static class Observer extends EmptyBottomSheetObserver {

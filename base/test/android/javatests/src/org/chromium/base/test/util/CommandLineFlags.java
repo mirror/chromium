@@ -7,6 +7,7 @@ package org.chromium.base.test.util;
 import android.content.Context;
 
 import org.junit.Assert;
+import org.junit.Rule;
 
 import org.chromium.base.BaseChromiumApplication;
 import org.chromium.base.CommandLine;
@@ -19,6 +20,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 import java.lang.reflect.AnnotatedElement;
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -82,10 +84,28 @@ public final class CommandLineFlags {
     }
 
     private static Set<String> getFlags(AnnotatedElement element) {
+        Set<String> flags = new HashSet<String>();
+
         AnnotatedElement parent = (element instanceof Method)
                 ? ((Method) element).getDeclaringClass()
                 : ((Class) element).getSuperclass();
-        Set<String> flags = (parent == null) ? new HashSet<String>() : getFlags(parent);
+
+        if (parent != null) {
+            // Get flags from rules, note that parent is always a class
+            for (Field field : ((Class) parent).getFields()) {
+                if (field.isAnnotationPresent(Rule.class)) {
+                    flags.addAll(getFlags(field.getType()));
+                }
+            }
+            for (Method method : ((Class) parent).getMethods()) {
+                if (method.isAnnotationPresent(Rule.class)) {
+                    flags.addAll(getFlags(method.getReturnType()));
+                }
+            }
+
+            // add the flags on the class itself. Override any flags defined by the rules.
+            flags.addAll(getFlags(parent));
+        }
 
         if (element.isAnnotationPresent(CommandLineFlags.Add.class)) {
             flags.addAll(
