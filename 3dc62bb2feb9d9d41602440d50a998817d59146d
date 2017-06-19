@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d20f06a_ecc610d9",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T14:24:10Z",
+      "side": 1,
+      "message": "What this test is checking is that the panel doesn\u0027t hide if the mouse is hovering the media controls bar itself (see how it hovers the \u0027play-button\u0027). However, it should hide if the mouse is hovering the video.\n\nYou can try: https://mounirlamouri.github.io/sandbox/media/dynamic-controls.html \n1. play\n2. hover the video (controls appear)\n\u003d\u003e controls disappear after a couple of seconds\n4. mouve mouse (contros appear)\n5. hover play button on bottom left\n\u003d\u003e controls will not disappear\n\nThis test is checking steps 4/5, it appears.",
+      "revId": "3dc62bb2feb9d9d41602440d50a998817d59146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
