@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d0cc02a7_13f5c4cf",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-19T22:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d91170e8_bced4933",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d5cd63d_d9f9d44c",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-17T01:17:37Z",
       "side": 1,
       "message": "Can you plz get rid of this. You can just sniff on _showPreviewView in tests",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb3f235c_315bb124",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-19T22:06:34Z",
+      "side": 1,
+      "message": "Done. However, this made it really hard to get the view out for tests.",
+      "parentUuid": "7d5cd63d_d9f9d44c",
       "revId": "c4cee5609645cd3246aef551fa5630718178760c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c4cee5609645cd3246aef551fa5630718178760c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec96dd82_e83d5218",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/RequestPreviewView.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-19T22:06:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4b488d89_40e1ba38",
+      "revId": "c4cee5609645cd3246aef551fa5630718178760c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
