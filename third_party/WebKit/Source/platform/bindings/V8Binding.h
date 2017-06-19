@@ -35,6 +35,7 @@
 #include "platform/PlatformExport.h"
 #include "platform/bindings/DOMDataStore.h"
 #include "platform/bindings/DOMWrapperWorld.h"
+#include "platform/bindings/RuntimeCallStats.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/bindings/StringResource.h"
 #include "platform/bindings/V8BindingMacros.h"
@@ -133,6 +134,9 @@ template <typename CallbackInfo>
 inline void V8SetReturnValueString(const CallbackInfo& info,
                                    const String& string,
                                    v8::Isolate* isolate) {
+  RUNTIME_CALL_TIMER_SCOPE(
+      rcs_scope, RuntimeCallStats::From(isolate),
+      RuntimeCallStats::CounterId::kV8SetReturnValueString);
   if (string.IsNull()) {
     V8SetReturnValueEmptyString(info);
     return;
@@ -177,6 +181,10 @@ inline void V8SetReturnValue(const CallbackInfo& callback_info,
 template <typename CallbackInfo>
 inline void V8SetReturnValueForMainWorld(const CallbackInfo& callback_info,
                                          ScriptWrappable* impl) {
+  RUNTIME_CALL_TIMER_SCOPE(rcs_scope,
+                           RuntimeCallStats::From(callback_info.GetIsolate()),
+                           RuntimeCallStats::CounterId::
+                               kV8SetReturnValueForMainWorldScriptWrappable);
   DCHECK(DOMWrapperWorld::Current(callback_info.GetIsolate()).IsMainWorld());
   if (UNLIKELY(!impl)) {
     V8SetReturnValueNull(callback_info);
@@ -251,6 +259,8 @@ inline String ToCoreStringWithUndefinedOrNullCheck(v8::Local<v8::Value> value) {
 
 inline v8::Local<v8::String> V8String(v8::Isolate* isolate,
                                       const StringView& string) {
+  RUNTIME_CALL_TIMER_SCOPE(rcs_scope, RuntimeCallStats::From(isolate),
+                           RuntimeCallStats::CounterId::kV8StringStringView);
   DCHECK(isolate);
   if (string.IsNull())
     return v8::String::Empty(isolate);
