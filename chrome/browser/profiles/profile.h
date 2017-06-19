@@ -48,6 +48,10 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 // Instead of adding more members to Profile, consider creating a
 // KeyedService. See
 // http://dev.chromium.org/developers/design-documents/profile-architecture
