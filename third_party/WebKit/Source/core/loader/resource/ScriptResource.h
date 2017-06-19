@@ -59,7 +59,8 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
 
   // Public for testing
-  static ScriptResource* Create(const KURL& url, const String& charset) {
+  static ScriptResource* CreateForTest(const KURL& url,
+                                       const CharsetRequest& charset) {
     ResourceRequest request(url);
     ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
                                   kClientDidNotRequestCredentials);
@@ -89,14 +90,14 @@ class CORE_EXPORT ScriptResource final : public TextResource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest& charset) const override {
       return new ScriptResource(request, options, charset);
     }
   };
 
   ScriptResource(const ResourceRequest&,
                  const ResourceLoaderOptions&,
-                 const String& charset);
+                 const CharsetRequest&);
 
   AtomicString source_text_;
 };

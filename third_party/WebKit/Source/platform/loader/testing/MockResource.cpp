@@ -18,7 +18,7 @@ class MockResourceFactory final : public ResourceFactory {
 
   Resource* Create(const ResourceRequest& request,
                    const ResourceLoaderOptions& options,
-                   const String&) const override {
+                   const CharsetRequest&) const override {
     return new MockResource(request, options);
   }
 };

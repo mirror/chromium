@@ -177,6 +177,15 @@ TextResourceDecoder::TextResourceDecoder(
   }
 }
 
+std::unique_ptr<TextResourceDecoder> TextResourceDecoder::Create(
+    const String& mime_type,
+    const CharsetRequest& charset_request) {
+  if (charset_request.AlwaysUseUTF8())
+    return CreateAlwaysUseUTF8ForText();
+
+  return Create(mime_type, charset_request.Encoding());
+}
+
 TextResourceDecoder::~TextResourceDecoder() {}
 
 void TextResourceDecoder::SetEncoding(const WTF::TextEncoding& encoding,

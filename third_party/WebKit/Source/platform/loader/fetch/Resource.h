@@ -50,6 +50,7 @@
 
 namespace blink {
 
+class CharsetRequest;
 class FetchParameters;
 class ResourceClient;
 class ResourceFetcher;
@@ -504,7 +505,7 @@ class ResourceFactory {
  public:
   virtual Resource* Create(const ResourceRequest&,
                            const ResourceLoaderOptions&,
-                           const String&) const = 0;
+                           const CharsetRequest&) const = 0;
   Resource::Type GetType() const { return type_; }
 
  protected:

@@ -28,6 +28,7 @@
 
 #include "platform/CrossOriginAttributeValue.h"
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/CharsetRequest.h"
 #include "platform/loader/fetch/ClientHintsPreferences.h"
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -87,8 +88,11 @@ class PLATFORM_EXPORT FetchParameters {
     resource_request_.SetRequestContext(context);
   }
 
-  String Charset() const { return String(charset_.GetName()); }
-  void SetCharset(const WTF::TextEncoding& charset) { charset_ = charset; }
+  const CharsetRequest& Charset() const { return charset_; }
+  void SetCharset(const WTF::TextEncoding& charset) {
+    charset_ = CharsetRequest(charset);
+  }
+  void SetCharset(const CharsetRequest& charset) { charset_ = charset; }
 
   const ResourceLoaderOptions& Options() const { return options_; }
 
@@ -164,7 +168,7 @@ class PLATFORM_EXPORT FetchParameters {
 
  private:
   ResourceRequest resource_request_;
-  WTF::TextEncoding charset_;
+  CharsetRequest charset_;
   ResourceLoaderOptions options_;
   SpeculativePreloadType speculative_preload_type_;
   double preload_discovery_time_;

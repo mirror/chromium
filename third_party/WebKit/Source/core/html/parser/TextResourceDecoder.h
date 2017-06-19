@@ -25,6 +25,7 @@
 
 #include <memory>
 #include "core/CoreExport.h"
+#include "platform/loader/fetch/CharsetRequest.h"
 #include "platform/weborigin/KURL.h"
 #include "platform/wtf/PtrUtil.h"
 #include "platform/wtf/text/TextEncoding.h"
@@ -70,6 +71,10 @@ class CORE_EXPORT TextResourceDecoder {
     return WTF::WrapUnique(new TextResourceDecoder(
         "plain/text", UTF8Encoding(), kAlwaysUseUTF8ForText, KURL()));
   }
+
+  static std::unique_ptr<TextResourceDecoder> Create(const String& mime_type,
+                                                     const CharsetRequest&);
+
   ~TextResourceDecoder();
 
   void SetEncoding(const WTF::TextEncoding&, EncodingSource);

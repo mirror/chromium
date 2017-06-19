@@ -46,7 +46,7 @@ class CORE_EXPORT StyleSheetResource : public TextResource {
                      Type type,
                      const ResourceLoaderOptions& options,
                      const String& mime_type,
-                     const String& charset)
+                     const CharsetRequest& charset)
       : TextResource(request, type, options, mime_type, charset) {}
 };
 
