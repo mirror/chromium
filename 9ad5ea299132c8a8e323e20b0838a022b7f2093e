@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "310bfce8_f6b85691",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoaderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T12:49:47Z",
+      "side": 1,
+      "message": "CamelCase",
+      "revId": "9ad5ea299132c8a8e323e20b0838a022b7f2093e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
