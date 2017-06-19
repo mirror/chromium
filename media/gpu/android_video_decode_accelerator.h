@@ -397,6 +397,8 @@ class MEDIA_GPU_EXPORT AndroidVideoDecodeAccelerator
 
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
 
+  AndroidVideoSurfaceChooser::State chooser_state_;
+
   PlatformConfig platform_config_;
 
   // Optional factory to produce mojo AndroidOverlay instances.

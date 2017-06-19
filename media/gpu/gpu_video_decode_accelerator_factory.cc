@@ -250,11 +250,14 @@ GpuVideoDecodeAcceleratorFactory::CreateAndroidVDA(
     const gpu::GpuDriverBugWorkarounds& workarounds,
     const gpu::GpuPreferences& gpu_preferences) const {
   std::unique_ptr<VideoDecodeAccelerator> decoder;
+  AndroidVideoDecodeAccelerator::PlatformConfig platform_config =
+      AndroidVideoDecodeAccelerator::PlatformConfig::CreateDefault();
   decoder.reset(new AndroidVideoDecodeAccelerator(
       AVDACodecAllocator::GetInstance(),
-      base::MakeUnique<AndroidVideoSurfaceChooserImpl>(),
+      base::MakeUnique<AndroidVideoSurfaceChooserImpl>(
+          platform_config.allow_setsurface),
       make_context_current_cb_, get_gles2_decoder_cb_, overlay_factory_cb_,
-      AndroidVideoDecodeAccelerator::PlatformConfig::CreateDefault()));
+      platform_config));
   return decoder;
 }
 #endif
