@@ -12,6 +12,7 @@
 #include <limits>
 #include <sstream>
 
+#include "ash/public/cpp/config.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_enumerator.h"
@@ -33,6 +34,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_manager.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -467,17 +469,16 @@ DeviceStatusCollector::DeviceStatusCollector(
     android_status_fetcher_ = base::Bind(&ReadAndroidStatus);
 
   idle_poll_timer_.Start(FROM_HERE,
-                         TimeDelta::FromSeconds(kIdlePollIntervalSeconds),
-                         this, &DeviceStatusCollector::CheckIdleState);
+                         TimeDelta::FromSeconds(kIdlePollIntervalSeconds), this,
+                         &DeviceStatusCollector::CheckIdleState);
   resource_usage_sampling_timer_.Start(
       FROM_HERE, TimeDelta::FromSeconds(kResourceUsageSampleIntervalSeconds),
       this, &DeviceStatusCollector::SampleResourceUsage);
 
   // Watch for changes to the individual policies that control what the status
   // reports contain.
-  base::Closure callback =
-      base::Bind(&DeviceStatusCollector::UpdateReportingSettings,
-                 base::Unretained(this));
+  base::Closure callback = base::Bind(
+      &DeviceStatusCollector::UpdateReportingSettings, base::Unretained(this));
   version_info_subscription_ = cros_settings_->AddSettingsObserver(
       chromeos::kReportDeviceVersionInfo, callback);
   activity_times_subscription_ = cros_settings_->AddSettingsObserver(
@@ -514,8 +515,7 @@ DeviceStatusCollector::DeviceStatusCollector(
                  weak_factory_.GetWeakPtr()));
 }
 
-DeviceStatusCollector::~DeviceStatusCollector() {
-}
+DeviceStatusCollector::~DeviceStatusCollector() {}
 
 // static
 void DeviceStatusCollector::RegisterPrefs(PrefRegistrySimple* registry) {
@@ -529,9 +529,15 @@ void DeviceStatusCollector::RegisterProfilePrefs(PrefRegistrySimple* registry) {
 }
 
 void DeviceStatusCollector::CheckIdleState() {
-  CalculateIdleState(kIdleStateThresholdSeconds,
-      base::Bind(&DeviceStatusCollector::IdleStateCallback,
-                 base::Unretained(this)));
+  if (chromeos::GetAshConfig() != ash::Config::MASH) {
+    // TODO(crbug.com/716244): This uses UserActivityDetector, which does not
+    // exist in the browser process under mash.
+    CalculateIdleState(kIdleStateThresholdSeconds,
+                       base::Bind(&DeviceStatusCollector::IdleStateCallback,
+                                  base::Unretained(this)));
+  } else {
+    NOTIMPLEMENTED();
+  }
 }
 
 void DeviceStatusCollector::UpdateReportingSettings() {
@@ -540,37 +546,36 @@ void DeviceStatusCollector::UpdateReportingSettings() {
   // back when they are available.
   if (chromeos::CrosSettingsProvider::TRUSTED !=
       cros_settings_->PrepareTrustedValues(
-      base::Bind(&DeviceStatusCollector::UpdateReportingSettings,
-                 weak_factory_.GetWeakPtr()))) {
+          base::Bind(&DeviceStatusCollector::UpdateReportingSettings,
+                     weak_factory_.GetWeakPtr()))) {
     return;
   }
 
   // All reporting settings default to 'enabled'.
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceVersionInfo, &report_version_info_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceVersionInfo,
+                                  &report_version_info_)) {
     report_version_info_ = true;
   }
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceActivityTimes, &report_activity_times_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceActivityTimes,
+                                  &report_activity_times_)) {
     report_activity_times_ = true;
   }
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceBootMode, &report_boot_mode_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceBootMode,
+                                  &report_boot_mode_)) {
     report_boot_mode_ = true;
   }
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceNetworkInterfaces,
-          &report_network_interfaces_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceNetworkInterfaces,
+                                  &report_network_interfaces_)) {
     report_network_interfaces_ = true;
   }
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceUsers, &report_users_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceUsers,
+                                  &report_users_)) {
     report_users_ = true;
   }
 
   const bool already_reporting_hardware_status = report_hardware_status_;
-  if (!cros_settings_->GetBoolean(
-          chromeos::kReportDeviceHardwareStatus, &report_hardware_status_)) {
+  if (!cros_settings_->GetBoolean(chromeos::kReportDeviceHardwareStatus,
+                                  &report_hardware_status_)) {
     report_hardware_status_ = true;
   }
 
@@ -848,11 +853,21 @@ bool DeviceStatusCollector::GetNetworkInterfaces(
     const char* type_string;
     em::NetworkInterface::NetworkDeviceType type_constant;
   } kDeviceTypeMap[] = {
-    { shill::kTypeEthernet,  em::NetworkInterface::TYPE_ETHERNET,  },
-    { shill::kTypeWifi,      em::NetworkInterface::TYPE_WIFI,      },
-    { shill::kTypeWimax,     em::NetworkInterface::TYPE_WIMAX,     },
-    { shill::kTypeBluetooth, em::NetworkInterface::TYPE_BLUETOOTH, },
-    { shill::kTypeCellular,  em::NetworkInterface::TYPE_CELLULAR,  },
+      {
+          shill::kTypeEthernet, em::NetworkInterface::TYPE_ETHERNET,
+      },
+      {
+          shill::kTypeWifi, em::NetworkInterface::TYPE_WIFI,
+      },
+      {
+          shill::kTypeWimax, em::NetworkInterface::TYPE_WIMAX,
+      },
+      {
+          shill::kTypeBluetooth, em::NetworkInterface::TYPE_BLUETOOTH,
+      },
+      {
+          shill::kTypeCellular, em::NetworkInterface::TYPE_CELLULAR,
+      },
   };
 
   // Maps shill device connection status to proto enum constants.
@@ -860,18 +875,17 @@ bool DeviceStatusCollector::GetNetworkInterfaces(
     const char* state_string;
     em::NetworkState::ConnectionState state_constant;
   } kConnectionStateMap[] = {
-    { shill::kStateIdle,              em::NetworkState::IDLE },
-    { shill::kStateCarrier,           em::NetworkState::CARRIER },
-    { shill::kStateAssociation,       em::NetworkState::ASSOCIATION },
-    { shill::kStateConfiguration,     em::NetworkState::CONFIGURATION },
-    { shill::kStateReady,             em::NetworkState::READY },
-    { shill::kStatePortal,            em::NetworkState::PORTAL },
-    { shill::kStateOffline,           em::NetworkState::OFFLINE },
-    { shill::kStateOnline,            em::NetworkState::ONLINE },
-    { shill::kStateDisconnect,        em::NetworkState::DISCONNECT },
-    { shill::kStateFailure,           em::NetworkState::FAILURE },
-    { shill::kStateActivationFailure,
-        em::NetworkState::ACTIVATION_FAILURE },
+      {shill::kStateIdle, em::NetworkState::IDLE},
+      {shill::kStateCarrier, em::NetworkState::CARRIER},
+      {shill::kStateAssociation, em::NetworkState::ASSOCIATION},
+      {shill::kStateConfiguration, em::NetworkState::CONFIGURATION},
+      {shill::kStateReady, em::NetworkState::READY},
+      {shill::kStatePortal, em::NetworkState::PORTAL},
+      {shill::kStateOffline, em::NetworkState::OFFLINE},
+      {shill::kStateOnline, em::NetworkState::ONLINE},
+      {shill::kStateDisconnect, em::NetworkState::DISCONNECT},
+      {shill::kStateFailure, em::NetworkState::FAILURE},
+      {shill::kStateActivationFailure, em::NetworkState::ACTIVATION_FAILURE},
   };
 
   chromeos::NetworkStateHandler::DeviceStateList device_list;
@@ -1247,9 +1261,8 @@ bool DeviceStatusCollector::GetAndroidStatus(
 
 std::string DeviceStatusCollector::GetAppVersion(
     const std::string& kiosk_app_id) {
-  Profile* const profile =
-      chromeos::ProfileHelper::Get()->GetProfileByUser(
-          user_manager::UserManager::Get()->GetActiveUser());
+  Profile* const profile = chromeos::ProfileHelper::Get()->GetProfileByUser(
+      user_manager::UserManager::Get()->GetActiveUser());
   const extensions::ExtensionRegistry* const registry =
       extensions::ExtensionRegistry::Get(profile);
   const extensions::Extension* const extension = registry->GetExtensionById(
