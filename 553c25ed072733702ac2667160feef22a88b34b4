@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "60e90be5_a003cb53",
+        "filename": "content/test/data/accessibility/aria/aria-controls-expected-blink.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-19T16:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "04cddef1_8da5ba36",
+      "revId": "553c25ed072733702ac2667160feef22a88b34b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db81e164_38e9d515",
         "filename": "content/test/data/accessibility/aria/aria-disabled-expected-blink.txt",
         "patchSetId": 23
@@ -33,6 +51,24 @@
       "revId": "553c25ed072733702ac2667160feef22a88b34b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "406c19b5_7ae77670",
+        "filename": "content/test/data/accessibility/aria/aria-disabled-expected-blink.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-19T16:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "db81e164_38e9d515",
+      "revId": "553c25ed072733702ac2667160feef22a88b34b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "7bc03e9b_472407ea",
+        "filename": "content/test/data/accessibility/aria/aria-flowto-expected-blink.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-19T16:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1cafde03_fe4a0c95",
+      "revId": "553c25ed072733702ac2667160feef22a88b34b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0913e90_a89f9caa",
         "filename": "content/test/data/accessibility/aria/aria-invalid-expected-blink.txt",
         "patchSetId": 23
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "447c3645_26a1b623",
+        "filename": "content/test/data/accessibility/aria/aria-invalid-expected-blink.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-19T16:29:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0913e90_a89f9caa",
+      "revId": "553c25ed072733702ac2667160feef22a88b34b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3c667dee_58a929a7",
         "filename": "content/test/data/accessibility/html/a-onclick-expected-blink.txt",
         "patchSetId": 23
@@ -81,6 +153,24 @@
       "writtenOn": "2017-06-19T15:39:26Z",
       "side": 1,
       "message": "Should this show clickable somehow?",
+      "revId": "553c25ed072733702ac2667160feef22a88b34b4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0d7ed25_e37d2d84",
+        "filename": "content/test/data/accessibility/html/a-onclick-expected-blink.txt",
+        "patchSetId": 23
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1211408
+      },
+      "writtenOn": "2017-06-19T16:29:37Z",
+      "side": 1,
+      "message": "Using defaultActionVerb* for that. It\u0027s a number, so eventually we may want to write it out as a friendly string.",
+      "parentUuid": "3c667dee_58a929a7",
       "revId": "553c25ed072733702ac2667160feef22a88b34b4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
