@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "d0b123c7_fa44b93a",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-19T19:11:50Z",
+      "side": 1,
+      "message": "Annotating the entries with the DumpGUID metric allows all the entries in the same global dump to be correlated with each other. I\u0027ve added a comment --- let me know what you think.",
+      "parentUuid": "75ff7e53_b87be591",
+      "range": {
+        "startLine": 163,
+        "startChar": 42,
+        "endLine": 163,
+        "endChar": 43
+      },
+      "revId": "787c2db6f82d58a1cf9df52e4e0bd5eb4d3ed0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3541bd21_a0d71c0a",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-19T17:57:01Z",
       "side": 1,
       "message": "what is this fake doing that the original class did not?",
+      "range": {
+        "startLine": 19,
+        "startChar": 6,
+        "endLine": 19,
+        "endChar": 37
+      },
+      "revId": "787c2db6f82d58a1cf9df52e4e0bd5eb4d3ed0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ed8fe57_566406f3",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-19T19:11:50Z",
+      "side": 1,
+      "message": "It surfaces ReceivedMemoryDump as a publicly visible member (rather than protected) for testing directly --- comment moved.",
+      "parentUuid": "3541bd21_a0d71c0a",
       "range": {
         "startLine": 19,
         "startChar": 6,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "53ece6f7_a1d95f66",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-19T19:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "425c451d_545ad1c4",
+      "range": {
+        "startLine": 126,
+        "startChar": 13,
+        "endLine": 126,
+        "endChar": 18
+      },
+      "revId": "787c2db6f82d58a1cf9df52e4e0bd5eb4d3ed0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe99e808_6545ca2e",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
         "patchSetId": 3
@@ -108,6 +180,24 @@
       "revId": "787c2db6f82d58a1cf9df52e4e0bd5eb4d3ed0d9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "955b75f6_a1ba20d9",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-19T19:11:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fe99e808_6545ca2e",
+      "revId": "787c2db6f82d58a1cf9df52e4e0bd5eb4d3ed0d9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
