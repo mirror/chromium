@@ -83,7 +83,7 @@ class PLATFORM_EXPORT RawResource final : public Resource {
 
     Resource* Create(const ResourceRequest& request,
                      const ResourceLoaderOptions& options,
-                     const String& charset) const override {
+                     const CharsetRequest&) const override {
       return new RawResource(request, type_, options);
     }
   };

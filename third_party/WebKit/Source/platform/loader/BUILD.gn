@@ -25,6 +25,7 @@ source_set("loader") {
     "fetch/CachedMetadata.cpp",
     "fetch/CachedMetadata.h",
     "fetch/CachedMetadataHandler.h",
+    "fetch/CharsetRequest.h",
     "fetch/ClientHintsPreferences.cpp",
     "fetch/ClientHintsPreferences.h",
     "fetch/CrossOriginAccessControl.cpp",
