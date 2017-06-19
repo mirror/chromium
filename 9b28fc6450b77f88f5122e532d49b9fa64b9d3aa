@@ -117,6 +117,29 @@
     },
     {
       "key": {
+        "uuid": "a4c76a49_5941a2f5",
+        "filename": "chrome/browser/predictors/predictor_database.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "On a related note: It is unfortunate that we have so many scoped_refptrs in predictors because it makes it difficult to reason about lifetime of the db, the tables etc. I do not have an easy solution to propose for this patch, so feel free to address it later.\n\nFor the task runner itself, I think it\u0027s game over, no need to try making it a non-refcounted-threadsafe.",
+      "range": {
+        "startLine": 63,
+        "startChar": 2,
+        "endLine": 64,
+        "endChar": 32
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8b92d781_981ff530",
         "filename": "chrome/browser/predictors/predictor_database.cc",
         "patchSetId": 4
@@ -133,6 +156,29 @@
         "startChar": 0,
         "endLine": 92,
         "endChar": 77
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "797607df_5f99f2a6",
+        "filename": "chrome/browser/predictors/predictor_database_factory.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "we should not auto smart pointers because the type is not easy to guess, please declare it as scope_refptr\u003cSequencedTaskRunner\u003e in addition to std::move suggested below.",
+      "range": {
+        "startLine": 36,
+        "startChar": 2,
+        "endLine": 36,
+        "endChar": 6
       },
       "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -202,6 +248,98 @@
         "startChar": 22,
         "endLine": 22,
         "endChar": 36
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "272e6a2a_e2783916",
+        "filename": "chrome/browser/predictors/predictor_table_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "let\u0027s explain that they need to be executed in the task runner that was provided by the client.",
+      "range": {
+        "startLine": 25,
+        "startChar": 43,
+        "endLine": 25,
+        "endChar": 58
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a460b71_2c7cbba5",
+        "filename": "chrome/browser/predictors/predictor_table_base.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "please provide a comment to this public method",
+      "range": {
+        "startLine": 29,
+        "startChar": 43,
+        "endLine": 29,
+        "endChar": 56
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0c415e7_f7ad8708",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_tables.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "This should remain a DCHECK, unless, as usual, I am missing something :)",
+      "range": {
+        "startLine": 229,
+        "startChar": 2,
+        "endLine": 229,
+        "endChar": 7
+      },
+      "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ceb9263_126c2c0b",
+        "filename": "chrome/browser/predictors/resource_prefetch_predictor_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000429
+      },
+      "writtenOn": "2017-06-19T12:44:00Z",
+      "side": 1,
+      "message": "As far as I understood this was required because some test code requires the (formerly known as) DB thread to be the same as UI thread. Was this to avoid extra waiting in tests?\n\nI like explicit waiting, but I also like the code being shorter. In any case, the constraints are not obvious, can you explain some of the patterns/requirements in a comment above the use of SequencedTaskRunnerHandle::Get()?",
+      "range": {
+        "startLine": 74,
+        "startChar": 12,
+        "endLine": 74,
+        "endChar": 50
       },
       "revId": "9b28fc6450b77f88f5122e532d49b9fa64b9d3aa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
