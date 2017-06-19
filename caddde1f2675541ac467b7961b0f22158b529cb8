@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9888ad33_96aff8f8",
+        "filename": "chrome/browser/download/download_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T18:59:55Z",
+      "side": 1,
+      "message": "I\u0027m fine with that at this layer.",
+      "parentUuid": "5c7a0b69_b13407a4",
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2882cb7b_0beb554c",
         "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
         "patchSetId": 2
@@ -76,6 +94,24 @@
       "writtenOn": "2017-06-19T18:14:37Z",
       "side": 1,
       "message": "Is this a TODO or the expected final state of this function? Are there response headers we should be inspecting?",
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db7b8bba_495989ca",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T18:59:55Z",
+      "side": 1,
+      "message": "Some other features (like background fetch) will need to validate the origin and the headers state what cross origin access is allowed.  They\u0027ll need it.  I don\u0027t think you do.",
+      "parentUuid": "97c09491_7955cba5",
       "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
