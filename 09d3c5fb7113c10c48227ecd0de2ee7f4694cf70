@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3291fe59_9d950c6b",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T13:28:30Z",
+      "side": 1,
+      "message": "nit: #include \u003calgorithms\u003e for this?",
+      "range": {
+        "startLine": 193,
+        "startChar": 28,
+        "endLine": 193,
+        "endChar": 36
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87a51a10_4fd99627",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T13:28:30Z",
+      "side": 1,
+      "message": "I saw your argument about unit-testing of RecordHistogramsOnSuppressedAccounts being hard, but I would like to understand in more details what are the issues.\n\nIdeally, instead of friending the *Recorder class and testing GetActionsTakenNew, the Actions test should morph into a test for RecordHistogramsOnSuppressedAccounts (which exposes the result of GetActionsTakenNew).\n\nI don\u0027t want to be blocking or demanding additional work unnecessarily, but to complement Vasilii\u0027s recent success with bringing our big tests into shape, I have been consistently pushing for improving unittest-ability and -coverage in our code. I need to understand the issue with writing the test here to be able to make plans for changing the production code structure even if we ended up not adding the test here.",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
