@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "60827307_c79af87e",
+        "filename": "third_party/WebKit/Source/core/editing/markers/DocumentMarker.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-19T08:23:49Z",
+      "side": 1,
+      "message": "Remove blank line",
+      "revId": "3e97b905ccceeafe7fa1523141c1e6443da25b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
