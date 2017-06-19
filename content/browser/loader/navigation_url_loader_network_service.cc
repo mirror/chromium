@@ -152,10 +152,10 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   // This could be called multiple times.
   void Restart() {
     handler_index_ = 0;
-    MaybeStartLoader(StartLoaderCallback());
+    MaybeStartLoader(0, StartLoaderCallback());
   }
 
-  void MaybeStartLoader(StartLoaderCallback start_loader_callback) {
+  void MaybeStartLoader(int index, StartLoaderCallback start_loader_callback) {
     if (start_loader_callback) {
       url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
           std::move(start_loader_callback),
@@ -169,7 +169,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
       handlers_[handler_index_++]->MaybeCreateLoader(
           *resource_request_, resource_context_,
           base::BindOnce(&URLLoaderRequestController::MaybeStartLoader,
-                         base::Unretained(this)));
+                         base::Unretained(this), 0));
       return;
     }
 
