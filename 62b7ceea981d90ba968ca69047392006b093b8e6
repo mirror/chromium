@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d723c35f_36d0379d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/HARWriter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-19T21:21:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11f8e120_04b66b2b",
+      "revId": "62b7ceea981d90ba968ca69047392006b093b8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "532e8612_c8b987f2",
         "filename": "third_party/WebKit/Source/devtools/front_end/network/HARWriter.js",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-17T01:45:58Z",
       "side": 1,
       "message": "IMO it\u0027s overcomplicated. How about:\n\nfor (var chunk of chunks) {\n  if (progress.isCanceled())\n    break;\n  bytesWritten \u003d await writeChunk(chunk, bytesWritten);\n}\nprogress.done();",
+      "revId": "62b7ceea981d90ba968ca69047392006b093b8e6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec24ec7a_b41a5bc2",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/HARWriter.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-19T21:21:14Z",
+      "side": 1,
+      "message": "Yes it was a bit complicated, however I did like the fact that this way should release the chunks as they are being written instead of holding everything in memory until the last chunk.",
+      "parentUuid": "532e8612_c8b987f2",
       "revId": "62b7ceea981d90ba968ca69047392006b093b8e6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
