@@ -171,6 +171,24 @@
       "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f857ee_b5988853",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/Uint8ClampedArray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T17:35:00Z",
+      "side": 1,
+      "message": "To clarify:\nThe code to destroy the passed-in argument is a no-op when the value is moved (since the internal pointer will be null). But the compiler cannot omit generating this code with the pass by value version, since it doesn\u0027t know enough to eliminate this call (at least, it hasn\u0027t with std::string, std::vector. Maybe RefPtr is simple enough that it can deduce this? *shrug)\n\nI don\u0027t think it matters much for most types though (which is why I\u0027ve reverted these to just pass by value).",
+      "parentUuid": "84ace034_7ff8e6e0",
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
