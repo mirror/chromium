@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d52fa43f_31e42e43",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-19T23:38:05Z",
+      "side": 1,
+      "message": "If we really need this, can we cxhange this to?\nstd::set\u003cuintptr_t\u003e reported_segments;",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1548be4a_5ae77510",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-19T23:38:05Z",
+      "side": 1,
+      "message": "Why is this check needed? The |usages_| is a map from address to usage. So, for a single address there can only be one entry. I suppose the addresses and shm_tokens have 1-1 mapping. So, the guids will be unique in the loop.\n\nSo, we should remove this safety check i guess?",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aebf1977_f8868bf2",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-19T23:38:05Z",
+      "side": 1,
+      "message": "We should still do GetSharedGlobalAllocatorDumpName(SharedMemoryTracker::GetGlobalDumpGUIDForTracing(shared_memory_guid)) here",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
