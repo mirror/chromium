@@ -16,6 +16,24 @@
       "revId": "4fa31914d0752cdcef25cd14607bbffca3f5cc20",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1733b5a_a58981f3",
+        "filename": "chrome/browser/ui/cocoa/bookmarks/bookmark_editor_base_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1135976
+      },
+      "writtenOn": "2017-06-19T18:08:54Z",
+      "side": 1,
+      "message": "Apparently we do, otherwise BookmarkEditorController can\u0027t call it",
+      "parentUuid": "2f7a7c41_3c119098",
+      "revId": "4fa31914d0752cdcef25cd14607bbffca3f5cc20",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
