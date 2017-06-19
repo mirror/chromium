@@ -352,6 +352,14 @@ v8::Local<v8::Object> HTMLPlugInElement::PluginWrapper() {
   // edge-case is OK.
   v8::Isolate* isolate = V8PerIsolateData::MainThreadIsolate();
   if (plugin_wrapper_.IsEmpty()) {
+    if (ContentFrame()) {
+      v8::Local<v8::Object> object =
+          frame->Client()->GetV8ScriptableObjectForPluginFrame(isolate,
+                                                               *ContentFrame());
+      if (!object.IsEmpty())
+        plugin_wrapper_.Reset(isolate, object);
+    }
+
     PluginView* plugin;
 
     if (persisted_plugin_)

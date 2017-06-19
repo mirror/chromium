@@ -144,6 +144,8 @@
 #include "extensions/common/extension_urls.h"
 #include "extensions/common/switches.h"
 #include "extensions/renderer/dispatcher.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_client.h"
+#include "extensions/renderer/mime_handler_view/mime_handler_view_manager.h"
 #include "extensions/renderer/renderer_extension_registry.h"
 #endif
 
@@ -1593,6 +1595,41 @@ GURL ChromeContentRendererClient::OverrideFlashEmbedWithHTML(const GURL& url) {
 
   RecordYouTubeRewriteUMA(result);
   return corrected_url.ReplaceComponents(r);
+}
+
+GURL ChromeContentRendererClient::OverridePDFEmbedWithHTML(
+    const GURL& url,
+    const std::string& orig_mime_type) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::OverridePDFEmbedWithHTML(
+      url, orig_mime_type);
+#else
+  return GURL();
+#endif
+}
+
+bool ChromeContentRendererClient::MaybeRequestPDFResource(
+    content::RenderFrame* navigating_frame,
+    const GURL& complete_url) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::MaybeRequestPDFResource(
+      navigating_frame, complete_url);
+#else
+  return false;
+#endif
+}
+
+v8::Local<v8::Object>
+ChromeContentRendererClient::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame,
+    int32_t original_frame_routing_id) {
+#if BUILDFLAG(ENABLE_EXTENSIONS)
+  return ChromeExtensionsRendererClient::GetV8ScriptableObjectForPluginFrame(
+      isolate, frame, original_frame_routing_id);
+#else
+  return v8::Local<v8::Object>();
+#endif
 }
 
 std::unique_ptr<base::TaskScheduler::InitParams>

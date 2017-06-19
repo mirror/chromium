@@ -1159,6 +1159,15 @@ blink::WebURL RenderFrameImpl::OverrideFlashEmbedWithHTML(
   return GetContentClient()->renderer()->OverrideFlashEmbedWithHTML(url);
 }
 
+blink::WebURL RenderFrameImpl::OverridePDFEmbedWithHTML(
+    const blink::WebURL& url,
+    const blink::WebString& original_mime_type) {
+  blink::WebURL overridden_url;
+  mime_handler_view_proxy_.OverrrideURLForPDFEmbed(url, original_mime_type,
+                                                   &overridden_url);
+  return overridden_url;
+}
+
 // RenderFrameImpl ----------------------------------------------------------
 RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
     : frame_(NULL),
@@ -1203,6 +1212,7 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
       media_factory_(this,
                      base::Bind(&RenderFrameImpl::RequestOverlayRoutingToken,
                                 base::Unretained(this))),
+      mime_handler_view_proxy_(this),
       weak_factory_(this) {
   interface_registry_ = base::MakeUnique<service_manager::BinderRegistry>();
   service_manager::mojom::InterfaceProviderPtr remote_interfaces;
@@ -1814,6 +1824,16 @@ void RenderFrameImpl::OnSwapOut(
   RenderViewImpl* render_view = render_view_;
   bool is_main_frame = is_main_frame_;
   int routing_id = GetRoutingID();
+
+  if (auto* mime_handler_view_proxy =
+          MimeHandlerViewProxy::FromWebFrame(frame_->Parent())) {
+    // If this frame is the content frame of a plugin element which is
+    // navigating to PDF extension, we should let the MimeHandlerViewProxy know
+    // so that blink's request for scriptable object is properly routed to the
+    // right handler in the extensions layer.
+    mime_handler_view_proxy->FrameSwappedWithProxy(routing_id,
+                                                   proxy_routing_id);
+  }
 
   // Now that all of the cleanup is complete and the browser side is notified,
   // start using the RenderFrameProxy.
@@ -3107,6 +3127,11 @@ void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
   // called on the parent frame.
   DCHECK_EQ(frame_, frame);
 
+  if (auto* mime_handler_view_proxy =
+          MimeHandlerViewProxy::FromWebFrame(frame_->Parent())) {
+    mime_handler_view_proxy->FrameDetached(routing_id_);
+  }
+
 #if BUILDFLAG(ENABLE_PLUGINS)
   if (focused_pepper_plugin_)
     GetRenderWidget()->set_focused_pepper_plugin(nullptr);
@@ -3137,6 +3162,11 @@ void RenderFrameImpl::FrameDetached(blink::WebLocalFrame* frame,
   CHECK(it != g_frame_map.Get().end());
   CHECK_EQ(it->second, this);
   g_frame_map.Get().erase(it);
+
+  if (auto* mime_handler_view_proxy =
+          MimeHandlerViewProxy::FromWebFrame(frame_->Parent())) {
+    mime_handler_view_proxy->FrameDetached(routing_id_);
+  }
 
   // |frame| is invalid after here.  Be sure to clear frame_ as well, since this
   // object may not be deleted immediately and other methods may try to access
@@ -3505,6 +3535,13 @@ void RenderFrameImpl::DidStartProvisionalLoad(blink::WebDataSource* data_source,
   Send(new FrameHostMsg_DidStartProvisionalLoad(
       routing_id_, data_source->GetRequest().Url(), redirect_chain,
       navigation_start));
+
+  if (RenderFrameImpl* parent = FromWebFrame(frame_->Parent())) {
+    // Let the MimeHandlerViewProxy know about this navigation so that it can
+    // initiate resource loading if necessary.
+    parent->mime_handler_view_proxy_.MaybeRequestPDFResource(
+        this, data_source->GetRequest().Url());
+  }
 }
 
 void RenderFrameImpl::DidReceiveServerRedirectForProvisionalLoad() {
@@ -6714,6 +6751,13 @@ std::unique_ptr<blink::WebURLLoader> RenderFrameImpl::CreateURLLoader() {
 void RenderFrameImpl::DraggableRegionsChanged() {
   for (auto& observer : observers_)
     observer.DraggableRegionsChanged();
+}
+
+v8::Local<v8::Object> RenderFrameImpl::GetV8ScriptableObjectForPluginFrame(
+    v8::Isolate* isolate,
+    blink::WebFrame* frame) {
+  return mime_handler_view_proxy_.GetV8ScriptableObjectForPluginFrame(isolate,
+                                                                      frame);
 }
 
 blink::WebPageVisibilityState RenderFrameImpl::GetVisibilityState() const {

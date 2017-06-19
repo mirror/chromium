@@ -2683,6 +2683,10 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kCrossProcessGuestViewIsolationName,
      flag_descriptions::kCrossProcessGuestViewIsolationDescription, kOsDesktop,
      FEATURE_VALUE_TYPE(features::kGuestViewCrossProcessFrames)},
+    {"web-accessible-pdf-extension",
+     flag_descriptions::kWebAccessiblePdfExtensionIsolationName,
+     flag_descriptions::kWebAccessiblePdfExtensionIsolationDescription,
+     kOsDesktop, FEATURE_VALUE_TYPE(features::kWebAccessiblePdfExtension)},
 #if !defined(OS_ANDROID) && !defined(OS_IOS)
     {"media-remoting", flag_descriptions::kMediaRemotingName,
      flag_descriptions::kMediaRemotingDescription, kOsDesktop,

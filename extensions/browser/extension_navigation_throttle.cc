@@ -13,6 +13,7 @@
 #include "content/public/common/url_constants.h"
 #include "extensions/browser/extension_registry.h"
 #include "extensions/browser/guest_view/web_view/web_view_guest.h"
+#include "extensions/browser/mime_handler_view/mime_handler_view_service.h"
 #include "extensions/browser/url_request_util.h"
 #include "extensions/common/constants.h"
 #include "extensions/common/extension.h"
@@ -128,6 +129,17 @@ ExtensionNavigationThrottle::WillStartOrRedirectRequest() {
   // Enforce the web_accessible_resources restriction, and same-origin
   // restrictions for platform apps.
   content::RenderFrameHost* parent = navigation_handle()->GetParentFrame();
+
+  content::NavigationThrottle::ThrottleCheckResult mhvs_result;
+  if (MimeHandlerViewService::FromRenderFrameHost(parent)->MaybeDeferNavigation(
+          navigation_handle(), &mhvs_result)) {
+    // This navigation relates to a frame corresponding to
+    // MimeHandlerViewService. The navigation will either pause until the
+    // corresponding StreamContainer is found, or might be canceled if the frame
+    // is already navigated to a PDF resource.
+    DCHECK_NE(content::NavigationThrottle::PROCEED, mhvs_result);
+    return mhvs_result;
+  }
 
   // Look to see if all ancestors belong to |target_extension|. If not,
   // then the web_accessible_resource restriction applies.

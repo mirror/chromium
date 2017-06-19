@@ -16,6 +16,7 @@ class ChromeExtensionsDispatcherDelegate;
 class GURL;
 
 namespace blink {
+class WebFrame;
 class WebLocalFrame;
 struct WebPluginParams;
 class WebURL;
@@ -33,6 +34,13 @@ class ExtensionsGuestViewContainerDispatcher;
 class RendererPermissionsPolicyDelegate;
 class ResourceRequestPolicy;
 }
+
+namespace v8 {
+class Isolate;
+template <class T>
+class Local;
+class Object;
+}  // namespace v8
 
 class ChromeExtensionsRendererClient
     : public extensions::ExtensionsRendererClient {
@@ -72,6 +80,15 @@ class ChromeExtensionsRendererClient
       content::RenderFrame* render_frame,
       const std::string& mime_type,
       const GURL& original_url);
+
+  static GURL OverridePDFEmbedWithHTML(const GURL& complete_url,
+                                       const std::string& mime_type);
+  static bool MaybeRequestPDFResource(content::RenderFrame* navigating_frame,
+                                      const GURL& url);
+  static v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame,
+      int32_t original_frame_routing_id);
 
   void RunScriptsAtDocumentStart(content::RenderFrame* render_frame);
   void RunScriptsAtDocumentEnd(content::RenderFrame* render_frame);
