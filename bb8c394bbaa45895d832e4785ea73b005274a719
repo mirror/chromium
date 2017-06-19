@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4ca10353_a72d5d5c",
+        "filename": "components/safe_browsing/common/safebrowsing_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-19T22:22:35Z",
+      "side": 1,
+      "message": "No (c)\nSee: https://chromium.googlesource.com/chromium/src/+/master/styleguide/c++/c++.md#File-headers",
+      "range": {
+        "startLine": 1,
+        "startChar": 13,
+        "endLine": 1,
+        "endChar": 16
+      },
+      "revId": "bb8c394bbaa45895d832e4785ea73b005274a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c24d2c8_b1bee01d",
+        "filename": "components/safe_browsing/common/safebrowsing_utils.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-19T22:22:35Z",
+      "side": 1,
+      "message": "I know you are following precedent but since these files are in safe_browsing directory, can we just call them utils?",
+      "range": {
+        "startLine": 8,
+        "startChar": 8,
+        "endLine": 8,
+        "endChar": 61
+      },
+      "revId": "bb8c394bbaa45895d832e4785ea73b005274a719",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
