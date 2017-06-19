@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "de73eced_14f6576c",
+        "filename": "media/base/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 300,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-19T05:16:28Z",
+      "side": 1,
+      "message": "Moved \"!is_android\" part in //media/filter and component and non-component build both are building fine for linux build on local PC.",
+      "parentUuid": "70725e44_d367f75b",
+      "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "22284321_439284fb",
         "filename": "media/filters/BUILD.gn",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T22:42:01Z",
       "side": 1,
       "message": "The problem is this I think? It should be a source_set, we only want one top level component. By making this a component it becomes it\u0027s own shared library; which has an impact on where statics are initialized.",
+      "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "009dc66b_018a083c",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-19T05:16:28Z",
+      "side": 1,
+      "message": "I would be source_set only if it is not component build right ?",
+      "parentUuid": "22284321_439284fb",
       "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
