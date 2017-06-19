@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "365ff5f3_bfcb6f8e",
+        "filename": "content/browser/presentation/presentation_service_impl_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:26:26Z",
+      "side": 1,
+      "message": "Consider adding a using declaration at the top of the file to shorten some lines here.",
+      "revId": "04c08b8c2b687e53c3bb233e94e6e7aec3ce285d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4568d35_e1c05d43",
+        "filename": "content/public/browser/presentation_screen_availability_listener.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001982
+      },
+      "writtenOn": "2017-06-19T18:26:26Z",
+      "side": 1,
+      "message": "Is the plan to remove this in favor of OnScreenAvailabilityChanged(DISABLED)?",
+      "revId": "04c08b8c2b687e53c3bb233e94e6e7aec3ce285d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
