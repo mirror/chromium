@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "28b03bb0_e69df7d9",
+        "filename": "android_webview/browser/aw_browser_main_parts.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "I think the major work to be done here is to extract the common part between this method and ChromeBrowserMainParts::SetupFieldTrials() and call this common part from two places.\n\nIt seems like the common part needs an entropy provider, a FlagsStorage and a VariationService. How are you going to create a variation service?",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "713562c4_1291600e",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "Not used in this header?",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1b91d4cf_2138c486",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "Not used in this header?",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f3778b8_18b1439f",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "s/entire browser/entire application/ ?\n\nstd::unique_ptr is called \"empty\" when not initialized, so s/nullptr/empty/",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5fce2ff8_8fda37b5",
+        "filename": "android_webview/browser/aw_browser_main_parts.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "Move this declaration up to the other data members, by convention DISALLOW_COPY_AND_ASSIGN() should be last one.",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ea2e395_1ce1b4d4",
+        "filename": "android_webview/browser/aw_metrics_service_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1129010
+      },
+      "writtenOn": "2017-06-19T23:55:48Z",
+      "side": 1,
+      "message": "I see only white space differences, remove this file from CL then.",
+      "revId": "45dd1456527d1020efcf9f1dac2585fdc59b8633",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
