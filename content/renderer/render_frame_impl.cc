@@ -991,7 +991,6 @@ RenderFrameImpl* RenderFrameImpl::CreateMainFrame(
   render_frame->InitializeBlameContext(nullptr);
   WebLocalFrame* web_frame = WebLocalFrame::Create(
       blink::WebTreeScopeType::kDocument, render_frame,
-      render_frame->blink_interface_provider_.get(),
       render_frame->blink_interface_registry_.get(), opener);
   render_frame->BindToWebFrame(web_frame);
   render_view->webview()->SetMainFrame(web_frame);
@@ -1040,7 +1039,6 @@ void RenderFrameImpl::CreateFrame(
     web_frame = parent_web_frame->CreateLocalChild(
         replicated_state.scope, WebString::FromUTF8(replicated_state.name),
         replicated_state.sandbox_flags, render_frame,
-        render_frame->blink_interface_provider_.get(),
         render_frame->blink_interface_registry_.get(),
         previous_sibling_web_frame,
         FeaturePolicyHeaderToWeb(replicated_state.container_policy),
@@ -1066,9 +1064,8 @@ void RenderFrameImpl::CreateFrame(
     render_frame->proxy_routing_id_ = proxy_routing_id;
     proxy->set_provisional_frame_routing_id(routing_id);
     web_frame = blink::WebLocalFrame::CreateProvisional(
-        render_frame, render_frame->blink_interface_provider_.get(),
-        render_frame->blink_interface_registry_.get(), proxy->web_frame(),
-        replicated_state.sandbox_flags);
+        render_frame, render_frame->blink_interface_registry_.get(),
+        proxy->web_frame(), replicated_state.sandbox_flags);
   }
   render_frame->BindToWebFrame(web_frame);
   CHECK(parent_routing_id != MSG_ROUTING_NONE || !web_frame->Parent());
@@ -1204,8 +1201,6 @@ RenderFrameImpl::RenderFrameImpl(const CreateParams& params)
   pending_remote_interface_provider_request_ = MakeRequest(&remote_interfaces);
   remote_interfaces_.reset(new service_manager::InterfaceProvider);
   remote_interfaces_->Bind(std::move(remote_interfaces));
-  blink_interface_provider_.reset(new BlinkInterfaceProviderImpl(
-      remote_interfaces_->GetWeakPtr()));
   blink_interface_registry_.reset(
       new BlinkInterfaceRegistryImpl(interface_registry_->GetWeakPtr()));
 
@@ -3074,7 +3069,6 @@ blink::WebLocalFrame* RenderFrameImpl::CreateChildFrame(
   child_render_frame->InitializeBlameContext(this);
   blink::WebLocalFrame* web_frame = parent->CreateLocalChild(
       scope, child_render_frame,
-      child_render_frame->blink_interface_provider_.get(),
       child_render_frame->blink_interface_registry_.get());
   child_render_frame->BindToWebFrame(web_frame);
 

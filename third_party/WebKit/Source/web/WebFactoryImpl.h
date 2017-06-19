@@ -23,7 +23,6 @@ class WebFactoryImpl : public WebFactory {
   WebLocalFrameBase* CreateWebLocalFrameBase(
       WebTreeScopeType,
       WebFrameClient*,
-      blink::InterfaceProvider*,
       blink::InterfaceRegistry*,
       WebFrame* opener = nullptr) const override;
 };

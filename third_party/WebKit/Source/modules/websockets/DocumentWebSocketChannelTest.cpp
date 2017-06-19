@@ -79,7 +79,9 @@ class MockWebSocketHandle : public WebSocketHandle {
 
   ~MockWebSocketHandle() override {}
 
-  MOCK_METHOD1(Initialize, void(InterfaceProvider*));
+  void Initialize(InterfaceProvider*) override {}
+  void Initialize(service_manager::InterfaceProvider*) override {}
+
   MOCK_METHOD6(Connect,
                void(const KURL&,
                     const Vector<String>&,
@@ -156,7 +158,6 @@ class DocumentWebSocketChannelTest : public ::testing::Test {
   void Connect() {
     {
       InSequence s;
-      EXPECT_CALL(*Handle(), Initialize(_));
       EXPECT_CALL(*Handle(), Connect(KURL(KURL(), "ws://localhost/"), _, _, _,
                                      _, HandleClient()));
       EXPECT_CALL(*Handle(), FlowControl(65536));
@@ -206,7 +207,6 @@ TEST_F(DocumentWebSocketChannelTest, connectSuccess) {
   Checkpoint checkpoint;
   {
     InSequence s;
-    EXPECT_CALL(*Handle(), Initialize(_));
     EXPECT_CALL(*Handle(),
                 Connect(KURLEq("ws://localhost/"), _, _,
                         KURLEq("http://example.com/"), _, HandleClient()))
@@ -817,7 +817,6 @@ class DocumentWebSocketChannelHandshakeThrottleTest
   // Expectations for the normal result of calling Channel()->Connect() with a
   // non-null throttle.
   void NormalHandshakeExpectations() {
-    EXPECT_CALL(*Handle(), Initialize(_));
     EXPECT_CALL(*Handle(), Connect(_, _, _, _, _, _));
     EXPECT_CALL(*Handle(), FlowControl(_));
     EXPECT_CALL(*handshake_throttle_, ThrottleHandshake(_, _, _));
@@ -827,7 +826,6 @@ class DocumentWebSocketChannelHandshakeThrottleTest
 };
 
 TEST_F(DocumentWebSocketChannelHandshakeThrottleTest, ThrottleArguments) {
-  EXPECT_CALL(*Handle(), Initialize(_));
   EXPECT_CALL(*Handle(), Connect(_, _, _, _, _, _));
   EXPECT_CALL(*Handle(), FlowControl(_));
   EXPECT_CALL(*handshake_throttle_,

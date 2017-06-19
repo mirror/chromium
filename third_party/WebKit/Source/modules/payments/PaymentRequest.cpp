@@ -21,6 +21,7 @@
 #include "core/events/EventQueue.h"
 #include "core/frame/Deprecation.h"
 #include "core/frame/FrameOwner.h"
+#include "core/frame/LocalFrameClient.h"
 #include "core/html/HTMLIFrameElement.h"
 #include "core/inspector/ConsoleMessage.h"
 #include "core/inspector/ConsoleTypes.h"
@@ -44,9 +45,9 @@
 #include "platform/feature_policy/FeaturePolicy.h"
 #include "platform/mojo/MojoHelper.h"
 #include "platform/wtf/HashSet.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
 #include "public/platform/WebTraceLocation.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace {
 
@@ -1023,7 +1024,7 @@ PaymentRequest::PaymentRequest(ExecutionContext* execution_context,
   DCHECK(shipping_type_.IsNull() || shipping_type_ == "shipping" ||
          shipping_type_ == "delivery" || shipping_type_ == "pickup");
 
-  GetFrame()->GetInterfaceProvider()->GetInterface(
+  GetFrame()->Client()->GetInterfaceProvider()->GetInterface(
       mojo::MakeRequest(&payment_provider_));
   payment_provider_.set_connection_error_handler(ConvertToBaseCallback(
       WTF::Bind(&PaymentRequest::OnError, WrapWeakPersistent(this),

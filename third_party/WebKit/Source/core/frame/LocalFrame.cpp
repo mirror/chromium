@@ -283,12 +283,9 @@ template class CORE_TEMPLATE_EXPORT Supplement<LocalFrame>;
 LocalFrame* LocalFrame::Create(LocalFrameClient* client,
                                Page& page,
                                FrameOwner* owner,
-                               InterfaceProvider* interface_provider,
                                InterfaceRegistry* interface_registry) {
   LocalFrame* frame = new LocalFrame(
       client, page, owner,
-      interface_provider ? interface_provider
-                         : InterfaceProvider::GetEmptyInterfaceProvider(),
       interface_registry ? interface_registry
                          : InterfaceRegistry::GetEmptyInterfaceRegistry());
   probe::frameAttachedToParent(frame);
@@ -920,7 +917,6 @@ void LocalFrame::RegisterInitializationCallback(FrameInitCallback callback) {
 inline LocalFrame::LocalFrame(LocalFrameClient* client,
                               Page& page,
                               FrameOwner* owner,
-                              InterfaceProvider* interface_provider,
                               InterfaceRegistry* interface_registry)
     : Frame(client, page, owner, LocalWindowProxyManager::Create(*this)),
       frame_scheduler_(page.GetChromeClient().CreateFrameScheduler(
@@ -940,11 +936,10 @@ inline LocalFrame::LocalFrame(LocalFrameClient* client,
       page_zoom_factor_(ParentPageZoomFactor(this)),
       text_zoom_factor_(ParentTextZoomFactor(this)),
       in_view_source_mode_(false),
-      interface_provider_(interface_provider),
       interface_registry_(interface_registry) {
   if (FrameResourceCoordinator::IsEnabled()) {
     frame_resource_coordinator_ =
-        FrameResourceCoordinator::Create(interface_provider);
+        FrameResourceCoordinator::Create(client->GetInterfaceProvider());
   }
   if (IsLocalRoot()) {
     probe_sink_ = new CoreProbeSink();

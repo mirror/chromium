@@ -13,13 +13,14 @@
 #include "core/dom/ExceptionCode.h"
 #include "core/dom/ExecutionContext.h"
 #include "core/frame/LocalDOMWindow.h"
+#include "core/frame/LocalFrameClient.h"
 #include "modules/nfc/NFCError.h"
 #include "modules/nfc/NFCMessage.h"
 #include "modules/nfc/NFCPushOptions.h"
 #include "modules/nfc/NFCWatchOptions.h"
 #include "platform/mojo/MojoHelper.h"
-#include "public/platform/InterfaceProvider.h"
 #include "public/platform/Platform.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 namespace {
 const char kJsonMimePostfix[] = "+json";
@@ -641,7 +642,8 @@ NFC::NFC(LocalFrame* frame)
   if (!IsSupportedInContext(GetExecutionContext(), error_message))
     return;
 
-  frame->GetInterfaceProvider()->GetInterface(mojo::MakeRequest(&nfc_));
+  frame->Client()->GetInterfaceProvider()->GetInterface(
+      mojo::MakeRequest(&nfc_));
   nfc_.set_connection_error_handler(ConvertToBaseCallback(
       WTF::Bind(&NFC::OnConnectionError, WrapWeakPersistent(this))));
   device::mojom::blink::NFCClientPtr client;

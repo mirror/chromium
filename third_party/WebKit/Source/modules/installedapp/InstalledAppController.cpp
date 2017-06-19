@@ -6,8 +6,9 @@
 
 #include "core/dom/Document.h"
 #include "core/frame/LocalFrame.h"
+#include "core/frame/LocalFrameClient.h"
 #include "platform/wtf/Functional.h"
-#include "public/platform/InterfaceProvider.h"
+#include "services/service_manager/public/cpp/interface_provider.h"
 
 #include <utility>
 
@@ -105,7 +106,7 @@ void InstalledAppController::FilterByInstalledApps(
   }
 
   if (!provider_) {
-    GetSupplementable()->GetInterfaceProvider()->GetInterface(
+    GetSupplementable()->Client()->GetInterfaceProvider()->GetInterface(
         mojo::MakeRequest(&provider_));
     // TODO(mgiuca): Set a connection error handler. This requires a refactor to
     // work like NavigatorShare.cpp (retain a persistent list of clients to
