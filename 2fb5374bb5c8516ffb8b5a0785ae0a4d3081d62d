@@ -1,0 +1,233 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9e463816_fd856638",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: nullptr on dtor is not necessary. If we want to do it, let\u0027s do it consistently for all child views, i.e. adding |pin_view_| here too. Otherwise, just get rid of it.",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bf93c7_91828f8f",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "This feels more like a job for the host of LoginAuthUserView. How about making LoginAuthUserView takes a callcack in construction and run it here? The host can decide whether to do a unlock or signing in.",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 10
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28ed0afc_d7bd4598",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: LoginAuthUserView* -\u003e LoginAuthUserView* const",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64f165c8_8e88b89d",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ae0a30_0a72f0cd",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: document?",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5615a10_d4bb8d3e",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: const AccountId\u0026 to save a copy",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8af3a90_6d0d353c",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: The view would be used for one user at a time, right? In this case, active_ prefix is a bit misleading. Maybe call it |current_user_|?",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b148d57_c1862e6b",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and other places",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0675982f_20fc2723",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: const char* -\u003e constexpr char []",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96e0c912_e551e3d0",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "Should we always do this when display_name is empty?",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0760d36f_727e949a",
+        "filename": "ash/login/ui/login_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T20:50:23Z",
+      "side": 1,
+      "message": "nit: LoginUserView* -\u003e LoginUserView* const",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
