@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "25edc284_c3f7deb9",
+        "filename": "docs/vscode.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-19T20:00:42Z",
+      "side": 0,
+      "message": "Alt-O is fast even without this.",
+      "revId": "3beccfbd391c2360fa243711822fe0150786df42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
