@@ -1413,8 +1413,7 @@ bool ShellSurface::IsResizing() const {
 
 gfx::Rect ShellSurface::GetVisibleBounds() const {
   // Use |geometry_| if set, otherwise use the visual bounds of the surface.
-  return geometry_.IsEmpty() ? gfx::Rect(surface_->content_size())
-                             : geometry_;
+  return geometry_.IsEmpty() ? gfx::Rect(surface_->content_size()) : geometry_;
 }
 
 gfx::Point ShellSurface::GetSurfaceOrigin() const {

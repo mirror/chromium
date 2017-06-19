@@ -525,8 +525,8 @@ void Surface::CommitSurfaceHierarchy() {
     stacking_target = sub_surface->window();
 
     // Update sub-surface position relative to surface origin.
-    sub_surface->window()->SetBounds(gfx::Rect(
-        sub_surface_entry.second, sub_surface->content_size_));
+    sub_surface->window()->SetBounds(
+        gfx::Rect(sub_surface_entry.second, sub_surface->content_size_));
   }
 }
 
@@ -536,8 +536,7 @@ bool Surface::IsSynchronized() const {
 
 gfx::Rect Surface::GetHitTestBounds() const {
   SkIRect bounds = state_.input_region.getBounds();
-  if (!bounds.intersect(
-          gfx::RectToSkIRect(gfx::Rect(content_size_))))
+  if (!bounds.intersect(gfx::RectToSkIRect(gfx::Rect(content_size_))))
     return gfx::Rect();
   return gfx::SkIRectToRect(bounds);
 }
