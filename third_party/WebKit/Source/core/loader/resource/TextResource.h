@@ -28,7 +28,7 @@ class CORE_EXPORT TextResource : public Resource {
   TextResource(const ResourceRequest&,
                Type,
                const ResourceLoaderOptions&,
-               TextResourceDecoder::ContentType,
+               TextResourceDecoderOptions::ContentType,
                const String& charset);
   ~TextResource() override;
 
