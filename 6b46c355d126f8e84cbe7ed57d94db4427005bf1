@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e2ef4615_e25938e8",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 2
+      },
+      "lineNbr": 2802,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-19T03:51:51Z",
+      "side": 1,
+      "message": "Don\u0027t need field_size here and at other places :)",
+      "revId": "6b46c355d126f8e84cbe7ed57d94db4427005bf1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
