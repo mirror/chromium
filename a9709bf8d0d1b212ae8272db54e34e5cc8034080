@@ -22,6 +22,30 @@
       "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa8b44c9_6a226146",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-19T09:15:38Z",
+      "side": 1,
+      "message": "Why does Create() need to accept it as a rvalue reference? Can we make it pass-by-value?",
+      "parentUuid": "a62ebbdd_1476fc26",
+      "range": {
+        "startLine": 190,
+        "startChar": 25,
+        "endLine": 190,
+        "endChar": 62
+      },
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
