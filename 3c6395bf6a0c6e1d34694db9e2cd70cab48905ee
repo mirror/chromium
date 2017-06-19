@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "67d516a0_a9a82e36",
+        "filename": "ios/chrome/browser/autofill/autofill_agent.mm",
+        "patchSetId": 7
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1000119
+      },
+      "writtenOn": "2017-06-19T19:06:55Z",
+      "side": 1,
+      "message": "What is the new |bounding_box| argument used for?  What will happen if iOS always passes an empty bounding box here?",
+      "revId": "3c6395bf6a0c6e1d34694db9e2cd70cab48905ee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
