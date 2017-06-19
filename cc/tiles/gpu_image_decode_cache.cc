@@ -110,6 +110,33 @@ gfx::Size CalculateSizeForMipLevel(const DrawImage& draw_image, int mip_level) {
   return MipMapUtil::GetSizeForLevel(base_size, mip_level);
 }
 
+bool ScaleImage(const DrawImage& draw_image, SkPixmap* target_pixmap) {
+  if (draw_image.scale() == SkSize::Make(1, 1) ||
+      target_pixmap->info().colorType() == kN32_SkColorType) {
+    // If no scaling is occurring, or if the target colortype is already N32,
+    // just scale directly into that.
+    return draw_image.image()->scalePixels(
+        *target_pixmap, CalculateUploadScaleFilterQuality(draw_image),
+        SkImage::kDisallow_CachingHint);
+  }
+
+  // If the target colortype is not N32, it may be impossible to scale
+  // directly. Instead scale into an N32 pixmap, and convert that into the
+  // target pixmap.
+  SkImageInfo decode_info =
+      target_pixmap->info().makeColorType(kN32_SkColorType);
+  SkBitmap decode_bitmap;
+  if (!decode_bitmap.tryAllocPixels(decode_info))
+    return false;
+
+  SkPixmap decode_pixmap(decode_bitmap.info(), decode_bitmap.getPixels(),
+                         decode_bitmap.rowBytes());
+  return draw_image.image()->scalePixels(
+             decode_pixmap, CalculateUploadScaleFilterQuality(draw_image),
+             SkImage::kDisallow_CachingHint) &&
+         decode_pixmap.readPixels(*target_pixmap);
+}
+
 }  // namespace
 
 // static
@@ -1115,11 +1142,10 @@ void GpuImageDecodeCache::DecodeImageIfNecessary(const DrawImage& draw_image,
         // scale.
         SkPixmap image_pixmap(image_info.makeColorSpace(nullptr),
                               backing_memory->data(), image_info.minRowBytes());
+
         // Note that scalePixels falls back to readPixels if the scale is 1x, so
         // no need to special case that as an optimization.
-        if (!draw_image.image()->scalePixels(
-                image_pixmap, CalculateUploadScaleFilterQuality(draw_image),
-                SkImage::kDisallow_CachingHint)) {
+        if (!ScaleImage(draw_image, &image_pixmap)) {
           DLOG(ERROR) << "scalePixels failed.";
           backing_memory->Unlock();
           backing_memory.reset();
