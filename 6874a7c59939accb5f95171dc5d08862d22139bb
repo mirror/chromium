@@ -117,6 +117,30 @@
       "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1996cc7_fcd1e3cd",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-06-19T07:18:57Z",
+      "side": 1,
+      "message": "I personally agree with you (as I\u0027m using \u0026\u0026 in my hobby code a lot).\n\nIf we change this argument to an rvalue reference, this constructor will no longer accept an lvalue RefPtr (currently an lvalue RefPtr invokes RefPtr\u0027s copy contructor, causing a ref churn). I feel like the new semantics is better, so I don\u0027t object to changing this to an rvalue reference. (But some existing code may break due to this.)",
+      "parentUuid": "fc8b8922_75be50e9",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
