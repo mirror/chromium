@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9493e46f_06afcad2",
+        "filename": "chrome/browser/ui/cocoa/location_bar/location_bar_view_mac.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 654,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-19T11:34:57Z",
+      "side": 1,
+      "message": "This logic exists elsewhere - it should be fine to delete this and use the result of chrome/browser/ui/cocoa/bubble_anchor_helper.h \u0027s GetPermissionBubbleAnchorPointForBrowser",
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab39206_3988ad28",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-19T11:34:57Z",
+      "side": 1,
+      "message": "There\u0027s nothing first-run-bubble-specific about these. I think they can go in\n\nbrowser_dialogs.h with a names like\n\nGetPageInfoAnchorView\nGetPageInfoAnhorPoint\n\n\npermission_prompt_impl.cc can be updated to call them too, and the duplicated code in permission_prompt_impl_views.cc and permission_prompt_impl_views_mac.mm deleted.",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8dc0d9a1_59ba57c6",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 801,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-19T11:34:57Z",
+      "side": 1,
+      "message": "I think we can delete this method",
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e70af86_4436dc49",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 859,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-19T11:34:57Z",
+      "side": 1,
+      "message": "I think we need purge out more plumbing. Looking at this method it seems that the TemplateURLService check is getting skipped on Mac. Now that we can show the toolkit-views bubble, we should ensure the same preconditions are being met.\n\nCan we move these TemplateURLService checks into a browser_dialogs.h method, ShowFirstRunBubbleWhenReady() that\u0027s invoked from Cocoa and Views browsers?",
+      "range": {
+        "startLine": 859,
+        "startChar": 5,
+        "endLine": 859,
+        "endChar": 9
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9b900ec_56b1c5a7",
+        "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1095,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-19T11:34:57Z",
+      "side": 1,
+      "message": "I think we need all this stuff when invoking the dialog for the Cocoa browser too..?\n\nCan we move this OnTemplateURLServiceChanged() override to a small self-deleting class?\n\nI\u0027m thinking something like\n\nnamespace {\nvoid ShowFirstRunBubble(Browser* browser) {\n#if defined(OS_MACOSX) \u0026\u0026 !BUILDFLAG(MAC_VIEWS_BROWSER)\n  if (!SecondaryUiMd()) {\n    ShowFirstRunBubbleCocoa(browser);\n    return;\n  }\n#endif\n  FirstRunBubble::ShowBubble(browser);\n}\n}  // namespace\n\nclass FirstRunBubblePresenter : public TemplateURLServiceObserver {\n public:\n  static void ShowFirstRunBubbleWhenReady(Browser* browser) {\n    ..\n    if (!url_service-\u003eloaded()) {\n      new FirstRunBubblePresenter();  // Deletes itself.\n    } else {\n      ShowFirstRunBubble(browser);\n    }\n  }\n\n private:\n   FirstRunBubblePresenter(Browser* browser) {\n     /* add observer */\n   } \n   OnTemplateURLServiceChanged() override {\n   }\n};\n\n\nAll the template url service stuff can be removed from LocationBarView",
+      "range": {
+        "startLine": 1095,
+        "startChar": 4,
+        "endLine": 1095,
+        "endChar": 22
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
