@@ -192,6 +192,7 @@ class CORE_EXPORT FrameLoader final {
       NavigationPolicy,
       FrameLoadType,
       bool is_client_redirect,
+      bool is_from_untrusted_event,
       HTMLFormElement*);
 
   // Like ShouldContinueForNavigationPolicy, but should be used when following

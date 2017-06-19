@@ -73,7 +73,8 @@ class CONTENT_EXPORT NavigatorImpl : public Navigator {
                       WindowOpenDisposition disposition,
                       bool force_new_process_for_new_contents,
                       bool should_replace_current_entry,
-                      bool user_gesture) override;
+                      bool user_gesture,
+                      bool from_untrusted_event) override;
   void RequestTransferURL(RenderFrameHostImpl* render_frame_host,
                           const GURL& url,
                           SiteInstance* source_site_instance,

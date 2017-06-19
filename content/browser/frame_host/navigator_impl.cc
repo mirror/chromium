@@ -724,7 +724,8 @@ void NavigatorImpl::RequestOpenURL(
     WindowOpenDisposition disposition,
     bool force_new_process_for_new_contents,
     bool should_replace_current_entry,
-    bool user_gesture) {
+    bool user_gesture,
+    bool from_untrusted_event) {
   // Note: This can be called for subframes (even when OOPIFs are not possible)
   // if the disposition calls for a different window.
 
@@ -774,6 +775,7 @@ void NavigatorImpl::RequestOpenURL(
     params.redirect_chain = redirect_chain;
   params.should_replace_current_entry = should_replace_current_entry;
   params.user_gesture = user_gesture;
+  params.from_untrusted_event = from_untrusted_event;
 
   // RequestOpenURL is used only for local frames, so we can get here only if
   // the navigation is initiated by a frame in the same SiteInstance as this

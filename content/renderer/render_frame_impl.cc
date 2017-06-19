@@ -3305,10 +3305,12 @@ void RenderFrameImpl::LoadURLExternally(const blink::WebURLRequest& request,
 
     Send(new FrameHostMsg_DownloadUrl(params));
   } else {
+    // TODO(csharrison): Plumb from_untrusted_event through Blink.
+    bool from_untrusted_event = false;
     OpenURL(request.Url(), IsHttpPost(request),
             GetRequestBodyForWebURLRequest(request),
             GetWebURLRequestHeaders(request), referrer, policy,
-            should_replace_current_entry, false);
+            should_replace_current_entry, false, from_untrusted_event);
   }
 }
 
@@ -3467,6 +3469,8 @@ void RenderFrameImpl::DidStartProvisionalLoad(blink::WebDataSource* data_source,
     info.is_history_navigation_in_new_child_frame =
         pending_navigation_info_->history_navigation_in_new_child_frame;
     info.is_client_redirect = pending_navigation_info_->client_redirect;
+    info.is_from_untrusted_event =
+        pending_navigation_info_->from_untrusted_event;
     info.is_cache_disabled = pending_navigation_info_->cache_disabled;
     info.form = pending_navigation_info_->form;
     info.source_location = pending_navigation_info_->source_location;
@@ -5324,7 +5328,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     OpenURL(url, IsHttpPost(info.url_request),
             GetRequestBodyForWebURLRequest(info.url_request),
             GetWebURLRequestHeaders(info.url_request), referrer,
-            info.default_policy, info.replaces_current_history_item, false);
+            info.default_policy, info.replaces_current_history_item, false,
+            info.is_from_untrusted_event);
     return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
   }
 
@@ -5357,7 +5362,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
         OpenURL(url, IsHttpPost(info.url_request),
                 GetRequestBodyForWebURLRequest(info.url_request),
                 GetWebURLRequestHeaders(info.url_request), referrer,
-                info.default_policy, info.replaces_current_history_item, true);
+                info.default_policy, info.replaces_current_history_item, true,
+                info.is_from_untrusted_event);
         // Suppress the load in Blink but mark the frame as loading.
         return blink::kWebNavigationPolicyHandledByClientForInitialHistory;
       } else {
@@ -5422,7 +5428,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
               GetRequestBodyForWebURLRequest(info.url_request),
               GetWebURLRequestHeaders(info.url_request),
               send_referrer ? referrer : Referrer(), info.default_policy,
-              info.replaces_current_history_item, false);
+              info.replaces_current_history_item, false,
+              info.is_from_untrusted_event);
       return blink::kWebNavigationPolicyIgnore;  // Suppress the load here.
     }
   }
@@ -5464,7 +5471,8 @@ WebNavigationPolicy RenderFrameImpl::DecidePolicyForNavigation(
     OpenURL(url, IsHttpPost(info.url_request),
             GetRequestBodyForWebURLRequest(info.url_request),
             GetWebURLRequestHeaders(info.url_request), Referrer(),
-            info.default_policy, info.replaces_current_history_item, false);
+            info.default_policy, info.replaces_current_history_item, false,
+            info.is_from_untrusted_event);
     return blink::kWebNavigationPolicyIgnore;
   }
 
@@ -5883,7 +5891,8 @@ void RenderFrameImpl::OpenURL(
     const Referrer& referrer,
     WebNavigationPolicy policy,
     bool should_replace_current_entry,
-    bool is_history_navigation_in_new_child) {
+    bool is_history_navigation_in_new_child,
+    bool is_from_untrusted_event) {
   FrameHostMsg_OpenURL_Params params;
   params.url = url;
   params.uses_post = uses_post;
@@ -5915,6 +5924,7 @@ void RenderFrameImpl::OpenURL(
 
   if (is_history_navigation_in_new_child)
     params.is_history_navigation_in_new_child = true;
+  params.is_from_untrusted_event = is_from_untrusted_event;
 
   Send(new FrameHostMsg_OpenURL(routing_id_, params));
 }
@@ -6882,6 +6892,7 @@ RenderFrameImpl::PendingNavigationInfo::PendingNavigationInfo(
       history_navigation_in_new_child_frame(
           info.is_history_navigation_in_new_child_frame),
       client_redirect(info.is_client_redirect),
+      from_untrusted_event(info.is_from_untrusted_event),
       cache_disabled(info.is_cache_disabled),
       form(info.form),
       source_location(info.source_location) {}
