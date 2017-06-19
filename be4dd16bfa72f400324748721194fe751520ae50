@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b00d717d_a422cf78",
+        "filename": "chrome/browser/android/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-19T23:43:17Z",
+      "side": 1,
+      "message": "offline page might be rendered even when online, i.e., opening a downloaded page.\n\nI think we should update SetOfflinePage to pass the online state.\n\nOne question, what do we want to report if we open an offline page on connected network?",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "be4dd16bfa72f400324748721194fe751520ae50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
