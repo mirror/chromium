@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40356bbc_82406ebb",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1000608
+      },
+      "writtenOn": "2017-06-19T20:42:52Z",
+      "side": 1,
+      "message": "Out of curiousity, would it be enough to just do the bind with the old service_id_ here instead of gen to create a new id?",
+      "revId": "97cecd453d389bf4aa9ebcd39fe7f8eaa4a620ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
