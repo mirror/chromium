@@ -91,6 +91,7 @@
 #include "core/page/FocusController.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
+#include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
@@ -170,7 +171,8 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
-#include "web/PageOverlay.h"
+#include "web/PrerendererClientImpl.h"
+#include "web/StorageQuotaClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)

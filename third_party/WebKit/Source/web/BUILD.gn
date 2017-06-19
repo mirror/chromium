@@ -39,12 +39,8 @@ component("web") {
     "AssertMatchingEnums.cpp",
     "ChromeClientImpl.cpp",
     "ChromeClientImpl.h",
-    "InspectorOverlayAgent.cpp",
-    "InspectorOverlayAgent.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
-    "PageOverlay.cpp",
-    "PageOverlay.h",
     "WebDevToolsAgentImpl.cpp",
     "WebDevToolsAgentImpl.h",
     "WebDevToolsFrontendImpl.cpp",
@@ -94,7 +90,6 @@ test("webkit_unit_tests") {
   visibility = [ "*" ]
 
   sources = [
-    "PageOverlayTest.cpp",
     "WebDragDataTest.cpp",
     "WebElementTest.cpp",
 
