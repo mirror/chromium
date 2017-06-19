@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d7c48143_e4fee4db",
+        "filename": "chrome/renderer/safe_browsing/phishing_classifier_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1144039
+      },
+      "writtenOn": "2017-06-19T21:02:39Z",
+      "side": 1,
+      "message": "Unless I am missing something, there needs to be a test for a HTTPS page also. Right?",
+      "range": {
+        "startLine": 229,
+        "startChar": 0,
+        "endLine": 229,
+        "endChar": 75
+      },
+      "revId": "a003e6d77f15d454f21fb3ede1a918e7295e0916",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
