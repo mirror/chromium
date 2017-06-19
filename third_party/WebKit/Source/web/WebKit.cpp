@@ -141,6 +141,10 @@ void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode rail_mode) {
   WorkerBackingThread::SetRAILModeOnWorkerThreadIsolates(rail_mode);
 }
 
+void EnableRuntimeCallStats() {
+  RuntimeCallStats::EnableRuntimeCallStats();
+}
+
 void LogRuntimeCallStats() {
   LOG(INFO)
       << "\n"

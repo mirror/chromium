@@ -288,7 +288,8 @@ void PaintLayer::SetSubpixelAccumulation(const LayoutSize& size) {
 void PaintLayer::UpdateLayerPositionsAfterLayout() {
   TRACE_EVENT0("blink,benchmark",
                "PaintLayer::updateLayerPositionsAfterLayout");
-  RuntimeCallTimerScope runtime_timer_scope(
+  RUNTIME_CALL_TIMER_SCOPE(
+      runtime_timer_scope,
       RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
       RuntimeCallStats::CounterId::kUpdateLayerPositionsAfterLayout);
 
