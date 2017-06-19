@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "d3fe130b_8ff1640b",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-19T23:20:05Z",
+      "side": 1,
+      "message": "The current state of has_received_user_gesture_ is that it gets reset on navigation for the main frame, but not for iframes. Which is kind of hacky and non-obvious (and my fault). I would be 100% open to changing that to resetting if not main frame and not eTLD+1 (or even just resetting it for eTLD+1 changes), and I *think* that would be preferable to having two bits.\n\nThe weirdness in LocalFrame::DocumentAttached is relatively new and I don\u0027t think anyone is heavily dependent on it, so I\u0027d be inclined to merge your behavior in to the existing bit so long as the tests pass.\n\nSorry for the delay, and for my poor documentation :(",
+      "parentUuid": "788023c0_1bd4f60b",
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5b773d7_771d1b2c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 4
