@@ -16,6 +16,24 @@
       "revId": "df148b024ee9ac82dd24bf95eb94ff066f9568c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cacca19a_d83132a3",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2596,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-19T19:00:34Z",
+      "side": 1,
+      "message": "Yeah, and you can say the same about the next piece of code - the one that looks at the containing block. Timing is definitely of essence here, and I can\u0027t imagine it ever being useful to anyone but UpdateLogicalWidth(). Another option would be to just cram everything in there.\n\nI\u0027ll just leave it like this for now, though, to avoid conflicts with my other CL. :) We can get back to it later, if necessary. It\u0027s wrong for intrinsic widths to be affected by the outside, but since we allow that anyway, some ugliness is unavoidable.",
+      "parentUuid": "2c797cb8_b37971fe",
+      "revId": "df148b024ee9ac82dd24bf95eb94ff066f9568c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
