@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cd5affd_052c27be",
+        "filename": "content/common/histogram.mojom",
+        "patchSetId": 13
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:52:56Z",
+      "side": 1,
+      "message": "I was thinking this would go somewhere in //services, e.g. //services/metrics, or //services/uma (/public/interfaces/)\n\nHistogramCollectorClient would go in //services/.../public/cpp/\n\nBrowserHistogramProvider would go in //services/... (and probably be renamed to ServerHistogramProvider or something like that)\n\nThis would allow other services (e.g. mus) to use this service, without pulling in content dependency.",
+      "revId": "515466ebe9cb54728e49d7eec09211e2f822fd09",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
