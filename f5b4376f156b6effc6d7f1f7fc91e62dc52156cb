@@ -25,6 +25,52 @@
     },
     {
       "key": {
+        "uuid": "7343d43e_f4d706c1",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-19T16:47:56Z",
+      "side": 1,
+      "message": "Nit: Maybe \u0027last week, the user might be happier if\u0027?",
+      "range": {
+        "startLine": 41,
+        "startChar": 32,
+        "endLine": 41,
+        "endChar": 42
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d14dd0_6482ad5c",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-19T16:47:56Z",
+      "side": 1,
+      "message": "Nit: Maybe \u0027We should show In-Product Help only if they don\u0027t seem use it but we believe it would be helpful to them\u0027?",
+      "range": {
+        "startLine": 50,
+        "startChar": 8,
+        "endLine": 51,
+        "endChar": 44
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cf77ecad_1209ab5a",
         "filename": "components/feature_engagement_tracker/README.md",
         "patchSetId": 12
@@ -80,6 +126,29 @@
         "startLine": 120,
         "startChar": 0,
         "endLine": 121,
+        "endChar": 49
+      },
+      "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e02c25_458fc1ad",
+        "filename": "components/feature_engagement_tracker/README.md",
+        "patchSetId": 12
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1211000
+      },
+      "writtenOn": "2017-06-19T16:47:56Z",
+      "side": 1,
+      "message": "Nit: Might want to modify the comments above it in feature_list.cc just to keep documentation consistent because right now it references DEFINE_VARIATION_PARAM as \u0027below\u0027 but it\u0027s now in feature_list.h.",
+      "range": {
+        "startLine": 137,
+        "startChar": 37,
+        "endLine": 137,
         "endChar": 49
       },
       "revId": "f5b4376f156b6effc6d7f1f7fc91e62dc52156cb",
