@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "ec8bc2d5_9ebee770",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-19T07:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "90a885da_df0213aa",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "70a7a4d8_585ed9df",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
         "patchSetId": 1
@@ -93,6 +117,30 @@
       "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4d273a6_39c71020",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-19T07:05:05Z",
+      "side": 1,
+      "message": "Thanks for kindly explanations!",
+      "parentUuid": "0949f41e_98a51cdf",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -187,6 +235,30 @@
       "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efc35f4c_ce2c7d56",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-19T07:05:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21821b60_21d1f643",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
