@@ -12,8 +12,8 @@ namespace device {
 
 SensorImpl::SensorImpl(scoped_refptr<PlatformSensor> sensor)
     : sensor_(std::move(sensor)),
-      suspended_(false),
-      suppress_on_change_events_count_(0) {
+      reading_notification_enabled_(true),
+      suspended_(false) {
   sensor_->AddClient(this);
 }
 
@@ -30,10 +30,7 @@ void SensorImpl::AddConfiguration(
     AddConfigurationCallback callback) {
   // TODO(Mikhail): To avoid overflowing browser by repeated AddConfigs
   // (maybe limit the number of configs per client).
-  bool success = sensor_->StartListening(this, configuration);
-  if (success && configuration.suppress_on_change_events())
-    ++suppress_on_change_events_count_;
-  std::move(callback).Run(success);
+  std::move(callback).Run(sensor_->StartListening(this, configuration));
 }
 
 void SensorImpl::GetDefaultConfiguration(
@@ -44,10 +41,7 @@ void SensorImpl::GetDefaultConfiguration(
 void SensorImpl::RemoveConfiguration(
     const PlatformSensorConfiguration& configuration,
     RemoveConfigurationCallback callback) {
-  bool success = sensor_->StopListening(this, configuration);
-  if (success && configuration.suppress_on_change_events())
-    --suppress_on_change_events_count_;
-  std::move(callback).Run(success);
+  std::move(callback).Run(sensor_->StopListening(this, configuration));
 }
 
 void SensorImpl::Suspend() {
@@ -60,20 +54,29 @@ void SensorImpl::Resume() {
   sensor_->UpdateSensor();
 }
 
-void SensorImpl::OnSensorReadingChanged() {
+void SensorImpl::ConfigureReadingChangeNotifications(bool enabled) {
+  reading_notification_enabled_ = enabled;
+}
+
+void SensorImpl::NotifySensorReadingChanged() {
   DCHECK(!suspended_);
-  if (client_ && suppress_on_change_events_count_ == 0)
+  DCHECK(reading_notification_enabled_);
+  if (client_)
     client_->SensorReadingChanged();
 }
 
-void SensorImpl::OnSensorError() {
+void SensorImpl::NotifySensorError() {
   DCHECK(!suspended_);
   if (client_)
     client_->RaiseError();
 }
 
-bool SensorImpl::IsNotificationSuspended() {
+bool SensorImpl::IsSuspended() {
   return suspended_;
+}
+
+bool SensorImpl::IsReadingNotificationEnabled() {
+  return reading_notification_enabled_;
 }
 
 }  // namespace device
