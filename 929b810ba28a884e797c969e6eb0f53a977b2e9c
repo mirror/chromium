@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "7c81f734_943f877f",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T09:30:35Z",
+      "side": 1,
+      "message": "Moved anonymous namespace inside main namespace in ps4.",
+      "parentUuid": "1f78f277_5a680406",
+      "range": {
+        "startLine": 54,
+        "startChar": 16,
+        "endLine": 54,
+        "endChar": 23
+      },
+      "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba62da1b_1fdcc42f",
         "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
         "patchSetId": 3
@@ -69,6 +93,30 @@
       "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82e40e15_aa0a4b22",
+        "filename": "media/gpu/ipc/service/gpu_jpeg_decode_accelerator_factory_provider.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T09:30:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "ba62da1b_1fdcc42f",
+      "range": {
+        "startLine": 92,
+        "startChar": 2,
+        "endLine": 92,
+        "endChar": 3
+      },
+      "revId": "929b810ba28a884e797c969e6eb0f53a977b2e9c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
