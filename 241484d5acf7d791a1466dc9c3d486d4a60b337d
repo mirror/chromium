@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e6dd01c2_8cf5e5af",
+        "filename": "third_party/WebKit/Source/core/paint/LinkHighlightImplTest.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T01:51:20Z",
+      "side": 0,
+      "message": "The test framework already calls this internally.",
+      "range": {
+        "startLine": 225,
+        "startChar": 2,
+        "endLine": 225,
+        "endChar": 42
+      },
+      "revId": "241484d5acf7d791a1466dc9c3d486d4a60b337d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
