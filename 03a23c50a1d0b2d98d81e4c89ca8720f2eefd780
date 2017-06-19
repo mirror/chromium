@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44f4c24a_c34cdaa9",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "I take it you were able to look at this (via your new test) and verify that this makes semantic sense?",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1457f00_3d8baa00",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: How come we need this #include?",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026c88e1_d6b6e739",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: I suggest avoiding these except where they save significant verbiage/wrapping below.",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "910dc0b6_b243d7f9",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: \"ForTesting\" seems kinda unnecessary for a function local to a test file.",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3155330f_7329103b",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: Or just inline GURL(url::kAboutBlankURL) below",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e870722b_16e92c5e",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: Seems like we don\u0027t need this accessor, no one outside the class uses it.",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f880581_f0836735",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: This and DisplayDialog() (if you don\u0027t inline it) can be private.",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b37cc22a_5ae402f5",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: Maybe\n\n  std::vector\u003cbase::string16\u003e headers \u003d\n      {base::string16(), base::ASCIIToUTF16(\"header2\")};",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "feccd8cb_76c80578",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-19T22:19:04Z",
+      "side": 1,
+      "message": "Nit: Maybe should just inline DisplayDialog() into this?",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
