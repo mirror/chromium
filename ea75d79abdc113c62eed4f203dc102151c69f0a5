@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6e38e618_7e7444f0",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 304,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-19T15:10:20Z",
+      "side": 1,
+      "message": "std::vector?",
+      "revId": "ea75d79abdc113c62eed4f203dc102151c69f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be221bd7_aa5480df",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-19T15:10:20Z",
+      "side": 1,
+      "message": "std::vector",
+      "revId": "ea75d79abdc113c62eed4f203dc102151c69f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22a53807_55cb96a5",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 317,
+      "author": {
+        "id": 1115911
+      },
+      "writtenOn": "2017-06-19T15:10:20Z",
+      "side": 1,
+      "message": "Use a base::flat_set instead?",
+      "revId": "ea75d79abdc113c62eed4f203dc102151c69f0a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
