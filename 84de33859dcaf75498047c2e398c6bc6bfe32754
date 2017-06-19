@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7040dea_19ab1692",
+        "filename": "third_party/WebKit/Source/core/dom/FirstLetterPseudoElement.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "IMO, it\u0027s not very obvious that RefPtr\u003cStringImpl\u003e\u0026\u0026 implicitly converts to String. I wrote it out to be explicit here, and I\u0027d like to propose making that constructor explicit as well. What do people think?\n\n(There\u0027s also a StringImpl* conversion constructor, but perhaps that one\u0027s OK to leave implicit... not sure)",
+      "range": {
+        "startLine": 198,
+        "startChar": 18,
+        "endLine": 198,
+        "endChar": 63
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04d703c5_270058e4",
+        "filename": "third_party/WebKit/Source/core/html/parser/HTMLToken.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "This change is needed to make some ternary operators compile--otherwise one side would return PassRefPtr\u003cStringImpl\u003e while the other would return RefPtr\u003cStringImpl\u003e. As either one can convert to the other, this would be a compile error without an explicit hint about the type.\n\nInstead, we just make the types match.",
+      "range": {
+        "startLine": 121,
+        "startChar": 4,
+        "endLine": 121,
+        "endChar": 22
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57977da9_e4284125",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutCounter.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 492,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "I believe this is safe, as |text| is a local copy of the string, and the value isn\u0027t used again.",
+      "range": {
+        "startLine": 492,
+        "startChar": 14,
+        "endLine": 492,
+        "endChar": 25
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37d8ba01_6463b120",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1618,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "Ditto: I opted to make the conversion here explicit, but I\u0027m open to other options.\n\nI went ahead and changed the parameter to be a RefPtr\u003cStringImpl\u003e as well, since this code is changing anyway.",
+      "range": {
+        "startLine": 1618,
+        "startChar": 10,
+        "endLine": 1618,
+        "endChar": 17
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b90a623_b32e104d",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutText.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "Similarly here--this fixes some ternary operators.",
+      "range": {
+        "startLine": 87,
+        "startChar": 10,
+        "endLine": 87,
+        "endChar": 28
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51b354a0_20396695",
+        "filename": "third_party/WebKit/Source/core/layout/svg/LayoutSVGInlineText.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 428,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:14:27Z",
+      "side": 1,
+      "message": "No reason not to just move here.",
+      "range": {
+        "startLine": 428,
+        "startChar": 29,
+        "endLine": 428,
+        "endChar": 39
+      },
+      "revId": "84de33859dcaf75498047c2e398c6bc6bfe32754",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
