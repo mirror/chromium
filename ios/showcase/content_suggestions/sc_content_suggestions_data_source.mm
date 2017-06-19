@@ -103,6 +103,9 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
       }
       return items;
     }
+    case ContentSuggestionsSectionLogo: {
+      return @[];
+    }
     case ContentSuggestionsSectionUnknown:
       return @[];
   }
@@ -128,6 +131,10 @@ using CSCollectionViewItem = CollectionViewItem<SuggestedContent>;
 }
 
 - (void)dismissSuggestion:(ContentSuggestionIdentifier*)suggestionIdentifier {
+}
+
+- (UIView*)headerView {
+  return nil;
 }
 
 #pragma mark - ContentSuggestionsImageFetcher
