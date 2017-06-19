@@ -121,6 +121,30 @@
     },
     {
       "key": {
+        "uuid": "b224ad7c_fc3cb69e",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T21:28:28Z",
+      "side": 1,
+      "message": "Of course you still need this function, it just doesn\u0027t need to update the state. Ok, I get it. Remove the comment above and no {}?",
+      "parentUuid": "a1ec2a4d_daec5c89",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ee7ad0_3f6d9ec1",
         "filename": "chrome/browser/ui/views/tabs/tab.h",
         "patchSetId": 1
