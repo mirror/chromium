@@ -14,8 +14,10 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
 import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
 import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationAvailability;
+import com.google.android.gms.location.LocationCallback;
 import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
 import com.google.android.gms.location.LocationServices;
 
 import org.chromium.base.Log;
@@ -26,8 +28,8 @@ import org.chromium.base.ThreadUtils;
  *
  * https://developers.google.com/android/reference/com/google/android/gms/location/package-summary
  */
-public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectionFailedListener,
-                                                LocationListener,
+public class LocationProviderGmsCore extends LocationCallback
+                                     implements ConnectionCallbacks, OnConnectionFailedListener,
                                                 LocationProviderFactory.LocationProvider {
     private static final String TAG = "cr_LocationProvider";
 
@@ -76,7 +78,9 @@ public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectio
         }
 
         final Location location = mLocationProviderApi.getLastLocation(mGoogleApiClient);
-        if (location != null) {
+        if (location == null) {
+            LocationProviderAdapter.newErrorAvailable("Location not available");
+        } else {
             LocationProviderAdapter.onNewLocationAvailable(location);
         }
 
@@ -132,9 +136,15 @@ public class LocationProviderGmsCore implements ConnectionCallbacks, OnConnectio
         return mGoogleApiClient.isConnecting() || mGoogleApiClient.isConnected();
     }
 
-    // LocationListener implementation
+    // LocationCallback implementation
+    public void onLocationAvailability(LocationAvailability locationAvailability) {
+        if (locationAvailability.isLocationAvailable()) return;
+
+        LocationProviderAdapter.newErrorAvailable("Location no longer available");
+    }
+
     @Override
-    public void onLocationChanged(Location location) {
-        LocationProviderAdapter.onNewLocationAvailable(location);
+    public void onLocationResult(LocationResult locationResult) {
+        LocationProviderAdapter.onNewLocationAvailable(locationResult.getLastLocation());
     }
 }
