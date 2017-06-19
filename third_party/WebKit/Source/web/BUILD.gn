@@ -62,7 +62,6 @@ component("web") {
     "WebFrameWidgetImpl.h",
     "WebHelperPluginImpl.cpp",
     "WebHelperPluginImpl.h",
-    "WebHitTestResult.cpp",
     "WebInputEvent.cpp",
     "WebKit.cpp",
     "WebLeakDetector.cpp",
