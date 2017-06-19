@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130b268b_456fcfb3",
+        "filename": "components/download/internal/config.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "Should we make this much bigger?  A day at least?  If we\u0027re late cleaning up the file that\u0027s fine, as long as we clean it up.  We only guarantee a minimum amount of time the file will be on the disk for the clients.",
+      "range": {
+        "startLine": 36,
+        "startChar": 50,
+        "endLine": 36,
+        "endChar": 52
+      },
+      "revId": "a4803d50dd21f8bbf5a72a2a6f812b2070b15318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ba243d_d065667f",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "Can we just make FileMonitor a pure interface and add a FileMonitorImpl?  We don\u0027t need all of the things we\u0027re passing in the constructor and that can have side effects.",
+      "range": {
+        "startLine": 77,
+        "startChar": 0,
+        "endLine": 77,
+        "endChar": 44
+      },
+      "revId": "a4803d50dd21f8bbf5a72a2a6f812b2070b15318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9965d2a_d813e329",
+        "filename": "components/download/internal/controller_impl_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "Possible to generate these based on the above data/config or do they have to be constants?",
+      "range": {
+        "startLine": 710,
+        "startChar": 59,
+        "endLine": 710,
+        "endChar": 67
+      },
+      "revId": "a4803d50dd21f8bbf5a72a2a6f812b2070b15318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80634930_24130840",
+        "filename": "components/download/internal/file_monitor.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "Ah cool I didn\u0027t see this :)",
+      "range": {
+        "startLine": 86,
+        "startChar": 6,
+        "endLine": 86,
+        "endChar": 28
+      },
+      "revId": "a4803d50dd21f8bbf5a72a2a6f812b2070b15318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3621897_b6489e17",
+        "filename": "components/download/internal/file_monitor_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "\"\"",
+      "range": {
+        "startLine": 5,
+        "startChar": 9,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "a4803d50dd21f8bbf5a72a2a6f812b2070b15318",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

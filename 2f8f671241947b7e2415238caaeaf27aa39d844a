@@ -1129,6 +1129,30 @@
     },
     {
       "key": {
+        "uuid": "a65658b0_ee41d185",
+        "filename": "components/download/internal/test/entry_utils.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T05:46:52Z",
+      "side": 1,
+      "message": "Oh nice thanks!",
+      "parentUuid": "520bae97_02a943d7",
+      "range": {
+        "startLine": 30,
+        "startChar": 17,
+        "endLine": 30,
+        "endChar": 27
+      },
+      "revId": "2f8f671241947b7e2415238caaeaf27aa39d844a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c2e2c7ad_0c6978dc",
         "filename": "components/download/internal/test/entry_utils.h",
         "patchSetId": 6
