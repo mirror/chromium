@@ -477,10 +477,8 @@ void BrowserProcessImpl::EndSession() {
     profile->SetExitType(Profile::EXIT_SESSION_ENDED);
     if (profile->GetPrefs()) {
       profile->GetPrefs()->CommitPendingWrite();
-      if (pref_service_enabled) {
-        rundown_counter->Post(content::BrowserThread::GetTaskRunnerForThread(
-                                  content::BrowserThread::IO)
-                                  .get());
+      if (profile->GetPrefServiceTaskRunner()) {
+        rundown_counter->Post(profile->GetPrefServiceTaskRunner().get());
         profile_writer_runners.push_back(profile->GetIOTaskRunner());
       } else {
         rundown_counter->Post(profile->GetIOTaskRunner().get());
