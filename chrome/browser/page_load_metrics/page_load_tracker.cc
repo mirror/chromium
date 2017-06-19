@@ -639,4 +639,11 @@ void PageLoadTracker::OnSubframeMetadataChanged() {
   }
 }
 
+void PageLoadTracker::UpdateFeatureUsage(
+    const std::vector<blink::WebFeature>& new_features) {
+  for (const auto& observer : observers_) {
+    observer->OnFeatureUsageObserved(new_features);
+  }
+}
+
 }  // namespace page_load_metrics
