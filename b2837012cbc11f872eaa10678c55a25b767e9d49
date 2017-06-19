@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "15c15cab_404615b0",
+        "filename": "content/browser/renderer_host/overscroll_controller.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 368,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "Added a helper here.",
+      "parentUuid": "c2c82b2c_a147f193",
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8681d8fc_e0c010a7",
         "filename": "content/browser/renderer_host/overscroll_controller.h",
         "patchSetId": 4
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "783b0d2a_db8333ae",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8681d8fc_e0c010a7",
+      "range": {
+        "startLine": 132,
+        "startChar": 5,
+        "endLine": 132,
+        "endChar": 14
+      },
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7185ab26_d0b39fb7",
         "filename": "content/browser/renderer_host/overscroll_controller.h",
         "patchSetId": 4
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-19T17:04:16Z",
       "side": 1,
       "message": "nit: I\u0027d just call it overscroll_delta_cap_ and also move it after overscroll_delta_x_/overscroll_delta_y_. I think this would make it a bit more obvious that it caps delta_x/y. The fact that it\u0027s specified by the delegate it an implementation detail. We could mention that in a comment.",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1622f4e5_ac2869ee",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "I wanted to emphasize that this is not a cap on \"overscroll_delta_x_\" and \"overscroll_delta_y_\". These two values include the start threshold, while the value sent to the delegate does not. The cap is in terms of the value sent to the delegate rather than these two values.",
+      "parentUuid": "7185ab26_d0b39fb7",
       "range": {
         "startLine": 135,
         "startChar": 8,
@@ -82,6 +148,24 @@
     },
     {
       "key": {
+        "uuid": "83f12075_d9d79d8e",
+        "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "eb313db4_b449c87a",
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f9e5da6a_e6b4128d",
         "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
         "patchSetId": 4
@@ -105,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "a9e4e300_55d6afe1",
+        "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f9e5da6a_e6b4128d",
+      "range": {
+        "startLine": 34,
+        "startChar": 66,
+        "endLine": 34,
+        "endChar": 67
+      },
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da5f2c60_c8d12c00",
         "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
         "patchSetId": 4
@@ -116,6 +224,24 @@
       "writtenOn": "2017-06-19T17:04:16Z",
       "side": 1,
       "message": "Looks like you picked up some changes that shouldn\u0027t be part of your CL?",
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57c1ca53_1571516a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-19T21:53:38Z",
+      "side": 1,
+      "message": "No, this value was passed to the function on every call (negated, through |ignore_phase| parameter). I just removed the parameter to directly check the value here. Not necessarily related to this CL. When I was adding a new test, I noticed it and decided to simplify the code!",
+      "parentUuid": "da5f2c60_c8d12c00",
       "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
