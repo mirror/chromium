@@ -12,6 +12,8 @@
 #include "base/macros.h"
 #include "components/offline_pages/core/prefetch/prefetch_dispatcher.h"
 #include "components/offline_pages/core/task_queue.h"
+#include "components/version_info/channel.h"
+#include "net/url_request/url_request_context_getter.h"
 
 namespace offline_pages {
 class PrefetchService;
@@ -28,7 +30,8 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher {
       const std::vector<PrefetchURL>& prefetch_urls) override;
   void RemoveAllUnprocessedPrefetchURLs(const std::string& name_space) override;
   void RemovePrefetchURLsByClientId(const ClientId& client_id) override;
-  void BeginBackgroundTask(std::unique_ptr<ScopedBackgroundTask> task) override;
+  void BeginBackgroundTask(
+      std::unique_ptr<ScopedBackgroundTask> background_task) override;
   void StopBackgroundTask() override;
   void GCMOperationCompletedMessageReceived(
       const std::string& operation_name) override;
@@ -38,10 +41,16 @@ class PrefetchDispatcherImpl : public PrefetchDispatcher {
   friend class PrefetchDispatcherTest;
 
   void DisposeTask();
+  void DonePrefetchRequest(const std::string& request_name,
+                           PrefetchRequestStatus status,
+                           const std::string& operation_name,
+                           const std::vector<RenderPageInfo>& pages);
 
   PrefetchService* service_;
   TaskQueue task_queue_;
-  std::unique_ptr<ScopedBackgroundTask> task_;
+  std::unique_ptr<ScopedBackgroundTask> background_task_;
+
+  base::WeakPtrFactory<PrefetchDispatcherImpl> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchDispatcherImpl);
 };
