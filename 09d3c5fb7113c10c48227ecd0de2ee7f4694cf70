@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "82519752_56fdef4f",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:31:39Z",
+      "side": 1,
+      "message": "nit: s/// + 3 occurrences below.",
+      "range": {
+        "startLine": 125,
+        "startChar": 10,
+        "endLine": 125,
+        "endChar": 20
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3291fe59_9d950c6b",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
         "patchSetId": 1
@@ -25,6 +48,52 @@
     },
     {
       "key": {
+        "uuid": "835964c2_f5d12ce8",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:31:39Z",
+      "side": 1,
+      "message": "#include \u003calgorithm\u003e",
+      "range": {
+        "startLine": 193,
+        "startChar": 28,
+        "endLine": 193,
+        "endChar": 36
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfb7bcb2_5748e351",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:31:39Z",
+      "side": 1,
+      "message": "nit: Can this be made const? Or even a reference to indicate that ownership stays with the caller?",
+      "range": {
+        "startLine": 114,
+        "startChar": 6,
+        "endLine": 114,
+        "endChar": 17
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "87a51a10_4fd99627",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 1
@@ -41,6 +110,29 @@
         "startChar": 2,
         "endLine": 118,
         "endChar": 65
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06e6b254_3bb119d0",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:31:39Z",
+      "side": 1,
+      "message": "Uhm, seems like I forgot a `\u0026` here back then. Could you please fix this? ;-)",
+      "range": {
+        "startLine": 142,
+        "startChar": 54,
+        "endLine": 142,
+        "endChar": 55
       },
       "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
