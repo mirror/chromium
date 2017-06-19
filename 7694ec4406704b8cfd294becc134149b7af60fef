@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0b16cb41_691dd8db",
+        "filename": "chrome/test/vr/perf/vr_perf_test.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1116794
+      },
+      "writtenOn": "2017-06-19T23:52:50Z",
+      "side": 1,
+      "message": "I guess you want to run self._Teardown() for each test no matter it is successful or failed.\n\nfor url in self._test_urls:\n  try:\n    self._Setup(url)\n    self._Run(url)\n  finally:\n    self._Teardown()\n\nIs it?",
+      "parentUuid": "be025171_1054cedc",
+      "range": {
+        "startLine": 30,
+        "startChar": 13,
+        "endLine": 30,
+        "endChar": 22
+      },
+      "revId": "7694ec4406704b8cfd294becc134149b7af60fef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "590b8111_a4d9e867",
         "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
         "patchSetId": 3
