@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a0c6e9fa_5ead94e3",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:46:50Z",
+      "side": 1,
+      "message": "I think it would be worth having a comment describing the overall serialization strategy. It\u0027s true I can read the code and eventually figure it out, but I don\u0027t necessarily understand the why (for example, why is it useful to append bytes to the previous element if it\u0027s also a data element? couldn\u0027t we copy less if we didn\u0027t do that?)\n\nAlso, any possibility of using more consistent naming? We call this \"bytes\" in the enum but \"data\" here.",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 33
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca2cb56f_e8295b97",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:46:50Z",
+      "side": 1,
+      "message": "I guess it\u0027s because BytesProvider is involved, but as it doesn\u0027t have any methods, it\u0027s hard for me to guess why \u003d)",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
