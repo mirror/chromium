@@ -71,12 +71,6 @@ class MockChromeClient final : public EmptyChromeClient {
     ScreenOrientationControllerImpl::ProvideTo(frame,
                                                &web_screen_orientation_client_);
   }
-  void EnterFullscreen(LocalFrame& frame) override {
-    Fullscreen::From(*frame.GetDocument()).DidEnterFullscreen();
-  }
-  void ExitFullscreen(LocalFrame& frame) override {
-    Fullscreen::From(*frame.GetDocument()).DidExitFullscreen();
-  }
 
   MOCK_CONST_METHOD0(GetScreenInfo, WebScreenInfo());
 
@@ -156,13 +150,13 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
 
     Fullscreen::RequestFullscreen(Video());
     Fullscreen::From(GetDocument()).DidEnterFullscreen();
-    testing::RunPendingTasks();
+    GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   }
 
   void SimulateExitFullscreen() {
     Fullscreen::ExitFullscreen(GetDocument());
     Fullscreen::From(GetDocument()).DidExitFullscreen();
-    testing::RunPendingTasks();
+    GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   }
 
   void SimulateOrientationLock() {
@@ -759,10 +753,16 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
 
   // MediaControlsRotateToFullscreenDelegate should enter fullscreen, so
   // MediaControlsOrientationLockDelegate should lock orientation to landscape
-  // (even though the screen is already landscape).
+  // (even though the screen is already landscape). It is the fullscreenchange
+  // event that triggers the lock, and that is fired at the first animation
+  // frame after entering fullscreen.
+  EXPECT_FALSE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidEnterFullscreen();
   EXPECT_TRUE(Video().IsFullscreen());
-  CheckStateMaybeLockedFullscreen();
+  EXPECT_EQ(kWebScreenOrientationLockDefault, DelegateOrientationLock());
+  GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   EXPECT_EQ(kWebScreenOrientationLockLandscape, DelegateOrientationLock());
+  CheckStateMaybeLockedFullscreen();
 
   // Device orientation events received by MediaControlsOrientationLockDelegate
   // will confirm that the device is already landscape.
@@ -963,6 +963,8 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
   testing::RunDelayedTasks(kUnlockDelayMs);
 
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
+  EXPECT_TRUE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidExitFullscreen();
   EXPECT_FALSE(Video().IsFullscreen());
 
   // MediaControlsOrientationLockDelegate should remain unlocked.
@@ -1222,10 +1224,16 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
 
   // MediaControlsRotateToFullscreenDelegate should enter fullscreen, so
   // MediaControlsOrientationLockDelegate should lock orientation to portrait
-  // (even though the screen is already portrait).
+  // (even though the screen is already landscape). It is the fullscreenchange
+  // event that triggers the lock, and that is fired at the first animation
+  // frame after entering fullscreen.
+  EXPECT_FALSE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidEnterFullscreen();
   EXPECT_TRUE(Video().IsFullscreen());
-  CheckStateMaybeLockedFullscreen();
+  EXPECT_EQ(kWebScreenOrientationLockDefault, DelegateOrientationLock());
+  GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   EXPECT_EQ(kWebScreenOrientationLockPortrait, DelegateOrientationLock());
+  CheckStateMaybeLockedFullscreen();
 
   // Device orientation events received by MediaControlsOrientationLockDelegate
   // will confirm that the device is already portrait.
@@ -1243,6 +1251,8 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
       RotateScreenTo(kWebScreenOrientationLandscapePrimary, 90));
 
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
+  EXPECT_TRUE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidExitFullscreen();
   EXPECT_FALSE(Video().IsFullscreen());
 
   // MediaControlsOrientationLockDelegate should remain unlocked.
@@ -1273,10 +1283,16 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
 
   // MediaControlsRotateToFullscreenDelegate should enter fullscreen, so
   // MediaControlsOrientationLockDelegate should lock orientation to landscape
-  // (even though the screen is already landscape).
+  // (even though the screen is already landscape). It is the fullscreenchange
+  // event that triggers the lock, and that is fired at the first animation
+  // frame after entering fullscreen.
+  EXPECT_FALSE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidEnterFullscreen();
   EXPECT_TRUE(Video().IsFullscreen());
-  CheckStateMaybeLockedFullscreen();
+  EXPECT_EQ(kWebScreenOrientationLockDefault, DelegateOrientationLock());
+  GetDocument().ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
   EXPECT_EQ(kWebScreenOrientationLockLandscape, DelegateOrientationLock());
+  CheckStateMaybeLockedFullscreen();
 
   // Device orientation events received by MediaControlsOrientationLockDelegate
   // will confirm that the device is already landscape.
@@ -1294,6 +1310,8 @@ TEST_F(MediaControlsOrientationLockAndRotateToFullscreenDelegateTest,
       RotateScreenTo(kWebScreenOrientationPortraitPrimary, 270));
 
   // MediaControlsRotateToFullscreenDelegate should exit fullscreen.
+  EXPECT_TRUE(Video().IsFullscreen());
+  Fullscreen::From(GetDocument()).DidExitFullscreen();
   EXPECT_FALSE(Video().IsFullscreen());
 
   // MediaControlsOrientationLockDelegate should remain unlocked.
