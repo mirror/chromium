@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb9edb7_4f103178",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 13
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1122966
+      },
+      "writtenOn": "2017-06-19T16:55:45Z",
+      "side": 1,
+      "message": "What is this assert guarding against? I\u0027m hitting it on a local build where the requested icon size is 168, the bitmap height is 242 and the bitmap width is 168.\n\nI think it expected that the native image decoder may return a bitmap that has one dimension larger than requested size. In thumbnail_provider.cc we shrink the image down so that its smallest dimension is equal to or smaller than the requested size. https://cs.chromium.org/chromium/src/chrome/browser/android/download/ui/thumbnail_provider.cc?q\u003dthumbnailproviderimpl\u0026sq\u003dpackage:chromium\u0026dr\u003dC\u0026l\u003d50",
+      "range": {
+        "startLine": 132,
+        "startChar": 12,
+        "endLine": 132,
+        "endChar": 18
+      },
+      "revId": "453a886141c7e593368cca31b27dbeee5c1716d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
