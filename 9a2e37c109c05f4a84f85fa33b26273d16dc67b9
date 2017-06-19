@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "76cb2695_1955fa69",
+        "filename": "chrome/browser/android/vr_shell/textures/system_indicator_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-19T15:25:32Z",
+      "side": 1,
+      "message": "Okay, interesting, that\u0027s really weird.",
+      "parentUuid": "6d715ed6_6041bd12",
+      "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "26a2e940_4ca63b91",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 1
