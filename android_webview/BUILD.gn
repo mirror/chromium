@@ -714,6 +714,7 @@ source_set("common") {
     "//components/spellcheck:build_features",
     "//components/supervised_user_error_page",
     "//components/supervised_user_error_page:gin",
+    "//components/variations/field_trial_config",
     "//components/version_info",
     "//components/visitedlink/browser",
     "//components/visitedlink/renderer",

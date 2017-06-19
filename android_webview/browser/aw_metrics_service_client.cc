@@ -69,6 +69,7 @@ void GetOrCreateGUID(const base::FilePath guid_file_path, std::string* guid) {
     // to the next run, but we can still collect metrics with this 1-time GUID.
     LOG(ERROR) << "Failed to write new GUID";
   }
+
   return;
 }
 
@@ -94,7 +95,6 @@ void AwMetricsServiceClient::Initialize(
     net::URLRequestContextGetter* request_context,
     const base::FilePath guid_file_path) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
-
   DCHECK(pref_service_ == nullptr);  // Initialize should only happen once.
   DCHECK(request_context_ == nullptr);
   pref_service_ = pref_service;
@@ -121,7 +121,6 @@ void AwMetricsServiceClient::InitializeWithGUID(std::string* guid) {
   metrics_state_manager_ = metrics::MetricsStateManager::Create(
       pref_service_, this, base::Bind(&StoreClientInfo),
       base::Bind(&LoadClientInfo));
-
   metrics_service_.reset(new ::metrics::MetricsService(
       metrics_state_manager_.get(), this, pref_service_));
 
