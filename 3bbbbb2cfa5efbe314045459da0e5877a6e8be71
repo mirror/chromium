@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "782fe6ab_8aa0b428",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-19T18:16:17Z",
+      "side": 1,
+      "message": "semantics {\n  sender: \"Background Fetch API\"\n  description:\n    \"The Background Fetch API enables developers to upload or download files \"\n    \"on behalf of the user. Such fetches will yield a user visible \"\n    \"notification to inform the user of the operation, through which it can \"\n    \"be suspended, resumed and/or cancelled. The developer retains control \"\n    \"of the file once the fetch is completed, similar to XMLHttpRequest and \"\n    \"other mechanisms for fetching resources using JavaScript.\"\n  trigger:\n    \"When the website uses the Background Fetch API to request fetching \"\n    \"a file and/or a list of files. This is a Web Platform API for which no \"\n    \"express user permission is required.\"\n  data:\n    \"The request headers and data as set by the website\u0027s developer.\"\n  destination: WEBSITE\n}\npolicy {\n  cookies_allowed: true\n  cookies_store: \"user\"\n  setting: \"This feature cannot be disabled in settings.\"\n  policy_exception_justification: \"Not implemented.\"\n}",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 12
+      },
+      "revId": "3bbbbb2cfa5efbe314045459da0e5877a6e8be71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
