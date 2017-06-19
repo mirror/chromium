@@ -187,6 +187,31 @@ void AddAdditionalRequestHeaders(net::HttpRequestHeaders* headers,
   headers->SetHeader(net::HttpRequestHeaders::kOrigin, origin.Serialize());
 }
 
+// Checks if a given throttle check result means we should abort a navigation.
+bool ShouldAbortNavigationRequest(
+    NavigationThrottle::ThrottleCheckResult throttle) {
+  return (throttle == NavigationThrottle::CANCEL ||
+          throttle == NavigationThrottle::CANCEL_AND_IGNORE ||
+          throttle == NavigationThrottle::BLOCK_REQUEST ||
+          throttle == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE);
+}
+
+// Returns the network error code that makes more sense to report a throttle
+// check failure.
+int GetNetErrorFromThrottle(NavigationThrottle::ThrottleCheckResult throttle) {
+  switch (throttle) {
+    case NavigationThrottle::CANCEL:
+    case NavigationThrottle::CANCEL_AND_IGNORE:
+      return net::ERR_ABORTED;
+    case NavigationThrottle::BLOCK_REQUEST:
+    case NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE:
+      return net::ERR_BLOCKED_BY_CLIENT;
+    default:
+      NOTREACHED();
+      return net::ERR_FAILED;
+  }
+}
+
 }  // namespace
 
 // static
@@ -739,21 +764,11 @@ void NavigationRequest::OnStartChecksComplete(
   if (on_start_checks_complete_closure_)
     on_start_checks_complete_closure_.Run();
   // Abort the request if needed. This will destroy the NavigationRequest.
-  if (result == NavigationThrottle::CANCEL_AND_IGNORE ||
-      result == NavigationThrottle::CANCEL ||
-      result == NavigationThrottle::BLOCK_REQUEST ||
-      result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-    // TODO(clamy): distinguish between CANCEL and CANCEL_AND_IGNORE.
-    int error_code = net::ERR_ABORTED;
-    if (result == NavigationThrottle::BLOCK_REQUEST ||
-        result == NavigationThrottle::BLOCK_REQUEST_AND_COLLAPSE) {
-      error_code = net::ERR_BLOCKED_BY_CLIENT;
-    }
-
+  if (ShouldAbortNavigationRequest(result)) {
+    int error_code = GetNetErrorFromThrottle(result);
     // If the start checks completed synchronously, which could happen if there
-    // is no onbeforeunload handler or if a NavigationThrottle cancelled it,
-    // then this could cause reentrancy into NavigationController. So use a
-    // PostTask to avoid that.
+    // is no onbeforeunload handler, then this could cause reentrancy into
+    // NavigationController. So use a PostTask to avoid that.
     BrowserThread::PostTask(
         BrowserThread::UI, FROM_HERE,
         base::Bind(&NavigationRequest::OnRequestFailed,
