@@ -194,9 +194,9 @@ bool ImageResource::CanUseCacheValidator() const {
   return Resource::CanUseCacheValidator();
 }
 
-ImageResource* ImageResource::Create(const ResourceRequest& request) {
-  ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
-                                kClientDidNotRequestCredentials);
+ImageResource* ImageResource::Create(ResourceRequest& request) {
+  request.SetFetchCredentialsMode(WebURLRequest::kFetchCredentialsModeOmit);
+  ResourceLoaderOptions options;
   return new ImageResource(request, options,
                            ImageResourceContent::CreateNotStarted(), false);
 }
