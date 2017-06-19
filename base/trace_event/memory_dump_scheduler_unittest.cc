@@ -130,7 +130,7 @@ TEST_F(MemoryDumpSchedulerTest, MultipleTriggers) {
 }
 
 TEST_F(MemoryDumpSchedulerTest, StartStopQuickly) {
-  const uint32_t kPeriodMs = 1;
+  const uint32_t kPeriodMs = 1000;
   const uint32_t kTicks = 10;
   WaitableEvent evt(WaitableEvent::ResetPolicy::MANUAL,
                     WaitableEvent::InitialState::NOT_SIGNALED);
@@ -139,7 +139,16 @@ TEST_F(MemoryDumpSchedulerTest, StartStopQuickly) {
   config.callback = Bind(&CallbackWrapper::OnTick, Unretained(&on_tick_));
 
   testing::InSequence sequence;
-  EXPECT_CALL(on_tick_, OnTick(_)).Times(kTicks - 1);
+  EXPECT_CALL(on_tick_, OnTick(_))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "0"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "1"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "2"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "3"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "4"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "5"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "6"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "7"; }))
+      .WillOnce(Invoke([](MemoryDumpLevelOfDetail) { LOG(ERROR) << "8"; }));
   EXPECT_CALL(on_tick_, OnTick(_))
       .WillRepeatedly(
           Invoke([&evt](MemoryDumpLevelOfDetail) { evt.Signal(); }));
@@ -148,6 +157,8 @@ TEST_F(MemoryDumpSchedulerTest, StartStopQuickly) {
   for (int i = 0; i < 5; i++) {
     scheduler_->Stop();
     scheduler_->Start(config, bg_thread_->task_runner());
+    LOG(ERROR) << "start=" << i;
+    PlatformThread::Sleep(TimeDelta::FromMilliseconds(5));
   }
   evt.Wait();
   const double time_ms = (TimeTicks::Now() - tstart).InMillisecondsF();

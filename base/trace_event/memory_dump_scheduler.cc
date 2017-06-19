@@ -73,6 +73,8 @@ void MemoryDumpScheduler::StartInternal(MemoryDumpScheduler::Config config) {
   light_dump_rate_ = light_dump_period_ms / min_period_ms;
   heavy_dump_rate_ = heavy_dump_period_ms / min_period_ms;
 
+  LOG(ERROR) << "Ticking due to StartInternal, generation="
+             << (generation_ + 1);
   // Trigger the first dump immediately.
   SequencedTaskRunnerHandle::Get()->PostTask(
       FROM_HERE,
@@ -86,8 +88,12 @@ void MemoryDumpScheduler::StopInternal() {
 }
 
 void MemoryDumpScheduler::Tick(uint32_t expected_generation) {
-  if (period_ms_ == 0 || generation_ != expected_generation)
+  if (period_ms_ == 0 || generation_ != expected_generation) {
+    LOG(ERROR) << "abandoned Tick, period=" << period_ms_
+               << ", gen=" << generation_
+               << ", expected=" << expected_generation;
     return;
+  }
 
   MemoryDumpLevelOfDetail level_of_detail = MemoryDumpLevelOfDetail::BACKGROUND;
   if (light_dump_rate_ > 0 && tick_count_ % light_dump_rate_ == 0)
@@ -96,6 +102,7 @@ void MemoryDumpScheduler::Tick(uint32_t expected_generation) {
     level_of_detail = MemoryDumpLevelOfDetail::DETAILED;
   tick_count_++;
 
+  LOG(ERROR) << "Tick";
   callback_.Run(level_of_detail);
 
   SequencedTaskRunnerHandle::Get()->PostDelayedTask(
