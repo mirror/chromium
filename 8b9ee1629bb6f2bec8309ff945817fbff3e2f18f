@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62ef4b1e_513da00d",
+        "filename": "third_party/WebKit/Source/platform/wtf/RefVector.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T06:49:23Z",
+      "side": 1,
+      "message": "Note: this std::move() is important: even though |vector| is an rvalue reference, it is not an rvalue (because it has a name). Before, this was calling the copy constructor as a result.",
+      "range": {
+        "startLine": 24,
+        "startChar": 37,
+        "endLine": 24,
+        "endChar": 47
+      },
+      "revId": "8b9ee1629bb6f2bec8309ff945817fbff3e2f18f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
