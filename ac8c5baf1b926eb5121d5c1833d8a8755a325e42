@@ -22,6 +22,30 @@
       "revId": "ac8c5baf1b926eb5121d5c1833d8a8755a325e42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ed841c5_493ef099",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-19T19:14:57Z",
+      "side": 0,
+      "message": "As I understand it, sb_error_ui()-\u003eCanShowExtendedReportingOption() is per-page and each page has a single active profile (and the profile is what stores the value of the relevant pref).\n\nIn simplest terms TriggerManager needs to know three bool values: incognito, sb-enabled, and sber-enabled. But I\u0027m interested in hiding those details from the caller if possible. So maybe for the WebView case I can create parallel methods that take those params directly, while the Chrome caller would just pass in a prefservice.\n\nThoughts?",
+      "parentUuid": "c481d13a_c02d316b",
+      "range": {
+        "startLine": 126,
+        "startChar": 56,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "ac8c5baf1b926eb5121d5c1833d8a8755a325e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
