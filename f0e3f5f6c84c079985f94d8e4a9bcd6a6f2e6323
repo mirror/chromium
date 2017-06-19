@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8af3e9ce_90551381",
+        "filename": "components/location/android/java/src/org/chromium/components/location/LocationUtils.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1126674
+      },
+      "writtenOn": "2017-06-19T16:50:11Z",
+      "side": 1,
+      "message": "Is there a crbug for this?",
+      "range": {
+        "startLine": 107,
+        "startChar": 65,
+        "endLine": 107,
+        "endChar": 93
+      },
+      "revId": "f0e3f5f6c84c079985f94d8e4a9bcd6a6f2e6323",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
