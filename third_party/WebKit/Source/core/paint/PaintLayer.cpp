@@ -387,6 +387,13 @@ void PaintLayer::UpdateLayerPositionsAfterOverflowScroll() {
   UpdateLayerPositionRecursive();
 }
 
+void PaintLayer::UpdateLayerAfterCreation() {
+  UpdateSize();
+  ClearClipRects();
+  UpdateLayerPositionRecursive();
+  UpdatePaginationRecursive(GetLayoutObject().FlowThreadContainingBlock());
+}
+
 void PaintLayer::UpdateTransformationMatrix() {
   if (TransformationMatrix* transform = this->Transform()) {
     LayoutBox* box = GetLayoutBox();

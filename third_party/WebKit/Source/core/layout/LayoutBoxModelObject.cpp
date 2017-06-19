@@ -332,11 +332,8 @@ void LayoutBoxModelObject::StyleDidChange(StyleDifference diff,
       if (was_floating_before_style_changed && IsFloating())
         SetChildNeedsLayout();
       CreateLayerAfterStyleChange();
-      if (Parent() && !NeedsLayout()) {
-        Layer()->UpdateSize();
-        // FIXME: We should call a specialized versions of this function.
-        Layer()->UpdateLayerPositionsAfterLayout();
-      }
+      if (Parent() && !NeedsLayout())
+        Layer()->UpdateLayerAfterCreation();
     }
   } else if (Layer() && Layer()->Parent()) {
     PaintLayer* parent_layer = Layer()->Parent();
