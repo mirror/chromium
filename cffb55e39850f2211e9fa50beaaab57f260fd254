@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3d759486_fdaadaea",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 332,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-19T04:35:19Z",
+      "side": 1,
+      "message": "Does std::array allocate its content on stack?\nIf so, 11*11*int and 11*11*std::pair\u003cint,int\u003e might be too large for stack.",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af381f15_aaf0a25a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-19T04:35:19Z",
+      "side": 1,
+      "message": "EXPECT_op arguments are expected value, actual value.",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27cc4d66_604a3774",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElementTest.cpp",
+        "patchSetId": 17
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1116047
+      },
+      "writtenOn": "2017-06-19T04:35:19Z",
+      "side": 1,
+      "message": "should have another edge case with nodes1 size is kTableSize-1 and nodes2 size is kTableSize-1.",
+      "revId": "cffb55e39850f2211e9fa50beaaab57f260fd254",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
