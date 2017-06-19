@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "020075b4_197808dd",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 140,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-19T06:40:06Z",
+      "side": 1,
+      "message": "all removed.",
+      "parentUuid": "4517361e_1b6984c2",
+      "revId": "a57da97b000d3e09ae8da35e46715e85fff7ce74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e62f082f_7ba1faee",
         "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
         "patchSetId": 2
@@ -48,6 +66,24 @@
       "writtenOn": "2017-06-19T04:35:37Z",
       "side": 1,
       "message": "Is there a way to share more code with InstallRuntimeEnabledFeaturesOnInstance?",
+      "revId": "a57da97b000d3e09ae8da35e46715e85fff7ce74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b360580e_dde643ee",
+        "filename": "third_party/WebKit/Source/bindings/templates/interface_base.cpp.tmpl",
+        "patchSetId": 2
+      },
+      "lineNbr": 719,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-19T06:40:06Z",
+      "side": 1,
+      "message": "DONE.",
+      "parentUuid": "e62f082f_7ba1faee",
       "revId": "a57da97b000d3e09ae8da35e46715e85fff7ce74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
