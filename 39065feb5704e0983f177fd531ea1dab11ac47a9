@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "da4e2cf5_fb0a649f",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-19T20:18:18Z",
+      "side": 1,
+      "message": "I\u0027ll add the CHECK. I considered adding an OpenURLParams for the window.open case but it felt like overkill (+ a perf hit due to copies, etc).\n\nWe could alternatively do something custom instead of threading the OpenURLParams, but I wanted to leave it open for flexibility.",
+      "parentUuid": "f602dd53_ab64e0d0",
+      "range": {
+        "startLine": 346,
+        "startChar": 40,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "39065feb5704e0983f177fd531ea1dab11ac47a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "db977347_69ce1942",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "39065feb5704e0983f177fd531ea1dab11ac47a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f17d144_885d1046",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-19T20:18:18Z",
+      "side": 1,
+      "message": "Huh I haven\u0027t seen that style around. Cool!",
+      "parentUuid": "db977347_69ce1942",
+      "range": {
+        "startLine": 2423,
+        "startChar": 40,
+        "endLine": 2423,
+        "endChar": 43
+      },
+      "revId": "39065feb5704e0983f177fd531ea1dab11ac47a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
