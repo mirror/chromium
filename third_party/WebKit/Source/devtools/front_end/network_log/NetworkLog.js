@@ -165,6 +165,11 @@ NetworkLog.NetworkLog = class {
           scriptId = topFrame.scriptId;
           break;
         }
+        if (!initiator.stack && initiator.url) {
+          type = SDK.NetworkRequest.InitiatorType.Script;
+          url = initiator.url;
+          lineNumber = 0;
+        }
       } else if (initiator.type === Protocol.Network.InitiatorType.Preload) {
         type = SDK.NetworkRequest.InitiatorType.Preload;
       }
