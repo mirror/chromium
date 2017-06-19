@@ -205,6 +205,30 @@
       "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88be106_f0a94567",
+        "filename": "chrome/browser/media/webrtc/native_desktop_media_list.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1116023
+      },
+      "writtenOn": "2017-06-19T17:32:50Z",
+      "side": 1,
+      "message": "This class still must run on UI thread because it interacts with Aura, so I think it\u0027s better to keep it as is for now.",
+      "parentUuid": "8eddb549_b7e30e34",
+      "range": {
+        "startLine": 167,
+        "startChar": 2,
+        "endLine": 167,
+        "endChar": 19
+      },
+      "revId": "ec242077c94e843b44a22231c1d7f9829e21b419",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
