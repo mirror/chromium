@@ -94,6 +94,23 @@
       "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1a885e4c_148dd90e",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/Uint8ClampedArray.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-19T14:36:56Z",
+      "side": 1,
+      "message": "Yeah, I\u0027d just pass a RefPtr\u003cArrayBuffer\u003e here (and elsewhere). (RefPtr is incredibly cheap to move-construct, anyhow, so using rvalue reference doesn\u0027t really help anything.)",
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
