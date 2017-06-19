@@ -96,6 +96,7 @@ std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
     const std::string& locale,
     const autofill::AutofillProfile& profile,
     const PaymentsProfileComparator& comp,
+    base::string16* accessible_content,
     bool enabled = true);
 
 // Extracts and formats descriptive text from the given |profile| to represent
@@ -106,7 +107,8 @@ std::unique_ptr<views::View> GetContactInfoLabel(
     const std::string& locale,
     const autofill::AutofillProfile& profile,
     const PaymentOptionsProvider& options,
-    const PaymentsProfileComparator& comp);
+    const PaymentsProfileComparator& comp,
+    base::string16* accessible_content);
 
 // Creates a views::Border object with |insets| that can paint the gray
 // horizontal ruler used as a separator between items in the Payment Request
@@ -133,7 +135,8 @@ std::unique_ptr<views::Label> CreateHintLabel(
 std::unique_ptr<views::View> CreateShippingOptionLabel(
     payments::mojom::PaymentShippingOption* shipping_option,
     const base::string16& formatted_amount,
-    bool emphasize_label);
+    bool emphasize_label,
+    base::string16* accessible_content);
 
 }  // namespace payments
 
