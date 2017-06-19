@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "425d2c50_96fcf791",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-19T16:52:43Z",
+      "side": 1,
+      "message": "Yes that\u0027s right, I am making that assumption, but I think it\u0027s valid. That state should have been passed in via Tab::SetData already, and I can\u0027t find any visible regressions or test failures due to this change.",
+      "parentUuid": "80f3c1c9_4f6df6d0",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ee7ad0_3f6d9ec1",
         "filename": "chrome/browser/ui/views/tabs/tab.h",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T15:54:15Z",
       "side": 1,
       "message": "optional: may be delayed_throbber_update_timer_?",
+      "range": {
+        "startLine": 373,
+        "startChar": 21,
+        "endLine": 373,
+        "endChar": 42
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b806accc_af3ca49e",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-19T16:52:43Z",
+      "side": 1,
+      "message": "renamed to delayed_throbber_show_timer_",
+      "parentUuid": "e3ee7ad0_3f6d9ec1",
       "range": {
         "startLine": 373,
         "startChar": 21,
