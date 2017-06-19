@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "5c7a0b69_b13407a4",
+        "filename": "chrome/browser/download/download_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "Is there any reason not to just DependsOn(PrefetchServiceFactory)?",
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2882cb7b_0beb554c",
         "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
         "patchSetId": 2
@@ -42,6 +59,23 @@
         "endLine": 20,
         "endChar": 66
       },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97c09491_7955cba5",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "Is this a TODO or the expected final state of this function? Are there response headers we should be inspecting?",
       "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -111,6 +145,23 @@
         "endLine": 33,
         "endChar": 43
       },
+      "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c9932a3_1354cc4a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "This isn\u0027t the right pattern, please add this to the PrefetchDispatcher instead.",
       "revId": "caddde1f2675541ac467b7961b0f22158b529cb8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

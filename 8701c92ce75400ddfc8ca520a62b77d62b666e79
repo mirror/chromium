@@ -1,0 +1,95 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "36da0bc0_f4a3fdec",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "This DCHECK is invalid since DownloadClients will be made for incognito profiles as well.  We should do nothing if prefetch_service is NULL.",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a800de6_f3c23163",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "Why NOTREACHED?",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "253dafd5_3911f078",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "What is the process for starting the download service?",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19f06791_a03a4dc0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem like the right logic here.  It should have a pending_cancellations_ vector and cancel the downloads when the service starts.",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5e0438_095d49c4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-19T18:14:37Z",
+      "side": 1,
+      "message": "Please add tests for this file.",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
