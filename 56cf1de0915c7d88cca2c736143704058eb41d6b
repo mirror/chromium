@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3e4cd30_25358b76",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/gerrit.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-19T23:09:14Z",
+      "side": 1,
+      "message": "There\u0027s a bit of logic here which is already duplicated in a couple places.\n\nFiled a bug to deduplicate it: https://chromium-review.googlesource.com/c/540146/\n(This would be done in a separate CL).",
+      "revId": "56cf1de0915c7d88cca2c736143704058eb41d6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
