@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1abf7380_0da3f7a6",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "Returning map by value would mean that the map would need to be copied. This could be slow depending on the size of the map.\n\nOne way to avoid this is to make this a class method, and modify the |max_delayable_requests_network_override_params_| directly.\n\nThe other way is that caller passes an empty map by reference to this method, and this method modifies the passed map directly.",
+      "range": {
+        "startLine": 1218,
+        "startChar": 19,
+        "endLine": 1218,
+        "endChar": 46
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d04145e_ea151d50",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "Add method comments.",
+      "range": {
+        "startLine": 1219,
+        "startChar": 19,
+        "endLine": 1219,
+        "endChar": 58
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3811ef_d08d5287",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "s/const std::string/static const char[]/",
+      "range": {
+        "startLine": 1220,
+        "startChar": 20,
+        "endLine": 1220,
+        "endChar": 42
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "516a687d_2b102465",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "s/i/range_index/\nor something else?",
+      "range": {
+        "startLine": 1225,
+        "startChar": 7,
+        "endLine": 1225,
+        "endChar": 8
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d9779d24_202b2881",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "May be rm this variable. And, just break/return when an invalid value is encountered?",
+      "range": {
+        "startLine": 1226,
+        "startChar": 7,
+        "endLine": 1226,
+        "endChar": 22
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a608d14_13798133",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "map seems like an overkill especially since we are not looking up values by keys.\nmay be use vector? Your code can assume that the ranges are in an increasing order. Then, when looking up in GetNumberOfDelayableRequestsForLatency(), return as soon as the range is exceeded.",
+      "range": {
+        "startLine": 125,
+        "startChar": 15,
+        "endLine": 125,
+        "endChar": 18
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

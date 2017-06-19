@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7fc8995f_369b3422",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "Stale description?",
+      "range": {
+        "startLine": 8,
+        "startChar": 13,
+        "endLine": 8,
+        "endChar": 23
+      },
+      "revId": "08bd9252f704097b44edf92f040fe53a565ea224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3908683_ed7d3ee3",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1235,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T17:59:52Z",
+      "side": 1,
+      "message": "I would rather do this for readability:\n\nint64_t a, b;\nsize_t c;\n\nif(!(...,\u0026a)) {\n return ...;\n}\n\nif(!(...,\u0026b)) {\n return ...;\n}\n\nif(!(...,\u0026c)) {\n return ...;\n}\n\nresult[,] \u003d ;",
+      "range": {
+        "startLine": 1235,
+        "startChar": 14,
+        "endLine": 1235,
+        "endChar": 27
+      },
+      "revId": "08bd9252f704097b44edf92f040fe53a565ea224",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
