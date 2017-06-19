@@ -335,12 +335,12 @@ size_t CSSInterpolationTypesMap::Version() const {
   return registry_ ? registry_->RegistrationCount() : 0;
 }
 
-CSSInterpolationTypes
-CSSInterpolationTypesMap::CreateCSSInterpolationTypesForSyntax(
+InterpolationTypes CSSInterpolationTypesMap::CreateInterpolationTypesForSyntax(
     const AtomicString& property_name,
-    const CSSSyntaxDescriptor& descriptor) {
+    const CSSSyntaxDescriptor& descriptor,
+    const PropertyRegistration& registration) {
   PropertyHandle property(property_name);
-  CSSInterpolationTypes result;
+  InterpolationTypes result;
   for (const CSSSyntaxComponent& component : descriptor.Components()) {
     if (component.repeatable_) {
       // TODO(alancutter): Support animation of repeatable types.

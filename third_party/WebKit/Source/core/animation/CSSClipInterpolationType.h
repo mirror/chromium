@@ -11,8 +11,9 @@ namespace blink {
 
 class CSSClipInterpolationType : public CSSInterpolationType {
  public:
-  CSSClipInterpolationType(PropertyHandle property)
-      : CSSInterpolationType(property) {
+  CSSClipInterpolationType(PropertyHandle property,
+                           const PropertyRegistration* registration = nullptr)
+      : CSSInterpolationType(property, registration) {
     DCHECK_EQ(CssProperty(), CSSPropertyClip);
   }
 
