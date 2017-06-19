@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93e90560_b123a9b1",
+        "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-06-19T23:15:59Z",
+      "side": 1,
+      "message": "OK, I also like 1). However, we should kill the renderer rather than CHECK, and that\u0027s probably impossible from here. This is probably enough.",
+      "parentUuid": "3ceacbce_77db4b7a",
+      "revId": "dd1824a5a4b4eed2dac658665b4afb40de83af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5899117b_4f36cb46",
         "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-19T22:43:09Z",
       "side": 1,
       "message": "Same as above",
+      "revId": "dd1824a5a4b4eed2dac658665b4afb40de83af55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd13896_2def84bd",
+        "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001213
+      },
+      "writtenOn": "2017-06-19T23:15:59Z",
+      "side": 1,
+      "message": "Ditto",
+      "parentUuid": "5899117b_4f36cb46",
       "revId": "dd1824a5a4b4eed2dac658665b4afb40de83af55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
