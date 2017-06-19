@@ -2408,6 +2408,7 @@ interface WritableStream
     getter onforeignfetch
     getter oninstall
     getter onmessage
+    getter onmessageerror
     getter onnotificationclick
     getter onnotificationclose
     getter onpaymentrequest
@@ -2426,6 +2427,7 @@ interface WritableStream
     setter onforeignfetch
     setter oninstall
     setter onmessage
+    setter onmessageerror
     setter onnotificationclick
     setter onnotificationclose
     setter onpaymentrequest

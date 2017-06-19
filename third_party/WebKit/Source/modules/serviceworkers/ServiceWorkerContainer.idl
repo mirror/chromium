@@ -39,4 +39,5 @@ interface ServiceWorkerContainer : EventTarget {
 
     attribute EventHandler oncontrollerchange;
     attribute EventHandler onmessage;
+    attribute EventHandler onmessageerror;
 };
