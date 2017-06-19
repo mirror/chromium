@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5141c502_8f413507",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 1
+      },
+      "lineNbr": 2762,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-19T03:37:13Z",
+      "side": 1,
+      "message": "don\u0027t need field sizes if it\u0027s a keyword.",
+      "revId": "014f6baf87da73e6fd3d3eb813d7289b5a31b57f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
