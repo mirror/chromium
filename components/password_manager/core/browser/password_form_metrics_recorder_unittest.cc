@@ -231,4 +231,30 @@ TEST(PasswordFormMetricsRecorder, Actions) {
   }
 }
 
+// Test that in the case of a sequence of user actions, only the last one is
+// recorded in ActionsV3 but all are recorded as UMA user actions.
+TEST(PasswordFormMetricsRecorder, ActionSequence) {
+  base::HistogramTester histogram_tester;
+  base::UserActionTester user_action_tester;
+
+  // Use a scoped PasswordFromMetricsRecorder because some metrics are recored
+  // on destruction.
+  {
+    PasswordFormMetricsRecorder recorder(/*is_main_frame_secure*/ true);
+    recorder.SetManagerAction(
+        PasswordFormMetricsRecorder::kManagerActionAutofilled);
+    recorder.SetUserAction(UserAction::kUserActionChoosePslMatch);
+    recorder.SetUserAction(UserAction::kUserActionOverrideUsernameAndPassword);
+    recorder.LogSubmitPassed();
+  }
+
+  EXPECT_THAT(histogram_tester.GetAllSamples("PasswordManager.ActionsTakenV3"),
+              ::testing::ElementsAre(base::Bucket(39, 1)));
+
+  EXPECT_EQ(1, user_action_tester.GetActionCount(
+                   "PasswordManager_ChoseSubdomainPassword"));
+  EXPECT_EQ(1, user_action_tester.GetActionCount(
+                   "PasswordManager_LoggedInWithNewUsername"));
+}
+
 }  // namespace password_manager
