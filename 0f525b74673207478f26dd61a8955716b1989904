@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1cf3cfe_c8db33b1",
+        "filename": "third_party/WebKit/Source/core/page/FocusController.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 1346,
+      "author": {
+        "id": 1207755
+      },
+      "writtenOn": "2017-06-19T12:58:30Z",
+      "side": 1,
+      "message": "Let\u0027s add TODO(crbug.com/734552) to this comment.\n\nAlso replace -input with -textarea. At ToT all tests but snav-textarea.html pass if we remove this Clear().",
+      "range": {
+        "startLine": 1346,
+        "startChar": 73,
+        "endLine": 1346,
+        "endChar": 74
+      },
+      "revId": "0f525b74673207478f26dd61a8955716b1989904",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
