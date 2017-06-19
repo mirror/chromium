@@ -142,7 +142,6 @@ enum AccessibilityRole {
 
 enum AccessibilityState {
   kAXBusyState,
-  kAXEnabledState,
   kAXExpandedState,
   kAXFocusableState,
   kAXFocusedState,
@@ -154,7 +153,6 @@ enum AccessibilityState {
   kAXMultiselectableState,
   kAXOffscreenState,
   kAXProtectedState,
-  kAXReadonlyState,
   kAXRequiredState,
   kAXSelectableState,
   kAXSelectedState,
@@ -166,6 +164,14 @@ enum AccessibilityOrientation {
   kAccessibilityOrientationUndefined = 0,
   kAccessibilityOrientationVertical,
   kAccessibilityOrientationHorizontal,
+};
+
+// The state of a control, if it is one
+enum AXControlMode {
+  kNotAControl = 0,
+  kEnabled,
+  kReadOnly,
+  kDisabled,
 };
 
 enum class AXDefaultActionVerb {
