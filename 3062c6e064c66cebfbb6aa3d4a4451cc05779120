@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "183147bd_4bf7ee5c",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T23:14:44Z",
+      "side": 1,
+      "message": "Is border-collapse: collapse needed to get the OffsetWidth to be exactly 1e6? If not, remove it.\nIf so, keep it but put a space between table and {.",
+      "revId": "3062c6e064c66cebfbb6aa3d4a4451cc05779120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "776062d9_af56b72e",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T23:14:44Z",
+      "side": 1,
+      "message": "Stray space",
+      "range": {
+        "startLine": 173,
+        "startChar": 17,
+        "endLine": 173,
+        "endChar": 18
+      },
+      "revId": "3062c6e064c66cebfbb6aa3d4a4451cc05779120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f974347d_29d567e0",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableTest.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T23:14:44Z",
+      "side": 1,
+      "message": "I think if you #include TableLayoutAlgorithm.h then you can change this literal to TableLayoutAlgorithm::kTableMaxWidth",
+      "range": {
+        "startLine": 184,
+        "startChar": 12,
+        "endLine": 184,
+        "endChar": 19
+      },
+      "revId": "3062c6e064c66cebfbb6aa3d4a4451cc05779120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "83440c96_3cec08e2",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 302,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T23:14:44Z",
+      "side": 1,
+      "message": "I think the static_cast\u003cfloat\u003e is only necessary when passing to std::min, try deleting this one.",
+      "revId": "3062c6e064c66cebfbb6aa3d4a4451cc05779120",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

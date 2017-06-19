@@ -93,6 +93,30 @@
       "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe916ca_1b1242e9",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1002809
+      },
+      "writtenOn": "2017-06-19T23:14:44Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "f3cd991e_c79ca9a9",
+      "range": {
+        "startLine": 297,
+        "startChar": 8,
+        "endLine": 297,
+        "endChar": 23
+      },
+      "revId": "cc685696febbf5b50ae79e5e703f276d0850a377",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
