@@ -94,6 +94,29 @@
       "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc8b8922_75be50e9",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/WTFString.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T07:05:08Z",
+      "side": 1,
+      "message": "Hmm... I thought about this more and changed it to take a \u0026\u0026.\n\nNormally, rvalue references aren\u0027t allowed, but this is a constructor that\u0027s supposed to consume the value. WDYT?",
+      "range": {
+        "startLine": 100,
+        "startChar": 9,
+        "endLine": 100,
+        "endChar": 27
+      },
+      "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
