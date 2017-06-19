@@ -8,6 +8,7 @@ import "mojo/common/time.mojom";
 import "services/identity/public/interfaces/account_info.mojom";
 import "services/identity/public/interfaces/account_state.mojom";
 import "services/identity/public/interfaces/google_service_auth_error.mojom";
+import "services/identity/public/interfaces/identity_observer.mojom";
 import "services/identity/public/interfaces/scope_set.mojom";
 
 // Gives access to information about the user's Google accounts.
@@ -38,4 +39,7 @@ interface IdentityManager {
      (string? token,
       mojo.common.mojom.Time expiration_time,
       GoogleServiceAuthError error);
+
+  // Adds |observer| as an observer of identity-related events.
+  AddObserver(IdentityObserver observer);
 };

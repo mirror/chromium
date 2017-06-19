@@ -10,6 +10,7 @@ mojom("interfaces") {
     "account_state.mojom",
     "google_service_auth_error.mojom",
     "identity_manager.mojom",
+    "identity_observer.mojom",
     "scope_set.mojom",
   ]
 

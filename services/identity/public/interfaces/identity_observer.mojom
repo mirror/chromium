@@ -1,0 +1,19 @@
+// Copyright 2017 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+module identity.mojom;
+
+import "services/identity/public/interfaces/account_info.mojom";
+import "services/identity/public/interfaces/account_state.mojom";
+
+// Interface that allows observance of identity-related events, e.g. a refresh
+// token being made available for a given account. Observers should register
+// with IdentityManager.
+interface IdentityObserver {
+  // Invoked when a refresh token has become available for the account
+  // repesented by |account_info|. |account_state| gives the current state of
+  // the account.
+  OnRefreshTokenAvailable(AccountInfo account_info,
+                          AccountState account_state);
+};
