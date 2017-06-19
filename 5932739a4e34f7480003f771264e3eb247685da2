@@ -143,6 +143,24 @@
     },
     {
       "key": {
+        "uuid": "a1efc506_7d0865f4",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:43:13Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "92c200ef_2781b6c8",
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21ca3ae3_c052d3cb",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 3
@@ -154,6 +172,30 @@
       "writtenOn": "2017-06-16T17:39:15Z",
       "side": 0,
       "message": "Can you confirm with the original bug (and jif@) that this is fixed? https://chromereviews.googleplex.com/221777013",
+      "range": {
+        "startLine": 87,
+        "startChar": 18,
+        "endLine": 87,
+        "endChar": 35
+      },
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b570ec94_31c8b99a",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:43:13Z",
+      "side": 0,
+      "message": "I did not find a way to repro it. Maybe it was when we were displaying screenshots instead of tiles?",
+      "parentUuid": "21ca3ae3_c052d3cb",
       "range": {
         "startLine": 87,
         "startChar": 18,
@@ -186,6 +228,30 @@
       "revId": "5932739a4e34f7480003f771264e3eb247685da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0217b7d9_a75b5027",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 517,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T10:43:13Z",
+      "side": 0,
+      "message": "Done",
+      "parentUuid": "e77de146_73d02a8a",
+      "range": {
+        "startLine": 517,
+        "startChar": 15,
+        "endLine": 517,
+        "endChar": 21
+      },
+      "revId": "5932739a4e34f7480003f771264e3eb247685da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
