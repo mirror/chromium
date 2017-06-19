@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1806d45e_1a67f6a5",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-19T19:14:44Z",
+      "side": 1,
+      "message": "Did you intend to remove the \u0027explicit\u0027 keyword?",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "85f30e4f_4e4b78bb",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-19T19:14:44Z",
+      "side": 1,
+      "message": "naming nit: IsAudioOrVideoSupported()\n                   ^^",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd3ecff3_ab6d31e6",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-19T19:14:44Z",
+      "side": 1,
+      "message": "Can you explain this boolean a bit more? We seem to be plumbing it in everywhere, which implies GetAvailabilityUrl() downstream may change based on whether the CORS check is good/bad, which then implies there are cases where the Presentation logic will monitor for screen availability on an URL that fails the CORS check. Do we want to allow that?\n\n(I\u0027m wondering if, instead of this boolean, we should just \"null-out\" the URL whenever the CORS check fails.)",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 34
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
