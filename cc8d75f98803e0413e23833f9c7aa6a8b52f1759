@@ -554,6 +554,30 @@
     },
     {
       "key": {
+        "uuid": "c0d98334_55f5494f",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T17:53:55Z",
+      "side": 1,
+      "message": "This, and manually calling base::BindOnce above, aren\u0027t necessary because base::RepeatingClosure implicitly casts to base::OnceClosure.",
+      "parentUuid": "3a5b4134_4703066f",
+      "range": {
+        "startLine": 359,
+        "startChar": 27,
+        "endLine": 359,
+        "endChar": 51
+      },
+      "revId": "cc8d75f98803e0413e23833f9c7aa6a8b52f1759",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "52f5a9f6_7afcb58f",
         "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
         "patchSetId": 8
