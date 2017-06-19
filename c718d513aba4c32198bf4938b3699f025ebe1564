@@ -22,6 +22,30 @@
       "revId": "c718d513aba4c32198bf4938b3699f025ebe1564",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bca8cb4d_f18e3823",
+        "filename": "net/android/java/src/org/chromium/net/X509Util.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002869
+      },
+      "writtenOn": "2017-06-19T21:19:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5105a96c_06504cc1",
+      "range": {
+        "startLine": 145,
+        "startChar": 23,
+        "endLine": 145,
+        "endChar": 29
+      },
+      "revId": "c718d513aba4c32198bf4938b3699f025ebe1564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
