@@ -357,11 +357,6 @@ class CONTENT_EXPORT NavigationHandleImpl : public NavigationHandle {
     return navigation_type_;
   }
 
-  void set_response_headers_for_testing(
-      scoped_refptr<net::HttpResponseHeaders> response_headers) {
-    response_headers_ = response_headers;
-  }
-
   void set_complete_callback_for_testing(
       const ThrottleChecksFinishedCallback& callback) {
     complete_callback_for_testing_ = callback;

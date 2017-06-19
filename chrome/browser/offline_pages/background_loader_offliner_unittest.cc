@@ -586,8 +586,8 @@ TEST_F(BackgroundLoaderOfflinerTest, OffliningPreviewsStatusOffHistogram) {
       handle.get(), std::move(navigation_data));
   scoped_refptr<net::HttpResponseHeaders> header(
       new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
-  offliner()->web_contents_tester()->SetHttpResponseHeaders(handle.get(),
-                                                            header);
+  handle->CallWillProcessResponseForTesting(
+      offliner()->web_contents()->GetMainFrame(), header->raw_headers());
   // Call DidFinishNavigation with handle.
   offliner()->DidFinishNavigation(handle.get());
 
@@ -620,8 +620,8 @@ TEST_F(BackgroundLoaderOfflinerTest, OffliningPreviewsStatusOnHistogram) {
       handle.get(), std::move(navigation_data));
   scoped_refptr<net::HttpResponseHeaders> header(
       new net::HttpResponseHeaders("HTTP/1.1 200 OK"));
-  offliner()->web_contents_tester()->SetHttpResponseHeaders(handle.get(),
-                                                            header);
+  handle->CallWillProcessResponseForTesting(
+      offliner()->web_contents()->GetMainFrame(), header->raw_headers());
   // Call DidFinishNavigation with handle.
   offliner()->DidFinishNavigation(handle.get());
 
