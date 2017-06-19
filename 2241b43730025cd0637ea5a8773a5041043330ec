@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "83950e71_56c29257",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorOverlayAgent.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-19T02:06:43Z",
+      "side": 1,
+      "message": "Needs NON_EXPORTED_BASE(public ...)",
+      "revId": "2241b43730025cd0637ea5a8773a5041043330ec",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
