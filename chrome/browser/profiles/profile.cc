@@ -115,6 +115,10 @@ ChromeZoomLevelPrefs* Profile::GetZoomLevelPrefs() {
 }
 #endif  // !defined(OS_ANDROID)
 
+const PrefService* Profile::GetReadOnlyOffTheRecordPrefs() {
+  return GetOffTheRecordPrefs();
+}
+
 Profile::Delegate::~Delegate() {
 }
 
