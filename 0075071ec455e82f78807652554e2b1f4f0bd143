@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "77c40c72_e74eaa48",
+        "filename": "third_party/WebKit/Source/core/dom/Fullscreen.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T09:19:27Z",
+      "side": 1,
+      "message": "Good idea, done.",
+      "parentUuid": "e8582e77_f1faaae8",
+      "range": {
+        "startLine": 508,
+        "startChar": 63,
+        "endLine": 508,
+        "endChar": 67
+      },
+      "revId": "0075071ec455e82f78807652554e2b1f4f0bd143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb364f40_4d7b85dc",
         "filename": "third_party/WebKit/Source/core/frame/FullscreenController.cpp",
         "patchSetId": 13
@@ -45,6 +69,30 @@
       "revId": "0075071ec455e82f78807652554e2b1f4f0bd143",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7c5b47b_2be487ef",
+        "filename": "third_party/WebKit/Source/core/frame/FullscreenController.cpp",
+        "patchSetId": 13
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T09:19:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb364f40_4d7b85dc",
+      "range": {
+        "startLine": 137,
+        "startChar": 55,
+        "endLine": 137,
+        "endChar": 71
+      },
+      "revId": "0075071ec455e82f78807652554e2b1f4f0bd143",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
