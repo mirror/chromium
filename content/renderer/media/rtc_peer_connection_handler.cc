@@ -206,7 +206,7 @@ void ConvertToWebKitRTCError(const webrtc::RTCError& webrtc_error,
 
 void RunClosureWithTrace(const base::Closure& closure,
                          const char* trace_event_name) {
-  TRACE_EVENT0("webrtc", trace_event_name);
+  TRACE_EVENT0("webrtc.chromium", trace_event_name);
   closure.Run();
 }
 
@@ -214,7 +214,7 @@ void RunSynchronousClosure(const base::Closure& closure,
                            const char* trace_event_name,
                            base::WaitableEvent* event) {
   {
-    TRACE_EVENT0("webrtc", trace_event_name);
+    TRACE_EVENT0("webrtc.chromium", trace_event_name);
     closure.Run();
   }
   event->Signal();
@@ -538,13 +538,13 @@ class StatsResponse : public webrtc::StatsObserver {
       : request_(request.get()),
         main_thread_(base::ThreadTaskRunnerHandle::Get()) {
     // Measure the overall time it takes to satisfy a getStats request.
-    TRACE_EVENT_ASYNC_BEGIN0("webrtc", "getStats_Native", this);
+    TRACE_EVENT_ASYNC_BEGIN0("webrtc.chromium", "getStats_Native", this);
     signaling_thread_checker_.DetachFromThread();
   }
 
   void OnComplete(const StatsReports& reports) override {
     DCHECK(signaling_thread_checker_.CalledOnValidThread());
-    TRACE_EVENT0("webrtc", "StatsResponse::OnComplete");
+    TRACE_EVENT0("webrtc.chromium", "StatsResponse::OnComplete");
     // We can't use webkit objects directly since they use a single threaded
     // heap allocator.
     std::vector<Report*>* report_copies = new std::vector<Report*>();
@@ -643,7 +643,7 @@ class StatsResponse : public webrtc::StatsObserver {
   };
 
   static void DeleteReports(std::vector<Report*>* reports) {
-    TRACE_EVENT0("webrtc", "StatsResponse::DeleteReports");
+    TRACE_EVENT0("webrtc.chromium", "StatsResponse::DeleteReports");
     for (auto* p : *reports)
       delete p;
     delete reports;
@@ -651,7 +651,7 @@ class StatsResponse : public webrtc::StatsObserver {
 
   void DeliverCallback(const std::vector<Report*>* reports) {
     DCHECK(main_thread_->BelongsToCurrentThread());
-    TRACE_EVENT0("webrtc", "StatsResponse::DeliverCallback");
+    TRACE_EVENT0("webrtc.chromium", "StatsResponse::DeliverCallback");
 
     rtc::scoped_refptr<LocalRTCStatsResponse> response(
         request_->createResponse().get());
@@ -663,7 +663,7 @@ class StatsResponse : public webrtc::StatsObserver {
     // Record the getStats operation as done before calling into Blink so that
     // we don't skew the perf measurements of the native code with whatever the
     // callback might be doing.
-    TRACE_EVENT_ASYNC_END0("webrtc", "getStats_Native", this);
+    TRACE_EVENT_ASYNC_END0("webrtc.chromium", "getStats_Native", this);
     request_->requestSucceeded(response);
     request_ = nullptr;  // must be freed on the main thread.
   }
@@ -683,7 +683,7 @@ void GetStatsOnSignalingThread(
     const scoped_refptr<webrtc::StatsObserver>& observer,
     const std::string& track_id,
     blink::WebMediaStreamSource::Type track_type) {
-  TRACE_EVENT0("webrtc", "GetStatsOnSignalingThread");
+  TRACE_EVENT0("webrtc.chromium", "GetStatsOnSignalingThread");
 
   scoped_refptr<webrtc::MediaStreamTrackInterface> track;
   if (!track_id.empty()) {
@@ -760,7 +760,7 @@ void GetRTCStatsOnSignalingThread(
     const scoped_refptr<base::SingleThreadTaskRunner>& main_thread,
     scoped_refptr<webrtc::PeerConnectionInterface> native_peer_connection,
     std::unique_ptr<blink::WebRTCStatsReportCallback> callback) {
-  TRACE_EVENT0("webrtc", "GetRTCStatsOnSignalingThread");
+  TRACE_EVENT0("webrtc.chromium", "GetRTCStatsOnSignalingThread");
 
   native_peer_connection->GetStats(
       GetRTCStatsCallback::Create(main_thread, std::move(callback)));
@@ -1223,7 +1223,7 @@ void RTCPeerConnectionHandler::CreateOffer(
     const blink::WebRTCSessionDescriptionRequest& request,
     const blink::WebMediaConstraints& options) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createOffer");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::createOffer");
 
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
@@ -1245,7 +1245,7 @@ void RTCPeerConnectionHandler::CreateOffer(
     const blink::WebRTCSessionDescriptionRequest& request,
     const blink::WebRTCOfferOptions& options) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createOffer");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::createOffer");
 
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
@@ -1267,7 +1267,7 @@ void RTCPeerConnectionHandler::CreateAnswer(
     const blink::WebRTCSessionDescriptionRequest& request,
     const blink::WebMediaConstraints& options) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createAnswer");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::createAnswer");
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
           base::ThreadTaskRunnerHandle::Get(), request,
@@ -1287,7 +1287,7 @@ void RTCPeerConnectionHandler::CreateAnswer(
     const blink::WebRTCSessionDescriptionRequest& request,
     const blink::WebRTCAnswerOptions& options) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createAnswer");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::createAnswer");
   scoped_refptr<CreateSessionDescriptionRequest> description_request(
       new rtc::RefCountedObject<CreateSessionDescriptionRequest>(
           base::ThreadTaskRunnerHandle::Get(), request,
@@ -1312,7 +1312,8 @@ void RTCPeerConnectionHandler::SetLocalDescription(
     const blink::WebRTCVoidRequest& request,
     const blink::WebRTCSessionDescription& description) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::setLocalDescription");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::setLocalDescription");
 
   std::string sdp = description.Sdp().Utf8();
   std::string type = description.GetType().Utf8();
@@ -1371,7 +1372,8 @@ void RTCPeerConnectionHandler::SetRemoteDescription(
     const blink::WebRTCVoidRequest& request,
     const blink::WebRTCSessionDescription& description) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::setRemoteDescription");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::setRemoteDescription");
   std::string sdp = description.Sdp().Utf8();
   std::string type = description.GetType().Utf8();
 
@@ -1426,7 +1428,7 @@ void RTCPeerConnectionHandler::SetRemoteDescription(
 
 blink::WebRTCSessionDescription RTCPeerConnectionHandler::LocalDescription() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::localDescription");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::localDescription");
 
   // Since local_description returns a pointer to a non-reference-counted object
   // that lives on the signaling thread, we cannot fetch a pointer to it and use
@@ -1446,7 +1448,8 @@ blink::WebRTCSessionDescription RTCPeerConnectionHandler::LocalDescription() {
 
 blink::WebRTCSessionDescription RTCPeerConnectionHandler::RemoteDescription() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::remoteDescription");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::remoteDescription");
   // Since local_description returns a pointer to a non-reference-counted object
   // that lives on the signaling thread, we cannot fetch a pointer to it and use
   // it directly here. Instead, we access the object completely on the signaling
@@ -1466,7 +1469,7 @@ blink::WebRTCSessionDescription RTCPeerConnectionHandler::RemoteDescription() {
 blink::WebRTCErrorType RTCPeerConnectionHandler::SetConfiguration(
     const blink::WebRTCConfiguration& blink_config) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::setConfiguration");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::setConfiguration");
   GetNativeRtcConfiguration(blink_config, &configuration_);
 
   if (peer_connection_tracker_)
@@ -1487,7 +1490,7 @@ bool RTCPeerConnectionHandler::AddICECandidate(
     const blink::WebRTCVoidRequest& request,
     const blink::WebRTCICECandidate& candidate) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::addICECandidate");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::addICECandidate");
   // Libjingle currently does not accept callbacks for addICECandidate.
   // For that reason we are going to call callbacks from here.
 
@@ -1504,7 +1507,7 @@ bool RTCPeerConnectionHandler::AddICECandidate(
 bool RTCPeerConnectionHandler::AddICECandidate(
     const blink::WebRTCICECandidate& candidate) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::addICECandidate");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::addICECandidate");
   std::unique_ptr<webrtc::IceCandidateInterface> native_candidate(
       dependency_factory_->CreateIceCandidate(candidate.SdpMid().Utf8(),
                                               candidate.SdpMLineIndex(),
@@ -1529,7 +1532,8 @@ bool RTCPeerConnectionHandler::AddICECandidate(
 void RTCPeerConnectionHandler::OnaddICECandidateResult(
     const blink::WebRTCVoidRequest& webkit_request, bool result) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnaddICECandidateResult");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnaddICECandidateResult");
   if (!result) {
     // We don't have the actual error code from the libjingle, so for now
     // using a generic error string.
@@ -1544,7 +1548,7 @@ bool RTCPeerConnectionHandler::AddStream(
     const blink::WebMediaStream& stream,
     const blink::WebMediaConstraints& options) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::addStream");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::addStream");
   for (const auto& adapter : local_streams_) {
     if (adapter->IsEqual(stream)) {
       DVLOG(1) << "RTCPeerConnectionHandler::addStream called with the same "
@@ -1583,7 +1587,7 @@ bool RTCPeerConnectionHandler::AddStream(
 void RTCPeerConnectionHandler::RemoveStream(
     const blink::WebMediaStream& stream) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::removeStream");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::removeStream");
   // Find the webrtc stream.
   scoped_refptr<webrtc::MediaStreamInterface> webrtc_stream;
   for (auto adapter_it = local_streams_.begin();
@@ -1618,8 +1622,7 @@ void RTCPeerConnectionHandler::GetStats(
 void RTCPeerConnectionHandler::getStats(
     const scoped_refptr<LocalRTCStatsRequest>& request) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::getStats");
-
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::getStats");
 
   rtc::scoped_refptr<webrtc::StatsObserver> observer(
       new rtc::RefCountedObject<StatsResponse>(request));
@@ -1663,7 +1666,7 @@ void RTCPeerConnectionHandler::GetStats(
 blink::WebVector<std::unique_ptr<blink::WebRTCRtpSender>>
 RTCPeerConnectionHandler::GetSenders() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::getSenders");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::getSenders");
   std::vector<rtc::scoped_refptr<webrtc::RtpSenderInterface>> webrtc_senders =
       native_peer_connection_->GetSenders();
   blink::WebVector<std::unique_ptr<blink::WebRTCRtpSender>> web_senders(
@@ -1704,7 +1707,7 @@ RTCPeerConnectionHandler::GetSenders() {
 blink::WebVector<std::unique_ptr<blink::WebRTCRtpReceiver>>
 RTCPeerConnectionHandler::GetReceivers() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::getReceivers");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::getReceivers");
 
   std::vector<rtc::scoped_refptr<webrtc::RtpReceiverInterface>>
       webrtc_receivers = native_peer_connection_->GetReceivers();
@@ -1764,7 +1767,8 @@ blink::WebRTCDataChannelHandler* RTCPeerConnectionHandler::CreateDataChannel(
     const blink::WebString& label,
     const blink::WebRTCDataChannelInit& init) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createDataChannel");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::createDataChannel");
   DVLOG(1) << "createDataChannel label " << label.Utf8();
 
   webrtc::DataChannelInit config;
@@ -1799,7 +1803,7 @@ blink::WebRTCDTMFSenderHandler* RTCPeerConnectionHandler::CreateDTMFSender(
     const blink::WebMediaStreamTrack& track) {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(!track.IsNull());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::createDTMFSender");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::createDTMFSender");
   DVLOG(1) << "createDTMFSender.";
 
   // Find the WebRtc track referenced by the blink track's ID.
@@ -1847,7 +1851,8 @@ void RTCPeerConnectionHandler::Stop() {
 void RTCPeerConnectionHandler::OnSignalingChange(
     webrtc::PeerConnectionInterface::SignalingState new_state) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnSignalingChange");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnSignalingChange");
 
   blink::WebRTCPeerConnectionHandlerClient::SignalingState state =
       GetWebKitSignalingState(new_state);
@@ -1860,7 +1865,8 @@ void RTCPeerConnectionHandler::OnSignalingChange(
 // Called any time the IceConnectionState changes
 void RTCPeerConnectionHandler::OnIceConnectionChange(
     webrtc::PeerConnectionInterface::IceConnectionState new_state) {
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnIceConnectionChange");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnIceConnectionChange");
   DCHECK(thread_checker_.CalledOnValidThread());
   ReportICEState(new_state);
   if (new_state == webrtc::PeerConnectionInterface::kIceConnectionChecking) {
@@ -1897,7 +1903,8 @@ void RTCPeerConnectionHandler::OnIceConnectionChange(
 void RTCPeerConnectionHandler::OnIceGatheringChange(
     webrtc::PeerConnectionInterface::IceGatheringState new_state) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnIceGatheringChange");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnIceGatheringChange");
 
   if (new_state == webrtc::PeerConnectionInterface::kIceGatheringComplete) {
     // If ICE gathering is completed, generate a NULL ICE candidate,
@@ -1929,7 +1936,8 @@ void RTCPeerConnectionHandler::OnIceGatheringChange(
 
 void RTCPeerConnectionHandler::OnRenegotiationNeeded() {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnRenegotiationNeeded");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnRenegotiationNeeded");
   if (peer_connection_tracker_)
     peer_connection_tracker_->TrackOnRenegotiationNeeded(this);
   if (!is_closed_)
@@ -1942,7 +1950,7 @@ void RTCPeerConnectionHandler::OnAddStream(
   DCHECK(remote_streams_.find(stream->webrtc_stream().get()) ==
          remote_streams_.end());
   DCHECK(stream->webkit_stream().GetExtraData()) << "Initialization not done";
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnAddStreamImpl");
+  TRACE_EVENT0("webrtc.chromium", "RTCPeerConnectionHandler::OnAddStreamImpl");
 
   RemoteMediaStreamImpl* stream_ptr = stream.get();
   remote_streams_[stream_ptr->webrtc_stream().get()] = std::move(stream);
@@ -1964,7 +1972,8 @@ void RTCPeerConnectionHandler::OnAddStream(
 void RTCPeerConnectionHandler::OnRemoveStream(
     const scoped_refptr<webrtc::MediaStreamInterface>& stream) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnRemoveStreamImpl");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnRemoveStreamImpl");
   auto it = remote_streams_.find(stream.get());
   if (it == remote_streams_.end()) {
     NOTREACHED() << "Stream not found";
@@ -1992,7 +2001,8 @@ void RTCPeerConnectionHandler::OnRemoveStream(
 void RTCPeerConnectionHandler::OnDataChannel(
     std::unique_ptr<RtcDataChannelHandler> handler) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnDataChannelImpl");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnDataChannelImpl");
 
   if (peer_connection_tracker_) {
     peer_connection_tracker_->TrackCreateDataChannel(
@@ -2007,7 +2017,8 @@ void RTCPeerConnectionHandler::OnIceCandidate(
     const std::string& sdp, const std::string& sdp_mid, int sdp_mline_index,
     int component, int address_family) {
   DCHECK(thread_checker_.CalledOnValidThread());
-  TRACE_EVENT0("webrtc", "RTCPeerConnectionHandler::OnIceCandidateImpl");
+  TRACE_EVENT0("webrtc.chromium",
+               "RTCPeerConnectionHandler::OnIceCandidateImpl");
   blink::WebRTCICECandidate web_candidate;
   web_candidate.Initialize(blink::WebString::FromUTF8(sdp),
                            blink::WebString::FromUTF8(sdp_mid),
@@ -2089,7 +2100,7 @@ void RTCPeerConnectionHandler::RunSynchronousClosureOnSignalingThread(
   DCHECK(thread_checker_.CalledOnValidThread());
   scoped_refptr<base::SingleThreadTaskRunner> thread(signaling_thread());
   if (!thread.get() || thread->BelongsToCurrentThread()) {
-    TRACE_EVENT0("webrtc", trace_event_name);
+    TRACE_EVENT0("webrtc.chromium", trace_event_name);
     closure.Run();
   } else {
     base::WaitableEvent event(base::WaitableEvent::ResetPolicy::AUTOMATIC,

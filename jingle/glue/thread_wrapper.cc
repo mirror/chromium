@@ -151,9 +151,9 @@ void JingleThreadWrapper::Clear(rtc::MessageHandler* handler,
 }
 
 void JingleThreadWrapper::Dispatch(rtc::Message* message) {
-  TRACE_EVENT2("webrtc", "JingleThreadWrapper::Dispatch", "src_file_and_line",
-               message->posted_from.file_and_line(), "src_func",
-               message->posted_from.function_name());
+  TRACE_EVENT2("webrtc.chromium", "JingleThreadWrapper::Dispatch",
+               "src_file_and_line", message->posted_from.file_and_line(),
+               "src_func", message->posted_from.function_name());
   message->phandler->OnMessage(message);
 }
 
