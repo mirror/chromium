@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b04009ff_a0f4a6d3",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/api/document-fullscreen-element.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T22:32:52Z",
+      "side": 0,
+      "message": "The tests under LayoutTests/fullscreen/api/ are mostly copies of LayoutTests/external/wpt/api/ with some tweaks to make them passing tests. I removed LayoutTests/external/wpt/fullscreen/api/document-fullscreen-element-manual-expected.txt and with that test passing, this copy isn\u0027t needed any longer. Other deletions are similar.",
+      "parentUuid": "05035d62_2d796c74",
+      "revId": "93b52f2ebbf04c770661d6152dc3287993e0e448",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3f263137_9bd3a766",
         "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
         "patchSetId": 13

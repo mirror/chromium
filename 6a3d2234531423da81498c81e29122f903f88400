@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "66e92aec_b9ab1fb1",
+        "filename": "third_party/WebKit/LayoutTests/fullscreen/full-screen-stacking-context.html",
+        "patchSetId": 15
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T22:32:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "02f2b4c3_b42ded48",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a766374b_81c75879",
         "filename": "third_party/WebKit/LayoutTests/fullscreen/full-screen-stacking-context.html",
         "patchSetId": 15
@@ -50,6 +68,24 @@
       "revId": "6a3d2234531423da81498c81e29122f903f88400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ffd7336_398b0d11",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T22:32:52Z",
+      "side": 1,
+      "message": "Per johnme@\u0027s suggestion, that duplication went away in PS16, because MockChromeClient is used when Simulate* are used it becomes rather simple.",
+      "parentUuid": "8698fcd5_6706e839",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -114,6 +150,24 @@
       "revId": "6a3d2234531423da81498c81e29122f903f88400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa51923f_3ff3842e",
+        "filename": "third_party/WebKit/Source/web/ChromeClientImpl.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T22:32:52Z",
+      "side": 1,
+      "message": "Changed here and everywhere, also a few previous_element to old_element made sense then.",
+      "parentUuid": "b4ce2c51_fd599005",
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
