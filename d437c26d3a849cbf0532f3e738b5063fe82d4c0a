@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "209cddc6_ebf80465",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "Is this API set in stone? I\u0027m worried about bugs that might happen if the caller passes in different |length| or |mode| parameters than those the |data| was born with. If possible, those details should be tied to |data| in a manner opaque to callers.",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667b7794_3d217a53",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "Maybe this should/could be subsumed into the Allocate* functions? Is that possible?\n\nWhat does it mean to set |length| greater than or less than the original length of |data|?",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2ab7964_8ca171d3",
+        "filename": "third_party/WebKit/Source/bindings/tests/results/core/V8ArrayBuffer.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "This seems to duplicate the previous file. Is there any way to avoid that?",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31690d3b_b03fd417",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "It\u0027s best to TODO(crbug.com/foo).",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dc6be67_f273066d",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "OK, my earlier comments might be off-base, as long as this class remains the only caller of the new lower-level APIs, and as long as it gets everything right.",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb9f5b8a_43a34335",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-19T22:55:10Z",
+      "side": 1,
+      "message": "This should maybe be a CHECK? It seems like a crucial correctness guarantee? Maybe I\u0027m wrong.",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
