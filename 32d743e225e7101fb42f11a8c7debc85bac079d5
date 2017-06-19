@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6460112c_01dc2f25",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1001216
+      },
+      "writtenOn": "2017-06-19T17:03:39Z",
+      "side": 1,
+      "message": "Oh, I didn\u0027t notice that you\u0027d omitted the Get.  Yes, the naming convention is to include the Get, so let\u0027s do that and avoid the \"class\".",
+      "parentUuid": "a0afb741_5c07f5d0",
+      "revId": "32d743e225e7101fb42f11a8c7debc85bac079d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "069d7d9d_2b945602",
         "filename": "content/browser/site_per_process_browsertest.cc",
         "patchSetId": 11
