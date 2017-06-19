@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7610fa6d_be9bb5e9",
+        "filename": "services/service_manager/background/background_service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "839a2b93_fe2b9962",
+      "range": {
+        "startLine": 19,
+        "startChar": 5,
+        "endLine": 19,
+        "endChar": 12
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8b67d474_50d96391",
         "filename": "services/service_manager/background/background_service_manager.h",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-16T13:58:54Z",
       "side": 1,
       "message": "Why is this include needed? If it compiles on iOS without it, this means it is not needed by the header file in the first place... Or am I missing something? Should this include be moved into the places that are including it instead of here?",
+      "range": {
+        "startLine": 20,
+        "startChar": 0,
+        "endLine": 20,
+        "endChar": 74
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a84eb4d7_663697a2",
+        "filename": "services/service_manager/background/background_service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "Good catch, it\u0027s not needed in this file at all now that ServiceProcessLauncherDelegate is split out. Removed.",
+      "parentUuid": "8b67d474_50d96391",
       "range": {
         "startLine": 20,
         "startChar": 0,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "8741ab50_cd316b5e",
+        "filename": "services/service_manager/service_manager.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b8aad08_21866da9",
+      "range": {
+        "startLine": 75,
+        "startChar": 4,
+        "endLine": 75,
+        "endChar": 11
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c9e279e8_ac4d11f0",
         "filename": "services/service_manager/service_manager.h",
         "patchSetId": 8
@@ -91,6 +163,30 @@
       "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8b4cf8c5_3a337bfb",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9e279e8_ac4d11f0",
+      "range": {
+        "startLine": 30,
+        "startChar": 5,
+        "endLine": 30,
+        "endChar": 12
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "cee9a0b1_b2967e2c",
+        "filename": "services/service_manager/service_manager.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "Moved into cc file where it\u0027s used, thanks.",
+      "parentUuid": "15d9d68e_dd4adb85",
+      "range": {
+        "startLine": 31,
+        "startChar": 0,
+        "endLine": 31,
+        "endChar": 74
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cb9c2d28_b5788ff2",
         "filename": "services/service_manager/standalone/context.cc",
         "patchSetId": 8
@@ -128,6 +248,30 @@
       "writtenOn": "2017-06-16T14:46:50Z",
       "side": 1,
       "message": "OS_IOS is defined in build/build_config.h. I suppose the file is indirectly included here, but this may break at any time. Could you \"include what you use\" to avoid risk of breakage?",
+      "range": {
+        "startLine": 37,
+        "startChar": 13,
+        "endLine": 37,
+        "endChar": 19
+      },
+      "revId": "055484e20ec54cb4066f531fb2ff234caa814caa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e353583c_8f1b979b",
+        "filename": "services/service_manager/standalone/context.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T15:40:35Z",
+      "side": 1,
+      "message": "The file\u0027s actually included here already :).",
+      "parentUuid": "cb9c2d28_b5788ff2",
       "range": {
         "startLine": 37,
         "startChar": 13,
