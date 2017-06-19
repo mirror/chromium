@@ -52,12 +52,14 @@ class CORE_EXPORT NGLayoutResult : public RefCounted<NGLayoutResult> {
     return unpositioned_floats_;
   }
 
+  RefPtr<NGLayoutResult> CloneWithoutOffset() const;
+
  private:
   friend class NGFragmentBuilder;
 
   NGLayoutResult(PassRefPtr<NGPhysicalFragment> physical_fragment,
-                 Vector<NGBlockNode>& out_of_flow_descendants,
-                 Vector<NGStaticPosition> out_of_flow_positions,
+                 const Vector<NGBlockNode>& out_of_flow_descendants,
+                 const Vector<NGStaticPosition> out_of_flow_positions,
                  Vector<RefPtr<NGUnpositionedFloat>>& unpositioned_floats);
 
   RefPtr<NGPhysicalFragment> physical_fragment_;
