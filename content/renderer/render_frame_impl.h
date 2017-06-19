@@ -657,6 +657,9 @@ class CONTENT_EXPORT RenderFrameImpl
   void DidChangeManifest() override;
   void EnterFullscreen() override;
   void ExitFullscreen() override;
+  void SuddenTerminationDisablerChanged(
+      bool present,
+      blink::WebFrameClient::SuddenTerminationDisablerType type) override;
   void RegisterProtocolHandler(const blink::WebString& scheme,
                                const blink::WebURL& url,
                                const blink::WebString& title) override;
