@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "35d41790_22e13d27",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T18:06:32Z",
+      "side": 1,
+      "message": "Initially, I had a similar idea to use GpuDataManagerObserver. But, piman@ suggested otherwise.\nPlease see piman@\u0027s comments at https://chromium-review.googlesource.com/c/525672/7/content%252Fbrowser%252Frenderer_host%252Fmedia%252Fvideo_capture_gpu_jpeg_decoder.cc#243",
+      "parentUuid": "539eb595_27de9867",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "418bdc6c_21cd7e2d",
         "filename": "content/browser/gpu/gpu_process_host.h",
         "patchSetId": 11
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-19T17:09:39Z",
       "side": 1,
       "message": "Maybe instead of two bools, have one enum GpuInitializationStatus { UNKNOWN, SUCCESS, FAILURE };?",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 25
+      },
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aeeb0c92_ec77c22c",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T18:06:32Z",
+      "side": 1,
+      "message": "sgtm. thanks.",
+      "parentUuid": "418bdc6c_21cd7e2d",
       "range": {
         "startLine": 266,
         "startChar": 7,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "6e60f729_dd24fdf2",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T18:06:32Z",
+      "side": 1,
+      "message": "Sure. I had this in mind but wanted to confirm this method\u0027s usage before adding further changes here. Anyway, thanks.",
+      "parentUuid": "13ba08d8_5e4d1c73",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7dd85369_defa18de",
         "filename": "services/ui/gpu/gpu_main.cc",
         "patchSetId": 11
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-19T17:09:39Z",
       "side": 1,
       "message": "You can just use |io_thread_| here, for example:\n\n  io_thread_.task_runner()-\u003ePostTask(FROM_HERE,\n      base::Bind(\u0026media...::Crate, base::Passed(std::move(request)));",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47f3b70d_b0f1191a",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1120018
+      },
+      "writtenOn": "2017-06-19T18:06:32Z",
+      "side": 1,
+      "message": "Sure",
+      "parentUuid": "7dd85369_defa18de",
       "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
