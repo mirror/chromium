@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "539eb595_27de9867",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:09:39Z",
+      "side": 1,
+      "message": "FWIW: we have a few places in the code where we install a content::GpuDataManagerObserver [1], and wait for the OnGpuInfoUpdate() callback. I am not a huge fan of this, and wish we instead had this API on content::GpuDataManager. There is currently RequestCompleteGpuInfoIfNeeded(). Perhaps we could update that API to take the callback instead?",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "418bdc6c_21cd7e2d",
+        "filename": "content/browser/gpu/gpu_process_host.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:09:39Z",
+      "side": 1,
+      "message": "Maybe instead of two bools, have one enum GpuInitializationStatus { UNKNOWN, SUCCESS, FAILURE };?",
+      "range": {
+        "startLine": 266,
+        "startChar": 7,
+        "endLine": 266,
+        "endChar": 25
+      },
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "13ba08d8_5e4d1c73",
+        "filename": "content/gpu/gpu_child_thread.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:09:39Z",
+      "side": 1,
+      "message": "GetIOTaskRunner() gives you the IO thread.",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7dd85369_defa18de",
+        "filename": "services/ui/gpu/gpu_main.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:09:39Z",
+      "side": 1,
+      "message": "You can just use |io_thread_| here, for example:\n\n  io_thread_.task_runner()-\u003ePostTask(FROM_HERE,\n      base::Bind(\u0026media...::Crate, base::Passed(std::move(request)));",
+      "revId": "d090f66e13c3d806a69230bfbabbd7847279f90f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
