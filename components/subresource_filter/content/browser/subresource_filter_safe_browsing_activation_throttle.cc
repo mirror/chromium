@@ -61,6 +61,10 @@ SubresourceFilterSafeBrowsingActivationThrottle::
                        base::OnTaskRunnerDeleter(io_task_runner_)),
       client_(client) {
   DCHECK(handle->IsInMainFrame());
+
+  CheckCurrentUrl();
+  // Check added to investigate crbug.com/733099.
+  CHECK(!database_client_ || !check_results_.empty());
 }
 
 SubresourceFilterSafeBrowsingActivationThrottle::
@@ -84,23 +88,16 @@ bool SubresourceFilterSafeBrowsingActivationThrottle::NavigationIsPageReload(
 }
 
 content::NavigationThrottle::ThrottleCheckResult
-SubresourceFilterSafeBrowsingActivationThrottle::WillStartRequest() {
-  CheckCurrentUrl();
-  return content::NavigationThrottle::ThrottleCheckResult::PROCEED;
-}
-
-content::NavigationThrottle::ThrottleCheckResult
 SubresourceFilterSafeBrowsingActivationThrottle::WillRedirectRequest() {
   CheckCurrentUrl();
+  // Check added to investigate crbug.com/733099.
+  CHECK(!database_client_ || !check_results_.empty());
   return content::NavigationThrottle::ThrottleCheckResult::PROCEED;
 }
 
 content::NavigationThrottle::ThrottleCheckResult
 SubresourceFilterSafeBrowsingActivationThrottle::WillProcessResponse() {
-  // Non-null |database_client_| implies that by this time we have made a
-  // database request. This is guaranteed because with a valid
-  // |database_client_|, we always populate |check_results_| in
-  // WillStartRequest.
+  // Check added to investigate crbug.com/733099.
   CHECK(!database_client_ || !check_results_.empty());
 
   // No need to defer the navigation if the check already happened.
