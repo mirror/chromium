@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5b3eccf4_53fcbe7f",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/clip-with-layout-delta-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "Why these two extra (duplicate) invalidations? Is this because chunk invalidations\ncan (always will?) duplicate display item invalidations within the same backing?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "237e6118_e02b2b65",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/multi-layout-one-frame-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "Why is it uncacheable?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de793d77_ad8ea9ed",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/overflow-hidden-in-overflow-hidden-scrolled-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "Why disappeared here? Isn\u0027t it just scrolling? Why would that change chunks?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17f3fc9d_2ce687a1",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "s/value/should_track/",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf8319a9_1aa04067",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "Why is this the best place to clear?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dd57e1e5_78070a7e",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "This implementation looks very complex, and also has n^2 worst-case running time.\nIs it correct that this code is meant to issue an invalidation in the following\ncases?\n\na. Chunk is added (invalidate new location of chunk)\nb. Chunk is removed (invalidation old location of chunk)\nc. Chunk changes order relative to previous chunk (invalidates old location and new location)\n\nIf so, how about this implementation:\n\n* Construct a map M_old and M_new of chunk id to \u003cchunk, vector index\u003e for old and new chunk\nvectors.\n\n// Check for disappeared chunks.\n* For each chunk c in old vector:\n  If c is not in M_new then trigger invalidation case (b)\n\nprevious_vector_index \u003d 0\n\n// Check for new chunks, and chunks that changed order relative to their order in the old\n// vector.\n* For each chunk c in new vector:\n  If c is not in M_old then trigger invalidation case (a)\n  else if M_old[c].vector_index !\u003d previous_vector_index + 1\n    Trigger invalidation case (c)\n  previous_vector_index \u003d M_old[c].vector_index",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "349dfae9_2883e59a",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 1,
+      "message": "first_unmatched_old_index is never changed, but old_index changes with each for loop iteration.\nThis doesn\u0027t seem correct?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

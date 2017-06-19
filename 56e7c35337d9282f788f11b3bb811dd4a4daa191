@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ebb64d87_2357ae0c",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/float-overflow-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T19:05:08Z",
+      "side": 0,
+      "message": "How did SPv2 figure out that all of these individually don\u0027t need to change? Is it\nbecause they didn\u0027t move within their chunks? It\u0027s an interesting testcase if so..",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
