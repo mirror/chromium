@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5645a92e_55f7dca8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 759,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-19T10:12:30Z",
+      "side": 1,
+      "message": "I find the parameter name comment very useful for these callback matchers.\nWhy not commenting the first parameter as well?\n\nThere are many calls of the same callback that you edit in this CL. Would you mind making commenting consistent? (either adding comments everywhere - my preferred choice - or removing them here.",
+      "range": {
+        "startLine": 759,
+        "startChar": 10,
+        "endLine": 759,
+        "endChar": 33
+      },
+      "revId": "f5404995448a50b4e086cd89d82e7762d6882708",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
