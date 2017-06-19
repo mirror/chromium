@@ -75,6 +75,9 @@ BLINK_EXPORT void MemoryPressureNotificationToWorkerThreadIsolates(
 // Set the RAIL performance mode on all worker thread isolates.
 BLINK_EXPORT void SetRAILModeOnWorkerThreadIsolates(v8::RAILMode);
 
+// Enables Runtime Call Stats for Blink.
+BLINK_EXPORT void EnableRuntimeCallStats();
+
 // Logs Runtime Call Stats table for Blink.
 BLINK_EXPORT void LogRuntimeCallStats();
 
