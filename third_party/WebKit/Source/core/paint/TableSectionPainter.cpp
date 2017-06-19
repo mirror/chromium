@@ -153,19 +153,9 @@ void TableSectionPainter::PaintCollapsedSectionBorders(
   // Collapsed borders are painted from the bottom right to the top left so that
   // precedence due to cell position is respected.
   for (unsigned r = dirtied_rows.End(); r > dirtied_rows.Start(); r--) {
-    unsigned row = r - 1;
-    unsigned n_cols = layout_table_section_.NumCols(row);
-    for (unsigned c = std::min(dirtied_columns.End(), n_cols);
-         c > dirtied_columns.Start(); c--) {
-      unsigned col = c - 1;
-      if (const LayoutTableCell* cell =
-              layout_table_section_.OriginatingCellAt(row, col)) {
-        LayoutPoint cell_point =
-            layout_table_section_.FlipForWritingModeForChild(
-                cell, adjusted_paint_offset);
-        CollapsedBorderPainter(*cell).PaintCollapsedBorders(paint_info,
-                                                            cell_point);
-      }
+    if (const auto* row = layout_table_section_.RowLayoutObjectAt(r - 1)) {
+      TableRowPainter(*row).PaintCollapsedBorders(
+          paint_info, adjusted_paint_offset, dirtied_columns);
     }
   }
 }
