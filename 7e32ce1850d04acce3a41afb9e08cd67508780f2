@@ -1,0 +1,175 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8209b97c_85e007b0",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "OnVideoFrameFactoryInitialized?",
+      "range": {
+        "startLine": 163,
+        "startChar": 42,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31f35cec_888e4faa",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "should |image| provide this?",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64bbb75c_61fb6268",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "maybe \u0027CreateNewVideoFrame\u0027 (and in Gpu*)?",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd7022eb_0b40dd7b",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "will this be separate from the mailbox release cb?",
+      "range": {
+        "startLine": 184,
+        "startChar": 28,
+        "endLine": 184,
+        "endChar": 29
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91714e53_19b9dcfc",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "visible_rect: i think so.\n\nnatural_size: i suspect that we need the aspect ratio.  i always get confused about our size triumvirate, though.  :)",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d3cc3b4_a3ce90f5",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "do these need MEDIA_GPU_EXPORT, here and elsewhere?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c2b0bc8_b887b5aa",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "words are missing near \"thread\", i think.  also, please document threading better -- which threads are these callbacks called on, for example?",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "177c4938_7de1b63f",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "please split to its own header / cc .",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296ed6e1_503643c4",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1130490
+      },
+      "writtenOn": "2017-06-19T14:32:33Z",
+      "side": 1,
+      "message": "can be moved into cc with a fwd decl.  maybe take MaybeRenderEarly with it.\n\nalso, might need a slightly different name.  confusing that it isn\u0027t a VideoFrameFactory.  could almost be one, except that it would be harder to return the video frame across threads from Gpu...::NewVideoFrame.",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
