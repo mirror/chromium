@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c0516a71_a75525b0",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-19T20:31:51Z",
+      "side": 1,
+      "message": "Doesn\u0027t this logic depend on the browser windows being returned to you in Z-order, from top to bottom? That should be documented on the GetBrowserInfoList function.",
+      "range": {
+        "startLine": 367,
+        "startChar": 13,
+        "endLine": 367,
+        "endChar": 24
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d04420b3_a3a830f0",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-19T20:31:51Z",
+      "side": 1,
+      "message": "We\u0027re guaranteed to get browser windows in Z order by this iteration?",
+      "range": {
+        "startLine": 888,
+        "startChar": 41,
+        "endLine": 888,
+        "endChar": 56
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa06a3b8_c3efab2e",
+        "filename": "chrome/browser/resource_coordinator/tab_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1001187
+      },
+      "writtenOn": "2017-06-19T20:31:51Z",
+      "side": 1,
+      "message": "This comment is redundant, IMO.",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
