@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4031d31c_09941ebe",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTable.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 1476,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-19T19:23:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "38a4faea_a52dc1c4",
+      "revId": "040113422cda2580198febdd3062263b139febc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b693303c_37e2d544",
         "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
         "patchSetId": 14
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-19T17:42:15Z",
       "side": 1,
       "message": "Move this class to CollapsedBorderValue.h.",
+      "revId": "040113422cda2580198febdd3062263b139febc2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0504b0c2_279bb6f1",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableCell.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-19T19:23:02Z",
+      "side": 1,
+      "message": "For now CollapsedBorderValues depends on LayoutTableCell because of the DisplayItemClient implementation. This will make moving it into CollapsedBorderValue.h complicated.\n\nThe situation will be simpler with https://chromium-review.googlesource.com/540178 (WIP). Will move this class into CollapsedBorderValue.h in that CL.",
+      "parentUuid": "b693303c_37e2d544",
       "revId": "040113422cda2580198febdd3062263b139febc2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
