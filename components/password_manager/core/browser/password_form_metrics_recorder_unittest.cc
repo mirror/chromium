@@ -14,7 +14,7 @@ namespace password_manager {
 // Test the metrics recorded around password generation and the user's
 // interaction with the offer to generate passwords.
 TEST(PasswordFormMetricsRecorder, Generation) {
-  static constexpr const struct {
+  static constexpr struct {
     bool generation_available;
     bool has_generated_password;
     PasswordFormMetricsRecorder::SubmitResult submission;
@@ -31,9 +31,10 @@ TEST(PasswordFormMetricsRecorder, Generation) {
   };
 
   for (const auto& test : kTests) {
-    SCOPED_TRACE(test.generation_available);
-    SCOPED_TRACE(test.has_generated_password);
-    SCOPED_TRACE(test.submission);
+    SCOPED_TRACE(testing::Message()
+                 << "generation_available=" << test.generation_available
+                 << ", has_generated_password=" << test.has_generated_password
+                 << ", submission" << test.submission);
 
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
@@ -170,10 +171,11 @@ TEST(PasswordFormMetricsRecorder, Actions) {
   };
 
   for (const auto& test : kTests) {
-    SCOPED_TRACE(test.is_main_frame_secure);
-    SCOPED_TRACE(test.manager_action);
-    SCOPED_TRACE(static_cast<int>(test.user_action));
-    SCOPED_TRACE(test.submit_result);
+    SCOPED_TRACE(testing::Message()
+                 << "is_main_frame_secure=" << test.is_main_frame_secure
+                 << ", manager_action=" << test.manager_action
+                 << ", user_action" << static_cast<int>(test.user_action)
+                 << ", submit_result=" << test.submit_result);
 
     base::HistogramTester histogram_tester;
     base::UserActionTester user_action_tester;
