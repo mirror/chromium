@@ -15,6 +15,7 @@
 #include "services/identity/public/cpp/scope_set.h"
 #include "services/identity/public/interfaces/constants.mojom.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
+#include "services/identity/public/interfaces/identity_observer.mojom.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 #include "services/service_manager/public/cpp/service_context.h"
 #include "services/service_manager/public/cpp/service_test.h"
@@ -76,10 +77,12 @@ class ServiceTestClient : public service_manager::test::ServiceTestClient,
   std::unique_ptr<service_manager::ServiceContext> identity_service_context_;
 };
 
-class IdentityManagerTest : public service_manager::test::ServiceTest {
+class IdentityManagerTest : public service_manager::test::ServiceTest,
+                            public mojom::IdentityObserver {
  public:
   IdentityManagerTest()
       : ServiceTest("identity_unittests", false),
+        observer_binding_(this),
         signin_client_(&pref_service_),
         signin_manager_(&signin_client_, &account_tracker_) {
     AccountTrackerService::RegisterPrefs(pref_service_.registry());
@@ -116,11 +119,29 @@ class IdentityManagerTest : public service_manager::test::ServiceTest {
     quit_closure.Run();
   }
 
+  // mojom::IdentityObserver:
+  void OnRefreshTokenAvailable(const AccountInfo& account_info,
+                               const AccountState& account_state) override {
+    account_info_on_refresh_taken_available_ = account_info;
+    account_state_on_refresh_token_available_ = account_state;
+    on_refresh_token_available_closure_.Run();
+  }
+
  protected:
   void SetUp() override {
     ServiceTest::SetUp();
 
     connector()->BindInterface(mojom::kServiceName, &identity_manager_);
+  }
+
+  void TearDown() override {
+    // Ensure that the Identity Manager instance we have constructed is
+    // destroyed before preceding, since the signin classes that it is passed
+    // must outlive it.
+    base::RunLoop run_loop;
+    identity_manager_.reset();
+    run_loop.RunUntilIdle();
+    ServiceTest::TearDown();
   }
 
   // service_manager::test::ServiceTest:
@@ -134,8 +155,12 @@ class IdentityManagerTest : public service_manager::test::ServiceTest {
   AccountState primary_account_state_;
   base::Optional<AccountInfo> account_info_from_gaia_id_;
   AccountState account_state_from_gaia_id_;
+  AccountInfo account_info_on_refresh_taken_available_;
+  AccountState account_state_on_refresh_token_available_;
+  base::Closure on_refresh_token_available_closure_;
   base::Optional<std::string> access_token_;
   GoogleServiceAuthError access_token_error_;
+  mojo::Binding<mojom::IdentityObserver> observer_binding_;
 
   AccountTrackerService* account_tracker() { return &account_tracker_; }
   SigninManagerBase* signin_manager() { return &signin_manager_; }
@@ -176,6 +201,7 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInNoRefreshToken) {
   EXPECT_EQ(kTestGaiaId, primary_account_info_->gaia);
   EXPECT_EQ(kTestEmail, primary_account_info_->email);
   EXPECT_FALSE(primary_account_state_.has_refresh_token);
+  EXPECT_TRUE(primary_account_state_.is_primary_account);
 }
 
 // Check that the primary account info has expected values if signed in with a
@@ -195,6 +221,7 @@ TEST_F(IdentityManagerTest, GetPrimaryAccountInfoSignedInRefreshToken) {
   EXPECT_EQ(kTestGaiaId, primary_account_info_->gaia);
   EXPECT_EQ(kTestEmail, primary_account_info_->email);
   EXPECT_TRUE(primary_account_state_.has_refresh_token);
+  EXPECT_TRUE(primary_account_state_.is_primary_account);
 }
 
 // Check that the account info for a given GAIA ID is null if that GAIA ID is
@@ -225,6 +252,7 @@ TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdNoRefreshToken) {
   EXPECT_EQ(kTestGaiaId, account_info_from_gaia_id_->gaia);
   EXPECT_EQ(kTestEmail, account_info_from_gaia_id_->email);
   EXPECT_FALSE(account_state_from_gaia_id_.has_refresh_token);
+  EXPECT_FALSE(account_state_from_gaia_id_.is_primary_account);
 }
 
 // Check that the account info for a given GAIA ID has expected values if that
@@ -244,6 +272,7 @@ TEST_F(IdentityManagerTest, GetAccountInfoForKnownGaiaIdRefreshToken) {
   EXPECT_EQ(kTestGaiaId, account_info_from_gaia_id_->gaia);
   EXPECT_EQ(kTestEmail, account_info_from_gaia_id_->email);
   EXPECT_TRUE(account_state_from_gaia_id_.has_refresh_token);
+  EXPECT_FALSE(account_state_from_gaia_id_.is_primary_account);
 }
 
 // Check that the expected error is received if requesting an access token when
@@ -277,6 +306,39 @@ TEST_F(IdentityManagerTest, GetAccessTokenSignedIn) {
   EXPECT_TRUE(access_token_);
   EXPECT_EQ(kTestAccessToken, access_token_.value());
   EXPECT_EQ(GoogleServiceAuthError::State::NONE, access_token_error_.state());
+}
+
+// Check that the observer method is called as expected when a refresh token is
+// made available.
+TEST_F(IdentityManagerTest, OnRefreshTokenAvailable) {
+  mojom::IdentityObserverPtr observer;
+  observer_binding_.Bind(mojo::MakeRequest(&observer));
+  identity_manager_->AddObserver(std::move(observer));
+
+  // Ask for the authenticated account info (which should be empty) to ensure
+  // that the observer has been added by the IdentityManager before going
+  // further.
+  base::RunLoop run_loop1;
+  identity_manager_->GetPrimaryAccountInfo(
+      base::Bind(&IdentityManagerTest::OnReceivedPrimaryAccountInfo,
+                 base::Unretained(this), run_loop1.QuitClosure()));
+  run_loop1.Run();
+  EXPECT_FALSE(primary_account_info_);
+
+  // Now sign the user in and add a refresh token.
+  base::RunLoop run_loop2;
+  on_refresh_token_available_closure_ = run_loop2.QuitClosure();
+  signin_manager()->SetAuthenticatedAccountInfo(kTestGaiaId, kTestEmail);
+  token_service()->UpdateCredentials(
+      signin_manager()->GetAuthenticatedAccountId(), kTestRefreshToken);
+  run_loop2.Run();
+
+  EXPECT_EQ(signin_manager()->GetAuthenticatedAccountId(),
+            account_info_on_refresh_taken_available_.account_id);
+  EXPECT_EQ(kTestGaiaId, account_info_on_refresh_taken_available_.gaia);
+  EXPECT_EQ(kTestEmail, account_info_on_refresh_taken_available_.email);
+  EXPECT_TRUE(account_state_on_refresh_token_available_.has_refresh_token);
+  EXPECT_TRUE(account_state_on_refresh_token_available_.is_primary_account);
 }
 
 }  // namespace

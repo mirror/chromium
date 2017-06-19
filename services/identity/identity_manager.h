@@ -7,16 +7,19 @@
 
 #include "components/signin/core/browser/account_info.h"
 #include "components/signin/core/browser/profile_oauth2_token_service.h"
+#include "mojo/public/cpp/bindings/interface_ptr_set.h"
 #include "services/identity/public/cpp/account_state.h"
 #include "services/identity/public/cpp/scope_set.h"
 #include "services/identity/public/interfaces/identity_manager.mojom.h"
+#include "services/identity/public/interfaces/identity_observer.mojom.h"
 
 class AccountTrackerService;
 class SigninManagerBase;
 
 namespace identity {
 
-class IdentityManager : public mojom::IdentityManager {
+class IdentityManager : public mojom::IdentityManager,
+                        public OAuth2TokenService::Observer {
  public:
   static void Create(mojom::IdentityManagerRequest request,
                      AccountTrackerService* account_tracker,
@@ -72,6 +75,10 @@ class IdentityManager : public mojom::IdentityManager {
                       const ScopeSet& scopes,
                       const std::string& consumer_id,
                       GetAccessTokenCallback callback) override;
+  void AddObserver(mojom::IdentityObserverPtr observer) override;
+
+  // OAuth2TokenService::Observer:
+  void OnRefreshTokenAvailable(const std::string& account_id) override;
 
   // Deletes |request|.
   void AccessTokenRequestCompleted(AccessTokenRequest* request);
@@ -85,6 +92,8 @@ class IdentityManager : public mojom::IdentityManager {
 
   // The set of pending requests for access tokens.
   AccessTokenRequests access_token_requests_;
+
+  mojo::InterfacePtrSet<mojom::IdentityObserver> observers_;
 };
 
 }  // namespace identity

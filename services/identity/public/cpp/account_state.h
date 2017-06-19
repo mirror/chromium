@@ -17,6 +17,7 @@ struct AccountState {
   ~AccountState();
 
   bool has_refresh_token;
+  bool is_primary_account;
 };
 
 }  // namespace identity

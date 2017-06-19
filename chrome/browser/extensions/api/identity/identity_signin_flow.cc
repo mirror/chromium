@@ -5,24 +5,21 @@
 #include "chrome/browser/extensions/api/identity/identity_signin_flow.h"
 
 #include "build/build_config.h"
-#include "chrome/browser/signin/profile_oauth2_token_service_factory.h"
-#include "chrome/browser/signin/signin_manager_factory.h"
+#include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service.h"
 #include "chrome/browser/ui/webui/signin/login_ui_service_factory.h"
-#include "components/signin/core/browser/profile_oauth2_token_service.h"
 #include "components/signin/core/browser/signin_manager.h"
+#include "content/public/browser/browser_context.h"
+#include "services/identity/public/cpp/account_state.h"
+#include "services/identity/public/interfaces/constants.mojom.h"
+#include "services/service_manager/public/cpp/connector.h"
 
 namespace extensions {
 
 IdentitySigninFlow::IdentitySigninFlow(Delegate* delegate, Profile* profile)
-    : delegate_(delegate),
-      profile_(profile) {
-}
+    : delegate_(delegate), profile_(profile), observer_binding_(this) {}
 
-IdentitySigninFlow::~IdentitySigninFlow() {
-  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->
-      RemoveObserver(this);
-}
+IdentitySigninFlow::~IdentitySigninFlow() {}
 
 void IdentitySigninFlow::Start() {
   DCHECK(delegate_);
@@ -35,7 +32,12 @@ void IdentitySigninFlow::Start() {
   return;
 #endif
 
-  ProfileOAuth2TokenServiceFactory::GetForProfile(profile_)->AddObserver(this);
+  content::BrowserContext::GetConnectorFor(profile_)->BindInterface(
+      ::identity::mojom::kServiceName, mojo::MakeRequest(&identity_manager_));
+
+  identity::mojom::IdentityObserverPtr observer;
+  observer_binding_.Bind(mojo::MakeRequest(&observer));
+  identity_manager_->AddObserver(std::move(observer));
 
   LoginUIService* login_ui_service =
       LoginUIServiceFactory::GetForProfile(profile_);
@@ -43,11 +45,10 @@ void IdentitySigninFlow::Start() {
 }
 
 void IdentitySigninFlow::OnRefreshTokenAvailable(
-    const std::string& account_id) {
-  if (SigninManagerFactory::GetForProfile(profile_)->
-      GetAuthenticatedAccountId() == account_id) {
+    const AccountInfo& account_info,
+    const identity::AccountState& account_state) {
+  if (account_state.is_primary_account)
     delegate_->SigninSuccess();
-  }
 }
 
 }  // namespace extensions

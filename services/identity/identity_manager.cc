@@ -71,9 +71,13 @@ IdentityManager::IdentityManager(AccountTrackerService* account_tracker,
                                  ProfileOAuth2TokenService* token_service)
     : account_tracker_(account_tracker),
       signin_manager_(signin_manager),
-      token_service_(token_service) {}
+      token_service_(token_service) {
+  token_service_->AddObserver(this);
+}
 
-IdentityManager::~IdentityManager() {}
+IdentityManager::~IdentityManager() {
+  token_service_->RemoveObserver(this);
+}
 
 void IdentityManager::GetPrimaryAccountInfo(
     GetPrimaryAccountInfoCallback callback) {
@@ -108,6 +112,20 @@ void IdentityManager::GetAccessToken(const std::string& account_id,
       std::move(access_token_request);
 }
 
+void IdentityManager::AddObserver(mojom::IdentityObserverPtr observer) {
+  observers_.AddPtr(std::move(observer));
+}
+
+void IdentityManager::OnRefreshTokenAvailable(const std::string& account_id) {
+  AccountInfo account_info = account_tracker_->GetAccountInfo(account_id);
+  AccountState account_state = GetStateOfAccount(account_info);
+
+  observers_.ForAllPtrs(
+      [&account_info, &account_state](mojom::IdentityObserver* observer) {
+        observer->OnRefreshTokenAvailable(account_info, account_state);
+      });
+}
+
 void IdentityManager::AccessTokenRequestCompleted(AccessTokenRequest* request) {
   access_token_requests_.erase(request);
 }
@@ -117,6 +135,8 @@ AccountState IdentityManager::GetStateOfAccount(
   AccountState account_state;
   account_state.has_refresh_token =
       token_service_->RefreshTokenIsAvailable(account_info.account_id);
+  account_state.is_primary_account =
+      (account_info.account_id == signin_manager_->GetAuthenticatedAccountId());
   return account_state;
 }
 
