@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "996b2614_83f1e492",
+        "filename": "components/offline_pages/core/prefetch/prefetch_request_fetcher.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-19T22:11:10Z",
+      "side": 1,
+      "message": "We need to do full validation before using any this kind of value from experiments.",
+      "range": {
+        "startLine": 38,
+        "startChar": 4,
+        "endLine": 38,
+        "endChar": 10
+      },
+      "revId": "6e7816e11308696395f74d5cd333d95a181acfd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
