@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1c82bdce_be1933c7",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1218,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-19T19:07:29Z",
+      "side": 1,
+      "message": "This is used in the ctor to initialize |max_delayable_requests_network_override_params_|, which is const. Also, this happens exactly once during startup, and just has 5-10 entries. Probably not worth optimizing it. One place where this can be changed is when passing the params to a new \nclient, that can be a pointer instead of a copy.",
+      "parentUuid": "1abf7380_0da3f7a6",
+      "range": {
+        "startLine": 1218,
+        "startChar": 19,
+        "endLine": 1218,
+        "endChar": 46
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0d04145e_ea151d50",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00b45ba6_921651fe",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1219,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-19T19:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0d04145e_ea151d50",
+      "range": {
+        "startLine": 1219,
+        "startChar": 19,
+        "endLine": 1219,
+        "endChar": 58
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "ecfdc3cb_39b36bc4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1220,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-19T19:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4c3811ef_d08d5287",
+      "range": {
+        "startLine": 1220,
+        "startChar": 20,
+        "endLine": 1220,
+        "endChar": 42
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "516a687d_2b102465",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 1
@@ -94,6 +166,30 @@
     },
     {
       "key": {
+        "uuid": "fb5ef7ff_03e47490",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1225,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-19T19:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "516a687d_2b102465",
+      "range": {
+        "startLine": 1225,
+        "startChar": 7,
+        "endLine": 1225,
+        "endChar": 8
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9779d24_202b2881",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 1
@@ -114,6 +210,30 @@
       "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a262d2c1_d3471ead",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1226,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-19T19:07:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9779d24_202b2881",
+      "range": {
+        "startLine": 1226,
+        "startChar": 7,
+        "endLine": 1226,
+        "endChar": 22
+      },
+      "revId": "4d1944acfc40a76426728ba854fcf791d1224ab4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
