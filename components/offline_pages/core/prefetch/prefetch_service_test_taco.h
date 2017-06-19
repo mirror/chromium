@@ -57,6 +57,11 @@ class PrefetchServiceTestTaco {
     return prefetch_service_.get();
   }
 
+  // Takes out the ownership of the created PrefetchService instance.
+  std::unique_ptr<PrefetchService> Takeout() {
+    return std::move(prefetch_service_);
+  }
+
  private:
   std::unique_ptr<OfflineMetricsCollector> metrics_collector_;
   std::unique_ptr<PrefetchDispatcher> dispatcher_;
