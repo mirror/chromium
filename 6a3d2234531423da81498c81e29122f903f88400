@@ -22,6 +22,30 @@
       "revId": "6a3d2234531423da81498c81e29122f903f88400",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1229540_bfe23027",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1157920
+      },
+      "writtenOn": "2017-06-19T15:02:01Z",
+      "side": 1,
+      "message": "Good catch, I assumed that the tests using Simulate*Fullscreen were using some other mock and didn\u0027t consider the overlap. Precisely what you suggest seems to have worked, and should work if the MockChromeClient is use.",
+      "parentUuid": "1974c72b_bda3ae50",
+      "range": {
+        "startLine": 176,
+        "startChar": 21,
+        "endLine": 176,
+        "endChar": 32
+      },
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
