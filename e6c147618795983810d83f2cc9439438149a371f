@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "c15b2aa1_1dea7f2f",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-19T22:05:07Z",
+      "side": 1,
+      "message": "Do we want this in every LocalFrameView? I\u0027d think we only want once instance of these in a global location like Page.",
+      "range": {
+        "startLine": 347,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 23
+      },
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d37e24_41eae9f7",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
@@ -36,6 +59,29 @@
       "writtenOn": "2017-06-19T19:20:02Z",
       "side": 1,
       "message": "Do we still need to call from here since the function is called from FrameLoader::ShouldClose?",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a51b7216_c515c4ca",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-19T22:05:07Z",
+      "side": 1,
+      "message": "I don\u0027t understand this sentence. Where does the difference between composited/non-composited come from when this is called from load vs unload. Also, by \"keep\" do you mean \"record\"?",
+      "range": {
+        "startLine": 2243,
+        "startChar": 71,
+        "endLine": 2245,
+        "endChar": 21
+      },
       "revId": "e6c147618795983810d83f2cc9439438149a371f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
