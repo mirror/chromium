@@ -366,9 +366,9 @@ String FileReaderLoader::ConvertToText() {
   // FIXME: consider supporting incremental decoding to improve the perf.
   StringBuilder builder;
   if (!decoder_) {
-    decoder_ = TextResourceDecoder::Create(
-        TextResourceDecoder::kPlainTextContent,
-        encoding_.IsValid() ? encoding_ : UTF8Encoding());
+    decoder_ = TextResourceDecoder::Create(TextResourceDecoderOptions(
+        TextResourceDecoderOptions::kPlainTextContent,
+        encoding_.IsValid() ? encoding_ : UTF8Encoding()));
   }
   builder.Append(decoder_->Decode(static_cast<const char*>(raw_data_->Data()),
                                   raw_data_->ByteLength()));
