@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0779029e_6b6d553d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T10:45:59Z",
+      "side": 1,
+      "message": "nit: Perhaps the \"const\" is no longer needed in the presence of constexpr?",
+      "range": {
+        "startLine": 17,
+        "startChar": 19,
+        "endLine": 17,
+        "endChar": 24
+      },
+      "revId": "ff6d192a3ba11464180a55dc2ced6093dce52fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e18f892e_07f305b0",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T10:45:59Z",
+      "side": 1,
+      "message": "optional: Is the result of the three scoped traces reasonably readable? If I read the documentation for SCOPED_TRACE, this will produce something like\n...unittest.cc:36: 2\n...unittest.cc:35: 1\n...unittest.cc:34: 0\nIs that what you want? Alternatively you can create a single scoped trace and pass it a testing::Message() \u003c\u003c \"available \u003d \" \u003c\u003c test.generation_available ... argument.\n\n(Also on line 173.)",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 36,
+        "endChar": 34
+      },
+      "revId": "ff6d192a3ba11464180a55dc2ced6093dce52fee",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
