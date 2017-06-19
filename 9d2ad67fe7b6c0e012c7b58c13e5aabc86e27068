@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c7755590_09ebb525",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-19T19:14:59Z",
+      "side": 1,
+      "message": "It\u0027s more common to use FRIEND_TEST_ALL_PREFIXES to do this.\n\ne.g. https://cs.chromium.org/chromium/src/ash/shell.h?type\u003dcs\u0026q\u003dfriend_test\u0026l\u003d610",
+      "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
