@@ -20,6 +20,9 @@ AllDownloadItemNotifier::AllDownloadItemNotifier(
     (*it)->AddObserver(this);
     observing_.insert(*it);
   }
+
+  if (manager_->IsManagerInitialized())
+    observer_->OnManagerInitialized(manager_);
 }
 
 AllDownloadItemNotifier::~AllDownloadItemNotifier() {
@@ -32,9 +35,14 @@ AllDownloadItemNotifier::~AllDownloadItemNotifier() {
   observing_.clear();
 }
 
+void AllDownloadItemNotifier::OnManagerInitialized() {
+  observer_->OnManagerInitialized(manager_);
+}
+
 void AllDownloadItemNotifier::ManagerGoingDown(
     content::DownloadManager* manager) {
   DCHECK_EQ(manager_, manager);
+  observer_->OnManagerGoingDown(manager);
   manager_->RemoveObserver(this);
   manager_ = NULL;
 }

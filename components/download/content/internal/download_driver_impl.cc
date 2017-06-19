@@ -4,6 +4,7 @@
 
 #include "components/download/content/internal/download_driver_impl.h"
 
+#include "base/memory/ptr_util.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -57,10 +58,7 @@ DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager,
   DCHECK(download_manager_);
 }
 
-DownloadDriverImpl::~DownloadDriverImpl() {
-  if (download_manager_)
-    download_manager_->RemoveObserver(this);
-}
+DownloadDriverImpl::~DownloadDriverImpl() = default;
 
 void DownloadDriverImpl::Initialize(DownloadDriver::Client* client) {
   DCHECK(!client_);
@@ -73,9 +71,8 @@ void DownloadDriverImpl::Initialize(DownloadDriver::Client* client) {
     return;
   }
 
-  download_manager_->AddObserver(this);
-  if (download_manager_->IsManagerInitialized())
-    client_->OnDriverReady(true);
+  notifier_ = base::MakeUnique<content::AllDownloadItemNotifier>(
+      download_manager_, this);
 }
 
 bool DownloadDriverImpl::IsReady() const {
@@ -122,7 +119,6 @@ void DownloadDriverImpl::Remove(const std::string& guid) {
   content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
   // Cancels the download and removes the persisted records in content layer.
   if (item) {
-    item->RemoveObserver(this);
     item->Remove();
   }
 }
@@ -152,30 +148,23 @@ base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   return base::nullopt;
 }
 
-void DownloadDriverImpl::OnDownloadUpdated(content::DownloadItem* item) {
+void DownloadDriverImpl::OnManagerInitialized(
+    content::DownloadManager* manager) {
+  DCHECK_EQ(download_manager_, manager);
   DCHECK(client_);
+  DCHECK(download_manager_);
+  client_->OnDriverReady(true);
+}
 
-  using DownloadState = content::DownloadItem::DownloadState;
-  DownloadState state = item->GetState();
-  content::DownloadInterruptReason reason = item->GetLastReason();
-  DriverEntry entry = CreateDriverEntry(item);
-
-  if (state == DownloadState::COMPLETE) {
-    client_->OnDownloadSucceeded(entry, item->GetTargetFilePath());
-    item->RemoveObserver(this);
-  } else if (state == DownloadState::IN_PROGRESS) {
-    client_->OnDownloadUpdated(entry);
-  } else if (reason !=
-             content::DownloadInterruptReason::DOWNLOAD_INTERRUPT_REASON_NONE) {
-    client_->OnDownloadFailed(entry, static_cast<int>(reason));
-    item->RemoveObserver(this);
-  }
+void DownloadDriverImpl::OnManagerGoingDown(content::DownloadManager* manager) {
+  DCHECK_EQ(download_manager_, manager);
+  notifier_.reset();
+  download_manager_ = nullptr;
 }
 
 void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
                                            content::DownloadItem* item) {
   // Listens to all downloads.
-  item->AddObserver(this);
   DCHECK(client_);
   DriverEntry entry = CreateDriverEntry(item);
 
@@ -185,15 +174,29 @@ void DownloadDriverImpl::OnDownloadCreated(content::DownloadManager* manager,
     client_->OnDownloadCreated(entry);
 }
 
-void DownloadDriverImpl::OnManagerInitialized() {
+void DownloadDriverImpl::OnDownloadUpdated(content::DownloadManager* manager,
+                                           content::DownloadItem* item) {
   DCHECK(client_);
-  DCHECK(download_manager_);
-  client_->OnDriverReady(true);
+
+  using DownloadState = content::DownloadItem::DownloadState;
+  DownloadState state = item->GetState();
+  content::DownloadInterruptReason reason = item->GetLastReason();
+  DriverEntry entry = CreateDriverEntry(item);
+
+  if (state == DownloadState::COMPLETE) {
+    client_->OnDownloadSucceeded(entry, item->GetTargetFilePath());
+  } else if (state == DownloadState::IN_PROGRESS) {
+    client_->OnDownloadUpdated(entry);
+  } else if (reason !=
+             content::DownloadInterruptReason::DOWNLOAD_INTERRUPT_REASON_NONE) {
+    client_->OnDownloadFailed(entry, static_cast<int>(reason));
+  }
 }
 
-void DownloadDriverImpl::ManagerGoingDown(content::DownloadManager* manager) {
-  DCHECK_EQ(download_manager_, manager);
-  download_manager_ = nullptr;
+void DownloadDriverImpl::OnDownloadRemoved(content::DownloadManager* manager,
+                                           content::DownloadItem* item) {
+  // TODO(dtrainor): Figure out if we can get this call without the service
+  // triggering it.
 }
 
 }  // namespace download
