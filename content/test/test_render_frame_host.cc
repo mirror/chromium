@@ -410,16 +410,21 @@ void TestRenderFrameHost::SendNavigateWithParameters(
 
 void TestRenderFrameHost::SendNavigateWithParams(
     FrameHostMsg_DidCommitProvisionalLoad_Params* params) {
+  SimulateWillProcessResponse();
+  FrameHostMsg_DidCommitProvisionalLoad msg(GetRoutingID(), *params);
+  OnDidCommitProvisionalLoad(msg);
+  last_commit_was_error_page_ = params->url_is_unreachable;
+}
+
+void TestRenderFrameHost::SimulateWillProcessResponse() {
   if (navigation_handle()) {
     scoped_refptr<net::HttpResponseHeaders> response_headers =
         new net::HttpResponseHeaders(std::string());
     response_headers->AddHeader(
         std::string("Content-Type: ") + contents_mime_type_);
-    navigation_handle()->set_response_headers_for_testing(response_headers);
+    navigation_handle()->CallWillProcessResponseForTesting(
+        this, response_headers->raw_headers());
   }
-  FrameHostMsg_DidCommitProvisionalLoad msg(GetRoutingID(), *params);
-  OnDidCommitProvisionalLoad(msg);
-  last_commit_was_error_page_ = params->url_is_unreachable;
 }
 
 void TestRenderFrameHost::SendRendererInitiatedNavigationRequest(

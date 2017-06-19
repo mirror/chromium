@@ -18,10 +18,6 @@ namespace gfx {
 class Size;
 }
 
-namespace net {
-class HttpResponseHeaders;
-}
-
 namespace content {
 
 class BrowserContext;
@@ -130,11 +126,6 @@ class WebContentsTester {
   virtual void SetNavigationData(
       NavigationHandle* navigation_handle,
       std::unique_ptr<NavigationData> navigation_data) = 0;
-
-  // Sets HttpResponseData on |navigation_handle|.
-  virtual void SetHttpResponseHeaders(
-      NavigationHandle* navigation_handle,
-      scoped_refptr<net::HttpResponseHeaders> response_headers) = 0;
 
   // Returns headers that were passed in the previous SaveFrameWithHeaders(...)
   // call.
