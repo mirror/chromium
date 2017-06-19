@@ -43,6 +43,7 @@ ContentAutofillDriver::ContentAutofillDriver(
   // currently used by Android only.
   if (provider) {
     autofill_handler_ = base::MakeUnique<AutofillHandlerProxy>(this, provider);
+    GetAutofillAgent()->BypassUserGestureCheck();
   } else {
     autofill_handler_ = base::MakeUnique<AutofillManager>(
         this, client, app_locale, enable_download_manager);
