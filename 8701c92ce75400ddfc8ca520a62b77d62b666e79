@@ -59,6 +59,24 @@
     },
     {
       "key": {
+        "uuid": "95f9d160_979d8a9f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T21:56:06Z",
+      "side": 1,
+      "message": "The current plan is to start it on Chrome launch.  xingliu@ is working on that patch now.",
+      "parentUuid": "253dafd5_3911f078",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f06791_a03a4dc0",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 3
