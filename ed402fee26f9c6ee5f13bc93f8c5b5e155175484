@@ -22,6 +22,30 @@
       "revId": "ed402fee26f9c6ee5f13bc93f8c5b5e155175484",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d5051b73_77705c82",
+        "filename": "ios/clean/chrome/app/steps/launch_to_foreground.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T11:19:14Z",
+      "side": 1,
+      "message": "Makes sense. Thanks!",
+      "parentUuid": "01f69db7_5cf394b8",
+      "range": {
+        "startLine": 85,
+        "startChar": 1,
+        "endLine": 85,
+        "endChar": 7
+      },
+      "revId": "ed402fee26f9c6ee5f13bc93f8c5b5e155175484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
