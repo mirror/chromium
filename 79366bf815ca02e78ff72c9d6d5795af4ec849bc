@@ -45,6 +45,30 @@
       "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71c9580a_764f80f5",
+        "filename": "gpu/ipc/service/gpu_channel_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 266,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-19T22:58:00Z",
+      "side": 1,
+      "message": "I tested with WebGL websites. The context group with WebGL is not deleted and the site is able to perform animations when Chrome goes to background and foreground. This was not possible if I removed this condition and I always got an error saying WebGL hit a snag.",
+      "parentUuid": "b950fd38_9ca6ea52",
+      "range": {
+        "startLine": 266,
+        "startChar": 19,
+        "endLine": 266,
+        "endChar": 40
+      },
+      "revId": "79366bf815ca02e78ff72c9d6d5795af4ec849bc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
