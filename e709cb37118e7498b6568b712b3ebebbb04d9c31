@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dda9c7c3_5760a707",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:29:48Z",
+      "side": 1,
+      "message": "s/three/four. But maybe the assert is already clear and this comment could be removed?",
+      "range": {
+        "startLine": 87,
+        "startChar": 19,
+        "endLine": 87,
+        "endChar": 24
+      },
+      "revId": "e709cb37118e7498b6568b712b3ebebbb04d9c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b4f9b2b_634f9476",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:29:48Z",
+      "side": 1,
+      "message": "Should this be profile_item_4? Idem below.",
+      "range": {
+        "startLine": 155,
+        "startChar": 17,
+        "endLine": 155,
+        "endChar": 31
+      },
+      "revId": "e709cb37118e7498b6568b712b3ebebbb04d9c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c55a65f1_d5ca159f",
+        "filename": "ios/chrome/browser/ui/payments/billing_address_selection_mediator_unittest.mm",
+        "patchSetId": 9
+      },
+      "lineNbr": 174,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:29:48Z",
+      "side": 1,
+      "message": "Same comment as above.",
+      "range": {
+        "startLine": 174,
+        "startChar": 19,
+        "endLine": 174,
+        "endChar": 24
+      },
+      "revId": "e709cb37118e7498b6568b712b3ebebbb04d9c31",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
