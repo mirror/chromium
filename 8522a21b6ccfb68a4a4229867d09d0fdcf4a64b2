@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "999bd188_9577466e",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-19T14:50:23Z",
+      "side": 1,
+      "message": "Do not remove the return statement?",
+      "revId": "8522a21b6ccfb68a4a4229867d09d0fdcf4a64b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
