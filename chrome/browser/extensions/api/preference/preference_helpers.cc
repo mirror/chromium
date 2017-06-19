@@ -58,7 +58,7 @@ const char* GetLevelOfControl(
     const std::string& extension_id,
     const std::string& browser_pref,
     bool incognito) {
-  PrefService* prefs = incognito ? profile->GetOffTheRecordPrefs()
+  PrefService* prefs = incognito ? profile->GetReadOnlyOffTheRecordPrefs()
                                  : profile->GetPrefs();
   bool from_incognito = false;
   bool* from_incognito_ptr = incognito ? &from_incognito : NULL;
