@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dea6656b_f8735a7f",
+        "filename": "third_party/WebKit/Source/core/exported/WebHitTestResult.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-19T08:53:29Z",
+      "side": 1,
+      "message": "This patch gives the following linker error when linking libweb:\n\nobj/third_party/WebKit/Source/web/web/WebViewImpl.o:../../third_party/WebKit/Source/web/WebViewImpl.cpp:function blink::WebViewImpl::HitTestResultAt(blink::WebPoint const\u0026): error: undefined reference to \u0027blink::WebHitTestResult::WebHitTestResult(blink::HitTestResult const\u0026)\u0027\nobj/third_party/WebKit/Source/web/web/WebViewImpl.o:../../third_party/WebKit/Source/web/WebViewImpl.cpp:function blink::WebViewImpl::HitTestResultForTap(blink::WebPoint const\u0026, blink::WebSize const\u0026): error: undefined reference to \u0027blink::WebHitTestResult::WebHitTestResult(blink::HitTestResult const\u0026)\u0027\n\nI think this is because WebViewImpl is looking at public/web/WebHitTestResult.h for these methods (eg https://cs.chromium.org/chromium/src/third_party/WebKit/Source/web/WebViewImpl.cpp?rcl\u003d6a0eec4e4305d89c30068ef402f3de6f1c578cf1\u0026l\u003d3768), but they are defined in a #if BLINK_IMPLEMENTATION block (https://cs.chromium.org/chromium/src/third_party/WebKit/public/web/WebHitTestResult.h?rcl\u003d6a0eec4e4305d89c30068ef402f3de6f1c578cf1\u0026l\u003d72) (which may not export the methods when outside of web?).\n\nThe solution I see is moving this class to core/exported/WebHitTestResultPrivate (or renaming to WebHitTestResultImpl) and having WebViewImpl include that instead, which we can CORE_EXPORT.\n\nThoughts?",
+      "revId": "e2e0e4509829f710f263a86e9b8b5804a7c0ed8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
