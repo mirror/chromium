@@ -3022,6 +3022,8 @@ TEST_F(UpdateClientTest, OneCrxUpdateCheckFails) {
   update_client->RemoveObserver(&observer);
 }
 
+#if defined(OS_WIN)  // ActionRun is only implemented on Windows.
+
 // Tests that a run action in invoked in the CRX install scenario.
 TEST_F(UpdateClientTest, ActionRun_Install) {
   class FakeUpdateChecker : public UpdateChecker {
@@ -3149,8 +3151,8 @@ TEST_F(UpdateClientTest, ActionRun_Install) {
           "total=\"1843\" download_time_ms=\"1000\"/>",
           events[0].c_str());
       EXPECT_STREQ(
-          "<event eventtype=\"42\" eventresult=\"1\" errorcode=\"1\" "
-          "extracode1=\"2\"/>",
+          "<event eventtype=\"42\" eventresult=\"1\" "
+          "errorcode=\"1877345072\"/>",
           events[1].c_str());
       EXPECT_STREQ("<event eventtype=\"3\" eventresult=\"1\"/>",
                    events[2].c_str());
@@ -3259,8 +3261,8 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
       const auto& events = FakePingManagerImpl::events();
       EXPECT_EQ(1u, events.size());
       EXPECT_STREQ(
-          "<event eventtype=\"42\" eventresult=\"1\" errorcode=\"1\" "
-          "extracode1=\"2\"/>",
+          "<event eventtype=\"42\" eventresult=\"1\" "
+          "errorcode=\"1877345072\"/>",
           events[0].c_str());
     }
   };
@@ -3330,5 +3332,7 @@ TEST_F(UpdateClientTest, ActionRun_NoUpdate) {
 
   RunThreads();
 }
+
+#endif  // OS_WIN
 
 }  // namespace update_client
