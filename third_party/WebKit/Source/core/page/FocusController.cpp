@@ -1344,7 +1344,8 @@ bool FocusController::AdvanceFocusDirectionallyInContainer(
   if (!element->IsTextControl() && !HasEditableStyle(*element->ToNode())) {
     // To fulfill the expectation of spatial-navigation/snav-input.html
     // we clear selection when spatnav moves focus away from a text-field.
-    FocusedFrame()->Selection().Clear();
+    if (FocusedFrame())
+      FocusedFrame()->Selection().Clear();
   }
   element->focus(FocusParams(SelectionBehaviorOnFocus::kReset, type, nullptr));
   return true;
