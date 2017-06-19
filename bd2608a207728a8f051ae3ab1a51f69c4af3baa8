@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80f3c1c9_4f6df6d0",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T15:54:15Z",
+      "side": 1,
+      "message": "You seem to be assuming you don\u0027t need to pass in the new TabRendererData::NetworkState state here. I don\u0027t think that is a valid assumption.",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3ee7ad0_3f6d9ec1",
+        "filename": "chrome/browser/ui/views/tabs/tab.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 373,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T15:54:15Z",
+      "side": 1,
+      "message": "optional: may be delayed_throbber_update_timer_?",
+      "range": {
+        "startLine": 373,
+        "startChar": 21,
+        "endLine": 373,
+        "endChar": 42
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
