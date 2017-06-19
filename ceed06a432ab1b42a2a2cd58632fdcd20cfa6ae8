@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7f5321db_968ae4c6",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-19T09:59:32Z",
+      "side": 1,
+      "message": "nit: you can start from 1.",
+      "revId": "ceed06a432ab1b42a2a2cd58632fdcd20cfa6ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

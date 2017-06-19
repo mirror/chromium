@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01cc4d2b_94a8c48d",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 281,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-19T09:59:32Z",
+      "side": 1,
+      "message": "Usually google C++ style puts \"// static\" comment here to indicate the following\nmember function is a static member function.  (But I cannot find any definitive\nreference in style guide now ...)",
+      "revId": "8fda1c1818e9a45e4bbc7cdf99201c78aa738675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f03a7298_772e26a9",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1000098
+      },
+      "writtenOn": "2017-06-19T09:59:32Z",
+      "side": 1,
+      "message": "I thought backtrack_table[r][c] would work, but it doesn\u0027t?",
+      "revId": "8fda1c1818e9a45e4bbc7cdf99201c78aa738675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
