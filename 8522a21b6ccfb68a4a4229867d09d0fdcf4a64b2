@@ -16,6 +16,24 @@
       "revId": "8522a21b6ccfb68a4a4229867d09d0fdcf4a64b2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb8ccd2c_0c0372dc",
+        "filename": "components/subresource_filter/content/browser/subresource_filter_safe_browsing_activation_throttle.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-19T14:58:19Z",
+      "side": 1,
+      "message": "Oops, typo. Thanks!",
+      "parentUuid": "999bd188_9577466e",
+      "revId": "8522a21b6ccfb68a4a4229867d09d0fdcf4a64b2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
