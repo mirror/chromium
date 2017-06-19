@@ -39,6 +39,19 @@ li.storage-group-list-item
     position: relative;
     top: -1px;
     left: -8px;
+    cursor: pointer;
+}
+
+li.storage-group-list-item
+.trailing-icons
+.sidebar-section-button:active {
+    opacity: 0.5;
+}
+
+li.storage-group-list-item
+.trailing-icons
+.sidebar-section-button:not(.active):hover {
+    background-color: #333;
 }
 
 .navigator-tree-item {
