@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5f0ad475_84f497d0",
+        "filename": "tools/metrics/actions/actions.xml",
+        "patchSetId": 5
+      },
+      "lineNbr": 5238,
+      "author": {
+        "id": 1169359
+      },
+      "writtenOn": "2017-06-19T21:44:07Z",
+      "side": 1,
+      "message": "tiny nit: Shouldn\u0027t this be  \u0027a used event\u0027?",
+      "range": {
+        "startLine": 5238,
+        "startChar": 23,
+        "endLine": 5238,
+        "endChar": 30
+      },
+      "revId": "00691f44bdb519c988f749221820d3c79fd79d80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
