@@ -351,8 +351,6 @@ enum SnapAlignment {
   kSnapAlignmentCenter
 };
 
-enum class AutoRepeatType { kNoAutoRepeat, kAutoFill, kAutoFit };
-
 // Page size type.
 // StyleRareNonInheritedData::page_size_ is meaningful only when
 // StyleRareNonInheritedData::page_size_type_ is kResolved.
