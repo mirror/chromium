@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2f67197b_df1bdf61",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 820,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T21:42:41Z",
+      "side": 1,
+      "message": "TODO(devdeepray): Check effective connection type value as well.",
+      "range": {
+        "startLine": 820,
+        "startChar": 8,
+        "endLine": 820,
+        "endChar": 10
+      },
+      "revId": "e288cb012bab09dd431aabb7bd1f09d70782a062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c77f0cc_6203fe60",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1243,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T21:42:41Z",
+      "side": 1,
+      "message": "to_string in C++ 11 is still not allowed in Chromium.\nhttps://chromium-cpp.appspot.com/\n\nInstead, use methods from base/strings/string_number_conversions.h",
+      "range": {
+        "startLine": 1243,
+        "startChar": 42,
+        "endLine": 1243,
+        "endChar": 51
+      },
+      "revId": "e288cb012bab09dd431aabb7bd1f09d70782a062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2938c7fa_bd51721d",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 1264,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T21:42:41Z",
+      "side": 1,
+      "message": "config_param_index++;",
+      "range": {
+        "startLine": 1264,
+        "startChar": 8,
+        "endLine": 1264,
+        "endChar": 30
+      },
+      "revId": "e288cb012bab09dd431aabb7bd1f09d70782a062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2431c7b2_57b30e8b",
+        "filename": "content/browser/loader/resource_scheduler.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-19T21:42:41Z",
+      "side": 1,
+      "message": "s/BDPRangeRequestCountMap/BDPRangeRequestCounts/\nThis makes it easier to change the container data structure to something else without updating the variable names everywhere.",
+      "range": {
+        "startLine": 126,
+        "startChar": 49,
+        "endLine": 126,
+        "endChar": 72
+      },
+      "revId": "e288cb012bab09dd431aabb7bd1f09d70782a062",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
