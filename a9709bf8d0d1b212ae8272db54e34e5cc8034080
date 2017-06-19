@@ -70,6 +70,30 @@
       "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e27be54_de86767b",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-19T14:34:38Z",
+      "side": 1,
+      "message": "+1 to 1.\n\nI tend to default to passing by value over passing by rvalue reference. For one, it avoids the fun question of whether the called function actually does unconditionally move from the rvalue. For another, it makes it legal to pass an lvalue if there is a copy constructor (which, e.g., RefPtr has) without explicitly invoking it.",
+      "parentUuid": "d1263556_a4afa41c",
+      "range": {
+        "startLine": 190,
+        "startChar": 25,
+        "endLine": 190,
+        "endChar": 62
+      },
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
