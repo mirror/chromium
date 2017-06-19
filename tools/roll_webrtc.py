@@ -269,11 +269,12 @@ class AutoRoller(object):
     readme.write(m)
     readme.truncate()
 
-  def PrepareRoll(self, dry_run, ignore_checks, no_commit, close_previous_roll):
+  def PrepareRoll(self, dry_run, ignore_checks, no_commit, close_previous_roll,
+                  revision):
     # TODO(kjellander): use os.path.normcase, os.path.join etc for all paths for
     # cross platform compatibility.
 
-    if not ignore_checks:
+    if False and not ignore_checks:
       if self._GetCurrentBranchName() != 'master':
         logging.error('Please checkout the master branch.')
         return -1
@@ -289,7 +290,7 @@ class AutoRoller(object):
     if not ignore_checks:
       self._RunCommand(['git', 'pull'])
 
-    self._RunCommand(['git', 'checkout', '-b', ROLL_BRANCH_NAME])
+    # self._RunCommand(['git', 'checkout', '-b', ROLL_BRANCH_NAME])
 
     # Modify Chromium's DEPS file.
 
@@ -298,8 +299,12 @@ class AutoRoller(object):
     deps = _ParseDepsFile(deps_filename)
     webrtc_current = self._GetDepsCommitInfo(deps, WEBRTC_PATH)
 
-    # Find ToT revisions.
-    webrtc_latest = self._GetCommitInfo(WEBRTC_PATH)
+    if revision is None:
+      # Find ToT revisions.
+      webrtc_latest = self._GetCommitInfo(WEBRTC_PATH)
+    else:
+      # Use given revision.
+      webrtc_latest = self._GetCommitInfo(WEBRTC_PATH, revision)
 
     if IS_WIN:
       # Make sure the roll script doesn't use Windows line endings.
@@ -414,6 +419,9 @@ def main():
       help=('Skips checks for being on the master branch, dirty workspaces and '
             'the updating of the checkout. Will still delete and create local '
             'Git branches.'))
+  parser.add_argument('-r', '--revision', default=None,
+                      help='WebRTC revision to roll. If not specified,'
+                           'the latest version will be used')
   parser.add_argument('-v', '--verbose', action='store_true', default=False,
       help='Be extra verbose in printing of log messages.')
   args = parser.parse_args()
@@ -430,7 +438,8 @@ def main():
     return autoroller.WaitForTrybots()
   else:
     return autoroller.PrepareRoll(args.dry_run, args.ignore_checks,
-                                  args.no_commit, args.close_previous_roll)
+                                  args.no_commit, args.close_previous_roll,
+                                  args.revision)
 
 if __name__ == '__main__':
   sys.exit(main())
