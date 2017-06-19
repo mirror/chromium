@@ -121,6 +121,32 @@ void InstallAttributeInternal(
     NOTREACHED();
 }
 
+void InstallAttributeInternal(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    const V8DOMConfiguration::AttributeConfiguration& config,
+    v8::Local<v8::Object> instance_or_prototype) {
+  if (!WorldConfigurationApplies(config, world))
+    return;
+
+  v8::Local<v8::Name> name = V8AtomicString(isolate, config.name);
+  v8::AccessorNameGetterCallback getter = config.getter;
+  v8::AccessorNameSetterCallback setter = config.setter;
+  v8::Local<v8::Value> data =
+      v8::External::New(isolate, const_cast<WrapperTypeInfo*>(config.data));
+  v8::PropertyAttribute attribute =
+      static_cast<v8::PropertyAttribute>(config.attribute);
+  unsigned location = config.property_location_configuration;
+  DCHECK(location);
+  DCHECK(location &
+         (V8DOMConfiguration::kOnInstance | V8DOMConfiguration::kOnPrototype));
+
+  v8::Local<v8::Context> context = isolate->GetCurrentContext();
+  instance_or_prototype
+      ->SetNativeDataProperty(context, name, getter, setter, data, attribute)
+      .ToChecked();
+}
+
 void InstallLazyDataAttributeInternal(
     v8::Isolate* isolate,
     v8::Local<v8::ObjectTemplate> instance_template,
@@ -280,6 +306,43 @@ void InstallAccessorInternal(
         name, getter, setter,
         static_cast<v8::PropertyAttribute>(accessor.attribute));
   }
+}
+
+void InstallAccessorInternal(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Signature> signature,
+    const V8DOMConfiguration::AccessorConfiguration& config,
+    v8::Local<v8::Object> instance_or_prototype) {
+  if (!WorldConfigurationApplies(config, world))
+    return;
+  V8DOMConfiguration::CachedPropertyKey cached_property_key = nullptr;
+  if (world.IsMainWorld()) {
+    cached_property_key = config.cached_property_key;
+  }
+
+  // Support [LenientThis] by not specifying the signature.  V8 does not do
+  // the type checking against holder if no signature is specified.  Note that
+  // info.Holder() passed to callbacks will be *unsafe*.
+  if (config.holder_check_configuration ==
+      V8DOMConfiguration::kDoNotCheckHolder)
+    signature = v8::Local<v8::Signature>();
+  v8::Local<v8::Value> data =
+      v8::External::New(isolate, const_cast<WrapperTypeInfo*>(config.data));
+
+  unsigned location = config.property_location_configuration;
+  DCHECK(location &
+         (V8DOMConfiguration::kOnInstance | V8DOMConfiguration::kOnPrototype));
+  v8::Local<v8::Function> getter =
+      CreateAccessorFunctionOrTemplate<v8::Function>(
+          isolate, config.getter, cached_property_key, data, signature, 0);
+  v8::Local<v8::Function> setter =
+      CreateAccessorFunctionOrTemplate<v8::Function>(
+          isolate, config.setter, nullptr, data, signature, 1);
+  v8::Local<v8::Name> name = V8AtomicString(isolate, config.name);
+  instance_or_prototype->SetAccessorProperty(
+      name, getter, setter,
+      static_cast<v8::PropertyAttribute>(config.attribute));
 }
 
 v8::Local<v8::Primitive> ValueForConstant(
@@ -480,6 +543,47 @@ void InstallMethodInternal(
   }
 }
 
+void InstallMethodInternal(
+    v8::Isolate* isolate,
+    const DOMWrapperWorld& world,
+    v8::Local<v8::Signature> signature,
+    const V8DOMConfiguration::MethodConfiguration& config,
+    v8::Local<v8::Object> object) {
+  if (!WorldConfigurationApplies(config, world))
+    return;
+
+  v8::Local<v8::Name> name = config.MethodName(isolate);
+  v8::FunctionCallback callback = config.callback;
+  // Promise-returning functions need to return a reject promise when
+  // an exception occurs.  This includes a case that the receiver object is not
+  // of the type.  So, we disable the type check of the receiver object on V8
+  // side so that V8 won't throw.  Instead, we do the check on Blink side and
+  // convert an exception to a reject promise.
+  if (config.holder_check_configuration ==
+      V8DOMConfiguration::kDoNotCheckHolder)
+    signature = v8::Local<v8::Signature>();
+
+  unsigned location = config.property_location_configuration;
+  DCHECK(location);
+  DCHECK(location &
+         (V8DOMConfiguration::kOnInstance | V8DOMConfiguration::kOnPrototype));
+
+  v8::Local<v8::FunctionTemplate> function_template = v8::FunctionTemplate::New(
+      isolate, callback, v8::Local<v8::Value>(), signature, config.length);
+  function_template->RemovePrototype();
+  if (config.access_check_configuration == V8DOMConfiguration::kCheckAccess) {
+    function_template->SetAcceptAnyReceiver(false);
+  }
+
+  v8::Local<v8::Function> function =
+      function_template->GetFunction(isolate->GetCurrentContext())
+          .ToLocalChecked();
+  object
+      ->DefineOwnProperty(isolate->GetCurrentContext(), name, function,
+                          static_cast<v8::PropertyAttribute>(config.attribute))
+      .ToChecked();
+}
+
 }  // namespace
 
 void V8DOMConfiguration::InstallAttributes(
@@ -497,13 +601,12 @@ void V8DOMConfiguration::InstallAttributes(
 void V8DOMConfiguration::InstallAttributes(
     v8::Isolate* isolate,
     const DOMWrapperWorld& world,
-    v8::Local<v8::Object> instance,
-    v8::Local<v8::Object> prototype,
     const AttributeConfiguration* attributes,
-    size_t attribute_count) {
-  for (size_t i = 0; i < attribute_count; ++i) {
-    InstallAttributeInternal(isolate, instance, prototype, attributes[i],
-                             world);
+    size_t attributes_count,
+    v8::Local<v8::Object> instance_or_prototype) {
+  for (size_t i = 0; i < attributes_count; ++i) {
+    InstallAttributeInternal(isolate, world, attributes[i],
+                             instance_or_prototype);
   }
 }
 
@@ -556,15 +659,13 @@ void V8DOMConfiguration::InstallAccessors(
 void V8DOMConfiguration::InstallAccessors(
     v8::Isolate* isolate,
     const DOMWrapperWorld& world,
-    v8::Local<v8::Object> instance,
-    v8::Local<v8::Object> prototype,
-    v8::Local<v8::Function> interface,
     v8::Local<v8::Signature> signature,
     const AccessorConfiguration* accessors,
-    size_t accessor_count) {
+    size_t accessor_count,
+    v8::Local<v8::Object> instance_or_prototype) {
   for (size_t i = 0; i < accessor_count; ++i) {
-    InstallAccessorInternal(isolate, instance, prototype, interface, signature,
-                            accessors[i], world);
+    InstallAccessorInternal(isolate, world, signature, accessors[i],
+                            instance_or_prototype);
   }
 }
 
@@ -681,6 +782,14 @@ void V8DOMConfiguration::InstallMethod(
   InstallMethodInternal(isolate, v8::Local<v8::ObjectTemplate>(),
                         prototype_template, v8::Local<v8::FunctionTemplate>(),
                         signature, method, world);
+}
+
+void V8DOMConfiguration::InstallMethod(v8::Isolate* isolate,
+                                       const DOMWrapperWorld& world,
+                                       v8::Local<v8::Signature> signature,
+                                       const MethodConfiguration& method,
+                                       v8::Local<v8::Object> object) {
+  InstallMethodInternal(isolate, world, signature, method, object);
 }
 
 void V8DOMConfiguration::InitializeDOMInterfaceTemplate(

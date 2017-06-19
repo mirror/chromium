@@ -105,10 +105,9 @@ class CORE_EXPORT V8DOMConfiguration final {
 
   static void InstallAttributes(v8::Isolate*,
                                 const DOMWrapperWorld&,
-                                v8::Local<v8::Object> instance,
-                                v8::Local<v8::Object> prototype,
                                 const AttributeConfiguration*,
-                                size_t attribute_count);
+                                size_t attribute_count,
+                                v8::Local<v8::Object> instance_or_prototype);
 
   static void InstallAttribute(v8::Isolate*,
                                const DOMWrapperWorld&,
@@ -169,12 +168,10 @@ class CORE_EXPORT V8DOMConfiguration final {
 
   static void InstallAccessors(v8::Isolate*,
                                const DOMWrapperWorld&,
-                               v8::Local<v8::Object> instance,
-                               v8::Local<v8::Object> prototype,
-                               v8::Local<v8::Function> interface,
                                v8::Local<v8::Signature>,
                                const AccessorConfiguration*,
-                               size_t accessor_count);
+                               size_t accessor_count,
+                               v8::Local<v8::Object> instance_or_prototype);
 
   static void InstallAccessor(
       v8::Isolate*,
@@ -325,6 +322,12 @@ class CORE_EXPORT V8DOMConfiguration final {
                             v8::Local<v8::ObjectTemplate>,
                             v8::Local<v8::Signature>,
                             const SymbolKeyedMethodConfiguration&);
+
+  static void InstallMethod(v8::Isolate*,
+                            const DOMWrapperWorld&,
+                            v8::Local<v8::Signature>,
+                            const MethodConfiguration&,
+                            v8::Local<v8::Object> instance_or_prototype);
 
   static void InitializeDOMInterfaceTemplate(
       v8::Isolate*,
