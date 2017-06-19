@@ -298,6 +298,11 @@ class CORE_EXPORT PaintLayer : public DisplayItemClient {
   void UpdateLayerPositionsAfterLayout();
   void UpdateLayerPositionsAfterOverflowScroll();
 
+  // Layout-less update of the layer and its descendants after creation. It's
+  // safe to skip layout in some cases, even if a layer was established, but
+  // then this method must be invoked instead.
+  void UpdateLayerAfterCreation();
+
   PaintLayer* EnclosingPaginationLayer() const {
     return rare_data_ ? rare_data_->enclosing_pagination_layer : nullptr;
   }
