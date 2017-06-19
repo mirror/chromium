@@ -33,6 +33,24 @@
       "revId": "8fda1c1818e9a45e4bbc7cdf99201c78aa738675",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62835da2_5865321a",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.cpp",
+        "patchSetId": 19
+      },
+      "lineNbr": 301,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-19T10:17:23Z",
+      "side": 1,
+      "message": "We can\u0027t do it for std::array.",
+      "parentUuid": "f03a7298_772e26a9",
+      "revId": "8fda1c1818e9a45e4bbc7cdf99201c78aa738675",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

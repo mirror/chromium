@@ -16,6 +16,24 @@
       "revId": "ceed06a432ab1b42a2a2cd58632fdcd20cfa6ae8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06365d4b_ffbfd33e",
+        "filename": "third_party/WebKit/Source/core/html/HTMLSlotElement.h",
+        "patchSetId": 20
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1115903
+      },
+      "writtenOn": "2017-06-19T10:17:23Z",
+      "side": 1,
+      "message": "Starting from 1 is not worth here, I think.",
+      "parentUuid": "7f5321db_968ae4c6",
+      "revId": "ceed06a432ab1b42a2a2cd58632fdcd20cfa6ae8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
