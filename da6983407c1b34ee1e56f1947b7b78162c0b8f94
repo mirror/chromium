@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e776c084_344af390",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Refactor this class in CL 538141",
+      "parentUuid": "7c9602c9_288d8c04",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0391a1_a06c3031",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 16
@@ -39,6 +57,30 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27c332c8_a041d157",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 735,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb0391a1_a06c3031",
+      "range": {
+        "startLine": 735,
+        "startChar": 60,
+        "endLine": 735,
+        "endChar": 67
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "5a43629e_bc04516c",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 784,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d52a3d9_9d6ff1ce",
+      "range": {
+        "startLine": 784,
+        "startChar": 8,
+        "endLine": 784,
+        "endChar": 13
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "09dc686a_ac80471f",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 16
@@ -85,6 +151,30 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0a94798_c8ec965a",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 875,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "09dc686a_ac80471f",
+      "range": {
+        "startLine": 875,
+        "startChar": 37,
+        "endLine": 875,
+        "endChar": 54
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "1a564a60_af78a023",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 892,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Use str.Template everywhere now.",
+      "parentUuid": "b5877342_0156a6eb",
+      "range": {
+        "startLine": 892,
+        "startChar": 63,
+        "endLine": 892,
+        "endChar": 69
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d498311d_8920c12c",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 16
@@ -125,6 +239,24 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b59ebf96_d6b1bf8e",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 903,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d498311d_8920c12c",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "e318bc4d_18d82f84",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1339,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "I just removed this part since ninja generates missing directory automatically.",
+      "parentUuid": "fc18006c_0c8c08a9",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8edb85c0_67cbd6a0",
         "filename": "base/android/jni_generator/jni_generator_helper.h",
         "patchSetId": 16
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "84f7e8f9_237dcda9",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8edb85c0_67cbd6a0",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5fe47d_ea20c19a",
         "filename": "base/android/jni_generator/jni_generator_helper.h",
         "patchSetId": 16
@@ -176,6 +344,24 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be463c14_234d1a6b",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "This function is also called by some manual registration functions such as \"third_party/gvr-android-sdk/gvr_api_jni.h\"",
+      "parentUuid": "bf5fe47d_ea20c19a",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -214,6 +400,24 @@
     },
     {
       "key": {
+        "uuid": "a13fd819_9291fb4d",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b9635da0_455b2ecf",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d2ff27d_14da2235",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 16
@@ -228,6 +432,24 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e89bd29_aa5874eb",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Now the InlHeaderFileGenerator class is no longer used in this script.   \nWe generate the new registration function outside of the namespace now.",
+      "parentUuid": "8d2ff27d_14da2235",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -254,6 +476,54 @@
     },
     {
       "key": {
+        "uuid": "02c3f27a_5b7f4ff7",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56da288f_33a9c437",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 41
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "0679019f_c4a8ad57",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "56da288f_33a9c437",
+      "range": {
+        "startLine": 60,
+        "startChar": 35,
+        "endLine": 60,
+        "endChar": 41
+      },
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7320a573_779ac546",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 16
@@ -271,6 +541,24 @@
     },
     {
       "key": {
+        "uuid": "f5cd4b04_31505ed9",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7320a573_779ac546",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "578dbe3c_e6e5b49f",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 16
@@ -282,6 +570,24 @@
       "writtenOn": "2017-06-14T20:53:38Z",
       "side": 1,
       "message": "What is this needed for?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e465add_21da5af3",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "We use this arg to exclude the linker files at \n\n\"//base/android/java/src/org/chromium/base/library_loader/LegacyLinker.java\",\n\"//base/android/java/src/org/chromium/base/library_loader/Linker.java\",\n\"//base/android/java/src/org/chromium/base/library_loader/ModernLinker.java\".",
+      "parentUuid": "578dbe3c_e6e5b49f",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -305,6 +611,24 @@
     },
     {
       "key": {
+        "uuid": "96ccdbc7_e48d7050",
+        "filename": "base/android/jni_generator/testMainDexFile.golden",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33b52c77_852795f8",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2153794a_18d89a48",
         "filename": "base/android/jni_generator/testNonMainDexFile.golden",
         "patchSetId": 16
@@ -322,6 +646,24 @@
     },
     {
       "key": {
+        "uuid": "e6f9860d_8ab04d5b",
+        "filename": "base/android/jni_generator/testNonMainDexFile.golden",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2153794a_18d89a48",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "15b5f96c_6cc87046",
         "filename": "chrome/browser/android/chrome_sync_shell_entry_point.cc",
         "patchSetId": 16
@@ -333,6 +675,24 @@
       "writtenOn": "2017-06-14T20:53:38Z",
       "side": 1,
       "message": "Why do we have to duplicate this?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b1577478_33e725f4",
+        "filename": "chrome/browser/android/chrome_sync_shell_entry_point.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "The chrome_sync_shell_apk includes different JNI functions than chrome_apk, so we generate another header file for it called \"chrome_sync_shell_jni_registration.h\" and create a new entry_point file for it.",
+      "parentUuid": "15b5f96c_6cc87046",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -389,6 +749,24 @@
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0e924f24_72951f94",
+        "filename": "testing/test.gni",
+        "patchSetId": 16
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-19T18:19:42Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "13f1ba27_4ed63872",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
