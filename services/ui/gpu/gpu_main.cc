@@ -17,6 +17,7 @@
 #include "gpu/ipc/gpu_in_process_thread_service.h"
 #include "gpu/ipc/service/gpu_memory_buffer_factory.h"
 #include "gpu/ipc/service/gpu_watchdog_thread.h"
+#include "media/gpu/ipc/service/gpu_jpeg_decode_accelerator.h"
 #include "services/ui/gpu/gpu_service.h"
 
 #if defined(USE_OZONE)
@@ -143,6 +144,12 @@ void GpuMain::CreateFrameSinkManager(
     return;
   }
   CreateFrameSinkManagerInternal(std::move(request), client.PassInterface());
+}
+
+void GpuMain::CreateJpegDecoder(
+    media::mojom::GpuJpegDecodeAcceleratorRequest request) {
+  // TODO(c.padhi): Ensure this happens on IO thread.
+  media::GpuJpegDecodeAccelerator::Create(std::move(request));
 }
 
 void GpuMain::BindOnGpu(mojom::GpuMainRequest request) {

@@ -86,6 +86,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
       base::Callback<void(const gfx::GpuMemoryBufferHandle& handle,
                           BufferCreationStatus status)>;
 
+  using RequestGPUInfoCallback = base::Callback<void(const gpu::GPUInfo&)>;
+
   static bool gpu_enabled() { return gpu_enabled_; }
   static int gpu_crash_count() { return gpu_crash_count_; }
 
@@ -145,6 +147,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   void DestroyGpuMemoryBuffer(gfx::GpuMemoryBufferId id,
                               int client_id,
                               const gpu::SyncToken& sync_token);
+
+  void RequestGPUInfo(RequestGPUInfoCallback request_cb);
 
 #if defined(OS_ANDROID)
   // Tells the GPU process that the given surface is being destroyed so that it
@@ -235,6 +239,8 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   // A callback to signal the completion of a SendDestroyingVideoSurface call.
   base::Closure send_destroying_video_surface_done_cb_;
 
+  RequestGPUInfoCallback request_gpu_info_cb_;
+
   // Qeueud messages to send when the process launches.
   std::queue<IPC::Message*> queued_messages_;
 
@@ -254,7 +260,10 @@ class GpuProcessHost : public BrowserChildProcessHostDelegate,
   bool process_launched_;
 
   // Whether the GPU process successfully initialized.
-  bool initialized_;
+  bool initialize_succeeded_;
+
+  // Whether the GPU process initialization failed.
+  bool initialize_failed_;
 
   // Time Init started.  Used to log total GPU process startup time to UMA.
   base::TimeTicks init_start_time_;
