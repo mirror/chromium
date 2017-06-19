@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -12,12 +12,7 @@ namespace password_manager {
 
 PasswordFormMetricsRecorder::PasswordFormMetricsRecorder(
     bool is_main_frame_secure)
-    : is_main_frame_secure_(is_main_frame_secure),
-      generation_available_(false),
-      has_generated_password_(false),
-      manager_action_(kManagerActionNone),
-      user_action_(UserAction::kUserActionNone),
-      submit_result_(kSubmitResultNotSubmitted) {}
+    : is_main_frame_secure_(is_main_frame_secure) {}
 
 PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
   UMA_HISTOGRAM_ENUMERATION("PasswordManager.ActionsTakenV3", GetActionsTaken(),
@@ -32,12 +27,13 @@ PasswordFormMetricsRecorder::~PasswordFormMetricsRecorder() {
   }
 
   if (submit_result_ == kSubmitResultNotSubmitted) {
-    if (has_generated_password_)
+    if (has_generated_password_) {
       metrics_util::LogPasswordGenerationSubmissionEvent(
           metrics_util::PASSWORD_NOT_SUBMITTED);
-    else if (generation_available_)
+    } else if (generation_available_) {
       metrics_util::LogPasswordGenerationAvailableSubmissionEvent(
           metrics_util::PASSWORD_NOT_SUBMITTED);
+    }
   }
 }
 

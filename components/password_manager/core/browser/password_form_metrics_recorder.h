@@ -1,4 +1,4 @@
-// Copyright (c) 2017 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
@@ -49,12 +49,12 @@ class PasswordFormMetricsRecorder {
   // The maximum number of combinations of the ManagerAction, UserAction and
   // SubmitResutl enums.
   // This is used when recording the actions taken by the form in UMA.
-  static const int kMaxNumActionsTaken =
+  static constexpr int kMaxNumActionsTaken =
       kManagerActionMax * static_cast<int>(UserAction::kUserActionMax) *
       kSubmitResultMax;
 
   // Same as above but for ManagerActionNew instead of ManagerAction.
-  static const int kMaxNumActionsTakenNew =
+  static constexpr int kMaxNumActionsTakenNew =
       kManagerActionNewMax * static_cast<int>(UserAction::kUserActionMax) *
       kSubmitResultMax;
 
@@ -85,20 +85,20 @@ class PasswordFormMetricsRecorder {
 
   // True if the main frame's visible URL, at the time this PasswordFormManager
   // was created, is secure.
-  bool is_main_frame_secure_ = false;
+  const bool is_main_frame_secure_;
 
   // Whether the user can choose to generate a password for this form.
-  bool generation_available_;
+  bool generation_available_ = false;
 
   // Whether this form has an auto generated password.
-  bool has_generated_password_;
+  bool has_generated_password_ = false;
 
   // These three fields record the "ActionsTaken" by the browser and
   // the user with this form, and the result. They are combined and
   // recorded in UMA when the PasswordFormMetricsRecorder is destroyed.
-  ManagerAction manager_action_;
-  UserAction user_action_;
-  SubmitResult submit_result_;
+  ManagerAction manager_action_ = kManagerActionNone;
+  UserAction user_action_ = UserAction::kUserActionNone;
+  SubmitResult submit_result_ = kSubmitResultNotSubmitted;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormMetricsRecorder);
 };
