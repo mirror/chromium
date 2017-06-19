@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93ef77e8_d6af892a",
+        "filename": "third_party/WebKit/Source/modules/encryptedmedia/MediaKeysClient.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-19T09:20:19Z",
+      "side": 1,
+      "message": "Not related to this CL, we can change this to DISALLOW_NEW(). MediaKeysClient is never allocated with the new operator.",
+      "revId": "637f4afcdbf6fe1957f8675420ce875e7f8e81d0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
