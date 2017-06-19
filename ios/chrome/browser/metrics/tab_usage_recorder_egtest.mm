@@ -215,11 +215,6 @@ void SelectTabUsingUI(NSString* title) {
 // Verifies the UMA metric for page loads before a tab eviction by loading
 // some tabs, forcing a tab eviction, then checking the histogram.
 - (void)testPageLoadCountBeforeEvictedTab {
-  // TODO(crbug.com/733152): Reenable this test on all configurations.
-  if (!base::ios::IsRunningOnIOS10OrLater() && !IsIPadIdiom()) {
-    EARL_GREY_TEST_DISABLED(@"Test disabled on iOS 9 iPhone simulators.");
-  }
-
   web::test::SetUpFileBasedHttpServer();
   chrome_test_util::HistogramTester histogramTester;
   ResetTabUsageRecorder();
@@ -235,7 +230,9 @@ void SelectTabUsingUI(NSString* title) {
   for (NSUInteger i = 0; i < numberOfTabs; i++) {
     chrome_test_util::OpenNewTab();
     [ChromeEarlGrey loadURL:url1];
-    [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord];
+    [[EarlGrey selectElementWithMatcher:chrome_test_util::WebViewContainingText(
+                                            kURL1FirstWord)]
+        assertWithMatcher:grey_notNil()];
   }
   chrome_test_util::AssertMainTabCount(numberOfTabs);
 
