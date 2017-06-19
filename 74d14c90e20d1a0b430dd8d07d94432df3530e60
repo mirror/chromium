@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92c4f7ae_81a3369c",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T07:31:18Z",
+      "side": 1,
+      "message": "Could you avoid using default argument?\nI think it\u0027s better to be explicit when passing null which should happen only for tests.",
+      "revId": "74d14c90e20d1a0b430dd8d07d94432df3530e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "263dd5e2_ede4e57c",
+        "filename": "components/drive/job_scheduler.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T07:31:18Z",
+      "side": 1,
+      "message": "Could you avoid using default argument?\nI think it\u0027s better to be explicit when passing null which should happen only for tests.",
+      "revId": "74d14c90e20d1a0b430dd8d07d94432df3530e60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

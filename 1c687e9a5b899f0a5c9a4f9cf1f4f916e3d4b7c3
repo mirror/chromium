@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3d322dd8_81d162ef",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 275,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T07:31:18Z",
+      "side": 1,
+      "message": "It\u0027s done at the beginning of this method.",
+      "parentUuid": "06ea6b15_53ae3cce",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1c95bb9f_179da511",
         "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
         "patchSetId": 6
@@ -142,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "fae8a0ab_f6f365de",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T07:31:18Z",
+      "side": 1,
+      "message": "\u003e While passing raw pointer of connector is much clean.\n\nI don\u0027t understand what you mean by \"much clean\".\nI see no problem in having a number of std::move.\nWith WakeLockProviderPtr, it is much easier to inject fake implementation for tests.",
+      "parentUuid": "e0cd5cf6_3e86411a",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c20531e9_ffcfe89f",
         "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
         "patchSetId": 6
@@ -206,6 +242,24 @@
       "side": 1,
       "message": "The DCHECK will fail in unittest. That\u0027s why I put it in the if() block.",
       "parentUuid": "a5df50ea_2b299a6f",
+      "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a42ad990_71751f28",
+        "filename": "chrome/browser/sync_file_system/drive_backend/sync_engine.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-19T07:31:18Z",
+      "side": 1,
+      "message": "Then please fix the test, or remove this DCHECK.",
+      "parentUuid": "83fe7456_c98f8a36",
       "revId": "1c687e9a5b899f0a5c9a4f9cf1f4f916e3d4b7c3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
