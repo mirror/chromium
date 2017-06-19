@@ -16,6 +16,24 @@
       "revId": "a889bbbdea02116f74072c909d1e8f0f33b69968",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4552313f_235afae9",
+        "filename": "content/browser/power_monitor_browsertest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-19T05:42:11Z",
+      "side": 1,
+      "message": "Done and Thanks!",
+      "parentUuid": "f920814f_daa408df",
+      "revId": "a889bbbdea02116f74072c909d1e8f0f33b69968",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
