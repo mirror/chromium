@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da179ca7_5fb10a5c",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/ui_element.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 293,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-19T14:10:31Z",
+      "side": 1,
+      "message": "- Shouldn\u0027t radius be in meters, to be consistent with all other element dimensions?  Seems like we should convert to pixels at render-time.\n- We\u0027ve ended up with duplicate docs, probably from addition of getter/setters.  I\u0027d keep docs on the getter/setters and remove the docs on the private members (IMO).",
+      "revId": "d6cc531bf5c77bf79e7c1c2e64fe5f1ef3cdc1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd4e8986_f3959876",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-19T14:10:31Z",
+      "side": 1,
+      "message": "Reinforcing the previous comment, the fact that this needs to be documented as a different unit means it should be meters as well.",
+      "revId": "d6cc531bf5c77bf79e7c1c2e64fe5f1ef3cdc1f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
