@@ -32,6 +32,7 @@ ModuleScript* ModuleScript::Create(
     ParserDisposition parser_state,
     WebURLRequest::FetchCredentialsMode credentials_mode,
     AccessControlStatus access_control_status,
+    const KURL& specifier,
     const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
   // Step 1. Let script be a new module script that this algorithm will
@@ -57,7 +58,7 @@ ModuleScript* ModuleScript::Create(
   // be used for the speced algorithms, but may be used from inspector.
   ModuleScript* script =
       CreateInternal(source_text, modulator, result, base_url, nonce,
-                     parser_state, credentials_mode, start_position);
+                     parser_state, credentials_mode, specifier, start_position);
 
   // Step 6. If result is a List of errors, then:
   if (exception_state.HadException()) {
@@ -85,7 +86,7 @@ ModuleScript* ModuleScript::CreateForTest(
     WebURLRequest::FetchCredentialsMode credentials_mode) {
   String dummy_source_text = "";
   return CreateInternal(dummy_source_text, modulator, record, base_url, nonce,
-                        parser_state, credentials_mode,
+                        parser_state, credentials_mode, KURL(),
                         TextPosition::MinimumPosition());
 }
 
@@ -97,6 +98,7 @@ ModuleScript* ModuleScript::CreateInternal(
     const String& nonce,
     ParserDisposition parser_state,
     WebURLRequest::FetchCredentialsMode credentials_mode,
+    const KURL& specifier,
     const TextPosition& start_position) {
   // https://html.spec.whatwg.org/#creating-a-module-script
   // Step 7. Set script's state to "uninstantiated".
@@ -108,9 +110,9 @@ ModuleScript* ModuleScript::CreateInternal(
   // Step 12. Set script's credentials mode to the credentials mode provided.
   // Step 13. Return script.
   // [not specced] |source_text| is saved for CSP checks.
-  ModuleScript* module_script =
-      new ModuleScript(modulator, result, base_url, nonce, parser_state,
-                       credentials_mode, source_text, start_position);
+  ModuleScript* module_script = new ModuleScript(
+      modulator, result, base_url, nonce, parser_state, credentials_mode,
+      source_text, specifier, start_position);
 
   // Step 5, a part of ParseModule(): Passing script as the last parameter
   // here ensures result.[[HostDefined]] will be script.
@@ -126,6 +128,7 @@ ModuleScript::ModuleScript(Modulator* settings_object,
                            ParserDisposition parser_state,
                            WebURLRequest::FetchCredentialsMode credentials_mode,
                            const String& source_text,
+                           const KURL& specifier,
                            const TextPosition& start_position)
     : settings_object_(settings_object),
       record_(this),
@@ -135,6 +138,7 @@ ModuleScript::ModuleScript(Modulator* settings_object,
       parser_state_(parser_state),
       credentials_mode_(credentials_mode),
       source_text_(source_text),
+      specifier_(specifier),
       start_position_(start_position) {
   if (record.IsNull()) {
     // We allow empty records for module infra tests which never touch records.
