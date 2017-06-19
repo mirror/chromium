@@ -4,25 +4,36 @@
 
 #include "content/browser/renderer_host/input/synthetic_gesture_target_android.h"
 
-#include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "jni/MotionEventSynthesizer_jni.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
+#include "ui/android/window_android.h"
 #include "ui/gfx/android/view_configuration.h"
 
+using base::android::JavaParamRef;
+using base::android::ScopedJavaLocalRef;
 using blink::WebTouchEvent;
 
 namespace content {
 
 SyntheticGestureTargetAndroid::SyntheticGestureTargetAndroid(
     RenderWidgetHostImpl* host,
-    base::android::ScopedJavaLocalRef<jobject> touch_event_synthesizer)
-    : SyntheticGestureTargetBase(host),
-      touch_event_synthesizer_(touch_event_synthesizer) {
-  DCHECK(!touch_event_synthesizer_.is_null());
+    ui::ViewAndroid* view)
+    : SyntheticGestureTargetBase(host), view_(view) {
+  JNIEnv* env = base::android::AttachCurrentThread();
+  touch_event_synthesizer_.Reset(Java_MotionEventSynthesizer_create(
+      env, view_->GetContainerView(), reinterpret_cast<intptr_t>(this)));
 }
 
 SyntheticGestureTargetAndroid::~SyntheticGestureTargetAndroid() {
+}
+
+ScopedJavaLocalRef<jobject> SyntheticGestureTargetAndroid::GetWindowAndroid(
+    JNIEnv* env,
+    const JavaParamRef<jobject>& obj) {
+  auto* window_android = view_->GetWindowAndroid();
+  return window_android ? window_android->GetJavaObject()
+                        : ScopedJavaLocalRef<jobject>();
 }
 
 void SyntheticGestureTargetAndroid::TouchSetPointer(
@@ -114,6 +125,11 @@ float SyntheticGestureTargetAndroid::GetMinScalingSpanInDips() const {
   // TODO(jdduke): Have all targets use the same ui::GestureConfiguration
   // codepath.
   return gfx::ViewConfiguration::GetMinScalingSpanInDips();
+}
+
+// static
+bool RegisterSyntheticGestureTargetAndroid(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace content

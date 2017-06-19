@@ -13,6 +13,7 @@ import android.view.View;
 import org.chromium.base.ContextUtils;
 import org.chromium.base.annotations.CalledByNative;
 import org.chromium.base.annotations.JNINamespace;
+import org.chromium.ui.base.WindowAndroid;
 import org.chromium.ui.display.DisplayAndroid;
 
 /**
@@ -32,23 +33,27 @@ public class MotionEventSynthesizer {
     private static final int ACTION_HOVER_MOVE = 7;
 
     private final View mTarget;
-    private final WindowAndroidProvider mWindowProvider;
+    private final long mNativeSyntheticGestureTargetAndroid;
     private final PointerProperties[] mPointerProperties;
     private final PointerCoords[] mPointerCoords;
     private long mDownTimeInMs;
 
-    public MotionEventSynthesizer(View target, WindowAndroidProvider windowProvider) {
+    @CalledByNative
+    private static MotionEventSynthesizer create(View target, long nativePointer) {
+        return new MotionEventSynthesizer(target, nativePointer);
+    }
+
+    private MotionEventSynthesizer(View target, long nativePointer) {
         mTarget = target;
-        mWindowProvider = windowProvider;
+        mNativeSyntheticGestureTargetAndroid = nativePointer;
         mPointerProperties = new PointerProperties[MAX_NUM_POINTERS];
         mPointerCoords = new PointerCoords[MAX_NUM_POINTERS];
     }
 
     // Guaranteed to return a non-null DisplayAndroid.
     private DisplayAndroid getDisplay() {
-        if (mWindowProvider != null && mWindowProvider.getWindowAndroid() != null) {
-            return mWindowProvider.getWindowAndroid().getDisplay();
-        }
+        WindowAndroid windowAndroid = nativeGetWindowAndroid(mNativeSyntheticGestureTargetAndroid);
+        if (windowAndroid != null) return windowAndroid.getDisplay();
         return DisplayAndroid.getNonMultiDisplay(ContextUtils.getApplicationContext());
     }
 
@@ -171,4 +176,6 @@ public class MotionEventSynthesizer {
         mTarget.dispatchGenericMotionEvent(event);
         event.recycle();
     }
+
+    private native WindowAndroid nativeGetWindowAndroid(long nativeSyntheticGestureTargetAndroid);
 }

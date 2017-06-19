@@ -33,6 +33,7 @@
 #include "content/browser/media/session/audio_focus_delegate_android.h"
 #include "content/browser/media/session/media_session_android.h"
 #include "content/browser/memory/memory_monitor_android.h"
+#include "content/browser/renderer_host/input/synthetic_gesture_target_android.h"
 #include "content/browser/speech/speech_recognizer_impl_android.h"
 #include "content/browser/web_contents/web_contents_android.h"
 
@@ -69,6 +70,8 @@ base::android::RegistrationMethod kContentRegisteredMethods[] = {
     {"SmartSelectionClient", content::RegisterSmartSelectionClient},
     {"SpeechRecognizerImplAndroid",
      content::SpeechRecognizerImplAndroid::RegisterSpeechRecognizer},
+    {"SyntheticGestureTargetAndroid",
+     content::RegisterSyntheticGestureTargetAndroid},
     {"TracingControllerAndroid", content::RegisterTracingControllerAndroid},
     {"WebContentsAccessibilityAndroid",
      content::RegisterWebContentsAccessibilityAndroid},

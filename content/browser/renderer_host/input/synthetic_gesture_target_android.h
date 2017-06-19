@@ -5,20 +5,19 @@
 #ifndef CONTENT_BROWSER_RENDERER_HOST_INPUT_SYNTHETIC_GESTURE_TARGET_ANDROID_H_
 #define CONTENT_BROWSER_RENDERER_HOST_INPUT_SYNTHETIC_GESTURE_TARGET_ANDROID_H_
 
-#include <stdint.h>
-
-#include "base/android/jni_android.h"
-#include "base/macros.h"
-#include "base/time/time.h"
+#include "base/android/scoped_java_ref.h"
 #include "content/browser/renderer_host/input/synthetic_gesture_target_base.h"
+
+namespace ui {
+class ViewAndroid;
+}
 
 namespace content {
 
 class SyntheticGestureTargetAndroid : public SyntheticGestureTargetBase {
  public:
-  SyntheticGestureTargetAndroid(
-      RenderWidgetHostImpl* host,
-      base::android::ScopedJavaLocalRef<jobject> touch_event_synthesizer);
+  SyntheticGestureTargetAndroid(RenderWidgetHostImpl* host,
+                                ui::ViewAndroid* view);
   ~SyntheticGestureTargetAndroid() override;
 
   // SyntheticGestureTargetBase:
@@ -40,6 +39,10 @@ class SyntheticGestureTargetAndroid : public SyntheticGestureTargetBase {
 
   float GetMinScalingSpanInDips() const override;
 
+  base::android::ScopedJavaLocalRef<jobject> GetWindowAndroid(
+      JNIEnv* env,
+      const base::android::JavaParamRef<jobject>& obj);
+
  private:
   // Enum values below need to be kept in sync with MotionEventSynthesizer.java.
   enum Action {
@@ -58,10 +61,13 @@ class SyntheticGestureTargetAndroid : public SyntheticGestureTargetBase {
                    int pointer_count,
                    int64_t time_in_ms);
 
+  ui::ViewAndroid* const view_;
   base::android::ScopedJavaGlobalRef<jobject> touch_event_synthesizer_;
 
   DISALLOW_COPY_AND_ASSIGN(SyntheticGestureTargetAndroid);
 };
+
+bool RegisterSyntheticGestureTargetAndroid(JNIEnv* env);
 
 }  // namespace content
 
