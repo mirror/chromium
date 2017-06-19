@@ -22,6 +22,29 @@
       "revId": "3bbbbb2cfa5efbe314045459da0e5877a6e8be71",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "63048ffb_1a16d361",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-19T18:16:59Z",
+      "side": 1,
+      "message": "This should just be the same annotation as before. Can we store traffic_annotation as a class member?",
+      "range": {
+        "startLine": 312,
+        "startChar": 13,
+        "endLine": 312,
+        "endChar": 0
+      },
+      "revId": "3bbbbb2cfa5efbe314045459da0e5877a6e8be71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
