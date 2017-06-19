@@ -54,6 +54,8 @@ blink_core_sources("loader") {
     "PingLoader.h",
     "PrerendererClient.cpp",
     "PrerendererClient.h",
+    "PrerendererClientImpl.cpp",
+    "PrerendererClientImpl.h",
     "ProgressTracker.cpp",
     "ProgressTracker.h",
     "SubresourceFilter.cpp",

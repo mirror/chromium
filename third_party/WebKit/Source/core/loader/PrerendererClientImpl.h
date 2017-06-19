@@ -29,28 +29,38 @@
  *
  */
 
-#include "web/PrerendererClientImpl.h"
+#ifndef PrerendererClientImpl_h
+#define PrerendererClientImpl_h
 
-#include "core/exported/WebViewBase.h"
-#include "platform/Prerender.h"
-#include "public/platform/WebPrerender.h"
-#include "public/web/WebPrerendererClient.h"
+#include "core/CoreExport.h"
+#include "core/loader/PrerendererClient.h"
+#include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
 
 namespace blink {
 
-PrerendererClientImpl::PrerendererClientImpl(Page& page,
-                                             WebPrerendererClient* client)
-    : PrerendererClient(page), client_(client) {}
+class Prerender;
+class WebPrerendererClient;
 
-void PrerendererClientImpl::WillAddPrerender(Prerender* prerender) {
-  if (!client_)
-    return;
-  WebPrerender web_prerender(prerender);
-  client_->WillAddPrerender(&web_prerender);
-}
+// TODO(sashab): Merge this into PrerendererClient.
+class CORE_EXPORT PrerendererClientImpl final
+    : public GarbageCollected<PrerendererClientImpl>,
+      public PrerendererClient {
+  USING_GARBAGE_COLLECTED_MIXIN(PrerendererClientImpl);
+  WTF_MAKE_NONCOPYABLE(PrerendererClientImpl);
 
-bool PrerendererClientImpl::IsPrefetchOnly() {
-  return client_ && client_->IsPrefetchOnly();
-}
+ public:
+  PrerendererClientImpl(Page&, WebPrerendererClient*);
+
+  void WillAddPrerender(Prerender*) override;
+  bool IsPrefetchOnly() override;
+
+  DEFINE_INLINE_VIRTUAL_TRACE() { PrerendererClient::Trace(visitor); }
+
+ private:
+  WebPrerendererClient* client_;
+};
 
 }  // namespace blink
+
+#endif  // PrerendererClientImpl_h
