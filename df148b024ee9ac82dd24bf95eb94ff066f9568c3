@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c797cb8_b37971fe",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBox.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2596,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-19T16:36:28Z",
+      "side": 1,
+      "message": "nit: this is optional, but I find it weird to put the dirty check inside this function, since it means the function can only be called at the \"right\" time (i.e., at a certain point during layout).  You might consider putting the check at the call site in UpdateLogicalWidth:\n\nvoid LayoutBox::UpdateLogicalWidth() {\n  if (!PreferredLogicalWidthsDirty() \u0026\u0026\n      NeedsPreferredWidthsRecalculation() \u0026\u0026\n      ShouldRecalculateMinMaxWidthsAffectedByAncestor(this)) {\n    ...\n  }\n  ...\n}",
+      "revId": "df148b024ee9ac82dd24bf95eb94ff066f9568c3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
