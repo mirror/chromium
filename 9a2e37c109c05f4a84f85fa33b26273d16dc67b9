@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6d715ed6_6041bd12",
+        "filename": "chrome/browser/android/vr_shell/textures/system_indicator_texture.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-06-19T15:10:09Z",
+      "side": 1,
+      "message": "Auto-formatter changed the format to this.",
+      "parentUuid": "4e8404d8_210524d6",
+      "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "26a2e940_4ca63b91",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 1
@@ -39,6 +57,30 @@
       "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc20a73b_79369563",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 208,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-06-19T15:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "26a2e940_4ca63b91",
+      "range": {
+        "startLine": 208,
+        "startChar": 54,
+        "endLine": 208,
+        "endChar": 57
+      },
+      "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -86,6 +128,30 @@
       "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9d3b477_80b42500",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 402,
+      "author": {
+        "id": 1119159
+      },
+      "writtenOn": "2017-06-19T15:10:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "642be1ac_8443f368",
+      "range": {
+        "startLine": 402,
+        "startChar": 71,
+        "endLine": 402,
+        "endChar": 0
+      },
+      "revId": "9a2e37c109c05f4a84f85fa33b26273d16dc67b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
