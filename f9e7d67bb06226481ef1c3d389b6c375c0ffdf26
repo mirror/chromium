@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb224591_18870b8f",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T18:00:27Z",
+      "side": 1,
+      "message": "Exclude new keys from UKM for now? See https://chromium-review.googlesource.com/c/538119/",
+      "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
