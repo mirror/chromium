@@ -227,6 +227,8 @@ void LogoTracker::FetchLogo() {
                                        gray_background_);
   }
 
+  LOG(ERROR) << "url: " << url.spec();
+
   net::NetworkTrafficAnnotationTag traffic_annotation =
       net::DefineNetworkTrafficAnnotation("logo_tracker", R"(
         semantics {
@@ -297,12 +299,14 @@ void LogoTracker::OnFreshLogoAvailable(
       !encoded_logo->metadata.fingerprint.empty() &&
       encoded_logo->metadata.fingerprint ==
           cached_logo_->metadata.fingerprint) {
+    LOG(ERROR) << "logo revalidated";
     // The cached logo was revalidated, i.e. its fingerprint was verified.
     // mime_type isn't sent when revalidating, so copy it from the cached logo.
     encoded_logo->metadata.mime_type = cached_logo_->metadata.mime_type;
     SetCachedMetadata(encoded_logo->metadata);
     download_outcome = DOWNLOAD_OUTCOME_LOGO_REVALIDATED;
   } else if (encoded_logo && image.isNull()) {
+    LOG(ERROR) << "decoding failed";
     // Image decoding failed. Do nothing.
     download_outcome = DOWNLOAD_OUTCOME_DECODING_FAILED;
   } else {
@@ -319,20 +323,20 @@ void LogoTracker::OnFreshLogoAvailable(
 
     if (logo) {
       download_outcome = DOWNLOAD_OUTCOME_NEW_LOGO_SUCCESS;
+      LOG(ERROR) << "new logo success";
     } else {
-      if (parsing_failed)
+      if (parsing_failed) {
+        LOG(ERROR) << "parsing failed";
         download_outcome = DOWNLOAD_OUTCOME_PARSING_FAILED;
-      else
+      } else {
+        LOG(ERROR) << "no logo today";
         download_outcome = DOWNLOAD_OUTCOME_NO_LOGO_TODAY;
+      }
     }
 
-    // Notify observers if a new logo was fetched, or if the new logo is NULL
-    // but the cached logo was non-NULL.
-    if (logo || cached_logo_) {
-      for (auto& observer : logo_observers_)
-        observer.OnLogoAvailable(logo.get(), false);
-      SetCachedLogo(std::move(encoded_logo));
-    }
+    for (auto& observer : logo_observers_)
+      observer.OnLogoAvailable(logo.get(), false);
+    SetCachedLogo(std::move(encoded_logo));
   }
 
   DCHECK_NE(kDownloadOutcomeNotTracked, download_outcome);

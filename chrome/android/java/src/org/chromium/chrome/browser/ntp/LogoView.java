@@ -23,8 +23,9 @@ import android.view.View.OnClickListener;
 import android.widget.FrameLayout;
 
 import org.chromium.chrome.R;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.ntp.LogoBridge.Logo;
-import org.chromium.chrome.browser.ntp.LogoBridge.LogoObserver;
+import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.widget.LoadingView;
 
 import java.lang.ref.WeakReference;
@@ -96,17 +97,6 @@ public class LogoView extends FrameLayout implements OnClickListener {
          * @param isAnimatedLogoShowing Whether the animated GIF logo is playing.
          */
         void onLogoClicked(boolean isAnimatedLogoShowing);
-
-        /**
-         * Gets the default search provider's logo and calls logoObserver with the result.
-         * @param logoObserver The callback to notify when the logo is available.
-         */
-        void getSearchProviderLogo(LogoObserver logoObserver);
-
-        /**
-         * Should be called when the owning class is destroyed.
-         */
-        void destroy();
     }
 
     /**
@@ -115,7 +105,6 @@ public class LogoView extends FrameLayout implements OnClickListener {
     public LogoView(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        mLogo = getDefaultLogo();
         mLogoMatrix = new Matrix();
         mLogoIsDefault = true;
 
@@ -175,29 +164,59 @@ public class LogoView extends FrameLayout implements OnClickListener {
     }
 
     /**
-     * Lets logo view show a spinning progressbar.
+     * Show a spinning progressbar.
      */
     public void showLoadingView() {
+        mLogo = null;
         mLoadingView.showLoadingUI();
+    }
+
+    /**
+     * Show a loading indicator or a baked-in default search provider logo, based on what is
+     * available.
+     */
+    public void showSearchProviderLoadingView() {
+        final boolean delayShowingDefaultLogo = ChromeFeatureList.isEnabled(
+                ChromeFeatureList.DELAY_SHOWING_SEARCH_PROVIDER_DEFAULT_LOGO);
+        if (hasDefaultLogo() && !delayShowingDefaultLogo) {
+            showDefaultLogo();
+        } else {
+            showLoadingView();
+        }
     }
 
     /**
      * Fades in a new logo over the current logo.
      *
-     * @param logo The new logo to fade in. May be null to reset to the default logo.
+     * @param logo The new logo to fade in.
      */
     public void updateLogo(Logo logo) {
         if (logo == null) {
-            updateLogo(getDefaultLogo(), null, true);
-        } else {
-            String contentDescription = TextUtils.isEmpty(logo.altText) ? null
-                    : getResources().getString(R.string.accessibility_google_doodle, logo.altText);
-            updateLogo(logo.image, contentDescription, false);
+            if (hasDefaultLogo()) {
+                showDefaultLogo();
+                return;
+            }
+
+            mLogo = null;
+            invalidate();
+            return;
         }
+
+        String contentDescription = TextUtils.isEmpty(logo.altText)
+                ? null
+                : getResources().getString(R.string.accessibility_google_doodle, logo.altText);
+        updateLogo(logo.image, contentDescription, false);
     }
 
     private void updateLogo(Bitmap logo, final String contentDescription, boolean isDefaultLogo) {
+        assert logo != null;
+
         if (mFadeAnimation != null) mFadeAnimation.end();
+
+        mLoadingView.hideLoadingUI();
+
+        // Don't crossfade if the new logo is the same as the old one.
+        if (mLogo != null && mLogo.sameAs(logo)) return;
 
         mNewLogo = logo;
         mNewLogoMatrix = new Matrix();
@@ -235,6 +254,10 @@ public class LogoView extends FrameLayout implements OnClickListener {
             }
         });
         mFadeAnimation.start();
+    }
+
+    private void showDefaultLogo() {
+        updateLogo(getDefaultLogo(), null, true);
     }
 
     /**
@@ -276,6 +299,10 @@ public class LogoView extends FrameLayout implements OnClickListener {
             sDefaultLogo = new WeakReference<Bitmap>(defaultLogo);
         }
         return defaultLogo;
+    }
+
+    private boolean hasDefaultLogo() {
+        return TemplateUrlService.getInstance().isDefaultSearchEngineGoogle();
     }
 
     @Override

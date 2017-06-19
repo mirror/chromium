@@ -446,6 +446,13 @@ const char kContextualSearchUrlActionsDescription[] =
     "Whether or not URL actions using Contextual Cards data in the "
     "Contextual Search Bar is enabled.";
 
+const char kDelayShowingSearchProviderDefaultLogoName[] =
+    "Delay showing search provider default logo";
+
+const char kDelayShowingSearchProviderDefaultLogoDescription[] =
+    "Delays showing the default logo for the search provider until after the "
+    "Doodle has been fetched.";
+
 #endif  // defined(OS_ANDROID)
 
 const char kSmoothScrollingName[] = "Smooth Scrolling";
