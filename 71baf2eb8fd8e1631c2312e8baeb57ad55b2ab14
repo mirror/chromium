@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b7116f79_d44dbe6f",
+        "filename": "third_party/WebKit/Source/core/paint/TableCellPainter.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:42:15Z",
+      "side": 0,
+      "message": "What if a cell is composited? Who paints its border?",
+      "revId": "71baf2eb8fd8e1631c2312e8baeb57ad55b2ab14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
