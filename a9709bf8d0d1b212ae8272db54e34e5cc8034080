@@ -46,6 +46,30 @@
       "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1263556_a4afa41c",
+        "filename": "third_party/WebKit/Source/core/frame/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-06-19T10:44:16Z",
+      "side": 1,
+      "message": "I vote for 1.\n\nOriginal code already smells; it copies a RefPtr unnecessarily. If you put .Release() to fix that, then the whole function call becomes invalid (dst_buffer may become null before dst_buffer-\u003eByteLength() is evaluated), so you have to move ByteLength() call outside.\n\nYour proposed change is basically a combination of \"putting .Release() and getting the whole function call correct\" and \"replacing .Release() with std::move()\". I think this process is natural and I don\u0027t see anything wrong in your proposed change.",
+      "parentUuid": "aa8b44c9_6a226146",
+      "range": {
+        "startLine": 190,
+        "startChar": 25,
+        "endLine": 190,
+        "endChar": 62
+      },
+      "revId": "a9709bf8d0d1b212ae8272db54e34e5cc8034080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
