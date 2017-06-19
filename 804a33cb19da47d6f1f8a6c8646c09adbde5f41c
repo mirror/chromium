@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "472034b8_89a08bc1",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-19T20:30:28Z",
+      "side": 1,
+      "message": "Does the resulting code look the same? I would expect so, but I\u0027d like to double check.\n\nAlso, let\u0027s add a comment about why the code is written this way.",
+      "range": {
+        "startLine": 518,
+        "startChar": 21,
+        "endLine": 518,
+        "endChar": 24
+      },
+      "revId": "804a33cb19da47d6f1f8a6c8646c09adbde5f41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
