@@ -190,7 +190,7 @@ TEST(PasswordFormMetricsRecorder, Actions) {
           PasswordFormMetricsRecorder::kSubmitResultFailed) {
         recorder.LogSubmitFailed();
       } else if (test.submit_result ==
-               PasswordFormMetricsRecorder::kSubmitResultPassed) {
+                 PasswordFormMetricsRecorder::kSubmitResultPassed) {
         recorder.LogSubmitPassed();
       }
 
