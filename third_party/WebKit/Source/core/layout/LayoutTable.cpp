@@ -1474,10 +1474,6 @@ void LayoutTable::EnsureIsReadyForPaintInvalidation() {
     for (auto* row = section->FirstRow(); row; row = row->NextRow()) {
       for (auto* cell = row->FirstCell(); cell; cell = cell->NextCell()) {
         DCHECK_EQ(cell->Table(), this);
-        // The cell will update its collapsed border cache, and invalidate
-        // display item client if needed.
-        cell->EnsureIsReadyForPaintInvalidation();
-
         // Determine if there are any collapsed borders, and if so set
         // has_collapsed_borders_.
         const auto* values = cell->GetCollapsedBorderValues();
