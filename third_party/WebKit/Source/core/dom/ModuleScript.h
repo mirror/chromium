@@ -42,6 +42,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
       ParserDisposition,
       WebURLRequest::FetchCredentialsMode,
       AccessControlStatus,
+      const KURL& specifier,
       const TextPosition& start_position = TextPosition::MinimumPosition());
 
   // Mostly corresponds to Create() but accepts ScriptModule as the argument
@@ -58,6 +59,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   ScriptModule Record() const;
   bool HasEmptyRecord() const;
   const KURL& BaseURL() const { return base_url_; }
+  const KURL& Specifier() const { return specifier_; }
 
   ModuleInstantiationState State() const { return state_; }
 
@@ -91,6 +93,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
                ParserDisposition parser_state,
                WebURLRequest::FetchCredentialsMode credentials_mode,
                const String& source_text,
+               const KURL& specifier,
                const TextPosition& start_position);
 
   static ModuleScript* CreateInternal(const String& source_text,
@@ -100,6 +103,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
                                       const String& nonce,
                                       ParserDisposition,
                                       WebURLRequest::FetchCredentialsMode,
+                                      const KURL& specifier,
                                       const TextPosition&);
 
   ScriptType GetScriptType() const override { return ScriptType::kModule; }
@@ -151,6 +155,7 @@ class CORE_EXPORT ModuleScript final : public Script, public TraceWrapperBase {
   // For CSP check.
   const String source_text_;
 
+  const KURL specifier_;
   const TextPosition start_position_;
 };
 

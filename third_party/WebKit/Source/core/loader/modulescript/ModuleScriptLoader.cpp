@@ -99,6 +99,8 @@ void ModuleScriptLoader::Fetch(const ModuleScriptFetchRequest& module_request,
   // https://fetch.spec.whatwg.org/#concept-request-initiator
   options.initiator_info.name = g_empty_atom;
 
+  options.initiator_info.module_referrer = module_request.GetReferrer();
+
   // referrer is referrer,
   if (!module_request.GetReferrer().IsNull()) {
     resource_request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
@@ -213,7 +215,7 @@ void ModuleScriptLoader::NotifyFinished(Resource*) {
       source_text, modulator_, GetResource()->GetResponse().Url(), nonce_,
       parser_state_,
       GetResource()->GetResourceRequest().GetFetchCredentialsMode(),
-      access_control_status);
+      access_control_status, GetResource()->GetResponse().Url());
 
   AdvanceState(State::kFinished);
 }

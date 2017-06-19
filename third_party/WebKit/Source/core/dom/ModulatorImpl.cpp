@@ -190,7 +190,7 @@ void ModulatorImpl::ExecuteModule(const ModuleScript* module_script) {
     v8::Isolate* isolate = script_state_->GetIsolate();
     ScriptModule::ReportException(
         script_state_.Get(), module_script->CreateErrorInternal(isolate),
-        module_script->BaseURL().GetString(), module_script->StartPosition());
+        module_script->Specifier().GetString(), module_script->StartPosition());
     return;
   }
 

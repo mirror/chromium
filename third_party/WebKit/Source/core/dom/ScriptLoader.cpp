@@ -350,6 +350,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
   ParserDisposition parser_state =
       IsParserInserted() ? kParserInserted : kNotParserInserted;
 
+  KURL url;
   // 21. "If the element has a src content attribute, run these substeps:"
   if (element_->HasSourceAttribute()) {
     // 21.1. Let src be the value of the element's src attribute.
@@ -369,7 +370,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
     is_external_script_ = true;
 
     // 21.4. "Parse src relative to the element's node document."
-    KURL url = element_document.CompleteURL(src);
+    url = element_document.CompleteURL(src);
 
     // 21.5. "If the previous step failed, queue a task to
     //        fire an event named error at the element, and abort these steps."
@@ -490,7 +491,7 @@ bool ScriptLoader::PrepareScript(const TextPosition& script_start_position,
             ToScriptStateForMainWorld(context_document->GetFrame()));
         ModuleScript* module_script = ModuleScript::Create(
             ScriptContent(), modulator, base_url, nonce, parser_state,
-            credentials_mode, kSharableCrossOrigin, position);
+            credentials_mode, kSharableCrossOrigin, url, position);
 
         // 3. "If this returns null, set the script's script to null and abort
         //     these substeps; the script is ready."
