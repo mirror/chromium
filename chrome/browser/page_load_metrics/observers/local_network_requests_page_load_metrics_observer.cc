@@ -22,6 +22,8 @@
 #include "net/base/url_util.h"
 #include "url/gurl.h"
 
+using namespace internal;
+
 namespace {
 
 // TODO(uthakore): Update router regex based on further study.
@@ -50,10 +52,10 @@ static const std::map<uint16_t, PortType>& localhost_port_categories =
         {80, PortType::PORT_TYPE_WEB},    {8000, PortType::PORT_TYPE_WEB},
         {8008, PortType::PORT_TYPE_WEB},  {8080, PortType::PORT_TYPE_WEB},
         {8081, PortType::PORT_TYPE_WEB},  {8088, PortType::PORT_TYPE_WEB},
-        {3306, PortType::PORT_TYPE_DB},   {5432, PortType::PORT_TYPE_DB},
-        {27017, PortType::PORT_TYPE_DB},  {27018, PortType::PORT_TYPE_DB},
-        {27019, PortType::PORT_TYPE_DB},  {515, PortType::PORT_TYPE_PRINT},
-        {631, PortType::PORT_TYPE_PRINT},
+        {443, PortType::PORT_TYPE_WEB},   {3306, PortType::PORT_TYPE_DB},
+        {5432, PortType::PORT_TYPE_DB},   {27017, PortType::PORT_TYPE_DB},
+        {27018, PortType::PORT_TYPE_DB},  {27019, PortType::PORT_TYPE_DB},
+        {515, PortType::PORT_TYPE_PRINT}, {631, PortType::PORT_TYPE_PRINT},
         // TODO(uthakore): Add additional port mappings based on further study.
     };
 }  // namespace
@@ -70,7 +72,9 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
   // Upon page load, we want to determine whether the page loaded was a public
   // domain or private domain and generate an event describing the domain type.
   net::HostPortPair address = navigation_handle->GetSocketAddress();
+  LOG(WARNING) << "The current address is " << address.host();
   if (net::IsLocalhost(address.host())) {
+    LOG(WARNING) << "and the address is a localhost address";
     page_load_type_ = DOMAIN_TYPE_LOCALHOST;
     page_ip_address_ = net::IPAddress::IPv4Localhost();
   } else {
@@ -200,32 +204,240 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordHistograms() {
   }
   ResolveResourceTypes();
 
-  // For each resource, log a histogram for all associated type of request.
+  // Compute the number of requests of each resource type for the loaded page.
+  std::map<const std::string, int> counts;
   for (const auto& entry : resource_request_counts_) {
-    UMA_HISTOGRAM_COUNTS_1000(
-        internal::kNonlocalhostHistogramNames.at(page_load_type_)
-            .at(requested_resource_types_->at(entry.first))
-            .at(true),
-        entry.second.first);
-    UMA_HISTOGRAM_COUNTS_1000(
-        internal::kNonlocalhostHistogramNames.at(page_load_type_)
-            .at(requested_resource_types_->at(entry.first))
-            .at(false),
-        entry.second.second);
+    counts[internal::kNonlocalhostHistogramNames.at(page_load_type_)
+               .at(requested_resource_types_->at(entry.first))
+               .at(true)] += entry.second.first;
+    counts[internal::kNonlocalhostHistogramNames.at(page_load_type_)
+               .at(requested_resource_types_->at(entry.first))
+               .at(false)] += entry.second.second;
   }
 
-  // Log an entry for each localhost resource (one per port).
   for (const auto& entry : localhost_request_counts_) {
+    counts[internal::kLocalhostHistogramNames.at(page_load_type_)
+               .at(DeterminePortType(entry.first))
+               .at(true)] += entry.second.first;
+    counts[internal::kLocalhostHistogramNames.at(page_load_type_)
+               .at(DeterminePortType(entry.first))
+               .at(false)] += entry.second.second;
+  }
+
+  // Log a histogram for each type of resource depending on the domain type of
+  // the page load.
+  if (page_load_type_ == DOMAIN_TYPE_PUBLIC) {
     UMA_HISTOGRAM_COUNTS_1000(
-        internal::kLocalhostHistogramNames.at(page_load_type_)
-            .at(DeterminePortType(entry.first))
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(RESOURCE_TYPE_PRIVATE)
             .at(true),
-        entry.second.first);
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(RESOURCE_TYPE_PRIVATE)
+                   .at(true)]);
     UMA_HISTOGRAM_COUNTS_1000(
-        internal::kLocalhostHistogramNames.at(page_load_type_)
-            .at(DeterminePortType(entry.first))
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(RESOURCE_TYPE_PRIVATE)
             .at(false),
-        entry.second.second);
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(RESOURCE_TYPE_PRIVATE)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(RESOURCE_TYPE_ROUTER)
+            .at(true),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(RESOURCE_TYPE_ROUTER)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(RESOURCE_TYPE_ROUTER)
+            .at(false),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(RESOURCE_TYPE_ROUTER)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_WEB)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_WEB)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_WEB)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_WEB)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_DB)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_DB)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_DB)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_DB)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_PRINT)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_PRINT)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_PRINT)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_PRINT)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_DEV)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_DEV)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_DEV)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_DEV)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_OTHER)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_OTHER)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+            .at(PORT_TYPE_OTHER)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+                   .at(PORT_TYPE_OTHER)
+                   .at(false)]);
+  } else {
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_PUBLIC)
+            .at(true),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_PUBLIC)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_PUBLIC)
+            .at(false),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_PUBLIC)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_LOCAL_SAME_SUBNET)
+            .at(true),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_LOCAL_SAME_SUBNET)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_LOCAL_SAME_SUBNET)
+            .at(false),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_LOCAL_SAME_SUBNET)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_LOCAL_DIFF_SUBNET)
+            .at(true),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_LOCAL_DIFF_SUBNET)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(RESOURCE_TYPE_LOCAL_DIFF_SUBNET)
+            .at(false),
+        counts[internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(RESOURCE_TYPE_LOCAL_DIFF_SUBNET)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_WEB)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_WEB)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_WEB)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_WEB)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_DB)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_DB)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_DB)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_DB)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_PRINT)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_PRINT)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_PRINT)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_PRINT)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_DEV)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_DEV)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_DEV)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_DEV)
+                   .at(false)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_OTHER)
+            .at(true),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_OTHER)
+                   .at(true)]);
+    UMA_HISTOGRAM_COUNTS_1000(
+        internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+            .at(PORT_TYPE_OTHER)
+            .at(false),
+        counts[internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PRIVATE)
+                   .at(PORT_TYPE_OTHER)
+                   .at(false)]);
   }
 }
 
