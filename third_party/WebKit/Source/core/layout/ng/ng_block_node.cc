@@ -244,7 +244,6 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     NGLayoutResult* layout_result) {
   NGPhysicalBoxFragment* physical_fragment =
       ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
-
   if (box_->Style()->SpecifiesColumns())
     UpdateLegacyMultiColumnFlowThread(box_, physical_fragment);
   box_->SetWidth(physical_fragment->Size().width);
@@ -282,8 +281,10 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     NGWritingMode writing_mode =
         FromPlatformWritingMode(Style().GetWritingMode());
     NGBoxFragment fragment(writing_mode, physical_fragment);
+    NGBoxStrut scrollers = GetScrollbarSizes(box_);
     ToLayoutBlock(box_)->ComputeOverflow(fragment.OverflowSize().block_size -
-                                         border_and_padding.block_end);
+                                         border_and_padding.block_end -
+                                         scrollers.BlockSum());
   }
 
   box_->UpdateAfterLayout();
