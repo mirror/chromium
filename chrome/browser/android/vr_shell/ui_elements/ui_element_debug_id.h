@@ -27,6 +27,7 @@ enum UiElementDebugId {
   kExitWarning,
   kExitPrompt,
   kExitPromptBackplane,
+  kLocationAccessIndicator,
 };
 
 }  // namespace vr_shell
