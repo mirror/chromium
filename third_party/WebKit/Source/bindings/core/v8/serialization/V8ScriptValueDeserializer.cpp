@@ -5,6 +5,7 @@
 #include "bindings/core/v8/serialization/V8ScriptValueDeserializer.h"
 
 #include "bindings/core/v8/ToV8ForCore.h"
+#include "bindings/core/v8/serialization/UnpackedSerializedScriptValue.h"
 #include "core/dom/CompositorProxy.h"
 #include "core/dom/DOMArrayBuffer.h"
 #include "core/dom/DOMSharedArrayBuffer.h"
@@ -91,7 +92,9 @@ V8ScriptValueDeserializer::V8ScriptValueDeserializer(
     RefPtr<SerializedScriptValue> serialized_script_value,
     const Options& options)
     : script_state_(std::move(script_state)),
-      serialized_script_value_(std::move(serialized_script_value)),
+      unpacked_value_(
+          SerializedScriptValue::Unpack(std::move(serialized_script_value))),
+      serialized_script_value_(unpacked_value_->Value()),
       deserializer_(script_state_->GetIsolate(),
                     serialized_script_value_->Data(),
                     serialized_script_value_->DataLengthInBytes(),
@@ -114,7 +117,7 @@ v8::Local<v8::Value> V8ScriptValueDeserializer::Deserialize() {
   v8::Local<v8::Context> context = script_state_->GetContext();
 
   size_t version_envelope_size =
-      ReadVersionEnvelope(serialized_script_value_.Get(), &version_);
+      ReadVersionEnvelope(serialized_script_value_, &version_);
   if (version_envelope_size) {
     const void* blink_envelope;
     bool read_envelope = ReadRawBytes(version_envelope_size, &blink_envelope);
@@ -148,11 +151,8 @@ void V8ScriptValueDeserializer::Transfer() {
   v8::Local<v8::Context> context = script_state_->GetContext();
   v8::Local<v8::Object> creation_context = context->Global();
 
-  // Receive the transfer, making the received objects available.
-  serialized_script_value_->ReceiveTransfer();
-
   // Transfer array buffers.
-  const auto& array_buffers = serialized_script_value_->ReceivedArrayBuffers();
+  const auto& array_buffers = unpacked_value_->ArrayBuffers();
   for (unsigned i = 0; i < array_buffers.size(); i++) {
     DOMArrayBufferBase* array_buffer = array_buffers.at(i);
     v8::Local<v8::Value> wrapper =
@@ -268,8 +268,7 @@ ScriptWrappable* V8ScriptValueDeserializer::ReadDOMObject(
     }
     case kImageBitmapTransferTag: {
       uint32_t index = 0;
-      const auto& transferred_image_bitmaps =
-          serialized_script_value_->ReceivedImageBitmaps();
+      const auto& transferred_image_bitmaps = unpacked_value_->ImageBitmaps();
       if (!ReadUint32(&index) || index >= transferred_image_bitmaps.size())
         return nullptr;
       return transferred_image_bitmaps[index].Get();

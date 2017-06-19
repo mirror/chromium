@@ -17,6 +17,7 @@
 namespace blink {
 
 class File;
+class UnpackedSerializedScriptValue;
 
 // Deserializes V8 values serialized using V8ScriptValueSerializer (or its
 // predecessor, ScriptValueSerializer).
@@ -77,7 +78,11 @@ class CORE_EXPORT V8ScriptValueDeserializer
                                                              uint32_t) override;
 
   RefPtr<ScriptState> script_state_;
-  RefPtr<SerializedScriptValue> serialized_script_value_;
+
+  // |unpacked_value_| keeps |serialized_script_value_| alive.
+  Member<UnpackedSerializedScriptValue> unpacked_value_;
+  SerializedScriptValue* serialized_script_value_;
+
   v8::ValueDeserializer deserializer_;
 
   // Message ports which were transferred in.

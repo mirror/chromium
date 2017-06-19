@@ -52,6 +52,7 @@ class BlobDataHandle;
 class Transferables;
 class ExceptionState;
 class StaticBitmapImage;
+class UnpackedSerializedScriptValue;
 class WebBlobInfo;
 
 typedef HashMap<String, RefPtr<BlobDataHandle>> BlobDataHandleMap;
@@ -159,6 +160,9 @@ class CORE_EXPORT SerializedScriptValue
   }
   v8::Local<v8::Value> Deserialize(v8::Isolate*, const DeserializeOptions&);
 
+  // TODO(jbroman): Describe this!
+  static UnpackedSerializedScriptValue* Unpack(RefPtr<SerializedScriptValue>);
+
   // Helper function which pulls the values out of a JS sequence and into a
   // MessagePortArray.  Also validates the elements per sections 4.1.13 and
   // 4.1.15 of the WebIDL spec and section 8.3.3 of the HTML5 spec and generates
@@ -204,22 +208,13 @@ class CORE_EXPORT SerializedScriptValue
   const uint8_t* Data() const { return data_buffer_.get(); }
   size_t DataLengthInBytes() const { return data_buffer_size_; }
 
-  // These are only accessible once we have "received" the transferred data on
-  // the new thread or context.
-  void ReceiveTransfer();
-  const HeapVector<Member<DOMArrayBufferBase>>& ReceivedArrayBuffers() const {
-    return received_->array_buffers;
-  }
-  const HeapVector<Member<ImageBitmap>>& ReceivedImageBitmaps() const {
-    return received_->image_bitmaps;
-  }
-
   TransferredWasmModulesArray& WasmModules() { return wasm_modules_; }
   BlobDataHandleMap& BlobDataHandles() { return blob_data_handles_; }
 
  private:
   friend class ScriptValueSerializer;
   friend class V8ScriptValueSerializer;
+  friend class UnpackedSerializedScriptValue;
 
   struct BufferDeleter {
     void operator()(uint8_t* buffer) { WTF::Partitions::BufferFree(buffer); }
@@ -248,23 +243,13 @@ class CORE_EXPORT SerializedScriptValue
   size_t data_buffer_size_ = 0;
 
   // These two have one-use transferred contents, and are stored in
-  // ReceivedObjects thereafter.
+  // UnpackedSerializedScriptValue thereafter.
   ArrayBufferContentsArray array_buffer_contents_array_;
   ImageBitmapContentsArray image_bitmap_contents_array_;
 
   // These do not have one-use transferred contents, like the above.
   TransferredWasmModulesArray wasm_modules_;
   BlobDataHandleMap blob_data_handles_;
-
-  // These replace their corresponding ordinary members, once set.
-  // Once the SerializedScriptValue is being deserialized, real objects will be
-  // materialized here, but only the contents should exist when moving between
-  // threads, frames, etc.
-  struct ReceivedObjects {
-    PersistentHeapVector<Member<DOMArrayBufferBase>> array_buffers;
-    PersistentHeapVector<Member<ImageBitmap>> image_bitmaps;
-  };
-  Optional<ReceivedObjects> received_;
 
   bool has_registered_external_allocation_;
   bool transferables_need_external_allocation_registration_;
