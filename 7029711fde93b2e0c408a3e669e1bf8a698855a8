@@ -16,6 +16,24 @@
       "revId": "7029711fde93b2e0c408a3e669e1bf8a698855a8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "114cf8b7_d21244e6",
+        "filename": "third_party/WebKit/Source/platform/mojo/GeometryStructTraitsTest.cpp",
+        "patchSetId": 9
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-19T23:38:12Z",
+      "side": 1,
+      "message": "No. Reverted it.",
+      "parentUuid": "9f0dedbf_9c7e2712",
+      "revId": "7029711fde93b2e0c408a3e669e1bf8a698855a8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
