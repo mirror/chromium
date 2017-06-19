@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4620d358_02c3f82c",
+        "filename": "components/arc/common/volume_mounter.mojom",
+        "patchSetId": 8
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-19T16:51:10Z",
+      "side": 1,
+      "message": "nit: ARC",
+      "range": {
+        "startLine": 40,
+        "startChar": 53,
+        "endLine": 40,
+        "endChar": 58
+      },
+      "revId": "28d1ca0cc1b49afcf8a8d6e4427575f485e857b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82d6ff9e_c467ea96",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-19T16:51:10Z",
+      "side": 1,
+      "message": "can you use BindOnce?",
+      "range": {
+        "startLine": 45,
+        "startChar": 33,
+        "endLine": 45,
+        "endChar": 37
+      },
+      "revId": "28d1ca0cc1b49afcf8a8d6e4427575f485e857b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c26611db_ba8f7d31",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-19T16:51:10Z",
+      "side": 1,
+      "message": "nit: ARC_GET_INSTANCE_FOR_METHOD already logs.",
+      "range": {
+        "startLine": 83,
+        "startChar": 4,
+        "endLine": 83,
+        "endChar": 65
+      },
+      "revId": "28d1ca0cc1b49afcf8a8d6e4427575f485e857b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
