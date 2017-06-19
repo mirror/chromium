@@ -52,6 +52,24 @@
       "revId": "97cecd453d389bf4aa9ebcd39fe7f8eaa4a620ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa6d543e_a970144c",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-19T23:24:51Z",
+      "side": 1,
+      "message": "Thanks Mo for checking this.\n\nJohn: I tested removing the Gen call and the re-attachment code below and it does seem to work both for the trivial test case in http://crbug.com/696126 as well as Kai\u0027s new conformance test from https://github.com/KhronosGroup/WebGL/pull/2407 .\n\nHowever, I\u0027d like to leave in the Gen call, and the tracking of the framebuffer_attachment_points_ per renderbuffer, in case we need to apply this workaround on desktop GL or ever need these back-pointers for some other driver bug workaround. Is this OK with you?",
+      "parentUuid": "7a3072cd_b467bc19",
+      "revId": "97cecd453d389bf4aa9ebcd39fe7f8eaa4a620ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
