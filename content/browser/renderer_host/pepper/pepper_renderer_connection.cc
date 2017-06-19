@@ -232,13 +232,30 @@ void PepperRendererConnection::OnMsgDidCreateInProcessInstance(
     PP_Instance instance,
     const PepperRendererInstanceData& instance_data) {
   PepperRendererInstanceData data = instance_data;
+  // It's important that we supply the render process ID ourselves since the
+  // message may be coming from a compromised renderer.
   data.render_process_id = render_process_id_;
-  in_process_host_->AddInstance(instance, data);
+  // We have no way to detect if the PP_Instance is valid. However, it's safe
+  // to add instance data since we always consider it untrusted. Don't allow a
+  // renderer to overwrite existing instance data, since we can detect that.
+  // See http://crbug.com/733548
+  if (!in_process_host_->IsValidInstance(instance)) {
+    in_process_host_->AddInstance(instance, data);
+  } else {
+    NOTREACHED();
+  }
 }
 
 void PepperRendererConnection::OnMsgDidDeleteInProcessInstance(
     PP_Instance instance) {
-  in_process_host_->DeleteInstance(instance);
+  // Since the instance is potentially invalid, check that the instance has
+  // been added before attempting to delete it.
+  // See http://crbug.com/733549
+  if (in_process_host_->IsValidInstance(instance)) {
+    in_process_host_->DeleteInstance(instance);
+  } else {
+    NOTREACHED();
+  }
 }
 
 }  // namespace content

@@ -208,8 +208,12 @@ void PpapiPluginProcessHost::DidCreateOutOfProcessInstance(
   for (PpapiPluginProcessHostIterator iter; !iter.Done(); ++iter) {
     if (iter->process_.get() &&
         iter->process_->GetData().id == plugin_process_id) {
-      // Found the plugin.
-      iter->host_impl_->AddInstance(pp_instance, instance_data);
+      // Found the plugin. Since the renderer may be compromised, make sure
+      // pp_instance isn't already registered.
+      // See http://crbug.com/733548
+      if (!iter->host_impl_->IsValidInstance(pp_instance)) {
+        iter->host_impl_->AddInstance(pp_instance, instance_data);
+      }
       return;
     }
   }
@@ -230,8 +234,12 @@ void PpapiPluginProcessHost::DidDeleteOutOfProcessInstance(
   for (PpapiPluginProcessHostIterator iter; !iter.Done(); ++iter) {
     if (iter->process_.get() &&
         iter->process_->GetData().id == plugin_process_id) {
-      // Found the plugin.
-      iter->host_impl_->DeleteInstance(pp_instance);
+      // Found the plugin. Since the renderer may be compromised, make sure
+      // pp_instance is already registered.
+      // See http://crbug.com/733549
+      if (iter->host_impl_->IsValidInstance(pp_instance)) {
+        iter->host_impl_->DeleteInstance(pp_instance);
+      }
       return;
     }
   }

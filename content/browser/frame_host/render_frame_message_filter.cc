@@ -543,8 +543,9 @@ void RenderFrameMessageFilter::OnDidCreateOutOfProcessPepperInstance(
     BrowserPpapiHostImpl* host = static_cast<BrowserPpapiHostImpl*>(
         GetContentClient()->browser()->GetExternalBrowserPpapiHost(
             plugin_child_id));
-    if (host)
+    if (host && !host->IsValidInstance(pp_instance)) {
       host->AddInstance(pp_instance, instance_data);
+    }
   } else {
     PpapiPluginProcessHost::DidCreateOutOfProcessInstance(
         plugin_child_id, pp_instance, instance_data);
@@ -560,8 +561,9 @@ void RenderFrameMessageFilter::OnDidDeleteOutOfProcessPepperInstance(
     BrowserPpapiHostImpl* host = static_cast<BrowserPpapiHostImpl*>(
         GetContentClient()->browser()->GetExternalBrowserPpapiHost(
             plugin_child_id));
-    if (host)
+    if (host && host->IsValidInstance(pp_instance)) {
       host->DeleteInstance(pp_instance);
+    }
   } else {
     PpapiPluginProcessHost::DidDeleteOutOfProcessInstance(
         plugin_child_id, pp_instance);
