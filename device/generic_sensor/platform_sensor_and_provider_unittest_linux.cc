@@ -114,7 +114,7 @@ class MockPlatformSensorClient : public PlatformSensor::Client {
     if (sensor_)
       sensor_->AddClient(this);
 
-    ON_CALL(*this, IsNotificationSuspended()).WillByDefault(Return(false));
+    ON_CALL(*this, IsSuspended()).WillByDefault(Return(false));
   }
 
   ~MockPlatformSensorClient() override {
@@ -123,9 +123,10 @@ class MockPlatformSensorClient : public PlatformSensor::Client {
   }
 
   // PlatformSensor::Client interface.
-  MOCK_METHOD0(OnSensorReadingChanged, void());
-  MOCK_METHOD0(OnSensorError, void());
-  MOCK_METHOD0(IsNotificationSuspended, bool());
+  MOCK_METHOD0(NotifySensorReadingChanged, void());
+  MOCK_METHOD0(NotifySensorError, void());
+  MOCK_METHOD0(IsSuspended, bool());
+  MOCK_METHOD0(IsReadingNotificationEnabled, bool());
 
  private:
   scoped_refptr<PlatformSensor> sensor_;
@@ -249,20 +250,19 @@ class PlatformSensorAndProviderLinuxTest : public ::testing::Test {
         }));
   }
 
-  // Waits before OnSensorReadingChanged is called.
+  // Waits before NotifySensorReadingChanged is called.
   void WaitOnSensorReadingChangedEvent(MockPlatformSensorClient* client) {
     run_loop_ = base::MakeUnique<base::RunLoop>();
-    EXPECT_CALL(*client, OnSensorReadingChanged()).WillOnce(Invoke([this]() {
-      run_loop_->Quit();
-    }));
+    EXPECT_CALL(*client, NotifySensorReadingChanged())
+        .WillOnce(Invoke([this]() { run_loop_->Quit(); }));
     run_loop_->Run();
     run_loop_ = nullptr;
   }
 
-  // Waits before OnSensorError is called.
+  // Waits before NotifySensorError is called.
   void WaitOnSensorErrorEvent(MockPlatformSensorClient* client) {
     run_loop_ = base::MakeUnique<base::RunLoop>();
-    EXPECT_CALL(*client, OnSensorError()).WillOnce(Invoke([this]() {
+    EXPECT_CALL(*client, NotifySensorError()).WillOnce(Invoke([this]() {
       run_loop_->Quit();
     }));
     run_loop_->Run();
@@ -357,7 +357,7 @@ TEST_F(PlatformSensorAndProviderLinuxTest, SensorStarted) {
   EXPECT_TRUE(sensor->StopListening(client.get(), configuration));
 }
 
-// Tests that OnSensorError is called when sensor is disconnected.
+// Tests that NotifySensorError is called when sensor is disconnected.
 TEST_F(PlatformSensorAndProviderLinuxTest, SensorRemoved) {
   double sensor_value[3] = {1};
   InitializeSupportedSensor(SensorType::AMBIENT_LIGHT, kZero, kZero, kZero,
