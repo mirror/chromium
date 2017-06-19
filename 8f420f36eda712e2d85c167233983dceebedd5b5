@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cb26955_388bc46b",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerController.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-19T22:31:49Z",
+      "side": 1,
+      "message": "@dcheng: is it OK to add a new call to DeprecatedLocalOwner?",
+      "revId": "8f420f36eda712e2d85c167233983dceebedd5b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
