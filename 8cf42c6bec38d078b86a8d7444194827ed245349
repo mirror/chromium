@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "904ddc17_b6415383",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-06-19T14:39:22Z",
+      "side": 1,
+      "message": "Why move this here from CancelJob?",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "8cf42c6bec38d078b86a8d7444194827ed245349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
