@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9d152615_dd4ffc20",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T18:03:12Z",
+      "side": 1,
+      "message": "Why is this new logic correct? Previously it checked for item.SkippedCache()",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23c2a3be_cdfdf1a5",
+        "filename": "third_party/WebKit/Source/platform/testing/PaintPrinters.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T18:03:12Z",
+      "side": 1,
+      "message": "Need to fix this to output the cacheable bit.",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
