@@ -36,6 +36,7 @@ class DEVICE_GEOLOCATION_EXPORT GeolocationProviderImpl
       bool enable_high_accuracy) override;
   void UserDidOptIntoLocationServices() override;
   void OverrideLocationForTesting(const Geoposition& position) override;
+  bool HighAccuracyLocationInUse() override;
 
   // Callback from the LocationArbitrator. Public for testing.
   void OnLocationUpdate(const LocationProvider* provider,

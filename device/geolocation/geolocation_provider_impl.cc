@@ -74,6 +74,10 @@ void GeolocationProviderImpl::OverrideLocationForTesting(
   NotifyClients(position);
 }
 
+bool GeolocationProviderImpl::HighAccuracyLocationInUse() {
+  return !high_accuracy_callbacks_.empty();
+}
+
 void GeolocationProviderImpl::OnLocationUpdate(const LocationProvider* provider,
                                                const Geoposition& position) {
   DCHECK(OnGeolocationThread());

@@ -62,6 +62,8 @@ class GeolocationProvider {
   // (crbug.com/125931).
   virtual void OverrideLocationForTesting(const Geoposition& position) = 0;
 
+  virtual bool HighAccuracyLocationInUse() = 0;
+
  protected:
   virtual ~GeolocationProvider() {}
 };
