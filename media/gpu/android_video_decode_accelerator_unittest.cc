@@ -88,7 +88,11 @@ class FakeOverlayChooser : public NiceMock<AndroidVideoSurfaceChooser> {
   // These are called by the real functions.  You may set expectations on
   // them if you like.
   MOCK_METHOD0(MockInitialize, void());
-  MOCK_METHOD0(MockReplaceOverlayFactory, void());
+  MOCK_METHOD0(MockUpdateState, void());
+
+  // Called by UpdateState if the factory is changed.  It is called with true if
+  // and only if the replacement factory isn't null.
+  MOCK_METHOD1(MockReplacedFactory, void(bool));
 
   // We guarantee that we'll only clear this during destruction, so that you
   // may treat it as "pointer that lasts as long as |this| does".
@@ -98,17 +102,24 @@ class FakeOverlayChooser : public NiceMock<AndroidVideoSurfaceChooser> {
 
   void Initialize(UseOverlayCB use_overlay_cb,
                   UseSurfaceTextureCB use_surface_texture_cb,
-                  AndroidOverlayFactoryCB initial_factory) override {
+                  AndroidOverlayFactoryCB initial_factory,
+                  const State& initial_state) override {
     MockInitialize();
 
     factory_ = std::move(initial_factory);
+    current_state_ = initial_state;
     use_overlay_cb_ = std::move(use_overlay_cb);
     use_surface_texture_cb_ = std::move(use_surface_texture_cb);
   }
 
-  void ReplaceOverlayFactory(AndroidOverlayFactoryCB factory) override {
-    MockReplaceOverlayFactory();
-    factory_ = std::move(factory);
+  void UpdateState(base::Optional<AndroidOverlayFactoryCB> factory,
+                   const State& new_state) override {
+    MockUpdateState();
+    if (factory) {
+      factory_ = std::move(*factory);
+      MockReplacedFactory(!factory_.is_null());
+    }
+    current_state_ = new_state;
   }
 
   // Notify AVDA to use a surface texture.
@@ -126,6 +137,7 @@ class FakeOverlayChooser : public NiceMock<AndroidVideoSurfaceChooser> {
   UseSurfaceTextureCB use_surface_texture_cb_;
 
   AndroidOverlayFactoryCB factory_;
+  State current_state_;
 
   base::WeakPtrFactory<FakeOverlayChooser> weak_factory_;
 
@@ -550,7 +562,8 @@ TEST_F(AndroidVideoDecodeAcceleratorTest,
   SKIP_IF_MEDIACODEC_IS_NOT_AVAILABLE();
   InitializeAVDAWithOverlay();
 
-  EXPECT_CALL(*chooser_, MockReplaceOverlayFactory()).Times(0);
+  EXPECT_CALL(*chooser_, MockUpdateState()).Times(1);
+  EXPECT_CALL(*chooser_, MockReplacedFactory(_)).Times(0);
   OverlayInfo overlay_info = config_.overlay_info;
   avda()->SetOverlayInfo(overlay_info);
 }
@@ -562,10 +575,21 @@ TEST_F(AndroidVideoDecodeAcceleratorTest,
   SKIP_IF_MEDIACODEC_IS_NOT_AVAILABLE();
   InitializeAVDAWithOverlay();
 
-  EXPECT_CALL(*chooser_, MockReplaceOverlayFactory()).Times(1);
+  EXPECT_CALL(*chooser_, MockUpdateState()).Times(1);
   OverlayInfo overlay_info = config_.overlay_info;
   overlay_info.surface_id++;
   avda()->SetOverlayInfo(overlay_info);
+}
+
+TEST_F(AndroidVideoDecodeAcceleratorTest, FullscreenSignalIsSentToChooser) {
+  // Send OverlayInfo that has |is_fullscreen| set, and verify that the chooser
+  // is notified about it.
+  SKIP_IF_MEDIACODEC_IS_NOT_AVAILABLE();
+  InitializeAVDAWithOverlay();
+  OverlayInfo overlay_info = config_.overlay_info;
+  overlay_info.is_fullscreen = !config_.overlay_info.is_fullscreen;
+  avda()->SetOverlayInfo(overlay_info);
+  ASSERT_EQ(chooser_->current_state_.is_fullscreen, overlay_info.is_fullscreen);
 }
 
 }  // namespace media
