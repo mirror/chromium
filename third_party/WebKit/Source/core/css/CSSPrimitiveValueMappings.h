@@ -158,42 +158,6 @@ inline CSSIdentifierValue::CSSIdentifierValue(EColumnFill column_fill)
 }
 
 template <>
-inline EColumnFill CSSIdentifierValue::ConvertTo() const {
-  if (value_id_ == CSSValueBalance)
-    return EColumnFill::kBalance;
-  if (value_id_ == CSSValueAuto)
-    return EColumnFill::kAuto;
-  NOTREACHED();
-  return EColumnFill::kBalance;
-}
-
-template <>
-inline CSSIdentifierValue::CSSIdentifierValue(EColumnSpan column_span)
-    : CSSValue(kIdentifierClass) {
-  switch (column_span) {
-    case EColumnSpan::kAll:
-      value_id_ = CSSValueAll;
-      break;
-    case EColumnSpan::kNone:
-      value_id_ = CSSValueNone;
-      break;
-  }
-}
-
-template <>
-inline EColumnSpan CSSIdentifierValue::ConvertTo() const {
-  switch (value_id_) {
-    case CSSValueAll:
-      return EColumnSpan::kAll;
-    default:
-      NOTREACHED();
-    // fall-through
-    case CSSValueNone:
-      return EColumnSpan::kNone;
-  }
-}
-
-template <>
 inline EBorderStyle CSSIdentifierValue::ConvertTo() const {
   if (value_id_ == CSSValueAuto)  // Valid for CSS outline-style
     return EBorderStyle::kDotted;
