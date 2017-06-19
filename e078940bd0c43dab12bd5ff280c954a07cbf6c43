@@ -1,0 +1,101 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7038ea5f_8070c12b",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:22:23Z",
+      "side": 1,
+      "message": "Seems like the wrong condition. This means that cell.headerView \u003d nil won\u0027t clear the headerView property.\nShouldn\u0027t it be if header \u003d\u003d _headerView?\n\nEdit: your check might be useful to not add the constraints below though.",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4146de4_3e02c407",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_header_item.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:22:23Z",
+      "side": 1,
+      "message": "And _headerView \u003d nil?\nI\u0027d advise to change the setter and do self.headerView \u003d nil.",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a859d9a_03234214",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:22:23Z",
+      "side": 1,
+      "message": "The API of this object is starting to grow. Can you add unit tests in a follow-up?",
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "026431cf_c45f7e75",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_collection_updater.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 520,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:22:23Z",
+      "side": 1,
+      "message": "addLogoHeaderIfNeeded",
+      "range": {
+        "startLine": 520,
+        "startChar": 8,
+        "endLine": 520,
+        "endChar": 21
+      },
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4692408_a6a5de14",
+        "filename": "ios/chrome/browser/ui/content_suggestions/content_suggestions_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 273,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:22:23Z",
+      "side": 1,
+      "message": "Nit: New line.",
+      "range": {
+        "startLine": 273,
+        "startChar": 1,
+        "endLine": 273,
+        "endChar": 0
+      },
+      "revId": "e078940bd0c43dab12bd5ff280c954a07cbf6c43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
