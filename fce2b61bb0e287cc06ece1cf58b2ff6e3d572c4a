@@ -16,6 +16,41 @@
       "revId": "fce2b61bb0e287cc06ece1cf58b2ff6e3d572c4a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac715449_772ae19c",
+        "filename": "ash/public/interfaces/ime_controller.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T17:47:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4a798996_fa1bfb32",
+      "revId": "fce2b61bb0e287cc06ece1cf58b2ff6e3d572c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "644de145_d86de880",
+        "filename": "chrome/browser/ui/ash/ime_controller_client_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-19T17:47:37Z",
+      "side": 1,
+      "message": "nit: pre-increment here and in other places, i.e. ++add_observer_count_;",
+      "revId": "fce2b61bb0e287cc06ece1cf58b2ff6e3d572c4a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
