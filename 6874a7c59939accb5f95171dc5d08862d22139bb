@@ -22,6 +22,30 @@
       "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aea4c2c1_283b85cc",
+        "filename": "third_party/WebKit/Source/platform/wtf/text/StringBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1103784
+      },
+      "writtenOn": "2017-06-19T06:50:21Z",
+      "side": 1,
+      "message": "Yeah I agree that it\u0027s confusing, but I want to make sure the name clearly indicates the data in the internal buffer will go away.",
+      "parentUuid": "b98e023e_69698bc6",
+      "range": {
+        "startLine": 67,
+        "startChar": 21,
+        "endLine": 67,
+        "endChar": 28
+      },
+      "revId": "6874a7c59939accb5f95171dc5d08862d22139bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
