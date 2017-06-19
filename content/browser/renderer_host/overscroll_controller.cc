@@ -4,6 +4,8 @@
 
 #include "content/browser/renderer_host/overscroll_controller.h"
 
+#include <algorithm>
+
 #include "base/command_line.h"
 #include "base/logging.h"
 #include "content/browser/renderer_host/overscroll_controller_delegate.h"
@@ -25,6 +27,10 @@ bool IsGestureEventFromTouchpad(const blink::WebInputEvent& event) {
   const blink::WebGestureEvent& gesture =
       static_cast<const blink::WebGestureEvent&>(event);
   return gesture.source_device == blink::kWebGestureDeviceTouchpad;
+}
+
+float ClampAbsoluteValue(float value, float max_abs) {
+  return std::max(-max_abs, std::min(value, max_abs));
 }
 
 }  // namespace
@@ -361,6 +367,23 @@ bool OverscrollController::ProcessOverscroll(float delta_x,
     return true;
   }
 
+  if (delegate_overscroll_cap_ > 0.f) {
+    switch (overscroll_mode_) {
+      case OVERSCROLL_WEST:
+      case OVERSCROLL_EAST:
+        overscroll_delta_x_ = ClampAbsoluteValue(
+            overscroll_delta_x_, delegate_overscroll_cap_ + horiz_threshold);
+        break;
+      case OVERSCROLL_NORTH:
+      case OVERSCROLL_SOUTH:
+        overscroll_delta_y_ = ClampAbsoluteValue(
+            overscroll_delta_y_, delegate_overscroll_cap_ + vert_threshold);
+        break;
+      default:
+        break;
+    }
+  }
+
   // Compute the current overscroll direction. If the direction is different
   // from the current direction, then always switch to no-overscroll mode first
   // to make sure that subsequent scroll events go through to the page first.
@@ -439,8 +462,11 @@ void OverscrollController::SetOverscrollMode(OverscrollMode mode,
     overscroll_delta_x_ = overscroll_delta_y_ = 0.f;
   else
     scroll_state_ = STATE_OVERSCROLLING;
-  if (delegate_)
-    delegate_->OnOverscrollModeChange(old_mode, overscroll_mode_, source);
+  delegate_overscroll_cap_ = 0.f;
+  if (delegate_) {
+    delegate_overscroll_cap_ =
+        delegate_->OnOverscrollModeChange(old_mode, overscroll_mode_, source);
+  }
 }
 
 }  // namespace content

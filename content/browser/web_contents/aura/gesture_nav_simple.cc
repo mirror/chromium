@@ -382,20 +382,20 @@ void GestureNavSimple::OnOverscrollComplete(OverscrollMode overscroll_mode) {
     controller.GoBack();
 }
 
-void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
-                                              OverscrollMode new_mode,
-                                              OverscrollSource source) {
+float GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
+                                               OverscrollMode new_mode,
+                                               OverscrollSource source) {
   NavigationControllerImpl& controller = web_contents_->GetController();
   if (!ShouldNavigateForward(controller, new_mode) &&
       !ShouldNavigateBack(controller, new_mode)) {
     AbortGestureAnimation();
-    return;
+    return 0.f;
   }
 
   aura::Window* window = web_contents_->GetNativeView();
   const gfx::Rect& window_bounds = window->bounds();
   DCHECK_NE(source, OverscrollSource::NONE);
-  float start_threshold = GetOverscrollConfig(
+  const float start_threshold = GetOverscrollConfig(
       source == OverscrollSource::TOUCHPAD
           ? OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHPAD
           : OVERSCROLL_CONFIG_HORIZ_THRESHOLD_START_TOUCHSCREEN);
@@ -415,6 +415,8 @@ void GestureNavSimple::OnOverscrollModeChange(OverscrollMode old_mode,
   ui::Layer* parent = window->layer()->parent();
   parent->Add(affordance_->root_layer());
   parent->StackAtTop(affordance_->root_layer());
+
+  return completion_threshold_;
 }
 
 }  // namespace content
