@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1974c72b_bda3ae50",
+        "filename": "third_party/WebKit/Source/modules/media_controls/MediaControlsOrientationLockDelegateTest.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000788
+      },
+      "writtenOn": "2017-06-19T14:47:15Z",
+      "side": 1,
+      "message": "Nit: now that I look at this code again, the calls to Did{Enter,Exit}Fullscreen in Simulate{Enter,Exit}Fullscreen are redundant with the calls to Did{Enter,Exit}Fullscreen in the MockChromeClient above. I think the former predate the latter (which I added to handle cases where a delegate triggers fullscreen, rather than the test triggering fullscreen), and could now be removed. You can probably also remove the ServiceScriptedAnimations from here, if you re-add testing::RunPendingTasks() to wait for the PostTasks you added in the MockChromeClient. But don\u0027t spend too long on this, if it doesn\u0027t work out as expected - the doubled calls to Did{Enter,Exit}Fullscreen predate your patch, and don\u0027t seem to cause problems in practice.",
+      "range": {
+        "startLine": 176,
+        "startChar": 21,
+        "endLine": 176,
+        "endChar": 32
+      },
+      "revId": "6a3d2234531423da81498c81e29122f903f88400",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
