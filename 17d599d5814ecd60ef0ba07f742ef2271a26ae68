@@ -16,6 +16,24 @@
       "revId": "17d599d5814ecd60ef0ba07f742ef2271a26ae68",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d301c14_6af48f08",
+        "filename": "base/time/time.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1144260
+      },
+      "writtenOn": "2017-06-19T22:39:54Z",
+      "side": 1,
+      "message": "I think in theory all that will happen in the future is that we lose one value of range, but it shouldn\u0027t really break. Theoretically. Maybe.",
+      "parentUuid": "6a8ef6c3_78759edc",
+      "revId": "17d599d5814ecd60ef0ba07f742ef2271a26ae68",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
