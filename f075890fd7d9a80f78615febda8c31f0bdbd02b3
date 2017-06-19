@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "92cda2af_484386fe",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-19T12:06:17Z",
+      "side": 0,
+      "message": "how come this is no longer necessary?",
+      "range": {
+        "startLine": 166,
+        "startChar": 3,
+        "endLine": 166,
+        "endChar": 33
+      },
+      "revId": "f075890fd7d9a80f78615febda8c31f0bdbd02b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

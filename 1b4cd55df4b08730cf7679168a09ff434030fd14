@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51389e93_a1ec95b1",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-19T12:06:17Z",
+      "side": 1,
+      "message": "why selectable \u003d NO?",
+      "range": {
+        "startLine": 100,
+        "startChar": 13,
+        "endLine": 100,
+        "endChar": 23
+      },
+      "revId": "1b4cd55df4b08730cf7679168a09ff434030fd14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a50f45b6_76d1a819",
+        "filename": "chrome/browser/ui/cocoa/tab_contents/sad_tab_view_cocoa.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000022
+      },
+      "writtenOn": "2017-06-19T12:06:17Z",
+      "side": 1,
+      "message": "I think that we prefer scoped_nsobject\u003c\u003e to autorelease",
+      "range": {
+        "startLine": 108,
+        "startChar": 14,
+        "endLine": 108,
+        "endChar": 25
+      },
+      "revId": "1b4cd55df4b08730cf7679168a09ff434030fd14",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
