@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f06a6115_e9868b62",
+        "filename": "third_party/WebKit/Source/core/css/CSSProperties.json5",
+        "patchSetId": 3
+      },
+      "lineNbr": 2755,
+      "author": {
+        "id": 1161824
+      },
+      "writtenOn": "2017-06-19T06:43:27Z",
+      "side": 1,
+      "message": "Hey this is cool, do you think we should add spec links for more stuff in this file?",
+      "revId": "7b6bfd73ae606f2b9233b757377aa78b2860a63a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
