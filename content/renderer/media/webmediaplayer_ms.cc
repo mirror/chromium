@@ -71,10 +71,10 @@ class WebMediaPlayerMS::FrameDeliverer {
     base::TimeTicks render_time;
     if (frame->metadata()->GetTimeTicks(
             media::VideoFrameMetadata::REFERENCE_TIME, &render_time)) {
-      TRACE_EVENT1("webrtc", "WebMediaPlayerMS::OnVideoFrame",
+      TRACE_EVENT1("webrtc.chromium", "WebMediaPlayerMS::OnVideoFrame",
                    "Ideal Render Instant", render_time.ToInternalValue());
     } else {
-      TRACE_EVENT0("webrtc", "WebMediaPlayerMS::OnVideoFrame");
+      TRACE_EVENT0("webrtc.chromium", "WebMediaPlayerMS::OnVideoFrame");
     }
 
     const bool is_opaque = media::IsOpaque(frame->format());
