@@ -21,6 +21,7 @@ class ImageQualityControllerTest : public RenderingTest {
 
  private:
   void SetUp() override {
+    RuntimeEnabledFeatures::SetLowQualityImagesDuringResizeEnabled(true);
     controller_ = ImageQualityController::GetImageQualityController();
     RenderingTest::SetUp();
   }

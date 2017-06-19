@@ -580,6 +580,9 @@
       status: "stable",
     },
     {
+      name: "LowQualityImagesDuringResize",
+    },
+    {
       name: "MediaCapabilities",
       status: "test",
     },
