@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "00cde77f_beb37b15",
+        "filename": "chrome/browser/chromeos/system_logs/touch_log_source_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-19T21:50:13Z",
+      "side": 1,
+      "message": "nit: controler -\u003e controller",
+      "revId": "e79f56663fc415bf4d2433877a2f0791a3063a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687e2a28_e30afdf1",
+        "filename": "chrome/browser/chromeos/system_logs/touch_log_source_ozone.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-19T21:50:13Z",
+      "side": 1,
+      "message": "ditto",
+      "revId": "e79f56663fc415bf4d2433877a2f0791a3063a37",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
