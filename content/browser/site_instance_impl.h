@@ -7,6 +7,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <type_traits>
 
 #include "base/observer_list.h"
 #include "content/browser/renderer_host/render_process_host_impl.h"
@@ -56,32 +57,49 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
   // process-per-site and ServiceWorkers proactively join a process that already
   // contains the site.
   enum class ProcessReusePolicy {
+    // By default, if the SiteInstances is not for service worker and there are
+    // service worker only processes for the site, the newest process is reused
+    // to renderer the page. If none exests a new RenderProcessHost will be
+    // created unless the process limit has been reached. When the limit has
+    // been reached, the RenderProcessHost reused will be chosen randomly and
+    // not based on the site.
+    DEFAULT = 0x00,
+
     // In this mode, all instances of the site will be hosted in the same
     // RenderProcessHost.
-    PROCESS_PER_SITE,
+    PROCESS_PER_SITE = 0x01,
 
     // In this mode, subframes will be hosted in a designated RenderProcessHost.
-    USE_DEFAULT_SUBFRAME_PROCESS,
+    USE_DEFAULT_SUBFRAME_PROCESS = 0x02,
 
     // In this mode, the site will be rendered in a RenderProcessHost that is
     // already in use for the site, either for a pending navigation or a
-    // committed navigation.  If none exists, a new process will be created.  If
-    // multiple such processes exist, ones that have foreground frames are given
-    // priority, and otherwise one is selected randomly.
-    REUSE_PENDING_OR_COMMITTED_SITE,
+    // committed navigation. If multiple such processes exist, ones that have
+    // foreground frames are given priority, and otherwise one is selected
+    // randomly. If none exists, and there are service worker only processes for
+    // the site, the newest process is reused. If none exests a new
+    // RenderProcessHost will be created unless the process limit has been
+    // reached. When the limit has been reached, the RenderProcessHost reused
+    // will be chosen randomly and not based on the site.
+    REUSE_PENDING_OR_COMMITTED_SITE = 0x03,
 
-    // By default, a new RenderProcessHost will be created unless the process
-    // limit has been reached. The RenderProcessHost reused will be chosen
-    // randomly and not based on the site.
-    DEFAULT,
+    // Utility mask value for the base policies above.
+    BASE_POLICY_MASK = 0x03,
+
+    // This flags can be used in combination with DEFAULT or
+    // REUSE_PENDING_OR_COMMITTED_SITE. If this flag is set, when a new process
+    // is created for this SiteInstance, the process will be tracked as a
+    // service worker only process until reused by another SiteInstance which
+    // reuse policy is DEFAULT or REUSE_PENDING_OR_COMMITTED_SITE.
+    IS_SERVICE_WORKER_REUSABLE_PROCESS = 0x04,
   };
 
-  void set_process_reuse_policy(ProcessReusePolicy policy) {
-    process_reuse_policy_ = policy;
-  }
+  void set_process_reuse_policy(ProcessReusePolicy policy);
   ProcessReusePolicy process_reuse_policy() const {
     return process_reuse_policy_;
   }
+  ProcessReusePolicy GetBaseProcessReusePolicy() const;
+  bool IsServiceWorkerReusableProcessPolicy() const;
 
   // Returns the SiteInstance, related to this one, that should be used
   // for subframes when an oopif is required, but a dedicated process is not.
@@ -209,6 +227,34 @@ class CONTENT_EXPORT SiteInstanceImpl final : public SiteInstance,
 
   DISALLOW_COPY_AND_ASSIGN(SiteInstanceImpl);
 };
+
+inline SiteInstanceImpl::ProcessReusePolicy operator&(
+    SiteInstanceImpl::ProcessReusePolicy lhs,
+    SiteInstanceImpl::ProcessReusePolicy rhs)
+
+{
+  return static_cast<SiteInstanceImpl::ProcessReusePolicy>(
+      static_cast<
+          std::underlying_type<SiteInstanceImpl::ProcessReusePolicy>::type>(
+          lhs) &
+      static_cast<
+          std::underlying_type<SiteInstanceImpl::ProcessReusePolicy>::type>(
+          rhs));
+}
+
+inline SiteInstanceImpl::ProcessReusePolicy operator|(
+    SiteInstanceImpl::ProcessReusePolicy lhs,
+    SiteInstanceImpl::ProcessReusePolicy rhs)
+
+{
+  return static_cast<SiteInstanceImpl::ProcessReusePolicy>(
+      static_cast<
+          std::underlying_type<SiteInstanceImpl::ProcessReusePolicy>::type>(
+          lhs) |
+      static_cast<
+          std::underlying_type<SiteInstanceImpl::ProcessReusePolicy>::type>(
+          rhs));
+}
 
 }  // namespace content
 

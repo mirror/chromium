@@ -99,9 +99,9 @@ RenderProcessHost* SiteInstanceImpl::GetProcess() {
         has_site_ &&
         RenderProcessHost::ShouldUseProcessPerSite(browser_context, site_);
     if (should_use_process_per_site) {
-      process_reuse_policy_ = ProcessReusePolicy::PROCESS_PER_SITE;
+      set_process_reuse_policy(ProcessReusePolicy::PROCESS_PER_SITE);
     } else if (process_reuse_policy_ == ProcessReusePolicy::PROCESS_PER_SITE) {
-      process_reuse_policy_ = ProcessReusePolicy::DEFAULT;
+      set_process_reuse_policy(ProcessReusePolicy::DEFAULT);
     }
 
     process_ = RenderProcessHostImpl::GetProcessHostForSiteInstance(
@@ -157,7 +157,7 @@ void SiteInstanceImpl::SetSite(const GURL& url) {
   bool should_use_process_per_site =
       RenderProcessHost::ShouldUseProcessPerSite(browser_context, site_);
   if (should_use_process_per_site) {
-    process_reuse_policy_ = ProcessReusePolicy::PROCESS_PER_SITE;
+    set_process_reuse_policy(ProcessReusePolicy::PROCESS_PER_SITE);
   }
 
   if (process_) {
@@ -216,6 +216,29 @@ bool SiteInstanceImpl::HasWrongProcessForURL(const GURL& url) {
   GURL site_url = GetSiteForURL(browsing_instance_->browser_context(), url);
   return !RenderProcessHostImpl::IsSuitableHost(
       GetProcess(), browsing_instance_->browser_context(), site_url);
+}
+
+void SiteInstanceImpl::set_process_reuse_policy(ProcessReusePolicy policy) {
+  DCHECK(policy == ProcessReusePolicy::DEFAULT ||
+         policy == ProcessReusePolicy::PROCESS_PER_SITE ||
+         policy == ProcessReusePolicy::USE_DEFAULT_SUBFRAME_PROCESS ||
+         policy == ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE ||
+         policy == (ProcessReusePolicy::DEFAULT |
+                    ProcessReusePolicy::IS_SERVICE_WORKER_REUSABLE_PROCESS) ||
+         policy == (ProcessReusePolicy::REUSE_PENDING_OR_COMMITTED_SITE |
+                    ProcessReusePolicy::IS_SERVICE_WORKER_REUSABLE_PROCESS));
+  process_reuse_policy_ = policy;
+}
+
+SiteInstanceImpl::ProcessReusePolicy
+SiteInstanceImpl::GetBaseProcessReusePolicy() const {
+  return process_reuse_policy_ & ProcessReusePolicy::BASE_POLICY_MASK;
+}
+
+bool SiteInstanceImpl::IsServiceWorkerReusableProcessPolicy() const {
+  return (process_reuse_policy_ &
+          ProcessReusePolicy::IS_SERVICE_WORKER_REUSABLE_PROCESS) ==
+         ProcessReusePolicy::IS_SERVICE_WORKER_REUSABLE_PROCESS;
 }
 
 scoped_refptr<SiteInstanceImpl>
