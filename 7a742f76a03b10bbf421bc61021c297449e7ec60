@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "9fa6b7a1_6aea197d",
+        "filename": "components/cronet/url_request_context_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-06-19T04:07:44Z",
+      "side": 1,
+      "message": "According to the original logic, std::vector\u003cstd::unique_ptr\u003cXXX\u003e\u003e equals to \"ScopedVector\".\nThe struct \"QuickHint\" has been set as \"DISALLOW_COPY_AND_ASSIGN\", and so as the wrapper class \"URLRequestContextConfig\", all pointers in \"URLRequestContextConfig\" have been designed as \"unique_ptr\". So, I think this may be the main reason of using unique semantics.\nThat\u0027s just my understandings, as an owner, if you have other suggestions or hints, please let me know.",
+      "parentUuid": "5ac248d6_f597d579",
+      "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b503200c_843cc4ff",
         "filename": "components/cronet/url_request_context_config.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T23:41:02Z",
       "side": 1,
       "message": "Same here.",
+      "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31fe2f60_366271d4",
+        "filename": "components/cronet/url_request_context_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1127279
+      },
+      "writtenOn": "2017-06-19T04:07:44Z",
+      "side": 1,
+      "message": "Similar as above.",
+      "parentUuid": "b503200c_843cc4ff",
       "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
