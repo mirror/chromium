@@ -16,6 +16,24 @@
       "revId": "3beccfbd391c2360fa243711822fe0150786df42",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4d963fa_fa0d2639",
+        "filename": "docs/vscode.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-19T20:03:40Z",
+      "side": 0,
+      "message": "Yeah I was going to suggest the same change. I haven\u0027t been using this extension.",
+      "parentUuid": "25edc284_c3f7deb9",
+      "revId": "3beccfbd391c2360fa243711822fe0150786df42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "ac4b60b829dfb6d3454a15a1e37b8aba05c0f615",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fd43958e_834424ed",
+        "filename": "docs/vscode.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-19T20:03:40Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "4aa11cba_b3e2168c",
+      "revId": "ac4b60b829dfb6d3454a15a1e37b8aba05c0f615",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
