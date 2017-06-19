@@ -162,6 +162,28 @@ TEST_F(LayoutTableTest, CollapsedBordersWithCol) {
   EXPECT_EQ(10, table3->BorderEnd());
 }
 
+TEST_F(LayoutTableTest, WidthPercentagesExceedHundred) {
+  SetBodyInnerHTML(
+      "<style>#outer { width: 2000000px; }"
+      "table{ border-collapse: collapse; }</style>"
+      "<div id='outer'>"
+      "<table id='onlyTable'>"
+      "  <tr>"
+      "    <td width='100%'>"
+      "      <div ></div>"
+      "    </td>"
+      "    <td width='60%'>"
+      "      <div width='10px;'></div>"
+      "    </td>"
+      "  </tr>"
+      "</table>"
+      "</div>");
+
+  // Table width should be kMaxTableWidth
+  auto* table = GetTableByElementId("onlyTable");
+  EXPECT_EQ(1000000, table->OffsetWidth());
+}
+
 }  // anonymous namespace
 
 }  // namespace blink
