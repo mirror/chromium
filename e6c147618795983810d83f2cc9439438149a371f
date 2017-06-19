@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d37e24_41eae9f7",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-19T19:20:02Z",
+      "side": 1,
+      "message": "This should be OnUnload now right?",
+      "range": {
+        "startLine": 349,
+        "startChar": 37,
+        "endLine": 349,
+        "endChar": 43
+      },
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "296229b3_3bca6370",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-19T19:20:02Z",
+      "side": 1,
+      "message": "Do we still need to call from here since the function is called from FrameLoader::ShouldClose?",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e375c00f_20d63865",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2249,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-19T19:20:02Z",
+      "side": 1,
+      "message": "I think it would be better if this metric were consistent about what it reports. I.e. if the document lifecycle state hasn\u0027t cleaned compositing inputs currently maybe we should not report anything rather than report different values based on the lifecycle state. Otherwise it will make the metric results difficult to interpret.",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "79d6c5e9_2fcf06ec",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 8
+      },
+      "lineNbr": 17973,
+      "author": {
+        "id": 1001365
+      },
+      "writtenOn": "2017-06-19T19:20:02Z",
+      "side": 1,
+      "message": "I think it\u0027s worth mentioning it\u0027s recorded at page unload time to avoid recording pages which aren\u0027t fully loaded yet.",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
