@@ -16,6 +16,24 @@
       "revId": "102b65725981d928b90edf27e3422c3c16ada660",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "182c43b0_641c91c7",
+        "filename": "ui/gl/test/gl_image_test_template.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 229,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-19T18:02:48Z",
+      "side": 1,
+      "message": "it would have to be eglGetError, I think. However, I instead made the implementation of this DCHECK in addition to logging an error in release builds so we catch errors on real devices.",
+      "parentUuid": "2d95ab2f_ae331cb1",
+      "revId": "102b65725981d928b90edf27e3422c3c16ada660",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
