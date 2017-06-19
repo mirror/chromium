@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "9381ff32_3d19f21d",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-19T16:57:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure that\u0027s right. It seems Browser::LoadingStateChanged() triggers called to this function.",
+      "parentUuid": "425d2c50_96fcf791",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ee7ad0_3f6d9ec1",
         "filename": "chrome/browser/ui/views/tabs/tab.h",
         "patchSetId": 1
