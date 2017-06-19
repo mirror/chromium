@@ -124,7 +124,7 @@ void LoginAuthUserView::OnAuthSubmit(bool is_pin,
       active_user_, std::string(), is_pin,
       base::BindOnce([](bool auth_success) {
         if (auth_success)
-          ash::DestroyLockScreen();
+          ash::LockScreen::instance()->Destroy();
       }));
 }
 
