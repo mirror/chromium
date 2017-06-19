@@ -22,6 +22,30 @@
       "revId": "543be0c3871fc7965f7ed10508e38516a4773451",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d16ced76_4151d3fe",
+        "filename": "ui/base/ime/chromeos/character_composer_sequences.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 4954,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-19T14:06:06Z",
+      "side": 1,
+      "message": "I didn\u0027t. I hadn\u0027t realized that Windows handled consecutive dead keys like that. Changed |CharacterComposer::FilterKeyPressSequenceMode()| to handle this.",
+      "parentUuid": "5dd0cd02_5f86516a",
+      "range": {
+        "startLine": 4954,
+        "startChar": 0,
+        "endLine": 4954,
+        "endChar": 20
+      },
+      "revId": "543be0c3871fc7965f7ed10508e38516a4773451",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
