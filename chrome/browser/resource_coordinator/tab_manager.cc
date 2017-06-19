@@ -604,7 +604,7 @@ void TabManager::AddTabStats(const TabStripModel* tab_strip_model,
       stats.is_internal_page = IsInternalPage(contents->GetLastCommittedURL());
       stats.is_media = IsMediaTab(contents);
       stats.is_pinned = tab_strip_model->IsTabPinned(i);
-      stats.is_selected = tab_strip_model->IsTabSelected(i);
+      stats.is_selected = window_is_active && tab_strip_model->IsTabSelected(i);
       stats.is_in_visible_window = window_is_visible;
       stats.is_discarded = GetWebContentsData(contents)->IsDiscarded();
       stats.has_form_entry =
