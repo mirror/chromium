@@ -1591,7 +1591,7 @@ TabsCaptureVisibleTabFunction::TabsCaptureVisibleTabFunction()
     : chrome_details_(this) {
 }
 
-bool TabsCaptureVisibleTabFunction::HasPermission() {
+bool TabsCaptureVisibleTabFunction::HasPermission(std::string* error_message) {
   return true;
 }
 
@@ -1778,7 +1778,7 @@ ExecuteCodeInTabFunction::ExecuteCodeInTabFunction()
 
 ExecuteCodeInTabFunction::~ExecuteCodeInTabFunction() {}
 
-bool ExecuteCodeInTabFunction::HasPermission() {
+bool ExecuteCodeInTabFunction::HasPermission(std::string* error_message) {
   if (Init() == SUCCESS &&
       // TODO(devlin/lazyboy): Consider removing the following check as it isn't
       // doing anything. The fallback to ExtensionFunction::HasPermission()
@@ -1787,7 +1787,7 @@ bool ExecuteCodeInTabFunction::HasPermission() {
           execute_tab_id_, APIPermission::kTab)) {
     return true;
   }
-  return ExtensionFunction::HasPermission();
+  return ExtensionFunction::HasPermission(error_message);
 }
 
 ExecuteCodeFunction::InitResult ExecuteCodeInTabFunction::Init() {

@@ -317,11 +317,13 @@ IOThreadExtensionFunction* ExtensionFunction::AsIOThreadExtensionFunction() {
   return NULL;
 }
 
-bool ExtensionFunction::HasPermission() {
+bool ExtensionFunction::HasPermission(std::string* error_message) {
   Feature::Availability availability =
       ExtensionAPI::GetSharedInstance()->IsAvailable(
           name_, extension_.get(), source_context_type_, source_url(),
           extensions::CheckAliasStatus::ALLOWED);
+  if (!availability.is_available())
+    *error_message = availability.message();
   return availability.is_available();
 }
 
@@ -345,6 +347,13 @@ const std::string& ExtensionFunction::GetError() const {
 
 void ExtensionFunction::SetBadMessage() {
   bad_message_ = true;
+}
+
+void ExtensionFunction::RespondWithPermissionsDenied() {
+  base::ListValue empty_list;
+  response_callback_.Run(ExtensionFunction::FAILED, empty_list,
+                         "Access to Extension API denied.", histogram_value());
+  did_respond_ = true;
 }
 
 bool ExtensionFunction::user_gesture() const {

@@ -127,14 +127,15 @@ class ExtensionFunction
   virtual UIThreadExtensionFunction* AsUIThreadExtensionFunction();
   virtual IOThreadExtensionFunction* AsIOThreadExtensionFunction();
 
-  // Returns true if the function has permission to run.
+  // Returns whether the function has permission to run.  If not,
+  // |error_message| will be populated with the error details.
   //
   // The default implementation is to check the Extension's permissions against
   // what this function requires to run, but some APIs may require finer
   // grained control, such as tabs.executeScript being allowed for active tabs.
   //
   // This will be run after the function has been set up but before Run().
-  virtual bool HasPermission();
+  virtual bool HasPermission(std::string* error_message);
 
   // The result of a function call.
   //
@@ -246,6 +247,9 @@ class ExtensionFunction
   virtual const std::string& GetError() const;
 
   virtual void SetBadMessage();
+
+  // Sends an error response if the function access was denied.
+  void RespondWithPermissionsDenied();
 
   // Specifies the name of the function. A long-lived string (such as a string
   // literal) must be provided.

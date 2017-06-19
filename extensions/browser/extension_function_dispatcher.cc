@@ -112,6 +112,13 @@ void IOThreadResponseCallback(
                          results, error);
 }
 
+void RespondWithUnknownApiError(
+    const ExtensionFunction::ResponseCallback& callback) {
+  base::ListValue empty_list;
+  callback.Run(ExtensionFunction::FAILED, empty_list, "Unknown Extension API.",
+               extensions::functions::UNKNOWN);
+}
+
 }  // namespace
 
 class ExtensionFunctionDispatcher::UIThreadResponseCallbackWrapper
@@ -555,9 +562,11 @@ bool ExtensionFunctionDispatcher::CheckPermissions(
     ExtensionFunction* function,
     const ExtensionHostMsg_Request_Params& params,
     const ExtensionFunction::ResponseCallback& callback) {
-  if (!function->HasPermission()) {
-    LOG(ERROR) << "Permission denied for " << params.name;
-    SendAccessDenied(callback, function->histogram_value());
+  std::string error_message;
+  if (!function->HasPermission(&error_message)) {
+    LOG(ERROR) << "Permissions denied for " << params.name << ": "
+               << error_message;
+    function->RespondWithPermissionsDenied();
     return false;
   }
   return true;
@@ -576,7 +585,7 @@ ExtensionFunction* ExtensionFunctionDispatcher::CreateExtensionFunction(
       ExtensionFunctionRegistry::GetInstance()->NewFunction(params.name);
   if (!function) {
     LOG(ERROR) << "Unknown Extension API - " << params.name;
-    SendAccessDenied(callback, extensions::functions::UNKNOWN);
+    RespondWithUnknownApiError(callback);
     return NULL;
   }
 
@@ -593,15 +602,6 @@ ExtensionFunction* ExtensionFunctionDispatcher::CreateExtensionFunction(
   function->set_source_process_id(requesting_process_id);
 
   return function;
-}
-
-// static
-void ExtensionFunctionDispatcher::SendAccessDenied(
-    const ExtensionFunction::ResponseCallback& callback,
-    functions::HistogramValue histogram_value) {
-  base::ListValue empty_list;
-  callback.Run(ExtensionFunction::FAILED, empty_list,
-               "Access to extension API denied.", histogram_value);
 }
 
 }  // namespace extensions
