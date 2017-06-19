@@ -189,6 +189,9 @@ bool ImageQualityController::ShouldPaintAtLowQuality(
       return false;
   }
 
+  if (!RuntimeEnabledFeatures::LowQualityImagesDuringResizeEnabled())
+    return false;
+
   // Look ourselves up in the hashtables.
   ObjectLayerSizeMap::iterator i = object_layer_size_map_.find(&object);
   LayerSizeMap* inner_map = nullptr;
