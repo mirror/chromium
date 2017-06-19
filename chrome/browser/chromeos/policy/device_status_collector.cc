@@ -12,6 +12,7 @@
 #include <limits>
 #include <sstream>
 
+#include "ash/public/cpp/config.h"
 #include "base/bind.h"
 #include "base/bind_helpers.h"
 #include "base/files/file_enumerator.h"
@@ -33,6 +34,7 @@
 #include "chrome/browser/browser_process.h"
 #include "chrome/browser/chromeos/app_mode/arc/arc_kiosk_app_manager.h"
 #include "chrome/browser/chromeos/app_mode/kiosk_app_manager.h"
+#include "chrome/browser/chromeos/ash_config.h"
 #include "chrome/browser/chromeos/login/users/chrome_user_manager.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -529,9 +531,15 @@ void DeviceStatusCollector::RegisterProfilePrefs(PrefRegistrySimple* registry) {
 }
 
 void DeviceStatusCollector::CheckIdleState() {
-  CalculateIdleState(kIdleStateThresholdSeconds,
-      base::Bind(&DeviceStatusCollector::IdleStateCallback,
-                 base::Unretained(this)));
+  if (chromeos::GetAshConfig() != ash::Config::MASH) {
+    // TODO(crbug.com/716244): This uses UserActivityDetector, which does not
+    // exist in the browser process under mash.
+    CalculateIdleState(kIdleStateThresholdSeconds,
+                       base::Bind(&DeviceStatusCollector::IdleStateCallback,
+                                  base::Unretained(this)));
+  } else {
+    NOTIMPLEMENTED();
+  }
 }
 
 void DeviceStatusCollector::UpdateReportingSettings() {
