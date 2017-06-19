@@ -1,14 +1,12 @@
-// Copyright 2012 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.app;
+package org.chromium.base.process_launcher;
 
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
-
-import org.chromium.base.annotations.JNINamespace;
 
 /**
  * This is the base class for child services; the [Sandboxed|Privileged]ProcessService0, 1.. etc
@@ -23,16 +21,21 @@ import org.chromium.base.annotations.JNINamespace;
  * and then N entries of the form:
  *     <service android:name="org.chromium.content.app.[Sandboxed|Privileged]ProcessServiceX"
  *              android:process=":[sandboxed|privileged]_processX" />
+ *
+ * Subclasses must also provide a delegate in this class constructor. That delegate is responsible
+ * for loading native libraries and running the main entry point of the service.
  */
-@JNINamespace("content")
-public class ChildProcessService extends Service {
-    private final ChildProcessServiceImpl mChildProcessServiceImpl = new ChildProcessServiceImpl();
+public abstract class ChildProcessService extends Service {
+    private final ChildProcessServiceImpl mChildProcessServiceImpl;
+
+    protected ChildProcessService(ChildProcessServiceDelegate delegate) {
+        mChildProcessServiceImpl = new ChildProcessServiceImpl(delegate);
+    }
 
     @Override
     public void onCreate() {
         super.onCreate();
-        mChildProcessServiceImpl.create(getApplicationContext(),
-                getApplicationContext());
+        mChildProcessServiceImpl.create(getApplicationContext(), getApplicationContext());
     }
 
     @Override

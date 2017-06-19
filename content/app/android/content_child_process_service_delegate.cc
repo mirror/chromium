@@ -1,37 +1,32 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Copyright 2017 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "content/app/android/child_process_service_impl.h"
+#include "content/app/android/content_child_process_service_delegate.h"
 
 #include <android/native_window_jni.h>
 #include <cpu-features.h>
 
 #include "base/android/jni_array.h"
-#include "base/android/jni_string.h"
 #include "base/android/library_loader/library_loader_hooks.h"
 #include "base/android/memory_pressure_listener_android.h"
 #include "base/android/unguessable_token_android.h"
-#include "base/file_descriptor_store.h"
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/macros.h"
-#include "base/posix/global_descriptors.h"
 #include "base/unguessable_token.h"
 #include "content/child/child_thread_impl.h"
 #include "content/public/common/content_descriptors.h"
 #include "content/public/common/content_switches.h"
 #include "gpu/ipc/common/android/scoped_surface_request_conduit.h"
 #include "gpu/ipc/common/gpu_surface_lookup.h"
-#include "jni/ChildProcessServiceImpl_jni.h"
+#include "jni/ContentChildProcessServiceDelegate_jni.h"
 #include "services/service_manager/embedder/shared_file_util.h"
 #include "services/service_manager/embedder/switches.h"
 #include "ui/gl/android/scoped_java_surface.h"
 #include "ui/gl/android/surface_texture.h"
 
 using base::android::AttachCurrentThread;
-using base::android::CheckException;
-using base::android::JavaIntArrayToIntVector;
 using base::android::JavaParamRef;
 
 namespace content {
@@ -59,7 +54,7 @@ class ChildProcessSurfaceManager : public gpu::ScopedSurfaceRequestConduit,
     JNIEnv* env = base::android::AttachCurrentThread();
 
     content::
-        Java_ChildProcessServiceImpl_forwardSurfaceTextureForSurfaceRequest(
+        Java_ContentChildProcessServiceDelegate_forwardSurfaceTextureForSurfaceRequest(
             env, service_impl_,
             base::android::UnguessableTokenAndroid::Create(env, request_token),
             surface_texture->j_surface_texture());
@@ -69,8 +64,8 @@ class ChildProcessSurfaceManager : public gpu::ScopedSurfaceRequestConduit,
   gfx::AcceleratedWidget AcquireNativeWidget(int surface_id) override {
     JNIEnv* env = base::android::AttachCurrentThread();
     gl::ScopedJavaSurface surface(
-        content::Java_ChildProcessServiceImpl_getViewSurface(env, service_impl_,
-                                                             surface_id));
+        content::Java_ContentChildProcessServiceDelegate_getViewSurface(
+            env, service_impl_, surface_id));
 
     if (surface.j_surface().is_null())
       return NULL;
@@ -89,8 +84,8 @@ class ChildProcessSurfaceManager : public gpu::ScopedSurfaceRequestConduit,
   gl::ScopedJavaSurface AcquireJavaSurface(int surface_id) override {
     JNIEnv* env = base::android::AttachCurrentThread();
     return gl::ScopedJavaSurface(
-        content::Java_ChildProcessServiceImpl_getViewSurface(env, service_impl_,
-                                                             surface_id));
+        content::Java_ContentChildProcessServiceDelegate_getViewSurface(
+            env, service_impl_, surface_id));
   }
 
  private:
@@ -106,10 +101,10 @@ static base::LazyInstance<ChildProcessSurfaceManager>::Leaky
 
 // Chrome actually uses the renderer code path for all of its child
 // processes such as renderers, plugins, etc.
-void InternalInitChildProcessImpl(JNIEnv* env,
-                                  const JavaParamRef<jobject>& service_impl,
-                                  jint cpu_count,
-                                  jlong cpu_features) {
+void InternalInitChildProcess(JNIEnv* env,
+                              const JavaParamRef<jobject>& service_impl,
+                              jint cpu_count,
+                              jlong cpu_features) {
   // Set the CPU properties.
   android_setCpu(cpu_count, cpu_features);
 
@@ -125,71 +120,44 @@ void InternalInitChildProcessImpl(JNIEnv* env,
 
 }  // namespace <anonymous>
 
-void RegisterFileDescriptors(JNIEnv* env,
-                             const JavaParamRef<jclass>& clazz,
-                             const JavaParamRef<jintArray>& j_ids,
-                             const JavaParamRef<jintArray>& j_fds,
-                             const JavaParamRef<jlongArray>& j_offsets,
-                             const JavaParamRef<jlongArray>& j_sizes) {
-  std::vector<int> ids;
-  base::android::JavaIntArrayToIntVector(env, j_ids, &ids);
-  std::vector<int> fds;
-  base::android::JavaIntArrayToIntVector(env, j_fds, &fds);
-  std::vector<int64_t> offsets;
-  base::android::JavaLongArrayToInt64Vector(env, j_offsets, &offsets);
-  std::vector<int64_t> sizes;
-  base::android::JavaLongArrayToInt64Vector(env, j_sizes, &sizes);
-
-  DCHECK_EQ(ids.size(), fds.size());
-  DCHECK_EQ(fds.size(), offsets.size());
-  DCHECK_EQ(offsets.size(), sizes.size());
-
-  std::map<int, std::string> ids_to_keys;
-  std::string file_switch_value =
-      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
-          service_manager::switches::kSharedFiles);
-  if (!file_switch_value.empty()) {
-    base::Optional<std::map<int, std::string>> ids_to_keys_from_command_line =
-        service_manager::ParseSharedFileSwitchValue(file_switch_value);
-    if (ids_to_keys_from_command_line) {
-      ids_to_keys = std::move(*ids_to_keys_from_command_line);
-    }
-  }
-
-  for (size_t i = 0; i < ids.size(); i++) {
-    base::MemoryMappedFile::Region region = {offsets.at(i), sizes.at(i)};
-    int id = ids.at(i);
-    int fd = fds.at(i);
-    auto iter = ids_to_keys.find(id);
-    if (iter != ids_to_keys.end()) {
-      base::FileDescriptorStore::GetInstance().Set(iter->second,
-                                                   base::ScopedFD(fd), region);
-    } else {
-      base::GlobalDescriptors::GetInstance()->Set(id, fd, region);
-    }
-  }
-}
-
-void InitChildProcessImpl(JNIEnv* env,
-                          const JavaParamRef<jclass>& clazz,
-                          const JavaParamRef<jobject>& service_impl,
-                          jint cpu_count,
-                          jlong cpu_features) {
-  InternalInitChildProcessImpl(env, service_impl, cpu_count, cpu_features);
-}
-
-void ExitChildProcess(JNIEnv* env, const JavaParamRef<jclass>& clazz) {
-  VLOG(0) << "ChildProcessServiceImpl: Exiting child process.";
-  base::android::LibraryLoaderExitHook();
-  _exit(0);
-}
-
-bool RegisterChildProcessServiceImpl(JNIEnv* env) {
-  return RegisterNativesImpl(env);
+void InitChildProcess(JNIEnv* env,
+                      const JavaParamRef<jobject>& obj,
+                      jint cpu_count,
+                      jlong cpu_features) {
+  InternalInitChildProcess(env, obj, cpu_count, cpu_features);
 }
 
 void ShutdownMainThread(JNIEnv* env, const JavaParamRef<jobject>& obj) {
   ChildThreadImpl::ShutdownThread();
+}
+
+void RetrieveFileDescriptorsIdsToKeys(JNIEnv* env,
+                                      const JavaParamRef<jobject>& obj) {
+  std::map<int, std::string> ids_to_keys;
+  std::string file_switch_value =
+      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(
+          service_manager::switches::kSharedFiles);
+
+  std::vector<int> ids;
+  std::vector<std::string> keys;
+  if (!file_switch_value.empty()) {
+    base::Optional<std::map<int, std::string>> ids_to_keys_from_command_line =
+        service_manager::ParseSharedFileSwitchValue(file_switch_value);
+    if (ids_to_keys_from_command_line) {
+      for (auto iter : *ids_to_keys_from_command_line) {
+        ids.push_back(iter.first);
+        keys.push_back(iter.second);
+      }
+    }
+  }
+
+  Java_ContentChildProcessServiceDelegate_setFileDescriptorsIdsToKeys(
+      env, obj, base::android::ToJavaIntArray(env, ids),
+      base::android::ToJavaArrayOfStrings(env, keys));
+}
+
+bool RegisterContentChildProcessServiceDelegate(JNIEnv* env) {
+  return RegisterNativesImpl(env);
 }
 
 }  // namespace content
