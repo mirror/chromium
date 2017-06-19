@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "01f69db7_5cf394b8",
+        "filename": "ios/clean/chrome/app/steps/launch_to_foreground.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-19T10:53:59Z",
+      "side": 1,
+      "message": "Maybe confine the NDEBUG guards to just the code inside this method; there\u0027s no measurable overhead to running a no-op application step, but there are readability overheads to having guard macros in multiple places.",
+      "range": {
+        "startLine": 85,
+        "startChar": 1,
+        "endLine": 85,
+        "endChar": 7
+      },
+      "revId": "ed402fee26f9c6ee5f13bc93f8c5b5e155175484",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
