@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65ec7be4_62c3bd89",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_metrics_services_manager_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:24:53Z",
+      "side": 1,
+      "message": "Nit: we try to avoid we in comments: go/avoidwe.",
+      "range": {
+        "startLine": 120,
+        "startChar": 51,
+        "endLine": 120,
+        "endChar": 53
+      },
+      "revId": "a96357535a8247440b50d68db385301f8b75ad24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1d0347f_a92c372a",
+        "filename": "ios/chrome/browser/metrics/ios_chrome_metrics_services_manager_client.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-19T09:24:53Z",
+      "side": 1,
+      "message": "Optional nit: In ios/, we format the TODO like so:\n// TODO(crbug.com/734091): Conservatively…",
+      "range": {
+        "startLine": 120,
+        "startChar": 10,
+        "endLine": 120,
+        "endChar": 15
+      },
+      "revId": "a96357535a8247440b50d68db385301f8b75ad24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
