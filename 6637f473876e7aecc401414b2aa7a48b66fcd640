@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3fc6b494_cb933c33",
+        "filename": "chrome/browser/ui/views/payments/payment_request_views_util.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136734
+      },
+      "writtenOn": "2017-06-19T17:10:49Z",
+      "side": 1,
+      "message": "Comment would be nice; it gets a little complicated when we have a return value and also a writable arg. Same goes for other .h files",
+      "revId": "6637f473876e7aecc401414b2aa7a48b66fcd640",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
