@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "90a885da_df0213aa",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 162,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-19T04:46:59Z",
+      "side": 1,
+      "message": "Yes I think so too.",
+      "parentUuid": "515ae991_7ef97f02",
+      "range": {
+        "startLine": 162,
+        "startChar": 0,
+        "endLine": 162,
+        "endChar": 25
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "70a7a4d8_585ed9df",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-15T12:08:37Z",
       "side": 1,
       "message": "This test can pass now, but I suppose TAINTED should be expected instead?\nBecause remote_image_url has different origin and our image object has no crossOrigin attribute.",
+      "range": {
+        "startLine": 221,
+        "startChar": 12,
+        "endLine": 221,
+        "endChar": 23
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0949f41e_98a51cdf",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-19T04:46:59Z",
+      "side": 1,
+      "message": "The response type is \"cors\" which is one of CORS-same-origin.\n\nhttps://html.spec.whatwg.org/#terminology-3\n\u003e A response whose type is \"basic\", \"cors\", or \"default\" is CORS-same-origin.\n\nSo the origin of the image is the element\u0027s node document\u0027s origin.\n\nhttps://html.spec.whatwg.org/#origin:cors-cross-origin\n\u003e For images of img elements\n\u003e  If the image data is CORS-cross-origin\n\u003e   A unique opaque origin assigned when the image is created.\n\u003e  If the image data is CORS-same-origin\n\u003e   The img element\u0027s node document\u0027s origin.\n\nSo the origin-clean flag of the element is true.\n\nhttps://html.spec.whatwg.org/#images-2:concept-canvas-origin-clean-6\n\u003e If the origin of image\u0027s image is not the same origin as the origin specified by the entry settings object, then set the origin-clean flag of the ImageBitmap object\u0027s bitmap to false.\n\nSo the image should not be tainted.",
+      "parentUuid": "70a7a4d8_585ed9df",
       "range": {
         "startLine": 221,
         "startChar": 12,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e4741407_f0cb241d",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-19T04:46:59Z",
+      "side": 1,
+      "message": "I think this is a bug of Memory Cache.\nThe response of the line 222-228 is cached in the memory cache of the page, not in the service worker.\n\nhiroshige@\nWhat do you think?",
+      "parentUuid": "5eff208b_7fbbf088",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 22
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "1b2c67f1_cb6c0628",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-15T12:08:37Z",
       "side": 1,
       "message": "I do believe this test should expect the same result with the test at line215-221, but why they are different now? And the comments seems to be strange, this test is not setting \u0027no-cors\u0027.",
+      "range": {
+        "startLine": 259,
+        "startChar": 12,
+        "endLine": 259,
+        "endChar": 19
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21821b60_21d1f643",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-19T04:46:59Z",
+      "side": 1,
+      "message": "I think this should also be NOT_TAINTED.\nThe response type is cors, and the origin-clean flag of the element is true.",
+      "parentUuid": "1b2c67f1_cb6c0628",
       "range": {
         "startLine": 259,
         "startChar": 12,
