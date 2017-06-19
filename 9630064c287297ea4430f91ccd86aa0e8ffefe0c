@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "5da0bbbc_260dc084",
+        "filename": "chrome/common/shell_handler_win.mojom",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-19T20:08:58Z",
+      "side": 1,
+      "message": "It cannot be an HANDLE because HWND !\u003d HANDLE in that they are global. And Mojo doesn\u0027t support HWNDs yet",
+      "parentUuid": "b1650463_17d34800",
+      "range": {
+        "startLine": 26,
+        "startChar": 22,
+        "endLine": 26,
+        "endChar": 28
+      },
+      "revId": "9630064c287297ea4430f91ccd86aa0e8ffefe0c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5a02fad8_44bada53",
         "filename": "chrome/common/shell_handler_win.mojom",
         "patchSetId": 5

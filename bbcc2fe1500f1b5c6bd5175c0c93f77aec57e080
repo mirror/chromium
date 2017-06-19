@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "4300e965_4ce81be2",
+        "filename": "chrome/browser/win/chrome_select_file_dialog_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-19T20:08:58Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "7b925ea3_d1a95f0c",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 34
+      },
+      "revId": "bbcc2fe1500f1b5c6bd5175c0c93f77aec57e080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9ae191b6_aea5274a",
         "filename": "chrome/common/BUILD.gn",
         "patchSetId": 3
@@ -84,6 +108,30 @@
       "side": 1,
       "message": "\u003e Either also move conflicts/module_event_sink_win.mojom or don\u0027t bother with this. IMO it\u0027s not worth it but I don\u0027t have a strong opinion.\n\nMore an IPC security thing.  Moved conflicts/module_event_sink_win.mojom into this group too, and we\u0027ll see if the bots like it.",
       "parentUuid": "9ae191b6_aea5274a",
+      "range": {
+        "startLine": 740,
+        "startChar": 2,
+        "endLine": 740,
+        "endChar": 13
+      },
+      "revId": "bbcc2fe1500f1b5c6bd5175c0c93f77aec57e080",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "87347605_623a8ed5",
+        "filename": "chrome/common/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 740,
+      "author": {
+        "id": 1137015
+      },
+      "writtenOn": "2017-06-19T20:08:58Z",
+      "side": 1,
+      "message": "What do you mean with \"More an IPC security thing\"?",
+      "parentUuid": "87c20a11_90db54e8",
       "range": {
         "startLine": 740,
         "startChar": 2,
