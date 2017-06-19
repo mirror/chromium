@@ -64,6 +64,7 @@ scoped_refptr<ResourceResponse> ResourceResponse::DeepCopy() const {
   new_response->head.cors_exposed_header_names = head.cors_exposed_header_names;
   new_response->head.did_service_worker_navigation_preload =
       head.did_service_worker_navigation_preload;
+
   return new_response;
 }
 

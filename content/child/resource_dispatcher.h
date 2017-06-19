@@ -182,6 +182,7 @@ class CONTENT_EXPORT ResourceDispatcher : public IPC::Listener {
     GURL url;
     // The security origin of the frame that initiates this request.
     url::Origin frame_origin;
+
     // The url of the latest response even in case of redirection.
     GURL response_url;
     bool download_to_file;

@@ -42,6 +42,7 @@
 #include "net/base/net_errors.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_response_headers.h"
+#include "url/origin.h"
 
 namespace content {
 
@@ -315,6 +316,7 @@ void ResourceDispatcher::OnReceivedRedirect(
     request_info->response_url = redirect_info.new_url;
     request_info->pending_redirect_message.reset(
         new ResourceHostMsg_FollowRedirect(request_id));
+
     if (!request_info->is_deferred) {
       FollowPendingRedirect(request_id, request_info);
     }
@@ -688,6 +690,7 @@ void ResourceDispatcher::ToResourceResponseInfo(
     const ResourceResponseHead& browser_info,
     ResourceResponseInfo* renderer_info) const {
   *renderer_info = browser_info;
+
   if (base::TimeTicks::IsConsistentAcrossProcesses() ||
       request_info.request_start.is_null() ||
       request_info.response_start.is_null() ||
