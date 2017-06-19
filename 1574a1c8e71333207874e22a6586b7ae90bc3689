@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "76973e90_711f57b5",
+        "filename": "third_party/WebKit/Source/core/css/CSSPrimitiveValueMappings.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 191,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-19T07:06:49Z",
+      "side": 0,
+      "message": "What did this do?",
+      "revId": "1574a1c8e71333207874e22a6586b7ae90bc3689",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
