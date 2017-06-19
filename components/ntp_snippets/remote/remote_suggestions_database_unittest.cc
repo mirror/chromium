@@ -51,6 +51,7 @@ std::unique_ptr<RemoteSuggestion> CreateTestSuggestion() {
   return RemoteSuggestion::CreateFromProto(proto);
 }
 
+// RemoteSuggestion is non-copyable and Pointee does not support it.
 MATCHER_P(SnippetEq, snippet, "") {
   return *arg == *snippet;
 }
