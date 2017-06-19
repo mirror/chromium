@@ -33,8 +33,7 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT BinderRegistry {
   void AddInterface(
       const base::Callback<void(const BindSourceInfo&,
                                 mojo::InterfaceRequest<Interface>)>& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner =
-          nullptr) {
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner = nullptr) {
     SetInterfaceBinder(
         Interface::Name_,
         base::MakeUnique<CallbackBinder<Interface>>(callback, task_runner));
@@ -42,12 +41,12 @@ class SERVICE_MANAGER_PUBLIC_CPP_EXPORT BinderRegistry {
   void AddInterface(
       const std::string& interface_name,
       const base::Callback<void(mojo::ScopedMessagePipeHandle)>& callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner = nullptr);
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner = nullptr);
 
   void AddInterface(
       const std::string& interface_name,
       const Binder& binder_callback,
-      const scoped_refptr<base::SingleThreadTaskRunner>& task_runner = nullptr);
+      const scoped_refptr<base::SequencedTaskRunner>& task_runner = nullptr);
 
   // Removes the specified interface from the registry. This has no effect on
   // bindings already completed.

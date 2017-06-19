@@ -22,12 +22,12 @@ void BindCallbackAdapter(
 
 GenericCallbackBinder::GenericCallbackBinder(
     const BindCallback& callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
     : callback_(callback), task_runner_(task_runner) {}
 
 GenericCallbackBinder::GenericCallbackBinder(
     const base::Callback<void(mojo::ScopedMessagePipeHandle)>& callback,
-    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner)
+    const scoped_refptr<base::SequencedTaskRunner>& task_runner)
     : callback_(base::Bind(&BindCallbackAdapter, callback)),
       task_runner_(task_runner) {}
 
