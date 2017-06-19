@@ -16,6 +16,24 @@
       "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e4573d_0d01f138",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T19:37:04Z",
+      "side": 1,
+      "message": "Happy to but wouldn\u0027t be simpler to add the UKM so your CL properly takes the \"Display\" into account? It sounds that it would be less likely to forget this way. WDYT?",
+      "parentUuid": "fb224591_18870b8f",
+      "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
