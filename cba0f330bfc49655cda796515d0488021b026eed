@@ -34,6 +34,24 @@
       "revId": "cba0f330bfc49655cda796515d0488021b026eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8cbaf02_0ca746d1",
+        "filename": "ios/chrome/app/spotlight/topsites_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-19T11:15:16Z",
+      "side": 1,
+      "message": "Because the mediator is aware of the ViewController and the ViewController is not aware of the mediator. So the mediator has to set the property on the ViewController if it is the other way around.",
+      "parentUuid": "8bd35575_db85cd81",
+      "revId": "cba0f330bfc49655cda796515d0488021b026eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
