@@ -419,6 +419,10 @@ void RenderFrameProxy::OnSetHasReceivedUserGesture() {
 }
 
 void RenderFrameProxy::FrameDetached(DetachType type) {
+  if (auto* proxy = MimeHandlerViewProxy::FromWebFrame(web_frame_->Parent())) {
+    proxy->FrameDetached(routing_id_);
+  }
+
   if (type == DetachType::kRemove && web_frame_->Parent()) {
     // Let the browser process know this subframe is removed, so that it is
     // destroyed in its current process.

@@ -266,6 +266,8 @@ target(link_target_type, "renderer") {
     "menu_item_builder.cc",
     "menu_item_builder.h",
     "message_delivery_policy.h",
+    "mime_handler_view/mime_handler_view_proxy.cc",
+    "mime_handler_view/mime_handler_view_proxy.h",
     "mojo/blink_connector_js_wrapper.cc",
     "mojo/blink_connector_js_wrapper.h",
     "mojo/blink_interface_provider_impl.cc",

@@ -826,6 +826,14 @@ extern const char kWifiCredentialSyncDescription[];
 extern const char kZeroCopyName[];
 extern const char kZeroCopyDescription[];
 
+// Name of about:flag option to turn on the experimental mode where PDF
+// extension becomes web accessible.
+extern const char kWebAccessiblePdfExtensionIsolationName[];
+
+// Description of about:flag option to turn on the experimental mode where PDF
+// extension becomes web accessible.
+extern const char kWebAccessiblePdfExtensionIsolationDescription[];
+
 // Android --------------------------------------------------------------------
 
 #if defined(OS_ANDROID)

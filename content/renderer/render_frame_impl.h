@@ -48,6 +48,7 @@
 #include "content/public/renderer/render_frame.h"
 #include "content/renderer/frame_blame_context.h"
 #include "content/renderer/media/media_factory.h"
+#include "content/renderer/mime_handler_view/mime_handler_view_proxy.h"
 #include "content/renderer/mojo/blink_interface_provider_impl.h"
 #include "content/renderer/renderer_webcookiejar_impl.h"
 #include "ipc/ipc_message.h"
@@ -239,6 +240,11 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Overwrites the given URL to use an HTML5 embed if possible.
   blink::WebURL OverrideFlashEmbedWithHTML(const blink::WebURL& url) override;
+
+  // Overwrites the given URL to use an HTML5 embed if possible.
+  blink::WebURL OverridePDFEmbedWithHTML(
+      const blink::WebURL& url,
+      const blink::WebString& original_mime_type) override;
 
   ~RenderFrameImpl() override;
 
@@ -669,6 +675,9 @@ class CONTENT_EXPORT RenderFrameImpl
   blink::WebPageVisibilityState VisibilityState() const override;
   std::unique_ptr<blink::WebURLLoader> CreateURLLoader() override;
   void DraggableRegionsChanged() override;
+  v8::Local<v8::Object> GetV8ScriptableObjectForPluginFrame(
+      v8::Isolate* isolate,
+      blink::WebFrame* frame) override;
 
   // WebFrameSerializerClient implementation:
   void DidSerializeDataForFrame(
@@ -762,6 +771,10 @@ class CONTENT_EXPORT RenderFrameImpl
   // TODO(varunjain): delete this method once we figure out how to keep
   // selection handles in sync with the webpage.
   void SyncSelectionIfRequired();
+
+  MimeHandlerViewProxy* mime_handler_view_proxy() {
+    return &mime_handler_view_proxy_;
+  }
 
  protected:
   explicit RenderFrameImpl(const CreateParams& params);
@@ -1117,6 +1130,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   void SendUpdateFaviconURL(blink::WebIconURL::Type icon_types_mask);
 
+  MimeHandlerViewProxy* GetMimeHandlerViewProxyInParentFrame();
+
   // Stores the WebLocalFrame we are associated with.  This is null from the
   // constructor until BindToWebFrame is called, and it is null after
   // frameDetached is called until destruction (which is asynchronous in the
@@ -1417,6 +1432,8 @@ class CONTENT_EXPORT RenderFrameImpl
 
   // Callbacks that we should call when we get a routing token.
   std::vector<media::RoutingTokenCallback> pending_routing_token_callbacks_;
+
+  MimeHandlerViewProxy mime_handler_view_proxy_;
 
   base::WeakPtrFactory<RenderFrameImpl> weak_factory_;
 
