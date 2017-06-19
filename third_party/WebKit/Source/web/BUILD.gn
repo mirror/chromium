@@ -39,14 +39,10 @@ component("web") {
     "AssertMatchingEnums.cpp",
     "ChromeClientImpl.cpp",
     "ChromeClientImpl.h",
-    "InspectorOverlayAgent.cpp",
-    "InspectorOverlayAgent.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
     "MediaKeysClientImpl.cpp",
     "MediaKeysClientImpl.h",
-    "PageOverlay.cpp",
-    "PageOverlay.h",
     "PrerendererClientImpl.cpp",
     "PrerendererClientImpl.h",
     "StorageClientImpl.cpp",
@@ -139,7 +135,6 @@ test("webkit_unit_tests") {
 
   sources = [
     "ExternalPopupMenuTest.cpp",
-    "PageOverlayTest.cpp",
     "WebAssociatedURLLoaderImplTest.cpp",
     "WebDragDataTest.cpp",
     "WebElementTest.cpp",
