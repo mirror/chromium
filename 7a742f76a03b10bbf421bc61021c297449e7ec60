@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "1222dc48_40e2a6ea",
+        "filename": "components/cronet/url_request_context_config.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-19T14:35:59Z",
+      "side": 1,
+      "message": "Ack. Got it. Yes, std::vector\u003c\u003e needs the contained type to have a copy constructor.\nLet\u0027s keep it as it is.",
+      "parentUuid": "9fa6b7a1_6aea197d",
+      "revId": "7a742f76a03b10bbf421bc61021c297449e7ec60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b503200c_843cc4ff",
         "filename": "components/cronet/url_request_context_config.h",
         "patchSetId": 3
