@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "components/payments/core/address_normalizer_impl.h"
+#include "components/payments/core/autofill_payment_instrument_delegate.h"
 #include "components/payments/core/payment_request_delegate.h"
 
 namespace content {
@@ -20,7 +21,8 @@ namespace payments {
 
 class PaymentRequestDialog;
 
-class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
+class ChromePaymentRequestDelegate : public PaymentRequestDelegate,
+                                     public AutofillPaymentInstrumentDelegate {
  public:
   explicit ChromePaymentRequestDelegate(content::WebContents* web_contents);
   ~ChromePaymentRequestDelegate() override;
@@ -29,20 +31,25 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   void ShowDialog(PaymentRequest* request) override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
-  autofill::PersonalDataManager* GetPersonalDataManager() override;
   const std::string& GetApplicationLocale() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;
   const GURL& GetLastCommittedURL() const override;
-  void DoFullCardRequest(
-      const autofill::CreditCard& credit_card,
-      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-          result_delegate) override;
-  AddressNormalizer* GetAddressNormalizer() override;
+
   autofill::RegionDataLoader* GetRegionDataLoader() override;
   ukm::UkmRecorder* GetUkmRecorder() override;
   std::string GetAuthenticatedEmail() const override;
   PrefService* GetPrefService() override;
+
+  // AutofillPaymentInstrumentDelegate:
+  void DoFullCardRequest(
+      const autofill::CreditCard& credit_card,
+      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+          result_delegate) override;
+
+  // PaymentRequestDelegate and AutofillPaymentInstrumentDelegate
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
+  AddressNormalizer* GetAddressNormalizer() override;
 
  protected:
   // Reference to the dialog so that we can satisfy calls to CloseDialog(). This

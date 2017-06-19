@@ -42,9 +42,11 @@ std::unique_ptr<::i18n::addressinput::Storage> GetAddressInputStorage() {
 
 PaymentRequest::PaymentRequest(
     const web::PaymentRequest& web_payment_request,
-    autofill::PersonalDataManager* personal_data_manager)
+    autofill::PersonalDataManager* personal_data_manager,
+    payments::AddressNormalizer* address_normalizer)
     : web_payment_request_(web_payment_request),
       personal_data_manager_(personal_data_manager),
+      address_normalizer_(address_normalizer),
       selected_shipping_profile_(nullptr),
       selected_contact_profile_(nullptr),
       selected_credit_card_(nullptr),
@@ -79,6 +81,21 @@ PaymentRequest::PaymentRequest(
 }
 
 PaymentRequest::~PaymentRequest() {}
+
+autofill::PersonalDataManager* PaymentRequest::GetPersonalDataManager() const {
+  return personal_data_manager_;
+}
+
+void PaymentRequest::DoFullCardRequest(
+    const autofill::CreditCard& credit_card,
+    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+        result_delegate) {
+  // TODO: Implement
+}
+
+payments::AddressNormalizer* PaymentRequest::GetAddressNormalizer() {
+  return address_normalizer_;
+}
 
 void PaymentRequest::UpdatePaymentDetails(const web::PaymentDetails& details) {
   web_payment_request_.details = details;

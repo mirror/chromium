@@ -69,12 +69,6 @@ void ChromePaymentRequestDelegate::ShowErrorMessage() {
     dialog_->ShowErrorMessage();
 }
 
-autofill::PersonalDataManager*
-ChromePaymentRequestDelegate::GetPersonalDataManager() {
-  return autofill::PersonalDataManagerFactory::GetForProfile(
-      Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
-}
-
 const std::string& ChromePaymentRequestDelegate::GetApplicationLocale() const {
   return g_browser_process->GetApplicationLocale();
 }
@@ -93,13 +87,6 @@ const GURL& ChromePaymentRequestDelegate::GetLastCommittedURL() const {
   return web_contents_->GetLastCommittedURL();
 }
 
-void ChromePaymentRequestDelegate::DoFullCardRequest(
-    const autofill::CreditCard& credit_card,
-    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
-        result_delegate) {
-  dialog_->ShowCvcUnmaskPrompt(credit_card, result_delegate, web_contents_);
-}
-
 autofill::RegionDataLoader*
 ChromePaymentRequestDelegate::GetRegionDataLoader() {
   return new autofill::RegionDataLoaderImpl(
@@ -107,10 +94,6 @@ ChromePaymentRequestDelegate::GetRegionDataLoader() {
           GetPersonalDataManager()->GetURLRequestContextGetter())
           .release(),
       GetAddressInputStorage().release(), GetApplicationLocale());
-}
-
-AddressNormalizer* ChromePaymentRequestDelegate::GetAddressNormalizer() {
-  return &address_normalizer_;
 }
 
 ukm::UkmRecorder* ChromePaymentRequestDelegate::GetUkmRecorder() {
@@ -134,6 +117,23 @@ std::string ChromePaymentRequestDelegate::GetAuthenticatedEmail() const {
 PrefService* ChromePaymentRequestDelegate::GetPrefService() {
   return Profile::FromBrowserContext(web_contents_->GetBrowserContext())
       ->GetPrefs();
+}
+
+void ChromePaymentRequestDelegate::DoFullCardRequest(
+    const autofill::CreditCard& credit_card,
+    base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+        result_delegate) {
+  dialog_->ShowCvcUnmaskPrompt(credit_card, result_delegate, web_contents_);
+}
+
+autofill::PersonalDataManager*
+ChromePaymentRequestDelegate::GetPersonalDataManager() const {
+  return autofill::PersonalDataManagerFactory::GetForProfile(
+      Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
+}
+
+AddressNormalizer* ChromePaymentRequestDelegate::GetAddressNormalizer() {
+  return &address_normalizer_;
 }
 
 }  // namespace payments

@@ -88,6 +88,8 @@ struct PendingPaymentResponse {
   // PersonalDataManager used to manage user credit cards and addresses.
   autofill::PersonalDataManager* _personalDataManager;
 
+  std::unique_ptr<payments::AddressNormalizer> _addressNormalizer;
+
   // Object that has a copy of web::PaymentRequest as provided by the page
   // invoking the PaymentRequest API. Also caches credit cards and addresses
   // provided by the _personalDataManager and manages selected ones for the
@@ -220,6 +222,18 @@ struct PendingPaymentResponse {
     _personalDataManager =
         autofill::PersonalDataManagerFactory::GetForBrowserState(
             browserState->GetOriginalChromeBrowserState());
+
+    std::unique_ptr<i18n::addressinput::Source> addressNormalizerSource =
+        base::MakeUnique<autofill::ChromeMetadataSource>(
+            I18N_ADDRESS_VALIDATION_DATA_URL,
+            _personalDataManager->GetURLRequestContextGetter());
+
+    std::unique_ptr<i18n::addressinput::Storage> addressNormalizerStorage =
+        autofill::ValidationRulesStorageFactory::CreateStorage();
+
+    _addressNormalizer = base::MakeUnique<payments::AddressNormalizerImpl>(
+        std::move(addressNormalizerSource),
+        std::move(addressNormalizerStorage));
   }
   return self;
 }
@@ -357,19 +371,6 @@ struct PendingPaymentResponse {
   autofill::PersonalDataManager* personalDataManager =
       _paymentRequest->GetPersonalDataManager();
 
-  std::unique_ptr<i18n::addressinput::Source> addressNormalizerSource =
-      base::MakeUnique<autofill::ChromeMetadataSource>(
-          I18N_ADDRESS_VALIDATION_DATA_URL,
-          personalDataManager->GetURLRequestContextGetter());
-
-  std::unique_ptr<i18n::addressinput::Storage> addressNormalizerStorage =
-      autofill::ValidationRulesStorageFactory::CreateStorage();
-
-  std::unique_ptr<payments::AddressNormalizer> addressNormalizer =
-      base::MakeUnique<payments::AddressNormalizerImpl>(
-          std::move(addressNormalizerSource),
-          std::move(addressNormalizerStorage));
-
   // Kickoff the process of loading the rules (which is asynchronous) for each
   // profile's country, to get faster address normalization later.
   for (const autofill::AutofillProfile* profile :
@@ -377,7 +378,7 @@ struct PendingPaymentResponse {
     std::string countryCode =
         base::UTF16ToUTF8(profile->GetRawInfo(autofill::ADDRESS_HOME_COUNTRY));
     if (autofill::data_util::IsValidCountryCode(countryCode)) {
-      addressNormalizer->LoadRulesForRegion(countryCode);
+      _addressNormalizer->LoadRulesForRegion(countryCode);
     }
   }
 
@@ -387,7 +388,7 @@ struct PendingPaymentResponse {
 
   _addressNormalizationManager =
       base::MakeUnique<payments::AddressNormalizationManager>(
-          std::move(addressNormalizer), default_country_code);
+          std::move(_addressNormalizer), default_country_code);
 }
 
 // Ensures that |_paymentRequest| is set to the correct value for |message|.
@@ -412,8 +413,8 @@ struct PendingPaymentResponse {
     return YES;
   }
 
-  _paymentRequest =
-      base::MakeUnique<PaymentRequest>(webPaymentRequest, _personalDataManager);
+  _paymentRequest = base::MakeUnique<PaymentRequest>(
+      webPaymentRequest, _personalDataManager, _addressNormalizer.get());
   return YES;
 }
 

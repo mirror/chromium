@@ -11,6 +11,7 @@
 #include <vector>
 
 #include "base/macros.h"
+#include "components/payments/core/autofill_payment_instrument_delegate.h"
 #include "components/payments/core/payment_options_provider.h"
 #include "components/payments/core/payments_profile_comparator.h"
 #include "ios/web/public/payments/payment_request.h"
@@ -23,6 +24,7 @@ class RegionDataLoader;
 }  // namespace autofill
 
 namespace payments {
+class AddressNormalizer;
 class CurrencyFormatter;
 }  // namespace payments
 
@@ -31,16 +33,22 @@ class CurrencyFormatter;
 // |personal_data_manager| and manages shared resources and user selections for
 // the current PaymentRequest flow. It must be initialized with a non-null
 // instance of |personal_data_manager| that outlives this class.
-class PaymentRequest : public payments::PaymentOptionsProvider {
+class PaymentRequest : public payments::PaymentOptionsProvider,
+                       public payments::AutofillPaymentInstrumentDelegate {
  public:
   // |personal_data_manager| should not be null and should outlive this object.
   PaymentRequest(const web::PaymentRequest& web_payment_request,
-                 autofill::PersonalDataManager* personal_data_manager);
+                 autofill::PersonalDataManager* personal_data_manager,
+                 payments::AddressNormalizer* address_normalizer);
   ~PaymentRequest() override;
 
-  autofill::PersonalDataManager* GetPersonalDataManager() const {
-    return personal_data_manager_;
-  }
+  // AutofillPaymentInstrumentDelegate:
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
+  void DoFullCardRequest(
+      const autofill::CreditCard& credit_card,
+      base::WeakPtr<autofill::payments::FullCardRequest::ResultDelegate>
+          result_delegate) override;
+  payments::AddressNormalizer* GetAddressNormalizer() override;
 
   // Returns the web::PaymentRequest that was used to build this PaymentRequest.
   const web::PaymentRequest& web_payment_request() const {
@@ -196,6 +204,8 @@ class PaymentRequest : public payments::PaymentOptionsProvider {
 
   // Never null and outlives this object.
   autofill::PersonalDataManager* personal_data_manager_;
+
+  payments::AddressNormalizer* address_normalizer_;
 
   // The currency formatter instance for this PaymentRequest flow.
   std::unique_ptr<payments::CurrencyFormatter> currency_formatter_;

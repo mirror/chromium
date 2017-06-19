@@ -47,7 +47,7 @@ class PaymentRequestDelegate {
 
   // Gets the PersonalDataManager associated with this PaymentRequest flow.
   // Cannot be null.
-  virtual autofill::PersonalDataManager* GetPersonalDataManager() = 0;
+  virtual autofill::PersonalDataManager* GetPersonalDataManager() const = 0;
 
   virtual const std::string& GetApplicationLocale() const = 0;
 

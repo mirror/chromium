@@ -16,9 +16,9 @@
 #include "components/autofill/core/browser/personal_data_manager.h"
 #include "components/autofill/core/browser/validation.h"
 #include "components/autofill/core/common/autofill_clock.h"
+#include "components/payments/core/autofill_payment_instrument_delegate.h"
 #include "components/payments/core/basic_card_response.h"
 #include "components/payments/core/payment_request_data_util.h"
-#include "components/payments/core/payment_request_delegate.h"
 
 namespace payments {
 
@@ -27,7 +27,7 @@ AutofillPaymentInstrument::AutofillPaymentInstrument(
     const autofill::CreditCard& card,
     const std::vector<autofill::AutofillProfile*>& billing_profiles,
     const std::string& app_locale,
-    PaymentRequestDelegate* payment_request_delegate)
+    AutofillPaymentInstrumentDelegate* payment_instrument_delegate)
     : PaymentInstrument(
           method_name,
           autofill::data_util::GetPaymentRequestData(card.network())
@@ -37,7 +37,7 @@ AutofillPaymentInstrument::AutofillPaymentInstrument(
       billing_profiles_(billing_profiles),
       app_locale_(app_locale),
       delegate_(nullptr),
-      payment_request_delegate_(payment_request_delegate),
+      payment_instrument_delegate_(payment_instrument_delegate),
       weak_ptr_factory_(this) {}
 AutofillPaymentInstrument::~AutofillPaymentInstrument() {}
 
@@ -70,11 +70,12 @@ void AutofillPaymentInstrument::InvokePaymentApp(
   if (!autofill::data_util::IsValidCountryCode(country_code)) {
     country_code = autofill::AutofillCountry::CountryCodeForLocale(app_locale_);
   }
-  payment_request_delegate_->GetAddressNormalizer()->StartAddressNormalization(
-      billing_address_, country_code, /*timeout_seconds=*/5, this);
+  payment_instrument_delegate_->GetAddressNormalizer()
+      ->StartAddressNormalization(billing_address_, country_code,
+                                  /*timeout_seconds=*/5, this);
 
-  payment_request_delegate_->DoFullCardRequest(credit_card_,
-                                               weak_ptr_factory_.GetWeakPtr());
+  payment_instrument_delegate_->DoFullCardRequest(
+      credit_card_, weak_ptr_factory_.GetWeakPtr());
 }
 
 bool AutofillPaymentInstrument::IsCompleteForPayment() {
@@ -103,7 +104,7 @@ bool AutofillPaymentInstrument::IsValidForCanMakePayment() {
 
 void AutofillPaymentInstrument::RecordUse() {
   // Record the use of the credit card.
-  payment_request_delegate_->GetPersonalDataManager()->RecordUseOf(
+  payment_instrument_delegate_->GetPersonalDataManager()->RecordUseOf(
       credit_card_);
 }
 

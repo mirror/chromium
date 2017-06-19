@@ -19,7 +19,7 @@
 
 namespace payments {
 
-class PaymentRequestDelegate;
+class AutofillPaymentInstrumentDelegate;
 
 // Represents an Autofill/Payments credit card form of payment in Payment
 // Request.
@@ -29,13 +29,13 @@ class AutofillPaymentInstrument
       public AddressNormalizer::Delegate {
  public:
   // |billing_profiles| is owned by the caller and should outlive this object.
-  // |payment_request_delegate| must outlive this object.
+  // |payment_instrument_delegate| must outlive this object.
   AutofillPaymentInstrument(
       const std::string& method_name,
       const autofill::CreditCard& card,
       const std::vector<autofill::AutofillProfile*>& billing_profiles,
       const std::string& app_locale,
-      PaymentRequestDelegate* payment_request_delegate);
+      AutofillPaymentInstrumentDelegate* payment_instrument_delegate);
   ~AutofillPaymentInstrument() override;
 
   // PaymentInstrument:
@@ -71,7 +71,7 @@ class AutofillPaymentInstrument
   const std::string app_locale_;
 
   PaymentInstrument::Delegate* delegate_;
-  PaymentRequestDelegate* payment_request_delegate_;
+  AutofillPaymentInstrumentDelegate* payment_instrument_delegate_;
   autofill::AutofillProfile billing_address_;
 
   base::string16 cvc_;
