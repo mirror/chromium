@@ -414,9 +414,8 @@ def main(argv):
   if options.type in ('java_binary', 'java_library', 'android_apk'):
     if options.java_sources_file:
       gradle['java_sources_file'] = options.java_sources_file
-    if options.bundled_srcjars:
-      gradle['bundled_srcjars'] = (
-          build_utils.ParseGnList(options.bundled_srcjars))
+    gradle['bundled_srcjars'] = (
+        build_utils.ParseGnList(options.bundled_srcjars))
 
     gradle['dependent_android_projects'] = []
     gradle['dependent_java_projects'] = []

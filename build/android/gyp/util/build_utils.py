@@ -93,12 +93,12 @@ def ParseGnList(gn_string):
   The common use for this behavior is in the Android build where things can
   take lists of @FileArg references that are expanded via ExpandFileArgs.
   """
+  if not gn_string:
+    return []
   if gn_string.startswith('['):
     parser = gn_helpers.GNValueParser(gn_string)
     return parser.ParseList()
-  if len(gn_string):
-    return [ gn_string ]
-  return []
+  return [ gn_string ]
 
 
 def CheckOptions(options, parser, required=None):
