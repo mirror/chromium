@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a5b64ab3_7140631c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/media/MediaCaptureNotificationService.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 207,
+      "author": {
+        "id": 1187649
+      },
+      "writtenOn": "2017-06-19T12:41:40Z",
+      "side": 1,
+      "message": "The channel id passed here should be updated to match the one used in the notification.",
+      "revId": "751b21569266c3e32784b416752ba5f456c8f3e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
