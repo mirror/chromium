@@ -93,9 +93,9 @@ class KeyMobileSitesPageSet(story.StorySet):
       action_on_load_complete=True))
 
     # Why: #8 (Alexa global), picked an interesting page
-    # Forbidden (Rate Limit Exceeded)
+    # TODO(rnephew): Uncomment when this story is rerecorded.
     # self.AddStory(KeyMobileSitesPage(
-    #  url='http://twitter.com/katyperry', page_set=self, name='Twitter'))
+    #    url='http://twitter.com/katyperry', page_set=self, name='Twitter'))
 
     # Why: #37 (Alexa global) """
     self.AddStory(KeyMobileSitesPage(
@@ -104,13 +104,11 @@ class KeyMobileSitesPageSet(story.StorySet):
         name='Pinterest'))
 
     # Why: #1 sports.
-    # Fails often; crbug.com/249722'
-    # self.AddStory(KeyMobileSitesPage(
-    # url='http://espn.go.com', page_set=self, name='ESPN'))
+    self.AddStory(KeyMobileSitesPage(
+        url='http://espn.go.com', page_set=self, name='ESPN'))
     # Why: crbug.com/231413
-    # Doesn't scroll; crbug.com/249736
-    # self.AddStory(KeyMobileSitesPage(
-    #                 url='http://forecast.io', page_set=self))
+    self.AddStory(
+        KeyMobileSitesPage(url='http://forecast.io', page_set=self))
     # Why: crbug.com/169827
     self.AddStory(KeyMobileSitesPage(
       url='http://slashdot.org/', page_set=self, tags=['fastpath']))
@@ -176,3 +174,13 @@ class KeyMobileSitesPageSet(story.StorySet):
 
     for url in urls_list:
       self.AddStory(KeyMobileSitesPage(url, self))
+
+class KeyMobileSitesStoryExpectations(story.expectations.StoryExpectations):
+  def SetExpectations(self):
+    self.DisableStory('ESPN', [story.expectations.ALL], 'crbug.com/249722')
+    self.DisableStory(
+        'http://forecast.io', [story.expectations.ALL], 'crbug.com/249736')
+    # TODO(rnephew): Uncomment when this story is rerecorded.
+    # self.DisableStory(
+    #    'Twitter', [story.expectations.ALL], 'Forbidden (Rate Limit Exceeded)')
+
