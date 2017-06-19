@@ -1,0 +1,107 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c1acd09d_f5768eb3",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "GetRegistrationFunctionName ?",
+      "range": {
+        "startLine": 415,
+        "startChar": 4,
+        "endLine": 415,
+        "endChar": 19
+      },
+      "revId": "66ce32c1dd9f604b6a7f5eed670e7386947839b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6aff410f_767d8efc",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 417,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "Could keep this as RegisterNative instead of lower case maybe? It\u0027s a weirdly formatted name either way because of the Java binary name but InitialCaps is more like our coding style.\n\nAlso for really trivial cases like this you can just do string concatenation instead of creating a Template :)",
+      "revId": "66ce32c1dd9f604b6a7f5eed670e7386947839b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8f6f576_ad7c807f",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 420,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "I meant you could share this logic itself between the generation of the registration function name and the other place in this file, instead of duplicating it..",
+      "revId": "66ce32c1dd9f604b6a7f5eed670e7386947839b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09542ab7_67396941",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 869,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "crbug.com",
+      "range": {
+        "startLine": 869,
+        "startChar": 9,
+        "endLine": 869,
+        "endChar": 14
+      },
+      "revId": "66ce32c1dd9f604b6a7f5eed670e7386947839b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57ea7363_06341ed9",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 18
+      },
+      "lineNbr": 877,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "crbug.com",
+      "range": {
+        "startLine": 877,
+        "startChar": 8,
+        "endLine": 877,
+        "endChar": 13
+      },
+      "revId": "66ce32c1dd9f604b6a7f5eed670e7386947839b3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

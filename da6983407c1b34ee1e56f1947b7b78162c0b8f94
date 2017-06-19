@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "6716b27a_b8f1faf3",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "Ah, it\u0027d be clearer if you based this CL on the other one, instead of including the changes here (though since the other one is in the CQ now, at this point it\u0027s easier to just wait for the other one to land and then rebase this on top)",
+      "parentUuid": "e776c084_344af390",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0391a1_a06c3031",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 16
@@ -295,6 +313,23 @@
     },
     {
       "key": {
+        "uuid": "f6f7dd8e_37d0486d",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "Why was this removed?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8edb85c0_67cbd6a0",
         "filename": "base/android/jni_generator/jni_generator_helper.h",
         "patchSetId": 16
@@ -359,6 +394,24 @@
       "side": 1,
       "message": "This function is also called by some manual registration functions such as \"third_party/gvr-android-sdk/gvr_api_jni.h\"",
       "parentUuid": "bf5fe47d_ea20c19a",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "c0702938_8d47b834",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "Hm, that\u0027s awkward :/\nThe VR SDK seems to use a really weird way to handle JNI registration - it shouldn\u0027t have a generated, edited header checked in. Can we put a TODO on this to remove it, and talk with the VR owners about how to fix registration in the VR SDK?",
+      "parentUuid": "be463c14_234d1a6b",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -693,6 +746,24 @@
       "side": 1,
       "message": "The chrome_sync_shell_apk includes different JNI functions than chrome_apk, so we generate another header file for it called \"chrome_sync_shell_jni_registration.h\" and create a new entry_point file for it.",
       "parentUuid": "15b5f96c_6cc87046",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f6ea8b2f_ad6f1dd1",
+        "filename": "chrome/browser/android/chrome_sync_shell_entry_point.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1109505
+      },
+      "writtenOn": "2017-06-19T20:37:38Z",
+      "side": 1,
+      "message": "Hrm, having to duplicate all this just to include a different header file seems a bit awkward :/\n\nMaybe this could just get #ifdef\u0027ed?",
+      "parentUuid": "b1577478_33e725f4",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
