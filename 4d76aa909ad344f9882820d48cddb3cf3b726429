@@ -69,6 +69,24 @@
       "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ca4f6337_2a9c1af2",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T17:23:14Z",
+      "side": 1,
+      "message": "Lots of bots are component only for speed.",
+      "parentUuid": "009dc66b_018a083c",
+      "revId": "4d76aa909ad344f9882820d48cddb3cf3b726429",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
