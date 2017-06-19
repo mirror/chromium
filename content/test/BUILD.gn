@@ -1414,6 +1414,7 @@ test("content_unittests") {
     "../common/throttling_url_loader_unittest.cc",
     "../common/webplugininfo_unittest.cc",
     "../network/url_loader_unittest.cc",
+    "../public/test/all_download_item_notifier_unittest.cc",
     "../public/test/referrer_unittest.cc",
     "../public/test/test_browser_thread_bundle_unittest.cc",
     "../renderer/android/disambiguation_popup_helper_unittest.cc",
