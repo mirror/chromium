@@ -31,9 +31,10 @@ class DEVICE_GENERIC_SENSOR_EXPORT PlatformSensor
   // The interface that must be implemented by PlatformSensor clients.
   class Client {
    public:
-    virtual void OnSensorReadingChanged() = 0;
-    virtual void OnSensorError() = 0;
-    virtual bool IsNotificationSuspended() = 0;
+    virtual void NotifySensorReadingChanged() = 0;
+    virtual void NotifySensorError() = 0;
+    virtual bool IsSuspended() = 0;
+    virtual bool IsReadingNotificationEnabled() = 0;
 
    protected:
     virtual ~Client() {}
