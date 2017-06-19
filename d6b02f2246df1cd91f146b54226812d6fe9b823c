@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9ae26394_9eae7d94",
+        "filename": "tools/roll_webrtc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-06-19T18:20:54Z",
+      "side": 1,
+      "message": "Please use \u0027revision\u0027 everywhere instead and remove webrtc_latest (as it\u0027s not always the latest anymore).",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 19
+      },
+      "revId": "d6b02f2246df1cd91f146b54226812d6fe9b823c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
