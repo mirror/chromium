@@ -377,6 +377,7 @@ void ControllerImpl::OnItemAdded(bool success,
   DCHECK_EQ(Entry::State::NEW, entry->state);
   TransitTo(entry, Entry::State::AVAILABLE, model_.get());
 
+  KillTimedOutDownloads();
   ActivateMoreDownloads();
 }
 
@@ -429,6 +430,8 @@ void ControllerImpl::AttemptToFinalizeSetup() {
 
   UpdateDriverStates();
   ProcessScheduledTasks();
+
+  KillTimedOutDownloads();
 
   // Pull the initial straw if active downloads haven't reach maximum.
   ActivateMoreDownloads();
@@ -698,10 +701,13 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
     TransitTo(entry, Entry::State::COMPLETE, model_.get());
     ScheduleCleanupTask();
   } else {
+    driver_->Remove(entry->guid);
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE, base::Bind(&ControllerImpl::SendOnDownloadFailed,
                               weak_ptr_factory_.GetWeakPtr(), entry->client,
                               guid, FailureReasonFromCompletionType(type)));
+    // TODO(dtrainor): Handle the case where we crash before the model write
+    // happens and we have no driver entry.
     model_->Remove(guid);
   }
 
@@ -729,6 +735,40 @@ void ControllerImpl::ScheduleCleanupTask() {
 
   task_scheduler_->ScheduleTask(DownloadTaskType::CLEANUP_TASK, false, false,
                                 start_time.InSeconds(), end_time.InSeconds());
+}
+
+void ControllerImpl::ScheduleKillDownloadTaskIfNecessary() {
+  base::Time earliest_cancel_time = base::Time::Max();
+  for (const Entry* entry : model_->PeekEntries()) {
+    if (entry->state != Entry::State::COMPLETE &&
+        entry->scheduling_params.cancel_time < earliest_cancel_time) {
+      earliest_cancel_time = entry->scheduling_params.cancel_time;
+    }
+  }
+
+  if (earliest_cancel_time == base::Time::Max())
+    return;
+
+  base::TimeDelta time_to_cancel =
+      earliest_cancel_time > base::Time::Now()
+          ? earliest_cancel_time - base::Time::Now()
+          : base::TimeDelta();
+
+  cancel_downloads_callback_.Reset(base::Bind(
+      &ControllerImpl::KillTimedOutDownloads, weak_ptr_factory_.GetWeakPtr()));
+  base::ThreadTaskRunnerHandle::Get()->PostDelayedTask(
+      FROM_HERE, cancel_downloads_callback_.callback(), time_to_cancel);
+}
+
+void ControllerImpl::KillTimedOutDownloads() {
+  for (const Entry* entry : model_->PeekEntries()) {
+    if (entry->state != Entry::State::COMPLETE &&
+        entry->scheduling_params.cancel_time <= base::Time::Now()) {
+      HandleCompleteDownload(CompletionType::TIMEOUT, entry->guid);
+    }
+  }
+
+  ScheduleKillDownloadTaskIfNecessary();
 }
 
 void ControllerImpl::ActivateMoreDownloads() {
