@@ -9,7 +9,12 @@
         {
           "object": "InlineTextBox '\n'",
           "rect": [8, 295, 552, 55],
-          "reason": "full"
+          "reason": "chunk uncacheable"
+        },
+        {
+          "object": "InlineTextBox '\n'",
+          "rect": [8, 295, 552, 55],
+          "reason": "chunk uncacheable"
         },
         {
           "object": "LayoutSVGEllipse circle id='c1'",
