@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "db423c11_6237faa5",
+        "filename": "content/renderer/fetchers/manifest_fetcher.cc",
+        "patchSetId": 31
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-19T03:18:47Z",
+      "side": 1,
+      "message": "Maybe drop a line in CL desc about this change to help future archaeology",
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1a38543_8ac58eb8",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 31
+      },
+      "lineNbr": 308,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-19T03:18:47Z",
+      "side": 1,
+      "message": "Can we keep the const? I couldn\u0027t find request modify",
+      "range": {
+        "startLine": 308,
+        "startChar": 4,
+        "endLine": 308,
+        "endChar": 19
+      },
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09284d7a_70195573",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 196,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-19T03:18:47Z",
+      "side": 1,
+      "message": "Would you add a comment that this corresponds to a \"CORS flag\" concept in https://fetch.spec.whatwg.org/#fetching algorithms?",
+      "range": {
+        "startLine": 196,
+        "startChar": 18,
+        "endLine": 196,
+        "endChar": 0
+      },
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
