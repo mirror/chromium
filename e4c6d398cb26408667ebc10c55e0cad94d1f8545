@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f51c88b0_abc13cb4",
+        "filename": "extensions/shell/browser/geolocation/geolocation_apitest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T23:33:03Z",
+      "side": 1,
+      "message": "PositionUnavailable",
+      "range": {
+        "startLine": 10,
+        "startChar": 55,
+        "endLine": 10,
+        "endChar": 71
+      },
+      "revId": "e4c6d398cb26408667ebc10c55e0cad94d1f8545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "68520709_00165706",
+        "filename": "extensions/test/data/geolocation/always_position_unavailable/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T23:33:03Z",
+      "side": 1,
+      "message": "unavailable",
+      "range": {
+        "startLine": 3,
+        "startChar": 49,
+        "endLine": 3,
+        "endChar": 55
+      },
+      "revId": "e4c6d398cb26408667ebc10c55e0cad94d1f8545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3229c3f0_29801f4e",
+        "filename": "extensions/test/data/geolocation/always_position_unavailable/manifest.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-19T23:33:03Z",
+      "side": 1,
+      "message": "unavailable",
+      "range": {
+        "startLine": 4,
+        "startChar": 71,
+        "endLine": 4,
+        "endChar": 77
+      },
+      "revId": "e4c6d398cb26408667ebc10c55e0cad94d1f8545",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
