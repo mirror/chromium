@@ -16,6 +16,24 @@
       "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "422fdf35_09a55121",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-19T21:10:27Z",
+      "side": 1,
+      "message": "Discussed offline --- this doesn\u0027t seem to work with parametrized tests, so continuing as-is.",
+      "parentUuid": "c7755590_09ebb525",
+      "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
