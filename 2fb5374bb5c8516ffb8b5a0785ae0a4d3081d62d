@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "76854f6d_f59ed545",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9e463816_fd856638",
+      "range": {
+        "startLine": 94,
+        "startChar": 0,
+        "endLine": 95,
+        "endChar": 27
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21bf93c7_91828f8f",
         "filename": "ash/login/ui/login_auth_user_view.cc",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1afb936_0acc2ddc",
+        "filename": "ash/login/ui/login_auth_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21bf93c7_91828f8f",
+      "range": {
+        "startLine": 123,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 10
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "225c0b66_65a378b7",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "28ed0afc_d7bd4598",
+      "range": {
+        "startLine": 34,
+        "startChar": 4,
+        "endLine": 34,
+        "endChar": 22
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "64f165c8_8e88b89d",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 3
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "6e2b7ed1_05b0d330",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64f165c8_8e88b89d",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92ae0a30_0a72f0cd",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 3
@@ -102,6 +192,24 @@
       "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cfdb4a4_a4c2c2cb",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92ae0a30_0a72f0cd",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "67b2149c_4df96fc8",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5615a10_d4bb8d3e",
+      "range": {
+        "startLine": 55,
+        "startChar": 2,
+        "endLine": 55,
+        "endChar": 11
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e8af3a90_6d0d353c",
         "filename": "ash/login/ui/login_auth_user_view.h",
         "patchSetId": 3
@@ -151,6 +283,30 @@
     },
     {
       "key": {
+        "uuid": "48a0dca2_915f10d5",
+        "filename": "ash/login/ui/login_auth_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e8af3a90_6d0d353c",
+      "range": {
+        "startLine": 65,
+        "startChar": 12,
+        "endLine": 65,
+        "endChar": 19
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5b148d57_c1862e6b",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 3
@@ -165,6 +321,24 @@
       "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e21e75a7_d5b275f6",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b148d57_c1862e6b",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +365,30 @@
     },
     {
       "key": {
+        "uuid": "51449b3e_a7d1984c",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done - needs to be constexpr const char[] though.",
+      "parentUuid": "0675982f_20fc2723",
+      "range": {
+        "startLine": 41,
+        "startChar": 0,
+        "endLine": 41,
+        "endChar": 11
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96e0c912_e551e3d0",
         "filename": "ash/login/ui/login_user_view.cc",
         "patchSetId": 3
@@ -205,6 +403,24 @@
       "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9d9f162_b1e0b40f",
+        "filename": "ash/login/ui/login_user_view.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96e0c912_e551e3d0",
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -228,6 +444,30 @@
       "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c61cf33d_99df2981",
+        "filename": "ash/login/ui/login_user_view.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-19T22:29:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0760d36f_727e949a",
+      "range": {
+        "startLine": 37,
+        "startChar": 4,
+        "endLine": 37,
+        "endChar": 18
+      },
+      "revId": "2fb5374bb5c8516ffb8b5a0785ae0a4d3081d62d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
