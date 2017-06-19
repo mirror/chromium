@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed27f7a5_52a0995f",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "Is it possible to have |cors_flag_| set to true when the mode is no-cors? If not, removing the second condition makes things a bit clearer.",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dd04a5_32ba6620",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "Can you give a proper parameter name or a comment? It\u0027s not clear what credentials mode it is.",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "22e7177b_92e37e74",
+        "filename": "third_party/WebKit/Source/core/loader/TextTrackLoader.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "TextTrackLoader doesn\u0027t user ThreadableLoader, so |cors_flag_| is always same as |cors_handling_by_resource_fetcher|, right?",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e1fb41cc_6420ee02",
+        "filename": "third_party/WebKit/Source/core/loader/private/CrossOriginPreflightResultCache.h",
+        "patchSetId": 34
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "It\u0027s unclear to me what this boolean means.",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92ee4560_1517b6ca",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ImageResource.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "Can you fix call-sites instead of doing this here?",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07d65728_02004214",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 34
+      },
+      "lineNbr": 1024,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "Please leave some comments.",
+      "revId": "c3c8d13e86c5aebc8bb9f1d1f30eb9d3614adbc6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

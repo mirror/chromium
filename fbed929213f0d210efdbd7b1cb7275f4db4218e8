@@ -128,6 +128,23 @@
       "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28476a34_819c8a15",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoaderOptions.h",
+        "patchSetId": 31
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-19T07:43:24Z",
+      "side": 1,
+      "message": "I think L99 comment is for |cors_flag| and L59-L60 comment is for |cors_handling_by_resource_fetcher|, right?",
+      "revId": "fbed929213f0d210efdbd7b1cb7275f4db4218e8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
