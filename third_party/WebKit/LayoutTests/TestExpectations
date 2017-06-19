@@ -2755,6 +2755,15 @@ crbug.com/731018 [ Mac ] sensor/gyroscope.html [ Failure Pass ]
 crbug.com/731018 [ Mac ] sensor/magnetometer.html [ Failure Pass ]
 crbug.com/731018 [ Mac ] sensor/orientation-sensor.html [ Failure Pass ]
 
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/basic-scrollbar.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/border-box-rect-clips-scrollbars.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/custom-scrollbar-appearance-property.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/disabled-scrollbar.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/resize-scales-with-dpi-150.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/scrollbar-buttons.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/scrollbar-orientation.html [ NeedsRebaseline ]
+crbug.com/505516 virtual/rootlayerscrolls/scrollbars/scrollbars-on-positioned-content.html [ NeedsRebaseline ]
+
 # More flaky tests on Mac
 crbug.com/731111 [ Mac ] http/tests/media/progress-events-generated-correctly.html [ Failure Pass Timeout ]
 crbug.com/731111 [ Mac ] http/tests/media/video-load-metadata-decode-error.html [ Failure Pass Timeout ]
