@@ -19,7 +19,7 @@ from webkitpy.common.net.buildbot import current_build_link
 from webkitpy.common.path_finder import PathFinder
 from webkitpy.layout_tests.models.test_expectations import TestExpectations, TestExpectationParser
 from webkitpy.layout_tests.port.base import Port
-from webkitpy.w3c.common import WPT_REPO_URL, WPT_DEST_NAME, exportable_commits_over_last_n_commits
+from webkitpy.w3c.common import WPT_REPO_URL, WPT_DEST_NAME, exportable_commits_over_last_n_commits, is_testharness_baseline
 from webkitpy.w3c.directory_owners_extractor import DirectoryOwnersExtractor
 from webkitpy.w3c.local_wpt import LocalWPT
 from webkitpy.w3c.test_copier import TestCopier
@@ -248,7 +248,7 @@ class TestImporter(object):
     def _clear_out_dest_path(self, dest_path):
         _log.info('Cleaning out tests from %s.', dest_path)
         should_remove = lambda fs, dirname, basename: (
-            not self.is_baseline(basename) and
+            not is_testharness_baseline(basename) and
             # See http://crbug.com/702283 for context.
             basename != 'OWNERS')
         files_to_delete = self.fs.files_under(dest_path, file_filter=should_remove)
@@ -271,7 +271,7 @@ class TestImporter(object):
 
     def _delete_orphaned_baselines(self, dest_path):
         _log.info('Deleting any orphaned baselines.')
-        is_baseline_filter = lambda fs, dirname, basename: self.is_baseline(basename)
+        is_baseline_filter = lambda fs, dirname, basename: is_testharness_baseline(basename)
         previous_baselines = self.fs.files_under(dest_path, file_filter=is_baseline_filter)
         for sub_path in previous_baselines:
             full_baseline_path = self.fs.join(dest_path, sub_path)
@@ -281,12 +281,6 @@ class TestImporter(object):
     def _has_corresponding_test(self, full_baseline_path):
         base = full_baseline_path.replace('-expected.txt', '')
         return any(self.fs.exists(base + ext) for ext in Port.supported_file_extensions)
-
-    @staticmethod
-    def is_baseline(basename):
-        # TODO(qyearsley): Find a better, centralized place for this.
-        # Also, the name for this method should be is_text_baseline.
-        return basename.endswith('-expected.txt')
 
     def run(self, cmd, exit_on_failure=True, cwd=None, stdin=''):
         _log.debug('Running command: %s', ' '.join(cmd))

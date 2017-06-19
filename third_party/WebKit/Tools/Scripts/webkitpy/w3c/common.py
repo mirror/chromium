@@ -82,3 +82,8 @@ def is_exportable(chromium_commit, local_wpt):
             not chromium_commit.message().startswith('Import') and
             patch and
             local_wpt.test_patch(patch, chromium_commit))
+
+
+def is_testharness_baseline(basename):
+    """Checks whether a given file name in wpt appears to be a baseline."""
+    return basename.endswith('-expected.txt')

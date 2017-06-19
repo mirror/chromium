@@ -8,7 +8,7 @@ import logging
 import os
 import urllib
 
-from webkitpy.w3c.common import CHROMIUM_WPT_DIR
+from webkitpy.w3c.common import CHROMIUM_WPT_DIR, is_testharness_baseline
 
 _log = logging.getLogger(__name__)
 URL_BASE = 'https://chromium-review.googlesource.com'
@@ -136,7 +136,7 @@ class GerritCL(object):
         """Returns True if the file could be exportable, or False otherwise."""
         filename = os.path.basename(filename.lower())
         return (
-            not filename.endswith('-expected.txt')
+            not is_testharness_baseline(filename)
             and not filename.startswith('.')
             and not filename.endswith('.json')
         )
@@ -170,7 +170,7 @@ class GerritCL(object):
                 continue
 
             # File is being changed, detect if it's exportable.
-            if CHROMIUM_WPT_DIR in line:
+            if CHROMIUM_WPT_DIR in line and not is_testharness_baseline(line):
                 in_exportable_diff = True
                 filtered_patch.append(line)
             else:

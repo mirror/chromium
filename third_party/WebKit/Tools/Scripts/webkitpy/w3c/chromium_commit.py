@@ -2,6 +2,7 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
+from webkitpy.w3c.common import is_testharness_baseline
 from webkitpy.w3c.chromium_finder import absolute_chromium_dir, absolute_chromium_wpt_dir
 from webkitpy.common.system.executive import ScriptError
 
@@ -115,16 +116,10 @@ class ChromiumCommit(object):
 
         is_ignored = lambda f: (
             f in qualified_blacklist or
-            self.is_baseline(f) or
+            is_testharness_baseline(f) or
             # See http://crbug.com/702283 for context.
             self.host.filesystem.basename(f) == 'OWNERS')
         return [f for f in changed_files if not is_ignored(f)]
-
-    @staticmethod
-    def is_baseline(basename):
-        """Checks whether a given file name in wpt appears to be a baseline."""
-        # TODO(qyearsley): Find a better, centralized place for this.
-        return basename.endswith('-expected.txt')
 
     def format_patch(self):
         """Makes a patch with only exportable changes."""
