@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "52b24d1d_b3a3bbf3",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-19T17:07:26Z",
+      "side": 1,
+      "message": "WebContentsImpl::LoadingStateChanged calls Browser::LoadingStateChanged at the same time as Browser::NavigationStateChanged[1]. That one calls Browser::ScheduleUIUpdate which calls TabStripModel::UpdateWebContentsAt and eventually Tab::SetData.\n\n[1] https://cs.chromium.org/chromium/src/content/browser/web_contents/web_contents_impl.cc?rcl\u003d3c82943d68e5553928b1da485ccc97f0272837c7\u0026l\u003d4296",
+      "parentUuid": "9381ff32_3d19f21d",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ee7ad0_3f6d9ec1",
         "filename": "chrome/browser/ui/views/tabs/tab.h",
         "patchSetId": 1
