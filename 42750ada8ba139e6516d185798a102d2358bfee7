@@ -73,6 +73,30 @@
     },
     {
       "key": {
+        "uuid": "2e70cb88_56929dd6",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-19T06:42:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a8e85f57_b0359fc1",
+      "range": {
+        "startLine": 448,
+        "startChar": 8,
+        "endLine": 448,
+        "endChar": 36
+      },
+      "revId": "42750ada8ba139e6516d185798a102d2358bfee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b41b0743_e64f423c",
         "filename": "chrome/browser/profiles/profile_impl.cc",
         "patchSetId": 23
@@ -155,6 +179,30 @@
       "side": 1,
       "message": "We\u0027d basically have to replicate everything we do to create the PrefService to do this accurately, so that would be hard to do for preference_api for now.\n\nI\u0027ve gone with the second option of adding an explicit method (that returns a read-only PrefService to make sure no one uses it to try to actually write to the OTR profile).",
       "parentUuid": "2cb00af8_21fd188b",
+      "range": {
+        "startLine": 1004,
+        "startChar": 23,
+        "endLine": 1005,
+        "endChar": 11
+      },
+      "revId": "42750ada8ba139e6516d185798a102d2358bfee7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "190e2f58_bb18cb3f",
+        "filename": "chrome/browser/profiles/profile_impl.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 1005,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-19T06:42:30Z",
+      "side": 1,
+      "message": "I had to backtrack a bit here. There are too many tests that call GetOffTheRecordPrefs even when there\u0027s no OTR profile. I\u0027ve instead filed a bug (linked from the TODO) to improve this state of affairs. Perhaps then we can create a separate method in Profile for this.\n\nNot a very satisfactory state of affairs.",
+      "parentUuid": "b206ae1e_4cd6ef60",
       "range": {
         "startLine": 1004,
         "startChar": 23,

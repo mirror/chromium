@@ -16,6 +16,24 @@
       "revId": "e76d87acc9a55f551ddab222b5f8f656eee63042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09f4f55b_83678603",
+        "filename": "chrome/browser/extensions/api/preference/preference_api.cc",
+        "patchSetId": 23
+      },
+      "lineNbr": 369,
+      "author": {
+        "id": 1160869
+      },
+      "writtenOn": "2017-06-19T06:42:30Z",
+      "side": 0,
+      "message": "Ack",
+      "parentUuid": "41c75861_c639f5f6",
+      "revId": "e76d87acc9a55f551ddab222b5f8f656eee63042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
