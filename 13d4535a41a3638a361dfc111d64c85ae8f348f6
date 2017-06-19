@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a52f81ab_f7f39695",
+        "filename": "content/public/browser/all_download_item_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-19T12:51:53Z",
+      "side": 1,
+      "message": "this file should go into content/browser/download",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfac264d_83242f7f",
+        "filename": "content/public/browser/all_download_item_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-19T12:51:53Z",
+      "side": 1,
+      "message": "why not make this a pure virtual interface (w/o ctor)?",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
