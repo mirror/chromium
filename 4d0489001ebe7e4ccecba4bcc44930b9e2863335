@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1017c50_fb73add4",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 16
+      },
+      "lineNbr": 3279,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-19T19:48:13Z",
+      "side": 1,
+      "message": "I don\u0027t think you should use kVoluntaryTerminationTimeoutMax here.\n\nGiven you\u0027re scheduling of up to that interval, it\u0027s perfectly valid for this to be greater - i.e. for cases where kVoluntaryTerminationTimeoutMax is used for the random interval, that\u0027s just the time for it to be scheduled and then there\u0027s still time to run a bunch of code until this specific line of code runs, right? So it would be greater. If the value you log is above the max, it will be in the unhelpful bucket [max, MaxInt32] - which doesn\u0027t tell you much about it.\n\nSuggest just using UMA_HISTOGRAM_TIMES() here which has a max of 10s which should be long enough above your 5s maximum.",
+      "range": {
+        "startLine": 3279,
+        "startChar": 12,
+        "endLine": 3279,
+        "endChar": 0
+      },
+      "revId": "4d0489001ebe7e4ccecba4bcc44930b9e2863335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28a2af8a_97eaf380",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 16
+      },
+      "lineNbr": 24855,
+      "author": {
+        "id": 1103654
+      },
+      "writtenOn": "2017-06-19T19:48:13Z",
+      "side": 1,
+      "message": "This is adding a new-top level prefix which we don\u0027t suggest unless it\u0027s an area where you expect a lot of metrics. Suggesting nesting under an existing prefix like \"Renderer.\" or \"Stability.\"",
+      "range": {
+        "startLine": 24855,
+        "startChar": 17,
+        "endLine": 24855,
+        "endChar": 29
+      },
+      "revId": "4d0489001ebe7e4ccecba4bcc44930b9e2863335",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
