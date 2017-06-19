@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f602dd53_ab64e0d0",
+        "filename": "chrome/browser/android/tab_web_contents_delegate_android.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 346,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-19T20:06:28Z",
+      "side": 1,
+      "message": "should ConsiderForPopupBlocking() grow a\nCHECK(!params || params.user_gesture \u003d\u003d user_gesture)? Or should the one caller that doesn\u0027t pass in a params acquire one somehow and then the now-mostly-redundant user_gesture param could go away?",
+      "range": {
+        "startLine": 346,
+        "startChar": 40,
+        "endLine": 346,
+        "endChar": 43
+      },
+      "revId": "39065feb5704e0983f177fd531ea1dab11ac47a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "db977347_69ce1942",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 2423,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-19T20:06:28Z",
+      "side": 1,
+      "message": "nit: if you say /*open_url_params\u003d*/nullptr, then clang-format won\u0027t surround the comment with spaces (it knows about this special spelling for emulating named parameters), and it\u0027s a bit less ambiguous when passing false to a function (with this spelling it\u0027s not clear if false means what\u0027s in the comment, or if it sets what\u0027s in the comment to false and does the opposite)",
+      "range": {
+        "startLine": 2423,
+        "startChar": 40,
+        "endLine": 2423,
+        "endChar": 43
+      },
+      "revId": "39065feb5704e0983f177fd531ea1dab11ac47a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
