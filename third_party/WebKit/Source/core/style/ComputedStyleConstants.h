@@ -331,7 +331,6 @@ enum SnapAlignment {
   kSnapAlignmentCenter
 };
 
-enum AutoRepeatType { kNoAutoRepeat, kAutoFill, kAutoFit };
 }  // namespace blink
 
 #endif  // ComputedStyleConstants_h
