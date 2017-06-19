@@ -1,0 +1,176 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "80ebfe40_1c754aea",
+        "filename": "components/password_manager/core/browser/password_form_manager.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "nit: How about metrics_recorder_?",
+      "range": {
+        "startLine": 602,
+        "startChar": 30,
+        "endLine": 602,
+        "endChar": 38
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4071fc7f_fda8ac14",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "nit: #include \"base/logging.h\"",
+      "range": {
+        "startLine": 69,
+        "startChar": 4,
+        "endLine": 69,
+        "endChar": 14
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86e64a22_8ed77c80",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "typo: Remove characters.",
+      "range": {
+        "startLine": 34,
+        "startChar": 41,
+        "endLine": 34,
+        "endChar": 43
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be612e3e_a43542ae",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 50,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "typo: Result",
+      "range": {
+        "startLine": 50,
+        "startChar": 11,
+        "endLine": 50,
+        "endChar": 17
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "18a20458_c5d1c5b2",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "nit: blank line after this.",
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "667b2f7b_7837d00d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "#include \"base/logging.h\"",
+      "range": {
+        "startLine": 60,
+        "startChar": 10,
+        "endLine": 60,
+        "endChar": 20
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3954d0e_0e6ef624",
+        "filename": "components/password_manager/core/browser/password_form_user_action.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "nit: If you are refactoring this already, can you please split this long blob of text, and have a one/two-liner above each enumerator?",
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "529d6d3c_17ddb147",
+        "filename": "components/password_manager/core/browser/password_form_user_action.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-19T13:21:38Z",
+      "side": 1,
+      "message": "nit: s/UserAction//g for enumerators of the scoped enum.",
+      "range": {
+        "startLine": 19,
+        "startChar": 3,
+        "endLine": 19,
+        "endChar": 13
+      },
+      "revId": "6a7bff0abccc431c2a6e6b25f9bc06d8211019ab",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
