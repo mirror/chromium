@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da0cbee6_611230a3",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:39:35Z",
+      "side": 1,
+      "message": "Can you check if event.target() is set here or not? Because if it is, then it would be better to pass that in to ProcessPressedEvent(), and use that, instead of doing the targeting based on event location.",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
