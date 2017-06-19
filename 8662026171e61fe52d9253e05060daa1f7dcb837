@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f10bf3af_aa0f8b91",
+        "filename": "content/browser/renderer_host/pepper/browser_ppapi_host_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-19T23:21:48Z",
+      "side": 1,
+      "message": "Ahh good point, maybe we should kill the renderer here. We could probably do it with content::bad_message::ReceivedBadMessage() since we have the render process id.\n\nI\u0027m ok to land this as-is because I think it\u0027s safer to merge though. Killing the renderer in a follow-up might be a good idea.",
+      "revId": "8662026171e61fe52d9253e05060daa1f7dcb837",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
