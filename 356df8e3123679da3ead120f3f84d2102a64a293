@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f66fe9f6_0102604a",
+        "filename": "components/gcm_driver/gcm_account_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-19T13:55:19Z",
+      "side": 0,
+      "message": "Nicolas, do you want this to be preserved? (and below). If so, I\u0027ll add them to AccountTracker.",
+      "range": {
+        "startLine": 105,
+        "startChar": 2,
+        "endLine": 105,
+        "endChar": 7
+      },
+      "revId": "356df8e3123679da3ead120f3f84d2102a64a293",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
