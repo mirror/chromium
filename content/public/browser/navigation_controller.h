@@ -408,9 +408,12 @@ class NavigationController {
   // entry. This will keep things in sync like the saved session.
   virtual void NotifyEntryChanged(const NavigationEntry* entry) = 0;
 
-  // Copies the navigation state from the given controller to this one. This
-  // one should be empty (just created).
-  virtual void CopyStateFrom(const NavigationController& source) = 0;
+  // Copies the navigation state from the given controller to this one. This one
+  // should be empty (just created). |needs_reload| indicates whether a reload
+  // needs to happen when activated (if false, the WebContents remains unloaded
+  // when activated).
+  virtual void CopyStateFrom(const NavigationController& source,
+                             bool needs_reload) = 0;
 
   // A variant of CopyStateFrom. Removes all entries from this except the last
   // committed entry, and inserts all entries from |source| before and including
