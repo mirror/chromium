@@ -28,6 +28,8 @@ class MediaEngagementContentsObserverTest
 
     playback_timer_ = new base::MockTimer(true, false);
     contents_observer_->SetTimerForTest(base::WrapUnique(playback_timer_));
+
+    ASSERT_TRUE(0u, contents_observer_->player_state_.size());
   }
 
   bool IsTimerRunning() const { return playback_timer_->IsRunning(); }
@@ -51,6 +53,7 @@ class MediaEngagementContentsObserverTest
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaStartedPlaying(player_info, player_id);
+    SimulateMutedStateChange(id, false);
   }
 
   void SimulatePlaybackStopped(int id) {
@@ -58,6 +61,12 @@ class MediaEngagementContentsObserverTest
     content::WebContentsObserver::MediaPlayerId player_id =
         std::make_pair(nullptr /* RenderFrameHost */, id);
     contents_observer_->MediaStoppedPlaying(player_info, player_id);
+  }
+
+  void SimulateMutedStateChange(int id, bool muted_state) {
+    content::WebContentsObserver::MediaPlayerId player_id =
+        std::make_pair(nullptr /* RenderFrameHost */, id);
+    contents_observer_->MediaMutedStateChanged(player_id, muted_state);
   }
 
   void SimulateIsVisible() { contents_observer_->WasShown(); }
@@ -73,6 +82,17 @@ class MediaEngagementContentsObserverTest
   }
 
   void SimulatePlaybackTimerFired() { playback_timer_->Fire(); }
+
+  void EnsureCleanupAfterNavigation(unsigned long expected_players) {
+    EXPECT_EQ(expected_players, contents_observer_->player_state_.size());
+
+    std::unique_ptr<content::NavigationHandle> test_handle =
+        content::NavigationHandle::CreateNavigationHandleForTesting(
+            GURL("https://example.com"), main_rfh(), true /** committed */);
+    contents_observer_->DidFinishNavigation(test_handle.get());
+
+    EXPECT_EQ(0u, contents_observer_->player_state_.size());
+  }
 
  private:
   // contents_observer_ auto-destroys when WebContents is destroyed.
@@ -129,6 +149,13 @@ TEST_F(MediaEngagementContentsObserverTest, AreConditionsMet) {
 
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(AreConditionsMet());
+
+  SimulateMutedStateChange(0, true);
+  EXPECT_FALSE(AreConditionsMet());
+
+  SimulatePlaybackStarted(1);
+  EXPECT_TRUE(AreConditionsMet());
+  ExpectCleanupAfterNavigation(1u);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
@@ -152,6 +179,13 @@ TEST_F(MediaEngagementContentsObserverTest, TimerRunsDependingOnConditions) {
 
   SimulatePlaybackStarted(0);
   EXPECT_TRUE(IsTimerRunning());
+
+  SimulateMutedStateChange(0, true);
+  EXPECT_FALSE(IsTimerRunning());
+
+  SimulatePlaybackStarted(1);
+  EXPECT_TRUE(IsTimerRunning());
+  ExpectCleanupAfterNavigation(1u);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, TimerDoesNotRunIfEntryRecorded) {
@@ -174,6 +208,7 @@ TEST_F(MediaEngagementContentsObserverTest,
 
   SimulatePlaybackTimerFired();
   EXPECT_TRUE(WasSignificantPlaybackRecorded());
+  ExpectCleanupAfterNavigation(1u);
 }
 
 TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
@@ -182,4 +217,5 @@ TEST_F(MediaEngagementContentsObserverTest, DoNotRecordAudiolessTrack) {
   content::WebContentsObserver::MediaPlayerInfo player_info(true, false);
   SimulatePlaybackStarted(player_info, 0);
   EXPECT_EQ(0u, GetSignificantActivePlayersCount());
+  ExpectCleanupAfterNavigation(1u);
 }
