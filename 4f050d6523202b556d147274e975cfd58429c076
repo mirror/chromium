@@ -16,6 +16,24 @@
       "revId": "4f050d6523202b556d147274e975cfd58429c076",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f99944e_42097687",
+        "filename": "content/browser/renderer_host/render_process_host_impl.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 819,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-19T10:14:19Z",
+      "side": 1,
+      "message": "In most cases there should only be one process in |site_to_processes_map_|.\nBut when there are multiple processes, I think the older one is more likely has hung on deadlock bugs.\nSo we should avoid oldest one.",
+      "parentUuid": "10d703dd_9ceef5bc",
+      "revId": "4f050d6523202b556d147274e975cfd58429c076",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
