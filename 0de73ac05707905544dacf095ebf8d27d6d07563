@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a3c42e22_9ad56ea5",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T17:50:46Z",
+      "side": 1,
+      "message": "With the other discussion clarified, I would still like to propose to replace this friend declaration with just making GetActionsTakenNew public and comment that it is only because testing.\n\nThe benefit over friending the test is that nobody can accidentally extend the test to use more private methods/data of PasswordFormMetricRecorder.\n\nAlternatively, perhaps we can argue that PasswordFormManagerTest.SuppressedFormsHistograms tests GetActionsTakenNew indirectly, and just drop the Actions test?",
+      "range": {
+        "startLine": 117,
+        "startChar": 2,
+        "endLine": 117,
+        "endChar": 26
+      },
+      "revId": "0de73ac05707905544dacf095ebf8d27d6d07563",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

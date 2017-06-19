@@ -189,6 +189,30 @@
     },
     {
       "key": {
+        "uuid": "52edc891_aedfe25e",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1002541
+      },
+      "writtenOn": "2017-06-19T17:50:46Z",
+      "side": 1,
+      "message": "Thanks for the explanation. Now I see that the integration test is just a PasswordFormManager unittest, I\u0027m more comfortable. I was fearing you want to replace it with a browser test or such. This looks fine to me.\n\nDo I understand correctly, that the state explosion and difficulty in setting up the inputs is unavoidable, but the argument is that this is already written in PasswordFormManagerTest?",
+      "parentUuid": "b821c424_29af518c",
+      "range": {
+        "startLine": 118,
+        "startChar": 2,
+        "endLine": 118,
+        "endChar": 65
+      },
+      "revId": "09d3c5fb7113c10c48227ecd0de2ee7f4694cf70",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "06e6b254_3bb119d0",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 1
