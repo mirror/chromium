@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "da4d9bea_44b87ed2",
+        "filename": "content/browser/service_worker/service_worker_metrics.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-19T20:40:44Z",
+      "side": 1,
+      "message": "nit: No need for the static-cast.",
+      "range": {
+        "startLine": 876,
+        "startChar": 6,
+        "endLine": 876,
+        "endChar": 22
+      },
+      "revId": "5515ddcd8c1f03b2bffc953928b57bf6f852e180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "097a56f6_58e1e141",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 7
+      },
+      "lineNbr": 68055,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-19T20:40:44Z",
+      "side": 1,
+      "message": "Did you mean enum\u003d?",
+      "range": {
+        "startLine": 68055,
+        "startChar": 4,
+        "endLine": 68055,
+        "endChar": 9
+      },
+      "revId": "5515ddcd8c1f03b2bffc953928b57bf6f852e180",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
