@@ -21,7 +21,7 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
                         NGPhysicalSize size,
                         NGPhysicalSize overflow,
                         Vector<RefPtr<NGPhysicalFragment>>& children,
-                        Vector<NGPositionedFloat>& positioned_floats,
+                        const Vector<NGPositionedFloat>& positioned_floats,
                         const WTF::Optional<NGLogicalOffset>& bfc_offset,
                         const NGMarginStrut& end_margin_strut,
                         unsigned,  // NGBorderEdges::Physical
@@ -46,6 +46,8 @@ class CORE_EXPORT NGPhysicalBoxFragment final : public NGPhysicalFragment {
   }
 
   const NGMarginStrut& EndMarginStrut() const { return end_margin_strut_; }
+
+  RefPtr<NGPhysicalFragment> CloneWithoutOffset() const;
 
  private:
   NGPhysicalSize overflow_;
