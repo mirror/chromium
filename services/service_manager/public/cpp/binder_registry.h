@@ -99,6 +99,8 @@ class BinderRegistryWithParams {
     return weak_factory_.GetWeakPtr();
   }
 
+  bool empty() const { return binders_.empty(); }
+
  private:
   using InterfaceNameToBinderMap =
       std::map<std::string, std::unique_ptr<InterfaceBinder<BinderArgs...>>>;
