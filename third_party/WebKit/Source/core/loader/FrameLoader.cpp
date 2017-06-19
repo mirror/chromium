@@ -1023,9 +1023,9 @@ bool FrameLoader::PrepareForCommit() {
 void FrameLoader::CommitProvisionalLoad() {
   DCHECK(Client()->HasWebView());
 
-  // Check if the destination page is allowed to access the previous page's
-  // timing information.
   if (frame_->GetDocument()) {
+    // Check if the destination page is allowed to access the previous page's
+    // timing information.
     RefPtr<SecurityOrigin> security_origin = SecurityOrigin::Create(
         provisional_document_loader_->GetRequest().Url());
     provisional_document_loader_->GetTiming()
