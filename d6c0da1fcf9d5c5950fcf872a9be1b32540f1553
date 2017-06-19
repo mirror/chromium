@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "611204c9_d8575c14",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Isn\u0027t this definition strictly more general than the one on line 23? If so,\nwhy not use it as the definition and remove the comment on line 23 and in\nthe .h file?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0c69830c_130b5062",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Do you have a proof written out?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3f72e18_e6ff3b50",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Document what situation this corresponds to.",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3971375a_01c74a31",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Why the changes here?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4da2b878_0c044854",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Ditto.",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee35771b_21b7f082",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Why didn\u0027t you just use GeometryMapper::InfiniteClip()?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbc4a116_908f8499",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Specify whether these transforms are flattened (i.e., no).",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11fd7cbd_b468d3df",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 1,
+      "message": "Document exactly what the checkpoint is (highest flat and invertible ancestor).\nActually, how about changing the name of this method to something that directly\nindicates that?",
+      "revId": "d6c0da1fcf9d5c5950fcf872a9be1b32540f1553",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

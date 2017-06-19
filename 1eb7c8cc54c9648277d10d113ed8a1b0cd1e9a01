@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a04566a6_e1763da5",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 746,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 0,
+      "message": "Why did you change all these?",
+      "revId": "1eb7c8cc54c9648277d10d113ed8a1b0cd1e9a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea7e1a22_906863e5",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 762,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-19T17:00:48Z",
+      "side": 0,
+      "message": "What happened to this expectation?",
+      "revId": "1eb7c8cc54c9648277d10d113ed8a1b0cd1e9a01",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
