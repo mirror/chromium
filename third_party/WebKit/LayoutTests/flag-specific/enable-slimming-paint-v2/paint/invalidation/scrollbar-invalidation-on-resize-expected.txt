@@ -9,12 +9,17 @@
         {
           "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
           "rect": [8, 50, 300, 100],
-          "reason": "full"
+          "reason": "chunk uncacheable"
         },
         {
           "object": "HorizontalScrollbar",
           "rect": [8, 135, 285, 15],
           "reason": "scroll control"
+        },
+        {
+          "object": "LayoutBlockFlow (positioned) DIV id='scrollable'",
+          "rect": [8, 50, 100, 100],
+          "reason": "chunk uncacheable"
         },
         {
           "object": "VerticalScrollbar",

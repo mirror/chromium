@@ -14,7 +14,12 @@
         {
           "object": "InlineTextBox 'right-aligned text'",
           "rect": [93, 85, 107, 19],
-          "reason": "full"
+          "reason": "chunk uncacheable"
+        },
+        {
+          "object": "InlineTextBox 'right-aligned text'",
+          "rect": [0, 85, 101, 19],
+          "reason": "chunk uncacheable"
         },
         {
           "object": "LayoutSVGRect rect",

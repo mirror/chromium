@@ -9,7 +9,12 @@
         {
           "object": "InlineTextBox '\n'",
           "rect": [162, 8, 158, 22],
-          "reason": "full"
+          "reason": "chunk uncacheable"
+        },
+        {
+          "object": "InlineTextBox '\n'",
+          "rect": [162, 8, 158, 22],
+          "reason": "chunk uncacheable"
         },
         {
           "object": "InlineTextBox 'PASSED'",
