@@ -312,8 +312,12 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
         (IsArcPlayStoreEnabledPreferenceManagedForProfile(profile_) &&
          AreArcAllOptInPreferencesManagedForProfile(profile_));
     if (!suppress_play_store_app) {
-      playstore_launcher_.reset(
-          new ArcAppLauncher(profile_, kPlayStoreAppId, true, false));
+      std::vector<std::string> launch_params;
+      launch_params.push_back(kInitialStartParam);
+      playstore_launcher_.reset(new ArcAppLauncher(
+          profile_, kPlayStoreAppId,
+          GetLaunchIntent(kPlayStorePackage, kPlayStoreActivity, launch_params),
+          true, false));
     }
 
     for (auto& observer : observer_list_)
