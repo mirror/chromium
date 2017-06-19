@@ -80,9 +80,16 @@ std::vector<std::string> RecoveryImprovedInstallerTraits::GetMimeTypes() const {
 }
 
 void RegisterRecoveryImprovedComponent(ComponentUpdateService* cus,
-                                       PrefService* prefs) {
+                                       PrefService* prefs,
+                                       bool is_per_user_install) {
 #if defined(GOOGLE_CHROME_BUILD)
 #if defined(OS_WIN) || defined(OS_MACOSX)
+  // The improved recovery components requires elevation in the case where
+  // Chrome is installed per-machine. The elevation mechanism is not implemented
+  // yet; therefore, the component is not registered in this case.
+  if (!is_per_user_install)
+    return;
+
   DVLOG(1) << "Registering RecoveryImproved component.";
 
   std::unique_ptr<ComponentInstallerTraits> traits(

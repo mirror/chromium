@@ -53,6 +53,7 @@
 #include "chrome/browser/browser_process_platform_part.h"
 #include "chrome/browser/browser_shutdown.h"
 #include "chrome/browser/chrome_browser_main_extra_parts.h"
+#include "chrome/browser/component_updater/component_updater_utils.h"
 #include "chrome/browser/component_updater/file_type_policies_component_installer.h"
 #include "chrome/browser/component_updater/origin_trials_component_installer.h"
 #include "chrome/browser/component_updater/pepper_flash_component_installer.h"
@@ -469,11 +470,12 @@ OSStatus KeychainCallback(SecKeychainEvent keychain_event,
 }
 #endif  // defined(OS_MACOSX)
 
-void RegisterComponentsForUpdate() {
+void RegisterComponentsForUpdateHelper(bool is_per_user_install) {
   auto* const cus = g_browser_process->component_updater();
 
   if (base::FeatureList::IsEnabled(features::kImprovedRecoveryComponent))
-    RegisterRecoveryImprovedComponent(cus, g_browser_process->local_state());
+    RegisterRecoveryImprovedComponent(cus, g_browser_process->local_state(),
+                                      is_per_user_install);
   else
     RegisterRecoveryComponent(cus, g_browser_process->local_state());
 
@@ -531,6 +533,19 @@ void RegisterComponentsForUpdate() {
   RegisterSwReporterComponent(cus);
 #endif  // defined(GOOGLE_CHROME_BUILD)
 #endif  // defined(OS_WIN)
+}
+
+void RegisterComponentsForUpdate() {
+#if defined(OS_WIN)
+  PostTaskWithTraitsAndReplyWithResult(
+      FROM_HERE,
+      {base::TaskPriority::BACKGROUND,
+       base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN},
+      base::Bind(&component_updater::IsPerUserInstall),
+      base::Bind(&RegisterComponentsForUpdateHelper));
+#else
+  RegisterComponentsForUpdateHelper(true);
+#endif  //  OS_WIN
 }
 
 #if !defined(OS_ANDROID)

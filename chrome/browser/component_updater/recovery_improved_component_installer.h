@@ -50,7 +50,8 @@ class RecoveryImprovedInstallerTraits : public ComponentInstallerTraits {
 };
 
 void RegisterRecoveryImprovedComponent(ComponentUpdateService* cus,
-                                       PrefService* prefs);
+                                       PrefService* prefs,
+                                       bool is_per_user_install);
 
 // Registers user preferences related to the recovery component.
 void RegisterPrefsForRecoveryImprovedComponent(PrefRegistrySimple* registry);
