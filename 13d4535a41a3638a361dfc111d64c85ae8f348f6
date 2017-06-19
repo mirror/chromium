@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "705a3fe2_bc0a6306",
+        "filename": "content/public/browser/all_download_item_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1160910
+      },
+      "writtenOn": "2017-06-19T15:22:26Z",
+      "side": 1,
+      "message": "content:: namespace specifier unnecessary now that this code lives in content::. Here and elsewhere.",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bfac264d_83242f7f",
         "filename": "content/public/browser/all_download_item_notifier.h",
         "patchSetId": 3
