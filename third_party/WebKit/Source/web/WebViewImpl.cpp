@@ -85,6 +85,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/loader/FrameLoaderStateMachine.h"
+#include "core/loader/PrerendererClient.h"
 #include "core/page/ContextMenuController.h"
 #include "core/page/ContextMenuProvider.h"
 #include "core/page/FocusController.h"
@@ -169,7 +170,6 @@
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
 #include "web/PageOverlay.h"
-#include "web/PrerendererClientImpl.h"
 #include "web/StorageQuotaClientImpl.h"
 #include "web/WebDevToolsAgentImpl.h"
 
@@ -318,8 +318,8 @@ void WebViewImpl::SetCredentialManagerClient(
 void WebViewImpl::SetPrerendererClient(
     WebPrerendererClient* prerenderer_client) {
   DCHECK(page_);
-  ProvidePrerendererClientTo(
-      *page_, new PrerendererClientImpl(*page_, prerenderer_client));
+  ProvidePrerendererClientTo(*page_,
+                             new PrerendererClient(*page_, prerenderer_client));
 }
 
 // static
