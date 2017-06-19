@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5cda464b_8e811786",
+        "filename": "ui/ozone/platform/drm/ozone_platform_gbm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-19T17:41:09Z",
+      "side": 1,
+      "message": "When/where is |gpu_task_runner_| set in this case?",
+      "range": {
+        "startLine": 210,
+        "startChar": 6,
+        "endLine": 210,
+        "endChar": 22
+      },
+      "revId": "6979b2008001b2b04724c4d3fd2f5d81399c2e6a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
