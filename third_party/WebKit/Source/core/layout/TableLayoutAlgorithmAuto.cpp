@@ -267,10 +267,8 @@ void TableLayoutAlgorithmAuto::ComputeIntrinsicLogicalWidths(
   float max_non_percent = 0;
   bool scale_columns_for_self = ShouldScaleColumnsForSelf(table_);
 
-  // We substitute 0 percent by (epsilon / percentScaleFactor) percent in two
-  // places below to avoid division by zero.
-  // FIXME: Handle the 0% cases properly.
-  const float kEpsilon = 1 / 128.0f;
+  // Instead of division by zero, logical_width and max_non_percent are set
+  // to kTableMaxWidth.
 
   float remaining_percent = 100;
   for (size_t i = 0; i < layout_struct_.size(); ++i) {
@@ -283,8 +281,10 @@ void TableLayoutAlgorithmAuto::ComputeIntrinsicLogicalWidths(
                          layout_struct_[i].effective_logical_width.Percent()),
                      remaining_percent);
         float logical_width =
-            static_cast<float>(layout_struct_[i].effective_max_logical_width) *
-            100 / std::max(percent, kEpsilon);
+            (percent > 0) ? static_cast<float>(
+                                layout_struct_[i].effective_max_logical_width) *
+                                100 / percent
+                          : static_cast<float>(kTableMaxWidth);
         max_percent = std::max(logical_width, max_percent);
         remaining_percent -= percent;
       } else {
@@ -294,12 +294,13 @@ void TableLayoutAlgorithmAuto::ComputeIntrinsicLogicalWidths(
   }
 
   if (scale_columns_for_self) {
-    max_non_percent =
-        max_non_percent * 100 / std::max(remaining_percent, kEpsilon);
-    scaled_width_from_percent_columns_ = LayoutUnit(
-        std::min(max_non_percent, static_cast<float>(kTableMaxWidth)));
+    if (max_non_percent != 0) {
+      max_non_percent = (remaining_percent > 0)
+                            ? max_non_percent * 100 / remaining_percent
+                            : static_cast<float>(kTableMaxWidth);
+    }
     scaled_width_from_percent_columns_ = std::max(
-        scaled_width_from_percent_columns_,
+        LayoutUnit(max_non_percent),
         LayoutUnit(std::min(max_percent, static_cast<float>(kTableMaxWidth))));
     if (scaled_width_from_percent_columns_ > max_width &&
         ShouldScaleColumnsForParent(table_))
