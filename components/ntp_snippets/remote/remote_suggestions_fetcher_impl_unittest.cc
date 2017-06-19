@@ -11,6 +11,7 @@
 
 #include "base/json/json_reader.h"
 #include "base/memory/ptr_util.h"
+#include "base/optional.h"
 #include "base/test/histogram_tester.h"
 #include "base/test/test_mock_time_task_runner.h"
 #include "base/threading/thread_task_runner_handle.h"
@@ -44,9 +45,11 @@ using testing::_;
 using testing::AllOf;
 using testing::ElementsAre;
 using testing::Eq;
+using testing::Field;
 using testing::IsEmpty;
 using testing::Not;
 using testing::NotNull;
+using testing::Property;
 using testing::StartsWith;
 
 const char kAPIKey[] = "fakeAPIkey";
@@ -63,20 +66,6 @@ const int64_t kTestJsonParsingLatencyMs = 20;
 
 ACTION_P(MoveArgument1PointeeTo, ptr) {
   *ptr = std::move(*arg1);
-}
-
-MATCHER(HasValue, "") {
-  return static_cast<bool>(*arg);
-}
-
-// TODO(fhorschig): When there are more helpers for the Status class, consider a
-// helpers file.
-MATCHER_P(HasCode, code, "") {
-  return arg.code == code;
-}
-
-MATCHER(IsSuccess, "") {
-  return arg.IsSuccess();
 }
 
 MATCHER(IsEmptyCategoriesList, "is an empty list of categories") {
@@ -448,7 +437,7 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldFetchSuccessfully) {
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   EXPECT_CALL(mock_callback(),
-              Run(IsSuccess(),
+              Run(Property(&Status::IsSuccess, true),
                   AllOf(IsSingleArticle("http://localhost/foobar"),
                         FirstCategoryHasInfo(IsCategoryInfoForArticles()))));
   fetcher().FetchSnippets(test_params(),
@@ -488,7 +477,7 @@ TEST_F(RemoteSuggestionsSignedInFetcherTest, ShouldFetchSuccessfully) {
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   EXPECT_CALL(mock_callback(),
-              Run(IsSuccess(),
+              Run(Property(&Status::IsSuccess, true),
                   AllOf(IsSingleArticle("http://localhost/foobar"),
                         FirstCategoryHasInfo(IsCategoryInfoForArticles()))));
 
@@ -533,7 +522,7 @@ TEST_F(RemoteSuggestionsSignedInFetcherTest, ShouldRetryWhenOAuthCancelled) {
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   EXPECT_CALL(mock_callback(),
-              Run(IsSuccess(),
+              Run(Property(&Status::IsSuccess, true),
                   AllOf(IsSingleArticle("http://localhost/foobar"),
                         FirstCategoryHasInfo(IsCategoryInfoForArticles()))));
 
@@ -563,7 +552,8 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, EmptyCategoryIsOK) {
       "}]}";
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), IsEmptyArticleList()));
+  EXPECT_CALL(mock_callback(),
+              Run(Property(&Status::IsSuccess, true), IsEmptyArticleList()));
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
   FastForwardUntilNoTasksRemain();
@@ -614,7 +604,7 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ServerCategories) {
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories;
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), _))
+  EXPECT_CALL(mock_callback(), Run(Property(&Status::IsSuccess, true), _))
       .WillOnce(MoveArgument1PointeeTo(&fetched_categories));
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -675,7 +665,7 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest,
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories;
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), _))
+  EXPECT_CALL(mock_callback(), Run(Property(&Status::IsSuccess, true), _))
       .WillOnce(MoveArgument1PointeeTo(&fetched_categories));
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -740,7 +730,7 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ExclusiveCategoryOnly) {
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
   RemoteSuggestionsFetcher::OptionalFetchedCategories fetched_categories;
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), _))
+  EXPECT_CALL(mock_callback(), Run(Property(&Status::IsSuccess, true), _))
       .WillOnce(MoveArgument1PointeeTo(&fetched_categories));
 
   RequestParams params = test_params();
@@ -763,8 +753,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ExclusiveCategoryOnly) {
 TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldNotFetchWithoutApiKey) {
   ResetFetcherWithAPIKey(std::string());
 
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::PERMANENT_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::PERMANENT_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -784,7 +777,8 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest,
   const std::string kJsonStr = "{\"categories\": []}";
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), IsEmptyCategoriesList()));
+  EXPECT_CALL(mock_callback(),
+              Run(Property(&Status::IsSuccess, true), IsEmptyCategoriesList()));
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
   FastForwardUntilNoTasksRemain();
@@ -844,8 +838,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest,
 TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportUrlStatusError) {
   SetFakeResponse(/*response_data=*/std::string(), net::HTTP_NOT_FOUND,
                   net::URLRequestStatus::FAILED);
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -866,8 +863,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportUrlStatusError) {
 TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportHttpError) {
   SetFakeResponse(/*response_data=*/std::string(), net::HTTP_NOT_FOUND,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -887,8 +887,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportJsonError) {
   const std::string kInvalidJsonStr = "{ \"recos\": []";
   SetFakeResponse(/*response_data=*/kInvalidJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -911,8 +914,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest,
        ShouldReportJsonErrorForEmptyResponse) {
   SetFakeResponse(/*response_data=*/std::string(), net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -931,8 +937,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportInvalidListError) {
       "{\"recos\": [{ \"contentInfo\": { \"foo\" : \"bar\" }}]}";
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -953,8 +962,11 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldReportInvalidListError) {
 TEST_F(RemoteSuggestionsSignedOutFetcherTest,
        ShouldReportHttpErrorForMissingBakedResponse) {
   InitFakeURLFetcherFactory();
-  EXPECT_CALL(mock_callback(), Run(HasCode(StatusCode::TEMPORARY_ERROR),
-                                   /*snippets=*/Not(HasValue())))
+  EXPECT_CALL(
+      mock_callback(),
+      Run(Field(&Status::code, StatusCode::TEMPORARY_ERROR),
+          /*fetched_categories=*/Property(
+              &base::Optional<std::vector<FetchedCategory>>::has_value, false)))
       .Times(1);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
@@ -965,7 +977,8 @@ TEST_F(RemoteSuggestionsSignedOutFetcherTest, ShouldProcessConcurrentFetches) {
   const std::string kJsonStr = "{ \"categories\": [] }";
   SetFakeResponse(/*response_data=*/kJsonStr, net::HTTP_OK,
                   net::URLRequestStatus::SUCCESS);
-  EXPECT_CALL(mock_callback(), Run(IsSuccess(), IsEmptyCategoriesList()))
+  EXPECT_CALL(mock_callback(),
+              Run(Property(&Status::IsSuccess, true), IsEmptyCategoriesList()))
       .Times(5);
   fetcher().FetchSnippets(test_params(),
                           ToSnippetsAvailableCallback(&mock_callback()));
