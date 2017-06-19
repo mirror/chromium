@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "4b493e4c_ebd5826d",
+        "filename": "content/public/browser/all_download_item_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T20:25:55Z",
+      "side": 1,
+      "message": "Ah could you help explain the content API rules?  I feel like the pattern I typically see is:\n\ncontent/public/browser/some_feature.h\ncontent/browser/xyz/some_feature_impl.h\ncontent/browser/xyz/some_feature_impl.cc\n\nWhat if there is no interface and it\u0027s just a shared helper class that wraps existing content/public/browser stuff (like this)?",
+      "parentUuid": "a52f81ab_f7f39695",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "705a3fe2_bc0a6306",
         "filename": "content/public/browser/all_download_item_notifier.cc",
         "patchSetId": 3
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-19T12:51:53Z",
       "side": 1,
       "message": "why not make this a pure virtual interface (w/o ctor)?",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8e84036_c7f3fc7a",
+        "filename": "content/public/browser/all_download_item_notifier.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-19T20:25:55Z",
+      "side": 1,
+      "message": "Ah do you mean remove all the default implementations of the virtual methods below?  I guess the reason is I just wanted this CL to be a straight move.  Also out of the 7 subclasses only one actually overrides all of those methods and I plan on adding two more methods to this class in the future as well.",
+      "parentUuid": "bfac264d_83242f7f",
       "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
