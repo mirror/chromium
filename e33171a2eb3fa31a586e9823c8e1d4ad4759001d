@@ -16,6 +16,24 @@
       "revId": "e33171a2eb3fa31a586e9823c8e1d4ad4759001d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "54c6807c_f035ad65",
+        "filename": "chrome/browser/ui/views/payments/shipping_address_editor_view_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1153419
+      },
+      "writtenOn": "2017-06-19T18:46:00Z",
+      "side": 1,
+      "message": "I don\u0027t think so, but I\u0027m going to normalize the profile\u0027s region very soon, so I\u0027ll stop comparing to the name altogether.\n\nGood question though :)",
+      "parentUuid": "823c3b5c_04b5f293",
+      "revId": "e33171a2eb3fa31a586e9823c8e1d4ad4759001d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
