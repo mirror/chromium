@@ -145,51 +145,51 @@ inline CSSReflectionDirection CSSIdentifierValue::ConvertTo() const {
 }
 
 template <>
-inline CSSIdentifierValue::CSSIdentifierValue(ColumnFill column_fill)
+inline CSSIdentifierValue::CSSIdentifierValue(EColumnFill column_fill)
     : CSSValue(kIdentifierClass) {
   switch (column_fill) {
-    case kColumnFillAuto:
+    case EColumnFill::kAuto:
       value_id_ = CSSValueAuto;
       break;
-    case kColumnFillBalance:
+    case EColumnFill::kBalance:
       value_id_ = CSSValueBalance;
       break;
   }
 }
 
 template <>
-inline ColumnFill CSSIdentifierValue::ConvertTo() const {
+inline EColumnFill CSSIdentifierValue::ConvertTo() const {
   if (value_id_ == CSSValueBalance)
-    return kColumnFillBalance;
+    return EColumnFill::kBalance;
   if (value_id_ == CSSValueAuto)
-    return kColumnFillAuto;
+    return EColumnFill::kAuto;
   NOTREACHED();
-  return kColumnFillBalance;
+  return EColumnFill::kBalance;
 }
 
 template <>
-inline CSSIdentifierValue::CSSIdentifierValue(ColumnSpan column_span)
+inline CSSIdentifierValue::CSSIdentifierValue(EColumnSpan column_span)
     : CSSValue(kIdentifierClass) {
   switch (column_span) {
-    case kColumnSpanAll:
+    case EColumnSpan::kAll:
       value_id_ = CSSValueAll;
       break;
-    case kColumnSpanNone:
+    case EColumnSpan::kNone:
       value_id_ = CSSValueNone;
       break;
   }
 }
 
 template <>
-inline ColumnSpan CSSIdentifierValue::ConvertTo() const {
+inline EColumnSpan CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueAll:
-      return kColumnSpanAll;
+      return EColumnSpan::kAll;
     default:
       NOTREACHED();
     // fall-through
     case CSSValueNone:
-      return kColumnSpanNone;
+      return EColumnSpan::kNone;
   }
 }
 
@@ -1531,52 +1531,52 @@ template <>
 inline CSSIdentifierValue::CSSIdentifierValue(WebBlendMode blend_mode)
     : CSSValue(kIdentifierClass) {
   switch (blend_mode) {
-    case kWebBlendModeNormal:
+    case WebBlendMode::kNormal:
       value_id_ = CSSValueNormal;
       break;
-    case kWebBlendModeMultiply:
+    case WebBlendMode::kMultiply:
       value_id_ = CSSValueMultiply;
       break;
-    case kWebBlendModeScreen:
+    case WebBlendMode::kScreen:
       value_id_ = CSSValueScreen;
       break;
-    case kWebBlendModeOverlay:
+    case WebBlendMode::kOverlay:
       value_id_ = CSSValueOverlay;
       break;
-    case kWebBlendModeDarken:
+    case WebBlendMode::kDarken:
       value_id_ = CSSValueDarken;
       break;
-    case kWebBlendModeLighten:
+    case WebBlendMode::kLighten:
       value_id_ = CSSValueLighten;
       break;
-    case kWebBlendModeColorDodge:
+    case WebBlendMode::kColorDodge:
       value_id_ = CSSValueColorDodge;
       break;
-    case kWebBlendModeColorBurn:
+    case WebBlendMode::kColorBurn:
       value_id_ = CSSValueColorBurn;
       break;
-    case kWebBlendModeHardLight:
+    case WebBlendMode::kHardLight:
       value_id_ = CSSValueHardLight;
       break;
-    case kWebBlendModeSoftLight:
+    case WebBlendMode::kSoftLight:
       value_id_ = CSSValueSoftLight;
       break;
-    case kWebBlendModeDifference:
+    case WebBlendMode::kDifference:
       value_id_ = CSSValueDifference;
       break;
-    case kWebBlendModeExclusion:
+    case WebBlendMode::kExclusion:
       value_id_ = CSSValueExclusion;
       break;
-    case kWebBlendModeHue:
+    case WebBlendMode::kHue:
       value_id_ = CSSValueHue;
       break;
-    case kWebBlendModeSaturation:
+    case WebBlendMode::kSaturation:
       value_id_ = CSSValueSaturation;
       break;
-    case kWebBlendModeColor:
+    case WebBlendMode::kColor:
       value_id_ = CSSValueColor;
       break;
-    case kWebBlendModeLuminosity:
+    case WebBlendMode::kLuminosity:
       value_id_ = CSSValueLuminosity;
       break;
   }
@@ -1586,43 +1586,43 @@ template <>
 inline WebBlendMode CSSIdentifierValue::ConvertTo() const {
   switch (value_id_) {
     case CSSValueNormal:
-      return kWebBlendModeNormal;
+      return WebBlendMode::kNormal;
     case CSSValueMultiply:
-      return kWebBlendModeMultiply;
+      return WebBlendMode::kMultiply;
     case CSSValueScreen:
-      return kWebBlendModeScreen;
+      return WebBlendMode::kScreen;
     case CSSValueOverlay:
-      return kWebBlendModeOverlay;
+      return WebBlendMode::kOverlay;
     case CSSValueDarken:
-      return kWebBlendModeDarken;
+      return WebBlendMode::kDarken;
     case CSSValueLighten:
-      return kWebBlendModeLighten;
+      return WebBlendMode::kLighten;
     case CSSValueColorDodge:
-      return kWebBlendModeColorDodge;
+      return WebBlendMode::kColorDodge;
     case CSSValueColorBurn:
-      return kWebBlendModeColorBurn;
+      return WebBlendMode::kColorBurn;
     case CSSValueHardLight:
-      return kWebBlendModeHardLight;
+      return WebBlendMode::kHardLight;
     case CSSValueSoftLight:
-      return kWebBlendModeSoftLight;
+      return WebBlendMode::kSoftLight;
     case CSSValueDifference:
-      return kWebBlendModeDifference;
+      return WebBlendMode::kDifference;
     case CSSValueExclusion:
-      return kWebBlendModeExclusion;
+      return WebBlendMode::kExclusion;
     case CSSValueHue:
-      return kWebBlendModeHue;
+      return WebBlendMode::kHue;
     case CSSValueSaturation:
-      return kWebBlendModeSaturation;
+      return WebBlendMode::kSaturation;
     case CSSValueColor:
-      return kWebBlendModeColor;
+      return WebBlendMode::kColor;
     case CSSValueLuminosity:
-      return kWebBlendModeLuminosity;
+      return WebBlendMode::kLuminosity;
     default:
       break;
   }
 
   NOTREACHED();
-  return kWebBlendModeNormal;
+  return WebBlendMode::kNormal;
 }
 
 template <>
