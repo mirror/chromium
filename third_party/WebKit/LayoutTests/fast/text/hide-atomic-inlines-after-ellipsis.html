@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<style>
+.container {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100px;
+  padding-right: 400px;
+  background: lightgrey;
+}
+
+.float {
+  float: right;
+  width: 10px;
+  height: 10px;
+  background-color: blue;
+}
+.inline-block {
+  display: inline-block;
+  border: 1px solid black;
+}
+span {
+  border: 1px solid black;
+}
+</style>
+<div class="container">
+  <span class="float" id="float"></span><span>01234567890123456789</span><span class="inline-block"><span id="nested">text</span>inline-block<br>more inline-block</span><span class="inline-block"></span><img src="f" alt="img">
+</div>
+
