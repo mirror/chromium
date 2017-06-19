@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c481d13a_c02d316b",
+        "filename": "chrome/browser/safe_browsing/safe_browsing_blocking_page.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1116054
+      },
+      "writtenOn": "2017-06-19T16:26:24Z",
+      "side": 0,
+      "message": "Sorry, slightly confused here, the sb_error_ui()-\u003eCanShowExtendedReportingOption() setting is per page right? or per profile (as it seems to be after refactoring)?\n\nI am asking because for WebView the use of PrefService instead of BaseSafeBrowsingErrorUI might be an issue as we don\u0027t have separate profiles (there is currently only one pref service and one browser context).",
+      "range": {
+        "startLine": 126,
+        "startChar": 56,
+        "endLine": 126,
+        "endChar": 0
+      },
+      "revId": "ac8c5baf1b926eb5121d5c1833d8a8755a325e42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
