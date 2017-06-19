@@ -466,12 +466,15 @@ NavigationThrottle::ThrottleCheckResult
 NavigationHandleImpl::CallWillProcessResponseForTesting(
     content::RenderFrameHost* render_frame_host,
     const std::string& raw_response_headers) {
+  static int request_id = 1000;
+  GlobalRequestID global_request_id(render_frame_host->GetProcess()->GetID(),
+                                    ++request_id);
   scoped_refptr<net::HttpResponseHeaders> headers =
       new net::HttpResponseHeaders(raw_response_headers);
   NavigationThrottle::ThrottleCheckResult result = NavigationThrottle::DEFER;
   WillProcessResponse(static_cast<RenderFrameHostImpl*>(render_frame_host),
                       headers, net::HttpResponseInfo::CONNECTION_INFO_UNKNOWN,
-                      SSLStatus(), GlobalRequestID(), false, false, false,
+                      SSLStatus(), global_request_id, false, false, false,
                       base::Closure(),
                       base::Bind(&UpdateThrottleCheckResult, &result));
 
