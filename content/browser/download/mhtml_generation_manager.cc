@@ -607,6 +607,12 @@ base::File MHTMLGenerationManager::CreateFile(const base::FilePath& file_path) {
   // principals).
   uint32_t file_flags = base::File::FLAG_CREATE_ALWAYS | base::File::FLAG_WRITE;
 
+  // Check the existence of the parent directory of |file_path| and create the
+  // directory if needed. The return value of CreateDirectory is not handled
+  // here, because even if it fails , there's nothing to do other than fail the
+  // creation of |browser_file|.
+  if (!base::DirectoryExists(file_path.DirName()))
+    base::CreateDirectory(file_path.DirName());
   base::File browser_file(file_path, file_flags);
   if (!browser_file.IsValid()) {
     LOG(ERROR) << "Failed to create file to save MHTML at: "
