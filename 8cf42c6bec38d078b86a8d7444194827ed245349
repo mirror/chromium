@@ -22,6 +22,30 @@
       "revId": "8cf42c6bec38d078b86a8d7444194827ed245349",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aabf3e21_90aaecc8",
+        "filename": "net/http/http_stream_factory_impl_job_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-19T14:46:07Z",
+      "side": 1,
+      "message": "I think the CancelJobs() in JobController::OnJobSucceeded() should be removed.\nThe only way to cancel a HttpStreamRequest is to delete it, which then calls OnRequestComplete(). I think we are fine doing RemoveRequestFromSpdySessionRequestMap() just here.\nThe CancelJobs() in OnJobSucceeded() probably should be removed. I don\u0027t see a way that the |job| is nullptr. Do you see the same?",
+      "parentUuid": "904ddc17_b6415383",
+      "range": {
+        "startLine": 181,
+        "startChar": 2,
+        "endLine": 181,
+        "endChar": 40
+      },
+      "revId": "8cf42c6bec38d078b86a8d7444194827ed245349",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
