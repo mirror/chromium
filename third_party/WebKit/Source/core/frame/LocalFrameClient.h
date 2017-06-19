@@ -131,6 +131,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
       NavigationPolicy,
       bool should_replace_current_entry,
       bool is_client_redirect,
+      bool is_from_untrusted_event,
       HTMLFormElement*,
       ContentSecurityPolicyDisposition
           should_check_main_world_content_security_policy) = 0;

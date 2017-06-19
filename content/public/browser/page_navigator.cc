@@ -21,6 +21,7 @@ OpenURLParams::OpenURLParams(const GURL& url,
       is_renderer_initiated(is_renderer_initiated),
       should_replace_current_entry(false),
       user_gesture(!is_renderer_initiated),
+      from_untrusted_event(false),
       started_from_context_menu(false) {}
 
 OpenURLParams::OpenURLParams(const GURL& url,
@@ -39,6 +40,7 @@ OpenURLParams::OpenURLParams(const GURL& url,
       is_renderer_initiated(is_renderer_initiated),
       should_replace_current_entry(false),
       user_gesture(!is_renderer_initiated),
+      from_untrusted_event(false),
       started_from_context_menu(started_from_context_menu) {}
 
 OpenURLParams::OpenURLParams(const GURL& url,
@@ -57,6 +59,7 @@ OpenURLParams::OpenURLParams(const GURL& url,
       is_renderer_initiated(is_renderer_initiated),
       should_replace_current_entry(false),
       user_gesture(!is_renderer_initiated),
+      from_untrusted_event(false),
       started_from_context_menu(false) {}
 
 OpenURLParams::OpenURLParams()
@@ -68,6 +71,7 @@ OpenURLParams::OpenURLParams()
       is_renderer_initiated(false),
       should_replace_current_entry(false),
       user_gesture(true),
+      from_untrusted_event(false),
       started_from_context_menu(false) {}
 
 OpenURLParams::OpenURLParams(const OpenURLParams& other) = default;

@@ -123,7 +123,8 @@ class CONTENT_EXPORT Navigator : public base::RefCounted<Navigator> {
       WindowOpenDisposition disposition,
       bool force_new_process_for_new_contents,
       bool should_replace_current_entry,
-      bool user_gesture) {}
+      bool user_gesture,
+      bool from_untrusted_event) {}
 
   // The RenderFrameHostImpl wants to transfer the request to a new renderer.
   // |redirect_chain| contains any redirect URLs (excluding |url|) that happened
