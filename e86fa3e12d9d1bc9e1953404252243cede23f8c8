@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e44a70ee_a784a7d5",
+        "filename": "ui/gl/gl_image_native_pixmap.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 244,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-19T20:04:07Z",
+      "side": 1,
+      "message": "Should GLImage::Flush() be changed to return a boolean so that tests can explicitly verify the return value?",
+      "revId": "e86fa3e12d9d1bc9e1953404252243cede23f8c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
