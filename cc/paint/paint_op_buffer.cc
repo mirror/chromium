@@ -735,12 +735,15 @@ std::pair<void*, size_t> PaintOpBuffer::AllocatePaintOp(size_t sizeof_op,
   DCHECK_LE(used_ + skip, reserved_);
 
   void* op = data_.get() + used_;
+  if ((op_count_ % kCheckpointFrequency) == 0)
+    byte_offset_checkpoints_.push_back(used_);
   used_ += skip;
   op_count_++;
   return std::make_pair(op, skip);
 }
 
 void PaintOpBuffer::ShrinkToFit() {
+  byte_offset_checkpoints_.shrink_to_fit();
   if (!used_ || used_ == reserved_)
     return;
   ReallocBuffer(used_);

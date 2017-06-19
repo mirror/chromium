@@ -884,10 +884,27 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
         return *this;
       }
 
+      DCHECK_LE(op_idx_, target_idx_);
+      // Only perform the jump if we know the buffer offset is going to be
+      // higher than the current one. Since we checkpoint at a given frequency,
+      // if the target idx is at least that far away, we know there's a
+      // checkpoint between the current idx and the next one, which means that
+      // there will be a new buffer offset that is higher than the current one
+      // in all cases.
+      if (target_idx_ - op_idx_ >= PaintOpBuffer::kCheckpointFrequency) {
+        checkpoint_idx_ = buffer_->element_idx_to_checkpoint_idx(target_idx_);
+        op_idx_ = buffer_->checkpoint_idx_to_element_idx(checkpoint_idx_);
+        size_t new_offset = buffer_->offset_of_checkpoint_idx(checkpoint_idx_);
+        DCHECK_LE(current_offset_, new_offset);
+        ptr_ += (new_offset - current_offset_);
+        current_offset_ = new_offset;
+      }
+
       while (*this && target_idx_ != op_idx_) {
         PaintOp* op = **this;
         uint32_t type = op->type;
         CHECK_LE(type, static_cast<uint32_t>(PaintOpType::LastPaintOpType));
+        current_offset_ += op->skip;
         ptr_ += op->skip;
         op_idx_++;
       }
@@ -915,6 +932,8 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
     size_t op_idx_ = 0;
     size_t target_idx_ = 0;
     size_t indices_index_ = 0;
+    size_t checkpoint_idx_ = 0;
+    size_t current_offset_ = 0;
   };
 
  private:
@@ -922,6 +941,17 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   // Returns the allocated op and the number of bytes to skip in |data_| to get
   // to the next op.
   std::pair<void*, size_t> AllocatePaintOp(size_t sizeof_op, size_t bytes);
+
+  ALWAYS_INLINE size_t element_idx_to_checkpoint_idx(size_t element_idx) const {
+    return element_idx / kCheckpointFrequency;
+  }
+  ALWAYS_INLINE size_t
+  checkpoint_idx_to_element_idx(size_t checkpoint_idx) const {
+    return checkpoint_idx * kCheckpointFrequency;
+  }
+  ALWAYS_INLINE size_t offset_of_checkpoint_idx(size_t checkpoint_idx) const {
+    return byte_offset_checkpoints_[checkpoint_idx];
+  }
 
   template <typename T, typename... Args>
   T* push_internal(size_t bytes, Args&&... args) {
@@ -959,6 +989,14 @@ class CC_PAINT_EXPORT PaintOpBuffer : public SkRefCnt {
   // Record additional bytes used by referenced sub-records and display lists.
   size_t subrecord_bytes_used_ = 0;
   bool has_discardable_images_ = false;
+
+  // This refers to how often the checkpoints are stored in
+  // |byte_offset_checkpoints_|. For example, byte_offset_checkpoints_[5] stores
+  // the byte offset of the element index 5 * kCheckpointFrequency. Checkpoint
+  // index 0 is first element (element index 0); checkpoint index 1 is is 11th
+  // element (element index 10).
+  static const int kCheckpointFrequency = 10;
+  std::vector<size_t> byte_offset_checkpoints_;
 
   DISALLOW_COPY_AND_ASSIGN(PaintOpBuffer);
 };
