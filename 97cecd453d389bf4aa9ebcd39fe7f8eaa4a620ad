@@ -34,6 +34,24 @@
       "revId": "97cecd453d389bf4aa9ebcd39fe7f8eaa4a620ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a3072cd_b467bc19",
+        "filename": "gpu/command_buffer/service/renderbuffer_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-19T22:21:07Z",
+      "side": 1,
+      "message": "I checked again.  It seems ES (2.0, 3.0, 3.1) does not require Gen before Bind, but newer GL (compatibility and core) does require Gen before Bind.\n\nIf we add a DCHECK somewhere, making sure this workaround is only applied to non-ANGLE ES backend, then maybe it\u0027s OK to remove the Gen and simplify the logic of the workaround.",
+      "parentUuid": "0a622fca_6a9ba4b5",
+      "revId": "97cecd453d389bf4aa9ebcd39fe7f8eaa4a620ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
