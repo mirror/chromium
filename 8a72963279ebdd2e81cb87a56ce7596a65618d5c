@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "367fe468_00c5dd33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-19T16:50:39Z",
+      "side": 1,
+      "message": "We can get line+column info from parser, right?",
+      "revId": "8a72963279ebdd2e81cb87a56ce7596a65618d5c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
