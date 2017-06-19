@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1a24a40d_36fae7c7",
+        "filename": "components/content_settings/core/browser/website_settings_registry.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-19T10:36:02Z",
+      "side": 1,
+      "message": "Yes we want to sync this across devices. The idea here is to use this to decide which sites can use Autoplay, so having this data across devices is quite important. At the moment this feature isn\u0027t launched so we are planning to do a privacy review later (full design doc is here: https://docs.google.com/a/google.com/document/d/1UI9zhjQ8bmjGVheODWUL5q9VxQtvkpvl23kf2NIc2r8/edit?usp\u003dsharing).\n\nI will hook this up to clear the browsing data in a future CL if that\u0027s ok?",
+      "parentUuid": "50c2ec1c_ce475f14",
+      "revId": "5707bedbd4a1589e81cd0d50ce071eeaf910c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d93cc74a_fff211d1",
         "filename": "components/content_settings/core/common/content_settings_types.h",
         "patchSetId": 4
@@ -33,6 +51,24 @@
       "revId": "5707bedbd4a1589e81cd0d50ce071eeaf910c3a6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c660c2fa_d9f04073",
+        "filename": "components/content_settings/core/common/content_settings_types.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 75,
+      "author": {
+        "id": 1212719
+      },
+      "writtenOn": "2017-06-19T10:36:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d93cc74a_fff211d1",
+      "revId": "5707bedbd4a1589e81cd0d50ce071eeaf910c3a6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
