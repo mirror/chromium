@@ -25,6 +25,7 @@ class BASE_EXPORT SharedMemoryTracker : public trace_event::MemoryDumpProvider {
   static SharedMemoryTracker* GetInstance();
 
   static trace_event::MemoryAllocatorDumpGuid GetDumpGUIDForTracing(
+      trace_event::ProcessMemoryDump* pmd,
       const UnguessableToken& id);
 
   static trace_event::MemoryAllocatorDumpGuid GetGlobalDumpGUIDForTracing(
