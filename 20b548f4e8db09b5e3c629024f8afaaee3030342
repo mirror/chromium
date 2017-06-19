@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "24634812_743b9923",
+        "filename": "third_party/WebKit/Source/core/html/HTMLMediaElement.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T17:02:19Z",
+      "side": 1,
+      "message": "Yes, that\u0027s because I\u0027m using `enum class`. It wouldn\u0027t with `enum`.",
+      "parentUuid": "bf30794f_51f89a8c",
+      "range": {
+        "startLine": 367,
+        "startChar": 23,
+        "endLine": 367,
+        "endChar": 39
+      },
+      "revId": "20b548f4e8db09b5e3c629024f8afaaee3030342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92c7bd6a_a185eb72",
         "filename": "tools/metrics/histograms/histograms.xml",
         "patchSetId": 3
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-19T16:57:38Z",
       "side": 1,
       "message": "Would it be helpful to also record a success (no rejection) bucket, to use as a baseline?  (If you do add this, I\u0027d recommend having it be bucket zero.)",
+      "range": {
+        "startLine": 29178,
+        "startChar": 36,
+        "endLine": 29178,
+        "endChar": 0
+      },
+      "revId": "20b548f4e8db09b5e3c629024f8afaaee3030342",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c2bffdb_5a92dd9e",
+        "filename": "tools/metrics/histograms/histograms.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 29178,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-19T17:02:19Z",
+      "side": 1,
+      "message": "Success is most likely going to be insanely large compared to the errors (ie. each playback of video or audio file will record an entry). We can always add this later if it appears to be needed but that would be a bad sign ;) Also, we have proxy metrics to figure out the number of playback in Chrome.",
+      "parentUuid": "92c7bd6a_a185eb72",
       "range": {
         "startLine": 29178,
         "startChar": 36,
