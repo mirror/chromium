@@ -34,6 +34,24 @@
       "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bbc4fbe_3a100f77",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-19T20:38:04Z",
+      "side": 1,
+      "message": "Defer to UKM folk, no idea what costs are associated with obsolete metrics.",
+      "parentUuid": "22e4573d_0d01f138",
+      "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
