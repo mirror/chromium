@@ -105,6 +105,8 @@ class WebRtcImageCaptureBrowserTest
       return true;
     }
 
+    LookupAndLogNameAndIdOfFirstCamera();
+
     std::string result;
     if (!ExecuteScriptAndExtractString(shell(), command, &result))
       return false;
