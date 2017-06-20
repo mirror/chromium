@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88b9d43e_de9f475f",
+        "filename": "third_party/WebKit/Source/core/exported/WebImageDecoder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:42:50Z",
+      "side": 0,
+      "message": "Implicit conversions are kind of evil, but since we already have them, may as well use them?",
+      "range": {
+        "startLine": 67,
+        "startChar": 20,
+        "endLine": 67,
+        "endChar": 45
+      },
+      "revId": "c21941d2b11067e23073143692fe5968af3875f7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

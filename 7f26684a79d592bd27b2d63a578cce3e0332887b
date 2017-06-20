@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7503e247_f216cac4",
+        "filename": "third_party/WebKit/Source/platform/SharedBuffer.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:42:50Z",
+      "side": 1,
+      "message": "This is the main reason for adding a const SharedBuffer\u0026 operator to WebData: Append() doesn\u0027t take ownership of the passed-in buffer at all, it actually copies.\n\nThe signature change here should make that clearer.",
+      "range": {
+        "startLine": 84,
+        "startChar": 14,
+        "endLine": 84,
+        "endChar": 33
+      },
+      "revId": "7f26684a79d592bd27b2d63a578cce3e0332887b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31d29883_36be4f5a",
+        "filename": "third_party/WebKit/Source/platform/exported/WebHTTPBody.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:42:50Z",
+      "side": 1,
+      "message": "I\u0027m going to try using WebPrivatePtr for this and WebSecurityOrigin in a followup... I found this immensely confusing ot think about.",
+      "range": {
+        "startLine": 161,
+        "startChar": 6,
+        "endLine": 161,
+        "endChar": 64
+      },
+      "revId": "7f26684a79d592bd27b2d63a578cce3e0332887b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "419d409f_daa80bcb",
+        "filename": "third_party/WebKit/Source/platform/exported/WebImage.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:42:50Z",
+      "side": 1,
+      "message": "I\u0027m removing the std::move in the next PS I upload, as it is unnecessary -- the implicit conversion returns a temporary RefPtr, so normal move semantics will apply.\n\nOne might argue that using std::move() anyway is nicer if we hypothetically merge WebData and RefPtr\u003cSharedBuffer\u003e, but that\u0027s not likely to happen soon/ever--and we should have a more generic tool for finding this sort of stuff anyway.",
+      "range": {
+        "startLine": 48,
+        "startChar": 6,
+        "endLine": 48,
+        "endChar": 16
+      },
+      "revId": "7f26684a79d592bd27b2d63a578cce3e0332887b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb47cbad_b2d0b5e3",
+        "filename": "third_party/WebKit/public/platform/WebData.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:42:50Z",
+      "side": 1,
+      "message": "I added this, because it\u0027s otherwise awkward to get a non-owning pointer out of a WebData.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 30
+      },
+      "revId": "7f26684a79d592bd27b2d63a578cce3e0332887b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
