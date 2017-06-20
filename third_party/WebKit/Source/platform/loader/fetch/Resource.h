@@ -108,7 +108,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual String Encoding() const { return String(); }
   virtual void AppendData(const char*, size_t);
   virtual void FinishAsError(const ResourceError&);
-  virtual void SetCORSFailed() {}
 
   void SetNeedsSynchronousCacheHit(bool needs_synchronous_cache_hit) {
     needs_synchronous_cache_hit_ = needs_synchronous_cache_hit;
@@ -207,8 +206,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void Finish(double finish_time);
   void Finish() { Finish(0.0); }
 
-  bool PassesAccessControlCheck(const SecurityOrigin*) const;
-
   virtual PassRefPtr<const SharedBuffer> ResourceBuffer() const {
     return data_;
   }
@@ -284,6 +281,18 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
   bool IsAlive() const { return is_alive_; }
+
+  bool IsCORSSuccessful() const { return is_cors_successful_; }
+
+  void SetCORSSuccessful(const bool is_cors_successful) {
+    is_cors_successful_ = is_cors_successful;
+  }
+
+  void SetSameOrigin(const bool is_same_origin) {
+    is_same_origin_ = is_same_origin;
+  }
+
+  bool IsSameOrigin() const { return is_same_origin_; }
 
   void SetCacheIdentifier(const String& cache_identifier) {
     cache_identifier_ = cache_identifier;
@@ -462,6 +471,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool link_preload_;
   bool is_revalidating_;
   bool is_alive_;
+  bool is_same_origin_;
+  bool is_cors_successful_;
   bool is_add_remove_client_prohibited_;
   bool is_revalidation_start_forbidden_ = false;
 
