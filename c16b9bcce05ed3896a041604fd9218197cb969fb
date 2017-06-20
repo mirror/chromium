@@ -93,6 +93,30 @@
       "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ecaef727_75b5e2ff",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-types.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-20T03:43:50Z",
+      "side": 1,
+      "message": "Yes, but what would a null/undefined url be transformed into?",
+      "parentUuid": "b13af889_bb3bd545",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
