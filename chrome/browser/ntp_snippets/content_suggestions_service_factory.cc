@@ -403,8 +403,16 @@ void SubscribeForGCMPushUpdates(PrefService* pref_service,
       std::move(subscription_manager),
       base::Bind(&safe_json::SafeJsonParser::Parse));
 
+  scoped_refptr<base::SequencedTaskRunner> task_runner =
+      base::CreateSequencedTaskRunnerWithTraits(
+          {base::MayBlock(), base::TaskPriority::BACKGROUND,
+           base::TaskShutdownBehavior::CONTINUE_ON_SHUTDOWN});
+  // TODO(mamir): check if the same DB can be used.
+  base::FilePath database_dir(
+      profile->GetPath().Append(ntp_snippets::kBreakingNewsDatabaseFolder));
   auto provider = base::MakeUnique<BreakingNewsSuggestionsProvider>(
-      service, std::move(handler), base::MakeUnique<base::DefaultClock>());
+      service, std::move(handler), base::MakeUnique<base::DefaultClock>(),
+      base::MakeUnique<RemoteSuggestionsDatabase>(database_dir, task_runner));
   provider->Start();
   service->RegisterProvider(std::move(provider));
 }
