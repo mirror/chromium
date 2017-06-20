@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "cb76a2f2_cb89cce0",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "WorkerScriptLoader has been using kAllowStoredCredentials for allow_credentials. Combined with kFetchRequestModeNoCORS, DocumentThreadableLoader was behaving as if the \"include\" credentials mode was specified.\n\nSee this section. The spec is currently requiring \"omit\". But we change DocumentThreadableLoader to honor the \"omit\" credentials mode. So, use of \"omit\" would break the current behavior.\nhttps://docs.google.com/document/d/1Iso_WSAUY_KKXWr9X3niEf1eu9Z_o5Gesp_P4xmJRDw/edit#heading\u003dh.na2z9q7roo7m\n\nSo, \"include\" is used here tentatively. Strictly speaking, \"same-origin\" also works since DocumentThreadableLoader doesn\u0027t yet honor difference between \"same-origin\"/\"include\" when the mode is \"no-cors\" (see https://chromium-review.googlesource.com/c/516925/41/third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp#1155). But \"include\" is better.",
+      "parentUuid": "41335dc8_f24cc19a",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6e82c0a1_321d8648",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
         "patchSetId": 41
@@ -33,6 +51,24 @@
       "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589fe08f_744858bc",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6e82c0a1_321d8648",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "278ff30f_81ee3457",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9152deb9_005963b6",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "37c85399_6109ac3b",
         "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
         "patchSetId": 41
@@ -67,6 +121,24 @@
       "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "06b4fa0b_77c47a06",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37c85399_6109ac3b",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a5c56c9d_ed50887e",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ddb5a0ce_600020cb",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d34f38aa_5c2435ed",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 41
@@ -101,6 +191,24 @@
       "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f0b9d42c_686a84b0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d34f38aa_5c2435ed",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "4846062d_f621dd7a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "05a1573f_afd7672e",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d1e38f63_e4f83ac6",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 41
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "3df1ed1d_060e2417",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d1e38f63_e4f83ac6",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98d5b1df_d7c19f80",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
         "patchSetId": 41
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-20T07:22:53Z",
       "side": 1,
       "message": "Super hard to read... ;_;",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c9a6a64_8f8d1770",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T08:06:12Z",
+      "side": 1,
+      "message": ";_;\n\nI tried to have some temp boolean variables, but naming them is hard and just inflates the code...\n\nTo be cleaned up...",
+      "parentUuid": "98d5b1df_d7c19f80",
       "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
