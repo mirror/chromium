@@ -52,6 +52,24 @@
       "revId": "cba0f330bfc49655cda796515d0488021b026eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2763ac5d_4a0df6f7",
+        "filename": "ios/chrome/app/spotlight/topsites_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T12:49:16Z",
+      "side": 1,
+      "message": "Having the mediator own this value seems correct to me if it\u0027s a piece of configuration that other objects (unrelated to the view controller) care about. Functionally this value seems to be business logic that gets applied to model-layer services; that makes it squarely in the domain of the mediator.",
+      "parentUuid": "b8cbaf02_0ca746d1",
+      "revId": "cba0f330bfc49655cda796515d0488021b026eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
