@@ -56,9 +56,9 @@ class CORE_EXPORT InsertionPoint : public HTMLElement {
 
   virtual bool CanAffectSelector() const { return false; }
 
-  void AttachLayoutTree(const AttachContext& = AttachContext()) override;
+  void AttachLayoutTree(AttachContext&) override;
   void DetachLayoutTree(const AttachContext& = AttachContext()) override;
-  void RebuildDistributedChildrenLayoutTrees();
+  void RebuildDistributedChildrenLayoutTrees(WhitespaceAttacher&);
 
   size_t DistributedNodesSize() const { return distributed_nodes_.size(); }
   Node* DistributedNodeAt(size_t index) const {
