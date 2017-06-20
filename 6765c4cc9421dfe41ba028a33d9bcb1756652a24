@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "88fe04ea_3f33d63b",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T22:54:56Z",
+      "side": 1,
+      "message": "I would personally prefer that we move the bit to clear has_received_user_gesture_ here as well (and do it unconditionally for all frames), to contrast with the new potentially sticky bit (assuming this makes sense to japhet@ as well)",
+      "range": {
+        "startLine": 1082,
+        "startChar": 3,
+        "endLine": 1082,
+        "endChar": 0
+      },
+      "revId": "6765c4cc9421dfe41ba028a33d9bcb1756652a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
