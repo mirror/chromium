@@ -45,6 +45,30 @@
       "revId": "c3c4dfa65758870761c60c4dbcf7fe45fdc870d5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f27c3e36_f1839b3c",
+        "filename": "components/autofill/content/common/autofill_agent.mojom",
+        "patchSetId": 1
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-06-20T16:27:50Z",
+      "side": 1,
+      "message": "Maybe Android platform provided autofill, I want this to include the autofill service.\n\nIn the email discussion, svetoslavganov@ already confirmed the autofill service will not do cross application autofill, I don\u0027t think framework have a way to prevent it, but this scenario, the autofill service is trusted because user is asked if the autofill service is trusted before he can switch the autofill service, basically, this still need user\u0027s consent. \n\nI can confirm this with svetoslavganov@.",
+      "parentUuid": "f0c6dd94_77f7280a",
+      "range": {
+        "startLine": 56,
+        "startChar": 27,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "c3c4dfa65758870761c60c4dbcf7fe45fdc870d5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
