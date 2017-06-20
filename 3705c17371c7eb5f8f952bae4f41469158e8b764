@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "886325e4_c3df4085",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T18:38:26Z",
+      "side": 1,
+      "message": "Optional: do you think adding a copy constructor is worthwhile?",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bae0f1a8_ff482a19",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T18:38:26Z",
+      "side": 1,
+      "message": "Can this be a vector for consistency? Unless there\u0027s a reason for std::list that I\u0027m not seeing.",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97e3ae55_87ccbfa8",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T18:38:26Z",
+      "side": 1,
+      "message": "Navigations aren\u0027t really supposed to fail after they get past WillProcessResponse / ReadyToCommitNavigation.\n\nI think a NavigationThrottle that cancels the nav in WillProcessResponse is a cleaner way of doing this, but I\u0027ll let clamy weigh in.",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
