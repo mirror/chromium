@@ -1817,7 +1817,11 @@ TEST_F(VideoDecodeAcceleratorTest, NoCrash) {
 
 class VDATestSuite : public base::TestSuite {
  public:
-  VDATestSuite(int argc, char** argv) : base::TestSuite(argc, argv) {}
+  VDATestSuite(int argc, char** argv) : base::TestSuite(argc, argv) {
+#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+    media::VaapiWrapper::PreSandboxInitialization();
+#endif
+  }
 
   int Run() {
 #if defined(OS_WIN) || defined(USE_OZONE)
@@ -1840,9 +1844,7 @@ class VDATestSuite : public base::TestSuite {
     ui::OzonePlatform::InitializeForUI();
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
-    media::VaapiWrapper::PreSandboxInitialization();
-#elif defined(OS_WIN)
+#if defined(OS_WIN)
     media::DXVAVideoDecodeAccelerator::PreSandboxInitialization();
 #endif
     return base::TestSuite::Run();
