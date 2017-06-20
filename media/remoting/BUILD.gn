@@ -67,6 +67,7 @@ source_set("remoting") {
     "//media",
     "//media/mojo/interfaces:remoting",
     "//mojo/public/cpp/bindings",
+    "//third_party/WebKit/public:blink",
     "//ui/gfx",
   ]
 }
