@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7868a9d_2b249488",
+        "filename": "chrome/browser/download/download_service_factory.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-20T01:33:35Z",
+      "side": 1,
+      "message": "Please base::ToUpperASCII() here, or level db will have lower case id.",
+      "range": {
+        "startLine": 48,
+        "startChar": 24,
+        "endLine": 48,
+        "endChar": 36
+      },
+      "revId": "3e96eef7f8dcc153d148b6f433487a50edca40ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
