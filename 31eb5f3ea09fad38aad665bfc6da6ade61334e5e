@@ -1,0 +1,244 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fbc1dfd3_1b4ddf61",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: const -\u003e constexpr, here and other places",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b97a884b_a6c1556c",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "If not too much work, I would prefer to make |data_source_| host real data and provide access to the data. And here, we can update the view using the data after observing it to ensure consistent state.\n\nOtherwise, add a comment about why we don\u0027t need to update the view from |data_source_|.\n\ne.g.\n  // LockContentsView is created with an empty |data_source_|. So\n  // no need to update here.",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3dc64ba_a781454d",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: emplace_back(user-\u003eaccount_id); saves a copy",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a789647_da80c115",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: This function is long. Can we split separate methods for each layout?\ne.g.\n  if (users.size() \u003d\u003d 2) {\n    CreateTwoUsersLayout(users);\n  } else if (users.size() \u003e\u003d 3 \u0026\u0026 users.size() \u003c\u003d 6) {\n    CreateMediumDensityLayout(users);\n  } else {\n    CreateHighDensityLayout(users, layout);\n  }",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1610a10f_11c227a8",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "This is not necessary since Layout() is called below.",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9857de22_3db226c1",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "Should we use the passed in |user| to find? Or at least DCHECK to ensure the two are for the same user.",
+      "range": {
+        "startLine": 198,
+        "startChar": 23,
+        "endLine": 198,
+        "endChar": 53
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "287b702e_1a1d77b5",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: not necessary for nested class",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f71b552_0964b4be",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e23051f2_5df76110",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "Do we plan to have LoginDataSource hold real data? If so, maybe we should have a SetUsers methods and call it here. For now, it could be just a wrapper to call NotifyUsers.",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73b7ea61_7fb09512",
+        "filename": "ash/login/ui/lock_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "Prefer not to mess with root view since this is Widget impl specific and might change in the future. \n\nHow about do a\n  delete GetContentsView();\n?",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f13d48d_a6edcb9a",
+        "filename": "ash/login/ui/login_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: ctor is not needed for an interface declaration",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76beb317_7250550b",
+        "filename": "ash/login/ui/login_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T17:15:38Z",
+      "side": 1,
+      "message": "nit: SetPinEnabledForUser -\u003e OnPinEnabledForUserChanged",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
