@@ -111,6 +111,10 @@ struct DEVICE_GENERIC_SENSOR_PUBLIC_EXPORT SensorReadingSharedBuffer {
   static uint64_t GetOffset(mojom::SensorType type);
 };
 
+bool DEVICE_GENERIC_SENSOR_PUBLIC_EXPORT
+GetSensorReadingFromBuffer(const SensorReadingSharedBuffer* buffer,
+                           SensorReading* result);
+
 }  // namespace device
 
 #endif  // DEVICE_GENERIC_SENSOR_PUBLIC_CPP_SENSOR_READING_H_
