@@ -227,6 +227,24 @@
       "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b354b62a_322127af",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-20T13:48:06Z",
+      "side": 1,
+      "message": "Disregard my comment on cors_enabled - I meanwhile figured out why CORS checks should only be performed when cors_enabled is set and adjusted the code with patch set 10.",
+      "parentUuid": "5385b398_a01cfb41",
+      "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
