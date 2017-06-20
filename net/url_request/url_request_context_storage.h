@@ -10,6 +10,7 @@
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
 #include "net/base/net_export.h"
+#include "net/nqe/network_quality_estimator.h"
 
 namespace net {
 
@@ -81,6 +82,8 @@ class NET_EXPORT URLRequestContextStorage {
   void set_sdch_manager(std::unique_ptr<SdchManager> sdch_manager);
   void set_reporting_service(
       std::unique_ptr<ReportingService> reporting_service);
+  void set_network_quality_estimator(
+      std::unique_ptr<NetworkQualityEstimator> network_quality_estimator);
 
   // Everything else can be access through the URLRequestContext, but this
   // cannot.  Having an accessor for it makes usage a little cleaner.
@@ -120,6 +123,7 @@ class NET_EXPORT URLRequestContextStorage {
   std::unique_ptr<URLRequestThrottlerManager> throttler_manager_;
   std::unique_ptr<SdchManager> sdch_manager_;
   std::unique_ptr<ReportingService> reporting_service_;
+  std::unique_ptr<NetworkQualityEstimator> network_quality_estimator_;
 
   DISALLOW_COPY_AND_ASSIGN(URLRequestContextStorage);
 };

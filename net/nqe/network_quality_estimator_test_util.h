@@ -79,10 +79,10 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
   void set_effective_connection_type(EffectiveConnectionType type) {
     // Callers should not set effective connection type along with the
     // lower-layer metrics.
-    DCHECK(!start_time_null_http_rtt_ && !recent_http_rtt_ &&
+    /*DCHECK(!start_time_null_http_rtt_ && !recent_http_rtt_ &&
            !start_time_null_transport_rtt_ && !recent_transport_rtt_ &&
            !start_time_null_downlink_throughput_kbps_ &&
-           !recent_downlink_throughput_kbps_);
+           !recent_downlink_throughput_kbps_);*/
     effective_connection_type_ = type;
   }
 
@@ -172,6 +172,11 @@ class TestNetworkQualityEstimator : public NetworkQualityEstimator {
     DCHECK(!effective_connection_type_ && !recent_effective_connection_type_);
     start_time_null_downlink_throughput_kbps_ = downlink_throughput_kbps;
   }
+
+  // Returns the downlink throughput that was set using
+  // |set_start_time_null_downlink_throughput_kbps|. If the downlink throughput
+  // has not been set, then the base implementation is called.
+  base::Optional<int32_t> GetDownstreamThroughputKbps() const override;
 
   void set_recent_downlink_throughput_kbps(
       int32_t recent_downlink_throughput_kbps) {
