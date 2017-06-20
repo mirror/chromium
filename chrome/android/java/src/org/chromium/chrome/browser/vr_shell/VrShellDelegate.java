@@ -795,8 +795,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
     @CalledByNative
     private boolean exitWebVRPresent() {
         if (!mInVr) return false;
-        if (!isVrShellEnabled(mVrSupportLevel) || !isDaydreamCurrentViewer()
-                || !activitySupportsVrBrowsing(mActivity)) {
+        if (!isVrShellEnabled(mVrSupportLevel) || !activitySupportsVrBrowsing(mActivity)) {
             if (isDaydreamCurrentViewer() && showDoff(false /* optional */)) return false;
             shutdownVr(
                     true /* disableVrMode */, false /* canReenter */, true /* stayingInChrome */);
