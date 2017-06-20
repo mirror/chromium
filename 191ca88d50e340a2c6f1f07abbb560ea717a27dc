@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f3884822_c4ac32cf",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T08:02:36Z",
+      "side": 1,
+      "message": "Will this send a non-default value in the future? I\u0027m curious what this argument is for otherwise. Maybe the mojom comments could clarify?",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 62
+      },
+      "revId": "191ca88d50e340a2c6f1f07abbb560ea717a27dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
