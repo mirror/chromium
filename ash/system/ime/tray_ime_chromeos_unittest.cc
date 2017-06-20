@@ -84,6 +84,8 @@ void TrayIMETest::SetAccessibilityKeyboardEnabled(bool enabled) {
 
 void TrayIMETest::SetActiveImeCount(int count) {
   available_imes_.resize(count);
+  for (int i = 0; i < count; ++i)
+    available_imes_[i].id = std::to_string(i);
   RefreshImeController();
 }
 
@@ -144,8 +146,6 @@ void TrayIMETest::SetUp() {
 }
 
 void TrayIMETest::RefreshImeController() {
-  mojom::ImeInfoPtr current_ime_ptr = current_ime_.Clone();
-
   std::vector<mojom::ImeInfoPtr> available_ime_ptrs;
   for (const auto& ime : available_imes_)
     available_ime_ptrs.push_back(ime.Clone());
@@ -154,7 +154,7 @@ void TrayIMETest::RefreshImeController() {
   for (const auto& item : menu_items_)
     menu_item_ptrs.push_back(item.Clone());
 
-  Shell::Get()->ime_controller()->RefreshIme(std::move(current_ime_ptr),
+  Shell::Get()->ime_controller()->RefreshIme(current_ime_.id,
                                              std::move(available_ime_ptrs),
                                              std::move(menu_item_ptrs));
 }
