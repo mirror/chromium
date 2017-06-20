@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec50fc30_00455b91",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 228,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T06:50:34Z",
+      "side": 1,
+      "message": "nit: If you want this kind of sanity check, this should be applied before the world configuration check.  Otherwise, it\u0027s okay to pass empty handles in the case that the world config doesn\u0027t apply.\n\nIn general, argument checks should be placed at the very beginning of the body.",
+      "range": {
+        "startLine": 228,
+        "startChar": 2,
+        "endLine": 228,
+        "endChar": 8
+      },
+      "revId": "6a45ffdda5445e7bc7cc5f26e650495d0388fb87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "789d0180_80e20b53",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T06:50:34Z",
+      "side": 1,
+      "message": "I\u0027m fine to check the emptiness against v8::Object because there are not many use cases / not many call sites.  However, I\u0027m uneasy with v8::ObjectTemplate case because we have thousands properties.  Remember that this function is called inside a loop of properties inside a loop of interfaces.\n\nFor example, we could have utility functions like below.\n\n// Returns true iff |target| is the empty handle to v8::Object.\n// Returns false especially when |target| is a handle to v8::ObjectTemplate.\nbool IsObjectAndEmpty(v8::Local\u003cv8::Object\u003e target) {\n  return target.IsEmpty();\n}\n\nbool IsObjectAndEmpty(v8::Local\u003cv8::ObjectTemplate\u003e target) {\n  return false;\n}\n\nThen, IsObjectAndEmpty(instance_or_template) is optimized and we don\u0027t worry about the overhead.",
+      "range": {
+        "startLine": 259,
+        "startChar": 9,
+        "endLine": 259,
+        "endChar": 29
+      },
+      "revId": "6a45ffdda5445e7bc7cc5f26e650495d0388fb87",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
