@@ -80,6 +80,7 @@ void ModuleDatabase::OnShellExtensionEnumerated(const base::FilePath& path,
   idle_timer_.Reset();
 
   DCHECK(task_runner_->RunsTasksInCurrentSequence());
+
   auto* module_info =
       FindOrCreateModuleInfo(path, size_of_image, time_date_stamp);
   module_info->second.module_types |= ModuleInfoData::kTypeShellExtension;
