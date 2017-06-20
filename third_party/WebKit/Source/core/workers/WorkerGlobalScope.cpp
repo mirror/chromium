@@ -190,6 +190,7 @@ void WorkerGlobalScope::importScripts(const Vector<String>& urls,
     completed_urls.push_back(url);
   }
 
+  // TODO(shimazu): Use WorkerInstalledScriptsManager here.
   for (const KURL& complete_url : completed_urls) {
     RefPtr<WorkerScriptLoader> script_loader(WorkerScriptLoader::Create());
     script_loader->SetRequestContext(WebURLRequest::kRequestContextScript);

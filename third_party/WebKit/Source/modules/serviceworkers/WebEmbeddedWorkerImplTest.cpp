@@ -9,8 +9,10 @@
 #include "platform/testing/UnitTestHelpers.h"
 #include "platform/wtf/PtrUtil.h"
 #include "public/platform/Platform.h"
+#include "public/platform/WebContentSettingsClient.h"
 #include "public/platform/WebURLLoaderMockFactory.h"
 #include "public/platform/WebURLResponse.h"
+#include "public/platform/modules/serviceworker/WebServiceWorkerInstalledScriptsManager.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerNetworkProvider.h"
 #include "public/platform/modules/serviceworker/WebServiceWorkerProvider.h"
 #include "public/web/WebEmbeddedWorkerStartData.h"
@@ -103,7 +105,10 @@ class WebEmbeddedWorkerImplTest : public ::testing::Test {
  protected:
   void SetUp() override {
     mock_client_ = new MockServiceWorkerContextClient();
-    worker_ = WTF::WrapUnique(WebEmbeddedWorker::Create(mock_client_, nullptr));
+    worker_ = WTF::WrapUnique(WebEmbeddedWorker::Create(
+        WTF::WrapUnique(
+            static_cast<WebServiceWorkerContextClient*>(mock_client_)),
+        nullptr, nullptr));
 
     WebURL script_url = URLTestHelpers::ToKURL("https://www.example.com/sw.js");
     WebURLResponse response;

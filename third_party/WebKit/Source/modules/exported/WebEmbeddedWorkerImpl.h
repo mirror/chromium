@@ -44,6 +44,7 @@ namespace blink {
 
 class ThreadableLoadingContext;
 class ServiceWorkerGlobalScopeProxy;
+class ServiceWorkerInstalledScriptsManager;
 class WebLocalFrameBase;
 class WebView;
 class WorkerInspectorProxy;
@@ -56,8 +57,10 @@ class WebEmbeddedWorkerImpl final : public WebEmbeddedWorker,
   WTF_MAKE_NONCOPYABLE(WebEmbeddedWorkerImpl);
 
  public:
-  WebEmbeddedWorkerImpl(std::unique_ptr<WebServiceWorkerContextClient>,
-                        std::unique_ptr<WebContentSettingsClient>);
+  WebEmbeddedWorkerImpl(
+      std::unique_ptr<WebServiceWorkerContextClient>,
+      std::unique_ptr<WebServiceWorkerInstalledScriptsManager>,
+      std::unique_ptr<WebContentSettingsClient>);
   ~WebEmbeddedWorkerImpl() override;
 
   // WebEmbeddedWorker overrides.
@@ -104,6 +107,9 @@ class WebEmbeddedWorkerImpl final : public WebEmbeddedWorker,
   WebEmbeddedWorkerStartData worker_start_data_;
 
   std::unique_ptr<WebServiceWorkerContextClient> worker_context_client_;
+
+  std::unique_ptr<ServiceWorkerInstalledScriptsManager>
+      installed_scripts_manager_;
 
   // This is kept until startWorkerContext is called, and then passed on
   // to WorkerContext.

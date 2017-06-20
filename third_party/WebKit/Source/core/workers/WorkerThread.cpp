@@ -39,8 +39,10 @@
 #include "core/probe/CoreProbes.h"
 #include "core/workers/ThreadedWorkletGlobalScope.h"
 #include "core/workers/WorkerBackingThread.h"
+#include "core/workers/WorkerCachedScriptsManager.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerInstalledScriptsManager.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
@@ -124,6 +126,15 @@ void WorkerThread::Start(std::unique_ptr<WorkerThreadStartupData> startup_data,
                       CrossThreadUnretained(this),
                       CrossThreadUnretained(&waitable_event)));
   waitable_event.Wait();
+
+  cached_scripts_manager_ = CreateCachedScriptsManager();
+  if (cached_scripts_manager_) {
+    GetWorkerBackingThread().BackingThread().PostTask(
+        BLINK_FROM_HERE, CrossThreadBind(&WorkerThread::RequestMainScript,
+                                         CrossThreadUnretained(this),
+                                         WTF::Passed(std::move(startup_data))));
+    return;
+  }
 
   GetWorkerBackingThread().BackingThread().PostTask(
       BLINK_FROM_HERE, CrossThreadBind(&WorkerThread::InitializeOnWorkerThread,
@@ -439,6 +450,23 @@ void WorkerThread::InitializeSchedulerOnWorkerThread(
   waitable_event->Signal();
 }
 
+void WorkerThread::RequestMainScript(
+    std::unique_ptr<WorkerThreadStartupData> startup_data) {
+  cached_scripts_manager_->GetScriptTextAndMetaData(
+      startup_data->script_url_,
+      WTF::Bind(&WorkerThread::OnMainScriptReady, WTF::Unretained(this),
+                WTF::Passed(std::move(startup_data))));
+}
+
+void WorkerThread::OnMainScriptReady(
+    std::unique_ptr<WorkerThreadStartupData> startup_data,
+    String source_code,
+    std::unique_ptr<Vector<char>> cached_meta_data) {
+  startup_data->source_code_ = std::move(source_code);
+  startup_data->cached_meta_data_ = std::move(cached_meta_data);
+  InitializeOnWorkerThread(std::move(startup_data));
+}
+
 void WorkerThread::InitializeOnWorkerThread(
     std::unique_ptr<WorkerThreadStartupData> startup_data) {
   DCHECK(IsCurrentThread());
@@ -457,6 +485,14 @@ void WorkerThread::InitializeOnWorkerThread(
   bool allow_atomics_wait =
       startup_data->worker_v8_settings_.atomics_wait_mode_ ==
       WorkerV8Settings::AtomicsWaitMode::kAllow;
+
+  if (installed_scripts_manager()) {
+    auto script_data = installed_scripts_manager()->GetScriptData(script_url);
+    if (script_data) {
+      source_code = std::move(script_data->source_text);
+      cached_meta_data = std::move(script_data->meta_data);
+    }
+  }
 
   {
     MutexLocker lock(thread_state_mutex_);
