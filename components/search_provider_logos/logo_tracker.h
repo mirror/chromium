@@ -68,9 +68,9 @@ class LogoDelegate {
 };
 
 // Parses the response from the server and returns it as an EncodedLogo. Returns
-// NULL if the response is invalid.
+// null if the response is invalid.
 typedef base::Callback<std::unique_ptr<EncodedLogo>(
-    const std::unique_ptr<std::string>& response,
+    std::unique_ptr<std::string> response,
     base::Time response_time,
     bool* parsing_failed)>
     ParseLogoResponse;

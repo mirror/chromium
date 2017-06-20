@@ -62,7 +62,7 @@ GURL GoogleAppendQueryparamsToLogoURL(const GURL& logo_url,
 }
 
 std::unique_ptr<EncodedLogo> GoogleParseLogoResponse(
-    const std::unique_ptr<std::string>& response,
+    std::unique_ptr<std::string> response,
     base::Time response_time,
     bool* parsing_failed) {
   // Google doodles are sent as JSON with a prefix. Example:

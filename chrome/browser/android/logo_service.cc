@@ -93,6 +93,24 @@ class ChromeLogoDelegate : public search_provider_logos::LogoDelegate {
   DISALLOW_COPY_AND_ASSIGN(ChromeLogoDelegate);
 };
 
+std::unique_ptr<search_provider_logos::EncodedLogo> ParseFixedLogoResponse(
+    std::unique_ptr<std::string> response,
+    base::Time response_time,
+    bool* parsing_failed) {
+  auto logo = base::MakeUnique<search_provider_logos::EncodedLogo>();
+  logo->encoded_image = base::RefCountedString::TakeString(response.get());
+  logo->metadata.expiration_time = response_time + base::TimeDelta::FromDays(1);
+  logo->metadata.can_show_after_expiration = true;
+  return logo;
+}
+
+GURL UseFixedLogoUrl(const GURL& logo_url,
+                     const std::string& fingerprint,
+                     bool wants_cta,
+                     bool gray_background) {
+  return logo_url;
+}
+
 }  // namespace
 
 // LogoService ----------------------------------------------------------------
@@ -111,27 +129,41 @@ void LogoService::GetLogo(search_provider_logos::LogoObserver* observer) {
 
   const TemplateURL* template_url =
       template_url_service->GetDefaultSearchProvider();
-  if (!template_url || !template_url->url_ref().HasGoogleBaseURLs(
-          template_url_service->search_terms_data()))
+  if (!template_url)
     return;
+
+  const bool use_fixed_logo = template_url->logo_url().is_valid();
+
+  if (!template_url->url_ref().HasGoogleBaseURLs(
+          template_url_service->search_terms_data()) &&
+      !use_fixed_logo) {
+    return;
+  }
 
   if (!logo_tracker_) {
     logo_tracker_.reset(new LogoTracker(
         profile_->GetPath().Append(kCachedLogoDirectory),
         BrowserThread::GetTaskRunnerForThread(BrowserThread::FILE),
         BrowserThread::GetBlockingPool(), profile_->GetRequestContext(),
-        std::unique_ptr<search_provider_logos::LogoDelegate>(
-            new ChromeLogoDelegate())));
+        base::MakeUnique<ChromeLogoDelegate>()));
   }
+
+  GURL url =
+      use_fixed_logo ? template_url->logo_url() : GetGoogleDoodleURL(profile_);
+  auto parse_logo_response_callback = base::Bind(
+      use_fixed_logo ? &ParseFixedLogoResponse
+                     : &search_provider_logos::GoogleParseLogoResponse);
+  auto append_query_params_callback = base::Bind(
+      use_fixed_logo
+          ? &UseFixedLogoUrl
+          : &search_provider_logos::GoogleAppendQueryparamsToLogoURL);
 
   bool use_gray_background =
       !base::FeatureList::IsEnabled(chrome::android::kChromeHomeFeature);
-  logo_tracker_->SetServerAPI(
-      GetGoogleDoodleURL(profile_),
-      base::Bind(&search_provider_logos::GoogleParseLogoResponse),
-      base::Bind(&search_provider_logos::GoogleAppendQueryparamsToLogoURL),
-      true, /* wants_cta */
-      use_gray_background);
+  logo_tracker_->SetServerAPI(url, parse_logo_response_callback,
+                              append_query_params_callback,
+                              true, /* wants_cta */
+                              use_gray_background);
   logo_tracker_->GetLogo(observer);
 }
 
