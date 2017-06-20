@@ -209,6 +209,24 @@
       "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c3aa3ec_183d9f19",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-20T15:06:17Z",
+      "side": 1,
+      "message": "I suggest you add a comment early in this file saying what a plane root\nis. I find the definition on lines 69-72 hard to read. Rephrase with an\nexample or two?",
+      "parentUuid": "bde9b048_9e62fc3c",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
