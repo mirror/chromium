@@ -29,6 +29,7 @@
 #include "components/password_manager/core/browser/form_fetcher_impl.h"
 #include "components/password_manager/core/browser/form_saver.h"
 #include "components/password_manager/core/browser/log_manager.h"
+#include "components/password_manager/core/browser/password_form_ukm_recorder.h"
 #include "components/password_manager/core/browser/password_manager.h"
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/password_manager_driver.h"
@@ -238,7 +239,10 @@ PasswordFormManager::PasswordFormManager(
                              true /* should_query_suppressed_https_forms */)),
       form_fetcher_(form_fetcher ? form_fetcher : owned_form_fetcher_.get()),
       is_main_frame_secure_(client->IsMainFrameSecure()),
-      metrics_recorder_(client->IsMainFrameSecure()) {
+      metrics_recorder_(
+          client->IsMainFrameSecure(),
+          base::MakeUnique<PasswordFormUkmRecorder>(client->GetUkmRecorder(),
+                                                    client->GetUkmSourceId())) {
   if (owned_form_fetcher_)
     owned_form_fetcher_->Fetch();
   DCHECK_EQ(observed_form.scheme == PasswordForm::SCHEME_HTML,

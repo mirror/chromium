@@ -5,6 +5,7 @@
 #ifndef COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_FORM_METRICS_RECORDER_H_
 #define COMPONENTS_PASSWORD_MANAGER_CORE_BROWSER_PASSWORD_FORM_METRICS_RECORDER_H_
 
+#include <memory>
 #include <vector>
 
 #include "base/macros.h"
@@ -13,14 +14,37 @@
 
 namespace password_manager {
 
+namespace internal {
+// UKM Metric names.
+
+// This metric records in the buckes 0 and 1 the occurreces of observed form
+// submissions and abandoned forms that were not submitted.
+constexpr const char kUkmSubmissionObserved[] = "Submission.Observed";
+
+// This metric records in buckets numbered according to
+// PasswordFormMetricsRecorder::SubmitResult the outcome of submissions.
+// Note that no event is recorded for kSubmitResultNotSubmitted.
+constexpr const char kUkmSubmissionResult[] = "Submission.SubmissionResult";
+
+// This metric records the classification of a form at submission time. The
+// buckets correspond to PasswordFormMetricsRecorder::SubmittedFormType.
+// Note that no event is recorded for kSubmittedFormTypeUnspecified.
+constexpr const char kUkmSubmissionFormType[] = "Submission.SubmittedFormType";
+}  // namespace internal
+
 class FormFetcher;
+class PasswordFormUkmRecorder;
 
 // The pupose of this class is to record various types of metrics about the
 // behavior of the PasswordFormManager and its interaction with the user and the
 // page.
 class PasswordFormMetricsRecorder {
  public:
-  explicit PasswordFormMetricsRecorder(bool is_main_frame_secure);
+  // |ukm_recorder| is the destination to which UKM metrics are reported. It
+  // may be nullptr, in which case no UKM metrics are reported.
+  PasswordFormMetricsRecorder(
+      bool is_main_frame_secure,
+      std::unique_ptr<PasswordFormUkmRecorder> ukm_recorder);
   ~PasswordFormMetricsRecorder();
 
   // ManagerAction - What does the PasswordFormManager do with this form? Either
@@ -159,6 +183,9 @@ class PasswordFormMetricsRecorder {
       autofill::PasswordForm::Type manual_or_generated,
       const autofill::PasswordForm& pending_credentials) const;
 
+  // Wrapper function for ukm_recorder_ to deal with ukm_recorder_ being NULL.
+  void RecordUkmMetric(const char* metric_name, int64_t value);
+
   // True if the main frame's visible URL, at the time this PasswordFormManager
   // was created, is secure.
   const bool is_main_frame_secure_;
@@ -180,6 +207,10 @@ class PasswordFormMetricsRecorder {
   // submission as the classification of the form can change depending on what
   // data the user has entered.
   SubmittedFormType submitted_form_type_ = kSubmittedFormTypeUnspecified;
+
+  // Records URL keyed metrics (UKMs) and submits them on destruction. May be a
+  // nullptr in which case no recording is expected.
+  std::unique_ptr<PasswordFormUkmRecorder> ukm_recorder_;
 
   DISALLOW_COPY_AND_ASSIGN(PasswordFormMetricsRecorder);
 };
