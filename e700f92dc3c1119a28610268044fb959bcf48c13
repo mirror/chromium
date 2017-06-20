@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "09a64629_1f40fb9c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d5a90ff5_9199d96c",
+      "range": {
+        "startLine": 82,
+        "startChar": 76,
+        "endLine": 82,
+        "endChar": 93
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8fffe836_87606df5",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb544603_3a2f05df",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8fffe836_87606df5",
+      "range": {
+        "startLine": 291,
+        "startChar": 11,
+        "endLine": 291,
+        "endChar": 14
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "48ac8160_cf69f5e0",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "51217f53_877f0a96",
+      "range": {
+        "startLine": 294,
+        "startChar": 8,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac82764b_d7020049",
         "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
         "patchSetId": 6
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-20T00:17:49Z",
       "side": 1,
       "message": "is GetNativeView guaranteed to be non-null (same comment elsewhere)?",
+      "range": {
+        "startLine": 760,
+        "startChar": 21,
+        "endLine": 760,
+        "endChar": 34
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "30797081_2441f77c",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Yes the native view is guaranteed to be non-null. It is created at WebContentsView construction and last till destruction.",
+      "parentUuid": "ac82764b_d7020049",
       "range": {
         "startLine": 760,
         "startChar": 21,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "f5a983e2_1e7fead7",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2df34b4d_caaa17d8",
+      "range": {
+        "startLine": 376,
+        "startChar": 13,
+        "endLine": 376,
+        "endChar": 0
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eff563c_c91ed73c",
         "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
         "patchSetId": 6
@@ -140,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "05fefa18_080754e3",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6eff563c_c91ed73c",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bbe4eaad_866e6150",
         "filename": "components/web_contents_delegate_android/validation_message_bubble_android.cc",
         "patchSetId": 6
@@ -151,6 +295,30 @@
       "writtenOn": "2017-06-20T00:17:49Z",
       "side": 1,
       "message": "I wonder if we should combine this with SetPositionRelativeToAnchor (i.e. call createAndShow) and then call SetPositionRelativeToAnchor right after.",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97824810_1be7ccb3",
+        "filename": "components/web_contents_delegate_android/validation_message_bubble_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 1,
+      "message": "Ctor() {\n  gfx::Rect anchor \u003d ...\n  java_validation_create();\n  PositionRelativeToAnchor(anchor.x(), ...);\n}\nand rewrite the Java layer accordingly. Is this what you\u0027re saying?\n\nThis makes sense (dedup the code scaling rect/size, split create and show/position). But I found that \u0027show\u0027 in createAndShow uses different API\u0027s from setPositionRelativeToAnchor. The former uses |PopupWindow.showAtLocation| while the latter |PopupWindow.update|. Not sure how to write one show method to work for both cases.\n\nI rewrote it in a little different way. Please see how it looks.",
+      "parentUuid": "bbe4eaad_866e6150",
       "range": {
         "startLine": 41,
         "startChar": 21,

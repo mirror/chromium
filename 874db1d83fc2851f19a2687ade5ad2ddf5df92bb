@@ -22,6 +22,30 @@
       "revId": "874db1d83fc2851f19a2687ade5ad2ddf5df92bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3dd607d2_e97533ba",
+        "filename": "components/web_contents_delegate_android/validation_message_bubble_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-20T12:37:06Z",
+      "side": 0,
+      "message": "Now I see it again, |Reset()| in ctor may fail. Put it back.",
+      "parentUuid": "c25a7474_ad6849e0",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "874db1d83fc2851f19a2687ade5ad2ddf5df92bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
