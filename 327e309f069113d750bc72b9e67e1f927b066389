@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dee2dbe4_6c1b5451",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-20T16:28:40Z",
+      "side": 1,
+      "message": "Could this be base::TaskPriority::BACKGROUND? https://chromium.googlesource.com/chromium/src/+/61ec4c2e31c1d1f9dae24a416b0f5b50157f71d9/base/task_scheduler/task_traits.h#27\n\nIf you use base::TaskPriority::BACKGROUND, you\u0027ll be able to remove the code that lowers the thread priority in CollectEnvironmentData https://cs.chromium.org/chromium/src/chrome/browser/safe_browsing/incident_reporting/environment_data_collection.cc?type\u003dcs\u0026l\u003d82",
+      "range": {
+        "startLine": 134,
+        "startChar": 43,
+        "endLine": 134,
+        "endChar": 75
+      },
+      "revId": "327e309f069113d750bc72b9e67e1f927b066389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
