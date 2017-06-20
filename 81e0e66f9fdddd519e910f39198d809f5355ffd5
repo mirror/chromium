@@ -212,6 +212,30 @@
       "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c38e3e8_89a241dd",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-20T23:50:59Z",
+      "side": 1,
+      "message": "Disregard my last comment, it doesn\u0027t take into account the \"or 1 dip\" part of \"it will never be off by more than 5% or 1 dip\". You\u0027re right, and I agree this is an acceptable rule to follow.",
+      "parentUuid": "5a5bb111_13467ff2",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
