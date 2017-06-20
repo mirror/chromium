@@ -16,6 +16,24 @@
       "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dd4b8f0_0f29e357",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/float-overflow-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 482,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 0,
+      "message": "This is because we invalidate the whole layer and ignore the smaller invalidations, when the origin of the whole layer changed. We need to reraster all contents of the layer at different locations.",
+      "parentUuid": "ebb64d87_2357ae0c",
+      "revId": "56e7c35337d9282f788f11b3bb811dd4a4daa191",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

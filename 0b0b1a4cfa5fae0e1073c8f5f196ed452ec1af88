@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c2085273_84501c22",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/clip-with-layout-delta-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "The new invalidations are because we didn\u0027t add raster invalidations for reordered chunks and disappeared chunks. It looks duplicated because some debug names are for display items and some are for paint chunks. Perhaps we should add a special tag in paint chunk debug names to distinguish.\n\nDetails:\n\nOld chunks and display items:\n(format:\nchunk_index: chunk_id\n  display items\n)\n0: LayoutView,UninitializedType           0,0 800x600\n  LayoutView DrawingDoucmentBackground\n1: HTML,UninitializedType                 8,8 100x100\n  DIV1 DrawingBoxDecorationBackground  \n2: DIV1 ClipBoxPaintPhaseChildBlockBackgrounds 8,8 100x100\n  SPAN t1 DrawingBoxDecorationBackground\n  InlineTextBox DrawingPaintPhaseForeground\n3: DIV2 UninitializedType\n  DIV2 DrawingBoxDecorationBackground     108,8 100x100\n4: DIV2 ClipBoxPaintPhaseForeground\n  InlineTextBox DrawingPaintPhaseForeground 108,8 4x19\n\nNew chunks and display items:\n0: LayoutView,UninitializedType           0,0 800x600\n  LayoutView DrawingDoucmentBackground\n1: HTML,UninitializedType                 8,8 100x100\n  DIV1 DrawingBoxDecorationBackground\n2: DIV1,ClipBoxPaintPhaseForeground\n  InlineTextBox DrawingPaintPhaseForeground 8,8 4x19\n3: DIV2,UninitializedType                 108,8 100x100\n  DIV2 DrawingBoxDecorationBackground\n4: DIV2,ClipBoxPaintPhaseChildBlockBackgrounds 108,8 100x100\n  SPAN t2 DrawingBoxDecorationBackground\n\nHow raster invalidations are issued:\n\nnew chunk 0 matches old chunk 0: no invalidation\n\nnew chunk 1 matches old chunk 1: DIV1 appeared 8,8 100x100 (This is added by PaintController. DIV1 previously painted nothing (the display item was empty) while now paints background.)\nnew chunk 2 matches no old chunk: DIV1 appeared 8,8 4x19\nnew chunk 3 matches old chunk 3: DIV2 reordered 108,8 100x100 (It\u0027s treated as reordered because it skips old chunk 2 which we doesn\u0027t know if it disappeared at that time.)\nnew chunk 4 matches no old chunk: DIV2 appeared 108,8 100x100\nunmatched old chunk 2: DIV1 disappeared 8,8 100x100\nunmatched old chunk 4: DIV2 disappeared 108,8 4x19",
+      "parentUuid": "5b3eccf4_53fcbe7f",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "237e6118_e02b2b65",
         "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/multi-layout-one-frame-expected.txt",
         "patchSetId": 8
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-19T19:05:08Z",
       "side": 1,
       "message": "Why is it uncacheable?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92a9b31e_d3c92172",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/multi-layout-one-frame-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "With https://chromium-review.googlesource.com/c/540661/, the chunk is no longer uncacheable.\n\n\n(The following comment was before https://chromium-review.googlesource.com/c/540661/:\n\u003cproperty\u003e\n  some text\n  \u003cproperty\u003e\n    ....\n  \u003c/property\u003e\n  some text  \u003c-- uncacheable\n\u003c/property\u003e\n\nThe chunk containing the trailing part of the outer scope is not cacheable because it doesn\u0027t have a unique id for matching. Such case seems rare in layout tests.)",
+      "parentUuid": "237e6118_e02b2b65",
       "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "29fab588_ba86ee65",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/overflow-hidden-in-overflow-hidden-scrolled-expected.txt",
+        "patchSetId": 8
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "This is because the new chunk and the old chunk don\u0027t match by id (type fields are different) so we issue raster invalidation for disappeared old chunk and appeared new chunk.",
+      "parentUuid": "de793d77_ad8ea9ed",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "17f3fc9d_2ce687a1",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
         "patchSetId": 8
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "39b79e93_6d687679",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17f3fc9d_2ce687a1",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8319a9_1aa04067",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
         "patchSetId": 8
@@ -81,6 +153,41 @@
       "writtenOn": "2017-06-19T19:05:08Z",
       "side": 1,
       "message": "Why is this the best place to clear?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "777d87fc_ba349122",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "This method starts or ends raster invalidation tracking. |invalidations| vector is useless when we are not tracking, and we don\u0027t want the invalidations tracked the previous tracking session to be seen in the next session.\n\n|invalidations| is also useless when we are checking raster-under-invalidations. It will accumulate but we\u0027ll clear it when we start tracking raster invalidations.\n\nWe also do this in SetTracksRasterInvalidations() methods in other classes.",
+      "parentUuid": "bf8319a9_1aa04067",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d643be7_af66eadd",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "I should write O((m-1)...) as O(m*n).",
       "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -104,6 +211,41 @@
     },
     {
       "key": {
+        "uuid": "e7c03af3_ad0d2918",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "The algorithm has been tested with the cases.\n\nI think without a HashMap, your pseudo code has complexity greater than the patch in most of the cases. For example:\n  for each chunk c in old vector:\n    if c is not in new then ...\nis always O(n^2), while the patch algorithm has near linear complexity in common cases that most of the chunks are matched in-order.\n\nWe could avoid O(n^2) with a HashMap, but it might degrade performance of common cases due to hash cost. We would also need to define hash functions for PaintChunk::Id. Because the number of chunks in a layer is normally small, HashSet might not even improve performance in the worst O(n^2) case.",
+      "parentUuid": "dd57e1e5_78070a7e",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d1e0155_d42619de",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "This is equivalent to:\n  If c is not in M_old then trigger invalidation case (a)",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "349dfae9_2883e59a",
         "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
         "patchSetId": 8
@@ -115,6 +257,41 @@
       "writtenOn": "2017-06-19T19:05:08Z",
       "side": 1,
       "message": "first_unmatched_old_index is never changed, but old_index changes with each for loop iteration.\nThis doesn\u0027t seem correct?",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ecc8279_f2bc8985",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "first_unmatched_old_index set at line 193. It\u0027s not strictly necessary for correctness, but is an optimization to avoid searching from the beginning each time for each chunk that can\u0027t be matched in-order.",
+      "parentUuid": "349dfae9_2883e59a",
+      "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9ffdddf8_3c74394b",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImpl.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:11Z",
+      "side": 1,
+      "message": "This is basically\nFor each chunk c in old vector:\n  If c is not in M_new then trigger invalidation case (b)",
       "revId": "0b0b1a4cfa5fae0e1073c8f5f196ed452ec1af88",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
