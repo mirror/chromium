@@ -34,6 +34,24 @@
       "revId": "c69f477bb8bc05cc1a6a1393095bfec7c956c431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a68ef78_4de58acf",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T07:37:16Z",
+      "side": 1,
+      "message": "Here are the raw perf numbers from my desktop - sort of startlingly slow... \n\n[ RUN      ] IdcPerfTest.Scale4444\n*RESULT FullSizeDecode+Convert: \u003d 2.219404458999634 runs/s\n*RESULT Decode+Scale+Convert: \u003d 8.340579986572266 runs/s\n[       OK ] IdcPerfTest.Scale4444 (11469 ms)",
+      "parentUuid": "e68b2bbc_2c122b06",
+      "revId": "c69f477bb8bc05cc1a6a1393095bfec7c956c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
