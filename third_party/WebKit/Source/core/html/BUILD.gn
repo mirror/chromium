@@ -382,6 +382,8 @@ blink_core_sources("html") {
     "forms/TypeAhead.h",
     "forms/URLInputType.cpp",
     "forms/URLInputType.h",
+    "forms/WebFormElementObserverImpl.cpp",
+    "forms/WebFormElementObserverImpl.h",
     "forms/WeekInputType.cpp",
     "forms/WeekInputType.h",
     "imports/HTMLImport.cpp",
