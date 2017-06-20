@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "78d44bf7_527bf4b2",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-20T07:58:49Z",
+      "side": 1,
+      "message": "what about introducing an enum class instead of encoding the state in a number of booleans, i.e.\n\nenum class CORSStatus { kSameOrigin, kSuccessfull, kFailed };",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "588e6bf9_51849453",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-20T07:58:49Z",
+      "side": 1,
+      "message": "why don\u0027t you have to do this in the service worker case?",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
