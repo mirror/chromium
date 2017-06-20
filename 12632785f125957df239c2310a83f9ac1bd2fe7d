@@ -1,0 +1,276 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ba1d608_f140a280",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Not sure if this belongs in core/dom, I was going to put it in core/loading but its a rendering test?",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a2e38ee8_c41aa17a",
+        "filename": "third_party/WebKit/Source/core/dom/ImeOnFocusTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Also not sure if this one goes in core/dom",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea05f19b_71b9ccea",
+        "filename": "third_party/WebKit/Source/core/dom/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Assumed this was core/dom because its to do with HTML",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64dd937d_0723c319",
+        "filename": "third_party/WebKit/Source/core/dom/WebMeaningfulLayoutsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure if core/dom or core/layout was right, but it doesn\u0027t have any includes from core/layout so thought core/dom was better",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cd39b4_0e0f8484",
+        "filename": "third_party/WebKit/Source/core/editing/KeyboardTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "core/editing seems right; core/events is the other option but thats for specific input event testing, this test seems to simulate a keyboard event in an editing area",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90812b61_489828f9",
+        "filename": "third_party/WebKit/Source/core/editing/TextSelectionRepaintTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Again not sure, but core/editing seems right since its to do with editable text areas",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c5d52a7_c66d823c",
+        "filename": "third_party/WebKit/Source/core/frame/DeferredLoadingTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "I was going to put this in core/loading but there are no loading includes. core/frame seemed the closest",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7775e51a_a4b693d2",
+        "filename": "third_party/WebKit/Source/core/frame/ListenerLeakTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "I\u0027m not sure what this is testing, but core/frame is the only core/ include so I thought this was the right place. It\u0027s definitely not core/exported",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4ef915c_00981fc3",
+        "filename": "third_party/WebKit/Source/core/frame/PrerenderingTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "What is prerendering? I thought of like frame prerendering so I guessed core/frame, also based on the includes.",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f421829_4f21e8f1",
+        "filename": "third_party/WebKit/Source/core/frame/ProgrammaticScrollTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Was going to put this in core/page/scrolling but there\u0027s no scrolling includes :\u0027(",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0cae3d97_f8bf76c5",
+        "filename": "third_party/WebKit/Source/core/frame/TouchActionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure for this one, are touch actions processed by the frame? Alternative is core/dom.",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9904cbee_1f6de7c0",
+        "filename": "third_party/WebKit/Source/core/html/MediaElementFillingViewportTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "Wasn\u0027t sure what a \"viewport\" was, but thought it was more html/ than dom/, could be wrong though",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28171eeb_f496d42c",
+        "filename": "third_party/WebKit/Source/core/page/LinkSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "I thought link selection was best in core/page/, but I could also have put it in core/frame, not sure which is best",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eaba8b74_1e73120a",
+        "filename": "third_party/WebKit/Source/core/page/ViewportTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "I was going to put this in core/frame but I\u0027m not sure what a viewport is, I thought it might be better in core/page.",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc4f31f6_5bdf36ea",
+        "filename": "third_party/WebKit/Source/core/page/WindowProxyTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "No idea where this goes haha, core/page was my best guess",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "20deac17_5946f237",
+        "filename": "third_party/WebKit/Source/core/paint/ScrollbarsTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T07:07:44Z",
+      "side": 1,
+      "message": "core/paint was my best guess since this seems to be a paint test, but could also have gone in core/page/scrolling maybe. Or core/layout",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
