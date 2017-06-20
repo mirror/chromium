@@ -51,6 +51,29 @@
       "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b09c4129_1e68c32b",
+        "filename": "third_party/WebKit/public/platform/WebInputEvent.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-20T18:05:09Z",
+      "side": 1,
+      "message": "As indicated when Ella added a similar flag I don\u0027t think this should be called kFakeMouseMove. But indicate it is synthetic (and not necessarily related to mouse move)",
+      "range": {
+        "startLine": 238,
+        "startChar": 4,
+        "endLine": 238,
+        "endChar": 18
+      },
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
