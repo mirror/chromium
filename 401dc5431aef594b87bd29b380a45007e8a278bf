@@ -116,6 +116,30 @@
       "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b08b3bdf_7c281e9c",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-20T20:28:29Z",
+      "side": 1,
+      "message": "This is intended for use with the Headless TabSocket.  We can already get the executionContextId by listening for Runtime.executionContextCreated.\n\nI don\u0027t know if it\u0027s possible to get the executionContextId given a V8::Local\u003cV8::Context\u003e - if it is then perhaps we don\u0027t need this.",
+      "parentUuid": "4b6d5bf1_0a3002a0",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
