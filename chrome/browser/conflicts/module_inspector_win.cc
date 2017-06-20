@@ -71,8 +71,8 @@ void ModuleInspector::StartInspectingModule() {
 void ModuleInspector::OnInspectionFinished(
     const ModuleInfoKey& module_key,
     std::unique_ptr<ModuleInspectionResult> inspection_result) {
-  // Pop first, because the callback may want to know if there is any work left
-  // to be done, which is caracterized by a non-empty queue.
+  // Pop first, because the callback may want to know if the ModuleInspector is
+  // now idle, which is caracterized by an empty queue.
   queue_.pop();
 
   on_module_inspected_callback_.Run(module_key, std::move(inspection_result));
