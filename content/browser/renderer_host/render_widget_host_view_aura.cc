@@ -2042,7 +2042,7 @@ void RenderWidgetHostViewAura::Shutdown() {
   }
 }
 
-TouchSelectionControllerClientManager*
+ui::TouchSelectionControllerClientManager*
 RenderWidgetHostViewAura::touch_selection_controller_client_manager() {
   return selection_controller_client_.get();
 }

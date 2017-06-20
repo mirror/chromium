@@ -8,7 +8,9 @@
 #include "chrome/browser/ui/browser.h"
 #include "chrome/browser/ui/browser_finder.h"
 #include "chrome/browser/ui/tab_contents/core_tab_helper.h"
+#include "content/public/browser/render_widget_host_view.h"
 #include "extensions/browser/guest_view/mime_handler_view/mime_handler_view_guest.h"
+#include "ui/gfx/geometry/point_f.h"
 
 namespace {
 
@@ -25,10 +27,30 @@ content::WebContents* GetWebContentsToUse(
 
 }  // namespace
 
-ChromePDFWebContentsHelperClient::ChromePDFWebContentsHelperClient() {
+ChromePDFWebContentsHelperClient::ChromePDFWebContentsHelperClient() :
+touch_selection_client_manager_(nullptr) {
+}
+
+void ChromePDFWebContentsHelperClient::InitTouchSelectionClientManager(
+    content::WebContents* contents) {
+  DCHECK(contents);
+  auto* view = contents->GetRenderWidgetHostView();
+  if (!view)
+    return;
+
+  touch_selection_client_manager_ =
+      view->touch_selection_controller_client_manager();
+  if (!touch_selection_client_manager_)
+    return;
+
+  touch_selection_client_manager_->AddObserver(this);
 }
 
 ChromePDFWebContentsHelperClient::~ChromePDFWebContentsHelperClient() {
+  if (touch_selection_client_manager_) {
+    touch_selection_client_manager_->InvalidateClient(this);
+    touch_selection_client_manager_->RemoveObserver(this);
+  }
 }
 
 void ChromePDFWebContentsHelperClient::UpdateContentRestrictions(
@@ -58,6 +80,62 @@ void ChromePDFWebContentsHelperClient::OnSelectionChanged(
     int32_t left_height,
     const gfx::Point& right,
     int32_t right_height) {
+  if (!touch_selection_client_manager_)
+    InitTouchSelectionClientManager(contents);
+
   fprintf(stderr, "Selection %d,%d x %d -> %d,%d x %d\n", left.x(), left.y(),
           left_height, right.x(), right.y(), right_height);
+  if (touch_selection_client_manager_) {
+    gfx::SelectionBound start;
+    gfx::SelectionBound end;
+    start.SetEdgeTop(gfx::PointF(left.x(), left.y()));
+    start.SetEdgeTop(gfx::PointF(left.x(), left.y() + left_height));
+    end.SetEdgeTop(gfx::PointF(right.x(), right.y()));
+    end.SetEdgeTop(gfx::PointF(right.x(), right.y() + right_height));
+    touch_selection_client_manager_->UpdateClientSelectionBounds(
+        start, end, this, nullptr);
+  }
+}
+
+bool ChromePDFWebContentsHelperClient::SupportsAnimation() const {
+  return false;
+}
+
+void ChromePDFWebContentsHelperClient::MoveCaret(const gfx::PointF& position) {
+  fprintf(stderr,
+          "wjm: ChromePDFWebContentsHelperClient::MoveCaret() x=%f, y=%f\n",
+          position.x(), position.y());
+}
+
+void ChromePDFWebContentsHelperClient::MoveRangeSelectionExtent(
+    const gfx::PointF& extent) {
+  fprintf(stderr,
+          "wjm: ChromePDFWebContentsHelperClient::MoveRangeSelectionExtent() x "
+          "= %f, y = %f\n",
+          extent.x(), extent.y());
+}
+
+void ChromePDFWebContentsHelperClient::SelectBetweenCoordinates(
+    const gfx::PointF& base,
+    const gfx::PointF& extent) {
+  fprintf(stderr,
+          "wjm: ChromePDFWebContentsHelperClient::SelectBetweenCoordinates() "
+          "base: x = %f, y = %f; extent: x = %f, y = %f\n",
+          base.x(), base.y(), extent.x(), extent.y());
+}
+
+void ChromePDFWebContentsHelperClient::OnSelectionEvent(
+    ui::SelectionEventType event) {}
+
+std::unique_ptr<ui::TouchHandleDrawable>
+ChromePDFWebContentsHelperClient::CreateDrawable() {
+  // We can return null here, as the manager will look after this.
+  return std::unique_ptr<ui::TouchHandleDrawable>();
+}
+
+void ChromePDFWebContentsHelperClient::OnManagerWillDestroy(
+      ui::TouchSelectionControllerClientManager* manager) {
+  DCHECK(manager == touch_selection_client_manager_);
+  manager->RemoveObserver(this);
+  touch_selection_client_manager_ = nullptr;
 }

@@ -10,9 +10,9 @@
 #include "base/macros.h"
 #include "base/observer_list.h"
 #include "base/timer/timer.h"
-#include "content/browser/renderer_host/input/touch_selection_controller_client_manager.h"
 #include "content/common/content_export.h"
 #include "ui/touch_selection/touch_selection_controller.h"
+#include "ui/touch_selection/touch_selection_controller_client_manager.h"
 #include "ui/touch_selection/touch_selection_menu_runner.h"
 
 namespace content {
@@ -24,7 +24,7 @@ class RenderWidgetHostViewAura;
 class CONTENT_EXPORT TouchSelectionControllerClientAura
     : public ui::TouchSelectionControllerClient,
       public ui::TouchSelectionMenuClient,
-      public TouchSelectionControllerClientManager {
+      public ui::TouchSelectionControllerClientManager {
  public:
   explicit TouchSelectionControllerClientAura(RenderWidgetHostViewAura* rwhva);
   ~TouchSelectionControllerClientAura() override;
@@ -63,9 +63,9 @@ class CONTENT_EXPORT TouchSelectionControllerClientAura
   void InvalidateClient(ui::TouchSelectionControllerClient* client) override;
   ui::TouchSelectionController* GetTouchSelectionController() override;
   void AddObserver(
-      TouchSelectionControllerClientManager::Observer* observer) override;
+      ui::TouchSelectionControllerClientManager::Observer* observer) override;
   void RemoveObserver(
-      TouchSelectionControllerClientManager::Observer* observer) override;
+      ui::TouchSelectionControllerClientManager::Observer* observer) override;
 
  private:
   friend class TestTouchSelectionControllerClientAura;
@@ -117,7 +117,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientAura
   gfx::SelectionBound manager_selection_start_;
   gfx::SelectionBound manager_selection_end_;
 
-  base::ObserverList<TouchSelectionControllerClientManager::Observer>
+  base::ObserverList<ui::TouchSelectionControllerClientManager::Observer>
       observers_;
 
   base::Timer quick_menu_timer_;

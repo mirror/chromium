@@ -21,6 +21,7 @@ component("touch_selection") {
     "touch_handle_orientation.h",
     "touch_selection_controller.cc",
     "touch_selection_controller.h",
+    "touch_selection_controller_client_manager.h",
     "touch_selection_draggable.h",
     "ui_touch_selection_export.h",
   ]
