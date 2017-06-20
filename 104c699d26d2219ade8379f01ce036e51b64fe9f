@@ -2,6 +2,97 @@
   "comments": [
     {
       "key": {
+        "uuid": "53dd44db_170de5e4",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "nit: CHECK_EQ(instance_, this);",
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "487223a6_3a6b4132",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "nit: unused ?",
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87d47d7a_0983a419",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "nit: instance -\u003e Get, same as ash::Shell and saves some typing. :)",
+      "range": {
+        "startLine": 23,
+        "startChar": 21,
+        "endLine": 23,
+        "endChar": 29
+      },
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f018576_aac3a4cf",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "nit: This can live in an anonymous namespace in cc file.",
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "27b95adb_b26d21ab",
+        "filename": "ash/login/ui/lock_screen.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "nit: initialize to nullptr",
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "23b2ac36_88c41bb3",
         "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
         "patchSetId": 2
@@ -16,6 +107,24 @@
       "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c92c7e_ac32f8aa",
+        "filename": "chrome/browser/chromeos/login/lock/screen_locker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T15:35:03Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "23b2ac36_88c41bb3",
+      "revId": "104c699d26d2219ade8379f01ce036e51b64fe9f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
