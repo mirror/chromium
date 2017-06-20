@@ -44,10 +44,9 @@
 namespace blink {
 
 WebImage WebImage::FromData(const WebData& data, const WebSize& desired_size) {
-  RefPtr<SharedBuffer> buffer = PassRefPtr<SharedBuffer>(data);
-  std::unique_ptr<ImageDecoder> decoder(
-      ImageDecoder::Create(buffer, true, ImageDecoder::kAlphaPremultiplied,
-                           ColorBehavior::Ignore()));
+  std::unique_ptr<ImageDecoder> decoder(ImageDecoder::Create(
+      std::move(data), true, ImageDecoder::kAlphaPremultiplied,
+      ColorBehavior::Ignore()));
   if (!decoder || !decoder->IsSizeAvailable())
     return WebImage();
 
@@ -83,10 +82,9 @@ WebVector<WebImage> WebImage::FramesFromData(const WebData& data) {
   // never hit in practice.
   const size_t kMaxFrameCount = 8;
 
-  RefPtr<SharedBuffer> buffer = PassRefPtr<SharedBuffer>(data);
-  std::unique_ptr<ImageDecoder> decoder(
-      ImageDecoder::Create(buffer, true, ImageDecoder::kAlphaPremultiplied,
-                           ColorBehavior::Ignore()));
+  std::unique_ptr<ImageDecoder> decoder(ImageDecoder::Create(
+      std::move(data), true, ImageDecoder::kAlphaPremultiplied,
+      ColorBehavior::Ignore()));
   if (!decoder || !decoder->IsSizeAvailable())
     return WebVector<WebImage>();
 
