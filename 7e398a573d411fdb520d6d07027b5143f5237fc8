@@ -87,6 +87,24 @@
       "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd4112e9_a170cdc4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-20T12:56:43Z",
+      "side": 1,
+      "message": "Right, moved it up",
+      "parentUuid": "8832a889_32a4e8f4",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
