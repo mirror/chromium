@@ -16,6 +16,24 @@
       "revId": "5a29e2fd5cff4e00930dac8a8d42801030e26065",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bd5eec57_c305035a",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2056,
+      "author": {
+        "id": 1116491
+      },
+      "writtenOn": "2017-06-20T13:59:37Z",
+      "side": 1,
+      "message": "Thank you.  The trick was to use list instead of vector.",
+      "parentUuid": "2fcb94ad_5d11dd73",
+      "revId": "5a29e2fd5cff4e00930dac8a8d42801030e26065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
