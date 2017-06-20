@@ -91,10 +91,11 @@ void PageLoadMetricsObserverTestHarness::SimulateTimingAndMetadataUpdate(
 }
 
 void PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
-    const ExtraRequestCompleteInfo& info) {
+    const ExtraRequestCompleteInfo& info,
+    const content::GlobalRequestID& request_id) {
   observer_->OnRequestComplete(
-      info.url, info.host_port_pair, info.frame_tree_node_id,
-      content::GlobalRequestID(), info.resource_type, info.was_cached,
+      info.url, info.host_port_pair, info.frame_tree_node_id, request_id,
+      info.resource_type, info.was_cached,
       info.data_reduction_proxy_data
           ? info.data_reduction_proxy_data->DeepCopy()
           : nullptr,

@@ -13,6 +13,7 @@
 #include "chrome/common/page_load_metrics/test/weak_mock_timer.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/test/base/chrome_render_view_host_test_harness.h"
+#include "content/public/browser/global_request_id.h"
 #include "content/public/test/web_contents_tester.h"
 #include "third_party/WebKit/public/platform/WebInputEvent.h"
 #include "ui/base/page_transition_types.h"
@@ -56,7 +57,12 @@ class PageLoadMetricsObserverTestHarness
                                        const mojom::PageLoadMetadata& metadata);
 
   // Simulates a loaded resource.
-  void SimulateLoadedResource(const ExtraRequestCompleteInfo& info);
+  void SimulateLoadedResource(const ExtraRequestCompleteInfo& info) {
+    SimulateLoadedResource(info, content::GlobalRequestID());
+  }
+
+  void SimulateLoadedResource(const ExtraRequestCompleteInfo& info,
+                              const content::GlobalRequestID& request_id);
 
   // Simulates a user input.
   void SimulateInputEvent(const blink::WebInputEvent& event);
