@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "ad3ddf7b_9bb4a2b5",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 367,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-20T17:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c0516a71_a75525b0",
+      "range": {
+        "startLine": 367,
+        "startChar": 13,
+        "endLine": 367,
+        "endChar": 24
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d04420b3_a3a830f0",
         "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T20:31:51Z",
       "side": 1,
       "message": "We\u0027re guaranteed to get browser windows in Z order by this iteration?",
+      "range": {
+        "startLine": 888,
+        "startChar": 41,
+        "endLine": 888,
+        "endChar": 56
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94134bb8_2a42b657",
+        "filename": "chrome/browser/resource_coordinator/tab_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 888,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-20T17:39:02Z",
+      "side": 1,
+      "message": "This iteration returns browsers from most recently to least recently active https://cs.chromium.org/chromium/src/chrome/browser/ui/browser_list.h?l\u003d53. On Windows, Mac, Linux and ChromeOS, most recently active to least recently active \u003d\u003d z-order from top to bottom.",
+      "parentUuid": "d04420b3_a3a830f0",
       "range": {
         "startLine": 888,
         "startChar": 41,
@@ -68,6 +116,30 @@
       "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3faa7cb2_bd9d7c5a",
+        "filename": "chrome/browser/resource_coordinator/tab_stats.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-20T17:39:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa06a3b8_c3efab2e",
+      "range": {
+        "startLine": 36,
+        "startChar": 29,
+        "endLine": 36,
+        "endChar": 37
+      },
+      "revId": "eb8faa6b8946890c6ccfd8c716a6ab61e381bed9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
