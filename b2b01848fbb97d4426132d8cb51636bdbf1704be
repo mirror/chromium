@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5de6342d_e1bbbdad",
+        "filename": "components/exo/surface.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 267,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-20T20:43:57Z",
+      "side": 1,
+      "message": "is this function still used? please remove this too if not",
+      "revId": "b2b01848fbb97d4426132d8cb51636bdbf1704be",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
