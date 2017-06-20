@@ -22,6 +22,30 @@
       "revId": "bdac62a55a4e5ca28f866ada55cacedd25e992da",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e250b096_14fc2b2c",
+        "filename": "components/arc/volume_mounter/arc_volume_mounter_bridge.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1221932
+      },
+      "writtenOn": "2017-06-20T08:33:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e266e0dc_23e1d1f0",
+      "range": {
+        "startLine": 73,
+        "startChar": 4,
+        "endLine": 73,
+        "endChar": 8
+      },
+      "revId": "bdac62a55a4e5ca28f866ada55cacedd25e992da",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
