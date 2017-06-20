@@ -1,0 +1,220 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "40729a38_c4e7932a",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "Even if we have a baked-in logo? (Does it matter in that case?)",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7a96d789_968ba2f3",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: braces please",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e85e540_5757acc6",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "Wasn\u0027t this MakeUnique at some point?\nAlso for the LogoTracker itself, above.",
+      "range": {
+        "startLine": 131,
+        "startChar": 40,
+        "endLine": 131,
+        "endChar": 0
+      },
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "305f9787_27e28066",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: /*wants_cta\u003d*/ (or just remove the param, if it\u0027s always true?)",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b4dc0433_d3ad48f3",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "Should you set parsing_failed?",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d879e07_bb3dcfca",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: \"search_provider_logos::\" not needed here either",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "061d67f7_52ced3bb",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "Hm, this is a bit weird.\nDoes the expiration date actually *do* anything if can_show_after_expiration is true?",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34d0939c_4c48ae45",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: No point in repeating the comment from the header.",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fc9e93f_5a24167d",
+        "filename": "components/search_provider_logos/fixed_logo_api.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: \"search_provider_logos::\" isn\u0027t needed.",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5913515f_b5465556",
+        "filename": "components/search_provider_logos/logo_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "nit: While you\u0027re here,\nusing ParseLogoResponse \u003d ...;\n?",
+      "range": {
+        "startLine": 76,
+        "startChar": 22,
+        "endLine": 76,
+        "endChar": 0
+      },
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba28dfb5_c0f8c54f",
+        "filename": "components/search_provider_logos/logo_tracker.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "Remove comments for wants_cta and gray_background and the TODO now :)",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33954eda_74c04187",
+        "filename": "tools/json_to_struct/json_to_struct.gni",
+        "patchSetId": 4
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T14:52:51Z",
+      "side": 1,
+      "message": "?",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
