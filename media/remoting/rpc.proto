@@ -284,6 +284,7 @@ enum CdmException {
   UNKNOWN_ERROR = 4;
   CLIENT_ERROR = 5;
   OUTPUT_ERROR = 6;
+  TYPE_ERROR = 7;
 }
 
 // Proto version of media::CdmMessageType.
