@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "5b72c063_335242e5",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 154,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Yes. I think the VERTICAL_MARGIN was indeed incorrect.",
+      "parentUuid": "44f4c24a_c34cdaa9",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b1457f00_3d8baa00",
         "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66f7133d_2ff7f39a",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "This file was \"seeded\" from m_g_d_v_unittest.cc... this was left over.",
+      "parentUuid": "b1457f00_3d8baa00",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "ca4b63ca_282a2edf",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "026c88e1_d6b6e739",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "910dc0b6_b243d7f9",
         "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
         "patchSetId": 8
@@ -67,6 +121,24 @@
       "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dfe0c0e_25e1e3b1",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "910dc0b6_b243d7f9",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "984ea860_7a4d78f3",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "It\u0027s used in two places.",
+      "parentUuid": "3155330f_7329103b",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e870722b_16e92c5e",
         "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8aa1b4d8_1dcb1ecc",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e870722b_16e92c5e",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "21f500f0_888fca94",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f880581_f0836735",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b37cc22a_5ae402f5",
         "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "9f7fb0f9_25b048cd",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b37cc22a_5ae402f5",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "feccd8cb_76c80578",
         "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
         "patchSetId": 8
@@ -152,6 +296,24 @@
       "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7eb683d_1efad568",
+        "filename": "chrome/browser/ui/views/extensions/media_galleries_dialog_views_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1161819
+      },
+      "writtenOn": "2017-06-20T15:38:00Z",
+      "side": 1,
+      "message": "The plan was to have more than one interactive dialog which displayed different information. However, that may not happen right now.",
+      "parentUuid": "feccd8cb_76c80578",
+      "revId": "03a23c50a1d0b2d98d81e4c89ca8720f2eefd780",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
