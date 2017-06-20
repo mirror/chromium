@@ -68,6 +68,24 @@
       "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4586897a_dd05c6c4",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T19:42:59Z",
+      "side": 1,
+      "message": "Charles and I looked at this a bit more and decided it was best to restore the previous code for the time being.\n\nOne open question is whether we should CHECK()-fail when Fail() is invoked after WillProcessResponse. If it\u0027s not valid to fail a nav after WillProcessResponse, we should enforce that in the NavigationSimulator API.",
+      "parentUuid": "29db5ceb_87ad67ec",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
