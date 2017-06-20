@@ -89,6 +89,7 @@ source_set("chromeos") {
     "//dbus",
     "//device/bluetooth",
     "//device/hid",
+    "//device/wake_lock/public/interfaces",
     "//extensions/browser/kiosk",
     "//mash/public/interfaces",
     "//media",
@@ -96,6 +97,7 @@ source_set("chromeos") {
     "//mojo/common",
     "//net",
     "//ppapi/proxy:ipc",  # For PpapiMsg_LoadPlugin
+    "//services/device/public/interfaces:constants",
     "//services/service_manager/public/cpp",
     "//services/service_manager/runner/common",
     "//services/ui/public/interfaces/display",
