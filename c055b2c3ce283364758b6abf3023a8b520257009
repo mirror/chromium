@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04313bab_726d1ebe",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/BarcodeDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:56:55Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 17
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "174e601b_7468c88a",
+        "filename": "third_party/WebKit/Source/modules/shapedetection/TextDetector.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:56:55Z",
+      "side": 1,
+      "message": "Nit: explicit",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 14
+      },
+      "revId": "c055b2c3ce283364758b6abf3023a8b520257009",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
