@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "327e30a8_0a3acfc1",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T16:35:38Z",
+      "side": 1,
+      "message": "Why are these all changed to scripts?",
+      "revId": "f279576edbd82f81309022d4b0d52bb9b6427f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
