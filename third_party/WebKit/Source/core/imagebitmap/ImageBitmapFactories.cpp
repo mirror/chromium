@@ -313,13 +313,7 @@ void ImageBitmapFactories::ImageBitmapLoader::ResolvePromiseOnOriginalThread(
 
   RefPtr<StaticBitmapImage> image = StaticBitmapImage::Create(std::move(frame));
   image->SetOriginClean(true);
-  ImageBitmap* image_bitmap = ImageBitmap::Create(image, crop_rect_, options_);
-  if (image_bitmap && image_bitmap->BitmapImage()) {
-    resolver_->Resolve(image_bitmap);
-  } else {
-    RejectPromise();
-    return;
-  }
+  ImageBitmap::Create(image, crop_rect_, resolver_, options_);
   factory_->DidFinishLoading(this);
 }
 

@@ -16,7 +16,6 @@
 
 namespace blink {
 
-class ImageBitmap;
 class ImageBitmapOptions;
 
 class CORE_EXPORT ImageBitmapSource {
@@ -29,8 +28,6 @@ class CORE_EXPORT ImageBitmapSource {
                                           ExceptionState&);
 
   virtual bool IsBlob() const { return false; }
-
-  static ScriptPromise FulfillImageBitmap(ScriptState*, ImageBitmap*);
 
  protected:
   virtual ~ImageBitmapSource() {}

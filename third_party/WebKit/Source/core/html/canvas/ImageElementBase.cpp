@@ -153,10 +153,12 @@ ScriptPromise ImageElementBase::CreateImageBitmap(
     return ScriptPromise();
   if (!ImageBitmap::IsResizeOptionValid(options, exception_state))
     return ScriptPromise();
-  return ImageBitmapSource::FulfillImageBitmap(
-      script_state, ImageBitmap::Create(
-                        this, crop_rect,
-                        event_target.ToLocalDOMWindow()->document(), options));
+  ScriptPromiseResolver* resolver = ScriptPromiseResolver::Create(script_state);
+  ScriptPromise promise = resolver->Promise();
+  ImageBitmap::Create(this, crop_rect,
+                      event_target.ToLocalDOMWindow()->document(), resolver,
+                      options);
+  return promise;
 }
 
 }  // namespace blink

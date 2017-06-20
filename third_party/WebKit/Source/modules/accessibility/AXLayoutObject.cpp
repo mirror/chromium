@@ -886,14 +886,16 @@ String AXLayoutObject::ImageDataUrl(const IntSize& max_size) const {
   ImageBitmap* image_bitmap = nullptr;
   Document* document = &node->GetDocument();
   if (isHTMLImageElement(node)) {
-    image_bitmap = ImageBitmap::Create(toHTMLImageElement(node),
-                                       Optional<IntRect>(), document, options);
+    image_bitmap =
+        ImageBitmap::Create(toHTMLImageElement(node), Optional<IntRect>(),
+                            document, nullptr, options);
   } else if (isHTMLCanvasElement(node)) {
     image_bitmap = ImageBitmap::Create(toHTMLCanvasElement(node),
-                                       Optional<IntRect>(), options);
+                                       Optional<IntRect>(), nullptr, options);
   } else if (isHTMLVideoElement(node)) {
-    image_bitmap = ImageBitmap::Create(toHTMLVideoElement(node),
-                                       Optional<IntRect>(), document, options);
+    image_bitmap =
+        ImageBitmap::Create(toHTMLVideoElement(node), Optional<IntRect>(),
+                            document, nullptr, options);
   }
   if (!image_bitmap)
     return String();
