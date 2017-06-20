@@ -22,6 +22,30 @@
       "revId": "e87713c866e3234d604a3f45227a2a1ded1c1fa4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589a12f7_ffff1381",
+        "filename": "chrome/browser/download/download_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-20T16:21:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0fe06088_6a95b7c8",
+      "range": {
+        "startLine": 130,
+        "startChar": 38,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "e87713c866e3234d604a3f45227a2a1ded1c1fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
