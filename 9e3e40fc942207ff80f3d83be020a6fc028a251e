@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "11d3f039_c3f563a5",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "Could we leave this part as a follow-up to avoid doing too many things at once?",
+      "range": {
+        "startLine": 13,
+        "startChar": 10,
+        "endLine": 13,
+        "endChar": 11
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90ee0d56_c7fe2b2f",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "\"Type\" and \"class\" are pretty much semantically equivalent here so should we rename this to QueueTypeForAttribution to make the difference clear?",
+      "range": {
+        "startLine": 80,
+        "startChar": 13,
+        "endLine": 80,
+        "endChar": 22
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2489d82_9caf9aa7",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 143,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "Can we think of a more descriptive term than \"important\"? What does this mean functionally?",
+      "range": {
+        "startLine": 143,
+        "startChar": 24,
+        "endLine": 143,
+        "endChar": 38
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf411f1a_72c84c94",
+        "filename": "third_party/WebKit/Source/platform/scheduler/base/task_queue_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "This feels like a policy decision -- can we make that in RendererScheduler instead? I think base/ should remain agnostic about queue types.",
+      "range": {
+        "startLine": 68,
+        "startChar": 7,
+        "endLine": 68,
+        "endChar": 18
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31baca4f_6e35a2d6",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "nit: Maybe nicer as a switch statement?",
+      "range": {
+        "startLine": 155,
+        "startChar": 6,
+        "endLine": 155,
+        "endChar": 7
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d06499_54e7af94",
+        "filename": "third_party/WebKit/Source/platform/scheduler/renderer/renderer_scheduler_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T17:36:33Z",
+      "side": 1,
+      "message": "nit: const ref",
+      "range": {
+        "startLine": 344,
+        "startChar": 15,
+        "endLine": 344,
+        "endChar": 34
+      },
+      "revId": "9e3e40fc942207ff80f3d83be020a6fc028a251e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
