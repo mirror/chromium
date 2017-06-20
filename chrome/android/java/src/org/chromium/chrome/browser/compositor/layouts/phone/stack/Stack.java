@@ -398,10 +398,7 @@ public class Stack {
      * @param id The id of the new tab to animate.
      */
     public void tabCreated(long time, int id) {
-        if (!createTabHelper(id)) return;
-
         mIsDying = false;
-        finishAnimation(time);
         startAnimation(time, OverviewAnimationType.NEW_TAB_OPENED,
                 TabModelUtils.getTabIndexById(mTabModel, id), TabModel.INVALID_TAB_INDEX, false);
     }
@@ -532,7 +529,9 @@ public class Stack {
                                 sourceIndex, mSpacing, mScrollOffset, mWarpSize, getDiscardRange());
             }
 
-            if (mTabAnimations != null) mTabAnimations.start();
+            if (mTabAnimations != null) {
+                mTabAnimations.start();
+            }
             if (mViewAnimations != null) mViewAnimations.start();
             if (mTabAnimations != null || mViewAnimations != null) {
                 mLayout.onStackAnimationStarted();
