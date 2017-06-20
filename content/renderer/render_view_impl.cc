@@ -156,6 +156,7 @@
 #include "third_party/WebKit/public/web/WebPageImportanceSignals.h"
 #include "third_party/WebKit/public/web/WebPlugin.h"
 #include "third_party/WebKit/public/web/WebPluginAction.h"
+#include "third_party/WebKit/public/web/WebPresentationReceiverFlags.h"
 #include "third_party/WebKit/public/web/WebRange.h"
 #include "third_party/WebKit/public/web/WebRenderTheme.h"
 #include "third_party/WebKit/public/web/WebScriptSource.h"
@@ -681,6 +682,14 @@ void RenderViewImpl::Initialize(
   if (!was_created_by_renderer && webview()->MainFrame()->IsWebLocalFrame()) {
     webview()->MainFrame()->ToWebLocalFrame()->ForceSandboxFlags(
         params.replicated_frame_state.sandbox_flags);
+  }
+
+  // Pages loaded as presentations have default sandboxing flags set.
+  // https://www.w3.org/TR/presentation-api/#creating-a-receiving-browsing-context
+  if (webkit_preferences_.presentation_receiver &&
+      webview()->MainFrame()->IsWebLocalFrame()) {
+    webview()->MainFrame()->ToWebLocalFrame()->ForceSandboxFlags(
+        blink::kPresentationReceiverSandboxFlags);
   }
 
   page_zoom_level_ = params.page_zoom_level;
