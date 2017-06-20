@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "948bc029_6ce55099",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T10:39:33Z",
+      "side": 1,
+      "message": "Why do you need this?",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5dec3edd_f19b5093",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T10:39:33Z",
+      "side": 1,
+      "message": "style: trailing whitespaces",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
