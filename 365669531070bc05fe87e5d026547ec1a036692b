@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e4d0dddb_f5ad323b",
+        "filename": "headless/lib/headless_web_contents_browsertest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 182,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T14:19:47Z",
+      "side": 1,
+      "message": "nit: Could just write 2u",
+      "range": {
+        "startLine": 182,
+        "startChar": 12,
+        "endLine": 182,
+        "endChar": 23
+      },
+      "revId": "365669531070bc05fe87e5d026547ec1a036692b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f8d3684_70d6e125",
+        "filename": "headless/public/headless_browser_context.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1116032
+      },
+      "writtenOn": "2017-06-20T14:19:47Z",
+      "side": 1,
+      "message": "Please add a virtual destructor.",
+      "range": {
+        "startLine": 83,
+        "startChar": 2,
+        "endLine": 83,
+        "endChar": 9
+      },
+      "revId": "365669531070bc05fe87e5d026547ec1a036692b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
