@@ -1136,7 +1136,8 @@ void LocalFrameView::UpdateLayout() {
 
   TRACE_EVENT0("blink,benchmark", "LocalFrameView::layout");
 
-  RuntimeCallTimerScope scope(
+  RUNTIME_CALL_TIMER_SCOPE(
+      timer_scope,
       RuntimeCallStats::From(V8PerIsolateData::MainThreadIsolate()),
       RuntimeCallStats::CounterId::kUpdateLayout);
 
@@ -3379,9 +3380,9 @@ void LocalFrameView::PushPaintArtifactToCompositor(
 
   SCOPED_BLINK_UMA_HISTOGRAM_TIMER("Blink.Compositing.UpdateTime");
 
-  paint_artifact_compositor_->Update(
-      paint_controller_->GetPaintArtifact(),
-      is_storing_composited_layer_debug_info_, composited_element_ids);
+  paint_artifact_compositor_->Update(paint_controller_->GetPaintArtifact(),
+                                     is_storing_composited_layer_debug_info_,
+                                     composited_element_ids);
 }
 
 std::unique_ptr<JSONObject> LocalFrameView::CompositedLayersAsJSON(
