@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8bfd6ca1_dcea934d",
+        "filename": "chrome/browser/metrics/process_memory_metrics_emitter.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1134874
+      },
+      "writtenOn": "2017-06-20T20:55:34Z",
+      "side": 1,
+      "message": "We\u0027re actually intentionally omitting it for now, since we don\u0027t have the URL information yet, but we plan on adding it in a later iteration.\n\nIs it strictly necessary to add the SourceURL? SourceURL seems an optional field (which I know is also proto protocol), and it looks like if we partially populate the reports they should still be able to correlate and be Dremeled with respect to each other, correct?",
+      "parentUuid": "bfaf07f8_74af98da",
+      "revId": "9d2ad67fe7b6c0e012c7b58c13e5aabc86e27068",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c7755590_09ebb525",
         "filename": "chrome/browser/metrics/process_memory_metrics_emitter_unittest.cc",
         "patchSetId": 4
