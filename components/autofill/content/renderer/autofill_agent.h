@@ -83,6 +83,7 @@ class AutofillAgent : public content::RenderFrameObserver,
   void ShowInitialPasswordAccountSuggestions(
       int32_t key,
       const PasswordFormFillData& form_data) override;
+  void BypassUserGestureCheck() override;
 
   void ShowNotSecureWarning(const blink::WebInputElement& element);
 
@@ -277,6 +278,9 @@ class AutofillAgent : public content::RenderFrameObserver,
   // This is needed because generation is shown on field focus vs. field click
   // for the password manager. TODO(gcasto): Have both UIs show on focus.
   bool is_generation_popup_possibly_visible_;
+
+  // Whether to check user guesture for notifying text field change.
+  bool bypass_user_gesture_check_;
 
   std::unique_ptr<PageClickTracker> page_click_tracker_;
 
