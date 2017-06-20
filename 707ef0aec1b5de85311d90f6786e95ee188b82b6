@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e88e90ec_c75d5634",
+        "filename": "base/sys_info_android.cc",
+        "patchSetId": 27
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002763
+      },
+      "writtenOn": "2017-06-20T09:39:44Z",
+      "side": 1,
+      "message": "__system_property_get is no longer part of the NDK, and it\u0027s only through some hacks that we can access it from Android L onwards. See https://bugs.chromium.org/p/chromium/issues/detail?id\u003d392191 for details. Please don\u0027t use it in new code.",
+      "range": {
+        "startLine": 213,
+        "startChar": 9,
+        "endLine": 213,
+        "endChar": 30
+      },
+      "revId": "707ef0aec1b5de85311d90f6786e95ee188b82b6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
