@@ -6,6 +6,9 @@
 const HCI_SUCCESS = 0x0000;
 const HCI_CONNECTION_TIMEOUT = 0x0008;
 
+const GATT_SUCCESS        = 0x0000;
+const GATT_INVALID_HANDLE = 0x0001;
+
 // Bluetooth UUID constants:
 // Services:
 var blocklist_test_service_uuid = "611c954a-263b-4f4a-aab6-01ddb953f985";
@@ -538,8 +541,7 @@ function getTwoHealthThermometerServicesDevice(options) {
 function getHealthThermometerService() {
   return getHealthThermometerDevice()
     .then(result => {
-      return result
-        .device.gatt.getPrimaryService('health_thermometer')
+      return result.device.gatt.getPrimaryService('health_thermometer')
         .then(service => ({
           service: service,
           fake_service: result.fake_health_thermometer
@@ -576,6 +578,17 @@ function getTwoMeasurementIntervalCharacteristicsService(options) {
     }));
 }
 
+function getMeasurementIntervalCharacteristic() {
+  return getHealthThermometerDevice()
+    .then(result => {
+      return result.device.gatt.getPrimaryService('health_thermometer')
+        .then(service => service.getCharacteristic('measurement_interval'))
+        .then(characteristic => ({
+          characteristic: characteristic,
+          fake_characteristic: result.fake_measurement_interval
+        }));
+    });
+}
 
 // Similar to getHealthThermometerDevice except the GATT discovery
 // response has not been set yet so more attributes can still be added.
