@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7deeda89_38fc5938",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 682,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T19:06:35Z",
+      "side": 1,
+      "message": "nit: reserve()? I don\u0027t know how many local storages a user typically has.",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "10a31720_b64f5407",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 730,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T19:06:35Z",
+      "side": 1,
+      "message": "nit: base::ContainsValue()",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e7e1a9_a727deb2",
+        "filename": "content/browser/dom_storage/local_storage_context_mojo.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 736,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T19:06:35Z",
+      "side": 1,
+      "message": "Optional: I\u0027d personally avoid repetition by having a method in an anonymous namespace to generate these empty entries from level_db_wrappers_. E.g.\n\nGenerateEmptyEntries(level_db_wrappers, \u0026origins);\nGenerateEmptyEntries(level_db_wrappers, nullptr);\n\nBut up to your taste.",
+      "revId": "812531255c18a498b1e6da3c09e6c03c8f8f3942",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
