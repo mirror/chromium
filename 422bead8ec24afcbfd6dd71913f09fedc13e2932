@@ -78,6 +78,24 @@
     },
     {
       "key": {
+        "uuid": "61321ff4_d66ef0c0",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-20T06:38:19Z",
+      "side": 1,
+      "message": "Yeah, I agree that SharedMemory(Tracker) behavior is suspicious and highly probably broken in single process mode. I\u0027ll revert this change and let\u0027s get back to the single process mode later. Done",
+      "parentUuid": "72761713_1e9d9558",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf1977_f8868bf2",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 6
@@ -125,6 +143,24 @@
       "side": 1,
       "message": "ProcessMemoryDump::CreateSharedGlobalAllocatorDump creates a global dump with guid of \"global/ID\", but the edge here is added to just ID. So, we should add GetSharedGlobalAllocatorDumpName() call here. Just like the first patch set.",
       "parentUuid": "b865eaf0_22d02899",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "181ed095_72934c56",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-20T06:38:19Z",
+      "side": 1,
+      "message": "GetSharedGlobalAllocatorDumpName is for an absolute name, not for a dump GUID. Take a look at CreateSharedGlobalAllocatorDump and you can see the given GUID is used as it is.",
+      "parentUuid": "627026d9_3e41ffb4",
       "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
