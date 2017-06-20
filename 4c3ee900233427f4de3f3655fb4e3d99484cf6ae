@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1f5ec28a_27bdeba5",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-20T13:03:15Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0d79bd0_1af50ade",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a07e02e_87d8f801",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
         "patchSetId": 2
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-20T11:22:54Z",
       "side": 1,
       "message": "Is the call to GetOriginalBrowserState() to hedge against self.browser being incognito?",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8af34dca_b7e10e3d",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-20T13:03:15Z",
+      "side": 1,
+      "message": "Correct.\nhttps://cs.chromium.org/chromium/src/ios/chrome/browser/ui/settings/settings_navigation_controller.mm?type\u003dcs\u0026q\u003d%22DCHECK(!browserState-%3EIsOffTheRecord());%22\u0026l\u003d307\n\nMainController keeps a _mainBrowserState and a _currentBrowserState for this use case.",
+      "parentUuid": "0a07e02e_87d8f801",
       "range": {
         "startLine": 47,
         "startChar": 39,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "bd05c2a2_193dd2fe",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-20T13:03:15Z",
+      "side": 1,
+      "message": "Right. The other possibility would be to keep a mapping [viewController -\u003e coordinator]. That should be possible when adding a child coordinator, the issue being that the grand parent doesn\u0027t get the update. We\u0027d still need a system to go all the way up this SettingsCoordinator object. :(",
+      "parentUuid": "07013d5d_402950dd",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "14c3e415_abd5877e",
         "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
         "patchSetId": 2
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-20T11:22:54Z",
       "side": 1,
       "message": "If we\u0027ve ensured that the parent isn\u0027t an OTR browser state, then we shouldn\u0027t need to do that for each child.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf488f72_bb4b204f",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-20T13:03:15Z",
+      "side": 1,
+      "message": "The issue is that we don\u0027t get this one via the parent view controller (the one that got the non-OTR browser state), but via the Browser object that can have the OTR browser state.\n\nI think one solution could be to push down the non-OTR requirement in the view controllers themselves (code which will be moved in coordinators tomorrow). We would then pass them whatever browser state we have here and they figure it out.",
+      "parentUuid": "14c3e415_abd5877e",
       "range": {
         "startLine": 28,
         "startChar": 33,
@@ -114,6 +210,30 @@
       "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "de6efda9_2085d193",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-20T13:03:15Z",
+      "side": 1,
+      "message": "Done. I even renamed the delegate protocol to more dispatch/commands parlance in the latest patch. PTAL, I can revert the latest patch but keep the dispatcher in this file only.",
+      "parentUuid": "edbf7874_f04f468d",
+      "range": {
+        "startLine": 30,
+        "startChar": 33,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
