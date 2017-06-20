@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "f16ca580_b6119d87",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T19:13:39Z",
+      "side": 0,
+      "message": "This makes sense, it is better to use ChromeAppIcon when we have app context.\nIt is hard to use only one (ideally ChromeAppIcon). ChromeAppIcon uses code from chrome/browser. IconImage exists in /extension. It is hard to refer /chrome/browser code from /extension. There is a code in /extension that uses IconImage. That is one problem. Another problem that changing everything might be too heavy to do in one CL. So I am trying to address cases that can easy found by user. This uninstall dialog is also used from app launcher, app context. Probably we may try to separate which icon to use based on context where uninstall dialog is used (looks bit crazy :)).",
+      "parentUuid": "29778a0d_50c6715b",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e6a2b335_ff07a9a6",
         "filename": "extensions/browser/extension_icon_image.h",
         "patchSetId": 7
@@ -66,6 +84,24 @@
       "writtenOn": "2017-06-20T18:41:33Z",
       "side": 0,
       "message": "gfx::Image is nice because it can store multiple representations of the image.  Why do we need to get rid of this?",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "111803be_03638a84",
+        "filename": "extensions/browser/extension_icon_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T19:13:39Z",
+      "side": 0,
+      "message": "You mean representations for different scales? If yes then it is stored in gfx::ImageSkia; if no then functionality you refer did not work and gfx::Image was mechanically updated each time image_skia_ was changed, pure wrapper. There was only one consumer which called image(). In all other cases image_skia() was called. It looks redundant  and to make it clear + better performance it is better to get rid it here.",
+      "parentUuid": "e6a2b335_ff07a9a6",
       "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

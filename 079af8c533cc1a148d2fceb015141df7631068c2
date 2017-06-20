@@ -101,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "84594a09_1cbf2705",
+        "filename": "chrome/browser/extensions/extension_action.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 237,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T19:13:39Z",
+      "side": 1,
+      "message": "This is only one consumer of IconImage::image(). I described in comment there.",
+      "parentUuid": "ac8a3c1f_2e75a29f",
+      "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "09a304eb_97bb7220",
         "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
         "patchSetId": 7
@@ -112,6 +130,24 @@
       "writtenOn": "2017-06-20T18:41:33Z",
       "side": 1,
       "message": "An uninstall dialog should only be used once, so we can either omit this or replace it with something like:\nDCHECK(!observer_.IsObserving(ExtensionRegistry::Get(profile_)));",
+      "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c3c5c0e_c06a51e0",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T19:13:39Z",
+      "side": 1,
+      "message": "Yes, this is more clear",
+      "parentUuid": "09a304eb_97bb7220",
       "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -132,6 +168,24 @@
       "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "92665e4f_29f28389",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T19:13:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fedd57f3_23f6298b",
+      "revId": "079af8c533cc1a148d2fceb015141df7631068c2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
