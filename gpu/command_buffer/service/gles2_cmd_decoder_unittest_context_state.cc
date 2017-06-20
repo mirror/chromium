@@ -484,6 +484,38 @@ TEST_P(GLES2DecoderRestoreStateTest, ES3RestoreZeroSampler) {
   sampler_manager.Destroy(false);
 }
 
+TEST_P(GLES2DecoderRestoreStateTest, ES3DontRestoreFromDeletedSampler) {
+  // This ES3-specific test is scoped within GLES2DecoderRestoreStateTest
+  // to avoid doing large refactorings of these tests.
+  auto feature_info = SetupForES3Test();
+
+  // Construct a previous ContextState assuming an ES3 context and with all
+  // texture bindings set to default textures.
+  SamplerManager sampler_manager(feature_info.get());
+  ContextState prev_state(feature_info.get(), NULL, NULL);
+  InitializeContextState(&prev_state, std::numeric_limits<uint32_t>::max(), 0);
+  // Set up a sampler in the previous state. The client_id and
+  // service_id don't matter except that they're non-zero. (It's hard
+  // to set up this state in the current state.)
+  prev_state.sampler_units[0] = sampler_manager.CreateSampler(1, 2);
+  // Simulate the scenario where two contexts are referencing the same
+  // sampler but deleting it only unbinds it from the current context.
+  sampler_manager.RemoveSampler(1);
+
+  InSequence sequence;
+  // Expect to do nothing with the sampler on unit GL_TEXTURE0,
+  // because it's already been deleted.
+
+  // Expect to restore the active texture unit to GL_TEXTURE0.
+  AddExpectationsForActiveTexture(GL_TEXTURE0);
+
+  GetDecoder()->RestoreAllTextureUnitAndSamplerBindings(&prev_state);
+
+  // Tell the sampler manager to destroy itself without a context so we
+  // don't have to set up more expectations.
+  sampler_manager.Destroy(false);
+}
+
 TEST_P(GLES2DecoderManualInitTest, ContextStateCapabilityCaching) {
   struct TestInfo {
     GLenum gl_enum;
