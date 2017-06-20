@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4730a2f0_06235200",
+        "filename": "ui/ozone/platform/drm/gpu/gbm_buffer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1123405
+      },
+      "writtenOn": "2017-06-20T00:39:19Z",
+      "side": 1,
+      "message": "Actually, if we always pass gbm_bo_get_format_modifier(bo) when we call CreateBufferForBO, can we just remove the parameter and get the modifier inside CreateBufferForBO?",
+      "revId": "1d285f0628785042c7cf97521719dfc5063f9e8b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
