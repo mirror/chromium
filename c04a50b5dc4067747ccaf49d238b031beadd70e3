@@ -22,6 +22,30 @@
       "revId": "c04a50b5dc4067747ccaf49d238b031beadd70e3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "185b2af8_753926aa",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-20T02:27:13Z",
+      "side": 1,
+      "message": "Good point. I made these fields constexpr, too.",
+      "parentUuid": "c97d122c_eb5a0910",
+      "range": {
+        "startLine": 211,
+        "startChar": 10,
+        "endLine": 211,
+        "endChar": 19
+      },
+      "revId": "c04a50b5dc4067747ccaf49d238b031beadd70e3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
