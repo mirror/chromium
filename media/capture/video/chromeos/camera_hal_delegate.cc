@@ -16,13 +16,6 @@
 #include "media/capture/video/chromeos/camera_metadata_utils.h"
 #include "media/capture/video/chromeos/pixel_format_utils.h"
 #include "media/capture/video/chromeos/video_capture_device_arc_chromeos.h"
-#include "mojo/edk/embedder/embedder.h"
-#include "mojo/edk/embedder/incoming_broker_client_invitation.h"
-#include "mojo/edk/embedder/named_platform_handle.h"
-#include "mojo/edk/embedder/named_platform_handle_utils.h"
-#include "mojo/edk/embedder/platform_channel_pair.h"
-#include "mojo/edk/embedder/platform_channel_utils_posix.h"
-#include "mojo/edk/embedder/platform_handle_vector.h"
 
 namespace media {
 
@@ -35,9 +28,20 @@ const base::TimeDelta kEventWaitTimeoutMs =
 
 }  // namespace
 
+CameraHalDelegate::LocalCameraClient::LocalCameraClient(
+    scoped_refptr<CameraHalDelegate> camera_hal_delegate)
+    : camera_hal_delegate_(std::move(camera_hal_delegate)) {}
+
+void CameraHalDelegate::LocalCameraClient::SetUpChannel(
+    arc::mojom::CameraModulePtr camera_module) {
+  camera_hal_delegate_->SetCameraModule(camera_module.PassInterface());
+}
+
 CameraHalDelegate::CameraHalDelegate(
     scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner)
-    : builtin_camera_info_updated_(
+    : camera_module_set_(base::WaitableEvent::ResetPolicy::MANUAL,
+                         base::WaitableEvent::InitialState::NOT_SIGNALED),
+      builtin_camera_info_updated_(
           base::WaitableEvent::ResetPolicy::MANUAL,
           base::WaitableEvent::InitialState::NOT_SIGNALED),
       num_builtin_cameras_(0),
@@ -48,62 +52,20 @@ CameraHalDelegate::CameraHalDelegate(
 
 CameraHalDelegate::~CameraHalDelegate() {}
 
-bool CameraHalDelegate::StartCameraModuleIpc() {
-  // Non-blocking socket handle.
-  mojo::edk::ScopedPlatformHandle socket_handle = mojo::edk::CreateClientHandle(
-      mojo::edk::NamedPlatformHandle(kArcCamera3SocketPath));
+void CameraHalDelegate::RegisterCameraClient() {
+  CameraHalDispatcherImpl::GetInstance()->AddClientObserver(
+      base::MakeUnique<LocalCameraClient>(this));
+}
 
-  // Set socket to blocking
-  int flags = HANDLE_EINTR(fcntl(socket_handle.get().handle, F_GETFL));
-  if (flags == -1) {
-    PLOG(ERROR) << "fcntl(F_GETFL) failed: ";
-    return false;
-  }
-  if (HANDLE_EINTR(fcntl(socket_handle.get().handle, F_SETFL,
-                         flags & ~O_NONBLOCK)) == -1) {
-    PLOG(ERROR) << "fcntl(F_SETFL) failed: ";
-    return false;
-  }
-
-  const size_t kTokenSize = 32;
-  char token[kTokenSize] = {};
-  std::deque<mojo::edk::PlatformHandle> platform_handles;
-  ssize_t ret = mojo::edk::PlatformChannelRecvmsg(
-      socket_handle.get(), token, sizeof(token), &platform_handles, true);
-  if (ret == -1) {
-    PLOG(ERROR) << "PlatformChannelRecvmsg failed: ";
-    return false;
-  }
-  if (platform_handles.size() != 1) {
-    LOG(ERROR) << "Unexpected number of handles received, expected 1: "
-               << platform_handles.size();
-    return false;
-  }
-  mojo::edk::ScopedPlatformHandle parent_pipe(platform_handles.back());
-  platform_handles.pop_back();
-  if (!parent_pipe.is_valid()) {
-    LOG(ERROR) << "Invalid parent pipe";
-    return false;
-  }
-  std::unique_ptr<mojo::edk::IncomingBrokerClientInvitation> invitation =
-      mojo::edk::IncomingBrokerClientInvitation::Accept(
-          mojo::edk::ConnectionParams(mojo::edk::TransportProtocol::kLegacy,
-                                      std::move(parent_pipe)));
-  mojo::ScopedMessagePipeHandle child_pipe =
-      invitation->ExtractMessagePipe(token);
-  if (!child_pipe.is_valid()) {
-    LOG(ERROR) << "Invalid child pipe";
-    return false;
-  }
-
+void CameraHalDelegate::SetCameraModule(
+    arc::mojom::CameraModulePtrInfo camera_module_ptr_info) {
   camera_module_ =
-      mojo::MakeProxy(mojo::InterfacePtrInfo<arc::mojom::CameraModule>(
-                          std::move(child_pipe), 0u),
-                      ipc_task_runner_);
-
-  VLOG(1) << "Camera module IPC connection established";
-
-  return true;
+      mojo::MakeProxy(std::move(camera_module_ptr_info), ipc_task_runner_);
+  camera_module_set_.Signal();
+  ipc_task_runner_->PostTask(
+      FROM_HERE,
+      base::Bind(&CameraHalDelegate::SetConnectionErrorHandlerOnModuleThread,
+                 this));
 }
 
 void CameraHalDelegate::Reset() {
@@ -116,6 +78,7 @@ std::unique_ptr<VideoCaptureDevice> CameraHalDelegate::CreateDevice(
     scoped_refptr<base::SingleThreadTaskRunner> task_runner_for_screen_observer,
     const VideoCaptureDeviceDescriptor& device_descriptor) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  camera_module_set_.Wait();
   std::unique_ptr<VideoCaptureDevice> capture_device;
   if (!UpdateBuiltInCameraInfo()) {
     return capture_device;
@@ -134,6 +97,7 @@ void CameraHalDelegate::GetSupportedFormats(
     VideoCaptureFormats* supported_formats) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
+  camera_module_set_.Wait();
   if (!UpdateBuiltInCameraInfo()) {
     return;
   }
@@ -194,6 +158,7 @@ void CameraHalDelegate::GetSupportedFormats(
 void CameraHalDelegate::GetDeviceDescriptors(
     VideoCaptureDeviceDescriptors* device_descriptors) {
   DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  camera_module_set_.Wait();
 
   if (!UpdateBuiltInCameraInfo()) {
     return;
@@ -235,6 +200,7 @@ void CameraHalDelegate::GetCameraInfo(int32_t camera_id,
                                       const GetCameraInfoCallback& callback) {
   // This method may be called on any thread.  Currently this method is used by
   // CameraDeviceDelegate to query camera info.
+  camera_module_set_.Wait();
   ipc_task_runner_->PostTask(
       FROM_HERE, base::Bind(&CameraHalDelegate::GetCameraInfoOnIpcThread, this,
                             camera_id, callback));
@@ -246,14 +212,27 @@ void CameraHalDelegate::OpenDevice(
     const OpenDeviceCallback& callback) {
   // This method may be called on any thread.  Currently this method is used by
   // CameraDeviceDelegate to open a camera device.
+  camera_module_set_.Wait();
   ipc_task_runner_->PostTask(
       FROM_HERE,
       base::Bind(&CameraHalDelegate::OpenDeviceOnIpcThread, this, camera_id,
                  base::Passed(&device_ops_request), callback));
 }
 
-void CameraHalDelegate::StartForTesting(arc::mojom::CameraModulePtrInfo info) {
-  camera_module_.Bind(std::move(info), ipc_task_runner_);
+void CameraHalDelegate::SetConnectionErrorHandlerOnModuleThread() {
+  DCHECK(ipc_task_runner_->BelongsToCurrentThread());
+  DCHECK(camera_module_set_.IsSignaled());
+  camera_module_.set_connection_error_handler(base::Bind(
+      &CameraHalDelegate::HandleMojoConnectionErrorOnModuleThread, this));
+}
+
+void CameraHalDelegate::HandleMojoConnectionErrorOnModuleThread() {
+  DCHECK(ipc_task_runner_->BelongsToCurrentThread());
+  camera_module_.reset();
+  if (camera_module_callbacks_.is_bound()) {
+    camera_module_callbacks_.Close();
+  }
+  camera_module_set_.Reset();
 }
 
 void CameraHalDelegate::ResetMojoInterfaceOnIpcThread() {

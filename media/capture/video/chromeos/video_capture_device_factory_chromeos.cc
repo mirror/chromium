@@ -6,6 +6,7 @@
 
 #include "base/files/file_util.h"
 #include "base/memory/ptr_util.h"
+#include "media/capture/video/chromeos/camera_hal_dispatcher_impl.h"
 #include "media/capture/video/linux/video_capture_device_factory_linux.h"
 
 namespace media {
@@ -25,9 +26,17 @@ bool VideoCaptureDeviceFactoryChromeOS::Init() {
     LOG(ERROR) << "Module thread failed to start";
     return false;
   }
+
+  if (!CameraHalDispatcherImpl::GetInstance()->is_started() &&
+      !CameraHalDispatcherImpl::GetInstance()->Start()) {
+    LOG(ERROR) << "Failed to start CameraHalDispatcherImpl";
+    return false;
+  }
+
   camera_hal_delegate_ =
       new CameraHalDelegate(camera_hal_ipc_thread_.task_runner());
-  return camera_hal_delegate_->StartCameraModuleIpc();
+  camera_hal_delegate_->RegisterCameraClient();
+  return true;
 }
 
 std::unique_ptr<VideoCaptureDevice>
@@ -60,8 +69,8 @@ bool VideoCaptureDeviceFactoryChromeOS::ShouldEnable() {
   // Checks whether the Chrome OS binary which provides the HAL v3 camera
   // service is installed on the device.  If the binary exists we assume the
   // device is using the new camera HAL v3 stack.
-  const base::FilePath kArcCamera3Service("/usr/bin/arc_camera3_service");
-  return base::PathExists(kArcCamera3Service);
+  const base::FilePath kCameraHalDispatcherImpl("/usr/bin/arc_camera3_service");
+  return base::PathExists(kCameraHalDispatcherImpl);
 }
 
 #if defined(OS_CHROMEOS)

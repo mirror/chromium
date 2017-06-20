@@ -13,6 +13,7 @@
 #include "base/sequence_checker.h"
 #include "base/synchronization/waitable_event.h"
 #include "base/threading/thread.h"
+#include "media/capture/video/chromeos/camera_hal_dispatcher_impl.h"
 #include "media/capture/video/chromeos/mojo/arc_camera3.mojom.h"
 #include "media/capture/video/video_capture_device_factory.h"
 #include "media/capture/video_capture_types.h"
@@ -36,9 +37,8 @@ class CAPTURE_EXPORT CameraHalDelegate final
   explicit CameraHalDelegate(
       scoped_refptr<base::SingleThreadTaskRunner> ipc_task_runner);
 
-  // Establishes the Mojo IPC channel to the camera HAL adapter.  This method
-  // should be called before any other methods of CameraHalDelegate is called.
-  bool StartCameraModuleIpc();
+  // Registers the camera client observer to the ArcCamera3Service Mojo service.
+  void RegisterCameraClient();
 
   // Resets |camera_module_| and |camera_module_callbacks_|.
   void Reset();
@@ -77,7 +77,26 @@ class CAPTURE_EXPORT CameraHalDelegate final
 
   friend class CameraHalDelegateTest;
   friend class CameraDeviceDelegateTest;
-  void StartForTesting(arc::mojom::CameraModulePtrInfo info);
+
+  class LocalCameraClient : public CameraClientObserver {
+   public:
+    explicit LocalCameraClient(
+        scoped_refptr<CameraHalDelegate> camera_hal_delegate);
+
+    void SetUpChannel(arc::mojom::CameraModulePtr camera_module);
+
+   private:
+    scoped_refptr<CameraHalDelegate> camera_hal_delegate_;
+    DISALLOW_IMPLICIT_CONSTRUCTORS(LocalCameraClient);
+  };
+
+  void SetCameraModule(arc::mojom::CameraModulePtrInfo camera_module_ptr_info);
+  base::WaitableEvent camera_module_set_;
+
+  // Mojo connection error handler.  On Mojo connection error, the handler will
+  // try to re-establish the Mojo connection to the camera HAL.
+  void SetConnectionErrorHandlerOnModuleThread();
+  void HandleMojoConnectionErrorOnModuleThread();
 
   // Resets the Mojo interface and bindings.
   void ResetMojoInterfaceOnIpcThread();
