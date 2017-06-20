@@ -22,6 +22,29 @@
       "revId": "b608dfe004b613e8da4cd42f1da53f9a9495b84b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86c35a63_24f350b8",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 3
+      },
+      "lineNbr": 24844,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-20T21:36:51Z",
+      "side": 1,
+      "message": "canceled?",
+      "range": {
+        "startLine": 24844,
+        "startChar": 33,
+        "endLine": 24844,
+        "endChar": 40
+      },
+      "revId": "b608dfe004b613e8da4cd42f1da53f9a9495b84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
