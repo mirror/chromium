@@ -8,9 +8,9 @@
 #include "base/message_loop/message_loop.h"
 #include "base/optional.h"
 #include "base/run_loop.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/webrtc/webrtc_video_capturer_adapter.h"
 #include "content/renderer/media/webrtc/webrtc_video_frame_adapter.h"
+#include "content/test/child_process_for_testing.h"
 #include "gpu/command_buffer/common/mailbox_holder.h"
 #include "media/base/video_frame.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -137,7 +137,7 @@ class WebRtcVideoCapturerAdapterTest
 
  private:
   const base::MessageLoopForIO message_loop_;
-  const ChildProcess child_process_;
+  const ChildProcessForTesting child_process_;
 
   std::unique_ptr<WebRtcVideoCapturerAdapter> adapter_;
   base::Optional<webrtc::VideoFrame> output_frame_;
