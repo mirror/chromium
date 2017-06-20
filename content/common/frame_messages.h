@@ -1661,6 +1661,13 @@ IPC_MESSAGE_ROUTED1(FrameHostMsg_RunFileChooser, content::FileChooserParams)
 IPC_MESSAGE_ROUTED1(FrameHostMsg_UpdateFaviconURL,
                     std::vector<content::FaviconURL> /* candidates */)
 
+// Messages to signal the presence or absence of beforeunload or unload handlers
+// for a frame. |present| is true if there is at least one of the handlers for
+// the frame.
+IPC_MESSAGE_ROUTED1(FrameHostMsg_BeforeUnloadHandlersPresent,
+                    bool /* present */)
+IPC_MESSAGE_ROUTED1(FrameHostMsg_UnloadHandlersPresent, bool /* present */)
+
 #if BUILDFLAG(USE_EXTERNAL_POPUP_MENU)
 
 // Message to show/hide a popup menu using native controls.
