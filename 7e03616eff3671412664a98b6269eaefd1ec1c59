@@ -22,6 +22,30 @@
       "revId": "7e03616eff3671412664a98b6269eaefd1ec1c59",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76be346a_5cbda5a6",
+        "filename": "build/android/pylib/utils/device_dependencies.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-20T03:42:49Z",
+      "side": 1,
+      "message": "We could do that too. Although this is not too ugly given that we will remove this rule altogether soon. And it also lets us have test coverage on Android.",
+      "parentUuid": "d0b4f126_cffba68c",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "7e03616eff3671412664a98b6269eaefd1ec1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
