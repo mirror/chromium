@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "07094c26_4a80b013",
+        "filename": "third_party/WebKit/Source/platform/MemoryCoordinator.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-20T14:31:35Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e470853b_52615dbe",
+      "revId": "f2e9ee4e0b5b4b7ebdf730645db3e0da8a842018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "905eda51_ef691baf",
         "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "f2e9ee4e0b5b4b7ebdf730645db3e0da8a842018",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e2acdf9b_52c8b0ae",
+        "filename": "third_party/WebKit/Source/platform/fonts/FontGlobalContext.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-20T14:31:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "826307c4_51a1b18a",
+      "revId": "f2e9ee4e0b5b4b7ebdf730645db3e0da8a842018",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
