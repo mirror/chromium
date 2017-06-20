@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+#include "base/strings/string_util.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_url_parameters.h"
@@ -111,7 +112,8 @@ void DownloadDriverImpl::Start(
        it.GetNext();) {
     download_url_params->add_request_header(it.name(), it.value());
   }
-  download_url_params->set_guid(guid);
+  // History db only supports upper case guid string.
+  download_url_params->set_guid(base::ToUpperASCII(guid));
   download_url_params->set_transient(true);
   download_url_params->set_method(request_params.method);
   download_url_params->set_file_path(file_dir_.AppendASCII(guid));
@@ -122,7 +124,8 @@ void DownloadDriverImpl::Start(
 void DownloadDriverImpl::Remove(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  content::DownloadItem* item =
+      download_manager_->GetDownloadByGuid(base::ToUpperASCII(guid));
   // Cancels the download and removes the persisted records in content layer.
   if (item) {
     item->RemoveObserver(this);
@@ -133,7 +136,8 @@ void DownloadDriverImpl::Remove(const std::string& guid) {
 void DownloadDriverImpl::Pause(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  content::DownloadItem* item =
+      download_manager_->GetDownloadByGuid(base::ToUpperASCII(guid));
   if (item)
     item->Pause();
 }
@@ -141,7 +145,8 @@ void DownloadDriverImpl::Pause(const std::string& guid) {
 void DownloadDriverImpl::Resume(const std::string& guid) {
   if (!download_manager_)
     return;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  content::DownloadItem* item =
+      download_manager_->GetDownloadByGuid(base::ToUpperASCII(guid));
   if (item)
     item->Resume();
 }
@@ -149,7 +154,8 @@ void DownloadDriverImpl::Resume(const std::string& guid) {
 base::Optional<DriverEntry> DownloadDriverImpl::Find(const std::string& guid) {
   if (!download_manager_)
     return base::nullopt;
-  content::DownloadItem* item = download_manager_->GetDownloadByGuid(guid);
+  content::DownloadItem* item =
+      download_manager_->GetDownloadByGuid(base::ToUpperASCII(guid));
   if (item)
     return CreateDriverEntry(item);
   return base::nullopt;

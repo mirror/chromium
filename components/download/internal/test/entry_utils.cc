@@ -5,6 +5,7 @@
 #include <algorithm>
 
 #include "base/guid.h"
+#include "base/strings/string_util.h"
 #include "components/download/internal/test/entry_utils.h"
 
 namespace download {
@@ -48,7 +49,8 @@ bool CompareEntryList(const std::vector<Entry>& list1,
 }
 
 Entry BuildBasicEntry() {
-  return BuildEntry(DownloadClient::TEST, base::GenerateGUID());
+  return BuildEntry(DownloadClient::TEST,
+                    base::ToUpperASCII(base::GenerateGUID()));
 }
 
 Entry BuildBasicEntry(Entry::State state) {
