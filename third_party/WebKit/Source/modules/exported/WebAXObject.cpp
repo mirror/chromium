@@ -313,6 +313,13 @@ bool WebAXObject::IsControl() const {
   return private_->IsControl();
 }
 
+bool WebAXObject::IsNativeTextControl() const {
+  if (IsDetached())
+    return false;
+
+  return private_->IsNativeTextControl();
+}
+
 bool WebAXObject::IsEnabled() const {
   if (IsDetached())
     return false;
