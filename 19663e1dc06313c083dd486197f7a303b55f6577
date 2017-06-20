@@ -22,6 +22,30 @@
       "revId": "19663e1dc06313c083dd486197f7a303b55f6577",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fa41d9d_7c97ba79",
+        "filename": "content/browser/service_worker/service_worker_version.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1115976
+      },
+      "writtenOn": "2017-06-20T05:20:33Z",
+      "side": 0,
+      "message": "It\u0027s just my intuition. There can be leaks :p",
+      "parentUuid": "3552929a_eae3d8af",
+      "range": {
+        "startLine": 35,
+        "startChar": 26,
+        "endLine": 35,
+        "endChar": 40
+      },
+      "revId": "19663e1dc06313c083dd486197f7a303b55f6577",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
