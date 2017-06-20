@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b325a681_278bdab5",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-20T18:56:52Z",
+      "side": 1,
+      "message": "\u003e I think it would be worth having a comment describing the overall serialization strategy. It\u0027s true I can read the code and eventually figure it out, but I don\u0027t necessarily understand the why (for example, why is it useful to append bytes to the previous element if it\u0027s also a data element? couldn\u0027t we copy less if we didn\u0027t do that?)\n\nThe overall strategy is sort of described at https://chromium.googlesource.com/chromium/src/+/44de8ed5eb297e06f066ddcf903d3e22ca8fc243/storage/browser/blob/README.md#Blob-Creation-Transportation-Renderer\nOf course mojofying does introduce some changes to how this all work, and I\u0027ll definitely have to update the docs at some point to reflect the new implementation. For the most part all of that still applies though (just in different parts of the code).\n\nI added some comment explaining why bytes are consolidated to the new code, for the overall serialization strategy markdown files will probably always make more sense, but I\u0027m not sure if it makes sense to update the existing documentation while the old code is still what is shipped.\n\nThere shouldn\u0027t be much in the way of data being copied though. At most kMaximumEmbeddedDataSize bytes are copied into the DataElement itself. For larger data we (will) merely add the RefPtr\u003cRawData\u003e to the BytesProvider implementation, but not copy any data.\n\n\n\u003e Also, any possibility of using more consistent naming? We call this \"bytes\" in the enum but \"data\" here.\n\nNot without rewriting large parts of the existing code either... The existing content side code (in for example storage/common/data_element.h) calls this bytes as well, while as you point out the blink side code calls it data (except that there is both blink::BlobData::AppendBytes and AppendData, only differing in the types of the arguments they take...). Anyway, ultimately the plan is to eliminate BlobDataItem completely and just have BlobData directly create the mojo DataElement instances, which should get rid of most of the naming inconsistencies. I just don\u0027t want to do that right now, since it would make the code much more complicated while we still need to support mojo and non-mojo code paths. I added a TODO comment to clarify that ultimately this loop should go away.\n\nAs an aside, elimination BlobDataItem should also make the consolidation logic somewhat simpler, and make it easier to document what and why is being done.",
+      "parentUuid": "a0c6e9fa_5ead94e3",
+      "range": {
+        "startLine": 291,
+        "startChar": 8,
+        "endLine": 291,
+        "endChar": 33
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ca2cb56f_e8295b97",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 7
@@ -45,6 +69,30 @@
       "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ddf2c40_8477fbb5",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-20T18:56:52Z",
+      "side": 1,
+      "message": "https://chromium-review.googlesource.com/c/522934/ has the BytesProvider implementation. It\u0027s always tricky to get the right balance between keeping CL\u0027s small enough to be reviewable and providing enough context to help reviewing...",
+      "parentUuid": "ca2cb56f_e8295b97",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }

@@ -192,6 +192,30 @@
     },
     {
       "key": {
+        "uuid": "d3c0414b_2ba1d632",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-20T18:56:52Z",
+      "side": 1,
+      "message": "The old code (in content::BlobConsolidation) skips 0 length elements because the browser process DCHECKs (for FileSystem URL elements) or CHECKs (for unpopulated byte elements) if it receives 0 length elements (huh, that seems wrong... the browser shouldn\u0027t be verifying IPC messages with CHECK or DCHECK...).\n\nEither way this should be less confusing once we can eliminate BlobDataItem completely after the old IPC code path goes away... Until then I\u0027d prefer not to touch the existing code path more than absolutely necessary to avoid introducing any bugs. So in particular since the existing code doesn\u0027t set BlobDataItem.length for bytes elements, I\u0027d like to keep the length check inside the various switch cases.\n\n(also from offline discussion with dmurph, his confusion was partially caused because he thought we were dealing with content::BlobConsolidation::ConsolidatedItem instances here, rather than blink::BlobDataItem instances)\n\nAdded comments explaining why we\u0027re skipping 0-byte elements.",
+      "parentUuid": "dc2d075a_16abfe41",
+      "range": {
+        "startLine": 292,
+        "startChar": 0,
+        "endLine": 292,
+        "endChar": 39
+      },
+      "revId": "a09e1d4d76a2b4dedc86e1b9ef658db33fe9d128",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "667fb072_f12fd3cb",
         "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
         "patchSetId": 4
