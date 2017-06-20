@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0b4f126_cffba68c",
+        "filename": "build/android/pylib/utils/device_dependencies.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1104639
+      },
+      "writtenOn": "2017-06-20T03:08:55Z",
+      "side": 1,
+      "message": "I feel that it might be cleaner to disable that test case on ANdroid.\n\nBut I will let you decide.",
+      "range": {
+        "startLine": 24,
+        "startChar": 21,
+        "endLine": 24,
+        "endChar": 28
+      },
+      "revId": "7e03616eff3671412664a98b6269eaefd1ec1c59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
