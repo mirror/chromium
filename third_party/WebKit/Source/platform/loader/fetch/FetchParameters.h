@@ -32,6 +32,7 @@
 #include "platform/loader/fetch/IntegrityMetadata.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
+#include "platform/loader/fetch/TextResourceDecoderOptions.h"
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/text/TextEncoding.h"
 
@@ -87,8 +88,16 @@ class PLATFORM_EXPORT FetchParameters {
     resource_request_.SetRequestContext(context);
   }
 
-  String Charset() const { return String(charset_.GetName()); }
-  void SetCharset(const WTF::TextEncoding& charset) { charset_ = charset; }
+  const TextResourceDecoderOptions& DecoderOptions() const {
+    return decoder_options_;
+  }
+  void SetDecoderOptions(const TextResourceDecoderOptions& decoder_options) {
+    decoder_options_ = decoder_options;
+  }
+  void SetCharset(const WTF::TextEncoding& charset) {
+    SetDecoderOptions(TextResourceDecoderOptions(
+        TextResourceDecoderOptions::kPlainTextContent, charset));
+  }
 
   const ResourceLoaderOptions& Options() const { return options_; }
 
@@ -164,7 +173,9 @@ class PLATFORM_EXPORT FetchParameters {
 
  private:
   ResourceRequest resource_request_;
-  WTF::TextEncoding charset_;
+  // |decoder_options_|'s ContentType is set to |kPlainTextContent| in
+  // FetchParameters but actual ContentType is ResourceFactory::ContentType().
+  TextResourceDecoderOptions decoder_options_;
   ResourceLoaderOptions options_;
   SpeculativePreloadType speculative_preload_type_;
   double preload_discovery_time_;

@@ -163,7 +163,7 @@ class PLATFORM_EXPORT ResourceFetcher
 
   void InitializeRevalidation(ResourceRequest&, Resource*);
   Resource* CreateResourceForLoading(FetchParameters&,
-                                     const String& charset,
+                                     const TextResourceDecoderOptions&,
                                      const ResourceFactory&);
   void StorePerformanceTimingInitiatorInformation(Resource*);
   ResourceLoadPriority ComputeLoadPriority(
@@ -184,9 +184,11 @@ class PLATFORM_EXPORT ResourceFetcher
                                       ResourceRequestBlockedReason&);
 
   Resource* ResourceForStaticData(const FetchParameters&,
+                                  const TextResourceDecoderOptions&,
                                   const ResourceFactory&,
                                   const SubstituteData&);
   Resource* ResourceForBlockedRequest(const FetchParameters&,
+                                      const TextResourceDecoderOptions&,
                                       const ResourceFactory&,
                                       ResourceRequestBlockedReason);
 

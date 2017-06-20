@@ -389,6 +389,7 @@ static std::unique_ptr<TracedValue> UrlForTraceEvent(const KURL& url) {
 
 Resource* ResourceFetcher::ResourceForStaticData(
     const FetchParameters& params,
+    const TextResourceDecoderOptions& decoder_options,
     const ResourceFactory& factory,
     const SubstituteData& substitute_data) {
   const KURL& url = params.GetResourceRequest().Url();
@@ -443,7 +444,7 @@ Resource* ResourceFetcher::ResourceForStaticData(
   }
 
   Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+                                      params.Options(), decoder_options);
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
   resource->SetStatus(ResourceStatus::kPending);
@@ -466,10 +467,11 @@ Resource* ResourceFetcher::ResourceForStaticData(
 
 Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
+    const TextResourceDecoderOptions& decoder_options,
     const ResourceFactory& factory,
     ResourceRequestBlockedReason blocked_reason) {
   Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+                                      params.Options(), decoder_options);
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
@@ -604,12 +606,17 @@ Resource* ResourceFetcher::RequestResource(
   ResourceRequestBlockedReason blocked_reason =
       ResourceRequestBlockedReason::kNone;
 
+  TextResourceDecoderOptions decoder_options = params.DecoderOptions();
+  decoder_options.OverrideContentType(factory.ContentType());
+
   PrepareRequestResult result = PrepareRequest(params, factory, substitute_data,
                                                identifier, blocked_reason);
   if (result == kAbort)
     return nullptr;
-  if (result == kBlock)
-    return ResourceForBlockedRequest(params, factory, blocked_reason);
+  if (result == kBlock) {
+    return ResourceForBlockedRequest(params, decoder_options, factory,
+                                     blocked_reason);
+  }
 
   if (!params.IsSpeculativePreload()) {
     // Only log if it's not for speculative preload.
@@ -626,7 +633,8 @@ Resource* ResourceFetcher::RequestResource(
   bool is_data_url = resource_request.Url().ProtocolIsData();
   bool is_static_data = is_data_url || substitute_data.IsValid() || archive_;
   if (is_static_data) {
-    resource = ResourceForStaticData(params, factory, substitute_data);
+    resource = ResourceForStaticData(params, decoder_options, factory,
+                                     substitute_data);
     // Abort the request if the archive doesn't contain the resource, except in
     // the case of data URLs which might have resources such as fonts that need
     // to be decoded only on demand. These data URLs are allowed to be
@@ -666,7 +674,7 @@ Resource* ResourceFetcher::RequestResource(
       GetMemoryCache()->Remove(resource);
     // Fall through
     case kLoad:
-      resource = CreateResourceForLoading(params, params.Charset(), factory);
+      resource = CreateResourceForLoading(params, decoder_options, factory);
       break;
     case kRevalidate:
       InitializeRevalidation(resource_request, resource);
@@ -795,7 +803,7 @@ void ResourceFetcher::InitializeRevalidation(
 
 Resource* ResourceFetcher::CreateResourceForLoading(
     FetchParameters& params,
-    const String& charset,
+    const TextResourceDecoderOptions& decoder_options,
     const ResourceFactory& factory) {
   const String cache_identifier = GetCacheIdentifier();
   DCHECK(!IsMainThread() ||
@@ -805,8 +813,8 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   RESOURCE_LOADING_DVLOG(1) << "Loading Resource for "
                             << params.GetResourceRequest().Url().ElidedString();
 
-  Resource* resource =
-      factory.Create(params.GetResourceRequest(), params.Options(), charset);
+  Resource* resource = factory.Create(params.GetResourceRequest(),
+                                      params.Options(), decoder_options);
   resource->SetLinkPreload(params.IsLinkPreload());
   if (params.IsSpeculativePreload()) {
     resource->SetPreloadDiscoveryTime(params.PreloadDiscoveryTime());
