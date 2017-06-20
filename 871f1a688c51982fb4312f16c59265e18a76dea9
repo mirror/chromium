@@ -215,6 +215,30 @@
     },
     {
       "key": {
+        "uuid": "1b89d437_cab43861",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 235,
+      "author": {
+        "id": 1161621
+      },
+      "writtenOn": "2017-06-20T06:10:05Z",
+      "side": 1,
+      "message": "Got it, then I\u0027d like to land this CL now, thanks!",
+      "parentUuid": "b5b08e98_86099f9e",
+      "range": {
+        "startLine": 235,
+        "startChar": 12,
+        "endLine": 235,
+        "endChar": 22
+      },
+      "revId": "871f1a688c51982fb4312f16c59265e18a76dea9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1b2c67f1_cb6c0628",
         "filename": "third_party/WebKit/LayoutTests/external/wpt/service-workers/service-worker/resources/fetch-canvas-tainting-iframe.html",
         "patchSetId": 1
