@@ -477,6 +477,8 @@ component("platform") {
     "bindings/Microtask.h",
     "bindings/RuntimeCallStats.cpp",
     "bindings/RuntimeCallStats.h",
+    "bindings/RuntimeEnabledPropertiesInstaller.cpp",
+    "bindings/RuntimeEnabledPropertiesInstaller.h",
     "bindings/ScopedPersistent.h",
     "bindings/ScriptPromiseProperties.h",
     "bindings/ScriptState.cpp",
