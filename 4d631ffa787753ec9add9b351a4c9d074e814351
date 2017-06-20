@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "757f17ad_0c175895",
+        "filename": ".clang-format",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1001629
+      },
+      "writtenOn": "2017-06-20T00:05:12Z",
+      "side": 1,
+      "message": "Let me make you aware of https://bugs.llvm.org/show_bug.cgi?id\u003d30656\n\nDo you still want to do this?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 15
+      },
+      "revId": "4d631ffa787753ec9add9b351a4c9d074e814351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
