@@ -56,6 +56,7 @@ static const std::map<uint16_t, PortType>& localhost_port_categories =
         {5432, PortType::PORT_TYPE_DB},   {27017, PortType::PORT_TYPE_DB},
         {27018, PortType::PORT_TYPE_DB},  {27019, PortType::PORT_TYPE_DB},
         {515, PortType::PORT_TYPE_PRINT}, {631, PortType::PORT_TYPE_PRINT},
+        {9000, PortType::PORT_TYPE_DEV},
         // TODO(uthakore): Add additional port mappings based on further study.
     };
 }  // namespace
