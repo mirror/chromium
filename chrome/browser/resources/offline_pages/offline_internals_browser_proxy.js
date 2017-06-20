@@ -145,6 +145,13 @@ cr.define('offlineInternals', function() {
      * @return {!Promise<string>} A string describing the result.
      */
     getOperation: function(name) {},
+
+    /**
+     * Downloads an archive.
+     * @param {string} name Name of archive to download.
+     * @return {!Promise<string>} A string describing the result.
+     */
+    downloadArchive: function(name) {},
   };
 
   /**
@@ -228,6 +235,11 @@ cr.define('offlineInternals', function() {
     /** @override */
     getOperation: function(name) {
       return cr.sendWithPromise('getOperation', name);
+    },
+
+    /** @override */
+    downloadArchive: function(name) {
+      return cr.sendWithPromise('downloadArchive', name);
     },
   };
 

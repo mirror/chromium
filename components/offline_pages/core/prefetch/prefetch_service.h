@@ -20,6 +20,18 @@ class PrefetchService : public KeyedService {
  public:
   ~PrefetchService() override = default;
 
+  // The interface to handle the download events from DownloadService.
+  class DownloadDelegate {
+   public:
+    virtual ~DownloadDelegate() = default;
+
+    // Called when the download service is ready.
+    virtual void OnDownloadServiceReady() = 0;
+    // Called when the archive download succeeds or fails.
+    virtual void OnDownloadCompleted(const std::string& download_id,
+                                     bool success) = 0;
+  };
+
   // Subobjects that are created and owned by this service. Creation should be
   // lightweight, all heavy work must be done on-demand only.
   // The service manages lifetime, hookup and initialization of Prefetch
@@ -33,6 +45,9 @@ class PrefetchService : public KeyedService {
   // May be |nullptr| in tests.  The PrefetchService does not depend on the
   // SuggestedArticlesObserver, it merely owns it for lifetime purposes.
   virtual SuggestedArticlesObserver* GetSuggestedArticlesObserver() = 0;
+
+  // Returns the delegate to handle the download events.
+  virtual DownloadDelegate* GetDownloadDelegate() = 0;
 };
 
 }  // namespace offline_pages
