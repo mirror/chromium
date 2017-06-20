@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "24e66197_5b87e2bf",
+        "filename": "chrome/browser/translate/chrome_translate_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-06-20T04:13:03Z",
+      "side": 1,
+      "message": "Can we just inline LogLanguageDetectionEvent here?",
+      "range": {
+        "startLine": 343,
+        "startChar": 2,
+        "endLine": 343,
+        "endChar": 27
+      },
+      "revId": "f422a90fb1e8d41881911195f26343f15c3bf45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "248c21f2_2c714596",
+        "filename": "chrome/browser/translate/chrome_translate_client_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1104796
+      },
+      "writtenOn": "2017-06-20T04:13:03Z",
+      "side": 1,
+      "message": "At this point, the test is not terribly meaningful - it tests that a call to logging logs. Do we not care any more that it happens in OnLanguageDetermined?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "f422a90fb1e8d41881911195f26343f15c3bf45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "695d63b8_ef049927",
         "filename": "components/translate/ios/browser/ios_translate_driver.mm",
         "patchSetId": 9
