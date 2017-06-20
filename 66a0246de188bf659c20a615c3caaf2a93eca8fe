@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf82dd9c_2557ba90",
+        "filename": "gpu/command_buffer/service/context_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-20T17:52:26Z",
+      "side": 1,
+      "message": "From the crash, it definitely looks like this DCHECK will fail. Maybe we should not assume the previous context is not destroyed? which will make prev_state-\u003esampler_units.size() to 0?\n\nSo should just call glBindSampler if unit \u003e\u003d prev_state-\u003esampler_units.size()?",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 13
+      },
+      "revId": "66a0246de188bf659c20a615c3caaf2a93eca8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
