@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb936cc1_158f7da6",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T07:08:37Z",
+      "side": 1,
+      "message": "Is this really okay?  Shouldn\u0027t this be NOTREACHED()?\n\nI\u0027m afraid that we\u0027re going to hit a bug that runtime-enabled features never be installed SILENTLY especially in case of testing.  It\u0027s hard to find such a bug, you know.",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21f6fba9_365fa0ce",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T07:08:37Z",
+      "side": 1,
+      "message": "s/pointers/a pointer/\n\nIt\u0027s not clear for me if this installs all kinds of runtime-enabled features or not.  The function doesn\u0027t take any |feature|, so probably it does all features.  Let\u0027s make it clear.",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f324b3_aee924cb",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T07:08:37Z",
+      "side": 1,
+      "message": "Class name is expected to be a noun rather than a verb.\n\nI\u0027m also wondering if this is going to install all kinds of conditionally enabled properties or not, e.g. [SecureContext] and/or origin trials.  Better to be clear on this point, too, in the comment above.\n\nSupposing that this only installs the runtime-enabled features, RuntimeEnabledPropertiesInstaller for example?  RuntimeEnabledFeaturesInstaller is fine for me, too.  Of course, any other better names are welcome.\n\nGiven that this only handles v8::Object case, we can give the name based on it.  At least, we can comment about it (i.e. v8::ObjectTemplate case is handled separately).",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
