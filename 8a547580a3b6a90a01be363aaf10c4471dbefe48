@@ -1,0 +1,84 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a1bfe60c_9efaa2bf",
+        "filename": "third_party/WebKit/Source/core/dom/ModuleScript.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 158,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-20T00:12:48Z",
+      "side": 1,
+      "message": "Can we make this String?\n- We need to store this as user wrote (something like \"./a.js\", not \"http://example.com/a.js\")\n- The specifier may not be a URL in the future",
+      "range": {
+        "startLine": 158,
+        "startChar": 8,
+        "endLine": 158,
+        "endChar": 12
+      },
+      "revId": "8a547580a3b6a90a01be363aaf10c4471dbefe48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ac55ea6_9a645c4c",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-20T00:12:48Z",
+      "side": 1,
+      "message": "If we want this to be a URL, you can use Modulator::ResolveModuleSpecifier",
+      "revId": "8a547580a3b6a90a01be363aaf10c4471dbefe48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a4fdd36_6d164ca1",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoader.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-20T00:12:48Z",
+      "side": 1,
+      "message": "You can plumb the \"module specifier\" through ModuleScriptFetchRequest.",
+      "revId": "8a547580a3b6a90a01be363aaf10c4471dbefe48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90caa948_bde38866",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleTreeLinker.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-20T00:12:48Z",
+      "side": 1,
+      "message": "Would you provide rationale for this change? I think BaseURL is correct here",
+      "range": {
+        "startLine": 341,
+        "startChar": 53,
+        "endLine": 341,
+        "endChar": 62
+      },
+      "revId": "8a547580a3b6a90a01be363aaf10c4471dbefe48",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
