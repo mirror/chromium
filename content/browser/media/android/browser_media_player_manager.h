@@ -58,6 +58,8 @@ class CONTENT_EXPORT BrowserMediaPlayerManager
 
   ~BrowserMediaPlayerManager() override;
 
+  WebContents* web_contents() const { return web_contents_; }
+
   // ContentVideoView::Client implementation.
   void DidExitFullscreen(bool release_media_player) override;
   void SetVideoSurface(gl::ScopedJavaSurface surface) override;
@@ -110,8 +112,6 @@ class CONTENT_EXPORT BrowserMediaPlayerManager
  protected:
   // Clients must use Create() or subclass constructor.
   explicit BrowserMediaPlayerManager(RenderFrameHost* render_frame_host);
-
-  WebContents* web_contents() const { return web_contents_; }
 
   // Adds a given player to the list.  Not private to allow embedders
   // to extend the manager and still utilize the base player management.

@@ -20,7 +20,6 @@ import android.view.animation.Animation.AnimationListener;
 import android.view.animation.ScaleAnimation;
 
 import org.chromium.chrome.browser.contextmenu.TabularContextMenuViewPager;
-import org.chromium.content.browser.RenderCoordinates;
 
 /**
  * ContextMenuDialog is a subclass of AlwaysDismissedDialog that ensures that the proper scale
@@ -35,7 +34,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
     private final View mContentView;
     private final float mTouchPointXPx;
     private final float mTouchPointYPx;
-    private final RenderCoordinates mRenderCoordinates;
+    private final float mTopContentOffsetYPx;
 
     private float mContextMenuSourceXPx;
     private float mContextMenuSourceYPx;
@@ -48,17 +47,17 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
      *              the default dialog theme
      * @param touchPointXPx The x-coordinate of the touch that triggered the context menu.
      * @param touchPointYPx The y-coordinate of the touch that triggered the context menu.
+     * @param topContentOffsetYPx The offset of the content from the top.
      * @param contentView The The {@link TabularContextMenuViewPager} to display on the dialog.
-     * @param renderCoordinates The render coordinates to get the y offset of the window.
      */
     public ContextMenuDialog(Activity ownerActivity, int theme, float touchPointXPx,
-            float touchPointYPx, View contentView, RenderCoordinates renderCoordinates) {
+            float touchPointYPx, float topContentOffsetYPx, View contentView) {
         super(ownerActivity, theme);
         mActivity = ownerActivity;
         mTouchPointXPx = touchPointXPx;
         mTouchPointYPx = touchPointYPx;
+        mTopContentOffsetYPx = topContentOffsetYPx;
         mContentView = contentView;
-        mRenderCoordinates = renderCoordinates;
     }
 
     @Override
@@ -95,7 +94,7 @@ public class ContextMenuDialog extends AlwaysDismissedDialog {
         window.getDecorView().getWindowVisibleDisplayFrame(rectangle);
 
         float xOffsetPx = rectangle.left;
-        float yOffsetPx = rectangle.top + mRenderCoordinates.getContentOffsetYPix();
+        float yOffsetPx = rectangle.top + mTopContentOffsetYPx;
 
         int[] currentLocationOnScreenPx = new int[2];
         mContentView.getLocationOnScreen(currentLocationOnScreenPx);

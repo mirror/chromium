@@ -7,14 +7,14 @@
 
 namespace content {
 
-class ContentViewCoreImplObserver {
+class ContentViewCoreObserver {
  public:
   virtual void OnContentViewCoreDestroyed() = 0;
   virtual void OnAttachedToWindow() = 0;
   virtual void OnDetachedFromWindow() = 0;
 
  protected:
-  virtual ~ContentViewCoreImplObserver() {}
+  virtual ~ContentViewCoreObserver() {}
 };
 
 }  // namespace content

@@ -107,7 +107,7 @@ void DialogOverlayImpl::OnDetachedFromWindow() {
     Java_DialogOverlayImpl_onWindowToken(env, obj.obj(), nullptr);
 }
 
-ContentViewCoreImpl* DialogOverlayImpl::GetContentViewCore() {
+ContentViewCore* DialogOverlayImpl::GetContentViewCore() {
   // Get the frame from the token.
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   content::RenderFrameHost* frame =
@@ -121,8 +121,8 @@ ContentViewCoreImpl* DialogOverlayImpl::GetContentViewCore() {
       content::WebContents::FromRenderFrameHost(frame);
   DCHECK(web_contents);
 
-  content::ContentViewCoreImpl* cvc =
-      content::ContentViewCoreImpl::FromWebContents(web_contents);
+  content::ContentViewCore* cvc =
+      content::ContentViewCore::FromWebContents(web_contents);
   if (!cvc) {
     DVLOG(1) << "Cannot find cvc for token " << token_;
     return nullptr;

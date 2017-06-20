@@ -7,7 +7,6 @@
 #include "base/logging.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
-#include "content/browser/android/content_view_core_impl.h"
 #include "content/browser/media/android/browser_media_player_manager.h"
 #include "content/public/common/content_switches.h"
 #include "jni/ContentVideoView_jni.h"
