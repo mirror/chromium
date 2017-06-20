@@ -51,4 +51,12 @@ void PDFWebContentsHelper::UpdateContentRestrictions(
   client_->UpdateContentRestrictions(web_contents(), content_restrictions);
 }
 
+void PDFWebContentsHelper::SelectionChanged(const gfx::Point& left,
+                                            int32_t left_width,
+                                            const gfx::Point& right,
+                                            int32_t right_width) {
+  client_->OnSelectionChanged(web_contents(), left, left_width, right,
+                              right_width);
+}
+
 }  // namespace pdf

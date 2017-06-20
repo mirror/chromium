@@ -2518,6 +2518,12 @@ IPC_MESSAGE_CONTROL3(
     std::vector<PP_PrivateAccessibilityTextRunInfo> /* text_runs */,
     std::vector<PP_PrivateAccessibilityCharInfo> /* chars */)
 
+IPC_MESSAGE_CONTROL4(PpapiHostMsg_PDF_SelectionChanged,
+                     PP_Point /* left */,
+                     int32_t /* left_height */,
+                     PP_Point /* right */,
+                     int32_t /* right_height */)
+
 // VideoCapture ----------------------------------------------------------------
 
 // VideoCapture_Dev, plugin -> host

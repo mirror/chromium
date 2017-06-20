@@ -43,6 +43,10 @@ class PDFWebContentsHelper
   void HasUnsupportedFeature() override;
   void SaveUrlAs(const GURL& url, const content::Referrer& referrer) override;
   void UpdateContentRestrictions(int32_t content_restrictions) override;
+  void SelectionChanged(const gfx::Point& left,
+                        int32_t left_width,
+                        const gfx::Point& right,
+                        int32_t right_width) override;
 
   content::WebContentsFrameBindingSet<mojom::PdfService> pdf_service_bindings_;
   std::unique_ptr<PDFWebContentsHelperClient> client_;

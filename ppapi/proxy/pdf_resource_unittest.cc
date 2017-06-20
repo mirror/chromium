@@ -125,5 +125,16 @@ TEST_F(PDFResourceTest, SaveAs) {
       PpapiHostMsg_PDF_SaveAs::ID, &params, &msg));
 }
 
+TEST_F(PDFResourceTest, SetPastable) {
+  const PPB_PDF* pdf_iface = thunk::GetPPB_PDF_Thunk();
+
+  pdf_iface->SetPastable(pp_instance(), true);
+
+  ResourceMessageCallParams params;
+  IPC::Message msg;
+  ASSERT_TRUE(sink().GetFirstResourceCallMatching(
+      PpapiHostMsg_PDF_SetPastable::ID, &params, &msg));
+}
+
 }  // namespace proxy
 }  // namespace ppapi
