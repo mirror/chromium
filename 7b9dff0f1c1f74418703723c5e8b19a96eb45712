@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5381d4f3_554fd2d0",
+        "filename": "third_party/WebKit/Source/core/loader/TextResourceDecoderBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T02:11:40Z",
+      "side": 0,
+      "message": "This |hint_encoding| is renamed to |default_encoding|, because this is not the hint encoding set via SetHintEncoding().",
+      "range": {
+        "startLine": 114,
+        "startChar": 30,
+        "endLine": 114,
+        "endChar": 43
+      },
+      "revId": "7b9dff0f1c1f74418703723c5e8b19a96eb45712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55ed42ad_2ad76ee1",
+        "filename": "third_party/WebKit/Source/core/loader/TextResourceDecoderBuilder.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T02:11:40Z",
+      "side": 0,
+      "message": "This SetHintEncoding() call is migrated to the newly introduced |hint_encoding|, which is only calculated for the CreateWithAutoDetection() case (Line 147) only, because the hint encoding is not used in other cases (Lines 140, 153).",
+      "range": {
+        "startLine": 156,
+        "startChar": 15,
+        "endLine": 156,
+        "endChar": 30
+      },
+      "revId": "7b9dff0f1c1f74418703723c5e8b19a96eb45712",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
