@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "93e8f3be_91be6184",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/ScriptStreamerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b341765_45242d63",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31d422b9_b56939f7",
         "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
         "patchSetId": 11
@@ -33,6 +51,24 @@
       "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d07acdf_a1169c16",
+        "filename": "third_party/WebKit/Source/core/html/parser/CSSPreloadScannerTest.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31d422b9_b56939f7",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "47c76066_c71236fe",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "91858aae_f2a04fea",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f94e67cd_ba0d174c",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.h",
         "patchSetId": 11
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "6d50da8a_fcd0dc4f",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f94e67cd_ba0d174c",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "96c5aed3_0b4b1584",
         "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.h",
         "patchSetId": 11
@@ -84,6 +156,24 @@
       "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7945896a_0212bdb2",
+        "filename": "third_party/WebKit/Source/core/loader/resource/CSSStyleSheetResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "#include\u0027d. (TextEncoding is in WTF, not in blink)",
+      "parentUuid": "96c5aed3_0b4b1584",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "e87d5526_aca44946",
+        "filename": "third_party/WebKit/Source/core/loader/resource/DocumentResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f51bdf5c_35383f53",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4794ea68_b0b8563f",
         "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.h",
         "patchSetId": 11
@@ -152,6 +260,24 @@
       "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d3efab2b_e7723b2b",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4794ea68_b0b8563f",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -189,6 +315,24 @@
     },
     {
       "key": {
+        "uuid": "6f23fbac_62233e54",
+        "filename": "third_party/WebKit/Source/core/loader/resource/TextResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "#include is added (in a previous CL according to your comment there).\nAlso removed TextResourceDecoder forward declaration here because the file is already #include\u0027d above.",
+      "parentUuid": "1589cb1f_b1276b45",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea8708e1_75b7e49c",
         "filename": "third_party/WebKit/Source/core/loader/resource/XSLStyleSheetResource.h",
         "patchSetId": 11
@@ -203,6 +347,24 @@
       "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "80ad0eb8_38c552a7",
+        "filename": "third_party/WebKit/Source/core/loader/resource/XSLStyleSheetResource.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T22:56:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ea8708e1_75b7e49c",
+      "revId": "66495f4402b660ffb84e5bb1e03c0d49790f116c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
