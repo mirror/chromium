@@ -91,10 +91,16 @@ void PageLoadMetricsObserverTestHarness::SimulateTimingAndMetadataUpdate(
 }
 
 void PageLoadMetricsObserverTestHarness::SimulateLoadedResource(
-    const ExtraRequestCompleteInfo& info) {
+    const ExtraRequestCompleteInfo& info,
+    const content::GlobalRequestID& request_id) {
+  if (info.resource_type == content::RESOURCE_TYPE_MAIN_FRAME) {
+    ASSERT_NE(content::GlobalRequestID(), request_id)
+        << "Main frame resources must have a GlobalRequestID.";
+  }
+
   observer_->OnRequestComplete(
-      info.url, info.host_port_pair, info.frame_tree_node_id,
-      content::GlobalRequestID(), info.resource_type, info.was_cached,
+      info.url, info.host_port_pair, info.frame_tree_node_id, request_id,
+      info.resource_type, info.was_cached,
       info.data_reduction_proxy_data
           ? info.data_reduction_proxy_data->DeepCopy()
           : nullptr,
@@ -122,11 +128,6 @@ void PageLoadMetricsObserverTestHarness::SimulateMediaPlayed() {
 const base::HistogramTester&
 PageLoadMetricsObserverTestHarness::histogram_tester() const {
   return histogram_tester_;
-}
-
-MetricsWebContentsObserver* PageLoadMetricsObserverTestHarness::observer()
-    const {
-  return observer_;
 }
 
 const PageLoadExtraInfo
