@@ -65,7 +65,7 @@ void RunTasksForPeriod(double delay_ms) {
       TimeDelta::FromMillisecondsD(delay_ms));
   testing::EnterRunLoop();
 }
-}
+}  // namespace
 
 // http://crbug.com/633321
 #if OS(ANDROID)
