@@ -11,9 +11,14 @@
 
 namespace password_manager {
 
-StubPasswordManagerClient::StubPasswordManagerClient() {}
+StubPasswordManagerClient::StubPasswordManagerClient()
+    : ukm_source_id_(ukm_recorder_.GetNewSourceID()) {}
 
 StubPasswordManagerClient::~StubPasswordManagerClient() {}
+
+ukm::TestUkmRecorder* StubPasswordManagerClient::GetTestUkmRecorder() {
+  return &ukm_recorder_;
+}
 
 bool StubPasswordManagerClient::PromptUserToSaveOrUpdatePassword(
     std::unique_ptr<PasswordFormManager> form_to_save,
@@ -78,5 +83,13 @@ void StubPasswordManagerClient::CheckProtectedPasswordEntry(
     const std::string& password_saved_domain,
     bool password_field_exists) {}
 #endif
+
+ukm::UkmRecorder* StubPasswordManagerClient::GetUkmRecorder() {
+  return &ukm_recorder_;
+}
+
+ukm::SourceId StubPasswordManagerClient::GetUkmSourceId() {
+  return ukm_source_id_;
+}
 
 }  // namespace password_manager
