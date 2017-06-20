@@ -145,11 +145,13 @@ namespace {
 // is obscured by the on screen keyboard.
 class WinScreenKeyboardObserver : public ui::OnScreenKeyboardObserver {
  public:
-  WinScreenKeyboardObserver(RenderWidgetHostImpl* host,
+  WinScreenKeyboardObserver(RenderWidgetHostViewAura* host_view,
+                            RenderWidgetHostImpl* host,
                             const gfx::Point& location_in_screen,
                             float scale_factor,
                             aura::Window* window)
-      : host_(host),
+      : host_view_(host_view),
+        host_(host),
         location_in_screen_(location_in_screen),
         device_scale_factor_(scale_factor),
         window_(window) {
@@ -197,7 +199,12 @@ class WinScreenKeyboardObserver : public ui::OnScreenKeyboardObserver {
       // We want to scroll the node into a rectangle which originates from
       // the touch point and a small offset (10) in either direction.
       gfx::Rect node_rect(origin.x(), origin.y(), 10, 10);
-      host_->ScrollFocusedEditableNodeIntoRect(node_rect);
+
+      RenderFrameHostImpl* rfh = host_view_->GetFocusedFrame();
+      if (rfh) {
+        rfh->GetFrameInputHandler()->ScrollFocusedEditableNodeIntoRect(
+            node_rect);
+      }
     }
   }
 
@@ -207,6 +214,7 @@ class WinScreenKeyboardObserver : public ui::OnScreenKeyboardObserver {
   }
 
  private:
+  RenderWidgetHostViewAura* host_view_;
   RenderWidgetHostImpl* host_;
   // The location in DIPs where the touch occurred.
   gfx::Point location_in_screen_;
@@ -771,7 +779,7 @@ void RenderWidgetHostViewAura::FocusedNodeTouched(
   DCHECK(osk_display_manager);
   if (editable && host_ && host_->GetView() && host_->delegate()) {
     keyboard_observer_.reset(new WinScreenKeyboardObserver(
-        host_, location_dips_screen, device_scale_factor_, window_));
+        this, host_, location_dips_screen, device_scale_factor_, window_));
     virtual_keyboard_requested_ =
         osk_display_manager->DisplayVirtualKeyboard(keyboard_observer_.get());
   } else {
@@ -1168,25 +1176,10 @@ void RenderWidgetHostViewAura::SetCompositionText(
   if (!text_input_manager_ || !text_input_manager_->GetActiveWidget())
     return;
 
-  // TODO(suzhe): convert both renderer_host and renderer to use
-  // ui::CompositionText.
-  std::vector<blink::WebCompositionUnderline> underlines;
-  underlines.reserve(composition.underlines.size());
-  for (std::vector<ui::CompositionUnderline>::const_iterator it =
-           composition.underlines.begin();
-       it != composition.underlines.end(); ++it) {
-    underlines.push_back(
-        blink::WebCompositionUnderline(static_cast<unsigned>(it->start_offset),
-                                       static_cast<unsigned>(it->end_offset),
-                                       it->color,
-                                       it->thick,
-                                       it->background_color));
-  }
-
   // TODO(suzhe): due to a bug of webkit, we can't use selection range with
   // composition string. See: https://bugs.webkit.org/show_bug.cgi?id=37788
   text_input_manager_->GetActiveWidget()->ImeSetComposition(
-      composition.text, underlines, gfx::Range::InvalidRange(),
+      composition.text, composition.underlines, gfx::Range::InvalidRange(),
       composition.selection.end(), composition.selection.end());
 
   has_composition_text_ = !composition.text.empty();
@@ -1213,7 +1206,7 @@ void RenderWidgetHostViewAura::InsertText(const base::string16& text) {
   if (text_input_manager_ && text_input_manager_->GetActiveWidget()) {
     if (text.length())
       text_input_manager_->GetActiveWidget()->ImeCommitText(
-          text, std::vector<blink::WebCompositionUnderline>(),
+          text, std::vector<ui::CompositionUnderline>(),
           gfx::Range::InvalidRange(), 0);
     else if (has_composition_text_)
       text_input_manager_->GetActiveWidget()->ImeFinishComposingText(false);
@@ -1448,7 +1441,10 @@ void RenderWidgetHostViewAura::EnsureCaretNotInRect(
       window_->GetBoundsInScreen(), hidden_window_bounds_in_screen);
   visible_area_in_local_space =
       ConvertRectFromScreen(visible_area_in_local_space);
-  host_->ScrollFocusedEditableNodeIntoRect(visible_area_in_local_space);
+  RenderFrameHostImpl* rfh = GetFocusedFrame();
+  if (rfh)
+    rfh->GetFrameInputHandler()->ScrollFocusedEditableNodeIntoRect(
+        visible_area_in_local_space);
 }
 
 bool RenderWidgetHostViewAura::IsTextEditCommandEnabled(
