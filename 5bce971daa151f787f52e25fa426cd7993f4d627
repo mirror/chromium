@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aaf309da_4010aa18",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-20T00:13:52Z",
+      "side": 1,
+      "message": "Yes, back when I added a parameter here :) Reverted.",
+      "parentUuid": "1806d45e_1a67f6a5",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 20
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "85f30e4f_4e4b78bb",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3a2d10e2_0216ac77",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-20T00:13:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "85f30e4f_4e4b78bb",
+      "range": {
+        "startLine": 100,
+        "startChar": 7,
+        "endLine": 100,
+        "endChar": 28
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cd3ecff3_ab6d31e6",
         "filename": "media/remoting/renderer_controller.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-19T19:14:44Z",
       "side": 1,
       "message": "Can you explain this boolean a bit more? We seem to be plumbing it in everywhere, which implies GetAvailabilityUrl() downstream may change based on whether the CORS check is good/bad, which then implies there are cases where the Presentation logic will monitor for screen availability on an URL that fails the CORS check. Do we want to allow that?\n\n(I\u0027m wondering if, instead of this boolean, we should just \"null-out\" the URL whenever the CORS check fails.)",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 34
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "566c3226_f06796e6",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1000014
+      },
+      "writtenOn": "2017-06-20T00:13:52Z",
+      "side": 1,
+      "message": "The way flinging is implemented now, a gstatic.com hosted media player on Chromecast (default media receiver app) is loading the media by its URL. If the CORS header is set and doesn\u0027t allow gstatic.com (or if it\u0027s HLS and CORS is not set at all), Chromecast will block playback per Chrome\u0027s default policy. I haven\u0027t truly checked if this boolean means exactly what is needed (e.g. it doesn\u0027t check for *.gstatic.com in the CORS header, for example, unless the sender page is also hosted on *.gstatic.com - however I believe such cases should be rare and most working sites set CORS to just * or don\u0027t set it) but I believe it should be a good approximation.\n\nWe do want to monitor some urls with the cors check set to false (and even the audio video codec set to false) for some special cases like YouTube - since we only care about the video id in the frame URL, not how YouTube serves the video to the sender page (most likely a blob MSE source that we wouldn\u0027t try to cast via the default player anyway). See more details at go/chromeremoteplayback, I mentioned you near the relevant section.\n\nOnce we can drop YouTube support in favor of them using the Cast Web SDK, the checks should be done in the RendererController and WebRemotePlaybackClient would only get called when the source compatibility is determined like OnSourceCompatible(url) and OnSourceIncompatible() so it can start/stop monitoring sinks availability.\n\nI\u0027m thinking of how to better allow this special behavior in the meanwhile :) Like providing a whitelist of frame origins that don\u0027t need the redirect / metadata / cors checks at all to RemotePlayback and updating it from RendererController like it\u0027s all there is.",
+      "parentUuid": "cd3ecff3_ab6d31e6",
       "range": {
         "startLine": 163,
         "startChar": 2,
