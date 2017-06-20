@@ -42,6 +42,7 @@
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/HistoryItem.h"
 #include "core/loader/NavigationPolicy.h"
+#include "core/loader/TriggeringEventInfo.h"
 #include "platform/heap/Handle.h"
 #include "platform/instrumentation/tracing/TracedValue.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -192,6 +193,7 @@ class CORE_EXPORT FrameLoader final {
       NavigationPolicy,
       FrameLoadType,
       bool is_client_redirect,
+      TriggeringEventInfo,
       HTMLFormElement*);
 
   // Like ShouldContinueForNavigationPolicy, but should be used when following
