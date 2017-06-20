@@ -66,6 +66,30 @@
     },
     {
       "key": {
+        "uuid": "1bf3511f_3f9b58a3",
+        "filename": "chrome/browser/ui/views/first_run_bubble.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002092
+      },
+      "writtenOn": "2017-06-20T11:01:42Z",
+      "side": 1,
+      "message": "Ooh - and actually this reminds me that we can\u0027t forward-declare View* in browser_dialogs.h due to DEPS anyway.\n\nCocoa-browser code can currently call stuff in chrome/browser/ui/cocoa/bubble_anchor_helper.h\n\nSo perhaps we need a chrome/browser/ui/views/bubble_anchor_util.{h,cc} or similar to hold these functions so that views-browser code can call it.\n\nthe mac implementation of it that want to interrogate the cocoa browser will still need to go under chrome/browser/ui/cocoa",
+      "parentUuid": "24164652_a53c7b1f",
+      "range": {
+        "startLine": 23,
+        "startChar": 22,
+        "endLine": 23,
+        "endChar": 35
+      },
+      "revId": "c19187feae89b43ea2cbab253f2a54bf993a274f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8dc0d9a1_59ba57c6",
         "filename": "chrome/browser/ui/views/location_bar/location_bar_view.cc",
         "patchSetId": 3
