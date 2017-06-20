@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b01072a2_0a614c81",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-20T19:59:38Z",
+      "side": 1,
+      "message": "Did you consider following the pattern that we use for database creation?\n\n  base::File::Error error \u003d base::File::FILE_OK;\n\n  if (!base::DirectoryExists(path.DirName())) {\n    if (!base::CreateDirectoryAndGetError(path.DirName(), \u0026error)) {\n      // your uma with specific error could go here\n    }\n  }\n\n  // or be reported below, as in:\n  UMA_HISTOGRAM_ENUMERATION(\"OfflinePages.ArchiveManager.ArchiveDirsCreationSuccessful\",\n                            -error, -base::File::FILE_ERROR_MAX);\n\nIt depends on whether you think we should be capturing successful creation or not.",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "c892d5b3c6ad98c5dd4733b6c22b0a8c71ea630b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
