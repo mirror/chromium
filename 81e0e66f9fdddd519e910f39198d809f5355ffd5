@@ -140,6 +140,30 @@
       "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d2bd521_f0014917",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-20T20:07:33Z",
+      "side": 1,
+      "message": "It has a chance to change appearance at 5%, but it won\u0027t, since it only changes appearance in increments of 6.25% (or 8.3% as you point out). The next window of opportunity to change appearance isn\u0027t until 10%.",
+      "parentUuid": "cc384569_fad89d5a",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
