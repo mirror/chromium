@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ea1434ea_1c04640d",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 359,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T19:42:47Z",
+      "side": 1,
+      "message": "nit: VLOG(1) or remove ?",
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
