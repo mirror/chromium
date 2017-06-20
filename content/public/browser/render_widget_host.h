@@ -31,6 +31,10 @@ class LatencyInfo;
 
 namespace content {
 
+namespace mojom {
+class WidgetInputHandler;
+}
+
 struct CursorInfo;
 class RenderProcessHost;
 class RenderWidgetHostIterator;
@@ -274,6 +278,8 @@ class CONTENT_EXPORT RenderWidgetHost : public IPC::Sender {
 
   // Sets cursor to a specified one when it is over this widget.
   virtual void SetCursor(const CursorInfo& cursor_info) {}
+
+  virtual mojom::WidgetInputHandler* GetWidgetInputHandler() = 0;
 };
 
 }  // namespace content
