@@ -6,6 +6,7 @@
 
 #include "base/metrics/histogram_macros.h"
 #include "components/google/core/browser/google_util.h"
+#include "extensions/common/constants.h"
 #include "url/gurl.h"
 
 namespace prerender {
@@ -68,7 +69,7 @@ void ReportUnsupportedPrerenderScheme(const GURL& url) {
     ReportPrerenderSchemeCancelReason(PRERENDER_SCHEME_CANCEL_REASON_FTP);
   } else if (url.SchemeIs("chrome")) {
     ReportPrerenderSchemeCancelReason(PRERENDER_SCHEME_CANCEL_REASON_CHROME);
-  } else if (url.SchemeIs("chrome-extension")) {
+  } else if (url.SchemeIs(extensions::kExtensionScheme)) {
     ReportPrerenderSchemeCancelReason(
         PRERENDER_SCHEME_CANCEL_REASON_CHROME_EXTENSION);
   } else if (url.SchemeIs("about")) {
