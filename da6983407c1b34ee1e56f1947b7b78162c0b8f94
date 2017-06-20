@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "fc5960d8_6a1f8e64",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 187,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-20T23:16:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6716b27a_b8f1faf3",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fb0391a1_a06c3031",
         "filename": "base/android/jni_generator/jni_generator.py",
         "patchSetId": 16
@@ -324,6 +342,24 @@
       "writtenOn": "2017-06-19T20:37:38Z",
       "side": 1,
       "message": "Why was this removed?",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ccf1cd22_4ba9adaf",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 16
+      },
+      "lineNbr": 1388,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-20T23:16:48Z",
+      "side": 1,
+      "message": "I change it to a default setting.",
+      "parentUuid": "f6f7dd8e_37d0486d",
       "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
