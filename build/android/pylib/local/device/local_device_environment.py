@@ -269,8 +269,8 @@ class LocalDeviceEnvironment(environment.Environment):
       logging.warning('Tracing is not running.')
     else:
       trace_event.trace_disable()
-    self._JsonToTrace(self._trace_output + '.json',
-                      self._trace_output)
+    #self._JsonToTrace(self._trace_output + '.json',
+    #                  self._trace_output)
 
   def EnableTracing(self):
     if trace_event.trace_is_enabled():
