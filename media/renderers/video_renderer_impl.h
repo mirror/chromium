@@ -100,6 +100,10 @@ class MEDIA_EXPORT VideoRendererImpl
   void OnBufferingStateChange(BufferingState state);
   void OnWaitingForDecryptionKey();
 
+  // Called by the VideoFrameStream when a config change occurs. Will notify
+  // RenderClient of the new config.
+  void OnConfigChange(const VideoDecoderConfig& config);
+
   // Callback for |video_frame_stream_| to deliver decoded video frames and
   // report video decoding status. If a frame is available the planes will be
   // copied asynchronously and FrameReady will be called once finished copying.

@@ -612,7 +612,8 @@ void AudioRendererImpl::DecodedAudioReady(
                  << " ts:" << buffer->timestamp().InMicroseconds()
                  << " old:" << last_decoded_sample_rate_
                  << " new:" << buffer->sample_rate();
-        OnConfigChange();
+        // Send a bogus config to reset timestamp state.
+        OnConfigChange(AudioDecoderConfig());
       }
       last_decoded_sample_rate_ = buffer->sample_rate();
 
@@ -980,10 +981,15 @@ void AudioRendererImpl::ChangeState_Locked(State new_state) {
   state_ = new_state;
 }
 
-void AudioRendererImpl::OnConfigChange() {
+void AudioRendererImpl::OnConfigChange(const AudioDecoderConfig& config) {
   DCHECK(task_runner_->BelongsToCurrentThread());
   DCHECK(expecting_config_changes_);
   buffer_converter_->ResetTimestampState();
+
+  // An invalid config may be supplied by callers who simply want to reset
+  // internal state outside of detecting a new config from the demuxer stream.
+  if (config.IsValidConfig())
+    client_->OnAudioConfigChange(config);
 }
 
 void AudioRendererImpl::SetBufferingState_Locked(

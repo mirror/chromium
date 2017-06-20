@@ -230,6 +230,8 @@ void VideoRendererImpl::Initialize(
 
   video_frame_stream_.reset(new VideoFrameStream(
       task_runner_, create_video_decoders_cb_, media_log_));
+  video_frame_stream_->set_config_change_observer(base::Bind(
+      &VideoRendererImpl::OnConfigChange, weak_factory_.GetWeakPtr()));
 
   // Always re-initialize or reset the |gpu_memory_buffer_pool_| in case we are
   // switching between video tracks with incompatible video formats (e.g. 8-bit
@@ -370,6 +372,12 @@ void VideoRendererImpl::OnBufferingStateChange(BufferingState state) {
 void VideoRendererImpl::OnWaitingForDecryptionKey() {
   DCHECK(task_runner_->BelongsToCurrentThread());
   client_->OnWaitingForDecryptionKey();
+}
+
+void VideoRendererImpl::OnConfigChange(const VideoDecoderConfig& config) {
+  DCHECK(task_runner_->BelongsToCurrentThread());
+  DCHECK(config.IsValidConfig());
+  client_->OnVideoConfigChange(config);
 }
 
 void VideoRendererImpl::SetTickClockForTesting(
