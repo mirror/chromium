@@ -16,6 +16,23 @@
       "revId": "f2ef60d37217c07681420669a05552c1d31dffeb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fcccf262_f094c78b",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 2581,
+      "author": {
+        "id": 1123071
+      },
+      "writtenOn": "2017-06-20T20:16:31Z",
+      "side": 1,
+      "message": "Can we not avoid the schedule cursor update now? If the synthetic mouse move is generated?",
+      "revId": "f2ef60d37217c07681420669a05552c1d31dffeb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
