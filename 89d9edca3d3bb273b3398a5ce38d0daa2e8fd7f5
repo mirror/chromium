@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f6ed0950_389b840c",
+        "filename": "third_party/WebKit/LayoutTests/platform/mac/virtual/gpu/fast/canvas/gradient-add-second-start-end-stop-expected.png",
+        "patchSetId": 10
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T16:03:36Z",
+      "side": 0,
+      "message": "Looks better :D",
+      "revId": "89d9edca3d3bb273b3398a5ce38d0daa2e8fd7f5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

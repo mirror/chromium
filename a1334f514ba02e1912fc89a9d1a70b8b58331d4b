@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "47eece57_e2626e5b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T16:03:36Z",
+      "side": 1,
+      "message": "If I want to render to 8888, then dither to 4444, I assume I can set this flag on my draw and use the effect?",
+      "revId": "a1334f514ba02e1912fc89a9d1a70b8b58331d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
