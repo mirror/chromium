@@ -8,7 +8,6 @@
 #include "ash/display/display_configuration_controller.h"
 #include "ash/shared/app_types.h"
 #include "ash/shell.h"
-#include "ash/shell_port.h"
 #include "ash/wm/maximize_mode/maximize_mode_controller.h"
 #include "ash/wm/mru_window_tracker.h"
 #include "ash/wm/window_state.h"
@@ -44,7 +43,8 @@ blink::WebScreenOrientationLockType GetDisplayNaturalOrientation() {
     return blink::kWebScreenOrientationLockLandscape;
 
   display::ManagedDisplayInfo info =
-      ShellPort::Get()->GetDisplayInfo(display::Display::InternalDisplayId());
+      Shell::Get()->display_manager()->GetDisplayInfo(
+          display::Display::InternalDisplayId());
   gfx::Size size = info.size_in_pixel();
   switch (info.GetActiveRotation()) {
     case display::Display::ROTATE_0:
@@ -228,7 +228,8 @@ void ScreenOrientationController::ToggleUserRotationLock() {
     SetLockToOrientation(blink::kWebScreenOrientationLockAny);
   } else {
     display::Display::Rotation current_rotation =
-        ShellPort::Get()
+        Shell::Get()
+            ->display_manager()
             ->GetDisplayInfo(display::Display::InternalDisplayId())
             .GetActiveRotation();
     SetLockToRotation(current_rotation);
@@ -289,7 +290,8 @@ void ScreenOrientationController::OnDisplayConfigurationChanged() {
   if (!display::Display::HasInternalDisplay())
     return;
   display::Display::Rotation user_rotation =
-      ShellPort::Get()
+      Shell::Get()
+          ->display_manager()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
   if (user_rotation != current_rotation_) {
@@ -310,7 +312,8 @@ void ScreenOrientationController::OnMaximizeModeStarted() {
   // Always start observing.
   if (display::Display::HasInternalDisplay()) {
     current_rotation_ = user_rotation_ =
-        ShellPort::Get()
+        Shell::Get()
+            ->display_manager()
             ->GetDisplayInfo(display::Display::InternalDisplayId())
             .GetActiveRotation();
   }
@@ -441,7 +444,8 @@ void ScreenOrientationController::LockToRotationMatchingOrientation(
     return;
 
   display::Display::Rotation rotation =
-      ShellPort::Get()
+      Shell::Get()
+          ->display_manager()
           ->GetDisplayInfo(display::Display::InternalDisplayId())
           .GetActiveRotation();
   if (natural_orientation_ == lock_orientation) {

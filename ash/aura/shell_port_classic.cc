@@ -20,8 +20,6 @@
 #include "ash/public/cpp/config.h"
 #include "ash/shared/immersive_fullscreen_controller.h"
 #include "ash/shell.h"
-#include "ash/shell_delegate.h"
-#include "ash/shell_observer.h"
 #include "ash/touch/touch_uma.h"
 #include "ash/virtual_keyboard_controller.h"
 #include "ash/wm/drag_window_resizer.h"
@@ -35,7 +33,6 @@
 #include "base/memory/ptr_util.h"
 #include "ui/aura/env.h"
 #include "ui/display/manager/chromeos/default_touch_transform_setter.h"
-#include "ui/display/manager/display_manager.h"
 #include "ui/display/types/native_display_delegate.h"
 
 #if defined(USE_X11)
@@ -70,46 +67,6 @@ Config ShellPortClassic::GetAshConfig() const {
   return Config::CLASSIC;
 }
 
-aura::Window* ShellPortClassic::GetPrimaryRootWindow() {
-  return Shell::Get()->window_tree_host_manager()->GetPrimaryRootWindow();
-}
-
-aura::Window* ShellPortClassic::GetRootWindowForDisplayId(int64_t display_id) {
-  return Shell::Get()->window_tree_host_manager()->GetRootWindowForDisplayId(
-      display_id);
-}
-
-const display::ManagedDisplayInfo& ShellPortClassic::GetDisplayInfo(
-    int64_t display_id) const {
-  return Shell::Get()->display_manager()->GetDisplayInfo(display_id);
-}
-
-bool ShellPortClassic::IsActiveDisplayId(int64_t display_id) const {
-  return Shell::Get()->display_manager()->IsActiveDisplayId(display_id);
-}
-
-display::Display ShellPortClassic::GetFirstDisplay() const {
-  return Shell::Get()->display_manager()->software_mirroring_display_list()[0];
-}
-
-bool ShellPortClassic::IsInUnifiedMode() const {
-  return Shell::Get()->display_manager()->IsInUnifiedMode();
-}
-
-bool ShellPortClassic::IsInUnifiedModeIgnoreMirroring() const {
-  return Shell::Get()
-             ->display_manager()
-             ->current_default_multi_display_mode() ==
-         display::DisplayManager::UNIFIED;
-}
-
-void ShellPortClassic::SetDisplayWorkAreaInsets(aura::Window* window,
-                                                const gfx::Insets& insets) {
-  Shell::Get()
-      ->window_tree_host_manager()
-      ->UpdateWorkAreaOfDisplayNearestWindow(window, insets);
-}
-
 std::unique_ptr<display::TouchTransformSetter>
 ShellPortClassic::CreateTouchTransformDelegate() {
   return base::MakeUnique<display::DefaultTouchTransformSetter>();
@@ -141,10 +98,6 @@ void ShellPortClassic::SetGlobalOverrideCursor(
 
 bool ShellPortClassic::IsMouseEventsEnabled() {
   return Shell::Get()->cursor_manager()->IsMouseEventsEnabled();
-}
-
-std::vector<aura::Window*> ShellPortClassic::GetAllRootWindows() {
-  return Shell::Get()->window_tree_host_manager()->GetAllRootWindows();
 }
 
 void ShellPortClassic::RecordUserMetricsAction(UserMetricsAction action) {
@@ -233,15 +186,7 @@ std::unique_ptr<AshWindowTreeHost> ShellPortClassic::CreateAshWindowTreeHost(
 void ShellPortClassic::OnCreatedRootWindowContainers(
     RootWindowController* root_window_controller) {}
 
-void ShellPortClassic::CreatePrimaryHost() {
-  Shell::Get()->window_tree_host_manager()->Start();
-  AshWindowTreeHostInitParams ash_init_params;
-  Shell::Get()->window_tree_host_manager()->CreatePrimaryHost(ash_init_params);
-}
-
-void ShellPortClassic::InitHosts(const ShellInitParams& init_params) {
-  Shell::Get()->window_tree_host_manager()->InitHosts();
-}
+void ShellPortClassic::OnInitedHosts() {}
 
 std::unique_ptr<display::NativeDisplayDelegate>
 ShellPortClassic::CreateNativeDisplayDelegate() {

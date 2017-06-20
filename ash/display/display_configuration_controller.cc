@@ -39,9 +39,7 @@ DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(ash::ScreenRotationAnimator,
                                    nullptr);
 
 aura::Window* GetRootWindow(int64_t display_id) {
-  return ash::Shell::Get()
-      ->window_tree_host_manager()
-      ->GetRootWindowForDisplayId(display_id);
+  return ash::Shell::GetRootWindowForDisplayId(display_id);
 }
 
 }  // namespace
