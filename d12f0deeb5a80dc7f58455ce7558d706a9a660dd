@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ffa3f445_329d79be",
+        "filename": "chrome/browser/android/download/download_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 224,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-20T03:35:05Z",
+      "side": 1,
+      "message": "we should add UMA here, to see how many infobars are shown. Maybe also log the case to see if view_helper or view_android are null.",
+      "revId": "d12f0deeb5a80dc7f58455ce7558d706a9a660dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a263c2ea_3e28b889",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1245,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-20T03:35:05Z",
+      "side": 1,
+      "message": "I don\u0027t think this will provide too much value here. \n1. this is resumption. \n2. RecordDangerousDownloadDiscard() should have been called in this case. And it should show up in the metrics file.",
+      "revId": "d12f0deeb5a80dc7f58455ce7558d706a9a660dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "592cf599_a2d25b6a",
+        "filename": "content/browser/download/download_item_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1266,
+      "author": {
+        "id": 1116010
+      },
+      "writtenOn": "2017-06-20T03:35:05Z",
+      "side": 1,
+      "message": "Same here, 1. resumption. 2. this should show up in the metrics file.  so it will not provide too much value",
+      "revId": "d12f0deeb5a80dc7f58455ce7558d706a9a660dd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
