@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "198fbbc2_71b248b0",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-nonutf8-encoding.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-20T02:43:04Z",
+      "side": 1,
+      "message": "Are you sure this has an effect?",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 25
+      },
+      "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3959f4a_0e9a9ead",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-types.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-20T02:43:04Z",
+      "side": 1,
+      "message": "Null url?",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
