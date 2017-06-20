@@ -161,7 +161,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
 
   // Helper functions to verify that particular slices of UMA histograms are
   // empty.
-  void ExpectHistogramsEmpty(DomainType domain_type) {
+  void ExpectEmptyHistograms(DomainType domain_type) {
     for (const auto& port :
          internal::kLocalhostHistogramNames.at(domain_type)) {
       for (const auto& histogramName : port.second) {
@@ -196,7 +196,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
   }
 
   /*
-    void ExpectHistogramsEmpty(ResourceType resource_type) {
+    void ExpectEmptyHistograms(ResourceType resource_type) {
       for (const auto& domain : internal::kNonlocalhostHistogramNames) {
         for (const auto& histogramName : domain.second.at(resource_type)) {
           histogram_tester().ExpectTotalCount(histogramName.second, 0);
@@ -204,7 +204,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
       }
     }
 
-    void ExpectHistogramsEmpty(PortType port_type) {
+    void ExpectEmptyHistograms(PortType port_type) {
       for (const auto& domain : internal::kLocalhostHistogramNames) {
         for (const auto& histogramName : domain.second.at(port_type)) {
           histogram_tester().ExpectTotalCount(histogramName.second, 0);
@@ -212,7 +212,7 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
       }
     }
 
-    void ExpectHistogramsEmpty(bool status) {
+    void ExpectEmptyHistograms(bool status) {
       for (const auto& domain : internal::kLocalhostHistogramNames) {
         for (const auto& port : domain.second) {
           histogram_tester().ExpectTotalCount(port.second.at(status), 0);
@@ -238,6 +238,53 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     EXPECT_FALSE(entry->metrics.empty());
     ExpectMetric(internal::kUkmDomainTypeName, static_cast<int>(domain_type),
                  entry);
+  }
+
+  void ExpectMetricsAndHistograms(
+      const internal::PageAddressInfo& page,
+      const std::vector<internal::UkmMetricInfo>& expected_metrics,
+      const std::map<std::string, int>& expected_histograms) {
+    const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
+    EXPECT_EQ(expected_metrics.size() + 1, ukm_entry_count());
+    auto entries = GetUkmEntriesForSourceID(source->id());
+    for (size_t i = 1; i < entries.size(); ++i) {
+      LOG(WARNING) << "Entry " << i;
+      EXPECT_EQ(entries[i]->source_id, source->id());
+      EXPECT_EQ(
+          entries[i]->event_hash,
+          base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
+      EXPECT_FALSE(entries[i]->metrics.empty());
+
+      EXPECT_EQ(entries[i]->metrics[0]->metric_hash,
+                base::HashMetricName(internal::kUkmResourceTypeName));
+      if (entries[i]->metrics[0]->value ==
+          static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
+        // Localhost page load
+        EXPECT_EQ(entries[i]->metrics.size(), 4ul);
+        ExpectMetric(internal::kUkmPortTypeName,
+                     static_cast<int>(expected_metrics[i - 1].port_type),
+                     entries[i]);
+        ExpectMetric(internal::kUkmSuccessfulCountName,
+                     expected_metrics[i - 1].success_count, entries[i]);
+        ExpectMetric(internal::kUkmFailedCountName,
+                     expected_metrics[i - 1].failed_count, entries[i]);
+      } else {
+        // Nonlocalhost page load
+        EXPECT_EQ(entries[i]->metrics.size(), 3ul);
+        EXPECT_EQ(expected_metrics[i - 1].resource_type,
+                  static_cast<ResourceType>(entries[i]->metrics[0]->value));
+        ExpectMetric(internal::kUkmSuccessfulCountName,
+                     expected_metrics[i - 1].success_count, entries[i]);
+        ExpectMetric(internal::kUkmFailedCountName,
+                     expected_metrics[i - 1].failed_count, entries[i]);
+      }
+    }
+
+    // Should have generated UMA histograms for all requests made.
+    for (auto hist : expected_histograms) {
+      histogram_tester().ExpectTotalCount(hist.first, 1);
+      histogram_tester().ExpectUniqueSample(hist.first, hist.second, 1);
+    }
   }
 
   // Copied from UkmPageLoadMetricsObserverTest
@@ -302,7 +349,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Should generate only a domain type UKM entry and nothing else.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
-  ExpectHistogramsEmpty(DOMAIN_TYPE_PUBLIC);
+  ExpectEmptyHistograms(DOMAIN_TYPE_PUBLIC);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
@@ -317,7 +364,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Should generate only a domain type UKM entry and nothing else.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
-  ExpectHistogramsEmpty(DOMAIN_TYPE_PUBLIC);
+  ExpectEmptyHistograms(DOMAIN_TYPE_PUBLIC);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
@@ -329,7 +376,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Should generate only a domain type UKM entry and nothing else.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PRIVATE);
-  ExpectHistogramsEmpty(DOMAIN_TYPE_PRIVATE);
+  ExpectEmptyHistograms(DOMAIN_TYPE_PRIVATE);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageNoRequests) {
@@ -340,7 +387,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, PrivatePageNoRequests) {
 
   // Should generate only a domain type UKM entry and nothing else.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PRIVATE);
-  ExpectHistogramsEmpty(DOMAIN_TYPE_PRIVATE);
+  ExpectEmptyHistograms(DOMAIN_TYPE_PRIVATE);
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPage) {
@@ -373,39 +420,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, LocalhostPageIPv6) {
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PublicPageAllSuccessfulRequests) {
-  const internal::PageAddressInfo page = internal::kPublicPageIPv6;
-  // Navigate to a public page with an IPv6 address.
-  SimulateNavigateAndCommit(page);
-
-  // Should generate only a domain type UKM entry by this point.
-  ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
-  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
-  EXPECT_EQ(GURL(page.url), source->url());
-
-  // Make all of the types of requests, with all being successful.
-  std::vector<internal::PageAddressInfo> requests = {
-      internal::kPublicPage,         internal::kPublicPageIPv6,
-      internal::kPrivatePage,        internal::kLocalhostPage,
-      internal::kLocalhostPageIPv6,  internal::kPublicRequest1,
-      internal::kPublicRequest2,     internal::kSameSubnetRequest1,
-      internal::kSameSubnetRequest2, internal::kSameSubnetRequest3,
-      internal::kDiffSubnetRequest1, internal::kDiffSubnetRequest2,
-      internal::kLocalhostRequest1,  internal::kLocalhostRequest2,
-      internal::kLocalhostRequest3,  internal::kLocalhostRequest4,
-      internal::kLocalhostRequest5,  internal::kRouterRequest1,
-      internal::kRouterRequest2};
-  for (auto request : requests) {
-    SimulateLoadedSuccessfulResource(request);
-  }
-  DeleteContents();
-
-  // Should now have generated UKM entries for each of the types of resources
-  // requested except for public resources.
-  EXPECT_EQ(13ul, ukm_entry_count());
-
-  // TODO(uthakore): Finish verification (code below)
-}
+       PublicPageAllSuccessfulRequests) {}
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PrivatePageAllSuccessfulRequests) {
@@ -533,84 +548,110 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   // requested except for the public resources.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
 
-  // List of expected UKM metric vlaues, in the sorted order the metrics are
-  // expected to be generated in.
-  internal::UkmMetricInfo expected_values[] = {
-      {RESOURCE_TYPE_ROUTER, PORT_TYPE_WEB, 1, 0},
-      {RESOURCE_TYPE_PRIVATE, PORT_TYPE_WEB, 1, 1},
-      {RESOURCE_TYPE_PRIVATE, PORT_TYPE_DEV, 1, 0},
-      {RESOURCE_TYPE_LOCALHOST, PORT_TYPE_DB, 0, 1},
-      {RESOURCE_TYPE_LOCALHOST, PORT_TYPE_OTHER, 0, 1},
-  };
-  // List of expected nonzero UMA histogram values.
-  std::pair<std::string, int> expected_histograms[] = {
-      {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(RESOURCE_TYPE_ROUTER)
-           .at(true),
-       1},
-      {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(RESOURCE_TYPE_PRIVATE)
-           .at(true),
-       2},
-      {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(RESOURCE_TYPE_PRIVATE)
-           .at(false),
-       1},
-      {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(PORT_TYPE_DB)
-           .at(false),
-       1},
-      {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(PORT_TYPE_OTHER)
-           .at(false),
-       1},
-  };
-
-  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
-  EXPECT_EQ(6ul, ukm_entry_count());
-  auto entries = GetUkmEntriesForSourceID(source->id());
-  for (size_t i = 1; i < entries.size(); ++i) {
-    LOG(WARNING) << "Entry " << i;
-    EXPECT_EQ(entries[i]->source_id, source->id());
-    EXPECT_EQ(
-        entries[i]->event_hash,
-        base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
-    EXPECT_FALSE(entries[i]->metrics.empty());
-
-    EXPECT_EQ(entries[i]->metrics[0]->metric_hash,
-              base::HashMetricName(internal::kUkmResourceTypeName));
-    if (entries[i]->metrics[0]->value ==
-        static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
-      // Localhost page load
-      EXPECT_EQ(entries[i]->metrics.size(), 4ul);
-      ExpectMetric(internal::kUkmPortTypeName,
-                   static_cast<int>(expected_values[i - 1].port_type),
-                   entries[i]);
-      ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values[i - 1].success_count, entries[i]);
-      ExpectMetric(internal::kUkmFailedCountName,
-                   expected_values[i - 1].failed_count, entries[i]);
-    } else {
-      // Nonlocalhost page load
-      EXPECT_EQ(entries[i]->metrics.size(), 3ul);
-      EXPECT_EQ(expected_values[i - 1].resource_type,
-                static_cast<ResourceType>(entries[i]->metrics[0]->value));
-      ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values[i - 1].success_count, entries[i]);
-      ExpectMetric(internal::kUkmFailedCountName,
-                   expected_values[i - 1].failed_count, entries[i]);
-    }
-  }
-
-  // Should have generated UMA histograms for all requests made.
-  for (auto hist : expected_histograms) {
-    histogram_tester().ExpectTotalCount(hist.first, 1);
-    histogram_tester().ExpectUniqueSample(hist.first, hist.second, 1);
-  }
+  ExpectMetricsAndHistograms(
+      page,
+      // List of expected UKM metric values, in the sorted order the metrics are
+      // expected to be generated in.
+      {
+          {RESOURCE_TYPE_ROUTER, PORT_TYPE_WEB, 1, 0},
+          {RESOURCE_TYPE_PRIVATE, PORT_TYPE_WEB, 1, 1},
+          {RESOURCE_TYPE_PRIVATE, PORT_TYPE_DEV, 1, 0},
+          {RESOURCE_TYPE_LOCALHOST, PORT_TYPE_DB, 0, 1},
+          {RESOURCE_TYPE_LOCALHOST, PORT_TYPE_OTHER, 0, 1},
+      },
+      // List of expected nonzero UMA histogram values.
+      {
+          {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(RESOURCE_TYPE_ROUTER)
+               .at(true),
+           1},
+          {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(RESOURCE_TYPE_PRIVATE)
+               .at(true),
+           2},
+          {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(RESOURCE_TYPE_PRIVATE)
+               .at(false),
+           1},
+          {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(PORT_TYPE_DB)
+               .at(false),
+           1},
+          {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(PORT_TYPE_OTHER)
+               .at(false),
+           1},
+      });
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
-       PublicPageLargeNumberOfRequests) {}
+       PublicPageLargeNumberOfRequests) {
+  // This test also verifies the sequence and timing of UKM metric generation.
+
+  const internal::PageAddressInfo page = internal::kPublicPageIPv6;
+
+  // Navigate to a public page with an IPv6 address.
+  SimulateNavigateAndCommit(page);
+
+  // Should generate only a domain type UKM entry by this point.
+  ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
+
+  // Make 100 each of many different types of requests, with 1000 of a single
+  // type.
+  std::vector<std::pair<internal::PageAddressInfo, bool>> requests = {
+      {internal::kPublicRequest1, true},
+      {internal::kLocalhostPage, true},
+      {internal::kLocalhostPageIPv6, false},
+      {internal::kSameSubnetRequest1, false},
+      {internal::kDiffSubnetRequest2, false},
+  };
+  for (auto request : requests) {
+    for (int i = 0; i < 100; ++i) {
+      SimulateLoadedResource(request.first, (request.second ? 0 : -1));
+    }
+  }
+  for (int i = 0; i < 1000; ++i) {
+    SimulateLoadedSuccessfulResource(internal::kDiffSubnetRequest1);
+  }
+
+  // At this point, we should still only see the domain type UKM entry.
+  EXPECT_EQ(1ul, ukm_entry_count());
+
+  // Close the page.
+  DeleteContents();
+
+  // We should now see UKM entries and histograms for each of the types of
+  // resources requested except for public resources.
+  ExpectMetricsAndHistograms(
+      page,
+      // List of expected UKM metric values, in the sorted order the metrics are
+      // expected to be generated in.
+      {
+          {RESOURCE_TYPE_PRIVATE, PORT_TYPE_WEB, 1000, 0},
+          {RESOURCE_TYPE_PRIVATE, PORT_TYPE_WEB, 0, 100},
+          {RESOURCE_TYPE_PRIVATE, PORT_TYPE_DEV, 0, 100},
+          {RESOURCE_TYPE_LOCALHOST, PORT_TYPE_WEB, 100, 100},
+      },
+      // List of expected nonzero UMA histogram values.
+      {
+          {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(RESOURCE_TYPE_PRIVATE)
+               .at(true),
+           1000},
+          {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(RESOURCE_TYPE_PRIVATE)
+               .at(false),
+           200},
+          {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(PORT_TYPE_WEB)
+               .at(true),
+           100},
+          {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
+               .at(PORT_TYPE_WEB)
+               .at(false),
+           100},
+      });
+}
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
        PublicPageRequestIpInUrlAndSocketAddress) {}
