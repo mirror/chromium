@@ -27,15 +27,17 @@ SharedMemoryTracker* SharedMemoryTracker::GetInstance() {
 
 // static
 trace_event::MemoryAllocatorDumpGuid SharedMemoryTracker::GetDumpGUIDForTracing(
+    trace_event::ProcessMemoryDump* pmd,
     const UnguessableToken& id) {
   std::string dump_name = GetDumpNameForTracing(id);
-  return trace_event::MemoryAllocatorDumpGuid(dump_name);
+  return pmd->GetOrCreateAllocatorDump(dump_name)->guid();
 }
 
 // static
 trace_event::MemoryAllocatorDumpGuid
 SharedMemoryTracker::GetGlobalDumpGUIDForTracing(const UnguessableToken& id) {
-  return GetDumpGUIDForTracing(id);
+  std::string dump_name = GetDumpNameForTracing(id);
+  return trace_event::MemoryAllocatorDumpGuid(dump_name);
 }
 
 void SharedMemoryTracker::IncrementMemoryUsage(
@@ -46,6 +48,8 @@ void SharedMemoryTracker::IncrementMemoryUsage(
 
 void SharedMemoryTracker::DecrementMemoryUsage(
     const SharedMemory& shared_memory) {
+  // TODO(hajimehoshi): This doesn't work correctly in single process mode. Fix
+  // this.
   AutoLock hold(usages_lock_);
   usages_.erase(&shared_memory);
 }
@@ -75,8 +79,11 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     } else {
       dump_name = GetDumpNameForTracing(memory_guid);
     }
-    auto dump_guid = GetDumpGUIDForTracing(memory_guid);
     // Discard duplicates that might be seen in single-process mode.
+    // TODO(hajimehoshi): This logic depends on the old fact that dumps are not
+    // created nowhere but SharedMemoryTracker::OnMemoryDump. After fixing
+    // DecrementMemoryUsage, this needs to be revisited. See the discussion at
+    // https://chromium-review.googlesource.com/c/535378.
     if (pmd->GetAllocatorDump(dump_name))
       continue;
     trace_event::MemoryAllocatorDump* local_dump =
@@ -85,6 +92,7 @@ bool SharedMemoryTracker::OnMemoryDump(const trace_event::MemoryDumpArgs& args,
     // Fix this to record resident size.
     local_dump->AddScalar(trace_event::MemoryAllocatorDump::kNameSize,
                           trace_event::MemoryAllocatorDump::kUnitsBytes, size);
+    auto dump_guid = GetGlobalDumpGUIDForTracing(memory_guid);
     trace_event::MemoryAllocatorDump* global_dump =
         pmd->CreateSharedGlobalAllocatorDump(dump_guid);
     global_dump->AddScalar(trace_event::MemoryAllocatorDump::kNameSize,
