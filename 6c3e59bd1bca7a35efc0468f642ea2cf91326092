@@ -1,0 +1,349 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65bd539a_79552ccd",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "This seems to be unused.",
+      "range": {
+        "startLine": 315,
+        "startChar": 31,
+        "endLine": 315,
+        "endChar": 44
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9b4dbb4_6d96c4d7",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_launcher.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "Should this be a base::Optional\u003cstd::string\u003e if it\u0027s really optional?",
+      "range": {
+        "startLine": 44,
+        "startChar": 8,
+        "endLine": 44,
+        "endChar": 19
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3543e18e_67590701",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "uint32_t",
+      "range": {
+        "startLine": 80,
+        "startChar": 10,
+        "endLine": 80,
+        "endChar": 13
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36f2b9ac_eea78288",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "if |launch_intent| were a base::Optional, this can be\n\nlaunch_intent.value_or(app_info-\u003eintent_url)",
+      "range": {
+        "startLine": 167,
+        "startChar": 8,
+        "endLine": 167,
+        "endChar": 68
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50abf8d6_3760565e",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "nit: is",
+      "range": {
+        "startLine": 180,
+        "startChar": 28,
+        "endLine": 180,
+        "endChar": 31
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bfcf67aa_689fc074",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "comment that base::Unretained is safe because this object is responsible for its own deletion.\n\nAnother alternative is to use base::Owned(this), but that might require a cascade of other changes.",
+      "range": {
+        "startLine": 214,
+        "startChar": 43,
+        "endLine": 214,
+        "endChar": 65
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d41624db_befb7cd0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 214,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "We should avoid using base::Bind() if possible. base::BindOnce() is the new hotness.",
+      "range": {
+        "startLine": 214,
+        "startChar": 14,
+        "endLine": 214,
+        "endChar": 18
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38312d82_cb053e02",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 500,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "nit: Add a comment that this is removing the |package_name| prefix, if present. It took me a bit to understand what it did.",
+      "range": {
+        "startLine": 500,
+        "startChar": 14,
+        "endLine": 500,
+        "endChar": 35
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47369c10_c40b58a1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 505,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "This definitely needs a comment :S",
+      "range": {
+        "startLine": 505,
+        "startChar": 15,
+        "endLine": 505,
+        "endChar": 27
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606fe467_f0da07bf",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 537,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "Why not return false as in L541?\n\nAlso, maybe you should DVLOG here and in L541.",
+      "range": {
+        "startLine": 537,
+        "startChar": 6,
+        "endLine": 537,
+        "endChar": 21
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f355a1c_bd9d3d45",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "flags should be unsigned. uint32_t?",
+      "range": {
+        "startLine": 44,
+        "startChar": 2,
+        "endLine": 44,
+        "endChar": 5
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5a2605f_0f7f495d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "nit: extra_params{arc::kInitialStartParam};\n\n(or you could inline it in the next line. up to you).",
+      "range": {
+        "startLine": 21,
+        "startChar": 27,
+        "endLine": 22,
+        "endChar": 50
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f1700b56_60f2c4b1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "Can this be |FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_RESET_TASK_IF_NEEDED|?",
+      "range": {
+        "startLine": 48,
+        "startChar": 34,
+        "endLine": 48,
+        "endChar": 44
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26f6c0e9_9c1054fe",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "Same here, can you use named constants?",
+      "range": {
+        "startLine": 58,
+        "startChar": 34,
+        "endLine": 58,
+        "endChar": 44
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eed0d6a2_f3c80abb",
+        "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T17:14:48Z",
+      "side": 1,
+      "message": "Can you make this a method of arc::Intent?",
+      "range": {
+        "startLine": 606,
+        "startChar": 8,
+        "endLine": 607,
+        "endChar": 71
+      },
+      "revId": "6c3e59bd1bca7a35efc0468f642ea2cf91326092",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
