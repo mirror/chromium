@@ -42,6 +42,7 @@
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoaderTypes.h"
 #include "core/loader/NavigationPolicy.h"
+#include "core/loader/TriggeringEventInfo.h"
 #include "platform/heap/Handle.h"
 #include "platform/loader/fetch/ResourceLoadPriority.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
@@ -130,6 +131,7 @@ class CORE_EXPORT LocalFrameClient : public FrameClient {
       NavigationPolicy,
       bool should_replace_current_entry,
       bool is_client_redirect,
+      TriggeringEventInfo,
       HTMLFormElement*,
       ContentSecurityPolicyDisposition
           should_check_main_world_content_security_policy) = 0;

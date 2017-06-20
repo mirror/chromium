@@ -1275,6 +1275,7 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
     NavigationPolicy policy,
     FrameLoadType frame_load_type,
     bool is_client_redirect,
+    TriggeringEventInfo triggering_event_info,
     HTMLFormElement* form) {
   // Don't ask if we are loading an empty URL.
   if (request.Url().IsEmpty() || substitute_data.IsValid())
@@ -1303,8 +1304,8 @@ NavigationPolicy FrameLoader::ShouldContinueForNavigationPolicy(
       frame_load_type == kFrameLoadTypeReplaceCurrentItem;
   policy = Client()->DecidePolicyForNavigation(
       request, origin_document, loader, type, policy,
-      replaces_current_history_item, is_client_redirect, form,
-      should_check_main_world_content_security_policy);
+      replaces_current_history_item, is_client_redirect, triggering_event_info,
+      form, should_check_main_world_content_security_policy);
   if (policy == kNavigationPolicyCurrentTab ||
       policy == kNavigationPolicyIgnore ||
       policy == kNavigationPolicyHandledByClient ||
@@ -1344,7 +1345,8 @@ NavigationPolicy FrameLoader::ShouldContinueForRedirectNavigationPolicy(
       // during the first navigation and not during redirects.
       nullptr,  // origin_document
       substitute_data, loader, should_check_main_world_content_security_policy,
-      type, policy, frame_load_type, is_client_redirect, form);
+      type, policy, frame_load_type, is_client_redirect,
+      kTriggeringEventInfoNotFromEvent, form);
 }
 
 NavigationPolicy FrameLoader::CheckLoadCanStart(
@@ -1372,6 +1374,12 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       ContentSecurityPolicy::CheckHeaderType::kCheckReportOnly);
   ModifyRequestForCSP(resource_request, nullptr);
 
+  TriggeringEventInfo triggering_event_info = kTriggeringEventInfoNotFromEvent;
+  if (frame_load_request.TriggeringEvent()) {
+    triggering_event_info = frame_load_request.TriggeringEvent()->isTrusted()
+                                ? kTriggeringEventInfoFromTrustedEvent
+                                : kTriggeringEventInfoFromUntrustedEvent;
+  }
   return ShouldContinueForNavigationPolicy(
       resource_request, frame_load_request.OriginDocument(),
       frame_load_request.GetSubstituteData(), nullptr,
@@ -1379,7 +1387,7 @@ NavigationPolicy FrameLoader::CheckLoadCanStart(
       navigation_type, navigation_policy, type,
       frame_load_request.ClientRedirect() ==
           ClientRedirectPolicy::kClientRedirect,
-      frame_load_request.Form());
+      triggering_event_info, frame_load_request.Form());
 }
 
 void FrameLoader::StartLoad(FrameLoadRequest& frame_load_request,
