@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d5662307_a61f6a4b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-20T08:17:28Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "78d44bf7_527bf4b2",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "588e6bf9_51849453",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T07:58:49Z",
       "side": 1,
       "message": "why don\u0027t you have to do this in the service worker case?",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7cd83f5c_4020c095",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-20T08:17:28Z",
+      "side": 1,
+      "message": "I don\u0027t know why, but before my changes, the following lines would only be reached when not fetched via service worker. I changed the \u003celse if\u003e construct to a separate \u003cif\u003e, so that I could call SetCORSStatus in between, i.e. after the initial error checks but before the call to CanAccessResponse (L401), which uses the result of the cors check.",
+      "parentUuid": "588e6bf9_51849453",
       "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
