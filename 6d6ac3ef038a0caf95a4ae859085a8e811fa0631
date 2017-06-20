@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "31d5d60e_a42dcb6d",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-20T20:37:16Z",
+      "side": 1,
+      "message": "FYI this an unrelated change from another CL that got picked up in the diff :(\n\nThe call to service_manager::ServiceManagerIsRemote() is being used as a \"are we running in mushrome or mustash\" check. It\u0027s not strictly that, but it\u0027s true in mustash/mushrome and false in normal chrome. OOPIFs were crashing mustash/mushrome so these checks were added...\n\nThis won\u0027t work for viz Desktop Chrome where there is no SurfaceManager but service_manager::ServiceManagerIsRemote() returns false, so it will need to be fixed eventually.",
+      "parentUuid": "bbaac6bc_2b104620",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "91c8ae61_9181e1f7",
         "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
         "patchSetId": 21
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T19:54:35Z",
       "side": 1,
       "message": "nit: wrap this call instead of early out in CreaetCompositorFrameSinkSupport, since that\u0027s what is done elsewhere in this file",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36eb8f27_e715ad85",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-20T20:37:16Z",
+      "side": 1,
+      "message": "Unrelated CL, so I\u0027d prefer not to change it here. I agree though, that would be better.",
+      "parentUuid": "91c8ae61_9181e1f7",
       "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "8728307e_acaeb3e1",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-20T20:37:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f63c7cdf_6b5ed9c8",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6eec7de0_4dd6bd0a",
         "filename": "ui/app_list/presenter/test/run_all_unittests.cc",
         "patchSetId": 21
@@ -67,6 +121,24 @@
       "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6abf734b_d5452cfd",
+        "filename": "ui/app_list/presenter/test/run_all_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-20T20:37:16Z",
+      "side": 1,
+      "message": "The convention is to have mojo::edk::Init() in main() for some reason, so I just followed that. I\u0027m not sure why exactly, other to absolutely positively make sure it never gets called twice.",
+      "parentUuid": "6eec7de0_4dd6bd0a",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
