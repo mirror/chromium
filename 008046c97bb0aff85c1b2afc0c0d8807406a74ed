@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "202d9666_d53292f4",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-20T19:58:10Z",
+      "side": 1,
+      "message": "Done. \n\nI\u0027ve thought that kojii does this weekly. There could be many other tests affected so I did not think that changing these 3 matters.",
+      "parentUuid": "ec4188d2_fe0356af",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41af360c_c8aa930e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T16:45:23Z",
       "side": 1,
       "message": "I still think that ng_length_utils needs to take this into account (in places like https://cs.chromium.org/chromium/src/third_party/WebKit/Source/core/layout/ng/ng_length_utils.cc?q\u003dng_length_utils+package:%5Echromium$\u0026l\u003d68), and once it does that you do not need to handle this here. We should not need to sprinkle around std::max outside of length utils.",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bda64ea_26dc3437",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-20T19:58:10Z",
+      "side": 1,
+      "message": "I disagree.\n\nI think the fundamental cause of our agreement is the disconnect between CSS spec, and what browsers implement.\n\nLets analyze blink::ComputeBlockSizeForFragment\n\n// Resolves the given length to a layout unit, constraining it by the min\n// logical height and max logical height properties from the ComputedStyle\n// object.\nComputeBlockSizeForFragment(\nconst NGConstraintSpace\u0026, const ComputedStyle\u0026, LayoutUnit content_size)\n\nI find this documentation confusing. What is \"given length\"? content_size?\n\nReading the code, I think what code does is:\n\n// Compute border box block length given CSS logical height. \n// Result is constrained by min/max CSS logical height.\n// TODO Document what is content_size\n\nAccording to the spec, given the following CSS, d1 and d2 should have different border-box sizes, because d2 also includes the scrollbar.\n\n#d1 {\n  box-sizing: content-box;\n  overflow: hidden;\n  width:100px;\n  height:80px;\n}\n#d2 {\n  box-sizing: content-box;\n  overflow: scroll;\n  width:100px;\n  height:80px;\n}\n\u003cdiv id\u003d\"d1\"\u003e\u003c/div\u003e\n\u003cdiv id\u003d\"d2\"\u003e\u003c/div\u003e\n\nThat is not what happens in any of the today\u0027s browsers. All of them keep sizes of d1 and d2 the same. Given this consistency, maybe there is some spec addendum about this I am not aware of. Will ask tabatkins.\n\nTo be compatible with the web, ComputeBlockSizeForFragment should not take scrollbars into account.\n\nI was unable to test what happens for min-content, max-content cases in multiple browsers, because they do not implement it. For consistency, they should probably ignore scrollbars too.",
+      "parentUuid": "41af360c_c8aa930e",
       "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "e7331a61_f8fb2e95",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-20T19:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6562ba69_6cd4be75",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c4be23_919ced44",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
         "patchSetId": 2
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "38e6e84a_4a6e5681",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 284,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-20T19:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "25c4be23_919ced44",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdcc34e7_5b9f632a",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
         "patchSetId": 2
@@ -84,6 +156,24 @@
       "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "368bf3b6_49571008",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 287,
+      "author": {
+        "id": 1161294
+      },
+      "writtenOn": "2017-06-20T19:58:10Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "bdcc34e7_5b9f632a",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
