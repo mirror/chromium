@@ -33,6 +33,70 @@
       "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5e65c17_2ace6f25",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-20T17:35:42Z",
+      "side": 1,
+      "message": "Ah, true. This makes things uglier :|\n\nMaybe just somehow revealing whether the tracker is initialized (e.g. letting the client passing a callback to notify)?\n\nThis way, this could be another dependency for RemoteSuggestionsProvider to be inited().",
+      "parentUuid": "1f1a462b_2e640419",
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b044f15_e7a2acc1",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-20T17:35:42Z",
+      "side": 1,
+      "message": "Shouldn\u0027t you also remove the observer before destructing it?\n\nThis means that you need to keep the model in a local pointer. Maybe document it in the header that you need |offline_page_model| to outlive PrefetchedPagesTracker?\n(this can be implemented by \"DependsOn(OfflinePageModelFactory::GetInstance())\" in the factory)",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 40
+      },
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cd193c9_8a74ef2d",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-20T17:35:42Z",
+      "side": 1,
+      "message": "nit: maybe add a const ref for this so that this long expression does not repeat 3 times?",
+      "range": {
+        "startLine": 94,
+        "startChar": 33,
+        "endLine": 94,
+        "endChar": 69
+      },
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
