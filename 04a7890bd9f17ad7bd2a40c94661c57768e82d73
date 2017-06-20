@@ -93,6 +93,30 @@
       "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f3cfc263_60b794b6",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T23:52:16Z",
+      "side": 1,
+      "message": "OK thanks for the background context.\n\nJust to help me understand: is BytesProvider something that could serve bytes to the browser process or the render process? (The comment says it\u0027s for the blob registry to request bytes, and my understanding is the canonical one is in the browser process, so maybe this is just renderer-\u003ebrowser?)",
+      "parentUuid": "0ddf2c40_8477fbb5",
+      "range": {
+        "startLine": 314,
+        "startChar": 12,
+        "endLine": 314,
+        "endChar": 44
+      },
+      "revId": "04a7890bd9f17ad7bd2a40c94661c57768e82d73",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
