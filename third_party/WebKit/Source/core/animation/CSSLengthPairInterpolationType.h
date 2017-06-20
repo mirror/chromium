@@ -14,7 +14,9 @@ namespace blink {
 
 class CSSLengthPairInterpolationType : public CSSLengthListInterpolationType {
  public:
-  CSSLengthPairInterpolationType(PropertyHandle property)
+  CSSLengthPairInterpolationType(
+      PropertyHandle property,
+      const PropertyRegistration* registration = nullptr)
       : CSSLengthListInterpolationType(property) {}
 
  private:
