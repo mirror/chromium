@@ -51,6 +51,7 @@ class PrefetchDispatcherTest : public testing::Test, public PrefetchService {
   PrefetchDispatcher* GetPrefetchDispatcher() override;
   PrefetchGCMHandler* GetPrefetchGCMHandler() override;
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
+  DownloadDelegate* GetDownloadDelegate() override;
 
   // KeyedService implementation.
   void Shutdown() override {}
@@ -114,6 +115,12 @@ PrefetchGCMHandler* PrefetchDispatcherTest::GetPrefetchGCMHandler() {
 
 SuggestedArticlesObserver*
 PrefetchDispatcherTest::GetSuggestedArticlesObserver() {
+  NOTREACHED();
+  return nullptr;
+}
+
+PrefetchService::DownloadDelegate*
+PrefetchDispatcherTest::GetDownloadDelegate() {
   NOTREACHED();
   return nullptr;
 }
