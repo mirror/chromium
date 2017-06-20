@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3b3c2804_925bbd54",
+        "filename": "components/offline_pages/core/prefetch/get_operation_task.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "old comment",
+      "range": {
+        "startLine": 18,
+        "startChar": 26,
+        "endLine": 18,
+        "endChar": 33
+      },
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d7a26b43_3dde47d8",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "Could you add a TODO or a bug to add unittests here that verify that specific tasks were created in right sequence and with right parameters? Unless it\u0027ll be a part of some other test.",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f93d92c_4c6ed8d0",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "\"Creates and starts\"?",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f97565e8_0f595892",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "This assumes the request is a singleton. A comment would be nice telling what happens if \"Create\" method is called more then once.",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94c8bd17_7f7e7e30",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "same here, what happens if this is called for the same name more than once?",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1795915f_6b9d0498",
+        "filename": "components/offline_pages/core/prefetch/prefetch_network_request_factory.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "do we need this and next methods? I wonder if when we do, it\u0027ll be in the form of \"CancelAllActiveRequests()\" or something else. Maybe remove these for now and add later as needed?",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c0daab2_c927779c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.cc",
+        "patchSetId": 12
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T23:04:26Z",
+      "side": 1,
+      "message": "Could you add a network_request_factory_ to the CHECK here?",
+      "revId": "162c85a14d3e6f4238b3f4683f699830311beb16",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
