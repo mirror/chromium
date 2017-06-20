@@ -7,6 +7,11 @@
 #include "base/mac/mac_util.h"
 #include "base/mac/scoped_cftyperef.h"
 
+#undef CGColorSpaceCopyICCProfile
+extern "C" {
+CFDataRef CGColorSpaceCopyICCProfile(CGColorSpaceRef);
+}  // extern "C"
+
 namespace gfx {
 
 // static
