@@ -1062,10 +1062,16 @@ InputHandlerProxy::EventDisposition InputHandlerProxy::HitTestTouchEvent(
         touch_event.touches[i].state != WebTouchPoint::kStatePressed) {
       continue;
     }
+    cc::TouchAction touch_action;
     cc::InputHandler::TouchStartOrMoveEventListenerType event_listener_type =
         input_handler_->EventListenerTypeForTouchStartOrMoveAt(
             gfx::Point(touch_event.touches[i].PositionInWidget().x,
-                       touch_event.touches[i].PositionInWidget().y));
+                       touch_event.touches[i].PositionInWidget().y),
+            &touch_action);
+    // TODO(hayleyferr): Remove touch_action = kTouchActionNone.
+    // Send |touch_action| to browser.
+    touch_action = cc::kTouchActionNone;
+
     if (event_listener_type !=
         cc::InputHandler::TouchStartOrMoveEventListenerType::NO_HANDLER) {
       *is_touching_scrolling_layer =

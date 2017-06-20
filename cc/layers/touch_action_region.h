@@ -24,6 +24,7 @@ class CC_EXPORT TouchActionRegion {
   void Union(TouchAction, const gfx::Rect&);
   const Region& region() const { return *region_; }
   const Region& GetRegionForTouchAction(TouchAction);
+  TouchAction GetMostRestrictedTouchAction(const gfx::Point&) const;
 
   TouchActionRegion& operator=(const TouchActionRegion& other);
   TouchActionRegion& operator=(TouchActionRegion&& other);
