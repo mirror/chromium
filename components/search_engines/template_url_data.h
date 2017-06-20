@@ -42,6 +42,7 @@ struct TemplateURLData {
                   base::StringPiece instant_url_post_params,
                   base::StringPiece image_url_post_params,
                   base::StringPiece favicon_url,
+                  base::StringPiece logo_url,
                   base::StringPiece encoding,
                   const base::ListValue& alternate_urls_list,
                   base::StringPiece search_terms_replacement_key,
@@ -80,6 +81,9 @@ struct TemplateURLData {
 
   // Optional favicon for the TemplateURL.
   GURL favicon_url;
+
+  // Optional URL for the logo.
+  GURL logo_url;
 
   // URL to the OSD file this came from. May be empty.
   GURL originating_url;
