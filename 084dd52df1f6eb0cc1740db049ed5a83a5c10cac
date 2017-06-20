@@ -16,6 +16,24 @@
       "revId": "084dd52df1f6eb0cc1740db049ed5a83a5c10cac",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "38f1ec82_e77c0a55",
+        "filename": "chrome/browser/chromeos/login/startup_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-20T20:37:23Z",
+      "side": 1,
+      "message": "Seems null reply would trigger a DCHECK.\n\nhttps://cs.chromium.org/chromium/src/base/threading/post_task_and_reply_impl.cc?rcl\u003ddbc3edc12de1d6ad8e4e43aace717ed6ac3e5256\u0026l\u003d82",
+      "parentUuid": "e0dda1f2_505b62ff",
+      "revId": "084dd52df1f6eb0cc1740db049ed5a83a5c10cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
