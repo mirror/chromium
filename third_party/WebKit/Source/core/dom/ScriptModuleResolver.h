@@ -33,6 +33,9 @@ class CORE_EXPORT ScriptModuleResolver
   // identifier -> ModuleScript mapping entry.
   virtual void RegisterModuleScript(ModuleScript*) = 0;
 
+  // Notify the ScriptModuleResolver to clear its ModuleScript mapping.
+  virtual void UnregisterModuleScript(ModuleScript*) = 0;
+
   // Implements "Runtime Semantics: HostResolveImportedModule"
   // https://tc39.github.io/ecma262/#sec-hostresolveimportedmodule
   // This returns a null ScriptModule when an exception is thrown.
