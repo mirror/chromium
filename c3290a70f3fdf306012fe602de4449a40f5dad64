@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ede78981_e639e664",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-20T16:28:21Z",
+      "side": 1,
+      "message": "You should just be able to use run_loop.QuitClosure() instead of binding your own. Did you get an error when you tried this?",
+      "range": {
+        "startLine": 38,
+        "startChar": 0,
+        "endLine": 40,
+        "endChar": 1
+      },
+      "revId": "c3290a70f3fdf306012fe602de4449a40f5dad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "46d40e64_a690f428",
+        "filename": "services/device/generic_sensor/generic_sensor_service_unittest.cc",
+        "patchSetId": 10
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-20T16:28:21Z",
+      "side": 1,
+      "message": "|check_value_| is called",
+      "range": {
+        "startLine": 201,
+        "startChar": 5,
+        "endLine": 201,
+        "endChar": 24
+      },
+      "revId": "c3290a70f3fdf306012fe602de4449a40f5dad64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
