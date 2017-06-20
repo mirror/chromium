@@ -118,6 +118,36 @@ FileEnumerator::FileInfo FileEnumerator::GetInfo() const {
   return directory_entries_[current_directory_entry_];
 }
 
+#if defined(OS_FUCHSIA)
+
+bool FileEnumerator::ReadDirectory(std::vector<FileInfo>* entries,
+                                   const FilePath& source,
+                                   bool show_links) {
+  base::ThreadRestrictions::AssertIOAllowed();
+  DIR* dir = opendir(source.value().c_str());
+  if (!dir)
+    return false;
+
+  struct dirent* dent;
+  while ((dent = readdir(dir))) {
+    FileInfo info;
+    info.filename_ = FilePath(dent->d_name);
+
+    FilePath full_name = source.Append(dent->d_name);
+    // No links on Fuchsia, show_links is ignored.
+    if (stat(full_name.value().c_str(), &info.stat_) < 0) {
+      DPLOG(ERROR) << "Couldn't stat " << source.Append(dent->d_name).value();
+      memset(&info.stat_, 0, sizeof(info.stat_));
+    }
+    entries->push_back(info);
+  }
+
+  closedir(dir);
+  return true;
+}
+
+#else  // defined(OS_FUCHSIA)
+
 bool FileEnumerator::ReadDirectory(std::vector<FileInfo>* entries,
                                    const FilePath& source, bool show_links) {
   base::ThreadRestrictions::AssertIOAllowed();
@@ -125,9 +155,8 @@ bool FileEnumerator::ReadDirectory(std::vector<FileInfo>* entries,
   if (!dir)
     return false;
 
-#if !defined(OS_LINUX) && !defined(OS_MACOSX) && !defined(OS_BSD) &&    \
-    !defined(OS_SOLARIS) && !defined(OS_ANDROID) && !defined(OS_AIX) && \
-    !defined(OS_FUCHSIA)
+#if !defined(OS_LINUX) && !defined(OS_MACOSX) && !defined(OS_BSD) && \
+    !defined(OS_SOLARIS) && !defined(OS_ANDROID) && !defined(OS_AIX)
 #error Port warning: depending on the definition of struct dirent, \
          additional space for pathname may be needed
 #endif
@@ -159,5 +188,7 @@ bool FileEnumerator::ReadDirectory(std::vector<FileInfo>* entries,
   closedir(dir);
   return true;
 }
+
+#endif  // defined(OS_FUCHSIA)
 
 }  // namespace base
