@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f2203d95_a8074f18",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9b677e1d_6c97dd84",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3ee15551_4007f8df",
         "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
         "patchSetId": 11
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "922f616c_2f1ad1df",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3ee15551_4007f8df",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "dbdad03d_f1efd0ce",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 11
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-20T21:44:07Z",
       "side": 1,
       "message": "This feels like it should be above, in publics with other PrefetchDispatcher \u0027inputs\u0027. Because this is an call that Dispatcher will just process by creating another task (either one that will start download or transition prefetch items in store to gcm wait etc)...",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2cb434a_9e7d1cb2",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "That may be true but in the final form we will have different methods for GetOperation and GeneratePageBundle.  This is just a temporary placeholder to log results, until we get a proper SQL store.  Do you want a more final API shape in this patch?",
+      "parentUuid": "dbdad03d_f1efd0ce",
       "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

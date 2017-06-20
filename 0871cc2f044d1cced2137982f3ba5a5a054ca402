@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b2e7e728_096cf01e",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b3809210_8296ca38",
+      "range": {
+        "startLine": 24,
+        "startChar": 25,
+        "endLine": 24,
+        "endChar": 32
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f609ffd_abda225c",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 5
@@ -45,6 +69,30 @@
       "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7651d243_36f4de0f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f609ffd_abda225c",
+      "range": {
+        "startLine": 142,
+        "startChar": 38,
+        "endLine": 142,
+        "endChar": 54
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "30afac17_f4d20b25",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f7c947c2_b4671b6f",
+      "range": {
+        "startLine": 149,
+        "startChar": 23,
+        "endLine": 149,
+        "endChar": 35
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8a3a9a2b_f3336895",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
         "patchSetId": 5
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-16T00:00:10Z",
       "side": 1,
       "message": "Can you use GetStringFromPrefetchRequestStatus and GetStringRenderPageInfoList?",
+      "range": {
+        "startLine": 156,
+        "startChar": 9,
+        "endLine": 156,
+        "endChar": 17
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e116fb4c_d676e2bd",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "I\u0027d rather leave that for a separate CL since those are hidden private functions in the offline-internals message handler.",
+      "parentUuid": "8a3a9a2b_f3336895",
       "range": {
         "startLine": 156,
         "startChar": 9,
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "d4a2f71a_81c3486c",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "\u003e I like this approach.\n\u003e \n\u003e Is it better to define this as struct?\n\nI refactored this away, the new network factory now owns network requests and provides facilities for canceling them later.",
+      "parentUuid": "5690161c_8dcbed18",
+      "range": {
+        "startLine": 28,
+        "startChar": 2,
+        "endLine": 28,
+        "endChar": 7
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "baf031f3_6281790c",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 5
@@ -137,6 +257,30 @@
       "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "464a745e_f716682a",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "baf031f3_6281790c",
+      "range": {
+        "startLine": 49,
+        "startChar": 34,
+        "endLine": 49,
+        "endChar": 47
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "176c98f7_ccb3e534",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7cc6ff0f_62a73e50",
+      "range": {
+        "startLine": 71,
+        "startChar": 7,
+        "endLine": 71,
+        "endChar": 26
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "428d9cd7_4ffa3633",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
         "patchSetId": 5
@@ -183,6 +351,30 @@
       "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0dc0b3c_633f519b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T21:56:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "428d9cd7_4ffa3633",
+      "range": {
+        "startLine": 85,
+        "startChar": 23,
+        "endLine": 85,
+        "endChar": 45
+      },
+      "revId": "0871cc2f044d1cced2137982f3ba5a5a054ca402",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
