@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "74c9f9d4_400d7114",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T14:15:24Z",
+      "side": 1,
+      "message": "Hm, should we rather change the behavior of ContextLifecycleObserver\u0027s GetExecutionContext to return nullptr in destroyed case like what ContextClient\u0027s one does?",
+      "revId": "9de88d0e22c5d417c0d433288659b09b5e7b9292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
