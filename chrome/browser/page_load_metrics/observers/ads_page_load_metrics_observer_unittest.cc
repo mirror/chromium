@@ -39,76 +39,6 @@ const char kNonAdUrl2[] = "https://bar.com/";
 const char kAdName[] = "google_ads_iframe_1";
 const char kNonAdName[] = "foo";
 
-class DelayWillProcessResponseObserver;
-
-// TODO(csharrison): Add this to the content public test API if we find that
-// this is useful in other places.
-// Delays WillProcessResponse until the caller tells it to cancel.
-class DelayWillProcessResponseThrottle : public content::NavigationThrottle {
- public:
-  explicit DelayWillProcessResponseThrottle(
-      content::NavigationHandle* navigation_handle)
-      : NavigationThrottle(navigation_handle) {}
-
-  // content::NavigationThrottle:
-  ThrottleCheckResult WillProcessResponse() override {
-    return NavigationThrottle::DEFER;
-  }
-  const char* GetNameForLogging() override {
-    return "DelayWillProcessResponseThrottle";
-  }
-
-  void CancelDeferredNavigation() {
-    navigation_handle()->CancelDeferredNavigation(NavigationThrottle::CANCEL);
-  }
-
- private:
-  DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseThrottle);
-};
-
-// Adds a navigation throttle to the navigation which delays
-// WillProcessResponse.
-class DelayWillProcessResponseObserver : public content::WebContentsObserver {
- public:
-  explicit DelayWillProcessResponseObserver(content::WebContents* contents)
-      : content::WebContentsObserver(contents) {}
-
-  // content::WebContentsObserver:
-  void DidStartNavigation(
-      content::NavigationHandle* navigation_handle) override {
-    std::unique_ptr<content::NavigationThrottle> delay_throttle =
-        base::MakeUnique<DelayWillProcessResponseThrottle>(navigation_handle);
-    throttle_ =
-        static_cast<DelayWillProcessResponseThrottle*>(delay_throttle.get());
-    navigation_handle->RegisterThrottleForTesting(std::move(delay_throttle));
-  }
-
-  void LoadResourceForMainFrameAndResume(
-      page_load_metrics::MetricsWebContentsObserver* observer) {
-    DCHECK(throttle_);
-
-    // Load a resource for the main frame before it commits.
-    content::NavigationHandle* navigation_handle =
-        throttle_->navigation_handle();
-
-    observer->OnRequestComplete(
-        GURL(kNonAdUrl), net::HostPortPair(),
-        navigation_handle->GetRenderFrameHost()->GetFrameTreeNodeId(),
-        navigation_handle->GetGlobalRequestID(),
-        content::RESOURCE_TYPE_MAIN_FRAME, false /* was_cached */,
-        nullptr /* data_reduction_proxy */, 10 * 1024 /* raw_body_bytes */,
-        0 /* original_network_content_length */, base::TimeTicks::Now(), 0);
-
-    throttle_->CancelDeferredNavigation();
-  }
-
- private:
-  DelayWillProcessResponseThrottle* throttle_ = nullptr;
-  content::GlobalRequestID global_request_id_;
-
-  DISALLOW_COPY_AND_ASSIGN(DelayWillProcessResponseObserver);
-};
-
 }  // namespace
 
 class AdsPageLoadMetricsObserverTest
@@ -683,28 +613,65 @@ TEST_F(AdsPageLoadMetricsObserverTest, FrameWithNoParent) {
       content::RESOURCE_TYPE_SUB_FRAME, 1);
 }
 
-// Make sure that ads histograms aren't recorded if the tracker never commits
-// (see https://crbug.com/723219).
-TEST_F(AdsPageLoadMetricsObserverTest, NoHistogramWithoutCommit) {
-  // Once the metrics observer has the GlobalRequestID, throttle.
-  DelayWillProcessResponseObserver delay_observer(web_contents());
-
+TEST_F(AdsPageLoadMetricsObserverTest, MainFrameResource) {
   // Start main-frame navigation
   auto navigation_simulator = NavigationSimulator::CreateRendererInitiated(
       GURL(kNonAdUrl), web_contents()->GetMainFrame());
-  navigation_simulator->Start();
+  navigation_simulator->WillProcessResponse();
 
-  // This will be run once WillProcessResponse defers and the navigation
-  // simulator runs the message loop waiting for the throttles to finish.
-  base::ThreadTaskRunnerHandle::Get()->PostTask(
-      FROM_HERE,
-      base::Bind(
-          &DelayWillProcessResponseObserver::LoadResourceForMainFrameAndResume,
-          base::Unretained(&delay_observer), observer()));
+  page_load_metrics::ExtraRequestCompleteInfo request(
+      GURL(kNonAdUrl), net::HostPortPair(),
+      navigation_simulator->GetNavigationHandle()->GetFrameTreeNodeId(),
+      false /* was_cached */, 10 * 1024 /* raw_body_bytes */,
+      0 /* original_network_content_length */,
+      nullptr /* data_reduction_proxy_data */,
+      content::RESOURCE_TYPE_MAIN_FRAME, 0);
 
-  // The commit will defer after calling WillProcessNavigationResponse, it
-  // will load a resource, and then the throttle will cancel the commit.
+  SimulateLoadedResource(
+      request,
+      navigation_simulator->GetNavigationHandle()->GetGlobalRequestID());
+
   navigation_simulator->Commit();
+
+  NavigateToUntrackedUrl();
+
+  // We only log histograms if we observed bytes for the page. Verify that the
+  // main frame resource was properly tracked and attributed.
+  histogram_tester().ExpectUniqueSample(
+      "PageLoad.Clients.Ads.Google.FrameCounts.AnyParentFrame.AdFrames", 0, 1);
+
+  // There shouldn't be any other histograms for a page with no ad resources.
+  EXPECT_EQ(1u, histogram_tester()
+                    .GetTotalCountsForPrefix("PageLoad.Clients.Ads.")
+                    .size());
+}
+
+// Make sure that ads histograms aren't recorded if the tracker never commits
+// (see https://crbug.com/723219).
+TEST_F(AdsPageLoadMetricsObserverTest, NoHistogramWithoutCommit) {
+  // Start main-frame navigation
+  auto navigation_simulator = NavigationSimulator::CreateRendererInitiated(
+      GURL(kNonAdUrl), web_contents()->GetMainFrame());
+  navigation_simulator->WillProcessResponse();
+
+  page_load_metrics::ExtraRequestCompleteInfo request(
+      GURL(kNonAdUrl), net::HostPortPair(),
+      navigation_simulator->GetNavigationHandle()->GetFrameTreeNodeId(),
+      false /* was_cached */, 10 * 1024 /* raw_body_bytes */,
+      0 /* original_network_content_length */,
+      nullptr /* data_reduction_proxy_data */,
+      content::RESOURCE_TYPE_MAIN_FRAME, 0);
+
+  SimulateLoadedResource(
+      request,
+      navigation_simulator->GetNavigationHandle()->GetGlobalRequestID());
+
+  // Metrics should not be logged for an aborted navigation.
+  navigation_simulator->Fail(net::ERR_ABORTED);
+
+  // Force navigation to a new page to make sure OnComplete() runs for the
+  // previous failed navigation.
+  NavigateToUntrackedUrl();
 
   // There shouldn't be any histograms for an aborted main frame.
   EXPECT_EQ(0u, histogram_tester()
