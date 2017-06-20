@@ -344,8 +344,10 @@ class FetchDataLoaderAsFormData final : public FetchDataLoader,
         blob_data_->SetContentType(content_type.IsNull() ? "text/plain"
                                                          : content_type);
       } else {
-        if (!string_decoder_)
-          string_decoder_ = TextResourceDecoder::CreateAlwaysUseUTF8ForText();
+        if (!string_decoder_) {
+          string_decoder_ = TextResourceDecoder::Create(
+              TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
+        }
         string_builder_.reset(new StringBuilder);
       }
       return true;
@@ -409,7 +411,8 @@ class FetchDataLoaderAsString final : public FetchDataLoader,
     DCHECK(!decoder_);
     DCHECK(!consumer_);
     client_ = client;
-    decoder_ = TextResourceDecoder::CreateAlwaysUseUTF8ForText();
+    decoder_ = TextResourceDecoder::Create(
+        TextResourceDecoderOptions::CreateAlwaysUseUTF8ForText());
     consumer_ = consumer;
     consumer_->SetClient(this);
     OnStateChange();
