@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ca1c280f_2508610b",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T22:02:45Z",
+      "side": 1,
+      "message": "Is there a case where the matrix is not decomposable, and although the scaled target size is emtpy, the unscaled one (used for non-decomposable transform) is not empty, and due to skew/etc... we would end up drawing something?\n\nBasically, should this code come after we potentially re-adjust target_size below?",
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cae6c85c_5cc1dc26",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T22:02:45Z",
+      "side": 1,
+      "message": "nit: Name is misleading, this isn\u0027t a target size, but a scale adjustment",
+      "range": {
+        "startLine": 959,
+        "startChar": 11,
+        "endLine": 959,
+        "endChar": 26
+      },
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da7d608f_6b364d0f",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T22:02:45Z",
+      "side": 1,
+      "message": "what about scaled subrects ;P",
+      "range": {
+        "startLine": 972,
+        "startChar": 6,
+        "endLine": 972,
+        "endChar": 34
+      },
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
