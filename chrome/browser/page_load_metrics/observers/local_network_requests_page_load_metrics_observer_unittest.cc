@@ -335,7 +335,8 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   // itself.
   const internal::PageAddressInfo& page = internal::kSameSubnetRequest1;
   NavigateToPageAndLoadResources(
-      page, {internal::kSameSubnetRequest2, internal::kSameSubnetRequest3, page},
+      page,
+      {internal::kSameSubnetRequest2, internal::kSameSubnetRequest3, page},
       {true, false, true});
 
   // Should generate only a domain type UKM entry and nothing else.
