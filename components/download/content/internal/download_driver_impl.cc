@@ -7,6 +7,7 @@
 #include <set>
 #include <vector>
 
+#include "base/strings/string_util.h"
 #include "components/download/internal/driver_entry.h"
 #include "content/public/browser/download_interrupt_reasons.h"
 #include "content/public/browser/download_url_parameters.h"
