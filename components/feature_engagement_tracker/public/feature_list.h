@@ -50,9 +50,10 @@ DEFINE_VARIATION_PARAM(kIPHDataSaverDetailFeature, "IPH_DataSaverDetail");
 DEFINE_VARIATION_PARAM(kIPHDownloadPageFeature, "IPH_DownloadPage");
 DEFINE_VARIATION_PARAM(kIPHDownloadHomeFeature, "IPH_DownloadHome");
 #endif  // OS_ANDROID
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
 DEFINE_VARIATION_PARAM(kIPHNewTabFeature, "IPH_NewTab");
-#endif  // OS_WIN
+DEFINE_VARIATION_PARAM(kIPHIncognitoWindowFeature, "IPH_IncognitoWindow");
+#endif  // OS_WIN || OS_LINUX
 
 }  // namespace
 
@@ -66,8 +67,9 @@ constexpr flags_ui::FeatureEntry::FeatureVariation
         VARIATION_ENTRY(kIPHDataSaverDetailFeature),
         VARIATION_ENTRY(kIPHDownloadPageFeature),
         VARIATION_ENTRY(kIPHDownloadHomeFeature),
-#elif defined(OS_WIN)
+#elif defined(OS_WIN) || defined(OS_LINUX)
         VARIATION_ENTRY(kIPHNewTabFeature),
+        VARIATION_ENTRY(kIPHIncognitoWindowFeature),
 #else
         VARIATION_ENTRY(kIPHDummyFeature),  // Ensures non-empty array.
 #endif
