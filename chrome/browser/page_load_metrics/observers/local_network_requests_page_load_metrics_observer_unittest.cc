@@ -48,8 +48,7 @@ static const PageAddressInfo
     kPublicPageIPv6 = {(char*)"https://google.com/",
                        (char*)"[2607:f8b0:4005:809::200e]", 443},
     kPrivatePage = {(char*)"http://test.local/", (char*)"192.168.10.123", 80},
-    kLocalhostPage = {(char*)"http://localhost:8080/", (char*)"127.0.0.1",
-                      8080},
+    kLocalhostPage = {(char*)"http://localhost/", (char*)"127.0.0.1", 80},
     kLocalhostPageIPv6 = {(char*)"http://[::1]/", (char*)"[::1]", 80},
     kPublicRequest1 = {(char*)"http://bar.com/", (char*)"100.150.200.250", 80},
     kPublicRequest2 = {(char*)"https://www.baz.com/", (char*)"192.10.20.30",
@@ -136,8 +135,9 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
                               const int net_error) {
     page_load_metrics::ExtraRequestCompleteInfo request_info(
         GURL(resource.url), net::HostPortPair(resource.host_ip, resource.port),
-        -1 /* frame_tree_node_id */, true /*was_cached*/,
-        1024 * 20 /* raw_body_bytes */, 0 /* original_network_content_length */,
+        -1 /* frame_tree_node_id */, !net_error /*was_cached*/,
+        (net_error ? 1024 * 20 : 0) /* raw_body_bytes */,
+        0 /* original_network_content_length */,
         nullptr /* data_reduction_proxy_data */,
         content::ResourceType::RESOURCE_TYPE_MAIN_FRAME, net_error);
 
@@ -276,7 +276,8 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     const ukm::mojom::UkmMetric* metric =
         ukm::TestUkmRecorder::FindMetric(entry, name);
     EXPECT_NE(nullptr, metric) << "Failed to find metric: " << name;
-    EXPECT_EQ(expected_value, metric->value);
+    EXPECT_EQ(expected_value, metric->value)
+        << "Value of metric " << name << " is incorrect.";
   }
 
  private:
@@ -384,13 +385,16 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Make all of the types of requests, with all being successful.
   std::vector<internal::PageAddressInfo> requests = {
-      internal::kPublicRequest1,     internal::kPublicRequest2,
-      internal::kSameSubnetRequest1, internal::kSameSubnetRequest2,
-      internal::kSameSubnetRequest3, internal::kDiffSubnetRequest1,
-      internal::kDiffSubnetRequest2, internal::kLocalhostRequest1,
-      internal::kLocalhostRequest2,  internal::kLocalhostRequest3,
-      internal::kLocalhostRequest4,  internal::kLocalhostRequest5,
-      internal::kRouterRequest1,     internal::kRouterRequest2};
+      internal::kPublicPage,         internal::kPublicPageIPv6,
+      internal::kPrivatePage,        internal::kLocalhostPage,
+      internal::kLocalhostPageIPv6,  internal::kPublicRequest1,
+      internal::kPublicRequest2,     internal::kSameSubnetRequest1,
+      internal::kSameSubnetRequest2, internal::kSameSubnetRequest3,
+      internal::kDiffSubnetRequest1, internal::kDiffSubnetRequest2,
+      internal::kLocalhostRequest1,  internal::kLocalhostRequest2,
+      internal::kLocalhostRequest3,  internal::kLocalhostRequest4,
+      internal::kLocalhostRequest5,  internal::kRouterRequest1,
+      internal::kRouterRequest2};
   for (auto request : requests) {
     SimulateLoadedSuccessfulResource(request);
   }
@@ -398,7 +402,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Should now have generated UKM entries for each of the types of resources
   // requested except for public resources.
-  EXPECT_EQ(11ul, ukm_entry_count());
+  EXPECT_EQ(13ul, ukm_entry_count());
 
   // TODO(uthakore): Finish verification (code below)
 }
@@ -549,7 +553,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
            .at(true),
        2},
       {internal::kNonlocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
-           .at(RESOURCE_TYPE_ROUTER)
+           .at(RESOURCE_TYPE_PRIVATE)
            .at(false),
        1},
       {internal::kLocalhostHistogramNames.at(DOMAIN_TYPE_PUBLIC)
@@ -566,6 +570,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   EXPECT_EQ(6ul, ukm_entry_count());
   auto entries = GetUkmEntriesForSourceID(source->id());
   for (size_t i = 1; i < entries.size(); ++i) {
+    LOG(WARNING) << "Entry " << i;
     EXPECT_EQ(entries[i]->source_id, source->id());
     EXPECT_EQ(
         entries[i]->event_hash,
@@ -584,9 +589,9 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
       ExpectMetric(internal::kUkmSuccessfulCountName,
                    expected_values[i - 1].success_count, entries[i]);
       ExpectMetric(internal::kUkmFailedCountName,
-                   expected_values[i].failed_count, entries[i]);
+                   expected_values[i - 1].failed_count, entries[i]);
     } else {
-      // Localhost page load
+      // Nonlocalhost page load
       EXPECT_EQ(entries[i]->metrics.size(), 3ul);
       EXPECT_EQ(expected_values[i - 1].resource_type,
                 static_cast<ResourceType>(entries[i]->metrics[0]->value));

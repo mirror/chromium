@@ -160,14 +160,19 @@ void LocalNetworkRequestsPageLoadMetricsObserver::ProcessLoadedResource(
   // itself as it might be an IP address if it is a local network request, which
   // is what we care about.
   if (!ip_exists && extra_request_info.url.is_valid()) {
+    ip_exists = net::ParseURLHostnameToAddress(extra_request_info.url.host(),
+                                               &resource_ip);
     if (net::IsLocalhost(extra_request_info.url.host())) {
       resource_ip = net::IPAddress::IPv4Localhost();
       ip_exists = true;
-    } else {
-      ip_exists = net::ParseURLHostnameToAddress(extra_request_info.url.host(),
-                                                 &resource_ip);
-      resource_port = extra_request_info.url.EffectiveIntPort();
     }
+    resource_port = extra_request_info.url.EffectiveIntPort();
+  }
+
+  if (net::IsLocalhost(resource_ip.ToString()) ||
+      resource_ip == net::IPAddress::IPv6Localhost()) {
+    resource_ip = net::IPAddress::IPv4Localhost();
+    ip_exists = true;
   }
 
   // We can't track anything if we don't have an IP address for the resource.
@@ -225,6 +230,11 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordHistograms() {
     counts[internal::kLocalhostHistogramNames.at(page_load_type_)
                .at(DeterminePortType(entry.first))
                .at(false)] += entry.second.second;
+  }
+
+  LOG(WARNING) << "UMA histogram values for " << page_ip_address_.ToString();
+  for (auto entry : counts) {
+    LOG(WARNING) << entry.first << " has value " << entry.second;
   }
 
   // Log a histogram for each type of resource depending on the domain type of
@@ -499,6 +509,10 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordUkmMetrics(
 
   // Log an entry for each non-localhost resource (one per IP address).
   for (const auto& entry : resource_request_counts_) {
+    LOG(WARNING) << "Nonlocalhost UKM entry: " << entry.first.ToString() << "["
+                 << static_cast<int>(requested_resource_types_->at(entry.first))
+                 << "]: (" << entry.second.first << ", " << entry.second.second
+                 << ")";
     ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
     if (!ukm_recorder) {
       break;
@@ -515,6 +529,9 @@ void LocalNetworkRequestsPageLoadMetricsObserver::RecordUkmMetrics(
 
   // Log an entry for each localhost resource (one per port).
   for (const auto& entry : localhost_request_counts_) {
+    LOG(WARNING) << "Localhost UKM entry: " << entry.first << "["
+                 << static_cast<int>(DeterminePortType(entry.first)) << "]: ("
+                 << entry.second.first << ", " << entry.second.second << ")";
     ukm::UkmRecorder* ukm_recorder = g_browser_process->ukm_recorder();
     if (!ukm_recorder) {
       break;
