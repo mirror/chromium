@@ -52,6 +52,24 @@
       "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "64b6b150_a0b30b3f",
+        "filename": "content/browser/media/media_internals.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 391,
+      "author": {
+        "id": 1003176
+      },
+      "writtenOn": "2017-06-20T20:25:19Z",
+      "side": 1,
+      "message": "Just to make sure i\u0027m following - you mention this because with Dale\u0027s refactor this set will be reworked, right? Well, once you\u0027re obsoleteing a bunch having a couple extra doesn\u0027t hurt. There\u0027s no serious cost to a couple more obsolete metrics so I think it is fine.",
+      "parentUuid": "4bbc4fbe_3a100f77",
+      "revId": "f9e7d67bb06226481ef1c3d389b6c375c0ffdf26",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
