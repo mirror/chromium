@@ -4,6 +4,7 @@
 
 #include "platform/bindings/RuntimeCallStats.h"
 
+#include "platform/RuntimeEnabledFeatures.h"
 #include "platform/wtf/CurrentTime.h"
 #include "testing/gtest/include/gtest/gtest.h"
 
@@ -36,6 +37,7 @@ class RuntimeCallStatsTest : public testing::Test {
 
   void TearDown() override {
     SetTimeFunctionsForTesting(original_time_function_);
+    RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(false);
   }
 
  private:
@@ -231,6 +233,94 @@ TEST_F(RuntimeCallStatsTest, ResetCallStats) {
 
   EXPECT_EQ(0ul, counter1->GetCount());
   EXPECT_EQ(0ul, counter2->GetCount());
+}
+
+TEST_F(RuntimeCallStatsTest, TestEnterAndLeaveMacrosWithCallStatsDisabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(false);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+  RuntimeCallTimer timer;
+
+  RUNTIME_CALL_STATS_ENTER(&stats, &timer, test_counter_1_id);
+  AdvanceClock(25);
+  RUNTIME_CALL_STATS_LEAVE(&stats, &timer);
+
+  EXPECT_EQ(0ul, counter->GetCount());
+  EXPECT_EQ(0, counter->GetTime().InMilliseconds());
+}
+
+TEST_F(RuntimeCallStatsTest, TestEnterAndLeaveMacrosWithCallStatsEnabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(true);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+  RuntimeCallTimer timer;
+
+  RUNTIME_CALL_STATS_ENTER(&stats, &timer, test_counter_1_id);
+  AdvanceClock(25);
+  RUNTIME_CALL_STATS_LEAVE(&stats, &timer);
+
+  EXPECT_EQ(1ul, counter->GetCount());
+  EXPECT_EQ(25, counter->GetTime().InMilliseconds());
+}
+
+TEST_F(RuntimeCallStatsTest, TestScopeMacroWithCallStatsDisabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(false);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+
+  {
+    RUNTIME_CALL_TIMER_SCOPE(scope, &stats, test_counter_1_id);
+    AdvanceClock(25);
+  }
+
+  EXPECT_EQ(0ul, counter->GetCount());
+  EXPECT_EQ(0, counter->GetTime().InMilliseconds());
+}
+
+TEST_F(RuntimeCallStatsTest, TestScopeMacroWithCallStatsEnabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(true);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+
+  {
+    RUNTIME_CALL_TIMER_SCOPE(scope, &stats, test_counter_1_id);
+    AdvanceClock(25);
+  }
+
+  EXPECT_EQ(1ul, counter->GetCount());
+  EXPECT_EQ(25, counter->GetTime().InMilliseconds());
+}
+
+TEST_F(RuntimeCallStatsTest, TestScopeWithOptionalMacroWithCallStatsDisabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(false);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+
+  {
+    Optional<RuntimeCallTimerScope> scope;
+    RUNTIME_CALL_TIMER_SCOPE_WITH_OPTIONAL_PROVIDED(scope, &stats,
+                                                    test_counter_1_id);
+    AdvanceClock(25);
+  }
+
+  EXPECT_EQ(0ul, counter->GetCount());
+  EXPECT_EQ(0, counter->GetTime().InMilliseconds());
+}
+
+TEST_F(RuntimeCallStatsTest, TestScopeWithOptionalMacroWithCallStatsEnabled) {
+  RuntimeEnabledFeatures::SetBlinkRuntimeCallStatsEnabled(true);
+  RuntimeCallStats stats;
+  RuntimeCallCounter* counter = stats.GetCounter(test_counter_1_id);
+
+  {
+    Optional<RuntimeCallTimerScope> scope;
+    RUNTIME_CALL_TIMER_SCOPE_WITH_OPTIONAL_PROVIDED(scope, &stats,
+                                                    test_counter_1_id);
+    AdvanceClock(25);
+  }
+
+  EXPECT_EQ(1ul, counter->GetCount());
+  EXPECT_EQ(25, counter->GetTime().InMilliseconds());
 }
 
 }  // namespace blink
