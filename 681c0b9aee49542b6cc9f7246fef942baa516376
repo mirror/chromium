@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c61b2903_b7d1b618",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/externalnav/ExternalNavigationDelegateImpl.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 447,
+      "author": {
+        "id": 1115960
+      },
+      "writtenOn": "2017-06-20T21:50:07Z",
+      "side": 1,
+      "message": "Can you explain the distinction to me? Permission request dialog is also a response to a user interaction.",
+      "range": {
+        "startLine": 447,
+        "startChar": 43,
+        "endLine": 447,
+        "endChar": 44
+      },
+      "revId": "681c0b9aee49542b6cc9f7246fef942baa516376",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
