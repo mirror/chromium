@@ -19,6 +19,7 @@
 #include "chrome/browser/android/vr_shell/ui_elements/permanent_security_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/screen_capture_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/screen_dimmer.h"
+#include "chrome/browser/android/vr_shell/ui_elements/start_presentation_toast.h"
 #include "chrome/browser/android/vr_shell/ui_elements/transient_security_warning.h"
 #include "chrome/browser/android/vr_shell/ui_elements/transient_url_bar.h"
 #include "chrome/browser/android/vr_shell/ui_elements/ui_element.h"
@@ -90,6 +91,11 @@ static constexpr float kTransientUrlBarVerticalOffset =
     -0.2 * kTransientUrlBarDistance;
 static constexpr int kTransientUrlBarTimeoutSeconds = 6;
 
+static constexpr float kToastDistance = 1.4;
+static constexpr float kToastWidth = 0.512 * kToastDistance;
+static constexpr float kToastHeight = 0.16 * kToastDistance;
+static constexpr int kToastTimeoutSeconds = kTransientUrlBarTimeoutSeconds;
+
 static constexpr float kCloseButtonDistance = 2.4;
 static constexpr float kCloseButtonHeight =
     kUrlBarHeightDMM * kCloseButtonDistance;
@@ -139,6 +145,7 @@ UiSceneManager::UiSceneManager(UiBrowserInterface* browser,
   CreateCloseButton();
   CreateScreenDimmer();
   CreateExitPrompt();
+  CreateToasts();
 
   ConfigureScene();
   ConfigureSecurityWarnings();
@@ -425,11 +432,25 @@ void UiSceneManager::CreateExitPrompt() {
   scene_->AddUiElement(std::move(element));
 }
 
+void UiSceneManager::CreateToasts() {
+  std::unique_ptr<UiElement> element = base::MakeUnique<StartPresentationToast>(512);
+  element->set_debug_id(kStartPresentationToast);
+  element->set_id(AllocateId());
+  element->set_fill(vr_shell::Fill::NONE);
+  element->set_size({kToastWidth, kToastHeight, 1});
+  element->set_translation({0, 0, -kToastDistance});
+  element->set_visible(false);
+  element->set_hit_testable(false);
+  element->set_lock_to_fov(true);
+  start_presentation_toast_ = element.get();
+  scene_->AddUiElement(std::move(element));
+}
+
 base::WeakPtr<UiSceneManager> UiSceneManager::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-void UiSceneManager::SetWebVrMode(bool web_vr, bool auto_presented) {
+void UiSceneManager::SetWebVrMode(bool web_vr, bool auto_presented, bool show_toast) {
   if (web_vr_mode_ == web_vr)
     return;
   web_vr_mode_ = web_vr;
@@ -438,6 +459,7 @@ void UiSceneManager::SetWebVrMode(bool web_vr, bool auto_presented) {
   ConfigureSecurityWarnings();
   ConfigureTransientUrlBar();
   ConfigureIndicators();
+  ConfigStartPresentationToast(show_toast);
 }
 
 void UiSceneManager::ConfigureScene() {
@@ -592,6 +614,18 @@ void UiSceneManager::ConfigureTransientUrlBar() {
   } else {
     transient_url_bar_timer_.Stop();
   }
+}
+
+void UiSceneManager::ConfigStartPresentationToast(bool show_toast) {
+  start_presentation_toast_->set_visible(show_toast);
+  if (!show_toast) return;
+  start_presentation_toast_timer_.Start(
+      FROM_HERE, base::TimeDelta::FromSeconds(kToastTimeoutSeconds), this,
+      &UiSceneManager::OnStartPresentationToastTimer);
+}
+
+void UiSceneManager::OnStartPresentationToastTimer() {
+  start_presentation_toast_->set_visible(false);
 }
 
 void UiSceneManager::OnTransientUrlBarTimer() {
