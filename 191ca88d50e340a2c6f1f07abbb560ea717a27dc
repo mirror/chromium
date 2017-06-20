@@ -22,6 +22,30 @@
       "revId": "191ca88d50e340a2c6f1f07abbb560ea717a27dc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f16a1f0_b71489e1",
+        "filename": "chrome/browser/ui/ash/ime_controller_client.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T14:15:55Z",
+      "side": 1,
+      "message": "This condition handles when there is no active IME (an uncommon state). The typical case is handled on line 175, which sends a non-default IME.\n\nI added a brief comment to the mojom. (And this parameter will become an ID string in the next CL, which should be a bit more obvious.)",
+      "parentUuid": "f3884822_c4ac32cf",
+      "range": {
+        "startLine": 145,
+        "startChar": 36,
+        "endLine": 145,
+        "endChar": 62
+      },
+      "revId": "191ca88d50e340a2c6f1f07abbb560ea717a27dc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
