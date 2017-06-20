@@ -105,7 +105,11 @@ const GpuFeatureInfo GetGpuFeatureInfo(size_t index, bool* eof) {
     {"video_decode",
      manager->IsFeatureBlacklisted(
          gpu::GPU_FEATURE_TYPE_ACCELERATED_VIDEO_DECODE),
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+     !command_line.HasSwitch(switches::kEnableAcceleratedVideo),
+#else
      command_line.HasSwitch(switches::kDisableAcceleratedVideoDecode),
+#endif
      "Accelerated video decode has been disabled, either via blacklist,"
      " about:flags or the command line.",
      true},
@@ -113,7 +117,11 @@ const GpuFeatureInfo GetGpuFeatureInfo(size_t index, bool* eof) {
     {"video_encode",
      manager->IsFeatureBlacklisted(
          gpu::GPU_FEATURE_TYPE_ACCELERATED_VIDEO_ENCODE),
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+     !command_line.HasSwitch(switches::kEnableAcceleratedVideo),
+#else
      command_line.HasSwitch(switches::kDisableWebRtcHWEncoding),
+#endif
      "Accelerated video encode has been disabled, either via blacklist,"
      " about:flags or the command line.",
      true},

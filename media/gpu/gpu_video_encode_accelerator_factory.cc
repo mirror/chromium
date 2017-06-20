@@ -7,7 +7,7 @@
 #include "base/memory/ptr_util.h"
 #include "media/gpu/gpu_video_accelerator_util.h"
 
-#if defined(OS_CHROMEOS)
+#if defined(OS_CHROMEOS) || defined(OS_LINUX)
 #if defined(USE_V4L2_CODEC)
 #include "media/gpu/v4l2_video_encode_accelerator.h"
 #endif
@@ -37,7 +37,7 @@ std::unique_ptr<VideoEncodeAccelerator> CreateV4L2VEA() {
 }
 #endif
 
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
 std::unique_ptr<VideoEncodeAccelerator> CreateVaapiVEA() {
   return base::WrapUnique<VideoEncodeAccelerator>(
       new VaapiVideoEncodeAccelerator());
@@ -76,7 +76,7 @@ std::vector<VEAFactoryFunction> GetVEAFactoryFunctions(
 #if defined(OS_CHROMEOS) && defined(USE_V4L2_CODEC)
   vea_factory_functions.push_back(&CreateV4L2VEA);
 #endif
-#if defined(OS_CHROMEOS) && defined(ARCH_CPU_X86_FAMILY)
+#if (defined(OS_LINUX) || defined(OS_CHROMEOS)) && defined(ARCH_CPU_X86_FAMILY)
   if (!gpu_preferences.disable_vaapi_accelerated_video_encode)
     vea_factory_functions.push_back(&CreateVaapiVEA);
 #endif

@@ -56,12 +56,19 @@ const gpu::GpuPreferences GetGpuPreferencesFromCommandLine() {
   gpu_preferences.ui_prioritize_in_gpu_process =
       command_line->HasSwitch(switches::kUIPrioritizeInGpuProcess);
   gpu_preferences.disable_accelerated_video_decode =
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+      !command_line->HasSwitch(switches::kEnableAcceleratedVideo);
+#else
       command_line->HasSwitch(switches::kDisableAcceleratedVideoDecode);
-#if defined(OS_CHROMEOS)
+#endif
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+  gpu_preferences.disable_vaapi_accelerated_video_encode =
+      !command_line->HasSwitch(switches::kEnableAcceleratedVideo);
+#elif defined(OS_CHROMEOS)
   gpu_preferences.disable_vaapi_accelerated_video_encode =
       command_line->HasSwitch(switches::kDisableVaapiAcceleratedVideoEncode);
 #endif
-#if BUILDFLAG(ENABLE_WEBRTC)
+#if BUILDFLAG(ENABLE_WEBRTC) && (!defined(OS_LINUX) || defined(OS_CHROMEOS))
   gpu_preferences.disable_web_rtc_hw_encoding =
       command_line->HasSwitch(switches::kDisableWebRtcHWEncoding);
 #endif

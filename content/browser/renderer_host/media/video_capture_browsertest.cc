@@ -154,8 +154,13 @@ class VideoCaptureBrowserTest : public ContentBrowserTest,
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kUseFakeJpegDecodeAccelerator);
     } else {
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+      base::CommandLine::ForCurrentProcess()->AppendSwitch(
+          switches::kEnableAcceleratedMjpegDecode);
+#else
       base::CommandLine::ForCurrentProcess()->AppendSwitch(
           switches::kDisableAcceleratedMjpegDecode);
+#endif
     }
     if (params_.use_mojo_service) {
       base::CommandLine::ForCurrentProcess()->AppendSwitchASCII(

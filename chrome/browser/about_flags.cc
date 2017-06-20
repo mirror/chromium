@@ -1142,12 +1142,14 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kUiPartialSwapDescription, kOsAll,
      SINGLE_DISABLE_VALUE_TYPE(switches::kUIDisablePartialSwap)},
 #if BUILDFLAG(ENABLE_WEBRTC)
+#if !defined(OS_LINUX) || defined(OS_CHROMEOS)
     {"disable-webrtc-hw-decoding", flag_descriptions::kWebrtcHwDecodingName,
      flag_descriptions::kWebrtcHwDecodingDescription, kOsAndroid | kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisableWebRtcHWDecoding)},
     {"disable-webrtc-hw-encoding", flag_descriptions::kWebrtcHwEncodingName,
      flag_descriptions::kWebrtcHwEncodingDescription, kOsAndroid | kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisableWebRtcHWEncoding)},
+#endif
     {"enable-webrtc-hw-h264-encoding",
      flag_descriptions::kWebrtcHwH264EncodingName,
      flag_descriptions::kWebrtcHwH264EncodingDescription, kOsAndroid | kOsCrOS,
@@ -1433,6 +1435,13 @@ const FeatureEntry kFeatureEntries[] = {
      flag_descriptions::kTetherDescription, kOsCrOS,
      FEATURE_VALUE_TYPE(features::kInstantTethering)},
 #endif  // OS_CHROMEOS
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    {
+        "enable-accelerated-video", flag_descriptions::kAcceleratedVideoName,
+        flag_descriptions::kAcceleratedVideoDescription, kOsLinux,
+        SINGLE_VALUE_TYPE(switches::kEnableAcceleratedVideo),
+    },
+#endif
     {
         "disable-accelerated-video-decode",
         flag_descriptions::kAcceleratedVideoDecodeName,
@@ -2093,12 +2102,17 @@ const FeatureEntry kFeatureEntries[] = {
      FEATURE_VALUE_TYPE(chrome::android::kWebVrAutopresent)},
 #endif  // OS_ANDROID
 #endif  // ENABLE_VR
-#if defined(OS_CHROMEOS)
+#if defined(OS_LINUX) && !defined(OS_CHROMEOS)
+    {"enable-accelerated-mjpeg-decode",
+     flag_descriptions::kAcceleratedMjpegDecodeName,
+     flag_descriptions::kAcceleratedMjpegDecodeDescription, kOsLinux,
+     SINGLE_VALUE_TYPE(switches::kEnableAcceleratedMjpegDecode)},
+#else
     {"disable-accelerated-mjpeg-decode",
      flag_descriptions::kAcceleratedMjpegDecodeName,
      flag_descriptions::kAcceleratedMjpegDecodeDescription, kOsCrOS,
      SINGLE_DISABLE_VALUE_TYPE(switches::kDisableAcceleratedMjpegDecode)},
-#endif  // OS_CHROMEOS
+#endif
     {"v8-cache-options", flag_descriptions::kV8CacheOptionsName,
      flag_descriptions::kV8CacheOptionsDescription, kOsAll,
      MULTI_VALUE_TYPE(kV8CacheOptionsChoices)},
