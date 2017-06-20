@@ -70,6 +70,24 @@
       "revId": "cba0f330bfc49655cda796515d0488021b026eed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "31a5e58c_d9cdaf95",
+        "filename": "ios/chrome/app/spotlight/topsites_spotlight_manager.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-20T15:22:24Z",
+      "side": 1,
+      "message": "Ok, I keep the value in the mediator.",
+      "parentUuid": "2763ac5d_4a0df6f7",
+      "revId": "cba0f330bfc49655cda796515d0488021b026eed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
