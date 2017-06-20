@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "44ecdf0f_68f52c61",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-20T14:42:47Z",
+      "side": 1,
+      "message": "If you haven\u0027t already, it might be worth trying UNLIKELY(runtime_call_stats_enabled) which will be more likely to minimize the inline code\u0027s effect on the RCS-off path. V8 does this in its version.",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c65d159a_3417b8ea",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-20T14:42:47Z",
+      "side": 1,
+      "message": "Why not use RuntimeEnabledFeatures?",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1439bfd5_0eebcd7e",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-20T14:42:47Z",
+      "side": 1,
+      "message": "This isn\u0027t the end of a namespace.",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "74b22a18_e9f83f5f",
+        "filename": "third_party/WebKit/Source/web/WebKit.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1002854
+      },
+      "writtenOn": "2017-06-20T14:42:47Z",
+      "side": 1,
+      "message": "If you use RuntimeEnabledFeatures, you\u0027ll get something like this \"for free\". If we do want to plumb it through the web API explicitly, WebRuntimeFeatures would be a more usual place.",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
