@@ -34,6 +34,41 @@
       "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29778a0d_50c6715b",
+        "filename": "chrome/browser/extensions/extension_uninstall_dialog.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-20T18:41:33Z",
+      "side": 0,
+      "message": "Sorry, I was a bit unclear - and meant IconImage rather than ImageLoader.  Right now, we have\nImageLoader\nIconImage\nChromeAppIcon\n\n(not to mention things like ExtensionActionIconFactory et al.)  It\u0027s getting tricky to know when to use which thing.  In particular, ChromeAppIcon and IconImage seem to be more-or-less trying to do the same thing - return an updating version of the extension icon.  I\u0027m wondering if we can/should consolidate those two into one class, so that we don\u0027t have to choose between them.\n\nPreviously, ChromeAppIcon was just used in app-like contexts, so the separation made sense.  If we\u0027re deciding that this is the right thing to do even for extensions, it seems like we should simplify things and have fewer classes.\n\nDoes that make sense?  If so, WDYT?  Would it make sense to do that, or is there a reason that IconImage and ChromeAppIcon should be kept separate?",
+      "parentUuid": "93912adc_ebf68e29",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6a2b335_ff07a9a6",
+        "filename": "extensions/browser/extension_icon_image.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-20T18:41:33Z",
+      "side": 0,
+      "message": "gfx::Image is nice because it can store multiple representations of the image.  Why do we need to get rid of this?",
+      "revId": "248dae6e34da5e9526b079d9ca898b5f83bf2084",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
