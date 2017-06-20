@@ -282,6 +282,7 @@ WebURLRequest::RequestContext ResourceFetcher::DetermineRequestContext(
 ResourceFetcher::ResourceFetcher(FetchContext* new_context,
                                  RefPtr<WebTaskRunner> task_runner)
     : context_(new_context),
+      dispatcher_(FetchDispatcher::Create()),
       archive_(Context().IsMainFrame() ? nullptr : Context().Archive()),
       resource_timing_report_timer_(
           std::move(task_runner),
@@ -1427,10 +1428,9 @@ bool ResourceFetcher::StartLoad(Resource* resource) {
     resource->SetFetcherSecurityOrigin(source_origin);
 
     resource->NotifyStartLoad();
-    loader->ActivateCacheAwareLoadingIfNeeded(request);
   }
 
-  loader->Start(request);
+  loader->Start();
   return true;
 }
 
@@ -1663,6 +1663,7 @@ void ResourceFetcher::EmulateLoadStartedForInspector(
 
 DEFINE_TRACE(ResourceFetcher) {
   visitor->Trace(context_);
+  visitor->Trace(dispatcher_);
   visitor->Trace(archive_);
   visitor->Trace(loaders_);
   visitor->Trace(non_blocking_loaders_);
