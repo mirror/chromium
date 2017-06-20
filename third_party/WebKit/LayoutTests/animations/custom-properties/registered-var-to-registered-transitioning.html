@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<script src="../../resources/testharness.js"></script>
+<script src="../../resources/testharnessreport.js"></script>
+<style>
+#target {
+  transition-property: --transition;
+  transition-duration: 1s;
+  transition-delay: -0.5s;
+  transition-timing-function: linear;
+  --transition: 100;
+}
+</style>
+<div id="target">target</div>
+<script>
+for (let name of ['--transition', '--test']) {
+  CSS.registerProperty({
+    name,
+    syntax: '<number>',
+    initialValue: '0',
+  });
+}
+
+test(() => {
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '0', '--test at initial value');
+  assert_equals(getComputedStyle(target).getPropertyValue('--transition'), '100', '--transition at initial value');
+
+  let animation = target.animate({'--test': ['50', 'var(--transition)']}, {duration: 100, fill: 'forwards'});
+
+  animation.currentTime = 0;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '50', '--test at 0% with no transition');
+  animation.currentTime = 50;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '75', '--test at 50% with no transition');
+  animation.currentTime = 100;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '100', '--test at 100% with no transition');
+
+  target.style.setProperty('--transition', '200');
+  assert_equals(getComputedStyle(target).getPropertyValue('--transition'), '150', '--transition at initial transitioning value');
+
+  animation.currentTime = 0;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '50', '--test at 0% with transition');
+  animation.currentTime = 50;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '100', '--test at 50% with transition');
+  animation.currentTime = 100;
+  assert_equals(getComputedStyle(target).getPropertyValue('--test'), '150', '--test at 50% with transition');
+}, 'Registered custom property animation keyframes with var() references to animating unregistered custom properties');
+</script>
