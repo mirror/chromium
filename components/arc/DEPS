@@ -1,6 +1,7 @@
 include_rules = [
   "+chromeos/chromeos_switches.h",
   "+chromeos/cryptohome",
+  "+chromeos/disks",
   "+chromeos/dbus",
   "+components/exo",
   "+components/prefs",
