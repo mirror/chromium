@@ -483,6 +483,11 @@ def parse_args(args):
                 '--test-results-server',
                 default='',
                 help='If specified, upload results json files to this appengine server.'),
+            optparse.make_option(
+                '--gtest_repeat',
+                type='int',
+                default=1,
+                help='Same as --repeat-each.'),
         ]))
 
     option_parser = optparse.OptionParser()
@@ -569,6 +574,10 @@ def _set_up_derived_options(port, options, args):
         options.total_shards = int(port.host.environ['GTEST_TOTAL_SHARDS'])
     if not options.shard_index and 'GTEST_SHARD_INDEX' in port.host.environ:
         options.shard_index = int(port.host.environ['GTEST_SHARD_INDEX'])
+
+    if options.gtest_repeat != 1:
+        assert options.repeat_each == 1, 'Cannot use --repeat-each and --gtest-repeat simultaneously.'
+        options.repeat_each = options.gtest_repeat
 
     if not options.seed:
         options.seed = port.host.time()
