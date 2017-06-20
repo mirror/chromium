@@ -34,6 +34,24 @@
       "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1fba077_cb9ba3c6",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-20T04:28:18Z",
+      "side": 0,
+      "message": "Wow, this actually goes all the way back to the khtml days:\n\nhttps://chromium.googlesource.com/chromium/src/+/1f52b69b723c77799d27e20e84623d0c99c689ab%5E%21/third_party/WebKit/WebCore/khtml/rendering/render_replaced.cpp\n\nI guess it\u0027s OK to remove?  We\u0027ll see if the crash reports start rolling in when it hits beta :)",
+      "parentUuid": "e7cde882_25d09103",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
