@@ -5,6 +5,7 @@
 module pdf.mojom;
 
 import "third_party/WebKit/public/platform/referrer.mojom";
+import "ui/gfx/geometry/mojo/geometry.mojom";
 import "url/mojo/url.mojom";
 
 interface PdfService {
@@ -16,4 +17,8 @@ interface PdfService {
 
   // Brings up SaveAs... dialog to save specified URL.
   SaveUrlAs(url.mojom.Url url, blink.mojom.Referrer referrer);
+
+  // Sets if the current widget accepts paste.
+  SelectionChanged(gfx.mojom.Point left, int32 left_height,
+                   gfx.mojom.Point right, int32 right_height);
 };

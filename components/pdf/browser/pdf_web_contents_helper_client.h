@@ -8,6 +8,7 @@
 #include "base/callback.h"
 #include "base/strings/string16.h"
 #include "ipc/ipc_message.h"
+#include "ui/gfx/geometry/point.h"
 
 namespace content {
 class WebContents;
@@ -25,6 +26,12 @@ class PDFWebContentsHelperClient {
   virtual void OnPDFHasUnsupportedFeature(content::WebContents* contents) = 0;
 
   virtual void OnSaveURL(content::WebContents* contents) = 0;
+
+  virtual void OnSelectionChanged(content::WebContents* contents,
+                                  const gfx::Point& left,
+                                  int32_t left_height,
+                                  const gfx::Point& right,
+                                  int32_t right_height) = 0;
 };
 
 }  // namespace pdf

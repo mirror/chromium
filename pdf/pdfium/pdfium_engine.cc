@@ -1905,7 +1905,7 @@ bool PDFiumEngine::OnMouseMove(const pp::MouseInputEvent& event) {
 
   SelectionChangeInvalidator selection_invalidator(this);
 
-  // Check if the user has descreased their selection area and we need to remove
+  // Check if the user has decreased their selection area and we need to remove
   // pages from selection_.
   for (size_t i = 0; i < selection_.size(); ++i) {
     if (selection_[i].page_index() == page_index) {
@@ -2253,6 +2253,7 @@ bool PDFiumEngine::SelectFindResult(bool forward) {
 
   client_->NotifySelectedFindResultChanged(current_find_index_.GetIndex());
   client_->NotifyNumberOfFindResultsChanged(find_results_.size(), true);
+
   return true;
 }
 
@@ -3517,6 +3518,30 @@ void PDFiumEngine::GetRegion(const pp::Point& location,
 
 void PDFiumEngine::OnSelectionChanged() {
   pp::PDF::SetSelectedText(GetPluginInstance(), GetSelectedText().c_str());
+
+  pp::Rect left(std::numeric_limits<int32_t>::max(),
+                std::numeric_limits<int32_t>::max(), 0, 0);
+  pp::Rect right;
+  for (auto sel : selection_) {
+    for (auto rect : sel.GetScreenRects(pp::Point(), 1.0, current_rotation_)) {
+      if (rect.y() < left.y() ||
+          (rect.y() == left.y() && rect.x() < left.x())) {
+        left = rect;
+      }
+      if (rect.y() > right.y() ||
+          (rect.y() == right.y() && rect.right() > right.right())) {
+        right = rect;
+      }
+    }
+  }
+  if (left.IsEmpty()) {
+    left.set_x(0);
+    left.set_y(0);
+  }
+
+  pp::PDF::SelectionChanged(
+      GetPluginInstance(), PP_MakePoint(left.x(), left.y()), left.height(),
+      PP_MakePoint(right.right(), right.y()), right.height());
 }
 
 void PDFiumEngine::RotateInternal() {

@@ -23,6 +23,12 @@ class ChromePDFWebContentsHelperClient
 
   void OnSaveURL(content::WebContents* contents) override;
 
+  void OnSelectionChanged(content::WebContents* contents,
+                          const gfx::Point& left,
+                          int32_t left_height,
+                          const gfx::Point& right,
+                          int32_t right_height) override;
+
   DISALLOW_COPY_AND_ASSIGN(ChromePDFWebContentsHelperClient);
 };
 
