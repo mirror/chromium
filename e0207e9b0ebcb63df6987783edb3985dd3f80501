@@ -126,6 +126,30 @@
     },
     {
       "key": {
+        "uuid": "c08baa37_01d232e7",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T14:33:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "422961b4_5deab068",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1e705b97_6fc50bcd",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 2
@@ -290,6 +314,24 @@
       "side": 1,
       "message": "Eh, either\u0027s fine. I was just curious.",
       "parentUuid": "2bff1225_2002ba50",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "52a6d884_f0b2fd19",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T14:33:29Z",
+      "side": 1,
+      "message": "OK, in that case I did change it back and did the currying while I\u0027m touching these methods anyway :)",
+      "parentUuid": "10d2fc07_3f23f9d9",
       "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
