@@ -516,8 +516,7 @@ void Scheduler::ScheduleBeginImplFrameDeadline() {
       deadline_ = begin_impl_frame_tracker_.Current().frame_time +
                   begin_impl_frame_tracker_.Current().interval;
       break;
-    case SchedulerStateMachine::
-        BEGIN_IMPL_FRAME_DEADLINE_MODE_BLOCKED_ON_READY_TO_DRAW:
+    case SchedulerStateMachine::BEGIN_IMPL_FRAME_DEADLINE_MODE_BLOCKED:
       // We are blocked because we are waiting for ReadyToDraw signal. We would
       // post deadline after we received ReadyToDraw singal.
       TRACE_EVENT1("cc", "Scheduler::ScheduleBeginImplFrameDeadline",
