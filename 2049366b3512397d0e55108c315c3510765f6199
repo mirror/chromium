@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "27c9ac1a_3c8ebbdb",
+        "filename": "chrome/browser/chromeos/customization/customization_document.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 559,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-06-20T23:01:11Z",
+      "side": 1,
+      "message": "Fix spelling while you\u0027re here?",
+      "range": {
+        "startLine": 559,
+        "startChar": 36,
+        "endLine": 559,
+        "endChar": 51
+      },
+      "revId": "2049366b3512397d0e55108c315c3510765f6199",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
