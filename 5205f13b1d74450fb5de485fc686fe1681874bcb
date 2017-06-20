@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "670e8b7f_33ede5af",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-20T08:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fb936cc1_158f7da6",
+      "range": {
+        "startLine": 16,
+        "startChar": 61,
+        "endLine": 16,
+        "endChar": 68
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "21f6fba9_365fa0ce",
         "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
         "patchSetId": 1
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "e3c9bf95_e1885d63",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-20T08:05:06Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21f6fba9_365fa0ce",
+      "range": {
+        "startLine": 17,
+        "startChar": 20,
+        "endLine": 17,
+        "endChar": 28
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d8f324b3_aee924cb",
         "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
         "patchSetId": 1
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-20T07:08:37Z",
       "side": 1,
       "message": "Class name is expected to be a noun rather than a verb.\n\nI\u0027m also wondering if this is going to install all kinds of conditionally enabled properties or not, e.g. [SecureContext] and/or origin trials.  Better to be clear on this point, too, in the comment above.\n\nSupposing that this only installs the runtime-enabled features, RuntimeEnabledPropertiesInstaller for example?  RuntimeEnabledFeaturesInstaller is fine for me, too.  Of course, any other better names are welcome.\n\nGiven that this only handles v8::Object case, we can give the name based on it.  At least, we can comment about it (i.e. v8::ObjectTemplate case is handled separately).",
+      "range": {
+        "startLine": 19,
+        "startChar": 22,
+        "endLine": 19,
+        "endChar": 51
+      },
+      "revId": "5205f13b1d74450fb5de485fc686fe1681874bcb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "78fad335_7f29e9c7",
+        "filename": "third_party/WebKit/Source/platform/bindings/InstallRuntimeEnabledFeatures.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1001470
+      },
+      "writtenOn": "2017-06-20T08:05:06Z",
+      "side": 1,
+      "message": "RuntimeEnabledPropertiesInstaller sounds good.",
+      "parentUuid": "d8f324b3_aee924cb",
       "range": {
         "startLine": 19,
         "startChar": 22,
