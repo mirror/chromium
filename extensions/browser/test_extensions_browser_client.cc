@@ -167,11 +167,6 @@ TestExtensionsBrowserClient::GetExtensionSystemFactory() {
 void TestExtensionsBrowserClient::RegisterExtensionFunctions(
     ExtensionFunctionRegistry* registry) const {}
 
-void TestExtensionsBrowserClient::RegisterMojoServices(
-    content::RenderFrameHost* render_frame_host,
-    const Extension* extension) const {
-}
-
 std::unique_ptr<RuntimeAPIDelegate>
 TestExtensionsBrowserClient::CreateRuntimeAPIDelegate(
     content::BrowserContext* context) const {

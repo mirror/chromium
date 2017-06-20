@@ -15,13 +15,18 @@
 #include "net/socket/udp_socket.h"
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
+namespace content {
+class RenderFrameHost;
+}
+
 namespace extensions {
 
 class WiFiDisplayMediaServiceImpl : public mojom::WiFiDisplayMediaService {
  public:
   ~WiFiDisplayMediaServiceImpl() override;
   static void BindToRequest(const service_manager::BindSourceInfo& source_info,
-                            mojom::WiFiDisplayMediaServiceRequest request);
+                            mojom::WiFiDisplayMediaServiceRequest request,
+                            content::RenderFrameHost*);
 
   void SetDesinationPoint(const std::string& ip_address,
                           int32_t port,

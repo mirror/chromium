@@ -191,12 +191,6 @@ void ShellExtensionsBrowserClient::RegisterExtensionFunctions(
   shell::api::ShellGeneratedFunctionRegistry::RegisterAll(registry);
 }
 
-void ShellExtensionsBrowserClient::RegisterMojoServices(
-    content::RenderFrameHost* render_frame_host,
-    const Extension* extension) const {
-  RegisterServicesForFrame(render_frame_host, extension);
-}
-
 std::unique_ptr<RuntimeAPIDelegate>
 ShellExtensionsBrowserClient::CreateRuntimeAPIDelegate(
     content::BrowserContext* context) const {

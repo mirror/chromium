@@ -7,6 +7,7 @@
 #include "base/bind.h"
 #include "base/memory/ptr_util.h"
 #include "content/public/browser/browser_context.h"
+#include "content/public/browser/render_frame_host.h"
 #include "extensions/browser/api/display_source/display_source_connection_delegate_factory.h"
 #include "mojo/public/cpp/bindings/strong_binding.h"
 
@@ -36,12 +37,12 @@ WiFiDisplaySessionServiceImpl::~WiFiDisplaySessionServiceImpl() {
 
 // static
 void WiFiDisplaySessionServiceImpl::BindToRequest(
-    content::BrowserContext* browser_context,
     const service_manager::BindSourceInfo& source_info,
-    WiFiDisplaySessionServiceRequest request) {
+    WiFiDisplaySessionServiceRequest request,
+    content::RenderFrameHost* render_frame_host) {
   DisplaySourceConnectionDelegate* delegate =
       DisplaySourceConnectionDelegateFactory::GetForBrowserContext(
-          browser_context);
+          render_frame_host->GetProcess()->GetBrowserContext());
   CHECK(delegate);
   auto* impl = new WiFiDisplaySessionServiceImpl(delegate);
   impl->binding_ =

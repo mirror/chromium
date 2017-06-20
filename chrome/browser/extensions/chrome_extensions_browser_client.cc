@@ -275,13 +275,6 @@ void ChromeExtensionsBrowserClient::RegisterExtensionFunctions(
   api::ChromeGeneratedFunctionRegistry::RegisterAll(registry);
 }
 
-void ChromeExtensionsBrowserClient::RegisterMojoServices(
-    content::RenderFrameHost* render_frame_host,
-    const Extension* extension) const {
-  RegisterServicesForFrame(render_frame_host, extension);
-  RegisterChromeServicesForFrame(render_frame_host, extension);
-}
-
 std::unique_ptr<RuntimeAPIDelegate>
 ChromeExtensionsBrowserClient::CreateRuntimeAPIDelegate(
     content::BrowserContext* context) const {

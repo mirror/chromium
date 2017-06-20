@@ -47,6 +47,7 @@
 #include "chrome/browser/download/download_prefs.h"
 #include "chrome/browser/font_family_cache.h"
 #include "chrome/browser/media/router/media_router_feature.h"
+#include "chrome/browser/media/router/mojo/media_router_mojo_impl.h"
 #include "chrome/browser/media/router/presentation_service_delegate_impl.h"
 #include "chrome/browser/media/router/receiver_presentation_service_delegate_impl.h"
 #include "chrome/browser/media/webrtc/media_capture_devices_dispatcher.h"
@@ -347,6 +348,7 @@
 #include "extensions/common/extension_set.h"
 #include "extensions/common/manifest_handlers/background_info.h"
 #include "extensions/common/manifest_handlers/shared_module_info.h"
+#include "extensions/common/permissions/api_permission.h"
 #include "extensions/common/permissions/permissions_data.h"
 #include "extensions/common/permissions/socket_permission.h"
 #include "extensions/common/switches.h"
@@ -883,6 +885,25 @@ void CreateWebUsbChooserService(
   UsbTabHelper* tab_helper =
       UsbTabHelper::GetOrCreateForWebContents(web_contents);
   tab_helper->CreateChooserService(render_frame_host, std::move(request));
+}
+
+void CreateMediaRouter(const service_manager::BindSourceInfo& source_info,
+                       media_router::mojom::MediaRouterRequest request,
+                       content::RenderFrameHost* render_frame_host) {
+  content::WebContents* web_contents =
+      content::WebContents::FromRenderFrameHost(render_frame_host);
+  ExtensionWebContentsObserver* observer =
+      ExtensionWebContentsObserver::GetForWebContents(web_contents);
+  const Extension* extension = GetExtensionFromFrame(render_frame_host, false);
+  content::BrowserContext* context =
+      render_frame_host->GetProcess()->GetBrowserContext();
+  if (media_router::MediaRouterEnabled(context)) {
+    if (extension->permissions_data()->HasAPIPermission(
+            APIPermission::kMediaRouterPrivate)) {
+      media_router::MediaRouterMojoImpl::BindToMojoRequest(
+          extension, context, source_info, std::move(request));
+    }
+  }
 }
 
 bool GetDataSaverEnabledPref(const PrefService* prefs) {
@@ -3403,6 +3424,9 @@ void ChromeContentBrowserClient::InitFrameInterfaces() {
     frame_interfaces_->AddInterface(base::Bind(&ShareServiceImpl::Create));
 #endif
   }
+
+  extensions::AddInterfacesForFrameRegistry(&frame_interfaces_parameterized_);
+  frame_interfaces_parameterized_.AddInterface(base::Bind(&CreateMediaRouter));
 }
 
 #if BUILDFLAG(ENABLE_WEBRTC)

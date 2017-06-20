@@ -13,7 +13,7 @@
 #include "services/service_manager/public/cpp/bind_source_info.h"
 
 namespace content {
-class BrowserContext;
+class RenderFrameHost;
 }  // namespace content
 
 namespace extensions {
@@ -25,9 +25,9 @@ class WiFiDisplaySessionServiceImpl
       public DisplaySourceConnectionDelegate::Observer {
  public:
   ~WiFiDisplaySessionServiceImpl() override;
-  static void BindToRequest(content::BrowserContext* context,
-                            const service_manager::BindSourceInfo& source_info,
-                            mojom::WiFiDisplaySessionServiceRequest request);
+  static void BindToRequest(const service_manager::BindSourceInfo& source_info,
+                            mojom::WiFiDisplaySessionServiceRequest request,
+                            content::RenderFrameHost* render_frame_host);
 
  private:
   // WiFiDisplaySessionService overrides.

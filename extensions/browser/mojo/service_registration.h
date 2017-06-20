@@ -11,10 +11,10 @@ class RenderFrameHost;
 
 namespace extensions {
 
-class Extension;
+using Registry =
+    service_manager::BinderRegistryWithParams<content::RenderFrameHost*>;
 
-void RegisterServicesForFrame(content::RenderFrameHost* render_frame_host,
-                              const Extension* extension);
+void AddInterfacesForFrameRegistry(Registry* registry);
 
 }  // namespace extensions
 

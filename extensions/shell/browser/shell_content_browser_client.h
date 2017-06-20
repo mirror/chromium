@@ -8,6 +8,7 @@
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "content/public/browser/content_browser_client.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 class GURL;
 
@@ -64,6 +65,11 @@ class ShellContentBrowserClient : public content::ContentBrowserClient {
       content::NavigationHandle* navigation_handle) override;
   std::unique_ptr<content::NavigationUIData> GetNavigationUIData(
       content::NavigationHandle* navigation_handle) override;
+  void BindInterfaceRequestFromFrame(
+      content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle interface_pipe) override;
 
  protected:
   // Subclasses may wish to provide their own ShellBrowserMainParts.
@@ -83,6 +89,9 @@ class ShellContentBrowserClient : public content::ContentBrowserClient {
 
   // Owned by ShellBrowserMainParts.
   ShellBrowserMainDelegate* browser_main_delegate_;
+
+  service_manager::BinderRegistryWithParams<content::RenderFrameHost*>
+      frame_interfaces_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellContentBrowserClient);
 };
