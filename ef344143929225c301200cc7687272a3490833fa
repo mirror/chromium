@@ -52,6 +52,24 @@
       "revId": "ef344143929225c301200cc7687272a3490833fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f64b815a_62bc641c",
+        "filename": "ios/chrome/app/chrome_exe_main.mm",
+        "patchSetId": 3
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-20T01:20:27Z",
+      "side": 1,
+      "message": "Thank you Sylvain for the detailed explanation! This is very informative!",
+      "parentUuid": "039c8b21_303ce7e1",
+      "revId": "ef344143929225c301200cc7687272a3490833fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
