@@ -321,9 +321,6 @@ class CORE_EXPORT HTMLMediaElement
 
   void VideoWillBeDrawnToCanvas() const;
 
-  WebRemotePlaybackClient* RemotePlaybackClient() {
-    return remote_playback_client_;
-  }
   const WebRemotePlaybackClient* RemotePlaybackClient() const {
     return remote_playback_client_;
   }
@@ -420,6 +417,9 @@ class CORE_EXPORT HTMLMediaElement
   bool IsAutoplayingMuted() final;
   void ActivateViewportIntersectionMonitoring(bool) final;
   bool HasNativeControls() final;
+  WebRemotePlaybackClient* RemotePlaybackClient() final {
+    return remote_playback_client_;
+  }
 
   void LoadTimerFired(TimerBase*);
   void ProgressEventTimerFired(TimerBase*);
