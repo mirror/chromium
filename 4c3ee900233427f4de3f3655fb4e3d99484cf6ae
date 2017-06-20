@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d0d79bd0_1af50ade",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T11:22:54Z",
+      "side": 1,
+      "message": "Function needs a comment; it should mention that it\u0027s a depth-first traversal.",
+      "range": {
+        "startLine": 20,
+        "startChar": 5,
+        "endLine": 20,
+        "endChar": 33
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a07e02e_87d8f801",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T11:22:54Z",
+      "side": 1,
+      "message": "Is the call to GetOriginalBrowserState() to hedge against self.browser being incognito?",
+      "range": {
+        "startLine": 47,
+        "startChar": 39,
+        "endLine": 47,
+        "endChar": 68
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07013d5d_402950dd",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T11:22:54Z",
+      "side": 1,
+      "message": "This is (as I\u0027m sure you know) not ideal, but I don\u0027t have a good alternative yet.",
+      "range": {
+        "startLine": 87,
+        "startChar": 2,
+        "endLine": 87,
+        "endChar": 30
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14c3e415_abd5877e",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T11:22:54Z",
+      "side": 1,
+      "message": "If we\u0027ve ensured that the parent isn\u0027t an OTR browser state, then we shouldn\u0027t need to do that for each child.",
+      "range": {
+        "startLine": 28,
+        "startChar": 33,
+        "endLine": 28,
+        "endChar": 62
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "edbf7874_f04f468d",
+        "filename": "ios/clean/chrome/browser/ui/settings/settings_main_page_coordinator.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1115958
+      },
+      "writtenOn": "2017-06-20T11:22:54Z",
+      "side": 1,
+      "message": "Can we instead use the dispatcher instead of explicit delegation? The view controller doens\u0027t need to know the difference.",
+      "range": {
+        "startLine": 30,
+        "startChar": 33,
+        "endLine": 30,
+        "endChar": 37
+      },
+      "revId": "4c3ee900233427f4de3f3655fb4e3d99484cf6ae",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
