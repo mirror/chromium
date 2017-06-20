@@ -244,7 +244,6 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
     NGLayoutResult* layout_result) {
   NGPhysicalBoxFragment* physical_fragment =
       ToNGPhysicalBoxFragment(layout_result->PhysicalFragment().Get());
-
   if (box_->Style()->SpecifiesColumns())
     UpdateLegacyMultiColumnFlowThread(box_, physical_fragment);
   box_->SetWidth(physical_fragment->Size().width);
@@ -255,7 +254,9 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
       box_->Style()->IsHorizontalWritingMode()
           ? physical_fragment->OverflowSize().height
           : physical_fragment->OverflowSize().width;
-  intrinsic_logical_height -= border_and_padding.BlockSum();
+  NGBoxStrut scrollbar_sizes = GetScrollbarSizes(box_);
+  intrinsic_logical_height -=
+      border_and_padding.BlockSum() + scrollbar_sizes.BlockSum();
   box_->SetIntrinsicContentLogicalHeight(intrinsic_logical_height);
 
   // TODO(ikilpatrick) is this the right thing to do?
@@ -283,7 +284,8 @@ void NGBlockNode::CopyFragmentDataToLayoutBox(
         FromPlatformWritingMode(Style().GetWritingMode());
     NGBoxFragment fragment(writing_mode, physical_fragment);
     ToLayoutBlock(box_)->ComputeOverflow(fragment.OverflowSize().block_size -
-                                         border_and_padding.block_end);
+                                         border_and_padding.block_end -
+                                         scrollbar_sizes.block_end);
   }
 
   box_->UpdateAfterLayout();
