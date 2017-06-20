@@ -36,6 +36,23 @@
     },
     {
       "key": {
+        "uuid": "7f8ae40f_028c832e",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-06-20T07:13:07Z",
+      "side": 1,
+      "message": "stop proxy_thread_?",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2619b4a9_fa57e64c",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -161,6 +178,40 @@
       "writtenOn": "2017-06-20T06:29:39Z",
       "side": 1,
       "message": "s/SetUpChannel/OnChannelSetUp/ because the channel has been set up.",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed12813f_c857c6bf",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-06-20T07:13:07Z",
+      "side": 1,
+      "message": "Add some documentation to say the things in the change description and the design doc. For example, what the server is and what the clients are.",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9ad9522_0a26ee1c",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001841
+      },
+      "writtenOn": "2017-06-20T07:13:07Z",
+      "side": 1,
+      "message": "nit: change to IsStarted because IsRunning has mutex inside?",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
