@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c25a7474_ad6849e0",
+        "filename": "components/web_contents_delegate_android/validation_message_bubble_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 0,
+      "message": "we removed this null check...is that on purpose?",
+      "range": {
+        "startLine": 65,
+        "startChar": 6,
+        "endLine": 65,
+        "endChar": 37
+      },
+      "revId": "874db1d83fc2851f19a2687ade5ad2ddf5df92bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

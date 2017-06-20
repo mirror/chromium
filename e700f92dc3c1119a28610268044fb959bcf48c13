@@ -1,0 +1,165 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d5a90ff5_9199d96c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ContextMenuHelper.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "instead of having to say pixel in the javadoc, let\u0027s change the param name to be suffixed with Px (or Dp in the reverse).  Then do that in all subsequent function calls.",
+      "range": {
+        "startLine": 82,
+        "startChar": 76,
+        "endLine": 82,
+        "endChar": 93
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8fffe836_87606df5",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "make this javadoc?",
+      "range": {
+        "startLine": 291,
+        "startChar": 11,
+        "endLine": 291,
+        "endChar": 14
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51217f53_877f0a96",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/TabularContextMenuUi.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "should we have assert mContextMenuDialog \u003d\u003d null; here instead of the javadoc comment?",
+      "range": {
+        "startLine": 294,
+        "startChar": 8,
+        "endLine": 294,
+        "endChar": 26
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ac82764b_d7020049",
+        "filename": "chrome/browser/media/webrtc/media_stream_devices_controller.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 760,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "is GetNativeView guaranteed to be non-null (same comment elsewhere)?",
+      "range": {
+        "startLine": 760,
+        "startChar": 21,
+        "endLine": 760,
+        "endChar": 34
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2df34b4d_caaa17d8",
+        "filename": "chrome/browser/ui/autofill/chrome_autofill_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 376,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "I believe if the conditional statement has more than one line, braces are used.",
+      "range": {
+        "startLine": 376,
+        "startChar": 13,
+        "endLine": 376,
+        "endChar": 0
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eff563c_c91ed73c",
+        "filename": "components/web_contents_delegate_android/android/java/src/org/chromium/components/web_contents_delegate_android/ValidationMessageBubble.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "is device pixel DP or Pixel?  density independent pixels or physical display pixels?  Like my other comment, the suffix of Px or Dp is clearer.",
+      "range": {
+        "startLine": 29,
+        "startChar": 37,
+        "endLine": 29,
+        "endChar": 39
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bbe4eaad_866e6150",
+        "filename": "components/web_contents_delegate_android/validation_message_bubble_android.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1116043
+      },
+      "writtenOn": "2017-06-20T00:17:49Z",
+      "side": 1,
+      "message": "I wonder if we should combine this with SetPositionRelativeToAnchor (i.e. call createAndShow) and then call SetPositionRelativeToAnchor right after.",
+      "range": {
+        "startLine": 41,
+        "startChar": 21,
+        "endLine": 41,
+        "endChar": 39
+      },
+      "revId": "e700f92dc3c1119a28610268044fb959bcf48c13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
