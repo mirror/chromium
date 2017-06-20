@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2b04b805_d6b4b90a",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T13:35:57Z",
+      "side": 0,
+      "message": "Nice, this simplifies the fuzzer a bunch :)",
+      "revId": "f471163c1112a5ed7685ac2d1f911c922cb08aa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

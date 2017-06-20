@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "cdbfa2ee_b47f7884",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T13:35:57Z",
+      "side": 1,
+      "message": "Nit: line wraps too early.",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58356d53_99f243bf",
         "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
         "patchSetId": 7
@@ -30,6 +47,24 @@
       "writtenOn": "2017-06-20T04:43:08Z",
       "side": 1,
       "message": "how about adding a fake entry to the enum to mark the last element instead of using the current last element for future robustness?",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2745752_ae233f9d",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-20T13:35:57Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "58356d53_99f243bf",
       "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
