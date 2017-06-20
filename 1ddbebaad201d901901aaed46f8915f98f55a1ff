@@ -22,6 +22,30 @@
       "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeac6b75_d418fc62",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1164104
+      },
+      "writtenOn": "2017-06-20T17:52:50Z",
+      "side": 1,
+      "message": "Do we understand why this is failing on iOS 9 iPhone simulator?\n\nOriginally, the matcher |WebViewContainingText| waits for the web view to contain specific text, however, a matcher should not wait, and that\u0027s why this line was replaced by |waitForWebViewContainingText|, so |waitForWebViewContainingText| is probably the right way to go. I think we need to figure out why |waitForWebViewContainingText| doesn\u0027t work for this test, maybe there is a bug in the helper functions.",
+      "parentUuid": "889e4c25_46364fd1",
+      "range": {
+        "startLine": 233,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 56
+      },
+      "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
