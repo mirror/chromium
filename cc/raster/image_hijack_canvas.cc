@@ -41,6 +41,7 @@ class ScopedDecodedImageLock {
     if (paint) {
       decoded_paint_ = *paint;
       decoded_paint_->setFilterQuality(decoded_draw_image_.filter_quality());
+      LOG(ERROR) << "DECODED PAINT Q" << decoded_draw_image_.filter_quality();
     }
   }
 
