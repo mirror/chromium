@@ -145,6 +145,30 @@
     },
     {
       "key": {
+        "uuid": "23d280c8_367750bf",
+        "filename": "chrome/browser/ui/views/tabs/browser_tab_strip_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 320,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-20T18:21:55Z",
+      "side": 1,
+      "message": "Yea, the purpose of the function seems to be to allow the tabstrip controller to synchronize updates to all tabs so SchedulePaints coalesce better. I tried to switch to CompositorAnimationObserver as per Sadrul\u0027s guidance on another CL but that upped the framerate to 60fps (from 33fps) which affected performance. I sent an email to Sadrul asking if there was a way or if we could introduce a way to change the FPS that an observer cares about, so following up on that is a TODO.\n\n(sorry, maybe should have mentioned this earlier)\n\ncomment/{} done.",
+      "parentUuid": "b224ad7c_fc3cb69e",
+      "range": {
+        "startLine": 320,
+        "startChar": 22,
+        "endLine": 320,
+        "endChar": 40
+      },
+      "revId": "bd2608a207728a8f051ae3ab1a51f69c4af3baa8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3ee7ad0_3f6d9ec1",
         "filename": "chrome/browser/ui/views/tabs/tab.h",
         "patchSetId": 1
