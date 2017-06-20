@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "51a8ed6e_393144de",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-20T00:15:36Z",
+      "side": 1,
+      "message": "Can you do a one off test to see the performance of this? This is interesting and perhaps we can use similar code in software as well, but it would be hit in a lot more cases, which is why I\u0027m curious about the performance (ie is downscaling and doing this better than just using the original decode?)",
+      "revId": "c69f477bb8bc05cc1a6a1393095bfec7c956c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
