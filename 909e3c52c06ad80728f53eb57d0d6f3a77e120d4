@@ -16,6 +16,24 @@
       "revId": "909e3c52c06ad80728f53eb57d0d6f3a77e120d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ef1366_8ce61a3c",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T04:58:48Z",
+      "side": 1,
+      "message": "Yeah. We can now check that. Actually, I saw fetch-canvas-tainting.https.html got fixed accidentally when I was debugging this condition.\n\nCan I do that in a following CL?",
+      "parentUuid": "eda703f9_51a97a80",
+      "revId": "909e3c52c06ad80728f53eb57d0d6f3a77e120d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
