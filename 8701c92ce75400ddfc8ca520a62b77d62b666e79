@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "b870a9f4_b30b9482",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T22:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "36da0bc0_f4a3fdec",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a800de6_f3c23163",
         "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
         "patchSetId": 3
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-19T18:14:37Z",
       "side": 1,
       "message": "Why NOTREACHED?",
+      "range": {
+        "startLine": 126,
+        "startChar": 4,
+        "endLine": 126,
+        "endChar": 5
+      },
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "34980e0d_9268b595",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T22:44:32Z",
+      "side": 1,
+      "message": "The download is not tested here.",
+      "parentUuid": "7a800de6_f3c23163",
       "range": {
         "startLine": 126,
         "startChar": 4,
@@ -77,6 +119,24 @@
     },
     {
       "key": {
+        "uuid": "168f0a68_92f5e570",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T22:44:32Z",
+      "side": 1,
+      "message": "PrefetchService could also start DownloadService if not yet. When PrefetchServiceFactory::GetForBrowserContext() is called for the 1st time, PrefetchService instance is created with DownloadService passed as a parameter.",
+      "parentUuid": "95f9d160_979d8a9f",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "19f06791_a03a4dc0",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 3
@@ -94,6 +154,24 @@
     },
     {
       "key": {
+        "uuid": "5518ba44_6a3e6c48",
+        "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T22:44:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "19f06791_a03a4dc0",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bd5e0438_095d49c4",
         "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
         "patchSetId": 3
@@ -105,6 +183,24 @@
       "writtenOn": "2017-06-19T18:14:37Z",
       "side": 1,
       "message": "Please add tests for this file.",
+      "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d18315b_a365e3d7",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T22:44:32Z",
+      "side": 1,
+      "message": "I think it would be better to test this in request unittest. They\u0027re covered in GeneratePageBundleRequestTest.RequestData (already added), GetOperationRequestTest.RequestData (already added), and PrefetchDownloaderTest.DownloadParams (added in this patch).",
+      "parentUuid": "bd5e0438_095d49c4",
       "revId": "8701c92ce75400ddfc8ca520a62b77d62b666e79",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
