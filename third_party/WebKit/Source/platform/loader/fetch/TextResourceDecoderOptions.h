@@ -73,6 +73,29 @@ class PLATFORM_EXPORT TextResourceDecoderOptions final {
   const KURL& HintURL() const { return hint_url_; }
   const char* HintLanguage() const { return hint_language_; }
 
+  bool operator==(const TextResourceDecoderOptions& other) const {
+    if (encoding_detection_option_ != other.encoding_detection_option_)
+      return false;
+    if (content_type_ != other.content_type_)
+      return false;
+    if (default_encoding_ != other.default_encoding_)
+      return false;
+    if (use_lenient_xml_decoding_ != other.use_lenient_xml_decoding_)
+      return false;
+
+    // Hint informantion can be ignored except for |kUseAllAutoDetection|.
+    if (encoding_detection_option_ != kUseAllAutoDetection)
+      return true;
+
+    if (hint_encoding_ != other.hint_encoding_)
+      return false;
+    if (hint_url_ != other.hint_url_)
+      return false;
+    if (strcmp(hint_language_, other.hint_language_))
+      return false;
+    return true;
+  }
+
  private:
   TextResourceDecoderOptions(EncodingDetectionOption,
                              ContentType,
