@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "48e8e9e7_fe465b09",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002246
+      },
+      "writtenOn": "2017-06-20T17:52:22Z",
+      "side": 1,
+      "message": "Nit: did git cl format mess up the alignment for that comment?",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 3
+      },
+      "revId": "b06cb2eaeb00a07b6164d69cd630376f4d8bb2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
