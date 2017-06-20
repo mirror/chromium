@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "060ea0c4_080b4b1a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "I don\u0027t think we want other observers to log into the \u0027PageLoad\u0027 UKM event - rather each observer should have its own event name and we should join events at analysis time based on the source id.",
+      "revId": "b7d97b683dfdecafe4ffdc60493e2f975c9213a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af6efb4a_79d82e95",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "i haven\u0027t seen this style of allocation for static variables before. you may want to use https://cs.chromium.org/chromium/src/base/lazy_instance.h for this. main question is around memory cleanup on shutdown - LazyInstance has well defined semantics here whereas just calling new means we\u0027re going to leak the object on shutdown, and any memory analysis tools may get confused by this, thinking it\u0027s a leak.\n\nsee also https://google.github.io/styleguide/cppguide.html#Static_and_Global_Variables which gives some context/guidance on how to use static global variables.",
+      "revId": "b7d97b683dfdecafe4ffdc60493e2f975c9213a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71769542_e3100842",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "just as a general heads up in advance, when a change adds more than ~8 histograms, the metrics team often pushes back and questions whether all of the histograms are really needed. so you should anticipate getting that inquiry here, and just be ready to explain why all of these are needed.",
+      "revId": "b7d97b683dfdecafe4ffdc60493e2f975c9213a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

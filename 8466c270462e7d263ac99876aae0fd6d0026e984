@@ -1,0 +1,225 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4624dc1_7f689a1e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "interesting - is there a reason we need to special case the page_ip_address_ \u003d\u003d net::IPAddress::IPv6Localhost()? Is net::IsLocalhost(address.host()) not sufficient? It looks like IsLocalhost covers both ipv4 and ipv6 internally.",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6bbdfeb_da698d1c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "I\u0027m not sure if we can expect parsing to alway be successful. For example, if the host is empty, does ParseURLHostnameToAddress return true? Perhaps better to do an early return if it did not parse successfully, e.g.\n\nif (!parsed_successfully)\n  return STOP_OBSERVING;",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0309019_aa2d35a7",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "extensions should never flow through page load metrics, so that should probably be removed from the comment, as it could otherwise be misleading to future readers of the code.",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1ee72470_03997425",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "could we do this test first, before the net::IsLocalhost() call? e.g.\n\n// In cases where the page loaded was not a network resource...\nif (!parsed_successfully || !page_ip_address_.IsValid() || page_ip_address_.IsZero())\n  return STOP_OBSERVING;\n\nif (net::IsLocalhost(address.host()) || ...)",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a8d393df_cffa860d",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "let\u0027s add a comment to explain what the data structure is here, e.g.\n\n// Maps from first byte of an IPv4 address, to the number of bits in the reserved prefix.\n\nI also notice that a similar table exists in  IsReservedIPv4 within ip_address.cc - we should see if we can work with net/ owners to provide a method that gives you the data you need here, based on the existing table in that file. Would be good to ask mmenke and see what he thinks.",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a12eb1fe_658ec2e8",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "we should be certain that the byte length is \u003e0 before using [0] here - I am not sure if the call to IsReserved() guarantees that or not. If so, adding a comment to note this might be good, e.g.\n\n// A reserved IP address must have at least N bytes, so [0] is safe here.",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33d6c4be_170f87fb",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "you can do this as a ternary:\n\nreturn (page_load_type_ \u003d\u003d DOMAIN_TYPE_LOCALHOST) ? STOP_OBSERVING : CONTINUE_OBSERVING;",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0cebde0_3558013e",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "given that you only call ProcessLoadedResource in this one place, it\u0027s probably better to inline ProcessLoadedResource\u0027s implementation here.",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "23369899_d55bd832",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "the block of code from here to line 175 looks like a good candidate for factoring into a helper method: \n\nstd::pair\u003cnet::IPAddress, int\u003e GetIPAndPort(const page_load_metrics::ExtraRequestCompleteInfo\u0026 extra_request_info);",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0d1ec58_2a942232",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "it\u0027s clearer to be explicit here about what we\u0027re testing for:\n\nif (extra_request_ifo.net_error \u003d\u003d net::OK) {",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed0ba488_9b92bf27",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "same",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f490c8bf_ea5845c4",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "the pair of uint32_t\u0027s might benefit from a typedef or using statement that better describes what they contain, for example:\n\nusing SuccessFailCounts \u003d std::pair\u003cuint32_t, uint32_t\u003e;",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "436c664b_79328245",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T20:08:55Z",
+      "side": 1,
+      "message": "best to give this a default value here, e.g. DomainType page_load_type_ \u003d DOMAIN_TYPE_UNKNOWN\n\n(and also maybe worth adding an entry for unknown in the enum, as the first entry)",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
