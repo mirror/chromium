@@ -22,6 +22,30 @@
       "revId": "e633de7fb4e5f90853bb1747f7701faa7e7d8c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eb0197bd_7dc62344",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-20T21:11:09Z",
+      "side": 1,
+      "message": "I originally didn\u0027t add this because it didn\u0027t make sense to me why a navigation would finish in the main frame without a response header. All other calls to GetResponseHeaders do a null check, and the only useful comment claims that it could be an intermediate navigation (not sure what that is - https://cs.chromium.org/chromium/src/chrome/browser/chromeos/arc/auth/arc_active_directory_enrollment_token_fetcher.cc?rcl\u003dfe199f4407a2d90e1cd7d95b072896f17cfd0f97\u0026l\u003d246)\n\nI think assuming 200 is ok though because it\u0027s not explicitly an error.",
+      "parentUuid": "0745338f_54abd9f7",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 45
+      },
+      "revId": "e633de7fb4e5f90853bb1747f7701faa7e7d8c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
