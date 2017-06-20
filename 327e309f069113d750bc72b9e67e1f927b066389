@@ -46,6 +46,30 @@
       "revId": "327e309f069113d750bc72b9e67e1f927b066389",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4b71ace5_e6f1c5c0",
+        "filename": "chrome/browser/safe_browsing/incident_reporting/incident_reporting_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 134,
+      "author": {
+        "id": 1002897
+      },
+      "writtenOn": "2017-06-20T21:41:27Z",
+      "side": 1,
+      "message": "We expect devs to use the appropriate traits when they migrate their code to the TaskScheduler API, even if it involves changing behavior. We already redirect all SequencedWorkerPool tasks to TaskScheduler under the hood to verify that code can run in TaskScheduler (this is the \"no behavior change\" test).",
+      "parentUuid": "861fac73_f0bf112f",
+      "range": {
+        "startLine": 134,
+        "startChar": 43,
+        "endLine": 134,
+        "endChar": 75
+      },
+      "revId": "327e309f069113d750bc72b9e67e1f927b066389",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
