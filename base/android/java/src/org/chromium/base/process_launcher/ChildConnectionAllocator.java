@@ -2,13 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.base.process_launcher;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
@@ -34,7 +36,7 @@ public class ChildConnectionAllocator {
 
     /** Factory interface. Used by tests to specialize created connections. */
     @VisibleForTesting
-    protected interface ConnectionFactory {
+    public interface ConnectionFactory {
         ChildProcessConnection createConnection(Context context, ComponentName serviceName,
                 boolean bindAsExternalService, Bundle serviceBundle,
                 ChildProcessCreationParams creationParams,
@@ -52,6 +54,9 @@ public class ChildConnectionAllocator {
                     serviceBundle, creationParams, deathCallback);
         }
     }
+
+    // The handle for the thread we were created on and on which all methods should be called.
+    private final Handler mLauncherHandler = new Handler();
 
     // Connections to services. Indices of the array correspond to the service numbers.
     private final ChildProcessConnection[] mChildProcessConnections;
@@ -109,7 +114,7 @@ public class ChildConnectionAllocator {
     }
 
     // TODO(jcivelli): remove this method once crbug.com/693484 has been addressed.
-    static int getNumberOfServices(
+    public static int getNumberOfServices(
             Context context, String packageName, String numChildServicesManifestKey) {
         int numServices = -1;
         try {
@@ -156,7 +161,7 @@ public class ChildConnectionAllocator {
     /** @return a connection ready to be bound, or null if there are no free slots. */
     public ChildProcessConnection allocate(Context context, Bundle serviceBundle,
             ChildProcessConnection.DeathCallback deathCallback) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnLauncherThread();
         if (mFreeConnectionIndices.isEmpty()) {
             Log.d(TAG, "Ran out of services to allocate.");
             return null;
@@ -173,7 +178,7 @@ public class ChildConnectionAllocator {
 
     /** Frees a connection and notifies listeners. */
     public void free(ChildProcessConnection connection) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnLauncherThread();
 
         // mChildProcessConnections is relatively short (20 items at max at this point).
         // We are better of iterating than caching in a map.
@@ -203,7 +208,7 @@ public class ChildConnectionAllocator {
     }
 
     public boolean isFreeConnectionAvailable() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnLauncherThread();
         return !mFreeConnectionIndices.isEmpty();
     }
 
@@ -221,20 +226,24 @@ public class ChildConnectionAllocator {
         assert removed;
     }
 
+    private boolean isRunningOnLauncherThread() {
+        return mLauncherHandler.getLooper() == Looper.myLooper();
+    }
+
     @VisibleForTesting
-    void setConnectionFactoryForTesting(ConnectionFactory connectionFactory) {
+    public void setConnectionFactoryForTesting(ConnectionFactory connectionFactory) {
         mConnectionFactory = connectionFactory;
     }
 
     /** @return the count of connections managed by the allocator */
     @VisibleForTesting
-    int allocatedConnectionsCountForTesting() {
-        assert LauncherThread.runningOnLauncherThread();
+    public int allocatedConnectionsCountForTesting() {
+        assert isRunningOnLauncherThread();
         return mChildProcessConnections.length - mFreeConnectionIndices.size();
     }
 
     @VisibleForTesting
-    ChildProcessConnection getChildProcessConnectionAtSlotForTesting(int slotNumber) {
+    public ChildProcessConnection getChildProcessConnectionAtSlotForTesting(int slotNumber) {
         return mChildProcessConnections[slotNumber];
     }
 }

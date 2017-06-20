@@ -23,6 +23,9 @@ import org.chromium.base.annotations.SuppressFBWarnings;
 import org.chromium.base.library_loader.Linker;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
 import org.chromium.base.process_launcher.FileDescriptorInfo;
+import org.chromium.base.process_launcher.ChildConnectionAllocator;
+import org.chromium.base.process_launcher.ChildProcessConnection;
+import org.chromium.base.process_launcher.ChildProcessLauncher;
 import org.chromium.content.app.ChromiumLinkerParams;
 import org.chromium.content.app.SandboxedProcessService;
 import org.chromium.content.common.ContentSwitches;
@@ -57,26 +60,33 @@ public class ChildProcessLauncherHelper {
     private static final long FREE_CONNECTION_DELAY_MILLIS = 1;
 
     // Factory used by the SpareConnection to create the actual ChildProcessConnection.
-    private static final SpareChildConnection.ConnectionFactory SANDBOXED_CONNECTION_FACTORY =
-            new SpareChildConnection.ConnectionFactory() {
-                @Override
-                public ChildProcessConnection allocateBoundConnection(Context context,
-                        ChildProcessCreationParams creationParams,
-                        ChildProcessConnection.StartCallback startCallback,
-                        ChildProcessConnection.DeathCallback deathCallback) {
-                    boolean bindToCallerCheck =
-                            creationParams == null ? false : creationParams.getBindToCallerCheck();
-                    ChildConnectionAllocator allocator =
-                            getConnectionAllocator(context, creationParams, true /* sandboxed */);
-                    return ChildProcessLauncherHelper.allocateBoundConnection(context, allocator,
-                            false /* useStrongBinding */, true /* useBindingManager */,
-                            ChildProcessLauncherHelper.createServiceBundle(bindToCallerCheck),
-                            startCallback, deathCallback);
-                }
-            };
+    // private static final SpareChildConnection.ConnectionFactory SANDBOXED_CONNECTION_FACTORY =
+    //         new SpareChildConnection.ConnectionFactory() {
+    //             @Override
+    //             public ChildProcessConnection allocateBoundConnection(Context context,
+    //                     ChildProcessCreationParams creationParams,
+    //                     ChildProcessConnection.StartCallback startCallback,
+    //                     ChildProcessConnection.DeathCallback deathCallback) {
+    //                 ChildConnectionAllocator allocator =
+    //                         getConnectionAllocator(context, creationParams, true /* sandboxed
+    //                         */);
+    //                 boolean bindToCallerCheck =
+    //                         creationParams == null ? false :
+    //                         creationParams.getBindToCallerCheck();
+
+    //                 ChildProcessLauncher launcher = new ChildProcessLauncher();
+    //                 return ChildProcessLauncherHelper.allocateBoundConnection(context, allocator,
+    //                         false /* useStrongBinding */, true /* useBindingManager */,
+    //                         ChildProcessLauncherHelper.createServiceBundle(bindToCallerCheck),
+    //                         startCallback, deathCallback);
+    //             }
+    //         };
 
     // A warmed-up connection to a sandboxed service.
-    private static SpareChildConnection sSpareSandboxedConnection;
+    // private static SpareChildConnection sSpareSandboxedConnection;
+
+    // Map from PID to ChildProcessLauncher.
+    private static final Map<Integer, ChildProcessLauncher> sLauncherByPid = new HashMap<>();
 
     // Map from package name to ChildConnectionAllocator.
     private static final Map<String, ChildConnectionAllocator>
@@ -90,9 +100,6 @@ public class ChildProcessLauncherHelper {
     private static int sSandboxedServicesCountForTesting = -1;
     private static String sSandboxedServicesNameForTesting;
 
-    // Map from PID to ChildService connection.
-    private static Map<Integer, ChildProcessLauncherHelper> sLauncherByPid = new HashMap<>();
-
     // Manages OOM bindings used to bind chind services. Lazily initialized by getBindingManager().
     private static BindingManager sBindingManager;
 
@@ -105,25 +112,78 @@ public class ChildProcessLauncherHelper {
     // Whether the connection is managed by the BindingManager.
     private final boolean mUseBindingManager;
 
-    // Whether the connection has a strong binding (which also means it is not managed by the
-    // BindingManager).
-    private final boolean mUseStrongBinding;
-
-    // Whether the connection should be setup once connected. Tests can set this to false to
-    // simulate a connected but not yet setup connection.
-    private final boolean mDoSetupConnection;
-
     private final ChildProcessCreationParams mCreationParams;
-
-    private final String[] mCommandLine;
-
-    private final FileDescriptorInfo[] mFilesToBeMapped;
-
-    // The allocator used to create the connection.
-    private final ChildConnectionAllocator mConnectionAllocator;
 
     // Whether the created process should be sandboxed.
     private final boolean mSandboxed;
+
+    private final ChildProcessLauncher
+            .Delegate mLauncherDelegate = new ChildProcessLauncher.Delegate() {
+        @Override
+        public ChildProcessConnection getExistingConnection(
+                ChildProcessConnection.StartCallback startCallback) {
+            // if (sSpareSandboxedConnection = null) {
+            //     return null;
+            // }
+            // ChildProcessConnection connection = sSpareSandboxedConnection.getConnection(
+            //             mCreationParams, mSandboxed, startCallback);
+            //     if (mConnection != null) {
+            //         Log.d(TAG, "Using warmed-up connection for service %s.",
+            //                 mConnection.getServiceName());
+            //         // Clear the spare connection now that it's been used.
+            //         sSpareSandboxedConnection = null;
+            //     }
+            // return sSpareSandboxedConnection.;
+            return null;
+        }
+
+        @Override
+        public void onBeforeConnectionAllocated(Bundle bundle) {
+            boolean bindToCallerCheck =
+                    mCreationParams == null ? false : mCreationParams.getBindToCallerCheck();
+            bundle.putBoolean(ChildProcessConstants.EXTRA_BIND_TO_CALLER, bindToCallerCheck);
+            bundle.putParcelable(
+                    ChildProcessConstants.EXTRA_LINKER_PARAMS, getLinkerParamsForNewConnection());
+        }
+
+        @Override
+        public void onConnectionBound(
+                ChildProcessConnection connection, ChildConnectionAllocator connectionAllocator) {
+            if (mUseBindingManager && !connectionAllocator.isFreeConnectionAvailable()) {
+                // Proactively releases all the moderate bindings once all the sandboxed services
+                // are allocated, which will be very likely to have some of them killed by OOM
+                // killer.
+                getBindingManager().releaseAllModerateBindings();
+            }
+        }
+
+        @Override
+        public void onBeforeConnectionSetup(
+                ChildProcessConnection connection, Bundle connectionBundle) {
+            // Popuplate the bundle passed to the service setup call with content specific
+            // parameters.
+            connectionBundle.putInt(ChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
+            connectionBundle.putLong(
+                    ChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
+            connectionBundle.putBundle(
+                    Linker.EXTRA_LINKER_SHARED_RELROS, Linker.getInstance().getSharedRelros());
+        }
+
+        @Override
+        public void onConnectionEstablished(ChildProcessConnection connection) {
+            int pid = connection.getPid();
+            if (mUseBindingManager) {
+                getBindingManager().addNewConnection(pid, connection);
+            }
+
+            // If the connection fails and pid == 0, the Java-side cleanup was already handled by
+            // DeathCallback. We still have to call back to native for cleanup there.
+            if (mNativeChildProcessLauncherHelper != 0) {
+                nativeOnChildProcessStarted(mNativeChildProcessLauncherHelper, connection.getPid());
+            }
+            mNativeChildProcessLauncherHelper = 0;
+        }
+    };
 
     // Note native pointer is only guaranteed live until nativeOnChildProcessStarted.
     private long mNativeChildProcessLauncherHelper;
@@ -193,17 +253,17 @@ public class ChildProcessLauncherHelper {
      */
     public static void warmUp(final Context context) {
         assert ThreadUtils.runningOnUiThread();
-        LauncherThread.post(new Runnable() {
-            @Override
-            public void run() {
-                if (sSpareSandboxedConnection != null && !sSpareSandboxedConnection.isEmpty()) {
-                    return;
-                }
-                sSpareSandboxedConnection =
-                        new SpareChildConnection(context, SANDBOXED_CONNECTION_FACTORY,
-                                ChildProcessCreationParams.getDefault(), true /* sandboxed */);
-            }
-        });
+        // LauncherThread.post(new Runnable() {
+        //     @Override
+        //     public void run() {
+        //         if (sSpareSandboxedConnection != null && !sSpareSandboxedConnection.isEmpty()) {
+        //             return;
+        //         }
+        //         sSpareSandboxedConnection =
+        //                 new SpareChildConnection(context, SANDBOXED_CONNECTION_FACTORY,
+        //                         ChildProcessCreationParams.getDefault(), true /* sandboxed */);
+        //     }
+        // });
     }
 
     public static String getPackageNameFromCreationParams(
@@ -336,63 +396,20 @@ public class ChildProcessLauncherHelper {
         return sSandboxedChildConnectionAllocatorMap.get(packageName);
     }
 
-    private static ChildProcessConnection allocateBoundConnection(Context context,
-            final ChildConnectionAllocator connectionAllocator, boolean useStrongBinding,
-            boolean useBindingManager, Bundle serviceBundle,
-            ChildProcessConnection.StartCallback startCallback,
-            final ChildProcessConnection.DeathCallback deathCallback) {
-        assert LauncherThread.runningOnLauncherThread();
-
-        ChildProcessConnection.DeathCallback deathCallbackWrapper =
-                new ChildProcessConnection.DeathCallback() {
-                    @Override
-                    public void onChildProcessDied(ChildProcessConnection connection) {
-                        assert LauncherThread.runningOnLauncherThread();
-                        if (connection.getPid() != 0) {
-                            stop(connection.getPid());
-                        } else {
-                            freeConnection(connectionAllocator, connection);
-                        }
-                        // Forward the call to the provided callback if any. The spare connection
-                        // uses that for clean-up.
-                        if (deathCallback != null) {
-                            deathCallback.onChildProcessDied(connection);
-                        }
-                    }
-                };
-
-        ChildProcessConnection connection =
-                connectionAllocator.allocate(context, serviceBundle, deathCallbackWrapper);
-        if (connection != null) {
-            connection.start(useStrongBinding, startCallback);
-            if (useBindingManager && !connectionAllocator.isFreeConnectionAvailable()) {
-                // Proactively releases all the moderate bindings once all the sandboxed services
-                // are allocated, which will be very likely to have some of them killed by OOM
-                // killer.
-                getBindingManager().releaseAllModerateBindings();
-            }
-        }
-        return connection;
-    }
-
     private ChildProcessLauncherHelper(long nativePointer,
             ChildProcessCreationParams creationParams, String[] commandLine,
             FileDescriptorInfo[] filesToBeMapped, boolean useStrongBinding, boolean sandboxed,
             IBinder binderCallback, boolean doSetupConnection) {
         assert LauncherThread.runningOnLauncherThread();
-
         mCreationParams = creationParams;
-        mCommandLine = commandLine;
-        mFilesToBeMapped = filesToBeMapped;
-        mUseStrongBinding = useStrongBinding;
         mUseBindingManager = sandboxed;
         mNativeChildProcessLauncherHelper = nativePointer;
-        mIBinderCallback = binderCallback;
-        mDoSetupConnection = doSetupConnection;
         mSandboxed = sandboxed;
 
-        mConnectionAllocator = getConnectionAllocator(
+        ChildConnectionAllocator connectionAllocator = getConnectionAllocator(
                 ContextUtils.getApplicationContext(), mCreationParams, sandboxed);
+        mLauncher = new ChildProcessLauncher(mLauncherDelegate, commandLine, filesToBeMapped,
+                connectionAllocator, useStrongBinding, binderCallback);
 
         initLinker();
     }
@@ -470,6 +487,7 @@ public class ChildProcessLauncherHelper {
                         allocator.removeListener(this);
                         boolean success = allocateAndSetupConnection(startCallback);
                         assert success;
+                        allocateAndSetupConnection(startCallback, false /* retryIfNone */);
                     }
                 });
                 return false;
@@ -557,37 +575,34 @@ public class ChildProcessLauncherHelper {
     // Called on client (UI or IO) thread.
     @CalledByNative
     private boolean isOomProtected() {
-        // mConnection is set on a different thread but does not change once it's been set. So it is
-        // safe to test whether it's null from a different thread.
-        if (mConnection == null) {
+        ChildProcessConnection connection = mLauncher.getConnection();
+        // Here we are accessing the connection from a thread other than the launcher thread, but it
+        // does not change once it's been set. So it is safe to test whether it's null here and
+        // access it afterwards.
+        if (connection == null) {
             return false;
         }
 
         // We consider the process to be child protected if it has a strong or moderate binding and
         // the app is in the foreground.
-        return sApplicationInForeground && !mConnection.isWaivedBoundOnlyOrWasWhenDied();
+        return sApplicationInForeground && !connection.isWaivedBoundOnlyOrWasWhenDied();
     }
 
     @CalledByNative
     private void setInForeground(int pid, boolean foreground, boolean boostForPendingViews) {
         assert LauncherThread.runningOnLauncherThread();
-        assert mConnection != null;
-        assert getPid() == pid;
+        assert mLauncher.getPid() == pid;
         getBindingManager().setPriority(pid, foreground, boostForPendingViews);
     }
 
     @CalledByNative
     static void stop(int pid) {
         assert LauncherThread.runningOnLauncherThread();
-        Log.d(TAG, "stopping child connection: pid=%d", pid);
-        ChildProcessLauncherHelper launcher = sLauncherByPid.remove(pid);
-        if (launcher == null) {
-            // Can happen for single process.
-            return;
+        ChildProcessLauncher launcher = ChildProcessLauncher.getByPid(pid);
+        // launcher can be null for single process.
+        if (launcher != null) {
+            launcher.stop();
         }
-        launcher.onConnectionLost(launcher.mConnection, pid);
-        launcher.mConnection.stop();
-        freeConnection(launcher.mConnectionAllocator, launcher.mConnection);
     }
 
     @CalledByNative
@@ -648,70 +663,6 @@ public class ChildProcessLauncherHelper {
         }
     }
 
-    /**
-     * Creates the common bundle to be passed to child processes through the service binding intent.
-     * If the service gets recreated by the framework the intent will be reused, so these parameters
-     * should be common to all processes of that type.
-     *
-     * @param commandLine Command line params to be passed to the service.
-     * @param linkerParams Linker params to start the service.
-     */
-    private static Bundle createServiceBundle(boolean bindToCallerCheck) {
-        initLinker();
-        Bundle bundle = new Bundle();
-        bundle.putBoolean(ChildProcessConstants.EXTRA_BIND_TO_CALLER, bindToCallerCheck);
-        bundle.putParcelable(
-                ChildProcessConstants.EXTRA_LINKER_PARAMS, getLinkerParamsForNewConnection());
-        return bundle;
-    }
-
-    public Bundle createConnectionBundle() {
-        Bundle bundle = new Bundle();
-        bundle.putStringArray(ChildProcessConstants.EXTRA_COMMAND_LINE, mCommandLine);
-        bundle.putParcelableArray(ChildProcessConstants.EXTRA_FILES, mFilesToBeMapped);
-        return bundle;
-    }
-
-    // Below are methods that will eventually be moved to a content delegate class.
-
-    private void onBeforeConnectionAllocated(Bundle commonParameters) {
-        // TODO(jcivelli): move createServiceBundle in there.
-    }
-
-    // Called once a connection has been allocated.
-    private void onConnectionBound(ChildProcessConnection connection,
-            ChildConnectionAllocator connectionAllocator, Bundle connectionBundle) {
-        if (mUseBindingManager && !connectionAllocator.isFreeConnectionAvailable()) {
-            // Proactively releases all the moderate bindings once all the sandboxed services are
-            // allocated, which will be very likely to have some of them killed by OOM killer.
-            getBindingManager().releaseAllModerateBindings();
-        }
-
-        // Popuplate the bundle passed to the service setup call with content specific parameters.
-        connectionBundle.putInt(ChildProcessConstants.EXTRA_CPU_COUNT, CpuFeatures.getCount());
-        connectionBundle.putLong(ChildProcessConstants.EXTRA_CPU_FEATURES, CpuFeatures.getMask());
-        connectionBundle.putBundle(
-                Linker.EXTRA_LINKER_SHARED_RELROS, Linker.getInstance().getSharedRelros());
-    }
-
-    private void onConnectionEstablished(ChildProcessConnection connection) {
-        if (mUseBindingManager) {
-            getBindingManager().addNewConnection(connection.getPid(), connection);
-        }
-    }
-
-    // Called when a connection has been disconnected. Only invoked if onConnectionEstablished was
-    // called, meaning the connection was already established.
-    private void onConnectionLost(ChildProcessConnection connection, int pid) {
-        if (mUseBindingManager) {
-            getBindingManager().removeConnection(pid);
-        }
-    }
-
-    private IBinder getIBinderCallback() {
-        return mIBinderCallback;
-    }
-
     // Testing only related methods.
     @VisibleForTesting
     public static ChildProcessLauncherHelper createAndStartForTesting(
@@ -723,6 +674,31 @@ public class ChildProcessLauncherHelper {
                         useStrongBinding, sandboxed, binderCallback, doSetupConnection);
         launcherHelper.start();
         return launcherHelper;
+    }
+
+    /** @return the count of services set-up and working. */
+    @VisibleForTesting
+    static int getConnectedServicesCountForTesting() {
+        int count = sPrivilegedChildConnectionAllocator == null
+                ? 0
+                : sPrivilegedChildConnectionAllocator.allocatedConnectionsCountForTesting();
+        return count + getConnectedSandboxedServicesCountForTesting(null /* packageName */);
+    }
+
+    @VisibleForTesting
+    public static int getConnectedSandboxedServicesCountForTesting(String packageName) {
+        int count = 0;
+        for (ChildConnectionAllocator allocator : sSandboxedChildConnectionAllocatorMap.values()) {
+            if (packageName == null || packageName.equals(allocator.getPackageName())) {
+                count += allocator.allocatedConnectionsCountForTesting();
+            }
+        }
+        return count;
+    }
+
+    @VisibleForTesting
+    static boolean hasSandboxedConnectionAllocatorForPackage(String packageName) {
+        return sSandboxedChildConnectionAllocatorMap.containsKey(packageName);
     }
 
     @VisibleForTesting
@@ -762,31 +738,18 @@ public class ChildProcessLauncherHelper {
 
     @VisibleForTesting
     public ChildProcessConnection getChildProcessConnection() {
-        return mConnection;
+        return mLauncher.getConnection();
     }
 
     @VisibleForTesting
     public ChildConnectionAllocator getChildConnectionAllocatorForTesting() {
-        return mConnectionAllocator;
+        return mLauncher.getConnectionAllocator();
     }
 
     @VisibleForTesting
     public static ChildProcessConnection getWarmUpConnectionForTesting() {
-        return sSpareSandboxedConnection == null ? null : sSpareSandboxedConnection.getConnection();
-    }
-
-    @VisibleForTesting
-    public static boolean crashProcessForTesting(int pid) {
-        if (sLauncherByPid.get(pid) == null) return false;
-
-        ChildProcessConnection connection = sLauncherByPid.get(pid).mConnection;
-        if (connection == null) return false;
-
-        try {
-            connection.crashServiceForTesting();
-            return true;
-        } catch (RemoteException ex) {
-            return false;
-        }
+        // return sSpareSandboxedConnection == null ? null :
+        // sSpareSandboxedConnection.getConnection();
+        return null;
     }
 }

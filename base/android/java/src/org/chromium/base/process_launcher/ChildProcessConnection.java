@@ -2,14 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-package org.chromium.content.browser;
+package org.chromium.base.process_launcher;
 
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.os.RemoteException;
 
 import org.chromium.base.Log;
@@ -32,7 +34,8 @@ public class ChildProcessConnection {
      * earlier than ConnectionCallbacks below, as a child process might die before the connection is
      * fully set up.
      */
-    interface DeathCallback {
+    // TODO(jcivelli): make SpareChildConnection not depend on this and make this protected.
+    public interface DeathCallback {
         // Called on Launcher thread.
         void onChildProcessDied(ChildProcessConnection connection);
     }
@@ -41,7 +44,8 @@ public class ChildProcessConnection {
      * Used to notify the consumer about the process start. These callbacks will be invoked before
      * the ConnectionCallbacks.
      */
-    interface StartCallback {
+    // TODO(jcivelli): make SpareChildConnection not depend on this and make this protected.
+    public interface StartCallback {
         /**
          * Called when the child process has successfully started and is ready for connection
          * setup.
@@ -124,7 +128,7 @@ public class ChildProcessConnection {
 
         @Override
         public void onServiceConnected(ComponentName className, final IBinder service) {
-            LauncherThread.post(new Runnable() {
+            mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     ChildProcessConnection.this.onServiceConnectedOnLauncherThread(service);
@@ -135,7 +139,7 @@ public class ChildProcessConnection {
         // Called on the main thread to notify that the child service did not disconnect gracefully.
         @Override
         public void onServiceDisconnected(ComponentName className) {
-            LauncherThread.post(new Runnable() {
+            mHandler.post(new Runnable() {
                 @Override
                 public void run() {
                     ChildProcessConnection.this.onServiceDisconnectedOnLauncherThread();
@@ -144,6 +148,8 @@ public class ChildProcessConnection {
         }
     }
 
+    // The handler of the thread this connection should be interacted on.
+    private final Handler mHandler;
     private final Context mContext;
     private final ChildProcessConnection.DeathCallback mDeathCallback;
     private final ComponentName mServiceName;
@@ -218,7 +224,7 @@ public class ChildProcessConnection {
     // Set to true once unbind() was called.
     private boolean mUnbound;
 
-    ChildProcessConnection(Context context, ComponentName serviceName,
+    public ChildProcessConnection(Context context, ComponentName serviceName,
             boolean bindAsExternalService, Bundle serviceBundle,
             ChildProcessCreationParams creationParams, DeathCallback deathCallback) {
         this(context, serviceName, bindAsExternalService, serviceBundle, creationParams,
@@ -229,7 +235,7 @@ public class ChildProcessConnection {
             boolean bindAsExternalService, Bundle serviceBundle,
             ChildProcessCreationParams creationParams, boolean doBind,
             DeathCallback deathCallback) {
-        assert LauncherThread.runningOnLauncherThread();
+        mHandler = new Handler();
         mContext = context;
         mDeathCallback = deathCallback;
         mCreationParams = creationParams;
@@ -252,22 +258,22 @@ public class ChildProcessConnection {
     }
 
     public final Context getContext() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mContext;
     }
 
     public final String getPackageName() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mServiceName.getPackageName();
     }
 
     public final IChildProcessService getService() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mService;
     }
 
     public final ComponentName getServiceName() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mServiceName;
     }
 
@@ -279,7 +285,7 @@ public class ChildProcessConnection {
      * @return the connection pid, or 0 if not yet connected
      */
     public int getPid() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mPid;
     }
 
@@ -293,10 +299,9 @@ public class ChildProcessConnection {
      * @param startCallback (optional) callback when the child process starts or fails to start.
      */
     public void start(boolean useStrongBinding, StartCallback startCallback) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         try {
             TraceEvent.begin("ChildProcessConnection.start");
-            assert LauncherThread.runningOnLauncherThread();
             assert mConnectionParams
                     == null : "setupConnection() called before start() in ChildProcessConnection.";
 
@@ -324,7 +329,7 @@ public class ChildProcessConnection {
      */
     public void setupConnection(Bundle connectionBundle, @Nullable IBinder callback,
             ConnectionCallback connectionCallback) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         assert mConnectionParams == null;
         if (mServiceDisconnected) {
             Log.w(TAG, "Tried to setup a connection that already disconnected.");
@@ -350,14 +355,14 @@ public class ChildProcessConnection {
      * this multiple times.
      */
     public void stop() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         unbind();
         mService = null;
         mConnectionParams = null;
     }
 
     private void onServiceConnectedOnLauncherThread(IBinder service) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         // A flag from the parent class ensures we run the post-connection logic only once
         // (instead of once per each ChildServiceConnection).
         if (mDidOnServiceConnected) {
@@ -408,7 +413,7 @@ public class ChildProcessConnection {
     }
 
     private void onServiceDisconnectedOnLauncherThread() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         // Ensure that the disconnection logic runs only once (instead of once per each
         // ChildServiceConnection).
         if (mServiceDisconnected) {
@@ -450,7 +455,7 @@ public class ChildProcessConnection {
             ICallbackInt pidCallback = new ICallbackInt.Stub() {
                 @Override
                 public void call(final int pid) {
-                    LauncherThread.post(new Runnable() {
+                    mHandler.post(new Runnable() {
                         @Override
                         public void run() {
                             onSetupConnectionResult(pid);
@@ -471,7 +476,7 @@ public class ChildProcessConnection {
     }
 
     private boolean bind(boolean useStrongBinding) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         assert !mUnbound;
 
         boolean success = useStrongBinding ? mStrongBinding.bind() : mInitialBinding.bind();
@@ -484,7 +489,7 @@ public class ChildProcessConnection {
 
     @VisibleForTesting
     protected void unbind() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         mUnbound = true;
         mStrongBinding.unbind();
         mWaivedBinding.unbind();
@@ -495,29 +500,29 @@ public class ChildProcessConnection {
     }
 
     public boolean isInitialBindingBound() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mInitialBinding.isBound();
     }
 
     public void addInitialBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         mInitialBinding.bind();
         updateWaivedBoundOnlyState();
     }
 
     public boolean isStrongBindingBound() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mStrongBinding.isBound();
     }
 
     public void removeInitialBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         mInitialBinding.unbind();
         updateWaivedBoundOnlyState();
     }
 
     public void dropOomBindings() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         mInitialBinding.unbind();
 
         mStrongBindingCount = 0;
@@ -528,7 +533,7 @@ public class ChildProcessConnection {
     }
 
     public void addStrongBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         if (!isConnected()) {
             Log.w(TAG, "The connection is not bound for %d", getPid());
             return;
@@ -541,7 +546,7 @@ public class ChildProcessConnection {
     }
 
     public void removeStrongBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         if (!isConnected()) {
             Log.w(TAG, "The connection is not bound for %d", getPid());
             return;
@@ -555,12 +560,12 @@ public class ChildProcessConnection {
     }
 
     public boolean isModerateBindingBound() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return mModerateBinding.isBound();
     }
 
     public void addModerateBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         if (!isConnected()) {
             Log.w(TAG, "The connection is not bound for %d", getPid());
             return;
@@ -570,7 +575,7 @@ public class ChildProcessConnection {
     }
 
     public void removeModerateBinding() {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         if (!isConnected()) {
             Log.w(TAG, "The connection is not bound for %d", getPid());
             return;
@@ -598,9 +603,13 @@ public class ChildProcessConnection {
         }
     }
 
+    private boolean isRunningOnCorrectThread() {
+        return mHandler.getLooper() == Looper.myLooper();
+    }
+
     @VisibleForTesting
     protected ChildServiceConnection createServiceConnection(int bindFlags) {
-        assert LauncherThread.runningOnLauncherThread();
+        assert isRunningOnCorrectThread();
         return new ChildServiceConnectionImpl(bindFlags);
     }
 

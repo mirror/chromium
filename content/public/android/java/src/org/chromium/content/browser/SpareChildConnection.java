@@ -9,6 +9,7 @@ import android.content.Context;
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
 import org.chromium.base.process_launcher.ChildProcessCreationParams;
+import org.chromium.base.process_launcher.ChildProcessConnection;
 
 /**
  * This class is used to create a single spare ChildProcessConnection (usually early on during
