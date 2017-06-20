@@ -9,8 +9,7 @@
 #include <string>
 
 #include "base/macros.h"
-#include "components/exo/surface_delegate.h"
-#include "components/exo/surface_observer.h"
+#include "components/exo/surface_tree_host_delegate.h"
 #include "ui/gfx/geometry/size.h"
 
 namespace aura {
@@ -20,9 +19,10 @@ class Window;
 namespace exo {
 class NotificationSurfaceManager;
 class Surface;
+class SurfaceTreeHost;
 
 // Handles notification surface role of a given surface.
-class NotificationSurface : public SurfaceDelegate, public SurfaceObserver {
+class NotificationSurface : public SurfaceTreeHostDelegate {
  public:
   NotificationSurface(NotificationSurfaceManager* manager,
                       Surface* surface,
@@ -34,16 +34,13 @@ class NotificationSurface : public SurfaceDelegate, public SurfaceObserver {
   aura::Window* window() { return window_.get(); }
   const std::string& notification_key() const { return notification_key_; }
 
-  // Overridden from SurfaceDelegate:
-  void OnSurfaceCommit() override;
-  bool IsSurfaceSynchronized() const override;
-
-  // Overridden from SurfaceObserver:
-  void OnSurfaceDestroying(Surface* surface) override;
+  // Overridden from SurfaceTreeHostDelegate:
+  void OnSurfaceTreeCommit() override;
+  void OnSurfaceDetached(Surface* surface) override;
 
  private:
   NotificationSurfaceManager* const manager_;  // Not owned.
-  Surface* surface_;                           // Not owned.
+  std::unique_ptr<SurfaceTreeHost> surface_tree_host_;
   const std::string notification_key_;
 
   std::unique_ptr<aura::Window> window_;

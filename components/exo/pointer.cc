@@ -12,6 +12,7 @@
 #include "components/exo/pointer_delegate.h"
 #include "components/exo/pointer_stylus_delegate.h"
 #include "components/exo/surface.h"
+#include "components/exo/surface_tree_host.h"
 #include "components/exo/wm_helper.h"
 #include "ui/aura/client/cursor_client.h"
 #include "ui/aura/env.h"
@@ -79,12 +80,11 @@ Pointer::Pointer(PointerDelegate* delegate)
   helper->AddPreTargetHandler(this);
   helper->AddCursorObserver(this);
   helper->AddDisplayConfigurationObserver(this);
+  surface_tree_host_ = base::MakeUnique<SurfaceTreeHost>(this);
 }
 
 Pointer::~Pointer() {
   delegate_->OnPointerDestroying(this);
-  if (surface_)
-    surface_->RemoveSurfaceObserver(this);
   if (focus_) {
     focus_->RemoveSurfaceObserver(this);
     focus_->UnregisterCursorProvider(this);
@@ -105,7 +105,7 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
 
   // If surface is different than the current pointer surface then remove the
   // current surface and add the new surface.
-  if (surface != surface_) {
+  if (surface != surface_tree_host_->surface()) {
     if (surface && surface->HasSurfaceDelegate()) {
       DLOG(ERROR) << "Surface has already been assigned a role";
       return;
@@ -124,9 +124,10 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
     return;
   }
 
-  // If |surface_| is set then asynchronously capture a snapshot of cursor,
-  // otherwise cancel pending capture and immediately set the cursor to "none".
-  if (surface_) {
+  // If |surface_tree_host_->surface()| is set then asynchronously capture a
+  // snapshot of cursor, otherwise cancel pending capture and immediately set
+  // the cursor to "none".
+  if (surface_tree_host_->surface()) {
     CaptureCursor(hotspot);
   } else {
     cursor_bitmap_.reset();
@@ -269,35 +270,26 @@ void Pointer::OnCursorDisplayChanged(const display::Display& display) {
 // WMHelper::DisplayConfigurationObserver overrides:
 
 void Pointer::OnDisplayConfigurationChanged() {
-  UpdatePointerSurface(surface_);
+  UpdatePointerSurface(surface_tree_host_->surface());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SurfaceDelegate overrides:
+// SurfaceTreeHostDelegate overrides:
 
-void Pointer::OnSurfaceCommit() {
-  surface_->CheckIfSurfaceHierarchyNeedsCommitToNewSurfaces();
-  surface_->CommitSurfaceHierarchy();
-
+void Pointer::OnSurfaceTreeCommit() {
   // Capture new cursor to reflect result of commit.
   if (focus_)
     CaptureCursor(hotspot_);
 }
 
-bool Pointer::IsSurfaceSynchronized() const {
-  // A pointer surface is always desynchronized.
-  return false;
-}
+void Pointer::OnSurfaceDetached(Surface* surface) {}
 
 ////////////////////////////////////////////////////////////////////////////////
-// SurfaceObserver overrides:
+// SurfaceTreeHostDelegate overrides:
 
 void Pointer::OnSurfaceDestroying(Surface* surface) {
-  DCHECK(surface == surface_ || surface == focus_);
-  if (surface == surface_)
-    surface_ = nullptr;
-  if (surface == focus_)
-    focus_ = nullptr;
+  DCHECK_EQ(surface, focus_);
+  focus_ = nullptr;
   surface->RemoveSurfaceObserver(this);
 }
 
@@ -314,28 +306,26 @@ Surface* Pointer::GetEffectiveTargetForEvent(ui::Event* event) const {
 }
 
 void Pointer::UpdatePointerSurface(Surface* surface) {
-  if (surface_) {
-    surface_->window()->SetTransform(gfx::Transform());
-    if (surface_->window()->parent())
-      surface_->window()->parent()->RemoveChild(surface_->window());
-    surface_->SetSurfaceDelegate(nullptr);
-    surface_->RemoveSurfaceObserver(this);
+  if (surface_tree_host_->surface()) {
+    auto* window = surface_tree_host_->window();
+    window->SetTransform(gfx::Transform());
+    if (window->parent())
+      window->parent()->RemoveChild(window);
+    surface_tree_host_->DetachSurface();
   }
-  surface_ = surface;
-  if (surface_) {
-    surface_->SetSurfaceDelegate(this);
-    surface_->AddSurfaceObserver(this);
+  if (surface) {
+    surface_tree_host_->AttachSurface(surface);
     // Note: Surface window needs to be added to the tree so we can take a
     // snapshot. Where in the tree is not important but we might as well use
     // the cursor container.
     WMHelper::GetInstance()
         ->GetPrimaryDisplayContainer(ash::kShellWindowId_MouseCursorContainer)
-        ->AddChild(surface_->window());
+        ->AddChild(surface_tree_host_->window());
   }
 }
 
 void Pointer::CaptureCursor(const gfx::Point& hotspot) {
-  DCHECK(surface_);
+  DCHECK(surface_tree_host_->surface());
   DCHECK(focus_);
 
   // Surface size is in DIPs, while layer size is in pseudo-DIP units that
@@ -346,7 +336,8 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
   auto* helper = WMHelper::GetInstance();
   float scale = helper->GetDisplayInfo(display.id()).GetEffectiveUIScale() *
                 kCursorCaptureScale / display.device_scale_factor();
-  surface_->window()->SetTransform(gfx::GetScaleTransform(gfx::Point(), scale));
+  surface_tree_host_->window()->SetTransform(
+      gfx::GetScaleTransform(gfx::Point(), scale));
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateBitmapRequest(
@@ -354,7 +345,8 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
                      cursor_capture_weak_ptr_factory_.GetWeakPtr(), hotspot));
 
   request->set_source(cursor_capture_source_id_);
-  surface_->window()->layer()->RequestCopyOfOutput(std::move(request));
+  surface_tree_host_->window()->layer()->RequestCopyOfOutput(
+      std::move(request));
 }
 
 void Pointer::OnCursorCaptured(const gfx::Point& hotspot,
