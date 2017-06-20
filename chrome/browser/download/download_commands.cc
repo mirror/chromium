@@ -49,24 +49,25 @@ const int64_t kMaxImageClipboardSize = 20 * 1024 * 1024;  // 20 MB
 
 class ImageClipboardCopyManager : public ImageDecoder::ImageRequest {
  public:
-  static void Start(const base::FilePath& file_path) {
-    new ImageClipboardCopyManager(file_path);
+  static void Start(const base::FilePath& file_path,
+                    base::SequencedTaskRunner* task_runner) {
+    new ImageClipboardCopyManager(file_path, task_runner);
   }
 
  private:
-  explicit ImageClipboardCopyManager(const base::FilePath& file_path)
+  ImageClipboardCopyManager(const base::FilePath& file_path,
+                            base::SequencedTaskRunner* task_runner)
       : file_path_(file_path) {
     // Constructor must be called in the UI thread.
     DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-    content::BrowserThread::GetBlockingPool()->PostTask(
+    task_runner->PostTask(
         FROM_HERE, base::BindOnce(&ImageClipboardCopyManager::StartDecoding,
                                   base::Unretained(this)));
   }
 
   void StartDecoding() {
-    DCHECK(content::BrowserThread::GetBlockingPool()->
-        RunsTasksInCurrentSequence());
+    base::ThreadsRestrictions::AssertIOAllowed();
 
     // Re-check the filesize since the file may be modified after downloaded.
     int64_t filesize;
@@ -125,6 +126,8 @@ DownloadCommands::DownloadCommands(content::DownloadItem* download_item)
     : download_item_(download_item) {
   DCHECK(download_item);
 }
+
+DownloadCommands::~DownloadCommands() = default;
 
 int DownloadCommands::GetCommandIconId(Command command) const {
   switch (command) {
@@ -407,5 +410,11 @@ void DownloadCommands::CopyFileAsImageToClipboard() const {
     return;
 
   base::FilePath file_path = download_item_->GetFullPath();
-  ImageClipboardCopyManager::Start(file_path);
+
+  if (!task_runner_) {
+    task_runner_ = base::CreateSequencedTaskRunnerWithTraits(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::SKIP_ON_SHUTDOWN});
+  }
+  ImageClipboardCopyManager::Start(file_path, task_runner_.get());
 }
