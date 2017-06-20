@@ -46,6 +46,30 @@
       "revId": "e633de7fb4e5f90853bb1747f7701faa7e7d8c27",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "adf3bec7_18307557",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-20T22:10:14Z",
+      "side": 1,
+      "message": "OK this seems consistent with:\nhttps://cs.chromium.org/chromium/src/net/http/http_response_headers.h?l\u003d293\nand\nhttps://cs.chromium.org/chromium/src/content/public/browser/navigation_handle.h?l\u003d223\n\nI wonder if there is a comment we could add to make it obvious that this is a conscious choice.",
+      "parentUuid": "eb0197bd_7dc62344",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 45
+      },
+      "revId": "e633de7fb4e5f90853bb1747f7701faa7e7d8c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
