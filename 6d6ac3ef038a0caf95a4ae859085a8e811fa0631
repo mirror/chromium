@@ -1,0 +1,123 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bbaac6bc_2b104620",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "Can you explain this to me? I thought this means that mus-ws is out of browser process, but SurfaceManager will be gone for viz too, and I tried to find this method in codesearch but it didn\u0027t tell me much.",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91c8ae61_9181e1f7",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 425,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "nit: wrap this call instead of early out in CreaetCompositorFrameSinkSupport, since that\u0027s what is done elsewhere in this file",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f63c7cdf_6b5ed9c8",
+        "filename": "content/browser/frame_host/render_widget_host_view_child_frame.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 792,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "no ;",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6eec7de0_4dd6bd0a",
+        "filename": "ui/app_list/presenter/test/run_all_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "Should this not go in Initialize? Thats where similar things are",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e16797e1_01af17b0",
+        "filename": "ui/app_list/test/run_all_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "Should this not go in Initialize()? Thats where similar things are.",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1d35a9a_4995979f",
+        "filename": "ui/compositor/run_all_unittests.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "Should this be in CompositorTestSuite::Initialize?",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "300f1029_7469847f",
+        "filename": "ui/views/run_all_unittests_main.cc",
+        "patchSetId": 21
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T19:54:35Z",
+      "side": 1,
+      "message": "Should it be in ViewsTestSuite::Initialize?",
+      "revId": "6d6ac3ef038a0caf95a4ae859085a8e811fa0631",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
