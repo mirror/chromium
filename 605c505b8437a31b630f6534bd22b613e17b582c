@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3ea972d2_e8910723",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-20T08:56:06Z",
+      "side": 1,
+      "message": "Hmm, it looks nasty we have to write this on all individual objects that inherit from ContextLifecycleObservers.\n\nWhat happens if we move this logic to ContextLifecycleObserver?",
+      "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
