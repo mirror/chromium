@@ -21,7 +21,7 @@ class PLATFORM_EXPORT TextResourceDecoderOptions final {
   };  // PlainText only checks for BOM.
 
   explicit TextResourceDecoderOptions(
-      ContentType,
+      ContentType = kPlainTextContent,
       const WTF::TextEncoding& default_encoding = WTF::TextEncoding());
 
   // Corresponds to utf-8 decode in Encoding spec:
@@ -35,6 +35,10 @@ class PLATFORM_EXPORT TextResourceDecoderOptions final {
       const KURL& hint_url);
 
   void SetUseLenientXMLDecoding() { use_lenient_xml_decoding_ = true; }
+  void OverrideContentType(ContentType content_type) {
+    if (encoding_detection_option_ != kAlwaysUseUTF8ForText)
+      content_type_ = content_type;
+  }
 
   static ContentType DetermineContentType(const String& mime_type);
 
@@ -76,15 +80,15 @@ class PLATFORM_EXPORT TextResourceDecoderOptions final {
                              const char* hint_encoding,
                              const KURL& hint_url);
 
-  const EncodingDetectionOption encoding_detection_option_;
-  const ContentType content_type_;
-  const WTF::TextEncoding default_encoding_;
+  EncodingDetectionOption encoding_detection_option_;
+  ContentType content_type_;
+  WTF::TextEncoding default_encoding_;
   bool use_lenient_xml_decoding_;  // Don't stop on XML decoding errors.
 
   // Hints for DetectTextEncoding().
   // Only used when |encoding_detection_option_| == |kUseAllAutoDetection|.
-  const char* const hint_encoding_;
-  const KURL hint_url_;
+  const char* hint_encoding_;
+  KURL hint_url_;
   char hint_language_[3];
 };
 

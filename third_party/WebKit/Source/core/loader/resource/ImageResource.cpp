@@ -131,11 +131,13 @@ class ImageResource::ImageResourceFactory : public ResourceFactory {
 
  public:
   ImageResourceFactory(const FetchParameters& fetch_params)
-      : ResourceFactory(Resource::kImage), fetch_params_(&fetch_params) {}
+      : ResourceFactory(Resource::kImage,
+                        TextResourceDecoderOptions::kPlainTextContent),
+        fetch_params_(&fetch_params) {}
 
   Resource* Create(const ResourceRequest& request,
                    const ResourceLoaderOptions& options,
-                   const String&) const override {
+                   const TextResourceDecoderOptions&) const override {
     return new ImageResource(request, options,
                              ImageResourceContent::CreateNotStarted(),
                              fetch_params_->GetPlaceholderImageRequestType() ==
