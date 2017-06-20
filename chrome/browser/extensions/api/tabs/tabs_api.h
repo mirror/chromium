@@ -203,7 +203,7 @@ class TabsCaptureVisibleTabFunction
   static void RegisterProfilePrefs(user_prefs::PrefRegistrySyncable* registry);
 
   // ExtensionFunction implementation.
-  bool HasPermission() override;
+  bool HasPermission(std::string* error_message) override;
   bool RunAsync() override;
 
  protected:
@@ -232,7 +232,7 @@ class ExecuteCodeInTabFunction : public ExecuteCodeFunction {
   ~ExecuteCodeInTabFunction() override;
 
   // ExtensionFunction:
-  bool HasPermission() override;
+  bool HasPermission(std::string* error_message) override;
 
   // Initializes |execute_tab_id_| and |details_|.
   InitResult Init() override;

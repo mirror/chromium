@@ -96,8 +96,7 @@ class ExtensionFunctionDispatcher
 
   // Called when an ExtensionFunction is done executing, after it has sent
   // a response (if any) to the extension.
-  void OnExtensionFunctionCompleted(const Extension* extension,
-                                    bool is_from_service_worker);
+  void OnExtensionFunctionCompleted(ExtensionFunction* function);
 
   // See the Delegate class for documentation on these methods.
   // TODO(devlin): None of these belong here. We should kill
@@ -127,6 +126,10 @@ class ExtensionFunctionDispatcher
   // |ui_thread_response_callback_wrappers_for_worker_|.
   struct WorkerResponseCallbackMapKey;
 
+  // Change the lazy keepalive count after the function call completed, if
+  // necessary.
+  void AdjustLazyKeepaliveCountAfterCompletion(ExtensionFunction* function);
+
   // Helper to check whether an ExtensionFunction has the required permissions.
   // This should be called after the function is fully initialized.
   // If the check fails, |callback| is run with an access-denied error and false
@@ -147,12 +150,6 @@ class ExtensionFunctionDispatcher
       ExtensionAPI* api,
       void* profile_id,
       const ExtensionFunction::ResponseCallback& callback);
-
-  // Helper to run the response callback with an access denied error. Can be
-  // called on any thread.
-  static void SendAccessDenied(
-      const ExtensionFunction::ResponseCallback& callback,
-      functions::HistogramValue histogram_value);
 
   void DispatchWithCallbackInternal(
       const ExtensionHostMsg_Request_Params& params,

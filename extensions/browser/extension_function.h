@@ -127,14 +127,15 @@ class ExtensionFunction
   virtual UIThreadExtensionFunction* AsUIThreadExtensionFunction();
   virtual IOThreadExtensionFunction* AsIOThreadExtensionFunction();
 
-  // Returns true if the function has permission to run.
+  // Returns whether the function has permission to run.  If not,
+  // |error_message| will be populated with the error details.
   //
   // The default implementation is to check the Extension's permissions against
   // what this function requires to run, but some APIs may require finer
   // grained control, such as tabs.executeScript being allowed for active tabs.
   //
   // This will be run after the function has been set up but before Run().
-  virtual bool HasPermission();
+  virtual bool HasPermission(std::string* error_message);
 
   // The result of a function call.
   //
@@ -246,6 +247,14 @@ class ExtensionFunction
   virtual const std::string& GetError() const;
 
   virtual void SetBadMessage();
+
+  // Sends an error response if the function access was denied.
+  // did_respond_with_permissions_denied() will return true after this call.
+  void RespondWithPermissionsDenied();
+
+  bool did_respond_with_permissions_denied() const {
+    return did_respond_with_permissions_denied_;
+  }
 
   // Specifies the name of the function. A long-lived string (such as a string
   // literal) must be provided.
@@ -498,6 +507,9 @@ class ExtensionFunction
   // TODO(devlin): Replace this with response_type_ != null.
   bool did_respond_;
 
+  // Whether this function has responded with a permissions denied error.
+  bool did_respond_with_permissions_denied_;
+
   DISALLOW_COPY_AND_ASSIGN(ExtensionFunction);
 };
 
@@ -540,6 +552,11 @@ class UIThreadExtensionFunction : public ExtensionFunction {
     service_worker_version_id_ = version_id;
   }
 
+  bool is_from_service_worker() const {
+    return service_worker_version_id_ !=
+           extensions::kInvalidServiceWorkerVersionId;
+  }
+
   // Gets the "current" web contents if any. If there is no associated web
   // contents then defaults to the foremost one.
   // NOTE: "current" can mean different things in different contexts. You
@@ -574,11 +591,6 @@ class UIThreadExtensionFunction : public ExtensionFunction {
   class RenderFrameHostTracker;
 
   void Destruct() const override;
-
-  bool is_from_service_worker() const {
-    return service_worker_version_id_ !=
-           extensions::kInvalidServiceWorkerVersionId;
-  }
 
   // The dispatcher that will service this extension function call.
   base::WeakPtr<extensions::ExtensionFunctionDispatcher> dispatcher_;

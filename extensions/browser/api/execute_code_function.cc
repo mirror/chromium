@@ -158,7 +158,7 @@ bool ExecuteCodeFunction::Execute(const std::string& code_string) {
   return true;
 }
 
-bool ExecuteCodeFunction::HasPermission() {
+bool ExecuteCodeFunction::HasPermission(std::string* error_message) {
   return true;
 }
 

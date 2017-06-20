@@ -304,7 +304,8 @@ ExtensionFunction::ExtensionFunction()
       histogram_value_(extensions::functions::UNKNOWN),
       source_context_type_(Feature::UNSPECIFIED_CONTEXT),
       source_process_id_(-1),
-      did_respond_(false) {}
+      did_respond_(false),
+      did_respond_with_permissions_denied_(false) {}
 
 ExtensionFunction::~ExtensionFunction() {
 }
@@ -317,11 +318,13 @@ IOThreadExtensionFunction* ExtensionFunction::AsIOThreadExtensionFunction() {
   return NULL;
 }
 
-bool ExtensionFunction::HasPermission() {
+bool ExtensionFunction::HasPermission(std::string* error_message) {
   Feature::Availability availability =
       ExtensionAPI::GetSharedInstance()->IsAvailable(
           name_, extension_.get(), source_context_type_, source_url(),
           extensions::CheckAliasStatus::ALLOWED);
+  if (!availability.is_available())
+    *error_message = availability.message();
   return availability.is_available();
 }
 
@@ -345,6 +348,16 @@ const std::string& ExtensionFunction::GetError() const {
 
 void ExtensionFunction::SetBadMessage() {
   bad_message_ = true;
+}
+
+void ExtensionFunction::RespondWithPermissionsDenied() {
+  DCHECK(response_callback_);
+  DCHECK(!did_respond_) << name_;
+  base::ListValue empty_list;
+  response_callback_.Run(ExtensionFunction::FAILED, empty_list,
+                         "Access to Extension API denied.", histogram_value());
+  did_respond_ = true;
+  did_respond_with_permissions_denied_ = true;
 }
 
 bool ExtensionFunction::user_gesture() const {
@@ -494,10 +507,8 @@ UIThreadExtensionFunction::UIThreadExtensionFunction()
       service_worker_version_id_(extensions::kInvalidServiceWorkerVersionId) {}
 
 UIThreadExtensionFunction::~UIThreadExtensionFunction() {
-  if (dispatcher() && (render_frame_host() || is_from_service_worker())) {
-    dispatcher()->OnExtensionFunctionCompleted(extension(),
-                                               is_from_service_worker());
-  }
+  if (dispatcher() && (render_frame_host() || is_from_service_worker()))
+    dispatcher()->OnExtensionFunctionCompleted(this);
 
   // The extension function should always respond to avoid leaks in the
   // renderer, dangling callbacks, etc. The exception is if the system is
