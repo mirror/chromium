@@ -25,6 +25,11 @@ AccessibilityTreeFormatterBlink::AccessibilityTreeFormatterBlink()
 AccessibilityTreeFormatterBlink::~AccessibilityTreeFormatterBlink() {
 }
 
+const char* const ADDITIONAL_ATTRIBUTES[] = {
+  "TreeData.textSelStartOffset",
+  "TreeData.textSelEndOffset"
+};
+
 uint32_t AccessibilityTreeFormatterBlink::ChildCount(
     const BrowserAccessibility& node) const {
   if (node.HasIntAttribute(ui::AX_ATTR_CHILD_TREE_ID))
@@ -45,7 +50,8 @@ BrowserAccessibility* AccessibilityTreeFormatterBlink::GetChild(
 void AccessibilityTreeFormatterBlink::AddProperties(
     const BrowserAccessibility& node,
     base::DictionaryValue* dict) {
-  dict->SetInteger("id", node.GetId());
+  int id = node.GetId();
+  dict->SetInteger("id", id);
 
   dict->SetString("internalRole", ui::ToString(node.GetData().role));
 
@@ -137,6 +143,23 @@ void AccessibilityTreeFormatterBlink::AddProperties(
         }
       }
       dict->Set(ui::ToString(attr), std::move(value_list));
+    }
+  }
+
+  if (!node.IsSimpleTextControl()) {
+    // Not a simple control, so these properties are not relevant:
+    dict->Remove("textSelStart", NULL);
+    dict->Remove("textSelEnd", NULL);
+    // Try to get rich text selection from TreeData
+    int anchor_id = node.manager()->GetTreeData().sel_anchor_object_id;
+    if (id == anchor_id) {
+      int anchor_offset = node.manager()->GetTreeData().sel_anchor_offset;
+      dict->SetInteger("TreeData.textSelStartOffset", anchor_offset);
+    }
+    int focus_id = node.manager()->GetTreeData().sel_focus_object_id;
+    if (id == focus_id) {
+      int focus_offset = node.manager()->GetTreeData().sel_focus_offset;
+      dict->SetInteger("TreeData.textSelEndOffset", focus_offset);
     }
   }
 
@@ -294,6 +317,45 @@ base::string16 AccessibilityTreeFormatterBlink::ToString(
     WriteAttribute(false,
                    base::StringPrintf("%s=%s", "actions", string_value.c_str()),
                    &line);
+  }
+
+  for (const char* attribute_name : ADDITIONAL_ATTRIBUTES) {
+    const base::Value* value;
+    if (!dict.Get(attribute_name, &value))
+      continue;
+
+    switch (value->GetType()) {
+      case base::Value::Type::STRING: {
+        std::string string_value;
+        value->GetAsString(&string_value);
+        WriteAttribute(false,
+                       base::StringPrintf("%s=%s", attribute_name,
+                                    string_value.c_str()),
+                       &line);
+        break;
+      }
+      case base::Value::Type::INTEGER: {
+        int int_value = 0;
+        value->GetAsInteger(&int_value);
+        WriteAttribute(false,
+                       base::StringPrintf("%s=%d", attribute_name,
+                                          int_value),
+                       &line);
+        break;
+      }
+      case base::Value::Type::DOUBLE: {
+        double double_value = 0.0;
+        value->GetAsDouble(&double_value);
+        WriteAttribute(false,
+                       base::StringPrintf("%s=%.2f", attribute_name,
+                                          double_value),
+                       &line);
+        break;
+      }
+      default:
+        NOTREACHED();
+        break;
+    }
   }
 
   return line;
