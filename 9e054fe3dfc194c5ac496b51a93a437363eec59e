@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f637e12a_482b6e6b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2682d30_342aedb5",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ac8429d1_df564206",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 3
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "74c0a4e3_27318419",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ac8429d1_df564206",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "d9725ed5_0f407972",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 3
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-20T01:12:41Z",
       "side": 1,
       "message": "Do you need these two if statements? It seems that the plane_root\nof a plane_root is itself.",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8197a8e1_4f019e56",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "These are not required. They are just optimization to avoid matrix copying/multiplication whenever possible.",
+      "parentUuid": "d9725ed5_0f407972",
       "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "4c33635c_3c8ae55b",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5b1eebc4_a9be1e24",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fca826e_7075b640",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
         "patchSetId": 3
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "4a66ed37_2f92479e",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapper.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "This is moved from SourceToDestinationClipRectInternal since the two code paths are de-duped.\nYes I think the right thing to do is to fix such invalid query in CompositedLayerMapping/PaintLayerPainter/PaintLayerClipper, but SPv1 is a goner so maybe not worth the time.",
+      "parentUuid": "3fca826e_7075b640",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "f3def1db_9b45ed04",
         "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
         "patchSetId": 3
@@ -98,6 +188,24 @@
       "writtenOn": "2017-06-20T01:12:41Z",
       "side": 1,
       "message": "plane_root still needs to be defined.",
+      "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bde9b048_9e62fc3c",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003330
+      },
+      "writtenOn": "2017-06-20T03:02:33Z",
+      "side": 1,
+      "message": "I\u0027ll add \"see below\".\n\nYea, I hate the variable declaration order. I did it this way to ensure tight packing. Maybe it isn\u0027t that bad to waste a few bytes? What do you think?",
+      "parentUuid": "f3def1db_9b45ed04",
       "revId": "9e054fe3dfc194c5ac496b51a93a437363eec59e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
