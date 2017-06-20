@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bf24ca0e_349c1f4d",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "57fd26d1_43142858",
+      "range": {
+        "startLine": 274,
+        "startChar": 55,
+        "endLine": 274,
+        "endChar": 64
+      },
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "47a1766c_3fe7e0c3",
         "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
         "patchSetId": 8
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-20T07:18:27Z",
       "side": 1,
       "message": "When GetForProcess() returns null on users\u0027 devices, this code fails silently, and it\u0027s difficult to notice this feature is totally disabled.\nAre we doing anything to ensure that ServiceManagerConnection is always initialized when running on real devices?",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6627786d_57c02719",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "Yes, this concern is true.\nI think a clean way is to mock the GetForProcess() in all the unittests, then we can expect the GetForProcess() always return a good value in the production code. Unfortunately there is not such a mock so far, and sad to find the \"if(GetForProcess())\" everywhere:(",
+      "parentUuid": "47a1766c_3fe7e0c3",
       "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "70f67d74_8d4fdfe0",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cd62a48c_96fabc67",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3cf43d08_d3f7ace7",
         "filename": "components/drive/BUILD.gn",
         "patchSetId": 8
@@ -73,6 +133,24 @@
       "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5237e07f_71731a99",
+        "filename": "components/drive/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3cf43d08_d3f7ace7",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -110,6 +188,24 @@
     },
     {
       "key": {
+        "uuid": "e26eaf7c_b3a97a93",
+        "filename": "components/drive/drive_uploader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "We use the mojo::MakeRequest() in this file, so I think we should keep it?",
+      "parentUuid": "3c4548b6_9fdaaa48",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e4266996_07b84654",
         "filename": "components/drive/drive_uploader.h",
         "patchSetId": 8
@@ -124,6 +220,24 @@
       "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d811f25_afc2092d",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-20T09:14:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e4266996_07b84654",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
