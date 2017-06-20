@@ -100,6 +100,8 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     kReloadAlways,
   };
 
+  enum CORSStatus { kUnknown, kSameOrigin, kSuccessfull, kFailed };
+
   virtual ~Resource();
 
   DECLARE_VIRTUAL_TRACE();
@@ -108,7 +110,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual String Encoding() const { return String(); }
   virtual void AppendData(const char*, size_t);
   virtual void FinishAsError(const ResourceError&);
-  virtual void SetCORSFailed() {}
 
   void SetNeedsSynchronousCacheHit(bool needs_synchronous_cache_hit) {
     needs_synchronous_cache_hit_ = needs_synchronous_cache_hit;
@@ -207,8 +208,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual void Finish(double finish_time);
   void Finish() { Finish(0.0); }
 
-  bool PassesAccessControlCheck(const SecurityOrigin*) const;
-
   virtual PassRefPtr<const SharedBuffer> ResourceBuffer() const {
     return data_;
   }
@@ -284,6 +283,16 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
   bool IsAlive() const { return is_alive_; }
+
+  void SetCORSStatus(const CORSStatus cors_status) {
+    cors_status_ = cors_status;
+  }
+
+  bool IsSameOriginOrCORSSuccessful() const {
+    return cors_status_ == CORSStatus::kSameOrigin || CORSStatus::kSuccessfull;
+  }
+
+  CORSStatus GetCORSStatus() const { return cors_status_; }
 
   void SetCacheIdentifier(const String& cache_identifier) {
     cache_identifier_ = cache_identifier;
@@ -457,6 +466,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   PreloadResult preload_result_;
   Type type_;
   ResourceStatus status_;
+  CORSStatus cors_status_;
 
   bool needs_synchronous_cache_hit_;
   bool link_preload_;
