@@ -10,8 +10,9 @@
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
 #include "base/unguessable_token.h"
-#include "components/exo/surface_delegate.h"
 #include "components/exo/surface_observer.h"
+#include "components/exo/surface_tree_host.h"
+#include "components/exo/surface_tree_host_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "ui/base/cursor/cursor.h"
@@ -38,8 +39,8 @@ class Surface;
 // devices, such as mice, which control the pointer location and pointer focus.
 class Pointer : public ui::EventHandler,
                 public WMHelper::CursorObserver,
+                public SurfaceTreeHostDelegate,
                 public WMHelper::DisplayConfigurationObserver,
-                public SurfaceDelegate,
                 public SurfaceObserver {
  public:
   explicit Pointer(PointerDelegate* delegate);
@@ -63,12 +64,12 @@ class Pointer : public ui::EventHandler,
   void OnCursorSetChanged(ui::CursorSetType cursor_set) override;
   void OnCursorDisplayChanged(const display::Display& display) override;
 
-  // Overridden from WMHelper::DisplayConfigurationObserver:
-  void OnDisplayConfigurationChanged() override;
-
-  // Overridden from SurfaceDelegate:
+  // Overridden from SurfaceTreeHostDelegate,:
   void OnSurfaceCommit() override;
   bool IsSurfaceSynchronized() const override;
+
+  // Overridden from WMHelper::DisplayConfigurationObserver:
+  void OnDisplayConfigurationChanged() override;
 
   // Overridden from SurfaceObserver:
   void OnSurfaceDestroying(Surface* surface) override;
@@ -95,6 +96,8 @@ class Pointer : public ui::EventHandler,
 
   // The current pointer surface.
   Surface* surface_ = nullptr;
+
+  std::unique_ptr<SurfaceTreeHost> surface_tree_host_;
 
   // The current focus surface for the pointer.
   Surface* focus_ = nullptr;

@@ -13,11 +13,15 @@
 #include "ash/wm/window_state_observer.h"
 #include "base/macros.h"
 #include "base/strings/string16.h"
+#include "components/exo/surface.h"
 #include "components/exo/surface_delegate.h"
 #include "components/exo/surface_observer.h"
+#include "components/exo/surface_tree_host_delegate.h"
 #include "components/exo/wm_helper.h"
 #include "ui/aura/window_observer.h"
 #include "ui/base/hit_test.h"
+#include "ui/compositor/compositor.h"
+#include "ui/compositor/compositor_vsync_manager.h"
 #include "ui/gfx/geometry/point.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/geometry/vector2d.h"
@@ -36,13 +40,17 @@ class TracedValue;
 }
 }
 
+namespace cc {
+class BeginFrameSource;
+}
+
 namespace exo {
-class Surface;
+class SurfaceTreeHost;
 
 // This class provides functions for treating a surfaces like toplevel,
 // fullscreen or popup widgets, move, resize or maximize them, associate
 // metadata like title and class, etc.
-class ShellSurface : public SurfaceDelegate,
+class ShellSurface : public SurfaceTreeHostDelegate,
                      public SurfaceObserver,
                      public views::WidgetDelegate,
                      public views::View,
@@ -218,7 +226,7 @@ class ShellSurface : public SurfaceDelegate,
   // Returns a trace value representing the state of the surface.
   std::unique_ptr<base::trace_event::TracedValue> AsTracedValue() const;
 
-  // Overridden from SurfaceDelegate:
+  // Overridden from SurfaceTreeHostDelegate:
   void OnSurfaceCommit() override;
   bool IsSurfaceSynchronized() const override;
 
@@ -378,6 +386,8 @@ class ShellSurface : public SurfaceDelegate,
   bool pending_shadow_underlay_in_surface_ = true;
   bool system_modal_ = false;
   gfx::ImageSkia icon_;
+
+  std::unique_ptr<SurfaceTreeHost> surface_tree_host_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellSurface);
 };
