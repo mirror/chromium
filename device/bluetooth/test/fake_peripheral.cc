@@ -10,6 +10,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/stringprintf.h"
 #include "device/bluetooth/bluetooth_uuid.h"
+#include "device/bluetooth/test/fake_remote_gatt_characteristic.h"
 #include "device/bluetooth/test/fake_remote_gatt_service.h"
 
 namespace bluetooth {

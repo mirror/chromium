@@ -262,6 +262,22 @@
       this.peripheral_address_ = peripheral_address;
       this.fake_central_ptr_ = fake_central_ptr;
     }
+
+    async setNextReadResponse(gatt_code, value=null) {
+      if (gatt_code === 0 && value === null) {
+        throw '|value| can\'t be null if read should success.';
+      }
+      if (gatt_code !== 0 && value !== null) {
+        throw '|value| must be null if read should fail.';
+      }
+
+      let {success} =
+        await this.fake_central_ptr_.setNextReadCharacteristicResponse(
+          gatt_code, value, this.characteristic_id_, this.service_id_,
+          this.peripheral_address_);
+
+      if (!success) throw 'setNextReadCharacteristicResponse failed';
+    }
   }
 
   navigator.bluetooth.test = new FakeBluetooth();
