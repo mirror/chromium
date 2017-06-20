@@ -16,6 +16,24 @@
       "revId": "cc043c108171d53f5031379f4a767041afcd2c9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4d2556f_305a6585",
+        "filename": "ui/webui/resources/cr_elements/cr_action_menu/cr_action_menu.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1130680
+      },
+      "writtenOn": "2017-06-20T01:39:56Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "8195e9b2_c7bf9092",
+      "revId": "cc043c108171d53f5031379f4a767041afcd2c9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
