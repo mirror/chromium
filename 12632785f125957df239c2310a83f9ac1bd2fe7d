@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "863da92c_39187722",
+        "filename": "third_party/WebKit/Source/core/dom/DocumentLoadingRenderingTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 3,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:59:36Z",
+      "side": 1,
+      "message": "Yes, I think core/dom is probably fine (not really loading related)",
+      "parentUuid": "6ba1d608_f140a280",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2e38ee8_c41aa17a",
         "filename": "third_party/WebKit/Source/core/dom/ImeOnFocusTest.cpp",
         "patchSetId": 2
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-20T07:07:44Z",
       "side": 1,
       "message": "Assumed this was core/dom because its to do with HTML",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "824c2b64_17437093",
+        "filename": "third_party/WebKit/Source/core/dom/MHTMLTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:59:36Z",
+      "side": 1,
+      "message": "This doesn\u0027t seem to have a good, relevant core/ directory (it\u0027s mainly testing platform/mhtml files)\n\nMaybe core/frame (as it has FrameSerializer)?",
+      "parentUuid": "ea05f19b_71b9ccea",
       "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -189,6 +225,24 @@
     },
     {
       "key": {
+        "uuid": "fd027617_afc79f7d",
+        "filename": "third_party/WebKit/Source/core/frame/TouchActionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:59:36Z",
+      "side": 1,
+      "message": "core/page ? (core/page/EventHandler.cpp)",
+      "parentUuid": "0cae3d97_f8bf76c5",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "9904cbee_1f6de7c0",
         "filename": "third_party/WebKit/Source/core/html/MediaElementFillingViewportTest.cpp",
         "patchSetId": 2
@@ -223,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "d8c48827_7fbd0541",
+        "filename": "third_party/WebKit/Source/core/page/LinkSelectionTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:59:36Z",
+      "side": 1,
+      "message": "core/editing ?",
+      "parentUuid": "28171eeb_f496d42c",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eaba8b74_1e73120a",
         "filename": "third_party/WebKit/Source/core/page/ViewportTest.cpp",
         "patchSetId": 2
@@ -251,6 +323,24 @@
       "writtenOn": "2017-06-20T07:07:44Z",
       "side": 1,
       "message": "No idea where this goes haha, core/page was my best guess",
+      "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e0992a4f_d6d2f516",
+        "filename": "third_party/WebKit/Source/core/page/WindowProxyTest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:59:36Z",
+      "side": 1,
+      "message": "core/v8 ?",
+      "parentUuid": "dc4f31f6_5bdf36ea",
       "revId": "12632785f125957df239c2310a83f9ac1bd2fe7d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
