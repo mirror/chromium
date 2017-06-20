@@ -104,6 +104,24 @@
       "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8c8359c9_915ef376",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T22:23:27Z",
+      "side": 1,
+      "message": "I\u0027m very uneasy about landing intermediate patches with code that is going to be changed that dramatically in just a couple of days. While it probably feels like a progress, it might be a longer/more difficult to get to the final result this way.",
+      "parentUuid": "f2cb434a_9e7d1cb2",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
