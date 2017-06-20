@@ -11,9 +11,9 @@
 #include "base/feature_list.h"
 #include "base/macros.h"
 #include "base/threading/thread_checker.h"
-#include "components/ukm/public/interfaces/ukm_interface.mojom.h"
-#include "components/ukm/public/ukm_entry_builder.h"
-#include "components/ukm/public/ukm_export.h"
+#include "services/metrics/public/cpp/ukm_entry_builder.h"
+#include "services/metrics/public/cpp/ukm_export.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 #include "url/gurl.h"
 
 class ContextualSearchRankerLoggerImpl;
@@ -24,11 +24,15 @@ namespace autofill {
 class AutofillMetrics;
 }
 
+namespace blink {
+class AutoplayUmaHelper;
+}
+
 namespace content {
 class MediaInternals;
 class RenderFrameImpl;
 class RenderWidgetHostLatencyTracker;
-}
+}  // namespace content
 
 namespace translate {
 class TranslateRankerImpl;
@@ -80,6 +84,7 @@ class UKM_EXPORT UkmRecorder {
   friend content::MediaInternals;
   friend content::RenderFrameImpl;
   friend content::RenderWidgetHostLatencyTracker;
+  friend blink::AutoplayUmaHelper;
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, AddEntryWithEmptyMetrics);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest, EntryBuilderAndSerialization);
   FRIEND_TEST_ALL_PREFIXES(UkmServiceTest,
