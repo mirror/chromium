@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb91dd3e_d194412d",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 265,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-20T07:22:34Z",
+      "side": 1,
+      "message": "nit: I believe we concluded in a previous CL that this is not needed?",
+      "range": {
+        "startLine": 265,
+        "startChar": 19,
+        "endLine": 265,
+        "endChar": 24
+      },
+      "revId": "d3b2a111428576a14a7b05d322543cb2a0709b9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
