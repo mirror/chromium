@@ -60,6 +60,24 @@
     },
     {
       "key": {
+        "uuid": "72761713_1e9d9558",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T05:59:11Z",
+      "side": 1,
+      "message": "Wait the SharedMemoryTracker is a singleton. in single process mode we will still have one instance of the class and one instance of the map. This would still mean we have unique keys in the map.\n\nOhh, also the logic of DecrementMemoryUsage could be wrong. If browser side frees the memory and renderer side still holds on to it, we would have deleted the segment from tracker. Not sure if this case is possible. Maybe add a comment on the bug and let\u0027s get back to this once we fix the multi process case.\nAlso I wonder if we even use SharedMemory in single process mode.",
+      "parentUuid": "9a65f3e7_11b32b14",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf1977_f8868bf2",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 6
@@ -89,6 +107,24 @@
       "side": 1,
       "message": "I don\u0027t think so: why should we call GetSharedGlobalAllocatorDumpName here?",
       "parentUuid": "aebf1977_f8868bf2",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627026d9_3e41ffb4",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T05:59:11Z",
+      "side": 1,
+      "message": "ProcessMemoryDump::CreateSharedGlobalAllocatorDump creates a global dump with guid of \"global/ID\", but the edge here is added to just ID. So, we should add GetSharedGlobalAllocatorDumpName() call here. Just like the first patch set.",
+      "parentUuid": "b865eaf0_22d02899",
       "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
