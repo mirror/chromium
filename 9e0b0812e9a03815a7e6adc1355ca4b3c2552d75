@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d4741e9_855e44e9",
+        "filename": "chrome/app/settings_strings.grdp",
+        "patchSetId": 1
+      },
+      "lineNbr": 2102,
+      "author": {
+        "id": 1111029
+      },
+      "writtenOn": "2017-06-20T18:07:29Z",
+      "side": 1,
+      "message": "Are you sure you don\u0027t need a version with (recommended) and a version without? See the precedent set here: https://cs.chromium.org/chromium/src/chrome/app/settings_strings.grdp?type\u003dcs\u0026q\u003dIDS_SETTINGS_SITE_SETTINGS_MIDI_DEVICES_ASK\u0026l\u003d2014\n\nAnd see where the version without (recommended) is used.",
+      "range": {
+        "startLine": 2102,
+        "startChar": 49,
+        "endLine": 2102,
+        "endChar": 52
+      },
+      "revId": "9e0b0812e9a03815a7e6adc1355ca4b3c2552d75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
