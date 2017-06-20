@@ -101,6 +101,15 @@ Polymer({
   attached: function() {
     this.resetState_();
     this.$.dialog.showModal();
+
+    // Show the pin is too short error when first displaying the PIN dialog.
+    this.problemClass_ = ProblemType.ERROR;
+    this.quickUnlockPrivate_.getCredentialRequirements(
+        chrome.quickUnlockPrivate.QuickUnlockMode.PIN,
+        this.processPinRequirements_.bind(this, MessageType.TOO_SHORT));
+    setTimeout(function() {
+      this.$.pinKeyboard.focus();
+    }.bind(this), 0);
   },
 
   close: function() {
@@ -237,13 +246,11 @@ Polymer({
       return;
     }
 
+    this.hideProblem_();
     if (this.canSubmit_()) {
-      this.hideProblem_();
       this.enableSubmit_ = true;
       return;
     }
-
-    this.showProblem_(MessageType.MISMATCH, ProblemType.WARNING);
   },
 
   /** @private */

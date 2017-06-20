@@ -60,7 +60,7 @@ void RegisterProfilePrefs(PrefRegistrySimple* registry) {
   registry->RegisterIntegerPref(prefs::kPinUnlockMinimumLength,
                                 kDefaultMinimumPinLength);
   // 0 indicates no maximum length for the pin.
-  registry->RegisterIntegerPref(prefs::kPinUnlockMaximumLength, 0);
+  registry->RegisterIntegerPref(prefs::kPinUnlockMaximumLength, 10);
   registry->RegisterBooleanPref(prefs::kPinUnlockWeakPinsAllowed, true);
 
   registry->RegisterBooleanPref(prefs::kEnableQuickUnlockFingerprint, false);
