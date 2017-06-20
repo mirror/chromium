@@ -107,6 +107,9 @@ struct DEVICE_GENERIC_SENSOR_PUBLIC_EXPORT SensorReadingSharedBuffer {
   SensorReadingField<OneWriterSeqLock> seqlock;
   SensorReading reading;
 
+  bool TryReadFromBuffer(SensorReading* result) const;
+  bool GetReading(SensorReading* result) const;
+
   // Gets the shared reading buffer offset for the given sensor type.
   static uint64_t GetOffset(mojom::SensorType type);
 };
