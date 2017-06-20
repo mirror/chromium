@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "72f0288d_489c545e",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T08:31:46Z",
+      "side": 1,
+      "message": "Unrelated: Some eslint check was added (or extended so that it now catches this case) that prevents document.getElementById usage. It points to some chrome:// util js file that provides a $() implementation to use instead (kinda like we do here!). However, since this is not a WebUI in the strict sense and we can\u0027t include stuff from chrome://, this doesn\u0027t apply. Yay for adding presubmits that fail on existing code.",
+      "revId": "d5045f51dca6495c82d3ad044c3f3b6e09a56bd9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}

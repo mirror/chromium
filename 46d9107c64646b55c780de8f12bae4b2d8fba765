@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe829b43_3998efad",
+        "filename": "chrome/browser/resources/local_ntp/local_ntp.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-20T08:31:46Z",
+      "side": 0,
+      "message": "The mv-page-ready class isn\u0027t used anywhere, so this is dead code.",
+      "revId": "46d9107c64646b55c780de8f12bae4b2d8fba765",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    }
+  ]
+}
