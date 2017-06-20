@@ -22,6 +22,30 @@
       "revId": "b06cb2eaeb00a07b6164d69cd630376f4d8bb2c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce58136c_f2f8a634",
+        "filename": "mojo/edk/embedder/platform_shared_buffer.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 311,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T17:55:16Z",
+      "side": 1,
+      "message": "Yeah, I decided to let it go in lieu of adding some weirdness to make clang-format behave. clang-format knows best! \u003e_\u003e",
+      "parentUuid": "48e8e9e7_fe465b09",
+      "range": {
+        "startLine": 311,
+        "startChar": 2,
+        "endLine": 311,
+        "endChar": 3
+      },
+      "revId": "b06cb2eaeb00a07b6164d69cd630376f4d8bb2c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
