@@ -22,6 +22,30 @@
       "revId": "e03759f2082e514b46a7afed10aa699ae10713d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6ec4e1c_932d55f9",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1175795
+      },
+      "writtenOn": "2017-06-20T19:33:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12f54a5_efcade04",
+      "range": {
+        "startLine": 292,
+        "startChar": 37,
+        "endLine": 292,
+        "endChar": 71
+      },
+      "revId": "e03759f2082e514b46a7afed10aa699ae10713d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
