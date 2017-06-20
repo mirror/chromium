@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "080ee12f_7f03d820",
+        "filename": "media/gpu/android/media_codec_video_decoder.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8209b97c_85e007b0",
+      "range": {
+        "startLine": 163,
+        "startChar": 42,
+        "endLine": 163,
+        "endChar": 70
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "31f35cec_888e4faa",
         "filename": "media/gpu/android/video_frame_factory.cc",
         "patchSetId": 3
@@ -39,6 +63,24 @@
       "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae9975c4_65b81031",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "31f35cec_888e4faa",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "34a8c1ef_0a7983fe",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "64bbb75c_61fb6268",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fd7022eb_0b40dd7b",
         "filename": "media/gpu/android/video_frame_factory.cc",
         "patchSetId": 3
@@ -70,6 +130,30 @@
       "writtenOn": "2017-06-19T14:32:33Z",
       "side": 1,
       "message": "will this be separate from the mailbox release cb?",
+      "range": {
+        "startLine": 184,
+        "startChar": 28,
+        "endLine": 184,
+        "endChar": 29
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4feb6217_7703da4c",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "I\u0027m not sure which one you mean. But Dan is setting it up so that we can register a callback for after the renderer drops the VideoFrame. At which point we can be confident that no one is trying to render it (because GVD currently deletes the texture in its VideoFrame destructor cb). The only trick is waiting for the release sync point, which I believe will be handled by MojoVideoDecoderService.",
+      "parentUuid": "fd7022eb_0b40dd7b",
       "range": {
         "startLine": 184,
         "startChar": 28,
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "d9519c22_3b9f6a12",
+        "filename": "media/gpu/android/video_frame_factory.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Thanks. Looks like natural size comes from the config from looking at other decoders, so I\u0027ve plumbed that through now.",
+      "parentUuid": "91714e53_19b9dcfc",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8d3cc3b4_a3ce90f5",
         "filename": "media/gpu/android/video_frame_factory.h",
         "patchSetId": 3
@@ -110,6 +212,30 @@
       "writtenOn": "2017-06-19T14:32:33Z",
       "side": 1,
       "message": "do these need MEDIA_GPU_EXPORT, here and elsewhere?",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 23
+      },
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd86b63a_e5e15673",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Not sure, but I added them.",
+      "parentUuid": "8d3cc3b4_a3ce90f5",
       "range": {
         "startLine": 70,
         "startChar": 6,
@@ -139,6 +265,24 @@
     },
     {
       "key": {
+        "uuid": "7d5022aa_c1ac0313",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3c2b0bc8_b887b5aa",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "177c4938_7de1b63f",
         "filename": "media/gpu/android/video_frame_factory.h",
         "patchSetId": 3
@@ -156,6 +300,24 @@
     },
     {
       "key": {
+        "uuid": "35b131c9_1e674945",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "177c4938_7de1b63f",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "296ed6e1_503643c4",
         "filename": "media/gpu/android/video_frame_factory.h",
         "patchSetId": 3
@@ -170,6 +332,24 @@
       "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b6fe56ab_00c8dcac",
+        "filename": "media/gpu/android/video_frame_factory.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-20T22:40:18Z",
+      "side": 1,
+      "message": "Moved into _impl files.\n\nI can\u0027t think of a great name for this. The good thing is no one needs to know the name outside of the impl.",
+      "parentUuid": "296ed6e1_503643c4",
+      "revId": "7e32ce1850d04acce3a41afb9e08cd67508780f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
