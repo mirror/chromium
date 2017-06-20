@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02853c97_d08a9a47",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 527,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T01:43:07Z",
+      "side": 1,
+      "message": "Sorry I should have been clearer in my comments.\n\nI was thinking this comment should cover the slightly unusual idiom here (moving into a local and then swapping with *this), since the point is to prevent unintended lifetime extension you would get from just calling swap() directly.",
+      "range": {
+        "startLine": 525,
+        "startChar": 0,
+        "endLine": 527,
+        "endChar": 63
+      },
+      "revId": "5ddb57c304e5ac9c61f1f24f74c75359e654ea12",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
