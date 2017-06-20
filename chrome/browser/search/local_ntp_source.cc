@@ -415,7 +415,7 @@ std::string LocalNtpSource::GetContentSecurityPolicyScriptSrc() const {
          GetIntegritySha256Value(
              GetConfigData(default_search_provider_is_google_io_thread_)) +
          "' "
-         "'sha256-//Ntxa12Vzvs6oUFThZ7SAu9dDxHfqgUeSTOrQKqlgE=';";
+         "'sha256-B+DpwVbIA4NPCMOrJpZO9ZQKe75eMRZfeQxAjW5IXHc=';";
 }
 
 std::string LocalNtpSource::GetContentSecurityPolicyChildSrc() const {
