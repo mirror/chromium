@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "7c389679_a1c4b468",
+        "filename": "media/blink/cdm_result_promise_helper.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Will do if the unused values can be removed.",
+      "parentUuid": "2b8e479c_b2cf9ce1",
+      "range": {
+        "startLine": 25,
+        "startChar": 9,
+        "endLine": 25,
+        "endChar": 22
+      },
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "dd1b41ea_cd427f0a",
         "filename": "media/blink/cdm_result_promise_helper.h",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "Can we remove these now given we should never report them?",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "377464f4_ca809f3d",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Based on the comment in the code, I assume we need to keep old values to ensure the UMA reports continue to work.",
+      "parentUuid": "dd1b41ea_cd427f0a",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "5b7f9419_9045bacb",
+        "filename": "media/cdm/aes_decryptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 316,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "37b28a7b_ae396b4b",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "800bad4d_eabfef4c",
         "filename": "media/cdm/aes_decryptor.cc",
         "patchSetId": 1
@@ -70,6 +130,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "Should this be TYPE_ERROR?",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a56d7c1f_041bb3fd",
+        "filename": "media/cdm/aes_decryptor.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 341,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "800bad4d_eabfef4c",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -93,6 +171,24 @@
     },
     {
       "key": {
+        "uuid": "b9e95da4_29d8addd",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "baff981f_25f969fe",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "71d842d4_8ccecbff",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 1
@@ -104,6 +200,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "Is it possible for a CDM to use these values today?",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cb742154_af916979",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Yes (except ClientError). Fixed.",
+      "parentUuid": "71d842d4_8ccecbff",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -127,6 +241,24 @@
     },
     {
       "key": {
+        "uuid": "02db7bc9_b439619c",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e1b092dd_44bde27e",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0ce9e004_788aacf2",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 1
@@ -138,6 +270,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "Should this be INVALID_STATE_ERROR?",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5007269b_b8e7eb60",
+        "filename": "media/cdm/cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 423,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0ce9e004_788aacf2",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -161,6 +311,24 @@
     },
     {
       "key": {
+        "uuid": "32fe5f94_29c247b5",
+        "filename": "media/cdm/ppapi/external_clear_key/clear_key_cdm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "410885dc_81356674",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b5c6130f_9878e987",
         "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
         "patchSetId": 1
@@ -172,6 +340,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "It cannot be removed yet. Add a TODO?",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1e40654_6505a540",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b5c6130f_9878e987",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -195,6 +381,24 @@
     },
     {
       "key": {
+        "uuid": "2ac193ac_7e695f10",
+        "filename": "media/cdm/ppapi/ppapi_cdm_adapter.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 278,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cbcd8cde_d236239d",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ce108ba6_541071e3",
         "filename": "media/mojo/clients/mojo_cdm.cc",
         "patchSetId": 1
@@ -206,6 +410,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "This should probably be INVALID_STATE_ERROR...",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c3a5c3b6_3b0768f8",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ce108ba6_541071e3",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -229,6 +451,24 @@
     },
     {
       "key": {
+        "uuid": "c6325465_9f59ba15",
+        "filename": "media/mojo/clients/mojo_cdm.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "befd622f_e3da9ce2",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a2fe0a8b_b8caf7ef",
         "filename": "media/remoting/proto_enum_utils.cc",
         "patchSetId": 1
@@ -240,6 +480,24 @@
       "writtenOn": "2017-06-16T23:56:02Z",
       "side": 1,
       "message": "Can we just remove these? If not, add a comment about why.",
+      "revId": "733162a0b3517323c570a5810d281539b9040f1c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e48a259_9466cc47",
+        "filename": "media/remoting/proto_enum_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1003189
+      },
+      "writtenOn": "2017-06-20T01:00:12Z",
+      "side": 1,
+      "message": "Done. If I can change the RPC definition then I will remove them.",
+      "parentUuid": "a2fe0a8b_b8caf7ef",
       "revId": "733162a0b3517323c570a5810d281539b9040f1c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
