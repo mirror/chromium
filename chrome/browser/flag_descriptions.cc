@@ -337,6 +337,9 @@ const char kUiPartialSwapDescription[] = "Sets partial swap behavior.";
 
 const char kDebugShortcutsName[] = "Debugging keyboard shortcuts";
 
+const char kDelayReloadStopButtonChangeName[] = "FOO";
+const char kDelayReloadStopButtonChangeDescription[] = "BAR";
+
 const char kIgnoreGpuBlacklistName[] = "Override software rendering list";
 
 const char kIgnoreGpuBlacklistDescription[] =
