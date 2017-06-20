@@ -73,32 +73,6 @@ TranslateEventProto::EventType BubbleResultToTranslateEvent(
   }
 }
 
-// ========== LOG LANGUAGE DETECTION EVENT ==============
-
-void LogLanguageDetectionEvent(
-    const content::WebContents* const web_contents,
-    const translate::LanguageDetectionDetails& details) {
-  auto* const profile =
-      Profile::FromBrowserContext(web_contents->GetBrowserContext());
-
-  syncer::UserEventService* const user_event_service =
-      browser_sync::UserEventServiceFactory::GetForProfile(profile);
-
-  const auto* const entry =
-      web_contents->GetController().GetLastCommittedEntry();
-
-  // If entry is null, we don't record the page.
-  // The navigation entry can be null in situations like download or initial
-  // blank page.
-  DCHECK(web_contents);
-  if (entry != nullptr &&
-      TranslateService::IsTranslatableURL(entry->GetVirtualURL())) {
-    user_event_service->RecordUserEvent(
-        translate::ConstructLanguageDetectionEvent(
-            entry->GetTimestamp().ToInternalValue(), details));
-  }
-}
-
 // ========== LOG TRANSLATE EVENT ==============
 
 void LogTranslateEvent(const content::WebContents* const web_contents,
@@ -338,6 +312,29 @@ int ChromeTranslateClient::GetInfobarIconID() const {
 #endif
 }
 
+void ChromeTranslateClient::RecordLanguageDetectionEvent(
+    const translate::LanguageDetectionDetails& details) const {
+  DCHECK(web_contents());
+  auto* const profile =
+      Profile::FromBrowserContext(web_contents()->GetBrowserContext());
+
+  syncer::UserEventService* const user_event_service =
+      browser_sync::UserEventServiceFactory::GetForProfile(profile);
+
+  const auto* const entry =
+      web_contents()->GetController().GetLastCommittedEntry();
+
+  // If entry is null, we don't record the page.
+  // The navigation entry can be null in situations like download or initial
+  // blank page.
+  if (entry != nullptr &&
+      TranslateService::IsTranslatableURL(entry->GetVirtualURL())) {
+    user_event_service->RecordUserEvent(
+        translate::ConstructLanguageDetectionEvent(
+            entry->GetTimestamp().ToInternalValue(), details));
+  }
+}
+
 bool ChromeTranslateClient::IsTranslatableURL(const GURL& url) {
   return TranslateService::IsTranslatableURL(url);
 }
@@ -378,7 +375,7 @@ void ChromeTranslateClient::OnLanguageDetermined(
       content::Source<content::WebContents>(web_contents()),
       content::Details<const translate::LanguageDetectionDetails>(&details));
 
-  LogLanguageDetectionEvent(web_contents(), details);
+  RecordLanguageDetectionEvent(details);
   // Unless we have no language model (e.g., in incognito), notify the model
   // about detected language of every page visited.
   if (language_model_ && details.is_cld_reliable)
