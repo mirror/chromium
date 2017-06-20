@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "38af851d_401c5371",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T19:54:19Z",
+      "side": 1,
+      "message": "Yes, good idea, done.",
+      "parentUuid": "886325e4_c3df4085",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bae0f1a8_ff482a19",
         "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
         "patchSetId": 9
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T18:38:26Z",
       "side": 1,
       "message": "Can this be a vector for consistency? Unless there\u0027s a reason for std::list that I\u0027m not seeing.",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "450cf35e_2b39e8d3",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T19:54:19Z",
+      "side": 1,
+      "message": "This was a list because there wasn\u0027t a copy constructor and vector needs a copy constructor when it resizes. Now that we have a copy constructor, we can use vector, so done.",
+      "parentUuid": "bae0f1a8_ff482a19",
       "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
