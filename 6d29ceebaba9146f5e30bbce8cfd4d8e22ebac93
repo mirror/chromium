@@ -16,6 +16,24 @@
       "revId": "6d29ceebaba9146f5e30bbce8cfd4d8e22ebac93",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e24a2f07_00917884",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-20T11:12:19Z",
+      "side": 1,
+      "message": "Can we keep const? Just to ensure it is not changed by mistake?",
+      "parentUuid": "8c9af8cd_2cf6c1d8",
+      "revId": "6d29ceebaba9146f5e30bbce8cfd4d8e22ebac93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
