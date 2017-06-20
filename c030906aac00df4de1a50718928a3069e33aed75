@@ -22,6 +22,23 @@
       "revId": "c030906aac00df4de1a50718928a3069e33aed75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8d0b266_595e0051",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T18:27:42Z",
+      "side": 1,
+      "message": "Why doesn\u0027t this just call GetOrCreateAllocatorDump(dump_name) and pass that?\n\nI don\u0027t like object A calling B which calls back to A, it looks like unneeded complexity in following the path of code.",
+      "revId": "c030906aac00df4de1a50718928a3069e33aed75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
