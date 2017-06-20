@@ -5,12 +5,11 @@
 #include "gpu/command_buffer/service/service_discardable_manager.h"
 
 #include "base/memory/singleton.h"
+#include "base/sys_info.h"
+#include "base/numerics/safe_conversions.h"
 #include "gpu/command_buffer/service/texture_manager.h"
 
 namespace gpu {
-
-const size_t ServiceDiscardableManager::kMaxSize;
-
 ServiceDiscardableManager::GpuDiscardableEntry::GpuDiscardableEntry(
     ServiceDiscardableHandle handle,
     size_t size)
@@ -23,7 +22,46 @@ ServiceDiscardableManager::GpuDiscardableEntry::~GpuDiscardableEntry() =
     default;
 
 ServiceDiscardableManager::ServiceDiscardableManager()
-    : entries_(EntryCache::NO_AUTO_EVICT) {}
+    : entries_(EntryCache::NO_AUTO_EVICT) {
+  // Calculate our base values for min/max cache size and growth. These values
+  // are designed to roughly match the existing image cache limits. These will
+  // be updated as more types of data are moved to this cache.
+
+  // Threshold at which we move from a normal cache to a high-memory cache.
+  const int kHighMemoryCacheSizeMemoryThresholdMB = 4 * 1024;
+
+  // Values for low-end Android devices. Low end assumes one renderer and does
+  // not grow the cache size.
+  const size_t kLowEndMinCacheSizeBytes = 2 * 1024 * 1024;
+  const size_t kLowEndMaxCacheSizeBytes = 2 * 1024 * 1024;
+  const size_t kLowEndCacheGrowthPerClientBytes = 0;
+
+  // Values for normal devices.
+  const size_t kNormalMinCacheSizeBytes = 128 * 1024 * 1024;
+  const size_t kNormalMaxCacheSizeBytes = 384 * 1024 * 1024;
+  const size_t kNormalCacheGrowthPerClientBytes = kNormalMinCacheSizeBytes;
+
+  // Values for high-memory devices.
+  const size_t kHighMemoryMinCacheSizeBytes = 256 * 1024 * 1024;
+  const size_t kHighMemoryMaxCacheSizeBytes = 512 * 1024 * 1024;
+  const size_t kHighMemoryCacheGrowthPerClientBytes = 128 * 1024 * 1024;
+
+  if (base::SysInfo::IsLowEndDevice()) {
+    min_cache_size_bytes_ = kLowEndMinCacheSizeBytes;
+    max_cache_size_bytes_ = kLowEndMaxCacheSizeBytes;
+    cache_growth_per_client_bytes_ = kLowEndCacheGrowthPerClientBytes;
+  } else if (base::SysInfo::AmountOfPhysicalMemoryMB() <
+             kHighMemoryCacheSizeMemoryThresholdMB) {
+    min_cache_size_bytes_ = kNormalMinCacheSizeBytes;
+    max_cache_size_bytes_ = kNormalMaxCacheSizeBytes;
+    cache_growth_per_client_bytes_ = kNormalCacheGrowthPerClientBytes;
+  } else {
+    min_cache_size_bytes_ = kHighMemoryMinCacheSizeBytes;
+    max_cache_size_bytes_ = kHighMemoryMaxCacheSizeBytes;
+    cache_growth_per_client_bytes_ = kHighMemoryCacheGrowthPerClientBytes;
+  }
+}
+
 ServiceDiscardableManager::~ServiceDiscardableManager() {
 #if DCHECK_IS_ON()
   for (const auto& entry : entries_) {
@@ -53,6 +91,7 @@ void ServiceDiscardableManager::InsertLockedTexture(
   total_size_ += texture_size;
   entries_.Put({texture_id, texture_manager},
                GpuDiscardableEntry{handle, texture_size});
+  clients_.insert(texture_manager);
   EnforceLimits();
 }
 
@@ -94,6 +133,8 @@ bool ServiceDiscardableManager::LockTexture(
 
 void ServiceDiscardableManager::OnTextureManagerDestruction(
     gles2::TextureManager* texture_manager) {
+  clients_.erase(texture_manager);
+
   for (auto& entry : entries_) {
     if (entry.first.texture_manager == texture_manager &&
         entry.second.unlocked_texture_ref) {
@@ -101,6 +142,8 @@ void ServiceDiscardableManager::OnTextureManagerDestruction(
           std::move(entry.second.unlocked_texture_ref));
     }
   }
+
+  EnforceLimits();
 }
 
 void ServiceDiscardableManager::OnTextureDeleted(
@@ -131,8 +174,10 @@ void ServiceDiscardableManager::OnTextureSizeChanged(
 }
 
 void ServiceDiscardableManager::EnforceLimits() {
+  size_t limit_bytes = CacheSizeLimitBytes();
+
   for (auto it = entries_.rbegin(); it != entries_.rend();) {
-    if (total_size_ <= kMaxSize) {
+    if (total_size_ <= limit_bytes) {
       return;
     }
     if (!it->second.handle.Delete()) {
@@ -154,6 +199,16 @@ void ServiceDiscardableManager::EnforceLimits() {
     it = entries_.Erase(it);
     texture_manager->RemoveTexture(texture_id);
   }
+}
+
+size_t ServiceDiscardableManager::CacheSizeLimitBytes() const {
+  base::CheckedNumeric<size_t> limit_checked(min_cache_size_bytes_);
+  base::CheckedNumeric<size_t> growth_checked(cache_growth_per_client_bytes_);
+  growth_checked *= std::max<size_t>(1, clients_.size()) - 1;
+  limit_checked += growth_checked;
+
+  size_t limit = limit_checked.ValueOrDefault(max_cache_size_bytes_);
+  return std::min(max_cache_size_bytes_, limit);
 }
 
 bool ServiceDiscardableManager::IsEntryLockedForTesting(
