@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ff16422f_758d38d9",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-20T15:35:13Z",
+      "side": 1,
+      "message": "Wow, that function is subtle. Maybe add a comment that the function will (only) update the FloatingObject\u0027s coordinates but not the LayoutObject itself?",
+      "revId": "c47ea07f3ca2213132b187b176815d3fae6a5e1d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
