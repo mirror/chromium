@@ -250,6 +250,11 @@ class RefCounted : public subtle::RefCountedBase {
 
   void Release() const {
     if (subtle::RefCountedBase::Release()) {
+      // Prune the code paths which the static analyzer may take to simulate
+      // object destruction. Use-after-free errors aren't possible given the
+      // lifetime guarantees of the refcounting system.
+      ANALYZER_SKIP_THIS_PATH();
+
       delete static_cast<const T*>(this);
     }
   }
@@ -316,7 +321,11 @@ class RefCountedThreadSafe : public subtle::RefCountedThreadSafeBase {
 
  private:
   friend struct DefaultRefCountedThreadSafeTraits<T>;
-  static void DeleteInternal(const T* x) { delete x; }
+  static void DeleteInternal(const T* x) {
+    ANALYZER_SKIP_THIS_PATH();
+
+    delete x;
+  }
 
   DISALLOW_COPY_AND_ASSIGN(RefCountedThreadSafe);
 };
@@ -506,13 +515,18 @@ class scoped_refptr {
   }
 
   scoped_refptr<T>& operator=(scoped_refptr<T>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
+    scoped_refptr<T> tmp(std::move(r));
+    tmp.swap(*this);
     return *this;
   }
 
   template <typename U>
   scoped_refptr<T>& operator=(scoped_refptr<U>&& r) {
-    scoped_refptr<T>(std::move(r)).swap(*this);
+    // We swap with a named variable instead of a temporary as a workaround for
+    // the static analyzer's shortcomings in understanding refcounted object
+    // lifetimes. Otherwise it will warn that |ptr_| is leaked.
+    scoped_refptr<T> tmp(std::move(r));
+    tmp.swap(*this);
     return *this;
   }
 
