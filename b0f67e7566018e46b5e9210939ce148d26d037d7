@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "2644e791_6c811461",
+        "filename": "chrome/browser/safe_browsing/threat_details_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1099,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T22:46:47Z",
+      "side": 1,
+      "message": "Thanks, fixed to avoid confusion. Please let me know if any of the others are nonsensical too :)",
+      "parentUuid": "ae11c334_aac88e21",
+      "revId": "b0f67e7566018e46b5e9210939ce148d26d037d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "022c4fbf_face0193",
         "filename": "components/safe_browsing/browser/threat_details.cc",
         "patchSetId": 2
@@ -51,6 +69,24 @@
       "revId": "b0f67e7566018e46b5e9210939ce148d26d037d7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f66eb4e0_83fb50ee",
+        "filename": "components/safe_browsing/browser/threat_details.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 146,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T22:46:47Z",
+      "side": 1,
+      "message": "Thanks, confirmed with awoz that REMOTE \u003d\u003d ANDROID_SAFETYNET",
+      "parentUuid": "59deb14c_403dff10",
+      "revId": "b0f67e7566018e46b5e9210939ce148d26d037d7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
