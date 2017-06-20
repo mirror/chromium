@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "852231df_208f1351",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T22:27:33Z",
+      "side": 1,
+      "message": "Thanks.",
+      "parentUuid": "addd6757_b1480155",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "90112aab_3b612bfe",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -86,6 +104,24 @@
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a85fdc9_e29c5e95",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12331,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T22:27:33Z",
+      "side": 1,
+      "message": "If it\u0027s already used that sounds fine.",
+      "parentUuid": "fb14198b_eafaf92a",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -385,6 +421,24 @@
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "df55e1b2_6c3a72ab",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T22:27:33Z",
+      "side": 1,
+      "message": "SGTM, as long as we are consistent I\u0027m fine either way.",
+      "parentUuid": "302b79b9_0696d7b0",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
