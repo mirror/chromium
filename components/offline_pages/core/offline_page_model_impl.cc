@@ -883,6 +883,8 @@ void OfflinePageModelImpl::InformSavePageDone(const SavePageCallback& callback,
   ReportSavePageResultHistogramAfterSave(client_id, result);
   archive_manager_->GetStorageStats(
       base::Bind(&ReportStorageHistogramsAfterSave));
+  // No need to pass in a callback.
+  archive_manager_->EnsureArchivesDirCreated(base::Bind([]() {}));
   callback.Run(result, offline_id);
 }
 
