@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bfaa90a3_f71a8926",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/TextResourceDecoderOptions.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T04:47:18Z",
+      "side": 1,
+      "message": "informantion -\u003e information",
+      "revId": "e55939b46da38bc127367ebd36053e55a65c5564",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
