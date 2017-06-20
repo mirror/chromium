@@ -1052,6 +1052,15 @@ std::unique_ptr<protocol::Network::Initiator>
 InspectorNetworkAgent::BuildInitiatorObject(
     Document* document,
     const FetchInitiatorInfo& initiator_info) {
+  if (!initiator_info.imported_module_referrer.IsEmpty()) {
+    std::unique_ptr<protocol::Network::Initiator> initiator_object =
+        protocol::Network::Initiator::create()
+            .setType(protocol::Network::Initiator::TypeEnum::Script)
+            .build();
+    initiator_object->setUrl(initiator_info.imported_module_referrer);
+    return initiator_object;
+  }
+
   std::unique_ptr<v8_inspector::protocol::Runtime::API::StackTrace>
       current_stack_trace =
           SourceLocation::Capture(document)->BuildInspectorObject();
