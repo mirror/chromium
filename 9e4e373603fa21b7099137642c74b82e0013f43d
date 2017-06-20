@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "086ad183_f62f00e6",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/PaintChunker.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1002481
+      },
+      "writtenOn": "2017-06-20T15:52:47Z",
+      "side": 0,
+      "message": "Actually the CL could be just removing this line only. Other changes are refactors to reduce duplicated code and to move calculations below the conditions when we need the results (e.g. for new_chunk_id, cacheable).",
+      "revId": "9e4e373603fa21b7099137642c74b82e0013f43d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
