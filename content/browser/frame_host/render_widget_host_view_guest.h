@@ -69,6 +69,8 @@ class CONTENT_EXPORT RenderWidgetHostViewGuest
   gfx::Size GetPhysicalBackingSize() const override;
   base::string16 GetSelectedText() override;
   void SetNeedsBeginFrames(bool needs_begin_frames) override;
+  ui::TouchSelectionControllerClientManager*
+  touch_selection_controller_client_manager() override;
 
   // RenderWidgetHostViewBase implementation.
   void InitAsPopup(RenderWidgetHostView* parent_host_view,

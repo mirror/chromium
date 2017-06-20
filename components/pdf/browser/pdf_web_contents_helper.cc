@@ -21,6 +21,7 @@ void PDFWebContentsHelper::CreateForWebContentsWithClient(
     std::unique_ptr<PDFWebContentsHelperClient> client) {
   if (FromWebContents(contents))
     return;
+  client->InitTouchSelectionClientManager(contents);
   contents->SetUserData(
       UserDataKey(),
       base::WrapUnique(new PDFWebContentsHelper(contents, std::move(client))));

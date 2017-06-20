@@ -5,7 +5,6 @@
 #include "content/browser/renderer_host/input/touch_selection_controller_client_child_frame.h"
 
 #include "content/browser/frame_host/render_widget_host_view_child_frame.h"
-#include "content/browser/renderer_host/input/touch_selection_controller_client_manager.h"
 #include "content/browser/renderer_host/render_widget_host_delegate.h"
 #include "content/browser/renderer_host/render_widget_host_impl.h"
 #include "content/common/content_switches_internal.h"
@@ -13,13 +12,14 @@
 #include "ui/base/clipboard/clipboard.h"
 #include "ui/gfx/geometry/point_conversions.h"
 #include "ui/strings/grit/ui_strings.h"
+#include "ui/touch_selection/touch_selection_controller_client_manager.h"
 
 namespace content {
 
 TouchSelectionControllerClientChildFrame::
     TouchSelectionControllerClientChildFrame(
         RenderWidgetHostViewChildFrame* rwhv,
-        TouchSelectionControllerClientManager* manager)
+        ui::TouchSelectionControllerClientManager* manager)
     : rwhv_(rwhv), manager_(manager) {
   DCHECK(rwhv);
   DCHECK(manager_);

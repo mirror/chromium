@@ -2,10 +2,10 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef CONTENT_BROWSER_RENDERER_HOST_INPUT_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
-#define CONTENT_BROWSER_RENDERER_HOST_INPUT_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
+#ifndef UI_TOUCH_SELECTION_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
+#define UI_TOUCH_SELECTION_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
 
-#include "content/common/content_export.h"
+#include "ui/touch_selection/ui_touch_selection_export.h"
 
 namespace gfx {
 class SelectionBound;
@@ -17,18 +17,18 @@ class TouchSelectionControllerClient;
 class TouchSelectionMenuClient;
 }
 
-namespace content {
+namespace ui {
 
 // This class defines an interface for a manager class that allows multiple
 // TouchSelectionControllerClients to work together with a single
 // TouchSelectionController.
-class CONTENT_EXPORT TouchSelectionControllerClientManager {
+class UI_TOUCH_SELECTION_EXPORT TouchSelectionControllerClientManager {
  public:
   virtual ~TouchSelectionControllerClientManager() {}
 
   // The manager uses this class' methods to notify observers about important
   // events.
-  class CONTENT_EXPORT Observer {
+  class UI_TOUCH_SELECTION_EXPORT Observer {
    public:
     virtual ~Observer() {}
 
@@ -56,6 +56,6 @@ class CONTENT_EXPORT TouchSelectionControllerClientManager {
   virtual void RemoveObserver(Observer* observer) = 0;
 };
 
-}  // namespace content
+}  // namespace ui
 
-#endif  // CONTENT_BROWSER_RENDERER_HOST_INPUT_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
+#endif  // UI_TOUCH_SELECTION_TOUCH_SELECTION_CONTROLLER_CLIENT_MANAGER_H_
