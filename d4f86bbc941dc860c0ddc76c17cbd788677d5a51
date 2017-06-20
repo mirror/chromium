@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "2f7e3b29_a3e179d3",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-20T23:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9abcf37_6fb574a6",
+      "range": {
+        "startLine": 114,
+        "startChar": 0,
+        "endLine": 116,
+        "endChar": 50
+      },
+      "revId": "d4f86bbc941dc860c0ddc76c17cbd788677d5a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "385e7fe7_1890e8ec",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 1
@@ -45,6 +69,30 @@
       "revId": "d4f86bbc941dc860c0ddc76c17cbd788677d5a51",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "004a1408_fed8f19d",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1149144
+      },
+      "writtenOn": "2017-06-20T23:21:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "385e7fe7_1890e8ec",
+      "range": {
+        "startLine": 116,
+        "startChar": 2,
+        "endLine": 116,
+        "endChar": 41
+      },
+      "revId": "d4f86bbc941dc860c0ddc76c17cbd788677d5a51",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
