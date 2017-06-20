@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "19865ed7_50563411",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-20T15:58:54Z",
+      "side": 1,
+      "message": "nit: why chrome_constants instead of extensions/common/constants?",
+      "range": {
+        "startLine": 25,
+        "startChar": 24,
+        "endLine": 25,
+        "endChar": 40
+      },
+      "revId": "63a9cfff2ba774c3ce7fabc87bf518c69d15d20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a74d0f5e_2f3d7443",
+        "filename": "chrome/renderer/chrome_content_renderer_client.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 148,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-20T15:58:54Z",
+      "side": 1,
+      "message": "we\u0027ll probably want to include the file in this block so it only gets included if extensions are enabled.",
+      "revId": "63a9cfff2ba774c3ce7fabc87bf518c69d15d20f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
