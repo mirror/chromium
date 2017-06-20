@@ -262,6 +262,28 @@
       this.peripheral_address_ = peripheral_address;
       this.fake_central_ptr_ = fake_central_ptr;
     }
+
+    // Sets the next read response for characteristic to |code| and |value|.
+    // |code| could be a GATT Error Response from
+    // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response or a number outside that range
+    // returned by specific platforms e.g. Android returns 0x101 to signal a GATT
+    // failure.
+    // https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#GATT_FAILURE
+    async setNextReadResponse(gatt_code, value=null) {
+      if (gatt_code === 0 && value === null) {
+        throw '|value| can\'t be null if read should success.';
+      }
+      if (gatt_code !== 0 && value !== null) {
+        throw '|value| must be null if read should fail.';
+      }
+
+      let {success} =
+        await this.fake_central_ptr_.setNextReadCharacteristicResponse(
+          gatt_code, value, this.characteristic_id_, this.service_id_,
+          this.peripheral_address_);
+
+      if (!success) throw 'setNextReadCharacteristicResponse failed';
+    }
   }
 
   navigator.bluetooth.test = new FakeBluetooth();
