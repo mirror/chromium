@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "393fc3d4_a40b5f48",
+        "filename": "chrome/browser/safe_browsing/ui_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 386,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Thank you for calling this out, I found what I was doing wrong initially (calling Initialize after AddPrefService). Reordering those calls fixes this issue.",
+      "parentUuid": "a33f333a_d8ca340b",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "88cfb74d_6f5dfc77",
         "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
         "patchSetId": 5
@@ -33,6 +51,24 @@
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75c49531_80368835",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Correct, this is an enterprise policy and causes the checkbox to be hidden on security interstitials. It affects both SBER1 and Scout.",
+      "parentUuid": "88cfb74d_6f5dfc77",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "9ad7a0aa_77ffa686",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "I\u0027m inclined to leave as is, primarily because Scout is temporary while we transition to the new setting. After that point we\u0027ll return to having a single \"Extended Reporting\" setting. I expect that cleanup to happen next quarter.\n\nWDYT?",
+      "parentUuid": "683b0dda_b3c72658",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63e54718_4646a6ac",
         "filename": "components/safe_browsing/triggers/trigger_manager.h",
         "patchSetId": 5
@@ -67,6 +121,24 @@
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b709696a_08df9852",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63e54718_4646a6ac",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "a7ff9b48_7ba0e552",
+        "filename": "components/safe_browsing/triggers/trigger_manager.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "695bb0eb_1286d022",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f2ceb31e_7d097280",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 5
@@ -101,6 +191,24 @@
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "14470cc0_923a931c",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f2ceb31e_7d097280",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "82a65ffa_9c8d22dc",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 77,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "Good call, done.",
+      "parentUuid": "2aaf1c5c_502a5fb1",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9b169a84_397d74a6",
         "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
         "patchSetId": 5
@@ -135,6 +261,24 @@
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37ceb1d6_75d96ec7",
+        "filename": "components/safe_browsing/triggers/trigger_manager_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1168342
+      },
+      "writtenOn": "2017-06-20T21:49:16Z",
+      "side": 1,
+      "message": "I think the SBER1/Scout interactions are well-covered in safe_browsing_prefs_unittest.cc. The main thing we care about here is that overall Extended Reporting is enabled/disabled. Since Scout is the default pref in code right now, I\u0027ve actually changed these tests to only use the Scout pref.\n\nAnd yes, SBER/Scout can be true while SBEROptInAllowed is false - they are independent prefs.",
+      "parentUuid": "9b169a84_397d74a6",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
