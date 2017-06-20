@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a485c8ff_ef85aaef",
+        "filename": "ash/ime/ime_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T17:31:50Z",
+      "side": 1,
+      "message": "This would imply a bug in chrome, but in the out-of-process ash case I thought it better to just skip the entry. I could also DCHECK or CHECK.",
+      "revId": "4bbe7b70ad52da299f047d0806dd9717af6a9abb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
