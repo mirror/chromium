@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "2895e02b_d89209c2",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T05:21:32Z",
+      "side": 1,
+      "message": "nit: This comment feels slightly out-of-place",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58356d53_99f243bf",
         "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
         "patchSetId": 7
