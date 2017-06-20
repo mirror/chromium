@@ -97,7 +97,7 @@ print_usage() {
   echo "   -u   Unregister" >&2
 }
 
-build_dir="Debug"
+build_dir="a"
 
 if [[ $# -gt 1 ]]; then
   print_usage
