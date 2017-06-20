@@ -16,6 +16,24 @@
       "revId": "ba673daa971a6f984ac3dfa18cf46cbb7f99222b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36ec6e81_bd83b563",
+        "filename": "third_party/WebKit/Source/modules/plugins/DOMPluginArray.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1211699
+      },
+      "writtenOn": "2017-06-20T15:20:14Z",
+      "side": 1,
+      "message": "It shouldn\u0027t matter here. I just have it before because it makes sure that the variables are still in scope when calling the CHECK().",
+      "parentUuid": "3546927e_3777c745",
+      "revId": "ba673daa971a6f984ac3dfa18cf46cbb7f99222b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
