@@ -55,6 +55,24 @@
     },
     {
       "key": {
+        "uuid": "d2c6e118_f1f79572",
+        "filename": "content/public/browser/all_download_item_notifier.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-20T17:23:18Z",
+      "side": 1,
+      "message": "Ok thanks for the explanation!  I\u0027d seen some other examples of cc files in public and wasn\u0027t quite sure what to do if it wasn\u0027t an interface.  Will move :).",
+      "parentUuid": "d1589c7d_1032f949",
+      "revId": "13d4535a41a3638a361dfc111d64c85ae8f348f6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "705a3fe2_bc0a6306",
         "filename": "content/public/browser/all_download_item_notifier.cc",
         "patchSetId": 3
