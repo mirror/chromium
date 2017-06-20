@@ -21,10 +21,10 @@ namespace {
 const char kResponsePreamble[] = ")]}'";
 }
 
-GURL GoogleAppendQueryparamsToLogoURL(const GURL& logo_url,
-                                      const std::string& fingerprint,
-                                      bool wants_cta,
-                                      bool gray_background) {
+GURL GoogleAppendQueryparamsToLogoURL(bool wants_cta,
+                                      bool gray_background,
+                                      const GURL& logo_url,
+                                      const std::string& fingerprint) {
   // Note: we can't just use net::AppendQueryParameter() because it escapes
   // ":" to "%3A", but the server requires the colon not to be escaped.
   // See: http://crbug.com/413845
@@ -62,7 +62,7 @@ GURL GoogleAppendQueryparamsToLogoURL(const GURL& logo_url,
 }
 
 std::unique_ptr<EncodedLogo> GoogleParseLogoResponse(
-    const std::unique_ptr<std::string>& response,
+    std::unique_ptr<std::string> response,
     base::Time response_time,
     bool* parsing_failed) {
   // Google doodles are sent as JSON with a prefix. Example:

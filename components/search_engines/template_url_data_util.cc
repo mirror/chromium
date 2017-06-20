@@ -48,10 +48,13 @@ std::unique_ptr<TemplateURLData> TemplateURLDataFromDictionary(
   dict.GetString(DefaultSearchManager::kContextualSearchURL,
                  &result->contextual_search_url);
   std::string favicon_url;
+  std::string logo_url;
   std::string originating_url;
   dict.GetString(DefaultSearchManager::kFaviconURL, &favicon_url);
+  dict.GetString(DefaultSearchManager::kLogoURL, &logo_url);
   dict.GetString(DefaultSearchManager::kOriginatingURL, &originating_url);
   result->favicon_url = GURL(favicon_url);
+  result->logo_url = GURL(logo_url);
   result->originating_url = GURL(originating_url);
 
   dict.GetString(DefaultSearchManager::kSearchURLPostParams,
@@ -131,6 +134,7 @@ std::unique_ptr<base::DictionaryValue> TemplateURLDataToDictionary(
                       data.contextual_search_url);
   url_dict->SetString(DefaultSearchManager::kFaviconURL,
                       data.favicon_url.spec());
+  url_dict->SetString(DefaultSearchManager::kLogoURL, data.logo_url.spec());
   url_dict->SetString(DefaultSearchManager::kOriginatingURL,
                       data.originating_url.spec());
 
@@ -189,7 +193,7 @@ std::unique_ptr<TemplateURLData> TemplateURLDataFromPrepopulatedEngine(
       engine.image_url, engine.new_tab_url, engine.contextual_search_url,
       engine.search_url_post_params, engine.suggest_url_post_params,
       engine.instant_url_post_params, engine.image_url_post_params,
-      engine.favicon_url, engine.encoding, alternate_urls,
+      engine.favicon_url, engine.logo_url, engine.encoding, alternate_urls,
       engine.search_terms_replacement_key, engine.id);
 }
 
@@ -213,6 +217,7 @@ std::unique_ptr<TemplateURLData> TemplateURLDataFromOverrideDictionary(
     std::string instant_url;
     std::string image_url;
     std::string new_tab_url;
+    std::string logo_url;
     std::string contextual_search_url;
     std::string search_url_post_params;
     std::string suggest_url_post_params;
@@ -225,6 +230,7 @@ std::unique_ptr<TemplateURLData> TemplateURLDataFromOverrideDictionary(
     engine.GetString("instant_url", &instant_url);
     engine.GetString("image_url", &image_url);
     engine.GetString("new_tab_url", &new_tab_url);
+    engine.GetString("logo_url", &logo_url);
     engine.GetString("contextual_search_url", &contextual_search_url);
     engine.GetString("search_url_post_params", &search_url_post_params);
     engine.GetString("suggest_url_post_params", &suggest_url_post_params);
@@ -237,8 +243,8 @@ std::unique_ptr<TemplateURLData> TemplateURLDataFromOverrideDictionary(
         name, keyword, search_url, suggest_url, instant_url, image_url,
         new_tab_url, contextual_search_url, search_url_post_params,
         suggest_url_post_params, instant_url_post_params, image_url_post_params,
-        favicon_url, encoding, *alternate_urls, search_terms_replacement_key,
-        id);
+        favicon_url, logo_url, encoding, *alternate_urls,
+        search_terms_replacement_key, id);
   }
   return std::unique_ptr<TemplateURLData>();
 }
