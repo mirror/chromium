@@ -178,13 +178,15 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 
 #pragma mark - SettingsCollectionViewController
 
-@interface SettingsCollectionViewController ()<SettingsControllerProtocol,
-                                               SyncObserverModelBridge,
-                                               ChromeIdentityServiceObserver,
-                                               BooleanObserver,
-                                               PrefObserverDelegate,
-                                               SigninPromoViewConsumer,
-                                               SigninPromoViewDelegate> {
+@interface SettingsCollectionViewController ()<
+    BooleanObserver,
+    ChromeIdentityServiceObserver,
+    PrefObserverDelegate,
+    SettingsControllerProtocol,
+    SettingsMainPageViewControllerDelegate,
+    SigninPromoViewConsumer,
+    SigninPromoViewDelegate,
+    SyncObserverModelBridge> {
   // The main browser state that hold the settings. Never off the record.
   ios::ChromeBrowserState* _mainBrowserState;  // weak
 
@@ -236,6 +238,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
 @end
 
 @implementation SettingsCollectionViewController
+@synthesize delegate = _delegate;
 
 #pragma mark Initialization
 
@@ -285,6 +288,8 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
         &_prefChangeRegistrar);
     _prefObserverBridge->ObserveChangesForPreference(
         autofill::prefs::kAutofillEnabled, &_prefChangeRegistrar);
+
+    _delegate = self;
 
     [self loadModel];
   }
@@ -790,7 +795,7 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
       // and only the switch is tappable.
       break;
     case ItemTypeCellCatalog:
-      controller = [[MaterialCellCatalogViewController alloc] init];
+      [self.delegate showMaterialCellCatalog];
       break;
     default:
       break;
@@ -1009,6 +1014,14 @@ void SigninObserverBridge::GoogleSignedOut(const std::string& account_id,
   // The sign-in is done. The sign-in promo cell or account cell can be
   // reloaded.
   [self reloadData];
+}
+
+#pragma mark Material Cell Catalog
+
+- (void)showMaterialCellCatalog {
+  [self.navigationController
+      pushViewController:[[MaterialCellCatalogViewController alloc] init]
+                animated:YES];
 }
 
 #pragma mark NotificationBridgeDelegate

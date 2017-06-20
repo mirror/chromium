@@ -28,6 +28,14 @@ extern NSString* const kSettingsSearchEngineCellId;
 // The accessibility identifier of the Voice Search cell.
 extern NSString* const kSettingsVoiceSearchCellId;
 
+// The protocol a delegate of a SettingsCollectionViewController must adhere to.
+@protocol SettingsMainPageViewControllerDelegate
+
+// Called when the Material Cell Catalog cell is tapped.
+- (void)showMaterialCellCatalog;
+
+@end
+
 // This class is the collection view for the application settings.
 @interface SettingsCollectionViewController
     : SettingsRootCollectionViewController<SettingsControllerProtocol>
@@ -36,6 +44,9 @@ extern NSString* const kSettingsVoiceSearchCellId;
 // currently occuring.
 @property(weak, nonatomic, readonly)
     SigninInteractionController* signinInteractionController;
+
+// This controller's delegate. By default it is the controller itself.
+@property(weak, nonatomic) id<SettingsMainPageViewControllerDelegate> delegate;
 
 // Initializes a new SettingsCollectionViewController. |mainBrowserState|,
 // |currentBrowserState| and |dataSource| must not be nil.
