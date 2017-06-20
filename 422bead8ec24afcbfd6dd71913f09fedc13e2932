@@ -42,6 +42,24 @@
     },
     {
       "key": {
+        "uuid": "9a65f3e7_11b32b14",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-20T01:33:30Z",
+      "side": 1,
+      "message": "This logic is for single process mode. In single process mode, same dump can come and we could detect by GetAllocator Dump in the previous implementation. GetAllocatorDump always returned null in multiprocess mode there.\n\nHowever, now dumps might be created at GetDumpGUIDForTracing, this is not true and we should treat such cases. Or, do you have any suggestions?",
+      "parentUuid": "1548be4a_5ae77510",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf1977_f8868bf2",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 6
@@ -53,6 +71,24 @@
       "writtenOn": "2017-06-19T23:38:05Z",
       "side": 1,
       "message": "We should still do GetSharedGlobalAllocatorDumpName(SharedMemoryTracker::GetGlobalDumpGUIDForTracing(shared_memory_guid)) here",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b865eaf0_22d02899",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-20T01:33:30Z",
+      "side": 1,
+      "message": "I don\u0027t think so: why should we call GetSharedGlobalAllocatorDumpName here?",
+      "parentUuid": "aebf1977_f8868bf2",
       "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
