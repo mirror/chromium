@@ -8,8 +8,8 @@
 #include <string>
 
 #include "base/macros.h"
-#include "components/ukm/public/interfaces/ukm_interface.mojom.h"
-#include "components/ukm/public/ukm_export.h"
+#include "services/metrics/public/cpp/ukm_export.h"
+#include "services/metrics/public/interfaces/ukm_interface.mojom.h"
 
 namespace ukm {
 
