@@ -1018,10 +1018,10 @@ void NavigatorImpl::OnBeginNavigation(
         frame_tree_node->current_frame_host()->GetSiteInstance(), nullptr);
     navigation_data_.reset();
   }
-  NavigationEntryImpl* pending_entry = controller_->GetPendingEntry();
+  NavigationEntryImpl* last_entry = controller_->GetLastCommittedEntry();
   frame_tree_node->CreatedNavigationRequest(
       NavigationRequest::CreateRendererInitiated(
-          frame_tree_node, pending_entry, common_params, begin_params,
+          frame_tree_node, last_entry, common_params, begin_params,
           controller_->GetLastCommittedEntryIndex(),
           controller_->GetEntryCount()));
   NavigationRequest* navigation_request = frame_tree_node->navigation_request();
