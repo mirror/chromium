@@ -119,6 +119,24 @@
       "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0dcc889_5d99c632",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T11:21:53Z",
+      "side": 1,
+      "message": "I realized that the PassesAccessControlCheck() users should be prohibited to use the resource when all the CORS handling in ResourceFetcher/ResourceLoader was not performed. So, what I said here should be fixed to say that the users of PassesAccessControlCheck() should assume the check has failed when the CORS status is not set. I.e. kUnknown?",
+      "parentUuid": "5f8eda32_a5657d9c",
+      "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
