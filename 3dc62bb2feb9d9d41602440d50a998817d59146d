@@ -16,6 +16,24 @@
       "revId": "3dc62bb2feb9d9d41602440d50a998817d59146d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da0ce7a_e8426f46",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-06-20T01:54:41Z",
+      "side": 1,
+      "message": "I modified this test, I think it should meet your test need, could you please take a look, thanks!",
+      "parentUuid": "3d20f06a_ecc610d9",
+      "revId": "3dc62bb2feb9d9d41602440d50a998817d59146d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
