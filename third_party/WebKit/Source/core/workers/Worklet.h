@@ -51,9 +51,6 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
   // The Worklet inherits the url and userAgent from the frame->document().
   explicit Worklet(LocalFrame*);
 
-  static WebURLRequest::FetchCredentialsMode ParseCredentialsOption(
-      const String& credentials_option);
-
   // Returns one of available global scopes.
   WorkletGlobalScopeProxy* FindAvailableGlobalScope() const;
 
