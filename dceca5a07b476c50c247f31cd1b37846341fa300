@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bc80a6b4_c6d8c02e",
+        "filename": "third_party/WebKit/Source/platform/weborigin/SecurityPolicy.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 168,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T06:26:36Z",
+      "side": 1,
+      "message": "Probably the most interesting change in this patch. As this method never actually takes ownership of the SecurityOrigin, I just changed it to take a const ref.",
+      "range": {
+        "startLine": 168,
+        "startChar": 4,
+        "endLine": 168,
+        "endChar": 32
+      },
+      "revId": "dceca5a07b476c50c247f31cd1b37846341fa300",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
