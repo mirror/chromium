@@ -40,6 +40,7 @@
 #include "content/common/frame_message_enums.h"
 #include "content/common/frame_replication_state.h"
 #include "content/common/image_downloader/image_downloader.mojom.h"
+#include "content/common/input/input_handler.mojom.h"
 #include "content/common/navigation_params.h"
 #include "content/common/url_loader_factory.mojom.h"
 #include "content/public/browser/render_frame_host.h"
