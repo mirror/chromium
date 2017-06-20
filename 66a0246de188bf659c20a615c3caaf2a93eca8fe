@@ -22,6 +22,30 @@
       "revId": "66a0246de188bf659c20a615c3caaf2a93eca8fe",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ed24e94_4d05a5c9",
+        "filename": "gpu/command_buffer/service/context_state.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 296,
+      "author": {
+        "id": 1105344
+      },
+      "writtenOn": "2017-06-20T23:16:06Z",
+      "side": 1,
+      "message": "I\u0027m mystified how this could happen but not have RestoreTextureUnitBindings crash first, since it\u0027s called just before RestoreSamplerBinding. Can you think of how that could happen?\n\nDo you think it\u0027s likely that we\u0027re crashing in the driver during the glBindSampler call below? One of the crashes shows that, but the others are clearly crashing in this code.\n\nWould it be OK with you if I upgrade these to CHECK_LT calls? That way we would at least see the crashes in the product and know the cause.",
+      "parentUuid": "cf82dd9c_2557ba90",
+      "range": {
+        "startLine": 296,
+        "startChar": 4,
+        "endLine": 296,
+        "endChar": 13
+      },
+      "revId": "66a0246de188bf659c20a615c3caaf2a93eca8fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
