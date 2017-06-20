@@ -17,6 +17,11 @@
 #include "ui/gfx/buffer_format_util.h"
 #include "ui/gfx/color_space_switches.h"
 
+#undef CGColorSpaceCopyICCProfile
+extern "C" {
+CFDataRef CGColorSpaceCopyICCProfile(CGColorSpaceRef);
+}  // extern "C"
+
 namespace gfx {
 
 namespace {
