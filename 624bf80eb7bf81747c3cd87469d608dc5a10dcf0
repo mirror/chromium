@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd7f7373_269a58df",
+        "filename": "chrome/browser/metrics/ukm_browsertest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:25:54Z",
+      "side": 1,
+      "message": "optional: std::move(base::MakeUnique(...)) would help avoid the \"new\". For purism!",
+      "revId": "624bf80eb7bf81747c3cd87469d608dc5a10dcf0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
