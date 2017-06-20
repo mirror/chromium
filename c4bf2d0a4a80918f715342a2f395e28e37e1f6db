@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "fbabf252_c1dd72cc",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T09:07:46Z",
+      "side": 1,
+      "message": "FWIW, \"Bug:\" works too, and is more inline with how Gerrit uses inline metadata in the CL description. I think in the long term the idea is to migrate everything from FOO\u003d to Foo: style metadata.",
+      "parentUuid": "ce3d3c75_1d1da454",
+      "range": {
+        "startLine": 16,
+        "startChar": 3,
+        "endLine": 16,
+        "endChar": 4
+      },
+      "revId": "c4bf2d0a4a80918f715342a2f395e28e37e1f6db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7bd7a758_e2195f02",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/DownloadItemView.java",
         "patchSetId": 9
