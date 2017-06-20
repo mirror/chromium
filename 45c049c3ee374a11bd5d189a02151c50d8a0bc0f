@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fec408a_26a3d997",
+        "filename": "mojo/edk/system/broker_host.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1115906
+      },
+      "writtenOn": "2017-06-20T00:44:20Z",
+      "side": 1,
+      "message": "The type is pretty short...can we just be explicit instead of using auto?",
+      "revId": "45c049c3ee374a11bd5d189a02151c50d8a0bc0f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
