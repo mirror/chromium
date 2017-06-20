@@ -70,6 +70,8 @@ class CORE_EXPORT TextResourceDecoder {
   bool SawError() const { return saw_error_; }
   size_t CheckForBOM(const char*, size_t);
 
+  const TextResourceDecoderOptions& Options() const { return options_; }
+
  protected:
   TextResourceDecoder(const TextResourceDecoderOptions&);
 

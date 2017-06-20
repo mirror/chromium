@@ -21,6 +21,7 @@ class CORE_EXPORT TextResource : public Resource {
   String DecodedText() const;
 
   WTF::TextEncoding Encoding() const override;
+  bool CanReuse(const FetchParameters&) const final;
 
   void SetEncodingForTest(const String& encoding) { SetEncoding(encoding); }
 
