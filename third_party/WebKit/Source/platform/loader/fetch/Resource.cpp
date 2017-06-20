@@ -424,25 +424,6 @@ AtomicString Resource::HttpContentType() const {
   return GetResponse().HttpContentType();
 }
 
-bool Resource::PassesAccessControlCheck(
-    const SecurityOrigin* security_origin) const {
-  StoredCredentials stored_credentials =
-      LastResourceRequest().AllowStoredCredentials()
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  CrossOriginAccessControl::AccessStatus status =
-      CrossOriginAccessControl::CheckAccess(GetResponse(), stored_credentials,
-                                            security_origin);
-
-  return status == CrossOriginAccessControl::kAccessAllowed;
-}
-
-bool Resource::IsEligibleForIntegrityCheck(
-    SecurityOrigin* security_origin) const {
-  return security_origin->CanRequest(GetResourceRequest().Url()) ||
-         PassesAccessControlCheck(security_origin);
-}
-
 void Resource::SetIntegrityDisposition(
     ResourceIntegrityDisposition disposition) {
   DCHECK_NE(disposition, ResourceIntegrityDisposition::kNotChecked);
