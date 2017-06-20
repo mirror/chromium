@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8cc29e13_00e7a87a",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "I didn\u0027t really understand this CL description. I think it should say something about display management.",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f1b34c1_89260fbf",
+        "filename": "ash/display/display_configuration_controller.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 188,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "nit: ash:: not needed",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "81966e37_7ae6d26b",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "This comment doesn\u0027t seem relevant anymore.",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6551fcd1_973d36c6",
+        "filename": "ash/shell.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1112,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "nit: MakeUnique",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa944c8f_22dac10d",
+        "filename": "ash/shell.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "nit: teh -\u003e the",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "87fbc4c3_1f5e211b",
+        "filename": "ash/shell_port.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 1,
+      "message": "nit: \"Inited\" reads strangely to me and is uncommon in the chromium codebase. I suggest OnHostsInitialized().",
+      "revId": "b3559ee895a2be3e05aa348c9830516f11288165",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

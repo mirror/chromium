@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c5c89bb_9a6732a8",
+        "filename": "ash/test/ash_test_helper.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000045
+      },
+      "writtenOn": "2017-06-20T23:26:42Z",
+      "side": 0,
+      "message": "Can this bug be resolved now?",
+      "revId": "8fbdd12b09665d14106eab9d2072395911792a59",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
