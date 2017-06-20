@@ -96,6 +96,30 @@
     },
     {
       "key": {
+        "uuid": "0c4ce48d_0fbe24c6",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "It\u0027s not though :)",
+      "parentUuid": "1e3a8b47_8608c4a4",
+      "range": {
+        "startLine": 42,
+        "startChar": 44,
+        "endLine": 42,
+        "endChar": 45
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5798bebb_6d29700f",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
         "patchSetId": 5
@@ -128,6 +152,24 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86505d44_8c2dd8cd",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "0734b165_628bfb5f",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -210,6 +252,24 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c1173ce7_e1c157c5",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "I\u0027m blaming this on Gerrit. I am not asking stupid questions, I meant to add this comment two lines above, where I thought for a moment that |is_annotated| is a local variable (because it doesn\u0027t end with an underscore).\n\nIt\u0027s fine though (small classes like this, which are basically structs with some helper methods may have public attributes).",
+      "parentUuid": "63f18e55_316353bb",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -339,6 +399,24 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25783e4d_b8985cef",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Acknowledged. This is very fragile, but at least we have good error handling.",
+      "parentUuid": "2c3435be_9ace6982",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -565,6 +643,30 @@
       "side": 1,
       "message": "It\u0027s the same thing, clang tool creates it, this one uses it.\nI will discuss merging the two with clang owners, but I strongly suspect that it would not be liked.",
       "parentUuid": "79d18ddb_cb12173b",
+      "range": {
+        "startLine": 15,
+        "startChar": 6,
+        "endLine": 15,
+        "endChar": 24
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6494393_3314a956",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Acknowledged, but please add a TODO to resolve this.",
+      "parentUuid": "96be9477_07f3fadd",
       "range": {
         "startLine": 15,
         "startChar": 6,
@@ -941,6 +1043,30 @@
     },
     {
       "key": {
+        "uuid": "9929f982_933c156c",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Eh, sorry, when I added this comment I was looking at the class above. Global functions should indeed be in a namespace, so this is fine.",
+      "parentUuid": "3d4ac5bc_9aa01ad5",
+      "range": {
+        "startLine": 111,
+        "startChar": 0,
+        "endLine": 111,
+        "endChar": 1
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "791543c0_291932d5",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
         "patchSetId": 5
@@ -970,6 +1096,24 @@
       "side": 1,
       "message": "Done, but C++ has just ONE thing to make life easier, and we prefer not to use it? :D",
       "parentUuid": "791543c0_291932d5",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "2a2cd853_b9581f18",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "I am admittedly a bit more averse to auto than an average Chromium developer. But in this particular case, I have really not seen global strings defined as auto yet.",
+      "parentUuid": "67b4d47a_2fc507e4",
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
@@ -1067,6 +1211,30 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f66b767c_dd1f9698",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "The typo is still there :)",
+      "parentUuid": "ce39f7cb_2c7edf88",
+      "range": {
+        "startLine": 116,
+        "startChar": 11,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1187,6 +1355,24 @@
     },
     {
       "key": {
+        "uuid": "ff95f6a9_978e23aa",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_auditor_ui.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 177,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "6a32b07a_681f79ce",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0ab071f6_a02b9c97",
         "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
         "patchSetId": 5
@@ -1266,6 +1452,24 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "67bb75b7_d74ed6b0",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Sorry, one more question. Is the 32-bitness important here?\n\nI remember you telling me that you copied this code from another infra tool. In this case I would leave it in.\n\nHowever, in other places (such as distinguishing \"\\n\" vs \"\\r\\n\"), it looks like it\u0027s not important. In that case, we should use OS_WINDOWS.",
+      "parentUuid": "99c9d0f5_e9f8f6f9",
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     },
     {
       "key": {
@@ -1442,6 +1646,30 @@
       "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1e8b1f03_da0dc1e7",
+        "filename": "tools/traffic_annotation/auditor/traffic_annotation_file_filter.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1118331
+      },
+      "writtenOn": "2017-06-20T20:14:15Z",
+      "side": 1,
+      "message": "Sorry, I misunderstood. Yes, strncmp() works correctly :)",
+      "parentUuid": "5a8e76a9_f7ae4764",
+      "range": {
+        "startLine": 110,
+        "startChar": 9,
+        "endLine": 110,
+        "endChar": 16
+      },
+      "revId": "f1296b43e9d82881173c2f24a077a594706f9766",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
