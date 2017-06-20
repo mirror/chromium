@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "626eed24_64a39f21",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T07:59:25Z",
+      "side": 1,
+      "message": "nit: Object(Template) is not that trivial.  Especially in case of \"prototype Object\", it looks like typo of \"prototype object\".  v8::Object or v8::ObjectTemplate makes it clear, I think.",
+      "range": {
+        "startLine": 78,
+        "startChar": 36,
+        "endLine": 78,
+        "endChar": 37
+      },
+      "revId": "83469fb140041f481d7ae2d9b809c8c8116235aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e374e015_538a7933",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8DOMConfiguration.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 111,
+      "author": {
+        "id": 1002507
+      },
+      "writtenOn": "2017-06-20T07:59:25Z",
+      "side": 1,
+      "message": "nit: \"the translations\" is unclear in this context.\n\nIf the empty handle is passed as |instance| or |prototype|, then that object is ignored and no property is installed on that object.  It\u0027s not allowed to pass the empty handle to the v8::ObjectTemplate version.",
+      "range": {
+        "startLine": 111,
+        "startChar": 5,
+        "endLine": 111,
+        "endChar": 17
+      },
+      "revId": "83469fb140041f481d7ae2d9b809c8c8116235aa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
