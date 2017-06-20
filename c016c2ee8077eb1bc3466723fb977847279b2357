@@ -1,0 +1,174 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5c6708a7_bda4f526",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "How about inlining? Also, as you\u0027re here, could you use base::MakeUnique?\n\nplaystore_launcher_ \u003d base::MakeUnique\u003cArcAppLauncher\u003e(\n    profile_, kPlayStoreAppId,\n    GetLaunchIntent(kPlayStorePackage, kPlayStoreActivity, {kInitialStartParam}),\n    true, false);",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a88b76e9_cc29d970",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "(Optional) In general, noun is better for class name. Maybe AppLauncher etc.?\n(I know, you just moved the code, though).",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "49250f3c_84e0cc92",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "maybe: content::BrowserContext* const context_; ?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5946d099_23122f33",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "\u0027\u0026\u0027 is missing.\nOr, maybe \"const auto\u0026\"?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6d927026_fd5d4a85",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "How about SplitStringPiece?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8bc49b5b_b63424ea",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "I\u0027d recommend base::HexStringToInt() ?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5399ba11_21328920",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "Maybe:\n!activity_compact_name.empty() \u0026\u0026 activity_compact_name[0] \u003d\u003d \u0027.\u0027 ?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "25c68af1_d119c6f0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "Let\u0027s logging if any condition does not meet.",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11dd258e_a6fea1b1",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "Style:\n\nTODO(khmel):\n\n- removing white space between TODO and the open paren.\n- colon after the closing paren.",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e277e2ad_a2dca632",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T07:26:21Z",
+      "side": 1,
+      "message": "Proposal/optional, how about define a struct?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
