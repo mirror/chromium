@@ -16,11 +16,14 @@
 #include "base/synchronization/lock.h"
 #include "base/threading/simple_thread.h"
 #include "base/time/time.h"
+#include "chromeos/login/login_state.h"
 
 namespace memory {
 
 // Traces kernel OOM kill events and Low memory kill events (by Chrome
-// TabManager).
+// TabManager). It starts logging when a user has logged in and stopped until
+// the chrome process has ended (usually because of a user log out). Thus it can
+// be deemed as a per user session logger.
 //
 // For OOM kill events, it listens to kernel message (/dev/kmsg) in a blocking
 // manner. It runs in a non-joinable thread in order to avoid blocking shutdown.
@@ -30,14 +33,9 @@ namespace memory {
 // For Low memory kills events, chrome calls the single global instance of
 // MemoryKillsMonitor synchronously. Note that it would be from a browser thread
 // other than the listening thread.
-//
-// For every events, it reports to UMA and optionally a local file specified by
-// --memory-kills-log. The log file is useful if we want to analyze low memory
-// kills. If the flag is not given, it won't write to any file.
-class MemoryKillsMonitor : public base::DelegateSimpleThread::Delegate {
+class MemoryKillsMonitor : public base::DelegateSimpleThread::Delegate,
+                           public chromeos::LoginState::Observer {
  public:
-  // A handle representing the MemoryKillsMonitor's lifetime (the monitor itself
-  // can't be destroyed per being a non-joinable Thread).
   class Handle {
    public:
     // Constructs a handle that will flag |outer| as shutting down on
@@ -53,11 +51,12 @@ class MemoryKillsMonitor : public base::DelegateSimpleThread::Delegate {
     DISALLOW_COPY_AND_ASSIGN(Handle);
   };
 
-  // Instantiates the MemoryKillsMonitor instance and starts it. This must only
-  // be invoked once per process.
-  static Handle StartMonitoring();
+  // Initialize the global instance, but do not start monitoring until logged
+  // in.
+  static Handle Initialize();
 
-  // Logs a low memory kill event.
+  // A convenient function to log a low memory kill event. It only logs events
+  // after StartMonitoring() has been called.
   static void LogLowMemoryKill(const std::string& type, int estimated_freed_kb);
 
  private:
@@ -66,11 +65,24 @@ class MemoryKillsMonitor : public base::DelegateSimpleThread::Delegate {
   MemoryKillsMonitor();
   ~MemoryKillsMonitor() override;
 
+  // Try to match a line in kernel message which reports OOM.
+  static void TryMatchOomKillLine(const std::string& line);
+
   // Overridden from base::DelegateSimpleThread::Delegate:
   void Run() override;
 
-  // Try to match a line in kernel message which reports OOM.
-  static void TryMatchOomKillLine(const std::string& line);
+  // LoginState::Observer overrides.
+  void LoggedInStateChanged() override;
+
+  // Starts a non-joinable thread to monitor OOM kills. This must only
+  // be invoked once per process.
+  void StartMonitoring();
+
+  // Log low memory kill event.
+  void LogLowMemoryKillImpl(const std::string& type, int estimated_freed_kb);
+
+  // Alaways access from the UI thread.
+  bool monitoring_started_;
 
   // A flag set when MemoryKillsMonitor is shutdown so that its thread can poll
   // it and attempt to wind down from that point (to avoid unnecessary work, not

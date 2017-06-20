@@ -27,8 +27,10 @@
 #include "base/strings/string_number_conversions.h"
 #include "base/strings/string_split.h"
 #include "base/synchronization/atomic_flag.h"
+#include "base/threading/platform_thread.h"
 #include "base/time/time.h"
 #include "chrome/browser/memory/memory_kills_histogram.h"
+#include "content/public/browser/browser_thread.h"
 #include "third_party/re2/src/re2/re2.h"
 
 namespace memory {
@@ -37,6 +39,8 @@ using base::SequencedWorkerPool;
 using base::TimeDelta;
 
 namespace {
+
+MemoryKillsMonitor* g_instance = nullptr;
 
 int64_t GetTimestamp(const std::string& line) {
   std::vector<std::string> fields = base::SplitString(
@@ -115,12 +119,12 @@ MemoryKillsMonitor::Handle::~Handle() {
   }
 }
 
-MemoryKillsMonitor::MemoryKillsMonitor() {
-  base::SimpleThread::Options non_joinable_options;
-  non_joinable_options.joinable = false;
-  non_joinable_worker_thread_ = base::MakeUnique<base::DelegateSimpleThread>(
-      this, "memory_kills_monitor", non_joinable_options);
-  non_joinable_worker_thread_->Start();
+MemoryKillsMonitor::MemoryKillsMonitor() : monitoring_started_(false) {
+  auto login_state = chromeos::LoginState::Get();
+  if (!login_state) {
+    LOG(ERROR) << "LoginState is not initialized";
+  }
+  login_state->AddObserver(this);
 }
 
 MemoryKillsMonitor::~MemoryKillsMonitor() {
@@ -131,46 +135,36 @@ MemoryKillsMonitor::~MemoryKillsMonitor() {
 }
 
 // static
-MemoryKillsMonitor::Handle MemoryKillsMonitor::StartMonitoring() {
+MemoryKillsMonitor::Handle MemoryKillsMonitor::Initialize() {
+  VLOG(2) << "MemoryKillsMonitor:: Initializing on "
+          << base::PlatformThread::CurrentId();
+
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
 #if DCHECK_IS_ON()
-  static volatile bool monitoring_active = false;
-  DCHECK(!monitoring_active);
-  monitoring_active = true;
+  static volatile bool is_initialized = false;
+  DCHECK(!is_initialized);
+  is_initialized = true;
 #endif
 
-  // Instantiate the MemoryKillsMonitor and its underlying thread. The
-  // MemoryKillsMonitor itself has to be leaked on shutdown per having a
-  // non-joinable thread associated to its state. The MemoryKillsMonitor::Handle
-  // will notify the MemoryKillsMonitor when it is destroyed so that the
-  // underlying thread can at a minimum not do extra work during shutdown.
-  MemoryKillsMonitor* instance = new MemoryKillsMonitor();
+  // Instantiate the MemoryKillsMonitor. The MemoryKillsMonitor itself has to
+  // be leaked on shutdown per having a non-joinable thread associated to its
+  // state.  The MemoryKillsMonitor::Handle will notify the MemoryKillsMonitor
+  // when it is destroyed so that the underlying thread can at a minimum not
+  // do extra work during shutdown.
+  g_instance = new MemoryKillsMonitor();
   ANNOTATE_LEAKING_OBJECT_PTR(instance);
-  return Handle(instance);
+  return Handle(g_instance);
 }
 
 // static
 void MemoryKillsMonitor::LogLowMemoryKill(
     const std::string& type, int estimated_freed_kb) {
-  static base::Time last_kill_time;
-  static int low_memory_kills = 0;
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
 
-  base::Time now = base::Time::Now();
-  LogEvent(now, "LOW_MEMORY_KILL_" + type);
-
-  const TimeDelta time_delta =
-      last_kill_time.is_null() ?
-      kMaxMemoryKillTimeDelta :
-      (now - last_kill_time);
-  UMA_HISTOGRAM_MEMORY_KILL_TIME_INTERVAL(
-            "Arc.LowMemoryKiller.TimeDelta", time_delta);
-  last_kill_time = now;
-
-  ++low_memory_kills;
-  UMA_HISTOGRAM_CUSTOM_COUNTS(
-      "Arc.LowMemoryKiller.Count", low_memory_kills, 1, 1000, 1001);
-
-  UMA_HISTOGRAM_MEMORY_KB("Arc.LowMemoryKiller.FreedSize",
-                          estimated_freed_kb);
+  if (g_instance) {
+    g_instance->LogLowMemoryKillImpl(type, estimated_freed_kb);
+  }
 }
 
 // static
@@ -189,7 +183,8 @@ void MemoryKillsMonitor::TryMatchOomKillLine(const std::string& line) {
 }
 
 void MemoryKillsMonitor::Run() {
-  VLOG(1) << "MemoryKillsMonitor started";
+  VLOG(2) << "Started monitoring OOM kills on thread "
+          << base::PlatformThread::CurrentId();
   base::ScopedFILE kmsg_handle(
       base::OpenFile(base::FilePath("/dev/kmsg"), "r"));
   if (!kmsg_handle) {
@@ -214,5 +209,70 @@ void MemoryKillsMonitor::Run() {
   }
 }
 
+void MemoryKillsMonitor::LoggedInStateChanged() {
+  VLOG(2) << "LoggedInStateChanged";
+  auto login_state = chromeos::LoginState::Get();
+  if (login_state) {
+    // Note: LoginState never fires a notification when logged out.
+    if (login_state->IsUserLoggedIn()) {
+      VLOG(2) << "User logged in";
+      StartMonitoring();
+    }
+  }
+}
+
+void MemoryKillsMonitor::StartMonitoring() {
+  VLOG(2) << "Starting monitor from thread "
+          << base::PlatformThread::CurrentId();
+
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  if (monitoring_started_) {
+    LOG(WARNING) << "Monitoring has been started";
+    return;
+  }
+
+  // Insert a zero kill record at the begining of each login session for easy
+  // comparison to those with non-zero kill sessions.
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.OOMKills.Count", 0, 1, 1000, 1001);
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.LowMemoryKiller.Count", 0, 1, 1000, 1001);
+
+  base::SimpleThread::Options non_joinable_options;
+  non_joinable_options.joinable = false;
+  non_joinable_worker_thread_ = base::MakeUnique<base::DelegateSimpleThread>(
+      this, "memory_kills_monitor", non_joinable_options);
+  non_joinable_worker_thread_->Start();
+  monitoring_started_ = true;
+}
+
+void MemoryKillsMonitor::LogLowMemoryKillImpl(const std::string& type,
+                                              int estimated_freed_kb) {
+  DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+
+  if (!monitoring_started_) {
+    LOG(WARNING) << "LogLowMemoryKill before monitoring started, "
+                    "skipped this log.";
+    return;
+  }
+
+  static base::Time last_kill_time;
+  static int low_memory_kills = 0;
+
+  base::Time now = base::Time::Now();
+  LogEvent(now, "LOW_MEMORY_KILL_" + type);
+
+  const TimeDelta time_delta = last_kill_time.is_null()
+                                   ? kMaxMemoryKillTimeDelta
+                                   : (now - last_kill_time);
+  UMA_HISTOGRAM_MEMORY_KILL_TIME_INTERVAL("Arc.LowMemoryKiller.TimeDelta",
+                                          time_delta);
+  last_kill_time = now;
+
+  ++low_memory_kills;
+  UMA_HISTOGRAM_CUSTOM_COUNTS("Arc.LowMemoryKiller.Count", low_memory_kills, 1,
+                              1000, 1001);
+
+  UMA_HISTOGRAM_MEMORY_KB("Arc.LowMemoryKiller.FreedSize", estimated_freed_kb);
+}
 
 }  // namespace memory
