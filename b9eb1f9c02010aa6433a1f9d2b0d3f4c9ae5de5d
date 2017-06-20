@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ff992d9_c6f1b0dd",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T09:44:25Z",
+      "side": 1,
+      "message": "Oh this has already happened. Never mind.",
+      "parentUuid": "9d6d0005_0852e801",
+      "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "094b0529_08bcadb7",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
         "patchSetId": 6
