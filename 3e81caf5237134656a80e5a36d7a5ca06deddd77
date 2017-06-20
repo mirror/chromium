@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "02c73302_652bb4a4",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests_unittest.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 405,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-20T23:24:42Z",
+      "side": 1,
+      "message": "I\u0027m not sure, but I think the flag that\u0027s listed later in the list overrides the previous flag. You could assert this in the test if you\u0027d like; although this isn\u0027t really an important behavior to test, so you could also remove this test method, I think.",
+      "revId": "3e81caf5237134656a80e5a36d7a5ca06deddd77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
