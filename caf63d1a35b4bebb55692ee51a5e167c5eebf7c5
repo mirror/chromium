@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "aca614c5_af9ce9dd",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1118546
+      },
+      "writtenOn": "2017-06-20T16:08:21Z",
+      "side": 1,
+      "message": "I do not want the previous actions effects the mouse moves.",
+      "parentUuid": "948bc029_6ce55099",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dec3edd_f19b5093",
         "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
         "patchSetId": 6
