@@ -191,6 +191,24 @@
     },
     {
       "key": {
+        "uuid": "ebbbb875_e138ee59",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:41:57Z",
+      "side": 1,
+      "message": "The proliferation of transient elements is probably something I should have already cleaned up.  I\u0027m going to a file a bug to centralize the transience into a class that elements like this can derive from.  With that, I picture the element temporarily showing when enabled, hiding when disabled, a Kick() method to temporarily show itself again, and a ForceVisible() method to temporarily force it to stay visible (ie. when loading is in progress).  Or something like this, anyway.\n\nFor now, Biao, it\u0027s likely best to just mimic what the transient webvr warning is doing.",
+      "parentUuid": "052aaf1a_a22bdceb",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "33052dd2_85352075",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
