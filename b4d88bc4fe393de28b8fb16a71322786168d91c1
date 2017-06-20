@@ -16,6 +16,24 @@
       "revId": "b4d88bc4fe393de28b8fb16a71322786168d91c1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d379b20_16b3f377",
+        "filename": "content/test/BUILD.gn",
+        "patchSetId": 3
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1118209
+      },
+      "writtenOn": "2017-06-20T00:02:22Z",
+      "side": 1,
+      "message": "This seems problematic to me.  content:content_implementation has a comment that it\u0027s \"Applied by targets internal to content\", but this is adding it to content/test:test_support, which is used all over the place, so I\u0027m concerned this gives tests outside of content ability to use content-internal APIs.  It also seems like it causes link problems - see the current compile failures on win_chromium_compile_dbg_ng, for example.\n\nA strawman idea is to add a GetContentClientForTesting() which isn\u0027t guarded by CONTENT_IMPLEMENTATION, but that feels like it\u0027s overkill for what you\u0027re trying to do here, so I\u0027d also try to avoid that.  The GetContentClient() call site feels a bit random from outside content anyhow.\n\nWould it work to add a SetBrowserStartupIsCompleteForTesting() somewhere in content/, which you call from CreateThreads, and content::SetBrowserStartupIsCompleteForTesting() then internally calls GetContentClient()-\u003eSetBrowserStartupIsCompleteForTesting()?",
+      "parentUuid": "deb918e2_489a005a",
+      "revId": "b4d88bc4fe393de28b8fb16a71322786168d91c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
