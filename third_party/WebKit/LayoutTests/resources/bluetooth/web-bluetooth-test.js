@@ -21,6 +21,7 @@
       FakeBluetoothPtr: mojo_.FakeBluetoothPtr,
       FakeCentral: mojo_.FakeCentral,
       FakeCentralPtr: mojo_.FakeCentralPtr,
+      CharacteristicProperties: mojo_.CharacteristicProperties,
     }] = mojo_.modules;
 
     return mojo_;
@@ -37,6 +38,19 @@
       default:
         throw `Unsupported value ${state} for state.`;
     }
+  }
+
+  function stringArrayToBoolStruct(arr, struct_type) {
+    let struct = new struct_type();
+
+    arr.forEach(val => {
+      if (struct.hasOwnProperty(val))
+        struct[val] = true;
+      else
+        throw `Invalid member '${val}' for '${struct_type}'`;
+    });
+
+    return struct;
   }
 
   class FakeBluetooth {
@@ -212,6 +226,38 @@
 
   class FakeRemoteGATTService {
     constructor(service_id, peripheral_address, fake_central_ptr) {
+      this.service_id_ = service_id;
+      this.characteristics_ = [];
+      this.peripheral_address_ = peripheral_address;
+      this.fake_central_ptr_ = fake_central_ptr;
+    }
+
+    // Adds a fake GATT Characteristic with |uuid| and |properties|
+    // to this fake service. The characteristic will be found when discovering
+    // the peripheral's GATT Attributes. Returns a FakeRemoteGATTCharacteristic
+    // corresponding to the added characteristic.
+    async addFakeCharacteristic({uuid, properties}) {
+      let {characteristic_id} = await this.fake_central_ptr_.addFakeCharacteristic(
+        {uuid: BluetoothUUID.getCharacteristic(uuid)},
+        stringArrayToBoolStruct(properties, mojo_.CharacteristicProperties),
+        this.service_id_,
+        this.peripheral_address_
+      );
+
+      if (characteristic_id === null) throw 'addFakeCharacteristic failed';
+
+      let fake_characteristic = new FakeRemoteGATTCharacteristic(
+        characteristic_id, this.service_id_,
+        this.peripheral_address_, this.fake_central_ptr_);
+      this.characteristics_.push(fake_characteristic);
+
+      return fake_characteristic;
+    }
+  }
+
+  class FakeRemoteGATTCharacteristic {
+    constructor(characteristic_id, service_id, peripheral_address, fake_central_ptr) {
+      this.characteristic_id_ = characteristic_id;
       this.service_id_ = service_id;
       this.peripheral_address_ = peripheral_address;
       this.fake_central_ptr_ = fake_central_ptr;
