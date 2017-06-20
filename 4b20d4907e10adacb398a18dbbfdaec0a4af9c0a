@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b6ee6e0b_00bb8ff2",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorNetworkAgent.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-20T18:41:18Z",
+      "side": 1,
+      "message": "Let\u0027s land the other patch first, and provide line/column right away.",
+      "revId": "4b20d4907e10adacb398a18dbbfdaec0a4af9c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a5653a4_06f0104e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network_log/NetworkLog.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 200,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-20T18:41:18Z",
+      "side": 1,
+      "message": "Let\u0027s update Initiator description in browser_protocol.json. Also, there is a lineNumber which we should respect if it was sent from backend.",
+      "revId": "4b20d4907e10adacb398a18dbbfdaec0a4af9c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
