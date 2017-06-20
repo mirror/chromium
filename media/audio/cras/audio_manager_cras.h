@@ -7,7 +7,9 @@
 
 #include <cras_types.h>
 
+#include <memory>
 #include <string>
+#include <vector>
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
@@ -30,6 +32,8 @@ class MEDIA_EXPORT AudioManagerCras : public AudioManagerBase {
   void GetAudioOutputDeviceNames(AudioDeviceNames* device_names) override;
   AudioParameters GetInputStreamParameters(
       const std::string& device_id) override;
+  std::string GetAssociatedOutputDeviceID(
+      const std::string& input_device_id) override;
   const char* GetName() override;
 
   // AudioManagerBase implementation.

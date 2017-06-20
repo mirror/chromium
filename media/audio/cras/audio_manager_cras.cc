@@ -7,6 +7,8 @@
 #include <stddef.h>
 
 #include <algorithm>
+#include <map>
+#include <utility>
 
 #include "base/command_line.h"
 #include "base/environment.h"
@@ -261,6 +263,32 @@ AudioParameters AudioManagerCras::GetInputStreamParameters(
     }
   }
   return params;
+}
+
+std::string AudioManagerCras::GetAssociatedOutputDeviceID(
+    const std::string& input_device_id) {
+  if (!base::FeatureList::IsEnabled(features::kEnumerateAudioDevices))
+    return "";
+  chromeos::AudioDeviceList devices;
+  chromeos::CrasAudioHandler::Get()->GetAudioDevices(&devices);
+  base::StringPiece device_name;
+  // First find the device name of the input device.
+  for (const auto& device : devices) {
+    if (device.is_input && base::Uint64ToString(device.id) == input_device_id) {
+      device_name = device.device_name;
+      break;
+    }
+  }
+  if (device_name.empty())
+    return "";
+
+  // Now search for an output device with the same device name.
+  for (const auto& device : devices) {
+    if (!device.is_input && device.device_name == device_name) {
+      return base::Uint64ToString(device.id);
+    }
+  }
+  return "";
 }
 
 const char* AudioManagerCras::GetName() {
