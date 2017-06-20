@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "50aa0c16_8343e4a7",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 931,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-20T22:27:11Z",
+      "side": 1,
+      "message": "So before the patch we only updated the target size once near the end and only if it wasn\u0027t empty. If the matrix is not decomposable, then we don\u0027t actually have a valid scale (it should be 1 and specified by draw image). So this is really the same as before, except I don\u0027t want to deal with an empty size throughout the function.",
+      "parentUuid": "ca1c280f_2508610b",
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cae6c85c_5cc1dc26",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 1
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "0b0d021a_e614dc7e",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 959,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-20T22:27:11Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cae6c85c_5cc1dc26",
+      "range": {
+        "startLine": 959,
+        "startChar": 11,
+        "endLine": 959,
+        "endChar": 26
+      },
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "da7d608f_6b364d0f",
         "filename": "cc/tiles/software_image_decode_cache.cc",
         "patchSetId": 1
@@ -53,6 +95,30 @@
       "writtenOn": "2017-06-20T22:02:45Z",
       "side": 1,
       "message": "what about scaled subrects ;P",
+      "range": {
+        "startLine": 972,
+        "startChar": 6,
+        "endLine": 972,
+        "endChar": 34
+      },
+      "revId": "94fa5ca51ee9c1aff9510df19896be723581c297",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "606a8460_10e97e39",
+        "filename": "cc/tiles/software_image_decode_cache.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 972,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-20T22:27:11Z",
+      "side": 1,
+      "message": "D:",
+      "parentUuid": "da7d608f_6b364d0f",
       "range": {
         "startLine": 972,
         "startChar": 6,
