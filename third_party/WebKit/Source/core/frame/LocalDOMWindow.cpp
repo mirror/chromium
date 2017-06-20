@@ -1435,22 +1435,19 @@ void LocalDOMWindow::AddedEventListener(
     it->DidAddEventListener(this, event_type);
   }
 
+  // This is confusingly named. It doesn't actually add the listener. It
+  // just increments a count so that we know we have listeners registered
+  // for the purposes of determining if we can fast terminate the renderer
+  // process.
   if (event_type == EventTypeNames::unload) {
     UseCounter::Count(document(), WebFeature::kDocumentUnloadRegistered);
     AddUnloadEventListener(this);
   } else if (event_type == EventTypeNames::beforeunload) {
     UseCounter::Count(document(), WebFeature::kDocumentBeforeUnloadRegistered);
-    if (AllowsBeforeUnloadListeners(this)) {
-      // This is confusingly named. It doesn't actually add the listener. It
-      // just increments a count so that we know we have listeners registered
-      // for the purposes of determining if we can fast terminate the renderer
-      // process.
-      AddBeforeUnloadEventListener(this);
-    } else {
-      // Subframes return false from allowsBeforeUnloadListeners.
+    AddBeforeUnloadEventListener(this);
+    if (GetFrame() && !GetFrame()->IsMainFrame())
       UseCounter::Count(document(),
                         WebFeature::kSubFrameBeforeUnloadRegistered);
-    }
   }
 }
 
