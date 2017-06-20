@@ -13,7 +13,6 @@
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/strings/utf_string_conversions.h"
-#include "content/child/child_process.h"
 #include "content/common/media/media_devices.h"
 #include "content/renderer/media/media_stream.h"
 #include "content/renderer/media/media_stream_audio_source.h"
@@ -22,6 +21,7 @@
 #include "content/renderer/media/mock_media_stream_dispatcher.h"
 #include "content/renderer/media/mock_media_stream_video_source.h"
 #include "content/renderer/media/webrtc/mock_peer_connection_dependency_factory.h"
+#include "content/test/child_process_for_testing.h"
 #include "mojo/public/cpp/bindings/binding.h"
 #include "testing/gtest/include/gtest/gtest.h"
 #include "third_party/WebKit/public/platform/WebMediaDeviceInfo.h"
@@ -333,7 +333,6 @@ class UserMediaClientImplTest : public ::testing::Test {
 
   void SetUp() override {
     // Create our test object.
-    child_process_.reset(new ChildProcess());
     dependency_factory_.reset(new MockPeerConnectionDependencyFactory());
     ms_dispatcher_ = new MockMediaStreamDispatcher();
     user_media_client_impl_.reset(new UserMediaClientImplUnderTest(
@@ -455,7 +454,7 @@ class UserMediaClientImplTest : public ::testing::Test {
 
  protected:
   base::MessageLoop message_loop_;
-  std::unique_ptr<ChildProcess> child_process_;
+  ChildProcessForTesting child_process_;
   MockMediaStreamDispatcher* ms_dispatcher_;  // Owned by |used_media_impl_|.
   MockMediaDevicesDispatcherHost media_devices_dispatcher_;
   mojo::Binding<::mojom::MediaDevicesDispatcherHost> binding_user_media;

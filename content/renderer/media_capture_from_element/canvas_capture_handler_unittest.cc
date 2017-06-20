@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "content/renderer/media_capture_from_element/canvas_capture_handler.h"
 #include "base/bind.h"
 #include "base/message_loop/message_loop.h"
 #include "base/run_loop.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "content/child/child_process.h"
 #include "content/renderer/media/media_stream_video_capturer_source.h"
-#include "content/renderer/media_capture_from_element/canvas_capture_handler.h"
+#include "content/test/child_process_for_testing.h"
 #include "media/base/limits.h"
 #include "testing/gmock/include/gmock/gmock.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -133,10 +133,10 @@ class CanvasCaptureHandlerTest
     return ms_source->source_.get();
   }
 
-  // A ChildProcess and a MessageLoopForUI are both needed to fool the Tracks
-  // and Sources into believing they are on the right threads.
+  // A ChildProcessForTesting and a MessageLoopForUI are both needed to fool the
+  // Tracks and Sources into believing they are on the right threads.
   base::MessageLoopForUI message_loop_;
-  ChildProcess child_process_;
+  ChildProcessForTesting child_process_;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(CanvasCaptureHandlerTest);
