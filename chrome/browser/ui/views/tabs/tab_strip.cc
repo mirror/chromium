@@ -26,6 +26,7 @@
 #include "chrome/browser/ui/tabs/tab_strip_model.h"
 #include "chrome/browser/ui/view_ids.h"
 #include "chrome/browser/ui/views/frame/browser_view.h"
+#include "chrome/browser/ui/views/tabs/newtab_promo.h"
 #include "chrome/browser/ui/views/tabs/stacked_tab_strip_layout.h"
 #include "chrome/browser/ui/views/tabs/tab.h"
 #include "chrome/browser/ui/views/tabs/tab_drag_controller.h"
@@ -411,7 +412,10 @@ void NewTabButton::PaintButtonContents(gfx::Canvas* canvas) {
       CreateShadowDrawLooper(SkColorSetA(stroke_color, shadow_alpha)));
   const SkAlpha path_alpha = static_cast<SkAlpha>(
       std::round((pressed ? 0.875f : 0.609375f) * alpha));
-  flags.setColor(SkColorSetA(stroke_color, path_alpha));
+  flags.setColor(NewTabPromo::ShowingPromo()
+                     ? GetNativeTheme()->GetSystemColor(
+                           ui::NativeTheme::kColorId_BlueButtonShadowColor)
+                     : SkColorSetA(stroke_color, path_alpha));
   canvas->DrawPath(stroke, flags);
 }
 
@@ -504,7 +508,10 @@ void NewTabButton::PaintFill(bool pressed,
                                           x_scale * scale, scale, 0, 0, &flags);
       DCHECK(succeeded);
     } else {
-      flags.setColor(tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
+      flags.setColor(NewTabPromo::ShowingPromo()
+                         ? GetNativeTheme()->GetSystemColor(
+                               ui::NativeTheme::kColorId_ProminentButtonColor)
+                         : tp->GetColor(ThemeProperties::COLOR_BACKGROUND_TAB));
     }
     const SkColor stroke_color = tab_strip_->GetToolbarTopSeparatorColor();
     const SkAlpha alpha = static_cast<SkAlpha>(
@@ -2661,7 +2668,11 @@ void TabStrip::ButtonPressed(views::Button* sender, const ui::Event& event) {
       }
     }
 
-    controller_->CreateNewTab();
+    // controller_->CreateNewTab();
+
+    NewTabPromo::ShowBubble(newtab_button_);
+    // chris
+
     if (event.type() == ui::ET_GESTURE_TAP)
       TouchUMA::RecordGestureAction(TouchUMA::GESTURE_NEWTAB_TAP);
   }
