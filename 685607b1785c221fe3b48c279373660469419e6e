@@ -46,6 +46,30 @@
       "revId": "685607b1785c221fe3b48c279373660469419e6e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44272299_d22503d0",
+        "filename": "third_party/WebKit/Source/core/paint/PaintLayerPainterTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 605,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-20T22:42:26Z",
+      "side": 1,
+      "message": "Done, thanks Xianzhu!",
+      "parentUuid": "833ecc9e_f4aabee7",
+      "range": {
+        "startLine": 605,
+        "startChar": 15,
+        "endLine": 605,
+        "endChar": 34
+      },
+      "revId": "685607b1785c221fe3b48c279373660469419e6e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
