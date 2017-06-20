@@ -1,0 +1,129 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57fd26d1_43142858",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "Not needed?\nJust default construct this ptr.",
+      "range": {
+        "startLine": 274,
+        "startChar": 55,
+        "endLine": 274,
+        "endChar": 64
+      },
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "47a1766c_3fe7e0c3",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "When GetForProcess() returns null on users\u0027 devices, this code fails silently, and it\u0027s difficult to notice this feature is totally disabled.\nAre we doing anything to ensure that ServiceManagerConnection is always initialized when running on real devices?",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cd62a48c_96fabc67",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "Do we need this check?\nIIUC ServiceManagerConnection::GetConnector() never returns null.",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3cf43d08_d3f7ace7",
+        "filename": "components/drive/BUILD.gn",
+        "patchSetId": 8
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "No longer needed?",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbe52e67_bca76c79",
+        "filename": "components/drive/DEPS",
+        "patchSetId": 8
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "No longer needed?",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4548b6_9fdaaa48",
+        "filename": "components/drive/drive_uploader.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "This include is not needed?",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e4266996_07b84654",
+        "filename": "components/drive/drive_uploader.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-20T07:18:27Z",
+      "side": 1,
+      "message": "It\u0027s obvious from the code.\nThis comment is not needed.",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
