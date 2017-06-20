@@ -6,18 +6,31 @@
 
 #include "chrome/browser/page_load_metrics/observers/from_gws_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_util.h"
+#include "net/http/http_response_headers.h"
 #include "third_party/WebKit/public/platform/WebLoadingBehaviorFlag.h"
 
 namespace internal {
 
 const char kHistogramServiceWorkerParseStart[] =
     "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart";
+const char kHistogramServiceWorkerParseStartForwardBack[] =
+    "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart."
+    "ForwardBack";
+const char kHistogramServiceWorkerParseStartForwardBackNoStore[] =
+    "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart."
+    "ForwardBack.NoStore";
 const char kBackgroundHistogramServiceWorkerParseStart[] =
     "PageLoad.Clients.ServiceWorker.ParseTiming.NavigationToParseStart."
     "Background";
 const char kHistogramServiceWorkerFirstContentfulPaint[] =
     "PageLoad.Clients.ServiceWorker.PaintTiming."
     "NavigationToFirstContentfulPaint";
+const char kHistogramServiceWorkerFirstContentfulPaintForwardBack[] =
+    "PageLoad.Clients.ServiceWorker.PaintTiming."
+    "NavigationToFirstContentfulPaint.ForwardBack";
+const char kHistogramServiceWorkerFirstContentfulPaintForwardBackNoStore[] =
+    "PageLoad.Clients.ServiceWorker.PaintTiming."
+    "NavigationToFirstContentfulPaint.ForwardBack.NoStore";
 const char kBackgroundHistogramServiceWorkerFirstContentfulPaint[] =
     "PageLoad.Clients.ServiceWorker.PaintTiming."
     "NavigationToFirstContentfulPaint.Background";
@@ -92,6 +105,18 @@ const char kHistogramNoServiceWorkerDomContentLoadedSearch[] =
 const char kHistogramNoServiceWorkerLoadSearch[] =
     "PageLoad.Clients.NoServiceWorker.DocumentTiming."
     "NavigationToLoadEventFired.search";
+const char kHistogramNoServiceWorkerParseStartForwardBack[] =
+    "PageLoad.Clients.NoServiceWorker.ParseTiming.NavigationToParseStart."
+    "ForwardBack";
+const char kHistogramNoServiceWorkerParseStartForwardBackNoStore[] =
+    "PageLoad.Clients.NoServiceWorker.ParseTiming.NavigationToParseStart."
+    "ForwardBack.NoStore";
+const char kHistogramNoServiceWorkerFirstContentfulPaintForwardBack[] =
+    "PageLoad.Clients.NoServiceWorker.PaintTiming."
+    "NavigationToFirstContentfulPaint.ForwardBack";
+const char kHistogramNoServiceWorkerFirstContentfulPaintForwardBackNoStore[] =
+    "PageLoad.Clients.NoServiceWorker.PaintTiming."
+    "NavigationToFirstContentfulPaint.ForwardBack.NoStore";
 
 }  // namespace internal
 
@@ -106,6 +131,10 @@ bool IsServiceWorkerControlled(
 
 bool IsInboxSite(const GURL& url) {
   return url.host_piece() == "inbox.google.com";
+}
+
+bool IsForwardBackLoad(ui::PageTransition transition) {
+  return transition & ui::PAGE_TRANSITION_FORWARD_BACK;
 }
 
 }  // namespace
@@ -129,8 +158,22 @@ void ServiceWorkerPageLoadMetricsObserver::OnFirstContentfulPaintInPage(
             kHistogramNoServiceWorkerParseStartToFirstContentfulPaintSearch,
         timing.paint_timing->first_contentful_paint.value() -
             timing.parse_timing->parse_start.value());
+
+    if (IsForwardBackLoad(transition_)) {
+      PAGE_LOAD_HISTOGRAM(
+          internal::kHistogramNoServiceWorkerFirstContentfulPaintForwardBack,
+          timing.paint_timing->first_contentful_paint.value());
+      if (was_no_store_main_resource_) {
+        PAGE_LOAD_HISTOGRAM(
+            internal::
+                kHistogramNoServiceWorkerFirstContentfulPaintForwardBackNoStore,
+            timing.paint_timing->first_contentful_paint.value());
+      }
+    }
+
     return;
   }
+
   if (!WasStartedInForegroundOptionalEventInForeground(
           timing.paint_timing->first_contentful_paint, info)) {
     PAGE_LOAD_HISTOGRAM(
@@ -144,6 +187,18 @@ void ServiceWorkerPageLoadMetricsObserver::OnFirstContentfulPaintInPage(
       internal::kHistogramServiceWorkerParseStartToFirstContentfulPaint,
       timing.paint_timing->first_contentful_paint.value() -
           timing.parse_timing->parse_start.value());
+
+  if (IsForwardBackLoad(transition_)) {
+    PAGE_LOAD_HISTOGRAM(
+        internal::kHistogramServiceWorkerFirstContentfulPaintForwardBack,
+        timing.paint_timing->first_contentful_paint.value());
+    if (was_no_store_main_resource_) {
+      PAGE_LOAD_HISTOGRAM(
+          internal::
+              kHistogramServiceWorkerFirstContentfulPaintForwardBackNoStore,
+          timing.paint_timing->first_contentful_paint.value());
+    }
+  }
 
   if (IsInboxSite(info.url)) {
     PAGE_LOAD_HISTOGRAM(
@@ -267,14 +322,53 @@ void ServiceWorkerPageLoadMetricsObserver::OnLoadEventStart(
 void ServiceWorkerPageLoadMetricsObserver::OnParseStart(
     const page_load_metrics::mojom::PageLoadTiming& timing,
     const page_load_metrics::PageLoadExtraInfo& info) {
-  if (!IsServiceWorkerControlled(info))
+  if (!IsServiceWorkerControlled(info)) {
+    if (!WasStartedInForegroundOptionalEventInForeground(
+            timing.parse_timing->parse_start, info)) {
+      return;
+    }
+    if (IsForwardBackLoad(transition_)) {
+      PAGE_LOAD_HISTOGRAM(
+          internal::kHistogramNoServiceWorkerParseStartForwardBack,
+          timing.paint_timing->first_contentful_paint.value());
+      if (was_no_store_main_resource_) {
+        PAGE_LOAD_HISTOGRAM(
+            internal::kHistogramNoServiceWorkerParseStartForwardBackNoStore,
+            timing.paint_timing->first_contentful_paint.value());
+      }
+    }
     return;
+  }
   if (WasStartedInForegroundOptionalEventInForeground(
           timing.parse_timing->parse_start, info)) {
     PAGE_LOAD_HISTOGRAM(internal::kHistogramServiceWorkerParseStart,
                         timing.parse_timing->parse_start.value());
+    if (IsForwardBackLoad(transition_)) {
+      PAGE_LOAD_HISTOGRAM(
+          internal::kHistogramServiceWorkerParseStartForwardBack,
+          timing.paint_timing->first_contentful_paint.value());
+      if (was_no_store_main_resource_) {
+        PAGE_LOAD_HISTOGRAM(
+            internal::kHistogramServiceWorkerParseStartForwardBackNoStore,
+            timing.paint_timing->first_contentful_paint.value());
+      }
+    }
   } else {
     PAGE_LOAD_HISTOGRAM(internal::kBackgroundHistogramServiceWorkerParseStart,
                         timing.parse_timing->parse_start.value());
   }
+}
+
+page_load_metrics::PageLoadMetricsObserver::ObservePolicy
+ServiceWorkerPageLoadMetricsObserver::OnCommit(
+    content::NavigationHandle* navigation_handle,
+    ukm::SourceId source_id) {
+  transition_ = navigation_handle->GetPageTransition();
+  const net::HttpResponseHeaders* headers =
+      navigation_handle->GetResponseHeaders();
+  if (headers) {
+    was_no_store_main_resource_ =
+        headers->HasHeaderValue("cache-control", "no-store");
+  }
+  return CONTINUE_OBSERVING;
 }

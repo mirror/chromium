@@ -7,6 +7,7 @@
 
 #include "base/macros.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
+#include "components/ukm/ukm_source.h"
 
 namespace internal {
 
@@ -54,7 +55,10 @@ class ServiceWorkerPageLoadMetricsObserver
     : public page_load_metrics::PageLoadMetricsObserver {
  public:
   ServiceWorkerPageLoadMetricsObserver();
+
   // page_load_metrics::PageLoadMetricsObserver implementation:
+  ObservePolicy OnCommit(content::NavigationHandle* navigation_handle,
+                         ukm::SourceId source_id) override;
   void OnParseStart(
       const page_load_metrics::mojom::PageLoadTiming& timing,
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
@@ -72,6 +76,9 @@ class ServiceWorkerPageLoadMetricsObserver
       const page_load_metrics::PageLoadExtraInfo& extra_info) override;
 
  private:
+  ui::PageTransition transition_ = ui::PAGE_TRANSITION_LINK;
+  bool was_no_store_main_resource_ = false;
+
   DISALLOW_COPY_AND_ASSIGN(ServiceWorkerPageLoadMetricsObserver);
 };
 
