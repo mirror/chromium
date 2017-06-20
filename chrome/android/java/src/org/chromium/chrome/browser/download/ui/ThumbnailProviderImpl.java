@@ -129,8 +129,9 @@ public class ThumbnailProviderImpl implements ThumbnailProvider {
     @CalledByNative
     private void onThumbnailRetrieved(String filePath, @Nullable Bitmap bitmap) {
         if (bitmap != null) {
-            assert mCurrentRequest.getIconSize() == bitmap.getHeight();
-            getBitmapCache().put(Pair.create(filePath, bitmap.getHeight()),
+            int minDimension = Math.min(bitmap.getWidth(), bitmap.getHeight());
+            assert mCurrentRequest.getIconSize() == minDimension;
+            getBitmapCache().put(Pair.create(filePath, minDimension),
                     Pair.create(bitmap, bitmap.getByteCount()));
             mCurrentRequest.onThumbnailRetrieved(filePath, bitmap);
         }
