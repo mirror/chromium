@@ -16,6 +16,23 @@
       "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "742d51b1_69ba916d",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1115461
+      },
+      "writtenOn": "2017-06-20T17:33:08Z",
+      "side": 1,
+      "message": "Is it ok if this part would be in separate source_set in //media/base/BUILD.gn ?",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
