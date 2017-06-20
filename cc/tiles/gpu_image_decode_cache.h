@@ -101,10 +101,10 @@ class CC_EXPORT GpuImageDecodeCache
  public:
   enum class DecodeTaskType { PART_OF_UPLOAD_TASK, STAND_ALONE_DECODE_TASK };
 
-  explicit GpuImageDecodeCache(ContextProvider* context,
+  explicit GpuImageDecodeCache(ContextProvider* compositor_context,
+                               ContextProvider* worker_context,
                                ResourceFormat decode_format,
-                               size_t max_working_set_bytes,
-                               size_t max_cache_bytes);
+                               size_t max_working_set_bytes);
   ~GpuImageDecodeCache() override;
 
   // ImageDecodeCache overrides.
@@ -146,13 +146,13 @@ class CC_EXPORT GpuImageDecodeCache
 
   // For testing only.
   void SetAllByteLimitsForTesting(size_t limit) {
-    cached_bytes_limit_ = limit;
     max_working_set_bytes_ = limit;
   }
-  size_t GetBytesUsedForTesting() const { return bytes_used_; }
+  size_t GetBytesUsedForTesting() const { return bytes_locked_; }
   size_t GetNumCacheEntriesForTesting() const {
     return persistent_cache_.size();
   }
+  size_t GetInUseCacheEntriesForTesting() const { return in_use_cache_.size(); }
   size_t GetDrawImageSizeForTesting(const DrawImage& image);
   void SetImageDecodingFailedForTesting(const DrawImage& image);
   bool DiscardableIsLockedForTesting(const DrawImage& image);
@@ -213,6 +213,7 @@ class CC_EXPORT GpuImageDecodeCache
 
     // True if the image is counting against our memory limits.
     bool budgeted = false;
+    bool is_locked = true;
     uint32_t ref_count = 0;
     // If non-null, this is the pending upload task for this image.
     scoped_refptr<TileTask> task;
@@ -288,7 +289,7 @@ class CC_EXPORT GpuImageDecodeCache
   };
 
   // All private functions should only be called while holding |lock_|. Some
-  // functions also require the |context_| lock. These are indicated by
+  // functions also require the |worker_context_| lock. These are indicated by
   // additional comments.
 
   // Similar to GetTaskForImageAndRef, but gets the dependent decode task
@@ -318,7 +319,6 @@ class CC_EXPORT GpuImageDecodeCache
   // freeing unreferenced cache entries to make room.
   bool EnsureCapacity(size_t required_size);
   bool CanFitInWorkingSet(size_t size) const;
-  bool CanFitInCache(size_t size) const;
   bool ExceedsPreferredCount() const;
 
   void DecodeImageIfNecessary(const DrawImage& draw_image,
@@ -338,13 +338,16 @@ class CC_EXPORT GpuImageDecodeCache
   bool IsCompatible(const ImageData* image_data,
                     const DrawImage& draw_image) const;
 
-  // The following two functions also require the |context_| lock to be held.
+  // The following two functions also require the |worker_context_| lock to be
+  // held.
   void UploadImageIfNecessary(const DrawImage& draw_image,
                               ImageData* image_data);
   void DeletePendingImages();
+  bool TryLockImage(ContextProvider* context_provider, ImageData* data);
 
   const ResourceFormat format_;
-  ContextProvider* context_;
+  ContextProvider* compositor_context_;
+  ContextProvider* worker_context_;
   sk_sp<GrContextThreadSafeProxy> context_threadsafe_proxy_;
 
   // All members below this point must only be accessed while holding |lock_|.
@@ -364,15 +367,16 @@ class CC_EXPORT GpuImageDecodeCache
   InUseCache in_use_cache_;
 
   size_t max_working_set_bytes_;
-  const size_t normal_max_cache_bytes_;
-  size_t cached_bytes_limit_ = normal_max_cache_bytes_;
-  size_t bytes_used_ = 0;
+  size_t bytes_locked_ = 0;
   base::MemoryState memory_state_ = base::MemoryState::NORMAL;
+  bool aggressively_freeing_resources_ = false;
 
   // We can't release GPU backed SkImages without holding the context lock,
   // so we add them to this list and defer deletion until the next time the lock
   // is held.
   std::vector<sk_sp<SkImage>> images_pending_deletion_;
+  std::vector<sk_sp<SkImage>> images_pending_abandon_;
+  std::vector<sk_sp<SkImage>> images_pending_unlock_;
 };
 
 }  // namespace cc
