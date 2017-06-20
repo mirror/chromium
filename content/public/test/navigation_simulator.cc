@@ -165,8 +165,8 @@ void NavigationSimulator::Start() {
 }
 
 void NavigationSimulator::Redirect(const GURL& new_url) {
-  CHECK(state_ <= STARTED) << "NavigationSimulator::Redirect should be "
-                              "called before Fail or Commit";
+  CHECK_LE(state_, STARTED) << "NavigationSimulator::Redirect should be "
+                               "called before Fail or Commit";
   CHECK_EQ(0, num_did_finish_navigation_called_)
       << "NavigationSimulator::Redirect cannot be called after the "
          "navigation has finished";
@@ -223,12 +223,13 @@ void NavigationSimulator::Redirect(const GURL& new_url) {
   }
 }
 
-void NavigationSimulator::Commit() {
-  CHECK_LE(state_, STARTED) << "NavigationSimulator::Commit can only be "
-                               "called once, and cannot be called after "
-                               "NavigationSimulator::Fail";
+void NavigationSimulator::WillProcessResponse() {
+  CHECK_LE(state_, STARTED)
+      << "NavigationSimulator::WillProcessResponse can only be "
+         "called once, and cannot be called after "
+         "NavigationSimulator::Fail";
   CHECK_EQ(0, num_did_finish_navigation_called_)
-      << "NavigationSimulator::Commit cannot be called after the "
+      << "NavigationSimulator::WillProcessResponse cannot be called after the "
          "navigation has finished";
 
   if (state_ == INITIALIZATION) {
@@ -247,7 +248,6 @@ void NavigationSimulator::Commit() {
       return;
     }
   }
-
   // Call NavigationHandle::WillProcessResponse if needed.
   // Note that the handle's state can be CANCELING if a throttle cancelled it
   // synchronously in PrepareForCommit.
@@ -273,8 +273,26 @@ void NavigationSimulator::Commit() {
     return;
   }
 
+  state_ = PROCESSING_RESPONSE;
+
   CHECK_EQ(1, num_will_process_response_called_);
   CHECK_EQ(1, num_ready_to_commit_called_);
+}
+
+void NavigationSimulator::Commit() {
+  CHECK_LE(state_, PROCESSING_RESPONSE)
+      << "NavigationSimulator::Commit can only be "
+         "called once, and cannot be called after "
+         "NavigationSimulator::Fail";
+  CHECK_EQ(0, num_did_finish_navigation_called_)
+      << "NavigationSimulator::Commit cannot be called after the "
+         "navigation has finished";
+
+  if (state_ < PROCESSING_RESPONSE) {
+    WillProcessResponse();
+    if (state_ == FAILED)
+      return;
+  }
 
   // Update the RenderFrameHost now that we know which RenderFrameHost will
   // commit the navigation.
@@ -335,8 +353,9 @@ void NavigationSimulator::Commit() {
 }
 
 void NavigationSimulator::Fail(int error_code) {
-  CHECK_LE(state_, STARTED) << "NavigationSimulator::Fail can only be "
-                               "called.";
+  CHECK_LE(state_, PROCESSING_RESPONSE)
+      << "NavigationSimulator::Fail can only be "
+         "called for a pending navigation.";
   CHECK_EQ(0, num_did_finish_navigation_called_)
       << "NavigationSimulator::Fail cannot be called after the "
          "navigation has finished";
@@ -484,7 +503,7 @@ NavigationSimulator::GetLastThrottleCheckResult() {
 }
 
 NavigationHandle* NavigationSimulator::GetNavigationHandle() const {
-  CHECK_EQ(STARTED, state_);
+  CHECK_LE(PROCESSING_RESPONSE, state_);
   return handle_;
 }
 
