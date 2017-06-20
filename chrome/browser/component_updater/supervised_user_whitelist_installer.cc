@@ -546,9 +546,8 @@ void SupervisedUserWhitelistInstallerImpl::RegisterWhitelist(
     base::ListValue* clients_weak = nullptr;
     if (!whitelist_dict_weak->GetList(kClients, &clients_weak)) {
       DCHECK(newly_added);
-      auto clients = base::MakeUnique<base::ListValue>();
-      clients_weak = clients.get();
-      whitelist_dict_weak->Set(kClients, std::move(clients));
+      clients_weak = whitelist_dict_weak->SetList(
+          kClients, base::MakeUnique<base::ListValue>());
     }
     bool success = clients_weak->AppendIfNotPresent(
         base::MakeUnique<base::Value>(client_id));

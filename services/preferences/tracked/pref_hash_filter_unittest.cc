@@ -780,6 +780,8 @@ TEST_P(PrefHashFilterTest, FilterUntrackedPrefUpdate) {
 
 TEST_P(PrefHashFilterTest, MultiplePrefsFilterSerializeData) {
   base::DictionaryValue root_dict;
+  root_dict.Reserve(5);
+
   base::Value* int_value1 = root_dict.SetInteger(kAtomicPref, 1);
   root_dict.SetInteger(kAtomicPref2, 2);
   root_dict.SetInteger(kAtomicPref3, 3);
@@ -804,7 +806,8 @@ TEST_P(PrefHashFilterTest, MultiplePrefsFilterSerializeData) {
   ASSERT_EQ(3u, mock_pref_hash_store_->stored_paths_count());
   MockPrefHashStore::ValuePtrStrategyPair stored_value_atomic1 =
       mock_pref_hash_store_->stored_value(kAtomicPref);
-  ASSERT_EQ(int_value1, stored_value_atomic1.first);
+  ASSERT_EQ(*int_value1,
+            *static_cast<const base::Value*>(stored_value_atomic1.first));
   ASSERT_EQ(PrefTrackingStrategy::ATOMIC, stored_value_atomic1.second);
   ASSERT_EQ(1u, mock_pref_hash_store_->transactions_performed());
 
@@ -815,7 +818,8 @@ TEST_P(PrefHashFilterTest, MultiplePrefsFilterSerializeData) {
 
   MockPrefHashStore::ValuePtrStrategyPair stored_value_split =
       mock_pref_hash_store_->stored_value(kSplitPref);
-  ASSERT_EQ(dict_value, stored_value_split.first);
+  ASSERT_EQ(*dict_value,
+            *static_cast<const base::Value*>(stored_value_split.first));
   ASSERT_EQ(PrefTrackingStrategy::SPLIT, stored_value_split.second);
 }
 
@@ -863,6 +867,8 @@ TEST_P(PrefHashFilterTest, UnknownNullValue) {
 }
 
 TEST_P(PrefHashFilterTest, InitialValueUnknown) {
+  pref_store_contents_->Reserve(2);
+
   base::Value* string_value =
       pref_store_contents_->SetString(kAtomicPref, "string value");
 
@@ -915,19 +921,23 @@ TEST_P(PrefHashFilterTest, InitialValueUnknown) {
     // have been updated to match them.
     const base::Value* atomic_value_in_store;
     ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, &atomic_value_in_store));
-    ASSERT_EQ(string_value, atomic_value_in_store);
-    ASSERT_EQ(string_value, stored_atomic_value.first);
+    ASSERT_EQ(*string_value, *atomic_value_in_store);
+    ASSERT_EQ(*string_value,
+              *static_cast<const base::Value*>(stored_atomic_value.first));
 
     const base::Value* split_value_in_store;
     ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, &split_value_in_store));
-    ASSERT_EQ(dict_value, split_value_in_store);
-    ASSERT_EQ(dict_value, stored_split_value.first);
+    ASSERT_EQ(*dict_value, *split_value_in_store);
+    ASSERT_EQ(*dict_value,
+              *static_cast<const base::Value*>(stored_split_value.first));
 
     VerifyRecordedReset(false);
   }
 }
 
 TEST_P(PrefHashFilterTest, InitialValueTrustedUnknown) {
+  pref_store_contents_->Reserve(2);
+
   base::Value* string_value =
       pref_store_contents_->SetString(kAtomicPref, "test");
 
@@ -961,10 +971,11 @@ TEST_P(PrefHashFilterTest, InitialValueTrustedUnknown) {
   // Seeding is always allowed for trusted unknown values.
   const base::Value* atomic_value_in_store;
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, &atomic_value_in_store));
-  ASSERT_EQ(string_value, atomic_value_in_store);
+  ASSERT_EQ(*string_value, *atomic_value_in_store);
   MockPrefHashStore::ValuePtrStrategyPair stored_atomic_value =
       mock_pref_hash_store_->stored_value(kAtomicPref);
-  ASSERT_EQ(string_value, stored_atomic_value.first);
+  ASSERT_EQ(*string_value,
+            *static_cast<const base::Value*>(stored_atomic_value.first));
   ASSERT_EQ(PrefTrackingStrategy::ATOMIC, stored_atomic_value.second);
 
   const base::Value* split_value_in_store;
@@ -977,6 +988,8 @@ TEST_P(PrefHashFilterTest, InitialValueTrustedUnknown) {
 }
 
 TEST_P(PrefHashFilterTest, InitialValueChanged) {
+  pref_store_contents_->Reserve(2);
+
   base::Value* int_value = pref_store_contents_->SetInteger(kAtomicPref, 1234);
 
   base::DictionaryValue* dict_value = pref_store_contents_->SetDictionary(
@@ -1032,8 +1045,9 @@ TEST_P(PrefHashFilterTest, InitialValueChanged) {
     // been updated to match it.
     const base::Value* atomic_value_in_store;
     ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, &atomic_value_in_store));
-    ASSERT_EQ(int_value, atomic_value_in_store);
-    ASSERT_EQ(int_value, stored_atomic_value.first);
+    ASSERT_EQ(*int_value, *atomic_value_in_store);
+    ASSERT_EQ(*int_value,
+              *static_cast<const base::Value*>(stored_atomic_value.first));
 
     const base::Value* split_value_in_store;
     ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, &split_value_in_store));
@@ -1085,6 +1099,8 @@ TEST_P(PrefHashFilterTest, EmptyCleared) {
 }
 
 TEST_P(PrefHashFilterTest, InitialValueUnchangedLegacyId) {
+  pref_store_contents_->Reserve(2);
+
   base::Value* string_value =
       pref_store_contents_->SetString(kAtomicPref, "string value");
 
@@ -1123,29 +1139,32 @@ TEST_P(PrefHashFilterTest, InitialValueUnchangedLegacyId) {
   ASSERT_EQ(PrefTrackingStrategy::ATOMIC, stored_atomic_value.second);
   const base::Value* atomic_value_in_store;
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, &atomic_value_in_store));
-  ASSERT_EQ(string_value, atomic_value_in_store);
-  ASSERT_EQ(string_value, stored_atomic_value.first);
+  ASSERT_EQ(*string_value, *atomic_value_in_store);
+  ASSERT_EQ(*string_value,
+            *static_cast<const base::Value*>(stored_atomic_value.first));
 
   MockPrefHashStore::ValuePtrStrategyPair stored_split_value =
       mock_pref_hash_store_->stored_value(kSplitPref);
   ASSERT_EQ(PrefTrackingStrategy::SPLIT, stored_split_value.second);
   const base::Value* split_value_in_store;
   ASSERT_TRUE(pref_store_contents_->Get(kSplitPref, &split_value_in_store));
-  ASSERT_EQ(dict_value, split_value_in_store);
-  ASSERT_EQ(dict_value, stored_split_value.first);
+  ASSERT_EQ(*dict_value, *split_value_in_store);
+  ASSERT_EQ(*dict_value,
+            *static_cast<const base::Value*>(stored_split_value.first));
 
   VerifyRecordedReset(false);
 }
 
 TEST_P(PrefHashFilterTest, DontResetReportOnly) {
+  pref_store_contents_->Reserve(4);
+
   base::Value* int_value1 = pref_store_contents_->SetInteger(kAtomicPref, 1);
   base::Value* int_value2 = pref_store_contents_->SetInteger(kAtomicPref2, 2);
-  base::Value* report_only_val =
-      pref_store_contents_->SetInteger(kReportOnlyPref, 3);
-  base::DictionaryValue* report_only_split_val =
-      pref_store_contents_->SetDictionary(
-          kReportOnlySplitPref, base::MakeUnique<base::DictionaryValue>());
-  report_only_split_val->SetInteger("a", 1234);
+  pref_store_contents_->SetInteger(kReportOnlyPref, 3);
+  auto report_only_split_dict = base::MakeUnique<base::DictionaryValue>();
+  report_only_split_dict->SetInteger("a", 1234);
+  pref_store_contents_->SetDictionary(kReportOnlySplitPref,
+                                      std::move(report_only_split_dict));
 
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref2, NULL));
@@ -1179,10 +1198,17 @@ TEST_P(PrefHashFilterTest, DontResetReportOnly) {
   // be reset.
   ASSERT_TRUE(pref_store_contents_->Get(kReportOnlyPref, NULL));
   ASSERT_TRUE(pref_store_contents_->Get(kReportOnlySplitPref, NULL));
-  ASSERT_EQ(report_only_val,
-            mock_pref_hash_store_->stored_value(kReportOnlyPref).first);
-  ASSERT_EQ(report_only_split_val,
-            mock_pref_hash_store_->stored_value(kReportOnlySplitPref).first);
+  const base::Value* report_only_val = static_cast<const base::Value*>(
+      mock_pref_hash_store_->stored_value(kReportOnlyPref).first);
+  ASSERT_EQ(3, report_only_val->GetInt());
+
+  auto* report_only_split_val = static_cast<const base::DictionaryValue*>(
+      mock_pref_hash_store_->stored_value(kReportOnlySplitPref).first);
+  ASSERT_EQ(base::Value::Type::DICTIONARY, report_only_split_val->type());
+  ASSERT_EQ(1u, report_only_split_val->size());
+  const base::Value* report_only_split_pref = nullptr;
+  ASSERT_TRUE(report_only_split_val->Get("a", &report_only_split_pref));
+  ASSERT_EQ(1234, report_only_split_pref->GetInt());
 
   // All other prefs should have been reset if the enforcement level allows it.
   if (GetParam() == EnforcementLevel::ENFORCE_ON_LOAD) {
@@ -1197,12 +1223,14 @@ TEST_P(PrefHashFilterTest, DontResetReportOnly) {
     const base::Value* value_in_store2;
     ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref, &value_in_store));
     ASSERT_TRUE(pref_store_contents_->Get(kAtomicPref2, &value_in_store2));
-    ASSERT_EQ(int_value1, value_in_store);
-    ASSERT_EQ(int_value1,
-              mock_pref_hash_store_->stored_value(kAtomicPref).first);
-    ASSERT_EQ(int_value2, value_in_store2);
-    ASSERT_EQ(int_value2,
-              mock_pref_hash_store_->stored_value(kAtomicPref2).first);
+    ASSERT_EQ(*int_value1, *value_in_store);
+    ASSERT_EQ(*int_value1,
+              *static_cast<const base::Value*>(
+                  mock_pref_hash_store_->stored_value(kAtomicPref).first));
+    ASSERT_EQ(*int_value2, *value_in_store2);
+    ASSERT_EQ(*int_value2,
+              *static_cast<const base::Value*>(
+                  mock_pref_hash_store_->stored_value(kAtomicPref2).first));
 
     VerifyRecordedReset(false);
   }

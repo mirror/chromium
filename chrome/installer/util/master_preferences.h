@@ -198,7 +198,6 @@ class MasterPreferences {
   std::string ExtractPrefString(const std::string& name) const;
 
   std::unique_ptr<base::DictionaryValue> master_dictionary_;
-  base::DictionaryValue* distribution_ = nullptr;
   bool preferences_read_from_file_ = false;
 
  private:

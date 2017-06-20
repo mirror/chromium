@@ -962,21 +962,20 @@ void LocalizedError::GetStrings(
     params->suggest_reload = !!(options.buttons && SHOW_BUTTON_RELOAD);
   }
 
-  base::ListValue* suggestions_details = nullptr;
-  base::ListValue* suggestions_summary_list = nullptr;
+  std::unique_ptr<base::ListValue> suggestions_summary_list;
 
   bool use_default_suggestions = true;
   if (!params->override_suggestions) {
     // Detailed suggestion information.
-    suggestions_details = error_strings->SetList(
-        "suggestionsDetails", base::MakeUnique<base::ListValue>());
-    suggestions_summary_list = error_strings->SetList(
-        "suggestionsSummaryList", base::MakeUnique<base::ListValue>());
+    // suggestions_summary_list = error_strings->SetList(
+    //     "suggestionsSummaryList", base::MakeUnique<base::ListValue>());
+    suggestions_summary_list = base::MakeUnique<base::ListValue>();
   } else {
-    suggestions_summary_list = error_strings->SetList(
-        "suggestionsSummaryList", std::move(params->override_suggestions));
+    // suggestions_summary_list = error_strings->SetList(
+    //     "suggestionsSummaryList", std::move(params->override_suggestions));
+    suggestions_summary_list = std::move(params->override_suggestions);
     use_default_suggestions = false;
-    AddGoogleCachedCopyButton(suggestions_summary_list, error_strings);
+    AddGoogleCachedCopyButton(suggestions_summary_list.get(), error_strings);
   }
 
   if (params->search_url.is_valid()) {
@@ -1010,8 +1009,11 @@ void LocalizedError::GetStrings(
   }
 
   // If not using the default suggestions, nothing else to do.
-  if (!use_default_suggestions)
+  if (!use_default_suggestions) {
+    error_strings->SetList("suggestionsSummaryList",
+                           std::move(suggestions_summary_list));
     return;
+  }
 
 #if defined(OS_CHROMEOS)
   // ChromeOS has its own diagnostics extension, which doesn't rely on a
@@ -1021,10 +1023,15 @@ void LocalizedError::GetStrings(
 
   // Add default suggestions and any relevant supporting details.
   GetSuggestionsSummaryList(error_code, error_strings, options.suggestions,
-                            locale, suggestions_summary_list,
+                            locale, suggestions_summary_list.get(),
                             can_show_network_diagnostics_dialog, failed_url);
+  error_strings->SetList("suggestionsSummaryList",
+                         std::move(suggestions_summary_list));
+
+  auto suggestions_details = base::MakeUnique<base::ListValue>();
   AddSuggestionsDetails(error_code, error_strings, options.suggestions,
-                        suggestions_details);
+                        suggestions_details.get());
+  error_strings->SetList("suggestionsDetails", std::move(suggestions_details));
 
   // Add action buttons.
   const std::string& show_saved_copy_value =

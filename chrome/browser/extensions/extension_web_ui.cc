@@ -474,9 +474,8 @@ void ExtensionWebUI::RegisterOrActivateChromeURLOverrides(
     base::ListValue* page_overrides_weak = nullptr;
     if (!all_overrides->GetList(page_override_pair.first,
                                 &page_overrides_weak)) {
-      auto page_overrides = base::MakeUnique<base::ListValue>();
-      page_overrides_weak = page_overrides.get();
-      all_overrides->Set(page_override_pair.first, std::move(page_overrides));
+      page_overrides_weak = all_overrides->SetList(
+          page_override_pair.first, base::MakeUnique<base::ListValue>());
     }
     AddOverridesToList(page_overrides_weak, page_override_pair.second.spec());
   }

@@ -246,9 +246,9 @@ class ExtensionPrefs : public ExtensionScopedPrefs, public KeyedService {
   void GetExtensions(ExtensionIdList* out) const;
 
   // ExtensionScopedPrefs methods:
-  void UpdateExtensionPref(const std::string& id,
-                           const std::string& key,
-                           std::unique_ptr<base::Value> value) override;
+  base::Value* UpdateExtensionPref(const std::string& id,
+                                   const std::string& key,
+                                   std::unique_ptr<base::Value> value) override;
 
   void DeleteExtensionPrefs(const std::string& id) override;
 

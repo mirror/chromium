@@ -136,7 +136,7 @@ void SettingsOverridesAPI::SetPref(const std::string& extension_id,
   if (!prefs)
     return;  // Expected in unit tests.
   prefs->SetExtensionControlledPref(
-      extension_id, pref_key, kExtensionPrefsScopeRegular, value.release());
+      extension_id, pref_key, kExtensionPrefsScopeRegular, std::move(value));
 }
 
 void SettingsOverridesAPI::UnsetPref(const std::string& extension_id,

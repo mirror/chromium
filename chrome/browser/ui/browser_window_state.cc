@@ -60,9 +60,8 @@ class WindowPlacementPrefUpdate : public DictionaryPrefUpdate {
     base::DictionaryValue* all_apps_dict = DictionaryPrefUpdate::Get();
     base::DictionaryValue* this_app_dict_weak = NULL;
     if (!all_apps_dict->GetDictionary(window_name_, &this_app_dict_weak)) {
-      auto this_app_dict = base::MakeUnique<base::DictionaryValue>();
-      this_app_dict_weak = this_app_dict.get();
-      all_apps_dict->Set(window_name_, std::move(this_app_dict));
+      this_app_dict_weak = all_apps_dict->SetDictionary(
+          window_name_, base::MakeUnique<base::DictionaryValue>());
     }
     return this_app_dict_weak;
   }

@@ -154,7 +154,7 @@ ShareServiceImpl::GetTargetsWithSufficientEngagement() {
       continue;
 
     const base::DictionaryValue* share_target_dict;
-    bool result = it.second->GetAsDictionary(&share_target_dict);
+    bool result = it.second.GetAsDictionary(&share_target_dict);
     DCHECK(result);
 
     std::string name;

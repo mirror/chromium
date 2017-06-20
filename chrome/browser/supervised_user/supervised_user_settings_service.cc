@@ -423,9 +423,9 @@ base::DictionaryValue* SupervisedUserSettingsService::GetOrCreateDictionary(
     bool success = value->GetAsDictionary(&dict);
     DCHECK(success);
   } else {
-    dict = new base::DictionaryValue;
-    store_->SetValue(key, base::WrapUnique(dict),
-                     WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS);
+    dict = static_cast<base::DictionaryValue*>(
+        store_->SetValue(key, base::MakeUnique<base::DictionaryValue>(),
+                         WriteablePrefStore::DEFAULT_PREF_WRITE_FLAGS));
   }
 
   return dict;

@@ -41,9 +41,9 @@ class PersistentPrefStoreClient
       mojom::PersistentPrefStoreConnectionPtr connection);
 
   // WriteablePrefStore:
-  void SetValue(const std::string& key,
-                std::unique_ptr<base::Value> value,
-                uint32_t flags) override;
+  base::Value* SetValue(const std::string& key,
+                        std::unique_ptr<base::Value> value,
+                        uint32_t flags) override;
   void RemoveValue(const std::string& key, uint32_t flags) override;
   bool GetMutableValue(const std::string& key, base::Value** result) override;
   void ReportValueChanged(const std::string& key, uint32_t flags) override;
@@ -51,9 +51,9 @@ class PersistentPrefStoreClient
       const std::string& key,
       std::set<std::vector<std::string>> path_components,
       uint32_t flags) override;
-  void SetValueSilently(const std::string& key,
-                        std::unique_ptr<base::Value> value,
-                        uint32_t flags) override;
+  base::Value* SetValueSilently(const std::string& key,
+                                std::unique_ptr<base::Value> value,
+                                uint32_t flags) override;
 
   // PersistentPrefStore:
   bool ReadOnly() const override;

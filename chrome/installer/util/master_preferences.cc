@@ -168,10 +168,6 @@ void MasterPreferences::InitializeFromCommandLine(
   // receives false. The updated dictionary is not written back to disk.
   master_dictionary_->Remove(
       std::string(master_preferences::kDistroDict) + ".multi_install", nullptr);
-
-  // Cache a pointer to the distribution dictionary. Ignore errors if any.
-  master_dictionary_->GetDictionary(installer::master_preferences::kDistroDict,
-                                    &distribution_);
 #endif
 }
 
@@ -197,10 +193,6 @@ bool MasterPreferences::InitializeFromString(const std::string& json_data) {
   if (!master_dictionary_.get()) {
     master_dictionary_.reset(new base::DictionaryValue());
     data_is_valid = false;
-  } else {
-    // Cache a pointer to the distribution dictionary.
-    master_dictionary_->GetDictionary(
-        installer::master_preferences::kDistroDict, &distribution_);
   }
 
   EnforceLegacyPreferences();
@@ -220,9 +212,12 @@ void MasterPreferences::EnforceLegacyPreferences() {
   bool create_all_shortcuts = true;
   GetBool(kCreateAllShortcuts, &create_all_shortcuts);
   if (!create_all_shortcuts) {
-    distribution_->SetBoolean(
+    base::DictionaryValue* distribution = nullptr;
+    master_dictionary_->GetDictionary(
+        installer::master_preferences::kDistroDict, &distribution);
+    distribution->SetBoolean(
         installer::master_preferences::kDoNotCreateDesktopShortcut, true);
-    distribution_->SetBoolean(
+    distribution->SetBoolean(
         installer::master_preferences::kDoNotCreateQuickLaunchShortcut, true);
   }
 
@@ -261,23 +256,32 @@ void MasterPreferences::EnforceLegacyPreferences() {
 
 bool MasterPreferences::GetBool(const std::string& name, bool* value) const {
   bool ret = false;
-  if (distribution_)
-    ret = distribution_->GetBoolean(name, value);
+  base::DictionaryValue* distribution = nullptr;
+  if (master_dictionary_->GetDictionary(
+          installer::master_preferences::kDistroDict, &distribution)) {
+    ret = distribution->GetBoolean(name, value);
+  }
   return ret;
 }
 
 bool MasterPreferences::GetInt(const std::string& name, int* value) const {
   bool ret = false;
-  if (distribution_)
-    ret = distribution_->GetInteger(name, value);
+  base::DictionaryValue* distribution = nullptr;
+  if (master_dictionary_->GetDictionary(
+          installer::master_preferences::kDistroDict, &distribution)) {
+    ret = distribution->GetInteger(name, value);
+  }
   return ret;
 }
 
 bool MasterPreferences::GetString(const std::string& name,
                                   std::string* value) const {
   bool ret = false;
-  if (distribution_)
-    ret = (distribution_->GetString(name, value) && !value->empty());
+  base::DictionaryValue* distribution = nullptr;
+  if (master_dictionary_->GetDictionary(
+          installer::master_preferences::kDistroDict, &distribution)) {
+    ret = (distribution->GetString(name, value) && !value->empty());
+  }
   return ret;
 }
 

@@ -29,14 +29,6 @@
 
 using testing::_;
 
-std::ostream& operator<<(std::ostream& os, const base::Value& value) {
-  std::string json;
-  base::JSONWriter::WriteWithOptions(
-      value, base::JSONWriter::OPTIONS_PRETTY_PRINT, &json);
-  os << json;
-  return os;
-}
-
 MATCHER_P(MatchesJson, json, json.c_str()) {
   std::unique_ptr<base::Value> expected(
       base::JSONReader::Read(json, base::JSON_PARSE_RFC));

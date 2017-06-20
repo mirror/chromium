@@ -43,36 +43,45 @@ void DictionaryValueUpdate::Clear() {
   value_->Clear();
 }
 
-void DictionaryValueUpdate::Set(base::StringPiece path,
-                                std::unique_ptr<base::Value> in_value) {
-  const base::Value* old_value = nullptr;
+base::Value* DictionaryValueUpdate::Set(base::StringPiece path,
+                                        std::unique_ptr<base::Value> in_value) {
+  base::Value* old_value = nullptr;
   if (value_->Get(path, &old_value) && *old_value == *in_value)
-    return;
+    return old_value;
 
   RecordPath(path);
-  value_->Set(path, std::move(in_value));
+  return value_->Set(path, std::move(in_value));
 }
 
-void DictionaryValueUpdate::SetBoolean(base::StringPiece path, bool in_value) {
-  Set(path, base::MakeUnique<base::Value>(in_value));
+base::Value* DictionaryValueUpdate::SetBoolean(base::StringPiece path,
+                                               bool in_value) {
+  return Set(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetInteger(base::StringPiece path, int in_value) {
-  Set(path, base::MakeUnique<base::Value>(in_value));
+base::Value* DictionaryValueUpdate::SetInteger(base::StringPiece path,
+                                               int in_value) {
+  return Set(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetDouble(base::StringPiece path, double in_value) {
-  Set(path, base::MakeUnique<base::Value>(in_value));
+base::Value* DictionaryValueUpdate::SetDouble(base::StringPiece path,
+                                              double in_value) {
+  return Set(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetString(base::StringPiece path,
-                                      base::StringPiece in_value) {
-  Set(path, base::MakeUnique<base::Value>(in_value));
+base::Value* DictionaryValueUpdate::SetString(base::StringPiece path,
+                                              base::StringPiece in_value) {
+  return Set(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetString(base::StringPiece path,
-                                      const base::string16& in_value) {
-  Set(path, base::MakeUnique<base::Value>(in_value));
+base::Value* DictionaryValueUpdate::SetString(base::StringPiece path,
+                                              const base::string16& in_value) {
+  return Set(path, base::MakeUnique<base::Value>(in_value));
+}
+
+base::ListValue* DictionaryValueUpdate::SetList(
+    base::StringPiece path,
+    std::unique_ptr<base::ListValue> in_value) {
+  return static_cast<base::ListValue*>(Set(path, std::move(in_value)));
 }
 
 std::unique_ptr<DictionaryValueUpdate> DictionaryValueUpdate::SetDictionary(
@@ -86,46 +95,53 @@ std::unique_ptr<DictionaryValueUpdate> DictionaryValueUpdate::SetDictionary(
       report_update_, dictionary_value, ConcatPath(path_, path));
 }
 
-void DictionaryValueUpdate::SetWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetWithoutPathExpansion(
     base::StringPiece key,
     std::unique_ptr<base::Value> in_value) {
-  const base::Value* old_value = nullptr;
+  base::Value* old_value = nullptr;
   if (value_->GetWithoutPathExpansion(key, &old_value) &&
       *old_value == *in_value) {
-    return;
+    return old_value;
   }
   RecordKey(key);
-  value_->SetWithoutPathExpansion(key, std::move(in_value));
+  return value_->SetWithoutPathExpansion(key, std::move(in_value));
 }
 
-void DictionaryValueUpdate::SetBooleanWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetBooleanWithoutPathExpansion(
     base::StringPiece path,
     bool in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+  return SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetIntegerWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetIntegerWithoutPathExpansion(
     base::StringPiece path,
     int in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+  return SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetDoubleWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetDoubleWithoutPathExpansion(
     base::StringPiece path,
     double in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+  return SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetStringWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetStringWithoutPathExpansion(
     base::StringPiece path,
     base::StringPiece in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+  return SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
 }
 
-void DictionaryValueUpdate::SetStringWithoutPathExpansion(
+base::Value* DictionaryValueUpdate::SetStringWithoutPathExpansion(
     base::StringPiece path,
     const base::string16& in_value) {
-  SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+  return SetWithoutPathExpansion(path, base::MakeUnique<base::Value>(in_value));
+}
+
+base::ListValue* DictionaryValueUpdate::SetListWithoutPathExpansion(
+    base::StringPiece path,
+    std::unique_ptr<base::ListValue> in_value) {
+  return static_cast<base::ListValue*>(
+      SetWithoutPathExpansion(path, std::move(in_value)));
 }
 
 std::unique_ptr<DictionaryValueUpdate>

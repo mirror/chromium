@@ -51,32 +51,42 @@ class DictionaryValueUpdate {
   // If the key at any step of the way doesn't exist, or exists but isn't
   // a DictionaryValue, a new DictionaryValue will be created and attached
   // to the path in that location. |in_value| must be non-null.
-  void Set(base::StringPiece path, std::unique_ptr<base::Value> in_value);
+  base::Value* Set(base::StringPiece path,
+                   std::unique_ptr<base::Value> in_value);
 
   // Convenience forms of Set().  These methods will replace any existing
   // value at that path, even if it has a different type.
-  void SetBoolean(base::StringPiece path, bool in_value);
-  void SetInteger(base::StringPiece path, int in_value);
-  void SetDouble(base::StringPiece path, double in_value);
-  void SetString(base::StringPiece path, base::StringPiece in_value);
-  void SetString(base::StringPiece path, const base::string16& in_value);
+  base::Value* SetBoolean(base::StringPiece path, bool in_value);
+  base::Value* SetInteger(base::StringPiece path, int in_value);
+  base::Value* SetDouble(base::StringPiece path, double in_value);
+  base::Value* SetString(base::StringPiece path, base::StringPiece in_value);
+  base::Value* SetString(base::StringPiece path,
+                         const base::string16& in_value);
+  base::ListValue* SetList(base::StringPiece path,
+                           std::unique_ptr<base::ListValue> in_value);
   std::unique_ptr<DictionaryValueUpdate> SetDictionary(
       base::StringPiece path,
       std::unique_ptr<base::DictionaryValue> in_value);
 
   // Like Set(), but without special treatment of '.'.  This allows e.g. URLs to
   // be used as paths.
-  void SetWithoutPathExpansion(base::StringPiece key,
-                               std::unique_ptr<base::Value> in_value);
+  base::Value* SetWithoutPathExpansion(base::StringPiece key,
+                                       std::unique_ptr<base::Value> in_value);
 
   // Convenience forms of SetWithoutPathExpansion().
-  void SetBooleanWithoutPathExpansion(base::StringPiece path, bool in_value);
-  void SetIntegerWithoutPathExpansion(base::StringPiece path, int in_value);
-  void SetDoubleWithoutPathExpansion(base::StringPiece path, double in_value);
-  void SetStringWithoutPathExpansion(base::StringPiece path,
-                                     base::StringPiece in_value);
-  void SetStringWithoutPathExpansion(base::StringPiece path,
-                                     const base::string16& in_value);
+  base::Value* SetBooleanWithoutPathExpansion(base::StringPiece path,
+                                              bool in_value);
+  base::Value* SetIntegerWithoutPathExpansion(base::StringPiece path,
+                                              int in_value);
+  base::Value* SetDoubleWithoutPathExpansion(base::StringPiece path,
+                                             double in_value);
+  base::Value* SetStringWithoutPathExpansion(base::StringPiece path,
+                                             base::StringPiece in_value);
+  base::Value* SetStringWithoutPathExpansion(base::StringPiece path,
+                                             const base::string16& in_value);
+  base::ListValue* SetListWithoutPathExpansion(
+      base::StringPiece path,
+      std::unique_ptr<base::ListValue> in_value);
   std::unique_ptr<DictionaryValueUpdate> SetDictionaryWithoutPathExpansion(
       base::StringPiece path,
       std::unique_ptr<base::DictionaryValue> in_value);

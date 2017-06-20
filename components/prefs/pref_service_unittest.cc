@@ -242,16 +242,18 @@ class WriteFlagChecker : public TestingPrefStore {
     SetLastWriteFlags(flags);
   }
 
-  void SetValue(const std::string& key,
-                std::unique_ptr<base::Value> value,
-                uint32_t flags) override {
-    SetLastWriteFlags(flags);
-  }
-
-  void SetValueSilently(const std::string& key,
+  base::Value* SetValue(const std::string& key,
                         std::unique_ptr<base::Value> value,
                         uint32_t flags) override {
     SetLastWriteFlags(flags);
+    return nullptr;
+  }
+
+  base::Value* SetValueSilently(const std::string& key,
+                                std::unique_ptr<base::Value> value,
+                                uint32_t flags) override {
+    SetLastWriteFlags(flags);
+    return nullptr;
   }
 
   void RemoveValue(const std::string& key, uint32_t flags) override {

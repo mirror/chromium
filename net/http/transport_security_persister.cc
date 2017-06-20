@@ -178,11 +178,9 @@ void SerializePKPData(TransportSecurityState* state,
     const std::string key = HashedDomainToExternalString(hostname);
     base::DictionaryValue* serialized = nullptr;
     if (!toplevel->GetDictionary(key, &serialized)) {
-      std::unique_ptr<base::DictionaryValue> serialized_scoped(
-          new base::DictionaryValue);
-      serialized = serialized_scoped.get();
+      serialized = toplevel->SetDictionary(
+          key, base::MakeUnique<base::DictionaryValue>());
       PopulateEntryWithDefaults(serialized);
-      toplevel->Set(key, std::move(serialized_scoped));
     }
 
     serialized->SetBoolean(kPkpIncludeSubdomains, pkp_state.include_subdomains);
@@ -226,9 +224,8 @@ void SerializeExpectCTData(TransportSecurityState* state,
     if (!toplevel->GetDictionary(key, &serialized)) {
       std::unique_ptr<base::DictionaryValue> serialized_scoped(
           new base::DictionaryValue);
-      serialized = serialized_scoped.get();
-      PopulateEntryWithDefaults(serialized);
-      toplevel->Set(key, std::move(serialized_scoped));
+      PopulateEntryWithDefaults(serialized_scoped.get());
+      serialized = toplevel->SetDictionary(key, std::move(serialized_scoped));
     }
 
     std::unique_ptr<base::DictionaryValue> expect_ct_subdictionary(

@@ -46,11 +46,10 @@ bool StructTraits<common::mojom::DictionaryValueDataView,
     if (!view.keys().Read(i, &key) || !view.values().Read(i, &value))
       return false;
 
-    dict_storage.emplace_back(key.as_string(), std::move(value));
+    dict_storage.emplace_back(key.as_string(), std::move(*value));
   }
-  *value_out = base::DictionaryValue::From(
-      base::MakeUnique<base::Value>(base::Value::DictStorage(
-          std::move(dict_storage), base::KEEP_LAST_OF_DUPES)));
+  *value_out = base::MakeUnique<base::DictionaryValue>(base::Value::DictStorage(
+      std::move(dict_storage), base::KEEP_LAST_OF_DUPES));
   return true;
 }
 
