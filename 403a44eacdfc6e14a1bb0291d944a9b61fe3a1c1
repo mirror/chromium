@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9b677e1d_6c97dd84",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T21:44:07Z",
+      "side": 1,
+      "message": "looks like comment from another task...",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ee15551_4007f8df",
+        "filename": "components/offline_pages/core/prefetch/generate_page_bundle_task.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T21:44:07Z",
+      "side": 1,
+      "message": "this comment is not about this task...",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dbdad03d_f1efd0ce",
+        "filename": "components/offline_pages/core/prefetch/prefetch_dispatcher_impl.h",
+        "patchSetId": 11
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T21:44:07Z",
+      "side": 1,
+      "message": "This feels like it should be above, in publics with other PrefetchDispatcher \u0027inputs\u0027. Because this is an call that Dispatcher will just process by creating another task (either one that will start download or transition prefetch items in store to gcm wait etc)...",
+      "revId": "403a44eacdfc6e14a1bb0291d944a9b61fe3a1c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
