@@ -442,8 +442,8 @@ Resource* ResourceFetcher::ResourceForStaticData(
     response.SetTextEncodingName(archive_resource->TextEncoding());
   }
 
-  Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+  Resource* resource = factory.Create(
+      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetNeedsSynchronousCacheHit(substitute_data.ForceSynchronousLoad());
   // FIXME: We should provide a body stream here.
   resource->SetStatus(ResourceStatus::kPending);
@@ -468,8 +468,8 @@ Resource* ResourceFetcher::ResourceForBlockedRequest(
     const FetchParameters& params,
     const ResourceFactory& factory,
     ResourceRequestBlockedReason blocked_reason) {
-  Resource* resource = factory.Create(params.GetResourceRequest(),
-                                      params.Options(), params.Charset());
+  Resource* resource = factory.Create(
+      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetStatus(ResourceStatus::kPending);
   resource->NotifyStartLoad();
   resource->FinishAsError(ResourceError::CancelledDueToAccessCheckError(
@@ -541,6 +541,8 @@ ResourceFetcher::PrepareRequestResult ResourceFetcher::PrepareRequest(
          factory.GetType() == Resource::kRaw ||
          factory.GetType() == Resource::kXSLStyleSheet);
 
+  params.OverrideContentType(factory.ContentType());
+
   SecurityViolationReportingPolicy reporting_policy =
       params.IsSpeculativePreload()
           ? SecurityViolationReportingPolicy::kSuppressReporting
@@ -608,8 +610,9 @@ Resource* ResourceFetcher::RequestResource(
                                                identifier, blocked_reason);
   if (result == kAbort)
     return nullptr;
-  if (result == kBlock)
+  if (result == kBlock) {
     return ResourceForBlockedRequest(params, factory, blocked_reason);
+  }
 
   if (!params.IsSpeculativePreload()) {
     // Only log if it's not for speculative preload.
@@ -666,7 +669,7 @@ Resource* ResourceFetcher::RequestResource(
       GetMemoryCache()->Remove(resource);
     // Fall through
     case kLoad:
-      resource = CreateResourceForLoading(params, params.Charset(), factory);
+      resource = CreateResourceForLoading(params, factory);
       break;
     case kRevalidate:
       InitializeRevalidation(resource_request, resource);
@@ -795,7 +798,6 @@ void ResourceFetcher::InitializeRevalidation(
 
 Resource* ResourceFetcher::CreateResourceForLoading(
     FetchParameters& params,
-    const String& charset,
     const ResourceFactory& factory) {
   const String cache_identifier = GetCacheIdentifier();
   DCHECK(!IsMainThread() ||
@@ -805,8 +807,8 @@ Resource* ResourceFetcher::CreateResourceForLoading(
   RESOURCE_LOADING_DVLOG(1) << "Loading Resource for "
                             << params.GetResourceRequest().Url().ElidedString();
 
-  Resource* resource =
-      factory.Create(params.GetResourceRequest(), params.Options(), charset);
+  Resource* resource = factory.Create(
+      params.GetResourceRequest(), params.Options(), params.DecoderOptions());
   resource->SetLinkPreload(params.IsLinkPreload());
   if (params.IsSpeculativePreload()) {
     resource->SetPreloadDiscoveryTime(params.PreloadDiscoveryTime());

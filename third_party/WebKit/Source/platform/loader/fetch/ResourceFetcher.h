@@ -163,7 +163,6 @@ class PLATFORM_EXPORT ResourceFetcher
 
   void InitializeRevalidation(ResourceRequest&, Resource*);
   Resource* CreateResourceForLoading(FetchParameters&,
-                                     const String& charset,
                                      const ResourceFactory&);
   void StorePerformanceTimingInitiatorInformation(Resource*);
   ResourceLoadPriority ComputeLoadPriority(
