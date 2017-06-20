@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "69426f8e_43617f0d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-20T20:46:43Z",
+      "side": 1,
+      "message": "Wouldn\u0027t CQ block your patch from committing if you don\u0027t add it? I was only talking about this one test.",
+      "parentUuid": "202d9666_d53292f4",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41af360c_c8aa930e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
@@ -72,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "6c0686ae_bfdffb1e",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 204,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-20T20:46:43Z",
+      "side": 1,
+      "message": "Yeah, hm, your response reminded me that I had the same discussion with Morten recently who said similar things. I guess this is OK for now. Longer-term we will need something like the ugly VerticalScrollbarWidthClampedToContentBox (https://codereview.chromium.org/2893833004/).\n\n\"given length\" is outdated :/ it should say \"block-size as specified in CSS (width/height)\".\n\n(But note that the inline version will need to take scrollbars into account for min/max/fit content)",
+      "parentUuid": "2bda64ea_26dc3437",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6562ba69_6cd4be75",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
         "patchSetId": 2
@@ -101,6 +137,24 @@
       "side": 1,
       "message": "Done",
       "parentUuid": "6562ba69_6cd4be75",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "f1c65f58_8178195c",
+        "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_node.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 257,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-20T20:46:43Z",
+      "side": 1,
+      "message": "It would\u0027ve been simpler to just turn border_and_padding into border_scrollbar_padding since both of its users want the scrollbar, but this works too.",
+      "parentUuid": "e7331a61_f8fb2e95",
       "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
