@@ -47,6 +47,8 @@ test(function() {
 }, "Ensure that style.overflowY can be set properly.")
 
 test(function() {
+    document.documentElement.style.overflowY = "";
+    document.body.style.overflowY = "";
     assert_equals(document.compatMode, "BackCompat", "Should be in quirks mode.");
 }, "document.compatMode should be BackCompat in quirks.")
 
