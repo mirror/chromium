@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c8adc606_d5b1e5d8",
+        "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoaderTest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115949
+      },
+      "writtenOn": "2017-06-20T00:37:11Z",
+      "side": 1,
+      "message": "This is adding a helper func on ModuleScriptLoaderTestModulator.\nSpecifiers on ModuleScript are acquired through Modulator-\u003eModuleRequestsFromScriptModule, and ModuleScriptLoaderTestModulator test-harness returns requests_ w/o consulting the actual ScriptModule",
+      "parentUuid": "d5027c4c_2d5910d0",
+      "revId": "9ad5ea299132c8a8e323e20b0838a022b7f2093e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "310bfce8_f6b85691",
         "filename": "third_party/WebKit/Source/core/loader/modulescript/ModuleScriptLoaderTest.cpp",
         "patchSetId": 3
