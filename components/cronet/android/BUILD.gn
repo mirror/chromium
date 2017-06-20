@@ -527,6 +527,9 @@ shared_library("cronet_tests") {
   ]
 
   include_dirs = [ _cronet_version_header_include_dir ]
+
+  configs -= [ "//build/config/android:hide_all_but_jni_onload" ]
+  configs += [ "//build/config/android:hide_all_but_jni" ]
 }
 
 android_resources("cronet_test_apk_resources") {
