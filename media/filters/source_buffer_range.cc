@@ -38,6 +38,8 @@ SourceBufferRange::SourceBufferRange(
       keyframe_map_index_base_(0),
       next_buffer_index_(-1),
       range_start_time_(range_start_time),
+      range_highest_frame_time_(kNoTimestamp),
+      range_end_time_(kNoTimestamp),
       interbuffer_distance_cb_(interbuffer_distance_cb),
       size_in_bytes_(0) {
   CHECK(!new_buffers.empty());
@@ -62,6 +64,8 @@ void SourceBufferRange::AppendBuffersToEnd(
        itr != new_buffers.end();
        ++itr) {
     DCHECK((*itr)->GetDecodeTimestamp() != kNoDecodeTimestamp());
+
+    UpdateEndTime((*itr)->timestamp(), (*itr)->duration());
     buffers_.push_back(*itr);
     size_in_bytes_ += (*itr)->data_size();
 
@@ -71,6 +75,15 @@ void SourceBufferRange::AppendBuffersToEnd(
                          buffers_.size() - 1 + keyframe_map_index_base_));
     }
   }
+}
+
+void SourceBufferRange::UpdateEndTimeDueToSpliceTrimming() {
+  UpdateEndTimeUsingLastGOP();
+}
+
+void SourceBufferRange::ResetEndTime() {
+  range_highest_frame_time_ = kNoTimestamp;
+  range_end_time_ = kNoTimestamp;
 }
 
 void SourceBufferRange::AdjustEstimatedDurationForNewAppend(
@@ -93,6 +106,11 @@ void SourceBufferRange::AdjustEstimatedDurationForNewAppend(
                << ") from previous range-end with derived duration ("
                << timestamp_delta << ").";
       last_appended_buffer->set_duration(timestamp_delta);
+      // To update the range end time here, there is no need to inspect an
+      // entire GOP. Estimated durations should only occur in WebM, which
+      // doesn't contain out-of-order presentation/decode sequences.
+      UpdateEndTime(last_appended_buffer->timestamp(),
+                    last_appended_buffer->duration());
     }
   }
 }
@@ -187,8 +205,13 @@ std::unique_ptr<SourceBufferRange> SourceBufferRange::SplitRange(
       GetFirstKeyframeAt(timestamp, false);
 
   // If there is no keyframe after |timestamp|, we can't split the range.
-  if (new_beginning_keyframe == keyframe_map_.end())
+  if (new_beginning_keyframe == keyframe_map_.end()) {
+    // Note, we could UpdateEndTimeUsingLastGOP() here instead of exposing
+    // UpdateEndTimeDueToSpliceTrimming(), but that would trigger unnecessary
+    // updates to potentially multiple ranges every time, regardless of whether
+    // a splice trim just occurred.
     return NULL;
+  }
 
   // Remove the data beginning at |keyframe_index| from |buffers_| and save it
   // into |removed_buffers|.
@@ -209,6 +232,7 @@ std::unique_ptr<SourceBufferRange> SourceBufferRange::SplitRange(
 
   keyframe_map_.erase(new_beginning_keyframe, keyframe_map_.end());
   FreeBufferRange(starting_point, buffers_.end());
+  UpdateEndTimeUsingLastGOP();
 
   // Create a new range with |removed_buffers|.
   std::unique_ptr<SourceBufferRange> split_range =
@@ -324,8 +348,13 @@ size_t SourceBufferRange::DeleteGOPFromFront(BufferQueue* deleted_buffers) {
   }
 
   // Invalidate range start time if we've deleted the first buffer of the range.
-  if (buffers_deleted > 0)
+  if (buffers_deleted > 0) {
     range_start_time_ = kNoDecodeTimestamp();
+    // Reset the range end time tracking if there are no more buffers in the
+    // range.
+    if (buffers_.empty())
+      ResetEndTime();
+  }
 
   return total_bytes_deleted;
 }
@@ -357,6 +386,8 @@ size_t SourceBufferRange::DeleteGOPFromBack(BufferQueue* deleted_buffers) {
     deleted_buffers->push_front(buffers_.back());
     buffers_.pop_back();
   }
+
+  UpdateEndTimeUsingLastGOP();
 
   return total_bytes_deleted;
 }
@@ -481,6 +512,8 @@ bool SourceBufferRange::TruncateAt(
 
   // Remove everything from |starting_point| onward.
   FreeBufferRange(starting_point, buffers_.end());
+
+  UpdateEndTimeUsingLastGOP();
   return buffers_.empty();
 }
 
@@ -601,6 +634,13 @@ DecodeTimestamp SourceBufferRange::GetBufferedEndTimestamp() const {
   return GetEndTimestamp() + duration;
 }
 
+void SourceBufferRange::GetRangeEndTimesForTesting(
+    base::TimeDelta* highest_pts,
+    base::TimeDelta* end_time) const {
+  *highest_pts = range_highest_frame_time_;
+  *end_time = range_end_time_;
+}
+
 DecodeTimestamp SourceBufferRange::NextKeyframeTimestamp(
     DecodeTimestamp timestamp) {
   DCHECK(!keyframe_map_.empty());
@@ -644,6 +684,108 @@ base::TimeDelta SourceBufferRange::GetApproximateDuration() const {
   base::TimeDelta max_interbuffer_distance = interbuffer_distance_cb_.Run();
   DCHECK(max_interbuffer_distance != kNoTimestamp);
   return max_interbuffer_distance;
+}
+
+void SourceBufferRange::UpdateEndTime(base::TimeDelta timestamp,
+                                      base::TimeDelta duration) {
+  DVLOG(1) << __func__ << " timestamp=" << timestamp
+           << ", duration=" << duration;
+  DCHECK_NE(timestamp, kNoTimestamp);
+  DCHECK_GE(timestamp, base::TimeDelta());
+  DCHECK_GE(duration, base::TimeDelta());
+  base::TimeDelta end_time = timestamp + duration;
+
+  if (range_highest_frame_time_ == kNoTimestamp) {
+    CHECK(buffers_.empty());
+    DCHECK_EQ(range_end_time_, kNoTimestamp);
+    DVLOG(1) << "Updating range end info from " << range_highest_frame_time_
+             << ", " << range_end_time_ << " to " << timestamp << ", "
+             << end_time;
+    range_highest_frame_time_ = timestamp;
+    range_end_time_ = end_time;
+    return;
+  }
+
+  CHECK(!buffers_.empty());
+  DCHECK_GE(range_end_time_, base::TimeDelta());
+
+  if (range_highest_frame_time_ < timestamp) {
+    base::TimeDelta new_end_time = range_end_time_;
+    if (range_end_time_ <= end_time) {
+      // (For the == case): valid "same timestamp" sequences (and estimated
+      // duration adjustment scenarios) can have |range_end_time_| == |end_time|
+      // here. There may also be less-valid ISOBMFF sequences where
+      // |range_end_time_| > |end_time| in this code block. Since we previously
+      // were permissive, continue to allow those "less-valid" sequences.
+      new_end_time = end_time;
+    }
+
+    DVLOG(1) << "Updating range end info from " << range_highest_frame_time_
+             << ", " << range_end_time_ << " to " << timestamp << ", "
+             << new_end_time;
+    range_highest_frame_time_ = timestamp;
+    range_end_time_ = new_end_time;
+
+    return;
+  }
+
+  if (range_highest_frame_time_ == timestamp && range_end_time_ < end_time) {
+    DVLOG(1) << "Updating range end info from " << range_highest_frame_time_
+             << ", " << range_end_time_ << " to " << timestamp << ", "
+             << end_time;
+    range_end_time_ = end_time;
+  }
+
+  // We shouldn't have a new frame with lower PTS, but higher end time, since
+  // the overlap should already have been removed.
+  CHECK(!(range_highest_frame_time_ > timestamp && range_end_time_ < end_time));
+}
+
+void SourceBufferRange::UpdateEndTimeUsingLastGOP() {
+  if (buffers_.empty()) {
+    DVLOG(1) << __func__ << " Empty range, resetting range end time";
+    ResetEndTime();
+    return;
+  }
+
+  base::TimeDelta old_highest_frame_time = range_highest_frame_time_;
+  base::TimeDelta old_end_time = range_end_time_;
+
+  ResetEndTime();
+
+  KeyframeMap::const_iterator last_gop = keyframe_map_.end();
+  DCHECK_GT(keyframe_map_.size(), 0u);
+  --last_gop;
+
+  // Iterate through the frames of the last GOP in this range, finding the
+  // current highest end time and the highest frame timestamp.
+  for (BufferQueue::const_iterator buffer_itr =
+           buffers_.begin() + (last_gop->second - keyframe_map_index_base_);
+       buffer_itr != buffers_.end(); ++buffer_itr) {
+    base::TimeDelta timestamp = (*buffer_itr)->timestamp();
+    base::TimeDelta end_time = timestamp + (*buffer_itr)->duration();
+
+    if (end_time > range_end_time_) {
+      range_end_time_ = end_time;
+    }
+    if (timestamp > range_highest_frame_time_) {
+      range_highest_frame_time_ = timestamp;
+    }
+  }
+
+  DVLOG(1) << __func__ << " Updated range end time from "
+           << old_highest_frame_time << ", " << old_end_time << " to "
+           << range_highest_frame_time_ << ", " << range_end_time_;
+}
+
+bool SourceBufferRange::IsNextInPresentationSequence(
+    base::TimeDelta timestamp) const {
+  CHECK(!buffers_.empty());
+  DCHECK_NE(range_highest_frame_time_, kNoTimestamp);
+  return (range_highest_frame_time_ == timestamp ||
+          (range_highest_frame_time_ < timestamp &&
+           (gap_policy_ == ALLOW_GAPS ||
+            timestamp <= range_highest_frame_time_ + GetFudgeRoom())));
 }
 
 bool SourceBufferRange::IsNextInDecodeSequence(
