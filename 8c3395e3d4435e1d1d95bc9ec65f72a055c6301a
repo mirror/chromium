@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "080ec5f2_8e4dfeb9",
+        "filename": "third_party/WebKit/Source/modules/accessibility/AXObject.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-20T04:03:53Z",
+      "side": 1,
+      "message": "Can we now merge AXObjectImpl into AXObject?",
+      "revId": "8c3395e3d4435e1d1d95bc9ec65f72a055c6301a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
