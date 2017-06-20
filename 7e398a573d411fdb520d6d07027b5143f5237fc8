@@ -69,6 +69,24 @@
       "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8832a889_32a4e8f4",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1176519
+      },
+      "writtenOn": "2017-06-20T09:35:48Z",
+      "side": 1,
+      "message": "Right, but why not call SetCORSStatus in line 353 (in this patchset)?",
+      "parentUuid": "7cd83f5c_4020c095",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
