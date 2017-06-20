@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7be300c1_f79836f6",
+        "filename": "third_party/WebKit/Source/core/exported/WebPagePopupImpl.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1116022
+      },
+      "writtenOn": "2017-06-20T02:14:16Z",
+      "side": 1,
+      "message": "I don\u0027t think RefCounted needs NON_EXPORTED_BASE. Also I think the NON_EXPORTED_BASE has to be outside public, eg NON_EXPORTED_BASE(public WebPagePopup).",
+      "revId": "edaee3826d6eb92694afae3618ae59342b84f39f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
