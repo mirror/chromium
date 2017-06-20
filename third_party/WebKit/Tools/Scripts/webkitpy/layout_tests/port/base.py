@@ -34,7 +34,6 @@ in the layout test infrastructure.
 
 import collections
 import errno
-import functools
 import json
 import logging
 import optparse
@@ -686,16 +685,25 @@ class Port(object):
         suites = self.virtual_test_suites()
         if paths:
             tests.extend(self._virtual_tests_matching_paths(paths, suites))
+            tests.extend(self._wpt_test_urls_matching_paths(paths))
         else:
             tests.extend(self._all_virtual_tests(suites))
+            tests.extend(['external/wpt' + test for test in self._wpt_manifest().all_urls()])
         return tests
 
     def real_tests(self, paths):
         # When collecting test cases, skip these directories.
-        skipped_directories = set(['platform', 'resources', 'support', 'script-tests', 'reference', 'reftest'])
-        files = find_files.find(self._filesystem, self.layout_tests_dir(), paths,
-                                skipped_directories, functools.partial(Port.is_test_file, self), self.test_key)
-        return self._convert_wpt_file_paths_to_url_paths([self.relative_test_filename(f) for f in files])
+        skipped_directories = set([
+            '.svn', '_svn', 'platform', 'resources', 'support',
+            'script-tests', 'reference', 'reftest', 'external'
+        ])
+        is_non_wpt_real_test_file = lambda fs, dirname, filename: (
+            self.is_test_file(fs, dirname, filename)
+            and not re.search(r'[/\\]external[/\\]wpt([/\\].*)?$', dirname)
+        )
+        files = find_files.find(self._filesystem, self.layout_tests_dir(), paths, skipped_directories,
+                                is_non_wpt_real_test_file, self.test_key)
+        return [self.relative_test_filename(f) for f in files]
 
     @staticmethod
     # If any changes are made here be sure to update the isUsedInReftest method in old-run-webkit-tests as well.
@@ -733,17 +741,15 @@ class Port(object):
         return Port._has_supported_extension(
             filesystem, filename) and not Port.is_reference_html_file(filesystem, dirname, filename)
 
-    def _convert_wpt_file_paths_to_url_paths(self, files):
+    def _convert_wpt_file_path_to_url_paths(self, file_path):
         tests = []
-        for file_path in files:
-            # Path separators are normalized by relative_test_filename().
-            match = re.search(r'external/wpt/(.*)$', file_path)
-            if not match:
-                tests.append(file_path)
-                continue
-            urls = self._wpt_manifest().file_path_to_url_paths(match.group(1))
-            for url in urls:
-                tests.append(file_path[0:match.start(1)] + url)
+        # Path separators are normalized by relative_test_filename().
+        match = re.search(r'external/wpt/(.*)$', file_path)
+        if not match:
+            return [file_path]
+        urls = self._wpt_manifest().file_path_to_url_paths(match.group(1))
+        for url in urls:
+            tests.append(file_path[0:match.start(1)] + url)
         return tests
 
     @memoized
@@ -753,6 +759,12 @@ class Port(object):
             _log.error('Manifest not found at %s. See http://crbug.com/698294', manifest_path)
             return WPTManifest('{}')
         return WPTManifest(self._filesystem.read_text_file(manifest_path))
+
+    def is_wpt_test(self, test_entry):
+        match = re.search(r'external\/wpt(\/.*)', test_entry)
+        if not match:
+            return False
+        return self._wpt_manifest().is_test_url(match.group(1))
 
     def is_slow_wpt_test(self, test_file):
         match = re.match(r'external/wpt/(.*)', test_file)
@@ -839,7 +851,7 @@ class Port(object):
         """Returns True if the test name refers to an existing test or baseline."""
         # Used by test_expectations.py to determine if an entry refers to a
         # valid test and by printing.py to determine if baselines exist.
-        return self.test_isfile(test_name) or self.test_isdir(test_name)
+        return self.is_wpt_test(test_name) or self.test_isfile(test_name) or self.test_isdir(test_name)
 
     def split_test(self, test_name):
         """Splits a test name into the 'directory' part and the 'basename' part."""
@@ -1524,9 +1536,38 @@ class Port(object):
                     tests.append(test)
         return tests
 
+    def _wpt_test_urls_matching_paths(self, paths):
+        tests = []
+
+        for test_url_path in self._wpt_manifest().all_urls():
+            if test_url_path[0] == '/':
+                test_url_path = test_url_path[1:]
+
+            full_test_url_path = 'external/wpt/' + test_url_path
+
+            for path in paths:
+                if 'external' not in path:
+                    continue
+
+                wpt_path = path.replace('external/wpt/', '')
+
+                # When `test_url_path` is test.any.html or test.any.worker.html and path is test.any.js
+                matches_any_js_test = (
+                    self._wpt_manifest().is_test_file(wpt_path)
+                    and test_url_path.startswith(re.sub(r'\.js$', '', wpt_path))
+                )
+
+                # For all other path matches within WPT
+                if matches_any_js_test or full_test_url_path.startswith(path):
+                    wpt_file_paths = self._convert_wpt_file_path_to_url_paths(test_url_path)
+                    tests.extend('external/wpt/' + wpt_file_path for wpt_file_path in wpt_file_paths)
+
+        return tests
+
     def _populate_virtual_suite(self, suite):
         if not suite.tests:
             base_tests = self.real_tests([suite.base])
+            base_tests.extend(self._wpt_test_urls_matching_paths([suite.base]))
             suite.tests = {}
             for test in base_tests:
                 suite.tests[test.replace(suite.base, suite.name, 1)] = test
