@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e0dda1f2_505b62ff",
+        "filename": "chrome/browser/chromeos/login/startup_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 176,
+      "author": {
+        "id": 1000623
+      },
+      "writtenOn": "2017-06-20T20:16:40Z",
+      "side": 1,
+      "message": "Wondering if PostAndReplay handles null callback correctly, and whether this check is necessary.",
+      "revId": "084dd52df1f6eb0cc1740db049ed5a83a5c10cac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
