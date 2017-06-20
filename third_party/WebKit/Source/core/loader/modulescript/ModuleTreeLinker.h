@@ -47,6 +47,7 @@ class CORE_EXPORT ModuleTreeLinker final
 
  private:
   ModuleTreeLinker(const AncestorList& ancestor_list_with_url,
+                   ModuleGraphLevel,
                    Modulator*,
                    ModuleTreeLinkerRegistry*,
                    ModuleTreeClient*);
@@ -66,12 +67,12 @@ class CORE_EXPORT ModuleTreeLinker final
 #endif
   void AdvanceState(State);
 
-  void FetchSelf(const ModuleScriptFetchRequest&, ModuleGraphLevel);
+  void FetchSelf(const ModuleScriptFetchRequest&);
   // Implements SingleModuleClient
   void NotifyModuleLoadFinished(ModuleScript*) override;
 
   void FetchDescendants();
-  void NotifyOneDescendantFinished(ModuleScript*);
+  void NotifyOneDescendantFinished();
 
   void Instantiate();
   HeapHashSet<Member<ModuleScript>> UninstantiatedInclusiveDescendants();
@@ -83,13 +84,11 @@ class CORE_EXPORT ModuleTreeLinker final
   Member<ModuleTreeLinkerRegistry> registry_;
   Member<ModuleTreeClient> client_;
   HashSet<KURL> ancestor_list_with_url_;
+  ModuleGraphLevel level_;
   State state_ = State::kInitial;
   // Correspond to _result_ in
   // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
   Member<ModuleScript> module_script_;
-  // Correspond to _descendants result_ in
-  // https://html.spec.whatwg.org/multipage/webappapis.html#internal-module-script-graph-fetching-procedure
-  Member<ModuleScript> descendants_module_script_;
   size_t num_incomplete_descendants_ = 0;
   HeapHashSet<Member<DependencyModuleClient>> dependency_clients_;
 };

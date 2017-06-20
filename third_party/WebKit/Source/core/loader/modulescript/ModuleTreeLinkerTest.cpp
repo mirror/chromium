@@ -460,8 +460,8 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   GetModulator()->ResolveDependentTreeFetch(
       url_dep, ModuleTreeLinkerTestModulator::ResolveResult::kFailure);
 
-  EXPECT_TRUE(client->WasNotifyFinished());
-  EXPECT_FALSE(client->GetModuleScript());
+  // TODO(kouhei): This may not hold once we implement early failure reporting.
+  EXPECT_FALSE(client->WasNotifyFinished());
 
   // Check below doesn't crash.
   url_dep = url_deps.back();
@@ -469,6 +469,9 @@ TEST_F(ModuleTreeLinkerTest, FetchTreeWith3Deps1Fail) {
   GetModulator()->ResolveDependentTreeFetch(
       url_dep, ModuleTreeLinkerTestModulator::ResolveResult::kSuccess);
   EXPECT_TRUE(url_deps.IsEmpty());
+
+  EXPECT_TRUE(client->WasNotifyFinished());
+  EXPECT_FALSE(client->GetModuleScript());
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
@@ -504,7 +507,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyTree) {
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+            ModuleInstantiationState::kUninstantiated);
 }
 
 TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
@@ -532,7 +535,7 @@ TEST_F(ModuleTreeLinkerTest, FetchDependencyOfCyclicGraph) {
   EXPECT_TRUE(client->WasNotifyFinished());
   ASSERT_TRUE(client->GetModuleScript());
   EXPECT_EQ(client->GetModuleScript()->State(),
-            ModuleInstantiationState::kInstantiated);
+            ModuleInstantiationState::kUninstantiated);
 }
 
 }  // namespace blink

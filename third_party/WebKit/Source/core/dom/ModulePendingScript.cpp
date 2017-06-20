@@ -25,7 +25,10 @@ void ModulePendingScriptTreeClient::SetPendingScript(
 void ModulePendingScriptTreeClient::NotifyModuleTreeLoadFinished(
     ModuleScript* module_script) {
   DCHECK(!module_script || module_script->IsErrored() ||
-         module_script->State() == ModuleInstantiationState::kInstantiated);
+         module_script->State() == ModuleInstantiationState::kInstantiated)
+      << "ModulePendingScriptTreeClient::NotifyModuleTreeLoadFinished was "
+         "unexpectedly notified module script of state \""
+      << ModuleInstantiationStateToString(module_script->State()) << "\".";
   DCHECK(!finished_);
   finished_ = true;
   module_script_ = module_script;
