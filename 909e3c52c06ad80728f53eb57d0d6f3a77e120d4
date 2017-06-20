@@ -34,6 +34,24 @@
       "revId": "909e3c52c06ad80728f53eb57d0d6f3a77e120d4",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3f085b37_e3f5885a",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 40
+      },
+      "lineNbr": 1037,
+      "author": {
+        "id": 1000781
+      },
+      "writtenOn": "2017-06-20T05:09:06Z",
+      "side": 1,
+      "message": "sounds good.",
+      "parentUuid": "59ef1366_8ce61a3c",
+      "revId": "909e3c52c06ad80728f53eb57d0d6f3a77e120d4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
