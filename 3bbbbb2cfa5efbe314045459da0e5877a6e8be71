@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "6e7956fc_22d7e095",
+        "filename": "content/browser/background_fetch/background_fetch_context.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 181,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-20T07:07:38Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "782fe6ab_8aa0b428",
+      "range": {
+        "startLine": 181,
+        "startChar": 11,
+        "endLine": 181,
+        "endChar": 12
+      },
+      "revId": "3bbbbb2cfa5efbe314045459da0e5877a6e8be71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63048ffb_1a16d361",
         "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T18:16:59Z",
       "side": 1,
       "message": "This should just be the same annotation as before. Can we store traffic_annotation as a class member?",
+      "range": {
+        "startLine": 312,
+        "startChar": 13,
+        "endLine": 312,
+        "endChar": 0
+      },
+      "revId": "3bbbbb2cfa5efbe314045459da0e5877a6e8be71",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b105cee_2d0d805e",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1211034
+      },
+      "writtenOn": "2017-06-20T07:07:38Z",
+      "side": 1,
+      "message": "I moved the annotation to the constructor of controller.",
+      "parentUuid": "63048ffb_1a16d361",
       "range": {
         "startLine": 312,
         "startChar": 13,
