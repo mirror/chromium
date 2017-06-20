@@ -108,7 +108,7 @@ TEST_F(RenderViewTest, MacTestCmdUp) {
   LoadHTML(kRawHtml);
   render_thread_->sink().ClearMessages();
 
-  const char* kArrowDownScrollDown = "40,false,false,true,false\n10144\np1";
+  const char* kArrowDownScrollDown = "40,false,false,true,false\n10059\np1";
   view->OnSetEditCommandsForNextKeyEvent(
       EditCommands(1, EditCommand("moveToEndOfDocument", "")));
   SendNativeKeyEvent(NativeWebKeyboardEvent(arrowDownKeyDown));

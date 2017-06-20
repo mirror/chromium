@@ -308,14 +308,16 @@ void RenderViewTest::SetUp() {
   view_params.never_visible = false;
   view_params.initial_size = *InitialSizeParams();
   view_params.enable_auto_resize = false;
-  view_params.min_size = gfx::Size();
-  view_params.max_size = gfx::Size();
+  view_params.min_size = gfx::Size(0, 0);
+  view_params.max_size = gfx::Size(0, 0);
 
   // This needs to pass the mock render thread to the view.
   RenderViewImpl* view = RenderViewImpl::Create(
       compositor_deps_.get(), view_params, RenderWidget::ShowCallback());
   view_ = view;
 }
+
+// view_->GetWebView()->Resize(blink::WebSize(800, 600));
 
 void RenderViewTest::TearDown() {
   // Run the loop so the release task from the renderwidget executes.
@@ -637,7 +639,11 @@ ContentRendererClient* RenderViewTest::CreateContentRendererClient() {
 }
 
 std::unique_ptr<ResizeParams> RenderViewTest::InitialSizeParams() {
-  return base::MakeUnique<ResizeParams>();
+  std::unique_ptr<ResizeParams> initial_size(new ResizeParams());
+  // Ensure the view has some size so tests involving scrolling bounds work.
+  initial_size->new_size = gfx::Size(100, 100);
+  initial_size->visible_viewport_size = gfx::Size(100, 100);
+  return initial_size;
 }
 
 void RenderViewTest::GoToOffset(int offset,

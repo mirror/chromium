@@ -93,7 +93,7 @@ TEST_F(CompositorMutableStateTest, MutableStateMutableProperties) {
   std::unique_ptr<LayerImpl> scoped_layer =
       LayerImpl::Create(HostImpl().active_tree(), 11);
   LayerImpl* layer = scoped_layer.get();
-  layer->SetScrollClipLayer(root->id());
+  layer->SetScrollContainerBounds(gfx::Size(1, 1));
 
   root->test_properties()->AddChild(std::move(scoped_layer));
 
