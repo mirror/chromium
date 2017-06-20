@@ -84,6 +84,24 @@
     },
     {
       "key": {
+        "uuid": "f73d0dc5_03a2515f",
+        "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-20T09:24:46Z",
+      "side": 1,
+      "message": "Totally agreed that this is a valid concern.\n\nHmm, from crbug.com/704098 it seems like TestServiceManagerContext like actually does what we need here. Ke He, can you try using that in the test(s) causing the problems and see if it gets the job done?",
+      "parentUuid": "6627786d_57c02719",
+      "revId": "363d0684648bd52dbc7d16d05482c7866d3a5bca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cd62a48c_96fabc67",
         "filename": "chrome/browser/chromeos/drive/drive_integration_service.cc",
         "patchSetId": 8
