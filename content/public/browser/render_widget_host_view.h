@@ -27,8 +27,9 @@ class VideoFrame;
 }
 
 namespace ui {
-class TextInputClient;
 class AcceleratedWidgetMac;
+class TextInputClient;
+class TouchSelectionControllerClientManager;
 }
 
 namespace content {
@@ -227,6 +228,13 @@ class CONTENT_EXPORT RenderWidgetHostView {
   // wants to have BeginFrame messages sent to it.  This should only be called
   // when the value has changed.  Views must initially default to false.
   virtual void SetNeedsBeginFrames(bool needs_begin_frames) = 0;
+
+  // This only returns non-null on platforms that implement touch
+  // selection editing (TSE), currently Aura and (soon) Android.
+  // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
+  // Android.
+  virtual ui::TouchSelectionControllerClientManager*
+  touch_selection_controller_client_manager() = 0;
 
 #if defined(OS_MACOSX)
   // Return the accelerated widget which hosts the CALayers that draw the

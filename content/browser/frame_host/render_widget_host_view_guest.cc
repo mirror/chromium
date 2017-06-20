@@ -265,6 +265,15 @@ void RenderWidgetHostViewGuest::SetNeedsBeginFrames(
    platform_view_->SetNeedsBeginFrames(needs_begin_frames);
 }
 
+ui::TouchSelectionControllerClientManager*
+RenderWidgetHostViewGuest::touch_selection_controller_client_manager() {
+  auto* root_view = GetOwnerRenderWidgetHostView();
+  if (!root_view)
+    return nullptr;
+
+  return root_view->touch_selection_controller_client_manager();
+}
+
 void RenderWidgetHostViewGuest::SetTooltipText(
     const base::string16& tooltip_text) {
   if (guest_)

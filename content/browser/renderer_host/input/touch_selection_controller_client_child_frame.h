@@ -11,9 +11,12 @@
 #include "ui/touch_selection/touch_selection_controller.h"
 #include "ui/touch_selection/touch_selection_menu_runner.h"
 
+namespace ui {
+class TouchSelectionControllerClientManager;
+}  // namespace ui
+
 namespace content {
 class RenderWidgetHostViewChildFrame;
-class TouchSelectionControllerClientManager;
 
 // An implementation of |TouchSelectionControllerClient| to be used by
 // implementations of TouchSelectionControllerClientManager. This class serves
@@ -28,7 +31,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientChildFrame
  public:
   TouchSelectionControllerClientChildFrame(
       RenderWidgetHostViewChildFrame* rwhv,
-      TouchSelectionControllerClientManager* manager);
+      ui::TouchSelectionControllerClientManager* manager);
   ~TouchSelectionControllerClientChildFrame() override;
 
   void UpdateSelectionBoundsIfNeeded(
@@ -55,7 +58,7 @@ class CONTENT_EXPORT TouchSelectionControllerClientChildFrame
 
   // Not owned, non-null for the lifetime of this object.
   RenderWidgetHostViewChildFrame* rwhv_;
-  TouchSelectionControllerClientManager* manager_;
+  ui::TouchSelectionControllerClientManager* manager_;
 
   // The last selection bounds reported by the view.
   gfx::SelectionBound selection_start_;

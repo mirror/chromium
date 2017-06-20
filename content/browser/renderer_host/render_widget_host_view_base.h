@@ -75,7 +75,6 @@ class RenderWidgetHostImpl;
 class RenderWidgetHostViewBaseObserver;
 class SyntheticGestureTarget;
 class TextInputManager;
-class TouchSelectionControllerClientManager;
 class WebContentsAccessibility;
 class WebCursor;
 struct NativeWebKeyboardEvent;
@@ -434,12 +433,8 @@ class CONTENT_EXPORT RenderWidgetHostViewBase : public RenderWidgetHostView,
     web_contents_accessibility_ = wcax;
   }
 
-  // This only returns non-null on platforms that implement touch
-  // selection editing (TSE), currently Aura and (soon) Android.
-  // TODO(wjmaclean): update this comment when OOPIF TSE is implemented on
-  // Android.
-  virtual TouchSelectionControllerClientManager*
-  touch_selection_controller_client_manager();
+  ui::TouchSelectionControllerClientManager*
+  touch_selection_controller_client_manager() override;
 
   // Exposed for testing.
   virtual bool IsChildFrameForTesting() const;

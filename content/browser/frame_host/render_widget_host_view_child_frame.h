@@ -23,13 +23,13 @@
 #include "cc/surfaces/surface_sequence.h"
 #include "content/browser/compositor/image_transport_factory.h"
 #include "content/browser/renderer_host/event_with_latency_info.h"
-#include "content/browser/renderer_host/input/touch_selection_controller_client_manager.h"
 #include "content/browser/renderer_host/render_widget_host_view_base.h"
 #include "content/common/content_export.h"
 #include "content/common/input/input_event_ack_state.h"
 #include "content/public/browser/readback_types.h"
 #include "ui/gfx/geometry/rect.h"
 #include "ui/gfx/native_widget_types.h"
+#include "ui/touch_selection/touch_selection_controller_client_manager.h"
 
 namespace cc {
 class CompositorFrameSinkSupport;
@@ -53,7 +53,7 @@ class TouchSelectionControllerClientChildFrame;
 // See comments in render_widget_host_view.h about this class and its members.
 class CONTENT_EXPORT RenderWidgetHostViewChildFrame
     : public RenderWidgetHostViewBase,
-      public TouchSelectionControllerClientManager::Observer,
+      public ui::TouchSelectionControllerClientManager::Observer,
       public NON_EXPORTED_BASE(cc::CompositorFrameSinkSupportClient) {
  public:
   static RenderWidgetHostViewChildFrame* Create(RenderWidgetHost* widget);
@@ -73,7 +73,7 @@ class CONTENT_EXPORT RenderWidgetHostViewChildFrame
 
   // TouchSelectionControllerClientManager::Observer implementation.
   void OnManagerWillDestroy(
-      TouchSelectionControllerClientManager* manager) override;
+      ui::TouchSelectionControllerClientManager* manager) override;
 
   // RenderWidgetHostView implementation.
   void InitAsChild(gfx::NativeView parent_view) override;

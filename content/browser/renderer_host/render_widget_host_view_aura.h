@@ -330,7 +330,7 @@ class CONTENT_EXPORT RenderWidgetHostViewAura
     return event_handler_.get();
   }
 
-  TouchSelectionControllerClientManager*
+  ui::TouchSelectionControllerClientManager*
   touch_selection_controller_client_manager() override;
 
  protected:

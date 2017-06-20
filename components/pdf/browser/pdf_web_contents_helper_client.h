@@ -32,6 +32,9 @@ class PDFWebContentsHelperClient {
                                   int32_t left_height,
                                   const gfx::Point& right,
                                   int32_t right_height) = 0;
+
+  virtual void InitTouchSelectionClientManager(
+      content::WebContents* contents) = 0;
 };
 
 }  // namespace pdf

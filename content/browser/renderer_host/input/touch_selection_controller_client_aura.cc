@@ -224,12 +224,12 @@ TouchSelectionControllerClientAura::GetTouchSelectionController() {
 }
 
 void TouchSelectionControllerClientAura::AddObserver(
-    TouchSelectionControllerClientManager::Observer* observer) {
+    ui::TouchSelectionControllerClientManager::Observer* observer) {
   observers_.AddObserver(observer);
 }
 
 void TouchSelectionControllerClientAura::RemoveObserver(
-    TouchSelectionControllerClientManager::Observer* observer) {
+    ui::TouchSelectionControllerClientManager::Observer* observer) {
   observers_.RemoveObserver(observer);
 }
 
