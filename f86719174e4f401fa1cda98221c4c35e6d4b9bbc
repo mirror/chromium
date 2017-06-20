@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "6ce443ab_7e2bc108",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-06-20T20:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b9aeaff_5a1d3d31",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5adb54e2_d67574e0",
         "filename": "chrome/browser/chrome_content_browser_client.cc",
         "patchSetId": 6
@@ -33,6 +51,24 @@
       "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c6993cc7_12e50ef7",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-06-20T20:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5adb54e2_d67574e0",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "3da975ff_8fd4d6b5",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-06-20T20:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5a9ece94_253e6817",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9d0d6544_9b6cc676",
         "filename": "services/service_manager/public/cpp/binder_registry.h",
         "patchSetId": 6
@@ -67,6 +121,24 @@
       "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1d1e52c3_ecc7b339",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1001287
+      },
+      "writtenOn": "2017-06-20T20:27:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9d0d6544_9b6cc676",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
