@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fb78de84_65fd7174",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 15
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-20T21:42:42Z",
+      "side": 1,
+      "message": "Maybe move this up line 315, if the static analyzer is still happy with that--that makes it consistent with RedCounted, and (hopefully) will handle any weird traits that get thrown at this.",
+      "range": {
+        "startLine": 325,
+        "startChar": 4,
+        "endLine": 325,
+        "endChar": 27
+      },
+      "revId": "5b8592c35ebd8382d6072a7690a911ffc75d0d9b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
