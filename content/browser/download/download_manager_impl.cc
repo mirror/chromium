@@ -16,6 +16,7 @@
 #include "base/memory/weak_ptr.h"
 #include "base/message_loop/message_loop.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/stl_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/strings/sys_string_conversions.h"
@@ -335,6 +336,8 @@ void DownloadManagerImpl::StartDownloadWithId(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK_NE(content::DownloadItem::kInvalidId, id);
   DownloadItemImpl* download = nullptr;
+  base::RecordAction(
+      base::UserMetricsAction("DownloadManager.StartDownloadWithId"));
   if (new_download) {
     download = CreateActiveItem(id, *info);
   } else {

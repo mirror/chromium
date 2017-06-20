@@ -12,6 +12,9 @@ import android.view.ContextMenu;
 import android.view.MenuItem;
 
 import org.chromium.base.Callback;
+import org.chromium.base.library_loader.LibraryProcessType;
+import org.chromium.base.metrics.RecordUserAction;
+import org.chromium.content.browser.BrowserStartupController;
 
 import java.util.List;
 
@@ -48,6 +51,13 @@ public class PlatformContextMenuUi implements ContextMenuUi {
                 ContextMenuItem item = group.get(itemIndex);
                 MenuItem menuItem = mMenu.add(0, item.menuId, 0, item.getString(activity));
                 menuItem.setOnMenuItemClickListener(menuListener);
+
+                if (BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                                .isStartupSuccessfullyCompleted()) {
+                    if (item == ContextMenuItem.SAVE_IMAGE) {
+                        RecordUserAction.record("Android.ContextMenu.SaveImage.Shown");
+                    }
+                }
             }
         }
     }
