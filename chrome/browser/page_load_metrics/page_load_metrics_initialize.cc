@@ -26,6 +26,7 @@
 #include "chrome/browser/page_load_metrics/observers/google_captcha_observer.h"
 #include "chrome/browser/page_load_metrics/observers/https_engagement_metrics/https_engagement_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/loading_predictor_page_load_metrics_observer.h"
+#include "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/lofi_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/media_page_load_metrics_observer.h"
 #include "chrome/browser/page_load_metrics/observers/no_state_prefetch_page_load_metrics_observer.h"
@@ -129,6 +130,8 @@ void PageLoadMetricsEmbedder::RegisterObservers(
                 web_contents_);
     if (loading_predictor_observer)
       tracker->AddObserver(std::move(loading_predictor_observer));
+    tracker->AddObserver(
+        base::MakeUnique<LocalNetworkRequestsPageLoadMetricsObserver>());
   } else {
     std::unique_ptr<page_load_metrics::PageLoadMetricsObserver>
         prerender_observer =
