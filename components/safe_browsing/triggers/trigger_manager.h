@@ -12,6 +12,8 @@
 #include "components/security_interstitials/content/unsafe_resource.h"
 #include "content/public/browser/web_contents.h"
 
+class PrefService;
+
 namespace history {
 class HistoryService;
 }
@@ -53,7 +55,8 @@ class TriggerManager {
       content::WebContents* web_contents,
       const security_interstitials::UnsafeResource& resource,
       net::URLRequestContextGetter* request_context_getter,
-      history::HistoryService* history_service);
+      history::HistoryService* history_service,
+      const PrefService& pref_service);
 
   // Completes the collection of a ThreatDetails report on the specified
   // |web_contents| and sends the report. |delay| can be used to wait a period
@@ -61,11 +64,13 @@ class TriggerManager {
   // user proceeded through the security interstitial associated with this
   // report. |num_visits| is how many times the user has visited the site
   // before.
-  // Returns true if the report was completed and sent, or false otherwise.
+  // Returns true if the report was completed and sent, or false otherwise (eg:
+  // the user was not opted-in to extended reporting after collection began).
   bool FinishCollectingThreatDetails(content::WebContents* web_contents,
                                      const base::TimeDelta& delay,
                                      bool did_proceed,
-                                     int num_visits);
+                                     int num_visits,
+                                     const PrefService& pref_service);
 
  private:
   friend class TriggerManagerTest;
