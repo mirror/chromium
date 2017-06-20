@@ -473,6 +473,8 @@ component("platform") {
     "bindings/DOMWrapperMap.h",
     "bindings/DOMWrapperWorld.cpp",
     "bindings/DOMWrapperWorld.h",
+    "bindings/InstallRuntimeEnabledFeatures.cpp",
+    "bindings/InstallRuntimeEnabledFeatures.h",
     "bindings/Microtask.cpp",
     "bindings/Microtask.h",
     "bindings/RuntimeCallStats.cpp",
