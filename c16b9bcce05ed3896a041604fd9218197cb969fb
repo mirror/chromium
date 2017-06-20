@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c840487d_ac72c2ed",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-nonutf8-encoding.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-20T03:37:17Z",
+      "side": 1,
+      "message": "It *doesn\u0027t* have an effect and that\u0027s the point (it should still encode using UTF-8).\n\nThe chance of this being handled incorrectly is low, but note that there are *some contexts* (HTML form submission being one, and possibly the only one), where URLs are encoded using the charset of the document, not UTF-8. See https://www.w3.org/TR/html5/forms.html#url-encoded-form-data.\n\nI just tested this page with an HTML form and indeed it does encode in Latin-1-percent-escapes when submitting the form. navigator.share correctly uses UTF-8. This just makes sure that that\u0027s the case.",
+      "parentUuid": "198fbbc2_71b248b0",
+      "range": {
+        "startLine": 2,
+        "startChar": 15,
+        "endLine": 2,
+        "endChar": 25
+      },
+      "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b3959f4a_0e9a9ead",
         "filename": "third_party/WebKit/LayoutTests/webshare/share-types.html",
         "patchSetId": 4
@@ -45,6 +69,30 @@
       "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b13af889_bb3bd545",
+        "filename": "third_party/WebKit/LayoutTests/webshare/share-types.html",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1115963
+      },
+      "writtenOn": "2017-06-20T03:37:17Z",
+      "side": 1,
+      "message": "title.",
+      "parentUuid": "b3959f4a_0e9a9ead",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 62
+      },
+      "revId": "c16b9bcce05ed3896a041604fd9218197cb969fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
