@@ -16,6 +16,24 @@
       "revId": "a1334f514ba02e1912fc89a9d1a70b8b58331d4b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0645e53a_1e00868e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 10
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1003156
+      },
+      "writtenOn": "2017-06-20T16:25:55Z",
+      "side": 1,
+      "message": "Yes, I believe Ganesh will apply the dither effect to any draw (unlike SW raster).",
+      "parentUuid": "47eece57_e2626e5b",
+      "revId": "a1334f514ba02e1912fc89a9d1a70b8b58331d4b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
