@@ -236,11 +236,6 @@ class ServicesCustomizationDocument : public CustomizationDocument,
   // Initiate file fetching. Don't wait for online status.
   void DoStartFileFetch();
 
-  // Executes on FILE thread and reads file to string.
-  static void ReadFileInBackground(
-      base::WeakPtr<ServicesCustomizationDocument> self,
-      const base::FilePath& file);
-
   // Called on UI thread with results of ReadFileInBackground.
   void OnManifesteRead(const std::string& manifest);
 
