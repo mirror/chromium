@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "4abed17f_5a5ebf6b",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 193,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-20T14:52:57Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7fb12a55_75680820",
+      "range": {
+        "startLine": 193,
+        "startChar": 0,
+        "endLine": 193,
+        "endChar": 35
+      },
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf8cb120_1c83311d",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
         "patchSetId": 4
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "93f84740_dbb260e6",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleBuilderConverter.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 248,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-20T14:52:57Z",
+      "side": 1,
+      "message": "It\u0027s true that would make more sense. But it\u0027s actually VERY complicated, because this function is only called by the auto generated functions, that ALWAYS call with (state, cssvalue).",
+      "parentUuid": "bf8cb120_1c83311d",
+      "range": {
+        "startLine": 248,
+        "startChar": 4,
+        "endLine": 248,
+        "endChar": 22
+      },
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6831ac0c_d0b9893a",
         "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
         "patchSetId": 4
@@ -59,6 +107,24 @@
       "writtenOn": "2017-06-14T15:33:15Z",
       "side": 1,
       "message": "Could we add a compile time assert ensuring that the property lists are identical or at the very least have the same size?",
+      "revId": "8606364c0a136252c7f87069734b71551c04dc60",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e6d4411d_6234f072",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolver.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 1994,
+      "author": {
+        "id": 1134723
+      },
+      "writtenOn": "2017-06-20T14:52:57Z",
+      "side": 1,
+      "message": "We could if FontStyleResolver actually used a list of properties. The problem is, we can\u0027t use \"StyleBuilder::ApplyProperty\" there (because it relies on ComputedStyle). So we actually \"unroll\" the ApplyProperty by calling each function for each property.",
+      "parentUuid": "6831ac0c_d0b9893a",
       "revId": "8606364c0a136252c7f87069734b71551c04dc60",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
