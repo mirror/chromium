@@ -75,8 +75,9 @@ Timeline.TimelineLoader = class {
   /**
    * @override
    * @param {string} chunk
+   * @return {!Promise}
    */
-  write(chunk) {
+  async write(chunk) {
     if (!this._client)
       return;
     this._loadedBytes += chunk.length;
