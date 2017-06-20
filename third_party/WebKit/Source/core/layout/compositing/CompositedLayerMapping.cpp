@@ -2678,6 +2678,10 @@ bool CompositedLayerMapping::ContainsPaintedContent() const {
     return false;
 
   LayoutObject& layout_object = this->GetLayoutObject();
+
+  if (IsPlaceholderCanvas(layout_object))
+    return false;
+
   // FIXME: we could optimize cases where the image, video or canvas is known to
   // fill the border box entirely, and set background color on the layer in that
   // case, instead of allocating backing store and painting.
