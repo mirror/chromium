@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+#include "components/offline_pages/core/archive_manager.h"
+
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/files/file_enumerator.h"
@@ -9,10 +11,10 @@
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/memory/ref_counted.h"
+#include "base/metrics/histogram_macros.h"
 #include "base/sequenced_task_runner.h"
 #include "base/sys_info.h"
 #include "base/threading/thread_task_runner_handle.h"
-#include "components/offline_pages/core/archive_manager.h"
 
 namespace offline_pages {
 
@@ -22,7 +24,12 @@ using StorageStatsCallback =
     base::Callback<void(const ArchiveManager::StorageStats& storage_stats)>;
 
 void EnsureArchivesDirCreatedImpl(const base::FilePath& archives_dir) {
-  CHECK(base::CreateDirectory(archives_dir));
+  if (!base::DirectoryExists(archives_dir)) {
+    bool creation_result = base::CreateDirectory(archives_dir);
+    UMA_HISTOGRAM_BOOLEAN(
+        "OfflinePages.ArchiveManager.ArchiveDirsCreationSuccessful",
+        creation_result);
+  }
 }
 
 void ExistsArchiveImpl(const base::FilePath& file_path,
