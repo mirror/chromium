@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e0091eb_2fc67d16",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-06-20T11:55:12Z",
+      "side": 1,
+      "message": "you are right, and that\u0027s what I did, but apparently I uploaded old version. Sorry :(",
+      "parentUuid": "a72d8985_519f003e",
+      "range": {
+        "startLine": 66,
+        "startChar": 8,
+        "endLine": 66,
+        "endChar": 23
+      },
+      "revId": "9e382f7d931fd2b1c4db6ab63086d92c33689c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e24ca81b_c13a33f7",
         "filename": "infra/config/cq.cfg",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "9e382f7d931fd2b1c4db6ab63086d92c33689c55",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6c88c73d_3a886a5b",
+        "filename": "infra/config/cq.cfg",
+        "patchSetId": 2
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1141499
+      },
+      "writtenOn": "2017-06-20T11:55:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e24ca81b_c13a33f7",
+      "range": {
+        "startLine": 67,
+        "startChar": 0,
+        "endLine": 67,
+        "endChar": 5
+      },
+      "revId": "9e382f7d931fd2b1c4db6ab63086d92c33689c55",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
