@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "acfecb3f_7119406a",
+        "filename": "services/ui/ws/window_server.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000763
+      },
+      "writtenOn": "2017-06-20T21:28:57Z",
+      "side": 1,
+      "message": "I\u0027m surprised you would want this order, as it seems like we end up not calling OnAcceleredWidgetDestroyed(), but I\u0027m assuming that is ok.",
+      "range": {
+        "startLine": 82,
+        "startChar": 16,
+        "endLine": 82,
+        "endChar": 25
+      },
+      "revId": "41ffb479deee44a8d3abda613dcaff628e39bfa0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
