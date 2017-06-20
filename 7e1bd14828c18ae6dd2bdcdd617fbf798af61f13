@@ -16,6 +16,24 @@
       "revId": "7e1bd14828c18ae6dd2bdcdd617fbf798af61f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bffaa219_9825bd59",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T01:07:59Z",
+      "side": 1,
+      "message": "Normally in other tests the Taco is holding the unique_ptr for the whole test duration. For exampel: prefetch_gcm_app_handler_unittest.cc\n\nI only need Takeout here to be able to use test factory which wants to take ownership of the pointer...",
+      "parentUuid": "a193bd12_5e0f2b1f",
+      "revId": "7e1bd14828c18ae6dd2bdcdd617fbf798af61f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
