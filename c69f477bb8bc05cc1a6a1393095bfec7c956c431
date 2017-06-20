@@ -16,6 +16,24 @@
       "revId": "c69f477bb8bc05cc1a6a1393095bfec7c956c431",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e68b2bbc_2c122b06",
+        "filename": "cc/tiles/gpu_image_decode_cache.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1221484
+      },
+      "writtenOn": "2017-06-20T07:35:19Z",
+      "side": 1,
+      "message": "So, interestingly, the 8888 \u003e 4444 conversion is super expensive (I guess dithering costs a lot). It completely overshadows the image decode portion - taking 10x longer than the decode on my test jpeg image.\n\nBecause of this, dithering a smaller image costs a lot less than dithering a full-sized one. In a quick test, it was 4x faster to decode / scale / convert a 1280x720 image \u003e 640x480 than to decode/convert a 1280x720 image unscaled.\n\nThis means that, if an image is scaled, it is definitely better to scale/convert it from a perf standpoint. If an image is already converted, it\u0027s less clear that re-decoding/scaling/converting makes sense.",
+      "parentUuid": "51a8ed6e_393144de",
+      "revId": "c69f477bb8bc05cc1a6a1393095bfec7c956c431",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
