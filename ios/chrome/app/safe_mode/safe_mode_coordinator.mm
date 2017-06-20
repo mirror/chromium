@@ -4,26 +4,34 @@
 
 #import "ios/chrome/app/safe_mode/safe_mode_coordinator.h"
 
-#import "base/logging.h"
+#include "base/mac/scoped_nsobject.h"
 #import "ios/chrome/app/safe_mode/safe_mode_view_controller.h"
 #include "ios/chrome/browser/crash_loop_detection_util.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 namespace {
 const int kStartupCrashLoopThreshold = 2;
 }
 
-@interface SafeModeCoordinator ()<SafeModeViewControllerDelegate>
-@end
-
-@implementation SafeModeCoordinator {
-  __weak UIWindow* _window;
+@interface SafeModeCoordinator ()<SafeModeViewControllerDelegate> {
+  // Weak pointer to window passed on init.
+  base::WeakNSObject<UIWindow> _window;
+  // Weak pointer backing property of the same name.
+  base::WeakNSProtocol<id<SafeModeCoordinatorDelegate>> _delegate;
 }
 
-@synthesize delegate = _delegate;
+@end
+
+@implementation SafeModeCoordinator
+
+#pragma mark - property implementation.
+
+- (id<SafeModeCoordinatorDelegate>)delegate {
+  return _delegate;
+}
+
+- (void)setDelegate:(id<SafeModeCoordinatorDelegate>)delegate {
+  _delegate.reset(delegate);
+}
 
 #pragma mark - Public class methods
 
@@ -46,8 +54,8 @@ const int kStartupCrashLoopThreshold = 2;
   // General note: Safe mode should be safe; it should not depend on other
   // objects being created. Be extremely conservative when adding code to this
   // method.
-  SafeModeViewController* viewController =
-      [[SafeModeViewController alloc] initWithDelegate:self];
+  base::scoped_nsobject<SafeModeViewController> viewController(
+      [[SafeModeViewController alloc] initWithDelegate:self]);
   [self.window setRootViewController:viewController];
 
   // Reset the crash count; the user may change something based on the recovery

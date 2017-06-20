@@ -15,7 +15,6 @@
 #include "base/memory/weak_ptr.h"
 #include "base/strings/string16.h"
 #include "net/cert/nss_cert_database.h"
-#include "net/ssl/client_cert_identity.h"
 
 namespace chromeos {
 class CertificateProvider;
@@ -171,8 +170,7 @@ class CertificateManagerModel {
   void RefreshSlotsUnlocked();
 
   // Callback used to refresh extension provided certificates. Refreshes UI.
-  void RefreshExtensionCertificates(
-      net::ClientCertIdentityList new_cert_identities);
+  void RefreshExtensionCertificates(const net::CertificateList& new_certs);
 
   net::NSSCertDatabase* cert_db_;
   net::CertificateList cert_list_;

@@ -895,6 +895,8 @@ if (!is_android) {
       "../browser/sync/test/integration/p2p_invalidation_forwarder.h",
       "../browser/sync/test/integration/p2p_sync_refresher.cc",
       "../browser/sync/test/integration/p2p_sync_refresher.h",
+      "../browser/sync/test/integration/password_manager_setting_migrator_helper.cc",
+      "../browser/sync/test/integration/password_manager_setting_migrator_helper.h",
       "../browser/sync/test/integration/passwords_helper.cc",
       "../browser/sync/test/integration/passwords_helper.h",
       "../browser/sync/test/integration/preferences_helper.cc",
@@ -2061,7 +2063,6 @@ test("browser_tests") {
         "../browser/ui/views/payments/payment_request_can_make_payment_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_completion_status_metrics_browsertest.cc",
         "../browser/ui/views/payments/payment_request_data_url_browsertest.cc",
-        "../browser/ui/views/payments/payment_request_debit_browsertest.cc",
         "../browser/ui/views/payments/payment_request_journey_logger_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_app_browsertest.cc",
         "../browser/ui/views/payments/payment_request_payment_response_browsertest.cc",
@@ -2646,6 +2647,7 @@ if (!is_android) {
       "../browser/sync/test/integration/single_client_dictionary_sync_test.cc",
       "../browser/sync/test/integration/single_client_directory_sync_test.cc",
       "../browser/sync/test/integration/single_client_extensions_sync_test.cc",
+      "../browser/sync/test/integration/single_client_password_manager_setting_migrator_service_sync_test.cc",
       "../browser/sync/test/integration/single_client_passwords_sync_test.cc",
       "../browser/sync/test/integration/single_client_preferences_sync_test.cc",
       "../browser/sync/test/integration/single_client_printers_sync_test.cc",
@@ -2667,6 +2669,7 @@ if (!is_android) {
       "../browser/sync/test/integration/two_client_dictionary_sync_test.cc",
       "../browser/sync/test/integration/two_client_extension_settings_and_app_settings_sync_test.cc",
       "../browser/sync/test/integration/two_client_extensions_sync_test.cc",
+      "../browser/sync/test/integration/two_client_password_manager_setting_migrator_service_sync_test.cc",
       "../browser/sync/test/integration/two_client_passwords_sync_test.cc",
       "../browser/sync/test/integration/two_client_preferences_sync_test.cc",
       "../browser/sync/test/integration/two_client_printers_sync_test.cc",
@@ -3492,7 +3495,6 @@ test("unit_tests") {
     sources += [
       "../browser/android/offline_pages/offline_page_mhtml_archiver_unittest.cc",
       "../browser/android/offline_pages/offline_page_request_job_unittest.cc",
-      "../browser/android/offline_pages/offline_page_tab_helper_unittest.cc",
       "../browser/android/offline_pages/offline_page_utils_unittest.cc",
       "../browser/android/offline_pages/prerender_adapter_unittest.cc",
       "../browser/android/offline_pages/prerendering_loader_unittest.cc",
@@ -3509,7 +3511,6 @@ test("unit_tests") {
       "//components/offline_pages/content/background_loader:test_support",
       "//components/offline_pages/core:test_support",
       "//components/offline_pages/core/background:test_support",
-      "//components/offline_pages/core/prefetch:test_support",
     ]
   }
 
@@ -4887,7 +4888,7 @@ test("unit_tests") {
       "../browser/ui/app_list/arc/arc_app_unittest.cc",
       "../browser/ui/app_list/extension_app_model_builder_unittest.cc",
       "../browser/ui/app_list/profile_loader_unittest.cc",
-      "../browser/ui/app_list/search/answer_card/answer_card_result_unittest.cc",
+      "../browser/ui/app_list/search/answer_card_result_unittest.cc",
       "../browser/ui/app_list/search/app_search_provider_unittest.cc",
       "../browser/ui/app_list/search/history_unittest.cc",
       "../browser/ui/app_list/search/launcher_search/launcher_search_icon_image_loader_unittest.cc",

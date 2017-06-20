@@ -656,7 +656,7 @@ VolumeItem.prototype.setupIcon_ = function(icon, volumeInfo) {
  * @private
  */
 VolumeItem.prototype.setupEjectButton_ = function(rowElement) {
-  var ejectButton = cr.doc.createElement('button');
+  var ejectButton = cr.doc.createElement('div');
   // Block other mouse handlers.
   ejectButton.addEventListener(
       'mouseup', function(event) { event.stopPropagation() });
@@ -664,7 +664,6 @@ VolumeItem.prototype.setupEjectButton_ = function(rowElement) {
       'mousedown', function(event) { event.stopPropagation() });
   ejectButton.className = 'root-eject';
   ejectButton.setAttribute('aria-label', str('UNMOUNT_DEVICE_BUTTON_LABEL'));
-  ejectButton.setAttribute('tabindex', '0');
   ejectButton.addEventListener('click', function(event) {
     event.stopPropagation();
     var unmountCommand = cr.doc.querySelector('command#unmount');

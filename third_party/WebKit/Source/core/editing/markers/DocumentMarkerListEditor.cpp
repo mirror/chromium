@@ -22,15 +22,6 @@ void DocumentMarkerListEditor::AddMarkerWithoutMergingOverlapping(
          const DocumentMarker* marker_to_insert) {
         return marker_in_list->StartOffset() < marker_to_insert->StartOffset();
       });
-
-  // DCHECK that we're not trying to add a marker that overlaps an existing one
-  // (this method only works for lists which don't allow overlapping markers)
-  if (pos != list->end())
-    DCHECK_LE(marker->EndOffset(), (*pos)->StartOffset());
-
-  if (pos != list->begin())
-    DCHECK_GE(marker->StartOffset(), (*std::prev(pos))->EndOffset());
-
   list->insert(pos - list->begin(), marker);
 }
 
@@ -47,7 +38,7 @@ bool DocumentMarkerListEditor::MoveMarkers(MarkerList* src_list,
     if (marker.StartOffset() > end_offset)
       break;
 
-    // Trim the marker to fit in dst_list's text node
+    // pin the marker to the specified range and apply the shift delta
     if (marker.EndOffset() > end_offset)
       marker.SetEndOffset(end_offset);
 

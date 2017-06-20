@@ -122,9 +122,8 @@ class MojoE2EPerftest : public edk::test::MojoTestBase {
     } else {
       base::RunLoop run_loop;
       runner->PostTaskAndReply(
-          FROM_HERE,
-          base::Bind(&MojoE2EPerftest::RunTests, base::Unretained(this),
-                     client_mp, test_name),
+          FROM_HERE, base::Bind(&MojoE2EPerftest::RunTests,
+                                base::Unretained(this), client_mp, test_name),
           run_loop.QuitClosure());
       run_loop.Run();
     }
@@ -182,23 +181,23 @@ DEFINE_TEST_CLIENT_TEST_WITH_PIPE(PingService, MojoE2EPerftest, mp) {
 }
 
 TEST_F(MojoE2EPerftest, MultiProcessEchoMainThread) {
-  RunTestClient("PingService", [&](MojoHandle mp) {
+  RUN_CHILD_ON_PIPE(PingService, mp)
     MojoHandle client_mp, service_mp;
     CreateMessagePipe(&client_mp, &service_mp);
     WriteMessageWithHandles(mp, "hello", &service_mp, 1);
     RunTestOnTaskRunner(message_loop_.task_runner().get(), client_mp,
                         "MultiProcessEchoMainThread");
-  });
+  END_CHILD()
 }
 
 TEST_F(MojoE2EPerftest, MultiProcessEchoIoThread) {
-  RunTestClient("PingService", [&](MojoHandle mp) {
+  RUN_CHILD_ON_PIPE(PingService, mp)
     MojoHandle client_mp, service_mp;
     CreateMessagePipe(&client_mp, &service_mp);
     WriteMessageWithHandles(mp, "hello", &service_mp, 1);
     RunTestOnTaskRunner(edk::GetIOTaskRunner().get(), client_mp,
                         "MultiProcessEchoIoThread");
-  });
+  END_CHILD()
 }
 
 }  // namespace

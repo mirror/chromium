@@ -53,7 +53,9 @@ class PackagedApp : public service_manager::Service,
   }
 
   // LifecycleControl:
-  void Ping(PingCallback callback) override { std::move(callback).Run(); }
+  void Ping(const PingCallback& callback) override {
+    callback.Run();
+  }
 
   void GracefulQuit() override {
     service_manager_connection_closed_callback_.Run();

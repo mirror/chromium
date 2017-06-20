@@ -91,6 +91,10 @@ enum PseudoId {
                          (1 << (kPseudoIdBackdrop - kFirstPublicPseudoId))
 };
 
+enum class EColumnFill { kBalance, kAuto };
+
+enum class EColumnSpan { kNone = 0, kAll };
+
 enum OutlineIsAuto { kOutlineIsAutoOff = 0, kOutlineIsAutoOn };
 
 // Random visual rendering model attributes. Not inherited.
@@ -193,6 +197,11 @@ inline TextDecorationSkip& operator|=(TextDecorationSkip& a,
 }
 
 enum OffsetRotationType { kOffsetRotationAuto, kOffsetRotationFixed };
+
+enum EBackfaceVisibility {
+  kBackfaceVisibilityVisible,
+  kBackfaceVisibilityHidden
+};
 
 enum ELineClampType { kLineClampLineCount, kLineClampPercentage };
 
@@ -321,6 +330,8 @@ enum SnapAlignment {
   kSnapAlignmentEnd,
   kSnapAlignmentCenter
 };
+
+enum AutoRepeatType { kNoAutoRepeat, kAutoFill, kAutoFit };
 
 }  // namespace blink
 

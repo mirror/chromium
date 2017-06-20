@@ -19,8 +19,6 @@
 #include "components/user_manager/user.h"
 #include "components/user_manager/user_image/user_image.h"
 #include "components/user_manager/user_manager.h"
-#include "components/wallpaper/wallpaper_color_calculator.h"
-#include "components/wallpaper/wallpaper_color_calculator_observer.h"
 #include "components/wallpaper/wallpaper_layout.h"
 #include "components/wallpaper/wallpaper_manager_base.h"
 #include "content/public/browser/notification_observer.h"
@@ -39,14 +37,14 @@ class WallpaperManager
       public content::NotificationObserver,
       public user_manager::UserManager::UserSessionStateObserver,
       public wm::ActivationChangeObserver,
-      public aura::WindowObserver,
-      public wallpaper::WallpaperColorCalculatorObserver {
+      public aura::WindowObserver {
  public:
   class PendingWallpaper;
 
   ~WallpaperManager() override;
 
-  // Expects there is no instance of WallpaperManager and create one.
+  // Creates an instance of Wallpaper Manager. If there is no instance, create
+  // one. Otherwise, returns the existing instance.
   static void Initialize();
 
   // Gets pointer to singleton WallpaperManager instance.
@@ -56,22 +54,9 @@ class WallpaperManager
   // WallpaperManager to remove any observers it has registered.
   static void Shutdown();
 
-  // Checks whether the instance exists. In general, please refrain from using
-  // this function. Use Get() directly when needing to access the singleton.
-  // TODO(crbug.com/733709): Remove this function when color calculation for
-  // login screen is moved elsewhere.
-  static bool HasInstance();
-
   // Returns if the image is in the pending list. |image_id| can be obtained
   // from gfx::ImageSkia by using WallpaperResizer::GetImageId().
   bool IsPendingWallpaper(uint32_t image_id);
-
-  // Calculates a prominent color based on the wallpaper image and notifies
-  // |observers_| of the value. An existing calculation in progress (if any)
-  // will be destroyed first.
-  void CalculateProminentColor(const gfx::ImageSkia& image);
-
-  base::Optional<SkColor> prominent_color() const { return prominent_color_; }
 
   // wallpaper::WallpaperManagerBase:
   WallpaperResolution GetAppropriateResolution() override;
@@ -127,9 +112,6 @@ class WallpaperManager
 
   // aura::WindowObserver:
   void OnWindowDestroying(aura::Window* window) override;
-
-  // wallpaper::WallpaperColorCalculatorObserver:
-  void OnColorCalculationComplete() override;
 
  private:
   friend class TestApi;
@@ -255,14 +237,6 @@ class WallpaperManager
   ScopedObserver<wm::ActivationClient, wm::ActivationChangeObserver>
       activation_client_observer_;
   ScopedObserver<aura::Window, aura::WindowObserver> window_observer_;
-
-  // The prominent color extracted from the current wallpaper. It doesn't have
-  // value if color extraction fails.
-  base::Optional<SkColor> prominent_color_;
-
-  // TODO(crbug.com/733709): Remove color calculation here when the old signin
-  // screen implementation is deprecated.
-  std::unique_ptr<wallpaper::WallpaperColorCalculator> color_calculator_;
 
   base::WeakPtrFactory<WallpaperManager> weak_factory_;
 

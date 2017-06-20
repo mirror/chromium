@@ -41,7 +41,6 @@
 #include "content/common/frame_replication_state.h"
 #include "content/common/image_downloader/image_downloader.mojom.h"
 #include "content/common/navigation_params.h"
-#include "content/common/url_loader_factory.mojom.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/common/javascript_dialog_type.h"
 #include "content/public/common/previews_state.h"
@@ -524,17 +523,12 @@ class CONTENT_EXPORT RenderFrameHostImpl
 
   // PlzNavigate: Indicates that a navigation is ready to commit and can be
   // handled by this RenderFrame.
-  // |subresource_url_loader_factory_info| is used in network service land to
-  // allow factories interested in handling subresource requests to the
-  // renderer. E.g. AppCache.
-  void CommitNavigation(
-      ResourceResponse* response,
-      std::unique_ptr<StreamHandle> body,
-      mojo::ScopedDataPipeConsumerHandle handle,
-      const CommonNavigationParams& common_params,
-      const RequestNavigationParams& request_params,
-      bool is_view_source,
-      mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info);
+  void CommitNavigation(ResourceResponse* response,
+                        std::unique_ptr<StreamHandle> body,
+                        mojo::ScopedDataPipeConsumerHandle handle,
+                        const CommonNavigationParams& common_params,
+                        const RequestNavigationParams& request_params,
+                        bool is_view_source);
 
   // PlzNavigate
   // Indicates that a navigation failed and that this RenderFrame should display

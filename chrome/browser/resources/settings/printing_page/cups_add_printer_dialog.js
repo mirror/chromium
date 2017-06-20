@@ -466,7 +466,7 @@ Polymer({
       this.addPrinter_();
     } else if (this.previousDialog_ == AddPrinterDialogs.MANUFACTURER) {
       this.configuringDialogTitle =
-          loadTimeData.getString('selectManufacturerAndModelTitle');
+          loadTimeData.getString('addPrintersManuallyTitle');
       this.addPrinter_();
     } else if (this.previousDialog_ == AddPrinterDialogs.MANUALLY) {
       this.configuringDialogTitle =

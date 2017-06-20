@@ -7,8 +7,6 @@
 
 #include <string>
 
-#include "content/public/browser/resource_request_info.h"
-
 namespace net {
 class URLRequest;
 }
@@ -35,11 +33,11 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
 
 // Processes account consistency response headers (X-Chrome-Manage-Accounts and
 // Dice). |redirect_url| is empty if the request is not a redirect.
-void ProcessAccountConsistencyResponseHeaders(
-    net::URLRequest* request,
-    const GURL& redirect_url,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter& web_contents_getter);
+void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
+                                              const GURL& redirect_url,
+                                              ProfileIOData* io_data,
+                                              int child_id,
+                                              int route_id);
 
 };  // namespace signin
 

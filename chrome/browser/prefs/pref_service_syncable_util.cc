@@ -30,10 +30,7 @@ sync_preferences::PrefServiceSyncable* PrefServiceSyncableIncognitoFromProfile(
 
 sync_preferences::PrefServiceSyncable* CreateIncognitoPrefServiceSyncable(
     sync_preferences::PrefServiceSyncable* pref_service,
-    PrefStore* incognito_extension_pref_store,
-    std::set<PrefValueStore::PrefStoreType> already_connected_types,
-    service_manager::Connector* incognito_connector,
-    service_manager::Connector* user_connector) {
+    PrefStore* incognito_extension_pref_store) {
   // List of keys that cannot be changed in the user prefs file by the incognito
   // profile.  All preferences that store information about the browsing history
   // or behavior of the user should have this property.
@@ -45,6 +42,5 @@ sync_preferences::PrefServiceSyncable* CreateIncognitoPrefServiceSyncable(
   overlay_pref_names.push_back(proxy_config::prefs::kProxy);
 #endif
   return pref_service->CreateIncognitoPrefService(
-      incognito_extension_pref_store, overlay_pref_names,
-      std::move(already_connected_types), incognito_connector, user_connector);
+      incognito_extension_pref_store, overlay_pref_names);
 }

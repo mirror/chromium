@@ -48,7 +48,6 @@ namespace blink {
 
 class ConsoleMessageStorage;
 class InspectorTaskRunner;
-class InterfaceProvider;
 class WorkerBackingThread;
 class WorkerInspectorController;
 class WorkerOrWorkletGlobalScope;
@@ -175,8 +174,6 @@ class CORE_EXPORT WorkerThread : public WebThread::TaskObserver {
   scheduler::WorkerGlobalScopeScheduler* GetGlobalScopeScheduler() const {
     return global_scope_scheduler_.get();
   }
-
-  InterfaceProvider* GetInterfaceProvider();
 
  protected:
   WorkerThread(ThreadableLoadingContext*, WorkerReportingProxy&);

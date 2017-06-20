@@ -130,7 +130,8 @@ void WorkerWebSocketChannel::Close(int code, const String& reason) {
 void WorkerWebSocketChannel::Fail(const String& reason,
                                   MessageLevel level,
                                   std::unique_ptr<SourceLocation> location) {
-  DCHECK(bridge_);
+  if (!bridge_)
+    return;
 
   std::unique_ptr<SourceLocation> captured_location = SourceLocation::Capture();
   if (!captured_location->IsUnknown()) {

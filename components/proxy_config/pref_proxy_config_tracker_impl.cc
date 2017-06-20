@@ -131,6 +131,7 @@ PrefProxyConfigTrackerImpl::PrefProxyConfigTrackerImpl(
     scoped_refptr<base::SingleThreadTaskRunner> io_task_runner)
     : pref_service_(pref_service),
       proxy_config_service_impl_(NULL),
+      update_pending_(true),
       io_task_runner_(io_task_runner) {
   config_state_ = ReadPrefConfig(pref_service_, &pref_config_);
   proxy_prefs_.Init(pref_service);
@@ -151,6 +152,7 @@ PrefProxyConfigTrackerImpl::CreateTrackingProxyConfigService(
       std::move(base_service), config_state_, pref_config_);
   VLOG(1) << this << ": set chrome proxy config service to "
           << proxy_config_service_impl_;
+  update_pending_ = false;
 
   return std::unique_ptr<net::ProxyConfigService>(proxy_config_service_impl_);
 }
@@ -265,12 +267,17 @@ ProxyPrefs::ConfigState PrefProxyConfigTrackerImpl::GetProxyConfig(
 void PrefProxyConfigTrackerImpl::OnProxyConfigChanged(
     ProxyPrefs::ConfigState config_state,
     const net::ProxyConfig& config) {
-  if (!proxy_config_service_impl_)
+  if (!proxy_config_service_impl_) {
+    VLOG(1) << "No chrome proxy config service to push to UpdateProxyConfig";
+    update_pending_ = true;
     return;
-  io_task_runner_->PostTask(
+  }
+  update_pending_ = !io_task_runner_->PostTask(
       FROM_HERE, base::Bind(&ProxyConfigServiceImpl::UpdateProxyConfig,
                             base::Unretained(proxy_config_service_impl_),
                             config_state, config));
+  VLOG(1) << this << (update_pending_ ? ": Error" : ": Done")
+          << " pushing proxy to UpdateProxyConfig";
 }
 
 bool PrefProxyConfigTrackerImpl::PrefConfigToNetConfig(
@@ -345,6 +352,8 @@ void PrefProxyConfigTrackerImpl::OnProxyPrefChanged() {
     config_state_ = config_state;
     if (config_state_ != ProxyPrefs::CONFIG_UNSET)
       pref_config_ = new_config;
-    OnProxyConfigChanged(config_state, new_config);
+    update_pending_ = true;
   }
+  if (update_pending_)
+    OnProxyConfigChanged(config_state, new_config);
 }

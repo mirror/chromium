@@ -8,7 +8,6 @@
 #include <utility>
 #include <vector>
 
-#include "base/command_line.h"
 #include "base/feature_list.h"
 #include "base/id_map.h"
 #include "base/lazy_instance.h"
@@ -32,13 +31,10 @@
 #include "chrome/browser/ui/webui/print_preview/print_preview_handler.h"
 #include "chrome/browser/ui/webui/theme_source.h"
 #include "chrome/common/chrome_features.h"
-#include "chrome/common/chrome_switches.h"
-#include "chrome/common/pref_names.h"
 #include "chrome/common/url_constants.h"
 #include "chrome/grit/browser_resources.h"
 #include "chrome/grit/chromium_strings.h"
 #include "chrome/grit/generated_resources.h"
-#include "components/prefs/pref_service.h"
 #include "components/printing/common/print_messages.h"
 #include "components/strings/grit/components_strings.h"
 #include "content/public/browser/url_data_source.h"
@@ -52,6 +48,11 @@
 #include "ui/gfx/geometry/rect.h"
 #include "ui/web_dialogs/web_dialog_delegate.h"
 #include "ui/web_dialogs/web_dialog_ui.h"
+
+#if defined(OS_CHROMEOS)
+#include "base/command_line.h"
+#include "chrome/common/chrome_switches.h"
+#endif
 
 using content::WebContents;
 using printing::PageSizeMargins;
@@ -164,7 +165,7 @@ bool HandleRequestCallback(
   return true;
 }
 
-content::WebUIDataSource* CreatePrintPreviewUISource(Profile* profile) {
+content::WebUIDataSource* CreatePrintPreviewUISource() {
   content::WebUIDataSource* source =
       content::WebUIDataSource::Create(chrome::kChromeUIPrintHost);
 #if defined(OS_CHROMEOS)
@@ -424,12 +425,8 @@ content::WebUIDataSource* CreatePrintPreviewUISource(Profile* profile) {
       !base::CommandLine::ForCurrentProcess()->HasSwitch(
           ::switches::kDisableNativeCups);
   source->AddBoolean("showLocalManageButton", cups_and_md_settings_enabled);
-  source->AddBoolean("useSystemDefaultPrinter", false);
 #else
   source->AddBoolean("showLocalManageButton", true);
-  bool system_default_printer = profile->GetPrefs()->GetBoolean(
-      prefs::kPrintPreviewUseSystemDefaultPrinter);
-  source->AddBoolean("useSystemDefaultPrinter", system_default_printer);
 #endif
   return source;
 }
@@ -447,7 +444,7 @@ PrintPreviewUI::PrintPreviewUI(content::WebUI* web_ui)
       dialog_closed_(false) {
   // Set up the chrome://print/ data source.
   Profile* profile = Profile::FromWebUI(web_ui);
-  content::WebUIDataSource::Add(profile, CreatePrintPreviewUISource(profile));
+  content::WebUIDataSource::Add(profile, CreatePrintPreviewUISource());
 
   // Set up the chrome://theme/ source.
   content::URLDataSource::Add(profile, new ThemeSource(profile));

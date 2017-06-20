@@ -4,20 +4,18 @@
 
 #import "ios/chrome/browser/memory/memory_debugger_manager.h"
 
+#include "base/ios/weak_nsobject.h"
 #import "base/mac/bind_objc_block.h"
+#include "base/mac/scoped_nsobject.h"
 #include "components/prefs/pref_member.h"
 #include "components/prefs/pref_registry_simple.h"
 #include "components/prefs/pref_service.h"
 #import "ios/chrome/browser/memory/memory_debugger.h"
 #import "ios/chrome/browser/pref_names.h"
 
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
-
 @implementation MemoryDebuggerManager {
-  __weak UIView* debuggerParentView_;
-  MemoryDebugger* memoryDebugger_;
+  __unsafe_unretained UIView* debuggerParentView_;  // weak
+  base::scoped_nsobject<MemoryDebugger> memoryDebugger_;
   BooleanPrefMember showMemoryDebugger_;
 }
 
@@ -27,9 +25,10 @@
     debuggerParentView_ = debuggerParentView;
 
     // Set up the callback for when the pref to show/hide the debugger changes.
-    __weak MemoryDebuggerManager* weakSelf = self;
-    base::Closure callback = base::BindBlockArc(^{
-      MemoryDebuggerManager* strongSelf = weakSelf;
+    base::WeakNSObject<MemoryDebuggerManager> weakSelf(self);
+    base::Closure callback = base::BindBlock(^{
+      base::scoped_nsobject<MemoryDebuggerManager> strongSelf(
+          [weakSelf retain]);
       if (strongSelf) {
         [self onShowMemoryDebuggingToolsChange];
       }
@@ -44,6 +43,7 @@
 
 - (void)dealloc {
   [self tearDownDebugger];
+  [super dealloc];
 }
 
 #pragma mark - Pref-handling methods
@@ -56,7 +56,7 @@
 // Shows or hides the debugger when the pref changes.
 - (void)onShowMemoryDebuggingToolsChange {
   if (showMemoryDebugger_.GetValue()) {
-    memoryDebugger_ = [[MemoryDebugger alloc] init];
+    memoryDebugger_.reset([[MemoryDebugger alloc] init]);
     [debuggerParentView_ addSubview:memoryDebugger_];
   } else {
     [self tearDownDebugger];
@@ -67,6 +67,6 @@
 - (void)tearDownDebugger {
   [memoryDebugger_ invalidateTimers];
   [memoryDebugger_ removeFromSuperview];
-  memoryDebugger_ = nil;
+  memoryDebugger_.reset();
 }
 @end

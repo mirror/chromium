@@ -35,6 +35,7 @@
 #include "chrome/browser/invalidation/profile_invalidation_provider_factory.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings.h"
 #include "chrome/browser/net/spdyproxy/data_reduction_proxy_chrome_settings_factory.h"
+#include "chrome/browser/password_manager/password_manager_setting_migrator_service_factory.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/prefs/incognito_mode_prefs.h"
 #include "chrome/browser/profiles/bookmark_model_loaded_observer.h"
@@ -74,6 +75,7 @@
 #include "components/invalidation/impl/profile_invalidation_provider.h"
 #include "components/invalidation/public/invalidation_service.h"
 #include "components/password_manager/core/browser/password_store.h"
+#include "components/password_manager/sync/browser/password_manager_setting_migrator_service.h"
 #include "components/prefs/pref_service.h"
 #include "components/prefs/scoped_user_pref_update.h"
 #include "components/search_engines/default_search_manager.h"
@@ -640,12 +642,13 @@ Profile* ProfileManager::GetLastUsedProfile(
 
     base::FilePath profile_path(user_data_dir);
     Profile* profile = GetProfileByPath(profile_path.Append(profile_dir));
-
-    // Accessing a user profile before it is loaded may lead to policy exploit.
-    // See http://crbug.com/689206.
-    LOG_IF(FATAL, !profile) << "Calling GetLastUsedProfile() before profile "
-                            << "initialization is completed.";
-
+    // If we get here, it means the user has logged in but the profile has not
+    // finished initializing, so treat the user as not having logged in.
+    if (!profile) {
+      LOG(WARNING) << "Calling GetLastUsedProfile() before profile "
+                   << "initialization is completed. Returning login profile.";
+      return GetActiveUserOrOffTheRecordProfileFromPath(user_data_dir);
+    }
     return profile->IsGuestSession() ? profile->GetOffTheRecordProfile() :
                                        profile;
   }
@@ -1260,6 +1263,14 @@ void ProfileManager::DoFinalInitForServices(Profile* profile,
   AccountFetcherServiceFactory::GetForProfile(profile)
       ->SetupInvalidationsOnProfileLoad(invalidation_service);
   AccountReconcilorFactory::GetForProfile(profile);
+
+  // Service is responsible for migration of the legacy password manager
+  // preference which controls behaviour of the Chrome to the new preference
+  // which controls password management behaviour on Chrome and Android. After
+  // migration will be performed for all users it's planned to remove the
+  // migration code, rough time estimates are Q1 2016.
+  PasswordManagerSettingMigratorServiceFactory::GetForProfile(profile)
+      ->InitializeMigration(ProfileSyncServiceFactory::GetForProfile(profile));
 
 #if defined(OS_ANDROID)
   // TODO(b/678590): create services during profile startup.

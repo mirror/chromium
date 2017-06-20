@@ -257,8 +257,9 @@ class QuicDispatcherTest : public QuicTest {
                      QuicPacketNumber packet_number) {
     QuicVersionVector versions(SupportedVersions(version));
     std::unique_ptr<QuicEncryptedPacket> packet(ConstructEncryptedPacket(
-        connection_id, has_version_flag, false, packet_number, data,
-        connection_id_length, packet_number_length, &versions));
+        GetPeerInMemoryConnectionId(connection_id), has_version_flag, false,
+        packet_number, data, connection_id_length, packet_number_length,
+        &versions));
     std::unique_ptr<QuicReceivedPacket> received_packet(
         ConstructReceivedPacket(*packet, helper_.GetClock()->Now()));
 

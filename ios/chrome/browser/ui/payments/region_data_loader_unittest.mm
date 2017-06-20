@@ -21,8 +21,6 @@
 #endif
 
 namespace {
-const char kQuebecCode[] = "QC";
-const char kOntarioCode[] = "ON";
 const char kQuebec[] = "Quebec";
 const char kOntario[] = "Ontario";
 }  // namespace
@@ -40,18 +38,17 @@ TEST_F(PaymentRequestRegionDataLoaderTest, SourceSuccess) {
   // Mock the consumer.
   id consumer =
       [OCMockObject mockForProtocol:@protocol(RegionDataLoaderConsumer)];
-  [[consumer expect] regionDataLoaderDidSucceedWithRegions:@{
-    base::SysUTF8ToNSString(kQuebecCode) : base::SysUTF8ToNSString(kQuebec),
-    base::SysUTF8ToNSString(kOntarioCode) : base::SysUTF8ToNSString(kOntario)
-  }];
+  [[consumer expect] regionDataLoaderDidSucceedWithRegions:@[
+    base::SysUTF8ToNSString(kQuebec), base::SysUTF8ToNSString(kOntario)
+  ]];
 
   RegionDataLoader region_data_loader(consumer);
   region_data_loader.LoadRegionData("some country",
                                     &autofill_region_data_loader_);
 
   std::vector<std::pair<std::string, std::string>> regions;
-  regions.push_back(std::make_pair(kQuebecCode, kQuebec));
-  regions.push_back(std::make_pair(kOntarioCode, kOntario));
+  regions.push_back(std::make_pair("QC", kQuebec));
+  regions.push_back(std::make_pair("ON", kOntario));
   autofill_region_data_loader_.SendAsynchronousData(regions);
 
   EXPECT_OCMOCK_VERIFY(consumer);
@@ -62,7 +59,7 @@ TEST_F(PaymentRequestRegionDataLoaderTest, SourceFailure) {
   // Mock the consumer.
   id consumer =
       [OCMockObject mockForProtocol:@protocol(RegionDataLoaderConsumer)];
-  [[consumer expect] regionDataLoaderDidSucceedWithRegions:@{}];
+  [[consumer expect] regionDataLoaderDidSucceedWithRegions:@[]];
 
   RegionDataLoader region_data_loader(consumer);
   region_data_loader.LoadRegionData("some country",

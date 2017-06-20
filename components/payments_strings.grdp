@@ -16,44 +16,8 @@
   <message name="IDS_PAYMENTS_SAVE_CARD_TO_DEVICE_CHECKBOX" desc="The label for the checkbox that enables the user to save a credit card to their device, for example, on their phone." formatter_data="android_java">
     Save this card to this device
   </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_CARDS_LABEL" desc="The title for the section that displays the card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
+  <message name="IDS_PAYMENTS_ACCEPTED_CARDS_LABEL" desc="The title for the section that displays the credit card types that the merchant accepts. Below the title, we show a row of icons indicating the accepted cards (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
     Accepted cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_CREDIT_CARDS_LABEL" desc="The title for the section that displays the credit card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted credit card networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted credit cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_DEBIT_CARDS_LABEL" desc="The title for the section that displays the debit card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted debit card networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted debit cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_PREPAID_CARDS_LABEL" desc="The title for the section that displays the prepaid card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted prepaid card networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted prepaid cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_CREDIT_DEBIT_CARDS_LABEL" desc="The title for the section that displays the credit and debit card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted credit and debit cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_CREDIT_PREPAID_CARDS_LABEL" desc="The title for the section that displays the credit and prepaid card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted credit and prepaid cards
-  </message>
-  <message name="IDS_PAYMENTS_ACCEPTED_DEBIT_PREPAID_CARDS_LABEL" desc="The title for the section that displays the debit and prepaid card networks that the merchant accepts. Below the title, we show a row of icons indicating the accepted networks (Visa icon, Mastercard icon, etc.)." formatter_data="android_java">
-    Accepted debit and prepaid cards
-  </message>
-  <message name="IDS_PAYMENTS_CREDIT_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's credit cards that the merchant accepts." formatter_data="android_java">
-    Credit cards are accepted.
-  </message>
-  <message name="IDS_PAYMENTS_DEBIT_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's debit cards that the merchant accepts." formatter_data="android_java">
-    Debit cards are accepted.
-  </message>
-  <message name="IDS_PAYMENTS_PREPAID_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's prepaid cards that the merchant accepts." formatter_data="android_java">
-    Prepaid cards are accepted.
-  </message>
-  <message name="IDS_PAYMENTS_CREDIT_DEBIT_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's credit and debit cards that the merchant accepts." formatter_data="android_java">
-    Credit and debit cards are accepted.
-  </message>
-  <message name="IDS_PAYMENTS_CREDIT_PREPAID_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's credit and prepaid cards that the merchant accepts." formatter_data="android_java">
-    Credit and prepaid cards are accepted.
-  </message>
-  <message name="IDS_PAYMENTS_DEBIT_PREPAID_CARDS_ARE_ACCEPTED_LABEL" desc="A message for the section that displays user's debit and prepaid cards that the merchant accepts." formatter_data="android_java">
-    Debit and prepaid cards are accepted.
   </message>
   <message name="IDS_PAYMENTS_METHOD_OF_PAYMENT_LABEL" desc="The title for the section that lets the user select the method of payment." formatter_data="android_java">
     Payment method
@@ -373,18 +337,4 @@
        other {<ph name="CONTACT_PREVIEW">{1}<ex>Jerry, 438-123-1922</ex></ph> and <ph name="NUMBER_OF_ADDITIONAL_CONTACTS">{2}<ex>2</ex></ph> more}}
     </message>
   </if>
-
-  <!-- a11y strings -->
-  <message name="IDS_PAYMENTS_BACK" desc="The screen reader string for the back arrow button in the Desktop Payments dialog">
-    Back
-  </message>
-  <message name="IDS_PAYMENTS_EDIT" desc="The screen reader string for the pencil edit button in the Desktop Payments dialog">
-    Edit
-  </message>
-  <message name="IDS_PAYMENTS_ROW_ACCESSIBLE_NAME_FORMAT" desc="The format to build the screen reader string for Payment Sheet rows">
-    <ph name="ROW_NAME">$1<ex>Payment Method</ex></ph> <ph name="ROW_CONTENT">$2<ex>VISA ****1234</ex></ph>
-  </message>
-  <message name="IDS_PAYMENTS_PROFILE_LABELS_ACCESSIBLE_FORMAT" desc="The format to build the screen reader string for profile labels">
-    <ph name="FIRST_LABEL">$1<ex>VISA ****1234</ex></ph> <ph name="SECOND_LABEL">$2<ex>Homer Simpson</ex></ph> <ph name="THIRD_LABEL">$3<ex>123 Fake Street</ex></ph>
-  </message>
 </grit-part>

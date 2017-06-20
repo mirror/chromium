@@ -5,5 +5,7 @@
 Polymer({
   is: 'throbber-notice',
 
-  properties: {text: String}
+  properties: {
+    text: String
+  }
 });

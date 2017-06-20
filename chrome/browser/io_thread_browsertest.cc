@@ -59,14 +59,14 @@ class TestURLFetcherDelegate : public net::URLFetcherDelegate {
   DISALLOW_COPY_AND_ASSIGN(TestURLFetcherDelegate);
 };
 
-class IOThreadBrowserTest : public InProcessBrowserTest {
+class IOThreadPacTest : public InProcessBrowserTest {
  public:
-  IOThreadBrowserTest() {}
-  ~IOThreadBrowserTest() override {}
+  IOThreadPacTest() {}
+  ~IOThreadPacTest() override {}
 
   void SetUp() override {
     // Must start listening (And get a port for the proxy) before calling
-    // SetUp(). Use two phase EmbeddedTestServer setup for proxy tests.
+    // SetUp().
     ASSERT_TRUE(embedded_test_server()->InitializeAndListen());
     InProcessBrowserTest::SetUp();
   }
@@ -84,38 +84,10 @@ class IOThreadBrowserTest : public InProcessBrowserTest {
   }
 };
 
-// Make sure that the system URLRequestContext does not cache responses. Main
-// reason for this test is that caching requires memory, so this guards against
-// accidentally hooking up a cache.
-IN_PROC_BROWSER_TEST_F(IOThreadBrowserTest, NoCache) {
-  GURL cacheable_url = embedded_test_server()->GetURL("/cachetime");
-  // Request a cacheable resource. Request should succeed.
-  TestURLFetcherDelegate fetcher_delegate;
-  std::unique_ptr<net::URLFetcher> fetcher = net::URLFetcher::Create(
-      cacheable_url, net::URLFetcher::GET, &fetcher_delegate);
-  fetcher->SetRequestContext(
-      g_browser_process->io_thread()->system_url_request_context_getter());
-  fetcher->Start();
-  fetcher_delegate.WaitForCompletion();
-  EXPECT_EQ(200, fetcher->GetResponseCode());
-
-  // Shut down server and re-request resource.  Request should fail.
-  TestURLFetcherDelegate failed_fetcher_delegate;
-  EXPECT_TRUE(embedded_test_server()->ShutdownAndWaitUntilComplete());
-  fetcher = net::URLFetcher::Create(cacheable_url, net::URLFetcher::GET,
-                                    &failed_fetcher_delegate);
-  fetcher->SetRequestContext(
-      g_browser_process->io_thread()->system_url_request_context_getter());
-  fetcher->Start();
-  failed_fetcher_delegate.WaitForCompletion();
-  EXPECT_FALSE(fetcher->GetStatus().is_success());
-  EXPECT_EQ(net::ERR_CONNECTION_REFUSED, fetcher->GetStatus().error());
-}
-
-class IOThreadBrowserTestWithHangingPacRequest : public IOThreadBrowserTest {
+class IOThreadPacTestWithHangingRequest : public IOThreadPacTest {
  public:
-  IOThreadBrowserTestWithHangingPacRequest() {}
-  ~IOThreadBrowserTestWithHangingPacRequest() override {}
+  IOThreadPacTestWithHangingRequest() {}
+  ~IOThreadPacTestWithHangingRequest() override {}
 
   void SetUpOnMainThread() override {
     // This must be created after the main message loop has been set up.
@@ -127,7 +99,7 @@ class IOThreadBrowserTestWithHangingPacRequest : public IOThreadBrowserTest {
 
     embedded_test_server()->SetConnectionListener(connection_listener_.get());
 
-    IOThreadBrowserTest::SetUpOnMainThread();
+    IOThreadPacTest::SetUpOnMainThread();
   }
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
@@ -142,7 +114,7 @@ class IOThreadBrowserTestWithHangingPacRequest : public IOThreadBrowserTest {
 
 // Make sure that the SystemURLRequestContext is shut down correctly when
 // there's an in-progress PAC script fetch.
-IN_PROC_BROWSER_TEST_F(IOThreadBrowserTestWithHangingPacRequest, Shutdown) {
+IN_PROC_BROWSER_TEST_F(IOThreadPacTestWithHangingRequest, Shutdown) {
   // Request that should hang while trying to request the PAC script.
   // Enough requests are created on startup that this probably isn't needed, but
   // best to be safe.
@@ -156,13 +128,11 @@ IN_PROC_BROWSER_TEST_F(IOThreadBrowserTestWithHangingPacRequest, Shutdown) {
   connection_listener_->WaitForConnections();
 }
 
-class IOThreadBrowserTestWithPacFileURL : public IOThreadBrowserTest {
+class IOThreadPacTestWithFileURL : public IOThreadPacTest {
  public:
-  IOThreadBrowserTestWithPacFileURL() {
-    EXPECT_TRUE(temp_dir_.CreateUniqueTempDir());
-  }
+  IOThreadPacTestWithFileURL() { EXPECT_TRUE(temp_dir_.CreateUniqueTempDir()); }
 
-  ~IOThreadBrowserTestWithPacFileURL() override {}
+  ~IOThreadPacTestWithFileURL() override {}
 
   void SetUpCommandLine(base::CommandLine* command_line) override {
     base::FilePath pac_file_path;
@@ -188,7 +158,7 @@ class IOThreadBrowserTestWithPacFileURL : public IOThreadBrowserTest {
 
 // Make sure the system URLRequestContext can hadle fetching PAC scripts from
 // file URLs.
-IN_PROC_BROWSER_TEST_F(IOThreadBrowserTestWithPacFileURL, FilePac) {
+IN_PROC_BROWSER_TEST_F(IOThreadPacTestWithFileURL, FilePac) {
   TestURLFetcherDelegate fetcher_delegate;
   std::unique_ptr<net::URLFetcher> fetcher =
       net::URLFetcher::Create(GURL("http://foo:12345/echoheader?Foo"),

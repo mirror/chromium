@@ -27,14 +27,29 @@ var NetworkUI = (function() {
   // a single state field or an array of state fields. If more than one is
   // specified then the first non empty value is used.
   var NETWORK_STATE_FIELDS = [
-    'GUID', 'service_path', 'Name', 'Type', 'ConnectionState', 'connectable',
-    'ErrorState', 'WiFi.Security', ['Cellular.NetworkTechnology', 'EAP.EAP'],
-    'Cellular.ActivationState', 'Cellular.RoamingState', 'WiFi.Frequency',
+    'GUID',
+    'service_path',
+    'Name',
+    'Type',
+    'ConnectionState',
+    'connectable',
+    'ErrorState',
+    'WiFi.Security',
+    ['Cellular.NetworkTechnology', 'EAP.EAP'],
+    'Cellular.ActivationState',
+    'Cellular.RoamingState',
+    'WiFi.Frequency',
     'WiFi.SignalStrength'
   ];
 
   var FAVORITE_STATE_FIELDS = [
-    'GUID', 'service_path', 'Name', 'Type', 'profile_path', 'visible', 'Source'
+    'GUID',
+    'service_path',
+    'Name',
+    'Type',
+    'profile_path',
+    'visible',
+    'Source'
   ];
 
   /**
@@ -43,7 +58,7 @@ var NetworkUI = (function() {
    * @return {!HTMLTableCellElement} A new td element.
    */
   var createTableCellElement = function() {
-    return /** @type {!HTMLTableCellElement} */ (document.createElement('td'));
+    return /** @type {!HTMLTableCellElement} */(document.createElement('td'));
   };
 
   /**
@@ -52,7 +67,7 @@ var NetworkUI = (function() {
    * @return {!HTMLTableRowElement} A new tr element.
    */
   var createTableRowElement = function() {
-    return /** @type {!HTMLTableRowElement} */ (document.createElement('tr'));
+    return /** @type {!HTMLTableRowElement} */(document.createElement('tr'));
   };
 
   /**
@@ -68,7 +83,7 @@ var NetworkUI = (function() {
    *     key (any part of it) is not defined.
    */
   var getOncProperty = function(networkState, key) {
-    var dict = /** @type {!Object} */ (networkState);
+    var dict = /** @type {!Object} */(networkState);
     var keys = key.split('.');
     while (keys.length > 1) {
       var k = keys.shift();
@@ -91,7 +106,7 @@ var NetworkUI = (function() {
     cell.className = 'state-table-expand-button-cell';
     var button = document.createElement('button');
     button.addEventListener('click', function(event) {
-      toggleExpandRow(/** @type {!HTMLElement} */ (event.target), guid);
+      toggleExpandRow(/** @type {!HTMLElement} */(event.target), guid);
     });
     button.className = 'state-table-expand-button';
     button.textContent = '+';
@@ -110,7 +125,7 @@ var NetworkUI = (function() {
   var createStateTableIcon = function(networkState) {
     var cell = createTableCellElement();
     cell.className = 'state-table-icon-cell';
-    var icon = /** @type {!CrNetworkIconElement} */ (
+    var icon = /** @type {!CrNetworkIconElement} */(
         document.createElement('cr-network-icon'));
     icon.isListItem = true;
     icon.networkState = networkState;
@@ -222,7 +237,7 @@ var NetworkUI = (function() {
    */
   var toggleExpandRow = function(btn, guid) {
     var cell = btn.parentNode;
-    var row = /** @type {!HTMLTableRowElement} */ (cell.parentNode);
+    var row = /** @type {!HTMLTableRowElement} */(cell.parentNode);
     if (btn.textContent == '-') {
       btn.textContent = '+';
       row.parentNode.removeChild(row.nextSibling);
@@ -264,16 +279,13 @@ var NetworkUI = (function() {
       chrome.send('getShillProperties', [guid]);
     } else if (selectedId == 'state') {
       chrome.networkingPrivate.getState(guid, function(properties) {
-        showDetail(properties, chrome.runtime.lastError);
-      });
+        showDetail(properties, chrome.runtime.lastError); });
     } else if (selectedId == 'managed') {
       chrome.networkingPrivate.getManagedProperties(guid, function(properties) {
-        showDetail(properties, chrome.runtime.lastError);
-      });
+        showDetail(properties, chrome.runtime.lastError); });
     } else {
       chrome.networkingPrivate.getProperties(guid, function(properties) {
-        showDetail(properties, chrome.runtime.lastError);
-      });
+        showDetail(properties, chrome.runtime.lastError); });
     }
     return expandedRow;
   };
@@ -310,16 +322,12 @@ var NetworkUI = (function() {
    */
   var requestNetworks = function() {
     chrome.networkingPrivate.getNetworks(
-        {
-          'networkType': chrome.networkingPrivate.NetworkType.ALL,
-          'visible': true
-        },
+        {'networkType': chrome.networkingPrivate.NetworkType.ALL,
+         'visible': true},
         onVisibleNetworksReceived);
     chrome.networkingPrivate.getNetworks(
-        {
-          'networkType': chrome.networkingPrivate.NetworkType.ALL,
-          'configured': true
-        },
+        {'networkType': chrome.networkingPrivate.NetworkType.ALL,
+         'configured': true},
         onFavoriteNetworksReceived);
   };
 
@@ -361,5 +369,7 @@ var NetworkUI = (function() {
     chrome.send('addNetwork', [event.detail.customData]);
   });
 
-  return {getShillPropertiesResult: getShillPropertiesResult};
+  return {
+    getShillPropertiesResult: getShillPropertiesResult
+  };
 })();

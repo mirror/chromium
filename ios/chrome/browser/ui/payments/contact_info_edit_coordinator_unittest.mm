@@ -135,11 +135,6 @@ TEST_F(PaymentRequestContactInfoEditCoordinatorTest, StartAndStop) {
   // Spin the run loop to trigger the animation.
   base::test::ios::SpinRunLoopWithMaxDelay(base::TimeDelta::FromSecondsD(1.0));
   EXPECT_TRUE([base_view_controller.presentedViewController
-      isMemberOfClass:[UINavigationController class]]);
-  UINavigationController* navigation_controller =
-      base::mac::ObjCCastStrict<UINavigationController>(
-          base_view_controller.presentedViewController);
-  EXPECT_TRUE([navigation_controller.visibleViewController
       isMemberOfClass:[PaymentRequestEditViewController class]]);
 
   [coordinator stop];
@@ -197,14 +192,9 @@ TEST_F(PaymentRequestContactInfoEditCoordinatorTest, DidFinishCreating) {
   EXPECT_CALL(*profile_comparator_, Invalidate(_)).Times(0);
 
   // Call the controller delegate method.
-  EXPECT_TRUE([base_view_controller.presentedViewController
-      isMemberOfClass:[UINavigationController class]]);
-  UINavigationController* navigation_controller =
-      base::mac::ObjCCastStrict<UINavigationController>(
-          base_view_controller.presentedViewController);
   PaymentRequestEditViewController* view_controller =
       base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
-          navigation_controller.visibleViewController);
+          base_view_controller.presentedViewController);
   [coordinator paymentRequestEditViewController:view_controller
                          didFinishEditingFields:GetEditorFields()];
 
@@ -261,14 +251,9 @@ TEST_F(PaymentRequestContactInfoEditCoordinatorTest, DidFinishEditing) {
       .Times(1);
 
   // Call the controller delegate method.
-  EXPECT_TRUE([base_view_controller.presentedViewController
-      isMemberOfClass:[UINavigationController class]]);
-  UINavigationController* navigation_controller =
-      base::mac::ObjCCastStrict<UINavigationController>(
-          base_view_controller.presentedViewController);
   PaymentRequestEditViewController* view_controller =
       base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
-          navigation_controller.visibleViewController);
+          base_view_controller.presentedViewController);
   [coordinator paymentRequestEditViewController:view_controller
                          didFinishEditingFields:GetEditorFields()];
 
@@ -301,14 +286,9 @@ TEST_F(PaymentRequestContactInfoEditCoordinatorTest, DidCancel) {
   EXPECT_NE(nil, base_view_controller.presentedViewController);
 
   // Call the controller delegate method.
-  EXPECT_TRUE([base_view_controller.presentedViewController
-      isMemberOfClass:[UINavigationController class]]);
-  UINavigationController* navigation_controller =
-      base::mac::ObjCCastStrict<UINavigationController>(
-          base_view_controller.presentedViewController);
   PaymentRequestEditViewController* view_controller =
       base::mac::ObjCCastStrict<PaymentRequestEditViewController>(
-          navigation_controller.visibleViewController);
+          base_view_controller.presentedViewController);
   [coordinator paymentRequestEditViewControllerDidCancel:view_controller];
 
   EXPECT_OCMOCK_VERIFY(delegate);

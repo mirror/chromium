@@ -19,6 +19,7 @@
 #include "components/signin/core/browser/signin_header_helper.h"
 #include "components/signin/core/common/profile_management_switches.h"
 #include "content/public/browser/browser_thread.h"
+#include "content/public/browser/resource_request_info.h"
 #include "content/public/browser/web_contents.h"
 #include "google_apis/gaia/gaia_auth_util.h"
 #include "net/http/http_response_headers.h"
@@ -45,10 +46,9 @@ const char kDiceResponseHeader[] = "X-Chrome-ID-Consistency-Response";
 // Processes the mirror response header on the UI thread. Currently depending
 // on the value of |header_value|, it either shows the profile avatar menu, or
 // opens an incognito window/tab.
-void ProcessMirrorHeaderUIThread(
-    ManageAccountsParams manage_accounts_params,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessMirrorHeaderUIThread(int child_id,
+                                 int route_id,
+                                 ManageAccountsParams manage_accounts_params) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
   DCHECK_EQ(switches::AccountConsistencyMethod::kMirror,
             switches::GetAccountConsistencyMethod());
@@ -56,7 +56,8 @@ void ProcessMirrorHeaderUIThread(
   GAIAServiceType service_type = manage_accounts_params.service_type;
   DCHECK_NE(GAIA_SERVICE_TYPE_NONE, service_type);
 
-  content::WebContents* web_contents = web_contents_getter.Run();
+  content::WebContents* web_contents =
+      tab_util::GetWebContentsByID(child_id, route_id);
   if (!web_contents)
     return;
 
@@ -108,11 +109,10 @@ void ProcessMirrorHeaderUIThread(
 // Looks for the X-Chrome-Manage-Accounts response header, and if found,
 // tries to show the avatar bubble in the browser identified by the
 // child/route id. Must be called on IO thread.
-void ProcessMirrorResponseHeaderIfExists(
-    net::URLRequest* request,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessMirrorResponseHeaderIfExists(net::URLRequest* request,
+                                         ProfileIOData* io_data,
+                                         int child_id,
+                                         int route_id) {
   DCHECK_CURRENTLY_ON(content::BrowserThread::IO);
 
   const content::ResourceRequestInfo* info =
@@ -152,9 +152,11 @@ void ProcessMirrorResponseHeaderIfExists(
   if (params.service_type == GAIA_SERVICE_TYPE_NONE)
     return;
 
+  params.child_id = child_id;
+  params.route_id = route_id;
   content::BrowserThread::PostTask(
       content::BrowserThread::UI, FROM_HERE,
-      base::Bind(ProcessMirrorHeaderUIThread, params, web_contents_getter));
+      base::Bind(ProcessMirrorHeaderUIThread, child_id, route_id, params));
 }
 
 #if !defined(OS_ANDROID)
@@ -240,20 +242,19 @@ void FixAccountConsistencyRequestHeader(net::URLRequest* request,
       io_data->GetCookieSettings(), profile_mode_mask);
 }
 
-void ProcessAccountConsistencyResponseHeaders(
-    net::URLRequest* request,
-    const GURL& redirect_url,
-    ProfileIOData* io_data,
-    const content::ResourceRequestInfo::WebContentsGetter&
-        web_contents_getter) {
+void ProcessAccountConsistencyResponseHeaders(net::URLRequest* request,
+                                              const GURL& redirect_url,
+                                              ProfileIOData* io_data,
+                                              int child_id,
+                                              int route_id) {
   if (redirect_url.is_empty()) {
     // This is not a redirect.
 
     // See if the response contains the X-Chrome-Manage-Accounts header. If so
     // show the profile avatar bubble so that user can complete signin/out
     // action the native UI.
-    signin::ProcessMirrorResponseHeaderIfExists(request, io_data,
-                                                web_contents_getter);
+    signin::ProcessMirrorResponseHeaderIfExists(request, io_data, child_id,
+                                                route_id);
   } else {
 // This is a redirect.
 

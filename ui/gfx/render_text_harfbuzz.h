@@ -86,6 +86,7 @@ struct GFX_EXPORT TextRunHarfBuzz {
   bool italic;
   Font::Weight weight;
   bool strike;
+  bool diagonal_strike;
   bool underline;
 
  private:

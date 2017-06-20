@@ -15,7 +15,6 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/command_line.h"
-#include "base/json/json_string_value_serializer.h"
 #include "base/location.h"
 #include "base/logging.h"
 #include "base/macros.h"
@@ -1318,8 +1317,7 @@ void WizardController::AddNetworkRequested(const std::string& onc_spec) {
 
   if (NetworkAllowUpdate(network_state)) {
     network_screen->CreateAndConnectNetworkFromOnc(
-        onc_spec, base::Bind(&base::DoNothing),
-        network_handler::ErrorCallback());
+        onc_spec, base::Bind(&base::DoNothing), base::Bind(&base::DoNothing));
   } else {
     network_screen->CreateAndConnectNetworkFromOnc(
         onc_spec, base::Bind(&WizardController::OnSetHostNetworkSuccessful,
@@ -1619,19 +1617,7 @@ void WizardController::OnSetHostNetworkSuccessful() {
   InitiateOOBEUpdate();
 }
 
-void WizardController::OnSetHostNetworkFailed(
-    const std::string& error_name,
-    std::unique_ptr<base::DictionaryValue> error_data) {
-  std::string error_message;
-  JSONStringValueSerializer serializer(&error_message);
-  serializer.Serialize(*error_data);
-  error_message = error_name + ": " + error_message;
-
-  remora_controller_->SetErrorCodeAndMessage(
-      static_cast<int>(
-          pairing_chromeos::HostPairingController::ErrorCode::NETWORK_ERROR),
-      error_message);
-
+void WizardController::OnSetHostNetworkFailed() {
   remora_controller_->OnNetworkConnectivityChanged(
       pairing_chromeos::HostPairingController::CONNECTIVITY_NONE);
 }

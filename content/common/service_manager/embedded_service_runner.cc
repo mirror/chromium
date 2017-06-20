@@ -30,8 +30,6 @@ class EmbeddedServiceRunner::InstanceManager
       : name_(name.as_string()),
         factory_callback_(info.factory),
         use_own_thread_(!info.task_runner && info.use_own_thread),
-        message_loop_type_(info.message_loop_type),
-        thread_priority_(info.thread_priority),
         quit_closure_(quit_closure),
         quit_task_runner_(base::ThreadTaskRunnerHandle::Get()),
         service_task_runner_(info.task_runner) {
@@ -45,18 +43,15 @@ class EmbeddedServiceRunner::InstanceManager
     if (use_own_thread_ && !thread_) {
       // Start a new thread if necessary.
       thread_.reset(new base::Thread(name_));
-      base::Thread::Options options;
-      options.message_loop_type = message_loop_type_;
-      options.priority = thread_priority_;
-      thread_->StartWithOptions(options);
+      thread_->Start();
       service_task_runner_ = thread_->task_runner();
     }
 
     DCHECK(service_task_runner_);
     service_task_runner_->PostTask(
         FROM_HERE,
-        base::Bind(&InstanceManager::BindServiceRequestOnServiceSequence, this,
-                   base::Passed(&request)));
+        base::Bind(&InstanceManager::BindServiceRequestOnServiceThread,
+                   this, base::Passed(&request)));
   }
 
   void ShutDown() {
@@ -64,11 +59,11 @@ class EmbeddedServiceRunner::InstanceManager
     if (!service_task_runner_)
       return;
     // Any extant ServiceContexts must be destroyed on the application thread.
-    if (service_task_runner_->RunsTasksOnCurrentThread()) {
-      QuitOnServiceSequence();
+    if (service_task_runner_->BelongsToCurrentThread()) {
+      QuitOnServiceThread();
     } else {
       service_task_runner_->PostTask(
-          FROM_HERE, base::Bind(&InstanceManager::QuitOnServiceSequence, this));
+          FROM_HERE, base::Bind(&InstanceManager::QuitOnServiceThread, this));
     }
   }
 
@@ -81,9 +76,9 @@ class EmbeddedServiceRunner::InstanceManager
     DCHECK(!thread_);
   }
 
-  void BindServiceRequestOnServiceSequence(
+  void BindServiceRequestOnServiceThread(
       service_manager::mojom::ServiceRequest request) {
-    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
+    DCHECK(service_task_runner_->BelongsToCurrentThread());
 
     int instance_id = next_instance_id_++;
 
@@ -99,7 +94,7 @@ class EmbeddedServiceRunner::InstanceManager
   }
 
   void OnInstanceLost(int instance_id) {
-    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
+    DCHECK(service_task_runner_->BelongsToCurrentThread());
 
     auto id_iter = id_to_context_map_.find(instance_id);
     CHECK(id_iter != id_to_context_map_.end());
@@ -111,14 +106,14 @@ class EmbeddedServiceRunner::InstanceManager
 
     // If we've lost the last instance, run the quit closure.
     if (contexts_.empty())
-      QuitOnServiceSequence();
+      QuitOnServiceThread();
   }
 
-  void QuitOnServiceSequence() {
-    DCHECK(service_task_runner_->RunsTasksOnCurrentThread());
+  void QuitOnServiceThread() {
+    DCHECK(service_task_runner_->BelongsToCurrentThread());
 
     contexts_.clear();
-    if (quit_task_runner_->RunsTasksOnCurrentThread()) {
+    if (quit_task_runner_->BelongsToCurrentThread()) {
       QuitOnRunnerThread();
     } else {
       quit_task_runner_->PostTask(
@@ -138,8 +133,6 @@ class EmbeddedServiceRunner::InstanceManager
   const std::string name_;
   const ServiceInfo::ServiceFactory factory_callback_;
   const bool use_own_thread_;
-  base::MessageLoop::Type message_loop_type_;
-  base::ThreadPriority thread_priority_;
   const base::Closure quit_closure_;
   const scoped_refptr<base::SingleThreadTaskRunner> quit_task_runner_;
 
@@ -149,7 +142,7 @@ class EmbeddedServiceRunner::InstanceManager
 
   // These fields must only be accessed from the runner's thread.
   std::unique_ptr<base::Thread> thread_;
-  scoped_refptr<base::SequencedTaskRunner> service_task_runner_;
+  scoped_refptr<base::SingleThreadTaskRunner> service_task_runner_;
 
   // These fields must only be accessed from the service thread, except in
   // the destructor which may run on either the runner thread or the service

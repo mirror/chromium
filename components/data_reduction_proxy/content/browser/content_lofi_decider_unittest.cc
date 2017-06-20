@@ -234,11 +234,6 @@ class ContentLoFiDeciderTest : public testing::Test {
 };
 
 TEST_F(ContentLoFiDeciderTest, LoFiFlags) {
-  // Turn off proxy-decides-transform feature for these unit tests.
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(
-      features::kDataReductionProxyDecidesTransform);
-
   // Enable Lo-Fi.
   const struct {
     bool is_using_lofi;
@@ -427,11 +422,6 @@ TEST_F(ContentLoFiDeciderTest, MaybeSetAcceptTransformHeaderAcceptEmptyImage) {
 }
 
 TEST_F(ContentLoFiDeciderTest, LoFiEnabledFieldTrial) {
-  // Turn off proxy-decides-transform feature for these unit tests.
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(
-      features::kDataReductionProxyDecidesTransform);
-
   base::FieldTrialList field_trial_list(nullptr);
   base::FieldTrialList::CreateFieldTrial(params::GetLoFiFieldTrialName(),
                                          "Enabled");
@@ -501,11 +491,6 @@ TEST_F(ContentLoFiDeciderTest, LoFiEnabledFieldTrial) {
 }
 
 TEST_F(ContentLoFiDeciderTest, LoFiControlFieldTrial) {
-  // Turn off proxy-decides-transform feature for these unit tests.
-  base::test::ScopedFeatureList scoped_feature_list;
-  scoped_feature_list.InitAndDisableFeature(
-      features::kDataReductionProxyDecidesTransform);
-
   base::FieldTrialList field_trial_list(nullptr);
   base::FieldTrialList::CreateFieldTrial(params::GetLoFiFieldTrialName(),
                                          "Control");

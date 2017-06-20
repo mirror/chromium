@@ -557,7 +557,7 @@ InspectorTest._innerReloadPage = function(hardReload, callback, scriptToEvaluate
     InspectorTest._pageLoadedCallback = InspectorTest.safeWrap(callback);
 
     if (UI.panels.network)
-        NetworkLog.networkLog.reset();
+        UI.panels.network._networkLogView.reset();
     InspectorTest.resourceTreeModel.reloadPage(hardReload, scriptToEvaluateOnLoad);
 }
 

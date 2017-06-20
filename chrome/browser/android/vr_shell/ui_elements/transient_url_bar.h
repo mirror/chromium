@@ -29,7 +29,7 @@ class TransientUrlBar : public TexturedElement {
   ~TransientUrlBar() override;
 
   void SetURL(const GURL& gurl);
-  void SetSecurityInfo(security_state::SecurityLevel level, bool malware);
+  void SetSecurityLevel(security_state::SecurityLevel level);
 
  private:
   UiTexture* GetTexture() const override;

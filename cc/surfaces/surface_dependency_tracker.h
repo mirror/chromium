@@ -29,8 +29,7 @@ class SurfaceManager;
 // TODO(fsamuel): Deadlines should not be global. They should be scoped to a
 // surface subtree. However, that will not be possible until SurfaceReference
 // work is complete.
-class CC_SURFACES_EXPORT SurfaceDependencyTracker
-    : public SurfaceDeadlineObserver {
+class CC_SURFACES_EXPORT SurfaceDependencyTracker {
  public:
   SurfaceDependencyTracker(SurfaceManager* surface_manager,
                            BeginFrameSource* begin_frame_source);
@@ -42,8 +41,7 @@ class CC_SURFACES_EXPORT SurfaceDependencyTracker
 
   bool has_deadline() const { return deadline_.has_deadline(); }
 
-  // SurfaceDeadlineObserver implementation:
-  void OnDeadline() override;
+  void OnDeadline();
 
   void OnSurfaceActivated(Surface* surface);
   void OnSurfaceDependenciesChanged(

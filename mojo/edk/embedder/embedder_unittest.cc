@@ -190,7 +190,7 @@ TEST_F(EmbedderTest, PipeSetup_LaunchFailure) {
 #if !defined(OS_IOS)
 
 TEST_F(EmbedderTest, MultiprocessChannels) {
-  RunTestClient("MultiprocessChannelsClient", [&](MojoHandle server_mp) {
+  RUN_CHILD_ON_PIPE(MultiprocessChannelsClient, server_mp)
     // 1. Write a message to |server_mp| (attaching nothing).
     WriteMessage(server_mp, "hello");
 
@@ -229,11 +229,10 @@ TEST_F(EmbedderTest, MultiprocessChannels) {
     ASSERT_EQ(MOJO_HANDLE_SIGNAL_PEER_CLOSED, state.satisfiable_signals);
 
     ASSERT_EQ(MOJO_RESULT_OK, MojoClose(mp2));
-  });
+  END_CHILD()
 }
 
-DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessChannelsClient,
-                                  EmbedderTest,
+DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessChannelsClient, EmbedderTest,
                                   client_mp) {
   // 1. Read the first message from |client_mp|.
   EXPECT_EQ("hello", ReadMessage(client_mp));
@@ -274,15 +273,15 @@ DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessChannelsClient,
 }
 
 TEST_F(EmbedderTest, MultiprocessBaseSharedMemory) {
-  RunTestClient("MultiprocessSharedMemoryClient", [&](MojoHandle server_mp) {
+  RUN_CHILD_ON_PIPE(MultiprocessSharedMemoryClient, server_mp)
     // 1. Create a base::SharedMemory object and create a mojo shared buffer
     // from it.
     base::SharedMemoryCreateOptions options;
     options.size = 123;
     base::SharedMemory shared_memory;
     ASSERT_TRUE(shared_memory.Create(options));
-    base::SharedMemoryHandle shm_handle =
-        base::SharedMemory::DuplicateHandle(shared_memory.handle());
+    base::SharedMemoryHandle shm_handle = base::SharedMemory::DuplicateHandle(
+        shared_memory.handle());
     MojoHandle sb1;
     ASSERT_EQ(MOJO_RESULT_OK,
               CreateSharedBufferWrapper(shm_handle, 123, false, &sb1));
@@ -313,11 +312,10 @@ TEST_F(EmbedderTest, MultiprocessBaseSharedMemory) {
               std::string(static_cast<char*>(shared_memory.memory())));
 
     ASSERT_EQ(MOJO_RESULT_OK, MojoClose(sb1));
-  });
+  END_CHILD()
 }
 
-DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessSharedMemoryClient,
-                                  EmbedderTest,
+DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessSharedMemoryClient, EmbedderTest,
                                   client_mp) {
   // 1. Read the first message from |client_mp|, which should have |sb1| which
   // should be a shared buffer handle.
@@ -354,15 +352,15 @@ DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessSharedMemoryClient,
 
 #if defined(OS_MACOSX) && !defined(OS_IOS)
 TEST_F(EmbedderTest, MultiprocessMachSharedMemory) {
-  RunTestClient("MultiprocessSharedMemoryClient", [&](MojoHandle server_mp) {
+  RUN_CHILD_ON_PIPE(MultiprocessSharedMemoryClient, server_mp)
     // 1. Create a Mach base::SharedMemory object and create a mojo shared
     // buffer from it.
     base::SharedMemoryCreateOptions options;
     options.size = 123;
     base::SharedMemory shared_memory;
     ASSERT_TRUE(shared_memory.Create(options));
-    base::SharedMemoryHandle shm_handle =
-        base::SharedMemory::DuplicateHandle(shared_memory.handle());
+    base::SharedMemoryHandle shm_handle = base::SharedMemory::DuplicateHandle(
+        shared_memory.handle());
     MojoHandle sb1;
     ASSERT_EQ(MOJO_RESULT_OK,
               CreateSharedBufferWrapper(shm_handle, 123, false, &sb1));
@@ -393,7 +391,7 @@ TEST_F(EmbedderTest, MultiprocessMachSharedMemory) {
               std::string(static_cast<char*>(shared_memory.memory())));
 
     ASSERT_EQ(MOJO_RESULT_OK, MojoClose(sb1));
-  });
+  END_CHILD()
 }
 
 enum class HandleType {
@@ -403,14 +401,17 @@ enum class HandleType {
 };
 
 const HandleType kTestHandleTypes[] = {
-    HandleType::MACH,  HandleType::MACH_NULL, HandleType::POSIX,
-    HandleType::POSIX, HandleType::MACH,
+  HandleType::MACH,
+  HandleType::MACH_NULL,
+  HandleType::POSIX,
+  HandleType::POSIX,
+  HandleType::MACH,
 };
 
 // Test that we can mix file descriptors and mach port handles.
 TEST_F(EmbedderTest, MultiprocessMixMachAndFds) {
   const size_t kShmSize = 1234;
-  RunTestClient("MultiprocessMixMachAndFdsClient", [&](MojoHandle server_mp) {
+  RUN_CHILD_ON_PIPE(MultiprocessMixMachAndFdsClient, server_mp)
     // 1. Create fds or Mach objects and mojo handles from them.
     MojoHandle platform_handles[arraysize(kTestHandleTypes)];
     for (size_t i = 0; i < arraysize(kTestHandleTypes); i++) {
@@ -424,8 +425,8 @@ TEST_F(EmbedderTest, MultiprocessMixMachAndFds) {
         scoped_handle.reset(PlatformHandle(file.TakePlatformFile()));
         EXPECT_EQ(PlatformHandle::Type::POSIX, scoped_handle.get().type);
       } else if (type == HandleType::MACH_NULL) {
-        scoped_handle.reset(
-            PlatformHandle(static_cast<mach_port_t>(MACH_PORT_NULL)));
+        scoped_handle.reset(PlatformHandle(
+            static_cast<mach_port_t>(MACH_PORT_NULL)));
         EXPECT_EQ(PlatformHandle::Type::MACH, scoped_handle.get().type);
       } else {
         base::SharedMemoryCreateOptions options;
@@ -437,9 +438,8 @@ TEST_F(EmbedderTest, MultiprocessMixMachAndFds) {
         scoped_handle.reset(PlatformHandle(shm_handle.GetMemoryObject()));
         EXPECT_EQ(PlatformHandle::Type::MACH, scoped_handle.get().type);
       }
-      ASSERT_EQ(MOJO_RESULT_OK,
-                CreatePlatformHandleWrapper(std::move(scoped_handle),
-                                            platform_handles + i));
+      ASSERT_EQ(MOJO_RESULT_OK, CreatePlatformHandleWrapper(
+          std::move(scoped_handle), platform_handles + i));
     }
 
     // 2. Send all the handles to the child.
@@ -448,11 +448,10 @@ TEST_F(EmbedderTest, MultiprocessMixMachAndFds) {
 
     // 3. Read a message from |server_mp|.
     EXPECT_EQ("bye", ReadMessage(server_mp));
-  });
+  END_CHILD()
 }
 
-DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessMixMachAndFdsClient,
-                                  EmbedderTest,
+DEFINE_TEST_CLIENT_TEST_WITH_PIPE(MultiprocessMixMachAndFdsClient, EmbedderTest,
                                   client_mp) {
   const int kNumHandles = arraysize(kTestHandleTypes);
   MojoHandle platform_handles[kNumHandles];
@@ -555,8 +554,7 @@ TEST_F(EmbedderTest, ClosePipeToConnectedPeer) {
   EXPECT_EQ(0, controller.WaitForShutdown());
 }
 
-DEFINE_TEST_CLIENT_TEST_WITH_PIPE(ClosePipeToConnectedPeerClient,
-                                  EmbedderTest,
+DEFINE_TEST_CLIENT_TEST_WITH_PIPE(ClosePipeToConnectedPeerClient, EmbedderTest,
                                   client_mp) {
   // 1. Read the first message from |client_mp|.
   EXPECT_EQ("hello", ReadMessage(client_mp));
@@ -581,8 +579,7 @@ TEST_F(EmbedderTest, ClosePipeToConnectingPeer) {
   EXPECT_EQ(0, controller.WaitForShutdown());
 }
 
-DEFINE_TEST_CLIENT_TEST_WITH_PIPE(ClosePipeToConnectingPeerClient,
-                                  EmbedderTest,
+DEFINE_TEST_CLIENT_TEST_WITH_PIPE(ClosePipeToConnectingPeerClient, EmbedderTest,
                                   client_mp) {
   ASSERT_EQ(MOJO_RESULT_OK,
             WaitForSignals(client_mp, MOJO_HANDLE_SIGNAL_PEER_CLOSED));

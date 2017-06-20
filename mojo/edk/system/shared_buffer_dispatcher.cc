@@ -27,8 +27,6 @@ namespace {
 struct SerializedState {
   uint64_t num_bytes;
   uint32_t flags;
-  uint64_t guid_high;
-  uint64_t guid_low;
   uint32_t padding;
 };
 
@@ -125,9 +123,9 @@ scoped_refptr<SharedBufferDispatcher> SharedBufferDispatcher::Deserialize(
     return nullptr;
   }
 
-  const SerializedState* serialized_state =
+  const SerializedState* serialization =
       static_cast<const SerializedState*>(bytes);
-  if (!serialized_state->num_bytes) {
+  if (!serialization->num_bytes) {
     LOG(ERROR)
         << "Invalid serialized shared buffer dispatcher (invalid num_bytes)";
     return nullptr;
@@ -145,15 +143,12 @@ scoped_refptr<SharedBufferDispatcher> SharedBufferDispatcher::Deserialize(
   // |platform_handles|.
   std::swap(platform_handle, *platform_handles);
 
-  base::UnguessableToken guid = base::UnguessableToken::Deserialize(
-      serialized_state->guid_high, serialized_state->guid_low);
-
   // Wrapping |platform_handle| in a |ScopedPlatformHandle| means that it'll be
   // closed even if creation fails.
-  bool read_only = (serialized_state->flags & kSerializedStateFlagsReadOnly);
+  bool read_only = (serialization->flags & kSerializedStateFlagsReadOnly);
   scoped_refptr<PlatformSharedBuffer> shared_buffer(
       PlatformSharedBuffer::CreateFromPlatformHandle(
-          static_cast<size_t>(serialized_state->num_bytes), read_only, guid,
+          static_cast<size_t>(serialization->num_bytes), read_only,
           ScopedPlatformHandle(platform_handle)));
   if (!shared_buffer) {
     LOG(ERROR)
@@ -259,17 +254,14 @@ void SharedBufferDispatcher::StartSerialize(uint32_t* num_bytes,
 bool SharedBufferDispatcher::EndSerialize(void* destination,
                                           ports::PortName* ports,
                                           PlatformHandle* handles) {
-  SerializedState* serialized_state =
+  SerializedState* serialization =
       static_cast<SerializedState*>(destination);
   base::AutoLock lock(lock_);
-  serialized_state->num_bytes =
-      static_cast<uint64_t>(shared_buffer_->GetNumBytes());
-  serialized_state->flags =
+  serialization->num_bytes =
+        static_cast<uint64_t>(shared_buffer_->GetNumBytes());
+  serialization->flags =
       (shared_buffer_->IsReadOnly() ? kSerializedStateFlagsReadOnly : 0);
-  base::UnguessableToken guid = shared_buffer_->GetGUID();
-  serialized_state->guid_high = guid.GetHighForSerialization();
-  serialized_state->guid_low = guid.GetLowForSerialization();
-  serialized_state->padding = 0;
+  serialization->padding = 0;
 
   handle_for_transit_ = shared_buffer_->DuplicatePlatformHandle();
   if (!handle_for_transit_.is_valid()) {

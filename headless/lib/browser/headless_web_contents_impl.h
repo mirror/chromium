@@ -26,7 +26,7 @@ class WebContents;
 }
 
 namespace gfx {
-class Rect;
+class Size;
 }
 
 namespace headless {
@@ -48,10 +48,10 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   static std::unique_ptr<HeadlessWebContentsImpl> Create(
       HeadlessWebContents::Builder* builder);
 
-  // Takes ownership of |child_contents|.
-  static std::unique_ptr<HeadlessWebContentsImpl> CreateForChildContents(
-      HeadlessWebContentsImpl* parent,
-      content::WebContents* child_contents);
+  // Takes ownership of |web_contents|.
+  static std::unique_ptr<HeadlessWebContentsImpl> CreateFromWebContents(
+      content::WebContents* web_contents,
+      HeadlessBrowserContextImpl* browser_context);
 
   // HeadlessWebContents implementation:
   void AddObserver(Observer* observer) override;
@@ -110,11 +110,6 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   }
   const std::string& window_state() const { return window_state_; }
 
-  // Set bounds of WebContent's platform window.
-  void SetBounds(const gfx::Rect& bounds);
-
-  void CreateTabSocketMojoService(mojo::ScopedMessagePipeHandle handle);
-
  private:
   // Takes ownership of |web_contents|.
   HeadlessWebContentsImpl(content::WebContents* web_contents,
@@ -123,12 +118,8 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   void MainFrameTabSocketSetupComplete();
   void MaybeIssueDevToolsTargetReady();
 
-  void InitializeWindow(const gfx::Rect& initial_bounds);
-
+  void InitializeScreen(const gfx::Size& initial_size);
   using MojoService = HeadlessWebContents::Builder::MojoService;
-  void CreateMojoService(
-      const MojoService::ServiceFactoryCallback& service_factory,
-      mojo::ScopedMessagePipeHandle handle);
 
   class Delegate;
   std::unique_ptr<Delegate> web_contents_delegate_;

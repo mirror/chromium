@@ -8,7 +8,8 @@
 
 login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
   return {
-    EXTERNAL_API: ['enableKioskForTesting', 'onCompleted'],
+    EXTERNAL_API: ['enableKioskForTesting',
+                   'onCompleted'],
     /**
      * Header text of the screen.
      * @type {string}
@@ -26,7 +27,8 @@ login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
 
       var confirmButton = this.ownerDocument.createElement('button');
       confirmButton.id = 'kiosk-enable-button';
-      confirmButton.textContent = loadTimeData.getString('kioskEnableButton');
+      confirmButton.textContent =
+        loadTimeData.getString('kioskEnableButton');
       confirmButton.addEventListener('click', function(e) {
         chrome.send('kioskOnEnable');
         e.stopPropagation();
@@ -35,7 +37,8 @@ login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
 
       var cancelButton = this.ownerDocument.createElement('button');
       cancelButton.id = 'kiosk-cancel-button';
-      cancelButton.textContent = loadTimeData.getString('kioskCancelButton');
+      cancelButton.textContent =
+          loadTimeData.getString('kioskCancelButton');
       cancelButton.addEventListener('click', function(e) {
         chrome.send('kioskOnClose');
         e.stopPropagation();
@@ -45,7 +48,8 @@ login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
       var okButton = this.ownerDocument.createElement('button');
       okButton.id = 'kiosk-ok-button';
       okButton.hidden = true;
-      okButton.textContent = loadTimeData.getString('kioskOKButton');
+      okButton.textContent =
+          loadTimeData.getString('kioskOKButton');
       okButton.addEventListener('click', function(e) {
         chrome.send('kioskOnClose');
         e.stopPropagation();
@@ -84,8 +88,8 @@ login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
      * @param {boolean} confirm True if the screen should confirm auto-launch.
      */
     enableKioskForTesting: function(confirm) {
-      var button =
-          confirm ? $('kiosk-enable-button') : $('kiosk-cancel-button');
+      var button = confirm ? $('kiosk-enable-button') :
+                             $('kiosk-cancel-button');
       var clickEvent = cr.doc.createEvent('Event');
       clickEvent.initEvent('click', true, true);
       button.dispatchEvent(clickEvent);
@@ -99,8 +103,12 @@ login.createScreen('KioskEnableScreen', 'kiosk-enable', function() {
       $('kiosk-enable-button').hidden = true;
       $('kiosk-cancel-button').hidden = true;
       $('kiosk-ok-button').hidden = false;
-      $('kiosk-enable-details').textContent = loadTimeData.getString(
-          success ? 'kioskEnableSuccessMsg' : 'kioskEnableErrorMsg');
+      $('kiosk-enable-details').textContent =
+        loadTimeData.getString(success ? 'kioskEnableSuccessMsg' :
+                                         'kioskEnableErrorMsg');
     }
   };
 });
+
+
+

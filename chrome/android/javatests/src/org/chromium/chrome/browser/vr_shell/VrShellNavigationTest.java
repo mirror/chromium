@@ -7,7 +7,6 @@ package org.chromium.chrome.browser.vr_shell;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.PAGE_LOAD_TIMEOUT_S;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_LONG_MS;
 import static org.chromium.chrome.browser.vr_shell.VrTestRule.POLL_TIMEOUT_SHORT_MS;
-import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_DEVICE_DAYDREAM;
 import static org.chromium.chrome.test.util.ChromeRestriction.RESTRICTION_TYPE_VIEWER_DAYDREAM;
 
 import android.support.test.filters.MediumTest;
@@ -41,7 +40,7 @@ import java.util.concurrent.TimeoutException;
 @CommandLineFlags.Add({ChromeSwitches.DISABLE_FIRST_RUN_EXPERIENCE,
         ChromeActivityTestRule.DISABLE_NETWORK_PREDICTION_FLAG, "enable-features=VrShell",
         "enable-webvr"})
-@Restriction(RESTRICTION_TYPE_DEVICE_DAYDREAM)
+@Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
 public class VrShellNavigationTest {
     @Rule
     public VrTestRule mVrTestRule = new VrTestRule();
@@ -159,7 +158,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrTo2d()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);
@@ -175,7 +173,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrToWebVr()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);
@@ -191,7 +188,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrPresentingTo2d()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);
@@ -208,7 +204,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrPresentingToWebVr()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);
@@ -225,7 +220,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrFullscreenTo2d()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);
@@ -242,7 +236,6 @@ public class VrShellNavigationTest {
      */
     @Test
     @MediumTest
-    @Restriction(RESTRICTION_TYPE_VIEWER_DAYDREAM)
     public void testWebVrFullscreenToWebVr()
             throws IllegalArgumentException, InterruptedException, TimeoutException {
         mVrTestRule.loadUrlAndAwaitInitialization(TEST_PAGE_WEBVR_URL, PAGE_LOAD_TIMEOUT_S);

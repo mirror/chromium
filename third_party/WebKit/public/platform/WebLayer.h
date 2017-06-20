@@ -97,9 +97,6 @@ class WebLayer {
   virtual void SetIsRootForIsolatedGroup(bool) = 0;
   virtual bool IsRootForIsolatedGroup() = 0;
 
-  virtual void SetShouldHitTest(bool) = 0;
-  virtual bool ShouldHitTest() = 0;
-
   virtual void SetOpaque(bool) = 0;
   virtual bool Opaque() const = 0;
 

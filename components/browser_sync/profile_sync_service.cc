@@ -930,7 +930,8 @@ void ProfileSyncService::OnEngineInitialized(
   }
 
   // Initialize local device info.
-  local_device_->Initialize(cache_guid, signin_scoped_device_id);
+  local_device_->Initialize(cache_guid, signin_scoped_device_id,
+                            sync_client_->GetBlockingPool());
 
   if (protocol_event_observers_.might_have_observers()) {
     engine_->RequestBufferedProtocolEventsAndEnableForwarding();

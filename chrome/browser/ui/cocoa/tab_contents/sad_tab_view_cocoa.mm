@@ -137,7 +137,6 @@ const CGFloat kMaxTopMargin = 130;
                                                messageColor,
                                          }] autorelease]];
     }
-    [message_ sizeToFit];
     [container_ addSubview:message_];
 
     NSString* helpLinkTitle =

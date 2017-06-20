@@ -20,7 +20,7 @@ ModelSafeGroup PassiveModelWorker::GetModelSafeGroup() {
   return GROUP_PASSIVE;
 }
 
-bool PassiveModelWorker::IsOnModelSequence() {
+bool PassiveModelWorker::IsOnModelThread() {
   // Passive types are checked by SyncBackendRegistrar.
   NOTREACHED();
   return false;

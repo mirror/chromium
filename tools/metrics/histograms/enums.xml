@@ -956,8 +956,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="27" label="Url is not eligible for WebAPKs"/>
   <int value="28" label="Site loaded in incognito window (not reported)"/>
   <int value="29" label="Service worker not offline capable"/>
-  <int value="30" label="Waiting for manifest to be fetched"/>
-  <int value="31" label="Waiting for installability check"/>
 </enum>
 
 <enum name="AppBannersInstallEvent">
@@ -5656,7 +5654,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="31" label="Permission autoblocker data setting"/>
   <int value="32" label="Ads setting"/>
   <int value="33" label="Ads metadata"/>
-  <int value="34" label="Password protection setting"/>
 </enum>
 
 <enum name="ContentTypeParseableResult">
@@ -5728,7 +5725,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="34" label="Open in Chrome incognito tab (CCT)"/>
   <int value="35" label="Open in browser (CCT)"/>
   <int value="36" label="Open in Chrome (Fullscreen)"/>
-  <int value="37" label="Share link"/>
 </enum>
 
 <enum name="ContextMenuSaveLinkType">
@@ -10699,7 +10695,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="370" label="NetworkTimeQueriesEnabled"/>
   <int value="371" label="DownloadRestrictions"/>
   <int value="372" label="DeviceSecondFactorAuthentication"/>
-  <int value="373" label="UseSystemDefaultPrinterAsDefault"/>
 </enum>
 
 <enum name="EnterprisePolicyInvalidations">
@@ -15487,7 +15482,6 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2024" label="DeprecatedTimingFunctionStepMiddle"/>
   <int value="2025" label="DocumentDomainSetWithNonDefaultPort"/>
   <int value="2026" label="DocumentDomainSetWithDefaultPort"/>
-  <int value="2027" label="HTMLMediaElementPlayRejected"/>
 </enum>
 
 <enum name="FeedbackSource">
@@ -22022,7 +22016,6 @@ from previous Chrome versions.
   <int value="-1963427770" label="EmojiHandwritingVoiceInput:disabled"/>
   <int value="-1963402827" label="enable-topchrome-md"/>
   <int value="-1961648833" label="show_summary"/>
-  <int value="-1960567385" label="KeepPrefetchedContentSuggestions:enabled"/>
   <int value="-1956349722" label="disable-smooth-scrolling"/>
   <int value="-1948540128" label="disable-webrtc-hw-encoding (deprecated)"/>
   <int value="-1946595906" label="enable-push-api-background-mode"/>
@@ -22133,7 +22126,6 @@ from previous Chrome versions.
   <int value="-1617183455" label="OfflineRecentPages:disabled"/>
   <int value="-1616855537" label="enable-manual-password-generation:disabled"/>
   <int value="-1614912400" label="enable-link-disambiguation-popup"/>
-  <int value="-1611305202" label="KeepPrefetchedContentSuggestions:disabled"/>
   <int value="-1605567628" label="disable-overlay-scrollbar"/>
   <int value="-1604051051" label="SpecialLocale:disabled"/>
   <int value="-1599538279" label="enable-md-policy-page"/>
@@ -22180,7 +22172,6 @@ from previous Chrome versions.
   <int value="-1460462432" label="disable-media-source"/>
   <int value="-1456004000" label="VrShell:disabled"/>
   <int value="-1450576851" label="OmniboxUIExperimentVerticalLayout:enabled"/>
-  <int value="-1444051091" label="ash-disable-night-light"/>
   <int value="-1443796945" label="OfflinePagesSharing:disabled"/>
   <int value="-1440440375" label="WebVrAutopresent:enabled"/>
   <int value="-1440152291" label="disable-gesture-typing"/>
@@ -29102,13 +29093,6 @@ from previous Chrome versions.
   <int value="6" label="PARSE_ERROR">Data could not be parsed.</int>
 </enum>
 
-<enum name="PlayPromiseRejectReason">
-  <int value="0" label="Failed autoplay policy"/>
-  <int value="1" label="Sources not supported"/>
-  <int value="2" label="Interrupted by pause()"/>
-  <int value="3" label="Interrupted by load()"/>
-</enum>
-
 <enum name="PluginAvailabilityStatus">
   <int value="0" label="PLUGIN_NOT_REGISTERED"/>
   <int value="1" label="PLUGIN_AVAILABLE"/>
@@ -35929,15 +35913,6 @@ from previous Chrome versions.
   <int value="3" label="Infobar dismissed"/>
 </enum>
 
-<enum name="ThumbnailTopSitesEvent" type="int">
-  <int value="0" label="Not added: Failure"/>
-  <int value="1" label="Not added: TopSites is full"/>
-  <int value="2" label="Not added: Existing thumbnail is better"/>
-  <int value="3" label="Added temp thumbnail"/>
-  <int value="4" label="Added regular thumbnail"/>
-  <int value="5" label="Promoted temp thumbnail to regular"/>
-</enum>
-
 <enum name="TileMemoryBudget">
   <int value="0" label="Within memory budget"/>
   <int value="1" label="Exceeded memory budget"/>
@@ -37884,7 +37859,6 @@ from previous Chrome versions.
   <int value="0" label="No WebContents"/>
   <int value="1" label="Prerendered WebContents"/>
   <int value="2" label="Spare WebContents"/>
-  <int value="3" label="Transferred WebContents"/>
 </enum>
 
 <enum name="WebFontCacheHit">

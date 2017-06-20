@@ -28,9 +28,6 @@
 -DiscardableSharedMemoryTest.MappedSize
 -DiscardableSharedMemoryTest.Purge
 -DiscardableSharedMemoryTest.ZeroSize
--EventWriterTest.HeapDumpAggregation
--EventWriterTest.HeapDumpNoBacktraceNoType
--EventWriterTest.SerializeHeapProfileEventData
 -FeatureListTest.StoreAndRetrieveAssociatedFeaturesFromSharedMemory
 -FeatureListTest.StoreAndRetrieveFeaturesFromSharedMemory
 -FieldTrialListTest.AddTrialsToAllocator
@@ -46,15 +43,15 @@
 -FileLockingTest.UnlockOnTerminate
 -FilePathTest.FromUTF8Unsafe_And_AsUTF8Unsafe
 -FilePathWatcherTest.DeleteAndRecreate
--FilePathWatcherTest.DeleteDuringNotify
 -FilePathWatcherTest.DeletedFile
+-FilePathWatcherTest.DeleteDuringNotify
 -FilePathWatcherTest.DirectoryChain
 -FilePathWatcherTest.DisappearingDirectory
 -FilePathWatcherTest.FileAttributesChanged
 -FilePathWatcherTest.ModifiedFile
 -FilePathWatcherTest.MoveChild
--FilePathWatcherTest.MoveParent
 -FilePathWatcherTest.MovedFile
+-FilePathWatcherTest.MoveParent
 -FilePathWatcherTest.MultipleWatchersSingleFile
 -FilePathWatcherTest.NewFile
 -FilePathWatcherTest.NonExistentDirectory
@@ -155,11 +152,10 @@
 -PersistentMemoryAllocatorTest.IteratorParallelismTest
 -PersistentMemoryAllocatorTest.PageTest
 -PersistentMemoryAllocatorTest.ParallelismTest
--PersistentSampleMapTest.AccumulateTest
 -PersistentSampleMapTest.Accumulate_LargeValuesDontOverflow
+-PersistentSampleMapTest.AccumulateTest
 -PlatformThreadTest.ThreadPriorityCurrentThread
 -ProcessMemoryDumpTest.CountResidentBytes
--ProcessMemoryDumpTest.TakeAllDumpsFrom
 -ProcessTest.Move
 -ProcessTest.Terminate
 -ProcessTest.TerminateCurrentProcessImmediatelyWithNonZeroExitCode
@@ -178,7 +174,6 @@
 -ProcessUtilTest.LaunchProcess
 -ProcessUtilTest.PreExecHook
 -ProcessUtilTest.SpawnChild
--RTLTest.WrapPathWithLTRFormatting
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.AvoidsDeadlockOnShutdown/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.AvoidsDeadlockOnShutdownWithSequencedBlockingTasks/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.ContinueOnShutdown/0
@@ -189,6 +184,7 @@
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.ShutsDownCleanWithContinueOnShutdown/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.SkipOnShutdown/0
 -RedirectionToTaskScheduler/SequencedWorkerPoolTest.SpuriousWorkSignal/0
+-RTLTest.WrapPathWithLTRFormatting
 -SafeNumerics.SignedIntegerMath
 -SharedMemoryProcessTest.SharedMemoryAcrossProcesses
 -SharedMemoryTest.AnonymousExecutable
@@ -225,10 +221,3 @@
 -VerifyPathControlledByUserTest.OwnershipChecks
 -VerifyPathControlledByUserTest.Symlinks
 -VerifyPathControlledByUserTest.WriteBitChecks
-
-
-# https://crbug.com/734216
--MemoryDumpSchedulerTest.StartStopQuickly
-
-# https://crbug.com/734218
--MemoryPeakDetectorTest.StartStopQuickly

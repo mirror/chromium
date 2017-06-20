@@ -41,10 +41,10 @@ void AllocateHeaderFromBuffer(internal::Buffer* buffer, HeaderType** header) {
 
 // An internal serialization context used to initialize new serialized messages.
 struct MessageInfo {
-  MessageInfo(size_t total_size, std::vector<ScopedHandle>* handles)
-      : total_size(total_size), handles(handles) {}
+  MessageInfo(size_t total_size, std::vector<ScopedHandle> handles)
+      : total_size(total_size), handles(std::move(handles)) {}
   const size_t total_size;
-  std::vector<ScopedHandle>* handles;
+  std::vector<ScopedHandle> handles;
   internal::Buffer payload_buffer;
 };
 
@@ -53,14 +53,13 @@ void GetSerializedSizeFromMessageInfo(uintptr_t context,
                                       size_t* num_handles) {
   auto* info = reinterpret_cast<MessageInfo*>(context);
   *num_bytes = info->total_size;
-  *num_handles = info->handles ? info->handles->size() : 0;
+  *num_handles = info->handles.size();
 }
 
 void SerializeHandlesFromMessageInfo(uintptr_t context, MojoHandle* handles) {
   auto* info = reinterpret_cast<MessageInfo*>(context);
-  DCHECK(info->handles);
-  for (size_t i = 0; i < info->handles->size(); ++i)
-    handles[i] = info->handles->at(i).release().value();
+  for (size_t i = 0; i < info->handles.size(); ++i)
+    handles[i] = info->handles[i].release().value();
 }
 
 void SerializePayloadFromMessageInfo(uintptr_t context, void* storage) {
@@ -142,13 +141,13 @@ void CreateSerializedMessageObject(uint32_t name,
                                    uint32_t flags,
                                    size_t payload_size,
                                    size_t payload_interface_id_count,
-                                   std::vector<ScopedHandle>* handles,
+                                   std::vector<ScopedHandle> handles,
                                    ScopedMessageHandle* out_handle,
                                    internal::Buffer* out_buffer) {
   internal::Buffer buffer;
   MessageInfo info(
       ComputeTotalSize(flags, payload_size, payload_interface_id_count),
-      handles);
+      std::move(handles));
   ScopedMessageHandle handle;
   MojoResult rv = mojo::CreateMessage(reinterpret_cast<uintptr_t>(&info),
                                       &kMessageInfoThunks, &handle);
@@ -181,10 +180,11 @@ Message::Message(Message&& other) = default;
 Message::Message(uint32_t name,
                  uint32_t flags,
                  size_t payload_size,
-                 size_t payload_interface_id_count) {
+                 size_t payload_interface_id_count,
+                 std::vector<ScopedHandle> handles) {
   CreateSerializedMessageObject(name, flags, payload_size,
-                                payload_interface_id_count, nullptr, &handle_,
-                                &payload_buffer_);
+                                payload_interface_id_count, std::move(handles),
+                                &handle_, &payload_buffer_);
   data_ = payload_buffer_.data();
   data_size_ = payload_buffer_.size();
   transferable_ = true;
@@ -274,9 +274,8 @@ const uint32_t* Message::payload_interface_ids() const {
   return array_pointer ? array_pointer->storage() : nullptr;
 }
 
-void Message::AttachHandles(std::vector<ScopedHandle>* handles) {
-  DCHECK(handles);
-  if (handles->empty())
+void Message::AttachHandles(std::vector<ScopedHandle> handles) {
+  if (handles.empty())
     return;
 
   // Sanity-check the current serialized message state. We must have a valid
@@ -291,7 +290,7 @@ void Message::AttachHandles(std::vector<ScopedHandle>* handles) {
       MOJO_GET_SERIALIZED_MESSAGE_CONTENTS_FLAG_NONE);
   DCHECK_EQ(MOJO_RESULT_OK, rv);
 
-  MessageInfo new_info(data_size_, handles);
+  MessageInfo new_info(data_size_, std::move(handles));
   ScopedMessageHandle new_handle;
   rv = mojo::CreateMessage(reinterpret_cast<uintptr_t>(&new_info),
                            &kMessageInfoThunks, &new_handle);
@@ -381,9 +380,7 @@ PassThroughFilter::PassThroughFilter() {}
 
 PassThroughFilter::~PassThroughFilter() {}
 
-bool PassThroughFilter::Accept(Message* message) {
-  return true;
-}
+bool PassThroughFilter::Accept(Message* message) { return true; }
 
 SyncMessageResponseContext::SyncMessageResponseContext()
     : outer_context_(current()) {

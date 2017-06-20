@@ -10,12 +10,10 @@
 #include <memory>
 #include <tuple>
 #include <utility>
-#include <vector>
 
 #include "base/bind.h"
 #include "base/location.h"
 #include "base/macros.h"
-#include "base/memory/ptr_util.h"
 #include "base/memory/shared_memory.h"
 #include "base/task_runner_util.h"
 #include "base/tuple.h"
@@ -269,9 +267,7 @@ class NaClIPCAdapter::RewrittenMessage {
 
   int Read(NaClImcTypedMsgHdr* msg);
 
-  void AddDescriptor(std::unique_ptr<NaClDescWrapper> desc) {
-    descs_.push_back(std::move(desc));
-  }
+  void AddDescriptor(NaClDescWrapper* desc) { descs_.push_back(desc); }
 
   size_t desc_count() const { return descs_.size(); }
 
@@ -284,7 +280,7 @@ class NaClIPCAdapter::RewrittenMessage {
   size_t data_read_cursor_;
 
   // Wrapped descriptors for transfer to untrusted code.
-  std::vector<std::unique_ptr<NaClDescWrapper>> descs_;
+  ScopedVector<NaClDescWrapper> descs_;
 };
 
 NaClIPCAdapter::RewrittenMessage::RewrittenMessage()
@@ -324,7 +320,7 @@ int NaClIPCAdapter::RewrittenMessage::Read(NaClImcTypedMsgHdr* msg) {
     msg->ndesc_length = desc_count;
     for (nacl_abi_size_t i = 0; i < desc_count; i++) {
       // Copy the NaClDesc to the buffer and add a ref so it won't be freed
-      // when we clear our vector.
+      // when we clear our ScopedVector.
       msg->ndescv[i] = descs_[i]->desc();
       NaClDescRef(descs_[i]->desc());
     }
@@ -604,7 +600,7 @@ bool NaClIPCAdapter::RewriteMessage(const IPC::Message& msg, uint32_t type) {
         // No default, so the compiler will warn us if new types get added.
       }
       if (nacl_desc.get())
-        rewritten_msg->AddDescriptor(std::move(nacl_desc));
+        rewritten_msg->AddDescriptor(nacl_desc.release());
     }
     if (new_msg)
       SaveMessage(*new_msg, std::move(rewritten_msg));
@@ -675,7 +671,7 @@ void NaClIPCAdapter::SaveOpenResourceMessage(
             NACL_ABI_O_RDONLY)));
 
     std::unique_ptr<RewrittenMessage> rewritten_msg(new RewrittenMessage);
-    rewritten_msg->AddDescriptor(std::move(desc_wrapper));
+    rewritten_msg->AddDescriptor(desc_wrapper.release());
     {
       base::AutoLock lock(lock_);
       SaveMessage(*new_msg, std::move(rewritten_msg));
@@ -696,7 +692,7 @@ void NaClIPCAdapter::SaveOpenResourceMessage(
 
   struct NaClDesc* desc =
       NaClDescCreateWithFilePathMetadata(handle, file_path_str.c_str());
-  rewritten_msg->AddDescriptor(base::MakeUnique<NaClDescWrapper>(desc));
+  rewritten_msg->AddDescriptor(new NaClDescWrapper(desc));
   {
     base::AutoLock lock(lock_);
     SaveMessage(*new_msg, std::move(rewritten_msg));

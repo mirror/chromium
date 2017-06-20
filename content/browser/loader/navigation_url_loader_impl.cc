@@ -101,10 +101,10 @@ void NavigationURLLoaderImpl::NotifyResponseStarted(
     bool is_stream) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
-  delegate_->OnResponseStarted(
-      response, std::move(body), mojo::ScopedDataPipeConsumerHandle(),
-      ssl_status, std::move(navigation_data), request_id, is_download,
-      is_stream, mojom::URLLoaderFactoryPtrInfo());
+  delegate_->OnResponseStarted(response, std::move(body),
+                               mojo::ScopedDataPipeConsumerHandle(), ssl_status,
+                               std::move(navigation_data), request_id,
+                               is_download, is_stream);
 }
 
 void NavigationURLLoaderImpl::NotifyRequestFailed(bool in_cache,

@@ -1059,7 +1059,7 @@ bool SelectorChecker::CheckPseudoClass(const SelectorCheckingContext& context,
       if (IsHTMLFrameElementBase(element) &&
           element.ContainsFullScreenElement())
         return true;
-      return Fullscreen::IsFullscreenElement(element);
+      return Fullscreen::IsCurrentFullScreenElement(element);
     case CSSSelector::kPseudoFullScreenAncestor:
       return element.ContainsFullScreenElement();
     case CSSSelector::kPseudoVideoPersistent:

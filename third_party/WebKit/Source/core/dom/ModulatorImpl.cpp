@@ -171,21 +171,20 @@ void ModulatorImpl::ExecuteModule(const ModuleScript* module_script) {
   // https://crbug.com/715376
   CHECK(RuntimeEnabledFeatures::ModuleScriptsEnabled());
 
-  // Step 1. "Let settings be the settings object of s." [spec text]
+  // 1. "Let settings be the settings object of s."
   // The settings object is |this|.
 
-  // Step 2. "Check if we can run script with settings.
-  //          If this returns "do not run" then abort these steps." [spec text]
+  // 2. "Check if we can run script with settings.
+  //     If this returns "do not run" then abort these steps."
   if (!GetExecutionContext()->CanExecuteScripts(kAboutToExecuteScript))
     return;
 
-  // Step 4. "Prepare to run script given settings." [spec text]
+  // 6. "Prepare to run script given settings."
   // This is placed here to also cover ScriptModule::ReportException().
   ScriptState::Scope scope(script_state_.Get());
 
-  // Step 3. "If s is errored, then report the exception given by s's error for
-  // s and abort these steps." [spec text]
-  // TODO(kouhei): Update "is errored".
+  // 3. "If s's instantiation state is "errored", then report the exception
+  //     given by s's instantiation error for s and abort these steps."
   ModuleInstantiationState instantiationState = module_script->State();
   if (instantiationState == ModuleInstantiationState::kErrored) {
     v8::Isolate* isolate = script_state_->GetIsolate();
@@ -195,18 +194,18 @@ void ModulatorImpl::ExecuteModule(const ModuleScript* module_script) {
     return;
   }
 
-  // Step 5. "Let record be s's module record." [spec text]
+  // 4. "Assert: s's instantiation state is "instantiated" (and thus its
+  //     module record is not null)."
+  CHECK_EQ(instantiationState, ModuleInstantiationState::kInstantiated);
+
+  // 5. "Let record be s's module record."
   const ScriptModule& record = module_script->Record();
   CHECK(!record.IsNull());
 
-  // Step 6. "Let evaluationStatus be record.ModuleEvaluation()." [spec text]
+  // Steps 7 and 8.
   record.Evaluate(script_state_.Get());
 
-  // Step 7. "If evaluationStatus is an abrupt completion, then report the
-  // exception given by evaluationStatus.[[Value]] for s." [spec text]
-  // TODO(kouhei): Implement this.
-
-  // Step 8. "Clean up after running script with settings." [spec text]
+  // 9. "Clean up after running script with settings."
   // Implemented as the ScriptState::Scope destructor.
 }
 

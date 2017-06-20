@@ -245,15 +245,6 @@ void AutofillAgent::FocusedNodeChanged(const WebNode& node) {
     return;
 
   element_ = *element;
-
-  FormData form;
-  FormFieldData field;
-  if (form_util::FindFormAndFieldForFormControlElement(element_, &form,
-                                                       &field)) {
-    GetAutofillDriver()->FocusOnFormField(
-        form, field,
-        render_frame()->GetRenderView()->ElementBoundsInWindow(element_));
-  }
 }
 
 void AutofillAgent::OnDestruct() {
@@ -378,10 +369,8 @@ void AutofillAgent::TextFieldDidChangeImpl(
   FormFieldData field;
   if (form_util::FindFormAndFieldForFormControlElement(element, &form,
                                                        &field)) {
-    GetAutofillDriver()->TextFieldDidChange(
-        form, field,
-        render_frame()->GetRenderView()->ElementBoundsInWindow(element),
-        base::TimeTicks::Now());
+    GetAutofillDriver()->TextFieldDidChange(form, field,
+                                            base::TimeTicks::Now());
   }
 }
 

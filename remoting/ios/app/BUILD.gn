@@ -65,7 +65,6 @@ source_set("main") {
   ]
   deps = [
     ":common_source_set",
-    "//remoting/ios/app/resources:system_icons",
   ]
   configs += [ "//build/config/compiler:enable_arc" ]
 }

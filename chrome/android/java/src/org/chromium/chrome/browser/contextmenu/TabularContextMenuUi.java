@@ -122,12 +122,18 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
             List<Pair<Integer, List<ContextMenuItem>>> itemGroups,
             TabularContextMenuViewPager viewPager) {
         List<Pair<String, ViewGroup>> viewGroups = new ArrayList<>();
+        int maxCount = 0;
+        for (int i = 0; i < itemGroups.size(); i++) {
+            Pair<Integer, List<ContextMenuItem>> itemGroup = itemGroups.get(i);
+            maxCount = Math.max(maxCount, itemGroup.second.size());
+        }
         for (int i = 0; i < itemGroups.size(); i++) {
             Pair<Integer, List<ContextMenuItem>> itemGroup = itemGroups.get(i);
             // TODO(tedchoc): Pass the ContextMenuGroup identifier to determine if it's an image.
             boolean isImageTab = itemGroup.first == R.string.contextmenu_image_title;
             viewGroups.add(new Pair<>(activity.getString(itemGroup.first),
-                    createContextMenuPageUi(activity, params, itemGroup.second, isImageTab)));
+                    createContextMenuPageUi(
+                            activity, params, itemGroup.second, isImageTab, maxCount)));
         }
 
         viewPager.setAdapter(new TabularContextMenuPagerAdapter(viewGroups));
@@ -157,7 +163,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
      */
     @VisibleForTesting
     ViewGroup createContextMenuPageUi(Activity activity, ContextMenuParams params,
-            List<ContextMenuItem> items, boolean isImage) {
+            List<ContextMenuItem> items, boolean isImage, int maxCount) {
         ViewGroup baseLayout = (ViewGroup) LayoutInflater.from(activity).inflate(
                 R.layout.tabular_context_menu_page, null);
         ListView listView = (ListView) baseLayout.findViewById(R.id.selectable_items);
@@ -182,7 +188,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
         TabularContextMenuListAdapter listAdapter =
                 new TabularContextMenuListAdapter(items, activity, onDirectShare);
         ViewGroup.LayoutParams layoutParams = listView.getLayoutParams();
-        layoutParams.height = measureApproximateListViewHeight(listView, listAdapter, items.size());
+        layoutParams.height = measureApproximateListViewHeight(listView, listAdapter, maxCount);
         listView.setLayoutParams(layoutParams);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(this);
@@ -256,7 +262,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
      *         of the ListView based off the an item.
      */
     private int measureApproximateListViewHeight(
-            ListView listView, BaseAdapter listAdapter, int itemCount) {
+            ListView listView, BaseAdapter listAdapter, int maxCount) {
         int totalHeight = listView.getPaddingTop() + listView.getPaddingBottom();
         if (mMenuItemHeight == 0 && !listAdapter.isEmpty()) {
             View view = listAdapter.getView(0, null, listView);
@@ -264,7 +270,7 @@ public class TabularContextMenuUi implements ContextMenuUi, AdapterView.OnItemCl
                     View.MeasureSpec.makeMeasureSpec(0, View.MeasureSpec.UNSPECIFIED));
             mMenuItemHeight = view.getMeasuredHeight();
         }
-        return totalHeight + mMenuItemHeight * itemCount;
+        return totalHeight + mMenuItemHeight * maxCount;
     }
 
     /**

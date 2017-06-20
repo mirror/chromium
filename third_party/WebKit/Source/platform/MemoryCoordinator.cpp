@@ -5,16 +5,10 @@
 #include "platform/MemoryCoordinator.h"
 
 #include "base/sys_info.h"
-#include "platform/WebTaskRunner.h"
-#include "platform/fonts/FontGlobalContext.h"
+#include "platform/fonts/FontCache.h"
 #include "platform/graphics/ImageDecodingStore.h"
 #include "platform/instrumentation/tracing/TraceEvent.h"
 #include "platform/wtf/allocator/Partitions.h"
-#include "public/platform/WebThread.h"
-
-#if OS(ANDROID)
-#include "base/android/sys_utils.h"
-#endif
 
 namespace blink {
 
@@ -39,15 +33,6 @@ void MemoryCoordinator::SetPhysicalMemoryMBForTesting(
 }
 
 // static
-bool MemoryCoordinator::IsCurrentlyLowMemory() {
-#if OS(ANDROID)
-  return base::android::SysUtils::IsCurrentlyLowMemory();
-#else
-  return false;
-#endif
-}
-
-// static
 void MemoryCoordinator::Initialize() {
   is_low_end_device_ = ::base::SysInfo::IsLowEndDevice();
   physical_memory_mb_ = ::base::SysInfo::AmountOfPhysicalMemoryMB();
@@ -66,13 +51,6 @@ MemoryCoordinator& MemoryCoordinator::Instance() {
   return *external.Get();
 }
 
-void MemoryCoordinator::RegisterThread(WebThread* thread) {
-  MemoryCoordinator::Instance().web_threads_.insert(thread);
-}
-
-void MemoryCoordinator::UnregisterThread(WebThread* thread) {
-  MemoryCoordinator::Instance().web_threads_.erase(thread);
-}
 
 MemoryCoordinator::MemoryCoordinator() {}
 
@@ -111,15 +89,6 @@ void MemoryCoordinator::OnPurgeMemory() {
   // cache in purge+throttle.
   ImageDecodingStore::Instance().Clear();
   WTF::Partitions::DecommitFreeableMemory();
-
-  // Thread-specific data never issues a layout, so we are safe here.
-  for (auto thread : web_threads_) {
-    if (!thread->GetWebTaskRunner())
-      continue;
-
-    thread->GetWebTaskRunner()->PostTask(
-        FROM_HERE, WTF::Bind(MemoryCoordinator::ClearThreadSpecificMemory));
-  }
 }
 
 void MemoryCoordinator::ClearMemory() {
@@ -127,11 +96,7 @@ void MemoryCoordinator::ClearMemory() {
   // TODO(tasak|bashi): Make ImageDecodingStore and FontCache be
   // MemoryCoordinatorClients rather than clearing caches here.
   ImageDecodingStore::Instance().Clear();
-  FontGlobalContext::ClearMemory();
-}
-
-void MemoryCoordinator::ClearThreadSpecificMemory() {
-  FontGlobalContext::ClearMemory();
+  FontCache::GetFontCache()->Invalidate();
 }
 
 DEFINE_TRACE(MemoryCoordinator) {

@@ -41,7 +41,6 @@
 #include "core/layout/LayoutAnalyzer.h"
 #include "core/layout/LayoutDeprecatedFlexibleBox.h"
 #include "core/layout/LayoutEmbeddedContent.h"
-#include "core/layout/LayoutFieldset.h"
 #include "core/layout/LayoutFlexibleBox.h"
 #include "core/layout/LayoutGrid.h"
 #include "core/layout/LayoutInline.h"
@@ -888,7 +887,7 @@ LayoutRect LayoutBox::BackgroundRect(BackgroundRectType rect_type) const {
       const FillLayer* cur = current;
       current = current->Next();
       if (rect_type == kBackgroundKnownOpaqueRect) {
-        if (cur->BlendMode() != WebBlendMode::kNormal ||
+        if (cur->BlendMode() != kWebBlendModeNormal ||
             cur->Composite() != kCompositeSourceOver)
           continue;
 
@@ -2583,21 +2582,25 @@ void LayoutBox::InflateVisualRectForFilter(
       FloatQuad(FloatRect(Layer()->MapLayoutRectForFilter(rect))));
 }
 
+static void MarkMinMaxWidthsAffectedByAncestorAsDirty(LayoutBox* box) {
+  box->SetPreferredLogicalWidthsDirty(kMarkOnlyThis);
+  for (LayoutObject* child = box->SlowFirstChild(); child;
+       child = child->NextSibling()) {
+    if (!child->IsBox())
+      continue;
+    LayoutBox* child_box = ToLayoutBox(child);
+    if (child_box->NeedsPreferredWidthsRecalculation())
+      MarkMinMaxWidthsAffectedByAncestorAsDirty(child_box);
+  }
+}
+
 static bool ShouldRecalculateMinMaxWidthsAffectedByAncestor(
     const LayoutBox* box) {
-  if (box->PreferredLogicalWidthsDirty()) {
-    // If the preferred widths are already dirty at this point (during layout),
-    // it actually means that we never need to calculate them, since that should
-    // have been carried out by an ancestor that's sized based on preferred
-    // widths (a shrink-to-fit container, for instance). In such cases the
-    // object will be left as dirty indefinitely, and it would just be a waste
-    // of time to calculate the preferred withs when nobody needs them.
-    return false;
-  }
   if (const LayoutBox* containing_block = box->ContainingBlock()) {
     if (containing_block->NeedsPreferredWidthsRecalculation()) {
       // If our containing block also has min/max widths that are affected by
-      // the ancestry, we have already dealt with this object as well. Avoid
+      // the ancestry, we have already dealt with this object as well (because
+      // of what MarkMinMaxWidthsAffectedByAncestorAsDirty() does). Avoid
       // unnecessary work and O(n^2) time complexity.
       return false;
     }
@@ -2614,7 +2617,7 @@ void LayoutBox::UpdateLogicalWidth() {
       // bottom-up, but that's not always the case), so since the containing
       // block size may have changed, we need to recalculate the min/max widths
       // of this object, and every child that has the same issue, recursively.
-      SetPreferredLogicalWidthsDirty(kMarkOnlyThis);
+      MarkMinMaxWidthsAffectedByAncestorAsDirty(this);
 
       // Since all this takes place during actual layout, instead of being part
       // of min/max the width calculation machinery, we need to enter said
@@ -2992,7 +2995,9 @@ bool LayoutBox::AutoWidthShouldFitContent() const {
   return GetNode() &&
          (isHTMLInputElement(*GetNode()) || isHTMLSelectElement(*GetNode()) ||
           isHTMLButtonElement(*GetNode()) ||
-          isHTMLTextAreaElement(*GetNode()) || IsRenderedLegend());
+          isHTMLTextAreaElement(*GetNode()) ||
+          (isHTMLLegendElement(*GetNode()) &&
+           !Style()->HasOutOfFlowPosition()));
 }
 
 void LayoutBox::ComputeMarginsForDirection(MarginDirection flow_direction,
@@ -5042,16 +5047,6 @@ void LayoutBox::MarkOrthogonalWritingModeRoot() {
 void LayoutBox::UnmarkOrthogonalWritingModeRoot() {
   DCHECK(GetFrameView());
   GetFrameView()->RemoveOrthogonalWritingModeRoot(*this);
-}
-
-bool LayoutBox::IsRenderedLegend() const {
-  if (!isHTMLLegendElement(GetNode()))
-    return false;
-  if (IsFloatingOrOutOfFlowPositioned())
-    return false;
-  const auto* parent = Parent();
-  return parent && parent->IsFieldset() &&
-         ToLayoutFieldset(parent)->FindInFlowLegend() == this;
 }
 
 void LayoutBox::AddVisualEffectOverflow() {

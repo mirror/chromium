@@ -153,11 +153,10 @@ bool MojoAudioOutputIPC::DoRequestDeviceAuthorization(
     LOG(ERROR) << "MojoAudioOutputIPC failed to acquire factory";
 
     // Resetting the callback ensures consistent behaviour with when the factory
-    // is destroyed before reply, i.e. calling OnDeviceAuthorized with
-    // ERROR_INTERNAL in the normal case. Note that this operation might destroy
-    // |this|. The AudioOutputIPCDelegate will call CloseStream as necessary.
+    // is destroyed before reply, i.e. call with ERROR_INTERNAL in the normal
+    // case.
     callback.Reset();
-    // As |this| may be deleted, no new lines may be added here.
+    CloseStream();
     return false;
   }
 

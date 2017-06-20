@@ -24,8 +24,6 @@ const std::string kPreparationType =
 void ExpectNoNavPreloadMainFrameUMA(
     const base::HistogramTester& histogram_tester) {
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame", 0);
-  histogram_tester.ExpectTotalCount(
       "ServiceWorker.NavPreload.ResponseTime_MainFrame", 0);
   histogram_tester.ExpectTotalCount(
       "ServiceWorker.NavPreload.FinishedFirst_MainFrame", 0);
@@ -35,37 +33,44 @@ void ExpectNoNavPreloadMainFrameUMA(
       "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame", 0);
 
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.ResponseTime_MainFrame_WorkerStartOccurred", 0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
+      "WorkerStartOccurred",
       0);
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
+      "WorkerStartOccurred",
       0);
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_"
+      "WorkerStartOccurred",
+      0);
+  histogram_tester.ExpectTotalCount(
+      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_"
+      "WorkerStartOccurred",
       0);
 }
 
 void ExpectNoNavPreloadWorkerStartOccurredUMA(
     const base::HistogramTester& histogram_tester) {
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.ResponseTime_MainFrame_WorkerStartOccurred", 0);
-  histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
+      "WorkerStartOccurred",
       0);
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
+      "WorkerStartOccurred",
       0);
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_"
+      "WorkerStartOccurred",
+      0);
+  histogram_tester.ExpectTotalCount(
+      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_"
+      "WorkerStartOccurred",
       0);
 }
 
 }  // namespace
-
-using StartSituation = ServiceWorkerMetrics::StartSituation;
-using WorkerPreparationType = ServiceWorkerMetrics::WorkerPreparationType;
 
 TEST(ServiceWorkerMetricsTest, ActivatedWorkerPreparation) {
   base::TimeDelta time = base::TimeDelta::FromMilliseconds(123);
@@ -77,7 +82,9 @@ TEST(ServiceWorkerMetricsTest, ActivatedWorkerPreparation) {
         ServiceWorkerMetrics::StartSituation::UNKNOWN,
         false /* did_navigation_preload */);
     histogram_tester.ExpectUniqueSample(
-        kPreparationType, static_cast<int>(WorkerPreparationType::STARTING), 1);
+        kPreparationType,
+        static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::STARTING),
+        1);
     histogram_tester.ExpectTotalCount(
         kPreparationType + kNavigationPreloadSuffix, 0);
     histogram_tester.ExpectTimeBucketCount(kPreparationTime, time, 1);
@@ -91,14 +98,19 @@ TEST(ServiceWorkerMetricsTest, ActivatedWorkerPreparation) {
     // Test preparation when the worker started up during startup.
     base::HistogramTester histogram_tester;
     ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
-        time, EmbeddedWorkerStatus::STOPPED, StartSituation::DURING_STARTUP,
+        time, EmbeddedWorkerStatus::STOPPED,
+        ServiceWorkerMetrics::StartSituation::DURING_STARTUP,
         true /* did_navigation_preload */);
     histogram_tester.ExpectUniqueSample(
         kPreparationType,
-        static_cast<int>(WorkerPreparationType::START_DURING_STARTUP), 1);
+        static_cast<int>(
+            ServiceWorkerMetrics::WorkerPreparationType::START_DURING_STARTUP),
+        1);
     histogram_tester.ExpectUniqueSample(
         kPreparationType + kNavigationPreloadSuffix,
-        static_cast<int>(WorkerPreparationType::START_DURING_STARTUP), 1);
+        static_cast<int>(
+            ServiceWorkerMetrics::WorkerPreparationType::START_DURING_STARTUP),
+        1);
     histogram_tester.ExpectTimeBucketCount(kPreparationTime, time, 1);
     histogram_tester.ExpectTimeBucketCount(
         kPreparationTime + kNavigationPreloadSuffix, time, 1);
@@ -110,14 +122,19 @@ TEST(ServiceWorkerMetricsTest, ActivatedWorkerPreparation) {
     // Test preparation when the worker started up in an existing process.
     base::HistogramTester histogram_tester;
     ServiceWorkerMetrics::RecordActivatedWorkerPreparationForMainFrame(
-        time, EmbeddedWorkerStatus::STOPPED, StartSituation::EXISTING_PROCESS,
+        time, EmbeddedWorkerStatus::STOPPED,
+        ServiceWorkerMetrics::StartSituation::EXISTING_PROCESS,
         true /* did_navigation_preload */);
     histogram_tester.ExpectUniqueSample(
         kPreparationType,
-        static_cast<int>(WorkerPreparationType::START_IN_EXISTING_PROCESS), 1);
+        static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                             START_IN_EXISTING_PROCESS),
+        1);
     histogram_tester.ExpectUniqueSample(
         kPreparationType + kNavigationPreloadSuffix,
-        static_cast<int>(WorkerPreparationType::START_IN_EXISTING_PROCESS), 1);
+        static_cast<int>(ServiceWorkerMetrics::WorkerPreparationType::
+                             START_IN_EXISTING_PROCESS),
+        1);
     histogram_tester.ExpectTimeBucketCount(kPreparationTime, time, 1);
     histogram_tester.ExpectTimeBucketCount(
         kPreparationTime + kNavigationPreloadSuffix, time, 1);
@@ -136,15 +153,11 @@ TEST(ServiceWorkerMetricsTest,
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(123);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(789);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::RUNNING;
-  StartSituation start_situation = StartSituation::EXISTING_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_MAIN_FRAME);
 
-  histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
-      static_cast<int>(WorkerPreparationType::RUNNING), 1);
   histogram_tester.ExpectTimeBucketCount(
       "ServiceWorker.NavPreload.ResponseTime_MainFrame", response_start, 1);
   histogram_tester.ExpectUniqueSample(
@@ -163,10 +176,9 @@ TEST(ServiceWorkerMetricsTest,
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(123);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(789);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::RUNNING;
-  StartSituation start_situation = StartSituation::EXISTING_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_SUB_FRAME);
 
   ExpectNoNavPreloadMainFrameUMA(histogram_tester);
@@ -178,15 +190,11 @@ TEST(ServiceWorkerMetricsTest,
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(234);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(789);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STOPPED;
-  StartSituation start_situation = StartSituation::NEW_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_MAIN_FRAME);
 
-  histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
-      static_cast<int>(WorkerPreparationType::START_IN_NEW_PROCESS), 1);
   histogram_tester.ExpectTimeBucketCount(
       "ServiceWorker.NavPreload.ResponseTime_MainFrame", response_start, 1);
   histogram_tester.ExpectUniqueSample(
@@ -197,16 +205,20 @@ TEST(ServiceWorkerMetricsTest,
       "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame", 0);
 
   histogram_tester.ExpectTimeBucketCount(
-      "ServiceWorker.NavPreload.ResponseTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ResponseTime_MainFrame_"
+      "WorkerStartOccurred",
       response_start, 1);
   histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.FinishedFirst_MainFrame_"
+      "WorkerStartOccurred",
       false, 1);
   histogram_tester.ExpectTimeBucketCount(
-      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.ConcurrentTime_MainFrame_"
+      "WorkerStartOccurred",
       worker_start, 1);
   histogram_tester.ExpectTotalCount(
-      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_WorkerStartOccurred",
+      "ServiceWorker.NavPreload.WorkerWaitTime_MainFrame_"
+      "WorkerStartOccurred",
       0);
 }
 
@@ -215,31 +227,27 @@ TEST(ServiceWorkerMetricsTest, NavigationPreloadResponse_WorkerStart_SubFrame) {
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(234);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(789);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STOPPED;
-  StartSituation start_situation = StartSituation::EXISTING_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_SUB_FRAME);
 
   ExpectNoNavPreloadMainFrameUMA(histogram_tester);
 }
 
-// The worker was already starting up (STARTING). This gets logged to the
-// _WorkerStartOccurred suffix as well.
+// The worker was already starting up (STARTING). This gets logged the same as
+// if it were STOPPED, since any status other than RUNNING gets logged to the
+// "_WorkerStartOccurred" suffix.
 TEST(ServiceWorkerMetricsTest,
-     NavigationPreloadResponse_WorkerStart_WorkerStarting) {
+     NavigationPreloadResponse_WorkerStart_BrowserStartup) {
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(234);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(789);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STARTING;
-  StartSituation start_situation = StartSituation::NEW_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_MAIN_FRAME);
 
-  histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
-      static_cast<int>(WorkerPreparationType::STARTING), 1);
   histogram_tester.ExpectTimeBucketCount(
       "ServiceWorker.NavPreload.ResponseTime_MainFrame", response_start, 1);
   histogram_tester.ExpectUniqueSample(
@@ -273,15 +281,12 @@ TEST(ServiceWorkerMetricsTest,
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(2345);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(456);
   base::TimeDelta wait_time = worker_start - response_start;
+  // STOPPING is also logged the same as STOPPED.
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STOPPING;
-  StartSituation start_situation = StartSituation::NEW_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_MAIN_FRAME);
-  histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
-      static_cast<int>(WorkerPreparationType::STOPPING), 1);
   histogram_tester.ExpectTimeBucketCount(
       "ServiceWorker.NavPreload.ResponseTime_MainFrame", response_start, 1);
   histogram_tester.ExpectUniqueSample(
@@ -311,28 +316,12 @@ TEST(ServiceWorkerMetricsTest,
   base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(2345);
   base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(456);
   EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STOPPED;
-  StartSituation start_situation = StartSituation::NEW_PROCESS;
   base::HistogramTester histogram_tester;
   ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
+      worker_start, response_start, initial_worker_status,
       RESOURCE_TYPE_SUB_FRAME);
 
   ExpectNoNavPreloadMainFrameUMA(histogram_tester);
-}
-
-// The worker started up during browser startup.
-TEST(ServiceWorkerMetricsTest, NavigationPreloadResponse_BrowserStartup) {
-  base::TimeDelta worker_start = base::TimeDelta::FromMilliseconds(2345);
-  base::TimeDelta response_start = base::TimeDelta::FromMilliseconds(456);
-  EmbeddedWorkerStatus initial_worker_status = EmbeddedWorkerStatus::STOPPED;
-  StartSituation start_situation = StartSituation::DURING_STARTUP;
-  base::HistogramTester histogram_tester;
-  ServiceWorkerMetrics::RecordNavigationPreloadResponse(
-      worker_start, response_start, initial_worker_status, start_situation,
-      RESOURCE_TYPE_MAIN_FRAME);
-  histogram_tester.ExpectUniqueSample(
-      "ServiceWorker.NavPreload.WorkerPreparationType_MainFrame",
-      static_cast<int>(WorkerPreparationType::START_DURING_STARTUP), 1);
 }
 
 }  // namespace content

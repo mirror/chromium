@@ -35,8 +35,8 @@
 #include "components/sync/base/report_unrecoverable_error.h"
 #include "components/sync/driver/sync_api_component_factory.h"
 #include "components/sync/driver/sync_util.h"
+#include "components/sync/engine/browser_thread_model_worker.h"
 #include "components/sync/engine/passive_model_worker.h"
-#include "components/sync/engine/sequenced_model_worker.h"
 #include "components/sync/engine/ui_model_worker.h"
 #include "components/sync_preferences/pref_service_syncable.h"
 #include "components/sync_sessions/favicon_cache.h"
@@ -178,6 +178,10 @@ void IOSChromeSyncClient::Initialize() {
         token_service, url_request_context_getter, web_data_service_,
         password_store_));
   }
+}
+
+base::SequencedWorkerPool* IOSChromeSyncClient::GetBlockingPool() {
+  return web::WebThread::GetBlockingPool();
 }
 
 syncer::SyncService* IOSChromeSyncClient::GetSyncService() {
@@ -375,11 +379,11 @@ IOSChromeSyncClient::CreateModelWorkerForGroup(syncer::ModelSafeGroup group) {
   DCHECK_CURRENTLY_ON(web::WebThread::UI);
   switch (group) {
     case syncer::GROUP_DB:
-      return new syncer::SequencedModelWorker(
+      return new syncer::BrowserThreadModelWorker(
           web::WebThread::GetTaskRunnerForThread(web::WebThread::DB),
           syncer::GROUP_DB);
     case syncer::GROUP_FILE:
-      return new syncer::SequencedModelWorker(
+      return new syncer::BrowserThreadModelWorker(
           web::WebThread::GetTaskRunnerForThread(web::WebThread::FILE),
           syncer::GROUP_FILE);
     case syncer::GROUP_UI:

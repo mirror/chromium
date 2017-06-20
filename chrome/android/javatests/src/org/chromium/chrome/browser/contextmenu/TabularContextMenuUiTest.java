@@ -146,7 +146,8 @@ public class TabularContextMenuUiTest {
             @Override
             public View call() {
                 return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
-                        new MockMenuParams(expectedUrl), Collections.unmodifiableList(item), false);
+                        new MockMenuParams(expectedUrl), Collections.unmodifiableList(item), false,
+                        item.size());
             }
         });
 
@@ -166,7 +167,8 @@ public class TabularContextMenuUiTest {
             @Override
             public View call() {
                 return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
-                        new MockMenuParams(""), Collections.unmodifiableList(item), false);
+                        new MockMenuParams(""), Collections.unmodifiableList(item), false,
+                        item.size());
             }
         });
 
@@ -187,7 +189,7 @@ public class TabularContextMenuUiTest {
             public View call() {
                 return dialog.createContextMenuPageUi(mActivityTestRule.getActivity(),
                         new MockMenuParams("http://google.com"), Collections.unmodifiableList(item),
-                        false);
+                        false, item.size());
             }
         });
 

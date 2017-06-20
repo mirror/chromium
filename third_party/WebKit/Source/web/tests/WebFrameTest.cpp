@@ -97,7 +97,6 @@
 #include "platform/DragImage.h"
 #include "platform/KeyboardCodes.h"
 #include "platform/RuntimeEnabledFeatures.h"
-#include "platform/bindings/Microtask.h"
 #include "platform/geometry/FloatRect.h"
 #include "platform/graphics/GraphicsLayer.h"
 #include "platform/loader/fetch/FetchParameters.h"
@@ -484,7 +483,7 @@ TEST_P(ParameterizedWebFrameTest, SuspendedRequestExecuteScript) {
 
   // If the frame navigates, pending scripts should be removed, but the callback
   // should always be ran.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "bar.html");
   EXPECT_TRUE(callback_helper.DidComplete());
   EXPECT_EQ(String(), callback_helper.StringValue());
@@ -638,7 +637,7 @@ TEST_P(ParameterizedWebFrameTest, ChromePageJavascript) {
   web_view_helper.InitializeAndLoad(chrome_url_ + "history.html");
 
   // Try to run JS against the chrome-style URL.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Clobbered'))");
 
@@ -658,7 +657,7 @@ TEST_P(ParameterizedWebFrameTest, ChromePageNoJavascript) {
 
   // Try to run JS against the chrome-style URL after prohibiting it.
   WebSecurityPolicy::RegisterURLSchemeAsNotAllowingJavascriptURLs("chrome");
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Clobbered'))");
 
@@ -680,11 +679,11 @@ TEST_P(ParameterizedWebFrameTest, LocationSetHostWithMissingPort) {
 
   // Setting host to "hostname:" should be treated as "hostname:0".
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.WebView()->MainFrame(),
       "javascript:location.host = 'internal.test:'; void 0;");
 
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.WebView()->MainFrame(),
       "javascript:document.body.textContent = location.href; void 0;");
 
   std::string content =
@@ -701,11 +700,11 @@ TEST_P(ParameterizedWebFrameTest, LocationSetEmptyPort) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + file_name);
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               "javascript:location.port = ''; void 0;");
 
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.WebView()->MainFrame(),
       "javascript:document.body.textContent = location.href; void 0;");
 
   std::string content =
@@ -1275,7 +1274,7 @@ TEST_P(ParameterizedWebFrameTest, FixedLayoutInitializeAtMinimumScale) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "fixed_layout.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -1317,7 +1316,7 @@ TEST_P(ParameterizedWebFrameTest, WideDocumentInitializeAtMinimumScale) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "wide_document.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -1515,7 +1514,7 @@ TEST_P(ParameterizedWebFrameTest, WideViewportSetsTo980WithXhtmlMp) {
   web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
   web_view_helper.WebView()->GetSettings()->SetUseWideViewport(true);
   FrameTestHelpers::LoadFrame(
-      web_view_helper.WebView()->MainFrameImpl(),
+      web_view_helper.WebView()->MainFrame(),
       base_url_ + "viewport/viewport-legacy-xhtmlmp.html");
 
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
@@ -2060,7 +2059,7 @@ TEST_P(ParameterizedWebFrameTest,
   web_view_helper.WebView()->GetSettings()->SetForceZeroLayoutHeight(true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "large-div.html");
   web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
@@ -2114,7 +2113,7 @@ TEST_P(ParameterizedWebFrameTest, WideViewportAndWideContentWithInitialScale) {
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "wide_document_width_viewport.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2143,7 +2142,7 @@ TEST_P(ParameterizedWebFrameTest, WideViewportQuirkClobbersHeight) {
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport-height-1000.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2172,7 +2171,7 @@ TEST_P(ParameterizedWebFrameTest, LayoutSize320Quirk) {
       true);
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport/viewport-30.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2249,7 +2248,7 @@ TEST_P(ParameterizedWebFrameTest, ZeroValuesQuirk) {
   web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
   web_view_helper.WebView()->GetSettings()->SetViewportMetaLayoutSizeQuirk(
       true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport-zero-values.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2280,7 +2279,7 @@ TEST_P(ParameterizedWebFrameTest, OverflowHiddenDisablesScrolling) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "body-overflow-hidden.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2301,7 +2300,7 @@ TEST_P(ParameterizedWebFrameTest,
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "body-overflow-hidden-short.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2328,7 +2327,7 @@ TEST_F(WebFrameTest, IgnoreOverflowHiddenQuirk) {
   web_view_helper.WebView()
       ->GetSettings()
       ->SetIgnoreMainFrameOverflowHiddenQuirk(true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "body-overflow-hidden.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2351,7 +2350,7 @@ TEST_P(ParameterizedWebFrameTest, NonZeroValuesNoQuirk) {
   web_view_helper.WebView()->GetSettings()->SetViewportMetaZeroValuesQuirk(
       true);
   web_view_helper.WebView()->GetSettings()->SetWideViewportQuirkEnabled(true);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport-nonzero-values.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2462,7 +2461,7 @@ TEST_P(ParameterizedWebFrameTest, initialScaleWrittenToHistoryItem) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.WebView()->SetDefaultPageScaleLimits(0.25f, 5);
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "fixed_layout.html");
   web_view_helper.Resize(WebSize(viewport_width, viewport_height));
 
@@ -2955,7 +2954,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportAffectingAtMediaRecalcCount) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(640, 480));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport-and-media.html");
 
   Document* document =
@@ -2981,7 +2980,7 @@ TEST_P(ParameterizedWebFrameTest, AtViewportWithViewportLengths) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize(nullptr, &client, nullptr, ConfigureAndroid);
   web_view_helper.Resize(WebSize(800, 600));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "viewport-lengths.html");
 
   LocalFrameView* view =
@@ -3208,7 +3207,7 @@ TEST_F(WebFrameTest, updateOverlayScrollbarLayers)
                              nullptr, &ConfigureCompositingWebView);
 
   web_view_helper.Resize(WebSize(view_width, view_height));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "large-div.html");
 
   LocalFrameView* view =
@@ -4198,11 +4197,11 @@ TEST_P(ParameterizedWebFrameTest, ReloadDoesntSetRedirect) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + "form.html", &web_frame_client);
 
-  web_view_helper.WebView()->MainFrameImpl()->Reload(
+  web_view_helper.WebView()->MainFrame()->Reload(
       WebFrameLoadType::kReloadBypassingCache);
   // start another reload before request is delivered.
   FrameTestHelpers::ReloadFrameBypassingCache(
-      web_view_helper.WebView()->MainFrameImpl());
+      web_view_helper.WebView()->MainFrame());
 }
 
 class ClearScrollStateOnCommitWebFrameClient
@@ -4235,7 +4234,7 @@ TEST_F(WebFrameTest, ReloadWithOverrideURLPreservesState) {
   web_view_helper.WebView()->SetPageScaleFactor(kPageScaleFactor);
 
   // Reload the page and end up at the same url. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.WebView()->MainFrame()->ReloadWithOverrideURL(
       ToKURL(base_url_ + first_url), WebFrameLoadType::kReload);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
       web_view_helper.WebView()->MainFrame());
@@ -4245,7 +4244,7 @@ TEST_F(WebFrameTest, ReloadWithOverrideURLPreservesState) {
   EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
 
   // Reload the page using the cache. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.WebView()->MainFrame()->ReloadWithOverrideURL(
       ToKURL(base_url_ + second_url), WebFrameLoadType::kReload);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
       web_view_helper.WebView()->MainFrame());
@@ -4255,7 +4254,7 @@ TEST_F(WebFrameTest, ReloadWithOverrideURLPreservesState) {
   EXPECT_EQ(1.0f, web_view_helper.WebView()->PageScaleFactor());
 
   // Reload the page while bypassing the cache. State should not be propagated.
-  web_view_helper.WebView()->MainFrameImpl()->ReloadWithOverrideURL(
+  web_view_helper.WebView()->MainFrame()->ReloadWithOverrideURL(
       ToKURL(base_url_ + third_url), WebFrameLoadType::kReloadBypassingCache);
   FrameTestHelpers::PumpPendingRequestsForFrameToLoad(
       web_view_helper.WebView()->MainFrame());
@@ -4273,10 +4272,10 @@ TEST_P(ParameterizedWebFrameTest, ReloadWhileProvisional) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize();
   WebURLRequest request(ToKURL(base_url_ + "fixed_layout.html"));
-  web_view_helper.WebView()->MainFrameImpl()->LoadRequest(request);
+  web_view_helper.WebView()->MainFrame()->LoadRequest(request);
   // start reload before first request is delivered.
   FrameTestHelpers::ReloadFrameBypassingCache(
-      web_view_helper.WebView()->MainFrameImpl());
+      web_view_helper.WebView()->MainFrame());
 
   WebDataSource* data_source =
       web_view_helper.WebView()->MainFrameImpl()->DataSource();
@@ -4536,7 +4535,7 @@ TEST_P(ParameterizedWebFrameTest, ContextNotificationsReload) {
 
   // Refresh, we should get two release notifications and two more create
   // notifications.
-  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrameImpl());
+  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrame());
   ASSERT_EQ(4u, create_notifications.size());
   ASSERT_EQ(2u, release_notifications.size());
 
@@ -4783,7 +4782,7 @@ TEST_P(ParameterizedWebFrameTest, ExecuteScriptDuringDidCreateScriptContext) {
   web_view_helper.InitializeAndLoad(base_url_ + "hello_world.html",
                                     &web_frame_client);
 
-  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrameImpl());
+  FrameTestHelpers::ReloadFrame(web_view_helper.WebView()->MainFrame());
 }
 
 class FindUpdateWebFrameClient : public FrameTestHelpers::TestWebFrameClient {
@@ -5921,7 +5920,7 @@ class CompositedSelectionBoundsTest : public WebFrameTest {
   void RunTestWithNoSelection(const char* test_file) {
     RegisterMockedHttpURLLoad(test_file);
     web_view_helper_.WebView()->SetFocus(true);
-    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrameImpl(),
+    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrame(),
                                 base_url_ + test_file);
     web_view_helper_.WebView()->UpdateAllLifecyclePhases();
 
@@ -5938,7 +5937,7 @@ class CompositedSelectionBoundsTest : public WebFrameTest {
   void RunTest(const char* test_file) {
     RegisterMockedHttpURLLoad(test_file);
     web_view_helper_.WebView()->SetFocus(true);
-    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrameImpl(),
+    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrame(),
                                 base_url_ + test_file);
     web_view_helper_.WebView()->UpdateAllLifecyclePhases();
 
@@ -6142,14 +6141,14 @@ class DisambiguationPopupTestWebViewClient
   bool triggered_;
 };
 
-static WebCoalescedInputEvent FatTap(int x, int y, int diameter) {
+static WebCoalescedInputEvent FatTap(int x, int y) {
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
                         WebInputEvent::kTimeStampForTesting);
   event.source_device = kWebGestureDeviceTouchscreen;
   event.x = x;
   event.y = y;
-  event.data.tap.width = diameter;
-  event.data.tap.height = diameter;
+  event.data.tap.width = 50;
+  event.data.tap.height = 50;
   return WebCoalescedInputEvent(event);
 }
 
@@ -6158,7 +6157,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
   RegisterMockedHttpURLLoad(html_file);
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6167,17 +6165,16 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(120, 230 + i * 5, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(120, 230 + i * 5));
 
     int j = i % 10;
     if (j >= 7 && j <= 9)
@@ -6188,8 +6185,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(10 + i * 5, 590));
 
     int j = i % 10;
     if (j >= 7 && j <= 9)
@@ -6206,8 +6202,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopup) {
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(10 + i * 5, 590));
     EXPECT_FALSE(client.Triggered());
   }
 }
@@ -6216,7 +6211,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
   RegisterMockedHttpURLLoad("disambiguation_popup_no_container.html");
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6226,7 +6220,7 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupNoContainer) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(50, 50, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(50, 50));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6235,7 +6229,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
   RegisterMockedHttpURLLoad(html_file);
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6245,24 +6238,22 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupMobileSite) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(120, 230 + i * 5, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(120, 230 + i * 5));
     EXPECT_FALSE(client.Triggered());
   }
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(10 + i * 5, 590));
     EXPECT_FALSE(client.Triggered());
   }
 }
@@ -6272,7 +6263,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
   RegisterMockedHttpURLLoad(html_file);
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6282,24 +6272,22 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupViewportSite) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(0, 0));
   EXPECT_FALSE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(200, 115));
   EXPECT_FALSE(client.Triggered());
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(120, 230 + i * 5, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(120, 230 + i * 5));
     EXPECT_FALSE(client.Triggered());
   }
 
   for (int i = 0; i <= 46; i++) {
     client.ResetTriggered();
-    web_view_helper.WebView()->HandleInputEvent(
-        FatTap(10 + i * 5, 590, kTapDiameter));
+    web_view_helper.WebView()->HandleInputEvent(FatTap(10 + i * 5, 590));
     EXPECT_FALSE(client.Triggered());
   }
 }
@@ -6309,7 +6297,6 @@ TEST_F(WebFrameTest, DisambiguationPopupVisualViewport) {
   RegisterMockedHttpURLLoad(html_file);
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad(base_url_ + html_file, nullptr, &client,
@@ -6335,7 +6322,7 @@ TEST_F(WebFrameTest, DisambiguationPopupVisualViewport) {
 
   // Tap at the top: there is nothing there.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60));
   EXPECT_FALSE(client.Triggered());
 
   // Scroll visual viewport to the bottom of the main frame.
@@ -6344,7 +6331,7 @@ TEST_F(WebFrameTest, DisambiguationPopupVisualViewport) {
 
   // Now the tap with the same coordinates should hit two elements.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60));
   EXPECT_TRUE(client.Triggered());
 
   // The same tap shouldn't trigger didTapMultipleTargets() after disabling the
@@ -6353,7 +6340,7 @@ TEST_F(WebFrameTest, DisambiguationPopupVisualViewport) {
       ->GetSettings()
       ->SetMultiTargetTapNotificationEnabled(false);
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(10, 60));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6365,7 +6352,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
   RegisterMockedHttpURLLoad(html_file);
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 100;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6375,22 +6361,21 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupBlacklist) {
 
   // Click somewhere where the popup shouldn't appear.
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(
-      FatTap(kViewportWidth / 2, 0, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(kViewportWidth / 2, 0));
   EXPECT_FALSE(client.Triggered());
 
   // Click directly in between two container divs with click handlers, with
   // children that don't handle clicks.
   client.ResetTriggered();
   web_view_helper.WebView()->HandleInputEvent(
-      FatTap(kViewportWidth / 2, kDivHeight, kTapDiameter));
+      FatTap(kViewportWidth / 2, kDivHeight));
   EXPECT_TRUE(client.Triggered());
 
   // The third div container should be blacklisted if you click on the link it
   // contains.
   client.ResetTriggered();
   web_view_helper.WebView()->HandleInputEvent(
-      FatTap(kViewportWidth / 2, kDivHeight * 3.25, kTapDiameter));
+      FatTap(kViewportWidth / 2, kDivHeight * 3.25));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6398,7 +6383,6 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupPageScale) {
   RegisterMockedHttpURLLoad("disambiguation_popup_page_scale.html");
 
   DisambiguationPopupTestWebViewClient client;
-  const int kTapDiameter = 50;
 
   // Make sure we initialize to minimum scale, even if the window size
   // only becomes available after the load begins.
@@ -6408,22 +6392,22 @@ TEST_P(ParameterizedWebFrameTest, DisambiguationPopupPageScale) {
   web_view_helper.Resize(WebSize(1000, 1000));
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(80, 80, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(80, 80));
   EXPECT_TRUE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(230, 190, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(230, 190));
   EXPECT_TRUE(client.Triggered());
 
   web_view_helper.WebView()->SetPageScaleFactor(3.0f);
   web_view_helper.WebView()->UpdateAllLifecyclePhases();
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(240, 240, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(240, 240));
   EXPECT_TRUE(client.Triggered());
 
   client.ResetTriggered();
-  web_view_helper.WebView()->HandleInputEvent(FatTap(690, 570, kTapDiameter));
+  web_view_helper.WebView()->HandleInputEvent(FatTap(690, 570));
   EXPECT_FALSE(client.Triggered());
 }
 
@@ -6457,7 +6441,7 @@ TEST_P(ParameterizedWebFrameTest, ReplaceNavigationAfterHistoryNavigation) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", &web_frame_client);
-  WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
+  WebFrame* frame = web_view_helper.WebView()->MainFrame();
 
   // Load a url as a history navigation that will return an error.
   // TestSubstituteDataWebFrameClient will start a SubstituteData load in
@@ -6984,7 +6968,7 @@ TEST_P(ParameterizedWebFrameTest, DidAccessInitialDocumentViaJavascriptUrl) {
   EXPECT_EQ(0, web_frame_client.did_access_initial_document_);
 
   // Access the initial document from a javascript: URL.
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               "javascript:document.body.appendChild(document."
                               "createTextNode('Modified'))");
   EXPECT_EQ(1, web_frame_client.did_access_initial_document_);
@@ -7317,7 +7301,7 @@ TEST_P(ParameterizedWebFrameTest, BackDuringChildFrameReload) {
   web_view_helper.InitializeAndLoad(base_url_ + "page_with_blank_iframe.html");
   WebLocalFrameBase* main_frame = web_view_helper.LocalMainFrame();
   const FrameLoader& main_frame_loader = main_frame->GetFrame()->Loader();
-  WebLocalFrame* child_frame = main_frame->FirstChild()->ToWebLocalFrame();
+  WebFrame* child_frame = main_frame->FirstChild();
   ASSERT_TRUE(child_frame);
 
   // Start a history navigation, then have a different frame commit a
@@ -7347,7 +7331,7 @@ TEST_P(ParameterizedWebFrameTest, ReloadPost) {
   web_view_helper.InitializeAndLoad(base_url_ + "reload_post.html");
   WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
 
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               "javascript:document.forms[0].submit()");
   // Pump requests one more time after the javascript URL has executed to
   // trigger the actual POST load request.
@@ -7540,7 +7524,7 @@ TEST_P(ParameterizedWebFrameTest,
                                     &ConfigureLoadsImagesAutomatically);
 
   WebCache::Clear();
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "foo_with_image.html");
 
   // 2 images are requested, and each triggers 2 willSendRequest() calls,
@@ -7704,7 +7688,7 @@ TEST_P(ParameterizedWebFrameTest, FirstBlankSubframeNavigation) {
   frame->ExecuteScript(WebScriptSource(WebString::FromUTF8(
       "document.body.appendChild(document.createElement('iframe'))")));
 
-  WebLocalFrame* iframe = frame->FirstChild()->ToWebLocalFrame();
+  WebFrame* iframe = frame->FirstChild();
   ASSERT_EQ(&client.ChildClient(), ToWebLocalFrameBase(iframe)->Client());
 
   std::string url1 = base_url_ + "history.html";
@@ -7728,7 +7712,7 @@ TEST_P(ParameterizedWebFrameTest, FirstNonBlankSubframeNavigation) {
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.InitializeAndLoad("about:blank", &client);
 
-  WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
+  WebFrame* frame = web_view_helper.WebView()->MainFrame();
 
   std::string url1 = base_url_ + "history.html";
   FrameTestHelpers::LoadFrame(
@@ -7739,7 +7723,7 @@ TEST_P(ParameterizedWebFrameTest, FirstNonBlankSubframeNavigation) {
           "';"
           "document.body.appendChild(f)");
 
-  WebLocalFrame* iframe = frame->FirstChild()->ToWebLocalFrame();
+  WebFrame* iframe = frame->FirstChild();
   EXPECT_EQ(url1, iframe->GetDocument().Url().GetString().Utf8());
 
   std::string url2 = base_url_ + "find.html";
@@ -7759,7 +7743,7 @@ TEST_F(WebFrameTest, overflowHiddenRewrite) {
                              nullptr, &ConfigureCompositingWebView);
 
   web_view_helper.Resize(WebSize(100, 100));
-  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrameImpl(),
+  FrameTestHelpers::LoadFrame(web_view_helper.WebView()->MainFrame(),
                               base_url_ + "non-scrollable.html");
 
   PaintLayerCompositor* compositor = web_view_helper.WebView()->Compositor();
@@ -7787,7 +7771,7 @@ TEST_P(ParameterizedWebFrameTest, CurrentHistoryItem) {
 
   FrameTestHelpers::WebViewHelper web_view_helper;
   web_view_helper.Initialize();
-  WebLocalFrame* frame = web_view_helper.WebView()->MainFrameImpl();
+  WebFrame* frame = web_view_helper.WebView()->MainFrame();
   const FrameLoader& main_frame_loader =
       web_view_helper.WebView()->MainFrameImpl()->GetFrame()->Loader();
   WebURLRequest request(ToKURL(url));
@@ -7995,10 +7979,15 @@ TEST_P(ParameterizedWebFrameTest, FullscreenLayerSize) {
   UserGestureIndicator gesture(UserGestureToken::Create(document));
   Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
-  EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*document));
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
+  EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->DidEnterFullscreen();
+  EXPECT_EQ(div_fullscreen,
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->UpdateAllLifecyclePhases();
+  EXPECT_EQ(div_fullscreen,
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
 
   // Verify that the element is sized to the viewport.
@@ -8033,10 +8022,15 @@ TEST_F(WebFrameTest, FullscreenLayerNonScrollable) {
   UserGestureIndicator gesture(UserGestureToken::Create(document));
   Element* div_fullscreen = document->getElementById("div1");
   Fullscreen::RequestFullscreen(*div_fullscreen);
-  EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*document));
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
+  EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->DidEnterFullscreen();
+  EXPECT_EQ(div_fullscreen,
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->UpdateAllLifecyclePhases();
+  EXPECT_EQ(div_fullscreen,
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
 
   // Verify that the viewports are nonscrollable.
@@ -8052,10 +8046,14 @@ TEST_F(WebFrameTest, FullscreenLayerNonScrollable) {
   ASSERT_FALSE(visual_viewport_scroll_layer->UserScrollableVertical());
 
   // Verify that the viewports are scrollable upon exiting fullscreen.
+  EXPECT_EQ(div_fullscreen,
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(div_fullscreen, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->DidExitFullscreen();
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->UpdateAllLifecyclePhases();
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*document));
   ASSERT_TRUE(layout_viewport_scroll_layer->UserScrollableHorizontal());
   ASSERT_TRUE(layout_viewport_scroll_layer->UserScrollableVertical());
@@ -8089,12 +8087,18 @@ TEST_P(ParameterizedWebFrameTest, FullscreenMainFrame) {
       web_view_impl->MainFrameImpl()->GetFrame()->GetDocument();
   UserGestureIndicator gesture(UserGestureToken::Create(document));
   Fullscreen::RequestFullscreen(*document->documentElement());
-  EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*document));
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*document));
+  EXPECT_EQ(document->documentElement(),
+            Fullscreen::FullscreenElementFrom(*document));
   web_view_impl->DidEnterFullscreen();
+  EXPECT_EQ(document->documentElement(),
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(document->documentElement(),
             Fullscreen::FullscreenElementFrom(*document));
 
   web_view_impl->UpdateAllLifecyclePhases();
+  EXPECT_EQ(document->documentElement(),
+            Fullscreen::CurrentFullScreenElementFrom(*document));
   EXPECT_EQ(document->documentElement(),
             Fullscreen::FullscreenElementFrom(*document));
 
@@ -8187,19 +8191,22 @@ TEST_P(ParameterizedWebFrameTest, FullscreenNestedExit) {
     Fullscreen::RequestFullscreen(*iframe_body);
   }
   web_view_impl->DidEnterFullscreen();
-  Microtask::PerformCheckpoint(V8PerIsolateData::MainThreadIsolate());
   web_view_impl->UpdateAllLifecyclePhases();
 
   // We are now in nested fullscreen, with both documents having a non-empty
   // fullscreen element stack.
+  EXPECT_EQ(top_body, Fullscreen::CurrentFullScreenElementFrom(*top_doc));
   EXPECT_EQ(iframe, Fullscreen::FullscreenElementFrom(*top_doc));
+  EXPECT_EQ(iframe_body, Fullscreen::CurrentFullScreenElementFrom(*iframe_doc));
   EXPECT_EQ(iframe_body, Fullscreen::FullscreenElementFrom(*iframe_doc));
 
   web_view_impl->DidExitFullscreen();
   web_view_impl->UpdateAllLifecyclePhases();
 
   // We should now have fully exited fullscreen.
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*top_doc));
   EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*top_doc));
+  EXPECT_EQ(nullptr, Fullscreen::CurrentFullScreenElementFrom(*iframe_doc));
   EXPECT_EQ(nullptr, Fullscreen::FullscreenElementFrom(*iframe_doc));
 }
 
@@ -9519,12 +9526,7 @@ TEST_P(ParameterizedWebFrameTest, FrameWidgetTest) {
 
   helper.WebView()->Resize(WebSize(1000, 1000));
 
-  WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,
-                        WebInputEvent::kTimeStampForTesting);
-  event.source_device = kWebGestureDeviceTouchscreen;
-  event.x = 20;
-  event.y = 20;
-  child_frame->FrameWidget()->HandleInputEvent(WebCoalescedInputEvent(event));
+  child_frame->FrameWidget()->HandleInputEvent(FatTap(20, 20));
   EXPECT_TRUE(child_widget_client.DidHandleGestureEvent());
 
   helper.Reset();
@@ -10666,7 +10668,7 @@ TEST_F(WebFrameTest, ChangeResourcePriority) {
   helper.Initialize(&client);
   helper.Resize(WebSize(640, 480));
   FrameTestHelpers::LoadFrame(
-      helper.WebView()->MainFrameImpl(),
+      helper.WebView()->MainFrame(),
       base_url_ + "promote_img_in_viewport_priority.html");
 
   // Ensure the image in the viewport got promoted after the request was sent.

@@ -103,19 +103,17 @@ ProfileSyncServiceFactory* ProfileSyncServiceFactory::GetInstance() {
 // static
 ProfileSyncService* ProfileSyncServiceFactory::GetForProfile(
     Profile* profile) {
+  if (!ProfileSyncService::IsSyncAllowedByFlag())
+    return nullptr;
+
   return static_cast<ProfileSyncService*>(
-      GetSyncServiceForBrowserContext(profile));
+      GetInstance()->GetServiceForBrowserContext(profile, true));
 }
 
 // static
 syncer::SyncService* ProfileSyncServiceFactory::GetSyncServiceForBrowserContext(
     content::BrowserContext* context) {
-  if (!ProfileSyncService::IsSyncAllowedByFlag()) {
-    return nullptr;
-  }
-
-  return static_cast<syncer::SyncService*>(
-      GetInstance()->GetServiceForBrowserContext(context, true));
+  return GetForProfile(Profile::FromBrowserContext(context));
 }
 
 ProfileSyncServiceFactory::ProfileSyncServiceFactory()

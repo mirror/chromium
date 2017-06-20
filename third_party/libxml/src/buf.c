@@ -231,7 +231,7 @@ xmlBufPtr
 xmlBufCreateStatic(void *mem, size_t size) {
     xmlBufPtr ret;
 
-    if (mem == NULL)
+    if ((mem == NULL) || (size == 0))
         return(NULL);
 
     ret = (xmlBufPtr) xmlMalloc(sizeof(xmlBuf));

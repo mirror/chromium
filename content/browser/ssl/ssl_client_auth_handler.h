@@ -13,12 +13,11 @@
 #include "base/memory/weak_ptr.h"
 #include "content/common/content_export.h"
 #include "content/public/browser/browser_thread.h"
-#include "net/ssl/client_cert_identity.h"
+#include "net/cert/x509_certificate.h"
 #include "net/ssl/ssl_cert_request_info.h"
 
 namespace net {
 class ClientCertStore;
-class SSLPrivateKey;
 class URLRequest;
 class X509Certificate;
 }  // namespace net
@@ -38,9 +37,7 @@ class SSLClientAuthHandler {
     Delegate() {}
 
     // Called to continue the request with |cert|. |cert| may be nullptr.
-    virtual void ContinueWithCertificate(
-        scoped_refptr<net::X509Certificate> cert,
-        scoped_refptr<net::SSLPrivateKey> private_key) = 0;
+    virtual void ContinueWithCertificate(net::X509Certificate* cert) = 0;
 
     // Called to cancel the certificate selection and abort the request.
     virtual void CancelCertificateSelection() = 0;
@@ -67,8 +64,7 @@ class SSLClientAuthHandler {
   // is static to avoid deleting |handler| while it is on the stack.
   static void ContinueWithCertificate(
       const base::WeakPtr<SSLClientAuthHandler>& handler,
-      scoped_refptr<net::X509Certificate> cert,
-      scoped_refptr<net::SSLPrivateKey> key);
+      net::X509Certificate* cert);
 
   // Called to abort the request associated with |handler|. This is static to
   // avoid deleting |handler| while it is on the stack.
@@ -79,7 +75,7 @@ class SSLClientAuthHandler {
   class Core;
 
   // Called when |core_| is done retrieving the cert list.
-  void DidGetClientCerts(net::ClientCertIdentityList client_certs);
+  void DidGetClientCerts(net::CertificateList client_certs);
 
   // A reference-counted core so the ClientCertStore may outlive
   // SSLClientAuthHandler if the handler is destroyed while an operation on the

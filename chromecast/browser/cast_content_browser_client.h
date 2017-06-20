@@ -30,7 +30,6 @@ class MetricsService;
 }
 
 namespace net {
-class SSLPrivateKey;
 class URLRequestContextGetter;
 class X509Certificate;
 }
@@ -142,7 +141,7 @@ class CastContentBrowserClient : public content::ContentBrowserClient {
   void SelectClientCertificate(
       content::WebContents* web_contents,
       net::SSLCertRequestInfo* cert_request_info,
-      net::ClientCertIdentityList client_certs,
+      net::CertificateList client_certs,
       std::unique_ptr<content::ClientCertificateDelegate> delegate) override;
   bool CanCreateWindow(content::RenderFrameHost* opener,
                        const GURL& opener_url,
@@ -183,13 +182,10 @@ class CastContentBrowserClient : public content::ContentBrowserClient {
   void AddNetworkHintsMessageFilter(int render_process_id,
                                     net::URLRequestContext* context);
 
-  void SelectClientCertificateOnIOThread(
+  net::X509Certificate* SelectClientCertificateOnIOThread(
       GURL requesting_url,
-      int render_process_id,
-      scoped_refptr<base::SequencedTaskRunner> original_runner,
-      const base::Callback<void(scoped_refptr<net::X509Certificate>,
-                                scoped_refptr<net::SSLPrivateKey>)>&
-          continue_callback);
+      int render_process_id);
+
 #if !defined(OS_ANDROID)
   // Returns the crash signal FD corresponding to the current process type.
   int GetCrashSignalFD(const base::CommandLine& command_line);

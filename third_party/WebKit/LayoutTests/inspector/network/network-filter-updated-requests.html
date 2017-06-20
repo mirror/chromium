@@ -3,7 +3,7 @@
 <script src="../../http/tests/inspector/inspector-test.js"></script>
 <script src="../../http/tests/inspector/network-test.js"></script>
 <script>
-async function test() {
+function test() {
     var target = UI.panels.network._networkLogView;
     var types = Common.resourceTypes;
 
@@ -14,33 +14,32 @@ async function test() {
     var requestFoo = new SDK.NetworkRequest(InspectorTest.networkManager, "", "", "", "", "");
     requestFoo.setResourceType(types.Script);
     requestFoo.setRequestId("foo");
-    InspectorTest.networkManager._dispatcher._startNetworkRequest(requestFoo);
-
+    target._appendRequest(requestFoo);
     var requestBar = new SDK.NetworkRequest(InspectorTest.networkManager, "", "", "", "", "");
     requestBar.setResourceType(types.Script);
     requestBar.setRequestId("bar");
-    InspectorTest.networkManager._dispatcher._startNetworkRequest(requestBar);
+    target._appendRequest(requestBar);
+    target._refresh();
 
-    async function isFilteredOut(request) {
-        var node = await InspectorTest.waitForNetworkLogViewNodeForRequest(request);
-        return !!node[Network.NetworkLogView._isFilteredOutSymbol];
+    function isFilteredOut(request) {
+        return !!target._nodesByRequestId.get(request.requestId())[Network.NetworkLogView._isFilteredOutSymbol];
     }
 
     InspectorTest.addResult("");
-    InspectorTest.addResult("Request [" + requestFoo.requestId() + "] of type '" + requestFoo.resourceType().name() + "' is hidden: " + await isFilteredOut(requestFoo));
-    InspectorTest.addResult("Request [" + requestBar.requestId() + "] of type '" + requestBar.resourceType().name() + "' is hidden: " + await isFilteredOut(requestBar));
+    InspectorTest.addResult("Request [" + requestFoo.requestId() + "] of type '" + requestFoo.resourceType().name() + "' is hidden: " + isFilteredOut(requestFoo));
+    InspectorTest.addResult("Request [" + requestBar.requestId() + "] of type '" + requestBar.resourceType().name() + "' is hidden: " + isFilteredOut(requestBar));
 
     InspectorTest.addResult("");
     requestFoo.setResourceType(types.XHR);
-    InspectorTest.networkManager._dispatcher._updateNetworkRequest(requestFoo);
+    target._refreshRequest(requestFoo);
     InspectorTest.addResult("Updated request [" + requestFoo.requestId() + "] type.");
-    InspectorTest.networkManager._dispatcher._updateNetworkRequest(requestBar);
+    target._refreshRequest(requestBar);
     InspectorTest.addResult("Updated request [" + requestBar.requestId() + "].");
     target._refresh();
 
     InspectorTest.addResult("");
-    InspectorTest.addResult("Request [" + requestFoo.requestId() + "] of type '" + requestFoo.resourceType().name() + "' is hidden: " + await isFilteredOut(requestFoo));
-    InspectorTest.addResult("Request [" + requestBar.requestId() + "] of type '" + requestBar.resourceType().name() + "' is hidden: " + await isFilteredOut(requestBar));
+    InspectorTest.addResult("Request [" + requestFoo.requestId() + "] of type '" + requestFoo.resourceType().name() + "' is hidden: " + isFilteredOut(requestFoo));
+    InspectorTest.addResult("Request [" + requestBar.requestId() + "] of type '" + requestBar.resourceType().name() + "' is hidden: " + isFilteredOut(requestBar));
 
     InspectorTest.completeTest();
 }

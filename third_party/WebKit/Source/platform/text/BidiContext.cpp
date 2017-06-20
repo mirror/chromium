@@ -37,7 +37,7 @@ struct SameSizeAsBidiContext : public RefCounted<SameSizeAsBidiContext> {
 static_assert(sizeof(BidiContext) == sizeof(SameSizeAsBidiContext),
               "BidiContext should stay small");
 
-inline RefPtr<BidiContext> BidiContext::CreateUncached(
+inline PassRefPtr<BidiContext> BidiContext::CreateUncached(
     unsigned char level,
     CharDirection direction,
     bool override,
@@ -46,11 +46,11 @@ inline RefPtr<BidiContext> BidiContext::CreateUncached(
   return AdoptRef(new BidiContext(level, direction, override, source, parent));
 }
 
-RefPtr<BidiContext> BidiContext::Create(unsigned char level,
-                                        CharDirection direction,
-                                        bool override,
-                                        BidiEmbeddingSource source,
-                                        BidiContext* parent) {
+PassRefPtr<BidiContext> BidiContext::Create(unsigned char level,
+                                            CharDirection direction,
+                                            bool override,
+                                            BidiEmbeddingSource source,
+                                            BidiContext* parent) {
   DCHECK_EQ(direction, (level % 2 ? kRightToLeft : kLeftToRight));
 
   if (parent || level >= 2)
@@ -84,7 +84,7 @@ RefPtr<BidiContext> BidiContext::Create(unsigned char level,
   return rtl_override_context;
 }
 
-static inline RefPtr<BidiContext> CopyContextAndRebaselineLevel(
+static inline PassRefPtr<BidiContext> CopyContextAndRebaselineLevel(
     BidiContext* context,
     BidiContext* parent) {
   DCHECK(context);
@@ -101,7 +101,8 @@ static inline RefPtr<BidiContext> CopyContextAndRebaselineLevel(
 // The BidiContext stack must be immutable -- they're re-used for re-layout
 // after DOM modification/editing -- so we copy all the non-unicode contexts,
 // and recalculate their levels.
-RefPtr<BidiContext> BidiContext::CopyStackRemovingUnicodeEmbeddingContexts() {
+PassRefPtr<BidiContext>
+BidiContext::CopyStackRemovingUnicodeEmbeddingContexts() {
   Vector<BidiContext*, 64> contexts;
   for (BidiContext* iter = this; iter; iter = iter->Parent()) {
     if (iter->Source() != kFromUnicode)
@@ -115,7 +116,7 @@ RefPtr<BidiContext> BidiContext::CopyStackRemovingUnicodeEmbeddingContexts() {
     top_context =
         CopyContextAndRebaselineLevel(contexts[i - 1], top_context.Get());
 
-  return top_context;
+  return top_context.Release();
 }
 
 bool operator==(const BidiContext& c1, const BidiContext& c2) {

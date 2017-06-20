@@ -45,7 +45,7 @@ class NET_EXPORT ClientCertStoreWin : public ClientCertStore {
   // using the common logic.
   bool SelectClientCertsForTesting(const CertificateList& input_certs,
                                    const SSLCertRequestInfo& cert_request_info,
-                                   ClientCertIdentityList* selected_identities);
+                                   CertificateList* selected_certs);
 
   ScopedHCERTSTORE cert_store_;
 

@@ -122,6 +122,8 @@ class AwContentsClientBridge {
   void CancelJsResult(JNIEnv*, const base::android::JavaRef<jobject>&, int id);
 
  private:
+  void HandleErrorInClientCertificateResponse(int id);
+
   JavaObjectWeakGlobalRef java_ref_;
 
   typedef const base::Callback<void(content::CertificateRequestResultType)>
@@ -129,7 +131,9 @@ class AwContentsClientBridge {
   IDMap<std::unique_ptr<CertErrorCallback>> pending_cert_error_callbacks_;
   IDMap<std::unique_ptr<content::JavaScriptDialogManager::DialogClosedCallback>>
       pending_js_dialog_callbacks_;
-  IDMap<std::unique_ptr<content::ClientCertificateDelegate>>
+  // |pending_client_cert_request_delegates_| owns its pointers, but IDMap
+  // doesn't provide Release, so ownership is managed manually.
+  IDMap<content::ClientCertificateDelegate*>
       pending_client_cert_request_delegates_;
 };
 

@@ -99,9 +99,6 @@ class IndexedDbOriginalSectioned(perf_benchmark.PerfBenchmark):
   def Name(cls):
     return 'storage.indexeddb_endure'
 
-  def GetExpectations(self):
-    return page_sets.IndexedDBEndureStoryExpectations()
-
 
 @benchmark.Disabled('linux') # crbug.com/677972
 @benchmark.Owner(emails=['cmumford@chromium.org'])
@@ -124,6 +121,3 @@ class IndexedDbTracing(perf_benchmark.PerfBenchmark):
   @classmethod
   def ValueCanBeAddedPredicate(cls, value, is_first_result):
     return 'idb' in value.name
-
-  def GetExpectations(self):
-    return page_sets.IndexedDBEndureStoryExpectations()

@@ -16,13 +16,11 @@ async function test()
         InspectorTest.makeSimpleXHR("GET", "resources/binary.data", false, makeHAR);
     }
 
-    async function makeHAR()
+    function makeHAR()
     {
+        var writer = new Network.HARWriter();
         var stream = new InspectorTest.StringOutputStream(onSaved);
-        var progress = new Common.Progress();
-        await Network.HARWriter.write(stream, InspectorTest.networkRequests(), progress);
-        progress.done();
-        stream.close();
+        writer.write(stream, InspectorTest.networkRequests(), new Common.Progress());
     }
 
     function dumpContent(content)

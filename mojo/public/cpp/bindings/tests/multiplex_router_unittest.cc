@@ -43,12 +43,7 @@ class MultiplexRouterTest : public testing::Test {
     endpoint1_ = router1_->CreateLocalEndpointHandle(id);
   }
 
-  void TearDown() override {
-    endpoint1_.reset();
-    endpoint0_.reset();
-    router1_ = nullptr;
-    router0_ = nullptr;
-  }
+  void TearDown() override {}
 
   void PumpMessages() { base::RunLoop().RunUntilIdle(); }
 

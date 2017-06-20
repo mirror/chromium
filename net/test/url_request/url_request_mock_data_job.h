@@ -30,9 +30,8 @@ class URLRequestMockDataJob : public URLRequestJob {
   void Start() override;
   int ReadRawData(IOBuffer* buf, int buf_size) override;
   void GetResponseInfo(HttpResponseInfo* info) override;
-  void ContinueWithCertificate(
-      scoped_refptr<X509Certificate> client_cert,
-      scoped_refptr<SSLPrivateKey> client_private_key) override;
+  void ContinueWithCertificate(X509Certificate* client_cert,
+                               SSLPrivateKey* client_private_key) override;
 
   // Adds the testing URLs to the URLRequestFilter.
   static void AddUrlHandler();

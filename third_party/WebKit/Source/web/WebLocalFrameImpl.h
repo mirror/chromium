@@ -75,6 +75,7 @@ class WebSpellCheckPanelHostClient;
 class WebView;
 class WebViewBase;
 enum class WebFrameLoadType;
+struct FrameLoadRequest;
 struct WebContentSecurityPolicyViolation;
 struct WebPrintParams;
 
@@ -346,7 +347,8 @@ class WEB_EXPORT WebLocalFrameImpl final
 
   ~WebLocalFrameImpl() override;
 
-  LocalFrame* CreateChildFrame(const AtomicString& name,
+  LocalFrame* CreateChildFrame(const FrameLoadRequest&,
+                               const AtomicString& name,
                                HTMLFrameOwnerElement*) override;
 
   void DidChangeContentsSize(const IntSize&);

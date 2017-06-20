@@ -548,6 +548,7 @@ class CONTENT_EXPORT RenderFrameImpl
   void LoadErrorPage(int reason) override;
   blink::WebNavigationPolicy DecidePolicyForNavigation(
       const NavigationPolicyInfo& info) override;
+  blink::WebHistoryItem HistoryItemForNewChildFrame() override;
   void WillSendSubmitEvent(const blink::WebFormElement& form) override;
   void WillSubmitForm(const blink::WebFormElement& form) override;
   void DidCreateDataSource(blink::WebLocalFrame* frame,

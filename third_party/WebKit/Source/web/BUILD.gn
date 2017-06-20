@@ -39,8 +39,12 @@ component("web") {
     "AssertMatchingEnums.cpp",
     "ChromeClientImpl.cpp",
     "ChromeClientImpl.h",
+    "InspectorOverlayAgent.cpp",
+    "InspectorOverlayAgent.h",
     "LocalFrameClientImpl.cpp",
     "LocalFrameClientImpl.h",
+    "PageOverlay.cpp",
+    "PageOverlay.h",
     "WebDevToolsAgentImpl.cpp",
     "WebDevToolsAgentImpl.h",
     "WebDevToolsFrontendImpl.cpp",
@@ -52,10 +56,15 @@ component("web") {
     "WebFormElementObserverImpl.h",
     "WebFrameWidgetImpl.cpp",
     "WebFrameWidgetImpl.h",
+    "WebHelperPluginImpl.cpp",
+    "WebHelperPluginImpl.h",
     "WebHitTestResult.cpp",
     "WebKit.cpp",
+    "WebLeakDetector.cpp",
     "WebLocalFrameImpl.cpp",
     "WebLocalFrameImpl.h",
+    "WebPagePopupImpl.cpp",
+    "WebPagePopupImpl.h",
     "WebViewImpl.cpp",
     "WebViewImpl.h",
   ]
@@ -85,6 +94,10 @@ test("webkit_unit_tests") {
   visibility = [ "*" ]
 
   sources = [
+    "PageOverlayTest.cpp",
+    "WebDragDataTest.cpp",
+    "WebElementTest.cpp",
+
     # FIXME: Move the tests from web/tests/ to appropriate places.
     # crbug.com/353585
     "tests/AccessibilityObjectModelTest.cpp",

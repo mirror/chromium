@@ -42,7 +42,7 @@ enable_net_mojo = !is_ios && !is_proto_quic
 # in addition to use_openssl_certs or use_nss_certs, in that case byte certs
 # are used internally but OpenSSL or NSS are used for certificate verification.
 # TODO(mattm): crbug.com/671420: Implement and enable this for all platforms.
-use_byte_certs = is_mac || is_android || is_nacl || is_ios || is_win
+use_byte_certs = is_mac || is_android || is_nacl || is_ios
 
 buildflag_header("features") {
   header = "net_features.h"
@@ -321,12 +321,12 @@ component("net") {
     "ssl/channel_id_service.h",
     "ssl/channel_id_store.cc",
     "ssl/channel_id_store.h",
-    "ssl/client_cert_identity.cc",
-    "ssl/client_cert_identity.h",
-    "ssl/client_cert_identity_mac.cc",
-    "ssl/client_cert_identity_mac.h",
+    "ssl/client_key_store.cc",
+    "ssl/client_key_store.h",
     "ssl/default_channel_id_store.cc",
     "ssl/default_channel_id_store.h",
+    "ssl/openssl_client_key_store.cc",
+    "ssl/openssl_client_key_store.h",
     "ssl/openssl_ssl_util.cc",
     "ssl/openssl_ssl_util.h",
     "ssl/ssl_cert_request_info.cc",
@@ -608,8 +608,6 @@ component("net") {
       "cert/x509_util_mac.h",
       "cert/x509_util_nss.cc",
       "cert/x509_util_nss.h",
-      "cert/x509_util_win.cc",
-      "cert/x509_util_win.h",
       "cert_net/cert_net_fetcher_impl.cc",
       "cert_net/cert_net_fetcher_impl.h",
       "cert_net/nss_ocsp.cc",
@@ -1185,6 +1183,8 @@ component("net") {
       "quic/core/crypto/curve25519_key_exchange.h",
       "quic/core/crypto/ephemeral_key_source.h",
       "quic/core/crypto/key_exchange.h",
+      "quic/core/crypto/local_strike_register_client.cc",
+      "quic/core/crypto/local_strike_register_client.h",
       "quic/core/crypto/null_decrypter.cc",
       "quic/core/crypto/null_decrypter.h",
       "quic/core/crypto/null_encrypter.cc",
@@ -1210,6 +1210,9 @@ component("net") {
       "quic/core/crypto/quic_random.h",
       "quic/core/crypto/scoped_evp_aead_ctx.cc",
       "quic/core/crypto/scoped_evp_aead_ctx.h",
+      "quic/core/crypto/strike_register.cc",
+      "quic/core/crypto/strike_register.h",
+      "quic/core/crypto/strike_register_client.h",
       "quic/core/frames/quic_ack_frame.cc",
       "quic/core/frames/quic_ack_frame.h",
       "quic/core/frames/quic_blocked_frame.cc",
@@ -1635,12 +1638,12 @@ component("net") {
       "ssl/ssl_config_service_defaults.h",
       "ssl/ssl_key_logger.cc",
       "ssl/ssl_key_logger.h",
+      "ssl/ssl_platform_key.h",
       "ssl/ssl_platform_key_android.cc",
       "ssl/ssl_platform_key_android.h",
       "ssl/ssl_platform_key_mac.cc",
       "ssl/ssl_platform_key_mac.h",
       "ssl/ssl_platform_key_nss.cc",
-      "ssl/ssl_platform_key_nss.h",
       "ssl/ssl_platform_key_util.cc",
       "ssl/ssl_platform_key_util.h",
       "ssl/ssl_platform_key_win.cc",
@@ -1784,6 +1787,8 @@ component("net") {
       sources -= [
         "cert/cert_database_openssl.cc",
         "cert/x509_certificate_openssl.cc",
+        "ssl/openssl_client_key_store.cc",
+        "ssl/openssl_client_key_store.h",
       ]
     } else {
       if (is_android) {
@@ -1829,7 +1834,11 @@ component("net") {
           "cert/nss_profile_filter_chromeos.h",
         ]
       }
-      sources -= [ "ssl/ssl_platform_key_nss.cc" ]
+      sources -= [
+        "ssl/client_key_store.cc",
+        "ssl/client_key_store.h",
+        "ssl/ssl_platform_key_nss.cc",
+      ]
     } else {
       sources += [
         "third_party/nss/ssl/cmpcert.cc",
@@ -1851,11 +1860,8 @@ component("net") {
     }
 
     if (is_chromecast && use_nss_certs) {
-      sources -= [
-        "ssl/client_cert_store_nss.cc",
-        "ssl/client_cert_store_nss.h",
-        "ssl/ssl_platform_key_nss.cc",
-      ]
+      sources += [ "ssl/ssl_platform_key_chromecast.cc" ]
+      sources -= [ "ssl/ssl_platform_key_nss.cc" ]
     }
 
     if (!enable_mdns) {
@@ -2470,10 +2476,6 @@ static_library("test_support") {
     "socket/socket_test_util.h",
     "spdy/chromium/spdy_test_util_common.cc",
     "spdy/chromium/spdy_test_util_common.h",
-    "ssl/client_cert_identity_test_util.cc",
-    "ssl/client_cert_identity_test_util.h",
-    "ssl/ssl_private_key_test_util.cc",
-    "ssl/ssl_private_key_test_util.h",
     "test/cert_test_util.cc",
     "test/cert_test_util.h",
     "test/cert_test_util_nss.cc",
@@ -3040,6 +3042,8 @@ source_set("quic_test_tools") {
     "quic/platform/impl/quic_test_loopback_impl.h",
     "quic/test_tools/crypto_test_utils.cc",
     "quic/test_tools/crypto_test_utils.h",
+    "quic/test_tools/delayed_verify_strike_register_client.cc",
+    "quic/test_tools/delayed_verify_strike_register_client.h",
     "quic/test_tools/failing_proof_source.cc",
     "quic/test_tools/failing_proof_source.h",
     "quic/test_tools/fake_proof_source.cc",
@@ -3455,7 +3459,6 @@ bundle_data("net_unittests_bundle_data") {
     "data/parse_certificate_unittest/serial_negative.pem",
     "data/parse_certificate_unittest/serial_zero_padded.pem",
     "data/parse_certificate_unittest/serial_zero_padded_21_bytes.pem",
-    "data/parse_certificate_unittest/signature_algorithm_null.pem",
     "data/parse_certificate_unittest/subject_alt_name.pem",
     "data/parse_certificate_unittest/subject_t61string.pem",
     "data/parse_certificate_unittest/subject_t61string_1-32.pem",
@@ -4866,6 +4869,7 @@ test("net_unittests") {
     "quic/core/crypto/crypto_server_test.cc",
     "quic/core/crypto/crypto_utils_test.cc",
     "quic/core/crypto/curve25519_key_exchange_test.cc",
+    "quic/core/crypto/local_strike_register_client_test.cc",
     "quic/core/crypto/null_decrypter_test.cc",
     "quic/core/crypto/null_encrypter_test.cc",
     "quic/core/crypto/p256_key_exchange_test.cc",
@@ -4873,6 +4877,7 @@ test("net_unittests") {
     "quic/core/crypto/quic_crypto_client_config_test.cc",
     "quic/core/crypto/quic_crypto_server_config_test.cc",
     "quic/core/crypto/quic_random_test.cc",
+    "quic/core/crypto/strike_register_test.cc",
     "quic/core/frames/quic_frames_test.cc",
     "quic/core/packet_number_indexed_queue_test.cc",
     "quic/core/quic_alarm_test.cc",
@@ -5024,12 +5029,12 @@ test("net_unittests") {
     "spdy/core/spdy_test_utils.h",
     "spdy/platform/api/spdy_string_utils_test.cc",
     "ssl/channel_id_service_unittest.cc",
-    "ssl/client_cert_identity_unittest.cc",
     "ssl/client_cert_store_mac_unittest.cc",
     "ssl/client_cert_store_nss_unittest.cc",
     "ssl/client_cert_store_unittest-inl.h",
     "ssl/client_cert_store_win_unittest.cc",
     "ssl/default_channel_id_store_unittest.cc",
+    "ssl/openssl_client_key_store_unittest.cc",
     "ssl/ssl_cipher_suite_names_unittest.cc",
     "ssl/ssl_client_auth_cache_unittest.cc",
     "ssl/ssl_client_session_cache_unittest.cc",
@@ -5041,6 +5046,8 @@ test("net_unittests") {
     "ssl/ssl_platform_key_nss_unittest.cc",
     "ssl/ssl_platform_key_util_unittest.cc",
     "ssl/ssl_platform_key_win_unittest.cc",
+    "ssl/ssl_private_key_test_util.cc",
+    "ssl/ssl_private_key_test_util.h",
     "test/embedded_test_server/embedded_test_server_unittest.cc",
     "test/embedded_test_server/http_request_unittest.cc",
     "test/embedded_test_server/http_response_unittest.cc",
@@ -5226,6 +5233,10 @@ test("net_unittests") {
   if (!use_nss_certs) {
     # Only include this test when using NSS for cert verification.
     sources -= [ "cert_net/nss_ocsp_unittest.cc" ]
+  }
+
+  if (!use_openssl_certs) {
+    sources -= [ "ssl/openssl_client_key_store_unittest.cc" ]
   }
 
   if (enable_websockets) {
@@ -5438,10 +5449,8 @@ test("net_unittests") {
   }
 
   if (is_chromecast && use_nss_certs) {
-    sources -= [
-      "ssl/client_cert_store_nss_unittest.cc",
-      "ssl/ssl_platform_key_nss_unittest.cc",
-    ]
+    sources += [ "ssl/ssl_platform_key_chromecast_unittest.cc" ]
+    sources -= [ "ssl/ssl_platform_key_nss_unittest.cc" ]
   }
 
   # Include transport_security_state_generator tests.

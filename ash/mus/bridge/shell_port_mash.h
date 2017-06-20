@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 
+#include "ash/display/window_tree_host_manager.h"
 #include "ash/shell_port.h"
 #include "base/macros.h"
 
@@ -37,7 +38,7 @@ class WindowManager;
 class ShellPortMashTestApi;
 
 // ShellPort implementation for mash/mus. See ash/README.md for more.
-class ShellPortMash : public ShellPort {
+class ShellPortMash : public ShellPort, public WindowTreeHostManager::Observer {
  public:
   ShellPortMash(aura::Window* primary_root_window,
                 WindowManager* window_manager,
@@ -94,6 +95,8 @@ class ShellPortMash : public ShellPort {
   CreateImmersiveFullscreenController() override;
   std::unique_ptr<KeyboardUI> CreateKeyboardUI() override;
   std::unique_ptr<KeyEventWatcher> CreateKeyEventWatcher() override;
+  void AddDisplayObserver(WmDisplayObserver* observer) override;
+  void RemoveDisplayObserver(WmDisplayObserver* observer) override;
   void AddPointerWatcher(views::PointerWatcher* watcher,
                          views::PointerWatcherEventTypes events) override;
   void RemovePointerWatcher(views::PointerWatcher* watcher) override;
@@ -136,6 +139,10 @@ class ShellPortMash : public ShellPort {
         accelerator_controller_delegate;
   };
 
+  // WindowTreeHostManager::Observer:
+  void OnDisplayConfigurationChanging() override;
+  void OnDisplayConfigurationChanged() override;
+
   WindowManager* window_manager_;
 
   // TODO(sky): remove this once mash supports simple display management.
@@ -147,6 +154,9 @@ class ShellPortMash : public ShellPort {
   std::unique_ptr<MusSpecificState> mus_state_;
 
   std::unique_ptr<DisplaySynchronizer> display_synchronizer_;
+
+  bool added_display_observer_ = false;
+  base::ObserverList<WmDisplayObserver> display_observers_;
 
   DISALLOW_COPY_AND_ASSIGN(ShellPortMash);
 };

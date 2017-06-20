@@ -113,28 +113,44 @@ StyleSelfAlignmentData LayoutGrid::DefaultAlignmentForChild(
              : style.ResolvedAlignItems(SelfAlignmentNormalBehavior(this));
 }
 
-bool LayoutGrid::SelfAlignmentChangedSize(GridAxis axis,
-                                          const ComputedStyle& old_style,
-                                          const ComputedStyle& new_style,
-                                          const LayoutBox& child) const {
-  return SelfAlignmentForChild(axis, child, &old_style).GetPosition() ==
-                 kItemPositionStretch
-             ? SelfAlignmentForChild(axis, child, &new_style).GetPosition() !=
-                   kItemPositionStretch
-             : SelfAlignmentForChild(axis, child, &new_style).GetPosition() ==
-                   kItemPositionStretch;
+bool LayoutGrid::SelfAlignmentChangedToStretch(GridAxis axis,
+                                               const ComputedStyle& old_style,
+                                               const ComputedStyle& new_style,
+                                               const LayoutBox& child) const {
+  return SelfAlignmentForChild(axis, child, &old_style).GetPosition() !=
+             kItemPositionStretch &&
+         SelfAlignmentForChild(axis, child, &new_style).GetPosition() ==
+             kItemPositionStretch;
 }
 
-bool LayoutGrid::DefaultAlignmentChangedSize(
+bool LayoutGrid::SelfAlignmentChangedFromStretch(GridAxis axis,
+                                                 const ComputedStyle& old_style,
+                                                 const ComputedStyle& new_style,
+                                                 const LayoutBox& child) const {
+  return SelfAlignmentForChild(axis, child, &old_style).GetPosition() ==
+             kItemPositionStretch &&
+         SelfAlignmentForChild(axis, child, &new_style).GetPosition() !=
+             kItemPositionStretch;
+}
+
+bool LayoutGrid::DefaultAlignmentChangedFromStretch(
     GridAxis axis,
     const ComputedStyle& old_style,
     const ComputedStyle& new_style) const {
   return DefaultAlignmentForChild(axis, old_style).GetPosition() ==
-                 kItemPositionStretch
-             ? DefaultAlignmentForChild(axis, new_style).GetPosition() !=
-                   kItemPositionStretch
-             : DefaultAlignmentForChild(axis, new_style).GetPosition() ==
-                   kItemPositionStretch;
+             kItemPositionStretch &&
+         DefaultAlignmentForChild(axis, new_style).GetPosition() !=
+             kItemPositionStretch;
+}
+
+bool LayoutGrid::DefaultAlignmentChangedToStretch(
+    GridAxis axis,
+    const ComputedStyle& old_style,
+    const ComputedStyle& new_style) const {
+  return DefaultAlignmentForChild(axis, old_style).GetPosition() !=
+             kItemPositionStretch &&
+         DefaultAlignmentForChild(axis, new_style).GetPosition() ==
+             kItemPositionStretch;
 }
 
 void LayoutGrid::StyleDidChange(StyleDifference diff,
@@ -145,8 +161,13 @@ void LayoutGrid::StyleDidChange(StyleDifference diff,
 
   const ComputedStyle& new_style = StyleRef();
   if (diff.NeedsFullLayout() &&
-      (DefaultAlignmentChangedSize(kGridRowAxis, *old_style, new_style) ||
-       DefaultAlignmentChangedSize(kGridColumnAxis, *old_style, new_style))) {
+      (DefaultAlignmentChangedToStretch(kGridRowAxis, *old_style, new_style) ||
+       DefaultAlignmentChangedToStretch(kGridColumnAxis, *old_style,
+                                        new_style) ||
+       DefaultAlignmentChangedFromStretch(kGridRowAxis, *old_style,
+                                          new_style) ||
+       DefaultAlignmentChangedFromStretch(kGridColumnAxis, *old_style,
+                                          new_style))) {
     // Style changes on the grid container implying stretching (to-stretch) or
     // shrinking (from-stretch) require the affected items to be laid out again.
     // These logic only applies to 'stretch' since the rest of the alignment
@@ -156,10 +177,14 @@ void LayoutGrid::StyleDidChange(StyleDifference diff,
     // change.
     for (LayoutBox* child = FirstInFlowChildBox(); child;
          child = child->NextInFlowSiblingBox()) {
-      if (SelfAlignmentChangedSize(kGridRowAxis, *old_style, new_style,
-                                   *child) ||
-          SelfAlignmentChangedSize(kGridColumnAxis, *old_style, new_style,
-                                   *child)) {
+      if (SelfAlignmentChangedToStretch(kGridRowAxis, *old_style, new_style,
+                                        *child) ||
+          SelfAlignmentChangedFromStretch(kGridRowAxis, *old_style, new_style,
+                                          *child) ||
+          SelfAlignmentChangedToStretch(kGridColumnAxis, *old_style, new_style,
+                                        *child) ||
+          SelfAlignmentChangedFromStretch(kGridColumnAxis, *old_style,
+                                          new_style, *child)) {
         child->SetNeedsLayout(LayoutInvalidationReason::kGridChanged);
       }
     }

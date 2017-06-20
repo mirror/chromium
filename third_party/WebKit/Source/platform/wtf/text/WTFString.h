@@ -97,7 +97,7 @@ class WTF_EXPORT String {
 
   // Construct a string referencing an existing StringImpl.
   String(StringImpl* impl) : impl_(impl) {}
-  String(RefPtr<StringImpl> impl) : impl_(std::move(impl)) {}
+  String(PassRefPtr<StringImpl> impl) : impl_(std::move(impl)) {}
 
   void swap(String& o) { impl_.Swap(o.impl_); }
 
@@ -113,7 +113,7 @@ class WTF_EXPORT String {
   bool IsEmpty() const { return !impl_ || !impl_->length(); }
 
   StringImpl* Impl() const { return impl_.Get(); }
-  RefPtr<StringImpl> ReleaseImpl() { return std::move(impl_); }
+  PassRefPtr<StringImpl> ReleaseImpl() { return impl_.Release(); }
 
   unsigned length() const {
     if (!impl_)

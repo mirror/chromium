@@ -22,7 +22,7 @@ ProcessStatsSender::ProcessStatsSender(
       thread_checker_() {
   DCHECK(thread_checker_.CalledOnValidThread());
   DCHECK(host_stats_stub_);
-  DCHECK(interval > base::TimeDelta());
+  DCHECK(!interval.is_zero());
   DCHECK(!agents_.empty());
 
   timer_.Start(FROM_HERE, interval, this, &ProcessStatsSender::ReportUsage);

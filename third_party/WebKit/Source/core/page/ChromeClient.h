@@ -253,8 +253,7 @@ class CORE_EXPORT ChromeClient : public PlatformChromeClient {
 
   virtual void EnterFullscreen(LocalFrame&) {}
   virtual void ExitFullscreen(LocalFrame&) {}
-  virtual void FullscreenElementChanged(Element* old_element,
-                                        Element* new_element) {}
+  virtual void FullscreenElementChanged(Element*, Element*) {}
 
   virtual void ClearCompositedSelection(LocalFrame*) {}
   virtual void UpdateCompositedSelection(LocalFrame*,

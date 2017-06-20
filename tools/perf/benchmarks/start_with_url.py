@@ -53,9 +53,6 @@ class StartWithUrlColdTBM(_StartupPerfBenchmark):
   def Name(cls):
     return 'start_with_url.cold.startup_pages'
 
-  def GetExpectations(self):
-    return page_sets.ColdStartupStoryExpectations()
-
 
 @benchmark.Enabled('has tabs')
 @benchmark.Enabled('android')
@@ -78,6 +75,3 @@ class StartWithUrlWarmTBM(_StartupPerfBenchmark):
     # Ignores first results because the first invocation is actualy cold since
     # we are loading the profile for the first time.
     return not is_first_result
-
-  def GetExpectations(self):
-    return page_sets.WarmStartupStoryExpectations()

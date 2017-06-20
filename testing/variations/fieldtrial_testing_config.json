@@ -590,10 +590,7 @@
             ],
             "experiments": [
                 {
-                    "name": "Enabled",
-                    "enable_features": [
-                        "DataReductionProxyLowMemoryDevicePromo"
-                    ]
+                    "name": "Enabled"
                 }
             ]
         }
@@ -2021,6 +2018,23 @@
             "experiments": [
                 {
                     "name": "Disabled"
+                }
+            ]
+        }
+    ],
+    "PasswordManagerSettingsMigration": [
+        {
+            "platforms": [
+                "android",
+                "chromeos",
+                "ios",
+                "linux",
+                "mac",
+                "win"
+            ],
+            "experiments": [
+                {
+                    "name": "Enable"
                 }
             ]
         }

@@ -200,7 +200,7 @@ static AXSparseAttributeSetterMap& GetSparseAttributeSetterMap() {
         new ObjectVectorAttributeSetter(AXObjectVectorAttribute::kAriaFlowTo));
     ax_sparse_attribute_setter_map.Set(
         aria_detailsAttr,
-        new ObjectAttributeSetter(AXObjectAttribute::kAriaDetails));
+        new ObjectVectorAttributeSetter(AXObjectVectorAttribute::kAriaDetails));
     ax_sparse_attribute_setter_map.Set(
         aria_errormessageAttr,
         new ObjectAttributeSetter(AXObjectAttribute::kAriaErrorMessage));

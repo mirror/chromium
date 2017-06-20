@@ -9,8 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 
-import org.chromium.base.annotations.MainDex;
-
 import java.util.List;
 
 /**
@@ -18,9 +16,9 @@ import java.util.List;
  * query function.
  * Note: if you move or rename this class, make sure you have also updated AndroidManifest.xml.
  */
-@MainDex
-public class TestPartnerBrowserCustomizationsDelayedProvider
-        extends TestPartnerBrowserCustomizationsProvider {
+public class TestPartnerBrowserCustomizationsDelayedProvider extends
+        TestPartnerBrowserCustomizationsProvider {
+
     private static String sUriPathToDelay;
 
     public TestPartnerBrowserCustomizationsDelayedProvider() {

@@ -12,6 +12,7 @@
 #include "core/workers/WorkletOptions.h"
 #include "platform/bindings/ScriptWrappable.h"
 #include "platform/heap/Handle.h"
+#include "public/platform/WebURLRequest.h"
 
 namespace blink {
 
@@ -49,6 +50,9 @@ class CORE_EXPORT Worklet : public GarbageCollectedFinalized<Worklet>,
  protected:
   // The Worklet inherits the url and userAgent from the frame->document().
   explicit Worklet(LocalFrame*);
+
+  static WebURLRequest::FetchCredentialsMode ParseCredentialsOption(
+      const String& credentials_option);
 
   // Returns one of available global scopes.
   WorkletGlobalScopeProxy* FindAvailableGlobalScope() const;

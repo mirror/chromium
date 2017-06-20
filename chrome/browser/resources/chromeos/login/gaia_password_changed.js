@@ -8,7 +8,10 @@ Polymer({
   properties: {
     email: String,
 
-    disabled: {type: Boolean, value: false}
+    disabled: {
+      type: Boolean,
+      value: false
+    }
   },
 
   ready: function() {
@@ -19,11 +22,8 @@ Polymer({
      */
     var pages = this.$.animatedPages;
     delete pages._squelchNextFinishEvent;
-    Object.defineProperty(pages, '_squelchNextFinishEvent', {
-      get: function() {
-        return false;
-      }
-    });
+    Object.defineProperty(pages, '_squelchNextFinishEvent',
+        { get: function() { return false; } });
   },
 
   invalidate: function() {

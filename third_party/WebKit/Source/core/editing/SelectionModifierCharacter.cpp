@@ -65,20 +65,10 @@ struct TraversalLeft {
     return box.CaretLeftmostOffset();
   }
 
-  static InlineBox* FindBackwardBidiRun(const InlineBox& box,
-                                        unsigned bidi_level) {
-    return InlineBoxTraversal::FindRightBidiRun(box, bidi_level);
-  }
-
   static InlineBox* FindBackwardBoundaryOfEntireBidiRun(const InlineBox& box,
                                                         unsigned bidi_level) {
     return InlineBoxTraversal::FindRightBoundaryOfEntireBidiRun(box,
                                                                 bidi_level);
-  }
-
-  static InlineBox* FindForwardBidiRun(const InlineBox& box,
-                                       unsigned bidi_level) {
-    return InlineBoxTraversal::FindLeftBidiRun(box, bidi_level);
   }
 
   static InlineBox* FindForwardBoundaryOfEntireBidiRun(const InlineBox& box,
@@ -157,19 +147,9 @@ struct TraversalRight {
     return box.CaretRightmostOffset();
   }
 
-  static InlineBox* FindBackwardBidiRun(const InlineBox& box,
-                                        unsigned bidi_level) {
-    return InlineBoxTraversal::FindLeftBidiRun(box, bidi_level);
-  }
-
   static InlineBox* FindBackwardBoundaryOfEntireBidiRun(const InlineBox& box,
                                                         unsigned bidi_level) {
     return InlineBoxTraversal::FindLeftBoundaryOfEntireBidiRun(box, bidi_level);
-  }
-
-  static InlineBox* FindForwardBidiRun(const InlineBox& box,
-                                       unsigned bidi_level) {
-    return InlineBoxTraversal::FindRightBidiRun(box, bidi_level);
   }
 
   static InlineBox* FindForwardBoundaryOfEntireBidiRun(const InlineBox& box,
@@ -331,7 +311,11 @@ static PositionTemplate<Strategy> TraverseInternalAlgorithm(
 
         level = prev_box->BidiLevel();
 
-        InlineBox* const next_box = Traversal::FindBackwardBidiRun(*box, level);
+        InlineBox* next_box = box;
+        do {
+          next_box = Traversal::BackwardLeafChildOf(*next_box);
+        } while (next_box && next_box->BidiLevel() > level);
+
         if (next_box && next_box->BidiLevel() == level)
           break;
 
@@ -351,7 +335,10 @@ static PositionTemplate<Strategy> TraverseInternalAlgorithm(
         line_layout_item = box->GetLineLayoutItem();
         offset = Traversal::CaretEndOffsetOf(*box);
         if (box->BidiLevel() > level) {
-          prev_box = Traversal::FindForwardBidiRun(*prev_box, level);
+          do {
+            prev_box = Traversal::ForwardLeafChildOf(*prev_box);
+          } while (prev_box && prev_box->BidiLevel() > level);
+
           if (!prev_box || prev_box->BidiLevel() < level)
             continue;
         }

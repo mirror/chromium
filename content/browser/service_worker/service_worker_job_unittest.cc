@@ -920,7 +920,8 @@ class UpdateJobTestHelper
     base::TimeDelta time_since_last_check =
         base::Time::Now() - registration->last_update_check();
     if (!is_update || script.GetOrigin() != kNoChangeOrigin ||
-        time_since_last_check > kServiceWorkerScriptMaxCacheAge) {
+        time_since_last_check > base::TimeDelta::FromHours(
+                                    kServiceWorkerScriptMaxCacheAgeInHours)) {
       version->embedded_worker()->OnNetworkAccessedForScriptLoad();
     }
 

@@ -128,8 +128,8 @@ int URLRequestMockDataJob::ReadRawData(IOBuffer* buf, int buf_size) {
 }
 
 void URLRequestMockDataJob::ContinueWithCertificate(
-    scoped_refptr<X509Certificate> client_cert,
-    scoped_refptr<SSLPrivateKey> client_private_key) {
+    X509Certificate* client_cert,
+    SSLPrivateKey* client_private_key) {
   DCHECK(request_client_certificate_);
   NotifyHeadersComplete();
 }

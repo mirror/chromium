@@ -525,8 +525,8 @@ void Surface::CommitSurfaceHierarchy() {
     stacking_target = sub_surface->window();
 
     // Update sub-surface position relative to surface origin.
-    sub_surface->window()->SetBounds(
-        gfx::Rect(sub_surface_entry.second, sub_surface->content_size_));
+    sub_surface->window()->SetBounds(gfx::Rect(
+        sub_surface_entry.second, sub_surface->window()->layer()->size()));
   }
 }
 
@@ -536,7 +536,8 @@ bool Surface::IsSynchronized() const {
 
 gfx::Rect Surface::GetHitTestBounds() const {
   SkIRect bounds = state_.input_region.getBounds();
-  if (!bounds.intersect(gfx::RectToSkIRect(gfx::Rect(content_size_))))
+  if (!bounds.intersect(
+          gfx::RectToSkIRect(gfx::Rect(window_->layer()->size()))))
     return gfx::Rect();
   return gfx::SkIRectToRect(bounds);
 }
@@ -545,12 +546,12 @@ bool Surface::HitTestRect(const gfx::Rect& rect) const {
   if (HasHitTestMask())
     return state_.input_region.intersects(gfx::RectToSkIRect(rect));
 
-  return rect.Intersects(gfx::Rect(content_size_));
+  return rect.Intersects(gfx::Rect(window_->layer()->size()));
 }
 
 bool Surface::HasHitTestMask() const {
   return !state_.input_region.contains(
-      gfx::RectToSkIRect(gfx::Rect(content_size_)));
+      gfx::RectToSkIRect(gfx::Rect(window_->layer()->size())));
 }
 
 void Surface::GetHitTestMask(gfx::Path* mask) const {

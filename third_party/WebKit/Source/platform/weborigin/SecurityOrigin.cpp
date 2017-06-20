@@ -176,12 +176,14 @@ SecurityOrigin::SecurityOrigin(const SecurityOrigin* other)
       is_unique_origin_potentially_trustworthy_(
           other->is_unique_origin_potentially_trustworthy_) {}
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
+PassRefPtr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
   if (RefPtr<SecurityOrigin> origin = GetOriginFromMap(url))
-    return origin;
+    return origin.Release();
 
-  if (ShouldTreatAsUniqueOrigin(url))
-    return AdoptRef(new SecurityOrigin());
+  if (ShouldTreatAsUniqueOrigin(url)) {
+    RefPtr<SecurityOrigin> origin = AdoptRef(new SecurityOrigin());
+    return origin.Release();
+  }
 
   if (ShouldUseInnerURL(url))
     return AdoptRef(new SecurityOrigin(ExtractInnerURL(url)));
@@ -189,13 +191,13 @@ RefPtr<SecurityOrigin> SecurityOrigin::Create(const KURL& url) {
   return AdoptRef(new SecurityOrigin(url));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::CreateUnique() {
+PassRefPtr<SecurityOrigin> SecurityOrigin::CreateUnique() {
   RefPtr<SecurityOrigin> origin = AdoptRef(new SecurityOrigin());
   DCHECK(origin->IsUnique());
-  return origin;
+  return origin.Release();
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
+PassRefPtr<SecurityOrigin> SecurityOrigin::IsolatedCopy() const {
   return AdoptRef(new SecurityOrigin(this));
 }
 
@@ -520,14 +522,14 @@ void SecurityOrigin::BuildRawString(StringBuilder& builder,
   }
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::CreateFromString(
+PassRefPtr<SecurityOrigin> SecurityOrigin::CreateFromString(
     const String& origin_string) {
   return SecurityOrigin::Create(KURL(KURL(), origin_string));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                              const String& host,
-                                              int port) {
+PassRefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
+                                                  const String& host,
+                                                  int port) {
   if (port < 0 || port > kMaxAllowedPort)
     return CreateUnique();
 
@@ -537,14 +539,14 @@ RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
   return Create(KURL(KURL(), protocol + "://" + host + port_part + "/"));
 }
 
-RefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
-                                              const String& host,
-                                              int port,
-                                              const String& suborigin) {
+PassRefPtr<SecurityOrigin> SecurityOrigin::Create(const String& protocol,
+                                                  const String& host,
+                                                  int port,
+                                                  const String& suborigin) {
   RefPtr<SecurityOrigin> origin = Create(protocol, host, port);
   if (!suborigin.IsEmpty())
     origin->suborigin_.SetName(suborigin);
-  return origin;
+  return origin.Release();
 }
 
 bool SecurityOrigin::IsSameSchemeHostPort(const SecurityOrigin* other) const {

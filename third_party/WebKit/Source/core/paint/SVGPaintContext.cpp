@@ -144,8 +144,8 @@ void SVGPaintContext::ApplyCompositingIfNecessary() {
   float opacity = style.Opacity();
   WebBlendMode blend_mode = style.HasBlendMode() && object_.IsBlendingAllowed()
                                 ? style.BlendMode()
-                                : WebBlendMode::kNormal;
-  if (opacity < 1 || blend_mode != WebBlendMode::kNormal) {
+                                : kWebBlendModeNormal;
+  if (opacity < 1 || blend_mode != kWebBlendModeNormal) {
     const FloatRect compositing_bounds =
         object_.VisualRectInLocalSVGCoordinates();
     compositing_recorder_ = WTF::WrapUnique(new CompositingRecorder(

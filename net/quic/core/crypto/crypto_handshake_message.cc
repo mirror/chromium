@@ -251,7 +251,9 @@ string CryptoHandshakeMessage::DebugStringInternal(
         if (it->second.size() == 8) {
           uint64_t value;
           memcpy(&value, it->second.data(), sizeof(value));
-          value = QuicEndian::NetToHost64(value);
+          if (QuicUtils::IsConnectionIdWireFormatBigEndian(perspective)) {
+            value = QuicEndian::NetToHost64(value);
+          }
           ret += QuicTextUtils::Uint64ToString(value);
           done = true;
         }

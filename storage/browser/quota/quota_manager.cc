@@ -207,15 +207,6 @@ bool UpdateModifiedTimeOnDBThread(const GURL& origin,
   return database->SetOriginLastModifiedTime(origin, type, modified_time);
 }
 
-void DidGetUsageAndQuotaForWebApps(
-    const QuotaManager::UsageAndQuotaCallback& callback,
-    QuotaStatusCode status,
-    int64_t usage,
-    int64_t quota,
-    base::flat_map<QuotaClient::ID, int64_t> usage_breakdown) {
-  callback.Run(status, usage, quota);
-}
-
 }  // namespace
 
 class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
@@ -226,7 +217,7 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
                       bool is_unlimited,
                       bool is_session_only,
                       bool is_incognito,
-                      const UsageAndQuotaWithBreakdownCallback& callback)
+                      const UsageAndQuotaCallback& callback)
       : QuotaTask(manager),
         origin_(origin),
         callback_(callback),
@@ -253,10 +244,9 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
     manager()->GetStorageCapacity(
         base::Bind(&UsageAndQuotaHelper::OnGotCapacity,
                    weak_factory_.GetWeakPtr(), barrier));
-    manager()->GetHostUsageWithBreakdown(
-        host, type_,
-        base::Bind(&UsageAndQuotaHelper::OnGotHostUsage,
-                   weak_factory_.GetWeakPtr(), barrier));
+    manager()->GetHostUsage(host, type_,
+                            base::Bind(&UsageAndQuotaHelper::OnGotHostUsage,
+                                       weak_factory_.GetWeakPtr(), barrier));
 
     // Determine host_quota differently depending on type.
     if (is_unlimited_) {
@@ -270,14 +260,13 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
                            weak_factory_.GetWeakPtr(), barrier));
     } else {
       DCHECK_EQ(kStorageTypeTemporary, type_);
-      // For temporary storage,  OnGotSettings will set the host quota.
+      // For temporary storge,  OnGotSettings will set the host quota.
     }
   }
 
   void Aborted() override {
     weak_factory_.InvalidateWeakPtrs();
-    callback_.Run(kQuotaErrorAbort, 0, 0,
-                  base::flat_map<QuotaClient::ID, int64_t>());
+    callback_.Run(kQuotaErrorAbort, 0, 0);
     DeleteSoon();
   }
 
@@ -292,8 +281,7 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
                  host_usage_ +
                      std::max(INT64_C(0), available_space_ -
                                               settings_.must_remain_available));
-    callback_.Run(kQuotaStatusOk, host_usage_, host_quota,
-                  std::move(host_usage_breakdown_));
+    callback_.Run(kQuotaStatusOk, host_usage_, host_quota);
     if (type_ == kStorageTypeTemporary && !is_incognito_ && !is_unlimited_) {
       UMA_HISTOGRAM_MBYTES("Quota.QuotaForOrigin", host_quota);
       if (host_quota > 0) {
@@ -329,12 +317,8 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
     barrier_closure.Run();
   }
 
-  void OnGotHostUsage(
-      const base::Closure& barrier_closure,
-      int64_t usage,
-      base::flat_map<QuotaClient::ID, int64_t> usage_breakdown) {
+  void OnGotHostUsage(const base::Closure& barrier_closure, int64_t usage) {
     host_usage_ = usage;
-    host_usage_breakdown_ = std::move(usage_breakdown);
     barrier_closure.Run();
   }
 
@@ -348,7 +332,7 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
   void OnBarrierComplete() { CallCompleted(); }
 
   GURL origin_;
-  QuotaManager::UsageAndQuotaWithBreakdownCallback callback_;
+  QuotaManager::UsageAndQuotaCallback callback_;
   StorageType type_;
   bool is_unlimited_;
   bool is_session_only_;
@@ -357,13 +341,12 @@ class QuotaManager::UsageAndQuotaHelper : public QuotaTask {
   int64_t total_space_ = 0;
   int64_t desired_host_quota_ = 0;
   int64_t host_usage_ = 0;
-  base::flat_map<QuotaClient::ID, int64_t> host_usage_breakdown_;
   QuotaSettings settings_;
   base::WeakPtrFactory<UsageAndQuotaHelper> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(UsageAndQuotaHelper);
 };
 
-// Helper to asynchronously gather information needed at the start of an
+// Helper to asychronously gather information needed at the start of an
 // eviction round.
 class QuotaManager::EvictionRoundInfoHelper : public QuotaTask {
  public:
@@ -856,19 +839,10 @@ void QuotaManager::GetUsageAndQuotaForWebApps(
     const GURL& origin,
     StorageType type,
     const UsageAndQuotaCallback& callback) {
-  GetUsageAndQuotaWithBreakdown(
-      origin, type, base::Bind(&DidGetUsageAndQuotaForWebApps, callback));
-}
-
-void QuotaManager::GetUsageAndQuotaWithBreakdown(
-    const GURL& origin,
-    StorageType type,
-    const UsageAndQuotaWithBreakdownCallback& callback) {
   DCHECK(origin == origin.GetOrigin());
   if (!IsSupportedType(type) ||
       (is_incognito_ && !IsSupportedIncognitoType(type))) {
-    callback.Run(kQuotaErrorNotSupported, 0, 0,
-                 base::flat_map<QuotaClient::ID, int64_t>());
+    callback.Run(kQuotaErrorNotSupported, 0, 0);
     return;
   }
   LazyInitialize();
@@ -889,7 +863,7 @@ void QuotaManager::GetUsageAndQuota(const GURL& origin,
 
   if (IsStorageUnlimited(origin, type)) {
     // TODO(michaeln): This seems like a non-obvious odd behavior, probably for
-    // apps/extensions, but it would be good to eliminate this special case.
+    // apps/extensions, but it would be good to elimiate this special case.
     callback.Run(kQuotaStatusOk, 0, kNoLimit);
     return;
   }
@@ -1047,15 +1021,6 @@ void QuotaManager::GetHostUsage(const std::string& host,
     return;
   }
   tracker->GetHostUsage(host, callback);
-}
-
-void QuotaManager::GetHostUsageWithBreakdown(
-    const std::string& host,
-    StorageType type,
-    const UsageWithBreakdownCallback& callback) {
-  LazyInitialize();
-  DCHECK(GetUsageTracker(type));
-  GetUsageTracker(type)->GetHostUsageWithBreakdown(host, callback);
 }
 
 bool QuotaManager::IsTrackingHostUsage(StorageType type,

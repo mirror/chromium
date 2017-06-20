@@ -42,6 +42,8 @@ class LayoutViewItem : public LayoutBlockItem {
     return ToView()->OverflowClipRect(location);
   }
 
+  void ClearSelection() { return ToView()->ClearSelection(); }
+
   bool HitTest(HitTestResult& result) { return ToView()->HitTest(result); }
 
   bool HitTestNoLifecycleUpdate(HitTestResult& result) {

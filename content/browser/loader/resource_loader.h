@@ -81,9 +81,7 @@ class CONTENT_EXPORT ResourceLoader : public net::URLRequest::Delegate,
   void ContinueSSLRequest() override;
 
   // SSLClientAuthHandler::Delegate implementation.
-  void ContinueWithCertificate(
-      scoped_refptr<net::X509Certificate> cert,
-      scoped_refptr<net::SSLPrivateKey> private_key) override;
+  void ContinueWithCertificate(net::X509Certificate* cert) override;
   void CancelCertificateSelection() override;
 
   // These correspond to Controller's methods.

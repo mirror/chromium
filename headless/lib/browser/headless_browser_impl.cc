@@ -141,7 +141,7 @@ void HeadlessBrowserImpl::RunOnStartCallback() {
   agent_host_ = content::DevToolsAgentHost::CreateForBrowser(
       nullptr, content::DevToolsAgentHost::CreateServerSocketCallback());
 
-  PlatformStart();
+  PlatformCreateWindow();
   on_start_callback_.Run(this);
   on_start_callback_ = base::Callback<void(HeadlessBrowser*)>();
 }

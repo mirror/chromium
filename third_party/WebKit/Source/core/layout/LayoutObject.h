@@ -585,6 +585,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
     return GetNode() && GetNode()->HasTagName(HTMLNames::bodyTag);
   }
   bool IsHR() const;
+  bool IsLegend() const;
 
   bool IsTablePart() const {
     return IsTableCell() || IsLayoutTableCol() || IsTableCaption() ||
@@ -866,7 +867,7 @@ class CORE_EXPORT LayoutObject : public ImageResourceObserver,
   bool HasClipPath() const { return Style() && Style()->ClipPath(); }
   bool HasHiddenBackface() const {
     return Style() &&
-           Style()->BackfaceVisibility() == EBackfaceVisibility::kHidden;
+           Style()->BackfaceVisibility() == kBackfaceVisibilityHidden;
   }
   bool HasBackdropFilter() const {
     return Style() && Style()->HasBackdropFilter();

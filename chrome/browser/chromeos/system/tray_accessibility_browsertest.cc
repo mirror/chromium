@@ -20,7 +20,6 @@
 #include "chrome/browser/chromeos/accessibility/magnification_manager.h"
 #include "chrome/browser/chromeos/login/helper.h"
 #include "chrome/browser/chromeos/login/startup_utils.h"
-#include "chrome/browser/chromeos/profiles/profile_helper.h"
 #include "chrome/browser/extensions/api/braille_display_private/mock_braille_controller.h"
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/profiles/profile_manager.h"
@@ -63,18 +62,6 @@ enum PrefSettingMechanism {
 
 void SetMagnifierEnabled(bool enabled) {
   MagnificationManager::Get()->SetMagnifierEnabled(enabled);
-}
-
-// Simulates how UserSessionManager creates and starts a user session.
-void CreateAndStartUserSession(const AccountId& account_id) {
-  using session_manager::SessionManager;
-
-  const std::string user_id_hash =
-      ProfileHelper::GetUserIdHashByUserIdForTesting(account_id.GetUserEmail());
-
-  SessionManager::Get()->CreateSession(account_id, user_id_hash);
-  ProfileHelper::GetProfileByUserIdHashForTest(user_id_hash);
-  SessionManager::Get()->SessionStarted();
 }
 
 class TrayAccessibilityTest
@@ -365,7 +352,9 @@ class TrayAccessibilityTest
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, LoginStatus) {
   EXPECT_EQ(ash::LoginStatus::NOT_LOGGED_IN, GetLoginStatus());
 
-  CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
+  session_manager::SessionManager::Get()->CreateSession(
+      AccountId::FromUserEmail("owner@invalid.domain"), "owner@invalid.domain");
+  session_manager::SessionManager::Get()->SessionStarted();
   // Flush to ensure the session state reaches ash and updates login status.
   SessionControllerClient::FlushForTesting();
 
@@ -378,7 +367,9 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowTrayIcon) {
   // Confirms that the icon is invisible before login.
   EXPECT_FALSE(IsTrayIconVisible());
 
-  CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
+  session_manager::SessionManager::Get()->CreateSession(
+      AccountId::FromUserEmail("owner@invalid.domain"), "owner@invalid.domain");
+  session_manager::SessionManager::Get()->SessionStarted();
 
   // Confirms that the icon is invisible just after login.
   EXPECT_FALSE(IsTrayIconVisible());
@@ -517,7 +508,9 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowTrayIcon) {
 
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenu) {
   // Login
-  CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
+  session_manager::SessionManager::Get()->CreateSession(
+      AccountId::FromUserEmail("owner@invalid.domain"), "owner@invalid.domain");
+  session_manager::SessionManager::Get()->SessionStarted();
   // Flush to ensure the session state reaches ash and updates login status.
   SessionControllerClient::FlushForTesting();
 
@@ -655,7 +648,9 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenu) {
 
 IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, ShowMenuWithShowMenuOption) {
   // Login
-  CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
+  session_manager::SessionManager::Get()->CreateSession(
+      AccountId::FromUserEmail("owner@invalid.domain"), "owner@invalid.domain");
+  session_manager::SessionManager::Get()->SessionStarted();
   // Flush to ensure the session state reaches ash and updates login status.
   SessionControllerClient::FlushForTesting();
 
@@ -1644,7 +1639,9 @@ IN_PROC_BROWSER_TEST_P(TrayAccessibilityTest, CheckMenuVisibilityOnDetailMenu) {
   CloseDetailMenu();
 
   // Simulate login.
-  CreateAndStartUserSession(AccountId::FromUserEmail("owner@invalid.domain"));
+  session_manager::SessionManager::Get()->CreateSession(
+      AccountId::FromUserEmail("owner@invalid.domain"), "owner@invalid.domain");
+  session_manager::SessionManager::Get()->SessionStarted();
   // Flush to ensure the session state reaches ash and updates login status.
   SessionControllerClient::FlushForTesting();
   EXPECT_TRUE(CreateDetailedMenu());

@@ -35,24 +35,26 @@ class NET_EXPORT ClientCertStoreNSS : public ClientCertStore {
   void GetClientCerts(const SSLCertRequestInfo& cert_request_info,
                       const ClientCertListCallback& callback) override;
 
-  // Examines the certificates in |identities| to find all certificates that
-  // match the client certificate request in |request|, removing any that don't.
-  // The remaining certs will be updated to include intermediates.
+  // Examines the certificates in |certs| to find all certificates that match
+  // the client certificate request in |request|, storing the matching
+  // certificates in |filtered_certs|. Any previous content of |filtered_certs|
+  // will be removed.
   // Must be called from a worker thread.
-  static void FilterCertsOnWorkerThread(ClientCertIdentityList* identities,
-                                        const SSLCertRequestInfo& request);
+  static void FilterCertsOnWorkerThread(const CertificateList& certs,
+                                        const SSLCertRequestInfo& request,
+                                        CertificateList* filtered_certs);
 
   // Retrieves all client certificates that are stored by NSS and adds them to
-  // |identities|. |password_delegate| is used to unlock slots if required.
+  // |certs|. |password_delegate| is used to unlock slots if required.
   // Must be called from a worker thread.
   static void GetPlatformCertsOnWorkerThread(
-      scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
+      std::unique_ptr<crypto::CryptoModuleBlockingPasswordDelegate>
           password_delegate,
-      ClientCertIdentityList* identities);
+      net::CertificateList* certs);
 
  private:
-  ClientCertIdentityList GetAndFilterCertsOnWorkerThread(
-      scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
+  CertificateList GetAndFilterCertsOnWorkerThread(
+      std::unique_ptr<crypto::CryptoModuleBlockingPasswordDelegate>
           password_delegate,
       const SSLCertRequestInfo* request);
 

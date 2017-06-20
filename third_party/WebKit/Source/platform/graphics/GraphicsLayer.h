@@ -179,8 +179,6 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   void SetBlendMode(WebBlendMode);
   void SetIsRootForIsolatedGroup(bool);
 
-  void SetShouldHitTest(bool);
-
   void SetFilters(CompositorFilterOperations);
   void SetBackdropFilters(CompositorFilterOperations);
 
@@ -351,7 +349,6 @@ class PLATFORM_EXPORT GraphicsLayer : public cc::LayerClient,
   bool draws_content_ : 1;
   bool contents_visible_ : 1;
   bool is_root_for_isolated_group_ : 1;
-  bool should_hit_test_ : 1;
 
   bool has_scroll_parent_ : 1;
   bool has_clip_parent_ : 1;

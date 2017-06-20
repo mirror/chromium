@@ -29,6 +29,7 @@
 #include "platform/wtf/Allocator.h"
 #include "platform/wtf/HashMap.h"
 #include "platform/wtf/Noncopyable.h"
+#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/Vector.h"
 
 namespace blink {
@@ -142,7 +143,7 @@ struct BidiStatus final {
   BidiStatus(WTF::Unicode::CharDirection eor_dir,
              WTF::Unicode::CharDirection last_strong_dir,
              WTF::Unicode::CharDirection last_dir,
-             RefPtr<BidiContext> bidi_context)
+             PassRefPtr<BidiContext> bidi_context)
       : eor(eor_dir),
         last_strong(last_strong_dir),
         last(last_dir),
@@ -240,7 +241,7 @@ class BidiResolver final {
   }
 
   BidiContext* Context() const { return status_.context.Get(); }
-  void SetContext(RefPtr<BidiContext> c) { status_.context = std::move(c); }
+  void SetContext(PassRefPtr<BidiContext> c) { status_.context = std::move(c); }
 
   void SetLastDir(WTF::Unicode::CharDirection last_dir) {
     status_.last = last_dir;

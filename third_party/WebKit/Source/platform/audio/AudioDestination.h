@@ -57,14 +57,14 @@ class PLATFORM_EXPORT AudioDestination : public WebAudioDevice::RenderCallback {
   AudioDestination(AudioIOCallback&,
                    unsigned number_of_output_channels,
                    const WebAudioLatencyHint&,
-                   RefPtr<SecurityOrigin>);
+                   PassRefPtr<SecurityOrigin>);
   ~AudioDestination() override;
 
   static std::unique_ptr<AudioDestination> Create(
       AudioIOCallback&,
       unsigned number_of_output_channels,
       const WebAudioLatencyHint&,
-      RefPtr<SecurityOrigin>);
+      PassRefPtr<SecurityOrigin>);
 
   // The actual render function (WebAudioDevice::RenderCallback) isochronously
   // invoked by the media renderer.

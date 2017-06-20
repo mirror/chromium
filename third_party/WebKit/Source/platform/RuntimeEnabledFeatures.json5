@@ -112,6 +112,10 @@
       status: "stable",
     },
     {
+      name: "BackspaceDefaultHandler",
+      status: "test",
+    },
+    {
       name: "BlockCredentialedSubresources",
       status: "stable",
     },
@@ -279,7 +283,7 @@
     },
     {
       name: "CSSOMSmoothScroll",
-      status: "stable",
+      status: "experimental",
     },
     {
       name: "CSSPaintAPI",

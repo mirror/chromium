@@ -65,9 +65,7 @@ void VrWebContentsObserver::DidChangeVisibleSecurityState() {
   DCHECK(helper);
   security_state::SecurityInfo security_info;
   helper->GetSecurityInfo(&security_info);
-  bool malware = (security_info.malicious_content_status !=
-                  security_state::MALICIOUS_CONTENT_STATUS_NONE);
-  ui_interface_->SetSecurityInfo(security_info.security_level, malware);
+  ui_interface_->SetSecurityLevel(security_info.security_level);
 }
 
 void VrWebContentsObserver::DidToggleFullscreenModeForTab(

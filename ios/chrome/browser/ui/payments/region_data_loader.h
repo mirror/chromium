@@ -21,10 +21,7 @@ class ComboboxModel;
 
 @protocol RegionDataLoaderConsumer
 
-// To be called with a map of region codes to region names when region data for
-// the given country code is loaded asynchronously.
-- (void)regionDataLoaderDidSucceedWithRegions:
-    (NSDictionary<NSString*, NSString*>*)regions;
+- (void)regionDataLoaderDidSucceedWithRegions:(NSArray<NSString*>*)regions;
 
 @end
 

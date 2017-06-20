@@ -295,9 +295,9 @@ void LayoutText::DeleteTextBoxes() {
   }
 }
 
-RefPtr<StringImpl> LayoutText::OriginalText() const {
+PassRefPtr<StringImpl> LayoutText::OriginalText() const {
   Node* e = GetNode();
-  return (e && e->IsTextNode()) ? ToText(e)->DataImpl() : nullptr;
+  return (e && e->IsTextNode()) ? ToText(e)->DataImpl() : 0;
 }
 
 String LayoutText::PlainText() const {
@@ -1613,9 +1613,9 @@ void ApplyTextTransform(const ComputedStyle* style,
   }
 }
 
-void LayoutText::SetTextInternal(RefPtr<StringImpl> text) {
+void LayoutText::SetTextInternal(PassRefPtr<StringImpl> text) {
   DCHECK(text);
-  text_ = String(std::move(text));
+  text_ = std::move(text);
 
   if (Style()) {
     ApplyTextTransform(Style(), text_, PreviousCharacter());

@@ -177,12 +177,12 @@ const char ScreenLayoutObserver::kNotificationId[] =
     "chrome://settings/display";
 
 ScreenLayoutObserver::ScreenLayoutObserver() {
-  Shell::Get()->window_tree_host_manager()->AddObserver(this);
-  UpdateDisplayInfo(nullptr);
+  ShellPort::Get()->AddDisplayObserver(this);
+  UpdateDisplayInfo(NULL);
 }
 
 ScreenLayoutObserver::~ScreenLayoutObserver() {
-  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+  ShellPort::Get()->RemoveDisplayObserver(this);
 }
 
 void ScreenLayoutObserver::UpdateDisplayInfo(

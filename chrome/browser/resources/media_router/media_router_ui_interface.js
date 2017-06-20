@@ -120,6 +120,7 @@ cr.define('media_router.ui', function() {
     container.deviceMissingUrl = data['deviceMissingUrl'];
     container.castModeList = data['castModes'];
     this.setSinkListAndIdentity(data['sinksAndIdentity']);
+    container.useWebUiRouteControls = !!data['useWebUiRouteControls'];
     container.routeList = data['routes'];
     container.maybeShowRouteDetailsOnOpen();
     if (data['useTabMirroring'])

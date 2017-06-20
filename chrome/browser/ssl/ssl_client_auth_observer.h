@@ -15,7 +15,6 @@
 
 namespace net {
 class SSLCertRequestInfo;
-class SSLPrivateKey;
 class X509Certificate;
 }
 
@@ -42,8 +41,7 @@ class SSLClientAuthObserver : public content::NotificationObserver {
   // Continues the request with a certificate. Can also call with NULL to
   // continue with no certificate. Derived classes must use this instead of
   // caching the delegate and calling it directly.
-  void CertificateSelected(net::X509Certificate* cert,
-                           net::SSLPrivateKey* private_key);
+  void CertificateSelected(net::X509Certificate* cert);
 
   // Cancels the certificate selection and aborts the request.
   void CancelCertificateSelection();

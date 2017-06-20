@@ -87,9 +87,7 @@ class CONTENT_EXPORT MediaInternals
 
   // If possible, i.e. a WebContents exists for the given RenderFrameHostID,
   // tells an existing AudioLogEntry the WebContents title for easier
-  // differentiation on the UI. Note that the log entry must be created (by
-  // calling OnCreated with |component_id| on |audio_log|) before calling this
-  // method.
+  // differentiation on the UI.
   void SetWebContentsTitleForAudioLogEntry(int component_id,
                                            int render_process_id,
                                            int render_frame_id,

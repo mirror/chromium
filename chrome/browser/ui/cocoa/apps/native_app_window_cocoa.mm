@@ -263,12 +263,11 @@ NativeAppWindowCocoa::NativeAppWindowCocoa(
   // the window bounds and constraints can be set precisely.
   NSRect cocoa_bounds = GfxToCocoaBounds(
       params.GetInitialWindowBounds(gfx::Insets()));
-  base::scoped_nsobject<NSWindow> window([[window_class alloc]
-      initWithContentRect:cocoa_bounds
-                styleMask:GetWindowStyleMask()
-                  backing:NSBackingStoreBuffered
-                    defer:NO]);
-  [window setReleasedWhenClosed:NO];  // Owned by the window controller.
+  NSWindow* window =
+      [[window_class alloc] initWithContentRect:cocoa_bounds
+                                      styleMask:GetWindowStyleMask()
+                                        backing:NSBackingStoreBuffered
+                                          defer:NO];
 
   std::string name;
   const extensions::Extension* extension = app_window_->GetExtension();

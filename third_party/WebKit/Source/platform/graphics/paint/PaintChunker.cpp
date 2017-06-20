@@ -40,13 +40,12 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
 
   ItemBehavior behavior;
   Optional<PaintChunk::Id> new_chunk_id;
-  PaintChunk::Cacheable cacheable =
-      item.SkippedCache() ? PaintChunk::kUncacheable : PaintChunk::kCacheable;
   if (DisplayItem::IsForeignLayerType(item.GetType())) {
     behavior = kRequiresSeparateChunk;
     // Use null chunkId if we are skipping cache, so that the chunk will not
     // match any old chunk and will be treated as brand new.
-    new_chunk_id.emplace(item.GetId());
+    if (!item.SkippedCache())
+      new_chunk_id.emplace(item.GetId());
 
     // Clear m_currentChunkId so that any display items after the foreign layer
     // without a new chunk id will be treated as having no id to avoid the chunk
@@ -54,16 +53,13 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
     current_chunk_id_ = WTF::nullopt;
   } else {
     behavior = kDefaultBehavior;
-    if (current_chunk_id_) {
+    if (!item.SkippedCache() && current_chunk_id_)
       new_chunk_id.emplace(*current_chunk_id_);
-    } else {
-      cacheable = PaintChunk::kUncacheable;
-      new_chunk_id.emplace(item.GetId());
-    }
   }
 
   if (chunks_.IsEmpty()) {
-    PaintChunk new_chunk(0, 1, *new_chunk_id, current_properties_, cacheable);
+    PaintChunk new_chunk(0, 1, new_chunk_id ? &*new_chunk_id : nullptr,
+                         current_properties_);
     chunks_.push_back(new_chunk);
     chunk_behavior_.push_back(behavior);
     force_new_chunk_ = DontForceNewChunk;
@@ -83,7 +79,8 @@ bool PaintChunker::IncrementDisplayItemIndex(const DisplayItem& item) {
   force_new_chunk_ = DontForceNewChunk;
 
   PaintChunk new_chunk(last_chunk.end_index, last_chunk.end_index + 1,
-                       *new_chunk_id, current_properties_, cacheable);
+                       new_chunk_id ? &*new_chunk_id : nullptr,
+                       current_properties_);
   chunks_.push_back(new_chunk);
   chunk_behavior_.push_back(behavior);
   return true;

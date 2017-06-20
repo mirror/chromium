@@ -145,6 +145,55 @@ inline CSSReflectionDirection CSSIdentifierValue::ConvertTo() const {
 }
 
 template <>
+inline CSSIdentifierValue::CSSIdentifierValue(EColumnFill column_fill)
+    : CSSValue(kIdentifierClass) {
+  switch (column_fill) {
+    case EColumnFill::kAuto:
+      value_id_ = CSSValueAuto;
+      break;
+    case EColumnFill::kBalance:
+      value_id_ = CSSValueBalance;
+      break;
+  }
+}
+
+template <>
+inline EColumnFill CSSIdentifierValue::ConvertTo() const {
+  if (value_id_ == CSSValueBalance)
+    return EColumnFill::kBalance;
+  if (value_id_ == CSSValueAuto)
+    return EColumnFill::kAuto;
+  NOTREACHED();
+  return EColumnFill::kBalance;
+}
+
+template <>
+inline CSSIdentifierValue::CSSIdentifierValue(EColumnSpan column_span)
+    : CSSValue(kIdentifierClass) {
+  switch (column_span) {
+    case EColumnSpan::kAll:
+      value_id_ = CSSValueAll;
+      break;
+    case EColumnSpan::kNone:
+      value_id_ = CSSValueNone;
+      break;
+  }
+}
+
+template <>
+inline EColumnSpan CSSIdentifierValue::ConvertTo() const {
+  switch (value_id_) {
+    case CSSValueAll:
+      return EColumnSpan::kAll;
+    default:
+      NOTREACHED();
+    // fall-through
+    case CSSValueNone:
+      return EColumnSpan::kNone;
+  }
+}
+
+template <>
 inline EBorderStyle CSSIdentifierValue::ConvertTo() const {
   if (value_id_ == CSSValueAuto)  // Valid for CSS outline-style
     return EBorderStyle::kDotted;
@@ -401,6 +450,34 @@ inline ControlPart CSSIdentifierValue::ConvertTo() const {
   if (value_id_ == CSSValueNone)
     return kNoControlPart;
   return ControlPart(value_id_ - CSSValueCheckbox + 1);
+}
+
+template <>
+inline CSSIdentifierValue::CSSIdentifierValue(EBackfaceVisibility e)
+    : CSSValue(kIdentifierClass) {
+  switch (e) {
+    case kBackfaceVisibilityVisible:
+      value_id_ = CSSValueVisible;
+      break;
+    case kBackfaceVisibilityHidden:
+      value_id_ = CSSValueHidden;
+      break;
+  }
+}
+
+template <>
+inline EBackfaceVisibility CSSIdentifierValue::ConvertTo() const {
+  switch (value_id_) {
+    case CSSValueVisible:
+      return kBackfaceVisibilityVisible;
+    case CSSValueHidden:
+      return kBackfaceVisibilityHidden;
+    default:
+      break;
+  }
+
+  NOTREACHED();
+  return kBackfaceVisibilityHidden;
 }
 
 template <>
@@ -1267,6 +1344,104 @@ inline CSSIdentifierValue::CSSIdentifierValue(EOrder e)
       value_id_ = CSSValueVisual;
       break;
   }
+}
+
+template <>
+inline CSSIdentifierValue::CSSIdentifierValue(WebBlendMode blend_mode)
+    : CSSValue(kIdentifierClass) {
+  switch (blend_mode) {
+    case kWebBlendModeNormal:
+      value_id_ = CSSValueNormal;
+      break;
+    case kWebBlendModeMultiply:
+      value_id_ = CSSValueMultiply;
+      break;
+    case kWebBlendModeScreen:
+      value_id_ = CSSValueScreen;
+      break;
+    case kWebBlendModeOverlay:
+      value_id_ = CSSValueOverlay;
+      break;
+    case kWebBlendModeDarken:
+      value_id_ = CSSValueDarken;
+      break;
+    case kWebBlendModeLighten:
+      value_id_ = CSSValueLighten;
+      break;
+    case kWebBlendModeColorDodge:
+      value_id_ = CSSValueColorDodge;
+      break;
+    case kWebBlendModeColorBurn:
+      value_id_ = CSSValueColorBurn;
+      break;
+    case kWebBlendModeHardLight:
+      value_id_ = CSSValueHardLight;
+      break;
+    case kWebBlendModeSoftLight:
+      value_id_ = CSSValueSoftLight;
+      break;
+    case kWebBlendModeDifference:
+      value_id_ = CSSValueDifference;
+      break;
+    case kWebBlendModeExclusion:
+      value_id_ = CSSValueExclusion;
+      break;
+    case kWebBlendModeHue:
+      value_id_ = CSSValueHue;
+      break;
+    case kWebBlendModeSaturation:
+      value_id_ = CSSValueSaturation;
+      break;
+    case kWebBlendModeColor:
+      value_id_ = CSSValueColor;
+      break;
+    case kWebBlendModeLuminosity:
+      value_id_ = CSSValueLuminosity;
+      break;
+  }
+}
+
+template <>
+inline WebBlendMode CSSIdentifierValue::ConvertTo() const {
+  switch (value_id_) {
+    case CSSValueNormal:
+      return kWebBlendModeNormal;
+    case CSSValueMultiply:
+      return kWebBlendModeMultiply;
+    case CSSValueScreen:
+      return kWebBlendModeScreen;
+    case CSSValueOverlay:
+      return kWebBlendModeOverlay;
+    case CSSValueDarken:
+      return kWebBlendModeDarken;
+    case CSSValueLighten:
+      return kWebBlendModeLighten;
+    case CSSValueColorDodge:
+      return kWebBlendModeColorDodge;
+    case CSSValueColorBurn:
+      return kWebBlendModeColorBurn;
+    case CSSValueHardLight:
+      return kWebBlendModeHardLight;
+    case CSSValueSoftLight:
+      return kWebBlendModeSoftLight;
+    case CSSValueDifference:
+      return kWebBlendModeDifference;
+    case CSSValueExclusion:
+      return kWebBlendModeExclusion;
+    case CSSValueHue:
+      return kWebBlendModeHue;
+    case CSSValueSaturation:
+      return kWebBlendModeSaturation;
+    case CSSValueColor:
+      return kWebBlendModeColor;
+    case CSSValueLuminosity:
+      return kWebBlendModeLuminosity;
+    default:
+      break;
+  }
+
+  NOTREACHED();
+  return kWebBlendModeNormal;
 }
 
 template <>

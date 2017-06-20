@@ -47,7 +47,7 @@ void ServiceContext::SetGlobalBinderForTesting(
     const std::string& service_name,
     const std::string& interface_name,
     const BinderRegistry::Binder& binder,
-    const scoped_refptr<base::SequencedTaskRunner>& task_runner) {
+    const scoped_refptr<base::SingleThreadTaskRunner>& task_runner) {
   if (!g_overridden_binder_registries.Get()) {
     g_overridden_binder_registries.Get() =
         base::MakeUnique<ServiceNameToBinderRegistryMap>();
@@ -117,10 +117,10 @@ void ServiceContext::QuitNow() {
 // ServiceContext, mojom::Service implementation:
 
 void ServiceContext::OnStart(const Identity& identity,
-                             OnStartCallback callback) {
+                             const OnStartCallback& callback) {
   identity_ = identity;
-  std::move(callback).Run(std::move(pending_connector_request_),
-                          mojo::MakeRequest(&service_control_));
+  callback.Run(std::move(pending_connector_request_),
+               mojo::MakeRequest(&service_control_));
   service_->OnStart();
 }
 
@@ -128,9 +128,9 @@ void ServiceContext::OnBindInterface(
     const BindSourceInfo& source_info,
     const std::string& interface_name,
     mojo::ScopedMessagePipeHandle interface_pipe,
-    OnBindInterfaceCallback callback) {
+    const OnBindInterfaceCallback& callback) {
   // Acknowledge the request regardless of whether it's accepted.
-  std::move(callback).Run();
+  callback.Run();
 
   BinderRegistry* global_registry =
       GetGlobalBinderRegistryForService(identity_.name());

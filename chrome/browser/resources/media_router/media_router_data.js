@@ -182,6 +182,7 @@ cr.define('media_router', function() {
     this.helpPageId = helpPageId;
   };
 
+
   /**
    * @param {string} id The media route ID.
    * @param {string} sinkId The ID of the media sink running this route.
@@ -220,9 +221,6 @@ cr.define('media_router', function() {
 
     /** @type {?string} */
     this.customControllerPath = customControllerPath;
-
-    /** @type {boolean} */
-    this.supportsWebUiController = false;
   };
 
   /**
@@ -280,6 +278,7 @@ cr.define('media_router', function() {
     this.currentTime = currentTime;
   };
 
+
   /**
    * @param {string} id The ID of the media sink.
    * @param {string} name The name of the sink.
@@ -317,6 +316,7 @@ cr.define('media_router', function() {
     /** @type {boolean} */
     this.isPseudoSink = false;
   };
+
 
   /**
    * @param {number} tabId The current tab ID.

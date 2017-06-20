@@ -16,6 +16,7 @@
 #include "crypto/scoped_capi_types.h"
 #include "net/base/net_errors.h"
 #include "net/cert/x509_certificate.h"
+#include "net/ssl/ssl_platform_key.h"
 #include "net/ssl/ssl_platform_key_util.h"
 #include "net/ssl/ssl_private_key.h"
 #include "net/ssl/threaded_ssl_private_key.h"
@@ -260,8 +261,9 @@ scoped_refptr<SSLPrivateKey> WrapCNGPrivateKey(
 }
 
 scoped_refptr<SSLPrivateKey> FetchClientCertPrivateKey(
-    const X509Certificate* certificate,
-    PCCERT_CONTEXT cert_context) {
+    const X509Certificate* certificate) {
+  PCCERT_CONTEXT cert_context = certificate->os_cert_handle();
+
   HCRYPTPROV_OR_NCRYPT_KEY_HANDLE prov_or_key = 0;
   DWORD key_spec = 0;
   BOOL must_free = FALSE;

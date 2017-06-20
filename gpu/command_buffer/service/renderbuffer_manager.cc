@@ -103,7 +103,6 @@ void Renderbuffer::SetInfoAndInvalidate(GLsizei samples,
   width_ = width;
   height_ = height;
   cleared_ = false;
-  allocated_ = true;
   for (auto& point : framebuffer_attachment_points_) {
     point.first->UnmarkAsComplete();
   }
@@ -128,40 +127,12 @@ Renderbuffer::Renderbuffer(RenderbufferManager* manager,
       client_id_(client_id),
       service_id_(service_id),
       cleared_(true),
-      allocated_(false),
       has_been_bound_(false),
       samples_(0),
       internal_format_(GL_RGBA4),
       width_(0),
       height_(0) {
   manager_->StartTracking(this);
-}
-
-bool Renderbuffer::RegenerateAndBindBackingObjectIfNeeded() {
-  if (!allocated_ || !has_been_bound_ || samples_ == 0) {
-    // Not needed - won't trigger bug (multisample_renderbuffer_resize_broken).
-    return false;
-  }
-
-  GLint original_fbo = 0;
-  glGetIntegerv(GL_DRAW_FRAMEBUFFER_BINDING, &original_fbo);
-
-  glDeleteRenderbuffersEXT(1, &service_id_);
-  service_id_ = 0;
-  glGenRenderbuffersEXT(1, &service_id_);
-  glBindRenderbufferEXT(GL_RENDERBUFFER, service_id_);
-
-  // Attach new renderbuffer to all framebuffers
-  for (auto& point : framebuffer_attachment_points_) {
-    glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, point.first->service_id());
-    glFramebufferRenderbufferEXT(GL_DRAW_FRAMEBUFFER, point.second,
-                                 GL_RENDERBUFFER, service_id_);
-  }
-
-  glBindFramebufferEXT(GL_DRAW_FRAMEBUFFER, original_fbo);
-
-  allocated_ = false;
-  return true;
 }
 
 void Renderbuffer::AddFramebufferAttachmentPoint(Framebuffer* framebuffer,
@@ -315,7 +286,7 @@ bool RenderbufferManager::OnMemoryDump(
 
   if (args.level_of_detail == MemoryDumpLevelOfDetail::BACKGROUND) {
     std::string dump_name =
-        base::StringPrintf("gpu/gl/renderbuffers/share_group_0x%" PRIX64,
+        base::StringPrintf("gpu/gl/renderbuffers/share_group_%" PRIu64 "/",
                            share_group_tracing_guid);
     MemoryAllocatorDump* dump = pmd->CreateAllocatorDump(dump_name);
     dump->AddScalar(MemoryAllocatorDump::kNameSize,
@@ -329,10 +300,9 @@ bool RenderbufferManager::OnMemoryDump(
     const auto& client_renderbuffer_id = renderbuffer_entry.first;
     const auto& renderbuffer = renderbuffer_entry.second;
 
-    std::string dump_name =
-        base::StringPrintf("gpu/gl/renderbuffers/share_group_0x%" PRIX64
-                           "/renderbuffer_0x%" PRIX32,
-                           share_group_tracing_guid, client_renderbuffer_id);
+    std::string dump_name = base::StringPrintf(
+        "gpu/gl/renderbuffers/share_group_%" PRIu64 "/renderbuffer_%d",
+        share_group_tracing_guid, client_renderbuffer_id);
     MemoryAllocatorDump* dump = pmd->CreateAllocatorDump(dump_name);
     dump->AddScalar(MemoryAllocatorDump::kNameSize,
                     MemoryAllocatorDump::kUnitsBytes,

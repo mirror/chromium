@@ -63,18 +63,6 @@ class MockWebScreenOrientationClient final : public WebScreenOrientationClient {
   MOCK_METHOD1(LockOrientation, void(WebScreenOrientationLockType));
 };
 
-void DidEnterFullscreen(Document* document) {
-  DCHECK(document);
-  Fullscreen::From(*document).DidEnterFullscreen();
-  document->ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
-}
-
-void DidExitFullscreen(Document* document) {
-  DCHECK(document);
-  Fullscreen::From(*document).DidExitFullscreen();
-  document->ServiceScriptedAnimations(WTF::MonotonicallyIncreasingTime());
-}
-
 class MockChromeClient final : public EmptyChromeClient {
  public:
   // ChromeClient overrides:
@@ -83,17 +71,11 @@ class MockChromeClient final : public EmptyChromeClient {
     ScreenOrientationControllerImpl::ProvideTo(frame,
                                                &web_screen_orientation_client_);
   }
-  // The real ChromeClient::EnterFullscreen/ExitFullscreen implementation is
-  // async due to IPC, emulate that by posting tasks:
   void EnterFullscreen(LocalFrame& frame) override {
-    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-        BLINK_FROM_HERE,
-        WTF::Bind(DidEnterFullscreen, WrapPersistent(frame.GetDocument())));
+    Fullscreen::From(*frame.GetDocument()).DidEnterFullscreen();
   }
   void ExitFullscreen(LocalFrame& frame) override {
-    Platform::Current()->CurrentThread()->GetWebTaskRunner()->PostTask(
-        BLINK_FROM_HERE,
-        WTF::Bind(DidExitFullscreen, WrapPersistent(frame.GetDocument())));
+    Fullscreen::From(*frame.GetDocument()).DidExitFullscreen();
   }
 
   MOCK_CONST_METHOD0(GetScreenInfo, WebScreenInfo());
@@ -171,12 +153,15 @@ class MediaControlsOrientationLockDelegateTest : public ::testing::Test {
 
   void SimulateEnterFullscreen() {
     UserGestureIndicator gesture(UserGestureToken::Create(&GetDocument()));
+
     Fullscreen::RequestFullscreen(Video());
+    Fullscreen::From(GetDocument()).DidEnterFullscreen();
     testing::RunPendingTasks();
   }
 
   void SimulateExitFullscreen() {
     Fullscreen::ExitFullscreen(GetDocument());
+    Fullscreen::From(GetDocument()).DidExitFullscreen();
     testing::RunPendingTasks();
   }
 

@@ -24,7 +24,6 @@ struct GvrGamepadData {
   bool is_touching;
   bool controller_button_pressed;
   bool right_handed;
-  bool connected;
 };
 
 // This class exposes GVR controller data to the gamepad API. Data is

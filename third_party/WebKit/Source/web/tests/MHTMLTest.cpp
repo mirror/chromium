@@ -34,7 +34,6 @@
 #include "core/frame/FrameTestHelpers.h"
 #include "core/frame/LocalFrame.h"
 #include "core/frame/Location.h"
-#include "core/frame/WebLocalFrameBase.h"
 #include "core/page/Page.h"
 #include "platform/SerializedResource.h"
 #include "platform/SharedBuffer.h"
@@ -106,7 +105,7 @@ class MHTMLTest : public ::testing::Test {
   }
 
   void LoadURLInTopFrame(const WebURL& url) {
-    FrameTestHelpers::LoadFrame(helper_.WebView()->MainFrameImpl(),
+    FrameTestHelpers::LoadFrame(helper_.WebView()->MainFrame(),
                                 url.GetString().Utf8().data());
   }
 

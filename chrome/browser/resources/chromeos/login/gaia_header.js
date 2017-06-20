@@ -5,5 +5,7 @@
 Polymer({
   is: 'gaia-header',
 
-  properties: {email: String}
+  properties: {
+    email: String
+  }
 });

@@ -23,7 +23,6 @@
 #include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/payments_profile_comparator.h"
 #include "components/payments/core/strings_util.h"
-#include "components/strings/grit/components_strings.h"
 #include "ui/base/default_style.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/base/resource/resource_bundle.h"
@@ -55,14 +54,11 @@ namespace {
 // |s1|, |s2|, and |s3| are lines identifying the profile. |s1| is the
 // "headline" which may be emphasized depending on |type|. If |enabled| is
 // false, the labels will look disabled.
-std::unique_ptr<views::View> GetBaseProfileLabel(
-    AddressStyleType type,
-    const base::string16& s1,
-    const base::string16& s2,
-    const base::string16& s3,
-    base::string16* accessible_content,
-    bool enabled = true) {
-  DCHECK(accessible_content);
+std::unique_ptr<views::View> GetBaseProfileLabel(AddressStyleType type,
+                                                 const base::string16& s1,
+                                                 const base::string16& s2,
+                                                 const base::string16& s3,
+                                                 bool enabled = true) {
   std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
   std::unique_ptr<views::BoxLayout> layout = base::MakeUnique<views::BoxLayout>(
       views::BoxLayout::kVertical, gfx::Insets(), 0);
@@ -106,10 +102,6 @@ std::unique_ptr<views::View> GetBaseProfileLabel(
     }
     container->AddChildView(label.release());
   }
-
-  *accessible_content = l10n_util::GetStringFUTF16(
-      IDS_PAYMENTS_PROFILE_LABELS_ACCESSIBLE_FORMAT, s1, s2, s3);
-
   return container;
 }
 
@@ -119,9 +111,7 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
     AddressStyleType type,
     const std::string& locale,
     const autofill::AutofillProfile& profile,
-    base::string16* accessible_content,
     bool enabled) {
-  DCHECK(accessible_content);
   base::string16 name =
       profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL), locale);
 
@@ -131,8 +121,7 @@ std::unique_ptr<views::View> GetShippingAddressLabel(
   base::string16 phone =
       data_util::GetFormattedPhoneNumberForDisplay(profile, locale);
 
-  return GetBaseProfileLabel(type, name, address, phone, accessible_content,
-                             enabled);
+  return GetBaseProfileLabel(type, name, address, phone, enabled);
 }
 
 std::unique_ptr<views::Label> GetLabelForMissingInformation(
@@ -220,7 +209,6 @@ std::unique_ptr<views::View> CreateSheetHeaderView(
     back_arrow->set_tag(
         static_cast<int>(PaymentRequestCommonTags::BACK_BUTTON_TAG));
     back_arrow->set_id(static_cast<int>(DialogViewID::BACK_BUTTON));
-    back_arrow->SetAccessibleName(l10n_util::GetStringUTF16(IDS_PAYMENTS_BACK));
     layout->AddView(back_arrow);
   }
 
@@ -277,11 +265,9 @@ std::unique_ptr<views::View> GetShippingAddressLabelWithMissingInfo(
     const std::string& locale,
     const autofill::AutofillProfile& profile,
     const PaymentsProfileComparator& comp,
-    base::string16* accessible_content,
     bool enabled) {
-  DCHECK(accessible_content);
-  std::unique_ptr<views::View> base_label = GetShippingAddressLabel(
-      type, locale, profile, accessible_content, enabled);
+  std::unique_ptr<views::View> base_label =
+      GetShippingAddressLabel(type, locale, profile, enabled);
 
   base::string16 missing = comp.GetStringForMissingShippingFields(profile);
   if (!missing.empty()) {
@@ -296,9 +282,7 @@ std::unique_ptr<views::View> GetContactInfoLabel(
     const std::string& locale,
     const autofill::AutofillProfile& profile,
     const PaymentOptionsProvider& options,
-    const PaymentsProfileComparator& comp,
-    base::string16* accessible_content) {
-  DCHECK(accessible_content);
+    const PaymentsProfileComparator& comp) {
   base::string16 name =
       options.request_payer_name()
           ? profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL), locale)
@@ -316,7 +300,7 @@ std::unique_ptr<views::View> GetContactInfoLabel(
           : base::string16();
 
   std::unique_ptr<views::View> base_label =
-      GetBaseProfileLabel(type, name, phone, email, accessible_content);
+      GetBaseProfileLabel(type, name, phone, email);
 
   base::string16 missing = comp.GetStringForMissingContactFields(profile);
   if (!missing.empty()) {
@@ -359,9 +343,7 @@ std::unique_ptr<views::Label> CreateHintLabel(
 std::unique_ptr<views::View> CreateShippingOptionLabel(
     payments::mojom::PaymentShippingOption* shipping_option,
     const base::string16& formatted_amount,
-    bool emphasize_label,
-    base::string16* accessible_content) {
-  DCHECK(accessible_content);
+    bool emphasize_label) {
   std::unique_ptr<views::View> container = base::MakeUnique<views::View>();
 
   std::unique_ptr<views::BoxLayout> layout = base::MakeUnique<views::BoxLayout>(
@@ -375,11 +357,7 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     std::unique_ptr<views::Label> shipping_label =
         emphasize_label ? CreateMediumLabel(text)
                         : base::MakeUnique<views::Label>(text);
-    // Strings from the website may not match the locale of the device, so align
-    // them according to the language of the text. This will result, for
-    // example, in "he" labels being right-aligned in a browser that's using
-    // "en" locale.
-    shipping_label->SetHorizontalAlignment(gfx::ALIGN_TO_HEAD);
+    shipping_label->SetHorizontalAlignment(gfx::ALIGN_LEFT);
     shipping_label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_OPTION_DESCRIPTION));
     container->AddChildView(shipping_label.release());
@@ -390,10 +368,6 @@ std::unique_ptr<views::View> CreateShippingOptionLabel(
     amount_label->set_id(
         static_cast<int>(DialogViewID::SHIPPING_OPTION_AMOUNT));
     container->AddChildView(amount_label.release());
-
-    *accessible_content = l10n_util::GetStringFUTF16(
-        IDS_PAYMENTS_PROFILE_LABELS_ACCESSIBLE_FORMAT, text, formatted_amount,
-        base::string16());
   }
 
   return container;

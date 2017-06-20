@@ -12,7 +12,7 @@ class ClientCertStoreWinTestDelegate {
  public:
   bool SelectClientCerts(const CertificateList& input_certs,
                          const SSLCertRequestInfo& cert_request_info,
-                         ClientCertIdentityList* selected_certs) {
+                         CertificateList* selected_certs) {
     return store_.SelectClientCertsForTesting(
         input_certs, cert_request_info, selected_certs);
   }

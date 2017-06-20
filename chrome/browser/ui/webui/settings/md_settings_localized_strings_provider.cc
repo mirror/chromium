@@ -748,19 +748,7 @@ void AddDeviceStrings(content::WebUIDataSource* html_source) {
       {"powerSourceAcAdapter", IDS_SETTINGS_POWER_SOURCE_AC_ADAPTER},
       {"powerSourceLowPowerCharger",
        IDS_SETTINGS_POWER_SOURCE_LOW_POWER_CHARGER},
-      {"calculatingPower", IDS_SETTINGS_POWER_SOURCE_CALCULATING},
-      {"powerIdleLabel", IDS_SETTINGS_POWER_IDLE_LABEL},
-      {"powerIdleDisplayOffSleep", IDS_SETTINGS_POWER_IDLE_DISPLAY_OFF_SLEEP},
-      {"powerIdleDisplayOffStayAwake",
-       IDS_SETTINGS_POWER_IDLE_DISPLAY_OFF_STAY_AWAKE},
-      {"powerIdleDisplayOn", IDS_SETTINGS_POWER_IDLE_DISPLAY_ON},
-      {"powerIdleOther", IDS_SETTINGS_POWER_IDLE_OTHER},
-      {"powerLidClosedLabel", IDS_SETTINGS_POWER_LID_CLOSED_LABEL},
-      {"powerLidClosedSleep", IDS_SETTINGS_POWER_LID_CLOSED_SLEEP},
-      {"powerLidClosedStayAwake", IDS_SETTINGS_POWER_LID_CLOSED_STAY_AWAKE},
-      {"powerLidClosedSignOut", IDS_SETTINGS_POWER_LID_CLOSED_SIGN_OUT},
-      {"powerLidClosedShutDown", IDS_SETTINGS_POWER_LID_CLOSED_SHUT_DOWN},
-  };
+      {"calculatingPower", IDS_SETTINGS_POWER_SOURCE_CALCULATING}};
   AddLocalizedStringsBulk(html_source, power_strings, arraysize(power_strings));
 
   html_source->AddString("naturalScrollLearnMoreLink",
@@ -1504,8 +1492,6 @@ void AddPrintingStrings(content::WebUIDataSource* html_source) {
      IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTERS_NEARBY_TITLE},
     {"addPrintersManuallyTitle",
      IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTERS_MANUALLY_TITLE},
-    {"selectManufacturerAndModelTitle",
-     IDS_SETTINGS_PRINTING_CUPS_SELECT_MANUFACTURER_AND_MODEL_TITLE},
     {"cancelButtonText", IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTER_BUTTON_CANCEL},
     {"addPrinterButtonText", IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTER_BUTTON_ADD},
     {"printerDetailsAdvanced", IDS_SETTINGS_PRINTING_CUPS_PRINTER_ADVANCED},

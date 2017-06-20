@@ -31,14 +31,12 @@
 #include "core/frame/RemoteFrameView.h"
 #include "core/layout/LayoutEmbeddedContent.h"
 #include "core/layout/api/LayoutEmbeddedContentItem.h"
-#include "core/loader/DocumentLoader.h"
 #include "core/loader/FrameLoadRequest.h"
 #include "core/loader/FrameLoader.h"
 #include "core/page/Page.h"
 #include "core/plugins/PluginView.h"
 #include "platform/heap/HeapAllocator.h"
 #include "platform/weborigin/SecurityOrigin.h"
-#include "public/platform/WebCachePolicy.h"
 
 namespace blink {
 
@@ -273,6 +271,7 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
     bool replace_current_item) {
   UpdateContainerPolicy();
 
+  LocalFrame* parent_frame = GetDocument().GetFrame();
   if (ContentFrame()) {
     ContentFrame()->Navigate(GetDocument(), url, replace_current_item,
                              UserGestureStatus::kNone);
@@ -286,30 +285,17 @@ bool HTMLFrameOwnerElement::LoadOrRedirectSubframe(
       Page::kMaxNumberOfFrames)
     return false;
 
-  LocalFrame* child_frame =
-      GetDocument().GetFrame()->Client()->CreateFrame(frame_name, this);
-  DCHECK_EQ(ContentFrame(), child_frame);
-  if (!child_frame)
-    return false;
+  FrameLoadRequest frame_load_request(&GetDocument(), ResourceRequest(url),
+                                      "_self", kCheckContentSecurityPolicy);
 
-  ResourceRequest request(url);
   ReferrerPolicy policy = ReferrerPolicyAttribute();
-  if (policy != kReferrerPolicyDefault) {
-    request.SetHTTPReferrer(SecurityPolicy::GenerateReferrer(
-        policy, url, GetDocument().OutgoingReferrer()));
-  }
+  if (policy != kReferrerPolicyDefault)
+    frame_load_request.GetResourceRequest().SetHTTPReferrer(
+        SecurityPolicy::GenerateReferrer(policy, url,
+                                         GetDocument().OutgoingReferrer()));
 
-  FrameLoadType child_load_type = kFrameLoadTypeInitialInChildFrame;
-  if (!GetDocument().LoadEventFinished() &&
-      GetDocument().Loader()->LoadType() ==
-          kFrameLoadTypeReloadBypassingCache) {
-    child_load_type = kFrameLoadTypeReloadBypassingCache;
-    request.SetCachePolicy(WebCachePolicy::kBypassingCache);
-  }
-
-  child_frame->Loader().Load(FrameLoadRequest(&GetDocument(), request),
-                             child_load_type);
-  return true;
+  return parent_frame->Loader().Client()->CreateFrame(frame_load_request,
+                                                      frame_name, this);
 }
 
 DEFINE_TRACE(HTMLFrameOwnerElement) {

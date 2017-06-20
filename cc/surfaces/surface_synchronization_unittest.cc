@@ -45,28 +45,6 @@ SurfaceId MakeSurfaceId(const FrameSinkId& frame_sink_id, uint32_t local_id) {
 
 }  // namespace
 
-class FakeExternalBeginFrameSourceClient
-    : public FakeExternalBeginFrameSource::Client {
- public:
-  FakeExternalBeginFrameSourceClient() = default;
-  ~FakeExternalBeginFrameSourceClient() = default;
-
-  bool has_observers() const { return observer_count_ > 0; }
-
-  // FakeExternalBeginFrameSource::Client implementation:
-  void OnAddObserver(BeginFrameObserver* obs) override { ++observer_count_; }
-
-  void OnRemoveObserver(BeginFrameObserver* obs) override {
-    DCHECK_GT(observer_count_, 0);
-    --observer_count_;
-  }
-
- private:
-  int observer_count_ = 0;
-
-  DISALLOW_COPY_AND_ASSIGN(FakeExternalBeginFrameSourceClient);
-};
-
 class SurfaceSynchronizationTest : public testing::Test {
  public:
   SurfaceSynchronizationTest()
@@ -120,12 +98,6 @@ class SurfaceSynchronizationTest : public testing::Test {
     return begin_frame_source_.get();
   }
 
-  bool HasDeadline() {
-    bool has_deadline = dependency_tracker().has_deadline();
-    EXPECT_EQ(has_deadline, begin_frame_source_client_.has_observers());
-    return has_deadline;
-  }
-
   FakeSurfaceObserver& surface_observer() { return surface_observer_; }
 
   // testing::Test:
@@ -134,7 +106,6 @@ class SurfaceSynchronizationTest : public testing::Test {
 
     begin_frame_source_ =
         base::MakeUnique<FakeExternalBeginFrameSource>(0.f, false);
-    begin_frame_source_->SetClient(&begin_frame_source_client_);
     dependency_tracker_ = base::MakeUnique<SurfaceDependencyTracker>(
         &surface_manager_, begin_frame_source_.get());
     surface_manager_.SetDependencyTracker(dependency_tracker_.get());
@@ -169,7 +140,6 @@ class SurfaceSynchronizationTest : public testing::Test {
 
     // SurfaceDependencyTracker depends on this BeginFrameSource and so it must
     // be destroyed AFTER the dependency tracker is destroyed.
-    begin_frame_source_->SetClient(nullptr);
     begin_frame_source_.reset();
 
     supports_.clear();
@@ -183,7 +153,6 @@ class SurfaceSynchronizationTest : public testing::Test {
  private:
   SurfaceManager surface_manager_;
   FakeSurfaceObserver surface_observer_;
-  FakeExternalBeginFrameSourceClient begin_frame_source_client_;
   std::unique_ptr<FakeExternalBeginFrameSource> begin_frame_source_;
   std::unique_ptr<SurfaceDependencyTracker> dependency_tracker_;
   std::vector<std::unique_ptr<CompositorFrameSinkSupport>> supports_;
@@ -233,7 +202,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedOnTwo) {
                           TransferableResourceArray()));
 
   // parent_support is blocked on |child_id1| and |child_id2|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(),
@@ -244,7 +213,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedOnTwo) {
   child_support1().SubmitCompositorFrame(child_id1.local_surface_id(),
                                          MakeCompositorFrame());
 
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(),
@@ -255,7 +224,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedOnTwo) {
   child_support2().SubmitCompositorFrame(child_id2.local_surface_id(),
                                          MakeCompositorFrame());
 
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(), IsEmpty());
@@ -273,7 +242,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
                           TransferableResourceArray()));
 
   // parent_support is blocked on |child_id1|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(),
@@ -287,7 +256,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
                           TransferableResourceArray()));
 
   // child_support1 should now be blocked on |child_id2|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_THAT(child_surface1()->blocking_surfaces(),
@@ -307,7 +276,7 @@ TEST_F(SurfaceSynchronizationTest, BlockedChain) {
       MakeCompositorFrame(empty_surface_ids(), empty_surface_ids(),
                           TransferableResourceArray()));
 
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 
   // child_surface1 should now be active.
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
@@ -338,7 +307,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
                           TransferableResourceArray()));
 
   // parent_support is blocked on |child_id2|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(),
@@ -350,7 +319,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
       MakeCompositorFrame({child_id2}, empty_surface_ids(),
                           TransferableResourceArray()));
 
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_THAT(child_surface1()->blocking_surfaces(),
@@ -365,7 +334,7 @@ TEST_F(SurfaceSynchronizationTest, TwoBlockedOnOne) {
   child_support2().SubmitCompositorFrame(child_id2.local_surface_id(),
                                          MakeCompositorFrame());
 
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 
   // child_surface1 should now be active.
   EXPECT_TRUE(child_surface1()->HasActiveFrame());
@@ -391,7 +360,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
                           TransferableResourceArray()));
 
   // parent_support is blocked on |child_id1|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(),
@@ -403,7 +372,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
                           TransferableResourceArray()));
 
   // child_support1 should now be blocked on |child_id2|.
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_FALSE(child_surface1()->HasActiveFrame());
   EXPECT_TRUE(child_surface1()->HasPendingFrame());
   EXPECT_THAT(child_surface1()->blocking_surfaces(),
@@ -419,7 +388,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
     // There is still a looming deadline! Eeek!
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
 
     // parent_support is still blocked on |child_id1|.
     EXPECT_FALSE(parent_surface()->HasActiveFrame());
@@ -437,7 +406,7 @@ TEST_F(SurfaceSynchronizationTest, DeadlineHits) {
   begin_frame_source()->TestOnBeginFrame(args);
 
   // The deadline has passed.
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 
   // parent_surface has been activated.
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
@@ -463,7 +432,7 @@ TEST_F(SurfaceSynchronizationTest, FramesSubmittedAfterDeadlineSet) {
         MakeCompositorFrame({arbitrary_id}, empty_surface_ids(),
                             TransferableResourceArray()));
     // The deadline has been set.
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
 
     // support(i) should be blocked on arbitrary_id.
     EXPECT_FALSE(surface(i)->HasActiveFrame());
@@ -675,7 +644,7 @@ TEST_F(SurfaceSynchronizationTest, EvictSurfaceWithPendingFrame) {
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_THAT(parent_surface()->blocking_surfaces(), IsEmpty());
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 }
 
 // This test verifies that if a surface has both a pending and active
@@ -1108,7 +1077,7 @@ TEST_F(SurfaceSynchronizationTest, DependencyTrackingGarbageCollection) {
       MakeCompositorFrame({parent_id1}, empty_surface_ids(),
                           TransferableResourceArray()));
 
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
 
   BeginFrameArgs args =
       CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
@@ -1116,10 +1085,10 @@ TEST_F(SurfaceSynchronizationTest, DependencyTrackingGarbageCollection) {
   // Advance BeginFrames to trigger a deadline.
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
   }
   begin_frame_source()->TestOnBeginFrame(args);
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 
   EXPECT_TRUE(display_surface()->HasActiveFrame());
   EXPECT_FALSE(display_surface()->HasPendingFrame());
@@ -1172,7 +1141,7 @@ TEST_F(SurfaceSynchronizationTest, GarbageCollectionOnDeadline) {
       MakeCompositorFrame({parent_id1}, {parent_id1},
                           TransferableResourceArray()));
 
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
 
@@ -1182,10 +1151,10 @@ TEST_F(SurfaceSynchronizationTest, GarbageCollectionOnDeadline) {
       CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
   }
   begin_frame_source()->TestOnBeginFrame(args);
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_FALSE(display_surface()->HasPendingFrame());
   EXPECT_TRUE(display_surface()->HasActiveFrame());
 
@@ -1210,10 +1179,10 @@ TEST_F(SurfaceSynchronizationTest, GarbageCollectionOnDeadline) {
   // should not cause a crash or use-after-free.
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
   }
   begin_frame_source()->TestOnBeginFrame(args);
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
 }
 
 // This test verifies that a CompositorFrame will only blocked on embedded
@@ -1235,7 +1204,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyBlockOnEmbeddedSurfaces) {
 
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
 
   // Verify that the display CompositorFrame will only block on |parent_id1| but
   // not |parent_id2|.
@@ -1250,7 +1219,7 @@ TEST_F(SurfaceSynchronizationTest, OnlyBlockOnEmbeddedSurfaces) {
   parent_support().SubmitCompositorFrame(parent_id1.local_surface_id(),
                                          MakeCompositorFrame());
 
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_FALSE(display_surface()->HasPendingFrame());
   EXPECT_TRUE(display_surface()->HasActiveFrame());
   EXPECT_THAT(display_surface()->blocking_surfaces(), IsEmpty());
@@ -1270,7 +1239,7 @@ TEST_F(SurfaceSynchronizationTest, LateArrivingDependency) {
 
   EXPECT_TRUE(display_surface()->HasPendingFrame());
   EXPECT_FALSE(display_surface()->HasActiveFrame());
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
 
   // Advance BeginFrames to trigger a deadline. This activates the
   // CompositorFrame submitted above.
@@ -1278,10 +1247,10 @@ TEST_F(SurfaceSynchronizationTest, LateArrivingDependency) {
       CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
   }
   begin_frame_source()->TestOnBeginFrame(args);
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_FALSE(display_surface()->HasPendingFrame());
   EXPECT_TRUE(display_surface()->HasActiveFrame());
 
@@ -1291,7 +1260,7 @@ TEST_F(SurfaceSynchronizationTest, LateArrivingDependency) {
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id1}, empty_surface_ids(),
                           TransferableResourceArray()));
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
 }
@@ -1333,7 +1302,7 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
       parent_id1.local_surface_id(),
       MakeCompositorFrame({child_id2}, {child_id1},
                           TransferableResourceArray()));
-  EXPECT_TRUE(HasDeadline());
+  EXPECT_TRUE(dependency_tracker().has_deadline());
   EXPECT_TRUE(parent_surface()->HasPendingFrame());
   EXPECT_FALSE(parent_surface()->HasActiveFrame());
 
@@ -1360,10 +1329,10 @@ TEST_F(SurfaceSynchronizationTest, FallbackSurfacesClosed) {
       CreateBeginFrameArgsForTesting(BEGINFRAME_FROM_HERE, 0, 1);
   for (int i = 0; i < 3; ++i) {
     begin_frame_source()->TestOnBeginFrame(args);
-    EXPECT_TRUE(HasDeadline());
+    EXPECT_TRUE(dependency_tracker().has_deadline());
   }
   begin_frame_source()->TestOnBeginFrame(args);
-  EXPECT_FALSE(HasDeadline());
+  EXPECT_FALSE(dependency_tracker().has_deadline());
   EXPECT_FALSE(parent_surface()->HasPendingFrame());
   EXPECT_TRUE(parent_surface()->HasActiveFrame());
 

@@ -58,8 +58,6 @@ blink_core_sources("inspector") {
     "InspectorMemoryAgent.h",
     "InspectorNetworkAgent.cpp",
     "InspectorNetworkAgent.h",
-    "InspectorOverlayAgent.cpp",
-    "InspectorOverlayAgent.h",
     "InspectorOverlayHost.cpp",
     "InspectorOverlayHost.h",
     "InspectorPageAgent.cpp",

@@ -14,17 +14,18 @@
 #include "platform/graphics/paint/PaintRecord.h"
 #include "platform/graphics/paint/PaintRecorder.h"
 #include "platform/graphics/skia/SkiaUtils.h"
-#include "platform/testing/FakeDisplayItemClient.h"
 #include "platform/wtf/Assertions.h"
 #include "platform/wtf/PtrUtil.h"
 
 namespace blink {
 
-class TestPaintArtifact::DummyRectClient : public FakeDisplayItemClient {
+class TestPaintArtifact::DummyRectClient : public DisplayItemClient {
+  USING_FAST_MALLOC(DummyRectClient);
+
  public:
-  DummyRectClient(const FloatRect& rect = FloatRect(),
-                  Color color = Color::kTransparent)
+  DummyRectClient(const FloatRect& rect, Color color)
       : rect_(rect), color_(color) {}
+  String DebugName() const final { return "<dummy>"; }
   LayoutRect VisualRect() const final { return EnclosingLayoutRect(rect_); }
   sk_sp<PaintRecord> MakeRecord() const;
 
@@ -60,17 +61,17 @@ TestPaintArtifact& TestPaintArtifact::Chunk(
     const PaintChunkProperties& properties) {
   if (!paint_chunks_.IsEmpty())
     paint_chunks_.back().end_index = display_item_list_.size();
-  auto client = WTF::MakeUnique<DummyRectClient>();
-  paint_chunks_.push_back(PaintChunk(
-      display_item_list_.size(), 0,
-      PaintChunk::Id(*client, DisplayItem::kDrawingFirst), properties));
-  dummy_clients_.push_back(std::move(client));
+  PaintChunk chunk;
+  chunk.begin_index = display_item_list_.size();
+  chunk.properties = properties;
+  paint_chunks_.push_back(chunk);
   return *this;
 }
 
 TestPaintArtifact& TestPaintArtifact::RectDrawing(const FloatRect& bounds,
                                                   Color color) {
-  auto client = WTF::MakeUnique<DummyRectClient>(bounds, color);
+  std::unique_ptr<DummyRectClient> client =
+      WTF::MakeUnique<DummyRectClient>(bounds, color);
   display_item_list_.AllocateAndConstruct<DrawingDisplayItem>(
       *client, DisplayItem::kDrawingFirst, client->MakeRecord(), bounds);
   dummy_clients_.push_back(std::move(client));
@@ -82,7 +83,8 @@ TestPaintArtifact& TestPaintArtifact::ForeignLayer(
     const IntSize& size,
     scoped_refptr<cc::Layer> layer) {
   FloatRect float_bounds(location, FloatSize(size));
-  auto client = WTF::MakeUnique<DummyRectClient>(float_bounds);
+  std::unique_ptr<DummyRectClient> client =
+      WTF::WrapUnique(new DummyRectClient(float_bounds, Color::kTransparent));
   display_item_list_.AllocateAndConstruct<ForeignLayerDisplayItem>(
       *client, DisplayItem::kForeignLayerFirst, std::move(layer), location,
       size);

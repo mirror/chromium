@@ -130,7 +130,7 @@ void Connector::ActiveDispatchTracker::NotifyBeginNesting() {
 
 Connector::Connector(ScopedMessagePipeHandle message_pipe,
                      ConnectorConfig config,
-                     scoped_refptr<base::SequencedTaskRunner> runner)
+                     scoped_refptr<base::SingleThreadTaskRunner> runner)
     : message_pipe_(std::move(message_pipe)),
       task_runner_(std::move(runner)),
       nesting_observer_(RunLoopNestingObserver::GetForThread()),
@@ -152,7 +152,7 @@ Connector::~Connector() {
       return;
   }
 
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
   CancelWait();
 }
 
@@ -162,7 +162,7 @@ void Connector::CloseMessagePipe() {
 }
 
 ScopedMessagePipeHandle Connector::PassMessagePipe() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   CancelWait();
   internal::MayAutoLock locker(&lock_);
@@ -176,13 +176,13 @@ ScopedMessagePipeHandle Connector::PassMessagePipe() {
 }
 
 void Connector::RaiseError() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   HandleError(true, true);
 }
 
 bool Connector::WaitForIncomingMessage(MojoDeadline deadline) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (error_)
     return false;
@@ -212,7 +212,7 @@ bool Connector::WaitForIncomingMessage(MojoDeadline deadline) {
 }
 
 void Connector::PauseIncomingMethodCallProcessing() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (paused_)
     return;
@@ -222,7 +222,7 @@ void Connector::PauseIncomingMethodCallProcessing() {
 }
 
 void Connector::ResumeIncomingMethodCallProcessing() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (!paused_)
     return;
@@ -232,8 +232,7 @@ void Connector::ResumeIncomingMethodCallProcessing() {
 }
 
 bool Connector::Accept(Message* message) {
-  if (!lock_)
-    DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(lock_ || thread_checker_.CalledOnValidThread());
 
   // It shouldn't hurt even if |error_| may be changed by a different thread at
   // the same time. The outcome is that we may write into |message_pipe_| after
@@ -282,7 +281,7 @@ bool Connector::Accept(Message* message) {
 }
 
 void Connector::AllowWokenUpBySyncWatchOnSameThread() {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   allow_woken_up_by_others_ = true;
 
@@ -291,7 +290,7 @@ void Connector::AllowWokenUpBySyncWatchOnSameThread() {
 }
 
 bool Connector::SyncWatch(const bool* should_stop) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (error_)
     return false;
@@ -327,7 +326,7 @@ void Connector::OnSyncHandleWatcherHandleReady(MojoResult result) {
 }
 
 void Connector::OnHandleReadyInternal(MojoResult result) {
-  DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
+  DCHECK(thread_checker_.CalledOnValidThread());
 
   if (result != MOJO_RESULT_OK) {
     HandleError(result != MOJO_RESULT_FAILED_PRECONDITION, false);

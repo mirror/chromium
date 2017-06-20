@@ -28,6 +28,7 @@ struct GFX_EXPORT DecoratedText {
     Range range;
     Font font;
     bool strike;
+    bool diagonal_strike;
   };
 
   DecoratedText();

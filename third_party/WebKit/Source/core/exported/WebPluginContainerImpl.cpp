@@ -317,7 +317,7 @@ void WebPluginContainerImpl::RequestFullscreen() {
 }
 
 bool WebPluginContainerImpl::IsFullscreenElement() const {
-  return Fullscreen::IsFullscreenElement(*element_);
+  return Fullscreen::IsCurrentFullScreenElement(*element_);
 }
 
 void WebPluginContainerImpl::CancelFullscreen() {

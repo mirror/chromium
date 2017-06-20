@@ -2,7 +2,6 @@
 <html>
 <head>
 <script src="../resources/js-test.js"></script>
-<script src="../resources/accessibility-helper.js"></script>
 </head>
 <body>
 
@@ -15,9 +14,6 @@ window.jsTestIsAsync = true;
 
 if (window.testRunner && window.accessibilityController) {
     testRunner.dumpAsText();
-
-    // Ensure entire a11y tree has already been seen.
-    traverseAccessibilityTree(accessibilityController.rootElement);
 
     // Focus the contenteditable text box and move the cursor to the end.
     var textbox = document.getElementById("textbox");
@@ -42,7 +38,7 @@ if (window.testRunner && window.accessibilityController) {
             else if (notification == "SelectedTextChanged")
                 selectedTextChangedCount++;
 
-            if (valueChangedCount >= 8 && selectedTextChangedCount >= 4) {
+            if (valueChangedCount == 8 && selectedTextChangedCount == 6) {
                 textbox.style.display = "none";
                 finishJSTest();
             }

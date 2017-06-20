@@ -33,7 +33,8 @@ Polymer({
      */
     controllerType_: {
       type: Number,
-      computed: 'computeControllerType_(route, isExtensionViewReady)',
+      computed: 'computeControllerType_(useWebUiRouteControls,' +
+          'isExtensionViewReady)',
     },
 
     /**
@@ -94,6 +95,16 @@ Polymer({
       type: Object,
       value: null,
     },
+
+    /**
+     * Whether we should use the WebUI route controls. This value is used for
+     * updating |controllerType_|,
+     * @type {boolean}
+     */
+    useWebUiRouteControls: {
+      type: Boolean,
+      value: false,
+    },
   },
 
   behaviors: [
@@ -150,13 +161,14 @@ Polymer({
   },
 
   /**
-   * @param {?media_router.Route} route
+   * @param {boolean} useWebUiRouteControls
    * @param {boolean} isExtensionViewReady
    * @return {number} An enum value to represent the controller to show.
    * @private
    */
-  computeControllerType_: function(route, isExtensionViewReady) {
-    if (route && route.supportsWebUiController) {
+  computeControllerType_: function(
+      useWebUiRouteControls, isExtensionViewReady) {
+    if (useWebUiRouteControls) {
       return media_router.ControllerType.WEBUI;
     }
     if (isExtensionViewReady) {
@@ -237,15 +249,6 @@ Polymer({
         this.$$('route-controls')) {
       this.$$('route-controls').onRouteUpdated(newRoute);
     }
-  },
-
-  /**
-   * @param {?media_router.Route} route
-   * @return {boolean}
-   * @private
-   */
-  shouldAttemptLoadingExtensionView_: function(route) {
-    return !!route && !route.supportsWebUiController;
   },
 
   /**

@@ -25,7 +25,7 @@ class PasswordModelWorker : public syncer::ModelSafeWorker {
 
   // syncer::ModelSafeWorker implementation.
   syncer::ModelSafeGroup GetModelSafeGroup() override;
-  bool IsOnModelSequence() override;
+  bool IsOnModelThread() override;
   void RequestStop() override;
 
  private:

@@ -105,7 +105,8 @@ void QuicSentPacketManager::SetFromConfig(const QuicConfig& config) {
                           config.GetInitialRoundTripTimeUsToSend())));
   }
   // Configure congestion control.
-  if (config.HasClientRequestedIndependentOption(kTBBR, perspective_)) {
+  if (FLAGS_quic_reloadable_flag_quic_allow_new_bbr &&
+      config.HasClientRequestedIndependentOption(kTBBR, perspective_)) {
     SetSendAlgorithm(kBBR);
   }
   if (config.HasClientRequestedIndependentOption(kRENO, perspective_)) {

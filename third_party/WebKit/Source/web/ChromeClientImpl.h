@@ -158,8 +158,7 @@ class WEB_EXPORT ChromeClientImpl final : public ChromeClient {
 
   void EnterFullscreen(LocalFrame&) override;
   void ExitFullscreen(LocalFrame&) override;
-  void FullscreenElementChanged(Element* old_element,
-                                Element* new_element) override;
+  void FullscreenElementChanged(Element*, Element*) override;
 
   void ClearCompositedSelection(LocalFrame*) override;
   void UpdateCompositedSelection(LocalFrame*,

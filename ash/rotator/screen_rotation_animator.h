@@ -25,6 +25,7 @@ class CopyOutputResult;
 
 namespace ui {
 class AnimationMetricsReporter;
+class Layer;
 class LayerTreeOwner;
 }  // namespace ui
 
@@ -152,6 +153,7 @@ class ASH_EXPORT ScreenRotationAnimator {
   void StopAnimating();
 
   aura::Window* root_window_;
+  ui::Layer* screen_rotation_container_layer_;
 
   // For current slow rotation animation, there are two states |ROTATING| and
   // |IDLE|. For the smooth rotation animation, we need to send copy request

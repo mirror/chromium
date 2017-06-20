@@ -111,10 +111,6 @@ def main(args):
   parser = argparse.ArgumentParser()
   parser.add_argument('--developer-dir', help='Path to Xcode')
   parser.add_argument('--sdk', help='Path to SDK')
-  parser.add_argument('--include',
-                      default=[],
-                      action='append',
-                      help='Additional include directory')
   parser.add_argument('defs')
   parser.add_argument('user_c')
   parser.add_argument('server_c')
@@ -128,12 +124,10 @@ def main(args):
              '-header', parsed.user_h,
              '-sheader', parsed.server_h,
             ]
-  if parsed.developer_dir is not None:
-    os.environ['DEVELOPER_DIR'] = parsed.developer_dir
   if parsed.sdk is not None:
     command.extend(['-isysroot', parsed.sdk])
-  for include in parsed.include:
-    command.extend(['-I' + include])
+  if parsed.developer_dir is not None:
+    os.environ['DEVELOPER_DIR'] = parsed.developer_dir
   command.append(parsed.defs)
   subprocess.check_call(command)
   FixUserImplementation(parsed.user_c)

@@ -9,9 +9,7 @@
 
 #include "base/callback.h"
 #include "base/memory/ref_counted.h"
-#include "base/message_loop/message_loop.h"
 #include "base/single_thread_task_runner.h"
-#include "base/threading/platform_thread.h"
 #include "content/common/content_export.h"
 
 namespace service_manager {
@@ -37,7 +35,7 @@ struct CONTENT_EXPORT ServiceInfo {
   // The task runner on which to construct and bind new Service instances
   // for this service. If null, behavior depends on the value of
   // |use_own_thread| below.
-  scoped_refptr<base::SequencedTaskRunner> task_runner;
+  scoped_refptr<base::SingleThreadTaskRunner> task_runner;
 
   // If |task_runner| is null, setting this to |true| will give each instance of
   // this service its own thread to run on. Setting this to |false| (the
@@ -45,14 +43,6 @@ struct CONTENT_EXPORT ServiceInfo {
   //
   // If |task_runner| is not null, this value is ignored.
   bool use_own_thread = false;
-
-  // If the service uses its own thread, this determines the type of the message
-  // loop used by the thread.
-  base::MessageLoop::Type message_loop_type = base::MessageLoop::TYPE_DEFAULT;
-
-  // If the service uses its own thread, this determines the priority of the
-  // thread.
-  base::ThreadPriority thread_priority = base::ThreadPriority::NORMAL;
 };
 
 }  // namespace content

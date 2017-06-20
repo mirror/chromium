@@ -116,6 +116,7 @@ class PLATFORM_EXPORT ResourceFetcher
 
   void SetDefersLoading(bool);
   void StopFetching();
+  bool IsFetching() const;
 
   bool ShouldDeferImageLoad(const KURL&) const;
 

@@ -66,7 +66,7 @@ TextStream& FEBlend::ExternalRepresentation(TextStream& ts, int indent) const {
   ts << "[feBlend";
   FilterEffect::ExternalRepresentation(ts);
   ts << " mode=\""
-     << (mode_ == WebBlendMode::kNormal
+     << (mode_ == kWebBlendModeNormal
              ? "normal"
              : CompositeOperatorName(kCompositeSourceOver, mode_))
      << "\"]\n";

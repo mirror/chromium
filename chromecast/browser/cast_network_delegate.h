@@ -9,7 +9,6 @@
 #include "net/base/network_delegate_impl.h"
 
 namespace net {
-class SSLPrivateKey;
 class X509Certificate;
 }
 
@@ -18,14 +17,13 @@ namespace shell {
 
 class CastNetworkDelegate : public net::NetworkDelegateImpl {
  public:
-  static std::unique_ptr<CastNetworkDelegate> Create();
-  static scoped_refptr<net::X509Certificate> DeviceCert();
-  static scoped_refptr<net::SSLPrivateKey> DeviceKey();
+  static CastNetworkDelegate* Create();
+  static net::X509Certificate* DeviceCert();
 
   CastNetworkDelegate();
   ~CastNetworkDelegate() override;
 
-  virtual void Initialize() = 0;
+  virtual void Initialize(bool use_sync_signing) = 0;
 
   virtual bool IsWhitelisted(const GURL& gurl, int render_process_id,
                              bool for_device_auth) const = 0;

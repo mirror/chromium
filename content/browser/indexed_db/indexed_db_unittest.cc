@@ -208,10 +208,9 @@ TEST_F(IndexedDBTest, ForceCloseOpenDatabasesOnDelete) {
     // TODO(jsbell): Remove static_cast<> when overloads are eliminated.
     idb_context->TaskRunner()->PostTask(
         FROM_HERE,
-        base::BindOnce(
-            static_cast<void (IndexedDBContextImpl::*)(const Origin&)>(
-                &IndexedDBContextImpl::DeleteForOrigin),
-            idb_context, kTestOrigin));
+        base::Bind(static_cast<void (IndexedDBContextImpl::*)(const Origin&)>(
+                       &IndexedDBContextImpl::DeleteForOrigin),
+                   idb_context, kTestOrigin));
     FlushIndexedDBTaskRunner();
     base::RunLoop().RunUntilIdle();
   }
@@ -244,7 +243,8 @@ TEST_F(IndexedDBTest, DeleteFailsIfDirectoryLocked) {
   void (IndexedDBContextImpl::* delete_for_origin)(const Origin&) =
       &IndexedDBContextImpl::DeleteForOrigin;
   idb_context->TaskRunner()->PostTask(
-      FROM_HERE, base::BindOnce(delete_for_origin, idb_context, kTestOrigin));
+      FROM_HERE,
+      base::Bind(delete_for_origin, idb_context, kTestOrigin));
   FlushIndexedDBTaskRunner();
 
   EXPECT_TRUE(base::DirectoryExists(test_path));

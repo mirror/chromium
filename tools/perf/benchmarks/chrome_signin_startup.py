@@ -6,7 +6,6 @@ from core import perf_benchmark
 from measurements import startup
 import page_sets
 from telemetry import benchmark
-from telemetry import story
 
 
 class _StartupWarm(perf_benchmark.PerfBenchmark):
@@ -31,9 +30,3 @@ class SigninStartup(_StartupWarm):
   @classmethod
   def Name(cls):
     return 'startup.warm.chrome_signin'
-
-  def GetExpectations(self):
-    class StoryExpectations(story.expectations.StoryExpectations):
-      def SetExpectations(self):
-        pass # chrome://signin-internals not disabled.
-    return StoryExpectations()

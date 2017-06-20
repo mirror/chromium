@@ -7,25 +7,18 @@
 
 #include "cc/scheduler/begin_frame_source.h"
 
-#include "cc/surfaces/surface_deadline_observer.h"
-
 namespace cc {
+
+class SurfaceDependencyTracker;
 
 class SurfaceDependencyDeadline : public BeginFrameObserver {
  public:
-  explicit SurfaceDependencyDeadline(BeginFrameSource* begin_frame_source);
+  SurfaceDependencyDeadline(SurfaceDependencyTracker* dependency_tracker,
+                            BeginFrameSource* begin_frame_source);
   ~SurfaceDependencyDeadline() override;
 
   void Set(uint32_t number_of_frames_to_deadline);
   void Cancel();
-
-  void AddObserver(SurfaceDeadlineObserver* obs) {
-    observer_list_.AddObserver(obs);
-  }
-
-  void RemoveObserver(SurfaceDeadlineObserver* obs) {
-    observer_list_.RemoveObserver(obs);
-  }
 
   bool has_deadline() const {
     return number_of_frames_to_deadline_.has_value();
@@ -37,7 +30,7 @@ class SurfaceDependencyDeadline : public BeginFrameObserver {
   void OnBeginFrameSourcePausedChanged(bool paused) override;
 
  private:
-  base::ObserverList<SurfaceDeadlineObserver> observer_list_;
+  SurfaceDependencyTracker* const dependency_tracker_;
   BeginFrameSource* begin_frame_source_ = nullptr;
   base::Optional<uint32_t> number_of_frames_to_deadline_;
 

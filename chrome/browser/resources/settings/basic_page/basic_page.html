@@ -54,10 +54,8 @@
 
       #secondaryUserBanner {
         @apply(--shadow-elevation-2dp);
-        align-items: center;
         background-color: white;
         border-radius: 2px;
-        display: flex;
         margin: 21px 0;
       }
 
@@ -98,7 +96,8 @@
           </settings-reset-profile-banner>
         </template>
 <if expr="chromeos">
-        <div id="secondaryUserBanner" hidden="[[!showSecondaryUserBanner_]]">
+        <div id="secondaryUserBanner" class="layout horizontal center"
+            hidden="[[!showSecondaryUserBanner_]]">
           <div id="secondaryUserIcon"></div>
           <div class="flex">$i18n{secondaryUserBannerText}</div>
         </div>

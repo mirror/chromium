@@ -585,7 +585,7 @@ void OmniboxViewViews::UpdateSchemeStyle(const gfx::Range& range) {
     return;
   ApplyColor(location_bar_view_->GetSecureTextColor(security_level_), range);
   if (security_level_ == security_state::DANGEROUS)
-    ApplyStyle(gfx::STRIKE, true, range);
+    ApplyStyle(gfx::DIAGONAL_STRIKE, true, range);
 }
 
 void OmniboxViewViews::EmphasizeURLComponents() {
@@ -600,7 +600,7 @@ void OmniboxViewViews::EmphasizeURLComponents() {
   GetRenderText()->SetDirectionalityMode(text_is_url
                                              ? gfx::DIRECTIONALITY_FORCE_LTR
                                              : gfx::DIRECTIONALITY_FROM_TEXT);
-  SetStyle(gfx::STRIKE, false);
+  SetStyle(gfx::DIAGONAL_STRIKE, false);
   UpdateTextStyle(text(), model()->client()->GetSchemeClassifier());
 }
 

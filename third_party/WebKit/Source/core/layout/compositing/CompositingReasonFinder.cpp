@@ -78,7 +78,7 @@ CompositingReasonFinder::PotentialCompositingReasonsFromStyle(
   if (RequiresCompositingForTransform(layout_object))
     reasons |= kCompositingReason3DTransform;
 
-  if (style.BackfaceVisibility() == EBackfaceVisibility::kHidden)
+  if (style.BackfaceVisibility() == kBackfaceVisibilityHidden)
     reasons |= kCompositingReasonBackfaceVisibilityHidden;
 
   if (RequiresCompositingForAnimation(style))

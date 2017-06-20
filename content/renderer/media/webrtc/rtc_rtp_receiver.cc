@@ -11,19 +11,27 @@
 
 namespace content {
 
+namespace {
+
+inline bool operator==(const blink::WebMediaStreamTrack& web_track,
+                       const webrtc::MediaStreamTrackInterface& webrtc_track) {
+  return !web_track.IsNull() && web_track.Id() == webrtc_track.id().c_str();
+}
+
+}  // namespace
+
 uintptr_t RTCRtpReceiver::getId(
     const webrtc::RtpReceiverInterface* webrtc_rtp_receiver) {
   return reinterpret_cast<uintptr_t>(webrtc_rtp_receiver);
 }
 
 RTCRtpReceiver::RTCRtpReceiver(
-    scoped_refptr<webrtc::RtpReceiverInterface> webrtc_rtp_receiver,
-    std::unique_ptr<WebRtcMediaStreamTrackAdapterMap::AdapterRef> track_adapter)
-    : webrtc_rtp_receiver_(std::move(webrtc_rtp_receiver)),
-      track_adapter_(std::move(track_adapter)) {
+    webrtc::RtpReceiverInterface* webrtc_rtp_receiver,
+    const blink::WebMediaStreamTrack& web_track)
+    : webrtc_rtp_receiver_(webrtc_rtp_receiver), web_track_(web_track) {
   DCHECK(webrtc_rtp_receiver_);
-  DCHECK(track_adapter_);
-  DCHECK_EQ(track_adapter_->webrtc_track(), webrtc_rtp_receiver_->track());
+  DCHECK(!web_track_.IsNull());
+  DCHECK(web_track_ == webrtc_track());
 }
 
 RTCRtpReceiver::~RTCRtpReceiver() {}
@@ -33,8 +41,8 @@ uintptr_t RTCRtpReceiver::Id() const {
 }
 
 const blink::WebMediaStreamTrack& RTCRtpReceiver::Track() const {
-  DCHECK(track_adapter_->webrtc_track() == webrtc_rtp_receiver_->track());
-  return track_adapter_->web_track();
+  DCHECK(web_track_ == webrtc_track());
+  return web_track_;
 }
 
 blink::WebVector<std::unique_ptr<blink::WebRTCRtpContributingSource>>
@@ -49,9 +57,11 @@ RTCRtpReceiver::GetSources() {
 }
 
 const webrtc::MediaStreamTrackInterface& RTCRtpReceiver::webrtc_track() const {
-  DCHECK(track_adapter_->webrtc_track() == webrtc_rtp_receiver_->track());
-  DCHECK(track_adapter_->webrtc_track());
-  return *track_adapter_->webrtc_track();
+  const webrtc::MediaStreamTrackInterface* webrtc_track =
+      webrtc_rtp_receiver_->track();
+  DCHECK(webrtc_track);
+  DCHECK(web_track_ == *webrtc_track);
+  return *webrtc_track;
 }
 
 }  // namespace content

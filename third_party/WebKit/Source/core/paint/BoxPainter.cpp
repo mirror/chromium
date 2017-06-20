@@ -33,7 +33,6 @@
 #include "core/style/ShadowList.h"
 #include "platform/LengthFunctions.h"
 #include "platform/geometry/LayoutPoint.h"
-#include "platform/geometry/LayoutRectOutsets.h"
 #include "platform/graphics/GraphicsContextStateSaver.h"
 #include "platform/graphics/paint/CompositingDisplayItem.h"
 
@@ -452,11 +451,12 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
     clip_to_border.emplace(obj, paint_info, rect, border, kApplyToContext);
   }
 
-  LayoutRectOutsets border(
-      obj.BorderTop(),
-      info.include_right_edge ? obj.BorderRight() : LayoutUnit(),
-      obj.BorderBottom(),
-      info.include_left_edge ? obj.BorderLeft() : LayoutUnit());
+  LayoutUnit b_left = info.include_left_edge ? obj.BorderLeft() : LayoutUnit();
+  LayoutUnit b_right =
+      info.include_right_edge ? obj.BorderRight() : LayoutUnit();
+  LayoutUnit p_left = info.include_left_edge ? obj.PaddingLeft() : LayoutUnit();
+  LayoutUnit p_right =
+      info.include_right_edge ? obj.PaddingRight() : LayoutUnit();
 
   GraphicsContextStateSaver clip_with_scrolling_state_saver(
       context, info.is_clipped_with_local_scrolling);
@@ -473,8 +473,7 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
     // the ends.
     IntSize offset = this_box.ScrolledContentOffset();
     scrolled_paint_rect.Move(-offset);
-    scrolled_paint_rect.SetWidth(border.Left() + this_box.ScrollWidth() +
-                                 border.Right());
+    scrolled_paint_rect.SetWidth(b_left + this_box.ScrollWidth() + b_right);
     scrolled_paint_rect.SetHeight(this_box.BorderTop() +
                                   this_box.ScrollHeight() +
                                   this_box.BorderBottom());
@@ -490,16 +489,17 @@ void BoxPainter::PaintFillLayer(const LayoutBoxModelObject& obj,
         break;
 
       // Clip to the padding or content boxes as necessary.
-      LayoutRect clip_rect = scrolled_paint_rect;
-      clip_rect.Contract(border);
-      if (bg_layer.Clip() == kContentFillBox) {
-        LayoutRectOutsets padding(
-            obj.PaddingTop(),
-            info.include_right_edge ? obj.PaddingRight() : LayoutUnit(),
-            obj.PaddingBottom(),
-            info.include_left_edge ? obj.PaddingLeft() : LayoutUnit());
-        clip_rect.Contract(padding);
-      }
+      bool include_padding = bg_layer.Clip() == kContentFillBox;
+      LayoutRect clip_rect(
+          scrolled_paint_rect.X() + b_left +
+              (include_padding ? p_left : LayoutUnit()),
+          scrolled_paint_rect.Y() + obj.BorderTop() +
+              (include_padding ? obj.PaddingTop() : LayoutUnit()),
+          scrolled_paint_rect.Width() - b_left - b_right -
+              (include_padding ? p_left + p_right : LayoutUnit()),
+          scrolled_paint_rect.Height() - obj.BorderTop() - obj.BorderBottom() -
+              (include_padding ? obj.PaddingTop() + obj.PaddingBottom()
+                               : LayoutUnit()));
       background_clip_state_saver.Save();
       // TODO(chrishtr): this should be pixel-snapped.
       context.Clip(FloatRect(clip_rect));

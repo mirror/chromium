@@ -226,7 +226,6 @@ void CompositedLayerMapping::CreatePrimaryGraphicsLayer() {
       CreateGraphicsLayer(owning_layer_.GetCompositingReasons(),
                           owning_layer_.GetSquashingDisallowedReasons());
 
-  UpdateShouldHitTest(true);
   UpdateOpacity(GetLayoutObject().StyleRef());
   UpdateTransform(GetLayoutObject().StyleRef());
   UpdateFilters(GetLayoutObject().StyleRef());
@@ -251,10 +250,6 @@ void CompositedLayerMapping::DestroyGraphicsLayers() {
 
   scrolling_layer_ = nullptr;
   scrolling_contents_layer_ = nullptr;
-}
-
-void CompositedLayerMapping::UpdateShouldHitTest(const bool& should_hit_test) {
-  graphics_layer_->SetShouldHitTest(should_hit_test);
 }
 
 void CompositedLayerMapping::UpdateOpacity(const ComputedStyle& style) {
@@ -1175,7 +1170,7 @@ void CompositedLayerMapping::UpdateMainGraphicsLayerGeometry(
 
   graphics_layer_->SetBackfaceVisibility(
       GetLayoutObject().Style()->BackfaceVisibility() ==
-      EBackfaceVisibility::kVisible);
+      kBackfaceVisibilityVisible);
 }
 
 void CompositedLayerMapping::ComputeGraphicsLayerParentLocation(
@@ -1340,7 +1335,7 @@ void CompositedLayerMapping::UpdateOverflowControlsHostLayerGeometry(
   overflow_controls_host_layer_->SetMasksToBounds(true);
   overflow_controls_host_layer_->SetBackfaceVisibility(
       owning_layer_.GetLayoutObject().Style()->BackfaceVisibility() ==
-      EBackfaceVisibility::kVisible);
+      kBackfaceVisibilityVisible);
 }
 
 void CompositedLayerMapping::UpdateChildContainmentLayerGeometry(
@@ -2385,7 +2380,6 @@ bool CompositedLayerMapping::UpdateScrollingLayers(
       // Inner layer which renders the content that scrolls.
       scrolling_contents_layer_ =
           CreateGraphicsLayer(kCompositingReasonLayerForScrollingContents);
-      scrolling_contents_layer_->SetShouldHitTest(true);
 
       AnimatingData data;
       GetAnimatingData(owning_layer_, data);
@@ -2886,7 +2880,7 @@ GraphicsLayer* CompositedLayerMapping::ChildForSuperlayers() const {
 void CompositedLayerMapping::SetBlendMode(WebBlendMode blend_mode) {
   if (ancestor_clipping_layer_) {
     ancestor_clipping_layer_->SetBlendMode(blend_mode);
-    graphics_layer_->SetBlendMode(WebBlendMode::kNormal);
+    graphics_layer_->SetBlendMode(kWebBlendModeNormal);
   } else {
     graphics_layer_->SetBlendMode(blend_mode);
   }

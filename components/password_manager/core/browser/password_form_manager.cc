@@ -228,6 +228,7 @@ PasswordFormManager::PasswordFormManager(
           observed_form.IsPossibleChangePasswordFormWithoutUsername()),
       client_(client),
       user_action_(UserAction::kNone),
+      form_type_(kFormTypeUnspecified),
       form_saver_(std::move(form_saver)),
       owned_form_fetcher_(
           form_fetcher ? nullptr
@@ -251,9 +252,97 @@ PasswordFormManager::PasswordFormManager(
 PasswordFormManager::~PasswordFormManager() {
   form_fetcher_->RemoveConsumer(this);
 
-  metrics_recorder_.RecordHistogramsOnSuppressedAccounts(
-      observed_form_.origin.SchemeIsCryptographic(), *form_fetcher_,
-      pending_credentials_);
+  RecordHistogramsOnSuppressedAccounts();
+
+  if (form_type_ != kFormTypeUnspecified) {
+    UMA_HISTOGRAM_ENUMERATION("PasswordManager.SubmittedFormType", form_type_,
+                              kFormTypeMax);
+    if (!is_main_frame_secure_) {
+      UMA_HISTOGRAM_ENUMERATION("PasswordManager.SubmittedNonSecureFormType",
+                                form_type_, kFormTypeMax);
+    }
+  }
+}
+
+int PasswordFormManager::GetHistogramSampleForSuppressedAccounts(
+    const std::vector<const autofill::PasswordForm*> suppressed_forms,
+    PasswordForm::Type manual_or_generated) const {
+  DCHECK(form_fetcher_->DidCompleteQueryingSuppressedForms());
+
+  SuppressedAccountExistence best_matching_account = kSuppressedAccountNone;
+  for (const autofill::PasswordForm* form : suppressed_forms) {
+    if (form->type != manual_or_generated)
+      continue;
+
+    SuppressedAccountExistence current_account;
+    if (pending_credentials_.password_value.empty())
+      current_account = kSuppressedAccountExists;
+    else if (form->username_value != pending_credentials_.username_value)
+      current_account = kSuppressedAccountExistsDifferentUsername;
+    else if (form->password_value != pending_credentials_.password_value)
+      current_account = kSuppressedAccountExistsSameUsername;
+    else
+      current_account = kSuppressedAccountExistsSameUsernameAndPassword;
+
+    best_matching_account = std::max(best_matching_account, current_account);
+  }
+
+  // Encoding: most significant digit is the |best_matching_account|.
+  int mixed_base_encoding = 0;
+  mixed_base_encoding += best_matching_account;
+  mixed_base_encoding *= PasswordFormMetricsRecorder::kMaxNumActionsTakenNew;
+  mixed_base_encoding += metrics_recorder_.GetActionsTakenNew();
+  DCHECK_LT(mixed_base_encoding, kMaxSuppressedAccountStats);
+  return mixed_base_encoding;
+}
+
+void PasswordFormManager::RecordHistogramsOnSuppressedAccounts() const {
+  UMA_HISTOGRAM_BOOLEAN("PasswordManager.QueryingSuppressedAccountsFinished",
+                        form_fetcher_->DidCompleteQueryingSuppressedForms());
+
+  if (!form_fetcher_->DidCompleteQueryingSuppressedForms())
+    return;
+
+  if (!observed_form_.origin.SchemeIsCryptographic()) {
+    UMA_HISTOGRAM_ENUMERATION(
+        "PasswordManager.SuppressedAccount.Generated.HTTPSNotHTTP",
+        GetHistogramSampleForSuppressedAccounts(
+            form_fetcher_->GetSuppressedHTTPSForms(),
+            PasswordForm::TYPE_GENERATED),
+        kMaxSuppressedAccountStats);
+    UMA_HISTOGRAM_ENUMERATION(
+        "PasswordManager.SuppressedAccount.Manual.HTTPSNotHTTP",
+        GetHistogramSampleForSuppressedAccounts(
+            form_fetcher_->GetSuppressedHTTPSForms(),
+            PasswordForm::TYPE_MANUAL),
+        kMaxSuppressedAccountStats);
+  }
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.SuppressedAccount.Generated.PSLMatching",
+      GetHistogramSampleForSuppressedAccounts(
+          form_fetcher_->GetSuppressedPSLMatchingForms(),
+          PasswordForm::TYPE_GENERATED),
+      kMaxSuppressedAccountStats);
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.SuppressedAccount.Manual.PSLMatching",
+      GetHistogramSampleForSuppressedAccounts(
+          form_fetcher_->GetSuppressedPSLMatchingForms(),
+          PasswordForm::TYPE_MANUAL),
+      kMaxSuppressedAccountStats);
+
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.SuppressedAccount.Generated.SameOrganizationName",
+      GetHistogramSampleForSuppressedAccounts(
+          form_fetcher_->GetSuppressedSameOrganizationNameForms(),
+          PasswordForm::TYPE_GENERATED),
+      kMaxSuppressedAccountStats);
+  UMA_HISTOGRAM_ENUMERATION(
+      "PasswordManager.SuppressedAccount.Manual.SameOrganizationName",
+      GetHistogramSampleForSuppressedAccounts(
+          form_fetcher_->GetSuppressedSameOrganizationNameForms(),
+          PasswordForm::TYPE_MANUAL),
+      kMaxSuppressedAccountStats);
 }
 
 // static
@@ -448,23 +537,20 @@ void PasswordFormManager::SetSubmittedForm(const autofill::PasswordForm& form) {
       !form.new_password_value.empty() && form.password_value.empty();
   bool no_username = form.username_element.empty();
 
-  PasswordFormMetricsRecorder::SubmittedFormType type =
-      PasswordFormMetricsRecorder::kSubmittedFormTypeUnspecified;
   if (form.layout == PasswordForm::Layout::LAYOUT_LOGIN_AND_SIGNUP) {
-    type = PasswordFormMetricsRecorder::kSubmittedFormTypeLoginAndSignup;
+    form_type_ = kFormTypeLoginAndSignup;
   } else if (is_change_password_form) {
-    type = PasswordFormMetricsRecorder::kSubmittedFormTypeChangePasswordEnabled;
+    form_type_ = kFormTypeChangePasswordEnabled;
   } else if (is_signup_form) {
     if (no_username)
-      type = PasswordFormMetricsRecorder::kSubmittedFormTypeSignupNoUsername;
+      form_type_ = kFormTypeSignupNoUsername;
     else
-      type = PasswordFormMetricsRecorder::kSubmittedFormTypeSignup;
+      form_type_ = kFormTypeSignup;
   } else if (no_username) {
-    type = PasswordFormMetricsRecorder::kSubmittedFormTypeLoginNoUsername;
+    form_type_ = kFormTypeLoginNoUsername;
   } else {
-    type = PasswordFormMetricsRecorder::kSubmittedFormTypeLogin;
+    form_type_ = kFormTypeLogin;
   }
-  metrics_recorder_.SetSubmittedFormType(type);
 }
 
 void PasswordFormManager::ScoreMatches(

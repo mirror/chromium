@@ -4,7 +4,8 @@
 
 cr.define('mobile', function() {
 
-  function ChooseNetwork() {}
+  function ChooseNetwork() {
+  }
 
   cr.addSingletonGetter(ChooseNetwork);
 
@@ -24,8 +25,8 @@ cr.define('mobile', function() {
       container.innerHTML = '';
       for (var i in networks) {
         var elem = document.createElement('div');
-        elem.innerHTML = '<input type="radio" name="network" id="network' + i +
-            '" />' +
+        elem.innerHTML =
+            '<input type="radio" name="network" id="network' + i + '" />' +
             '<label for="network' + i + '" id="label' + i + '"></label>';
         container.appendChild(elem);
         $('label' + i).textContent = networks[i].operatorName;
@@ -95,7 +96,9 @@ cr.define('mobile', function() {
   };
 
   // Export
-  return {ChooseNetwork: ChooseNetwork};
+  return {
+    ChooseNetwork: ChooseNetwork
+  };
 });
 
 var ChooseNetwork = mobile.ChooseNetwork;

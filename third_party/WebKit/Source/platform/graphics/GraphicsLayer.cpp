@@ -87,7 +87,7 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
     : client_(client),
       background_color_(Color::kTransparent),
       opacity_(1),
-      blend_mode_(WebBlendMode::kNormal),
+      blend_mode_(kWebBlendModeNormal),
       has_transform_origin_(false),
       contents_opaque_(false),
       should_flatten_transform_(true),
@@ -95,7 +95,6 @@ GraphicsLayer::GraphicsLayer(GraphicsLayerClient* client)
       draws_content_(false),
       contents_visible_(true),
       is_root_for_isolated_group_(false),
-      should_hit_test_(false),
       has_scroll_parent_(false),
       has_clip_parent_(false),
       painted_(false),
@@ -628,7 +627,7 @@ std::unique_ptr<JSONObject> GraphicsLayer::LayerAsJSONInternal(
   if (opacity_ != 1)
     json->SetDouble("opacity", opacity_);
 
-  if (blend_mode_ != WebBlendMode::kNormal) {
+  if (blend_mode_ != kWebBlendModeNormal) {
     json->SetString("blendMode",
                     CompositeOperatorName(kCompositeSourceOver, blend_mode_));
   }
@@ -995,13 +994,6 @@ void GraphicsLayer::SetIsRootForIsolatedGroup(bool isolated) {
     return;
   is_root_for_isolated_group_ = isolated;
   PlatformLayer()->SetIsRootForIsolatedGroup(isolated);
-}
-
-void GraphicsLayer::SetShouldHitTest(bool hit_test) {
-  if (should_hit_test_ == hit_test)
-    return;
-  should_hit_test_ = hit_test;
-  PlatformLayer()->SetShouldHitTest(hit_test);
 }
 
 void GraphicsLayer::SetContentsNeedsDisplay() {

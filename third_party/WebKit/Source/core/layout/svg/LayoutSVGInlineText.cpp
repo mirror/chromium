@@ -44,18 +44,19 @@ namespace blink {
 // Turn tabs, newlines and carriage returns into spaces. In the future this
 // should be removed in favor of letting the generic white-space code handle
 // this.
-static RefPtr<StringImpl> NormalizeWhitespace(RefPtr<StringImpl> string) {
+static PassRefPtr<StringImpl> NormalizeWhitespace(
+    PassRefPtr<StringImpl> string) {
   RefPtr<StringImpl> new_string = string->Replace('\t', ' ');
   new_string = new_string->Replace('\n', ' ');
   new_string = new_string->Replace('\r', ' ');
-  return new_string;
+  return new_string.Release();
 }
 
 LayoutSVGInlineText::LayoutSVGInlineText(Node* n, PassRefPtr<StringImpl> string)
     : LayoutText(n, NormalizeWhitespace(std::move(string))),
       scaling_factor_(1) {}
 
-void LayoutSVGInlineText::SetTextInternal(RefPtr<StringImpl> text) {
+void LayoutSVGInlineText::SetTextInternal(PassRefPtr<StringImpl> text) {
   LayoutText::SetTextInternal(std::move(text));
   if (LayoutSVGText* text_layout_object =
           LayoutSVGText::LocateLayoutSVGTextAncestor(this))
@@ -421,11 +422,11 @@ FloatRect LayoutSVGInlineText::VisualRectInLocalSVGCoordinates() const {
   return Parent()->VisualRectInLocalSVGCoordinates();
 }
 
-RefPtr<StringImpl> LayoutSVGInlineText::OriginalText() const {
+PassRefPtr<StringImpl> LayoutSVGInlineText::OriginalText() const {
   RefPtr<StringImpl> result = LayoutText::OriginalText();
   if (!result)
     return nullptr;
-  return NormalizeWhitespace(std::move(result));
+  return NormalizeWhitespace(result);
 }
 
 }  // namespace blink

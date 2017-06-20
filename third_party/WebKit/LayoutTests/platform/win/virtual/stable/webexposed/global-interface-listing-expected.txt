@@ -1165,11 +1165,8 @@ interface Element : Node
     method removeAttributeNode
     method replaceWith
     method requestPointerLock
-    method scroll
-    method scrollBy
     method scrollIntoView
     method scrollIntoViewIfNeeded
-    method scrollTo
     method setAttribute
     method setAttributeNS
     method setAttributeNode

@@ -261,7 +261,8 @@ class MediaStreamDevicesControllerTest
   void SetUpOnMainThread() override {
     WebRtcTestBase::SetUpOnMainThread();
 
-    if (GetParam() == TestType::TEST_WITH_GROUPED_MEDIA_REQUESTS) {
+    if (static_cast<TestType>(GetParam()) ==
+        TestType::TEST_WITH_GROUPED_MEDIA_REQUESTS) {
       scoped_feature_list_.InitAndEnableFeature(
           features::kUsePermissionManagerForMediaRequests);
       PermissionRequestManager* manager =
@@ -269,9 +270,6 @@ class MediaStreamDevicesControllerTest
               browser()->tab_strip_model()->GetActiveWebContents());
       prompt_factory_.reset(new MockPermissionPromptFactory(manager));
       manager->DisplayPendingRequests();
-    } else {
-      scoped_feature_list_.InitAndDisableFeature(
-          features::kUsePermissionManagerForMediaRequests);
     }
 
     // Cleanup.
@@ -858,14 +856,14 @@ IN_PROC_BROWSER_TEST_P(MediaStreamDevicesControllerTest,
     // disabled that permission will be denied. TODO(raymes): Remove this when
     // crbug.com/526324 is fixed.
     base::test::ScopedFeatureList scoped_feature_list;
-    if (GetParam() == TestType::TEST_WITH_GROUPED_MEDIA_REQUESTS) {
+    if (static_cast<TestType>(GetParam()) ==
+        TestType::TEST_WITH_GROUPED_MEDIA_REQUESTS) {
       scoped_feature_list.InitWithFeatures(
           {features::kUsePermissionManagerForMediaRequests},
           {features::kRequireSecureOriginsForPepperMediaRequests});
     } else {
       scoped_feature_list.InitWithFeatures(
-          {}, {features::kUsePermissionManagerForMediaRequests,
-               features::kRequireSecureOriginsForPepperMediaRequests});
+          {}, {features::kRequireSecureOriginsForPepperMediaRequests});
     }
     RequestPermissions(
         GetWebContents(),

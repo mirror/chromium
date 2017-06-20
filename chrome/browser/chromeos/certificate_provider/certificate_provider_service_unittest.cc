@@ -15,6 +15,7 @@
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/chromeos/certificate_provider/certificate_provider.h"
 #include "net/base/net_errors.h"
+#include "net/ssl/client_key_store.h"
 #include "net/test/cert_test_util.h"
 #include "net/test/test_data_directory.h"
 #include "testing/gtest/include/gtest/gtest.h"
@@ -40,15 +41,10 @@ void ExpectOKAndStoreSignature(std::vector<uint8_t>* out_signature,
   *out_signature = signature;
 }
 
-void StoreCertificates(net::ClientCertIdentityList* out_certs,
-                       net::ClientCertIdentityList certs) {
+void StoreCertificates(net::CertificateList* out_certs,
+                       const net::CertificateList& certs) {
   if (out_certs)
-    *out_certs = std::move(certs);
-}
-
-void StorePrivateKey(scoped_refptr<net::SSLPrivateKey>* out_key,
-                     scoped_refptr<net::SSLPrivateKey> in_key) {
-  *out_key = std::move(in_key);
+    *out_certs = certs;
 }
 
 certificate_provider::CertificateInfo CreateCertInfo(
@@ -65,13 +61,6 @@ certificate_provider::CertificateInfo CreateCertInfo(
 bool IsKeyEqualToCertInfo(const certificate_provider::CertificateInfo& info,
                           net::SSLPrivateKey* key) {
   return info.supported_hashes == key->GetDigestPreferences();
-}
-
-bool ClientCertIdentityAlphabeticSorter(
-    const std::unique_ptr<net::ClientCertIdentity>& a_identity,
-    const std::unique_ptr<net::ClientCertIdentity>& b_identity) {
-  return a_identity->certificate()->subject().GetDisplayName() <
-         b_identity->certificate()->subject().GetDisplayName();
 }
 
 class TestDelegate : public CertificateProviderService::Delegate {
@@ -136,6 +125,7 @@ class CertificateProviderServiceTest : public testing::Test {
   CertificateProviderServiceTest()
       : task_runner_(new base::TestMockTimeTaskRunner()),
         task_runner_handle_(task_runner_),
+        client_key_store_(net::ClientKeyStore::GetInstance()),
         service_(new CertificateProviderService()),
         cert_info1_(CreateCertInfo("client_1.pem")),
         cert_info2_(CreateCertInfo("client_2.pem")) {
@@ -151,7 +141,7 @@ class CertificateProviderServiceTest : public testing::Test {
 
   // Triggers a GetCertificates request and returns the request id. Assumes that
   // at least one extension is registered as a certificate provider.
-  int RequestCertificatesFromExtensions(net::ClientCertIdentityList* certs) {
+  int RequestCertificatesFromExtensions(net::CertificateList* certs) {
     test_delegate_->ClearAndExpectRequest(
         TestDelegate::RequestType::GET_CERTIFICATES);
 
@@ -164,24 +154,12 @@ class CertificateProviderServiceTest : public testing::Test {
     return test_delegate_->last_cert_request_id_;
   }
 
-  scoped_refptr<net::SSLPrivateKey> FetchIdentityPrivateKey(
-      net::ClientCertIdentity* identity) {
-    scoped_refptr<net::SSLPrivateKey> ssl_private_key;
-    identity->AcquirePrivateKey(base::Bind(StorePrivateKey, &ssl_private_key));
-    task_runner_->RunUntilIdle();
-    return ssl_private_key;
-  }
-
   // Provides |cert_info1_| through kExtension1.
-  std::unique_ptr<net::ClientCertIdentity> ProvideDefaultCert() {
-    net::ClientCertIdentityList certs;
-    const int cert_request_id = RequestCertificatesFromExtensions(&certs);
+  void ProvideDefaultCert() {
+    const int cert_request_id = RequestCertificatesFromExtensions(nullptr);
     SetCertificateProvidedByExtension(kExtension1, cert_request_id,
                                       cert_info1_);
     task_runner_->RunUntilIdle();
-    if (certs.empty())
-      return nullptr;
-    return std::move(certs[0]);
   }
 
   // Like service_->SetCertificatesProvidedByExtension but taking a single
@@ -223,6 +201,7 @@ class CertificateProviderServiceTest : public testing::Test {
   scoped_refptr<base::TestMockTimeTaskRunner> task_runner_;
   base::ThreadTaskRunnerHandle task_runner_handle_;
   TestDelegate* test_delegate_ = nullptr;
+  net::ClientKeyStore* const client_key_store_;
   std::unique_ptr<CertificateProvider> certificate_provider_;
   std::unique_ptr<CertificateProviderService> service_;
   const certificate_provider::CertificateInfo cert_info1_;
@@ -235,7 +214,7 @@ class CertificateProviderServiceTest : public testing::Test {
 TEST_F(CertificateProviderServiceTest, GetCertificates) {
   test_delegate_->provider_extensions_.insert(kExtension2);
 
-  net::ClientCertIdentityList certs;
+  net::CertificateList certs;
   const int cert_request_id = RequestCertificatesFromExtensions(&certs);
 
   task_runner_->RunUntilIdle();
@@ -251,12 +230,13 @@ TEST_F(CertificateProviderServiceTest, GetCertificates) {
   SetCertificateProvidedByExtension(kExtension2, cert_request_id, cert_info2_);
 
   task_runner_->RunUntilIdle();
-  ASSERT_EQ(2u, certs.size());
+  EXPECT_EQ(2u, certs.size());
 
-  // Verify that the ClientCertIdentity returns key handles for the provided
-  // certs.
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[0].get()));
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[1].get()));
+  // Verify that the ClientKeyStore returns key handles for the provide certs.
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info2_.certificate));
 
   // Deregister the extensions as certificate providers. The next
   // GetCertificates call must report an empty list of certs.
@@ -369,7 +349,7 @@ TEST_F(CertificateProviderServiceTest, LookUpCertificate) {
 TEST_F(CertificateProviderServiceTest, GetCertificatesTimeout) {
   test_delegate_->provider_extensions_.insert(kExtension2);
 
-  net::ClientCertIdentityList certs;
+  net::CertificateList certs;
   const int cert_request_id = RequestCertificatesFromExtensions(&certs);
 
   certificate_provider::CertificateInfoList infos;
@@ -383,64 +363,43 @@ TEST_F(CertificateProviderServiceTest, GetCertificatesTimeout) {
   task_runner_->FastForwardUntilNoTasksRemain();
   // After the timeout, only extension1_'s certificates are returned.
   // This verifies that the timeout delay is > 0 but not how long the delay is.
-  ASSERT_EQ(1u, certs.size());
+  EXPECT_EQ(1u, certs.size());
 
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[0].get()));
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
 }
 
 TEST_F(CertificateProviderServiceTest, UnloadExtensionAfterGetCertificates) {
   test_delegate_->provider_extensions_.insert(kExtension2);
 
-  net::ClientCertIdentityList certs;
-  const int cert_request_id = RequestCertificatesFromExtensions(&certs);
+  const int cert_request_id = RequestCertificatesFromExtensions(nullptr);
 
   SetCertificateProvidedByExtension(kExtension1, cert_request_id, cert_info1_);
   SetCertificateProvidedByExtension(kExtension2, cert_request_id, cert_info2_);
   task_runner_->RunUntilIdle();
 
-  ASSERT_EQ(2u, certs.size());
-
-  // Sort the returned certs to ensure that the test results are stable.
-  std::sort(certs.begin(), certs.end(), ClientCertIdentityAlphabeticSorter);
-
   // Private key handles for both certificates must be available now.
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[0].get()));
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[1].get()));
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info2_.certificate));
 
   // Unload one of the extensions.
   service_->OnExtensionUnloaded(kExtension2);
 
   // extension1 isn't affected by the uninstall.
-  EXPECT_TRUE(FetchIdentityPrivateKey(certs[0].get()));
+  EXPECT_TRUE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
   // No key handles that were backed by the uninstalled extension must be
   // returned.
-  EXPECT_FALSE(FetchIdentityPrivateKey(certs[1].get()));
-}
-
-TEST_F(CertificateProviderServiceTest, DestroyServiceAfterGetCertificates) {
-  test_delegate_->provider_extensions_.insert(kExtension2);
-
-  net::ClientCertIdentityList certs;
-  const int cert_request_id = RequestCertificatesFromExtensions(&certs);
-
-  SetCertificateProvidedByExtension(kExtension1, cert_request_id, cert_info1_);
-  SetCertificateProvidedByExtension(kExtension2, cert_request_id, cert_info2_);
-  task_runner_->RunUntilIdle();
-
-  ASSERT_EQ(2u, certs.size());
-
-  // Destroy the service.
-  service_.reset();
-
-  // Private key handles for both certificates should return nullptr now.
-  EXPECT_FALSE(FetchIdentityPrivateKey(certs[0].get()));
-  EXPECT_FALSE(FetchIdentityPrivateKey(certs[1].get()));
+  EXPECT_FALSE(
+      client_key_store_->FetchClientCertPrivateKey(*cert_info2_.certificate));
 }
 
 TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringGetCertificates) {
   test_delegate_->provider_extensions_.insert(kExtension2);
 
-  net::ClientCertIdentityList certs;
+  net::CertificateList certs;
   const int cert_request_id = RequestCertificatesFromExtensions(&certs);
 
   SetCertificateProvidedByExtension(kExtension1, cert_request_id, cert_info1_);
@@ -456,11 +415,10 @@ TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringGetCertificates) {
 // Trying to sign data using the exposed SSLPrivateKey must cause a sign
 // request. The reply must be correctly routed back to the private key.
 TEST_F(CertificateProviderServiceTest, SignRequest) {
-  std::unique_ptr<net::ClientCertIdentity> cert(ProvideDefaultCert());
-  ASSERT_TRUE(cert);
+  ProvideDefaultCert();
 
   scoped_refptr<net::SSLPrivateKey> private_key(
-      FetchIdentityPrivateKey(cert.get()));
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
 
   ASSERT_TRUE(private_key);
   EXPECT_TRUE(IsKeyEqualToCertInfo(cert_info1_, private_key.get()));
@@ -494,11 +452,10 @@ TEST_F(CertificateProviderServiceTest, SignRequest) {
 }
 
 TEST_F(CertificateProviderServiceTest, UnloadExtensionDuringSign) {
-  std::unique_ptr<net::ClientCertIdentity> cert(ProvideDefaultCert());
-  ASSERT_TRUE(cert);
+  ProvideDefaultCert();
 
   scoped_refptr<net::SSLPrivateKey> private_key(
-      FetchIdentityPrivateKey(cert.get()));
+      client_key_store_->FetchClientCertPrivateKey(*cert_info1_.certificate));
   ASSERT_TRUE(private_key);
 
   test_delegate_->ClearAndExpectRequest(TestDelegate::RequestType::SIGN);

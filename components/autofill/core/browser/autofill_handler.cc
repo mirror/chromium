@@ -25,15 +25,11 @@ bool AutofillHandler::OnWillSubmitForm(const FormData& form,
 
 void AutofillHandler::OnTextFieldDidChange(const FormData& form,
                                            const FormFieldData& field,
-                                           const gfx::RectF& bounding_box,
                                            const TimeTicks timestamp) {
   if (!IsValidFormData(form) || !IsValidFormFieldData(field))
     return;
 
-  gfx::RectF transformed_box =
-      driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);
-
-  OnTextFieldDidChangeImpl(form, field, transformed_box, timestamp);
+  OnTextFieldDidChangeImpl(form, field, timestamp);
 }
 
 void AutofillHandler::OnQueryFormFieldAutofill(int query_id,
@@ -47,18 +43,6 @@ void AutofillHandler::OnQueryFormFieldAutofill(int query_id,
       driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);
 
   OnQueryFormFieldAutofillImpl(query_id, form, field, transformed_box);
-}
-
-void AutofillHandler::OnFocusOnFormField(const FormData& form,
-                                         const FormFieldData& field,
-                                         const gfx::RectF& bounding_box) {
-  if (!IsValidFormData(form) || !IsValidFormFieldData(field))
-    return;
-
-  gfx::RectF transformed_box =
-      driver_->TransformBoundingBoxToViewportCoordinates(bounding_box);
-
-  OnFocusOnFormFieldImpl(form, field, transformed_box);
 }
 
 void AutofillHandler::SendFormDataToRenderer(

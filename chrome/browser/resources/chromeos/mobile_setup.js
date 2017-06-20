@@ -5,7 +5,8 @@
 
 cr.define('mobile', function() {
 
-  function MobileSetup() {}
+  function MobileSetup() {
+  }
 
   cr.addSingletonGetter(MobileSetup);
 
@@ -27,12 +28,12 @@ cr.define('mobile', function() {
 
   MobileSetup.EXTENSION_PAGE_URL =
       'chrome-extension://iadeocfgjdjdmpenejdbfeaocpbikmab';
-  MobileSetup.ACTIVATION_PAGE_URL =
-      MobileSetup.EXTENSION_PAGE_URL + '/activation.html';
-  MobileSetup.PORTAL_OFFLINE_PAGE_URL =
-      MobileSetup.EXTENSION_PAGE_URL + '/portal_offline.html';
-  MobileSetup.REDIRECT_POST_PAGE_URL =
-      MobileSetup.EXTENSION_PAGE_URL + '/redirect.html';
+  MobileSetup.ACTIVATION_PAGE_URL = MobileSetup.EXTENSION_PAGE_URL +
+                                    '/activation.html';
+  MobileSetup.PORTAL_OFFLINE_PAGE_URL = MobileSetup.EXTENSION_PAGE_URL +
+                                        '/portal_offline.html';
+  MobileSetup.REDIRECT_POST_PAGE_URL = MobileSetup.EXTENSION_PAGE_URL +
+                                       '/redirect.html';
 
   MobileSetup.prototype = {
     // Mobile device information.
@@ -63,13 +64,14 @@ cr.define('mobile', function() {
       self = this;
       this.frameName_ = frame_name;
 
-      cr.ui.dialogs.BaseDialog.OK_LABEL = loadTimeData.getString('ok_button');
+      cr.ui.dialogs.BaseDialog.OK_LABEL =
+          loadTimeData.getString('ok_button');
       cr.ui.dialogs.BaseDialog.CANCEL_LABEL =
           loadTimeData.getString('cancel_button');
       this.confirm_ = new cr.ui.dialogs.ConfirmDialog(document.body);
 
       window.addEventListener('message', function(e) {
-        self.onMessageReceived_(e);
+          self.onMessageReceived_(e);
       });
 
       $('closeButton').addEventListener('click', function(e) {
@@ -159,7 +161,8 @@ cr.define('mobile', function() {
 
           $('statusHeader').textContent =
               loadTimeData.getString('connecting_header');
-          $('auxHeader').textContent = loadTimeData.getString('please_wait');
+          $('auxHeader').textContent =
+              loadTimeData.getString('please_wait');
           $('paymentForm').classList.add('hidden');
           $('finalStatus').classList.add('hidden');
           this.setCarrierPage_(MobileSetup.ACTIVATION_PAGE_URL);
@@ -176,7 +179,8 @@ cr.define('mobile', function() {
 
           $('statusHeader').textContent =
               loadTimeData.getString('activating_header');
-          $('auxHeader').textContent = loadTimeData.getString('please_wait');
+          $('auxHeader').textContent =
+              loadTimeData.getString('please_wait');
           $('paymentForm').classList.add('hidden');
           $('finalStatus').classList.add('hidden');
           this.setCarrierPage_(MobileSetup.ACTIVATION_PAGE_URL);
@@ -202,11 +206,12 @@ cr.define('mobile', function() {
           var statusHeaderText;
           var carrierPage;
           if (deviceInfo.activation_type == 'NonCellular') {
-            statusHeaderText =
-                loadTimeData.getString('portal_unreachable_header');
+            statusHeaderText = loadTimeData.getString(
+                'portal_unreachable_header');
             carrierPage = MobileSetup.PORTAL_OFFLINE_PAGE_URL;
           } else if (deviceInfo.activation_type == 'OTA') {
-            statusHeaderText = loadTimeData.getString('connecting_header');
+            statusHeaderText =
+                loadTimeData.getString('connecting_header');
             carrierPage = MobileSetup.ACTIVATION_PAGE_URL;
           }
           $('statusHeader').textContent = statusHeaderText;
@@ -247,7 +252,8 @@ cr.define('mobile', function() {
         case MobileSetup.PLAN_ACTIVATION_ERROR:
           $('statusHeader').textContent = '';
           $('auxHeader').textContent = '';
-          $('finalHeader').textContent = loadTimeData.getString('error_header');
+          $('finalHeader').textContent =
+              loadTimeData.getString('error_header');
           $('finalMessage').textContent = deviceInfo.error;
           $('systemStatus').classList.add('hidden');
           $('canvas').classList.add('hidden');
@@ -286,7 +292,7 @@ cr.define('mobile', function() {
     },
 
     sendPostFrame_: function(frameUrl) {
-      var msg = {type: 'postFrame'};
+      var msg = { type: 'postFrame' };
       $(this.frameName_).contentWindow.postMessage(msg, frameUrl);
     },
 
@@ -301,8 +307,8 @@ cr.define('mobile', function() {
           'MDN': this.deviceInfo_.MDN
         }
       };
-      $(this.frameName_)
-          .contentWindow.postMessage(msg, this.deviceInfo_.payment_url);
+      $(this.frameName_).contentWindow.postMessage(msg,
+          this.deviceInfo_.payment_url);
     }
 
   };
@@ -311,36 +317,34 @@ cr.define('mobile', function() {
     var ctx = canvas.getContext('2d');
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    var segmentCount = Math.min(12, canvas.width / 1.6);  // Number of segments
-    var rotation = 0.75;  // Counterclockwise rotation
+    var segmentCount = Math.min(12, canvas.width / 1.6); // Number of segments
+    var rotation = 0.75; // Counterclockwise rotation
 
     // Rotate canvas over time
     ctx.translate(canvas.width / 2, canvas.height / 2);
     ctx.rotate(Math.PI * 2 / (segmentCount + rotation));
     ctx.translate(-canvas.width / 2, -canvas.height / 2);
 
-    var gap = canvas.width / 24;                 // Gap between segments
-    var oRadius = canvas.width / 2;              // Outer radius
-    var iRadius = oRadius * 0.618;               // Inner radius
-    var oCircumference = Math.PI * 2 * oRadius;  // Outer circumference
-    var iCircumference = Math.PI * 2 * iRadius;  // Inner circumference
-    var oGap = gap / oCircumference;  // Gap size as fraction of  outer ring
-    var iGap = gap / iCircumference;  // Gap size as fraction of  inner ring
-    var oArc = Math.PI * 2 * (1 / segmentCount - oGap);  // Angle of outer arcs
-    var iArc = Math.PI * 2 * (1 / segmentCount - iGap);  // Angle of inner arcs
+    var gap = canvas.width / 24; // Gap between segments
+    var oRadius = canvas.width / 2; // Outer radius
+    var iRadius = oRadius * 0.618; // Inner radius
+    var oCircumference = Math.PI * 2 * oRadius; // Outer circumference
+    var iCircumference = Math.PI * 2 * iRadius; // Inner circumference
+    var oGap = gap / oCircumference; // Gap size as fraction of  outer ring
+    var iGap = gap / iCircumference; // Gap size as fraction of  inner ring
+    var oArc = Math.PI * 2 * (1 / segmentCount - oGap); // Angle of outer arcs
+    var iArc = Math.PI * 2 * (1 / segmentCount - iGap); // Angle of inner arcs
 
-    for (i = 0; i < segmentCount; i++) {  // Draw each segment
+    for (i = 0; i < segmentCount; i++) { // Draw each segment
       var opacity = Math.pow(1.0 - i / segmentCount, 3.0);
-      opacity = (0.15 + opacity * 0.8);  // Vary from 0.15 to 0.95
-      var angle = -Math.PI * 2 * i / segmentCount;
+      opacity = (0.15 + opacity * 0.8); // Vary from 0.15 to 0.95
+      var angle = - Math.PI * 2 * i / segmentCount;
 
       ctx.beginPath();
-      ctx.arc(
-          canvas.width / 2, canvas.height / 2, oRadius, angle - oArc / 2,
-          angle + oArc / 2, false);
-      ctx.arc(
-          canvas.width / 2, canvas.height / 2, iRadius, angle + iArc / 2,
-          angle - iArc / 2, true);
+      ctx.arc(canvas.width / 2, canvas.height / 2, oRadius,
+        angle - oArc / 2, angle + oArc / 2, false);
+      ctx.arc(canvas.width / 2, canvas.height / 2, iRadius,
+        angle + iArc / 2, angle - iArc / 2, true);
       ctx.closePath();
       ctx.fillStyle = 'rgba(240, 30, 29, ' + opacity + ')';
       ctx.fill();
@@ -360,12 +364,14 @@ cr.define('mobile', function() {
   };
 
   MobileSetup.loadPage = function() {
-    mobile.MobileSetup.getInstance().initialize(
-        'paymentForm', mobile.MobileSetup.ACTIVATION_PAGE_URL);
+    mobile.MobileSetup.getInstance().initialize('paymentForm',
+        mobile.MobileSetup.ACTIVATION_PAGE_URL);
   };
 
   // Export
-  return {MobileSetup: MobileSetup};
+  return {
+    MobileSetup: MobileSetup
+  };
 });
 
 document.addEventListener('DOMContentLoaded', mobile.MobileSetup.loadPage);

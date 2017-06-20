@@ -13,9 +13,6 @@
 
 namespace net {
 
-#define ENDPOINT \
-  (perspective_ == Perspective::IS_SERVER ? "Server: " : "Client: ")
-
 QuicDataReader::QuicDataReader(const char* data,
                                const size_t len,
                                Perspective perspective,
@@ -24,9 +21,7 @@ QuicDataReader::QuicDataReader(const char* data,
       len_(len),
       pos_(0),
       perspective_(perspective),
-      endianness_(endianness) {
-  QUIC_DVLOG(1) << ENDPOINT << "QuicDataReader";
-}
+      endianness_(endianness) {}
 
 bool QuicDataReader::ReadUInt8(uint8_t* result) {
   return ReadBytes(result, sizeof(*result));
@@ -142,7 +137,10 @@ bool QuicDataReader::ReadConnectionId(uint64_t* connection_id) {
   if (!ReadBytes(connection_id, sizeof(*connection_id))) {
     return false;
   }
-  *connection_id = QuicEndian::NetToHost64(*connection_id);
+
+  if (QuicUtils::IsConnectionIdWireFormatBigEndian(perspective_)) {
+    *connection_id = QuicEndian::NetToHost64(*connection_id);
+  }
 
   return true;
 }

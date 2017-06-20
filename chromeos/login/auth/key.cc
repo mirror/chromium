@@ -94,7 +94,9 @@ void Key::Transform(KeyType target_key_type, const std::string& salt) {
           crypto::SymmetricKey::DeriveKeyFromPassword(
               crypto::SymmetricKey::AES, secret_, salt, kNumIterations,
               kKeySizeInBits));
-      base::Base64Encode(key->key(), &secret_);
+      std::string raw_secret;
+      key->GetRawKey(&raw_secret);
+      base::Base64Encode(raw_secret, &secret_);
       break;
     }
     case KEY_TYPE_SALTED_SHA256:

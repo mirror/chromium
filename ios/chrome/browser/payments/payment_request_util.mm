@@ -11,7 +11,6 @@
 #include "components/autofill/core/browser/autofill_profile.h"
 #include "components/autofill/core/browser/field_types.h"
 #include "components/autofill/core/browser/personal_data_manager.h"
-#include "components/payments/core/payment_request_data_util.h"
 #include "components/payments/core/strings_util.h"
 #include "components/strings/grit/components_strings.h"
 #include "ios/chrome/browser/application_context.h"
@@ -27,10 +26,9 @@ namespace payment_request_util {
 
 NSString* GetNameLabelFromAutofillProfile(
     const autofill::AutofillProfile& profile) {
-  base::string16 label =
+  return base::SysUTF16ToNSString(
       profile.GetInfo(autofill::AutofillType(autofill::NAME_FULL),
-                      GetApplicationContext()->GetApplicationLocale());
-  return !label.empty() ? base::SysUTF16ToNSString(label) : nil;
+                      GetApplicationContext()->GetApplicationLocale()));
 }
 
 NSString* GetShippingAddressLabelFromAutofillProfile(
@@ -49,16 +47,13 @@ NSString* GetBillingAddressLabelFromAutofillProfile(
 
 NSString* GetPhoneNumberLabelFromAutofillProfile(
     const autofill::AutofillProfile& profile) {
-  base::string16 label = payments::data_util::GetFormattedPhoneNumberForDisplay(
-      profile, GetApplicationContext()->GetApplicationLocale());
+  base::string16 label = profile.GetRawInfo(autofill::PHONE_HOME_WHOLE_NUMBER);
   return !label.empty() ? base::SysUTF16ToNSString(label) : nil;
 }
 
 NSString* GetEmailLabelFromAutofillProfile(
     const autofill::AutofillProfile& profile) {
-  base::string16 label =
-      profile.GetInfo(autofill::AutofillType(autofill::EMAIL_ADDRESS),
-                      GetApplicationContext()->GetApplicationLocale());
+  base::string16 label = profile.GetRawInfo(autofill::EMAIL_ADDRESS);
   return !label.empty() ? base::SysUTF16ToNSString(label) : nil;
 }
 

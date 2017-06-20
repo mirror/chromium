@@ -40,10 +40,8 @@
 #include "core/css/properties/CSSPropertyAPIOffsetAnchor.h"
 #include "core/css/properties/CSSPropertyAPIOffsetPosition.h"
 #include "core/css/properties/CSSPropertyAlignmentUtils.h"
-#include "core/css/properties/CSSPropertyAnimationIterationCountUtils.h"
 #include "core/css/properties/CSSPropertyAnimationNameUtils.h"
 #include "core/css/properties/CSSPropertyBorderImageUtils.h"
-#include "core/css/properties/CSSPropertyBoxShadowUtils.h"
 #include "core/css/properties/CSSPropertyColumnUtils.h"
 #include "core/css/properties/CSSPropertyDescriptor.h"
 #include "core/css/properties/CSSPropertyFontUtils.h"
@@ -315,6 +313,12 @@ static CSSValue* ConsumeLocale(CSSParserTokenRange& range) {
   return ConsumeString(range);
 }
 
+static CSSValue* ConsumeAnimationIterationCount(CSSParserTokenRange& range) {
+  if (range.Peek().Id() == CSSValueInfinite)
+    return ConsumeIdent(range);
+  return ConsumeNumber(range, kValueRangeNonNegative);
+}
+
 static CSSValue* ConsumeSteps(CSSParserTokenRange& range) {
   DCHECK_EQ(range.Peek().FunctionId(), CSSValueSteps);
   CSSParserTokenRange range_copy = range;
@@ -425,8 +429,7 @@ static CSSValue* ConsumeAnimationValue(CSSPropertyID property,
       return ConsumeIdent<CSSValueNone, CSSValueForwards, CSSValueBackwards,
                           CSSValueBoth>(range);
     case CSSPropertyAnimationIterationCount:
-      return CSSPropertyAnimationIterationCountUtils::
-          ConsumeAnimationIterationCount(range);
+      return ConsumeAnimationIterationCount(range);
     case CSSPropertyAnimationName:
       return CSSPropertyAnimationNameUtils::ConsumeAnimationName(
           range, context, use_legacy_parsing);
@@ -499,6 +502,72 @@ bool CSSPropertyParser::ConsumeAnimationShorthand(
   return range_.AtEnd();
 }
 
+static CSSShadowValue* ParseSingleShadow(CSSParserTokenRange& range,
+                                         CSSParserMode css_parser_mode,
+                                         bool allow_inset_and_spread) {
+  CSSIdentifierValue* style = nullptr;
+  CSSValue* color = nullptr;
+
+  if (range.AtEnd())
+    return nullptr;
+  if (range.Peek().Id() == CSSValueInset) {
+    if (!allow_inset_and_spread)
+      return nullptr;
+    style = ConsumeIdent(range);
+  }
+  color = ConsumeColor(range, css_parser_mode);
+
+  CSSPrimitiveValue* horizontal_offset =
+      ConsumeLength(range, css_parser_mode, kValueRangeAll);
+  if (!horizontal_offset)
+    return nullptr;
+
+  CSSPrimitiveValue* vertical_offset =
+      ConsumeLength(range, css_parser_mode, kValueRangeAll);
+  if (!vertical_offset)
+    return nullptr;
+
+  CSSPrimitiveValue* blur_radius =
+      ConsumeLength(range, css_parser_mode, kValueRangeAll);
+  CSSPrimitiveValue* spread_distance = nullptr;
+  if (blur_radius) {
+    // Blur radius must be non-negative.
+    if (blur_radius->GetDoubleValue() < 0)
+      return nullptr;
+    if (allow_inset_and_spread)
+      spread_distance = ConsumeLength(range, css_parser_mode, kValueRangeAll);
+  }
+
+  if (!range.AtEnd()) {
+    if (!color)
+      color = ConsumeColor(range, css_parser_mode);
+    if (range.Peek().Id() == CSSValueInset) {
+      if (!allow_inset_and_spread || style)
+        return nullptr;
+      style = ConsumeIdent(range);
+    }
+  }
+  return CSSShadowValue::Create(horizontal_offset, vertical_offset, blur_radius,
+                                spread_distance, style, color);
+}
+
+static CSSValue* ConsumeShadow(CSSParserTokenRange& range,
+                               CSSParserMode css_parser_mode,
+                               bool allow_inset_and_spread) {
+  if (range.Peek().Id() == CSSValueNone)
+    return ConsumeIdent(range);
+
+  CSSValueList* shadow_value_list = CSSValueList::CreateCommaSeparated();
+  do {
+    if (CSSShadowValue* shadow_value =
+            ParseSingleShadow(range, css_parser_mode, allow_inset_and_spread))
+      shadow_value_list->Append(*shadow_value);
+    else
+      return nullptr;
+  } while (ConsumeCommaIncludingWhitespace(range));
+  return shadow_value_list;
+}
+
 static CSSFunctionValue* ConsumeFilterFunction(
     CSSParserTokenRange& range,
     const CSSParserContext* context) {
@@ -510,8 +579,7 @@ static CSSFunctionValue* ConsumeFilterFunction(
   CSSValue* parsed_value = nullptr;
 
   if (filter_type == CSSValueDropShadow) {
-    parsed_value = CSSPropertyBoxShadowUtils::ParseSingleShadow(
-        args, context->Mode(), AllowInsetAndSpread::kForbid);
+    parsed_value = ParseSingleShadow(args, context->Mode(), false);
   } else {
     if (args.AtEnd()) {
       context->Count(WebFeature::kCSSFilterFunctionNoArguments);
@@ -1450,9 +1518,7 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
                        CSSValueBoth>,
           range_);
     case CSSPropertyAnimationIterationCount:
-      return ConsumeCommaSeparatedList(CSSPropertyAnimationIterationCountUtils::
-                                           ConsumeAnimationIterationCount,
-                                       range_);
+      return ConsumeCommaSeparatedList(ConsumeAnimationIterationCount, range_);
     case CSSPropertyAnimationPlayState:
       return ConsumeCommaSeparatedList(
           ConsumeIdent<CSSValueRunning, CSSValuePaused>, range_);
@@ -1497,11 +1563,9 @@ const CSSValue* CSSPropertyParser::ParseSingleValue(
           range_, context_->Mode(), unitless);
     }
     case CSSPropertyTextShadow:
-      return CSSPropertyBoxShadowUtils::ConsumeShadow(
-          range_, context_->Mode(), AllowInsetAndSpread::kForbid);
+      return ConsumeShadow(range_, context_->Mode(), false);
     case CSSPropertyBoxShadow:
-      return CSSPropertyBoxShadowUtils::ConsumeShadow(
-          range_, context_->Mode(), AllowInsetAndSpread::kAllow);
+      return ConsumeShadow(range_, context_->Mode(), true);
     case CSSPropertyFilter:
     case CSSPropertyBackdropFilter:
       return ConsumeFilter(range_, context_);

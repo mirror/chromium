@@ -47,17 +47,12 @@ class AutofillHandlerProxy : public AutofillHandler {
 
   void OnTextFieldDidChangeImpl(const FormData& form,
                                 const FormFieldData& field,
-                                const gfx::RectF& bounding_box,
                                 const base::TimeTicks timestamp) override;
 
   void OnQueryFormFieldAutofillImpl(int query_id,
                                     const FormData& form,
                                     const FormFieldData& field,
                                     const gfx::RectF& bounding_box) override;
-
-  void OnFocusOnFormFieldImpl(const FormData& form,
-                              const FormFieldData& field,
-                              const gfx::RectF& bounding_box) override;
 
  private:
   AutofillProvider* provider_;

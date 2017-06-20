@@ -4,7 +4,6 @@
 
 #include <map>
 #include <memory>
-#include <sstream>
 #include <string>
 
 #include "base/bind.h"
@@ -545,10 +544,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, SubFrameActivation) {
-  std::ostringstream message_filter;
-  message_filter << kDisallowSubframeConsoleMessage << "*";
-  content::ConsoleObserverDelegate console_observer(web_contents(),
-                                                    message_filter.str());
+  content::ConsoleObserverDelegate console_observer(
+      web_contents(), kDisallowSubframeConsoleMessage + "*");
   web_contents()->SetDelegate(&console_observer);
 
   GURL url(GetTestUrl(kTestFrameSetPath));
@@ -567,17 +564,15 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest, SubFrameActivation) {
                            1);
 
   // Console message for subframe blocking should be displayed.
-  std::ostringstream result;
-  result << kDisallowSubframeConsoleMessage << "*included_script.js*";
-  EXPECT_TRUE(base::MatchPattern(console_observer.message(), result.str()));
+  EXPECT_TRUE(base::MatchPattern(
+      console_observer.message(),
+      kDisallowSubframeConsoleMessage + "*included_script.js*"));
 }
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        ActivationDisabled_NoConsoleMessage) {
-  std::ostringstream message_filter;
-  message_filter << kDisallowSubframeConsoleMessage << "*";
-  content::ConsoleObserverDelegate console_observer(web_contents(),
-                                                    message_filter.str());
+  content::ConsoleObserverDelegate console_observer(
+      web_contents(), kDisallowSubframeConsoleMessage + "*");
   web_contents()->SetDelegate(&console_observer);
 
   Configuration config(
@@ -599,10 +594,8 @@ IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
 
 IN_PROC_BROWSER_TEST_F(SubresourceFilterBrowserTest,
                        ActivationDryRun_NoConsoleMessage) {
-  std::ostringstream message_filter;
-  message_filter << kDisallowSubframeConsoleMessage << "*";
-  content::ConsoleObserverDelegate console_observer(web_contents(),
-                                                    message_filter.str());
+  content::ConsoleObserverDelegate console_observer(
+      web_contents(), kDisallowSubframeConsoleMessage + "*");
   web_contents()->SetDelegate(&console_observer);
 
   Configuration config(

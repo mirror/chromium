@@ -32,6 +32,7 @@
 #include "ash/wm/window_cycle_event_filter_aura.h"
 #include "ash/wm/window_util.h"
 #include "ash/wm/workspace/workspace_event_handler_aura.h"
+#include "ash/wm_display_observer.h"
 #include "base/memory/ptr_util.h"
 #include "ui/aura/env.h"
 #include "ui/display/manager/chromeos/default_touch_transform_setter.h"
@@ -59,6 +60,9 @@ ShellPortClassic* ShellPortClassic::Get() {
 }
 
 void ShellPortClassic::Shutdown() {
+  if (added_display_observer_)
+    Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+
   pointer_watcher_adapter_.reset();
 
   ShellPort::Shutdown();
@@ -194,6 +198,18 @@ std::unique_ptr<KeyEventWatcher> ShellPortClassic::CreateKeyEventWatcher() {
   return base::MakeUnique<KeyEventWatcherAura>();
 }
 
+void ShellPortClassic::AddDisplayObserver(WmDisplayObserver* observer) {
+  if (!added_display_observer_) {
+    added_display_observer_ = true;
+    Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  }
+  display_observers_.AddObserver(observer);
+}
+
+void ShellPortClassic::RemoveDisplayObserver(WmDisplayObserver* observer) {
+  display_observers_.RemoveObserver(observer);
+}
+
 void ShellPortClassic::AddPointerWatcher(
     views::PointerWatcher* watcher,
     views::PointerWatcherEventTypes events) {
@@ -259,6 +275,16 @@ ShellPortClassic::CreateAcceleratorController() {
       base::MakeUnique<AcceleratorControllerDelegateAura>();
   return base::MakeUnique<AcceleratorController>(
       accelerator_controller_delegate_.get(), nullptr);
+}
+
+void ShellPortClassic::OnDisplayConfigurationChanging() {
+  for (auto& observer : display_observers_)
+    observer.OnDisplayConfigurationChanging();
+}
+
+void ShellPortClassic::OnDisplayConfigurationChanged() {
+  for (auto& observer : display_observers_)
+    observer.OnDisplayConfigurationChanged();
 }
 
 }  // namespace ash

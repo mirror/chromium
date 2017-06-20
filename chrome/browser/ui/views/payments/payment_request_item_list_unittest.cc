@@ -31,8 +31,7 @@ class TestListItem : public PaymentRequestItemList::Item {
   }
 
  private:
-  std::unique_ptr<views::View> CreateContentView(
-      base::string16* accessible_content) override {
+  std::unique_ptr<views::View> CreateContentView() override {
     return base::MakeUnique<views::View>();
   }
 

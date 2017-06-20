@@ -27,7 +27,6 @@
 #include "net/cert/x509_certificate.h"
 #include "net/cert/x509_util_mac.h"
 #include "net/ssl/ssl_cert_request_info.h"
-#include "net/ssl/ssl_platform_key_mac.h"
 #include "ui/base/cocoa/window_size_constants.h"
 #include "ui/base/l10n/l10n_util_mac.h"
 
@@ -37,7 +36,7 @@ using content::BrowserThread;
 // A system-private interface that dismisses a panel whose sheet was started by
 // -beginSheetForWindow:modalDelegate:didEndSelector:contextInfo:identities:message:
 // as though the user clicked the button identified by returnCode. Verified
-// present in 10.5 through 10.12.
+// present in 10.5 through 10.8.
 - (void)_dismissWithCode:(NSInteger)code;
 @end
 
@@ -82,7 +81,7 @@ namespace chrome {
 void ShowSSLClientCertificateSelector(
     content::WebContents* contents,
     net::SSLCertRequestInfo* cert_request_info,
-    net::ClientCertIdentityList client_certs,
+    net::CertificateList client_certs,
     std::unique_ptr<content::ClientCertificateDelegate> delegate) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
 
@@ -178,13 +177,13 @@ void ClearTableViewDataSourcesIfNeeded(NSWindow*) {}
 - (void)sheetDidEnd:(NSWindow*)sheet
          returnCode:(NSInteger)returnCode
             context:(void*)context {
-  net::ClientCertIdentity* cert = nullptr;
+  net::X509Certificate* cert = NULL;
   if (returnCode == NSFileHandlingPanelOKButton) {
-    CFRange range = CFRangeMake(0, CFArrayGetCount(sec_identities_));
+    CFRange range = CFRangeMake(0, CFArrayGetCount(identities_));
     CFIndex index =
-        CFArrayGetFirstIndexOfValue(sec_identities_, range, [panel_ identity]);
+        CFArrayGetFirstIndexOfValue(identities_, range, [panel_ identity]);
     if (index != -1)
-      cert = cert_identities_[index].get();
+      cert = certificates_[index].get();
     else
       NOTREACHED();
   }
@@ -198,32 +197,30 @@ void ClearTableViewDataSourcesIfNeeded(NSWindow*) {}
     // certificate. Otherwise, tell the backend which identity (or none) the
     // user selected.
     userResponded_ = YES;
-
-    if (cert) {
-      observer_->CertificateSelected(
-          cert->certificate(),
-          CreateSSLPrivateKeyForSecIdentity(cert->certificate(),
-                                            cert->sec_identity_ref())
-              .get());
-    } else {
-      observer_->CertificateSelected(nullptr, nullptr);
-    }
+    observer_->CertificateSelected(cert);
 
     constrainedWindow_->CloseWebContentsModalDialog();
   }
 }
 
 - (void)displayForWebContents:(content::WebContents*)webContents
-                  clientCerts:(net::ClientCertIdentityList)inputClientCerts {
-  cert_identities_ = std::move(inputClientCerts);
+                  clientCerts:(net::CertificateList)inputClientCerts {
   // Create an array of CFIdentityRefs for the certificates:
-  size_t numCerts = cert_identities_.size();
-  sec_identities_.reset(CFArrayCreateMutable(kCFAllocatorDefault, numCerts,
-                                             &kCFTypeArrayCallBacks));
+  size_t numCerts = inputClientCerts.size();
+  identities_.reset(CFArrayCreateMutable(
+      kCFAllocatorDefault, numCerts, &kCFTypeArrayCallBacks));
   for (size_t i = 0; i < numCerts; ++i) {
-    DCHECK(cert_identities_[i]->sec_identity_ref());
-    CFArrayAppendValue(sec_identities_,
-                       cert_identities_[i]->sec_identity_ref());
+    base::ScopedCFTypeRef<SecCertificateRef> cert(
+        net::x509_util::CreateSecCertificateFromX509Certificate(
+            inputClientCerts[i].get()));
+    if (!cert)
+      continue;
+    SecIdentityRef identity;
+    if (SecIdentityCreateWithCertificate(NULL, cert, &identity) == noErr) {
+      CFArrayAppendValue(identities_, identity);
+      CFRelease(identity);
+      certificates_.push_back(inputClientCerts[i]);
+    }
   }
 
   // Get the message to display:
@@ -268,7 +265,7 @@ void ClearTableViewDataSourcesIfNeeded(NSWindow*) {}
                 modalDelegate:self
                didEndSelector:@selector(sheetDidEnd:returnCode:context:)
                   contextInfo:NULL
-                   identities:base::mac::CFToNSCast(sec_identities_)
+                   identities:base::mac::CFToNSCast(identities_)
                       message:title];
 }
 

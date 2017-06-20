@@ -343,13 +343,13 @@ TEST_F(MessagePipeTest, DISABLED_DataPipeConsumerHandlePingPong) {
     MojoClose(p);
   }
 
-  RunTestClient("HandlePingPong", [&](MojoHandle h) {
+  RUN_CHILD_ON_PIPE(HandlePingPong, h)
     for (size_t i = 0; i < kPingPongIterations; i++) {
       WriteMessageWithHandles(h, "", c, kPingPongHandlesPerIteration);
       ReadMessageWithHandles(h, c, kPingPongHandlesPerIteration);
     }
     WriteMessage(h, "quit", 4);
-  });
+  END_CHILD()
   for (size_t i = 0; i < kPingPongHandlesPerIteration; ++i)
     MojoClose(c[i]);
 }
@@ -362,29 +362,29 @@ TEST_F(MessagePipeTest, DISABLED_DataPipeProducerHandlePingPong) {
     MojoClose(c);
   }
 
-  RunTestClient("HandlePingPong", [&](MojoHandle h) {
+  RUN_CHILD_ON_PIPE(HandlePingPong, h)
     for (size_t i = 0; i < kPingPongIterations; i++) {
       WriteMessageWithHandles(h, "", p, kPingPongHandlesPerIteration);
       ReadMessageWithHandles(h, p, kPingPongHandlesPerIteration);
     }
     WriteMessage(h, "quit", 4);
-  });
+  END_CHILD()
   for (size_t i = 0; i < kPingPongHandlesPerIteration; ++i)
     MojoClose(p[i]);
 }
 
 TEST_F(MessagePipeTest, SharedBufferHandlePingPong) {
   MojoHandle buffers[kPingPongHandlesPerIteration];
-  for (size_t i = 0; i < kPingPongHandlesPerIteration; ++i)
+  for (size_t i = 0; i <kPingPongHandlesPerIteration; ++i)
     EXPECT_EQ(MOJO_RESULT_OK, MojoCreateSharedBuffer(nullptr, 1, &buffers[i]));
 
-  RunTestClient("HandlePingPong", [&](MojoHandle h) {
+  RUN_CHILD_ON_PIPE(HandlePingPong, h)
     for (size_t i = 0; i < kPingPongIterations; i++) {
       WriteMessageWithHandles(h, "", buffers, kPingPongHandlesPerIteration);
       ReadMessageWithHandles(h, buffers, kPingPongHandlesPerIteration);
     }
     WriteMessage(h, "quit", 4);
-  });
+  END_CHILD()
   for (size_t i = 0; i < kPingPongHandlesPerIteration; ++i)
     MojoClose(buffers[i]);
 }

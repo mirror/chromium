@@ -208,18 +208,18 @@ class APP_LIST_EXPORT SearchResult {
   bool mouse_is_in_view_ = false;
 
   std::string id_;
-  double relevance_ = 0;
-  DisplayType display_type_ = DISPLAY_LIST;
+  double relevance_;
+  DisplayType display_type_;
 
   // The Manhattan distance from the origin of all search results to this
   // result. This is logged for UMA.
-  int distance_from_origin_ = -1;
+  int distance_from_origin_;
 
   Actions actions_;
-  bool voice_result_ = false;
+  bool voice_result_;
 
-  bool is_installing_ = false;
-  int percent_downloaded_ = 0;
+  bool is_installing_;
+  int percent_downloaded_;
 
   base::ObserverList<SearchResultObserver> observers_;
 

@@ -56,13 +56,13 @@ class ClientCertStoreChromeOS : public net::ClientCertStore {
  private:
   void GotAdditionalCerts(const net::SSLCertRequestInfo* request,
                           const ClientCertListCallback& callback,
-                          net::ClientCertIdentityList additional_certs);
+                          const net::CertificateList& additional_certs);
 
-  net::ClientCertIdentityList GetAndFilterCertsOnWorkerThread(
-      scoped_refptr<crypto::CryptoModuleBlockingPasswordDelegate>
+  net::CertificateList GetAndFilterCertsOnWorkerThread(
+      std::unique_ptr<crypto::CryptoModuleBlockingPasswordDelegate>
           password_delegate,
       const net::SSLCertRequestInfo* request,
-      net::ClientCertIdentityList additional_certs);
+      const net::CertificateList& additional_certs);
 
   std::unique_ptr<CertificateProvider> cert_provider_;
   std::unique_ptr<CertFilter> cert_filter_;

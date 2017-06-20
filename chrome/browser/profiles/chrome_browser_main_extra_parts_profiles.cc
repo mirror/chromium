@@ -36,6 +36,7 @@
 #include "chrome/browser/notifications/extension_welcome_notification_factory.h"
 #include "chrome/browser/notifications/notifier_state_tracker_factory.h"
 #include "chrome/browser/ntp_snippets/content_suggestions_service_factory.h"
+#include "chrome/browser/password_manager/password_manager_setting_migrator_service_factory.h"
 #include "chrome/browser/password_manager/password_store_factory.h"
 #include "chrome/browser/plugins/plugin_prefs_factory.h"
 #include "chrome/browser/policy/cloud/policy_header_service_factory.h"
@@ -118,9 +119,9 @@
 #endif
 
 #if defined(OS_CHROMEOS)
+#include "chrome/browser/chromeos/printer_detector/usb_printer_detector_factory.h"
 #include "chrome/browser/chromeos/printing/cups_print_job_manager_factory.h"
 #include "chrome/browser/chromeos/printing/printers_manager_factory.h"
-#include "chrome/browser/chromeos/printing/usb_printer_detector_factory.h"
 #include "chrome/browser/chromeos/tether/tether_service_factory.h"
 #include "chrome/browser/extensions/api/platform_keys/verify_trust_api.h"
 #endif
@@ -284,6 +285,7 @@ EnsureBrowserContextKeyedServiceFactoriesBuilt() {
 #endif
   ContentSuggestionsServiceFactory::GetInstance();
   PasswordStoreFactory::GetInstance();
+  PasswordManagerSettingMigratorServiceFactory::GetInstance();
 #if !defined(OS_ANDROID)
   PinnedTabServiceFactory::GetInstance();
   ThemeServiceFactory::GetInstance();

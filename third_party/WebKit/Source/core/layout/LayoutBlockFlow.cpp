@@ -4290,8 +4290,14 @@ bool LayoutBlockFlow::CreatesNewFormattingContext() const {
     return true;
   }
 
-  if (IsRenderedLegend())
+  if (IsLegend()) {
+    // This is wrong; see crbug.com/727378 . It may be that our current
+    // implementation requires the rendered legend inside a FIELDSET to create a
+    // new formatting context. That should probably be fixed too, but more
+    // importantly: We should never create a new formatting context for LEGEND
+    // elements that aren't associated with a FIELDSET.
     return true;
+  }
 
   if (IsTextControl()) {
     // INPUT and other replaced elements rendered by Blink itself should be

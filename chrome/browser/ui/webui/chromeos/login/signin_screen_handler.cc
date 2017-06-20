@@ -11,7 +11,6 @@
 
 #include "ash/public/interfaces/constants.mojom.h"
 #include "ash/public/interfaces/tray_action.mojom.h"
-#include "ash/shelf/shelf_constants.h"
 #include "ash/shell.h"
 #include "ash/system/devicetype_utils.h"
 #include "ash/wm/lock_state_controller.h"
@@ -53,6 +52,7 @@
 #include "chrome/browser/chromeos/login/ui/login_feedback.h"
 #include "chrome/browser/chromeos/login/ui/webui_login_display.h"
 #include "chrome/browser/chromeos/login/users/multi_profile_user_controller.h"
+#include "chrome/browser/chromeos/login/users/wallpaper/wallpaper_manager.h"
 #include "chrome/browser/chromeos/login/wizard_controller.h"
 #include "chrome/browser/chromeos/policy/browser_policy_connector_chromeos.h"
 #include "chrome/browser/chromeos/policy/device_local_account.h"
@@ -102,7 +102,6 @@
 #include "ui/base/ime/chromeos/input_method_manager.h"
 #include "ui/base/ime/chromeos/input_method_util.h"
 #include "ui/base/webui/web_ui_util.h"
-#include "ui/gfx/color_utils.h"
 
 namespace {
 
@@ -127,11 +126,6 @@ const char kSourceAccountPicker[] = "account-picker";
 const char kNoLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.NONE";
 const char kBackgroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.BACKGROUND";
 const char kForegroundLockScreenApps[] = "LOCK_SCREEN_APPS_STATE.FOREGROUND";
-
-// The alpha value for the signin screen background.
-// TODO(crbug.com/732566): Move all constants related to views-based signin
-// screen to a separate file.
-constexpr int kLoginTranslucentAlpha = 76;
 
 class CallOnReturn {
  public:
@@ -287,8 +281,6 @@ SigninScreenHandler::SigninScreenHandler(
       lock_screen_apps::StateController::IsEnabled()) {
     lock_screen_apps_observer_.Add(lock_screen_apps::StateController::Get());
   }
-  if (WallpaperManager::HasInstance())
-    WallpaperManager::Get()->AddObserver(this);
 }
 
 SigninScreenHandler::~SigninScreenHandler() {
@@ -308,8 +300,6 @@ SigninScreenHandler::~SigninScreenHandler() {
   network_state_informer_->RemoveObserver(this);
   proximity_auth::ScreenlockBridge::Get()->SetLockHandler(nullptr);
   proximity_auth::ScreenlockBridge::Get()->SetFocusedUser(EmptyAccountId());
-  if (WallpaperManager::HasInstance())
-    WallpaperManager::Get()->RemoveObserver(this);
 }
 
 void SigninScreenHandler::DeclareLocalizedValues(
@@ -866,22 +856,6 @@ void SigninScreenHandler::ReloadGaia(bool force_reload) {
   gaia_screen_handler_->ReloadGaia(force_reload);
 }
 
-void SigninScreenHandler::SetSigninScreenColors(SkColor dark_muted_color) {
-  // The dark muted color should have 100% opacity.
-  dark_muted_color = SkColorSetA(dark_muted_color, 0xFF);
-  SkColor base_color = color_utils::GetResultingPaintColor(
-      SkColorSetA(ash::kShelfDefaultBaseColor,
-                  ash::kShelfTranslucentColorDarkenAlpha),
-      dark_muted_color);
-  SkColor background_color =
-      SkColorSetA(base_color, ash::kShelfTranslucentAlpha);
-  SkColor scroll_color = SkColorSetA(base_color, kLoginTranslucentAlpha);
-  CallJS("login.AccountPickerScreen.setOverlayColors",
-         color_utils::SkColorToRgbaString(dark_muted_color),
-         color_utils::SkColorToRgbaString(scroll_color),
-         color_utils::SkColorToRgbaString(background_color));
-}
-
 void SigninScreenHandler::Initialize() {
   // Preload PIN keyboard if any of the users can authenticate via PIN.
   if (user_manager::UserManager::IsInitialized()) {
@@ -920,14 +894,6 @@ void SigninScreenHandler::OnCurrentScreenChanged(OobeScreen current_screen,
     // Restore active IME state if returning to user pod row screen.
     input_method::InputMethodManager::Get()->SetState(ime_state_);
   }
-}
-
-void SigninScreenHandler::OnWallpaperColorsChanged() {
-  base::Optional<SkColor> color = WallpaperManager::Get()->prominent_color();
-  // If color extraction fails, use transparent as default.
-  if (!color.has_value())
-    color = SK_ColorTRANSPARENT;
-  SetSigninScreenColors(color.value());
 }
 
 void SigninScreenHandler::ClearAndEnablePassword() {

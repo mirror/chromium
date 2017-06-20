@@ -21,7 +21,7 @@ class UIModelWorker : public ModelSafeWorker {
 
   // ModelSafeWorker implementation.
   ModelSafeGroup GetModelSafeGroup() override;
-  bool IsOnModelSequence() override;
+  bool IsOnModelThread() override;
 
  private:
   ~UIModelWorker() override;

@@ -53,12 +53,12 @@ class LayoutSVGInlineText final : public LayoutText {
   // round and does a better job than enclosingIntRect.
   FloatRect FloatLinesBoundingBox() const;
 
-  RefPtr<StringImpl> OriginalText() const override;
+  PassRefPtr<StringImpl> OriginalText() const override;
 
   const char* GetName() const override { return "LayoutSVGInlineText"; }
 
  private:
-  void SetTextInternal(RefPtr<StringImpl>) override;
+  void SetTextInternal(PassRefPtr<StringImpl>) override;
   void StyleDidChange(StyleDifference, const ComputedStyle*) override;
 
   void AddMetricsFromRun(const TextRun&, bool& last_character_was_white_space);

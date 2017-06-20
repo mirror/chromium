@@ -39,7 +39,6 @@ class APP_LIST_EXPORT SearchResultTileItemView
 
   // Overridden from SearchResultObserver:
   void OnIconChanged() override;
-  void OnBadgeIconChanged() override;
   void OnResultDestroying() override;
 
   // views::ContextMenuController overrides:

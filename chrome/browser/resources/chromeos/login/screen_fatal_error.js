@@ -6,9 +6,10 @@
  * @fileoverview A simple message box screen implementation.
  */
 
-login.createScreen('FatalErrorScreen', 'fatal-error', function() {
-  return {
-    EXTERNAL_API: ['show'],
+login.createScreen('FatalErrorScreen', 'fatal-error', function() { return {
+    EXTERNAL_API: [
+      'show'
+    ],
 
     /**
      * Callback to run when the screen is dismissed.
@@ -24,8 +25,8 @@ login.createScreen('FatalErrorScreen', 'fatal-error', function() {
 
     /** @override */
     decorate: function() {
-      $('fatal-error-card')
-          .addEventListener('buttonclick', this.onDismiss_.bind(this));
+      $('fatal-error-card').addEventListener(
+          'buttonclick', this.onDismiss_.bind(this));
     },
 
     /** @override */

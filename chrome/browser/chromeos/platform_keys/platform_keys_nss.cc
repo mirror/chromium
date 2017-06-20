@@ -546,17 +546,11 @@ void SignRSAWithDB(std::unique_ptr<SignRSAState> state,
 // SelectCertificatesOnIOThread().
 void DidSelectCertificatesOnIOThread(
     std::unique_ptr<SelectCertificatesState> state,
-    net::ClientCertIdentityList identities) {
+    net::CertificateList certs) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  // Convert the ClientCertIdentityList to a CertificateList since returning
-  // ClientCertIdentities would require changing the platformKeys extension
-  // api. This assumes that the necessary keys can be found later with
-  // crypto::FindNSSKeyFromPublicKeyInfo.
-  std::unique_ptr<net::CertificateList> certs =
-      base::MakeUnique<net::CertificateList>();
-  for (const std::unique_ptr<net::ClientCertIdentity>& identity : identities)
-    certs->push_back(identity->certificate());
-  state->CallBack(FROM_HERE, std::move(certs), std::string() /* no error */);
+  state->CallBack(FROM_HERE,
+                  base::MakeUnique<net::CertificateList>(std::move(certs)),
+                  std::string() /* no error */);
 }
 
 // Continues selecting certificates on the IO thread. Used by

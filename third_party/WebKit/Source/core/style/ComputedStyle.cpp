@@ -988,43 +988,42 @@ void ComputedStyle::ApplyMotionPathTransform(
     float origin_y,
     const FloatRect& bounding_box,
     TransformationMatrix& transform) const {
+  const StyleMotionData& motion_data =
+      rare_non_inherited_data_->transform_data_->motion_;
   // TODO(ericwilligers): crbug.com/638055 Apply offset-position.
-  if (!OffsetPath()) {
+  if (!motion_data.path_) {
     return;
   }
   const LengthPoint& position = OffsetPosition();
   const LengthPoint& anchor = OffsetAnchor();
-  const Length& distance = OffsetDistance();
-  const BasicShape* path = OffsetPath();
-  const StyleOffsetRotation& rotate = OffsetRotate();
 
   FloatPoint point;
   float angle;
-  if (path->GetType() == BasicShape::kStyleRayType) {
+  if (motion_data.path_->GetType() == BasicShape::kStyleRayType) {
     // TODO(ericwilligers): crbug.com/641245 Support <size> for ray paths.
-    float float_distance = FloatValueForLength(distance, 0);
+    float distance = FloatValueForLength(motion_data.distance_, 0);
 
-    angle = ToStyleRay(*path).Angle() - 90;
-    point.SetX(float_distance * cos(deg2rad(angle)));
-    point.SetY(float_distance * sin(deg2rad(angle)));
+    angle = ToStyleRay(*motion_data.path_).Angle() - 90;
+    point.SetX(distance * cos(deg2rad(angle)));
+    point.SetY(distance * sin(deg2rad(angle)));
   } else {
-    const StylePath& motion_path = ToStylePath(*path);
+    const StylePath& motion_path = ToStylePath(*motion_data.path_);
     float path_length = motion_path.length();
-    float float_distance = FloatValueForLength(distance, path_length);
+    float distance = FloatValueForLength(motion_data.distance_, path_length);
     float computed_distance;
     if (motion_path.IsClosed() && path_length > 0) {
-      computed_distance = fmod(float_distance, path_length);
+      computed_distance = fmod(distance, path_length);
       if (computed_distance < 0)
         computed_distance += path_length;
     } else {
-      computed_distance = clampTo<float>(float_distance, 0, path_length);
+      computed_distance = clampTo<float>(distance, 0, path_length);
     }
 
     motion_path.GetPath().PointAndNormalAtLength(computed_distance, point,
                                                  angle);
   }
 
-  if (rotate.type == kOffsetRotationFixed)
+  if (motion_data.rotation_.type == kOffsetRotationFixed)
     angle = 0;
 
   float origin_shift_x = 0;
@@ -1043,7 +1042,7 @@ void ComputedStyle::ApplyMotionPathTransform(
 
   transform.Translate(point.X() - origin_x + origin_shift_x,
                       point.Y() - origin_y + origin_shift_y);
-  transform.Rotate(angle + rotate.angle);
+  transform.Rotate(angle + motion_data.rotation_.angle);
 
   if (position.X() != Length(kAuto) || anchor.X() != Length(kAuto))
     // Shift the origin back to transform-origin.
@@ -2044,7 +2043,7 @@ void ComputedStyle::SetMarginEnd(const Length& margin) {
 }
 
 void ComputedStyle::SetOffsetPath(RefPtr<BasicShape> path) {
-  rare_non_inherited_data_.Access()->transform_data_.Access()->offset_path_ =
+  rare_non_inherited_data_.Access()->transform_data_.Access()->motion_.path_ =
       std::move(path);
 }
 

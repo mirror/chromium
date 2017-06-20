@@ -29,7 +29,7 @@ ModelSafeGroup FakeModelWorker::GetModelSafeGroup() {
   return group_;
 }
 
-bool FakeModelWorker::IsOnModelSequence() {
+bool FakeModelWorker::IsOnModelThread() {
   return thread_checker_.CalledOnValidThread();
 }
 

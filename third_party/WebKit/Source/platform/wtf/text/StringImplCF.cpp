@@ -22,6 +22,7 @@
 
 #if OS(MACOSX)
 
+#include "platform/wtf/PassRefPtr.h"
 #include "platform/wtf/RetainPtr.h"
 #include "platform/wtf/Threading.h"
 #include "platform/wtf/allocator/Partitions.h"

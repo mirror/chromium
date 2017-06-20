@@ -681,6 +681,8 @@ void BlinkTestController::OnTestFinished() {
   test_phase_ = CLEAN_UP;
   if (!printer_->output_finished())
     printer_->PrintImageFooter();
+  RenderViewHost* render_view_host =
+      main_window_->web_contents()->GetRenderViewHost();
   main_window_->web_contents()->ExitFullscreen(/*will_cause_resize=*/false);
 
   ShellBrowserContext* browser_context =
@@ -688,14 +690,10 @@ void BlinkTestController::OnTestFinished() {
   StoragePartition* storage_partition =
       BrowserContext::GetStoragePartition(browser_context, nullptr);
   storage_partition->GetServiceWorkerContext()->ClearAllServiceWorkersForTest(
-      base::Bind(&BlinkTestController::OnAllServiceWorkersCleared,
-                 base::Unretained(this)));
+      base::Bind(base::IgnoreResult(&BlinkTestController::Send),
+                 base::Unretained(this),
+                 new ShellViewMsg_Reset(render_view_host->GetRoutingID())));
   storage_partition->ClearBluetoothAllowedDevicesMapForTesting();
-}
-
-void BlinkTestController::OnAllServiceWorkersCleared() {
-  Send(new ShellViewMsg_Reset(
-      main_window_->web_contents()->GetRenderViewHost()->GetRoutingID()));
 }
 
 void BlinkTestController::OnImageDump(const std::string& actual_pixel_hash,

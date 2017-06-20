@@ -6,10 +6,13 @@
  * @fileoverview Oobe Terms of Service screen implementation.
  */
 
-login.createScreen('TermsOfServiceScreen', 'terms-of-service', function() {
-  return {
-    EXTERNAL_API:
-        ['setDomain', 'setTermsOfServiceLoadError', 'setTermsOfService'],
+login.createScreen('TermsOfServiceScreen', 'terms-of-service',
+  function() { return {
+    EXTERNAL_API: [
+      'setDomain',
+      'setTermsOfServiceLoadError',
+      'setTermsOfService'
+    ],
 
     /**
      * Updates headings on the screen to indicate that the Terms of Service
@@ -105,3 +108,4 @@ login.createScreen('TermsOfServiceScreen', 'terms-of-service', function() {
     }
   };
 });
+

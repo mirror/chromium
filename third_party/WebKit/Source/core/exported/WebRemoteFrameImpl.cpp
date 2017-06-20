@@ -133,6 +133,19 @@ WebPerformance WebRemoteFrameImpl::Performance() const {
   return WebPerformance();
 }
 
+void WebRemoteFrameImpl::Reload(WebFrameLoadType) {
+  NOTREACHED();
+}
+
+void WebRemoteFrameImpl::ReloadWithOverrideURL(const WebURL& override_url,
+                                               WebFrameLoadType) {
+  NOTREACHED();
+}
+
+void WebRemoteFrameImpl::LoadRequest(const WebURLRequest&) {
+  NOTREACHED();
+}
+
 void WebRemoteFrameImpl::StopLoading() {
   // TODO(dcheng,japhet): Calling this method should stop loads
   // in all subframes, both remote and local.
@@ -342,21 +355,24 @@ void WebRemoteFrameImpl::WillEnterFullscreen() {
   HTMLFrameOwnerElement* owner_element =
       ToHTMLFrameOwnerElement(GetFrame()->Owner());
 
-  // Call |requestFullscreen()| on |ownerElement| to make it the pending
-  // fullscreen element in anticipation of the coming |didEnterFullscreen()|
-  // call.
+  // Call requestFullscreen() on |ownerElement| to make it the provisional
+  // fullscreen element in FullscreenController, and to prepare
+  // fullscreenchange events that will need to fire on it and its (local)
+  // ancestors. The events will be triggered if/when fullscreen is entered.
   //
-  // PrefixedForCrossProcessDescendant is necessary because:
-  //  - The fullscreen element ready check and other checks should be bypassed.
-  //  - |ownerElement| will need :-webkit-full-screen-ancestor style in addition
-  //    to :-webkit-full-screen.
+  // Passing |forCrossProcessAncestor| to requestFullscreen is necessary
+  // because:
+  // - |ownerElement| will need :-webkit-full-screen-ancestor style in
+  //   addition to :-webkit-full-screen.
+  // - there's no need to resend the ToggleFullscreen IPC to the browser
+  //   process.
   //
   // TODO(alexmos): currently, this assumes prefixed requests, but in the
   // future, this should plumb in information about which request type
   // (prefixed or unprefixed) to use for firing fullscreen events.
-  Fullscreen::RequestFullscreen(
-      *owner_element,
-      Fullscreen::RequestType::kPrefixedForCrossProcessDescendant);
+  Fullscreen::RequestFullscreen(*owner_element,
+                                Fullscreen::RequestType::kPrefixed,
+                                true /* forCrossProcessAncestor */);
 }
 
 void WebRemoteFrameImpl::SetHasReceivedUserGesture() {

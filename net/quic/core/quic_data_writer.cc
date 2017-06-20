@@ -13,9 +13,6 @@
 
 namespace net {
 
-#define ENDPOINT \
-  (perspective_ == Perspective::IS_SERVER ? "Server: " : "Client: ")
-
 QuicDataWriter::QuicDataWriter(size_t size,
                                char* buffer,
                                Perspective perspective,
@@ -24,9 +21,7 @@ QuicDataWriter::QuicDataWriter(size_t size,
       capacity_(size),
       length_(0),
       perspective_(perspective),
-      endianness_(endianness) {
-  QUIC_DVLOG(1) << ENDPOINT << "QuicDataWriter";
-}
+      endianness_(endianness) {}
 
 QuicDataWriter::~QuicDataWriter() {}
 
@@ -178,7 +173,9 @@ bool QuicDataWriter::WritePaddingBytes(size_t count) {
 }
 
 bool QuicDataWriter::WriteConnectionId(uint64_t connection_id) {
-  connection_id = QuicEndian::HostToNet64(connection_id);
+  if (QuicUtils::IsConnectionIdWireFormatBigEndian(perspective_)) {
+    connection_id = QuicEndian::HostToNet64(connection_id);
+  }
 
   return WriteBytes(&connection_id, sizeof(connection_id));
 }

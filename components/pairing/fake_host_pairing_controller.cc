@@ -141,10 +141,6 @@ void FakeHostPairingController::SetPermanentId(
     const std::string& permanent_id) {
 }
 
-void FakeHostPairingController::SetErrorCodeAndMessage(
-    int error_code,
-    const std::string& error_message) {}
-
 void FakeHostPairingController::Reset() {
 }
 

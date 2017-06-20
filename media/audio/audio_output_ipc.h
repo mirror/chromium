@@ -25,8 +25,7 @@ class MEDIA_EXPORT AudioOutputIPCDelegate {
   virtual void OnError() = 0;
 
   // Called when an authorization request for an output device has been
-  // completed. The AudioOutputIPCDelegate will delete the AudioOutputIPC, if
-  // |device_status| is not OUTPUT_DEVICE_STATUS_OK.
+  // completed
   virtual void OnDeviceAuthorized(OutputDeviceStatus device_status,
                                   const media::AudioParameters& output_params,
                                   const std::string& matched_device_id) = 0;

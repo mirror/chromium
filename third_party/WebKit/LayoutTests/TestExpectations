@@ -839,7 +839,7 @@ crbug.com/410974 fast/scroll-behavior/scroll-customization/touch-scroll-customiz
 crbug.com/707865 fast/scroll-behavior/wheel-and-touch-scroll-use-count.html [ Skip ]
 
 # These tests will pass once the --enable-features=TouchpadAndWheelScrollLatching flag is enabled by default.
-crbug.com/526463 fast/events/wheel/mouse-wheel-scroll-latching.html [ Failure Pass ]
+crbug.com/526463 fast/events/wheel/mouse-wheel-scroll-latching.html [ Failure ]
 crbug.com/526463 fast/events/wheel/wheel-scroll-latching-on-scrollbar.html [ Failure Timeout ]
 crbug.com/526463 fast/events/wheel/mainthread-touchpad-fling-latching.html [ Failure Timeout ]
 
@@ -910,12 +910,6 @@ crbug.com/487281 [ Mac ] fast/forms/select/menulist-narrow-width.html [ Failure 
 crbug.com/543110 [ Mac ] fast/text/international/text-shaping-arabic.html [ Failure ]
 
 crbug.com/731731 inspector-protocol/layers/paint-profiler-load-empty.html [ Failure Pass ]
-
-crbug.com/734744 http/tests/inspector/indexeddb/resources-panel.html [ Pass Failure Timeout ]
-crbug.com/734744 virtual/mojo-loading/http/tests/inspector/indexeddb/resources-panel.html [ Pass Failure Timeout ]
-
-crbug.com/734793 http/tests/inspector/indexeddb/database-names.html [ Pass Failure Timeout ]
-crbug.com/734793 virtual/mojo-loading/http/tests/inspector/indexeddb/database-names.html [ Pass Failure Timeout ]
 
 # Will be re-enabled and rebaselined once we remove the '--enable-file-cookies' flag.
 crbug.com/470482 fast/cookies/local-file-can-set-cookies.html [ Skip ]
@@ -1277,8 +1271,6 @@ crbug.com/658305 css3/filters/effect-reference-tile-hw.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-reference-zoom.html [ Failure Pass ]
 crbug.com/658305 css3/filters/effect-reference-zoom-hw.html [ Failure Pass ]
 crbug.com/658305 css3/filters/filter-effect-removed.html [ Failure Pass ]
-
-crbug.com/734733 css3/blending/background-blend-mode-gif-color-2.html [ Failure Pass ]
 
 crbug.com/267206 [ Mac ] fast/scrolling/scrollbar-tickmarks-hittest.html [ Timeout ]
 crbug.com/267206 [ Mac ] virtual/scroll_customization/fast/scrolling/scrollbar-tickmarks-hittest.html [ Timeout ]
@@ -1647,6 +1639,10 @@ crbug.com/459056 [ Win7 ] fast/text/font-fallback-win.html [ Failure ]
 crbug.com/525296 fast/css/font-load-while-styleresolver-missing.html [ Crash Failure Pass ]
 
 crbug.com/240576 external/wpt/fullscreen/api/element-ready-check-containing-iframe-manual.html [ Timeout Failure Pass ]
+
+# TODO(foolip): Make the timing of fullscreen events reliable.
+crbug.com/402376 external/wpt/fullscreen/api/document-exit-fullscreen-timing-manual.html [ Failure Pass ]
+crbug.com/402376 external/wpt/fullscreen/api/element-request-fullscreen-timing-manual.html [ Failure Pass ]
 
 crbug.com/567230 [ Debug ] virtual/threaded/animations/restart-not-visible.html [ Timeout ]
 
@@ -2329,6 +2325,8 @@ crbug.com/675540 external/wpt/service-workers/service-worker/claim-with-redirect
 crbug.com/675540 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/claim-with-redirect.https.html [ Skip ]
 crbug.com/658997 external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
 crbug.com/658997 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/clients-matchall-client-types.https.html [ Skip ]
+crbug.com/658997 external/wpt/service-workers/service-worker/fetch-canvas-tainting-cache.https.html [ Skip ]
+crbug.com/658997 virtual/off-main-thread-fetch/external/wpt/service-workers/service-worker/fetch-canvas-tainting-cache.https.html [ Skip ]
 
 crbug.com/435547 http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
 crbug.com/435547 virtual/mojo-loading/http/tests/cachestorage/serviceworker/ignore-search-with-credentials.html [ Skip ]
@@ -2776,4 +2774,5 @@ crbug.com/732839 [ Win ] external/wpt/payment-request/payment-request-constructo
 crbug.com/733357 [ Win Mac ] inspector/elements/styles-4/styles-history.html [ Failure Pass ]
 crbug.com/733448 virtual/mojo-loading/http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
 crbug.com/733448 http/tests/inspector/extensions/extensions-network.html [ Failure Pass ]
+crbug.com/729075 [ Mac10.11 Retina ] css3/blending/background-blend-mode-gif-color-2.html [ Failure Pass ]
 crbug.com/733524 [ Mac ] virtual/mojo-loading/http/tests/security/contentSecurityPolicy/report-cross-origin-no-cookies.php [ Timeout Pass ]

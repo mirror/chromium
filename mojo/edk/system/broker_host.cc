@@ -46,8 +46,8 @@ BrokerHost::~BrokerHost() {
 
 bool BrokerHost::PrepareHandlesForClient(PlatformHandleVector* handles) {
 #if defined(OS_WIN)
-  if (!Channel::Message::RewriteHandles(base::GetCurrentProcessHandle(),
-                                        client_process_, handles)) {
+  if (!Channel::Message::RewriteHandles(
+      base::GetCurrentProcessHandle(), client_process_, handles)) {
     // NOTE: We only log an error here. We do not signal a logical error or
     // prevent any message from being sent. The client should handle unexpected
     // invalid handles appropriately.
@@ -80,7 +80,7 @@ bool BrokerHost::SendChannel(ScopedPlatformHandle handle) {
   if (!PrepareHandlesForClient(handles.get()))
     return false;
 
-  message->SetHandles(std::move(handles));
+   message->SetHandles(std::move(handles));
   channel_->Write(std::move(message));
   return true;
 }
@@ -109,13 +109,9 @@ void BrokerHost::OnBufferRequest(uint32_t num_bytes) {
   if (!read_only_buffer)
     buffer = nullptr;
 
-  BufferResponseData* response;
   Channel::MessagePtr message = CreateBrokerMessage(
-      BrokerMessageType::BUFFER_RESPONSE, buffer ? 2 : 0, 0, &response);
+      BrokerMessageType::BUFFER_RESPONSE, buffer ? 2 : 0, nullptr);
   if (buffer) {
-    base::UnguessableToken guid = buffer->GetGUID();
-    response->guid_high = guid.GetHighForSerialization();
-    response->guid_low = guid.GetLowForSerialization();
     ScopedPlatformHandleVectorPtr handles;
     handles.reset(new PlatformHandleVector(2));
     handles->at(0) = buffer->PassPlatformHandle().release();
@@ -138,7 +134,7 @@ void BrokerHost::OnChannelMessage(const void* payload,
   switch (header->type) {
     case BrokerMessageType::BUFFER_REQUEST:
       if (payload_size ==
-          sizeof(BrokerMessageHeader) + sizeof(BufferRequestData)) {
+            sizeof(BrokerMessageHeader) + sizeof(BufferRequestData)) {
         const BufferRequestData* request =
             reinterpret_cast<const BufferRequestData*>(header + 1);
         OnBufferRequest(request->size);
@@ -151,13 +147,9 @@ void BrokerHost::OnChannelMessage(const void* payload,
   }
 }
 
-void BrokerHost::OnChannelError() {
-  delete this;
-}
+void BrokerHost::OnChannelError() { delete this; }
 
-void BrokerHost::WillDestroyCurrentMessageLoop() {
-  delete this;
-}
+void BrokerHost::WillDestroyCurrentMessageLoop() { delete this; }
 
 }  // namespace edk
 }  // namespace mojo

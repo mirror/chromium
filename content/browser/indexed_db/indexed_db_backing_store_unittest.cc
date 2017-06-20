@@ -143,8 +143,10 @@ class TestableIndexedDBBackingStore : public IndexedDBBackingStore {
     writes_.push_back(descriptor);
     task_runner()->PostTask(
         FROM_HERE,
-        base::BindOnce(&Transaction::ChainedBlobWriter::ReportWriteCompletion,
-                       chained_blob_writer, true, 1));
+        base::Bind(&Transaction::ChainedBlobWriter::ReportWriteCompletion,
+                   chained_blob_writer,
+                   true,
+                   1));
     return true;
   }
 

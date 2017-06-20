@@ -2819,7 +2819,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -2860,7 +2860,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -2901,7 +2901,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -2942,7 +2942,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -2974,7 +2974,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3015,7 +3015,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3056,7 +3056,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3077,6 +3077,15 @@
         "test": "components_unittests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "content_browsertests"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -3088,7 +3097,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3104,8 +3113,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 6
+          ]
         },
         "test": "content_browsertests"
       },
@@ -3130,7 +3138,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3171,7 +3179,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3212,7 +3220,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3253,7 +3261,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3294,7 +3302,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3335,7 +3343,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3376,7 +3384,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3417,7 +3425,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3458,7 +3466,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3499,7 +3507,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3540,7 +3548,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3581,7 +3589,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3602,6 +3610,15 @@
         "test": "media_unittests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "net_unittests"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -3613,7 +3630,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3629,8 +3646,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 2
+          ]
         },
         "test": "net_unittests"
       },
@@ -3655,7 +3671,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3696,7 +3712,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3737,7 +3753,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3778,7 +3794,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3819,7 +3835,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3860,7 +3876,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3881,6 +3897,15 @@
         "test": "ui_touch_selection_unittests"
       },
       {
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "unit_tests"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -3892,7 +3917,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3908,8 +3933,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 2
+          ]
         },
         "test": "unit_tests"
       },
@@ -3934,7 +3958,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -3955,6 +3979,18 @@
         "test": "vr_common_unittests"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "chrome_public_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -3982,8 +4018,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 10
+          ]
         },
         "test": "chrome_public_test_apk"
       },
@@ -4013,7 +4048,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -4054,7 +4089,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -4075,6 +4110,18 @@
         "test": "chrome_sync_shell_test_apk"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "content_shell_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -4086,7 +4133,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -4102,12 +4149,23 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 2
+          ]
         },
         "test": "content_shell_test_apk"
       },
       {
+        "args": [
+          "--gs-results-bucket=chromium-result-details"
+        ],
+        "merge": {
+          "args": [
+            "--bucket",
+            "chromium-result-details",
+            "--test-name",
+            "webview_instrumentation_test_apk"
+          ],
+          "script": "//build/android/pylib/results/presentation/test_results_presentation.py"
+        },
         "swarming": {
           "can_use_on_swarming_builders": true,
           "cipd_packages": [
@@ -4119,7 +4177,7 @@
           ],
           "dimension_sets": [
             {
-              "android_devices": "1",
+              "android_devices": "4",
               "device_os": "LMY48I",
               "device_type": "hammerhead"
             }
@@ -4135,8 +4193,7 @@
               ],
               "name": "shard #${SHARD_INDEX} logcats"
             }
-          ],
-          "shards": 6
+          ]
         },
         "test": "webview_instrumentation_test_apk"
       }

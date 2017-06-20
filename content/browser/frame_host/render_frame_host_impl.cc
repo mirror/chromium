@@ -2990,8 +2990,7 @@ void RenderFrameHostImpl::NavigateToInterstitialURL(const GURL& data_url) {
       CSPDisposition::CHECK /* should_check_main_world_csp */);
   if (IsBrowserSideNavigationEnabled()) {
     CommitNavigation(nullptr, nullptr, mojo::ScopedDataPipeConsumerHandle(),
-                     common_params, RequestNavigationParams(), false,
-                     mojom::URLLoaderFactoryPtrInfo());
+                     common_params, RequestNavigationParams(), false);
   } else {
     Navigate(common_params, StartNavigationParams(), RequestNavigationParams());
   }
@@ -3141,8 +3140,7 @@ void RenderFrameHostImpl::CommitNavigation(
     mojo::ScopedDataPipeConsumerHandle handle,
     const CommonNavigationParams& common_params,
     const RequestNavigationParams& request_params,
-    bool is_view_source,
-    mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_info) {
+    bool is_view_source) {
   TRACE_EVENT2("navigation", "RenderFrameHostImpl::CommitNavigation",
                "frame_tree_node", frame_tree_node_->frame_tree_node_id(), "url",
                common_params.url.possibly_invalid_spec());
@@ -3173,18 +3171,13 @@ void RenderFrameHostImpl::CommitNavigation(
   // TODO(scottmg): Pass a factory for SW, etc. once we have one.
   if (base::CommandLine::ForCurrentProcess()->HasSwitch(
           switches::kEnableNetworkService)) {
-    if (!subresource_url_loader_factory_info.is_valid()) {
-      const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
-      if (std::find(schemes.begin(), schemes.end(),
-                    common_params.url.scheme()) != schemes.end()) {
-        commit_data.url_loader_factory = CreateWebUIURLLoader(frame_tree_node_)
-                                             .PassInterface()
-                                             .PassHandle()
-                                             .release();
-      }
-    } else {
-      commit_data.url_loader_factory =
-          subresource_url_loader_factory_info.PassHandle().release();
+    const auto& schemes = URLDataManagerBackend::GetWebUISchemes();
+    if (std::find(schemes.begin(), schemes.end(), common_params.url.scheme()) !=
+        schemes.end()) {
+      commit_data.url_loader_factory = CreateWebUIURLLoader(frame_tree_node_)
+                                           .PassInterface()
+                                           .PassHandle()
+                                           .release();
     }
   }
   Send(new FrameMsg_CommitNavigation(routing_id_, head, body_url, commit_data,

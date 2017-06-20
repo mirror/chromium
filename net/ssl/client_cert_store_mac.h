@@ -26,24 +26,24 @@ class NET_EXPORT ClientCertStoreMac : public ClientCertStore {
   friend class ClientCertStoreMacTest;
   friend class ClientCertStoreMacTestDelegate;
 
-  // A hook for testing. Filters |input_identities| using the logic being used
-  // to filter the system store when GetClientCerts() is called. Implemented by
-  // creating a list of certificates that otherwise would be extracted from the
-  // system store and filtering it using the common logic (less adequate than
-  // the approach used on Windows).
-  bool SelectClientCertsForTesting(ClientCertIdentityList input_identities,
+  // A hook for testing. Filters |input_certs| using the logic being used to
+  // filter the system store when GetClientCerts() is called.
+  // Implemented by creating a list of certificates that otherwise would be
+  // extracted from the system store and filtering it using the common logic
+  // (less adequate than the approach used on Windows).
+  bool SelectClientCertsForTesting(const CertificateList& input_certs,
                                    const SSLCertRequestInfo& cert_request_info,
-                                   ClientCertIdentityList* selected_identities);
+                                   CertificateList* selected_certs);
 
   // Testing hook specific to Mac, where the internal logic recognizes preferred
   // certificates for particular domains. If the preferred certificate is
   // present in the output list (i.e. it doesn't get filtered out), it should
   // always come first.
   bool SelectClientCertsGivenPreferredForTesting(
-      std::unique_ptr<ClientCertIdentity> preferred_identity,
-      ClientCertIdentityList regular_identities,
+      const scoped_refptr<X509Certificate>& preferred_cert,
+      const CertificateList& regular_certs,
       const SSLCertRequestInfo& request,
-      ClientCertIdentityList* selected_identities);
+      CertificateList* selected_certs);
 
   DISALLOW_COPY_AND_ASSIGN(ClientCertStoreMac);
 };

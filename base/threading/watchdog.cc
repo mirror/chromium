@@ -179,8 +179,7 @@ void Watchdog::ThreadDelegate::SetThreadName() const {
 void Watchdog::ResetStaticData() {
   StaticData* static_data = GetStaticData();
   AutoLock lock(static_data->lock);
-  // See https://crbug.com/734232 for why this cannot be zero-initialized.
-  static_data->last_debugged_alarm_time = TimeTicks::Min();
+  static_data->last_debugged_alarm_time = TimeTicks();
   static_data->last_debugged_alarm_delay = TimeDelta();
 }
 

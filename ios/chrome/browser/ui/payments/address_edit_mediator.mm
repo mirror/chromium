@@ -10,7 +10,6 @@
 #include <utility>
 
 #include "base/callback.h"
-#include "base/logging.h"
 #include "base/memory/ptr_util.h"
 #include "base/strings/sys_string_conversions.h"
 #include "base/values.h"
@@ -69,6 +68,7 @@
 @synthesize consumer = _consumer;
 @synthesize countries = _countries;
 @synthesize selectedCountryCode = _selectedCountryCode;
+@synthesize regions = _regions;
 @synthesize paymentRequest = _paymentRequest;
 @synthesize address = _address;
 @synthesize fieldsMap = _fieldsMap;
@@ -126,32 +126,28 @@
 #pragma mark - RegionDataLoaderConsumer
 
 - (void)regionDataLoaderDidSucceedWithRegions:
-    (NSDictionary<NSString*, NSString*>*)regions {
+    (NSMutableArray<NSString*>*)regions {
+  self.regions = regions;
   // Enable the previously disabled field.
   self.regionField.enabled = YES;
 
-  // An autofill profile may have a region code or a region name stored as the
-  // autofill::ADDRESS_HOME_STATE. If an address is being edited whose value for
-  // that field type is a valid region code or a valid region name, the editor
-  // field value is set to the respective region code. Otherwise, it is set to
-  // nil.
-  self.regionField.value = nil;
+  // If an address is being edited and it has a valid region, the field value is
+  // set to that region. Otherwise, set the field value to nil. If creating an
+  // address, set the first available region as the field value, if possible.
   if (self.address) {
     NSString* region =
         [self fieldValueFromProfile:self.address
                           fieldType:autofill::ADDRESS_HOME_STATE];
-    if ([regions objectForKey:region]) {
-      self.regionField.value = region;
-    } else if ([[regions allKeysForObject:region] count]) {
-      DCHECK(1 == [[regions allKeysForObject:region] count]);
-      self.regionField.value = [regions allKeysForObject:region][0];
-    }
+    self.regionField.value =
+        [self.regions containsObject:region] ? region : nil;
+  } else {
+    self.regionField.value = regions.count ? regions[0] : nil;
   }
 
   // Notify the view controller asynchronously to allow for the view to update.
   __weak AddressEditMediator* weakSelf = self;
   dispatch_async(dispatch_get_main_queue(), ^{
-    [weakSelf.consumer setOptions:[regions allKeys]
+    [weakSelf.consumer setOptions:weakSelf.regions
                    forEditorField:weakSelf.regionField];
   });
 }

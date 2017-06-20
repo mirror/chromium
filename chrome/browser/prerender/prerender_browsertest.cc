@@ -114,7 +114,6 @@
 #include "net/base/escape.h"
 #include "net/cert/x509_certificate.h"
 #include "net/dns/mock_host_resolver.h"
-#include "net/ssl/client_cert_identity_test_util.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_server_config.h"
@@ -2258,7 +2257,7 @@ class TestClientCertStore : public net::ClientCertStore {
   // net::ClientCertStore:
   void GetClientCerts(const net::SSLCertRequestInfo& cert_request_info,
                       const ClientCertListCallback& callback) override {
-    callback.Run(FakeClientCertIdentityListFromCertificateList(certs_));
+    callback.Run(certs_);
   }
 
  private:

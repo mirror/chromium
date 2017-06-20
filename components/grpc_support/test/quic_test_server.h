@@ -15,7 +15,6 @@ void ShutdownQuicTestServer();
 
 int GetQuicTestServerPort();
 
-extern const char kTestServerDomain[];
 extern const char kTestServerHost[];
 extern const char kTestServerUrl[];
 

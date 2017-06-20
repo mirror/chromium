@@ -100,8 +100,8 @@ class PLATFORM_EXPORT ResourceRequest final {
   const KURL& FirstPartyForCookies() const;
   void SetFirstPartyForCookies(const KURL&);
 
-  RefPtr<SecurityOrigin> RequestorOrigin() const;
-  void SetRequestorOrigin(RefPtr<SecurityOrigin>);
+  PassRefPtr<SecurityOrigin> RequestorOrigin() const;
+  void SetRequestorOrigin(PassRefPtr<SecurityOrigin>);
 
   const AtomicString& HttpMethod() const;
   void SetHTTPMethod(const AtomicString&);

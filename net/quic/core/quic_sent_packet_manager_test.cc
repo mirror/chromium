@@ -1370,6 +1370,7 @@ TEST_F(QuicSentPacketManagerTest, NegotiateTimeLossDetectionFromOptions) {
 }
 
 TEST_F(QuicSentPacketManagerTest, NegotiateCongestionControlFromOptions) {
+  FLAGS_quic_reloadable_flag_quic_allow_new_bbr = true;
   QuicConfig config;
   QuicTagVector options;
 
@@ -1454,6 +1455,7 @@ TEST_F(QuicSentPacketManagerTest, NegotiateCongestionControlFromOptions) {
 }
 
 TEST_F(QuicSentPacketManagerTest, NegotiateClientCongestionControlFromOptions) {
+  FLAGS_quic_reloadable_flag_quic_allow_new_bbr = true;
   FLAGS_quic_reloadable_flag_quic_enable_pcc = true;
   QuicConfig config;
   QuicTagVector options;

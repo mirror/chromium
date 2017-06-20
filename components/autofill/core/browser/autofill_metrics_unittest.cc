@@ -1038,8 +1038,7 @@ TEST_F(AutofillMetricsTest, QualityMetrics_NoSubmission) {
   autofill_manager_->AddSeenForm(form, heuristic_types, server_types);
 
   // Simulate text input on one of the fields.
-  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], gfx::RectF(),
-                                          TimeTicks());
+  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], TimeTicks());
 
   // Trigger a form upload and metrics by Resetting the manager.
   base::HistogramTester histogram_tester;
@@ -1584,10 +1583,8 @@ TEST_F(AutofillMetricsTest, NumberOfEditedAutofilledFields) {
 
   base::HistogramTester histogram_tester;
   // Simulate text input in the first and second fields.
-  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], gfx::RectF(),
-                                          TimeTicks());
-  autofill_manager_->OnTextFieldDidChange(form, form.fields[1], gfx::RectF(),
-                                          TimeTicks());
+  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], TimeTicks());
+  autofill_manager_->OnTextFieldDidChange(form, form.fields[1], TimeTicks());
 
   // Simulate form submission.
   autofill_manager_->SubmitForm(form, TimeTicks::Now());
@@ -1635,8 +1632,7 @@ TEST_F(AutofillMetricsTest, NumberOfEditedAutofilledFields_NoSubmission) {
 
   base::HistogramTester histogram_tester;
   // Simulate text input in the first field.
-  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], gfx::RectF(),
-                                          TimeTicks());
+  autofill_manager_->OnTextFieldDidChange(form, form.fields[0], TimeTicks());
 
   // We expect metrics to be logged when the manager is reset.
   autofill_manager_->ResetRunLoop();
@@ -4328,7 +4324,7 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction) {
   {
     base::HistogramTester histogram_tester;
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(), TimeTicks());
+                                            TimeTicks());
     histogram_tester.ExpectUniqueSample("Autofill.UserHappiness",
                                         AutofillMetrics::USER_DID_TYPE, 1);
   }
@@ -4371,10 +4367,10 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction) {
         AutofillDriver::FORM_DATA_ACTION_FILL, 0, form, form.fields.front(),
         autofill_manager_->MakeFrontendID(std::string(), guid));
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(), TimeTicks());
+                                            TimeTicks());
     // Simulate a second keystroke; make sure we don't log the metric twice.
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(), TimeTicks());
+                                            TimeTicks());
     histogram_tester.ExpectBucketCount(
         "Autofill.UserHappiness",
         AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD, 1);
@@ -4394,8 +4390,7 @@ TEST_F(AutofillMetricsTest, UserHappinessFormInteraction) {
   // Simulate editing another autofilled field.
   {
     base::HistogramTester histogram_tester;
-    autofill_manager_->OnTextFieldDidChange(form, form.fields[1], gfx::RectF(),
-                                            TimeTicks());
+    autofill_manager_->OnTextFieldDidChange(form, form.fields[1], TimeTicks());
     histogram_tester.ExpectUniqueSample(
         "Autofill.UserHappiness",
         AutofillMetrics::USER_DID_EDIT_AUTOFILLED_FIELD, 1);
@@ -4512,7 +4507,6 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     base::HistogramTester histogram_tester;
     autofill_manager_->OnFormsSeen(forms, TimeTicks::FromInternalValue(1));
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
                                             TimeTicks::FromInternalValue(3));
     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
 
@@ -4565,7 +4559,6 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->OnDidFillAutofillFormData(
         form, TimeTicks::FromInternalValue(5));
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
                                             TimeTicks::FromInternalValue(3));
     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
 
@@ -4594,7 +4587,6 @@ TEST_F(AutofillMetricsTest, FormFillDuration) {
     autofill_manager_->OnDidFillAutofillFormData(
         form, TimeTicks::FromInternalValue(5));
     autofill_manager_->OnTextFieldDidChange(form, form.fields.front(),
-                                            gfx::RectF(),
                                             TimeTicks::FromInternalValue(3));
     autofill_manager_->SubmitForm(form, TimeTicks::FromInternalValue(17));
 

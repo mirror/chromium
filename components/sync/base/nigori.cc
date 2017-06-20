@@ -75,21 +75,25 @@ bool Nigori::InitByDerivation(const std::string& hostname,
       kSaltKeySizeInBits));
   DCHECK(user_salt);
 
+  std::string raw_user_salt;
+  if (!user_salt->GetRawKey(&raw_user_salt))
+    return false;
+
   // Kuser = PBKDF2(P, Suser, Nuser, 16)
   user_key_ = SymmetricKey::DeriveKeyFromPassword(
-      SymmetricKey::AES, password, user_salt->key(), kUserIterations,
+      SymmetricKey::AES, password, raw_user_salt, kUserIterations,
       kDerivedKeySizeInBits);
   DCHECK(user_key_);
 
   // Kenc = PBKDF2(P, Suser, Nenc, 16)
   encryption_key_ = SymmetricKey::DeriveKeyFromPassword(
-      SymmetricKey::AES, password, user_salt->key(), kEncryptionIterations,
+      SymmetricKey::AES, password, raw_user_salt, kEncryptionIterations,
       kDerivedKeySizeInBits);
   DCHECK(encryption_key_);
 
   // Kmac = PBKDF2(P, Suser, Nmac, 16)
   mac_key_ = SymmetricKey::DeriveKeyFromPassword(
-      SymmetricKey::HMAC_SHA1, password, user_salt->key(), kSigningIterations,
+      SymmetricKey::HMAC_SHA1, password, raw_user_salt, kSigningIterations,
       kDerivedKeySizeInBits);
   DCHECK(mac_key_);
 
@@ -128,8 +132,12 @@ bool Nigori::Permute(Type type,
   if (!encryptor.Encrypt(plaintext.str(), &ciphertext))
     return false;
 
+  std::string raw_mac_key;
+  if (!mac_key_->GetRawKey(&raw_mac_key))
+    return false;
+
   HMAC hmac(HMAC::SHA256);
-  if (!hmac.Init(mac_key_->key()))
+  if (!hmac.Init(raw_mac_key))
     return false;
 
   std::vector<unsigned char> hash(kHashSize);
@@ -160,8 +168,12 @@ bool Nigori::Encrypt(const std::string& value, std::string* encrypted) const {
   if (!encryptor.Encrypt(value, &ciphertext))
     return false;
 
+  std::string raw_mac_key;
+  if (!mac_key_->GetRawKey(&raw_mac_key))
+    return false;
+
   HMAC hmac(HMAC::SHA256);
-  if (!hmac.Init(mac_key_->key()))
+  if (!hmac.Init(raw_mac_key))
     return false;
 
   std::vector<unsigned char> hash(kHashSize);
@@ -194,8 +206,12 @@ bool Nigori::Decrypt(const std::string& encrypted, std::string* value) const {
       input.substr(kIvSize, input.size() - (kIvSize + kHashSize)));
   std::string hash(input.substr(input.size() - kHashSize, kHashSize));
 
+  std::string raw_mac_key;
+  if (!mac_key_->GetRawKey(&raw_mac_key))
+    return false;
+
   HMAC hmac(HMAC::SHA256);
-  if (!hmac.Init(mac_key_->key()))
+  if (!hmac.Init(raw_mac_key))
     return false;
 
   std::vector<unsigned char> expected(kHashSize);
@@ -216,7 +232,7 @@ bool Nigori::Decrypt(const std::string& encrypted, std::string* value) const {
   return true;
 }
 
-void Nigori::ExportKeys(std::string* user_key,
+bool Nigori::ExportKeys(std::string* user_key,
                         std::string* encryption_key,
                         std::string* mac_key) const {
   DCHECK(encryption_key);
@@ -224,12 +240,12 @@ void Nigori::ExportKeys(std::string* user_key,
   DCHECK(user_key);
 
   if (user_key_)
-    *user_key = user_key_->key();
+    user_key_->GetRawKey(user_key);
   else
     user_key->clear();
 
-  *encryption_key = encryption_key_->key();
-  *mac_key = mac_key_->key();
+  return encryption_key_->GetRawKey(encryption_key) &&
+         mac_key_->GetRawKey(mac_key);
 }
 
 }  // namespace syncer

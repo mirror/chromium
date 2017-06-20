@@ -194,14 +194,8 @@ class WALLPAPER_EXPORT WallpaperManagerBase {
   class Observer {
    public:
     virtual ~Observer() {}
-    // Notified when the wallpaper animation finishes.
-    virtual void OnWallpaperAnimationFinished(const AccountId& account_id) {}
-    // Notified when the wallpaper is updated and the color calculation results
-    // change.
-    virtual void OnWallpaperColorsChanged() {}
-    // Notified when the wallpaper is updated.
+    virtual void OnWallpaperAnimationFinished(const AccountId& account_id) = 0;
     virtual void OnUpdateWallpaperForTesting() {}
-    // Notified when the wallpaper pending list is empty.
     virtual void OnPendingListEmptyForTesting() {}
   };
 

@@ -117,7 +117,7 @@ public class LocaleManager {
         int state = SEARCH_ENGINE_PROMO_SHOULD_CHECK;
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
-            state = ContextUtils.getAppSharedPreferences().getInt(
+            ContextUtils.getAppSharedPreferences().getInt(
                     KEY_SEARCH_ENGINE_PROMO_SHOW_STATE, SEARCH_ENGINE_PROMO_SHOULD_CHECK);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);
@@ -243,11 +243,6 @@ public class LocaleManager {
     private void handleSearchEnginePromoWithTemplateUrlsLoaded(
             final Activity activity, final @Nullable Callback<Boolean> onSearchEngineFinalized) {
         assert TemplateUrlService.getInstance().isLoaded();
-
-        if (TemplateUrlService.getInstance().isDefaultSearchManaged()) {
-            if (onSearchEngineFinalized != null) onSearchEngineFinalized.onResult(true);
-            return;
-        }
 
         final int shouldShow = getSearchEnginePromoShowType();
         Callable<PromoDialog> dialogCreator;
@@ -453,15 +448,10 @@ public class LocaleManager {
      * @return Whether we still have to check for whether search engine dialog is necessary.
      */
     public boolean needToCheckForSearchEnginePromo() {
-        if (ChromeFeatureList.isInitialized()
-                && !ChromeFeatureList.isEnabled(
-                           ChromeFeatureList.SEARCH_ENGINE_PROMO_EXISTING_DEVICE)) {
-            return false;
-        }
         int state = SEARCH_ENGINE_PROMO_SHOULD_CHECK;
         StrictMode.ThreadPolicy oldPolicy = StrictMode.allowThreadDiskReads();
         try {
-            state = ContextUtils.getAppSharedPreferences().getInt(
+            ContextUtils.getAppSharedPreferences().getInt(
                     KEY_SEARCH_ENGINE_PROMO_SHOW_STATE, SEARCH_ENGINE_PROMO_SHOULD_CHECK);
         } finally {
             StrictMode.setThreadPolicy(oldPolicy);

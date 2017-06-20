@@ -8,7 +8,8 @@
 #include <vector>
 
 #include "base/macros.h"
-#include "net/ssl/client_cert_identity.h"
+#include "base/memory/ref_counted.h"
+#include "net/cert/x509_certificate.h"
 
 namespace chromeos {
 
@@ -18,7 +19,7 @@ class CertificateProvider {
   virtual ~CertificateProvider() {}
 
   virtual void GetCertificates(
-      const base::Callback<void(net::ClientCertIdentityList)>& callback) = 0;
+      const base::Callback<void(const net::CertificateList&)>& callback) = 0;
 
   virtual std::unique_ptr<CertificateProvider> Copy() = 0;
 

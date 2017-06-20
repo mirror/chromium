@@ -9,7 +9,6 @@
 #include "base/callback_forward.h"
 #include "base/macros.h"
 #include "content/common/url_loader.mojom.h"
-#include "content/common/url_loader_factory.mojom.h"
 
 namespace content {
 
@@ -34,11 +33,6 @@ class CONTENT_EXPORT URLLoaderRequestHandler {
   virtual void MaybeCreateLoader(const ResourceRequest& resource_request,
                                  ResourceContext* resource_context,
                                  LoaderCallback callback) = 0;
-
-  // Returns the URLLoaderFactory if any to be used for subsequent URL requests
-  // going forward. Subclasses who want to handle subresource requests etc may
-  // want to override this to return a custom factory.
-  virtual mojom::URLLoaderFactoryPtr MaybeCreateSubresourceFactory();
 };
 
 }  // namespace content

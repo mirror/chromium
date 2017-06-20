@@ -109,23 +109,23 @@ class ProvidedService : public Service,
   }
 
   // test::mojom::ConnectTestService:
-  void GetTitle(GetTitleCallback callback) override {
-    std::move(callback).Run(title_);
+  void GetTitle(const GetTitleCallback& callback) override {
+    callback.Run(title_);
   }
 
-  void GetInstance(GetInstanceCallback callback) override {
-    std::move(callback).Run(context()->identity().instance());
+  void GetInstance(const GetInstanceCallback& callback) override {
+    callback.Run(context()->identity().instance());
   }
 
   // test::mojom::BlockedInterface:
-  void GetTitleBlocked(GetTitleBlockedCallback callback) override {
-    std::move(callback).Run("Called Blocked Interface!");
+  void GetTitleBlocked(const GetTitleBlockedCallback& callback) override {
+    callback.Run("Called Blocked Interface!");
   }
 
   // test::mojom::UserIdTest:
   void ConnectToClassAppAsDifferentUser(
       const service_manager::Identity& target,
-      ConnectToClassAppAsDifferentUserCallback callback) override {
+      const ConnectToClassAppAsDifferentUserCallback& callback) override {
     context()->connector()->StartService(target);
     mojom::ConnectResult result;
     Identity resolved_identity;
@@ -138,7 +138,7 @@ class ProvidedService : public Service,
           base::MessageLoop::current());
       loop.Run();
     }
-    std::move(callback).Run(static_cast<int32_t>(result), resolved_identity);
+    callback.Run(static_cast<int32_t>(result), resolved_identity);
   }
 
   // base::SimpleThread:
@@ -225,12 +225,12 @@ class ConnectTestService : public Service,
   }
 
   // test::mojom::ConnectTestService:
-  void GetTitle(GetTitleCallback callback) override {
-    std::move(callback).Run("ROOT");
+  void GetTitle(const GetTitleCallback& callback) override {
+    callback.Run("ROOT");
   }
 
-  void GetInstance(GetInstanceCallback callback) override {
-    std::move(callback).Run(context()->identity().instance());
+  void GetInstance(const GetInstanceCallback& callback) override {
+    callback.Run(context()->identity().instance());
   }
 
   void OnConnectionError() {

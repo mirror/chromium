@@ -77,7 +77,7 @@ class LayoutCounter final : public LayoutText {
   bool IsOfType(LayoutObjectType type) const override {
     return type == kLayoutObjectCounter || LayoutText::IsOfType(type);
   }
-  RefPtr<StringImpl> OriginalText() const override;
+  PassRefPtr<StringImpl> OriginalText() const override;
 
   // Removes the reference to the CounterNode associated with this layoutObject.
   // This is used to cause a counter display update when the CounterNode tree

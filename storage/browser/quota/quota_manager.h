@@ -18,7 +18,6 @@
 #include <vector>
 
 #include "base/callback.h"
-#include "base/containers/flat_map.h"
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
@@ -114,12 +113,6 @@ class STORAGE_EXPORT QuotaManager
   typedef base::Callback<
       void(QuotaStatusCode, int64_t /* usage */, int64_t /* quota */)>
       UsageAndQuotaCallback;
-  typedef base::Callback<void(
-      QuotaStatusCode,
-      int64_t /* usage */,
-      int64_t /* quota */,
-      base::flat_map<QuotaClient::ID, int64_t> /* usage breakdown */)>
-      UsageAndQuotaWithBreakdownCallback;
 
   static const int64_t kNoLimit;
 
@@ -146,13 +139,6 @@ class STORAGE_EXPORT QuotaManager
       const GURL& origin,
       StorageType type,
       const UsageAndQuotaCallback& callback);
-
-  // Called by DevTools.
-  // This method is declared as virtual to allow test code to override it.
-  virtual void GetUsageAndQuotaWithBreakdown(
-      const GURL& origin,
-      StorageType type,
-      const UsageAndQuotaWithBreakdownCallback& callback);
 
   // Called by StorageClients.
   // This method is declared as virtual to allow test code to override it.
@@ -221,9 +207,6 @@ class STORAGE_EXPORT QuotaManager
   void GetHostUsage(const std::string& host, StorageType type,
                     QuotaClient::ID client_id,
                     const UsageCallback& callback);
-  void GetHostUsageWithBreakdown(const std::string& host,
-                                 StorageType type,
-                                 const UsageWithBreakdownCallback& callback);
 
   bool IsTrackingHostUsage(StorageType type, QuotaClient::ID client_id) const;
 

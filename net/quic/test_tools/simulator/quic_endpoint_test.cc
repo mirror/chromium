@@ -15,6 +15,7 @@
 using ::testing::_;
 using ::testing::NiceMock;
 using ::testing::Return;
+using net::test::GetPeerInMemoryConnectionId;
 
 namespace net {
 namespace simulator {
@@ -47,7 +48,8 @@ TEST_F(QuicEndpointTest, OneWayTransmission) {
   QuicEndpoint endpoint_a(&simulator_, "Endpoint A", "Endpoint B",
                           Perspective::IS_CLIENT, 42);
   QuicEndpoint endpoint_b(&simulator_, "Endpoint B", "Endpoint A",
-                          Perspective::IS_SERVER, 42);
+                          Perspective::IS_SERVER,
+                          GetPeerInMemoryConnectionId(42));
   auto link_a = Link(&endpoint_a, switch_.port(1));
   auto link_b = Link(&endpoint_b, switch_.port(2));
 
@@ -82,7 +84,8 @@ TEST_F(QuicEndpointTest, WriteBlocked) {
   QuicEndpoint endpoint_a(&simulator_, "Endpoint A", "Endpoint B",
                           Perspective::IS_CLIENT, 42);
   QuicEndpoint endpoint_b(&simulator_, "Endpoint B", "Endpoint A",
-                          Perspective::IS_SERVER, 42);
+                          Perspective::IS_SERVER,
+                          GetPeerInMemoryConnectionId(42));
   auto link_a = Link(&endpoint_a, switch_.port(1));
   auto link_b = Link(&endpoint_b, switch_.port(2));
 
@@ -122,7 +125,8 @@ TEST_F(QuicEndpointTest, TwoWayTransmission) {
   QuicEndpoint endpoint_a(&simulator_, "Endpoint A", "Endpoint B",
                           Perspective::IS_CLIENT, 42);
   QuicEndpoint endpoint_b(&simulator_, "Endpoint B", "Endpoint A",
-                          Perspective::IS_SERVER, 42);
+                          Perspective::IS_SERVER,
+                          GetPeerInMemoryConnectionId(42));
   auto link_a = Link(&endpoint_a, switch_.port(1));
   auto link_b = Link(&endpoint_b, switch_.port(2));
 
@@ -150,11 +154,14 @@ TEST_F(QuicEndpointTest, Competition) {
   auto endpoint_c = QuicMakeUnique<QuicEndpoint>(
       &simulator_, "Endpoint C", "Endpoint D (C)", Perspective::IS_CLIENT, 44);
   auto endpoint_d_a = QuicMakeUnique<QuicEndpoint>(
-      &simulator_, "Endpoint D (A)", "Endpoint A", Perspective::IS_SERVER, 42);
+      &simulator_, "Endpoint D (A)", "Endpoint A", Perspective::IS_SERVER,
+      GetPeerInMemoryConnectionId(42));
   auto endpoint_d_b = QuicMakeUnique<QuicEndpoint>(
-      &simulator_, "Endpoint D (B)", "Endpoint B", Perspective::IS_SERVER, 43);
+      &simulator_, "Endpoint D (B)", "Endpoint B", Perspective::IS_SERVER,
+      GetPeerInMemoryConnectionId(43));
   auto endpoint_d_c = QuicMakeUnique<QuicEndpoint>(
-      &simulator_, "Endpoint D (C)", "Endpoint C", Perspective::IS_SERVER, 44);
+      &simulator_, "Endpoint D (C)", "Endpoint C", Perspective::IS_SERVER,
+      GetPeerInMemoryConnectionId(44));
   QuicEndpointMultiplexer endpoint_d(
       "Endpoint D",
       {endpoint_d_a.get(), endpoint_d_b.get(), endpoint_d_c.get()});

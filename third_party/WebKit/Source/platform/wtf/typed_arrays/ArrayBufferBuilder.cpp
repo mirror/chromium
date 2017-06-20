@@ -97,7 +97,7 @@ unsigned ArrayBufferBuilder::Append(const char* data, unsigned length) {
   return bytes_to_save;
 }
 
-RefPtr<ArrayBuffer> ArrayBufferBuilder::ToArrayBuffer() {
+PassRefPtr<ArrayBuffer> ArrayBufferBuilder::ToArrayBuffer() {
   // Fully used. Return m_buffer as-is.
   if (buffer_->ByteLength() == bytes_used_)
     return buffer_;

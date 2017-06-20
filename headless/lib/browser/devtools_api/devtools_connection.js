@@ -31,7 +31,7 @@ class Connection {
     /**
      * An object containing pending DevTools protocol commands keyed by id.
      *
-     * @private {!Map<number, !Connection.PendingCommand>}
+     * @private {!Map<number, !Connection.CallbackFunction>}
      */
     this.pendingCommands_ = new Map();
 
@@ -42,7 +42,7 @@ class Connection {
      * An object containing DevTools protocol events we are listening for keyed
      * by name.
      *
-     * @private {!Map<string, !Map<number, !Connection.EventFunction>>}
+     * @private {!Map<string, !Map<number, !Connection.CallbackFunction>>}
      */
     this.eventListeners_ = new Map();
 
@@ -62,7 +62,7 @@ class Connection {
    *
    * @param {string} eventName Name of the DevTools protocol event to listen
    *     for.
-   * @param {!Connection.EventFunction} listener The callback issued when we
+   * @param {!Connection.CallbackFunction} listener The callback issued when we
    *     receive a DevTools protocol event corresponding to the given name.
    * @return {number} The id of this event listener.
    */
@@ -114,7 +114,7 @@ class Connection {
     this.transport_.send(
         JSON.stringify({'method': method, 'id': id, 'params': params}));
     return new Promise((resolve, reject) => {
-      this.pendingCommands_.set(id, {resolve: resolve, reject: reject});
+      this.pendingCommands_.set(id, resolve);
     });
   }
 
@@ -132,9 +132,8 @@ class Connection {
       if (!this.pendingCommands_.has(message.id))
         throw new Error('Unrecognized id:' + jsonMessage);
       if (message.hasOwnProperty('error'))
-        this.pendingCommands_.get(message.id).reject(message.error);
-      else
-        this.pendingCommands_.get(message.id).resolve(message.result);
+        throw new Error('DevTools protocol error: ' + message.error);
+      this.pendingCommands_.get(message.id)(message.result);
       this.pendingCommands_.delete(message.id);
     } else {
       if (!message.hasOwnProperty('method') ||
@@ -165,14 +164,6 @@ class Connection {
 /**
  * @typedef {function(Object): undefined|function(string): undefined}
  */
-Connection.EventFunction;
-
-/**
- * @typedef {{
- *    resolve: function(!Object),
- *    reject: function(!Object)
- * }}
- */
-Connection.PendingCommand;
+Connection.CallbackFunction;
 
 exports = Connection;

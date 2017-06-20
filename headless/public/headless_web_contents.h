@@ -133,19 +133,26 @@ class HEADLESS_EXPORT HeadlessWebContents::Builder {
 
   explicit Builder(HeadlessBrowserContextImpl* browser_context);
 
-  struct MojoService {
-    using ServiceFactoryCallback =
-        base::Callback<void(HeadlessWebContents*,
-                            mojo::ScopedMessagePipeHandle)>;
+  template <typename Interface>
+  static void ForwardToServiceFactory(
+      const base::Callback<void(mojo::InterfaceRequest<Interface>)>&
+          service_factory,
+      mojo::ScopedMessagePipeHandle handle) {
+    service_factory.Run(mojo::InterfaceRequest<Interface>(std::move(handle)));
+  }
 
+  struct MojoService {
     MojoService();
-    MojoService(const MojoService& other);
     MojoService(const std::string& service_name,
-                const ServiceFactoryCallback& service_factory);
+                const base::Callback<void(mojo::ScopedMessagePipeHandle)>&
+                    service_factory);
     ~MojoService();
 
     std::string service_name;
-    ServiceFactoryCallback service_factory;
+    base::Callback<void(mojo::ScopedMessagePipeHandle)> service_factory;
+
+   private:
+    DISALLOW_COPY_AND_ASSIGN(MojoService);
   };
 
   HeadlessBrowserContextImpl* browser_context_;

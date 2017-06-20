@@ -348,8 +348,10 @@ std::string Cryptographer::GetDefaultNigoriKeyData() const {
   if (iter == nigoris_.end())
     return std::string();
   sync_pb::NigoriKey key;
-  iter->second->ExportKeys(key.mutable_user_key(), key.mutable_encryption_key(),
-                           key.mutable_mac_key());
+  if (!iter->second->ExportKeys(key.mutable_user_key(),
+                                key.mutable_encryption_key(),
+                                key.mutable_mac_key()))
+    return std::string();
   return key.SerializeAsString();
 }
 

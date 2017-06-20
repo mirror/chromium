@@ -427,10 +427,6 @@ extern const char kPrintingEnabled[];
 extern const char kPrintPreviewDisabled[];
 extern const char kPrintPreviewDefaultDestinationSelectionRules[];
 
-#if !defined(OS_CHROMEOS) && !defined(OS_ANDROID)
-extern const char kPrintPreviewUseSystemDefaultPrinter[];
-#endif
-
 #if defined(OS_CHROMEOS)
 extern const char kPrintingDevices[];
 extern const char kRecommendedNativePrinters[];

@@ -159,7 +159,7 @@ window.addEventListener('message', function(evt) {
             remote_image_url +
             '&mode=same-origin&url=' + encodeURIComponent(image_url),
             '',
-            NOT_TAINTED),
+            TAINTED),
         create_test_promise(
             remote_image_url +
             '&mode=same-origin&url=' + encodeURIComponent(image_url),

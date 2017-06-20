@@ -91,7 +91,6 @@
 #include "core/page/FocusController.h"
 #include "core/page/FrameTree.h"
 #include "core/page/Page.h"
-#include "core/page/PageOverlay.h"
 #include "core/page/PagePopupClient.h"
 #include "core/page/PointerLockController.h"
 #include "core/page/ScopedPageSuspender.h"
@@ -171,6 +170,7 @@
 #include "public/web/WebSelection.h"
 #include "public/web/WebViewClient.h"
 #include "public/web/WebWindowFeatures.h"
+#include "web/PageOverlay.h"
 #include "web/WebDevToolsAgentImpl.h"
 
 #if USE(DEFAULT_RENDER_THEME)
@@ -2109,9 +2109,9 @@ void WebViewImpl::ExitFullscreen(LocalFrame& frame) {
   fullscreen_controller_->ExitFullscreen(frame);
 }
 
-void WebViewImpl::FullscreenElementChanged(Element* old_element,
-                                           Element* new_element) {
-  fullscreen_controller_->FullscreenElementChanged(old_element, new_element);
+void WebViewImpl::FullscreenElementChanged(Element* from_element,
+                                           Element* to_element) {
+  fullscreen_controller_->FullscreenElementChanged(from_element, to_element);
 }
 
 bool WebViewImpl::HasHorizontalScrollbar() {

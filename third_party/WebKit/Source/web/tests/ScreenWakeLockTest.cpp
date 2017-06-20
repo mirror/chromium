@@ -97,7 +97,7 @@ class ScreenWakeLockTest : public ::testing::Test {
   }
 
   void LoadFrame() {
-    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrameImpl(),
+    FrameTestHelpers::LoadFrame(web_view_helper_.WebView()->MainFrame(),
                                 "http://example.com/foo.html");
     web_view_helper_.WebView()->UpdateAllLifecyclePhases();
   }

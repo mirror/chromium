@@ -8,13 +8,10 @@
 
 #include <memory>
 
+#import "base/mac/scoped_nsobject.h"
 #import "ios/chrome/browser/memory/memory_metrics.h"
 #include "ios/chrome/browser/ui/ui_util.h"
 #import "ios/chrome/browser/ui/uikit_ui_util.h"
-
-#if !defined(__has_feature) || !__has_feature(objc_arc)
-#error "This file requires ARC support."
-#endif
 
 namespace {
 // The number of bytes in a megabyte.
@@ -25,24 +22,24 @@ const CGFloat kPadding = 10;
 
 @implementation MemoryDebugger {
   // A timer to trigger refreshes.
-  NSTimer* _refreshTimer;
+  base::scoped_nsobject<NSTimer> _refreshTimer;
 
   // A timer to trigger continuous memory warnings.
-  NSTimer* _memoryWarningTimer;
+  base::scoped_nsobject<NSTimer> _memoryWarningTimer;
 
   // The font to use.
-  UIFont* _font;
+  base::scoped_nsobject<UIFont> _font;
 
   // Labels for memory metrics.
-  UILabel* _physicalFreeMemoryLabel;
-  UILabel* _realMemoryUsedLabel;
-  UILabel* _xcodeGaugeLabel;
-  UILabel* _dirtyVirtualMemoryLabel;
+  base::scoped_nsobject<UILabel> _physicalFreeMemoryLabel;
+  base::scoped_nsobject<UILabel> _realMemoryUsedLabel;
+  base::scoped_nsobject<UILabel> _xcodeGaugeLabel;
+  base::scoped_nsobject<UILabel> _dirtyVirtualMemoryLabel;
 
   // Inputs for memory commands.
-  UITextField* _bloatField;
-  UITextField* _refreshField;
-  UITextField* _continuousMemoryWarningField;
+  base::scoped_nsobject<UITextField> _bloatField;
+  base::scoped_nsobject<UITextField> _refreshField;
+  base::scoped_nsobject<UITextField> _continuousMemoryWarningField;
 
   // A place to store the artifical memory bloat.
   std::unique_ptr<uint8_t> _bloat;
@@ -57,7 +54,7 @@ const CGFloat kPadding = 10;
 - (instancetype)init {
   self = [super initWithFrame:CGRectZero];
   if (self) {
-    _font = [UIFont systemFontOfSize:14];
+    _font.reset([[UIFont systemFontOfSize:14] retain]);
     self.backgroundColor = [UIColor colorWithWhite:0.8f alpha:0.9f];
     self.opaque = NO;
 
@@ -77,6 +74,7 @@ const CGFloat kPadding = 10;
 
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
+  [super dealloc];
 }
 
 #pragma mark UIView methods
@@ -99,19 +97,19 @@ const CGFloat kPadding = 10;
   NSUInteger index = 0;
 
   // Display some metrics.
-  _physicalFreeMemoryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _physicalFreeMemoryLabel.reset([[UILabel alloc] initWithFrame:CGRectZero]);
   [self addMetricWithName:@"Physical Free"
                   atIndex:index++
                usingLabel:_physicalFreeMemoryLabel];
-  _realMemoryUsedLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _realMemoryUsedLabel.reset([[UILabel alloc] initWithFrame:CGRectZero]);
   [self addMetricWithName:@"Real Memory Used"
                   atIndex:index++
                usingLabel:_realMemoryUsedLabel];
-  _xcodeGaugeLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _xcodeGaugeLabel.reset([[UILabel alloc] initWithFrame:CGRectZero]);
   [self addMetricWithName:@"Xcode Gauge"
                   atIndex:index++
                usingLabel:_xcodeGaugeLabel];
-  _dirtyVirtualMemoryLabel = [[UILabel alloc] initWithFrame:CGRectZero];
+  _dirtyVirtualMemoryLabel.reset([[UILabel alloc] initWithFrame:CGRectZero]);
   [self addMetricWithName:@"Dirty VM"
                   atIndex:index++
                usingLabel:_dirtyVirtualMemoryLabel];
@@ -132,7 +130,7 @@ const CGFloat kPadding = 10;
 
   // Display a text input to set the amount of artificial memory bloat and a
   // button to reset the bloat to zero.
-  _bloatField = [[UITextField alloc] initWithFrame:CGRectZero];
+  _bloatField.reset([[UITextField alloc] initWithFrame:CGRectZero]);
   [self addLabelWithText:@"Set bloat (MB)"
                    input:_bloatField
              inputTarget:self
@@ -150,8 +148,8 @@ const CGFloat kPadding = 10;
 // like them) in official builds.
 #if CHROMIUM_BUILD
   // Display a text input to control the rate of continuous memory warnings.
-  _continuousMemoryWarningField =
-      [[UITextField alloc] initWithFrame:CGRectZero];
+  _continuousMemoryWarningField.reset(
+      [[UITextField alloc] initWithFrame:CGRectZero]);
   [self addLabelWithText:@"Set memory warning interval (secs)"
                    input:_continuousMemoryWarningField
              inputTarget:self
@@ -161,7 +159,7 @@ const CGFloat kPadding = 10;
 #endif  // CHROMIUM_BUILD
 
   // Display a text input to control the refresh rate of the memory debugger.
-  _refreshField = [[UITextField alloc] initWithFrame:CGRectZero];
+  _refreshField.reset([[UITextField alloc] initWithFrame:CGRectZero]);
   [self addLabelWithText:@"Set refresh interval (secs)"
                    input:_refreshField
              inputTarget:self
@@ -206,7 +204,8 @@ const CGFloat kPadding = 10;
   CGPoint nameOrigin = [self originForSubviewAtIndex:index];
   CGRect nameFrame =
       CGRectMake(nameOrigin.x, nameOrigin.y, kNameWidth, [_font lineHeight]);
-  UILabel* nameLabel = [[UILabel alloc] initWithFrame:nameFrame];
+  base::scoped_nsobject<UILabel> nameLabel(
+      [[UILabel alloc] initWithFrame:nameFrame]);
   [nameLabel setText:[NSString stringWithFormat:@"%@: ", name]];
   [nameLabel setFont:_font];
   [self addSubview:nameLabel];
@@ -222,7 +221,8 @@ const CGFloat kPadding = 10;
                     target:(id)target
                     action:(SEL)action
                 withOrigin:(CGPoint)origin {
-  UIButton* button = [UIButton buttonWithType:UIButtonTypeSystem];
+  base::scoped_nsobject<UIButton> button(
+      [[UIButton buttonWithType:UIButtonTypeSystem] retain]);
   [button setTitle:title forState:UIControlStateNormal];
   [button titleLabel].font = _font;
   [[button titleLabel] setTextAlignment:NSTextAlignmentCenter];
@@ -274,7 +274,8 @@ const CGFloat kPadding = 10;
             buttonTarget:(id)buttonTarget
             buttonAction:(SEL)buttonAction
                  atIndex:(NSUInteger)index {
-  UILabel* label = [[UILabel alloc] initWithFrame:CGRectZero];
+  base::scoped_nsobject<UILabel> label(
+      [[UILabel alloc] initWithFrame:CGRectZero]);
   if (labelText) {
     [label setText:[NSString stringWithFormat:@"%@: ", labelText]];
   }
@@ -466,11 +467,12 @@ const CGFloat kPadding = 10;
     return;
   }
   [_refreshTimer invalidate];
-  _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:refreshTimerValue
-                                                   target:self
-                                                 selector:@selector(refresh:)
-                                                 userInfo:nil
-                                                  repeats:YES];
+  _refreshTimer.reset(
+      [[NSTimer scheduledTimerWithTimeInterval:refreshTimerValue
+                                        target:self
+                                      selector:@selector(refresh:)
+                                      userInfo:nil
+                                       repeats:YES] retain]);
 }
 
 #pragma mark Memory warning interval methods
@@ -507,12 +509,12 @@ const CGFloat kPadding = 10;
   // memory warnings.
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wundeclared-selector"
-  _memoryWarningTimer =
-      [NSTimer scheduledTimerWithTimeInterval:timerValue
-                                       target:[UIApplication sharedApplication]
-                                     selector:@selector(_performMemoryWarning)
-                                     userInfo:nil
-                                      repeats:YES];
+  _memoryWarningTimer.reset(
+      [[NSTimer scheduledTimerWithTimeInterval:timerValue
+                                        target:[UIApplication sharedApplication]
+                                      selector:@selector(_performMemoryWarning)
+                                      userInfo:nil
+                                       repeats:YES] retain]);
 #pragma clang diagnostic push
 }
 #endif  // CHROMIUM_BUILD

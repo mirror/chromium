@@ -260,8 +260,10 @@ void RenderTextMac::DrawVisualText(internal::SkiaTextRenderer* renderer) {
     renderer->DrawPosText(&run.glyph_positions[0], &run.glyphs[0],
                           run.glyphs.size());
     renderer->DrawDecorations(run.origin.x(), run.origin.y(), run.width,
-                              run.underline, run.strike);
+                              run.underline, run.strike, run.diagonal_strike);
   }
+
+  renderer->EndDiagonalStrike();
 }
 
 RenderTextMac::TextRun::TextRun()
@@ -270,7 +272,8 @@ RenderTextMac::TextRun::TextRun()
       width(0),
       foreground(SK_ColorBLACK),
       underline(false),
-      strike(false) {}
+      strike(false),
+      diagonal_strike(false) {}
 
 RenderTextMac::TextRun::TextRun(TextRun&& other) = default;
 
@@ -441,7 +444,7 @@ void RenderTextMac::ComputeRuns() {
     }
 
     // TODO(asvitkine): Style boundaries are not necessarily per-run. Handle
-    //                  this better. Also, support strike.
+    //                  this better. Also, support strike and diagonal_strike.
     CFDictionaryRef attributes = CTRunGetAttributes(ct_run);
     CTFontRef ct_font = base::mac::GetValueFromDictionary<CTFontRef>(
         attributes, kCTFontAttributeName);

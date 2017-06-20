@@ -211,14 +211,7 @@ class MODULES_EXPORT RTCPeerConnection final
   DECLARE_VIRTUAL_TRACE();
 
  private:
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest, GetAudioTrack);
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest, GetVideoTrack);
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest, GetAudioAndVideoTrack);
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest, GetTrackRemoveStreamAndGCAll);
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest,
-                           GetTrackRemoveStreamAndGCWithPersistentComponent);
-  FRIEND_TEST_ALL_PREFIXES(RTCPeerConnectionTest,
-                           GetTrackRemoveStreamAndGCWithPersistentStream);
+  friend class RTCPeerConnectionTest;
 
   typedef Function<bool()> BoolFunction;
   class EventWrapper : public GarbageCollectedFinalized<EventWrapper> {
@@ -246,6 +239,12 @@ class MODULES_EXPORT RTCPeerConnection final
   void ScheduleDispatchEvent(Event*, std::unique_ptr<BoolFunction>);
   void DispatchScheduledEvent();
   MediaStreamTrack* GetTrack(const WebMediaStreamTrack& web_track) const;
+  // Senders and receivers returned by the handler are in use by the peer
+  // connection, a sender or receiver that is no longer in use is permanently
+  // inactive and does not need to be referenced anymore. These methods removes
+  // such senders/receivers from |rtp_senders_|/|rtp_receivers_|.
+  void RemoveInactiveSenders();
+  void RemoveInactiveReceivers();
 
   void ChangeSignalingState(WebRTCPeerConnectionHandlerClient::SignalingState);
   void ChangeIceGatheringState(
@@ -274,8 +273,8 @@ class MODULES_EXPORT RTCPeerConnection final
   // |rtp_receivers_|.
   HeapHashMap<WeakMember<MediaStreamComponent>, WeakMember<MediaStreamTrack>>
       tracks_;
-  HeapHashMap<uintptr_t, WeakMember<RTCRtpSender>> rtp_senders_;
-  HeapHashMap<uintptr_t, WeakMember<RTCRtpReceiver>> rtp_receivers_;
+  HeapHashMap<uintptr_t, Member<RTCRtpSender>> rtp_senders_;
+  HeapHashMap<uintptr_t, Member<RTCRtpReceiver>> rtp_receivers_;
 
   std::unique_ptr<WebRTCPeerConnectionHandler> peer_handler_;
 

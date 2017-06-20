@@ -69,10 +69,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 @property(nonatomic, strong)
     BillingAddressSelectionCoordinator* billingAddressSelectionCoordinator;
 
-@property(nonatomic, strong) UINavigationController* viewController;
-
-@property(nonatomic, strong)
-    PaymentRequestEditViewController* editViewController;
+@property(nonatomic, strong) PaymentRequestEditViewController* viewController;
 
 @property(nonatomic, strong) CreditCardEditViewControllerMediator* mediator;
 
@@ -86,33 +83,25 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
 @synthesize billingAddressSelectionCoordinator =
     _billingAddressSelectionCoordinator;
 @synthesize viewController = _viewController;
-@synthesize editViewController = _editViewController;
 @synthesize mediator = _mediator;
 
 - (void)start {
-  _editViewController = [[PaymentRequestEditViewController alloc] init];
+  _viewController = [[PaymentRequestEditViewController alloc] init];
   // TODO(crbug.com/602666): Title varies depending on the missing fields.
   NSString* title = _creditCard
                         ? l10n_util::GetNSString(IDS_PAYMENTS_EDIT_CARD)
                         : l10n_util::GetNSString(IDS_PAYMENTS_ADD_CARD_LABEL);
-  [_editViewController setTitle:title];
-  [_editViewController setDelegate:self];
-  [_editViewController setValidatorDelegate:self];
+  [_viewController setTitle:title];
+  [_viewController setDelegate:self];
+  [_viewController setValidatorDelegate:self];
   _mediator = [[CreditCardEditViewControllerMediator alloc]
       initWithPaymentRequest:_paymentRequest
                   creditCard:_creditCard];
-  [_mediator setConsumer:_editViewController];
-  [_editViewController setDataSource:_mediator];
-  [_editViewController loadModel];
+  [_mediator setConsumer:_viewController];
+  [_viewController setDataSource:_mediator];
+  [_viewController loadModel];
 
-  self.viewController = [[UINavigationController alloc]
-      initWithRootViewController:self.editViewController];
-  [self.viewController setModalPresentationStyle:UIModalPresentationFormSheet];
-  [self.viewController
-      setModalTransitionStyle:UIModalTransitionStyleCoverVertical];
-  [self.viewController setNavigationBarHidden:YES];
-
-  [[self baseViewController] presentViewController:self.viewController
+  [[self baseViewController] presentViewController:_viewController
                                           animated:YES
                                         completion:nil];
 }
@@ -123,8 +112,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
                          completion:nil];
   [self.billingAddressSelectionCoordinator stop];
   self.billingAddressSelectionCoordinator = nil;
-  self.editViewController = nil;
-  self.viewController = nil;
+  _viewController = nil;
 }
 
 #pragma mark - PaymentRequestEditViewControllerValidator
@@ -160,7 +148,7 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   if (field.autofillUIType == AutofillUITypeCreditCardBillingAddress) {
     self.billingAddressSelectionCoordinator =
         [[BillingAddressSelectionCoordinator alloc]
-            initWithBaseViewController:self.editViewController];
+            initWithBaseViewController:self.viewController];
     [self.billingAddressSelectionCoordinator
         setPaymentRequest:self.paymentRequest];
     [self.billingAddressSelectionCoordinator
@@ -234,8 +222,8 @@ bool IsValidCreditCardNumber(const base::string16& card_number,
   // controller.
   DCHECK(billingAddress);
   [self.mediator setBillingProfile:billingAddress];
-  [self.editViewController loadModel];
-  [self.editViewController.collectionView reloadData];
+  [self.viewController loadModel];
+  [self.viewController.collectionView reloadData];
 
   [self.billingAddressSelectionCoordinator stop];
   self.billingAddressSelectionCoordinator = nil;

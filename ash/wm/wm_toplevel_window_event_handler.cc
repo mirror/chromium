@@ -6,6 +6,7 @@
 
 #include "ash/public/cpp/config.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/resize_shadow_controller.h"
 #include "ash/wm/window_resizer.h"
 #include "ash/wm/window_state.h"
@@ -161,11 +162,11 @@ void WmToplevelWindowEventHandler::ScopedWindowResizer::OnWindowDestroying(
 
 WmToplevelWindowEventHandler::WmToplevelWindowEventHandler()
     : first_finger_hittest_(HTNOWHERE) {
-  Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  ShellPort::Get()->AddDisplayObserver(this);
 }
 
 WmToplevelWindowEventHandler::~WmToplevelWindowEventHandler() {
-  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+  ShellPort::Get()->RemoveDisplayObserver(this);
 }
 
 void WmToplevelWindowEventHandler::OnKeyEvent(ui::KeyEvent* event) {

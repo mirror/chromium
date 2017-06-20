@@ -264,7 +264,7 @@ bool SyncBackendRegistrar::IsCurrentThreadSafeForModel(
 
   auto it = workers_.find(group);
   DCHECK(it != workers_.end());
-  return it->second->IsOnModelSequence();
+  return it->second->IsOnModelThread();
 }
 
 SyncBackendRegistrar::~SyncBackendRegistrar() {

@@ -484,7 +484,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
     DCHECK(cached_chunk != current_paint_artifact_.PaintChunks().end());
 
     UpdateCurrentPaintChunkProperties(
-        cached_chunk->is_cacheable ? &cached_chunk->id : nullptr,
+        cached_chunk->id ? &*cached_chunk->id : nullptr,
         cached_chunk->properties, ForceNewChunk);
   } else {
     // Avoid uninitialized variable error on Windows.
@@ -508,7 +508,7 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
         ++cached_chunk;
         DCHECK(cached_chunk != current_paint_artifact_.PaintChunks().end());
         UpdateCurrentPaintChunkProperties(
-            cached_chunk->is_cacheable ? &cached_chunk->id : nullptr,
+            cached_chunk->id ? &*cached_chunk->id : nullptr,
             cached_chunk->properties, ForceNewChunk);
       }
 
@@ -525,11 +525,9 @@ void PaintController::CopyCachedSubsequence(size_t begin_index,
 #endif
 
       ProcessNewItem(MoveItemFromCurrentListToNewList(current_index));
-      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
-        DCHECK((!new_paint_chunks_.LastChunk().is_cacheable &&
-                !cached_chunk->is_cacheable) ||
+      if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled())
+        DCHECK((!new_paint_chunks_.LastChunk().id && !cached_chunk->id) ||
                new_paint_chunks_.LastChunk().Matches(*cached_chunk));
-      }
     }
   }
 
@@ -605,8 +603,8 @@ void PaintController::CommitNewDisplayItems() {
 
   if (RuntimeEnabledFeatures::SlimmingPaintV2Enabled()) {
     for (const auto& chunk : current_paint_artifact_.PaintChunks()) {
-      if (chunk.id.client.IsJustCreated())
-        chunk.id.client.ClearIsJustCreated();
+      if (chunk.id && chunk.id->client.IsJustCreated())
+        chunk.id->client.ClearIsJustCreated();
     }
   }
 
@@ -672,7 +670,7 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
     return;
 
   static FloatRect infinite_float_rect(LayoutRect::InfiniteIntRect());
-  if (!new_chunk.is_cacheable) {
+  if (!new_chunk.id) {
     // This chunk is not cacheable, so always invalidate the whole chunk.
     AddRasterInvalidation(
         new_display_item_list_[new_chunk.begin_index].Client(), new_chunk,
@@ -691,12 +689,12 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
     }
 
     // Add skipped old chunks into the index.
-    if (old_chunk.is_cacheable) {
-      auto it = out_of_order_chunk_indices_.find(&old_chunk.id.client);
+    if (old_chunk.id) {
+      auto it = out_of_order_chunk_indices_.find(&old_chunk.id->client);
       Vector<size_t>& indices =
           it == out_of_order_chunk_indices_.end()
               ? out_of_order_chunk_indices_
-                    .insert(&old_chunk.id.client, Vector<size_t>())
+                    .insert(&old_chunk.id->client, Vector<size_t>())
                     .stored_value->value
               : it->value;
       indices.push_back(next_chunk_to_match_);
@@ -705,7 +703,7 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
   }
 
   // Sequential matching reaches the end. Find from the out-of-order index.
-  auto it = out_of_order_chunk_indices_.find(&new_chunk.id.client);
+  auto it = out_of_order_chunk_indices_.find(&new_chunk.id->client);
   if (it != out_of_order_chunk_indices_.end()) {
     for (size_t i : it->value) {
       if (new_chunk.Matches(old_chunks[i])) {
@@ -716,7 +714,7 @@ void PaintController::GenerateRasterInvalidations(PaintChunk& new_chunk) {
   }
 
   // We reach here because the chunk is new.
-  AddRasterInvalidation(new_chunk.id.client, new_chunk, infinite_float_rect,
+  AddRasterInvalidation(new_chunk.id->client, new_chunk, infinite_float_rect,
                         PaintInvalidationReason::kAppeared);
 }
 

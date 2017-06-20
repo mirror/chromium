@@ -26,9 +26,8 @@ void TransientUrlBar::SetURL(const GURL& gurl) {
   UpdateTexture();
 }
 
-void TransientUrlBar::SetSecurityInfo(security_state::SecurityLevel level,
-                                      bool malware) {
-  texture_->SetSecurityInfo(level, malware);
+void TransientUrlBar::SetSecurityLevel(security_state::SecurityLevel level) {
+  texture_->SetSecurityLevel(level);
   UpdateTexture();
 }
 

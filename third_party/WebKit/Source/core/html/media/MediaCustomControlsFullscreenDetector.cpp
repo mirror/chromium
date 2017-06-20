@@ -144,7 +144,7 @@ void MediaCustomControlsFullscreenDetector::
 
 bool MediaCustomControlsFullscreenDetector::IsVideoOrParentFullscreen() {
   Element* fullscreen_element =
-      Fullscreen::FullscreenElementFrom(VideoElement().GetDocument());
+      Fullscreen::CurrentFullScreenElementFrom(VideoElement().GetDocument());
   if (!fullscreen_element)
     return false;
 

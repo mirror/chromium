@@ -742,7 +742,9 @@ void QuicCryptoServerConfig::ProcessClientHelloAfterGetProof(
     const QuicReferenceCountedPointer<Config>& requested_config,
     const QuicReferenceCountedPointer<Config>& primary_config,
     std::unique_ptr<ProcessClientHelloResultCallback> done_cb) const {
-  connection_id = QuicEndian::HostToNet64(connection_id);
+  if (QuicUtils::IsConnectionIdWireFormatBigEndian(Perspective::IS_SERVER)) {
+    connection_id = QuicEndian::HostToNet64(connection_id);
+  }
 
   ProcessClientHelloHelper helper(&done_cb);
 
@@ -1468,8 +1470,11 @@ void QuicCryptoServerConfig::BuildRejection(
                   << "with server-designated connection ID "
                   << server_designated_connection_id;
     out->set_tag(kSREJ);
-    out->SetValue(kRCID,
-                  QuicEndian::HostToNet64(server_designated_connection_id));
+    if (QuicUtils::IsConnectionIdWireFormatBigEndian(Perspective::IS_SERVER)) {
+      server_designated_connection_id =
+          QuicEndian::HostToNet64(server_designated_connection_id);
+    }
+    out->SetValue(kRCID, server_designated_connection_id);
   } else {
     out->set_tag(kREJ);
   }

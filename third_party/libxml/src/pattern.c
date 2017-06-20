@@ -969,7 +969,6 @@ xmlCompileAttributeTest(xmlPatParserContextPtr ctxt) {
 		ERROR5(NULL, NULL, NULL,
 		    "xmlCompileAttributeTest : no namespace bound to prefix %s\n",
 		    prefix);
-	        XML_PAT_FREE_STRING(ctxt, prefix);
 		ctxt->error = 1;
 		goto error;
 	    }

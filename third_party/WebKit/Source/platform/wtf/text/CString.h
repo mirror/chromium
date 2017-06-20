@@ -48,7 +48,8 @@ class WTF_EXPORT CStringImpl : public RefCounted<CStringImpl> {
   void* operator new(size_t, void* ptr) { return ptr; }
   void operator delete(void*);
 
-  static RefPtr<CStringImpl> CreateUninitialized(size_t length, char*& data);
+  static PassRefPtr<CStringImpl> CreateUninitialized(size_t length,
+                                                     char*& data);
 
   const char* data() const { return reinterpret_cast<const char*>(this + 1); }
   size_t length() const { return length_; }
@@ -75,7 +76,7 @@ class WTF_EXPORT CString {
 
   // Construct a string referencing an existing buffer.
   CString(CStringImpl* buffer) : buffer_(buffer) {}
-  CString(RefPtr<CStringImpl> buffer) : buffer_(std::move(buffer)) {}
+  CString(PassRefPtr<CStringImpl> buffer) : buffer_(std::move(buffer)) {}
 
   static CString CreateUninitialized(size_t length, char*& data) {
     return CStringImpl::CreateUninitialized(length, data);

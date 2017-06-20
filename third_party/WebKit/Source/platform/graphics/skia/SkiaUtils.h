@@ -62,7 +62,7 @@ enum {
 
 SkBlendMode PLATFORM_EXPORT
     WebCoreCompositeToSkiaComposite(CompositeOperator,
-                                    WebBlendMode = WebBlendMode::kNormal);
+                                    WebBlendMode = kWebBlendModeNormal);
 CompositeOperator PLATFORM_EXPORT CompositeOperatorFromSkia(SkBlendMode);
 WebBlendMode PLATFORM_EXPORT BlendModeFromSkia(SkBlendMode);
 

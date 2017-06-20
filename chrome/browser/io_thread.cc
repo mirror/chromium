@@ -884,8 +884,6 @@ void IOThread::ConstructSystemRequestContext() {
   builder.set_ftp_enabled(true);
 #endif
 
-  builder.DisableHttpCache();
-
   globals_->system_request_context = builder.Build();
 }
 

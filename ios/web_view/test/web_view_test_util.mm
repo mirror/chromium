@@ -4,8 +4,7 @@
 
 #import "ios/web_view/test/web_view_test_util.h"
 
-#import "ios/web_view/public/cwv_web_view.h"
-#import "ios/web_view/public/cwv_web_view_configuration.h"
+#import <ChromeWebView/ChromeWebView.h>
 
 #import "ios/testing/wait_util.h"
 

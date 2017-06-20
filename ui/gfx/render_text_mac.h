@@ -74,6 +74,7 @@ class GFX_EXPORT RenderTextMac : public RenderText {
     SkColor foreground;
     bool underline;
     bool strike;
+    bool diagonal_strike;
 
     TextRun();
     TextRun(const TextRun& other) = delete;

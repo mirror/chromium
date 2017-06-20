@@ -16,7 +16,6 @@ import org.chromium.base.test.util.SkipCheck;
 import org.chromium.chrome.test.ChromeInstrumentationTestRunner.ChromeDisableIfSkipCheck;
 import org.chromium.chrome.test.ChromeInstrumentationTestRunner.ChromeRestrictionSkipCheck;
 import org.chromium.content.browser.test.ChildProcessAllocatorSettingsHook;
-import org.chromium.policy.test.annotations.Policies;
 
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class ChromeJUnit4ClassRunner extends BaseJUnit4ClassRunner {
 
     private static List<PreTestHook> defaultPreTestHooks() {
         return CollectionUtil.newArrayList(CommandLineFlags.getRegistrationHook(),
-                new ChildProcessAllocatorSettingsHook(), Policies.getRegistrationHook());
+            new ChildProcessAllocatorSettingsHook());
     }
 
 }

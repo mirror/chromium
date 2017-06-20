@@ -425,17 +425,17 @@
   <message name="IDS_SETTINGS_CREDIT_CARD_CLEAR" desc="Label for a context menu item clears the locally cached credit card that is also saved on Google Payments. Clicking this will NOT remove the credit card from Google Payments.">
    Clear copy
   </message>
-  <message name="IDS_SETTINGS_EDIT_CREDIT_CARD_TITLE" desc="The title for the dialog that's shown when editing a card. This can be either credit, debit, or prepaid card..">
-    Edit card
+  <message name="IDS_SETTINGS_EDIT_CREDIT_CARD_TITLE" desc="The title for the dialog that's shown when editing a credit card.">
+    Edit credit card
   </message>
-  <message name="IDS_SETTINGS_ADD_CREDIT_CARD_TITLE" desc="The title for the dialog that's shown when entering the information for a new card. This can be either credit, debit, or prepaid card.">
-    Add card
+  <message name="IDS_SETTINGS_ADD_CREDIT_CARD_TITLE" desc="The title for the dialog that's shown when entering the information for a new credit card.">
+    Add credit card
   </message>
   <message name="IDS_SETTINGS_NAME_ON_CREDIT_CARD" desc="The title for the input that lets users modify the name on the credit card.">
     Name on card
   </message>
-  <message name="IDS_SETTINGS_CREDIT_CARD_NUMBER" desc="The title for the input that lets users modify the number for a card. This can be either credit, debit, or prepaid card.">
-    Card number
+  <message name="IDS_SETTINGS_CREDIT_CARD_NUMBER" desc="The title for the input that lets users modify the credit card number for a credit card.">
+    Credit card number
   </message>
   <message name="IDS_SETTINGS_CREDIT_CARD_EXPIRATION_DATE" desc="Label for the expiration date fields of a credit card that has been or is being saved.">
     Expiration date
@@ -446,8 +446,8 @@
   <message name="IDS_SETTINGS_CREDIT_CARD_EXPIRATION_YEAR" desc="Accessibility label on the year drop down to let users know the field corresponds to the expiration year">
     Expiration year
   </message>
-  <message name="IDS_SETTINGS_CREDIT_CARD_EXPIRED" desc="The error message that is shown when user attempts to enter or save an expired card.">
-    Your card is expired
+  <message name="IDS_SETTINGS_CREDIT_CARD_EXPIRED" desc="The error message that is shown when user attempts to enter or save an expired credit card.">
+    Your credit card is expired
   </message>
   <message name="IDS_SETTINGS_PASSWORDS" desc="Name for the password section and toggle">
     Manage passwords
@@ -917,9 +917,6 @@
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_ADD_PRINTERS_MANUALLY_TITLE" desc="Text for the title of the dialog that is used to manually add a printer instead of automatically finding ones nearby.">
       Add a printer manually
-    </message>
-    <message name="IDS_SETTINGS_PRINTING_CUPS_SELECT_MANUFACTURER_AND_MODEL_TITLE" desc="Text for the title of the dialog that is used to select a manufacturer and model from the drop down list.">
-      Select a printer manufacturer and model
     </message>
     <message name="IDS_SETTINGS_PRINTING_CUPS_PRINTER_DETAILS_TITLE" desc="Text for the title of the Printer Details subpage.">
       Printer details
@@ -3151,36 +3148,6 @@
     </message>
     <message name="IDS_SETTINGS_POWER_SOURCE_CALCULATING" desc="In Device Settings > Power, the power source description when the power status is being determined.">
       Checking...
-    </message>
-    <message name="IDS_SETTINGS_POWER_IDLE_LABEL" desc="In Device Settings > Power, label for behavior when device is idle.">
-      When idle
-    </message>
-    <message name="IDS_SETTINGS_POWER_IDLE_DISPLAY_OFF_SLEEP" desc="In Device Settings > Power, menu item for idle behavior that turns the screen off and later puts the device to sleep.">
-      Turn off display and sleep
-    </message>
-    <message name="IDS_SETTINGS_POWER_IDLE_DISPLAY_OFF_STAY_AWAKE" desc="In Device Settings > Power, menu item for idle behavior that turns the screen off but prevents the device from sleeping.">
-      Turn off display but stay awake
-    </message>
-    <message name="IDS_SETTINGS_POWER_IDLE_DISPLAY_ON" desc="In Device Settings > Power, menu item for idle behavior that prevents the screen from turning off and prevents the device from sleeping.">
-      Keep display on
-    </message>
-    <message name="IDS_SETTINGS_POWER_IDLE_OTHER" desc="In Device Settings > Power, menu item for custom idle behavior.">
-      Other
-    </message>
-    <message name="IDS_SETTINGS_POWER_LID_CLOSED_LABEL" desc="In Device Settings > Power, label for behavior when lid is closed.">
-      When lid is closed
-    </message>
-    <message name="IDS_SETTINGS_POWER_LID_CLOSED_SLEEP" desc="In Device Settings > Power, menu item for lid-closed behavior that puts the device to sleep.">
-      Sleep
-    </message>
-    <message name="IDS_SETTINGS_POWER_LID_CLOSED_STAY_AWAKE" desc="In Device Settings > Power, menu item for lid-closed behavior that prevents the device from sleeping.">
-      Stay awake
-    </message>
-    <message name="IDS_SETTINGS_POWER_LID_CLOSED_SIGN_OUT" desc="In Device Settings > Power, menu item for lid-closed behavior that signs the user out.">
-      Sign out
-    </message>
-    <message name="IDS_SETTINGS_POWER_LID_CLOSED_SHUT_DOWN" desc="In Device Settings > Power, menu item for lid-closed behavior that shuts the system down.">
-      Shut down
     </message>
   </if>
 

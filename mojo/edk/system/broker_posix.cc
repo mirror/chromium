@@ -23,14 +23,12 @@ namespace edk {
 
 namespace {
 
-Channel::MessagePtr WaitForBrokerMessage(
-    PlatformHandle platform_handle,
-    BrokerMessageType expected_type,
-    size_t expected_num_handles,
-    size_t expected_data_size,
-    std::deque<PlatformHandle>* incoming_handles) {
-  Channel::MessagePtr message(new Channel::Message(
-      sizeof(BrokerMessageHeader) + expected_data_size, expected_num_handles));
+bool WaitForBrokerMessage(PlatformHandle platform_handle,
+                          BrokerMessageType expected_type,
+                          size_t expected_num_handles,
+                          std::deque<PlatformHandle>* incoming_handles) {
+  Channel::MessagePtr message(
+      new Channel::Message(sizeof(BrokerMessageHeader), expected_num_handles));
   std::deque<PlatformHandle> incoming_platform_handles;
   ssize_t read_result = PlatformChannelRecvmsg(
       platform_handle, const_cast<void*>(message->data()),
@@ -62,10 +60,7 @@ Channel::MessagePtr WaitForBrokerMessage(
     if (incoming_handles)
       incoming_handles->swap(incoming_platform_handles);
   }
-
-  if (error)
-    return nullptr;
-  return message;
+  return !error;
 }
 
 }  // namespace
@@ -82,7 +77,7 @@ Broker::Broker(ScopedPlatformHandle platform_handle)
 
   // Wait for the first message, which should contain a handle.
   std::deque<PlatformHandle> incoming_platform_handles;
-  if (WaitForBrokerMessage(sync_channel_.get(), BrokerMessageType::INIT, 1, 0,
+  if (WaitForBrokerMessage(sync_channel_.get(), BrokerMessageType::INIT, 1,
                            &incoming_platform_handles)) {
     parent_channel_ = ScopedPlatformHandle(incoming_platform_handles.front());
   }
@@ -113,20 +108,14 @@ scoped_refptr<PlatformSharedBuffer> Broker::GetSharedBuffer(size_t num_bytes) {
   }
 
   std::deque<PlatformHandle> incoming_platform_handles;
-  Channel::MessagePtr message = WaitForBrokerMessage(
-      sync_channel_.get(), BrokerMessageType::BUFFER_RESPONSE, 2,
-      sizeof(BufferResponseData), &incoming_platform_handles);
-  if (message) {
-    const BufferResponseData* data;
-    if (!GetBrokerMessageData(message.get(), &data))
-      return nullptr;
-    base::UnguessableToken guid =
-        base::UnguessableToken::Deserialize(data->guid_high, data->guid_low);
+  if (WaitForBrokerMessage(sync_channel_.get(),
+                           BrokerMessageType::BUFFER_RESPONSE, 2,
+                           &incoming_platform_handles)) {
     ScopedPlatformHandle rw_handle(incoming_platform_handles.front());
     incoming_platform_handles.pop_front();
     ScopedPlatformHandle ro_handle(incoming_platform_handles.front());
     return PlatformSharedBuffer::CreateFromPlatformHandlePair(
-        num_bytes, guid, std::move(rw_handle), std::move(ro_handle));
+        num_bytes, std::move(rw_handle), std::move(ro_handle));
   }
 
   return nullptr;

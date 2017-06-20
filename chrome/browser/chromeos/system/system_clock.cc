@@ -122,9 +122,8 @@ void SystemClock::Observe(int type,
   }
 }
 
-void SystemClock::ActiveUserChanged(const user_manager::User* active_user) {
-  if (active_user && active_user->is_profile_created())
-    UpdateClockType();
+void SystemClock::ActiveUserChanged(const user_manager::User* /*user*/) {
+  UpdateClockType();
 }
 
 void SystemClock::AddObserver(SystemClockObserver* observer) {
@@ -143,7 +142,6 @@ void SystemClock::OnActiveProfileChanged(Profile* profile) {
   user_pref_registrar_->Add(
       prefs::kUse24HourClock,
       base::Bind(&SystemClock::UpdateClockType, base::Unretained(this)));
-  UpdateClockType();
 }
 
 bool SystemClock::OnProfileDestroyed(Profile* profile) {

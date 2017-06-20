@@ -68,7 +68,6 @@ class OortOnlineTBMPage(OortOnlinePage):
     with action_runner.CreateInteraction('End'):
       action_runner.tab.browser.DumpMemory()
 
-
 class OortOnlineTBMPageSet(story.StorySet):
   """Oort Online WebGL benchmark for TBM.
   URL: http://oortonline.gl/#run

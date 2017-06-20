@@ -32,7 +32,9 @@ cr.define('options', function() {
     PageManager.closeOverlay();
   };
 
-  return {BluetoothOptions: BluetoothOptions};
+  return {
+    BluetoothOptions: BluetoothOptions
+  };
 });
 
 /**

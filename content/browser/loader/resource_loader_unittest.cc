@@ -42,7 +42,6 @@
 #include "net/cert/x509_certificate.h"
 #include "net/nqe/effective_connection_type.h"
 #include "net/nqe/network_quality_estimator_test_util.h"
-#include "net/ssl/client_cert_identity_test_util.h"
 #include "net/ssl/client_cert_store.h"
 #include "net/ssl/ssl_cert_request_info.h"
 #include "net/ssl/ssl_private_key.h"
@@ -80,7 +79,7 @@ class ClientCertStoreStub : public net::ClientCertStore {
   ClientCertStoreStub(const net::CertificateList& response,
                       int* request_count,
                       std::vector<std::string>* requested_authorities)
-      : response_(std::move(response)),
+      : response_(response),
         requested_authorities_(requested_authorities),
         request_count_(request_count) {
     requested_authorities_->clear();
@@ -95,7 +94,7 @@ class ClientCertStoreStub : public net::ClientCertStore {
     *requested_authorities_ = cert_request_info.cert_authorities;
     ++(*request_count_);
 
-    callback.Run(net::FakeClientCertIdentityListFromCertificateList(response_));
+    callback.Run(response_);
   }
 
  private:
@@ -135,7 +134,7 @@ class LoaderDestroyingCertStore : public net::ClientCertStore {
                          const ClientCertListCallback& cert_selected_callback,
                          const base::Closure& on_loader_deleted_callback) {
     loader->reset();
-    cert_selected_callback.Run(net::ClientCertIdentityList());
+    cert_selected_callback.Run(net::CertificateList());
     on_loader_deleted_callback.Run();
   }
 
@@ -169,9 +168,8 @@ class MockClientCertURLRequestJob : public net::URLRequestTestJob {
                    base::RetainedRef(cert_request_info)));
   }
 
-  void ContinueWithCertificate(
-      scoped_refptr<net::X509Certificate> cert,
-      scoped_refptr<net::SSLPrivateKey> private_key) override {
+  void ContinueWithCertificate(net::X509Certificate* cert,
+                               net::SSLPrivateKey* private_key) override {
     net::URLRequestTestJob::Start();
   }
 
@@ -275,31 +273,28 @@ class SelectCertificateBrowserClient : public TestContentBrowserClient {
   void SelectClientCertificate(
       WebContents* web_contents,
       net::SSLCertRequestInfo* cert_request_info,
-      net::ClientCertIdentityList client_certs,
+      net::CertificateList client_certs,
       std::unique_ptr<ClientCertificateDelegate> delegate) override {
     EXPECT_FALSE(delegate_.get());
 
     ++call_count_;
-    passed_identities_ = std::move(client_certs);
+    passed_certs_ = std::move(client_certs);
     delegate_ = std::move(delegate);
     select_certificate_run_loop_.Quit();
   }
 
   int call_count() { return call_count_; }
-  const net::ClientCertIdentityList& passed_identities() {
-    return passed_identities_;
-  }
+  net::CertificateList passed_certs() { return passed_certs_; }
 
-  void ContinueWithCertificate(scoped_refptr<net::X509Certificate> cert,
-                               scoped_refptr<net::SSLPrivateKey> private_key) {
-    delegate_->ContinueWithCertificate(std::move(cert), std::move(private_key));
+  void ContinueWithCertificate(net::X509Certificate* cert) {
+    delegate_->ContinueWithCertificate(cert);
     delegate_.reset();
   }
 
   void CancelCertificateSelection() { delegate_.reset(); }
 
  private:
-  net::ClientCertIdentityList passed_identities_;
+  net::CertificateList passed_certs_;
   int call_count_;
   std::unique_ptr<ClientCertificateDelegate> delegate_;
 
@@ -600,10 +595,8 @@ TEST_F(ClientCertResourceLoaderTest, WithStoreLookup) {
   // Set up the test client cert store.
   int store_request_count;
   std::vector<std::string> store_requested_authorities;
-  scoped_refptr<net::X509Certificate> test_cert =
-      net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem");
-  ASSERT_TRUE(test_cert);
-  net::CertificateList dummy_certs(1, test_cert);
+  net::CertificateList dummy_certs(
+      1, net::ImportCertFromFile(net::GetTestCertsDirectory(), "ok_cert.pem"));
   std::unique_ptr<ClientCertStoreStub> test_store(new ClientCertStoreStub(
       dummy_certs, &store_request_count, &store_requested_authorities));
   SetClientCertStore(std::move(test_store));
@@ -626,11 +619,10 @@ TEST_F(ClientCertResourceLoaderTest, WithStoreLookup) {
   // Check if the retrieved certificates were passed to the content browser
   // client.
   EXPECT_EQ(1, test_client.call_count());
-  EXPECT_EQ(1U, test_client.passed_identities().size());
-  EXPECT_EQ(test_cert.get(), test_client.passed_identities()[0]->certificate());
+  EXPECT_EQ(dummy_certs, test_client.passed_certs());
 
   // Continue the request.
-  test_client.ContinueWithCertificate(nullptr, nullptr);
+  test_client.ContinueWithCertificate(nullptr);
   raw_ptr_resource_handler_->WaitUntilResponseComplete();
   EXPECT_EQ(net::OK, raw_ptr_resource_handler_->final_status().error());
 
@@ -652,10 +644,10 @@ TEST_F(ClientCertResourceLoaderTest, WithNullStore) {
   // Check if the SelectClientCertificate was called on the content browser
   // client.
   EXPECT_EQ(1, test_client.call_count());
-  EXPECT_EQ(net::ClientCertIdentityList(), test_client.passed_identities());
+  EXPECT_EQ(net::CertificateList(), test_client.passed_certs());
 
   // Continue the request.
-  test_client.ContinueWithCertificate(nullptr, nullptr);
+  test_client.ContinueWithCertificate(nullptr);
   raw_ptr_resource_handler_->WaitUntilResponseComplete();
   EXPECT_EQ(net::OK, raw_ptr_resource_handler_->final_status().error());
 
@@ -676,7 +668,7 @@ TEST_F(ClientCertResourceLoaderTest, CancelSelection) {
   // Check if the SelectClientCertificate was called on the content browser
   // client.
   EXPECT_EQ(1, test_client.call_count());
-  EXPECT_EQ(net::ClientCertIdentityList(), test_client.passed_identities());
+  EXPECT_EQ(net::CertificateList(), test_client.passed_certs());
 
   // Cancel the request.
   test_client.CancelCertificateSelection();

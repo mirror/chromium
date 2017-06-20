@@ -8,7 +8,6 @@
 #include "base/macros.h"
 
 namespace net {
-class SSLPrivateKey;
 class X509Certificate;
 }
 
@@ -22,12 +21,10 @@ class ClientCertificateDelegate {
   ClientCertificateDelegate() {}
   virtual ~ClientCertificateDelegate() {}
 
-  // Continue the request with |cert| and matching |key|. |cert| may be nullptr
-  // to continue without supplying a certificate. This decision will be
-  // remembered for future requests to the domain.
-  virtual void ContinueWithCertificate(
-      scoped_refptr<net::X509Certificate> cert,
-      scoped_refptr<net::SSLPrivateKey> key) = 0;
+  // Continue the request with |cert|. |cert| may be nullptr to continue without
+  // supplying a certificate. This decision will be remembered for future
+  // requests to the domain.
+  virtual void ContinueWithCertificate(net::X509Certificate* cert) = 0;
 
  private:
   DISALLOW_COPY_AND_ASSIGN(ClientCertificateDelegate);

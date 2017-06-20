@@ -12,6 +12,7 @@
 #include "libxml.h"
 
 #include <string.h>
+#include <limits.h>
 
 #include <libxml/xmlmemory.h>
 #include <libxml/uri.h>
@@ -2163,6 +2164,7 @@ xmlBuildRelativeURI (const xmlChar * URI, const xmlChar * base)
     xmlChar *val = NULL;
     int ret;
     int ix;
+    int pos = 0;
     int nbslash = 0;
     int len;
     xmlURIPtr ref = NULL;
@@ -2253,22 +2255,19 @@ xmlBuildRelativeURI (const xmlChar * URI, const xmlChar * base)
 	uptr = NULL;
 	len = 1;	/* this is for a string terminator only */
     } else {
-        xmlChar *rptr = (xmlChar *) ref->path;
-        int pos = 0;
-
-        /*
-         * Next we compare the two strings and find where they first differ
-         */
-	if ((*rptr == '.') && (rptr[1] == '/'))
-            rptr += 2;
+    /*
+     * Next we compare the two strings and find where they first differ
+     */
+	if ((ref->path[pos] == '.') && (ref->path[pos+1] == '/'))
+            pos += 2;
 	if ((*bptr == '.') && (bptr[1] == '/'))
             bptr += 2;
-	else if ((*bptr == '/') && (*rptr != '/'))
+	else if ((*bptr == '/') && (ref->path[pos] != '/'))
 	    bptr++;
-	while ((bptr[pos] == rptr[pos]) && (bptr[pos] != 0))
+	while ((bptr[pos] == ref->path[pos]) && (bptr[pos] != 0))
 	    pos++;
 
-	if (bptr[pos] == rptr[pos]) {
+	if (bptr[pos] == ref->path[pos]) {
 	    val = xmlStrdup(BAD_CAST "");
 	    goto done;		/* (I can't imagine why anyone would do this) */
 	}
@@ -2278,25 +2277,25 @@ xmlBuildRelativeURI (const xmlChar * URI, const xmlChar * base)
 	 * beginning of the "unique" suffix of URI
 	 */
 	ix = pos;
-	if ((rptr[ix] == '/') && (ix > 0))
+	if ((ref->path[ix] == '/') && (ix > 0))
 	    ix--;
-	else if ((rptr[ix] == 0) && (ix > 1) && (rptr[ix - 1] == '/'))
+	else if ((ref->path[ix] == 0) && (ix > 1) && (ref->path[ix - 1] == '/'))
 	    ix -= 2;
 	for (; ix > 0; ix--) {
-	    if (rptr[ix] == '/')
+	    if (ref->path[ix] == '/')
 		break;
 	}
 	if (ix == 0) {
-	    uptr = (xmlChar *)rptr;
+	    uptr = (xmlChar *)ref->path;
 	} else {
 	    ix++;
-	    uptr = (xmlChar *)&rptr[ix];
+	    uptr = (xmlChar *)&ref->path[ix];
 	}
 
 	/*
 	 * In base, count the number of '/' from the differing point
 	 */
-	if (bptr[pos] != rptr[pos]) {/* check for trivial URI == base */
+	if (bptr[pos] != ref->path[pos]) {/* check for trivial URI == base */
 	    for (; bptr[ix] != 0; ix++) {
 		if (bptr[ix] == '/')
 		    nbslash++;
@@ -2457,7 +2456,6 @@ xmlCanonicPath(const xmlChar *path)
 	        xmlFreeURI(uri);
 		return escURI;
 	    }
-            xmlFree(escURI);
 	}
     }
 

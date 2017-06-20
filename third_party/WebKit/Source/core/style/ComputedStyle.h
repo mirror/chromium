@@ -433,6 +433,18 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_NESTED_VAR(rare_non_inherited_data_, filter_, operations_, ops);
   }
 
+  // backface-visibility (aka -webkit-backface-visibility)
+  static EBackfaceVisibility InitialBackfaceVisibility() {
+    return kBackfaceVisibilityVisible;
+  }
+  EBackfaceVisibility BackfaceVisibility() const {
+    return static_cast<EBackfaceVisibility>(
+        rare_non_inherited_data_->backface_visibility_);
+  }
+  void SetBackfaceVisibility(EBackfaceVisibility b) {
+    SET_VAR(rare_non_inherited_data_, backface_visibility_, b);
+  }
+
   // Background properties.
   // background-color
   static Color InitialBackgroundColor() { return Color::kTransparent; }
@@ -613,6 +625,17 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
                    InitialColumnCount());
   }
 
+  // column-fill
+  static EColumnFill InitialColumnFill() { return EColumnFill::kBalance; }
+  EColumnFill GetColumnFill() const {
+    return static_cast<EColumnFill>(
+        rare_non_inherited_data_->multi_col_data_->column_fill_);
+  }
+  void SetColumnFill(EColumnFill column_fill) {
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_fill_,
+                   static_cast<unsigned>(column_fill));
+  }
+
   // column-gap (aka -webkit-column-gap)
   float ColumnGap() const {
     return rare_non_inherited_data_->multi_col_data_->column_gap_;
@@ -659,6 +682,17 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   void SetColumnRuleWidth(unsigned short w) {
     SET_NESTED_BORDER_WIDTH(rare_non_inherited_data_, multi_col_data_,
                             column_rule_, w);
+  }
+
+  // column-span (aka -webkit-column-span)
+  static EColumnSpan InitialColumnSpan() { return EColumnSpan::kNone; }
+  EColumnSpan GetColumnSpan() const {
+    return static_cast<EColumnSpan>(
+        rare_non_inherited_data_->multi_col_data_->column_span_);
+  }
+  void SetColumnSpan(EColumnSpan column_span) {
+    SET_NESTED_VAR(rare_non_inherited_data_, multi_col_data_, column_span_,
+                   static_cast<unsigned>(column_span));
   }
 
   // column-width (aka -webkit-column-width)
@@ -780,12 +814,68 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
     SET_NESTED_VAR(rare_non_inherited_data_, grid_data_, grid_auto_flow_, flow);
   }
 
+  // mix-blend-mode
+  static WebBlendMode InitialBlendMode() { return kWebBlendModeNormal; }
+  WebBlendMode BlendMode() const {
+    return static_cast<WebBlendMode>(
+        rare_non_inherited_data_->effective_blend_mode_);
+  }
+  void SetBlendMode(WebBlendMode v) {
+    rare_non_inherited_data_.Access()->effective_blend_mode_ = v;
+  }
+
+  // offset-anchor
+  static LengthPoint InitialOffsetAnchor() {
+    return LengthPoint(Length(kAuto), Length(kAuto));
+  }
+  const LengthPoint& OffsetAnchor() const {
+    return rare_non_inherited_data_->transform_data_->motion_.anchor_;
+  }
+  void SetOffsetAnchor(const LengthPoint& offset_anchor) {
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, motion_.anchor_,
+                   offset_anchor);
+  }
+
+  // offset-distance
+  static Length InitialOffsetDistance() { return Length(0, kFixed); }
+  const Length& OffsetDistance() const {
+    return rare_non_inherited_data_->transform_data_->motion_.distance_;
+  }
+  void SetOffsetDistance(const Length& offset_distance) {
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, motion_.distance_,
+                   offset_distance);
+  }
+
   // offset-path
   static BasicShape* InitialOffsetPath() { return nullptr; }
   BasicShape* OffsetPath() const {
-    return rare_non_inherited_data_->transform_data_->offset_path_.Get();
+    return rare_non_inherited_data_->transform_data_->motion_.path_.Get();
   }
   void SetOffsetPath(RefPtr<BasicShape>);
+
+  // offset-position
+  static LengthPoint InitialOffsetPosition() {
+    return LengthPoint(Length(kAuto), Length(kAuto));
+  }
+  const LengthPoint& OffsetPosition() const {
+    return rare_non_inherited_data_->transform_data_->motion_.position_;
+  }
+  void SetOffsetPosition(const LengthPoint& offset_position) {
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, motion_.position_,
+                   offset_position);
+  }
+
+  // offset-rotate
+  static StyleOffsetRotation InitialOffsetRotate() {
+    return StyleOffsetRotation(0, kOffsetRotationAuto);
+  }
+  const StyleOffsetRotation& OffsetRotate() const {
+    return rare_non_inherited_data_->transform_data_->motion_.rotation_;
+  }
+  void SetOffsetRotate(const StyleOffsetRotation& offset_rotate) {
+    SET_NESTED_VAR(rare_non_inherited_data_, transform_data_, motion_.rotation_,
+                   offset_rotate);
+  }
 
   // opacity (aka -webkit-opacity)
   static float InitialOpacity() { return 1.0f; }
@@ -967,6 +1057,16 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   }
   void SetScrollBehavior(ScrollBehavior b) {
     SET_VAR(rare_non_inherited_data_, scroll_behavior_, b);
+  }
+
+  // scroll-snap-type
+  static ScrollSnapType InitialScrollSnapType() { return ScrollSnapType(); }
+  ScrollSnapType GetScrollSnapType() const {
+    return rare_non_inherited_data_->scroll_snap_data_->scroll_snap_type_;
+  }
+  void SetScrollSnapType(const ScrollSnapType& b) {
+    SET_NESTED_VAR(rare_non_inherited_data_, scroll_snap_data_,
+                   scroll_snap_type_, b);
   }
 
   // scroll-padding-block-start
@@ -1685,6 +1785,14 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool HasTextCombine() const { return TextCombine() != ETextCombine::kNone; }
 
   // Grid utility functions.
+  AutoRepeatType GridAutoRepeatColumnsType() const {
+    return static_cast<AutoRepeatType>(
+        rare_non_inherited_data_->grid_data_->grid_auto_repeat_columns_type_);
+  }
+  AutoRepeatType GridAutoRepeatRowsType() const {
+    return static_cast<AutoRepeatType>(
+        rare_non_inherited_data_->grid_data_->grid_auto_repeat_rows_type_);
+  }
   GridAutoFlow GetGridAutoFlow() const {
     return static_cast<GridAutoFlow>(
         rare_non_inherited_data_->grid_data_->grid_auto_flow_);
@@ -1706,6 +1814,16 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool IsGridAutoFlowAlgorithmDense() const {
     return (rare_non_inherited_data_->grid_data_->grid_auto_flow_ &
             kInternalAutoFlowAlgorithmDense) == kInternalAutoFlowAlgorithmDense;
+  }
+  void SetGridAutoRepeatColumnsType(const AutoRepeatType auto_repeat_type) {
+    SET_NESTED_VAR(rare_non_inherited_data_, grid_data_,
+                   grid_auto_repeat_columns_type_,
+                   static_cast<unsigned>(auto_repeat_type));
+  }
+  void SetGridAutoRepeatRowsType(const AutoRepeatType auto_repeat_type) {
+    SET_NESTED_VAR(rare_non_inherited_data_, grid_data_,
+                   grid_auto_repeat_rows_type_,
+                   static_cast<unsigned>(auto_repeat_type));
   }
 
   // align-content utility functions.
@@ -2236,7 +2354,7 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   bool IsFloating() const { return Floating() != EFloat::kNone; }
 
   // Mix-blend-mode utility functions.
-  bool HasBlendMode() const { return BlendMode() != WebBlendMode::kNormal; }
+  bool HasBlendMode() const { return BlendMode() != kWebBlendModeNormal; }
 
   // Motion utility functions.
   bool HasOffset() const {

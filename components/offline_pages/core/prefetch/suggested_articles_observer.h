@@ -25,10 +25,11 @@ namespace offline_pages {
 class SuggestedArticlesObserver
     : public ntp_snippets::ContentSuggestionsService::Observer {
  public:
-  SuggestedArticlesObserver();
+  // |dispatcher| is unowned, lifetime must be managed by the owner of
+  // SuggestedArticlesObserver.
+  SuggestedArticlesObserver(PrefetchDispatcher* dispatcher);
   ~SuggestedArticlesObserver() override;
 
-  void SetPrefetchService(PrefetchService* service);
   void SetContentSuggestionsServiceAndObserve(
       ntp_snippets::ContentSuggestionsService* service);
 
@@ -52,8 +53,8 @@ class SuggestedArticlesObserver
   ntp_snippets::ContentSuggestionsService* content_suggestions_service_ =
       nullptr;
 
-  // Unowned, owns |this|.
-  PrefetchService* prefetch_service_;
+  // Unowned. (see constructor comment).
+  PrefetchDispatcher* prefetch_dispatcher_;
 
   // Normally null, but can be set in tests to override the default behavior.
   std::unique_ptr<std::vector<ntp_snippets::ContentSuggestion>> test_articles_;

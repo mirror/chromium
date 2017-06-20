@@ -86,7 +86,7 @@ void WebSecurityPolicy::ResetOriginAccessWhitelists() {
 
 void WebSecurityPolicy::AddOriginTrustworthyWhiteList(
     const WebSecurityOrigin& origin) {
-  SecurityPolicy::AddOriginTrustworthyWhiteList(*origin.Get());
+  SecurityPolicy::AddOriginTrustworthyWhiteList(origin);
 }
 
 void WebSecurityPolicy::AddSchemeToBypassSecureContextWhitelist(

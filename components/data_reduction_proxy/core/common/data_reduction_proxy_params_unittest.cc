@@ -13,8 +13,6 @@
 #include "base/command_line.h"
 #include "base/macros.h"
 #include "base/metrics/field_trial.h"
-#include "base/test/scoped_feature_list.h"
-#include "components/data_reduction_proxy/core/common/data_reduction_proxy_features.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_params_test_utils.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_server.h"
 #include "components/data_reduction_proxy/core/common/data_reduction_proxy_switches.h"
@@ -548,23 +546,22 @@ TEST_F(DataReductionProxyParamsTest, FREPromoFieldTrial) {
   }
 }
 
-TEST_F(DataReductionProxyParamsTest, LowMemoryPromoFeature) {
+TEST_F(DataReductionProxyParamsTest, LowMemoryPromoFieldTrial) {
   const struct {
+    std::string trial_group_name;
     bool expected_in_field_trial;
   } tests[] = {
-      {false}, {true},
+      {"Enabled", true},
+      {"Enabled_Control", true},
+      {"Disabled", false},
+      {"enabled", false},
   };
 
   for (const auto& test : tests) {
-    base::test::ScopedFeatureList scoped_feature_list;
-    if (test.expected_in_field_trial) {
-      scoped_feature_list.InitAndDisableFeature(
-          features::kDataReductionProxyLowMemoryDevicePromo);
-    } else {
-      scoped_feature_list.InitAndEnableFeature(
-          features::kDataReductionProxyLowMemoryDevicePromo);
-    }
+    base::FieldTrialList field_trial_list(nullptr);
 
+    EXPECT_TRUE(base::FieldTrialList::CreateFieldTrial(
+        "DataReductionProxyLowMemoryDevicePromo", test.trial_group_name));
 #if defined(OS_ANDROID)
     EXPECT_EQ(test.expected_in_field_trial && base::SysInfo::IsLowEndDevice(),
               params::IsIncludedInPromoFieldTrial());

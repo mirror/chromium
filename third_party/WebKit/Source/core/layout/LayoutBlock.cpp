@@ -272,10 +272,6 @@ void LayoutBlock::StyleDidChange(StyleDifference diff,
 void LayoutBlock::UpdateFromStyle() {
   LayoutBox::UpdateFromStyle();
 
-  UpdateHasOverflowClip();
-}
-
-void LayoutBlock::UpdateHasOverflowClip() {
   bool should_clip_overflow =
       !StyleRef().IsOverflowVisible() && AllowsOverflowClip();
   if (should_clip_overflow != HasOverflowClip()) {
@@ -1455,14 +1451,6 @@ void LayoutBlock::ComputeBlockPreferredLogicalWidths(
     if (child->IsOutOfFlowPositioned() || child->IsColumnSpanAll()) {
       child = child->NextSibling();
       continue;
-    }
-
-    if (child->IsBox() &&
-        ToLayoutBox(child)->NeedsPreferredWidthsRecalculation()) {
-      // We don't really know whether the containing block of this child did
-      // change or is going to change size. However, this is our only
-      // opportunity to make sure that it gets its min/max widths calculated.
-      child->SetPreferredLogicalWidthsDirty();
     }
 
     RefPtr<ComputedStyle> child_style = child->MutableStyle();

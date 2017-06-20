@@ -28,7 +28,6 @@ function LocalNTP() {
  * @return {HTMLElement} The found element or null if not found.
  */
 function $(id) {
-  // eslint-disable-next-line no-restricted-properties
   return document.getElementById(id);
 }
 
@@ -233,27 +232,37 @@ function onThemeChange() {
 
 /**
  * Updates the NTP style according to theme.
- * @param {Object} themeInfo The information about the theme.
+ * @param {Object=} opt_themeInfo The information about the theme. If it is
+ * omitted the style will be reverted to the default.
  * @private
  */
-function setCustomThemeStyle(themeInfo) {
+// TODO(treib): We actually never call this without a themeInfo. Should we?
+function setCustomThemeStyle(opt_themeInfo) {
   var customStyleElement = $(IDS.CUSTOM_THEME_STYLE);
   var head = document.head;
-  if (!themeInfo.usingDefaultTheme) {
+  if (opt_themeInfo && !opt_themeInfo.usingDefaultTheme) {
     $(IDS.NTP_CONTENTS).classList.remove(CLASSES.DEFAULT_THEME);
     var themeStyle =
       '#attribution {' +
-      '  color: ' + convertToRGBAColor(themeInfo.textColorLightRgba) + ';' +
+      '  color: ' + convertToRGBAColor(opt_themeInfo.textColorLightRgba) + ';' +
       '}' +
       '#mv-msg {' +
-      '  color: ' + convertToRGBAColor(themeInfo.textColorRgba) + ';' +
+      '  color: ' + convertToRGBAColor(opt_themeInfo.textColorRgba) + ';' +
       '}' +
       '#mv-notice-links span {' +
-      '  color: ' + convertToRGBAColor(themeInfo.textColorLightRgba) + ';' +
+      '  color: ' + convertToRGBAColor(opt_themeInfo.textColorLightRgba) + ';' +
       '}' +
       '#mv-notice-x {' +
       '  -webkit-filter: drop-shadow(0 0 0 ' +
-          convertToRGBAColor(themeInfo.textColorRgba) + ');' +
+          convertToRGBAColor(opt_themeInfo.textColorRgba) + ');' +
+      '}' +
+      '.mv-page-ready .mv-mask {' +
+      '  border: 1px solid ' +
+          convertToRGBAColor(opt_themeInfo.sectionBorderColorRgba) + ';' +
+      '}' +
+      '.mv-page-ready:hover .mv-mask, .mv-page-ready .mv-focused ~ .mv-mask {' +
+      '  border-color: ' +
+          convertToRGBAColor(opt_themeInfo.headerColorRgba) + ';' +
       '}';
 
     if (customStyleElement) {

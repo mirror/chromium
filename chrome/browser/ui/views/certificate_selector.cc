@@ -45,8 +45,8 @@ const int CertificateSelector::kTableViewHeight = 150;
 
 class CertificateSelector::CertificateTableModel : public ui::TableModel {
  public:
-  // |identities| and |provider_names| must have the same size.
-  CertificateTableModel(const net::ClientCertIdentityList& identities,
+  // |certs| and |provider_names| must have the same size.
+  CertificateTableModel(const net::CertificateList& certs,
                         const std::vector<std::string>& provider_names);
 
   // ui::TableModel:
@@ -67,11 +67,11 @@ class CertificateSelector::CertificateTableModel : public ui::TableModel {
 };
 
 CertificateSelector::CertificateTableModel::CertificateTableModel(
-    const net::ClientCertIdentityList& identities,
+    const net::CertificateList& certs,
     const std::vector<std::string>& provider_names) {
-  DCHECK_EQ(identities.size(), provider_names.size());
-  for (size_t i = 0; i < identities.size(); i++) {
-    net::X509Certificate* cert = identities[i]->certificate();
+  DCHECK_EQ(certs.size(), provider_names.size());
+  for (size_t i = 0; i < certs.size(); i++) {
+    net::X509Certificate* cert = certs[i].get();
     Row row;
     row.subject = base::UTF8ToUTF16(cert->subject().GetDisplayName());
     row.issuer = base::UTF8ToUTF16(cert->issuer().GetDisplayName());
@@ -113,13 +113,14 @@ base::string16 CertificateSelector::CertificateTableModel::GetText(
 void CertificateSelector::CertificateTableModel::SetObserver(
     ui::TableModelObserver* observer) {}
 
-CertificateSelector::CertificateSelector(net::ClientCertIdentityList identities,
-                                         content::WebContents* web_contents)
-    : web_contents_(web_contents) {
+CertificateSelector::CertificateSelector(
+    const net::CertificateList& certificates,
+    content::WebContents* web_contents)
+    : web_contents_(web_contents), table_(nullptr), view_cert_button_(nullptr) {
   CHECK(web_contents_);
 
-  // |provider_names| and |identities_| are parallel arrays.
-  // The entry at index |i| is the provider name for |identities_[i]|.
+  // |provider_names| and |certificates_| are parallel arrays.
+  // The entry at index |i| is the provider name for |certificates_[i]|.
   std::vector<std::string> provider_names;
 #if defined(OS_CHROMEOS)
   chromeos::CertificateProviderService* service =
@@ -129,12 +130,11 @@ CertificateSelector::CertificateSelector(net::ClientCertIdentityList identities,
       extensions::ExtensionRegistryFactory::GetForBrowserContext(
           web_contents->GetBrowserContext());
 
-  for (auto& identity : identities) {
+  for (const auto& cert : certificates) {
     std::string provider_name;
     bool has_extension = false;
     std::string extension_id;
-    if (service->LookUpCertificate(*identity->certificate(), &has_extension,
-                                   &extension_id)) {
+    if (service->LookUpCertificate(*cert, &has_extension, &extension_id)) {
       if (!has_extension) {
         // This certificate was provided by an extension but isn't provided by
         // any extension currently. Don't expose it to the user.
@@ -151,15 +151,15 @@ CertificateSelector::CertificateSelector(net::ClientCertIdentityList identities,
       show_provider_column_ = true;
     }  // Otherwise the certificate is provided by the platform.
 
-    identities_.push_back(std::move(identity));
+    certificates_.push_back(cert);
     provider_names.push_back(provider_name);
   }
 #else
-  provider_names.assign(identities.size(), std::string());
-  identities_ = std::move(identities);
+  provider_names.assign(certificates.size(), std::string());
+  certificates_ = certificates;
 #endif
 
-  model_.reset(new CertificateTableModel(identities_, provider_names));
+  model_.reset(new CertificateTableModel(certificates_, provider_names));
 }
 
 CertificateSelector::~CertificateSelector() {
@@ -181,11 +181,11 @@ void CertificateSelector::Show() {
   // TODO(isandrk): A certificate that was previously provided by *both* the
   // platform and an extension will get incorrectly filtered out if the
   // extension stops providing it (both instances will be filtered out), hence
-  // the |identities_| array will be empty. Displaying a dialog with an empty
+  // the |certificates_| array will be empty. Displaying a dialog with an empty
   // list won't make much sense for the user, and also there are some CHECKs in
   // the code that will fail when the list is empty and that's why an early exit
   // is performed here. See crbug.com/641440 for more details.
-  if (identities_.empty()) {
+  if (certificates_.empty()) {
     GetWidget()->Close();
     return;
   }
@@ -239,22 +239,12 @@ ui::TableModel* CertificateSelector::table_model_for_testing() const {
   return model_.get();
 }
 
-net::ClientCertIdentity* CertificateSelector::GetSelectedCert() const {
+net::X509Certificate* CertificateSelector::GetSelectedCert() const {
   const int selected = table_->FirstSelectedRow();
   if (selected < 0)  // Nothing is selected in |table_|.
     return nullptr;
-  DCHECK_LT(static_cast<size_t>(selected), identities_.size());
-  return identities_[selected].get();
-}
-
-bool CertificateSelector::Accept() {
-  const int selected = table_->FirstSelectedRow();
-  if (selected < 0)  // Nothing is selected in |table_|.
-    return false;
-
-  DCHECK_LT(static_cast<size_t>(selected), identities_.size());
-  AcceptCertificate(std::move(identities_[selected]));
-  return true;
+  CHECK_LT(static_cast<size_t>(selected), certificates_.size());
+  return certificates_[selected].get();
 }
 
 bool CertificateSelector::CanResize() const {
@@ -288,12 +278,10 @@ ui::ModalType CertificateSelector::GetModalType() const {
 void CertificateSelector::ButtonPressed(views::Button* sender,
                                         const ui::Event& event) {
   if (sender == view_cert_button_) {
-    net::ClientCertIdentity* const cert = GetSelectedCert();
-    if (cert) {
+    net::X509Certificate* const cert = GetSelectedCert();
+    if (cert)
       ShowCertificateViewer(web_contents_,
-                            web_contents_->GetTopLevelNativeWindow(),
-                            cert->certificate());
-    }
+                            web_contents_->GetTopLevelNativeWindow(), cert);
   }
 }
 

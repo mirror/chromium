@@ -16,7 +16,7 @@ ModelSafeGroup UIModelWorker::GetModelSafeGroup() {
   return GROUP_UI;
 }
 
-bool UIModelWorker::IsOnModelSequence() {
+bool UIModelWorker::IsOnModelThread() {
   return ui_thread_->BelongsToCurrentThread();
 }
 

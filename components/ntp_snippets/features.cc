@@ -21,7 +21,6 @@ const base::Feature*(kAllFeatures[]) = {&kArticleSuggestionsFeature,
                                         &kContentSuggestionsPushFeature,
                                         &kForeignSessionsSuggestionsFeature,
                                         &kIncreasedVisibility,
-                                        &kKeepPrefetchedContentSuggestions,
                                         &kNotificationsFeature,
                                         &kPhysicalWebPageSuggestionsFeature,
                                         &kPublisherFaviconsFromNewServerFeature,
@@ -145,8 +144,5 @@ const char kNotificationsKeepWhenFrontmostParam[] =
 const char kNotificationsOpenToNTPParam[] = "open_to_ntp";
 const char kNotificationsDailyLimit[] = "daily_limit";
 const char kNotificationsIgnoredLimitParam[] = "ignored_limit";
-
-const base::Feature kKeepPrefetchedContentSuggestions{
-    "KeepPrefetchedContentSuggestions", base::FEATURE_DISABLED_BY_DEFAULT};
 
 }  // namespace ntp_snippets

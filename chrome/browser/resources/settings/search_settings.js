@@ -260,43 +260,45 @@ cr.define('settings', function() {
       highlightAssociatedControl_(associatedControl, rawQuery);
   }
 
-  /** @abstract */
-  class Task {
-    /**
-     * @param {!settings.SearchRequest} request
-     * @param {!Node} node
-     */
-    constructor(request, node) {
-      /** @protected {!settings.SearchRequest} */
-      this.request = request;
+  /**
+   * @constructor
+   *
+   * @param {!settings.SearchRequest} request
+   * @param {!Node} node
+   */
+  function Task(request, node) {
+    /** @protected {!settings.SearchRequest} */
+    this.request = request;
 
-      /** @protected {!Node} */
-      this.node = node;
-    }
+    /** @protected {!Node} */
+    this.node = node;
+  }
 
+  Task.prototype = {
     /**
      * @abstract
      * @return {!Promise}
      */
-    exec() {}
+    exec: function() {},
+  };
+
+  /**
+   * A task that takes a <template is="dom-if">...</template> node corresponding
+   * to a setting subpage and renders it. A SearchAndHighlightTask is posted for
+   * the newly rendered subtree, once rendering is done.
+   * @constructor
+   * @extends {Task}
+   *
+   * @param {!settings.SearchRequest} request
+   * @param {!Node} node
+   */
+  function RenderTask(request, node) {
+    Task.call(this, request, node);
   }
 
-  class RenderTask extends Task {
-    /**
-     * A task that takes a <template is="dom-if">...</template> node
-     * corresponding to a setting subpage and renders it. A
-     * SearchAndHighlightTask is posted for the newly rendered subtree, once
-     * rendering is done.
-     *
-     * @param {!settings.SearchRequest} request
-     * @param {!Node} node
-     */
-    constructor(request, node) {
-      super(request, node);
-    }
-
+  RenderTask.prototype = {
     /** @override */
-    exec() {
+    exec: function() {
       var routePath = this.node.getAttribute('route-path');
       var subpageTemplate =
           this.node['_content'].querySelector('settings-subpage');
@@ -316,37 +318,43 @@ cr.define('settings', function() {
           resolve();
         }.bind(this));
       }.bind(this));
-    }
+    },
+  };
+
+  /**
+   * @constructor
+   * @extends {Task}
+   *
+   * @param {!settings.SearchRequest} request
+   * @param {!Node} node
+   */
+  function SearchAndHighlightTask(request, node) {
+    Task.call(this, request, node);
   }
 
-  class SearchAndHighlightTask extends Task {
-    /**
-     * @param {!settings.SearchRequest} request
-     * @param {!Node} node
-     */
-    constructor(request, node) {
-      super(request, node);
-    }
-
+  SearchAndHighlightTask.prototype = {
     /** @override */
-    exec() {
+    exec: function() {
       var foundMatches = findAndHighlightMatches_(this.request, this.node);
       this.request.updateMatches(foundMatches);
       return Promise.resolve();
-    }
+    },
+  };
+
+  /**
+   * @constructor
+   * @extends {Task}
+   *
+   * @param {!settings.SearchRequest} request
+   * @param {!Node} page
+   */
+  function TopLevelSearchTask(request, page) {
+    Task.call(this, request, page);
   }
 
-  class TopLevelSearchTask extends Task {
-    /**
-     * @param {!settings.SearchRequest} request
-     * @param {!Node} page
-     */
-    constructor(request, page) {
-      super(request, page);
-    }
-
+  TopLevelSearchTask.prototype = {
     /** @override */
-    exec() {
+    exec: function() {
       findAndRemoveHighlights_(this.node);
 
       var shouldSearch = this.request.regExp !== null;
@@ -357,88 +365,91 @@ cr.define('settings', function() {
       }
 
       return Promise.resolve();
-    }
+    },
 
     /**
      * @param {boolean} visible
      * @private
      */
-    setSectionsVisibility_(visible) {
+    setSectionsVisibility_: function(visible) {
       var sections = this.node.querySelectorAll('settings-section');
 
       for (var i = 0; i < sections.length; i++)
         sections[i].hiddenBySearch = !visible;
-    }
+    },
+  };
+
+  /**
+   * @constructor
+   * @param {!settings.SearchRequest} request
+   */
+  function TaskQueue(request) {
+    /** @private {!settings.SearchRequest} */
+    this.request_ = request;
+
+    /**
+     * @private {{
+     *   high: !Array<!Task>,
+     *   middle: !Array<!Task>,
+     *   low: !Array<!Task>
+     * }}
+     */
+    this.queues_;
+    this.reset();
+
+    /** @private {?Function} */
+    this.onEmptyCallback_ = null;
+
+    /**
+     * Whether a task is currently running.
+     * @private {boolean}
+     */
+    this.running_ = false;
   }
 
-  class TaskQueue {
-    /** @param {!settings.SearchRequest} request */
-    constructor(request) {
-      /** @private {!settings.SearchRequest} */
-      this.request_ = request;
-
-      /**
-       * @private {{
-       *   high: !Array<!Task>,
-       *   middle: !Array<!Task>,
-       *   low: !Array<!Task>
-       * }}
-       */
-      this.queues_;
-      this.reset();
-
-      /** @private {?Function} */
-      this.onEmptyCallback_ = null;
-
-      /**
-       * Whether a task is currently running.
-       * @private {boolean}
-       */
-      this.running_ = false;
-    }
-
+  TaskQueue.prototype = {
     /** Drops all tasks. */
-    reset() {
+    reset: function() {
       this.queues_ = {high: [], middle: [], low: []};
-    }
+    },
 
     /** @param {!TopLevelSearchTask} task */
-    addTopLevelSearchTask(task) {
+    addTopLevelSearchTask: function(task) {
       this.queues_.high.push(task);
       this.consumePending_();
-    }
+    },
 
     /** @param {!SearchAndHighlightTask} task */
-    addSearchAndHighlightTask(task) {
+    addSearchAndHighlightTask: function(task) {
       this.queues_.middle.push(task);
       this.consumePending_();
-    }
+    },
 
     /** @param {!RenderTask} task */
-    addRenderTask(task) {
+    addRenderTask: function(task) {
       this.queues_.low.push(task);
       this.consumePending_();
-    }
+    },
 
     /**
      * Registers a callback to be called every time the queue becomes empty.
      * @param {function():void} onEmptyCallback
      */
-    onEmpty(onEmptyCallback) {
+    onEmpty: function(onEmptyCallback) {
       this.onEmptyCallback_ = onEmptyCallback;
-    }
+    },
 
     /**
      * @return {!Task|undefined}
      * @private
      */
-    popNextTask_() {
+    popNextTask_: function() {
       return this.queues_.high.shift() || this.queues_.middle.shift() ||
           this.queues_.low.shift();
-    }
+    },
 
     /** @private */
-    consumePending_() {
+    consumePending_: function() {
       if (this.running_)
         return;
 
@@ -464,116 +475,125 @@ cr.define('settings', function() {
         }.bind(this));
         return;
       }
-    }
-  }
+    },
+  };
 
-  class SearchRequest {
+  /**
+   * @constructor
+   *
+   * @param {string} rawQuery
+   * @param {!HTMLElement} root
+   */
+  var SearchRequest = function(rawQuery, root) {
+    /** @private {string} */
+    this.rawQuery_ = rawQuery;
+
+    /** @private {!HTMLElement} */
+    this.root_ = root;
+
+    /** @type {?RegExp} */
+    this.regExp = this.generateRegExp_();
+
     /**
-     * @param {string} rawQuery
-     * @param {!HTMLElement} root
+     * Whether this request was canceled before completing.
+     * @type {boolean}
      */
-    constructor(rawQuery, root) {
-      /** @private {string} */
-      this.rawQuery_ = rawQuery;
+    this.canceled = false;
 
-      /** @private {!HTMLElement} */
-      this.root_ = root;
+    /** @private {boolean} */
+    this.foundMatches_ = false;
 
-      /** @type {?RegExp} */
-      this.regExp = this.generateRegExp_();
+    /** @type {!PromiseResolver} */
+    this.resolver = new PromiseResolver();
 
-      /**
-       * Whether this request was canceled before completing.
-       * @type {boolean}
-       */
-      this.canceled = false;
+    /** @private {!TaskQueue} */
+    this.queue_ = new TaskQueue(this);
+    this.queue_.onEmpty(function() {
+      this.resolver.resolve(this);
+    }.bind(this));
+  };
 
-      /** @private {boolean} */
-      this.foundMatches_ = false;
+  /** @private {!RegExp} */
+  SearchRequest.SANITIZE_REGEX_ = /[-[\]{}()*+?.,\\^$|#\s]/g;
 
-      /** @type {!PromiseResolver} */
-      this.resolver = new PromiseResolver();
-
-      /** @private {!TaskQueue} */
-      this.queue_ = new TaskQueue(this);
-      this.queue_.onEmpty(function() {
-        this.resolver.resolve(this);
-      }.bind(this));
-    }
-
+  SearchRequest.prototype = {
     /**
      * Fires this search request.
      */
-    start() {
+    start: function() {
       this.queue_.addTopLevelSearchTask(
           new TopLevelSearchTask(this, this.root_));
-    }
+    },
 
     /**
      * @return {?RegExp}
      * @private
      */
-    generateRegExp_() {
+    generateRegExp_: function() {
       var regExp = null;
 
       // Generate search text by escaping any characters that would be
       // problematic for regular expressions.
-      var searchText = this.rawQuery_.trim().replace(SANITIZE_REGEX, '\\$&');
+      var searchText =
+          this.rawQuery_.trim().replace(SearchRequest.SANITIZE_REGEX_, '\\$&');
       if (searchText.length > 0)
         regExp = new RegExp('(' + searchText + ')', 'i');
 
       return regExp;
-    }
+    },
 
     /**
      * @param {string} rawQuery
      * @return {boolean} Whether this SearchRequest refers to an identical
      *     query.
      */
-    isSame(rawQuery) {
+    isSame: function(rawQuery) {
       return this.rawQuery_ == rawQuery;
-    }
+    },
 
     /**
      * Updates the result for this search request.
      * @param {boolean} found
      */
-    updateMatches(found) {
+    updateMatches: function(found) {
       this.foundMatches_ = this.foundMatches_ || found;
-    }
+    },
 
     /** @return {boolean} Whether any matches were found. */
-    didFindMatches() {
+    didFindMatches: function() {
       return this.foundMatches_;
-    }
-  }
-
-  /** @const {!RegExp} */
-  var SANITIZE_REGEX = /[-[\]{}()*+?.,\\^$|#\s]/g;
+    },
+  };
 
   /** @interface */
-  class SearchManager {
+  var SearchManager = function() {};
+
+  SearchManager.prototype = {
     /**
      * @param {string} text The text to search for.
      * @param {!Node} page
      * @return {!Promise<!settings.SearchRequest>} A signal indicating that
      *     searching finished.
      */
-    search(text, page) {}
-  }
+    search: function(text, page) {}
+  };
 
-  /** @implements {SearchManager} */
-  class SearchManagerImpl {
-    constructor() {
-      /** @private {!Set<!settings.SearchRequest>} */
-      this.activeRequests_ = new Set();
+  /**
+   * @constructor
+   * @implements {SearchManager}
+   */
+  var SearchManagerImpl = function() {
+    /** @private {!Set<!settings.SearchRequest>} */
+    this.activeRequests_ = new Set();
 
-      /** @private {?string} */
-      this.lastSearchedText_ = null;
-    }
+    /** @private {?string} */
+    this.lastSearchedText_ = null;
+  };
+  cr.addSingletonGetter(SearchManagerImpl);
 
+  SearchManagerImpl.prototype = {
     /** @override */
-    search(text, page) {
+    search: function(text, page) {
       // Cancel any pending requests if a request with different text is
       // submitted.
       if (text != this.lastSearchedText_) {
@@ -593,9 +613,8 @@ cr.define('settings', function() {
         this.activeRequests_.delete(request);
         return request;
       }.bind(this));
-    }
-  }
-  cr.addSingletonGetter(SearchManagerImpl);
+    },
+  };
 
   /** @return {!SearchManager} */
   function getSearchManager() {

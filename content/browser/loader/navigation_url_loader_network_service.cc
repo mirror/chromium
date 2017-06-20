@@ -75,11 +75,11 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   URLLoaderRequestController(
       std::unique_ptr<ResourceRequest> resource_request,
       ResourceContext* resource_context,
-      scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter,
+      scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter,
       const base::WeakPtr<NavigationURLLoaderNetworkService>& owner)
       : resource_request_(std::move(resource_request)),
         resource_context_(resource_context),
-        default_url_loader_factory_getter_(default_url_loader_factory_getter),
+        url_loader_factory_getter_(url_loader_factory_getter),
         owner_(owner) {}
 
   ~URLLoaderRequestController() override {
@@ -141,8 +141,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     if (appcache_handle_core) {
       std::unique_ptr<URLLoaderRequestHandler> appcache_handler =
           AppCacheRequestHandler::InitializeForNavigationNetworkService(
-              *resource_request_, appcache_handle_core,
-              default_url_loader_factory_getter_.get());
+              *resource_request_, appcache_handle_core);
       if (appcache_handler)
         handlers_.push_back(std::move(appcache_handler));
     }
@@ -163,15 +162,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
           GetContentClient()->browser()->CreateURLLoaderThrottles(
               web_contents_getter_),
           *resource_request_, this);
-
-      DCHECK_GT(handler_index_, 0U);
-
-      mojom::URLLoaderFactoryPtr subresource_loader_factory =
-          handlers_[handler_index_ - 1]->MaybeCreateSubresourceFactory();
-      if (subresource_loader_factory.get()) {
-        subresource_url_loader_factory_ptr_info_ =
-            subresource_loader_factory.PassInterface();
-      }
       return;
     }
 
@@ -186,9 +176,9 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     mojom::URLLoaderFactory* factory = nullptr;
     DCHECK_EQ(handlers_.size(), handler_index_);
     if (resource_request_->url.SchemeIs(url::kBlobScheme)) {
-      factory = default_url_loader_factory_getter_->GetBlobFactory()->get();
+      factory = url_loader_factory_getter_->GetBlobFactory()->get();
     } else {
-      factory = default_url_loader_factory_getter_->GetNetworkFactory()->get();
+      factory = url_loader_factory_getter_->GetNetworkFactory()->get();
     }
     url_loader_ = ThrottlingURLLoader::CreateLoaderAndStart(
         factory,
@@ -204,12 +194,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
     DCHECK(url_loader_);
 
     url_loader_->FollowRedirect();
-  }
-
-  // Ownership of the URLLoaderFactoryPtrInfo instance is transferred to the
-  // caller.
-  mojom::URLLoaderFactoryPtrInfo GetSubresourceURLLoaderFactory() {
-    return std::move(subresource_url_loader_factory_ptr_info_);
   }
 
  private:
@@ -266,7 +250,7 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
   ResourceContext* resource_context_;
   base::Callback<WebContents*()> web_contents_getter_;
 
-  scoped_refptr<URLLoaderFactoryGetter> default_url_loader_factory_getter_;
+  scoped_refptr<URLLoaderFactoryGetter> url_loader_factory_getter_;
 
   mojom::URLLoaderFactoryPtr webui_factory_ptr_;
 
@@ -274,10 +258,6 @@ class NavigationURLLoaderNetworkService::URLLoaderRequestController
 
   // This is referenced only on the UI thread.
   base::WeakPtr<NavigationURLLoaderNetworkService> owner_;
-
-  // Currently used by the AppCache loader to pass its factory to the
-  // renderer which enables it to handle subresources.
-  mojom::URLLoaderFactoryPtrInfo subresource_url_loader_factory_ptr_info_;
 
   DISALLOW_COPY_AND_ASSIGN(URLLoaderRequestController);
 };
@@ -414,11 +394,10 @@ void NavigationURLLoaderNetworkService::OnStartLoadingResponseBody(
   // Temporarily, we pass both a stream (null) and the data pipe to the
   // delegate until PlzNavigate has shipped and we can be comfortable fully
   // switching to the data pipe.
-  delegate_->OnResponseStarted(
-      response_, nullptr, std::move(body), ssl_status_,
-      std::unique_ptr<NavigationData>(), GlobalRequestID(-1, g_next_request_id),
-      false /* is_download? */, false /* is_stream */,
-      request_controller_->GetSubresourceURLLoaderFactory());
+  delegate_->OnResponseStarted(response_, nullptr, std::move(body), ssl_status_,
+                               std::unique_ptr<NavigationData>(),
+                               GlobalRequestID(-1, g_next_request_id),
+                               false /* is_download? */, false /* is_stream */);
 }
 
 void NavigationURLLoaderNetworkService::OnComplete(

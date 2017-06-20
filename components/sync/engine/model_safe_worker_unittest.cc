@@ -38,7 +38,7 @@ class MockModelSafeWorker : public ModelSafeWorker {
 
   ModelSafeGroup GetModelSafeGroup() override { return GROUP_PASSIVE; }
 
-  bool IsOnModelSequence() override {
+  bool IsOnModelThread() override {
     return task_runner_->BelongsToCurrentThread();
   }
 

@@ -85,61 +85,6 @@ ContainerNode* HighestEditableRoot(const Position& position,
   return HighestEditableRoot(position);
 }
 
-ContainerNode* HighestEditableRootOfNode(const Node& node,
-                                         EditableType editable_type) {
-  // TODO(editing-dev): We should introduce |const Node&| version of
-  // |FirstPositionInOrBeforeNode()|. See http://crbug.com/734849
-  return HighestEditableRoot(
-      FirstPositionInOrBeforeNode(const_cast<Node*>(&node)), editable_type);
-}
-
-Node* PreviousNodeConsideringAtomicNodes(const Node& start) {
-  if (start.previousSibling()) {
-    Node* node = start.previousSibling();
-    while (!IsAtomicNode(node) && node->lastChild())
-      node = node->lastChild();
-    return node;
-  }
-  return start.parentNode();
-}
-
-Node* NextNodeConsideringAtomicNodes(const Node& start) {
-  if (!IsAtomicNode(&start) && start.hasChildren())
-    return start.firstChild();
-  if (start.nextSibling())
-    return start.nextSibling();
-  const Node* node = &start;
-  while (node && !node->nextSibling())
-    node = node->parentNode();
-  if (node)
-    return node->nextSibling();
-  return nullptr;
-}
-
-// Returns the previous leaf node or nullptr if there are no more. Delivers leaf
-// nodes as if the whole DOM tree were a linear chain of its leaf nodes.
-Node* PreviousAtomicLeafNode(const Node& start) {
-  Node* node = PreviousNodeConsideringAtomicNodes(start);
-  while (node) {
-    if (IsAtomicNode(node))
-      return node;
-    node = PreviousNodeConsideringAtomicNodes(*node);
-  }
-  return nullptr;
-}
-
-// Returns the next leaf node or nullptr if there are no more. Delivers leaf
-// nodes as if the whole DOM tree were a linear chain of its leaf nodes.
-Node* NextAtomicLeafNode(const Node& start) {
-  Node* node = NextNodeConsideringAtomicNodes(start);
-  while (node) {
-    if (IsAtomicNode(node))
-      return node;
-    node = NextNodeConsideringAtomicNodes(*node);
-  }
-  return nullptr;
-}
-
 Node* PreviousLeafWithSameEditability(Node* node, EditableType editable_type) {
   const bool editable = HasEditableStyle(*node, editable_type);
   for (Node* runner = PreviousAtomicLeafNode(*node); runner;
@@ -150,7 +95,9 @@ Node* PreviousLeafWithSameEditability(Node* node, EditableType editable_type) {
   return nullptr;
 }
 
-Node* NextLeafWithSameEditability(Node* node, EditableType editable_type) {
+Node* NextLeafWithSameEditability(
+    Node* node,
+    EditableType editable_type = kContentIsEditable) {
   if (!node)
     return nullptr;
 
@@ -267,21 +214,6 @@ bool InSameLine(const Node& node, const VisiblePosition& visible_position) {
                     visible_position);
 }
 
-Node* FindNodeInPreviousLine(const Node& start_node,
-                             const VisiblePosition& visible_position,
-                             EditableType editable_type) {
-  // TODO(editing-dev): We should make |PreviousLeafWithSameEditability()| to
-  // take |const Node&|.
-  for (Node* runner = PreviousLeafWithSameEditability(
-           const_cast<Node*>(&start_node), editable_type);
-       runner;
-       runner = PreviousLeafWithSameEditability(runner, editable_type)) {
-    if (!InSameLine(*runner, visible_position))
-      return runner;
-  }
-  return nullptr;
-}
-
 }  // namespace
 
 // FIXME: consolidate with code in previousLinePosition.
@@ -292,11 +224,17 @@ Position PreviousRootInlineBoxCandidatePosition(
   DCHECK(visible_position.IsValid()) << visible_position;
   ContainerNode* highest_root =
       HighestEditableRoot(visible_position.DeepEquivalent(), editable_type);
-  Node* const previous_node =
-      FindNodeInPreviousLine(*node, visible_position, editable_type);
+  Node* previous_node = PreviousLeafWithSameEditability(node, editable_type);
+
+  while (previous_node && InSameLine(*previous_node, visible_position)) {
+    previous_node =
+        PreviousLeafWithSameEditability(previous_node, editable_type);
+  }
+
   for (Node* runner = previous_node; runner && !runner->IsShadowRoot();
        runner = PreviousLeafWithSameEditability(runner, editable_type)) {
-    if (HighestEditableRootOfNode(*runner, editable_type) != highest_root)
+    if (HighestEditableRoot(FirstPositionInOrBeforeNode(runner),
+                            editable_type) != highest_root)
       break;
 
     const Position& candidate =
@@ -322,7 +260,8 @@ Position NextRootInlineBoxCandidatePosition(
 
   for (Node* runner = next_node; runner && !runner->IsShadowRoot();
        runner = NextLeafWithSameEditability(runner, editable_type)) {
-    if (HighestEditableRootOfNode(*runner, editable_type) != highest_root)
+    if (HighestEditableRoot(FirstPositionInOrBeforeNode(runner),
+                            editable_type) != highest_root)
       break;
 
     const Position& candidate =
@@ -427,22 +366,20 @@ static VisiblePositionTemplate<Strategy> EndPositionForLine(
     end_node = end_box->GetLineLayoutItem().NonPseudoNode();
   }
 
+  PositionTemplate<Strategy> pos;
   if (isHTMLBRElement(*end_node)) {
-    return CreateVisiblePosition(
-        PositionTemplate<Strategy>::BeforeNode(end_node),
-        VP_UPSTREAM_IF_POSSIBLE);
-  }
-  if (end_box->IsInlineTextBox() && end_node->IsTextNode()) {
+    pos = PositionTemplate<Strategy>::BeforeNode(end_node);
+  } else if (end_box->IsInlineTextBox() && end_node->IsTextNode()) {
     InlineTextBox* end_text_box = ToInlineTextBox(end_box);
     int end_offset = end_text_box->Start();
     if (!end_text_box->IsLineBreak())
       end_offset += end_text_box->Len();
-    return CreateVisiblePosition(
-        PositionTemplate<Strategy>(ToText(end_node), end_offset),
-        VP_UPSTREAM_IF_POSSIBLE);
+    pos = PositionTemplate<Strategy>(ToText(end_node), end_offset);
+  } else {
+    pos = PositionTemplate<Strategy>::AfterNode(end_node);
   }
-  return CreateVisiblePosition(PositionTemplate<Strategy>::AfterNode(end_node),
-                               VP_UPSTREAM_IF_POSSIBLE);
+
+  return CreateVisiblePosition(pos, VP_UPSTREAM_IF_POSSIBLE);
 }
 
 // TODO(yosin) Rename this function to reflect the fact it ignores bidi levels.

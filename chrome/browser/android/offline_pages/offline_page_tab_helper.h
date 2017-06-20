@@ -21,7 +21,6 @@ class WebContents;
 namespace offline_pages {
 
 struct OfflinePageItem;
-class PrefetchService;
 
 // Per-tab class that monitors the navigations and stores the necessary info
 // to facilitate the synchronous access to offline information.
@@ -117,9 +116,6 @@ class OfflinePageTabHelper :
   LoadedOfflinePageInfo offline_info_;
 
   bool reloading_url_on_net_error_ = false;
-
-  // Service, overlives this object.
-  PrefetchService* prefetch_service_ = nullptr;
 
   base::WeakPtrFactory<OfflinePageTabHelper> weak_ptr_factory_;
 

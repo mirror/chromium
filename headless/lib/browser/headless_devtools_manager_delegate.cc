@@ -72,7 +72,8 @@ std::unique_ptr<base::DictionaryValue> CreateInvalidParamResponse(
 std::unique_ptr<base::DictionaryValue> CreateBoundsDict(
     const HeadlessWebContentsImpl* web_contents) {
   auto bounds_object = base::MakeUnique<base::DictionaryValue>();
-  gfx::Rect bounds = web_contents->web_contents()->GetContainerBounds();
+  gfx::Rect bounds =
+      web_contents->web_contents()->GetRenderWidgetHostView()->GetViewBounds();
   bounds_object->SetInteger("left", bounds.x());
   bounds_object->SetInteger("top", bounds.y());
   bounds_object->SetInteger("width", bounds.width());
@@ -474,7 +475,8 @@ HeadlessDevToolsManagerDelegate::SetWindowBounds(
 
   // Compute updated bounds when window state is normal.
   bool set_bounds = false;
-  gfx::Rect bounds = web_contents->web_contents()->GetContainerBounds();
+  gfx::Rect bounds =
+      web_contents->web_contents()->GetRenderWidgetHostView()->GetViewBounds();
   int left, top, width, height;
   if (bounds_dict->GetInteger("left", &left)) {
     bounds.set_x(left);
@@ -512,7 +514,7 @@ HeadlessDevToolsManagerDelegate::SetWindowBounds(
   }
 
   web_contents->set_window_state(window_state);
-  web_contents->SetBounds(bounds);
+  web_contents->web_contents()->GetRenderWidgetHostView()->SetBounds(bounds);
   return CreateSuccessResponse(command_id, nullptr);
 }
 

@@ -14,6 +14,7 @@
 #include "ash/root_window_controller.h"
 #include "ash/shelf/shelf.h"
 #include "ash/shell.h"
+#include "ash/shell_port.h"
 #include "ash/wm/overview/window_selector_controller.h"
 #include "ash/wm/window_animation_types.h"
 #include "ash/wm/window_parenting_utils.h"
@@ -259,7 +260,7 @@ PanelLayoutManager::PanelLayoutManager(Window* panel_container)
       weak_factory_(this) {
   DCHECK(panel_container);
   Shell::Get()->activation_client()->AddObserver(this);
-  Shell::Get()->window_tree_host_manager()->AddObserver(this);
+  ShellPort::Get()->AddDisplayObserver(this);
   Shell::Get()->AddShellObserver(this);
 }
 
@@ -289,7 +290,7 @@ void PanelLayoutManager::Shutdown() {
   }
   panel_windows_.clear();
   Shell::Get()->activation_client()->RemoveObserver(this);
-  Shell::Get()->window_tree_host_manager()->RemoveObserver(this);
+  ShellPort::Get()->RemoveDisplayObserver(this);
   Shell::Get()->RemoveShellObserver(this);
 }
 
@@ -516,7 +517,7 @@ void PanelLayoutManager::OnWindowActivated(ActivationReason reason,
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// PanelLayoutManager, WindowTreeHostManager::Observer implementation:
+// PanelLayoutManager, WmDisplayObserver::Observer implementation:
 
 void PanelLayoutManager::OnDisplayConfigurationChanged() {
   Relayout();

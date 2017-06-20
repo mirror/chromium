@@ -5,6 +5,7 @@
 #include "chrome/browser/ui/webui/settings_utils.h"
 
 #include <windows.h>
+#include <cryptuiapi.h>
 #include <shellapi.h>
 
 #include "base/bind.h"
@@ -16,7 +17,6 @@
 #include "base/threading/thread.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "chrome/browser/browser_process.h"
-#include "chrome/browser/ui/cryptuiapi_shim.h"
 #include "content/public/browser/browser_thread.h"
 #include "content/public/browser/web_contents.h"
 #include "ui/gfx/font.h"

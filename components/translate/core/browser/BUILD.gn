@@ -102,7 +102,6 @@ source_set("unit_tests") {
     "mock_translate_ranker.h",
     "ranker_model_loader_unittest.cc",
     "ranker_model_unittest.cc",
-    "translate_accept_languages_unittest.cc",
     "translate_browser_metrics_unittest.cc",
     "translate_language_list_unittest.cc",
     "translate_manager_unittest.cc",
@@ -110,7 +109,6 @@ source_set("unit_tests") {
     "translate_ranker_impl_unittest.cc",
     "translate_script_unittest.cc",
     "translate_ui_delegate_unittest.cc",
-    "translate_url_util_unittest.cc",
   ]
   deps = [
     ":browser",

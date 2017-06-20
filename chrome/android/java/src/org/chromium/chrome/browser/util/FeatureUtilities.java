@@ -247,8 +247,7 @@ public class FeatureUtilities {
 
         boolean isChromeHomeEnabled = ChromeFeatureList.isEnabled(ChromeFeatureList.CHROME_HOME);
         ChromePreferenceManager manager = ChromePreferenceManager.getInstance();
-        boolean valueChanged =
-                sChromeHomeEnabled != null && isChromeHomeEnabled != manager.isChromeHomeEnabled();
+        boolean valueChanged = isChromeHomeEnabled != manager.isChromeHomeEnabled();
         manager.setChromeHomeEnabled(isChromeHomeEnabled);
         sChromeHomeEnabled = isChromeHomeEnabled;
 
