@@ -16,6 +16,7 @@
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/system/tray/tri_view.h"
 #include "chromeos/audio/cras_audio_handler.h"
+#include "components/vector_icons/vector_icons.h"
 #include "ui/accessibility/ax_node_data.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/paint_vector_icon.h"
@@ -49,7 +50,7 @@ const gfx::VectorIcon& GetActiveOutputDeviceVectorIcon() {
     if (device.type == chromeos::AUDIO_TYPE_USB)
       return kSystemMenuUsbIcon;
     if (device.type == chromeos::AUDIO_TYPE_BLUETOOTH)
-      return kSystemMenuBluetoothIcon;
+      return vector_icons::kSystemMenuBluetoothIcon;
     if (device.type == chromeos::AUDIO_TYPE_HDMI)
       return kSystemMenuHdmiIcon;
   }

@@ -24,6 +24,7 @@
 #include "ash/system/tray/tray_popup_item_style.h"
 #include "ash/system/tray/tray_popup_utils.h"
 #include "ash/system/tray/tri_view.h"
+#include "components/vector_icons/vector_icons.h"
 #include "device/bluetooth/bluetooth_common.h"
 #include "ui/base/l10n/l10n_util.h"
 #include "ui/gfx/color_palette.h"
@@ -101,13 +102,13 @@ const gfx::VectorIcon& GetBluetoothDeviceIcon(
       return ash::kSystemMenuMouseIcon;
     case device::BluetoothDeviceType::MODEM:
     case device::BluetoothDeviceType::PERIPHERAL:
-      return ash::kSystemMenuBluetoothIcon;
+      return vector_icons::kSystemMenuBluetoothIcon;
     case device::BluetoothDeviceType::UNKNOWN:
       LOG(WARNING) << "Unknown device type icon for Bluetooth was requested.";
       break;
   }
   return connected ? ash::kSystemMenuBluetoothConnectedIcon
-                   : ash::kSystemMenuBluetoothIcon;
+                   : vector_icons::kSystemMenuBluetoothIcon;
 }
 
 const int kDisabledPanelLabelBaselineY = 20;
@@ -172,7 +173,7 @@ class BluetoothDefaultView : public TrayItemMore {
       }
     }
     return has_connected_device ? kSystemMenuBluetoothConnectedIcon
-                                : kSystemMenuBluetoothIcon;
+                                : vector_icons::kSystemMenuBluetoothIcon;
   }
 
   DISALLOW_COPY_AND_ASSIGN(BluetoothDefaultView);

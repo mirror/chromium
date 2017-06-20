@@ -29,6 +29,7 @@ enum UiElementDebugId {
   kExitPromptBackplane,
   kTransientUrlBar,
   kLocationAccessIndicator,
+  kBluetoothConnectedIndicator,
 };
 
 }  // namespace vr_shell

@@ -10,6 +10,7 @@
 #include "chrome/browser/android/vr_shell/textures/ui_texture.h"
 #include "chrome/browser/android/vr_shell/ui_browser_interface.h"
 #include "chrome/browser/android/vr_shell/ui_elements/audio_capture_indicator.h"
+#include "chrome/browser/android/vr_shell/ui_elements/bluetooth_connected_indicator.h"
 #include "chrome/browser/android/vr_shell/ui_elements/button.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_prompt.h"
 #include "chrome/browser/android/vr_shell/ui_elements/exit_prompt_backplane.h"
@@ -74,12 +75,14 @@ static constexpr float kAudioCaptureIndicatorWidth = 0.5;
 static constexpr float kVideoCaptureIndicatorWidth = 0.5;
 static constexpr float kScreenCaptureIndicatorWidth = 0.4;
 static constexpr float kLocationIndicatorWidth = 0.088;
+static constexpr float kBluetoothConnectedWidth = 0.088;
 
 static constexpr float kCaptureIndicatorsVerticalOffset = 0.1;
-static constexpr float kAudioCaptureHorizontalOffset = -0.6;
-static constexpr float kVideoCaptureHorizontalOffset = 0;
-static constexpr float kScreenCaptureHorizontalOffset = 0.6;
-static constexpr float kLocationAccessHorizontalOffset = 1.0;
+static constexpr float kAudioCaptureHorizontalOffset = -0.8;
+static constexpr float kVideoCaptureHorizontalOffset = -0.2;
+static constexpr float kScreenCaptureHorizontalOffset = 0.4;
+static constexpr float kLocationAccessHorizontalOffset = 0.8;
+static constexpr float kBluetoothConnectedHorizontalOffset = 1.0;
 
 static constexpr float kTransientUrlBarDistance = 1.4;
 static constexpr float kTransientUrlBarWidth =
@@ -236,6 +239,19 @@ void UiSceneManager::CreateSystemIndicators() {
   element->set_y_anchoring(YAnchoring::YTOP);
   element->set_visible(false);
   location_access_indicator_ = element.get();
+  scene_->AddUiElement(std::move(element));
+
+  element = base::MakeUnique<BluetoothConnectedIndicator>(250);
+  element->set_debug_id(kBluetoothConnectedIndicator);
+  element->set_id(AllocateId());
+  element->set_translation({kBluetoothConnectedHorizontalOffset,
+                            kCaptureIndicatorsVerticalOffset,
+                            kIndicatorContentDistance});
+  element->set_size({kBluetoothConnectedWidth, 0, 1});
+  element->set_parent_id(main_content_->id());
+  element->set_y_anchoring(YAnchoring::YTOP);
+  element->set_visible(false);
+  bluetooth_connected_indicator_ = element.get();
   scene_->AddUiElement(std::move(element));
 
   element = base::MakeUnique<VideoCaptureIndicator>(512);
@@ -530,6 +546,11 @@ void UiSceneManager::SetLocationAccessIndicator(bool enabled) {
   ConfigureIndicators();
 }
 
+void UiSceneManager::SetBluetoothConnectedIndicator(bool enabled) {
+  bluetooth_connected_ = enabled;
+  ConfigureIndicators();
+}
+
 void UiSceneManager::SetWebVrSecureOrigin(bool secure) {
   secure_origin_ = secure;
   ConfigureSecurityWarnings();
@@ -576,6 +597,8 @@ void UiSceneManager::ConfigureIndicators() {
   video_capture_indicator_->set_visible(!web_vr_mode_ && video_capturing_);
   screen_capture_indicator_->set_visible(!web_vr_mode_ && screen_capturing_);
   location_access_indicator_->set_visible(!web_vr_mode_ && location_access_);
+  bluetooth_connected_indicator_->set_visible(!web_vr_mode_ &&
+                                              bluetooth_connected_);
 }
 
 void UiSceneManager::OnSecurityWarningTimer() {
