@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a193bd12_5e0f2b1f",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T01:00:34Z",
+      "side": 1,
+      "message": "Why do we need prefetch_service() after Takeout()?",
+      "revId": "7e1bd14828c18ae6dd2bdcdd617fbf798af61f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
