@@ -78,7 +78,7 @@ class FakeAddressNormalizer : public AddressNormalizer {
   AddressNormalizer::Delegate* requester_;
 };
 
-class FakePaymentRequestDelegate : public PaymentRequestDelegate {
+class FakePaymentRequestDelegate : public PaymentRequestUIDelegate {
  public:
   FakePaymentRequestDelegate()
       : locale_("en-US"), last_committed_url_("https://shop.com") {}
@@ -88,7 +88,7 @@ class FakePaymentRequestDelegate : public PaymentRequestDelegate {
 
   void ShowErrorMessage() override {}
 
-  autofill::PersonalDataManager* GetPersonalDataManager() override {
+  autofill::PersonalDataManager* GetPersonalDataManager() const override {
     return nullptr;
   }
 

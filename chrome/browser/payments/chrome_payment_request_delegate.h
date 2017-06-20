@@ -10,6 +10,7 @@
 
 #include "base/macros.h"
 #include "components/payments/core/address_normalizer_impl.h"
+#include "components/payments/core/autofill_payment_instrument_delegate.h"
 #include "components/payments/core/payment_request_delegate.h"
 
 namespace content {
@@ -20,16 +21,18 @@ namespace payments {
 
 class PaymentRequestDialog;
 
-class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
+class ChromePaymentRequestDelegate : public PaymentRequestUIDelegate {
  public:
   explicit ChromePaymentRequestDelegate(content::WebContents* web_contents);
   ~ChromePaymentRequestDelegate() override;
 
-  // PaymentRequestDelegate:
+  // PaymentRequestUIDelegate:
   void ShowDialog(PaymentRequest* request) override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
-  autofill::PersonalDataManager* GetPersonalDataManager() override;
+
+  // PaymentRequestDelegate:
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
   const std::string& GetApplicationLocale() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;

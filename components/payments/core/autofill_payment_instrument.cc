@@ -71,7 +71,8 @@ void AutofillPaymentInstrument::InvokePaymentApp(
     country_code = autofill::AutofillCountry::CountryCodeForLocale(app_locale_);
   }
   payment_request_delegate_->GetAddressNormalizer()->StartAddressNormalization(
-      billing_address_, country_code, /*timeout_seconds=*/5, this);
+      billing_address_, country_code,
+      /*timeout_seconds=*/5, this);
 
   payment_request_delegate_->DoFullCardRequest(credit_card_,
                                                weak_ptr_factory_.GetWeakPtr());

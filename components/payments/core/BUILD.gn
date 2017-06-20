@@ -31,6 +31,7 @@ static_library("core") {
     "payment_request_data_util.cc",
     "payment_request_data_util.h",
     "payment_request_delegate.h",
+    "payment_request_ui_delegate.h",
     "payments_profile_comparator.cc",
     "payments_profile_comparator.h",
     "strings_util.cc",

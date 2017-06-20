@@ -34,20 +34,9 @@ class PaymentRequestDelegate {
  public:
   virtual ~PaymentRequestDelegate() {}
 
-  // Shows the Payment Request dialog for the given |request|.
-  virtual void ShowDialog(PaymentRequest* request) = 0;
-
-  // Closes the same dialog that was opened by this delegate. Must be safe to
-  // call when the dialog is not showing.
-  virtual void CloseDialog() = 0;
-
-  // Disables the dialog and shows an error message that the transaction has
-  // failed.
-  virtual void ShowErrorMessage() = 0;
-
   // Gets the PersonalDataManager associated with this PaymentRequest flow.
   // Cannot be null.
-  virtual autofill::PersonalDataManager* GetPersonalDataManager() = 0;
+  virtual autofill::PersonalDataManager* GetPersonalDataManager() const = 0;
 
   virtual const std::string& GetApplicationLocale() const = 0;
 

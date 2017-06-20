@@ -8,21 +8,24 @@
 #include <string>
 
 #include "components/payments/core/payment_request_delegate.h"
+#include "components/payments/core/payment_request_ui_delegate.h"
 #include "components/payments/core/test_address_normalizer.h"
 
 namespace payments {
 
-class TestPaymentRequestDelegate : public PaymentRequestDelegate {
+class TestPaymentRequestDelegate : public PaymentRequestUIDelegate {
  public:
   TestPaymentRequestDelegate(
       autofill::PersonalDataManager* personal_data_manager);
   ~TestPaymentRequestDelegate() override;
 
-  // PaymentRequestDelegate
+  // PaymentRequestUIDelegate
   void ShowDialog(PaymentRequest* request) override {}
   void CloseDialog() override {}
   void ShowErrorMessage() override {}
-  autofill::PersonalDataManager* GetPersonalDataManager() override;
+
+  // PaymentRequestDelegate
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
   const std::string& GetApplicationLocale() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;

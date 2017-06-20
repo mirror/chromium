@@ -70,7 +70,7 @@ void ChromePaymentRequestDelegate::ShowErrorMessage() {
 }
 
 autofill::PersonalDataManager*
-ChromePaymentRequestDelegate::GetPersonalDataManager() {
+ChromePaymentRequestDelegate::GetPersonalDataManager() const {
   return autofill::PersonalDataManagerFactory::GetForProfile(
       Profile::FromBrowserContext(web_contents_->GetBrowserContext()));
 }
