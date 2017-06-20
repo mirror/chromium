@@ -10,6 +10,11 @@
           "object": "LayoutSVGImage image id='image'",
           "rect": [0, 0, 200, 200],
           "reason": "image"
+        },
+        {
+          "object": "LayoutSVGImage image id='image'",
+          "rect": [0, 0, 200, 200],
+          "reason": "image"
         }
       ]
     }

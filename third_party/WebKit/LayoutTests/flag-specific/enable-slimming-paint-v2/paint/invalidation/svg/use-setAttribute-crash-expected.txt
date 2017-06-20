@@ -4,14 +4,7 @@
       "name": "LayoutView #document",
       "bounds": [800, 600],
       "contentsOpaque": true,
-      "drawsContent": true,
-      "paintInvalidations": [
-        {
-          "object": "LayoutSVGEllipse svg:circle id='circle'",
-          "rect": [27, 27, 62, 62],
-          "reason": "appeared"
-        }
-      ]
+      "drawsContent": true
     }
   ],
   "objectPaintInvalidations": [
