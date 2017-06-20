@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2d0133ff_6f7d481c",
+        "filename": "services/metrics/public/cpp/BUILD.gn",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1113941
+      },
+      "writtenOn": "2017-06-20T14:59:45Z",
+      "side": 1,
+      "message": "this needs to be a component",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 10
+      },
+      "revId": "6ab61bfa72fc9c5ab91185551a1bd154ee4165e7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
