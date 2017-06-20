@@ -131,6 +131,14 @@ class CORE_EXPORT ScriptLoader : public GarbageCollectedFinalized<ScriptLoader>,
   }
   void SetFetchDocWrittenScriptDeferIdle();
 
+  // Script streaming support.
+  // (Methods are virtual to support testing.)
+  virtual bool StartStreamingIfPossible(Document*,
+                                        ScriptStreamer::Type,
+                                        std::unique_ptr<WTF::Closure>);
+  virtual bool HasStreamer() const;
+  virtual bool IsCurrentlyStreaming() const;
+
  protected:
   ScriptLoader(ScriptElementBase*,
                bool created_by_parser,
