@@ -16,17 +16,31 @@
 #include "ui/base/l10n/l10n_util.h"
 #include "url/url_constants.h"
 
+#include "base/debug/stack_trace.h"
+#include "base/strings/utf_string_conversions.h"
+
 namespace payments {
+namespace {
 
-PaymentManifestParserHost::PaymentManifestParserHost() : callback_counter_(0) {}
+const size_t kMaximumNumberOfItems = 100U;
 
-PaymentManifestParserHost::~PaymentManifestParserHost() {}
+}  // namespace
+
+PaymentManifestParserHost::PaymentManifestParserHost() : callback_counter_(0) {
+  LOG(ERROR) << __FUNCTION__;
+}
+
+PaymentManifestParserHost::~PaymentManifestParserHost() {
+  LOG(ERROR) << __FUNCTION__;
+}
 
 void PaymentManifestParserHost::StartUtilityProcess() {
+  LOG(ERROR) << __FUNCTION__;
   mojo_client_ = base::MakeUnique<
       content::UtilityProcessMojoClient<mojom::PaymentManifestParser>>(
-      l10n_util::GetStringUTF16(
-          IDS_UTILITY_PROCESS_PAYMENT_MANIFEST_PARSER_NAME));
+      base::ASCIIToUTF16("Payment Manifest Parser"));
+  // l10n_util::GetStringUTF16(
+  //    IDS_UTILITY_PROCESS_PAYMENT_MANIFEST_PARSER_NAME));
   mojo_client_->set_error_callback(
       base::Bind(&PaymentManifestParserHost::OnUtilityProcessStopped,
                  base::Unretained(this)));
@@ -36,10 +50,15 @@ void PaymentManifestParserHost::StartUtilityProcess() {
 void PaymentManifestParserHost::ParsePaymentMethodManifest(
     const std::string& content,
     PaymentMethodCallback callback) {
+  LOG(ERROR) << __FUNCTION__;
   if (!mojo_client_) {
-    std::move(callback).Run(std::vector<GURL>());
+    LOG(ERROR) << "Mojo connection down";
+    std::move(callback).Run(std::vector<GURL>(), std::vector<url::Origin>(),
+                            false);
     return;
   }
+
+  LOG(ERROR) << "Mojo connection up";
 
   int64_t callback_identifier = callback_counter_++;
   const auto& result = pending_payment_method_callbacks_.insert(
@@ -54,6 +73,7 @@ void PaymentManifestParserHost::ParsePaymentMethodManifest(
 
 void PaymentManifestParserHost::ParseWebAppManifest(const std::string& content,
                                                     WebAppCallback callback) {
+  LOG(ERROR) << __FUNCTION__;
   if (!mojo_client_) {
     std::move(callback).Run(std::vector<mojom::WebAppManifestSectionPtr>());
     return;
@@ -72,7 +92,9 @@ void PaymentManifestParserHost::ParseWebAppManifest(const std::string& content,
 
 void PaymentManifestParserHost::OnPaymentMethodParse(
     int64_t callback_identifier,
-    const std::vector<GURL>& web_app_manifest_urls) {
+    const std::vector<GURL>& web_app_manifest_urls,
+    const std::vector<url::Origin>& supported_origins,
+    bool all_origins_supported) {
   const auto& pending_callback_it =
       pending_payment_method_callbacks_.find(callback_identifier);
   if (pending_callback_it == pending_payment_method_callbacks_.end()) {
@@ -82,8 +104,8 @@ void PaymentManifestParserHost::OnPaymentMethodParse(
     return;
   }
 
-  const size_t kMaximumNumberOfWebAppUrls = 100U;
-  if (web_app_manifest_urls.size() > kMaximumNumberOfWebAppUrls) {
+  if (web_app_manifest_urls.size() > kMaximumNumberOfItems ||
+      supported_origins.size() > kMaximumNumberOfItems) {
     // If more than 100 items, then something went wrong in the utility
     // process. Stop the utility process and notify all callbacks.
     OnUtilityProcessStopped();
@@ -104,7 +126,8 @@ void PaymentManifestParserHost::OnPaymentMethodParse(
 
   // Can trigger synchronous deletion of this object, so can't access any of
   // the member variables after this block.
-  std::move(callback).Run(web_app_manifest_urls);
+  std::move(callback).Run(web_app_manifest_urls, supported_origins,
+                          all_origins_supported);
 }
 
 void PaymentManifestParserHost::OnWebAppParse(
@@ -119,8 +142,7 @@ void PaymentManifestParserHost::OnWebAppParse(
     return;
   }
 
-  const size_t kMaximumNumberOfSections = 100U;
-  if (manifest.size() > kMaximumNumberOfSections) {
+  if (manifest.size() > kMaximumNumberOfItems) {
     // If more than 100 items, then something went wrong in the utility
     // process. Stop the utility process and notify all callbacks.
     OnUtilityProcessStopped();
@@ -128,8 +150,7 @@ void PaymentManifestParserHost::OnWebAppParse(
   }
 
   for (size_t i = 0; i < manifest.size(); ++i) {
-    const size_t kMaximumNumberOfFingerprints = 100U;
-    if (manifest[i]->fingerprints.size() > kMaximumNumberOfFingerprints) {
+    if (manifest[i]->fingerprints.size() > kMaximumNumberOfItems) {
       // If more than 100 items, then something went wrong in the utility
       // process. Stop the utility process and notify all callbacks.
       OnUtilityProcessStopped();
@@ -146,6 +167,8 @@ void PaymentManifestParserHost::OnWebAppParse(
 }
 
 void PaymentManifestParserHost::OnUtilityProcessStopped() {
+  LOG(ERROR) << __FUNCTION__
+             << " called from: " << base::debug::StackTrace().ToString();
   mojo_client_.reset();
 
   std::unordered_map<int64_t, PaymentMethodCallback> payment_method_callbacks =
@@ -156,7 +179,8 @@ void PaymentManifestParserHost::OnUtilityProcessStopped() {
   for (auto& callback : payment_method_callbacks) {
     // Can trigger synchronous deletion of this object, so can't access any of
     // the member variables after this line.
-    std::move(callback.second).Run(std::vector<GURL>());
+    std::move(callback.second)
+        .Run(std::vector<GURL>(), std::vector<url::Origin>(), false);
   }
 
   for (auto& callback : web_app_callbacks) {
