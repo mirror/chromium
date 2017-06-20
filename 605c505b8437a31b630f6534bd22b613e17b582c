@@ -16,6 +16,24 @@
       "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "627b3641_5b1e46ae",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-20T09:07:01Z",
+      "side": 1,
+      "message": "Then we will have [Call]ContextDestroyedIfNeeded similar to SuspendIfNeeded. Every ContextLifecycleObserver implementation will be obliged to call it in the constructor.",
+      "parentUuid": "3ea972d2_e8910723",
+      "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
