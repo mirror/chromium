@@ -73,10 +73,21 @@ void CreateContextMenuDownload(
     const std::string& extra_headers,
     bool granted) {
   content::WebContents* web_contents = wc_getter.Run();
-
-  if (!web_contents)
+  if (!granted) {
+    DownloadController::RecordStoragePermission(
+        DownloadController::StoragePermissionType::STORAGE_PERMISSION_DENIED);
     return;
+  }
 
+  if (!web_contents) {
+    DownloadController::RecordStoragePermission(
+        DownloadController::StoragePermissionType::
+            STORAGE_PERMISSION_NO_WEB_CONTENTS);
+    return;
+  }
+
+  DownloadController::RecordStoragePermission(
+      DownloadController::StoragePermissionType::STORAGE_PERMISSION_GRANTED);
   const GURL& url = is_link ? params.link_url : params.src_url;
   const GURL& referring_url =
       params.frame_url.is_empty() ? params.page_url : params.frame_url;
@@ -188,6 +199,12 @@ void DownloadController::RecordDownloadCancelReason(
 }
 
 // static
+void DownloadController::RecordStoragePermission(StoragePermissionType type) {
+  UMA_HISTOGRAM_ENUMERATION("MobileDownload.StoragePermission", type,
+                            STORAGE_PERMISSION_MAX);
+}
+
+// static
 DownloadController* DownloadController::GetInstance() {
   return base::Singleton<DownloadController>::get();
 }
@@ -206,6 +223,8 @@ void DownloadController::AcquireFileAccessPermission(
         BrowserThread::UI, FROM_HERE, base::Bind(cb, true));
     return;
   }
+
+  RecordStoragePermission(StoragePermissionType::STORAGE_PERMISSION_REQUESTED);
 
   AcquirePermissionCallback callback(
       base::Bind(&OnRequestFileAccessResult, web_contents_getter, cb));
