@@ -65,7 +65,7 @@
 #endif
 
 #if defined(USE_X11)
-#include "ui/base/x/x11_util_internal.h"  // nogncheck
+#include "ui/base/x/x11_util_internal.h"
 #endif
 
 #if defined(OS_CHROMEOS)
