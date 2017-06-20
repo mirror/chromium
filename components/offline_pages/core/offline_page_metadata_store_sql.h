@@ -37,6 +37,8 @@ namespace offline_pages {
 // * In M56 original_url was added.
 // * In M57 expiration_time was dropped. Existing expired pages would be
 //   removed when metadata consistency check happens.
+// * In M61 origin_package was added. Because database was consistent between
+//   M57 and M60, we mark upgrade from M57.
 //
 // Here is a procedure to update the schema for this store:
 // * Decide how to detect that the store is on a particular version, which
