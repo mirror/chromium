@@ -21,10 +21,13 @@ class Vector2dF;
 
 namespace blink {
 
+class ClipPaintPropertyNode;
 class DisplayItemList;
+class EffectPaintPropertyNode;
 struct PaintChunk;
 class PropertyTreeState;
 struct RasterInvalidationTracking;
+class TransformPaintPropertyNode;
 
 struct RasterUnderInvalidationCheckingParams {
   RasterUnderInvalidationCheckingParams(RasterInvalidationTracking& tracking,
@@ -47,6 +50,21 @@ class PLATFORM_EXPORT PaintChunksToCcLayer {
       const gfx::Vector2dF& layer_offset,
       const DisplayItemList&,
       RasterUnderInvalidationCheckingParams* = nullptr);
+
+ private:
+  inline PaintChunksToCcLayer(const Vector<const PaintChunk*>&,
+                              const DisplayItemList&,
+                              cc::DisplayItemList&);
+  inline ~PaintChunksToCcLayer();
+
+  void ConvertRecursively(const TransformPaintPropertyNode* current_transform,
+                          const ClipPaintPropertyNode* current_clip,
+                          const EffectPaintPropertyNode* current_effect);
+
+  const Vector<const PaintChunk*>& paint_chunks_;
+  Vector<const PaintChunk*>::const_iterator chunk_it_;
+  const DisplayItemList& display_items_;
+  cc::DisplayItemList& cc_list_;
 };
 
 }  // namespace blink
