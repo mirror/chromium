@@ -11,6 +11,7 @@
 #include "base/memory/ptr_util.h"
 #include "base/metrics/field_trial.h"
 #include "base/metrics/field_trial_param_associator.h"
+#include "base/metrics/field_trial_params.h"
 #include "base/run_loop.h"
 #include "base/strings/string_number_conversions.h"
 #include "base/test/histogram_tester.h"
@@ -28,6 +29,7 @@
 #include "net/base/host_port_pair.h"
 #include "net/base/request_priority.h"
 #include "net/http/http_server_properties_impl.h"
+#include "net/nqe/network_quality_estimator_test_util.h"
 #include "net/traffic_annotation/network_traffic_annotation_test_helper.h"
 #include "net/url_request/url_request.h"
 #include "net/url_request/url_request_test_util.h"
@@ -135,9 +137,10 @@ class FakeResourceContext : public ResourceContext {
 
 class ResourceSchedulerTest : public testing::Test {
  protected:
-  ResourceSchedulerTest() {
+  ResourceSchedulerTest() : field_trial_list_(nullptr) {
     InitializeScheduler();
     context_.set_http_server_properties(&http_server_properties_);
+    context_.set_network_quality_estimator(&network_quality_estimator_);
   }
 
   ~ResourceSchedulerTest() override {
@@ -254,6 +257,38 @@ class ResourceSchedulerTest : public testing::Test {
     mock_timer_->Fire();
   }
 
+  void InitializeMaxDelayableRequestsExperiment(
+      base::test::ScopedFeatureList* scoped_feature_list) {
+    base::FieldTrialParamAssociator::GetInstance()->ClearAllParamsForTesting();
+    const std::string kTrialName = "TrialName";
+    const std::string kGroupName = "GroupName";
+    const char kMaxDelayableRequestsNetworkOverride[] =
+        "MaxDelayableRequestsNetworkOverride";
+
+    std::map<std::string, std::string> params;
+    params["EffectiveConnectionType1"] =
+        "2";  // EFFECTIVE_CONNECTION_TYPE_SLOW_2G
+    params["EffectiveConnectionType2"] = "4";  // EFECTIVE_CONNECTION_TYPE_3G
+    // BDP for SLOW_2G: 3000 * 40 = 120000
+    // BDP for 3G: 400 * 400 = 160000
+    params["BDPLowerBound1"] = "100000";
+    params["BDPUpperBound1"] = "130000";
+    params["MaxDelayableRequests1"] = "2";
+    params["BDPLowerBound2"] = "140000";
+    params["BDPUpperBound2"] = "160000";
+    params["MaxDelayableRequests2"] = "4";
+
+    base::AssociateFieldTrialParams(kTrialName, kGroupName, params);
+    base::FieldTrial* field_trial =
+        base::FieldTrialList::CreateFieldTrial(kTrialName, kGroupName);
+
+    std::unique_ptr<base::FeatureList> feature_list(new base::FeatureList);
+    feature_list->RegisterFieldTrialOverride(
+        kMaxDelayableRequestsNetworkOverride,
+        base::FeatureList::OVERRIDE_ENABLE_FEATURE, field_trial);
+    scoped_feature_list->InitWithFeatureList(std::move(feature_list));
+  }
+
   ResourceScheduler* scheduler() {
     return scheduler_.get();
   }
@@ -262,7 +297,9 @@ class ResourceSchedulerTest : public testing::Test {
   std::unique_ptr<ResourceScheduler> scheduler_;
   base::MockTimer* mock_timer_;
   net::HttpServerPropertiesImpl http_server_properties_;
+  net::TestNetworkQualityEstimator network_quality_estimator_;
   net::TestURLRequestContext context_;
+  base::FieldTrialList field_trial_list_;
 };
 
 TEST_F(ResourceSchedulerTest, OneIsolatedLowRequest) {
@@ -981,6 +1018,78 @@ TEST_F(ResourceSchedulerTest, RequestStartedAfterClientDeletedManyDelayable) {
   base::RunLoop().RunUntilIdle();
   EXPECT_TRUE(lowest->started());
 }
+
+// Configuration working: see if everything is enabled, does it limit the number
+// of requests.
+TEST_F(ResourceSchedulerTest, RequestLimitOverrideConfigWorking) {
+  base::test::ScopedFeatureList scoped_feature_list;
+  InitializeMaxDelayableRequestsExperiment(&scoped_feature_list);
+  InitializeScheduler();
+
+  // RTT and bandwidth must fall in the SLOW_2G range. The product of the two
+  // should lie in the experimental bucket defined in
+  // InitializeMaxDelayableRequestsExperiment.
+  // The effective connection type must be SLOW_2G, which has a numeric value of
+  // 2.
+  network_quality_estimator_.set_start_time_null_http_rtt(
+      TimeDelta::FromMilliseconds(3500));
+  network_quality_estimator_.set_start_time_null_transport_rtt(
+      TimeDelta::FromMilliseconds(3000));
+  network_quality_estimator_.set_start_time_null_downlink_throughput_kbps(40);
+  network_quality_estimator_.set_effective_connection_type(
+      static_cast<net::EffectiveConnectionType>(2));
+
+  // For 2G, the typical values of RTT and BW should result in the override
+  // taking effect with the experiment enabled. For this case, the new limit is
+  // 2.
+  // The limit will matter only once the page has a body, since delayable
+  // requests are not loaded before that.
+  scheduler()->OnWillInsertBody(kChildId, kRouteId);
+
+  // Throw in one high priority request to ensure that it does not matter once
+  // a body exists.
+  std::unique_ptr<TestRequest> high(
+      NewRequest("http://host/high", net::HIGHEST));
+  EXPECT_TRUE(high->started());
+
+  const int kOverriddenNumRequests =
+      2;  // Should match the configuration set by
+          // InitializeMaxDelayableRequestsExperiment
+
+  std::vector<std::unique_ptr<TestRequest>> lows_singlehost;
+  // Queue up to the per-host limit (we subtract the current high-pri request).
+  for (int i = 0; i < kOverriddenNumRequests; ++i) {
+    string url = "http://host/low" + base::IntToString(i);
+    lows_singlehost.push_back(NewRequest(url.c_str(), net::LOWEST));
+    EXPECT_TRUE(lows_singlehost[i]->started());
+  }
+
+  std::unique_ptr<TestRequest> second_last_singlehost(
+      NewRequest("http://host/s_last", net::LOWEST));
+  std::unique_ptr<TestRequest> last_singlehost(
+      NewRequest("http://host/last", net::LOWEST));
+
+  EXPECT_FALSE(second_last_singlehost->started());
+
+  lows_singlehost.erase(lows_singlehost.begin());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(second_last_singlehost->started());
+  EXPECT_FALSE(last_singlehost->started());
+
+  lows_singlehost.erase(lows_singlehost.begin());
+  base::RunLoop().RunUntilIdle();
+  EXPECT_TRUE(last_singlehost->started());
+}
+// Configuration working: see if the number of delayable requests in-flight is
+// correct for given input and disabled
+
+// Inside ECT limit check
+
+// Outside ECT nolimit check
+
+// Multiple buckets inside bucket limit test.
+
+// Multiple buckets outside bucket limit test.
 
 }  // unnamed namespace
 
