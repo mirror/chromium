@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "542ef095_ea502306",
+        "filename": "content/browser/devtools/devtools_http_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 804,
+      "author": {
+        "id": 1118499
+      },
+      "writtenOn": "2017-06-20T00:54:02Z",
+      "side": 1,
+      "message": "Current output looks like this:\n\u003e **** DEVTOOLS LISTENING ON 127.0.0.1:57035 ****\n\nFWIW node now outputs something quite readable:\n$ node --inspect-brk lighthouse-cli\n\u003e Debugger listening on ws://127.0.0.1:9229/fab66233-df42-4915-81ce-5e86f42475e7\n\u003e For help see https://nodejs.org/en/docs/inspector\n\n\nI think we should do something similar... such as:\n\n\u003e DevTools listening on 127.0.0.1:57035",
+      "revId": "d2f0fd98f9b59ba8e7de44de22d260f1d3bdcf43",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
