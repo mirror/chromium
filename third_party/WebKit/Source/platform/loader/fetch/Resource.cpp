@@ -392,23 +392,19 @@ AtomicString Resource::HttpContentType() const {
   return GetResponse().HttpContentType();
 }
 
-bool Resource::PassesAccessControlCheck(
-    const SecurityOrigin* security_origin) const {
-  StoredCredentials stored_credentials =
-      LastResourceRequest().AllowStoredCredentials()
-          ? kAllowStoredCredentials
-          : kDoNotAllowStoredCredentials;
-  CrossOriginAccessControl::AccessStatus status =
-      CrossOriginAccessControl::CheckAccess(GetResponse(), stored_credentials,
-                                            security_origin);
-
-  return status == CrossOriginAccessControl::kAccessAllowed;
-}
-
 bool Resource::IsEligibleForIntegrityCheck(
     SecurityOrigin* security_origin) const {
+  // TODO(hintzed): Though this method is apparently only called with
+  // document.GetSecurityOrigin() as security_origin by
+  // SubresourceIntegrity::CheckSubresourceIntegrity, it seems wrong to
+  // potentially call CanRequest() on a different origin than what is used for
+  // the CORS result. Does SubresourceIntegrity rely on
+  // document.GetSecurityOrigin() or could we remove the parameter and use the
+  // origin used for cors? But if, do we also store the result of canRequest,
+  // which for instance checks some whitelist?
+
   return security_origin->CanRequest(GetResourceRequest().Url()) ||
-         PassesAccessControlCheck(security_origin);
+         IsSameOriginOrCORSSuccessful();
 }
 
 void Resource::SetIntegrityDisposition(
