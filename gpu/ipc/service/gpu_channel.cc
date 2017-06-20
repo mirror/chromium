@@ -446,7 +446,7 @@ void GpuChannelMessageQueue::UpdateStateChecking() {
       timer_->Start(
           FROM_HERE,
           base::TimeDelta::FromMilliseconds(kPreemptWaitTimeMs) - time_elapsed,
-          this, &GpuChannelMessageQueue::UpdatePreemptionState);
+          base::Bind(&GpuChannelMessageQueue::UpdatePreemptionState, this));
     } else {
       timer_->Stop();
       if (!scheduled_)
@@ -528,9 +528,9 @@ void GpuChannelMessageQueue::TransitionToWaiting() {
 
   preemption_state_ = WAITING;
 
-  timer_->Start(FROM_HERE,
-                base::TimeDelta::FromMilliseconds(kPreemptWaitTimeMs), this,
-                &GpuChannelMessageQueue::UpdatePreemptionState);
+  timer_->Start(
+      FROM_HERE, base::TimeDelta::FromMilliseconds(kPreemptWaitTimeMs),
+      base::Bind(&GpuChannelMessageQueue::UpdatePreemptionState, this));
 }
 
 void GpuChannelMessageQueue::TransitionToChecking() {
@@ -559,8 +559,9 @@ void GpuChannelMessageQueue::TransitionToPreempting() {
 
   DCHECK_LE(max_preemption_time_,
             base::TimeDelta::FromMilliseconds(kMaxPreemptTimeMs));
-  timer_->Start(FROM_HERE, max_preemption_time_, this,
-                &GpuChannelMessageQueue::UpdatePreemptionState);
+  timer_->Start(
+      FROM_HERE, max_preemption_time_,
+      base::Bind(&GpuChannelMessageQueue::UpdatePreemptionState, this));
 }
 
 void GpuChannelMessageQueue::TransitionToWouldPreemptDescheduled() {
