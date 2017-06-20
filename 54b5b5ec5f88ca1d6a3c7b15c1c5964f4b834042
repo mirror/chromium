@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "3d7e89d2_49cae682",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T19:31:34Z",
+      "side": 1,
+      "message": "+1, that or change the method name to set WebVr State or something since it\u0027s no longer just about being enabled.",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90112aab_3b612bfe",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -13,6 +30,23 @@
       "writtenOn": "2017-06-20T19:17:21Z",
       "side": 1,
       "message": "- Should this just be \"IDS_PRESS_APP_TO_EXIT_PRESENTATION\"?\n- Maybe mention transient nature of the toast?\n- s/webvr/WebVR/ ?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59ef3292_befcaf5a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12331,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T19:31:34Z",
+      "side": 1,
+      "message": "What does \u0027in the bubble\u0027 mean?  I\u0027m imagining trying to be a translator and figuring out what this description is trying to tell me.",
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +121,24 @@
     },
     {
       "key": {
+        "uuid": "7126626d_ad901e78",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/start_presentation_toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T19:31:34Z",
+      "side": 1,
+      "message": "+1 for a base class.",
+      "parentUuid": "0fe54952_651eed07",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "621d0d01_e2d44433",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
@@ -115,6 +167,41 @@
       "writtenOn": "2017-06-20T19:17:21Z",
       "side": 1,
       "message": "Also stop the timer?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "052aaf1a_a22bdceb",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T19:31:34Z",
+      "side": 1,
+      "message": "+1, although it looks like we do something very similar for the transient url bar as well.  Maybe an opportunity for a ConfigureTimer method, or would that get messy?",
+      "parentUuid": "687d29d6_214ad234",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "33052dd2_85352075",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1150437
+      },
+      "writtenOn": "2017-06-20T19:31:34Z",
+      "side": 1,
+      "message": "Should we clean up method order?  Should all the OnXXX methods be together, or should they be close to where their config elements were setup?\n\nYou\u0027ve added this new code in between the transient url bar config (line 607 in this patch) and it\u0027s handler (line 631 below).\n\nI think my preference is to keep them close together if possible, but it\u0027s not a major concern.",
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
