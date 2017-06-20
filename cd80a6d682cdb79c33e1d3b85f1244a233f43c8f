@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8fbff9c9_bf4b62de",
+        "filename": "third_party/WebKit/LayoutTests/bluetooth/script-tests/service/get-same-object.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-20T06:20:57Z",
+      "side": 1,
+      "message": "This is redundant if the set lengths are equal and each item in the first is found in the second.",
+      "range": {
+        "startLine": 24,
+        "startChar": 0,
+        "endLine": 28,
+        "endChar": 9
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e2ac923_a1cecaf9",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-20T06:20:57Z",
+      "side": 1,
+      "message": "// |properties| is an array of strings for property bits to be set as true.",
+      "range": {
+        "startLine": 357,
+        "startChar": 2,
+        "endLine": 357,
+        "endChar": 26
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a358198d_8b97443b",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 536,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-20T06:20:57Z",
+      "side": 1,
+      "message": "Returns a device, not just an object.",
+      "range": {
+        "startLine": 536,
+        "startChar": 14,
+        "endLine": 536,
+        "endChar": 20
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "36556d20_df1202a6",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 551,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-20T06:20:57Z",
+      "side": 1,
+      "message": "I don\u0027t think we should make services with standard names that don\u0027t follow the standards. https://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.health_thermometer.xml doesn\u0027t ever have duplicate characteristics.\n\nHere\u0027s one service that does allow for duplicate characteristics:\nhttps://www.bluetooth.com/specifications/gatt/viewer?attributeXmlFile\u003dorg.bluetooth.service.environmental_sensing.xml\n(though, I\u0027m not sure why that logically makes sense)\n\nOr, we could use custom UUIDs for when we want multiple characteristics. \n\nHow many tests need 2 characteristics with the same UUID? Perhaps we should just add them directly in the test where needed -- which I think could help the tests be easier to understand:\ntest() {\n  // add a characteristic\n  // add a characteristic\n  // getCharacteristics\n  // assert there are two with same UUID\n}\n\nI\u0027m OK giving up on this goal if you think it\u0027s not worth it.",
+      "range": {
+        "startLine": 550,
+        "startChar": 65,
+        "endLine": 551,
+        "endChar": 42
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3959166_880f7540",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/bluetooth-helpers.js",
+        "patchSetId": 5
+      },
+      "lineNbr": 680,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-20T06:20:57Z",
+      "side": 1,
+      "message": "Similar",
+      "range": {
+        "startLine": 680,
+        "startChar": 3,
+        "endLine": 680,
+        "endChar": 11
+      },
+      "revId": "cd80a6d682cdb79c33e1d3b85f1244a233f43c8f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
