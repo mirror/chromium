@@ -24,7 +24,7 @@
         {
           "object": "LayoutBlockFlow (anonymous)",
           "rect": [8, 92, 769, 99],
-          "reason": "disappeared"
+          "reason": "geometry"
         },
         {
           "object": "LayoutIFrame IFRAME id='iframe'",
@@ -60,16 +60,12 @@
       "reason": "disappeared"
     },
     {
-      "object": "LayoutText #text",
-      "reason": "disappeared"
+      "object": "LayoutView #document",
+      "reason": "incremental"
     },
     {
       "object": "LayoutBlockFlow (anonymous)",
-      "reason": "disappeared"
-    },
-    {
-      "object": "LayoutView #document",
-      "reason": "incremental"
+      "reason": "geometry"
     },
     {
       "object": "LayoutBlockFlow (relative positioned) DIV class='relative paddingTop'",
