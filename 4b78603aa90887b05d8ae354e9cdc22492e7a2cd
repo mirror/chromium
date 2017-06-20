@@ -1,0 +1,157 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "41335dc8_f24cc19a",
+        "filename": "third_party/WebKit/Source/core/exported/WebSharedWorkerImpl.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 201,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "why do we set \"include\" in this case?",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6e82c0a1_321d8648",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 602,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "nit: \"(i.e. cors flag is true)\"",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9152deb9_005963b6",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 635,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "nit: \"If the original request\u0027s cors flag is set (i.e. it wasn\u0027t same-origin)\" ?",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37c85399_6109ac3b",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 648,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "Could we have some comment for this line for readers?",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ddb5a0ce_600020cb",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentThreadableLoader.h",
+        "patchSetId": 41
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "nit: add a comment to note that this sets/updates the request\u0027s AllowStoredCredentials (and continues to load the request with kDisableCORSHandlingByResourceFetcher)",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d34f38aa_5c2435ed",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1011,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "nit: add period or hyphen before \u0027The safe\u0027",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "05a1573f_afd7672e",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "nit: update var names\ne.g. dataBufferingPolicy -\u003e data_buffering_policy etc",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d1e38f63_e4f83ac6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1020,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "Add an empty line before line 1020?",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d5b1df_d7c19f80",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 41
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-20T07:22:53Z",
+      "side": 1,
+      "message": "Super hard to read... ;_;",
+      "revId": "4b78603aa90887b05d8ae354e9cdc22492e7a2cd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
