@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f323c55d_854e8d55",
+        "filename": "cc/DEPS",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1212239
+      },
+      "writtenOn": "2017-06-20T17:55:37Z",
+      "side": 1,
+      "message": "Will remove this line.",
+      "revId": "7dad683af4bc6eae1feb56b071ad9a086b6aab6b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
