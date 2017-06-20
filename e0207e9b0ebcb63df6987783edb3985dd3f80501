@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "64a06455_46bfa160",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 103,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Hm, in the current signature I don\u0027t own the string, but looking at the call site more closely, it looks like that\u0027s an accident: the string is bound to the callback with base::Passed, so the caller already gives up ownership, it\u0027s just owned by the callback object and then immediately destroyed. So, with changes to the signature (and search_provider_logos::GoogleParseLogoResponse): Done.",
+      "parentUuid": "414ac49e_4eaac3b1",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fbff7de8_0ac5893d",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 2
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-19T14:13:06Z",
       "side": 1,
       "message": "These two should probably go into the component, next to the other parsing functions?",
+      "range": {
+        "startLine": 114,
+        "startChar": 1,
+        "endLine": 114,
+        "endChar": 0
+      },
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "62f273a3_c3d55e0c",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Hm, the existing methods are in google_logo_api.{h,cc}, and these are not Google-specific. Maybe the others should go into doodle_api.{h,cc} and these into fixed_logo_api.{h,cc} or something?",
+      "parentUuid": "fbff7de8_0ac5893d",
       "range": {
         "startLine": 114,
         "startChar": 1,
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "ccb5b805_ec99fa1e",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1e705b97_6fc50bcd",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "10b68734_38fb971d",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 2
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f14f5a94_5c4a1ae8",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 142,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "10b68734_38fb971d",
+      "range": {
+        "startLine": 142,
+        "startChar": 11,
+        "endLine": 142,
+        "endChar": 0
+      },
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "034f6ef2_e28c35fa",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 2
@@ -99,6 +183,24 @@
     },
     {
       "key": {
+        "uuid": "6c844f1f_d0b1b3bf",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "034f6ef2_e28c35fa",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6ff6c73f_519e6c51",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 2
@@ -110,6 +212,24 @@
       "writtenOn": "2017-06-19T14:13:06Z",
       "side": 1,
       "message": "Out of curiosity: Can the ?: be inside the base::Bind, so that doesn\u0027t have to be repeated?",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2bff1225_2002ba50",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Yeah -- the function pointers have exactly the same type, so it\u0027s fine. It does mean we can\u0027t curry additional parameters though (like we might want to curry the wants_cta and use_gray_background parameters), but we can change it back when we want do that?",
+      "parentUuid": "6ff6c73f_519e6c51",
       "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -133,6 +253,24 @@
     },
     {
       "key": {
+        "uuid": "8e0407b4_5ae3f498",
+        "filename": "chrome/browser/android/logo_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 166,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "At the moment it is accurate (I\u0027m not sure it\u0027s enabled by default, but there is a very simple NTP for Chrome Home that shows a logo/Doodle). I\u0027ll make sure that this gets updated if the Chrome Home NTP changes.",
+      "parentUuid": "f8078214_57897fa9",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "63baa033_9e362bbb",
         "filename": "components/search_engines/template_url_data.h",
         "patchSetId": 2
@@ -150,6 +288,47 @@
     },
     {
       "key": {
+        "uuid": "d1952d2b_817dfa5f",
+        "filename": "components/search_engines/template_url_data.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "63baa033_9e362bbb",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7092fec6_179ef4d8",
+        "filename": "components/search_engines/template_url_data_util.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Oops :-D",
+      "range": {
+        "startLine": 137,
+        "startChar": 59,
+        "endLine": 137,
+        "endChar": 66
+      },
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7530f255_837b0778",
         "filename": "components/search_provider_logos/logo_tracker.cc",
         "patchSetId": 2
@@ -164,6 +343,24 @@
       "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "69670742_c1950901",
+        "filename": "components/search_provider_logos/logo_tracker.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 339,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T12:57:02Z",
+      "side": 1,
+      "message": "Turns out I don\u0027t need that change anymore :)",
+      "parentUuid": "7530f255_837b0778",
+      "revId": "e0207e9b0ebcb63df6987783edb3985dd3f80501",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
