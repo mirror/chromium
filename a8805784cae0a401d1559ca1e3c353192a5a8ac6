@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "e750caec_aba1f17a",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-20T20:55:19Z",
+      "side": 1,
+      "message": "nit: It would be great if you update the doc here or at https://cs.chromium.org/chromium/src/testing/android/docs/junit4.md explaining @CommandLine.Add / Remove works the same way in test rules as test classes?",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "94323dca_d7e62aae",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-20T20:55:19Z",
+      "side": 1,
+      "message": "a bit concerned about this, if a test rule is specified as parent class type/interface type, like this:\n```\n@Rule\nTestRule mRule \u003d new ChromeActivityTestRule();\n```\nthen the commandline flag would be missed. I don\u0027t think there is a fix for this? but at least tests don\u0027t currently this.\n\nEventually, we should move towards a happy world where rules take care of everything, instead of using annotation and overriding test runners.",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "377f7908_eb1cde1c",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
         "patchSetId": 1
@@ -13,6 +47,23 @@
       "writtenOn": "2017-06-19T15:01:58Z",
       "side": 1,
       "message": "Nit: capitalize \"Add\" :)",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3282ae1f_c2fc92ff",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-20T20:55:19Z",
+      "side": 1,
+      "message": "This should apply to flag removal",
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
