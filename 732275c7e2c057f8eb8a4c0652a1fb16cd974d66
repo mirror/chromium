@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1f5384cd_304c670f",
+        "filename": "media/filters/BUILD.gn",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-20T16:57:35Z",
+      "side": 1,
+      "message": "This source_set should now be merged with the filters one below.",
+      "revId": "732275c7e2c057f8eb8a4c0652a1fb16cd974d66",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
