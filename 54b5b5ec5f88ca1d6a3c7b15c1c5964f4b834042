@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "addd6757_b1480155",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/vr_shell/VrShell.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Agree. Created crbug.com/735169",
+      "parentUuid": "3d7e89d2_49cae682",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90112aab_3b612bfe",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "fb14198b_eafaf92a",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12331,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "While bubble may not be clear, but I think it is not a very helpful piece of information with translation. Also, fullscreen string uses the same description, so hopefully our translator knows what a bubble means already. Or if you have better suggestion, I am happy to change the text.",
+      "parentUuid": "59ef3292_befcaf5a",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b0b97c6c_0ccfed0f",
         "filename": "chrome/app/generated_resources.grd",
         "patchSetId": 2
@@ -67,6 +103,24 @@
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "96225bc4_98e88888",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12332,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0b97c6c_0ccfed0f",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "8f0af711_d30f9a0c",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d4283648_5d874880",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a46a62cc_23d3d8b6",
         "filename": "chrome/browser/android/vr_shell/textures/start_presentation_toast_texture.cc",
         "patchSetId": 2
@@ -98,6 +170,24 @@
       "writtenOn": "2017-06-20T19:17:21Z",
       "side": 1,
       "message": "This is probably copied code, but it\u0027s hard to read.  What about instead computing border_pixels once, from width() and kBorderFactor, and using that where needed?\n\nAlso, the DCHECK might also be simploer to read if you just compute the total height, then DCHECK that it\u0027s less than the incoming texture size height.  Thoughts?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1790c08b_ab3a65ed",
+        "filename": "chrome/browser/android/vr_shell/textures/start_presentation_toast_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "will address in refactor.",
+      "parentUuid": "a46a62cc_23d3d8b6",
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -139,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "1829d085_d05e37bb",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/start_presentation_toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "talked offline. created a bug",
+      "parentUuid": "7126626d_ad901e78",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "621d0d01_e2d44433",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
@@ -153,6 +261,24 @@
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4cdebb49_5e72a432",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "621d0d01_e2d44433",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -209,6 +335,24 @@
     },
     {
       "key": {
+        "uuid": "aea83014_38ee92b6",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ebbbb875_e138ee59",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "33052dd2_85352075",
         "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
         "patchSetId": 2
@@ -220,6 +364,24 @@
       "writtenOn": "2017-06-20T19:31:34Z",
       "side": 1,
       "message": "Should we clean up method order?  Should all the OnXXX methods be together, or should they be close to where their config elements were setup?\n\nYou\u0027ve added this new code in between the transient url bar config (line 607 in this patch) and it\u0027s handler (line 631 below).\n\nI think my preference is to keep them close together if possible, but it\u0027s not a major concern.",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "302b79b9_0696d7b0",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 627,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Good call. I remember that we should keep implementation the same order as definition in header file. So I have made new added functions conform that rule. As for group methods togather, I think it is better for readability. But I think it doesn\u0027t belong to this CL. I think refactor/reformat should be in a separate CL so it is easier to review.",
+      "parentUuid": "33052dd2_85352075",
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -240,6 +402,24 @@
       "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cab249_fa4bd47f",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1002161
+      },
+      "writtenOn": "2017-06-20T21:15:50Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6b2a294f_eee65559",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
