@@ -16,6 +16,24 @@
       "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e7cde882_25d09103",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutEmbeddedContent.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 394,
+      "author": {
+        "id": 1186968
+      },
+      "writtenOn": "2017-06-20T02:02:49Z",
+      "side": 0,
+      "message": "The code was originally a RenderWidgetProtector class in RenderWidget.cpp https://chromium.googlesource.com/chromium/src/+/1eb5649aba8a1252cae87d0b01af6481fdf86628 which was then merged into RenderPart, which became LayoutPart https://codereview.chromium.org/625073002\n, which is now LayoutEmbeddedContent.\n\nThe original comment when the code was introduced mentions protecting RenderWidget from destruction during a function - I assume SetFrameRect.  I can\u0027t see how that can be relevant for the LayoutEmbeddedContent object right now.\n\nTests all pass fine without this code.",
+      "parentUuid": "20ab1d17_ec86a9a8",
+      "revId": "1092ca3e6798b5ac37e72612fda1087a123b5401",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
