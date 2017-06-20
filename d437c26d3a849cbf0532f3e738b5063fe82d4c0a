@@ -177,6 +177,24 @@
     },
     {
       "key": {
+        "uuid": "73e3e686_968253f2",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-20T23:12:10Z",
+      "side": 1,
+      "message": "Right, those comments. OK, I understand better now. Thanks.",
+      "parentUuid": "a22a807a_271d1530",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "bb9f5b8a_43a34335",
         "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
         "patchSetId": 5
@@ -206,6 +224,24 @@
       "side": 1,
       "message": "The more I think about it, I think it would be better to have one DCHECK that guards both branches.\n\nThe only thing that\u0027s absolutely required is that allocation_base_ \u003c\u003d data_ \u003c\u003d data_ + data_length_ \u003c\u003d allocation_base_ + allocation_length_. When we\u0027re using the kReservation mode, we end up cases there data_ and allocation_base_ are different. For kNormal, so far the two ranges are always equal, but the contract doesn\u0027t require it. Basically, allocation_base_ to allocation_base_ + allocation_length_ is the part that the memory manager cares about, while data_ to data_ + data_length_ is contains the data that the rest of the system cares about.\n\nAs far as CHECK vs DCHECK, I I think of DCHECK as being for things that indicate a programmer error, in this case that the rest of the code failed to ensure the invariants that we expect here, while CHECK is for things that are possible in production, such as if these bytes had been run off the network. Thus, I\u0027d be inclined to choose DCHECK here, but I\u0027d be happy to change it to CHECK if you prefer.\n\nI went ahead and changed the DCHECK to enforce the bounds that are actually required, and also duplicated them in the constructor because that seems like the more logical place for them.",
       "parentUuid": "bb9f5b8a_43a34335",
+      "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0941e859_16cc0604",
+        "filename": "third_party/WebKit/Source/platform/wtf/typed_arrays/ArrayBufferContents.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 96,
+      "author": {
+        "id": 1001040
+      },
+      "writtenOn": "2017-06-20T23:12:10Z",
+      "side": 1,
+      "message": "Right, I share your view of the purposes of CHECK vs. DCHECK. As long as you\u0027re sure the assertion could only fail due to programmer error and never due to run-time conditions, I\u0027m OK with DCHECK(s).",
+      "parentUuid": "866adf5e_940da269",
       "revId": "d437c26d3a849cbf0532f3e738b5063fe82d4c0a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
