@@ -2,6 +2,63 @@
   "comments": [
     {
       "key": {
+        "uuid": "e69f5245_5cbe22df",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-20T22:17:27Z",
+      "side": 1,
+      "message": "Bad guy gerrit:\n- Allows comments on commit messages\n- Can detect trailing whitespace in commit messages\n- And doesn\u0027t just fix them...",
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1393b541_e1d134c8",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-20T22:17:27Z",
+      "side": 1,
+      "message": "These guids might now collide when they didn\u0027t before(?).\nBefore we did `MangleEventId()` which does `id ^ process_id_hash_`\nwhere as now I think they are just incrementing numbers so if\nthe browser process calls DoGlobalDumpWithoutCallback then the renderer calls DoGlobalDumpWithoutCallback we\u0027ll get dump with id\u003d1 twice?",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 40
+      },
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98e2c92e_8a6494a1",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1115925
+      },
+      "writtenOn": "2017-06-20T22:17:27Z",
+      "side": 1,
+      "message": "I\u0027m confused, I know the people who talk directly to the service (process_memory_metrics_emitter.cc etc) set dump_guid to 0 but what about the other clients?\nDon\u0027t their requests also eventually end up here?",
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ab0b07_6b0940d8",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
         "patchSetId": 2
