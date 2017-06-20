@@ -39,6 +39,24 @@
       "revId": "c030906aac00df4de1a50718928a3069e33aed75",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acd876cd_887189bf",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 421,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T18:38:44Z",
+      "side": 1,
+      "message": "hmm, makes sense. Hajime, how about we expose the dump name instead of guid, ie change to SharedMemoryTracker::GetDumpNameForTracing and call GetOrCreate here?",
+      "parentUuid": "b8d0b266_595e0051",
+      "revId": "c030906aac00df4de1a50718928a3069e33aed75",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
