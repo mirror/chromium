@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6819762_7b6b09b7",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 312,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T09:53:20Z",
+      "side": 1,
+      "message": "We basically don\u0027t want to have the Resource remember this subtle detail.\n\nIn case ScriptResource::CalculateAccessControlStatus() can work with IsSameOriginOrCORSSuccessful() as I suggested, let\u0027s merge kSameOrigin into kSuccessful.",
+      "revId": "abee51d64177f66f4439e9e9dbf9a99809e852d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
