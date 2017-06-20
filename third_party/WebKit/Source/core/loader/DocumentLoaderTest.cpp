@@ -18,8 +18,6 @@
 
 namespace blink {
 
-// TODO(dcheng): Ideally, enough of FrameTestHelpers would be in core/ that
-// placing a test for a core/ class in web/ wouldn't be necessary.
 class DocumentLoaderTest : public ::testing::Test {
  protected:
   void SetUp() override {

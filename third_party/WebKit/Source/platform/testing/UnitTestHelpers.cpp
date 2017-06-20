@@ -89,6 +89,8 @@ String BlinkRootDir() {
   return FilePathToWebString(BlinkRootFilePath());
 }
 
+// TODO(sashab): Remove this method, updating callers to use the data directory
+// in either platform/ or a new one in core/ (Source/core/testing/data).
 String WebTestDataPath(const String& relative_path) {
   return FilePathToWebString(
       BlinkRootFilePath()
