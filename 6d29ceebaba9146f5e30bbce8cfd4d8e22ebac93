@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8c9af8cd_2cf6c1d8",
+        "filename": "content/browser/background_fetch/background_fetch_job_controller.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T11:05:26Z",
+      "side": 1,
+      "message": "This can\u0027t be a reference - |traffic_annotation| is allocated on the stack in the BackgroundFetchContext, so this would point to an address that\u0027s bound to be overridden once the call chain is complete. Just remove const\u0026 to copy the hash.",
+      "revId": "6d29ceebaba9146f5e30bbce8cfd4d8e22ebac93",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
