@@ -90,6 +90,7 @@ void ModelImpl::OnInitializedFinished(
   }
 
   for (const auto& entry : *entries) {
+    LOG(ERROR) << "@@@ Model entry, guid = " << entry.guid;
     entries_.emplace(entry.guid, base::MakeUnique<Entry>(entry));
   }
 

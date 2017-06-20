@@ -65,6 +65,7 @@ void DownloadStore::OnDatabaseLoaded(InitCallback callback,
   }
 
   auto entries = ProtoConversions::EntryVectorFromProto(std::move(protos));
+
   is_initialized_ = true;
   std::move(callback).Run(success, std::move(entries));
 }

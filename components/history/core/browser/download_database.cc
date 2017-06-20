@@ -485,7 +485,7 @@ void DownloadDatabase::QueryDownloads(std::vector<DownloadRow>* results) {
 
     // Confirm the id has already been seen--if it hasn't, discard the
     // record.
-    DCHECK(base::ContainsKey(info_map, id));
+    DCHECK(base::ContainsKey(info_map, id)) << ",id = " << id;
     if (!base::ContainsKey(info_map, id))
       continue;
 

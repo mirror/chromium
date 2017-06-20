@@ -1255,7 +1255,7 @@ void DownloadItemImpl::DestinationCompleted(
   // callbacks.
   DCHECK(state_ == TARGET_PENDING_INTERNAL || state_ == IN_PROGRESS_INTERNAL);
   DVLOG(20) << __func__ << "() download=" << DebugString(true);
-
+  LOG(ERROR) << "@@@ DestinationCompleted" << DebugString(true);
   OnAllDataSaved(total_bytes, std::move(secure_hash));
   MaybeCompleteDownload();
 }
@@ -1302,6 +1302,7 @@ void DownloadItemImpl::Start(
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   DCHECK(!download_file_.get());
   DVLOG(20) << __func__ << "() this=" << DebugString(true);
+  LOG(ERROR) << "@@@ DownloadItemImpl::Start, " << DebugString(true);
   RecordDownloadCount(START_COUNT);
 
   download_file_ = std::move(file);

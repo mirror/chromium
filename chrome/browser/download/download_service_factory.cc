@@ -25,8 +25,68 @@
 #include "chrome/browser/android/download/service/download_task_scheduler.h"
 #endif
 
+#include "base/guid.h"
+#include "components/download/public/client.h"
+#include "components/download/public/download_params.h"
+#include "components/download/public/download_service.h"
+
+class TestClient : public download::Client {
+ public:
+  TestClient(content::BrowserContext* context) : browser_context_(context) {}
+  ~TestClient() override = default;
+
+  // Client implementation.
+  void OnServiceInitialized(
+      const std::vector<std::string>& outstanding_download_guids) override {
+    LOG(ERROR) << "@@@ OnServiceInitialized";
+    DCHECK(browser_context_);
+
+    // Starts a download for manual test.
+    download::DownloadService* download_service =
+        DownloadServiceFactory::GetForBrowserContext(browser_context_);
+    download::DownloadParams params;
+    params.guid = base::GenerateGUID();
+    params.client = download::DownloadClient::TEST;
+    LOG(ERROR) << "@@@ GUID = " << params.guid;
+    params.request_params.url = GURL(
+        "https://notepad-plus-plus.org/repository/7.x/7.3.1/npp.7.3.1.bin.7z");
+
+    download_service->StartDownload(params);
+  }
+
+  download::Client::ShouldDownload OnDownloadStarted(
+      const std::string& guid,
+      const std::vector<GURL>& url_chain,
+      const scoped_refptr<const net::HttpResponseHeaders>& headers) override {
+    LOG(ERROR) << "@@@ OnDownloadStarted, guid = " << guid;
+
+    return download::Client::ShouldDownload::CONTINUE;
+  }
+  void OnDownloadUpdated(const std::string& guid,
+                         uint64_t bytes_downloaded) override {
+    LOG(ERROR) << "@@@ OnDownloadUpdated, guid = " << guid
+               << " , bytes_downloaded = " << bytes_downloaded;
+  }
+  void OnDownloadFailed(const std::string& guid,
+                        download::Client::FailureReason reason) override {
+    LOG(ERROR) << "@@@ OnDownloadFailed, guid = " << guid
+               << " , reason = " << static_cast<int>(reason);
+  }
+  void OnDownloadSucceeded(const std::string& guid,
+                           const base::FilePath& path,
+                           uint64_t size) override {
+    LOG(ERROR) << "@@@ OnDownloadSucceeded, , guid = " << guid
+               << ", path = " << path.value() << ", size = " << size;
+  }
+
+ private:
+  content::BrowserContext* browser_context_;
+  DISALLOW_COPY_AND_ASSIGN(TestClient);
+};
+
 // static
 DownloadServiceFactory* DownloadServiceFactory::GetInstance() {
+  LOG(ERROR) << "@@@ DownloadServiceFactory::GetInstance()!";
   return base::Singleton<DownloadServiceFactory>::get();
 }
 
@@ -46,9 +106,14 @@ DownloadServiceFactory::~DownloadServiceFactory() = default;
 
 KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
     content::BrowserContext* context) const {
-  auto clients = base::MakeUnique<download::DownloadClientMap>();
+  LOG(ERROR) << "@@@ DownloadServiceFactory::BuildServiceInstanceFor!";
 
+  auto clients = base::MakeUnique<download::DownloadClientMap>();
   // TODO(dtrainor): Register all clients here.
+
+  // Register a test client.
+  clients->emplace(download::DownloadClient::TEST,
+                   base::MakeUnique<TestClient>(context));
 
   auto* download_manager = content::BrowserContext::GetDownloadManager(context);
 
@@ -56,6 +121,7 @@ KeyedService* DownloadServiceFactory::BuildServiceInstanceFor(
   if (!context->IsOffTheRecord() && !context->GetPath().empty()) {
     storage_dir =
         context->GetPath().Append(chrome::kDownloadServiceStorageDirname);
+    LOG(ERROR) << "@@@ storage_dir = " << storage_dir.value();
   }
 
   scoped_refptr<base::SequencedTaskRunner> background_task_runner =
