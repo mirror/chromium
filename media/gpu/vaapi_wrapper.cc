@@ -193,7 +193,14 @@ scoped_refptr<VaapiWrapper> VaapiWrapper::Create(
     return nullptr;
   }
 
-  scoped_refptr<VaapiWrapper> vaapi_wrapper(new VaapiWrapper());
+  scoped_refptr<VaapiWrapper> vaapi_wrapper =
+      GetProfileInfos()->GetVaapiWrapper();
+  if (!vaapi_wrapper) {
+    LOG(ERROR) << "Failed to create VaapiWrapper for va_profile: "
+               << va_profile;
+    return nullptr;
+  }
+
   if (vaapi_wrapper->VaInitialize(report_error_to_uma_cb)) {
     if (vaapi_wrapper->Initialize(mode, va_profile))
       return vaapi_wrapper;
@@ -1164,12 +1171,12 @@ VaapiWrapper::LazyProfileInfos* VaapiWrapper::GetProfileInfos() {
 VaapiWrapper::LazyProfileInfos::LazyProfileInfos() {
   static_assert(arraysize(supported_profiles_) == kCodecModeMax,
                 "The array size of supported profile is incorrect.");
-  scoped_refptr<VaapiWrapper> vaapi_wrapper(new VaapiWrapper());
-  if (!vaapi_wrapper->VaInitialize(base::Bind(&base::DoNothing)))
+  vaapi_wrapper_ = new VaapiWrapper();
+  if (!vaapi_wrapper_->VaInitialize(base::Bind(&base::DoNothing)))
     return;
   for (size_t i = 0; i < kCodecModeMax; ++i) {
     supported_profiles_[i] =
-        vaapi_wrapper->GetSupportedProfileInfosForCodecModeInternal(
+        vaapi_wrapper_->GetSupportedProfileInfosForCodecModeInternal(
             static_cast<CodecMode>(i));
   }
 }
@@ -1180,6 +1187,10 @@ std::vector<VaapiWrapper::ProfileInfo>
 VaapiWrapper::LazyProfileInfos::GetSupportedProfileInfosForCodecMode(
     CodecMode mode) {
   return supported_profiles_[mode];
+}
+
+scoped_refptr<VaapiWrapper> VaapiWrapper::LazyProfileInfos::GetVaapiWrapper() {
+  return vaapi_wrapper_;
 }
 
 bool VaapiWrapper::LazyProfileInfos::IsProfileSupported(CodecMode mode,
