@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "149184d7_f91bdc43",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/download/ui/ThumbnailProviderImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-20T16:41:43Z",
+      "side": 1,
+      "message": "Could we add some test cases for weird image dimensions? And also maybe refer here to\na) the code on the native side that does the resizing, and\nb) the fact that we crop an image that is too big (right?)",
+      "range": {
+        "startLine": 133,
+        "startChar": 49,
+        "endLine": 133,
+        "endChar": 51
+      },
+      "revId": "955f3e49cb004d3a79a1e332c3375e06e7c50cc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
