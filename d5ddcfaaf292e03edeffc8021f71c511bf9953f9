@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "73b0346e_cf69aa80",
+        "filename": "content/browser/android/content_view_core_observer.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-20T19:00:46Z",
+      "side": 1,
+      "message": "fix ifdef",
+      "revId": "d5ddcfaaf292e03edeffc8021f71c511bf9953f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cfbbaac4_869f24bb",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 222,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-20T19:00:46Z",
+      "side": 1,
+      "message": "recursion here makes no sense to me",
+      "revId": "d5ddcfaaf292e03edeffc8021f71c511bf9953f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "efa1315d_afd6aad0",
+        "filename": "ui/android/view_android.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 314,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-20T19:00:46Z",
+      "side": 1,
+      "message": "ditto, feels like this one should recurse down, not up",
+      "revId": "d5ddcfaaf292e03edeffc8021f71c511bf9953f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e00a9e4_d0ebe490",
+        "filename": "ui/android/view_android.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002725
+      },
+      "writtenOn": "2017-06-20T19:00:46Z",
+      "side": 1,
+      "message": "don\u0027t inline these, inline allowed only for POD types",
+      "revId": "d5ddcfaaf292e03edeffc8021f71c511bf9953f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
