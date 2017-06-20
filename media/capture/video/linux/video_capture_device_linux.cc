@@ -36,8 +36,10 @@ std::list<uint32_t> VideoCaptureDeviceLinux::GetListOfUsableFourCCs(
 }
 
 VideoCaptureDeviceLinux::VideoCaptureDeviceLinux(
-    const VideoCaptureDeviceDescriptor& device_descriptor)
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    bool allow_image_capture_controls)
     : device_descriptor_(device_descriptor),
+      allow_image_capture_controls_(allow_image_capture_controls),
       v4l2_thread_("V4L2CaptureThread") {}
 
 VideoCaptureDeviceLinux::~VideoCaptureDeviceLinux() {
@@ -58,7 +60,8 @@ void VideoCaptureDeviceLinux::AllocateAndStart(
   const int line_frequency =
       TranslatePowerLineFrequencyToV4L2(GetPowerLineFrequency(params));
   capture_impl_ = base::MakeUnique<V4L2CaptureDelegate>(
-      device_descriptor_, v4l2_thread_.task_runner(), line_frequency);
+      device_descriptor_, v4l2_thread_.task_runner(), line_frequency,
+      allow_image_capture_controls_);
   if (!capture_impl_) {
     client->OnError(FROM_HERE, "Failed to create VideoCaptureDelegate");
     return;
@@ -102,6 +105,9 @@ void VideoCaptureDeviceLinux::TakePhoto(TakePhotoCallback callback) {
 }
 
 void VideoCaptureDeviceLinux::GetPhotoState(GetPhotoStateCallback callback) {
+  if (!allow_image_capture_controls_)
+    return;
+
   auto functor =
       base::Bind(&V4L2CaptureDelegate::GetPhotoState,
                  capture_impl_->GetWeakPtr(), base::Passed(&callback));
@@ -116,6 +122,9 @@ void VideoCaptureDeviceLinux::GetPhotoState(GetPhotoStateCallback callback) {
 void VideoCaptureDeviceLinux::SetPhotoOptions(
     mojom::PhotoSettingsPtr settings,
     SetPhotoOptionsCallback callback) {
+  if (!allow_image_capture_controls_)
+    return;
+
   auto functor = base::Bind(&V4L2CaptureDelegate::SetPhotoOptions,
                             capture_impl_->GetWeakPtr(),
                             base::Passed(&settings), base::Passed(&callback));

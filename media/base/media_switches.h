@@ -105,6 +105,7 @@ namespace media {
 MEDIA_EXPORT extern const base::Feature kBackgroundVideoPauseOptimization;
 MEDIA_EXPORT extern const base::Feature kBackgroundVideoTrackOptimization;
 MEDIA_EXPORT extern const base::Feature kExternalClearKeyForTesting;
+MEDIA_EXPORT extern const base::Feature kImageCaptureControls;
 MEDIA_EXPORT extern const base::Feature kLowDelayVideoRenderingOnLiveStream;
 MEDIA_EXPORT extern const base::Feature kMediaCastOverlayButton;
 MEDIA_EXPORT extern const base::Feature kMemoryPressureBasedSourceBufferGC;
@@ -129,7 +130,6 @@ MEDIA_EXPORT extern const base::Feature kMediaDrmPersistentLicense;
 #if defined(OS_WIN)
 MEDIA_EXPORT extern const base::Feature kD3D11VideoDecoding;
 MEDIA_EXPORT extern const base::Feature kDelayCopyNV12Textures;
-MEDIA_EXPORT extern const base::Feature kImageCaptureControls;
 MEDIA_EXPORT extern const base::Feature kMediaFoundationH264Encoding;
 #endif  // defined(OS_WIN)
 

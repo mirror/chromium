@@ -20,6 +20,7 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "build/build_config.h"
+#include "media/base/media_switches.h"
 
 #if defined(OS_OPENBSD)
 #include <sys/videoio.h>
@@ -166,11 +167,12 @@ VideoCaptureDeviceFactoryLinux::CreateDevice(
     const VideoCaptureDeviceDescriptor& device_descriptor) {
   DCHECK(thread_checker_.CalledOnValidThread());
 #if defined(OS_CHROMEOS)
-  VideoCaptureDeviceChromeOS* self =
-      new VideoCaptureDeviceChromeOS(ui_task_runner_, device_descriptor);
+  VideoCaptureDeviceChromeOS* self = new VideoCaptureDeviceChromeOS(
+      ui_task_runner_, device_descriptor,
+      base::FeatureList::IsEnabled(kImageCaptureControls));
 #else
-  VideoCaptureDeviceLinux* self =
-      new VideoCaptureDeviceLinux(device_descriptor);
+  VideoCaptureDeviceLinux* self = new VideoCaptureDeviceLinux(
+      device_descriptor, base::FeatureList::IsEnabled(kImageCaptureControls));
 #endif
   if (!self)
     return std::unique_ptr<VideoCaptureDevice>();

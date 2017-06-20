@@ -221,7 +221,8 @@ class V4L2CaptureDelegateTest : public ::testing::Test {
         delegate_(base::MakeUnique<V4L2CaptureDelegate>(
             device_descriptor_,
             base::ThreadTaskRunnerHandle::Get(),
-            50)) {}
+            50,
+            true /*allow_image_capture_controls*/)) {}
   ~V4L2CaptureDelegateTest() override = default;
 
   base::test::ScopedTaskEnvironment scoped_task_environment_;

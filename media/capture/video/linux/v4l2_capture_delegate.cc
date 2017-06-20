@@ -371,10 +371,12 @@ std::list<uint32_t> V4L2CaptureDelegate::GetListOfUsableFourCcs(
 V4L2CaptureDelegate::V4L2CaptureDelegate(
     const VideoCaptureDeviceDescriptor& device_descriptor,
     const scoped_refptr<base::SingleThreadTaskRunner>& v4l2_task_runner,
-    int power_line_frequency)
+    int power_line_frequency,
+    bool allow_image_capture_controls)
     : v4l2_task_runner_(v4l2_task_runner),
       device_descriptor_(device_descriptor),
       power_line_frequency_(power_line_frequency),
+      allow_image_capture_controls_(allow_image_capture_controls),
       is_capturing_(false),
       timeout_count_(0),
       rotation_(0),
@@ -397,7 +399,8 @@ void V4L2CaptureDelegate::AllocateAndStart(
     return;
   }
 
-  ResetUserAndCameraControlsToDefault(device_fd_.get());
+  if (allow_image_capture_controls_)
+    ResetUserAndCameraControlsToDefault(device_fd_.get());
 
   v4l2_capability cap = {};
   if (!((HANDLE_EINTR(ioctl(device_fd_.get(), VIDIOC_QUERYCAP, &cap)) == 0) &&

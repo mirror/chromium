@@ -250,6 +250,21 @@ const base::Feature kVideoBlitColorAccuracy{"video-blit-color-accuracy",
 const base::Feature kExternalClearKeyForTesting{
     "external-clear-key-for-testing", base::FEATURE_DISABLED_BY_DEFAULT};
 
+// Enables code paths accessing controls exposed by video capture devices in the
+// context of capturing still images. Note that several webcam drivers have
+// shown issues when accessing these controls, resulting in symptoms such as
+// video capture outputting blank images or images with incorrect settings for
+// things like zoom, white balance, contrast, focus, etc, see, for example,
+// https://crbug.com/722038.
+const base::Feature kImageCaptureControls {
+  "ImageCaptureControls",
+#if defined(OS_WIN)
+      base::FEATURE_DISABLED_BY_DEFAULT
+#else
+      base::FEATURE_ENABLED_BY_DEFAULT
+#endif
+};
+
 // Enables low-delay video rendering in media pipeline on "live" stream.
 const base::Feature kLowDelayVideoRenderingOnLiveStream{
     "low-delay-video-rendering-on-live-stream",
@@ -287,15 +302,6 @@ const base::Feature kD3D11VideoDecoding{"D3D11VideoDecoding",
 // used by GL.
 const base::Feature kDelayCopyNV12Textures{"DelayCopyNV12Textures",
                                            base::FEATURE_ENABLED_BY_DEFAULT};
-
-// Enables code paths accessing controls exposed by video capture devices in the
-// context of capturing still images. Note that several webcam drivers have
-// shown issues when accessing these controls, resulting in symptoms such as
-// video capture outputting blank images or images with incorrect settings for
-// things like zoom, white balance, contrast, focus, etc, see
-// https://crbug.com/722038.
-const base::Feature kImageCaptureControls{"ImageCaptureControls",
-                                          base::FEATURE_DISABLED_BY_DEFAULT};
 
 // Enables H264 HW encode acceleration using Media Foundation for Windows.
 const base::Feature kMediaFoundationH264Encoding{

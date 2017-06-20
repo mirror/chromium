@@ -32,7 +32,8 @@ class VideoCaptureDeviceLinux : public VideoCaptureDevice {
   static std::list<uint32_t> GetListOfUsableFourCCs(bool favour_mjpeg);
 
   explicit VideoCaptureDeviceLinux(
-      const VideoCaptureDeviceDescriptor& device_descriptor);
+      const VideoCaptureDeviceDescriptor& device_descriptor,
+      bool allow_image_capture_controls);
   ~VideoCaptureDeviceLinux() override;
 
   // VideoCaptureDevice implementation.
@@ -51,6 +52,8 @@ class VideoCaptureDeviceLinux : public VideoCaptureDevice {
 
  private:
   static int TranslatePowerLineFrequencyToV4L2(PowerLineFrequency frequency);
+
+  const bool allow_image_capture_controls_;
 
   // Internal delegate doing the actual capture setting, buffer allocation and
   // circulation with the V4L2 API. Created in the thread where

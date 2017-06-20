@@ -24,8 +24,9 @@ static CameraConfigChromeOS* GetCameraConfig() {
 
 VideoCaptureDeviceChromeOS::VideoCaptureDeviceChromeOS(
     scoped_refptr<base::SingleThreadTaskRunner> ui_task_runner,
-    const VideoCaptureDeviceDescriptor& device_descriptor)
-    : VideoCaptureDeviceLinux(device_descriptor),
+    const VideoCaptureDeviceDescriptor& device_descriptor,
+    bool allow_image_capture_controls)
+    : VideoCaptureDeviceLinux(device_descriptor, allow_image_capture_controls),
       screen_observer_delegate_(
           new ScreenObserverDelegate(this, ui_task_runner)),
       lens_facing_(

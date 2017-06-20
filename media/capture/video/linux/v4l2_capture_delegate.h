@@ -43,7 +43,8 @@ class CAPTURE_EXPORT V4L2CaptureDelegate final {
   V4L2CaptureDelegate(
       const VideoCaptureDeviceDescriptor& device_descriptor,
       const scoped_refptr<base::SingleThreadTaskRunner>& v4l2_task_runner,
-      int power_line_frequency);
+      int power_line_frequency,
+      bool allow_image_capture_controls);
   ~V4L2CaptureDelegate();
 
   // Forward-to versions of VideoCaptureDevice virtual methods.
@@ -80,6 +81,7 @@ class CAPTURE_EXPORT V4L2CaptureDelegate final {
   const scoped_refptr<base::SingleThreadTaskRunner> v4l2_task_runner_;
   const VideoCaptureDeviceDescriptor device_descriptor_;
   const int power_line_frequency_;
+  const bool allow_image_capture_controls_;
 
   // The following members are only known on AllocateAndStart().
   VideoCaptureFormat capture_format_;
