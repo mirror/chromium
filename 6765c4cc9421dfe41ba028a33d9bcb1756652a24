@@ -22,6 +22,30 @@
       "revId": "6765c4cc9421dfe41ba028a33d9bcb1756652a24",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55afb5e0_6fa44785",
+        "filename": "third_party/WebKit/Source/core/loader/DocumentLoader.cpp",
+        "patchSetId": 11
+      },
+      "lineNbr": 1082,
+      "author": {
+        "id": 1115930
+      },
+      "writtenOn": "2017-06-20T23:00:50Z",
+      "side": 1,
+      "message": "Agreed on co-location.\n\nClearing unconditionally is preferable, but that may require auditing all current users of has_received_user_gesture_ to see if they\u0027re all OK with that behavior. I\u0027m ok with deferring that for a soon-but-not-right-now patch.",
+      "parentUuid": "88fe04ea_3f33d63b",
+      "range": {
+        "startLine": 1082,
+        "startChar": 3,
+        "endLine": 1082,
+        "endChar": 0
+      },
+      "revId": "6765c4cc9421dfe41ba028a33d9bcb1756652a24",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
