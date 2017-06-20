@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ffad2df_bedfbc3c",
+        "filename": "third_party/WebKit/LayoutTests/transforms/inline-in-transformed-multicol.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 2,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-20T14:48:30Z",
+      "side": 1,
+      "message": "Could you add a test with transformed inlines also? I think those\nwere also broken before.",
+      "revId": "f7b2b6c93aa6ac261c7f045d80dee0433dd3177f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
