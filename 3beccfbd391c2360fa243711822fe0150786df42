@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aeaff6b2_6f19ab43",
+        "filename": "content/renderer/media/webmediaplayer_ms.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 625,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-06-20T15:47:29Z",
+      "side": 0,
+      "message": "If we have to make this change, we should inform any users (at least the person that added this) about it.",
+      "range": {
+        "startLine": 625,
+        "startChar": 16,
+        "endLine": 625,
+        "endChar": 22
+      },
+      "revId": "3beccfbd391c2360fa243711822fe0150786df42",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
