@@ -22,6 +22,30 @@
       "revId": "c892d5b3c6ad98c5dd4733b6c22b0a8c71ea630b",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6cb839c9_bdfd738c",
+        "filename": "components/offline_pages/core/archive_manager.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1184710
+      },
+      "writtenOn": "2017-06-20T21:08:53Z",
+      "side": 1,
+      "message": "Done\nI wasn\u0027t considering to log more status than success/fail. But it seems to be a good thing to do.",
+      "parentUuid": "b01072a2_0a614c81",
+      "range": {
+        "startLine": 27,
+        "startChar": 13,
+        "endLine": 27,
+        "endChar": 28
+      },
+      "revId": "c892d5b3c6ad98c5dd4733b6c22b0a8c71ea630b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
