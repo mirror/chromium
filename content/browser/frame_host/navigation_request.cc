@@ -279,7 +279,7 @@ std::unique_ptr<NavigationRequest> NavigationRequest::CreateRendererInitiated(
   // TODO(clamy): See if the navigation start time should be measured in the
   // renderer and sent to the browser instead of being measured here.
   RequestNavigationParams request_params(
-      false,                // is_overriding_user_agent
+      entry ? entry->GetIsOverridingUserAgent() : false,
       std::vector<GURL>(),  // redirects
       common_params.url, common_params.method,
       false,                          // can_load_local_resources
