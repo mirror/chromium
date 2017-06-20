@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "aa77a45b_8a3628cb",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 347,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-20T00:29:02Z",
+      "side": 1,
+      "message": "Page is a reasonable place for this. Will update it in the following patch set.",
+      "parentUuid": "c15b2aa1_1dea7f2f",
+      "range": {
+        "startLine": 347,
+        "startChar": 2,
+        "endLine": 347,
+        "endChar": 23
+      },
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "78d37e24_41eae9f7",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-19T19:20:02Z",
       "side": 1,
       "message": "This should be OnUnload now right?",
+      "range": {
+        "startLine": 349,
+        "startChar": 37,
+        "endLine": 349,
+        "endChar": 43
+      },
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0990f957_3facdee9",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 349,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-20T00:29:02Z",
+      "side": 1,
+      "message": "Right. We need to update the name once the logic is settled.",
+      "parentUuid": "78d37e24_41eae9f7",
       "range": {
         "startLine": 349,
         "startChar": 37,
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "6e1e7b0d_ec5831f5",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2213,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-20T00:29:02Z",
+      "side": 1,
+      "message": "As discussed, we don\u0027t need to call it here and we may need to move it outside of FrameLoader as well.",
+      "parentUuid": "296229b3_3bca6370",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a51b7216_c515c4ca",
         "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
         "patchSetId": 8
@@ -76,6 +142,30 @@
       "writtenOn": "2017-06-19T22:05:07Z",
       "side": 1,
       "message": "I don\u0027t understand this sentence. Where does the difference between composited/non-composited come from when this is called from load vs unload. Also, by \"keep\" do you mean \"record\"?",
+      "range": {
+        "startLine": 2243,
+        "startChar": 71,
+        "endLine": 2245,
+        "endChar": 21
+      },
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e93f7dd9_16061324",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2245,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-20T00:29:02Z",
+      "side": 1,
+      "message": "When we call RecordScrollerSizeRelatedMetrics() from HandleLoadCompleted, we report all scrollers because we don\u0027t have the compositing info yet. By the time we call from FrameLoader::ShouldClose(), we know about that info therefore we can exclude the non-composted scrollers through line 2250 and only report the composited ones.\n\n\"keep\" does mean \"record\". I use \"keep\" to differentiate \"report to UMA\" because the SingleSampleMetric that I use here can guarantee that we only \"report\" once no matter how many times we \"record\". \n\nAs Rob suggested below, calling the function twice may not be a good idea. However, we are not quite sure where the best place to call this function is. In this patch the caller is from FrameLoader but in the case of fast shutdown (e.g. close the tab), the logic of FrameLoader::ShouldClose() won\u0027t be fired therefore we cannot record anything. Currently we are thinking of moving the recording logic to the commit time and do it only once. That way we would have the compositing info handy when recording the size of small scrollers. Any concerns or other suggestions?",
+      "parentUuid": "a51b7216_c515c4ca",
       "range": {
         "startLine": 2243,
         "startChar": 71,
@@ -102,6 +192,24 @@
       "revId": "e6c147618795983810d83f2cc9439438149a371f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "891aa2f8_86c50aaa",
+        "filename": "third_party/WebKit/Source/core/frame/LocalFrameView.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 2249,
+      "author": {
+        "id": 1177980
+      },
+      "writtenOn": "2017-06-20T00:29:02Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "e375c00f_20d63865",
+      "revId": "e6c147618795983810d83f2cc9439438149a371f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
