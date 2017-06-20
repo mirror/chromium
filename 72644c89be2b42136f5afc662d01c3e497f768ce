@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf7f854e_4654347b",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/layout_tests/run_webkit_tests.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 491,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-20T21:05:09Z",
+      "side": 1,
+      "message": "If it\u0027s exactly the same, we can it just an alias for the same option.\n\nAs far as I know, this could be done by modifying the option entry for repeat-each above:\n\n            optparse.make_option(\n                \u0027--repeat-each\u0027,\n                \u0027--gtest_repeat\u0027,\n                type\u003d\u0027int\u0027,\n                default\u003d1,\n                help\u003d\u0027Number of times to run each test (e.g. AAABBBCCC)\u0027),\n\nOR, by adding another entry but using a common dest\u003d\n\n            optparse.make_option(\n                \u0027--repeat-each\u0027,\n                type\u003d\u0027int\u0027,\n                default\u003d1,\n                help\u003d\u0027Number of times to run each test (e.g. AAABBBCCC)\u0027),\n\n            optparse.make_option(\n                \u0027--gtest_repeat\u0027,\n                dest\u003d\u0027repeat_each\u0027\n                type\u003d\u0027int\u0027,\n                default\u003d1,\n                help\u003d\u0027Alias for --repeat-each\u0027),\n\nI think the first option is probably a bit better.",
+      "revId": "72644c89be2b42136f5afc662d01c3e497f768ce",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
