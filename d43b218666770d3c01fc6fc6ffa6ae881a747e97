@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "89c6b5f2_f83e903d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-20T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6f5ed9e2_19e53c85",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 30,
+        "endChar": 3
+      },
+      "revId": "d43b218666770d3c01fc6fc6ffa6ae881a747e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "17730061_35d232e4",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
         "patchSetId": 5
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "43156f85_6b2387a7",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 61,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-20T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "17730061_35d232e4",
+      "range": {
+        "startLine": 61,
+        "startChar": 2,
+        "endLine": 61,
+        "endChar": 56
+      },
+      "revId": "d43b218666770d3c01fc6fc6ffa6ae881a747e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "121c8d47_260b4fe6",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
         "patchSetId": 5
@@ -68,6 +116,30 @@
       "revId": "d43b218666770d3c01fc6fc6ffa6ae881a747e97",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b5d39cc_089ece58",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-20T15:28:00Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "121c8d47_260b4fe6",
+      "range": {
+        "startLine": 134,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 60
+      },
+      "revId": "d43b218666770d3c01fc6fc6ffa6ae881a747e97",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
