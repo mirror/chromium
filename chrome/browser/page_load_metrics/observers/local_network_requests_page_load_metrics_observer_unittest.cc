@@ -27,8 +27,6 @@
 
 struct FrameHostMsg_DidCommitProvisionalLoad_Params;
 
-using namespace internal;
-
 namespace internal {
 
 typedef struct {
@@ -222,7 +220,6 @@ class LocalNetworkRequestsPageLoadMetricsObserverTest
     EXPECT_EQ(expected_metrics.size() + 1, ukm_entry_count());
     auto entries = GetUkmEntriesForSourceID(source->id());
     for (size_t i = 1; i < entries.size(); ++i) {
-      LOG(WARNING) << "Entry " << i;
       EXPECT_EQ(entries[i]->source_id, source->id());
       EXPECT_EQ(
           entries[i]->event_hash,
@@ -338,7 +335,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   // itself.
   const internal::PageAddressInfo& page = internal::kSameSubnetRequest1;
   NavigateToPageAndLoadResources(
-      page, {kSameSubnetRequest2, kSameSubnetRequest3, page},
+      page, {internal::kSameSubnetRequest2, internal::kSameSubnetRequest3, page},
       {true, false, true});
 
   // Should generate only a domain type UKM entry and nothing else.
