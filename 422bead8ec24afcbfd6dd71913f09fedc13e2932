@@ -96,6 +96,24 @@
     },
     {
       "key": {
+        "uuid": "3e0ffd73_58e9c983",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-20T07:29:08Z",
+      "side": 1,
+      "message": "On second thought, as for DecrementMemoryUsage, I think this works in single process mode since |usage_| manages base::SharedMemory pointers and if DecrementMemoryUsage is called for a same region, the base::SharedMemory objects must be different. Even in this case, the two base::SharedMemory would have the same GUID and that\u0027s the problem.",
+      "parentUuid": "61321ff4_d66ef0c0",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aebf1977_f8868bf2",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 6
