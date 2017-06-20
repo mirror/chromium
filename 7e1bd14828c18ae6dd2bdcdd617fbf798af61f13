@@ -34,6 +34,24 @@
       "revId": "7e1bd14828c18ae6dd2bdcdd617fbf798af61f13",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21317174_2504d89e",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_test_taco.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115922
+      },
+      "writtenOn": "2017-06-20T01:12:49Z",
+      "side": 1,
+      "message": "Then we have 2 different paths which seem to be a bit hard to consume.\n\nCan you rename this to something like CreatePrefetchServiceAndTakeOut?",
+      "parentUuid": "bffaa219_9825bd59",
+      "revId": "7e1bd14828c18ae6dd2bdcdd617fbf798af61f13",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
