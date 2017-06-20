@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "78850359_d0c3bb43",
+        "filename": "cc/output/layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Yeah, changed this a little to not imply all clients are LayerTreeFrameSinks. I didn\u0027t add anything about why it\u0027s submitting CompositorFrames, cuz I wasn\u0027t sure what to say other than that is the only structure we have for submitting stuff to the display compositor.",
+      "parentUuid": "57c8c3cb_45cfcfe4",
+      "range": {
+        "startLine": 34,
+        "startChar": 0,
+        "endLine": 36,
+        "endChar": 25
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "66203d5c_65fe9306",
         "filename": "cc/output/layer_tree_frame_sink_client.h",
         "patchSetId": 6
@@ -45,6 +69,30 @@
       "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bb2ae09c_021064e2",
+        "filename": "cc/output/layer_tree_frame_sink_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "66203d5c_65fe9306",
+      "range": {
+        "startLine": 29,
+        "startChar": 27,
+        "endLine": 29,
+        "endChar": 28
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "0655a00a_05472e24",
+        "filename": "cc/scheduler/scheduler_state_machine_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1319,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "I grepped and found a few more of these. Funnily these are from when it was an OutputSurface!",
+      "parentUuid": "cacf61a0_25ddc983",
+      "range": {
+        "startLine": 1319,
+        "startChar": 27,
+        "endLine": 1319,
+        "endChar": 29
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b194f309_f1a4e4b4",
         "filename": "cc/test/fake_layer_tree_frame_sink_client.cc",
         "patchSetId": 6
@@ -85,6 +157,24 @@
       "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "75f977f5_dff24f70",
+        "filename": "cc/test/fake_layer_tree_frame_sink_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b194f309_f1a4e4b4",
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -111,6 +201,30 @@
     },
     {
       "key": {
+        "uuid": "da230eaf_01519558",
+        "filename": "cc/trees/layer_tree_host_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d2741298_110c40d1",
+      "range": {
+        "startLine": 51,
+        "startChar": 55,
+        "endLine": 51,
+        "endChar": 56
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a6c2ec6a_b7b523bd",
         "filename": "cc/trees/proxy.h",
         "patchSetId": 6
@@ -131,6 +245,30 @@
       "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16201c7e_cc240ea7",
+        "filename": "cc/trees/proxy.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6c2ec6a_b7b523bd",
+      "range": {
+        "startLine": 27,
+        "startChar": 0,
+        "endLine": 27,
+        "endChar": 24
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -157,6 +295,30 @@
     },
     {
       "key": {
+        "uuid": "c6a1bf88_39a92d26",
+        "filename": "components/viz/client/client_layer_tree_frame_sink.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "As discussed offline, maybe a MojoLayerTreeFrameSink or something, but we\u0027ll leave it as is for this CL.",
+      "parentUuid": "9c0fa475_031fcf05",
+      "range": {
+        "startLine": 22,
+        "startChar": 6,
+        "endLine": 22,
+        "endChar": 30
+      },
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "756d3043_71d4590b",
         "filename": "services/ui/ws/frame_generator.cc",
         "patchSetId": 6
@@ -171,6 +333,24 @@
       "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fb3896f3_64782cca",
+        "filename": "services/ui/ws/frame_generator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "756d3043_71d4590b",
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -191,6 +371,24 @@
     },
     {
       "key": {
+        "uuid": "8b375666_0f05de06",
+        "filename": "services/ui/ws/frame_generator_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e2c519f1_6bd54509",
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2f1020a6_bd00146e",
         "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutableStateTest.cpp",
         "patchSetId": 6
@@ -205,6 +403,24 @@
       "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98827224_7d11a5a2",
+        "filename": "third_party/WebKit/Source/platform/graphics/CompositorMutableStateTest.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-20T21:10:20Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2f1020a6_bd00146e",
+      "revId": "102133ddcd918602bc71a00979cef43a72c910c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
