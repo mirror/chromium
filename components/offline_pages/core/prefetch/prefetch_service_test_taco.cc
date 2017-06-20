@@ -64,4 +64,8 @@ void PrefetchServiceTestTaco::CreatePrefetchService() {
       std::move(suggested_articles_observer_));
 }
 
+std::unique_ptr<PrefetchService> PrefetchServiceTestTaco::Takeout() {
+  return std::move(prefetch_service_);
+}
+
 }  // namespace offline_page
