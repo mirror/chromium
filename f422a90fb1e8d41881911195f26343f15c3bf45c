@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "bc70bc47_e9518c1d",
+        "filename": "chrome/browser/translate/chrome_translate_client.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 343,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-06-20T04:38:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "24e66197_5b87e2bf",
+      "range": {
+        "startLine": 343,
+        "startChar": 2,
+        "endLine": 343,
+        "endChar": 27
+      },
+      "revId": "f422a90fb1e8d41881911195f26343f15c3bf45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "248c21f2_2c714596",
         "filename": "chrome/browser/translate/chrome_translate_client_unittest.cc",
         "patchSetId": 9
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-20T04:13:03Z",
       "side": 1,
       "message": "At this point, the test is not terribly meaningful - it tests that a call to logging logs. Do we not care any more that it happens in OnLanguageDetermined?",
+      "range": {
+        "startLine": 55,
+        "startChar": 9,
+        "endLine": 55,
+        "endChar": 37
+      },
+      "revId": "f422a90fb1e8d41881911195f26343f15c3bf45c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bc800b4b_275be3a8",
+        "filename": "chrome/browser/translate/chrome_translate_client_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1176036
+      },
+      "writtenOn": "2017-06-20T04:38:19Z",
+      "side": 1,
+      "message": "good point! thanks",
+      "parentUuid": "248c21f2_2c714596",
       "range": {
         "startLine": 55,
         "startChar": 9,
