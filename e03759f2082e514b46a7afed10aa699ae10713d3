@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a12f54a5_efcade04",
+        "filename": "media/base/media_switches.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-20T17:13:34Z",
+      "side": 1,
+      "message": "No comma. Add full link to the bug.",
+      "range": {
+        "startLine": 292,
+        "startChar": 37,
+        "endLine": 292,
+        "endChar": 71
+      },
+      "revId": "e03759f2082e514b46a7afed10aa699ae10713d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
