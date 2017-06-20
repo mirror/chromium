@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "62f082e9_19968a24",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 12,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1fc59dc5_b089d19f",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ed95dba_68f66674",
         "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
         "patchSetId": 4
@@ -54,6 +72,42 @@
     },
     {
       "key": {
+        "uuid": "6d2122fe_77e9b775",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done. Changed line 231 to DCHECK(camera_module_.is_bound()).",
+      "parentUuid": "22f0b711_ae67b258",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0119084a_fa6b1eff",
+        "filename": "media/capture/video/chromeos/camera_hal_delegate.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7ed95dba_68f66674",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d8a74c6b_ab16f71f",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -65,6 +119,24 @@
       "writtenOn": "2017-06-20T10:19:39Z",
       "side": 1,
       "message": "IIUC, there is already a colon in the PLOG output\nhttps://cs.chromium.org/chromium/src/base/logging.cc?type\u003dcs\u0026l\u003d915\n\nI feel original message \"pipe2()\" is enough \nhttps://cs.chromium.org/chromium/src/components/arc/arc_session.cc?type\u003dcs\u0026q\u003d%5Cbpipe2%5Cb+package:%5Echromium$\u0026l\u003d76",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3d52a6c_c4de615e",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d8a74c6b_ab16f71f",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -88,6 +160,24 @@
     },
     {
       "key": {
+        "uuid": "f869d038_dc2d79a1",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84436280_7c4ad480",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7f8ae40f_028c832e",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "595f8c98_34c4acbc",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 105,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7f8ae40f_028c832e",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "2619b4a9_fa57e64c",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -116,6 +224,24 @@
       "writtenOn": "2017-06-20T06:29:39Z",
       "side": 1,
       "message": "We should wait for the result of CreateSocket. Otherwise the capture thread may be stuck waiting for camera_module_set in CameraHalDelegate::GetDeviceDescriptors. Right?",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6a4d2db4_d0af64da",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 113,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2619b4a9_fa57e64c",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -145,6 +271,30 @@
     },
     {
       "key": {
+        "uuid": "cd6da270_ae0acaf4",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 119,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6438288f_90616634",
+      "range": {
+        "startLine": 119,
+        "startChar": 23,
+        "endLine": 119,
+        "endChar": 32
+      },
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8bb93a35_937a1be6",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -156,6 +306,24 @@
       "writtenOn": "2017-06-20T06:29:39Z",
       "side": 1,
       "message": "s/ProxyThread/CameraProxyThread/\ns/BlockingIOThread/CameraBlockingIOThread/",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae806bdf_d7fd72f8",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8bb93a35_937a1be6",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -179,6 +347,24 @@
     },
     {
       "key": {
+        "uuid": "754a2689_ad29178d",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ba8a7203_00ec9070",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5f309c6e_43779d9c",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -196,6 +382,24 @@
     },
     {
       "key": {
+        "uuid": "175046fe_f3c2b9dc",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 252,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Re-posting the task and using a simple while loop are equivalent here. I\u0027ve combined CreateServiceLoop and WaitForIncomingConnection into one StartServiceLoop function with a while loop.",
+      "parentUuid": "5f309c6e_43779d9c",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7417174b_42aa5c7e",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -207,6 +411,24 @@
       "writtenOn": "2017-06-20T10:19:39Z",
       "side": 1,
       "message": "I\u0027m not sure..., do you still need to keep reference of observers after server is registered?\n\nIIUC, the only usage of client_observers_ is OnCameraHalClientConnectionError(), which is actually doing nothing.",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dc5630ce_031797bc",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "The server (i.e. the camera HAL) may crash. Keeping the reference of the client observers allows us to re-establish the Mojo channels once server is reconnected.",
+      "parentUuid": "7417174b_42aa5c7e",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -247,6 +469,24 @@
     },
     {
       "key": {
+        "uuid": "6575c907_04a170e3",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "This method handles the Mojo connection error between the client and the dispatcher.\n\nThe server and the client (e.g. the camera HAL and the Android cameraserver process) have another Mojo channel, which is created with the help of the dispatcher, for the camera functions and they have error handlers for this camera Mojo channel as well.",
+      "parentUuid": "3bf12ce2_fc423b10",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "8c2a7b43_2602175f",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
         "patchSetId": 4
@@ -258,6 +498,24 @@
       "writtenOn": "2017-06-20T06:29:39Z",
       "side": 1,
       "message": "let\u0027s print a log if this fails.",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e483c9_7ff296c7",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 350,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8c2a7b43_2602175f",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -287,6 +545,30 @@
     },
     {
       "key": {
+        "uuid": "e7679e6b_454e7bd6",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "It\u0027s not needed anymore. Removed.",
+      "parentUuid": "4d0ef215_6d09d953",
+      "range": {
+        "startLine": 24,
+        "startChar": 19,
+        "endLine": 24,
+        "endChar": 34
+      },
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c19fed12_271b7ec3",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
         "patchSetId": 4
@@ -298,6 +580,24 @@
       "writtenOn": "2017-06-20T06:29:39Z",
       "side": 1,
       "message": "s/SetUpChannel/OnChannelSetUp/ because the channel has been set up.",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "644d2df2_51e8f498",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done. Changed this is OnChannelCreated.",
+      "parentUuid": "c19fed12_271b7ec3",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -321,6 +621,24 @@
     },
     {
       "key": {
+        "uuid": "70c690be_f6da2fb4",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed12813f_c857c6bf",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ad9522_0a26ee1c",
         "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
         "patchSetId": 4
@@ -332,6 +650,24 @@
       "writtenOn": "2017-06-20T07:13:07Z",
       "side": 1,
       "message": "nit: change to IsStarted because IsRunning has mutex inside?",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d6ccdf8c_5b826be6",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e9ad9522_0a26ee1c",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -355,6 +691,24 @@
     },
     {
       "key": {
+        "uuid": "285e406f_5442dfd7",
+        "filename": "media/capture/video/chromeos/camera_hal_dispatcher_impl.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a852dfce_435a0eed",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "4ad7befc_72ccb9be",
         "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
         "patchSetId": 4
@@ -366,6 +720,24 @@
       "writtenOn": "2017-06-20T10:19:39Z",
       "side": 1,
       "message": "1. what if there are more than one server trying to register\n2. do you need unregister mechanism? for example, what if the server want to close itself?",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0a47c667_67f58dc4",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "1. There\u0027s only one camera HAL thus only one server on the system. If somehow a second server tries to register, this function should simply drop the request.\n\n2. The server and the dispatcher should keep connected as long as the system is on so that camera service is always available. I guess the unregister mechanism we have now is the Mojo connection error handlers, which is usually triggered by crash of one end of the channel.",
+      "parentUuid": "4ad7befc_72ccb9be",
       "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -389,6 +761,24 @@
     },
     {
       "key": {
+        "uuid": "9e165fe6_26623405",
+        "filename": "media/capture/video/chromeos/mojo/arc_camera3_service.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "The dispatcher will wait until the server registers, and then create the Mojo channel for each registered clients.",
+      "parentUuid": "a750a539_c51dfcd5",
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "924f9ffe_c84b474f",
         "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.cc",
         "patchSetId": 4
@@ -400,6 +790,30 @@
       "writtenOn": "2017-06-20T10:19:39Z",
       "side": 1,
       "message": "i\u0027m not sure, should this be \"||\" ?",
+      "range": {
+        "startLine": 30,
+        "startChar": 60,
+        "endLine": 30,
+        "endChar": 62
+      },
+      "revId": "bd44a938461cc2a5af96b35647b6c09a09061874",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07c61882_31a17505",
+        "filename": "media/capture/video/chromeos/video_capture_device_factory_chromeos.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1001646
+      },
+      "writtenOn": "2017-06-20T14:53:36Z",
+      "side": 1,
+      "message": "It should be \u0026\u0026 here. We only need to start the CameraHalDispatcherImpl singleton once.",
+      "parentUuid": "924f9ffe_c84b474f",
       "range": {
         "startLine": 30,
         "startChar": 60,
