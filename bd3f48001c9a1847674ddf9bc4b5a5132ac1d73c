@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f180e897_062d1ad3",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 1
+      },
+      "lineNbr": 2782,
+      "author": {
+        "id": 1115851
+      },
+      "writtenOn": "2017-06-20T21:43:58Z",
+      "side": 1,
+      "message": "This can be shortened to\n\ncrbug.com/v8/6504",
+      "range": {
+        "startLine": 2782,
+        "startChar": 0,
+        "endLine": 2782,
+        "endChar": 42
+      },
+      "revId": "bd3f48001c9a1847674ddf9bc4b5a5132ac1d73c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
