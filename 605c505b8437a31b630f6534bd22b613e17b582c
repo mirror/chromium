@@ -34,6 +34,24 @@
       "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c0c3e92a_9ece3051",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-20T09:28:40Z",
+      "side": 1,
+      "message": "Hmm. Why are other ContextLifecycleObserver objects not facing the same problem? Is it just by accident?",
+      "parentUuid": "627b3641_5b1e46ae",
+      "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
