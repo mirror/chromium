@@ -22,6 +22,30 @@
       "revId": "be4dd16bfa72f400324748721194fe751520ae50",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fc0d431f_9b96fa4b",
+        "filename": "chrome/browser/android/offline_pages/offline_page_tab_helper.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T00:32:30Z",
+      "side": 1,
+      "message": "I think this is okay. I\u0027m adding a comment here, but the idea is that we don\u0027t count navgations when offline, we count navigations to offline pages. For day classification, if user only opened one or two offline pages during a day, even if the network was connected we count this as \u0027offline day\u0027 - because user didn\u0027t even use online that day. However, if at least one online navigation happened, the day will be counted as \u0027online day\u0027.",
+      "parentUuid": "b00d717d_a422cf78",
+      "range": {
+        "startLine": 118,
+        "startChar": 10,
+        "endLine": 118,
+        "endChar": 22
+      },
+      "revId": "be4dd16bfa72f400324748721194fe751520ae50",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
