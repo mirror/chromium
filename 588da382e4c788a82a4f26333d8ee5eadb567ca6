@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "dd1b8ffd_0d2faa5f",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-20T20:56:47Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1eb43f40_805c66e6",
+      "revId": "588da382e4c788a82a4f26333d8ee5eadb567ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4f2d05fa_aeacac27",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater_unittest.py",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T18:12:48Z",
       "side": 1,
       "message": "Should you also assert that no successful tryjob results were fetched?",
+      "revId": "588da382e4c788a82a4f26333d8ee5eadb567ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "28f59e2c_580c3cee",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-20T20:56:47Z",
+      "side": 1,
+      "message": "Done, and as a result I realized that it was actually still fetching results for builds that had passed; now fixed.",
+      "parentUuid": "4f2d05fa_aeacac27",
       "revId": "588da382e4c788a82a4f26333d8ee5eadb567ca6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
