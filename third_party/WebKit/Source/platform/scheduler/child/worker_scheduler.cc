@@ -29,7 +29,7 @@ scoped_refptr<TaskQueue> WorkerScheduler::CreateUnthrottledTaskRunner(
     TaskQueue::QueueType queue_type) {
   helper_->CheckOnValidThread();
   scoped_refptr<TaskQueue> unthrottled_task_queue(
-      helper_->NewTaskQueue(TaskQueue::Spec(queue_type)
+      helper_->NewTaskQueue(TaskQueue::QueueCreationParams(queue_type)
                                 .SetShouldMonitorQuiescence(true)
                                 .SetTimeDomain(nullptr)));
   return unthrottled_task_queue;

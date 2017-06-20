@@ -199,7 +199,7 @@ TEST_F(SchedulerHelperTest, OnUnregisterTaskQueue) {
   scheduler_helper_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = scheduler_helper_->NewTaskQueue(
-      TaskQueue::Spec(TaskQueue::QueueType::TEST));
+      TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST));
 
   EXPECT_CALL(observer, OnUnregisterTaskQueue(_)).Times(1);
   task_queue->UnregisterTaskQueue();
@@ -212,7 +212,7 @@ TEST_F(SchedulerHelperTest, OnTriedToExecuteBlockedTask) {
   scheduler_helper_->SetObserver(&observer);
 
   scoped_refptr<TaskQueue> task_queue = scheduler_helper_->NewTaskQueue(
-      TaskQueue::Spec(TaskQueue::QueueType::TEST)
+      TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)
           .SetShouldReportWhenExecutionBlocked(true));
   std::unique_ptr<TaskQueue::QueueEnabledVoter> voter =
       task_queue->CreateQueueEnabledVoter();

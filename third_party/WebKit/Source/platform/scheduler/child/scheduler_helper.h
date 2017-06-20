@@ -25,7 +25,7 @@ class PLATFORM_EXPORT SchedulerHelper : public TaskQueueManager::Observer {
       scoped_refptr<SchedulerTqmDelegate> task_queue_manager_delegate);
   explicit SchedulerHelper(
       scoped_refptr<SchedulerTqmDelegate> task_queue_manager_delegate,
-      TaskQueue::Spec default_task_queue_spec);
+      TaskQueue::QueueCreationParams default_task_queue_spec);
   ~SchedulerHelper() override;
 
   // There is a small overhead to recording task delay histograms, we may not
@@ -67,7 +67,8 @@ class PLATFORM_EXPORT SchedulerHelper : public TaskQueueManager::Observer {
   }
 
   // Creates a new TaskQueue with the given |spec|.
-  scoped_refptr<TaskQueue> NewTaskQueue(const TaskQueue::Spec& spec);
+  scoped_refptr<TaskQueue> NewTaskQueue(
+      const TaskQueue::QueueCreationParams& spec);
 
   class PLATFORM_EXPORT Observer {
    public:
@@ -78,7 +79,8 @@ class PLATFORM_EXPORT SchedulerHelper : public TaskQueueManager::Observer {
         const scoped_refptr<TaskQueue>& queue) = 0;
 
     // Called when the scheduler tried to execute a task from a disabled
-    // queue. See TaskQueue::Spec::SetShouldReportWhenExecutionBlocked.
+    // queue. See
+    // TaskQueue::QueueCreationParams::SetShouldReportWhenExecutionBlocked.
     virtual void OnTriedToExecuteBlockedTask(const TaskQueue& queue,
                                              const base::PendingTask& task) = 0;
   };

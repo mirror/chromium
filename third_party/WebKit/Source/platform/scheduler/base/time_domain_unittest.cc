@@ -70,7 +70,7 @@ class TimeDomainTest : public testing::Test {
     time_domain_ = base::WrapUnique(CreateMockTimeDomain());
     task_queue_ = make_scoped_refptr(new internal::TaskQueueImpl(
         nullptr, time_domain_.get(),
-        TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+        TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
   }
 
   void TearDown() final {
@@ -135,17 +135,20 @@ TEST_F(TimeDomainTest, ScheduleDelayedWorkSupersedesPreviousWakeUp) {
 }
 
 TEST_F(TimeDomainTest, RequestWakeUpAt_OnlyCalledForEarlierTasks) {
-  scoped_refptr<internal::TaskQueueImpl> task_queue2 = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue2 =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
-  scoped_refptr<internal::TaskQueueImpl> task_queue3 = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue3 =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
-  scoped_refptr<internal::TaskQueueImpl> task_queue4 = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue4 =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
   base::TimeDelta delay1 = base::TimeDelta::FromMilliseconds(10);
   base::TimeDelta delay2 = base::TimeDelta::FromMilliseconds(20);
@@ -179,9 +182,10 @@ TEST_F(TimeDomainTest, RequestWakeUpAt_OnlyCalledForEarlierTasks) {
 }
 
 TEST_F(TimeDomainTest, UnregisterQueue) {
-  scoped_refptr<internal::TaskQueueImpl> task_queue2_ = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue2_ =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
   base::TimeTicks now = time_domain_->Now();
   base::TimeTicks wake_up1 = now + base::TimeDelta::FromMilliseconds(10);
@@ -243,9 +247,10 @@ TEST_F(TimeDomainTest, WakeUpReadyDelayedQueuesWithIdenticalRuntimes) {
   EXPECT_CALL(*time_domain_.get(), RequestWakeUpAt(_, delayed_runtime));
   EXPECT_CALL(*time_domain_.get(), CancelWakeUpAt(delayed_runtime));
 
-  scoped_refptr<internal::TaskQueueImpl> task_queue2 = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue2 =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
   time_domain_->ScheduleDelayedWork(task_queue2.get(),
                                     {delayed_runtime, ++sequence_num}, now);
@@ -281,9 +286,10 @@ TEST_F(TimeDomainTest, CancelDelayedWork) {
 }
 
 TEST_F(TimeDomainTest, CancelDelayedWork_TwoQueues) {
-  scoped_refptr<internal::TaskQueueImpl> task_queue2 = make_scoped_refptr(
-      new internal::TaskQueueImpl(nullptr, time_domain_.get(),
-                                  TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+  scoped_refptr<internal::TaskQueueImpl> task_queue2 =
+      make_scoped_refptr(new internal::TaskQueueImpl(
+          nullptr, time_domain_.get(),
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
 
   base::TimeTicks now = time_domain_->Now();
   base::TimeTicks run_time1 = now + base::TimeDelta::FromMilliseconds(20);

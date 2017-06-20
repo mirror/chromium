@@ -101,7 +101,7 @@ class PLATFORM_EXPORT TaskQueueManager
   // Creates a task queue with the given |spec|.  Must be called on the thread
   // this class was created on.
   scoped_refptr<internal::TaskQueueImpl> NewTaskQueue(
-      const TaskQueue::Spec& spec);
+      const TaskQueue::QueueCreationParams& spec);
 
   class PLATFORM_EXPORT Observer {
    public:
@@ -112,7 +112,8 @@ class PLATFORM_EXPORT TaskQueueManager
         const scoped_refptr<TaskQueue>& queue) = 0;
 
     // Called when the manager tried to execute a task from a disabled
-    // queue. See TaskQueue::Spec::SetShouldReportWhenExecutionBlocked.
+    // queue. See
+    // TaskQueue::QueueCreationParams::SetShouldReportWhenExecutionBlocked.
     virtual void OnTriedToExecuteBlockedTask(const TaskQueue& queue,
                                              const base::PendingTask& task) = 0;
   };

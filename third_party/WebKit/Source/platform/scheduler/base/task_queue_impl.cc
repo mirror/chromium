@@ -53,6 +53,32 @@ const char* TaskQueue::NameForQueueType(TaskQueue::QueueType queue_type) {
 }
 
 // static
+TaskQueue::QueueClass TaskQueue::QueueClassForQueueType(QueueType type) {
+  switch (type) {
+    case QueueType::CONTROL:
+    case QueueType::DEFAULT:
+    case QueueType::IDLE:
+    case QueueType::TEST:
+      return QueueClass::NONE;
+    case QueueType::DEFAULT_LOADING:
+    case QueueType::FRAME_LOADING:
+      return QueueClass::LOADING;
+    case QueueType::DEFAULT_TIMER:
+    case QueueType::FRAME_TIMER:
+    // Unthrottled tasks are considered timers which can't be throttled and
+    // fall into TIMER class.
+    case QueueType::FRAME_UNTHROTTLED:
+    case QueueType::UNTHROTTLED:
+      return QueueClass::TIMER;
+    case QueueType::COMPOSITOR:
+      return QueueClass::COMPOSITOR;
+    case QueueType::COUNT:
+      DCHECK(false);
+      return QueueClass::COUNT;
+  }
+}
+
+// static
 const char* TaskQueue::PriorityToString(QueuePriority priority) {
   switch (priority) {
     case CONTROL_PRIORITY:
@@ -71,20 +97,36 @@ const char* TaskQueue::PriorityToString(QueuePriority priority) {
   }
 }
 
+TaskQueue::Spec::Spec(TaskQueue::QueueClass queue_class,
+                      bool is_important,
+                      bool can_be_blocked,
+                      bool can_be_throttled,
+                      bool can_be_suspended)
+    : queue_class(queue_class),
+      is_important(is_important),
+      can_be_blocked(can_be_blocked),
+      can_be_throttled(can_be_throttled),
+      can_be_suspended(can_be_suspended) {}
+
 namespace internal {
 
 TaskQueueImpl::TaskQueueImpl(TaskQueueManager* task_queue_manager,
                              TimeDomain* time_domain,
-                             const Spec& spec)
+                             const QueueCreationParams& params)
     : thread_id_(base::PlatformThread::CurrentId()),
       any_thread_(task_queue_manager, time_domain),
-      type_(spec.type),
-      name_(NameForQueueType(spec.type)),
+      type_(params.queue_type),
+      name_(NameForQueueType(params.queue_type)),
       main_thread_only_(task_queue_manager, this, time_domain),
-      should_monitor_quiescence_(spec.should_monitor_quiescence),
-      should_notify_observers_(spec.should_notify_observers),
+      spec_(QueueClassForQueueType(params.queue_type),
+            params.is_important,
+            params.can_be_blocked,
+            params.can_be_throttled,
+            params.can_be_suspended),
+      should_monitor_quiescence_(params.should_monitor_quiescence),
+      should_notify_observers_(params.should_notify_observers),
       should_report_when_execution_blocked_(
-          spec.should_report_when_execution_blocked) {
+          params.should_report_when_execution_blocked) {
   DCHECK(time_domain);
   time_domain->RegisterQueue(this);
 }
@@ -166,6 +208,10 @@ TaskQueueImpl::MainThreadOnly::MainThreadOnly(
       current_fence(0) {}
 
 TaskQueueImpl::MainThreadOnly::~MainThreadOnly() {}
+
+const TaskQueue::Spec& TaskQueueImpl::GetSpec() const {
+  return spec_;
+}
 
 void TaskQueueImpl::UnregisterTaskQueue() {
   base::AutoLock lock(any_thread_lock_);

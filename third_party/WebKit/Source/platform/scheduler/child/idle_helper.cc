@@ -23,11 +23,9 @@ IdleHelper::IdleHelper(
     base::TimeDelta required_quiescence_duration_before_long_idle_period)
     : helper_(helper),
       delegate_(delegate),
-      idle_queue_(
-          helper_->NewTaskQueue(TaskQueue::Spec(TaskQueue::QueueType::IDLE))),
-      state_(helper,
-             delegate,
-             idle_period_tracing_name),
+      idle_queue_(helper_->NewTaskQueue(
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::IDLE))),
+      state_(helper, delegate, idle_period_tracing_name),
       required_quiescence_duration_before_long_idle_period_(
           required_quiescence_duration_before_long_idle_period),
       is_shutdown_(false),

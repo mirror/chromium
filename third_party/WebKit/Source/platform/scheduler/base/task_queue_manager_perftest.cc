@@ -94,7 +94,7 @@ class TaskQueueManagerPerfTest : public testing::Test {
 
     for (size_t i = 0; i < num_queues; i++) {
       queues_.push_back(manager_->NewTaskQueue(
-          TaskQueue::Spec(TaskQueue::QueueType::TEST)
+          TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)
               .SetTimeDomain(virtual_time_domain_.get())));
     }
   }

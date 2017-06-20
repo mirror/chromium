@@ -74,6 +74,9 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
   // Can be called on any thread.
   static const char* PriorityToString(QueuePriority priority);
 
+  // QueueClass is a more-high level category than QueueType. Scheduler bases
+  // its policies on QueueClass while QueueType is used for instrumentation.
+
   enum class QueueType {
     // Keep TaskQueue::NameForQueueType in sync.
     // This enum is used for a histogram and it should not be re-numbered.
@@ -92,46 +95,102 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
     COUNT = 11
   };
 
+  // High-level category used for scheduling.
+  enum class QueueClass {
+    NONE = 0,
+    LOADING = 1,
+    TIMER = 3,
+    COMPOSITOR = 4,
+
+    COUNT = 5
+  };
+
+  static QueueClass QueueClassForQueueType(QueueType type);
+
   // Returns name of the given queue type. Returned string has application
   // lifetime.
   static const char* NameForQueueType(QueueType queue_type);
 
-  // Options for constructing a TaskQueue. Once set the |name| and
-  // |should_monitor_quiescence| are immutable.
-  struct Spec {
-    explicit Spec(QueueType type)
-        : type(type),
+  // Options for constructing a TaskQueue. Once set the |type| and
+  // |queue_class| are immutable.
+  struct QueueCreationParams {
+    explicit QueueCreationParams(QueueType queue_type)
+        : queue_type(queue_type),
           should_monitor_quiescence(false),
           time_domain(nullptr),
           should_notify_observers(true),
-          should_report_when_execution_blocked(false) {}
+          should_report_when_execution_blocked(false),
+          is_important(false),
+          can_be_blocked(false),
+          can_be_throttled(false),
+          can_be_suspended(false) {}
 
-    Spec SetShouldMonitorQuiescence(bool should_monitor) {
+    QueueCreationParams SetShouldMonitorQuiescence(bool should_monitor) {
       should_monitor_quiescence = should_monitor;
       return *this;
     }
 
-    Spec SetShouldNotifyObservers(bool run_observers) {
+    QueueCreationParams SetShouldNotifyObservers(bool run_observers) {
       should_notify_observers = run_observers;
       return *this;
     }
 
-    Spec SetTimeDomain(TimeDomain* domain) {
+    QueueCreationParams SetTimeDomain(TimeDomain* domain) {
       time_domain = domain;
       return *this;
     }
 
+    QueueCreationParams SetIsImportant(bool value) {
+      is_important = value;
+      return *this;
+    }
+
+    QueueCreationParams SetCanBeBlocked(bool value) {
+      can_be_blocked = value;
+      return *this;
+    }
+
+    QueueCreationParams SetCanBeThrottled(bool value) {
+      can_be_throttled = value;
+      return *this;
+    }
+
+    QueueCreationParams SetCanBeSuspended(bool value) {
+      can_be_suspended = value;
+      return *this;
+    }
+
     // See TaskQueueManager::Observer::OnTriedToExecuteBlockedTask.
-    Spec SetShouldReportWhenExecutionBlocked(bool should_report) {
+    QueueCreationParams SetShouldReportWhenExecutionBlocked(
+        bool should_report) {
       should_report_when_execution_blocked = should_report;
       return *this;
     }
 
-    QueueType type;
+    QueueType queue_type;
     bool should_monitor_quiescence;
     TimeDomain* time_domain;
     bool should_notify_observers;
     bool should_report_when_execution_blocked;
+    bool is_important;
+    bool can_be_blocked;
+    bool can_be_throttled;
+    bool can_be_suspended;
+  };
+
+  struct Spec {
+    Spec(QueueClass queue_class,
+         bool is_important,
+         bool can_be_blocked,
+         bool can_be_throttled,
+         bool can_be_suspended);
+
+    QueueClass queue_class;
+
+    bool is_important;
+    bool can_be_blocked;
+    bool can_be_throttled;
+    bool can_be_suspended;
   };
 
   // An interface that lets the owner vote on whether or not the associated
@@ -151,6 +210,8 @@ class PLATFORM_EXPORT TaskQueue : public base::SingleThreadTaskRunner {
    private:
     DISALLOW_COPY_AND_ASSIGN(QueueEnabledVoter);
   };
+
+  virtual const Spec& GetSpec() const = 0;
 
   // Returns an interface that allows the caller to vote on whether or not this
   // TaskQueue is enabled. The TaskQueue will be enabled if there are no voters

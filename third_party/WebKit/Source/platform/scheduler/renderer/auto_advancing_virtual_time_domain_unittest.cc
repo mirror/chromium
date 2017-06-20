@@ -34,8 +34,8 @@ class AutoAdvancingVirtualTimeDomainTest : public testing::Test {
 
     manager_ = base::MakeUnique<TaskQueueManager>(main_task_runner_);
     manager_->AddTaskTimeObserver(&test_task_time_observer_);
-    task_queue_ =
-        manager_->NewTaskQueue(TaskQueue::Spec(TaskQueue::QueueType::TEST));
+    task_queue_ = manager_->NewTaskQueue(
+        TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST));
     initial_time_ = clock_->NowTicks();
     auto_advancing_time_domain_.reset(
         new AutoAdvancingVirtualTimeDomain(initial_time_));

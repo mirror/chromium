@@ -62,7 +62,7 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
  public:
   TaskQueueImpl(TaskQueueManager* task_queue_manager,
                 TimeDomain* time_domain,
-                const Spec& spec);
+                const QueueCreationParams& spec);
 
   // Represents a time at which a task wants to run. Tasks scheduled for the
   // same point in time will be ordered by their sequence numbers.
@@ -131,6 +131,7 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
   };
 
   // TaskQueue implementation.
+  const Spec& GetSpec() const override;
   void UnregisterTaskQueue() override;
   bool RunsTasksInCurrentSequence() const override;
   bool PostDelayedTask(const tracked_objects::Location& from_here,
@@ -391,6 +392,8 @@ class PLATFORM_EXPORT TaskQueueImpl final : public TaskQueue {
     immediate_incoming_queue_lock_.AssertAcquired();
     return immediate_incoming_queue_;
   }
+
+  Spec spec_;
 
   const bool should_monitor_quiescence_;
   const bool should_notify_observers_;

@@ -122,9 +122,10 @@ class TaskQueueSelectorTest : public testing::Test {
     virtual_time_domain_ = base::WrapUnique<VirtualTimeDomain>(
         new VirtualTimeDomain(base::TimeTicks()));
     for (size_t i = 0; i < kTaskQueueCount; i++) {
-      scoped_refptr<TaskQueueImpl> task_queue = make_scoped_refptr(
-          new TaskQueueImpl(nullptr, virtual_time_domain_.get(),
-                            TaskQueue::Spec(TaskQueue::QueueType::TEST)));
+      scoped_refptr<TaskQueueImpl> task_queue =
+          make_scoped_refptr(new TaskQueueImpl(
+              nullptr, virtual_time_domain_.get(),
+              TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)));
       selector_.AddQueue(task_queue.get());
       task_queues_.push_back(task_queue);
     }
@@ -146,10 +147,10 @@ class TaskQueueSelectorTest : public testing::Test {
   }
 
   scoped_refptr<TaskQueueImpl> NewTaskQueueWithBlockReporting() {
-    return make_scoped_refptr(
-        new TaskQueueImpl(nullptr, virtual_time_domain_.get(),
-                          TaskQueue::Spec(TaskQueue::QueueType::TEST)
-                              .SetShouldReportWhenExecutionBlocked(true)));
+    return make_scoped_refptr(new TaskQueueImpl(
+        nullptr, virtual_time_domain_.get(),
+        TaskQueue::QueueCreationParams(TaskQueue::QueueType::TEST)
+            .SetShouldReportWhenExecutionBlocked(true)));
   }
 
   const size_t kTaskQueueCount = 5;

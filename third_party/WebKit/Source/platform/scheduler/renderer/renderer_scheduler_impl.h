@@ -154,16 +154,15 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   scoped_refptr<TaskQueue> LoadingTaskQueue();
   scoped_refptr<TaskQueue> TimerTaskQueue();
 
+  // Returns a new task queue created with given params.
+  scoped_refptr<TaskQueue> NewTaskQueue(TaskQueue::QueueCreationParams params);
+
   // Returns a new loading task queue. This queue is intended for tasks related
   // to resource dispatch, foreground HTML parsing, etc...
   scoped_refptr<TaskQueue> NewLoadingTaskQueue(TaskQueue::QueueType queue_type);
 
   // Returns a new timer task queue. This queue is intended for DOM Timers.
   scoped_refptr<TaskQueue> NewTimerTaskQueue(TaskQueue::QueueType queue_type);
-
-  // Returns a task queue for tasks which should never get throttled.
-  scoped_refptr<TaskQueue> NewUnthrottledTaskQueue(
-      TaskQueue::QueueType queue_type);
 
   // Returns a task queue where tasks run at the highest possible priority.
   scoped_refptr<TaskQueue> ControlTaskQueue();
@@ -258,37 +257,65 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   static const char* TimeDomainTypeToString(TimeDomainType domain_type);
 
   struct TaskQueuePolicy {
+    // Default constructor of TaskQueuePolicy should match behaviour of a
+    // newly-created task queue.
     TaskQueuePolicy()
         : is_enabled(true),
-          priority(TaskQueue::NORMAL_PRIORITY),
-          time_domain_type(TimeDomainType::REAL) {}
+          is_suspended(false),
+          is_throttled(false),
+          is_blocked(false),
+          use_virtual_time(false),
+          priority(TaskQueue::NORMAL_PRIORITY) {}
 
     bool is_enabled;
+    bool is_suspended;
+    bool is_throttled;
+    bool is_blocked;
+    bool use_virtual_time;
     TaskQueue::QueuePriority priority;
-    TimeDomainType time_domain_type;
+
+    bool IsEnabled(const TaskQueue::Spec& spec) const;
+
+    TaskQueue::QueuePriority GetPriority(const TaskQueue::Spec& spec) const;
+
+    TimeDomainType GetTimeDomainType(const TaskQueue::Spec& spec) const;
 
     bool operator==(const TaskQueuePolicy& other) const {
-      return is_enabled == other.is_enabled && priority == other.priority &&
-             time_domain_type == other.time_domain_type;
+      return is_enabled == other.is_enabled &&
+             is_suspended == other.is_suspended &&
+             is_throttled == other.is_throttled &&
+             is_blocked == other.is_blocked &&
+             use_virtual_time == other.use_virtual_time &&
+             priority == other.priority;
     }
 
     void AsValueInto(base::trace_event::TracedValue* state) const;
   };
 
   struct Policy {
-    TaskQueuePolicy compositor_queue_policy;
-    TaskQueuePolicy loading_queue_policy;
-    TaskQueuePolicy timer_queue_policy;
-    TaskQueuePolicy default_queue_policy;
+    TaskQueuePolicy& compositor_queue_policy();
+    const TaskQueuePolicy& compositor_queue_policy() const;
+
+    TaskQueuePolicy& loading_queue_policy();
+    const TaskQueuePolicy& loading_queue_policy() const;
+
+    TaskQueuePolicy& timer_queue_policy();
+    const TaskQueuePolicy& timer_queue_policy() const;
+
+    TaskQueuePolicy& default_queue_policy();
+    const TaskQueuePolicy& default_queue_policy() const;
+
+    const TaskQueuePolicy& GetQueuePolicy(
+        TaskQueue::QueueClass queue_class) const;
+
+    std::array<TaskQueuePolicy,
+               static_cast<size_t>(TaskQueue::QueueClass::COUNT)>
+        policies;
     v8::RAILMode rail_mode = v8::PERFORMANCE_ANIMATION;
     bool should_disable_throttling = false;
 
     bool operator==(const Policy& other) const {
-      return compositor_queue_policy == other.compositor_queue_policy &&
-             loading_queue_policy == other.loading_queue_policy &&
-             timer_queue_policy == other.timer_queue_policy &&
-             default_queue_policy == other.default_queue_policy &&
-             rail_mode == other.rail_mode &&
+      return policies == other.policies && rail_mode == other.rail_mode &&
              should_disable_throttling == other.should_disable_throttling;
     }
 
@@ -436,16 +463,13 @@ class PLATFORM_EXPORT RendererSchedulerImpl
   const scoped_refptr<TaskQueue> control_task_queue_;
   const scoped_refptr<TaskQueue> compositor_task_queue_;
   scoped_refptr<TaskQueue> virtual_time_control_task_queue_;
-  std::unique_ptr<TaskQueue::QueueEnabledVoter>
-      compositor_task_queue_enabled_voter_;
 
   using TaskQueueVoterMap =
       std::map<scoped_refptr<TaskQueue>,
                std::unique_ptr<TaskQueue::QueueEnabledVoter>>;
 
-  TaskQueueVoterMap loading_task_runners_;
-  TaskQueueVoterMap timer_task_runners_;
-  std::set<scoped_refptr<TaskQueue>> unthrottled_task_runners_;
+  TaskQueueVoterMap task_runners_;
+
   scoped_refptr<TaskQueue> default_loading_task_queue_;
   scoped_refptr<TaskQueue> default_timer_task_queue_;
 
