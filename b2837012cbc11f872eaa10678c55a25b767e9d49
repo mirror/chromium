@@ -155,6 +155,30 @@
     },
     {
       "key": {
+        "uuid": "da865baa_64684b7e",
+        "filename": "content/browser/renderer_host/overscroll_controller.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-20T16:58:36Z",
+      "side": 1,
+      "message": "I\u0027ve thought about this too. The issue I had with this approach is that value of 0 would not be equal to no cap anymore. Instead the value of start_threshold would indicate no cap. Maybe, what I can do is to set the value to 0 if delegate returns 0; otherwise, add start_threshold to the value and save it as a cap to overscroll_delta_x_/y_ values. WDYT?",
+      "parentUuid": "6288fcbb_d6e6610f",
+      "range": {
+        "startLine": 135,
+        "startChar": 8,
+        "endLine": 135,
+        "endChar": 32
+      },
+      "revId": "b2837012cbc11f872eaa10678c55a25b767e9d49",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "eb313db4_b449c87a",
         "filename": "content/browser/renderer_host/overscroll_controller_delegate.h",
         "patchSetId": 4

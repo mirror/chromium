@@ -16,6 +16,24 @@
       "revId": "7db99859049367f02ade612d26425c0215965229",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "da110e34_e5629e9a",
+        "filename": "content/browser/renderer_host/render_widget_host_view_aura_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 977,
+      "author": {
+        "id": 1002242
+      },
+      "writtenOn": "2017-06-20T16:58:36Z",
+      "side": 1,
+      "message": "They are all related to the cleanup I mentioned in my previous comment. Do you mean that we should leave the cleanup out of this CL or there is something else I\u0027m missing not related to the cleanup?",
+      "parentUuid": "6dc35af1_c885b87e",
+      "revId": "7db99859049367f02ade612d26425c0215965229",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
