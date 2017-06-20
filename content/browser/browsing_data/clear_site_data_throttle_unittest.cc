@@ -69,7 +69,8 @@ class TestThrottle : public ClearSiteDataThrottle {
                void(const url::Origin& origin,
                     bool clear_cookies,
                     bool clear_storage,
-                    bool clear_cache));
+                    bool clear_cache,
+                    bool clear_documents))
 
  protected:
   const net::HttpResponseHeaders* GetResponseHeaders() const override {
@@ -80,8 +81,10 @@ class TestThrottle : public ClearSiteDataThrottle {
                            bool clear_cookies,
                            bool clear_storage,
                            bool clear_cache,
+                           bool clear_documents,
                            base::OnceClosure callback) override {
-    ClearSiteData(origin, clear_cookies, clear_storage, clear_cache);
+    ClearSiteData(origin, clear_cookies, clear_storage, clear_cache,
+                  clear_documents);
 
     // NOTE: ResourceThrottle expects Resume() to be called asynchronously.
     // For the purposes of this test, synchronous call works correctly, and
@@ -171,34 +174,35 @@ TEST_F(ClearSiteDataThrottleTest, ParseHeaderAndExecuteClearingTask) {
     bool cookies;
     bool storage;
     bool cache;
+    bool documents;
   } test_cases[] = {
       // One data type.
-      {"\"cookies\"", true, false, false},
-      {"\"storage\"", false, true, false},
-      {"\"cache\"", false, false, true},
+      {"\"cookies\"", true, false, false, false},
+      {"\"storage\"", false, true, false, false},
+      {"\"cache\"", false, false, true, false},
 
       // Two data types.
-      {"\"cookies\", \"storage\"", true, true, false},
-      {"\"cookies\", \"cache\"", true, false, true},
-      {"\"storage\", \"cache\"", false, true, true},
+      {"\"cookies\", \"storage\"", true, true, false, false},
+      {"\"cookies\", \"cache\"", true, false, true, false},
+      {"\"storage\", \"cache\"", false, true, true, false},
 
       // Three data types.
-      {"\"storage\", \"cache\", \"cookies\"", true, true, true},
-      {"\"cache\", \"cookies\", \"storage\"", true, true, true},
-      {"\"cookies\", \"storage\", \"cache\"", true, true, true},
+      {"\"storage\", \"cache\", \"cookies\"", true, true, true, false},
+      {"\"cache\", \"cookies\", \"storage\"", true, true, true, false},
+      {"\"cookies\", \"storage\", \"cache\"", true, true, true, false},
 
       // Different formatting.
-      {"\"cookies\"", true, false, false},
+      {"\"cookies\"", true, false, false, false},
 
       // Duplicates.
-      {"\"cookies\", \"cookies\"", true, false, false},
+      {"\"cookies\", \"cookies\"", true, false, false, false},
 
       // Other JSON-formatted items in the list.
-      {"\"storage\", { \"other_params\": {} }", false, true, false},
+      {"\"storage\", { \"other_params\": {} }", false, true, false, false},
 
       // Unknown types are ignored, but we still proceed with the deletion for
       // those that we recognize.
-      {"\"cache\", \"foo\"", false, false, true},
+      {"\"cache\", \"foo\"", false, false, true, false},
   };
 
   for (const TestCase& test_case : test_cases) {
@@ -208,17 +212,19 @@ TEST_F(ClearSiteDataThrottleTest, ParseHeaderAndExecuteClearingTask) {
     bool actual_cookies;
     bool actual_storage;
     bool actual_cache;
+    bool actual_documents;
 
     GURL url("https://example.com");
     ConsoleMessagesDelegate console_delegate;
 
     EXPECT_TRUE(ClearSiteDataThrottle::ParseHeaderForTesting(
         test_case.header, &actual_cookies, &actual_storage, &actual_cache,
-        &console_delegate, url));
+        &actual_documents & console_delegate, url));
 
     EXPECT_EQ(test_case.cookies, actual_cookies);
     EXPECT_EQ(test_case.storage, actual_storage);
     EXPECT_EQ(test_case.cache, actual_cache);
+    EXPECT_EQ(test_case.documents, actual_documents);
 
     // Test that a call with the above parameters actually reaches
     // ExecuteClearingTask().
@@ -271,12 +277,13 @@ TEST_F(ClearSiteDataThrottleTest, InvalidHeader) {
     bool actual_cookies;
     bool actual_storage;
     bool actual_cache;
+    bool actual_documents;
 
     ConsoleMessagesDelegate console_delegate;
 
     EXPECT_FALSE(ClearSiteDataThrottle::ParseHeaderForTesting(
         test_case.header, &actual_cookies, &actual_storage, &actual_cache,
-        &console_delegate, GURL()));
+        &actual_documents, &console_delegate, GURL()));
 
     std::string multiline_message;
     for (const auto& message : console_delegate.messages()) {

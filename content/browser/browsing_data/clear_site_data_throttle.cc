@@ -11,6 +11,9 @@
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
 #include "base/values.h"
+#include "content/browser/frame_host/frame_tree.h"
+#include "content/browser/frame_host/frame_tree_node.h"
+#include "content/browser/frame_host/navigator.h"
 #include "content/browser/service_worker/service_worker_response_info.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/browser_thread.h"
@@ -40,6 +43,7 @@ const char kClearSiteDataHeader[] = "Clear-Site-Data";
 const char kDatatypeCookies[] = "\"cookies\"";
 const char kDatatypeStorage[] = "\"storage\"";
 const char kDatatypeCache[] = "\"cache\"";
+const char kDatatypeDocuments[] = "\"documents\"";
 
 // Pretty-printed log output.
 const char kConsoleMessageTemplate[] = "Clear-Site-Data header on '%s': %s";
@@ -52,10 +56,14 @@ bool IsNavigationRequest(net::URLRequest* request) {
 }
 
 // Represents the parameters as a single number to be recorded in a histogram.
-int ParametersMask(bool clear_cookies, bool clear_storage, bool clear_cache) {
+int ParametersMask(bool clear_cookies,
+                   bool clear_storage,
+                   bool clear_cache,
+                   bool clear_documents) {
   return static_cast<int>(clear_cookies) * (1 << 0) +
          static_cast<int>(clear_storage) * (1 << 1) +
-         static_cast<int>(clear_cache) * (1 << 2);
+         static_cast<int>(clear_cache) * (1 << 2) +
+         static_cast<int>(clear_documents) * (1 << 3);
 }
 
 // A helper function to pass an IO thread callback to a method called on
@@ -88,6 +96,42 @@ class UIThreadSiteDataClearer : public BrowsingDataRemover::Observer {
                                  clear_storage, clear_cache,
                                  std::move(callback)))
         ->RunAndDestroySelfWhenDone();
+  }
+
+  static void ReloadDocuments(const ResourceRequestInfo::FrameTreeNodeIdGetter&
+                                  frame_tree_node_id_getter,
+                              const url::Origin& origin,
+                              base::OnceClosure callback) {
+    DCHECK_CURRENTLY_ON(BrowserThread::UI);
+
+    int frame_tree_node_id = frame_tree_node_id_getter.Run();
+    DCHECK(frame_tree_node_id);
+    FrameTree* tree =
+        FrameTreeNode::GloballyFindByID(frame_tree_node_id)->frame_tree();
+    DCHECK(tree);
+    std::vector<FrameTreeNode*> nodes_to_reloads;
+    for (FrameTreeNode* node : tree->Nodes()) {
+      if (node->current_origin().IsSameOriginWith(origin)) {
+        bool parent_is_reloading = false;
+        for (FrameTreeNode* reloading : nodes_to_reloads) {
+          if (node->IsDescendantOf(already_reloading)) {
+            parent_is_reloading = true;
+            break;
+          }
+        }
+        if (!parent_is_reloading)
+          nodes_to_reloads.push_back(node);
+      }
+    }
+
+    for (FrameTreeNode* node : nodes_to_reloads) {
+      NavigationController::LoadURLParams params(node->current_url());
+      params.frame_tree_node_id = node->frame_tree_node_id();
+      params.transition_type = ui::PAGE_TRANSITION_RELOAD;
+      node->navigator()->GetController()->LoadURLWithParams(params);
+    }
+
+    JumpFromUIToIOThread(std::move(callback));
   }
 
  private:
@@ -312,10 +356,12 @@ bool ClearSiteDataThrottle::ParseHeaderForTesting(
     bool* clear_cookies,
     bool* clear_storage,
     bool* clear_cache,
+    bool* clear_documents,
     ConsoleMessagesDelegate* delegate,
     const GURL& current_url) {
   return ClearSiteDataThrottle::ParseHeader(
-      header, clear_cookies, clear_storage, clear_cache, delegate, current_url);
+      header, clear_cookies, clear_storage, clear_cache, clear_documents,
+      delegate, current_url);
 }
 
 ClearSiteDataThrottle::ClearSiteDataThrottle(
@@ -400,32 +446,44 @@ bool ClearSiteDataThrottle::HandleHeader() {
   bool clear_cookies;
   bool clear_storage;
   bool clear_cache;
+  bool clear_documents;
 
-  if (!ClearSiteDataThrottle::ParseHeader(header_value, &clear_cookies,
-                                          &clear_storage, &clear_cache,
-                                          delegate_.get(), GetCurrentURL())) {
+  if (!ClearSiteDataThrottle::ParseHeader(
+          header_value, &clear_cookies, &clear_storage, &clear_cache,
+          &clear_documents, delegate_.get(), GetCurrentURL())) {
     return false;
   }
-
-  // If the header is valid, clear the data for this browser context and origin.
-  clearing_started_ = base::TimeTicks::Now();
-
-  // Record the call parameters.
-  UMA_HISTOGRAM_ENUMERATION(
-      "Navigation.ClearSiteData.Parameters",
-      ParametersMask(clear_cookies, clear_storage, clear_cache), (1 << 3));
-
-  base::WeakPtr<ClearSiteDataThrottle> weak_ptr =
-      weak_ptr_factory_.GetWeakPtr();
 
   // Immediately bind the weak pointer to the current thread (IO). This will
   // make a potential misuse on the UI thread DCHECK immediately rather than
   // later when it's correctly used on the IO thread again.
+  base::WeakPtr<ClearSiteDataThrottle> weak_ptr =
+      weak_ptr_factory_.GetWeakPtr();
   weak_ptr.get();
+  if (clear_cookies || clear_storage || clear_cache) {
+    // If the header is valid, clear the data for this browser context and
+    // origin.
+    clearing_started_ = base::TimeTicks::Now();
 
-  ExecuteClearingTask(
-      origin, clear_cookies, clear_storage, clear_cache,
-      base::BindOnce(&ClearSiteDataThrottle::TaskFinished, weak_ptr));
+    // Record the call parameters.
+    UMA_HISTOGRAM_ENUMERATION("Navigation.ClearSiteData.Parameters",
+                              ParametersMask(clear_cookies, clear_storage,
+                                             clear_cache, clear_documents),
+                              (1 << 4));
+
+    ExecuteClearingTask(
+        origin, clear_cookies, clear_storage, clear_cache, clear_documents,
+        base::BindOnce(&ClearSiteDataThrottle::TaskFinished, weak_ptr));
+  } else if (clear_documents) {
+    // If we're not clearing any other data types, clear documents now.
+    BrowserThread::PostTask(
+        BrowserThread::UI, FROM_HERE,
+        base::BindOnce(
+            &UIThreadSiteDataClearer::ReloadDocuments,
+            ResourceRequestInfo::ForRequest(request_)
+                ->GetFrameTreeNodeIdGetterForRequest(),
+            origin, base::BindOnce(&ClearSiteDataThrottle::Resume, weak_ptr)));
+  }
 
   return true;
 }
@@ -435,6 +493,7 @@ bool ClearSiteDataThrottle::ParseHeader(const std::string& header,
                                         bool* clear_cookies,
                                         bool* clear_storage,
                                         bool* clear_cache,
+                                        bool* clear_documents,
                                         ConsoleMessagesDelegate* delegate,
                                         const GURL& current_url) {
   if (!base::IsStringASCII(header)) {
@@ -458,6 +517,8 @@ bool ClearSiteDataThrottle::ParseHeader(const std::string& header,
       data_type = clear_storage;
     } else if (type == kDatatypeCache) {
       data_type = clear_cache;
+    } else if (type == kDatatypeDocuments) {
+      data_type = clear_documents;
     } else {
       delegate->AddMessage(current_url,
                            base::StringPrintf("Unrecognized type: %s.",
@@ -477,7 +538,8 @@ bool ClearSiteDataThrottle::ParseHeader(const std::string& header,
     type_names += type.as_string();
   }
 
-  if (!*clear_cookies && !*clear_storage && !*clear_cache) {
+  if (!*clear_cookies && !*clear_storage && !*clear_cache &&
+      !*clear_documents) {
     delegate->AddMessage(current_url, "No recognized types specified.",
                          CONSOLE_MESSAGE_LEVEL_ERROR);
     return false;
@@ -496,6 +558,7 @@ void ClearSiteDataThrottle::ExecuteClearingTask(const url::Origin& origin,
                                                 bool clear_cookies,
                                                 bool clear_storage,
                                                 bool clear_cache,
+                                                bool clear_documents,
                                                 base::OnceClosure callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
   BrowserThread::PostTask(

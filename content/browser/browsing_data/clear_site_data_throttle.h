@@ -95,6 +95,7 @@ class CONTENT_EXPORT ClearSiteDataThrottle : public ResourceThrottle {
                                     bool* clear_cookies,
                                     bool* clear_storage,
                                     bool* clear_cache,
+                                    bool* clear_documents,
                                     ConsoleMessagesDelegate* delegate,
                                     const GURL& current_url);
 
@@ -117,13 +118,15 @@ class CONTENT_EXPORT ClearSiteDataThrottle : public ResourceThrottle {
   bool HandleHeader();
 
   // Parses the value of the 'Clear-Site-Data' header and outputs whether
-  // the header requests to |clear_cookies|, |clear_storage|, and |clear_cache|.
-  // The |delegate| will be filled with messages to be output in the console,
-  // prepended by the |current_url|. Returns true if parsing was successful.
+  // the header requests to |clear_cookies|, |clear_storage|, |clear_cache|,
+  // and |clear_documents|. The |delegate| will be filled with messages to be
+  // output in the console, prepended by the |current_url|. Returns true if
+  // parsing was successful.
   static bool ParseHeader(const std::string& header,
                           bool* clear_cookies,
                           bool* clear_storage,
                           bool* clear_cache,
+                          bool* clear_documents,
                           ConsoleMessagesDelegate* delegate,
                           const GURL& current_url);
 
@@ -132,6 +135,7 @@ class CONTENT_EXPORT ClearSiteDataThrottle : public ResourceThrottle {
                                    bool clear_cookies,
                                    bool clear_storage,
                                    bool clear_cache,
+                                   bool clear_documents,
                                    base::OnceClosure callback);
 
   // Signals that a parsing and deletion task was finished.
