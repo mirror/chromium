@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cfa14157_905bdc54",
+        "filename": "third_party/WebKit/LayoutTests/inspector-protocol/page/createIsolatedWorld-expected.txt",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-20T18:10:37Z",
+      "side": 1,
+      "message": "This number will make the test flaky.",
+      "range": {
+        "startLine": 5,
+        "startChar": 17,
+        "endLine": 5,
+        "endChar": 26
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2be55730_5d51e3bf",
+        "filename": "third_party/WebKit/Source/core/inspector/InspectorPageAgent.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 929,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-20T18:10:37Z",
+      "side": 1,
+      "message": "What does \"D\" mean in this method name?",
+      "range": {
+        "startLine": 929,
+        "startChar": 35,
+        "endLine": 929,
+        "endChar": 67
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bef30929_b4a38db7",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1000379
+      },
+      "writtenOn": "2017-06-20T18:10:37Z",
+      "side": 1,
+      "message": "I think this should be executionContextId instead. How am I supposed to use an arbitrary int which is not reused in protocol at all?",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
