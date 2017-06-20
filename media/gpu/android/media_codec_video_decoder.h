@@ -167,6 +167,9 @@ class MEDIA_GPU_EXPORT MediaCodecVideoDecoder : public VideoDecoder {
   // codec with.
   std::unique_ptr<AndroidVideoSurfaceChooser> surface_chooser_;
 
+  // Current state for the chooser.
+  AndroidVideoSurfaceChooser::State chooser_state_;
+
   // An optional factory callback for creating mojo AndroidOverlays.
   AndroidOverlayMojoFactoryCB overlay_factory_cb_;
 
