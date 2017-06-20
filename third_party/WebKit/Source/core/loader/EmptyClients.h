@@ -284,6 +284,7 @@ class CORE_EXPORT EmptyLocalFrameClient : public LocalFrameClient {
       NavigationPolicy,
       bool,
       bool,
+      TriggeringEventInfo,
       HTMLFormElement*,
       ContentSecurityPolicyDisposition) override;
 

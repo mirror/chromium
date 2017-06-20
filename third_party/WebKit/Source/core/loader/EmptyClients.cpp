@@ -144,6 +144,7 @@ NavigationPolicy EmptyLocalFrameClient::DecidePolicyForNavigation(
     NavigationPolicy,
     bool,
     bool,
+    TriggeringEventInfo,
     HTMLFormElement*,
     ContentSecurityPolicyDisposition) {
   return kNavigationPolicyIgnore;
