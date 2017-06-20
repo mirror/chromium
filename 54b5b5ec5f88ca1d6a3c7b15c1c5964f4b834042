@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "90112aab_3b612bfe",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12331,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "- Should this just be \"IDS_PRESS_APP_TO_EXIT_PRESENTATION\"?\n- Maybe mention transient nature of the toast?\n- s/webvr/WebVR/ ?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0b97c6c_0ccfed0f",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 2
+      },
+      "lineNbr": 12332,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "Should this be \"Press App button ...\" to be more clear, or is this preferred?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d4283648_5d874880",
+        "filename": "chrome/browser/android/vr_shell/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "These files could probably just be \"presentation_toast...\", dropping the \"start\", if you like them shorter.",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a46a62cc_23d3d8b6",
+        "filename": "chrome/browser/android/vr_shell/textures/start_presentation_toast_texture.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 52,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "This is probably copied code, but it\u0027s hard to read.  What about instead computing border_pixels once, from width() and kBorderFactor, and using that where needed?\n\nAlso, the DCHECK might also be simploer to read if you just compute the total height, then DCHECK that it\u0027s less than the incoming texture size height.  Thoughts?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0fe54952_651eed07",
+        "filename": "chrome/browser/android/vr_shell/ui_elements/start_presentation_toast.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "This should be a bug rather than a TODO IMO.  It will apply to the fullscreen toast too.\n\nDid you consider just creating a base class now, because you are right, they\u0027re very much the same.",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "621d0d01_e2d44433",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 619,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "s/Config/Configure/",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "687d29d6_214ad234",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 621,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "Also stop the timer?",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b2a294f_eee65559",
+        "filename": "chrome/browser/android/vr_shell/ui_scene_manager_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-20T19:17:21Z",
+      "side": 1,
+      "message": "s/Show/Showing/",
+      "revId": "54b5b5ec5f88ca1d6a3c7b15c1c5964f4b834042",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
