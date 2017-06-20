@@ -211,6 +211,9 @@ XMLHttpRequest* XMLHttpRequest::Create(ExecutionContext* context) {
       new XMLHttpRequest(context, false, nullptr);
   xml_http_request->SuspendIfNeeded();
 
+  if (context->IsContextDestroyed())
+    xml_http_request->ContextDestroyed(context);
+
   return xml_http_request;
 }
 
