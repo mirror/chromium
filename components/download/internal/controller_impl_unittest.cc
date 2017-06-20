@@ -120,7 +120,7 @@ class DownloadServiceControllerImplTest : public testing::Test {
   DownloadParams MakeDownloadParams() {
     DownloadParams params;
     params.client = DownloadClient::TEST;
-    params.guid = base::GenerateGUID();
+    params.guid = base::ToUpperASCII(base::GenerateGUID());
     params.callback = start_callback_;
     return params;
   }

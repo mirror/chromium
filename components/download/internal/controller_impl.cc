@@ -10,6 +10,7 @@
 #include "base/bind.h"
 #include "base/callback_helpers.h"
 #include "base/memory/ptr_util.h"
+#include "base/strings/string_util.h"
 #include "base/threading/thread_task_runner_handle.h"
 #include "components/download/internal/client_set.h"
 #include "components/download/internal/config.h"
@@ -92,6 +93,7 @@ const StartupStatus* ControllerImpl::GetStartupStatus() {
 
 void ControllerImpl::StartDownload(const DownloadParams& params) {
   DCHECK(startup_status_.Ok());
+  DCHECK(params.guid == base::ToUpperASCII(params.guid));
 
   // TODO(dtrainor): Check if there are any downloads we can cancel.  We don't
   // want to return a BACKOFF if we technically could time out a download to
@@ -128,6 +130,7 @@ void ControllerImpl::StartDownload(const DownloadParams& params) {
 
 void ControllerImpl::PauseDownload(const std::string& guid) {
   DCHECK(startup_status_.Ok());
+  DCHECK(guid == base::ToUpperASCII(guid));
 
   auto* entry = model_->Get(guid);
 
@@ -147,6 +150,7 @@ void ControllerImpl::PauseDownload(const std::string& guid) {
 
 void ControllerImpl::ResumeDownload(const std::string& guid) {
   DCHECK(startup_status_.Ok());
+  DCHECK(guid == base::ToUpperASCII(guid));
 
   auto* entry = model_->Get(guid);
   DCHECK(entry);
@@ -162,6 +166,7 @@ void ControllerImpl::ResumeDownload(const std::string& guid) {
 
 void ControllerImpl::CancelDownload(const std::string& guid) {
   DCHECK(startup_status_.Ok());
+  DCHECK(guid == base::ToUpperASCII(guid));
 
   auto* entry = model_->Get(guid);
   if (!entry)
@@ -181,6 +186,7 @@ void ControllerImpl::CancelDownload(const std::string& guid) {
 void ControllerImpl::ChangeDownloadCriteria(const std::string& guid,
                                             const SchedulingParams& params) {
   DCHECK(startup_status_.Ok());
+  DCHECK(guid == base::ToUpperASCII(guid));
 
   auto* entry = model_->Get(guid);
   if (!entry || entry->scheduling_params == params) {
@@ -634,6 +640,8 @@ void ControllerImpl::HandleStartDownloadResponse(
     model_->Remove(guid);
   }
 
+  if (callback.is_null())
+    return;
   base::ThreadTaskRunnerHandle::Get()->PostTask(
       FROM_HERE, base::Bind(callback, guid, result));
 }
