@@ -52,6 +52,24 @@
       "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61eb153e_b7e22d6c",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 2
+      },
+      "lineNbr": 215,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-20T10:16:11Z",
+      "side": 1,
+      "message": "The failing test is\nhttps://cs.chromium.org/chromium/src/third_party/WebKit/LayoutTests/http/tests/xmlhttprequest/detaching-frame-2.html?q\u003ddetaching-frame-2+package:%5Echromium$\u0026l\u003d1\n\nI think it\u0027s a general problem.\n\nAnd I found this change is not enough because Calling ContextDestroyed won\u0027t make GetExecutionContext return null.",
+      "parentUuid": "c0c3e92a_9ece3051",
+      "revId": "605c505b8437a31b630f6534bd22b613e17b582c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
