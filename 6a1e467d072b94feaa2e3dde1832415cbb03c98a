@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f88c3f8a_cba81755",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-20T23:22:24Z",
+      "side": 1,
+      "message": "copied a lot of code here because otherwise the conditionals got really complicated, plus when we remove this flag (enabling it by default or abandoning it), it should be easier to just delete a large block of code than try to untangle the conditionals again.",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
