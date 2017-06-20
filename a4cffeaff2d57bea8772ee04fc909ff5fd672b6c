@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5ba0b02d_f215d854",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "\"but the alternative of...would be costly\"\n\nRealistically it\u0027s not, the conceptual benefit of having the right const correctness is worth quite a lot. This (probably) is OK because it doesn\u0027t actually change the state of NotificationChannelsProviderAndroid, it\u0027s just the most appropriate place to detect changes and inform observers given that we\u0027re dealing with external data provider.",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b9e29f3c_c7d3149d",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "The discrepancy between these two methods is a bit surprising. You could consider using std::tie() for this:\n\nreturn std::tie(origin_, status_) \u003d\u003d std::tie(other.origin_, other.status_);\nreturn std::tie(origin_, status_) \u003c std::tie(other.origin_, other.status_);",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "59aab4e4_a58ce799",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "Please document why we cache channels. Also #include \u003cvector\u003e above.",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7e7cd8_f23a15f7",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "micro nit: blank line under this one. Also #include \"base/memory/weak_ptr.h\" above.",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91d2a215_105bd255",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "nit: data members after methods. also please separate the \"blocks\" by blank lines",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19d94558_fd5bc2ec",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 238,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-20T14:48:17Z",
+      "side": 1,
+      "message": "I haven\u0027t got a clue how this test works :P. Maybe add a few lines of comments to explain the mechanism?",
+      "revId": "a4cffeaff2d57bea8772ee04fc909ff5fd672b6c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
