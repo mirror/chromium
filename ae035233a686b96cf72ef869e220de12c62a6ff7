@@ -52,6 +52,24 @@
       "revId": "ae035233a686b96cf72ef869e220de12c62a6ff7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "1dfba653_51abe4cf",
+        "filename": "ui/ozone/platform/drm/gpu/hardware_display_plane_manager_atomic.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1112153
+      },
+      "writtenOn": "2017-06-20T21:37:51Z",
+      "side": 1,
+      "message": "because I want to know the failure is legit.\ntest_only failure is legit. e.g. IA fails with DRM_REFLECT_Y which stream video quad set, but it\u0027s legit. When I load video page, this failure very often happens. NOTE: supporting DRM_REFLECT_Y on Intel is in progress in upstream kernel.\nI want to check the real failure which has test_only \u003d\u003d false.",
+      "parentUuid": "1315e320_16a9a2c7",
+      "revId": "ae035233a686b96cf72ef869e220de12c62a6ff7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
