@@ -22,6 +22,30 @@
       "revId": "d6b02f2246df1cd91f146b54226812d6fe9b823c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4fad7160_afc1adcb",
+        "filename": "tools/roll_webrtc.py",
+        "patchSetId": 1
+      },
+      "lineNbr": 307,
+      "author": {
+        "id": 1002075
+      },
+      "writtenOn": "2017-06-20T09:33:19Z",
+      "side": 1,
+      "message": "I now realized the variable passed to _UpdateDep needs to be a CommitInfo object, so let\u0027s call it revision_info instead.",
+      "parentUuid": "9ae26394_9eae7d94",
+      "range": {
+        "startLine": 307,
+        "startChar": 6,
+        "endLine": 307,
+        "endChar": 19
+      },
+      "revId": "d6b02f2246df1cd91f146b54226812d6fe9b823c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
