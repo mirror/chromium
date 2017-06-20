@@ -16,6 +16,24 @@
       "revId": "f279576edbd82f81309022d4b0d52bb9b6427f74",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7e8591cc_1eac90ec",
+        "filename": "chrome/browser/page_load_metrics/observers/subresource_filter_metrics_observer_unittest.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 218,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T16:58:20Z",
+      "side": 1,
+      "message": "Ah, sure, I tried to cover this in the change comment but here are the key points:\n* MAIN_FRAME resources must include a valid GlobalRequestID when SimulateLoadedResource is called\n* most observers (this one included) don\u0027t care about the resource type, so it\u0027s simpler to just switch them to non-main frame resources. I used SCRIPT arbitrarily, but could\u0027ve used any other type here.",
+      "parentUuid": "327e30a8_0a3acfc1",
+      "revId": "f279576edbd82f81309022d4b0d52bb9b6427f74",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

@@ -16,6 +16,24 @@
       "revId": "e438353b8b9ecd93216aca5313dc5446c4095102",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8d0d053c_cd9e7054",
+        "filename": "chrome/browser/page_load_metrics/metrics_web_contents_observer.cc",
+        "patchSetId": 7
+      },
+      "lineNbr": 246,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T16:58:20Z",
+      "side": 0,
+      "message": "There\u0027s a DCHECK in the downstream HasMatchingNavigationRequestID, but I\u0027ve added one here as well, thanks!",
+      "parentUuid": "d8cad004_45444c76",
+      "revId": "e438353b8b9ecd93216aca5313dc5446c4095102",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
