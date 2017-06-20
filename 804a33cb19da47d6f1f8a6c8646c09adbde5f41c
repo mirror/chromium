@@ -22,6 +22,30 @@
       "revId": "804a33cb19da47d6f1f8a6c8646c09adbde5f41c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72bb7a04_dc41397b",
+        "filename": "base/memory/ref_counted.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 518,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-20T00:54:04Z",
+      "side": 1,
+      "message": "Done.\n\nI wrote a unit test to compare both forms under release build; there was no difference in the binary.",
+      "parentUuid": "472034b8_89a08bc1",
+      "range": {
+        "startLine": 518,
+        "startChar": 21,
+        "endLine": 518,
+        "endChar": 24
+      },
+      "revId": "804a33cb19da47d6f1f8a6c8646c09adbde5f41c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
