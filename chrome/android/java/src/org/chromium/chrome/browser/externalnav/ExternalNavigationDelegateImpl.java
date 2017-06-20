@@ -442,7 +442,15 @@ public class ExternalNavigationDelegateImpl implements ExternalNavigationDelegat
                     //                instead of silently dropping it on the floor.
                     if (needsToCloseTab) {
                         // If the access was not granted, then close the tab if necessary.
-                        closeTab(tab);
+                        // The tab should be closed asynchronously. See https://crbug.com/732260.
+                        // Other tab closures done through |loadIntent| are all executed in
+                        // response to user interaction via UI listeners.
+                        ThreadUtils.postOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                mTab.getTabModelSelector().closeTab(mTab);
+                            }
+                        });
                     }
                 }
             }
