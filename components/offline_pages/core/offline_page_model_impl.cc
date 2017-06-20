@@ -732,6 +732,7 @@ void OfflinePageModelImpl::OnCreateArchiveDone(
                                     file_size, start_time);
   offline_page_item.title = title;
   offline_page_item.original_url = save_page_params.original_url;
+  offline_page_item.origin_package = save_page_params.origin_package;
   store_->AddOfflinePage(offline_page_item,
                          base::Bind(&OfflinePageModelImpl::OnAddOfflinePageDone,
                                     weak_ptr_factory_.GetWeakPtr(), archiver,

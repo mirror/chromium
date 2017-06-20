@@ -76,6 +76,9 @@ class OfflinePageModel : public base::SupportsUserData {
 
     // Run page problem detectors while generating MTHML if true.
     bool use_page_problem_detectors;
+
+    // The app package that the request originated from.
+    std::string origin_package;
   };
 
   // Observer of the OfflinePageModel.

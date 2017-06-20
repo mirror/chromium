@@ -20,6 +20,7 @@ OfflinePageModel::SavePageParams::SavePageParams(const SavePageParams& other) {
   proposed_offline_id = other.proposed_offline_id;
   original_url = other.original_url;
   is_background = other.is_background;
+  origin_package = other.origin_package;
 }
 
 // static
