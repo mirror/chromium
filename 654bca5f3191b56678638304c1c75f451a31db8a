@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7868b7c_3eba57c3",
+        "filename": "third_party/WebKit/Source/core/loader/resource/ScriptResource.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 122,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-20T09:43:53Z",
+      "side": 1,
+      "message": "Please try using IsSameOriginOrCORSSuccessful() here too.\n\nAs you might noticed, PassesAccessControlCheck() is wrong. It doesn\u0027t consider the case where all the request were same-origin.",
+      "revId": "654bca5f3191b56678638304c1c75f451a31db8a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
