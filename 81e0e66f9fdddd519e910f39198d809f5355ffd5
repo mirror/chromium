@@ -188,6 +188,30 @@
       "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a5bb111_13467ff2",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1116046
+      },
+      "writtenOn": "2017-06-20T23:45:16Z",
+      "side": 1,
+      "message": "I think the fudge factor can be more than 5%. Consider a battery sized such that it can draw an additional 1 dp of charge every time the battery\u0027s charge level increases by 12% (12%, 24%, 36%, ...). If you have re-draw requests at 5% intervals (0%, 5%, 10%, ...) this means that: \n\n* the battery image representing a 24% charge will be drawn when the actual charge level reaches 25%\n* the next battery image (representing a 36% charge) will be drawn when the actual charge level reaches 40%\n\nSo as a result there is a 40-25\u003d15% gap during which the battery image is incorrect.",
+      "parentUuid": "8e1868d7_248cb1e5",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
