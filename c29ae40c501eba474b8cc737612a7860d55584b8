@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "521a38c3_699828f7",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 93,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-20T19:57:02Z",
+      "side": 1,
+      "message": "I added UNLIKELY, seemed to have a small (positive) impact based off 3 runs of speedometer.",
+      "parentUuid": "44ecdf0f_68f52c61",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "c65d159a_3417b8ea",
         "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
         "patchSetId": 4
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-20T14:42:47Z",
       "side": 1,
       "message": "Why not use RuntimeEnabledFeatures?",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35450b11_40230eb2",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-20T19:57:02Z",
+      "side": 1,
+      "message": "Didn\u0027t even think of using it, updated patch.",
+      "parentUuid": "c65d159a_3417b8ea",
       "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "0151aadf_fd9214b3",
+        "filename": "third_party/WebKit/Source/platform/bindings/RuntimeCallStats.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-20T19:57:02Z",
+      "side": 1,
+      "message": "Weird, don\u0027t know how that got added in.",
+      "parentUuid": "1439bfd5_0eebcd7e",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "74b22a18_e9f83f5f",
         "filename": "third_party/WebKit/Source/web/WebKit.cpp",
         "patchSetId": 4
@@ -67,6 +121,24 @@
       "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdeaf084_78d0af54",
+        "filename": "third_party/WebKit/Source/web/WebKit.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1175471
+      },
+      "writtenOn": "2017-06-20T19:57:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "74b22a18_e9f83f5f",
+      "revId": "c29ae40c501eba474b8cc737612a7860d55584b8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
