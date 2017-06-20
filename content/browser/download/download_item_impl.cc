@@ -32,6 +32,7 @@
 #include "base/guid.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/stl_util.h"
 #include "base/strings/string_util.h"
 #include "base/strings/stringprintf.h"
@@ -1240,6 +1241,8 @@ void DownloadItemImpl::Start(
   if (state_ == CANCELLED_INTERNAL) {
     // The download was in the process of resuming when it was cancelled. Don't
     // proceed.
+    base::RecordAction(
+        base::UserMetricsAction("DownloadItem.Start.WasCancelled"));
     ReleaseDownloadFile(true);
     job_->Cancel(true);
     return;
@@ -1259,6 +1262,8 @@ void DownloadItemImpl::Start(
   // If a resumption attempted failed, or if the download was DOA, then the
   // download should go back to being interrupted.
   if (new_create_info.result != DOWNLOAD_INTERRUPT_REASON_NONE) {
+    base::RecordAction(
+        base::UserMetricsAction("DownloadItem.Start.WasInterrupted"));
     DCHECK(!download_file_.get());
 
     // Download requests that are interrupted by Start() should result in a
@@ -1372,6 +1377,8 @@ void DownloadItemImpl::OnDownloadTargetDetermined(
             << " this:" << DebugString(true);
 
   if (IsCancellation(interrupt_reason) || target_path.empty()) {
+    base::RecordAction(
+        base::UserMetricsAction("DownloadItem.TargetDetermined.Cancel"));
     Cancel(true);
     return;
   }

@@ -14,13 +14,16 @@ import android.view.ContextMenu;
 import android.webkit.MimeTypeMap;
 
 import org.chromium.base.CollectionUtil;
+import org.chromium.base.library_loader.LibraryProcessType;
 import org.chromium.base.metrics.RecordHistogram;
+import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.firstrun.FirstRunStatus;
 import org.chromium.chrome.browser.preferences.ChromePreferenceManager;
 import org.chromium.chrome.browser.preferences.datareduction.DataReductionProxyUma;
 import org.chromium.chrome.browser.search_engines.TemplateUrlService;
 import org.chromium.chrome.browser.util.UrlUtilities;
+import org.chromium.content.browser.BrowserStartupController;
 import org.chromium.content_public.common.ContentUrlConstants;
 
 import java.lang.annotation.Retention;
@@ -563,6 +566,15 @@ public class ChromeContextMenuPopulator implements ContextMenuPopulator {
         } else if (itemId == R.id.contextmenu_save_image) {
             ContextMenuUma.record(params, ContextMenuUma.ACTION_SAVE_IMAGE);
             if (mDelegate.startDownload(params.getSrcUrl(), false)) {
+                if (BrowserStartupController.get(LibraryProcessType.PROCESS_BROWSER)
+                                .isStartupSuccessfullyCompleted()) {
+                    if (mDelegate.isDataReductionProxyEnabledForURL(params.getSrcUrl())) {
+                        RecordUserAction.record(
+                                "Android.ContextMenu.SaveImage.WillSaveWithProxyEnabled");
+                    } else {
+                        RecordUserAction.record("Android.ContextMenu.SaveImage.WillSave");
+                    }
+                }
                 helper.startContextMenuDownload(
                         false, mDelegate.isDataReductionProxyEnabledForURL(params.getSrcUrl()));
             }

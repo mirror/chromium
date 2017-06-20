@@ -14,6 +14,7 @@
 #include "base/lazy_instance.h"
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "base/metrics/user_metrics.h"
 #include "base/synchronization/lock.h"
 #include "chrome/browser/android/download/chrome_download_delegate.h"
 #include "chrome/browser/android/download/dangerous_download_infobar_delegate.h"
@@ -63,8 +64,11 @@ void CreateContextMenuDownload(int render_process_id,
                                bool is_link,
                                const std::string& extra_headers,
                                bool granted) {
-  if (!granted)
+  if (!granted) {
+    base::RecordAction(
+        base::UserMetricsAction("Android.ContextMenu.Download.NoPermission"));
     return;
+  }
 
   content::WebContents* web_contents =
       GetWebContents(render_process_id, render_view_id);
