@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a84c7f_eaf61de4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-20T00:39:22Z",
+      "side": 1,
+      "message": "why not SetService(this) to match the others?",
+      "revId": "7c3ebceb75aa7c6558c07dad635ca4de5341f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
