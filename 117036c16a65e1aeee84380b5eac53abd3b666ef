@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "c6e01b61_ae578074",
+        "filename": "components/about_ui/resources/about_credits_entry.tmpl",
+        "patchSetId": 1
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1002115
+      },
+      "writtenOn": "2017-06-20T20:26:33Z",
+      "side": 1,
+      "message": "i\u0027m confused. how often is the checkbox unhidden? this label probably only ought to have a tabindex when the checkbox is hidden.",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 54
+      },
+      "revId": "117036c16a65e1aeee84380b5eac53abd3b666ef",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
