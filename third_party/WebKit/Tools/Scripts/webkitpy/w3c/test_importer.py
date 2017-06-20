@@ -22,6 +22,7 @@ from webkitpy.layout_tests.port.base import Port
 from webkitpy.w3c.common import WPT_REPO_URL, WPT_DEST_NAME, exportable_commits_over_last_n_commits
 from webkitpy.w3c.directory_owners_extractor import DirectoryOwnersExtractor
 from webkitpy.w3c.local_wpt import LocalWPT
+from webkitpy.w3c.wpt_github import WPTGitHub
 from webkitpy.w3c.test_copier import TestCopier
 from webkitpy.w3c.wpt_expectations_updater import WPTExpectationsUpdater
 from webkitpy.w3c.wpt_manifest import WPTManifest
@@ -155,7 +156,9 @@ class TestImporter(object):
         """
         assert self.host.filesystem.exists(wpt_path)
         local_wpt = LocalWPT(self.host, path=wpt_path)
-        return exportable_commits_over_last_n_commits(self.host, local_wpt)
+        wpt_github = WPTGitHub(self.host)
+        return exportable_commits_over_last_n_commits(
+            self.host, local_wpt, wpt_github)
 
     def clean_up_temp_repo(self, temp_repo_path):
         """Removes the temporary copy of the wpt repo that was downloaded."""

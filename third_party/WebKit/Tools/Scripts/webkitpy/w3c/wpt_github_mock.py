@@ -59,6 +59,7 @@ class MockWPTGitHub(object):
         return 'fake branch for PR {}'.format(number)
 
     def pr_with_position(self, position):
+        print position
         self.calls.append('pr_with_position')
         for pr in self.pull_requests:
             if position in pr.body:
