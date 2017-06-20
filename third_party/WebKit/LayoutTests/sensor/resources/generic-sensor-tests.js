@@ -279,6 +279,55 @@ function runGenericSensorTests(sensorType, updateReading, verifyReading) {
   }, prefix + 'Test that sensor receives suspend / resume notifications when page'
       + ' visibility changes.');
 
+    sensor_test(sensor => {
+      let sensorObject = new sensorType;
+      sensorObject.start();
+
+      let iframe = document.createElement('iframe');
+      iframe.src = 'data:text/html;charset=utf-8,'; // Cross-origin.
+      document.body.appendChild(iframe);
+
+      let button = document.createElement('button');
+      document.body.appendChild(button);
+
+      let testPromise = sensor.mockSensorProvider.getCreatedSensor()
+          .then(mockSensor => {
+            return mockSensor.setUpdateSensorReadingFunction(updateReading);
+          })
+          .then(mockSensor => {
+            return new Promise((resolve, reject) => {
+              let wrapper = new CallbackWrapper(() => {
+                assert_true(verifyReading(sensorObject));
+                resolve(mockSensor);
+              }, reject);
+
+              sensorObject.onchange = wrapper.callback;
+              sensorObject.onerror = reject;
+            });
+          })
+          .then(mockSensor => {
+            iframe.focus();
+            return mockSensor.suspendCalled();
+          })
+          .then(mockSensor => {
+            button.focus();
+            return mockSensor.resumeCalled();
+          })
+          .then(mockSensor => {
+            return new Promise((resolve, reject) => {
+              sensorObject.stop();
+              document.body.removeChild(iframe);
+              document.body.removeChild(button);
+              resolve(mockSensor);
+              sensorObject.onerror = reject;
+            });
+          })
+          .then(mockSensor => { return mockSensor.removeConfigurationCalled(); });
+
+      return testPromise;
+    }, prefix + 'Test that sensor receives suspend / resume notifications when'
+        + ' cross-origin subframe is focused');
+
   sensor_test(sensor => {
     let sensor1 = new sensorType({frequency: 60});
     sensor1.start();
