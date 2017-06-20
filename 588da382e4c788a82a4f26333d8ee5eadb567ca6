@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1eb43f40_805c66e6",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-20T18:12:48Z",
+      "side": 1,
+      "message": "There\u0027s a double space after \u0027there\u0027",
+      "revId": "588da382e4c788a82a4f26333d8ee5eadb567ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f2d05fa_aeacac27",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_expectations_updater_unittest.py",
+        "patchSetId": 3
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1168241
+      },
+      "writtenOn": "2017-06-20T18:12:48Z",
+      "side": 1,
+      "message": "Should you also assert that no successful tryjob results were fetched?",
+      "revId": "588da382e4c788a82a4f26333d8ee5eadb567ca6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
