@@ -1,0 +1,293 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "94c13e5a_bbdd814d",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 825,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Maybe merge/replace this with: Common.StringOutputStream?",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995eff1a_190b2b06",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 876,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Why are we setTimeout here? Before it was because it needed to be async, but with promises it should not matter any more.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "51c16d02_0a9a625e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 887,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "nit: return this.readRange();",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "098ad482_9539f52e",
+        "filename": "third_party/WebKit/LayoutTests/http/tests/inspector/inspector-test.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 891,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Change these to be optional.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acbc6fb3_9f74d881",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "This is confusing, lets add some jsdoc:\n\n/** @type {?FileEntry} */",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2e779583_61bb46b8",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "/** @type {?FileWriter} */",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e43165f6_3c1e3e50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Can we wrap this in a helper function so we don\u0027t early return and instead truncate if the length is \u003e 0? (I think the code will be cleaner.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42ba757b_0d44881b",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "I know this isn\u0027t very relevant to this patch, but this seems horribly inefficient, it think it might be best to have a shared \"finished\" promise/resolver that gets fired and awaited on rather than having all this syncing including things like _pendingReads.\n\nI know it\u0027s not for this patch, but a little help around it might help?",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2d7a497e_a591e403",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "We have no protection to someone calling this function twice and the promise never getting resolved. (maybe it\u0027s worth adding a console.assert or something?)",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d395a39e_84b188c3",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 239,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "We \"might\" be adding a race condition here because _didCreateTempFile() only checks to make sure there are chunks and write() assumes that the one it just created will be here by the time it gets into this function, and this function does not check to see if _chunks has chunks before shifting.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "82cd662c_8fc0741d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 274,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "nit: Change these to optional.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "61bfb223_7985271f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 385,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Lets try and remove @unrestricted to this class. (ie: add _stringLength to the constructor).",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ae8cb6c4_2b47a01e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 599,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "nit: rename successful or inline it in the if?",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1c6543ba_bc00360e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/console/ConsoleView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 607,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "if (progressIndicator.isCanceled())\n  break;",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c87801ca_eeee080e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1358,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "This is not the same logic as it was since _bufferedWriter was being set to null in the same callstack, but now it can happen later. Please confirm that this is ok or make a copy of it and unset it then await.",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3e0db65_f3bf7de1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/HeapSnapshotView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 1467,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Can we await this and inline onOpen?",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d0132110_d11f4a98",
+        "filename": "third_party/WebKit/Source/devtools/front_end/profiler/ProfileView.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 498,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 1,
+      "message": "Can we await this and inline the onOpenForSave too?",
+      "revId": "7f5fdfc896445e30c4ce3d1f839c8d00c49f73ea",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

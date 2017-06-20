@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a8458929_5fd7124f",
+        "filename": "third_party/WebKit/Source/devtools/front_end/network/HARWriter.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1148840
+      },
+      "writtenOn": "2017-06-20T23:22:38Z",
+      "side": 0,
+      "message": "Interesting... I changed this to be a for-loop before I committed I thought. :-(",
+      "revId": "718c9ac88d6bb3d6820c8494c22995c5e9166e25",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
