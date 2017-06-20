@@ -16,6 +16,24 @@
       "revId": "7c3ebceb75aa7c6558c07dad635ca4de5341f265",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d8f96f51_fbfec3e4",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-20T15:54:31Z",
+      "side": 1,
+      "message": "To differentiate the two services that get set on SuggestedArticlesObserver: PrefetchService and ContentSuggestionsService.",
+      "parentUuid": "f7a84c7f_eaf61de4",
+      "revId": "7c3ebceb75aa7c6558c07dad635ca4de5341f265",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
