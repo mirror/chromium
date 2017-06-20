@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a74e93e7_8db8cf6b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceFetcher.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 951,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T19:29:50Z",
+      "side": 0,
+      "message": "How about keeping this existing check (while adding the new check to DocumentThreadableLoader)?\nI\u0027m not 100% confident that the DocumentThreadableLoader check covers this check here.\n(I think it\u0027s probably OK -- but \"probably\" tends to be false)",
+      "range": {
+        "startLine": 951,
+        "startChar": 2,
+        "endLine": 951,
+        "endChar": 4
+      },
+      "revId": "2cd6f2dd305dee2674898b6c423ec3035330cc11",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
