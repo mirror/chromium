@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18fd42d9_7c2b87b3",
+        "filename": "extensions/browser/extension_function_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1115745
+      },
+      "writtenOn": "2017-06-20T21:20:07Z",
+      "side": 1,
+      "message": "This is a bit weird to me, since the dispatcher here is the one with most of the logic around permissioning, but the function is the thing that holds the state and responds.\n\nWhat if we instead keep the dispatcher as the one to respond as it is now, and instead tweak ExtensionFunction to have a tristate of NOT_RUN, RUNNING, RESPONDED, and then we can DCHECK that the state is either NOT_RUN or RESPONDED (and should never be RUNNING in normal circumstances).  Then we set the state to RUNNING in RunWithValidation().  WDYT?",
+      "revId": "7b817ded3d1d907cb8ee1423b67a0737c5f355fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
