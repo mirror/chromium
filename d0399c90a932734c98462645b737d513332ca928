@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a9b55c8_aadf7a67",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T15:11:10Z",
+      "side": 1,
+      "message": "Maybe an early return:\n```\nif (state !\u003d player_state_.end())\n  return state-\u003esecond;\n// create new entry\n```",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8fbf3ba_917df884",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T15:11:10Z",
+      "side": 1,
+      "message": "It doesn\u0027t have to have a video track, right?",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0dc389d3_48d26ee2",
+        "filename": "chrome/browser/media/media_engagement_contents_observer.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T15:11:10Z",
+      "side": 1,
+      "message": "nit: I would make this plural to make it clear it\u0027s a collection",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c4114130_b7d8c850",
+        "filename": "chrome/browser/media/media_engagement_contents_observer_unittest.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T15:11:10Z",
+      "side": 1,
+      "message": "Could this be `unsigned` instead?\n\nAlso, seems that the method name doesn\u0027t match the usage below. In general, I think it might better to add one unit test that checks that cleanup is made after navigation instead of adding this to all unit tests (in other words, pretty much make this method its own unit test). I don\u0027t feel strongly so feel free to keep it as is :)",
+      "revId": "d0399c90a932734c98462645b737d513332ca928",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
