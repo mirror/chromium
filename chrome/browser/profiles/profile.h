@@ -48,6 +48,10 @@ namespace user_prefs {
 class PrefRegistrySyncable;
 }
 
+namespace service_manager {
+class Connector;
+}
+
 // Instead of adding more members to Profile, consider creating a
 // KeyedService. See
 // http://dev.chromium.org/developers/design-documents/profile-architecture
@@ -190,6 +194,11 @@ class Profile : public content::BrowserContext {
   // for OffTheRecord Profiles.  This PrefService is lazily created the first
   // time that this method is called.
   virtual PrefService* GetOffTheRecordPrefs() = 0;
+
+  // Like GetOffTheRecordPrefs but gives a read-only view of prefs that can be
+  // used even if there's no OTR profile at the moment
+  // (i.e. HasOffTheRecordProfile is false).
+  virtual PrefService* GetReadOnlyOffTheRecordPrefs();
 
   // Returns the main request context.
   virtual net::URLRequestContextGetter* GetRequestContext() = 0;
