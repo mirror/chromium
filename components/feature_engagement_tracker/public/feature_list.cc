@@ -20,9 +20,10 @@ const base::Feature* kAllFeatures[] = {
     &kIPHDownloadPageFeature,
     &kIPHDownloadHomeFeature,
 #endif  // OS_ANDROID
-#if defined(OS_WIN)
+#if defined(OS_WIN) || defined(OS_LINUX)
     &kIPHNewTabFeature,
-#endif  // OS_WIN
+    &kIPHIncognitoWindowFeature,
+#endif  // OS_WIN || OS_LINUX
 };
 }  // namespace
 
