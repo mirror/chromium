@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2fcb94ad_5d11dd73",
+        "filename": "net/http/http_stream_factory_impl_job_controller_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 2056,
+      "author": {
+        "id": 1120845
+      },
+      "writtenOn": "2017-06-20T13:36:22Z",
+      "side": 1,
+      "message": "Nice!",
+      "revId": "5a29e2fd5cff4e00930dac8a8d42801030e26065",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
