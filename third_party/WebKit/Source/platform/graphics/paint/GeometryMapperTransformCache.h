@@ -14,44 +14,68 @@ namespace blink {
 
 class TransformPaintPropertyNode;
 
-// A GeometryMapperTransformCache hangs off a TransformPaintPropertyNode. It
-// stores cached "transformed rects" (See GeometryMapper.h) from that node in
-// ancestor spaces.
+// A GeometryMapperTransformCache hangs off a TransformPaintPropertyNode.
+// It stores useful intermediate results such as screen matrix for geometry
+// queries.
 class PLATFORM_EXPORT GeometryMapperTransformCache {
   USING_FAST_MALLOC(GeometryMapperTransformCache);
-
  public:
-  GeometryMapperTransformCache();
-
-  // Returns the transformed rect (see GeometryMapper.h) of |this| in the
-  // space of |ancestorTransform|, if there is one cached. Otherwise returns
-  // null.
-  //
-  // These transforms are not flattened to 2d.
-  const TransformationMatrix* GetCachedTransform(
-      const TransformPaintPropertyNode* ancestor_transform);
-
-  // Stores the "transformed rect" of |this| in the space of |ancestors|,
-  // into a local cache.
-  void SetCachedTransform(const TransformPaintPropertyNode* ancestor_transform,
-                          const TransformationMatrix& to_ancestor);
+  GeometryMapperTransformCache() = default;
 
   static void ClearCache();
 
+  void UpdateIfNeeded(const TransformPaintPropertyNode& node) {
+    if (cache_generation_ != s_global_generation)
+      Update(node);
+    DCHECK_EQ(cache_generation_, s_global_generation);
+  }
+
+  const TransformationMatrix& to_screen() const { return to_screen_; }
+  bool to_screen_is_invertible() const { return to_screen_is_invertible_; }
+
+  const TransformationMatrix& projection_from_screen() const {
+    return projection_from_screen_;
+  }
+  bool projection_from_screen_is_valid() const {
+    return projection_from_screen_is_valid_;
+  }
+
+  const TransformationMatrix& to_plane_root() const { return to_plane_root_; }
+  const TransformationMatrix& from_plane_root() const {
+    return from_plane_root_;
+  }
+  const TransformPaintPropertyNode* plane_root() const { return plane_root_; }
+
  private:
-  struct TransformCacheEntry {
-    const TransformPaintPropertyNode* ancestor_node;
-    TransformationMatrix to_ancestor;
-    TransformCacheEntry(const TransformPaintPropertyNode* ancestor_node_arg,
-                        const TransformationMatrix& to_ancestor_arg)
-        : ancestor_node(ancestor_node_arg), to_ancestor(to_ancestor_arg) {}
-  };
+  void Update(const TransformPaintPropertyNode&);
 
-  void InvalidateCacheIfNeeded();
+  static unsigned s_global_generation;
 
-  Vector<TransformCacheEntry> transform_cache_;
-  unsigned cache_generation_;
-
+  // The screen matrix of this node, as defined by:
+  // to_screen = (flattens_inherited_transform ?
+  //     flatten(parent.to_screen) : parent.to_screen) * local
+  TransformationMatrix to_screen_;
+  // Back projection from screen, if inversion exists:
+  // projection_from_screen = flatten(to_screen)^-1
+  // Is guaranteed to be flat.
+  TransformationMatrix projection_from_screen_;
+  // The accumulated matrix between this node and plane_root.
+  // flatten(to_screen) = flatten(plane_root.to_screen) * to_plane_root
+  // Is guaranteed to be flat.
+  TransformationMatrix to_plane_root_;
+  // from_plane_root = to_plane_root^-1
+  // Is guaranteed to be flat.
+  TransformationMatrix from_plane_root_;
+  // The oldest ancestor node that every nodes in the ancestor chain are
+  // coplanar to, and have invertible transform.
+  // i.e. For all nodes n in the ancestor chain [this, plane_root],
+  // n.local is flat and invertible.
+  const TransformPaintPropertyNode* plane_root_ = nullptr;
+  unsigned cache_generation_ = s_global_generation - 1;
+  // Whether to_screen^-1 is valid.
+  unsigned to_screen_is_invertible_ : 1;
+  // Whether flatten(to_screen)^-1 is valid.
+  unsigned projection_from_screen_is_valid_ : 1;
   DISALLOW_COPY_AND_ASSIGN(GeometryMapperTransformCache);
 };
 
