@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "23ca6306_98a80a57",
+        "filename": "components/subresource_filter/content/renderer/subresource_filter_agent.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1172224
+      },
+      "writtenOn": "2017-06-20T15:27:30Z",
+      "side": 1,
+      "message": "Add a TODO with bug reference to revert this CHECK to DCHECK once fixed.",
+      "revId": "442a8dc340379c33e6dc771f49f2e399763203d6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
