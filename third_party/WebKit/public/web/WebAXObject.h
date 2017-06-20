@@ -139,6 +139,7 @@ class WebAXObject {
   BLINK_EXPORT bool IsClickable() const;
   BLINK_EXPORT bool IsCollapsed() const;
   BLINK_EXPORT bool IsControl() const;
+  BLINK_EXPORT bool IsNativeTextControl() const;
   BLINK_EXPORT bool IsEnabled() const;
   BLINK_EXPORT WebAXExpanded IsExpanded() const;
   BLINK_EXPORT bool IsFocused() const;
