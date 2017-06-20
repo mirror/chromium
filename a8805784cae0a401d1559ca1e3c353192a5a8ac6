@@ -19,6 +19,23 @@
     },
     {
       "key": {
+        "uuid": "595e889e_f4decdb1",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 95,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-20T22:06:21Z",
+      "side": 1,
+      "message": "I think it\u0027s unintuitive to iterate through the parent\u0027s fields and methods as opposed to having elements iterate through their own fields and methods.",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "94323dca_d7e62aae",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
         "patchSetId": 1
@@ -64,6 +81,23 @@
       "writtenOn": "2017-06-20T20:55:19Z",
       "side": 1,
       "message": "This should apply to flag removal",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "802b8219_5d07b65c",
+        "filename": "chrome/test/android/javatests/src/org/chromium/chrome/test/BottomSheetTestRule.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1181690
+      },
+      "writtenOn": "2017-06-20T22:06:21Z",
+      "side": 1,
+      "message": "This is statically importing from itself...? I didn\u0027t realize this worked.",
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
