@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "71207b30_d5b3ee4a",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T06:02:29Z",
+      "side": 1,
+      "message": "How about simplify the transition by changing this to, something like |start_requested_|.\nAt initialization, start_requested_ is false. If Start() is called externally, it is set to true, and never set back to false.\n\nYou do not need to keep \"is_instance_for_login_screen\", then.\nInstead, you can look at the value in ;\n1) OnSocketCreated() to switch D-Bus message.\n2) OnInstanceStarted() to see whether D-Bus signal is needed to be re-sent or accept(2) for ABS.\n\nWDYT?",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3addba52_955f6f18",
+        "filename": "components/arc/arc_session.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 818,
+      "author": {
+        "id": 1115919
+      },
+      "writtenOn": "2017-06-20T06:02:29Z",
+      "side": 1,
+      "message": "Because, by design, ArcSession instance is tied to one container instance run, and I\u0027d like keep the concept as is for this change, so I\u0027d like to avoid reusing the instance.\nHow about pulling EmitLoginPromptVisibleCalled and this into one-layer or two-layer above (ArcSessionRunner, ASM),\nso that ArcSession instance can be created / deleted properly?\n\nWDYT?",
+      "revId": "96291d8a05c1f2ec2167a47f050dc80e25a93e41",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
