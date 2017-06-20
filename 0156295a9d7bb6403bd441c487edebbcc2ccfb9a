@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "04c4ca35_c85de1d8",
+        "filename": "chrome/gpu/chrome_arc_video_decode_accelerator.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T00:35:06Z",
+      "side": 0,
+      "message": "Note for Erik: I don\u0027t think these TODOs are valid or relevant to the bug. As it turns out, because of subtleties in how shm is used between chrome and android-side ARC stuff, they\u0027re likely never going to use mojo shared buffer objects and will instead always pass a raw FD themselves.",
+      "revId": "0156295a9d7bb6403bd441c487edebbcc2ccfb9a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
