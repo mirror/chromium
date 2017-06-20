@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0b9aeaff_5a1d3d31",
+        "filename": "android_webview/browser/aw_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 552,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T19:51:07Z",
+      "side": 1,
+      "message": "I think I\u0027d just add these binders in the constructor since there are only two.",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5adb54e2_d67574e0",
+        "filename": "chrome/browser/chrome_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 3018,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T19:51:07Z",
+      "side": 1,
+      "message": "Let\u0027s use a unique_ptr or base::Optional for the registry rather than testing empty().",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5a9ece94_253e6817",
+        "filename": "content/shell/browser/shell_content_browser_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 226,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T19:51:07Z",
+      "side": 1,
+      "message": "Just initialize it in the constructor? It\u0027s small and test-only code so I don\u0027t think startup cost matters.",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d0d6544_9b6cc676",
+        "filename": "services/service_manager/public/cpp/binder_registry.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-20T19:51:07Z",
+      "side": 1,
+      "message": "Per the comments in each client cc, I think we should avoid adding this interface since it\u0027s superfluous. I also worry that it would eventually lead to confusing code, as equating \"empty\" with \"uninitialized\" seems a bit fragile.",
+      "revId": "f86719174e4f401fa1cda98221c4c35e6d4b9bbc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
