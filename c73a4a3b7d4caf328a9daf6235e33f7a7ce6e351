@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d1062919_4a908f6c",
+        "filename": "content/renderer/render_frame_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 5916,
+      "author": {
+        "id": 1001500
+      },
+      "writtenOn": "2017-06-20T16:34:52Z",
+      "side": 1,
+      "message": "nit: I\u0027d put this with all the other unconditional members at the beginning of the method. Or at last put an empty line to visually separate it a bit more from the conditional.",
+      "revId": "c73a4a3b7d4caf328a9daf6235e33f7a7ce6e351",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
