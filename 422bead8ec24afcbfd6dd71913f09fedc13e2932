@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "e3ef0c1a_c5c68776",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 67,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T18:12:41Z",
+      "side": 1,
+      "message": ".",
+      "parentUuid": "d52fa43f_31e42e43",
+      "range": {
+        "startLine": 67,
+        "startChar": 24,
+        "endLine": 67,
+        "endChar": 36
+      },
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1548be4a_5ae77510",
         "filename": "base/memory/shared_memory_tracker.cc",
         "patchSetId": 6
@@ -132,6 +156,24 @@
     },
     {
       "key": {
+        "uuid": "070f230c_af06a6ba",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T18:12:41Z",
+      "side": 1,
+      "message": "Aha, so storing the address is not going to help here then for the issue of single process.\nOkay your fix looks good! thanks",
+      "parentUuid": "04dc16cf_0c4da065",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "aebf1977_f8868bf2",
         "filename": "base/trace_event/process_memory_dump.cc",
         "patchSetId": 6
@@ -200,6 +242,24 @@
       "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e79f065a_d50ee87a",
+        "filename": "base/trace_event/process_memory_dump.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 427,
+      "author": {
+        "id": 1125359
+      },
+      "writtenOn": "2017-06-20T18:12:41Z",
+      "side": 1,
+      "message": "Ah okay, makes sense. Thanks!",
+      "parentUuid": "181ed095_72934c56",
+      "revId": "422bead8ec24afcbfd6dd71913f09fedc13e2932",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
