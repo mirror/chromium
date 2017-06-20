@@ -91,6 +91,24 @@
     },
     {
       "key": {
+        "uuid": "027e61f9_bb29e257",
+        "filename": "third_party/WebKit/Source/core/frame/Frame.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 175,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-20T10:27:32Z",
+      "side": 1,
+      "message": "Nate, as said above, having the two bits is part of a larger design wrt user activation: https://docs.google.com/document/d/1erpl1yqJlc1pH0QvVVmi1s3WzqQLsEXTLLh6VuYp228/edit \n\nWe do not believe that all current and future users of has_received_user_gesture_ will expect the bits to stay during navigation and we can always merge them later if it happens. It seems to be the safest path.",
+      "parentUuid": "d3fe130b_8ff1640b",
+      "revId": "0e605110bf52cfa660e7cfe0591f60d62a3ea896",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "d5b773d7_771d1b2c",
         "filename": "third_party/WebKit/Source/core/loader/FrameLoader.cpp",
         "patchSetId": 4
