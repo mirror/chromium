@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "e2d0f924_e16fe30f",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableTest.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 184,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-20T17:11:02Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "986dc080_15f1ecac",
+      "revId": "e3b27019a38017d30204869c8d3641e5c286e6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "cde0d3fe_71137a71",
         "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
         "patchSetId": 7
@@ -30,6 +48,30 @@
       "writtenOn": "2017-06-20T01:12:34Z",
       "side": 1,
       "message": "Sorry, just noticed this. Can max_non_percent be \u003ekTableMaxWidth here? If so then I think this refactor doesn\u0027t work so well. But I agree that the old way was confusing. Maybe something like this is what you were going for?\nscaled_width_from_percent_columns_ \u003d std::min(kTableMaxWidth, std::max(max_percent, max_non_percent))?\n\nIs that right?",
+      "range": {
+        "startLine": 305,
+        "startChar": 19,
+        "endLine": 305,
+        "endChar": 34
+      },
+      "revId": "e3b27019a38017d30204869c8d3641e5c286e6fd",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef11401b_de1dc006",
+        "filename": "third_party/WebKit/Source/core/layout/TableLayoutAlgorithmAuto.cpp",
+        "patchSetId": 7
+      },
+      "lineNbr": 305,
+      "author": {
+        "id": 1223141
+      },
+      "writtenOn": "2017-06-20T17:11:02Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "cde0d3fe_71137a71",
       "range": {
         "startLine": 305,
         "startChar": 19,
