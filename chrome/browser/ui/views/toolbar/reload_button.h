@@ -76,9 +76,11 @@ class ReloadButton : public ToolbarButton,
 
   void OnDoubleClickTimer();
   void OnStopToReloadTimer();
+  void OnLongLoadTimer();
 
   base::OneShotTimer double_click_timer_;
-  base::OneShotTimer stop_to_reload_timer_;
+  base::OneShotTimer mode_switch_timer_;
+  base::OneShotTimer long_load_timer_timer_;
 
   // This may be NULL when testing.
   CommandUpdater* command_updater_;
@@ -92,7 +94,7 @@ class ReloadButton : public ToolbarButton,
   // The delay times for the timers.  These are members so that tests can modify
   // them.
   base::TimeDelta double_click_timer_delay_;
-  base::TimeDelta stop_to_reload_timer_delay_;
+  base::TimeDelta mode_switch_timer_delay_;
 
   // Indicates if reload menu is enabled.
   bool menu_enabled_;
