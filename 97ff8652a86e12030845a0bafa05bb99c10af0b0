@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4d1b9784_448bc406",
+        "filename": "tools/metrics/histograms/enums.xml",
+        "patchSetId": 1
+      },
+      "lineNbr": 4055,
+      "author": {
+        "id": 1163331
+      },
+      "writtenOn": "2017-06-20T20:43:12Z",
+      "side": 1,
+      "message": "Can you figure out if these labels are used in any type of querying? If yes, isn\u0027t it better to make them more brief? If not ignore!!",
+      "range": {
+        "startLine": 4055,
+        "startChar": 24,
+        "endLine": 4055,
+        "endChar": 46
+      },
+      "revId": "97ff8652a86e12030845a0bafa05bb99c10af0b0",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
