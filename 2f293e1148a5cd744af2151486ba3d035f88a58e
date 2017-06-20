@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5afc847c_63054cbe",
+        "filename": "chrome/browser/extensions/api/tab_capture/offscreen_tab.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1212411
+      },
+      "writtenOn": "2017-06-20T23:53:21Z",
+      "side": 1,
+      "message": "Shall we also destroy the tab? If so it seems that we can reuse CloseContents()?",
+      "revId": "2f293e1148a5cd744af2151486ba3d035f88a58e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
