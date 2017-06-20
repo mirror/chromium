@@ -8,6 +8,7 @@
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/chrome/browser/ui/settings/settings_root_collection_view_controller.h"
 
+@protocol SettingsMainPageCommands;
 @class SigninInteractionController;
 namespace ios {
 class ChromeBrowserState;
@@ -36,6 +37,9 @@ extern NSString* const kSettingsVoiceSearchCellId;
 // currently occuring.
 @property(weak, nonatomic, readonly)
     SigninInteractionController* signinInteractionController;
+
+// This controller's dispatcher. By default it is the controller itself.
+@property(weak, nonatomic) id<SettingsMainPageCommands> dispatcher;
 
 // Initializes a new SettingsCollectionViewController. |mainBrowserState|,
 // |currentBrowserState| and |dataSource| must not be nil.
