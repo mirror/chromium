@@ -72,13 +72,16 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
   // Upon page load, we want to determine whether the page loaded was a public
   // domain or private domain and generate an event describing the domain type.
   net::HostPortPair address = navigation_handle->GetSocketAddress();
+  bool parsed_successfully =
+      net::ParseURLHostnameToAddress(address.host(), &page_ip_address_);
   LOG(WARNING) << "The current address is " << address.host();
-  if (net::IsLocalhost(address.host())) {
+  if (net::IsLocalhost(address.host()) ||
+      page_ip_address_ == net::IPAddress::IPv6Localhost()) {
     LOG(WARNING) << "and the address is a localhost address";
     page_load_type_ = DOMAIN_TYPE_LOCALHOST;
     page_ip_address_ = net::IPAddress::IPv4Localhost();
   } else {
-    DCHECK(net::ParseURLHostnameToAddress(address.host(), &page_ip_address_));
+    DCHECK(parsed_successfully);
 
     // In cases where the page loaded was not a network resource (e.g.,
     // extensions), we don't want to track the page load. Such resources will

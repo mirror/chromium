@@ -288,7 +288,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest, NoMetrics) {
   EXPECT_EQ(0ul, ukm_entry_count());
 
   // Sanity check
-  ExpectHistogramsEmpty(DOMAIN_TYPE_PUBLIC);
+  ExpectNoHistograms();
 }
 
 TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
@@ -379,8 +379,7 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
 
   // Should generate only a domain type UKM entry by this point.
   ExpectPageLoadMetric(page, DOMAIN_TYPE_PUBLIC);
-  const ukm::UkmSource* source =
-      GetUkmSourceForUrl(page.url);
+  const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
   EXPECT_EQ(GURL(page.url), source->url());
 
   // Make all of the types of requests, with all being successful.
@@ -566,36 +565,36 @@ TEST_F(LocalNetworkRequestsPageLoadMetricsObserverTest,
   const ukm::UkmSource* source = GetUkmSourceForUrl(page.url);
   EXPECT_EQ(6ul, ukm_entry_count());
   auto entries = GetUkmEntriesForSourceID(source->id());
-  int i = 0;
-  for (auto* entry : entries) {
-    EXPECT_EQ(entry->source_id, source->id());
+  for (size_t i = 1; i < entries.size(); ++i) {
+    EXPECT_EQ(entries[i]->source_id, source->id());
     EXPECT_EQ(
-        entry->event_hash,
+        entries[i]->event_hash,
         base::HashMetricName(internal::kUkmLocalNetworkRequestsEventName));
-    EXPECT_FALSE(entry->metrics.empty());
+    EXPECT_FALSE(entries[i]->metrics.empty());
 
-    EXPECT_EQ(entry->metrics[0]->metric_hash,
+    EXPECT_EQ(entries[i]->metrics[0]->metric_hash,
               base::HashMetricName(internal::kUkmResourceTypeName));
-    if (entry->metrics[0]->value == static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
+    if (entries[i]->metrics[0]->value ==
+        static_cast<int>(RESOURCE_TYPE_LOCALHOST)) {
       // Localhost page load
-      EXPECT_EQ(entry->metrics.size(), 4ul);
+      EXPECT_EQ(entries[i]->metrics.size(), 4ul);
       ExpectMetric(internal::kUkmPortTypeName,
-                   static_cast<int>(expected_values[i].port_type), entry);
+                   static_cast<int>(expected_values[i - 1].port_type),
+                   entries[i]);
       ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values[i].success_count, entry);
+                   expected_values[i - 1].success_count, entries[i]);
       ExpectMetric(internal::kUkmFailedCountName,
-                   expected_values[i].failed_count, entry);
+                   expected_values[i].failed_count, entries[i]);
     } else {
       // Localhost page load
-      EXPECT_EQ(entry->metrics.size(), 3ul);
-      EXPECT_EQ(expected_values[i].resource_type,
-                static_cast<ResourceType>(entry->metrics[0]->value));
+      EXPECT_EQ(entries[i]->metrics.size(), 3ul);
+      EXPECT_EQ(expected_values[i - 1].resource_type,
+                static_cast<ResourceType>(entries[i]->metrics[0]->value));
       ExpectMetric(internal::kUkmSuccessfulCountName,
-                   expected_values[i].success_count, entry);
+                   expected_values[i - 1].success_count, entries[i]);
       ExpectMetric(internal::kUkmFailedCountName,
-                   expected_values[i].failed_count, entry);
+                   expected_values[i - 1].failed_count, entries[i]);
     }
-    ++i;
   }
 
   // Should have generated UMA histograms for all requests made.
