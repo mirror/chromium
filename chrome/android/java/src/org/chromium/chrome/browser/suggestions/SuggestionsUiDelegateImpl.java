@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.suggestions;
 import android.support.annotation.Nullable;
 
 import org.chromium.base.DiscardableReferencePool;
+import org.chromium.base.VisibleForTesting;
 import org.chromium.chrome.browser.NativePageHost;
 import org.chromium.chrome.browser.download.ui.ThumbnailProvider;
 import org.chromium.chrome.browser.download.ui.ThumbnailProviderImpl;
@@ -160,5 +161,15 @@ public class SuggestionsUiDelegateImpl implements SuggestionsUiDelegate {
         assert !mIsDestroyed;
         if (mLargeIconBridge == null) mLargeIconBridge = new LargeIconBridge(mProfile);
         return mLargeIconBridge;
+    }
+
+    @VisibleForTesting
+    public void setLargeIconBridge(LargeIconBridge bridge) {
+        mLargeIconBridge = bridge;
+    }
+
+    @VisibleForTesting
+    public void setFaviconHelper(FaviconHelper helper) {
+        mFaviconHelper = helper;
     }
 }

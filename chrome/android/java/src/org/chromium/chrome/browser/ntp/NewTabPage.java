@@ -78,6 +78,7 @@ public class NewTabPage
     private static final String NAVIGATION_ENTRY_SCROLL_POSITION_KEY = "NewTabPageScrollPosition";
 
     private static SuggestionsSource sSuggestionsSourceForTests;
+    private static SuggestionsEventReporter sEventReporterForTesting;
 
     private final Tab mTab;
     private final TabModelSelector mTabModelSelector;
@@ -173,6 +174,11 @@ public class NewTabPage
     @VisibleForTesting
     public static void setSuggestionsSourceForTests(SuggestionsSource suggestionsSource) {
         sSuggestionsSourceForTests = suggestionsSource;
+    }
+
+    @VisibleForTesting
+    public static void setEventReporterForTesting(SuggestionsEventReporter eventReporter) {
+        sEventReporterForTesting = eventReporter;
     }
 
     private class NewTabPageManagerImpl
@@ -321,7 +327,13 @@ public class NewTabPage
         Profile profile = mTab.getProfile();
 
         mSnippetsBridge = new SnippetsBridge(profile);
-        SuggestionsEventReporter eventReporter = new SuggestionsEventReporterBridge();
+
+        SuggestionsEventReporter eventReporter;
+        if (sEventReporterForTesting == null) {
+            eventReporter = new SuggestionsEventReporterBridge();
+        } else {
+            eventReporter = sEventReporterForTesting;
+        }
 
         SuggestionsNavigationDelegateImpl navigationDelegate =
                 new SuggestionsNavigationDelegateImpl(
