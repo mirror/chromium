@@ -68,6 +68,30 @@
       "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6ca288bb_7760e720",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1115999
+      },
+      "writtenOn": "2017-06-20T18:18:41Z",
+      "side": 1,
+      "message": "I\u0027m echoing this, Dmitry, is there a way to get executionContextId for a given v8 context now?",
+      "parentUuid": "bef30929_b4a38db7",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
