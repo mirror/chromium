@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0fe06088_6a95b7c8",
+        "filename": "chrome/browser/download/download_commands.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-20T04:49:18Z",
+      "side": 1,
+      "message": "\u003d default;",
+      "range": {
+        "startLine": 130,
+        "startChar": 38,
+        "endLine": 130,
+        "endChar": 40
+      },
+      "revId": "e87713c866e3234d604a3f45227a2a1ded1c1fa4",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
