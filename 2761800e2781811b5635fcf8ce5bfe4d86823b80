@@ -2,6 +2,75 @@
   "comments": [
     {
       "key": {
+        "uuid": "adc659f5_01d87bd7",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 210,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T19:51:25Z",
+      "side": 1,
+      "message": "nit: BindOnce",
+      "range": {
+        "startLine": 210,
+        "startChar": 14,
+        "endLine": 210,
+        "endChar": 18
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2f0952f5_7f908bcf",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T19:51:25Z",
+      "side": 1,
+      "message": "nit: const",
+      "range": {
+        "startLine": 220,
+        "startChar": 30,
+        "endLine": 220,
+        "endChar": 44
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0b35115c_e9b12df2",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 249,
+      "author": {
+        "id": 1003166
+      },
+      "writtenOn": "2017-06-20T19:51:25Z",
+      "side": 1,
+      "message": "nit: superfluous parens",
+      "range": {
+        "startLine": 249,
+        "startChar": 34,
+        "endLine": 249,
+        "endChar": 35
+      },
+      "revId": "2761800e2781811b5635fcf8ce5bfe4d86823b80",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea1434ea_1c04640d",
         "filename": "chrome/browser/ui/ash/launcher/arc_app_window_launcher_controller.cc",
         "patchSetId": 3
