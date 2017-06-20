@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d65636aa_7036f0c2",
+        "filename": "chrome/browser/chromeos/arc/arc_session_manager.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 315,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5c6708a7_bda4f526",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a88b76e9_cc29d970",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 1
@@ -53,6 +71,24 @@
     },
     {
       "key": {
+        "uuid": "c9787a2f_26d5bb9c",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 221,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "49250f3c_84e0cc92",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5946d099_23122f33",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 1
@@ -67,6 +103,24 @@
       "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5117eaf_4dfe8061",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 494,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5946d099_23122f33",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +141,24 @@
     },
     {
       "key": {
+        "uuid": "a280e5cd_da65aed6",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 519,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6d927026_fd5d4a85",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8bc49b5b_b63424ea",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 1
@@ -98,6 +170,24 @@
       "writtenOn": "2017-06-20T07:26:21Z",
       "side": 1,
       "message": "I\u0027d recommend base::HexStringToInt() ?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "569f57eb_f2ba8fdc",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 543,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Thank for help. I could not find something like this.",
+      "parentUuid": "8bc49b5b_b63424ea",
       "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -121,6 +211,24 @@
     },
     {
       "key": {
+        "uuid": "cb2145f1_5f73a67d",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 555,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5399ba11_21328920",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "25c68af1_d119c6f0",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
         "patchSetId": 1
@@ -132,6 +240,24 @@
       "writtenOn": "2017-06-20T07:26:21Z",
       "side": 1,
       "message": "Let\u0027s logging if any condition does not meet.",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b3ff0215_3923f93a",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 564,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "With struct this is no longer required.",
+      "parentUuid": "25c68af1_d119c6f0",
       "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -155,6 +281,24 @@
     },
     {
       "key": {
+        "uuid": "b3cb9754_860378b3",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "11dd258e_a6fea1b1",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e277e2ad_a2dca632",
         "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
         "patchSetId": 1
@@ -166,6 +310,24 @@
       "writtenOn": "2017-06-20T07:26:21Z",
       "side": 1,
       "message": "Proposal/optional, how about define a struct?",
+      "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3e0b85d_86b1d7f0",
+        "filename": "chrome/browser/ui/app_list/arc/arc_app_utils.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 118,
+      "author": {
+        "id": 1136695
+      },
+      "writtenOn": "2017-06-20T16:07:39Z",
+      "side": 1,
+      "message": "That is much convenient. Thanks",
+      "parentUuid": "e277e2ad_a2dca632",
       "revId": "c016c2ee8077eb1bc3466723fb977847279b2357",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
