@@ -58,10 +58,18 @@ void PrefetchServiceTestTaco::SetSuggestedArticlesObserver(
 }
 
 void PrefetchServiceTestTaco::CreatePrefetchService() {
+  CHECK(metrics_collector_ && dispatcher_ && gcm_handler_ && store_ &&
+        suggested_articles_observer_);
   prefetch_service_ = base::MakeUnique<PrefetchServiceImpl>(
       std::move(metrics_collector_), std::move(dispatcher_),
       std::move(gcm_handler_), std::move(store_),
       std::move(suggested_articles_observer_));
+}
+
+std::unique_ptr<PrefetchService>
+PrefetchServiceTestTaco::CreateAndReturnPrefetchService() {
+  CreatePrefetchService();
+  return std::move(prefetch_service_);
 }
 
 }  // namespace offline_page
