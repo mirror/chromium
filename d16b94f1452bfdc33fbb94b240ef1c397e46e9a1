@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a603c38f_fd071823",
+        "filename": "media/gpu/video_decode_accelerator_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1196204
+      },
+      "writtenOn": "2017-06-20T05:15:11Z",
+      "side": 1,
+      "message": "I am actually wondering whether we need this preprocessor condition here. Do we ever run this test without ozone? And why would the messageloop type need to change based on the OS or lower layer?\n\nIf nobody objects, I suggest setting it unconditionally.",
+      "revId": "d16b94f1452bfdc33fbb94b240ef1c397e46e9a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
