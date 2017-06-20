@@ -4,6 +4,25 @@
 
 #include "device/generic_sensor/public/cpp/sensor_reading.h"
 
+#include "device/base/synchronization/shared_memory_seqlock_buffer.h"
+
+namespace {
+
+constexpr int kMaxReadAttemptsCount = 10;
+
+bool TryReadFromBuffer(const device::SensorReadingSharedBuffer* buffer,
+                       device::SensorReading* result) {
+  const device::OneWriterSeqLock& seqlock = buffer->seqlock.value();
+  auto version = seqlock.ReadBegin();
+  auto reading_data = buffer->reading;
+  if (seqlock.ReadRetry(version))
+    return false;
+  *result = reading_data;
+  return true;
+}
+
+}  // namespace
+
 namespace device {
 
 SensorReading::SensorReading() = default;
@@ -12,6 +31,16 @@ SensorReading::~SensorReading() = default;
 
 SensorReadingSharedBuffer::SensorReadingSharedBuffer() = default;
 SensorReadingSharedBuffer::~SensorReadingSharedBuffer() = default;
+
+bool SensorReadingSharedBuffer::GetReading(SensorReading* reading) const {
+  int read_attempts = 0;
+  while (!TryReadFromBuffer(this, reading)) {
+    if (++read_attempts == kMaxReadAttemptsCount)
+      return false;
+  }
+
+  return true;
+}
 
 // static
 uint64_t SensorReadingSharedBuffer::GetOffset(mojom::SensorType type) {
