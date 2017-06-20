@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5d888aac_16c5b444",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/contextmenu/ChromeContextMenuPopulator.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 704,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-20T21:26:22Z",
+      "side": 1,
+      "message": "Is it correct that this is skipped for the two early-return cases above?",
+      "range": {
+        "startLine": 704,
+        "startChar": 0,
+        "endLine": 704,
+        "endChar": 80
+      },
+      "revId": "b608dfe004b613e8da4cd42f1da53f9a9495b84b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
