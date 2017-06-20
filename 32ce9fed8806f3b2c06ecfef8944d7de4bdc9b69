@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f1e7a85c_5dc8fc54",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/GeometryMapperTransformCache.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-20T21:30:19Z",
+      "side": 1,
+      "message": "maybe scaleZ(0) to give an example that is 3D yet non-invertible?",
+      "revId": "32ce9fed8806f3b2c06ecfef8944d7de4bdc9b69",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
