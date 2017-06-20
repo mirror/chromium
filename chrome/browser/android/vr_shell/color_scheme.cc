@@ -40,6 +40,12 @@ void InitializeColorSchemes() {
       normal_scheme.exit_warning_foreground;
   normal_scheme.transient_warning_background =
       normal_scheme.exit_warning_background;
+  // Need value from UX
+  normal_scheme.start_presentation_toast_foreground =
+      normal_scheme.exit_warning_foreground;
+  normal_scheme.start_presentation_toast_background =
+      normal_scheme.exit_warning_background;
+
   normal_scheme.permanent_warning_foreground = 0xFF444444;
   normal_scheme.permanent_warning_background = SK_ColorWHITE;
   normal_scheme.system_indicator_foreground =

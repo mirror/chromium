@@ -651,7 +651,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         boolean webVrMode = mRequestedWebVr || tentativeWebVrMode;
         mVrShell.initializeNative(mActivity.getActivityTab(), webVrMode, mAutopresentWebVr,
                 mActivity instanceof CustomTabActivity);
-        mVrShell.setWebVrModeEnabled(webVrMode, mAutopresentWebVr);
+        mVrShell.setWebVrModeEnabled(webVrMode, mAutopresentWebVr, false);
         mAutopresentWebVr = false;
 
         // We're entering VR, but not in WebVr mode.
@@ -748,7 +748,8 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         mRequestedWebVr = true;
         switch (enterVrInternal()) {
             case ENTER_VR_NOT_NECESSARY:
-                mVrShell.setWebVrModeEnabled(true, mAutopresentWebVr);
+                Log.e("====bshe====", "This is where we present webvr in VR???");
+                mVrShell.setWebVrModeEnabled(true, mAutopresentWebVr, true);
                 maybeSetPresentResult(true);
                 break;
             case ENTER_VR_CANCELLED:
@@ -803,7 +804,7 @@ public class VrShellDelegate implements ApplicationStatus.ActivityStateListener,
         } else {
             mVrBrowserUsed = true;
             mAutopresentWebVr = false;
-            mVrShell.setWebVrModeEnabled(false, false);
+            mVrShell.setWebVrModeEnabled(false, false, false);
         }
         return true;
     }
