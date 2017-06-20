@@ -22,6 +22,12 @@ enum NotificationChannelStatus { ENABLED, BLOCKED, UNAVAILABLE };
 struct NotificationChannel {
   NotificationChannel(std::string origin, NotificationChannelStatus status)
       : origin_(origin), status_(status) {}
+  bool operator==(const NotificationChannel& other) const {
+    return origin_ == other.origin_ && status_ == other.status_;
+  }
+  bool operator<(const NotificationChannel& other) const {
+    return origin_ < other.origin_;
+  }
   std::string origin_;
   NotificationChannelStatus status_ = NotificationChannelStatus::UNAVAILABLE;
 };
@@ -72,7 +78,9 @@ class NotificationChannelsProviderAndroid
 
   std::unique_ptr<NotificationChannelsBridge> bridge_;
   bool should_use_channels_;
+  std::vector<NotificationChannel> cached_channels_;
 
+  base::WeakPtrFactory<NotificationChannelsProviderAndroid> weak_factory_;
   DISALLOW_COPY_AND_ASSIGN(NotificationChannelsProviderAndroid);
 };
 
