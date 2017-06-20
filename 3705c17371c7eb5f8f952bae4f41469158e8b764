@@ -50,6 +50,24 @@
       "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "29db5ceb_87ad67ec",
+        "filename": "chrome/browser/page_load_metrics/observers/ads_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 667,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-20T19:08:47Z",
+      "side": 1,
+      "message": "Ok, I can restore the code Josh had before. It seemed unfortunate to have to write so much support code in the test, but if calling Fail() here is incorrect we can revert back to what we had before. Alternatively, if there\u0027s a way to modify the NavigationSimulator API to support this operation more cleanly, I\u0027d be open to making that change. Camille, others, please let me know what changes if any we could make to NavigationSimulator API to make it easier to fail the nav via a throttle, if that\u0027s what we need to do here.",
+      "parentUuid": "97e3ae55_87ccbfa8",
+      "revId": "3705c17371c7eb5f8f952bae4f41469158e8b764",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
