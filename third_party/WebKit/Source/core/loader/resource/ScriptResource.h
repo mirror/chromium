@@ -59,11 +59,14 @@ class CORE_EXPORT ScriptResource final : public TextResource {
   static ScriptResource* Fetch(FetchParameters&, ResourceFetcher*);
 
   // Public for testing
-  static ScriptResource* Create(const KURL& url, const String& charset) {
+  static ScriptResource* CreateForTest(const KURL& url,
+                                       const WTF::TextEncoding& encoding) {
     ResourceRequest request(url);
     ResourceLoaderOptions options(kDoNotAllowStoredCredentials,
                                   kClientDidNotRequestCredentials);
-    return new ScriptResource(request, options, charset);
+    TextResourceDecoderOptions decoder_options(
+        TextResourceDecoderOptions::kPlainTextContent, encoding);
+    return new ScriptResource(request, options, decoder_options);
   }
 
   ~ScriptResource() override;
@@ -85,18 +88,21 @@ class CORE_EXPORT ScriptResource final : public TextResource {
  private:
   class ScriptResourceFactory : public ResourceFactory {
    public:
-    ScriptResourceFactory() : ResourceFactory(Resource::kScript) {}
+    ScriptResourceFactory()
+        : ResourceFactory(Resource::kScript,
+                          TextResourceDecoderOptions::kPlainTextContent) {}
 
-    Resource* Create(const ResourceRequest& request,
-                     const ResourceLoaderOptions& options,
-                     const String& charset) const override {
-      return new ScriptResource(request, options, charset);
+    Resource* Create(
+        const ResourceRequest& request,
+        const ResourceLoaderOptions& options,
+        const TextResourceDecoderOptions& decoder_options) const override {
+      return new ScriptResource(request, options, decoder_options);
     }
   };
 
   ScriptResource(const ResourceRequest&,
                  const ResourceLoaderOptions&,
-                 const String& charset);
+                 const TextResourceDecoderOptions&);
 
   AtomicString source_text_;
 };

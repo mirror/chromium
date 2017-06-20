@@ -29,8 +29,7 @@ class CORE_EXPORT TextResource : public Resource {
   TextResource(const ResourceRequest&,
                Type,
                const ResourceLoaderOptions&,
-               TextResourceDecoderOptions::ContentType,
-               const String& charset);
+               const TextResourceDecoderOptions&);
   ~TextResource() override;
 
   void SetEncoding(const String&) override;
