@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "52cda8f3_285c6162",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoder.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T19:47:34Z",
+      "side": 1,
+      "message": "I also feel so but I\u0027ll keep this as-is because I don\u0027t have an immediate plan for improvement and it is not directly related to this chain of changes.",
+      "parentUuid": "2895e02b_d89209c2",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "cdbfa2ee_b47f7884",
         "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
         "patchSetId": 7
@@ -33,6 +51,24 @@
       "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada81767_05932165",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T19:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "cdbfa2ee_b47f7884",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -68,6 +104,24 @@
       "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4bf49fd1_03bae17d",
+        "filename": "third_party/WebKit/Source/core/html/parser/TextResourceDecoderForFuzzing.h",
+        "patchSetId": 7
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1115924
+      },
+      "writtenOn": "2017-06-20T19:47:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c2745752_ae233f9d",
+      "revId": "0f59e4812b88cb4788f0e9f5d88f05c081ca88a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
