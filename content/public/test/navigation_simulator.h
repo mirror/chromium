@@ -105,6 +105,9 @@ class NavigationSimulator : public WebContentsObserver {
   // Simulates the start of the navigation.
   virtual void Start();
 
+  // Simulates the navigation beginning to process a response.
+  virtual void WillProcessResponse();
+
   // Simulates a redirect to |new_url| for the navigation.
   virtual void Redirect(const GURL& new_url);
 
@@ -181,6 +184,7 @@ class NavigationSimulator : public WebContentsObserver {
   enum State {
     INITIALIZATION,
     STARTED,
+    PROCESSING_RESPONSE,
     FAILED,
     FINISHED,
   };
