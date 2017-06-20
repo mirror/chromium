@@ -8,6 +8,7 @@
 #include <vector>
 
 #include "base/containers/mru_cache.h"
+#include "base/containers/flat_set.h"
 #include "gpu/command_buffer/common/discardable_handle.h"
 #include "gpu/command_buffer/service/context_group.h"
 #include "gpu/gpu_export.h"
@@ -64,12 +65,20 @@ class GPU_EXPORT ServiceDiscardableManager {
       uint32_t texture_id,
       gles2::TextureManager* texture_manager) const;
 
-  // TODO(ericrk): Arbitrary limit, refine this once we actually use this class
-  // in production. crbug.com/706456
-  static const size_t kMaxSize = 256 * 1024 * 1024;
+  void SetLimitsForTesting(size_t min_size, size_t max_size, size_t growth_per_client) {
+    min_cache_size_bytes_ = min_size;
+    max_cache_size_bytes_ = max_size;
+    cache_growth_per_client_bytes_ = growth_per_client;
+  }
+
+  size_t GetLimitForTesting() const {
+    return CacheSizeLimitBytes();
+  }
 
  private:
   void EnforceLimits();
+
+  size_t CacheSizeLimitBytes() const;
 
   struct GpuDiscardableEntry {
    public:
@@ -105,6 +114,14 @@ class GPU_EXPORT ServiceDiscardableManager {
   // Total size of all |entries_|. The same as summing
   // GpuDiscardableEntry::size for each entry.
   size_t total_size_ = 0;
+
+  // Number of unique TextureManagers / clients attached.
+  base::flat_set<const gles2::TextureManager*> clients_;
+
+  // Values used to calculate cache limits.
+  size_t min_cache_size_bytes_ = 0;
+  size_t max_cache_size_bytes_ = 0;
+  size_t cache_growth_per_client_bytes_ = 0;
 
   DISALLOW_COPY_AND_ASSIGN(ServiceDiscardableManager);
 };
