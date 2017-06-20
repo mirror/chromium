@@ -16,6 +16,24 @@
       "revId": "9de88d0e22c5d417c0d433288659b09b5e7b9292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43c0fc4b_5b79f887",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1114080
+      },
+      "writtenOn": "2017-06-20T15:48:38Z",
+      "side": 1,
+      "message": "That may be a correct fix, but it does affect all ContextLifeCycleObservers and I don\u0027t want to do it in this change.",
+      "parentUuid": "74c9f9d4_400d7114",
+      "revId": "9de88d0e22c5d417c0d433288659b09b5e7b9292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
