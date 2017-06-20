@@ -10,6 +10,12 @@
 #include "base/time/time.h"
 #include "media/remoting/remoting_cdm.h"
 #include "media/remoting/remoting_cdm_context.h"
+#include "third_party/WebKit/public/platform/WebURL.h"
+#include "third_party/WebKit/public/platform/modules/remoteplayback/WebRemotePlaybackClient.h"
+
+#if defined(OS_ANDROID)
+#include "media/base/android/media_codec_util.h"
+#endif
 
 namespace media {
 namespace remoting {
@@ -186,7 +192,46 @@ void RendererController::OnMetadataChanged(const PipelineMetadata& metadata) {
                        ? UNSUPPORTED_AUDIO_AND_VIDEO_CODECS
                        : UNSUPPORTED_VIDEO_CODEC;
   }
+
+  // Update remote playback client with metadata.
+  UpdateRemotePlaybackClientWithSource();
+
   UpdateAndMaybeSwitch(start_trigger, stop_trigger);
+}
+
+void RendererController::OnDataSourceInitialized(
+    const GURL& url_after_redirects,
+    bool did_pass_cors_access_check) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+
+  if (url_after_redirects == url_after_redirects_ &&
+      did_pass_cors_access_check == did_pass_cors_access_check_) {
+    return;
+  }
+
+  // TODO(avayvod): Does WMPI update MediaObserver when metadata becomes
+  // invalid or should we reset it here?
+  url_after_redirects_ = url_after_redirects;
+  did_pass_cors_access_check_ = did_pass_cors_access_check;
+
+  UpdateRemotePlaybackClientWithSource();
+}
+
+void RendererController::UpdateRemotePlaybackClientWithSource() {
+  if (!remote_playback_client_)
+    return;
+
+#if defined(OS_ANDROID)
+  // TODO(tguilbert): Detect the presence of HLS based on demuxing results,
+  // rather than the URL string. See crbug.com/663503.
+  bool is_supported_url = MediaCodecUtil::IsHLSURL(url_after_redirects_);
+#else
+  bool is_supported_url = false;
+#endif
+
+  remote_playback_client_->SourceChanged(
+      blink::WebURL(url_after_redirects_), did_pass_cors_access_check_,
+      is_supported_url || IsAudioOrVideoSupported());
 }
 
 bool RendererController::IsVideoCodecSupported() {
@@ -292,11 +337,8 @@ bool RendererController::ShouldBeRemoting() {
       break;  // The sink is capable of remote rendering.
   }
 
-  if ((!has_audio() && !has_video()) ||
-      (has_video() && !IsVideoCodecSupported()) ||
-      (has_audio() && !IsAudioCodecSupported())) {
+  if (!IsAudioOrVideoSupported())
     return false;
-  }
 
   if (is_remote_playback_disabled_)
     return false;
@@ -305,6 +347,16 @@ bool RendererController::ShouldBeRemoting() {
   // signal that starts remote rendering. However, current technical limitations
   // require encrypted content be remoted without waiting for a user signal.
   return is_fullscreen_ || is_dominant_content_;
+}
+
+bool RendererController::IsAudioOrVideoSupported() {
+  if ((!has_audio() && !has_video()) ||
+      (has_video() && !IsVideoCodecSupported()) ||
+      (has_audio() && !IsAudioCodecSupported())) {
+    return false;
+  }
+
+  return true;
 }
 
 void RendererController::UpdateAndMaybeSwitch(StartTrigger start_trigger,
@@ -370,6 +422,15 @@ void RendererController::SetClient(MediaObserverClient* client) {
 
   client_ = client;
   client_->ActivateViewportIntersectionMonitoring(IsRemoteSinkAvailable());
+}
+
+void RendererController::SetRemotePlaybackClient(
+    blink::WebRemotePlaybackClient* remote_playback_client) {
+  DCHECK(thread_checker_.CalledOnValidThread());
+  DCHECK(remote_playback_client);
+  DCHECK(!remote_playback_client_);
+
+  remote_playback_client_ = remote_playback_client;
 }
 
 }  // namespace remoting

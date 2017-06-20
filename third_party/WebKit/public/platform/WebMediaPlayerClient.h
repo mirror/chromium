@@ -39,6 +39,7 @@ namespace blink {
 class WebInbandTextTrack;
 class WebLayer;
 class WebMediaSource;
+class WebRemotePlaybackClient;
 
 enum class WebRemotePlaybackAvailability;
 
@@ -120,6 +121,8 @@ class BLINK_PLATFORM_EXPORT WebMediaPlayerClient {
   // Returns whether the media element has native controls. It does not mean
   // that the controls are currently visible.
   virtual bool HasNativeControls() = 0;
+
+  virtual WebRemotePlaybackClient* RemotePlaybackClient() { return nullptr; };
 
  protected:
   ~WebMediaPlayerClient() {}
