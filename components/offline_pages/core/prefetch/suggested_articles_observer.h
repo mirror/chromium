@@ -6,6 +6,7 @@
 #define COMPONENTS_OFFLINE_PAGES_CORE_PREFETCH_SUGGESTED_ARTICLES_OBSERVER_H_
 
 #include <memory>
+#include <vector>
 
 #include "base/callback.h"
 #include "base/memory/weak_ptr.h"
@@ -27,11 +28,14 @@ class SuggestedArticlesObserver
  public:
   // |dispatcher| is unowned, lifetime must be managed by the owner of
   // SuggestedArticlesObserver.
-  SuggestedArticlesObserver(PrefetchDispatcher* dispatcher);
+  explicit SuggestedArticlesObserver(PrefetchDispatcher* dispatcher);
   ~SuggestedArticlesObserver() override;
 
   void SetContentSuggestionsServiceAndObserve(
       ntp_snippets::ContentSuggestionsService* service);
+
+  // TODO(dewittj): Make this private when the SQL store is up and running.
+  bool GetCurrentSuggestions(std::vector<PrefetchURL>* result);
 
   // ContentSuggestionsService::Observer overrides.
   void OnNewSuggestions(ntp_snippets::Category category) override;
