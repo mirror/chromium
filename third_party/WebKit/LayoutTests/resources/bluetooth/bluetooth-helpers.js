@@ -468,7 +468,7 @@ function getHealthThermometerDevice(options) {
   let fake_peripheral;
   let fake_generic_access;
   let fake_health_thermometer;
-
+  let fake_measurement_interval;
   return getConnectedHealthThermometerDevice(options)
     .then(result => {
       ({
@@ -476,6 +476,7 @@ function getHealthThermometerDevice(options) {
         fake_peripheral,
         fake_generic_access,
         fake_health_thermometer,
+        fake_measurement_interval,
       } = result);
     })
     .then(() => fake_peripheral.setNextGATTDiscoveryResponse({
@@ -484,7 +485,8 @@ function getHealthThermometerDevice(options) {
       device: device,
       fake_peripheral: fake_peripheral,
       fake_generic_access: fake_generic_access,
-      fake_health_thermometer1: fake_health_thermometer,
+      fake_health_thermometer: fake_health_thermometer,
+      fake_measurement_interval: fake_measurement_interval,
     }));
 }
 
@@ -526,6 +528,7 @@ function getConnectedHealthThermometerDevice(options) {
   let fake_peripheral;
   let fake_generic_access;
   let fake_health_thermometer;
+  let fake_measurement_interval;
   return getDiscoveredHealthThermometerDevice(options)
     .then(result => {
       ({device, fake_peripheral} = result);
@@ -538,11 +541,15 @@ function getConnectedHealthThermometerDevice(options) {
     .then(() => fake_peripheral.addFakeService({
       uuid: 'health_thermometer'}))
     .then(s => fake_health_thermometer = s)
+    .then(() => fake_health_thermometer.addFakeCharacteristic({
+      uuid: 'measurement_interval', properties: ['read', 'write', 'indicate']}))
+    .then(c => fake_measurement_interval = c)
     .then(() => ({
       device: device,
       fake_peripheral: fake_peripheral,
       fake_generic_access: fake_generic_access,
       fake_health_thermometer: fake_health_thermometer,
+      fake_measurement_interval: fake_measurement_interval,
     }));
 }
 
