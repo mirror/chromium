@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0745338f_54abd9f7",
+        "filename": "chrome/browser/offline_pages/background_loader_offliner.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 321,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-20T19:48:44Z",
+      "side": 1,
+      "message": "This line makes me wonder:\nWhat does it mean if we don\u0027t have response headers?\nAnd why is it OK to presume 200 in that case?\n\nCould you capture the response with appropriate comment?",
+      "range": {
+        "startLine": 321,
+        "startChar": 27,
+        "endLine": 321,
+        "endChar": 45
+      },
+      "revId": "e633de7fb4e5f90853bb1747f7701faa7e7d8c27",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
