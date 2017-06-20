@@ -1588,18 +1588,40 @@
             ]
         }
     ],
-    "NTPPersonalizedSectionRanking": [
+    "NTPPersonalizedSectionRankingEM": [
         {
             "platforms": [
                 "android"
             ],
             "experiments": [
                 {
-                    "name": "Enabled-ClickBasedRanker",
+                    "name": "Enabled-ClickBasedRanker-InitialOrderEM",
                     "params": {
+                        "category_order": "emerging_markets_oriented",
                         "category_ranker": "click_based"
                     },
                     "enable_features": [
+                        "ContentSuggestionsCategoryOrder",
+                        "ContentSuggestionsCategoryRanker"
+                    ]
+                }
+            ]
+        }
+    ],
+    "NTPPersonalizedSectionRankingNonEM": [
+        {
+            "platforms": [
+                "android"
+            ],
+            "experiments": [
+                {
+                    "name": "Enabled-ClickBasedRanker-InitialOrderGeneral",
+                    "params": {
+                        "category_order": "general",
+                        "category_ranker": "click_based"
+                    },
+                    "enable_features": [
+                        "ContentSuggestionsCategoryOrder",
                         "ContentSuggestionsCategoryRanker"
                     ]
                 }
