@@ -98,6 +98,7 @@ class InstanceHolder {
   // This can be called in both case; on ready, and on closed.
   // Passing nullptr to |instance| means closing.
   void SetInstance(T* instance, uint32_t version = T::Version_) {
+    LOG(ERROR) << "@@@@ #### " << version;
     DCHECK(thread_checker_.CalledOnValidThread());
     DCHECK(instance == nullptr || instance_ == nullptr);
 

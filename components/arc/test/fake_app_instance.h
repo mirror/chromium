@@ -112,6 +112,7 @@ class FakeAppInstance : public mojom::AppInstance {
   void SetNotificationsEnabled(const std::string& package_name,
                                bool enabled) override;
   void InstallPackage(mojom::ArcPackageInfoPtr arcPackageInfo) override;
+  void StartPaiFlow() override;
 
   // Methods to reply messages.
   void SendRefreshAppList(const std::vector<mojom::AppInfo>& apps);

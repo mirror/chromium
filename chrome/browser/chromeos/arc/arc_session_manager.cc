@@ -32,6 +32,7 @@
 #include "chrome/browser/profiles/profile.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_launcher.h"
 #include "chrome/browser/ui/app_list/arc/arc_app_utils.h"
+#include "chrome/browser/ui/app_list/arc/arc_pai_starter.h"
 #include "chrome/browser/ui/ash/multi_user/multi_user_util.h"
 #include "chrome/browser/ui/browser_commands.h"
 #include "chrome/common/pref_names.h"
@@ -679,9 +680,11 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
   // is fixed.
   SetState(State::NEGOTIATING_TERMS_OF_SERVICE);
 
-  if (!scoped_opt_in_tracker_ &&
-      !profile_->GetPrefs()->GetBoolean(prefs::kArcSignedIn)) {
-    scoped_opt_in_tracker_ = base::MakeUnique<ScopedOptInFlowTracker>();
+  if (!profile_->GetPrefs()->GetBoolean(prefs::kArcSignedIn)) {
+    if (!scoped_opt_in_tracker_)
+      scoped_opt_in_tracker_ = base::MakeUnique<ScopedOptInFlowTracker>();
+    if (!pai_starter_)
+      pai_starter_ = base::MakeUnique<ArcPaiStarter>(profile_);
   }
 
   if (!IsArcTermsOfServiceNegotiationNeeded()) {
