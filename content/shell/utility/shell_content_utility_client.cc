@@ -11,6 +11,7 @@
 #include "base/files/scoped_temp_dir.h"
 #include "base/memory/ptr_util.h"
 #include "base/process/process.h"
+#include "components/payments/content/utility/payment_manifest_parser.h"
 #include "content/public/child/child_thread.h"
 #include "content/public/common/service_manager_connection.h"
 #include "content/public/common/simple_connection_filter.h"
@@ -111,13 +112,18 @@ class NetworkServiceTestImpl : public mojom::NetworkServiceTest {
 
 ShellContentUtilityClient::ShellContentUtilityClient() {}
 
-ShellContentUtilityClient::~ShellContentUtilityClient() {
-}
+ShellContentUtilityClient::~ShellContentUtilityClient() {}
 
 void ShellContentUtilityClient::UtilityThreadStarted() {
   auto registry = base::MakeUnique<service_manager::BinderRegistry>();
   registry->AddInterface(base::Bind(&TestServiceImpl::Create),
                          base::ThreadTaskRunnerHandle::Get());
+
+  // Used only in content_browsertests
+  // (by payment_manifest_parser_host_browsertest.cc).
+  registry->AddInterface(base::Bind(&payments::PaymentManifestParser::Create),
+                         base::ThreadTaskRunnerHandle::Get());
+
   content::ChildThread::Get()
       ->GetServiceManagerConnection()
       ->AddConnectionFilter(
