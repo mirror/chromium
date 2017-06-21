@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3cd30b20_9a458d77",
+        "filename": "chrome/browser/ui/browser_content_setting_bubble_model_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T21:59:47Z",
+      "side": 1,
+      "message": "Nit: If you change this break; to return;, you can eliminate the conditional below.",
+      "revId": "6228864dd219f31a858f1f05d5d79ed27ba82a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "98d735fb_9ad42cf0",
+        "filename": "chrome/browser/ui/content_settings/content_setting_bubble_model.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1276,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T21:59:47Z",
+      "side": 1,
+      "message": "When is this null?",
+      "revId": "6228864dd219f31a858f1f05d5d79ed27ba82a1f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
