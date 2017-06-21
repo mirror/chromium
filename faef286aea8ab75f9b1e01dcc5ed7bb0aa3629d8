@@ -326,6 +326,24 @@
     },
     {
       "key": {
+        "uuid": "045c3c94_77fdd201",
+        "filename": "ash/wm/power_button_controller.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T23:07:53Z",
+      "side": 1,
+      "message": "this is the \"legacy power button\" path. it\u0027s only used for systems that have regular ACPI power buttons that don\u0027t report button-down and button-up separately -- instead, both events come in simultaneously. for the most part, i think that it only applies to chromeboxes (e.g. stumpy, panther). i\u0027m not sure about chromebases. i think you can pass --aura-legacy-power-button to chrome (see /etc/chrome_dev.conf) to force it on a chromebook, though.\n\noh, and to answer your specific question, the intended user experience is that the first button-down event locks the screen and a second event while locked shuts the system down. at the login screen or in guest mode, where locking isn\u0027t possible, the first event shuts down instead. we ignore legacy button-up events since they\u0027re meaningless.",
+      "parentUuid": "70a195c0_d7615947",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "72e81a70_28469caa",
         "filename": "ash/wm/power_button_controller.cc",
         "patchSetId": 1
