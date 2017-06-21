@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "7214e6f2_3550f172",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "can this be protected?",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be1557d7_26a2cfde",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "nit: \"const gfx::Size\u0026 size\" instead of uint32_t width/height.",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f2a0ce2b_15699311",
+        "filename": "components/exo/wayland/clients/client_base.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "drm_format here is confusing as it\u0027s only valid when using drm. can we split this function into two CreateBuffer (that doesn\u0027t take a format but always use RGBA) and CreateDRMBuffer (that takes a drm_format). CreateBuffer can then call CreateDRMBuffer as needed.",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9b7f41c_8eda0d31",
+        "filename": "components/exo/wayland/clients/subsurface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "s/SimpleClient/SubSurfaceClient/",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72cba427_c4fca564",
+        "filename": "components/exo/wayland/clients/subsurface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "nit: blank line after ctor/dtor",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5c64bab1_655383d4",
+        "filename": "components/exo/wayland/clients/subsurface.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1000539
+      },
+      "writtenOn": "2017-06-21T12:14:30Z",
+      "side": 1,
+      "message": "Buffer creation requires a round trip today so use CreateBuffer this way doesn\u0027t really work. Please wait for https://codereview.chromium.org/2846203002 to land and then this will work just fine.",
+      "revId": "d619d4cab39c9ec61d6492abeeb0dc68c7345461",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
