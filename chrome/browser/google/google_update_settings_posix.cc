@@ -19,6 +19,11 @@
 
 namespace {
 
+base::LazySequencedTaskRunner g_collect_stats_consent_task_runner =
+    LAZY_SEQUENCED_TASK_RUNNER_INITIALIZER(
+        {base::MayBlock(), base::TaskPriority::BACKGROUND,
+         base::TaskShutdownBehavior::BLOCK_SHUTDOWN});
+
 base::LazyInstance<std::string>::Leaky g_posix_client_id =
     LAZY_INSTANCE_INITIALIZER;
 base::LazyInstance<base::Lock>::Leaky g_posix_client_id_lock =
@@ -40,6 +45,14 @@ void SetConsentFilePermissionIfNeeded(const base::FilePath& consent_file) {
 }
 
 }  // namespace
+
+// static
+base::SequencedTaskRunner*
+GoogleUpdateSettings::CollectStatsConsentTaskRunner() {
+  // TODO(fdoray): Use LazySequencedTaskRunner::GetRaw() here instead of
+  // .Get().get() when it's added to the API, http://crbug.com/730170.
+  return g_collect_stats_consent_task_runner.Get().get();
+}
 
 // static
 bool GoogleUpdateSettings::GetCollectStatsConsent() {
