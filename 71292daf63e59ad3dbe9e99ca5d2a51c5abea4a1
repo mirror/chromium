@@ -22,6 +22,30 @@
       "revId": "71292daf63e59ad3dbe9e99ca5d2a51c5abea4a1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "950e34d2_365623bb",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerUtil.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1002681
+      },
+      "writtenOn": "2017-06-21T13:36:50Z",
+      "side": 1,
+      "message": "No because there\u0027s a bit of a fake-out that happens for the documentElement. If the documentElement is the Global rootScroller, we use the LayoutView\u0027s PaintLayer rather than the documentElement\u0027s. I currently have to do that because we use a ViewportScrollCallback (part of ScrollCustomization) for viewport actions but that\u0027s available on Elements and not Node so I can\u0027t . I have plans to move ScrollCustomization onto Node which will clean up this mess but for now this is necessary.",
+      "parentUuid": "f7a8ad19_8abb5bd4",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "71292daf63e59ad3dbe9e99ca5d2a51c5abea4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
