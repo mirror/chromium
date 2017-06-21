@@ -64,9 +64,11 @@ bool TestDownloadDriver::IsReady() const {
 void TestDownloadDriver::Start(
     const RequestParams& params,
     const std::string& guid,
+    const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DriverEntry entry;
   entry.guid = guid;
+  entry.temporary_physical_file_path = file_path;
   entry.state = DriverEntry::State::IN_PROGRESS;
   entry.paused = false;
   entry.bytes_downloaded = 0;

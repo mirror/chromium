@@ -56,8 +56,7 @@ class DownloadDriverImplTest : public testing::Test {
   ~DownloadDriverImplTest() override = default;
 
   void SetUp() override {
-    driver_ =
-        base::MakeUnique<DownloadDriverImpl>(&mock_manager_, base::FilePath());
+    driver_ = base::MakeUnique<DownloadDriverImpl>(&mock_manager_);
   }
 
   // TODO(xingliu): implements test download manager for embedders to test.

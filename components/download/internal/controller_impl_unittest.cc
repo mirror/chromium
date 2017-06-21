@@ -790,7 +790,8 @@ TEST_F(DownloadServiceControllerImplTest, DownloadCompletionTest) {
   EXPECT_CALL(*client_,
               OnDownloadFailed(entry2.guid, Client::FailureReason::ABORTED))
       .Times(1);
-  driver_->Start(RequestParams(), entry2.guid, NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), entry2.guid, entry2.target_file_path,
+                 NO_TRAFFIC_ANNOTATION_YET);
 
   // Test FailureReason::NETWORK.
   EXPECT_CALL(*client_,
@@ -1042,7 +1043,9 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
   dentry2.state = DriverEntry::State::IN_PROGRESS;
 
   // Simulate a newly created external download.
-  driver_->Start(RequestParams(), dentry2.guid, NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), dentry2.guid,
+                 dentry2.temporary_physical_file_path,
+                 NO_TRAFFIC_ANNOTATION_YET);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);
@@ -1070,7 +1073,9 @@ TEST_F(DownloadServiceControllerImplTest, NewExternalDownload) {
 
   // Rebuild the download so we can simulate more.
   dentry2.state = DriverEntry::State::IN_PROGRESS;
-  driver_->Start(RequestParams(), dentry2.guid, NO_TRAFFIC_ANNOTATION_YET);
+  driver_->Start(RequestParams(), dentry2.guid,
+                 dentry2.temporary_physical_file_path,
+                 NO_TRAFFIC_ANNOTATION_YET);
 
   EXPECT_TRUE(driver_->Find(entry1.guid).value().paused);
   EXPECT_FALSE(driver_->Find(entry2.guid).value().paused);

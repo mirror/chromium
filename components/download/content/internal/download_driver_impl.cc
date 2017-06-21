@@ -56,9 +56,8 @@ DriverEntry DownloadDriverImpl::CreateDriverEntry(
   return entry;
 }
 
-DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager,
-                                       const base::FilePath& dir)
-    : download_manager_(manager), file_dir_(dir), client_(nullptr) {
+DownloadDriverImpl::DownloadDriverImpl(content::DownloadManager* manager)
+    : download_manager_(manager), client_(nullptr) {
   DCHECK(download_manager_);
 }
 
@@ -91,6 +90,7 @@ bool DownloadDriverImpl::IsReady() const {
 void DownloadDriverImpl::Start(
     const RequestParams& request_params,
     const std::string& guid,
+    const base::FilePath& file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
@@ -116,7 +116,7 @@ void DownloadDriverImpl::Start(
   download_url_params->set_guid(guid);
   download_url_params->set_transient(true);
   download_url_params->set_method(request_params.method);
-  download_url_params->set_file_path(file_dir_.AppendASCII(guid));
+  download_url_params->set_file_path(file_path);
 
   download_manager_->DownloadUrl(std::move(download_url_params));
 }

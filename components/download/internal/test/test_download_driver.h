@@ -40,6 +40,7 @@ class TestDownloadDriver : public DownloadDriver {
   void Start(
       const RequestParams& params,
       const std::string& guid,
+      const base::FilePath& file_path,
       const net::NetworkTrafficAnnotationTag& traffic_annotation) override;
   void Remove(const std::string& guid) override;
   void Pause(const std::string& guid) override;
