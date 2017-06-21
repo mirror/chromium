@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "5ba42a7d_3b3b2793",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:10:32Z",
+      "side": 1,
+      "message": "Sounds ok, thanks! Can you add a comment in the code to explain this?",
+      "parentUuid": "8c9c9a26_f91d8903",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6bbdfeb_da698d1c",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
