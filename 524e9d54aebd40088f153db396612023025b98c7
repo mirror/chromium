@@ -22,6 +22,30 @@
       "revId": "524e9d54aebd40088f153db396612023025b98c7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4265bdeb_ad3f2295",
+        "filename": "content/browser/shared_worker/shared_worker_host.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 205,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T23:55:02Z",
+      "side": 1,
+      "message": "Right - I see.\n\nOK, I think I found the issue - it looks like the permission checking functions move execution to the UI thread and run the callback there, which is different behavior than other implementations of AllowFileSystem(). I wrapped the callback with a helper function to hop back to the IO thread before running the callback.\n\nI\u0027ll update the CL description to better summarize the fix.",
+      "parentUuid": "b8733f4b_d4f0402e",
+      "range": {
+        "startLine": 205,
+        "startChar": 33,
+        "endLine": 205,
+        "endChar": 54
+      },
+      "revId": "524e9d54aebd40088f153db396612023025b98c7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
