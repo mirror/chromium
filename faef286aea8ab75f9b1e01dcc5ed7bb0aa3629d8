@@ -84,6 +84,30 @@
     },
     {
       "key": {
+        "uuid": "2e443f44_8d86c578",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 13,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T23:02:10Z",
+      "side": 1,
+      "message": "is it possible to differentiate between the two and have e.g. LOGIN_SHUT_DOWN_BUTTON and LOCK_SHUT_DOWN_BUTTON?",
+      "parentUuid": "8d6fe776_f2a49808",
+      "range": {
+        "startLine": 13,
+        "startChar": 2,
+        "endLine": 13,
+        "endChar": 17
+      },
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3d4fe017_c39371c2",
         "filename": "ash/shutdown_reason.h",
         "patchSetId": 1
@@ -178,6 +202,24 @@
       "side": 1,
       "message": "Power.ShutdownReason\u0027s metric owner is...derat.",
       "parentUuid": "4c96a717_294e06c6",
+      "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3435b675_cdc60b4d",
+        "filename": "ash/shutdown_reason.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T23:02:10Z",
+      "side": 1,
+      "message": "yes, i\u0027m quite aware of that. :-)\n\ni\u0027m pretty convinced that we shouldn\u0027t pass ui-related metrics through to powerd. also note that the system can shut down for lots of different reasons that don\u0027t have anything to do with the ui.\n\npowerd generates a histogram of shutdown reasons, while these chrome metrics are reported as user actions (typically used to compare the popularity of different accelerators or buttons in the ui).\n\nif \"Update to restart\" doesn\u0027t pass through here, that\u0027s fine. i\u0027d recommend reporting a separate action in the handler for that button if we don\u0027t do so already.",
+      "parentUuid": "b06121b6_5a3f1cc1",
       "revId": "faef286aea8ab75f9b1e01dcc5ed7bb0aa3629d8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
