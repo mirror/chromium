@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d38fe69d_15d5b64e",
+        "filename": "chrome/test/vr/perf/android_vr_perf_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "nit: missing periods, two lines down, and elsewhere. :)\n\nAlso, I see that this code is mostly just moving, but it\u0027s worth reviewing I think.",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7dde778_0d0213b1",
+        "filename": "chrome/test/vr/perf/android_vr_perf_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "Just a question; does the test framework have a util to pull the src root directory?  That might be better than ../../",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9e38dadf_17d4f183",
+        "filename": "chrome/test/vr/perf/android_vr_perf_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "General comment that sleeps are bad in tests.  Polling is still bad, but test frameworks sometimes have built in utils to help.  You could poll until you see Chrome has started, and maybe save 9 seconds.  Is that worthwhile, or no?",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44987276_e883956e",
+        "filename": "chrome/test/vr/perf/android_vr_perf_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 117,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "You could technically put these in a for/else clause, but I guess it doesn\u0027t add much value.",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21bf114c_97318b77",
+        "filename": "chrome/test/vr/perf/vrcore_fps/run_vrcore_fps_test.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "Does this raise an exception and bail?  It probably shouldn\u0027t proceed, if it does.",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2658f7d1_e900da95",
+        "filename": "chrome/test/vr/perf/vrcore_fps/vr_perf_summary.py",
+        "patchSetId": 5
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1117479
+      },
+      "writtenOn": "2017-06-21T15:14:42Z",
+      "side": 1,
+      "message": "This use of LINES_OF_INTEREST looks fragile.  Probably better to have individual constants for the strings you care about, and then just put them all into LINES_OF_INTEREST for the search above, IMO.  Thoughts?",
+      "revId": "2a60ef73501f3e3b1f2138db2359b6dd47fa31f8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
