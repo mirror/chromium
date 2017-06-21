@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0f1254f7_c42b593c",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/test_exporter.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-21T23:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e32165c3_545b7e2f",
+      "revId": "1cecba046342fe8f8d568733e219a6094dc69d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "92cb5b31_ec87e8da",
         "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
         "patchSetId": 2
@@ -33,6 +51,24 @@
       "revId": "1cecba046342fe8f8d568733e219a6094dc69d77",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "014e4e3c_29b9c4e2",
+        "filename": "third_party/WebKit/Tools/Scripts/webkitpy/w3c/wpt_github_mock.py",
+        "patchSetId": 2
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1003190
+      },
+      "writtenOn": "2017-06-21T23:39:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "92cb5b31_ec87e8da",
+      "revId": "1cecba046342fe8f8d568733e219a6094dc69d77",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
