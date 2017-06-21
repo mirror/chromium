@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c4319e1a_b5eefa58",
+        "filename": "components/autofill/content/browser/content_autofill_driver.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-06-21T18:49:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8668faeb_ceb6431a",
+      "range": {
+        "startLine": 43,
+        "startChar": 23,
+        "endLine": 43,
+        "endChar": 30
+      },
+      "revId": "da69d5fa76e6c0c37b1d8e55f0bebd45c3ba8fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9bae7dc2_b176334a",
         "filename": "components/autofill/content/common/autofill_agent.mojom",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3d53e015_2288419b",
+        "filename": "components/autofill/content/common/autofill_agent.mojom",
+        "patchSetId": 2
+      },
+      "lineNbr": 59,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-06-21T18:49:48Z",
+      "side": 1,
+      "message": "change to SetUserGestureRequired()",
+      "parentUuid": "9bae7dc2_b176334a",
+      "range": {
+        "startLine": 59,
+        "startChar": 2,
+        "endLine": 59,
+        "endChar": 24
+      },
+      "revId": "da69d5fa76e6c0c37b1d8e55f0bebd45c3ba8fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "afe3b866_be261b23",
         "filename": "components/autofill/content/renderer/autofill_agent.h",
         "patchSetId": 2
@@ -59,6 +107,30 @@
       "writtenOn": "2017-06-21T00:58:05Z",
       "side": 1,
       "message": "nit: prefer not to have flags where true turns something off. Instead use an affirmative flag and default it to true if that\u0027s the default behaviour.\n\ni.e., something like require_user_gesture_ or is_user_gesture_required_",
+      "range": {
+        "startLine": 283,
+        "startChar": 7,
+        "endLine": 283,
+        "endChar": 33
+      },
+      "revId": "da69d5fa76e6c0c37b1d8e55f0bebd45c3ba8fd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "038dcc21_2dcb3b05",
+        "filename": "components/autofill/content/renderer/autofill_agent.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 283,
+      "author": {
+        "id": 1000825
+      },
+      "writtenOn": "2017-06-21T18:49:48Z",
+      "side": 1,
+      "message": "change to is_user_gesture_required_",
+      "parentUuid": "afe3b866_be261b23",
       "range": {
         "startLine": 283,
         "startChar": 7,
