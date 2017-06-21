@@ -32,6 +32,8 @@
 #include "content/public/browser/browser_thread.h"
 #include "extensions/browser/process_manager.h"
 
+#include "base/debug/stack_trace.h"
+
 #define DVLOG_WITH_INSTANCE(level) \
   DVLOG(level) << "MR #" << instance_id_ << ": "
 
@@ -915,6 +917,7 @@ void MediaRouterMojoImpl::DoStopObservingMediaRoutes(
 }
 
 void MediaRouterMojoImpl::EnqueueTask(base::OnceClosure closure) {
+  base::debug::StackTrace(50).Print();
   pending_requests_.push_back(std::move(closure));
   if (pending_requests_.size() > kMaxPendingRequests) {
     DLOG_WITH_INSTANCE(ERROR) << "Reached max queue size. Dropping oldest "

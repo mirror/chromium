@@ -1570,7 +1570,11 @@ TEST_F(MediaRouterMojoExtensionTest, AttemptedWakeupTooManyTimes) {
       .WillOnce(Return(true));
   EXPECT_CALL(*process_manager_, WakeEventPage(extension_->id(), _))
       .WillOnce(testing::DoAll(media::RunCallback<1>(true), Return(true)));
+  LOG(ERROR) << "Before Detach Route : "
+             << media_router_->pending_requests_.size();
   media_router_->DetachRoute(kRouteId);
+  LOG(ERROR) << "After Detach Route : "
+             << media_router_->pending_requests_.size();
   EXPECT_EQ(1u, media_router_->pending_requests_.size());
   ExpectWakeReasonBucketCount(MediaRouteProviderWakeReason::DETACH_ROUTE, 1);
   ExpectWakeupBucketCount(MediaRouteProviderWakeup::SUCCESS, 1);
