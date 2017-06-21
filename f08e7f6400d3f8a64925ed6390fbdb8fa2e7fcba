@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3e59b068_7f7564f2",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 325,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-21T18:09:40Z",
+      "side": 1,
+      "message": "The final path is here.",
+      "range": {
+        "startLine": 325,
+        "startChar": 63,
+        "endLine": 325,
+        "endChar": 67
+      },
+      "revId": "f08e7f6400d3f8a64925ed6390fbdb8fa2e7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a140aeff_6e9721b1",
+        "filename": "components/download/internal/controller_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 710,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-21T18:09:40Z",
+      "side": 1,
+      "message": "This is probably the intermediate file path, the final path is passed in through ControllerImpl::OnDownloadSucceeded(_, const FilePath\u0026);",
+      "range": {
+        "startLine": 710,
+        "startChar": 19,
+        "endLine": 710,
+        "endChar": 42
+      },
+      "revId": "f08e7f6400d3f8a64925ed6390fbdb8fa2e7fcba",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
