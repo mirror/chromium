@@ -41,9 +41,20 @@ proto_library("traffic_annotation") {
   use_protobuf_full = true
 }
 
-group("traffic_annotation_auditor") {
+executable("traffic_annotation_auditor") {
+  sources = [
+    "traffic_annotation_auditor.cc",
+    "traffic_annotation_auditor.h",
+    "traffic_annotation_auditor_ui.cc",
+    "traffic_annotation_file_filter.cc",
+    "traffic_annotation_file_filter.h",
+  ]
+
   deps = [
     ":traffic_annotation",
+    "//base",
+    "//net:test_support",
+    "//net:traffic_annotation",
     "//third_party/protobuf:protobuf_full",
   ]
 }
