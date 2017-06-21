@@ -12,6 +12,7 @@
 #include "content/browser/frame_host/render_frame_host_impl.h"
 #include "content/public/browser/render_process_host.h"
 #include "content/public/browser/storage_partition.h"
+#include "storage/browser/quota/quota_client.h"
 #include "storage/browser/quota/quota_manager.h"
 #include "storage/common/quota/quota_status_code.h"
 
@@ -30,29 +31,61 @@ static const char kServiceWorkers[] = "service_workers";
 static const char kCacheStorage[] = "cache_storage";
 static const char kAll[] = "all";
 
+Storage::StorageType GetTypeName(storage::QuotaClient::ID id) {
+  switch (id) {
+    case storage::QuotaClient::kFileSystem:
+      return Storage::StorageType("file_systems");
+    case storage::QuotaClient::kDatabase:
+      return Storage::StorageType("websql");
+    case storage::QuotaClient::kAppcache:
+      return Storage::StorageType("appcache");
+    case storage::QuotaClient::kIndexedDatabase:
+      return Storage::StorageType("indexeddb");
+    case storage::QuotaClient::kServiceWorkerCache:
+      return Storage::StorageType("cache_storage");
+    case storage::QuotaClient::kServiceWorker:
+      return Storage::StorageType("service_workers");
+    default:
+      return Storage::StorageType("unknown");
+  }
+}
+
 void ReportUsageAndQuotaDataOnUIThread(
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback,
     storage::QuotaStatusCode code,
     int64_t usage,
-    int64_t quota) {
+    int64_t quota,
+    base::flat_map<storage::QuotaClient::ID, int64_t> usage_breakdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
   if (code != storage::kQuotaStatusOk) {
     return callback->sendFailure(
         Response::Error("Quota information is not available"));
   }
-  callback->sendSuccess(usage, quota);
+
+  std::unique_ptr<Array<Storage::UsageForType>> usageList =
+      Array<Storage::UsageForType>::create();
+  for (const auto& usage : usage_breakdown) {
+    std::unique_ptr<Storage::UsageForType> entry =
+        Storage::UsageForType::Create()
+            .SetStorageType(GetTypeName(usage.first))
+            .SetUsage(usage.second)
+            .Build();
+    usageList->addItem(std::move(entry));
+  }
+  callback->sendSuccess(usage, quota, std::move(usageList));
 }
 
 void GotUsageAndQuotaDataCallback(
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback,
     storage::QuotaStatusCode code,
     int64_t usage,
-    int64_t quota) {
+    int64_t quota,
+    base::flat_map<storage::QuotaClient::ID, int64_t> usage_breakdown) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  BrowserThread::PostTask(
-      BrowserThread::UI, FROM_HERE,
-      base::Bind(ReportUsageAndQuotaDataOnUIThread,
-                 base::Passed(std::move(callback)), code, usage, quota));
+  BrowserThread::PostTask(BrowserThread::UI, FROM_HERE,
+                          base::Bind(ReportUsageAndQuotaDataOnUIThread,
+                                     base::Passed(std::move(callback)), code,
+                                     usage, quota, std::move(usage_breakdown)));
 }
 
 void GetUsageAndQuotaOnIOThread(
@@ -60,7 +93,7 @@ void GetUsageAndQuotaOnIOThread(
     const GURL& url,
     std::unique_ptr<StorageHandler::GetUsageAndQuotaCallback> callback) {
   DCHECK_CURRENTLY_ON(BrowserThread::IO);
-  manager->GetUsageAndQuotaForWebApps(
+  manager->GetUsageAndQuotaWithBreakdown(
       url, storage::kStorageTypeTemporary,
       base::Bind(&GotUsageAndQuotaDataCallback,
                  base::Passed(std::move(callback))));
