@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f7a8ad19_8abb5bd4",
+        "filename": "third_party/WebKit/Source/core/page/scrolling/RootScrollerUtil.cpp",
+        "patchSetId": 15
+      },
+      "lineNbr": 91,
+      "author": {
+        "id": 1116039
+      },
+      "writtenOn": "2017-06-21T02:07:12Z",
+      "side": 1,
+      "message": "nit: could just return IsGlobal(*layer.GetLayoutBox()) here?",
+      "range": {
+        "startLine": 91,
+        "startChar": 14,
+        "endLine": 91,
+        "endChar": 33
+      },
+      "revId": "71292daf63e59ad3dbe9e99ca5d2a51c5abea4a1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
