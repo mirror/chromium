@@ -33,6 +33,23 @@
       "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8ab51726_58373c70",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-21T14:43:53Z",
+      "side": 1,
+      "message": "I chatted briefly with nasko@ and we agreed that it\u0027s probably unsafe to pass the current NavigationEntry to NavigationRequest::CreateRendererInitiated. What we could do instead is to pass the user agent override explicitly to the function. I think it\u0027s ok to compute it from the current NavigationEntry, just we don\u0027t want to pass the NavigationEntry itself to other code that might not expect it.",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
