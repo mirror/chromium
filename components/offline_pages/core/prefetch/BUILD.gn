@@ -33,6 +33,10 @@ static_library("prefetch") {
     "prefetch_service_impl.h",
     "prefetch_types.cc",
     "prefetch_types.h",
+    "store/prefetch_store_sql.cc",
+    "store/prefetch_store_sql.h",
+    "store/prefetch_store_sql_utils.cc",
+    "store/prefetch_store_sql_utils.h",
     "suggested_articles_observer.cc",
     "suggested_articles_observer.h",
   ]
@@ -51,6 +55,7 @@ static_library("prefetch") {
     "//components/version_info",
     "//google_apis",
     "//net:net",
+    "//sql:sql",
     "//url",
   ]
 }
@@ -97,6 +102,9 @@ source_set("unit_tests") {
     "prefetch_request_operation_response_unittest.cc",
     "prefetch_request_test_base.cc",
     "prefetch_request_test_base.h",
+    "store/prefetch_store_sql_test_util.cc",
+    "store/prefetch_store_sql_test_util.h",
+    "store/prefetch_store_sql_unittest.cc",
     "suggested_articles_observer_unittest.cc",
   ]
 
@@ -108,6 +116,7 @@ source_set("unit_tests") {
     "//components/offline_pages/core:switches",
     "//components/offline_pages/core:test_support",
     "//net:test_support",
+    "//sql:sql",
     "//testing/gmock",
     "//testing/gtest",
     "//url",

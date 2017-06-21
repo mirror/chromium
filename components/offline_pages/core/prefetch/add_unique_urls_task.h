@@ -8,11 +8,13 @@
 #include <string>
 #include <vector>
 
+#include "base/macros.h"
 #include "base/memory/weak_ptr.h"
-#include "components/offline_pages/core/prefetch/prefetch_types.h"
 #include "components/offline_pages/core/task.h"
 
 namespace offline_pages {
+class PrefetchStoreSQL;
+struct PrefetchURL;
 
 // Task that adds new URL suggestions to the pipeline. URLs are matched against
 // existing ones from any stage of the process so that only new, unique ones are
@@ -25,7 +27,8 @@ namespace offline_pages {
 // from the store.
 class AddUniqueUrlsTask : public Task {
  public:
-  AddUniqueUrlsTask(const std::string& name_space,
+  AddUniqueUrlsTask(PrefetchStoreSQL* prefetch_store,
+                    const std::string& name_space,
                     const std::vector<PrefetchURL>& prefetch_urls);
   ~AddUniqueUrlsTask() override;
 
@@ -34,6 +37,8 @@ class AddUniqueUrlsTask : public Task {
  private:
   void OnUrlsAdded(int added_entry_count);
 
+  // Prefetch store to execute against. Not owned.
+  PrefetchStoreSQL* prefetch_store_;
   const std::string& name_space_;
   std::vector<PrefetchURL> prefetch_urls_;
 

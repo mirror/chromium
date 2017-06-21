@@ -30,6 +30,10 @@ enum class ItemActionStatus {
   ALREADY_EXISTS,
   NOT_FOUND,
   STORE_ERROR,
+  // Below status are added for benefit of prefetch items.
+  // TODO(fgorski): Extend offline pages model/request queue to support these.
+  ITEM_ADDED,
+  ITEM_DELETED,
 };
 
 // List of item action statuses mapped to item ID.
