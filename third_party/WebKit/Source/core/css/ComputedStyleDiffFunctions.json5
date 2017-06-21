@@ -255,7 +255,7 @@
           },
           {
             predicate: "a.OutlineVisuallyEqual(b)",
-            field_dependencies: ["Outline"]
+            field_dependencies: ["outline-width", "outline-color", "OutlineColorIsCurrentColor", "outline-offset", "outline-style", "OutlineStyleIsAuto"]
           },
           {
             predicate: "a.VisitedLinkBorderLeftColorHasNotChanged(b)",
@@ -325,7 +325,7 @@
           },
           {
             predicate: "a.OutlineVisuallyEqual(b)",
-            field_dependencies: ["Outline"]
+            field_dependencies: ["outline-width", "outline-color", "OutlineColorIsCurrentColor", "outline-offset", "outline-style", "OutlineStyleIsAuto"]
           },
           {
             predicate: "a.BorderVisualOverflowEqual(b)",
