@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "59c9dad7_f55af3ce",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 925,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-21T15:51:41Z",
+      "side": 1,
+      "message": "just to double-check: does this work for amp articles?",
+      "range": {
+        "startLine": 925,
+        "startChar": 14,
+        "endLine": 925,
+        "endChar": 38
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7418bcd6_97a0b570",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 926,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-21T15:51:41Z",
+      "side": 1,
+      "message": "I meant fetch_date() here.\nI think it is safer because we have no guarantees on how fresh the content provided by FCS is.\nI am happy to reiterate the 36h above if you think this is too much for fetch_date().",
+      "range": {
+        "startLine": 926,
+        "startChar": 45,
+        "endLine": 926,
+        "endChar": 59
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f3056fff_0214f1f8",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_provider_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 962,
+      "author": {
+        "id": 1161814
+      },
+      "writtenOn": "2017-06-21T15:51:41Z",
+      "side": 1,
+      "message": "Please simplify according to our offline discussion.",
+      "range": {
+        "startLine": 933,
+        "startChar": 4,
+        "endLine": 962,
+        "endChar": 5
+      },
+      "revId": "73eacd065e317556f8bbf71be4ecb6a0a79222b5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
