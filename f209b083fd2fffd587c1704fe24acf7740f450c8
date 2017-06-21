@@ -34,6 +34,24 @@
       "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "807c1771_11eb15e1",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1002911
+      },
+      "writtenOn": "2017-06-21T16:19:27Z",
+      "side": 1,
+      "message": "Found this:\nYou can not use the ALTER TABLE statement to drop a column in a table. Instead you will need to rename the table, create a new table, and copy the data into the new table.\n\nhttps://www.techonthenet.com/sqlite/tables/alter_table.php\n\nWhich is probably the reason for the original approach (As we were trying to drop some fields).",
+      "parentUuid": "a1e868dc_477047e0",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
