@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "f7e01fb7_32335ce1",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 25,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "590ecb2a_1da8ba34",
+      "range": {
+        "startLine": 25,
+        "startChar": 10,
+        "endLine": 25,
+        "endChar": 23
+      },
+      "revId": "bc7d2f78b41e8d6176500a570342d0f13bea29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "542e8ac8_246228f7",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
         "patchSetId": 2
@@ -48,6 +72,30 @@
     },
     {
       "key": {
+        "uuid": "3957c926_d403f4bb",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 108,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:43:27Z",
+      "side": 1,
+      "message": "The visual one is V:|[container]|, this is about the horizontal constraint.",
+      "parentUuid": "542e8ac8_246228f7",
+      "range": {
+        "startLine": 108,
+        "startChar": 22,
+        "endLine": 108,
+        "endChar": 35
+      },
+      "revId": "bc7d2f78b41e8d6176500a570342d0f13bea29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "721288bb_e36ea542",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
         "patchSetId": 2
@@ -65,6 +113,24 @@
     },
     {
       "key": {
+        "uuid": "b91f7c47_564bbc94",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:43:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "721288bb_e36ea542",
+      "revId": "bc7d2f78b41e8d6176500a570342d0f13bea29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bdf7dfed_af224054",
         "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
         "patchSetId": 2
@@ -79,6 +145,24 @@
       "revId": "bc7d2f78b41e8d6176500a570342d0f13bea29eb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "19db7105_0fbfe7e2",
+        "filename": "ios/chrome/browser/ui/content_suggestions/cells/content_suggestions_whats_new_item.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 167,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:43:27Z",
+      "side": 1,
+      "message": "No.",
+      "parentUuid": "bdf7dfed_af224054",
+      "revId": "bc7d2f78b41e8d6176500a570342d0f13bea29eb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
