@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a31ed5ef_964946af",
+        "filename": "ui/app_list/presenter/test/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-21T16:18:06Z",
+      "side": 1,
+      "message": "Please restrict this to mojo/edk/embedder (I realize it\u0027s kind of confusing that the actual GN dep is mojo/edk/system, but the includes you\u0027re allowed to use are all in mojo/edk/embedder... I\u0027ll fix it some day :))",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ed6d149_f92465c3",
+        "filename": "ui/app_list/test/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-21T16:18:06Z",
+      "side": 1,
+      "message": "mojo/edk/embedder",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c62c8a8_ce87b74b",
+        "filename": "ui/compositor/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-21T16:18:06Z",
+      "side": 1,
+      "message": "mojo/edk/embedder",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b8ed62b_df56a0a5",
+        "filename": "ui/views/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-21T16:18:06Z",
+      "side": 1,
+      "message": "mojo/edk/embedder",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
