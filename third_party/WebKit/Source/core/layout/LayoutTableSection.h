@@ -362,6 +362,8 @@ class CORE_EXPORT LayoutTableSection final : public LayoutTableBoxComponent {
                                               unsigned auto_rows_count);
   void DistributeRemainingExtraLogicalHeight(int& extra_logical_height);
 
+  bool HasVisibilityCollapse(unsigned row);
+
   void UpdateBaselineForCell(LayoutTableCell*,
                              unsigned row,
                              int& baseline_descent);
