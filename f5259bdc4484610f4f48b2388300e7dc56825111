@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "130535d1_11f34ec0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-21T14:58:21Z",
+      "side": 1,
+      "message": "Add the \"Learn more\" link to the Mac bubble",
+      "range": {
+        "startLine": 7,
+        "startChar": 21,
+        "endLine": 7,
+        "endChar": 43
+      },
+      "revId": "f5259bdc4484610f4f48b2388300e7dc56825111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e8d7e6d8_c3e403e5",
+        "filename": "chrome/browser/ui/cocoa/subresource_filter/subresource_filter_bubble_controller.mm",
+        "patchSetId": 2
+      },
+      "lineNbr": 72,
+      "author": {
+        "id": 1144624
+      },
+      "writtenOn": "2017-06-21T14:58:21Z",
+      "side": 1,
+      "message": "You shouldn\u0027t need any of these .get() calls.",
+      "range": {
+        "startLine": 72,
+        "startChar": 7,
+        "endLine": 72,
+        "endChar": 13
+      },
+      "revId": "f5259bdc4484610f4f48b2388300e7dc56825111",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
