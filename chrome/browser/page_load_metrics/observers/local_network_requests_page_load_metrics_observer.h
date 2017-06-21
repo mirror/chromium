@@ -9,19 +9,23 @@
 #include <map>
 #include <memory>
 
+#include "base/lazy_instance.h"
 #include "base/macros.h"
 #include "chrome/browser/page_load_metrics/page_load_metrics_observer.h"
 #include "components/ukm/public/ukm_recorder.h"
 #include "net/base/ip_address.h"
+
+using SuccessFailCounts = std::pair<uint32_t, uint32_t>;
 
 namespace {
 
 // The domain type of the IP address of the loaded page. We use these to
 // determine what classes of resource request metrics to collect.
 enum DomainType {
-  DOMAIN_TYPE_PUBLIC = 0,
-  DOMAIN_TYPE_PRIVATE = 1,
-  DOMAIN_TYPE_LOCALHOST = 2,
+  DOMAIN_TYPE_UNKNOWN = 0,
+  DOMAIN_TYPE_PUBLIC = 1,
+  DOMAIN_TYPE_PRIVATE = 2,
+  DOMAIN_TYPE_LOCALHOST = 4,
 };
 
 // The type of the IP address of the loaded resource.
@@ -49,7 +53,7 @@ enum PortType {
 namespace internal {
 
 // UKM event names
-const char kUkmPageLoadEventName[] = "PageLoad";
+const char kUkmPageLoadEventName[] = "PageDomain";
 const char kUkmLocalNetworkRequestsEventName[] = "LocalNetworkRequests";
 
 // UKM metric names
@@ -63,113 +67,115 @@ const char kUkmFailedCountName[] = "Count.Failed";
 static const std::map<DomainType,
                       std::map<ResourceType, std::map<bool, std::string>>>&
 GetNonlocalhostHistogramNames() {
-  static std::map<DomainType,
-                  std::map<ResourceType, std::map<bool, std::string>>>&
-      kNonlocalhostHistogramNames =
-          *new std::map<DomainType,
-                        std::map<ResourceType, std::map<bool, std::string>>>();
-  kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][true] =
+  base::LazyInstance<std::map<
+      DomainType, std::map<ResourceType, std::map<bool, std::string>>>>::Leaky
+      kNonlocalhostHistogramNames;
+
+  kNonlocalhostHistogramNames
+      .Get()[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][true] =
       "LocalNetworkRequests.PublicPage.PrivateRequestCount.Successful";
   kNonlocalhostHistogramNames
-      [DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][false] =
-          "LocalNetworkRequests.PublicPage.PrivateRequestCount.Failed";
-  kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][true] =
+      .Get()[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][false] =
+      "LocalNetworkRequests.PublicPage.PrivateRequestCount.Failed";
+  kNonlocalhostHistogramNames
+      .Get()[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][true] =
       "LocalNetworkRequests.PublicPage.RouterRequestCount.Successful";
-  kNonlocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][false] =
+  kNonlocalhostHistogramNames
+      .Get()[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_ROUTER][false] =
       "LocalNetworkRequests.PublicPage.RouterRequestCount.Failed";
 
-  kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][true] =
+  kNonlocalhostHistogramNames
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][true] =
       "LocalNetworkRequests.PrivatePage.PublicRequestCount.Successful";
   kNonlocalhostHistogramNames
-      [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][false] =
-          "LocalNetworkRequests.PrivatePage.PublicRequestCount.Failed";
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_PUBLIC][false] =
+      "LocalNetworkRequests.PrivatePage.PublicRequestCount.Failed";
   kNonlocalhostHistogramNames
-      [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][true] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][true] =
+      "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Successful";
   kNonlocalhostHistogramNames
-      [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
-  kNonlocalhostHistogramNames[DOMAIN_TYPE_PRIVATE]
-                             [RESOURCE_TYPE_LOCAL_DIFF_SUBNET][true] =
-                                 "LocalNetworkRequests.PrivatePage."
-                                 "DifferentSubnetRequestCount.Successful";
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_SAME_SUBNET][false] =
+      "LocalNetworkRequests.PrivatePage.SameSubnetRequestCount.Failed";
   kNonlocalhostHistogramNames
-      [DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_DIFF_SUBNET][false] =
-          "LocalNetworkRequests.PrivatePage.DifferentSubnetRequestCount.Failed";
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_DIFF_SUBNET][true] =
+      "LocalNetworkRequests.PrivatePage."
+      "DifferentSubnetRequestCount.Successful";
+  kNonlocalhostHistogramNames
+      .Get()[DOMAIN_TYPE_PRIVATE][RESOURCE_TYPE_LOCAL_DIFF_SUBNET][false] =
+      "LocalNetworkRequests.PrivatePage.DifferentSubnetRequestCount.Failed";
 
-  return kNonlocalhostHistogramNames;
+  return kNonlocalhostHistogramNames.Get();
 }
 
 static const std::map<DomainType,
                       std::map<PortType, std::map<bool, std::string>>>&
 GetLocalhostHistogramNames() {
-  static std::map<DomainType, std::map<PortType, std::map<bool, std::string>>>&
-      kLocalhostHistogramNames =
-          *new std::map<DomainType,
-                        std::map<PortType, std::map<bool, std::string>>>();
+  base::LazyInstance<std::map<
+      DomainType, std::map<PortType, std::map<bool, std::string>>>>::Leaky
+      kLocalhostHistogramNames;
 
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][true] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "WebRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][false] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "WebRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][true] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "DatabaseRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DB][false] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "DatabaseRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][true] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "PrinterRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_PRINT][false] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "PrinterRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][true] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "DevelopmentRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_DEV][false] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "DevelopmentRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][true] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "OtherRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_OTHER][false] =
       "LocalNetworkRequests.PublicPage.Localhost."
       "OtherRequestCount.Failed";
 
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][true] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "WebRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_WEB][false] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "WebRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][true] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "DatabaseRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DB][false] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "DatabaseRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][true] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "PrinterRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_PRINT][false] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "PrinterRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][true] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "DevelopmentRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_DEV][false] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "DevelopmentRequestCount.Failed";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][true] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][true] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "OtherRequestCount.Successful";
-  kLocalhostHistogramNames[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][false] =
+  kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PRIVATE][PORT_TYPE_OTHER][false] =
       "LocalNetworkRequests.PrivatePage.Localhost."
       "OtherRequestCount.Failed";
-  return kLocalhostHistogramNames;
+  return kLocalhostHistogramNames.Get();
 }
 
 // For simple access during UMA histogram logging, the names are in a
@@ -185,7 +191,7 @@ static const std::map<DomainType,
 
 }  // namespace internal
 
-// This observer is for observing local network requests
+// This observer is for observing local network requests.
 // TODO(uthakore): Add description.
 class LocalNetworkRequestsPageLoadMetricsObserver
     : public page_load_metrics::PageLoadMetricsObserver {
@@ -229,20 +235,20 @@ class LocalNetworkRequestsPageLoadMetricsObserver
 
   // Stores the counts of resource requests for each non-localhost IP address as
   // pairs of (successful, failed) request counts.
-  std::map<net::IPAddress, std::pair<uint32_t, uint32_t>>
-      resource_request_counts_;
+  std::map<net::IPAddress, SuccessFailCounts> resource_request_counts_;
 
   std::unique_ptr<std::map<net::IPAddress, ResourceType>>
       requested_resource_types_ = nullptr;
 
   // Stores the counts of resource requests for each localhost port as
   // pairs of (successful, failed) request counts.
-  std::map<int, std::pair<uint32_t, uint32_t>> localhost_request_counts_;
+  std::map < int, SuccessFao;
+  Cpimts > localhost_request_counts_;
 
   // The page load type. This is used to determine what resource requests to
   // monitor while the page is committed and to determine the UMA histogram name
   // to use.
-  DomainType page_load_type_;
+  DomainType page_load_type_ = DOMAIN_TYPE_UNKNOWN;
 
   // The IP address of the page that was loaded.
   net::IPAddress page_ip_address_;

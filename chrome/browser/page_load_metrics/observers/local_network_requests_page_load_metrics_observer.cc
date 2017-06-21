@@ -19,10 +19,9 @@
 #include "components/ukm/public/ukm_recorder.h"
 #include "net/base/host_port_pair.h"
 #include "net/base/ip_address.h"
+#include "net/base/net_errors.h"
 #include "net/base/url_util.h"
 #include "url/gurl.h"
-
-using namespace internal;
 
 namespace {
 
@@ -43,6 +42,47 @@ bool IsLikelyRouterIP(net::IPAddress ip_address) {
             ip_address.bytes()[2] == 10) &&
            (ip_address.bytes()[3] == 1 || ip_address.bytes()[3] == 10 ||
             ip_address.bytes()[3] == 100 || ip_address.bytes()[3] == 2)));
+}
+
+// Attempts to get the IP address of a resource request from
+// |extra_request_info.host_port_pair|, trying to get it from the URL string in
+// |extra_request_info.url| if that fails.
+// Sets the values of |resource_ip| and |port| with the extracted IP address and
+// port, respectively.
+// Returns true if a valid, nonempty IP address was extracted.
+bool GetIPAndPort(
+    const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info,
+    net::IPAddress& resource_ip,
+    int& resource_port) {
+  // If the request was successful, then the IP address should be in
+  // |extra_request_info|.
+  bool ip_exists = net::ParseURLHostnameToAddress(
+      extra_request_info.host_port_pair.host(), &resource_ip);
+  int resource_port = extra_request_info.host_port_pair.port();
+
+  // If the request failed, it's possible we didn't receive the IP address,
+  // possibly because domain resolution failed. As a backup, try getting the IP
+  // from the URL. If none was returned, try matching the hostname from the URL
+  // itself as it might be an IP address if it is a local network request, which
+  // is what we care about.
+  if (!ip_exists && extra_request_info.url.is_valid()) {
+    if (net::IsLocalhost(extra_request_info.url.HostNoBrackets()) {
+      resource_ip = net::IPAddress::IPv4Localhost();
+      ip_exists = true;
+    }
+    else {
+      ip_exists = net::ParseURLHostnameToAddress(extra_request_info.url.host(),
+                                                 &resource_ip);
+    }
+    resource_port = extra_request_info.url.EffectiveIntPort();
+  }
+
+  if (net::IsLocalhost(resource_ip.ToString())) {
+    resource_ip = net::IPAddress::IPv4Localhost();
+    ip_exists = true;
+  }
+
+  return ip_exists;
 }
 
 // List of mappings for localhost ports that belong to special categories that
@@ -75,26 +115,29 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
   net::HostPortPair address = navigation_handle->GetSocketAddress();
   bool parsed_successfully =
       net::ParseURLHostnameToAddress(address.host(), &page_ip_address_);
+
+  // In cases where the page loaded does not have a socket address or was not a
+  // network resource, we don't want to track the page load. Such resources will
+  // fail to parse or return an empty IP address.
+  if (!parsed_successfully || page_ip_address_.IsZero()) {
+    return STOP_OBSERVING;
+  }
+
   if (net::IsLocalhost(address.host()) ||
       page_ip_address_ == net::IPAddress::IPv6Localhost()) {
     page_load_type_ = DOMAIN_TYPE_LOCALHOST;
     page_ip_address_ = net::IPAddress::IPv4Localhost();
   } else {
-    DCHECK(parsed_successfully);
-
-    // In cases where the page loaded was not a network resource (e.g.,
-    // extensions), we don't want to track the page load. Such resources will
-    // return an empty IP address.
-    if (page_ip_address_.IsZero()) {
-      return STOP_OBSERVING;
-    }
-
     if (page_ip_address_.IsReserved()) {
       page_load_type_ = DOMAIN_TYPE_PRIVATE;
+      // Maps from first byte of an IPv4 address to the number of bits in the
+      // reserved prefix.
       static const uint8_t kReservedIPv4Prefixes[][2] = {
           {10, 8}, {100, 10}, {169, 16}, {172, 12}, {192, 16}, {198, 15}};
 
       for (const auto& entry : kReservedIPv4Prefixes) {
+        // A reserved IP will always be a valid IPv4 or IPv6 address and will
+        // thus have at least 4 bytes, so [0] is safe here.
         if (page_ip_address_.bytes()[0] == entry[0]) {
           page_ip_prefix_length_ = entry[1];
         }
@@ -107,12 +150,10 @@ LocalNetworkRequestsPageLoadMetricsObserver::OnCommit(
 
   RecordUkmDomainType(source_id);
 
-  // If the load was localhost, we don't track it because it isn't
-  // meaningful for our purposes.
-  if (page_load_type_ == DOMAIN_TYPE_LOCALHOST) {
-    return STOP_OBSERVING;
-  }
-  return CONTINUE_OBSERVING;
+  // If the load was localhost, we don't track it because it isn't meaningful
+  // for our purposes.
+  return (page_load_type_ == DOMAIN_TYPE_LOCALHOST ? STOP_OBSERVING
+                                                   : CONTINUE_OBSERVING);
 }
 
 page_load_metrics::PageLoadMetricsObserver::ObservePolicy
@@ -132,7 +173,33 @@ LocalNetworkRequestsPageLoadMetricsObserver::FlushMetricsOnAppEnterBackground(
 
 void LocalNetworkRequestsPageLoadMetricsObserver::OnLoadedResource(
     const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info) {
-  ProcessLoadedResource(extra_request_info);
+  net::IPAddress resource_ip;
+  int resource_port;
+
+  // We can't track anything if we don't have an IP address for the resource.
+  // We also don't want to track any requests to the page's IP address itself.
+  if (!GetIPAndPort(extra_request_info, resource_ip, resource_port) ||
+      resource_ip.IsZero() || resource_ip == page_ip_address_) {
+    return;
+  }
+
+  // We monitor localhost resource requests for both public and private page
+  // loads.
+  if (resource_ip == net::IPAddress::IPv4Localhost()) {
+    if (extra_request_info.net_error == net::OK) {
+      localhost_request_counts_[resource_port].second++;
+    } else {
+      localhost_request_counts_[resource_port].first++;
+    }
+  }
+  // We only track public resource requests for private pages.
+  else if (resource_ip.IsReserved() || page_load_type_ == DOMAIN_TYPE_PRIVATE) {
+    if (extra_request_info.net_error == net::OK) {
+      resource_request_counts_[resource_ip].second++;
+    } else {
+      resource_request_counts_[resource_ip].first++;
+    }
+  }
 }
 
 void LocalNetworkRequestsPageLoadMetricsObserver::OnComplete(
@@ -141,61 +208,6 @@ void LocalNetworkRequestsPageLoadMetricsObserver::OnComplete(
   if (info.did_commit) {
     RecordHistograms();
     RecordUkmMetrics(info.source_id);
-  }
-}
-
-void LocalNetworkRequestsPageLoadMetricsObserver::ProcessLoadedResource(
-    const page_load_metrics::ExtraRequestCompleteInfo& extra_request_info) {
-  // If the resource request was successful, then the IP address should be in
-  // |extra_request_info|.
-  net::IPAddress resource_ip;
-  bool ip_exists = net::ParseURLHostnameToAddress(
-      extra_request_info.host_port_pair.host(), &resource_ip);
-  int resource_port = extra_request_info.host_port_pair.port();
-
-  // If the request failed, it's possible we didn't receive the IP address,
-  // possibly because domain resolution failed. As a backup, try getting the IP
-  // from the URL. If none was returned, try matching the hostname from the URL
-  // itself as it might be an IP address if it is a local network request, which
-  // is what we care about.
-  if (!ip_exists && extra_request_info.url.is_valid()) {
-    ip_exists = net::ParseURLHostnameToAddress(extra_request_info.url.host(),
-                                               &resource_ip);
-    if (net::IsLocalhost(extra_request_info.url.host())) {
-      resource_ip = net::IPAddress::IPv4Localhost();
-      ip_exists = true;
-    }
-    resource_port = extra_request_info.url.EffectiveIntPort();
-  }
-
-  if (net::IsLocalhost(resource_ip.ToString()) ||
-      resource_ip == net::IPAddress::IPv6Localhost()) {
-    resource_ip = net::IPAddress::IPv4Localhost();
-    ip_exists = true;
-  }
-
-  // We can't track anything if we don't have an IP address for the resource.
-  // We also don't want to track any requests to the page's IP address itself.
-  if (resource_ip.IsZero() || resource_ip == page_ip_address_) {
-    return;
-  }
-
-  // We monitor localhost resource requests for both public and private page
-  // loads.
-  if (resource_ip == net::IPAddress::IPv4Localhost()) {
-    if (extra_request_info.net_error) {
-      localhost_request_counts_[resource_port].second++;
-    } else {
-      localhost_request_counts_[resource_port].first++;
-    }
-  }
-  // We only track public resource requests for private pages.
-  else if (resource_ip.IsReserved() || page_load_type_ == DOMAIN_TYPE_PRIVATE) {
-    if (extra_request_info.net_error) {
-      resource_request_counts_[resource_ip].second++;
-    } else {
-      resource_request_counts_[resource_ip].first++;
-    }
   }
 }
 
