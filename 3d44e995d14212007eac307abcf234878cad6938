@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4a98cd05_85490607",
+        "filename": "third_party/WebKit/Source/core/css/threaded/FontObjectThreadedTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:10:14Z",
+      "side": 1,
+      "message": "Since there are no EXPECT*, Maybe add comment that says: test passes by not crashing in TSAN.",
+      "range": {
+        "startLine": 39,
+        "startChar": 4,
+        "endLine": 39,
+        "endChar": 8
+      },
+      "revId": "3d44e995d14212007eac307abcf234878cad6938",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
