@@ -50,6 +50,16 @@ void FakeRemoteGattCharacteristic::SetNextReadResponse(
   next_read_response_.emplace(gatt_code, value);
 }
 
+void FakeRemoteGattCharacteristic::SetNextWriteResponse(uint16_t gatt_code) {
+  DCHECK(!next_write_response_);
+  next_write_response_.emplace(gatt_code);
+}
+
+base::Optional<std::vector<uint8_t>>
+FakeRemoteGattCharacteristic::GetLastWrittenValue() {
+  return last_written_value_;
+}
+
 std::string FakeRemoteGattCharacteristic::GetIdentifier() const {
   return characteristic_id_;
 }
@@ -105,7 +115,11 @@ void FakeRemoteGattCharacteristic::WriteRemoteCharacteristic(
     const std::vector<uint8_t>& value,
     const base::Closure& callback,
     const ErrorCallback& error_callback) {
-  NOTREACHED();
+  last_written_value_ = value;
+  base::ThreadTaskRunnerHandle::Get()->PostTask(
+      FROM_HERE,
+      base::Bind(&FakeRemoteGattCharacteristic::DispatchWriteResponse,
+                 weak_ptr_factory_.GetWeakPtr(), callback, error_callback));
 }
 
 void FakeRemoteGattCharacteristic::SubscribeToNotifications(
@@ -138,6 +152,22 @@ void FakeRemoteGattCharacteristic::DispatchReadResponse(
     return;
   } else if (gatt_code == mojom::kGATTInvalidHandle) {
     DCHECK(!value);
+    error_callback.Run(device::BluetoothGattService::GATT_ERROR_FAILED);
+    return;
+  }
+}
+
+void FakeRemoteGattCharacteristic::DispatchWriteResponse(
+    const base::Closure& callback,
+    const ErrorCallback& error_callback) {
+  DCHECK(next_write_response_);
+  uint16_t gatt_code = next_write_response_.value();
+  next_write_response_.reset();
+
+  if (gatt_code == mojom::kGATTSuccess) {
+    callback.Run();
+    return;
+  } else if (gatt_code == mojom::kGATTInvalidHandle) {
     error_callback.Run(device::BluetoothGattService::GATT_ERROR_FAILED);
     return;
   }
