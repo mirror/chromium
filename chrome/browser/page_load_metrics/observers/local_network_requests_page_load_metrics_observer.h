@@ -69,7 +69,7 @@ static const std::map<DomainType,
 GetNonlocalhostHistogramNames() {
   base::LazyInstance<std::map<
       DomainType, std::map<ResourceType, std::map<bool, std::string>>>>::Leaky
-      kNonlocalhostHistogramNames;
+      kNonlocalhostHistogramNames = LAZY_INSTANCE_INITIALIZER;
 
   kNonlocalhostHistogramNames
       .Get()[DOMAIN_TYPE_PUBLIC][RESOURCE_TYPE_PRIVATE][true] =
@@ -112,7 +112,7 @@ static const std::map<DomainType,
 GetLocalhostHistogramNames() {
   base::LazyInstance<std::map<
       DomainType, std::map<PortType, std::map<bool, std::string>>>>::Leaky
-      kLocalhostHistogramNames;
+      kLocalhostHistogramNames = LAZY_INSTANCE_INITIALIZER;
 
   kLocalhostHistogramNames.Get()[DOMAIN_TYPE_PUBLIC][PORT_TYPE_WEB][true] =
       "LocalNetworkRequests.PublicPage.Localhost."

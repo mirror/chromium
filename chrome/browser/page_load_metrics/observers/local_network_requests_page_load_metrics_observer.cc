@@ -186,7 +186,7 @@ void LocalNetworkRequestsPageLoadMetricsObserver::OnLoadedResource(
   // We monitor localhost resource requests for both public and private page
   // loads.
   if (resource_ip == net::IPAddress::IPv4Localhost()) {
-    if (extra_request_info.net_error == net::OK) {
+    if (extra_request_info.net_error != net::OK) {
       localhost_request_counts_[resource_port].second++;
     } else {
       localhost_request_counts_[resource_port].first++;
@@ -194,7 +194,7 @@ void LocalNetworkRequestsPageLoadMetricsObserver::OnLoadedResource(
   }
   // We only track public resource requests for private pages.
   else if (resource_ip.IsReserved() || page_load_type_ == DOMAIN_TYPE_PRIVATE) {
-    if (extra_request_info.net_error == net::OK) {
+    if (extra_request_info.net_error != net::OK) {
       resource_request_counts_[resource_ip].second++;
     } else {
       resource_request_counts_[resource_ip].first++;
