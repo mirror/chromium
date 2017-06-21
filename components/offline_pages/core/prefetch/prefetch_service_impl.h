@@ -9,11 +9,13 @@
 
 #include "base/macros.h"
 #include "components/offline_pages/core/offline_event_logger.h"
+#include "components/offline_pages/core/prefetch/prefetch_downloader.h"
 #include "components/offline_pages/core/prefetch/prefetch_service.h"
 
 namespace offline_pages {
 class OfflineMetricsCollector;
 class PrefetchDispatcher;
+class PrefetchDownloader;
 class PrefetchGCMHandler;
 class SuggestedArticlesObserver;
 
@@ -32,9 +34,18 @@ class PrefetchServiceImpl : public PrefetchService {
   PrefetchGCMHandler* GetPrefetchGCMHandler() override;
   SuggestedArticlesObserver* GetSuggestedArticlesObserver() override;
   OfflineEventLogger* GetLogger() override;
+  DownloadDelegate* GetDownloadDelegate() override;
 
   // KeyedService implementation:
   void Shutdown() override;
+
+  // TODO(jianli): Temporary exposure for OfflineInternalsUIMessageHandler.
+  PrefetchDownloader* prefetch_downloader() {
+    return prefetch_downloader_.get();
+  }
+  void set_prefetch_downloader(std::unique_ptr<PrefetchDownloader> downloader) {
+    prefetch_downloader_ = std::move(downloader);
+  }
 
  private:
   OfflineEventLogger logger_;
@@ -43,6 +54,7 @@ class PrefetchServiceImpl : public PrefetchService {
   std::unique_ptr<PrefetchDispatcher> prefetch_dispatcher_;
   std::unique_ptr<PrefetchGCMHandler> prefetch_gcm_handler_;
   std::unique_ptr<SuggestedArticlesObserver> suggested_articles_observer_;
+  std::unique_ptr<PrefetchDownloader> prefetch_downloader_;
 
   DISALLOW_COPY_AND_ASSIGN(PrefetchServiceImpl);
 };
