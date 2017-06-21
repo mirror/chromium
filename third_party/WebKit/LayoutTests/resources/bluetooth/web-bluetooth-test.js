@@ -309,6 +309,48 @@
 
       if (!success) throw 'setNextReadCharacteristicResponse failed';
     }
+
+    // Sets the next subscribe to notifications response to |code|.
+    // |code| could be a GATT Error Response from
+    // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response or a number outside that range
+    // returned by specific platforms e.g. Android returns 0x101 to signal a GATT
+    // failure.
+    // https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#GATT_FAILURE
+    // Subscribing to notifications involves writing to the CCC descriptor.
+    // Since platforms abstract this procedure in different ways we also
+    // abstract it.
+    async setNextSubscribeToNotificationsResponse(gatt_code) {
+      let {success} =
+        await this.fake_central_ptr_.setNextSubscribeToNotificationsResponse(
+          gatt_code, ...this.ids_);
+      if (!success) throw 'setNextSubscribeToNotificationsResponse failed';
+    }
+
+    // Sets the next unsubscribe from notifications response to |code|.
+    // |code| could be a GATT Error Response from
+    // BT 4.2 Vol 3 Part F 3.4.1.1 Error Response or a number outside that range
+    // returned by specific platforms e.g. Android returns 0x101 to signal a GATT
+    // failure.
+    // https://developer.android.com/reference/android/bluetooth/BluetoothGatt.html#GATT_FAILURE
+    // Unsubscribing from notifications involves writing to the CCC descriptor.
+    // Since platforms abstract this procedure in different ways we also
+    // abstract it.
+    async setNextUnsubscribeFromNotificationsResponse(gatt_code) {
+      let {success} =
+        await this.fake_central_ptr_.setNextUnsubscribeFromNotificationsResponse(
+          gatt_code, ...this.ids_);
+      if (!success) throw 'setNextUnsubscribeToNotificationsResponse failed';
+    }
+
+    // Returns whether or not a client has subscribed to notifications for this
+    // characteristic.
+    async isNotifying() {
+      let {success, is_notifying} =
+        await this.fake_central_ptr_.isNotifying(...this.ids_);
+      if (!success) throw 'isNotifying failed';
+
+      return is_notifying;
+    }
   }
 
   class FakeRemoteGATTDescriptor {

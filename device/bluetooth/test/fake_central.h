@@ -60,6 +60,22 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
       const std::string& service_id,
       const std::string& peripheral_address,
       SetNextReadCharacteristicResponseCallback callback) override;
+  void SetNextSubscribeToNotificationsResponse(
+      uint16_t gatt_code,
+      const std::string& characteristic_id,
+      const std::string& service_id,
+      const std::string& peripheral_address,
+      SetNextSubscribeToNotificationsResponseCallback callback) override;
+  void SetNextUnsubscribeFromNotificationsResponse(
+      uint16_t gatt_code,
+      const std::string& characteristic_id,
+      const std::string& service_id,
+      const std::string& peripheral_address,
+      SetNextUnsubscribeFromNotificationsResponseCallback callback) override;
+  void IsNotifying(const std::string& characteristic_id,
+                   const std::string& service_id,
+                   const std::string& peripheral_address,
+                   IsNotifyingCallback callback) override;
 
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;
