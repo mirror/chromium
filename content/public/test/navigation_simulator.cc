@@ -10,7 +10,6 @@
 #include "content/browser/frame_host/navigation_handle_impl.h"
 #include "content/browser/frame_host/navigation_request.h"
 #include "content/common/frame_messages.h"
-#include "content/public/browser/global_request_id.h"
 #include "content/public/browser/navigation_throttle.h"
 #include "content/public/browser/web_contents.h"
 #include "content/public/common/browser_side_navigation_policy.h"
@@ -255,12 +254,12 @@ void NavigationSimulator::Commit() {
     // Start the request_ids at 1000 to avoid collisions with request ids from
     // network resources (it should be rare to compare these in unit tests).
     static int request_id = 1000;
-    GlobalRequestID global_id(render_frame_host_->GetProcess()->GetID(),
-                              ++request_id);
+    request_id_ = content::GlobalRequestID(
+        render_frame_host_->GetProcess()->GetID(), ++request_id);
     DCHECK(!IsBrowserSideNavigationEnabled());
     handle_->WillProcessResponse(
         render_frame_host_, scoped_refptr<net::HttpResponseHeaders>(),
-        net::HttpResponseInfo::ConnectionInfo(), SSLStatus(), global_id,
+        net::HttpResponseInfo::ConnectionInfo(), SSLStatus(), request_id_,
         false /* should_replace_current_entry */, false /* is_download */,
         false /* is_stream */, base::Closure(),
         base::Callback<void(NavigationThrottle::ThrottleCheckResult)>());
@@ -486,6 +485,13 @@ NavigationSimulator::GetLastThrottleCheckResult() {
 NavigationHandle* NavigationSimulator::GetNavigationHandle() const {
   CHECK_EQ(STARTED, state_);
   return handle_;
+}
+
+content::GlobalRequestID NavigationSimulator::GetGlobalRequestID() const {
+  CHECK_GT(state_, STARTED) << "The GlobalRequestID is not available until "
+                               "after the navigation has completed "
+                               "WillProcessResponse";
+  return request_id_;
 }
 
 void NavigationSimulator::DidStartNavigation(
