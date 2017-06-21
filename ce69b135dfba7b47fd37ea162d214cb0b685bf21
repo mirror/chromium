@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1c595699_1c011c79",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 364,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-21T12:54:33Z",
+      "side": 1,
+      "message": "So, if this happens, do we need further processing? For example, remove the preference from the list? The function setUpAdsPreference calls setUpListPreference(preference, null); for this purpose, I believe.",
+      "range": {
+        "startLine": 364,
+        "startChar": 16,
+        "endLine": 364,
+        "endChar": 22
+      },
+      "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "028d0224_20b4f650",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/preferences/website/SingleWebsitePreferences.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 372,
+      "author": {
+        "id": 1002500
+      },
+      "writtenOn": "2017-06-21T12:54:33Z",
+      "side": 1,
+      "message": "Which values are you seeing from native?",
+      "range": {
+        "startLine": 372,
+        "startChar": 48,
+        "endLine": 372,
+        "endChar": 50
+      },
+      "revId": "ce69b135dfba7b47fd37ea162d214cb0b685bf21",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
