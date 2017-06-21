@@ -38,7 +38,7 @@ class VIEWS_EXPORT AnimatedIconView : public views::ImageView,
   void OnPaint(gfx::Canvas* canvas) override;
 
   // ui::CompositorAnimationObserver
-  void OnAnimationStep(base::TimeTicks timestamp) override;
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
  private:

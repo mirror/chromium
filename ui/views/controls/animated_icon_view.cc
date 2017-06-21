@@ -4,6 +4,7 @@
 
 #include "ui/views/controls/animated_icon_view.h"
 
+#include "cc/output/begin_frame_args.h"
 #include "ui/compositor/compositor.h"
 #include "ui/gfx/canvas.h"
 #include "ui/gfx/color_palette.h"
@@ -48,8 +49,8 @@ void AnimatedIconView::OnPaint(gfx::Canvas* canvas) {
   gfx::PaintVectorIcon(canvas, icon_, color_, elapsed);
 }
 
-void AnimatedIconView::OnAnimationStep(base::TimeTicks timestamp) {
-  base::TimeDelta elapsed = timestamp - start_time_;
+void AnimatedIconView::OnAnimationStep(const cc::BeginFrameArgs& args) {
+  base::TimeDelta elapsed = args.frame_time - start_time_;
   if (elapsed > duration_) {
     GetWidget()->GetCompositor()->RemoveAnimationObserver(this);
     start_time_ = base::TimeTicks();

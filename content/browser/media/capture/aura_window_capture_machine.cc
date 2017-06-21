@@ -9,6 +9,7 @@
 
 #include "base/logging.h"
 #include "base/metrics/histogram_macros.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/output/copy_output_request.h"
 #include "cc/output/copy_output_result.h"
 #include "components/viz/service/display_compositor/gl_helper.h"
@@ -433,9 +434,9 @@ void AuraWindowCaptureMachine::OnWindowRemovingFromRootWindow(
   }
 }
 
-void AuraWindowCaptureMachine::OnAnimationStep(base::TimeTicks timestamp) {
+void AuraWindowCaptureMachine::OnAnimationStep(const cc::BeginFrameArgs& args) {
   DCHECK_CURRENTLY_ON(BrowserThread::UI);
-  DCHECK(!timestamp.is_null());
+  DCHECK(!args.frame_time.is_null());
 
   // HACK: The compositor invokes this observer method to step layer animation
   // forward. Scheduling frame capture was not the intention, and so invoking
@@ -451,7 +452,7 @@ void AuraWindowCaptureMachine::OnAnimationStep(base::TimeTicks timestamp) {
   // significantly.
   // http://crbug.com/492839
   if (frame_capture_active_)
-    Capture(timestamp);
+    Capture(args.frame_time);
 }
 
 void AuraWindowCaptureMachine::OnCompositingShuttingDown(

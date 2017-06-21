@@ -55,7 +55,7 @@ class AuraWindowCaptureMachine
                                       aura::Window* new_root) override;
 
   // ui::CompositorAnimationObserver implementation.
-  void OnAnimationStep(base::TimeTicks timestamp) override;
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
   // Sets the window to use for capture.

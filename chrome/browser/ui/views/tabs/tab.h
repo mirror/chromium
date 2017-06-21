@@ -95,9 +95,6 @@ class Tab : public gfx::AnimationDelegate,
   void SetData(const TabRendererData& data);
   const TabRendererData& data() const { return data_; }
 
-  // Redraws the loading animation if one is visible. Otherwise, no-op.
-  void StepLoadingAnimation();
-
   // Starts/Stops a pulse animation.
   void StartPulse();
   void StopPulse();
@@ -165,6 +162,7 @@ class Tab : public gfx::AnimationDelegate,
   friend class AlertIndicatorButtonTest;
   friend class TabTest;
   friend class TabStripTest;
+  friend class Throbberview;
   FRIEND_TEST_ALL_PREFIXES(TabStripTest, TabCloseButtonVisibilityWhenStacked);
 
   // The animation object used to swap the favicon with the sad tab icon.

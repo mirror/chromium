@@ -15,6 +15,7 @@
 #include "base/strings/utf_string_conversions.h"
 #include "base/time/time.h"
 #include "build/build_config.h"
+#include "cc/output/begin_frame_args.h"
 #include "cc/paint/paint_flags.h"
 #include "cc/paint/paint_recorder.h"
 #include "cc/paint/paint_shader.h"
@@ -360,7 +361,8 @@ class Tab::TabCloseButton : public views::ImageButton,
 // ThrobberView
 //
 // A Layer-backed view for updating a waiting or loading tab throbber.
-class Tab::ThrobberView : public views::View {
+class Tab::ThrobberView : public views::View,
+                          public ui::CompositorAnimationObserver {
  public:
   explicit ThrobberView(Tab* owner);
 
@@ -368,7 +370,12 @@ class Tab::ThrobberView : public views::View {
   void ResetStartTimes();
 
   // views::View:
+  void SetVisible(bool visible) override;
   void OnPaint(gfx::Canvas* canvas) override;
+
+  // ui::CompositorAnimationObserver
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override;
+  void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
  private:
   Tab* owner_;  // Weak. Owns |this|.
@@ -397,7 +404,7 @@ void Tab::ThrobberView::ResetStartTimes() {
 
 void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
   const TabRendererData::NetworkState state = owner_->data().network_state;
-  CHECK(ShouldShowThrobber(state));
+  DCHECK(ShouldShowThrobber(state));
 
   const ui::ThemeProvider* tp = GetThemeProvider();
   const gfx::Rect bounds = GetLocalBounds();
@@ -422,6 +429,33 @@ void Tab::ThrobberView::OnPaint(gfx::Canvas* canvas) {
         base::TimeTicks::Now() - loading_start_time_, &waiting_state_);
   }
 }
+
+void Tab::ThrobberView::SetVisible(bool visible) {
+  views::View::SetVisible(visible);
+
+  auto* widget = GetWidget();
+  auto* compositor = widget ? widget->GetCompositor() : nullptr;
+  if (!compositor)
+    return;
+
+  bool observing = compositor->HasAnimationObserver(this);
+
+  if (visible) {
+    if (!observing)
+      compositor->AddAnimationObserver(this);
+  } else {
+    if (observing)
+      compositor->RemoveAnimationObserver(this);
+  }
+}
+
+void Tab::ThrobberView::OnAnimationStep(const cc::BeginFrameArgs& args) {
+  // Use 30fps instead of 60fps.
+  if (args.sequence_number % 2)
+    owner_->RefreshThrobber();
+}
+
+void Tab::ThrobberView::OnCompositingShuttingDown(ui::Compositor* compositor) {}
 
 ////////////////////////////////////////////////////////////////////////////////
 // Tab, public:
@@ -568,13 +602,6 @@ void Tab::SetData(const TabRendererData& data) {
 
   Layout();
   SchedulePaint();
-}
-
-void Tab::StepLoadingAnimation() {
-  if (!throbber_->visible())
-    return;
-
-  RefreshThrobber();
 }
 
 void Tab::StartPulse() {

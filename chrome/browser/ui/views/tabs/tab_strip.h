@@ -171,10 +171,6 @@ class TabStrip : public views::View,
   // doesn't close.
   bool IsTabStripCloseable() const;
 
-  // Updates the loading animations displayed by tabs in the tabstrip to the
-  // next frame.
-  void UpdateLoadingAnimations();
-
   // Returns true if the specified point (in TabStrip coordinates) is in the
   // window caption area of the browser window.
   bool IsPositionInWindowCaption(const gfx::Point& point);

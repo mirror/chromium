@@ -418,7 +418,7 @@ class TestCompositorAnimationObserver : public CompositorAnimationObserver {
   bool shutdown() const { return shutdown_; }
 
  private:
-  void OnAnimationStep(base::TimeTicks timestamp) override {
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override {
     ++animation_step_count_;
   }
 

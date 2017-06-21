@@ -709,6 +709,10 @@ void BrowserView::UpdateDevTools() {
 }
 
 void BrowserView::UpdateLoadingAnimations(bool should_animate) {
+  // The tabstrip handles updating its own throbbers.
+  if (browser_->is_type_tabbed())
+    return;
+
   if (should_animate) {
     if (!loading_animation_timer_.IsRunning()) {
       // Loads are happening, and the timer isn't running, so start it.
@@ -2132,22 +2136,16 @@ void BrowserView::InitViews() {
 }
 
 void BrowserView::LoadingAnimationCallback() {
-  if (browser_->is_type_tabbed()) {
-    // Loading animations are shown in the tab for tabbed windows.  We check the
-    // browser type instead of calling IsTabStripVisible() because the latter
-    // will return false for fullscreen windows, but we still need to update
-    // their animations (so that when they come out of fullscreen mode they'll
-    // be correct).
-    tabstrip_->UpdateLoadingAnimations();
-  } else if (ShouldShowWindowIcon()) {
-    // ... or in the window icon area for popups and app windows.
-    WebContents* web_contents =
-        browser_->tab_strip_model()->GetActiveWebContents();
-    // GetActiveWebContents can return null for example under Purify when
-    // the animations are running slowly and this function is called on a timer
-    // through LoadingAnimationCallback.
-    frame_->UpdateThrobber(web_contents && web_contents->IsLoading());
-  }
+  DCHECK(!browser_->is_type_tabbed());
+  if (!ShouldShowWindowIcon())
+    return;
+
+  WebContents* web_contents =
+      browser_->tab_strip_model()->GetActiveWebContents();
+  // GetActiveWebContents can return null for example under Purify when the
+  // animations are running slowly and this function is called on a timer
+  // through LoadingAnimationCallback.
+  frame_->UpdateThrobber(web_contents && web_contents->IsLoading());
 }
 
 void BrowserView::OnLoadCompleted() {

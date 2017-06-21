@@ -62,7 +62,6 @@ class BrowserWindowCocoa
   void BookmarkBarStateChanged(
       BookmarkBar::AnimateChangeType change_type) override;
   void UpdateDevTools() override;
-  void UpdateLoadingAnimations(bool should_animate) override;
   void SetStarredState(bool is_starred) override;
   void SetTranslateIconToggled(bool is_lit) override;
   void OnActiveTabChanged(content::WebContents* old_contents,

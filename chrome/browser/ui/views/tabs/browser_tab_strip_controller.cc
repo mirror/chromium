@@ -312,11 +312,6 @@ void BrowserTabStripController::ShowContextMenuForTab(
   context_menu_contents_->RunMenuAt(p, source_type);
 }
 
-void BrowserTabStripController::UpdateLoadingAnimations() {
-  for (int i = 0, tab_count = tabstrip_->tab_count(); i < tab_count; ++i)
-    tabstrip_->tab_at(i)->StepLoadingAnimation();
-}
-
 int BrowserTabStripController::HasAvailableDragActions() const {
   return model_->delegate()->GetDragActions();
 }

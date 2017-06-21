@@ -5,8 +5,11 @@
 #ifndef UI_COMPOSITOR_COMPOSITOR_ANIMATION_OBSERVER_H_
 #define UI_COMPOSITOR_COMPOSITOR_ANIMATION_OBSERVER_H_
 
-#include "base/time/time.h"
 #include "ui/compositor/compositor_export.h"
+
+namespace cc {
+struct BeginFrameArgs;
+}
 
 namespace ui {
 
@@ -16,7 +19,7 @@ class COMPOSITOR_EXPORT CompositorAnimationObserver {
  public:
   virtual ~CompositorAnimationObserver() {}
 
-  virtual void OnAnimationStep(base::TimeTicks timestamp) = 0;
+  virtual void OnAnimationStep(const cc::BeginFrameArgs& args) = 0;
   virtual void OnCompositingShuttingDown(Compositor* compositor) = 0;
 };
 

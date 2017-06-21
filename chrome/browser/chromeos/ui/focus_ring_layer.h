@@ -79,7 +79,7 @@ class FocusRingLayer : public ui::LayerDelegate,
   void OnDeviceScaleFactorChanged(float device_scale_factor) override;
 
   // CompositorAnimationObserver overrides:
-  void OnAnimationStep(base::TimeTicks timestamp) override;
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override;
   void OnCompositingShuttingDown(ui::Compositor* compositor) override;
 
   // The object that owns this layer.

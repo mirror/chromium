@@ -445,7 +445,7 @@ bool Compositor::HasAnimationObserver(
 void Compositor::BeginMainFrame(const cc::BeginFrameArgs& args) {
   DCHECK(!IsLocked());
   for (auto& observer : animation_observer_list_)
-    observer.OnAnimationStep(args.frame_time);
+    observer.OnAnimationStep(args);
   if (animation_observer_list_.might_have_observers())
     host_->SetNeedsAnimate();
 }

@@ -2552,7 +2552,7 @@ TEST(LayerAnimatorTest, LayerAnimatorCollectionTickTime) {
   animator->SetDelegate(&delegate);
 
   LayerAnimatorCollection* collection = delegate.GetLayerAnimatorCollection();
-  base::TimeTicks null;
+  cc::BeginFrameArgs null;
   collection->OnAnimationStep(null);
   EXPECT_TRUE(collection->last_tick_time().is_null());
 

@@ -295,10 +295,6 @@ void BrowserWindowCocoa::UpdateDevTools() {
       browser_->tab_strip_model()->GetActiveWebContents()];
 }
 
-void BrowserWindowCocoa::UpdateLoadingAnimations(bool should_animate) {
-  // Do nothing on Mac.
-}
-
 void BrowserWindowCocoa::SetStarredState(bool is_starred) {
   [controller_ setStarredState:is_starred];
 }

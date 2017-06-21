@@ -7,6 +7,7 @@
 #include <set>
 
 #include "base/time/time.h"
+#include "cc/output/begin_frame_args.h"
 #include "ui/compositor/compositor.h"
 #include "ui/compositor/layer_animator.h"
 
@@ -43,15 +44,15 @@ bool LayerAnimatorCollection::HasActiveAnimators() const {
   return !animators_.empty();
 }
 
-void LayerAnimatorCollection::OnAnimationStep(base::TimeTicks now) {
-  last_tick_time_ = now;
+void LayerAnimatorCollection::OnAnimationStep(const cc::BeginFrameArgs& args) {
+  last_tick_time_ = args.frame_time;
   std::set<scoped_refptr<LayerAnimator> > list = animators_;
   for (std::set<scoped_refptr<LayerAnimator> >::iterator iter = list.begin();
        iter != list.end();
        ++iter) {
     // Make sure the animator is still valid.
     if (animators_.count(*iter) > 0)
-      (*iter)->Step(now);
+      (*iter)->Step(args.frame_time);
   }
   if (!HasActiveAnimators() && compositor_)
     compositor_->RemoveAnimationObserver(this);

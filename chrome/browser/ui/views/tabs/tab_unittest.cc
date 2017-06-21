@@ -240,6 +240,8 @@ class TabTest : public views::ViewsTestBase {
     closure.Run();
   }
 
+  void RefreshThrobber(Tab* tab) { tab->RefreshThrobber(); }
+
  protected:
   void InitWidget(Widget* widget) {
     Widget::InitParams params(CreateParams(Widget::InitParams::TYPE_WINDOW));
@@ -490,11 +492,11 @@ TEST_F(TabTest, LayeredThrobber) {
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
   tab_controller.set_paint_throbber_to_layer(false);
-  tab.StepLoadingAnimation();
+  RefreshThrobber(&tab);
   EXPECT_TRUE(throbber->visible());
   EXPECT_FALSE(throbber->layer());
   tab_controller.set_paint_throbber_to_layer(true);
-  tab.StepLoadingAnimation();
+  RefreshThrobber(&tab);
   EXPECT_TRUE(throbber->visible());
   EXPECT_TRUE(throbber->layer());
   data.network_state = TabRendererData::NETWORK_STATE_NONE;

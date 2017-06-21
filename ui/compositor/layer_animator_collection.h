@@ -35,7 +35,7 @@ class COMPOSITOR_EXPORT LayerAnimatorCollection
   base::TimeTicks last_tick_time() const { return last_tick_time_; }
 
   // CompositorAnimationObserver:
-  void OnAnimationStep(base::TimeTicks timestamp) override;
+  void OnAnimationStep(const cc::BeginFrameArgs& args) override;
   void OnCompositingShuttingDown(Compositor* compositor) override;
 
  private:
