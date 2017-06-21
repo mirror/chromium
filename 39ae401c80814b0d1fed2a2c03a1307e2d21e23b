@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "445bc001_c446b724",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:12:48Z",
+      "side": 1,
+      "message": "Will this method be eliminated in the later CL? I\u0027m wondering if it will be replaced by GetEndTimestamp() and GetBufferedEndTimestamp() down the road.",
+      "range": {
+        "startLine": 219,
+        "startChar": 7,
+        "endLine": 219,
+        "endChar": 33
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5259b56f_16baadaa",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 259,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:12:48Z",
+      "side": 1,
+      "message": "nit:You didn\u0027t end up going with this method name",
+      "range": {
+        "startLine": 259,
+        "startChar": 47,
+        "endLine": 259,
+        "endChar": 58
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3120d045_357fc21f",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4878,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:12:48Z",
+      "side": 1,
+      "message": "Would add the sunny-day case, where you append a frame who\u0027s PTS \u003d last_frame_PTS + last_frame_DUR",
+      "range": {
+        "startLine": 4878,
+        "startChar": 8,
+        "endLine": 4878,
+        "endChar": 24
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f087486a_98732a19",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4879,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:12:48Z",
+      "side": 1,
+      "message": "I think you have two options for end time in these cases. \n1) make end time be the highest observed end time (this is what you\u0027ve done)\n2) make end time be the last frame pts+dur \n\nCan you explain what you prefer about option 1? Option 2 would seem to be much simpler to implement (no need to cache things, no need to update cache on splice)\n\nFWIW, I don\u0027t think option 2 is any more or less \"accurate\" from a playback POV. I think video frame durations are never really used in rendering - so the second frame here will show at time 15 and we won\u0027t go back to showing the first frame after the second frame\u0027s duration ends. Of course, if the second frame is the last frame we probably don\u0027t attempt to show it for its reported duration either...",
+      "range": {
+        "startLine": 4879,
+        "startChar": 18,
+        "endLine": 4879,
+        "endChar": 20
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6be89c99_65afd951",
+        "filename": "media/filters/source_buffer_stream_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 4921,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T01:12:48Z",
+      "side": 1,
+      "message": "Ditto on sunny case (2nd frame starting at time 20, maybe also one with frame at time [0, 10))",
+      "range": {
+        "startLine": 4921,
+        "startChar": 8,
+        "endLine": 4921,
+        "endChar": 24
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
