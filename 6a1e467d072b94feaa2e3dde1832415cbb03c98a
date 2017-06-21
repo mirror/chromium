@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c0f2e10d_b0b798c1",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3103,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "My intent was not to apply finch to this but to let designers play with it and see what they thought. I don\u0027t think we\u0027re targeting any particular change of user behavior. The text in feature_entry.h speaks of features as \"Most feature entries should only be around for a few milestones, until their full launch.\" so it doesn\u0027t seem like this fits that mold.",
+      "parentUuid": "41fe1abb_a2d79472",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a34fb3eb_b5c7db00",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T02:46:09Z",
       "side": 1,
       "message": "Nit: It might be nice if the flag name and the description text were in sync (e.g. by naming this kReduceStopReloadFlicker or something)",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3ce63c2a_fc39fd2d",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "Most everywhere (including the description text and variable names) uses the term \"delay\" but I used \"reduce\" in the flag name text because I think using slightly different descriptions helps people understand it.",
+      "parentUuid": "a34fb3eb_b5c7db00",
       "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -83,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f26e0e1_80f682a8",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0659a7dd_de60a2c3",
+      "range": {
+        "startLine": 344,
+        "startChar": 36,
+        "endLine": 344,
+        "endChar": 37
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a40074d6_56e7d38c",
         "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
         "patchSetId": 5
@@ -103,6 +163,30 @@
       "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0f89dde6_ed6d564c",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a40074d6_56e7d38c",
+      "range": {
+        "startLine": 81,
+        "startChar": 38,
+        "endLine": 81,
+        "endChar": 40
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -146,6 +230,30 @@
     },
     {
       "key": {
+        "uuid": "312a36f3_9a9e185b",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "87d18f4f_388533e7",
+      "range": {
+        "startLine": 22,
+        "startChar": 19,
+        "endLine": 23,
+        "endChar": 27
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8d25117c_ecbe4d5c",
         "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
         "patchSetId": 5
@@ -160,6 +268,24 @@
       "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1f5b9e25_ae4c6863",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:41:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8d25117c_ecbe4d5c",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
