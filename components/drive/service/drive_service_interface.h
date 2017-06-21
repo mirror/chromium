@@ -317,6 +317,16 @@ class DriveServiceInterface : public DriveServiceBatchOperationsInterface {
   virtual google_apis::CancelCallback GetAboutResource(
       const google_apis::AboutResourceCallback& callback) = 0;
 
+  // Gets the largest change ID from the server. When |team_drive_id| is empty,
+  // gets the one for the user's changelist. Otherwise, gets the one for the
+  // Team Drive's changelist.
+  // Upon completion, invokes |callback| with results on the calling thread.
+  // |callback| must not be null. Fields other than |largest_change_id| are
+  // not filled in the ChangeList which is passed to |callback|.
+  virtual google_apis::CancelCallback GetLargestChangeId(
+      const std::string& team_drive_id,
+      const google_apis::ChangeListCallback& callback) = 0;
+
   // Gets the application information from the server.
   // Upon completion, invokes |callback| with results on the calling thread.
   // |callback| must not be null.

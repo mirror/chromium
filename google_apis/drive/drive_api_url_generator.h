@@ -94,7 +94,8 @@ class DriveApiUrlGenerator {
                            const std::string& page_token) const;
 
   // Returns a URL to fetch a list of changes.
-  GURL GetChangesListUrl(bool include_deleted,
+  GURL GetChangesListUrl(bool only_largest_change_id,
+                         bool include_deleted,
                          int max_results,
                          const std::string& page_token,
                          int64_t start_change_id,
