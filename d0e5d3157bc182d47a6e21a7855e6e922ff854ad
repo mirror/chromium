@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2c893f6c_7ab6f2e5",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-21T16:46:42Z",
+      "side": 1,
+      "message": "In your previous PS we are checking against the min_buffered_frames_, which matches the comment. But now we only check max_buffered_frames_. Wondering why you make this change...",
+      "revId": "d0e5d3157bc182d47a6e21a7855e6e922ff854ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
