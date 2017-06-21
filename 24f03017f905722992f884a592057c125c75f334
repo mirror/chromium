@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "f415348f_12b1de72",
+        "filename": "base/trace_event/memory_dump_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T13:48:32Z",
+      "side": 1,
+      "message": "At this point I\u0027d rename this to kDeailedTicks (or some better name) to make it clearer that this counts only the DETAILED ones",
+      "range": {
+        "startLine": 135,
+        "startChar": 17,
+        "endLine": 135,
+        "endChar": 23
+      },
+      "revId": "24f03017f905722992f884a592057c125c75f334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "91b31d65_81095d02",
+        "filename": "base/trace_event/memory_dump_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 151,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T13:48:32Z",
+      "side": 1,
+      "message": "maybe extract this 5 into a const int kQuickIterations, so future ourselves will be less puzzled when reading this.",
+      "range": {
+        "startLine": 151,
+        "startChar": 20,
+        "endLine": 151,
+        "endChar": 21
+      },
+      "revId": "24f03017f905722992f884a592057c125c75f334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "681bae58_3b4d8410",
+        "filename": "base/trace_event/memory_dump_scheduler_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 161,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T13:48:32Z",
+      "side": 1,
+      "message": "I think at this point you can swap these two (i.e. start then stop), which will then remove the need of the extra stop below",
+      "range": {
+        "startLine": 160,
+        "startChar": 1,
+        "endLine": 161,
+        "endChar": 63
+      },
+      "revId": "24f03017f905722992f884a592057c125c75f334",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
