@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "2e7855ac_15da0fea",
+        "filename": "third_party/WebKit/Source/core/css/resolver/StyleResolverState.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1197444
+      },
+      "writtenOn": "2017-06-21T03:18:57Z",
+      "side": 1,
+      "message": "nit: maybe change this to a RefPtr as well?",
+      "revId": "2b0812cd45d49e556d7a8aa467373c35c42000f1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
