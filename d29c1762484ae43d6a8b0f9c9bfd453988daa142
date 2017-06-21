@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5fce4517_750d2065",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 289,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-21T07:35:39Z",
+      "side": 1,
+      "message": "nit: Whe -\u003e When",
+      "revId": "d29c1762484ae43d6a8b0f9c9bfd453988daa142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "50272083_17d2725d",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobData.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 298,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-21T07:35:39Z",
+      "side": 1,
+      "message": "We always skip zero-byte element, is there a reason we couldn\u0027t do this in one place before the switch/case?",
+      "revId": "d29c1762484ae43d6a8b0f9c9bfd453988daa142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed8025df_25fd4dde",
+        "filename": "third_party/WebKit/Source/platform/blob/BlobDataTest.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1001472
+      },
+      "writtenOn": "2017-06-21T07:35:39Z",
+      "side": 1,
+      "message": "nit: explicit",
+      "revId": "d29c1762484ae43d6a8b0f9c9bfd453988daa142",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
