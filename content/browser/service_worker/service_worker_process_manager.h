@@ -22,6 +22,7 @@ namespace content {
 class BrowserContext;
 struct EmbeddedWorkerSettings;
 class SiteInstance;
+class SiteInstanceImpl;
 
 // Interacts with the UI thread to keep RenderProcessHosts alive while the
 // ServiceWorker system is using them. It also tracks candidate processes
@@ -84,6 +85,10 @@ class CONTENT_EXPORT ServiceWorkerProcessManager {
 
   // Returns true if the |pattern| has at least one process to run.
   bool PatternHasProcessToRun(const GURL& pattern) const;
+
+  void RegisterCandidateSiteInstance(SiteInstanceImpl*);
+  void UnregisterCandidateSiteInstance();
+  SiteInstance* candidate_site_instance() const;
 
  private:
   FRIEND_TEST_ALL_PREFIXES(ServiceWorkerProcessManagerTest, SortProcess);
@@ -157,6 +162,8 @@ class CONTENT_EXPORT ServiceWorkerProcessManager {
   // Candidate processes info for each pattern, should be accessed on the
   // UI thread.
   PatternProcessRefMap pattern_processes_;
+
+  scoped_refptr<SiteInstanceImpl> candidate_site_instance_;
 
   // Used to double-check that we don't access *this after it's destroyed.
   base::WeakPtr<ServiceWorkerProcessManager> weak_this_;
