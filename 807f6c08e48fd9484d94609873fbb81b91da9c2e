@@ -1,0 +1,181 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "b4b3b25f_d1fe4e8f",
+        "filename": "device/wake_lock/public/interfaces/wake_lock.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "nit: \"client\"",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d58082b_5f6c3fe3",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "is it correct to be calling this directly instead of going through request_wake_lock_function_? if it\u0027s possible to stub out wake lock creation in a better way than by injecting create/release functions, please feel free to do that. iirc i just injected these functions because PowerSaveBlocker made it basically impossible to write unit tests.",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be66b625_52726e55",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "is it safe to call this before you check has_wake_lock_? if so, could you add a comment to the wake_lock_ member in the header file explaining when it\u0027s safe to use it? it\u0027s not super-obvious to me (as someone who knows fairly little about mojo interface pointers).",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa622849_c7052c2e",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "nit: \"functions\"",
+      "range": {
+        "startLine": 81,
+        "startChar": 18,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "995fe653_7da09b73",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "nit: \"empty callbacks\"",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c9c3e27c_9f068296",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "nit: \"Functions\"",
+      "range": {
+        "startLine": 83,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ed721c7f_60978d73",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "methods come before data members, i.e. please move these above browser_context_. mind adding a comment above each documenting what it does, too? something like \"Requests a wake lock (used internally to override power management) and saves it to |wake_lock_|.\" is fine.",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b939c173_dfe9bfe4",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "i take it you\u0027re unable to check whether wake_lock_ is null now?",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b807383_adf31377",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1000042
+      },
+      "writtenOn": "2017-06-21T14:11:47Z",
+      "side": 1,
+      "message": "if this is still meaningless when has_wake_lock_ is false, can you update the comment to retain that part?",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
