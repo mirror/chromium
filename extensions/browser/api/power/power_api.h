@@ -12,7 +12,7 @@
 #include "base/callback.h"
 #include "base/macros.h"
 #include "base/single_thread_task_runner.h"
-#include "device/power_save_blocker/power_save_blocker.h"
+#include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
 #include "extensions/browser/browser_context_keyed_api_factory.h"
 #include "extensions/browser/extension_function.h"
 #include "extensions/browser/extension_registry_observer.h"
@@ -54,13 +54,9 @@ class PowerReleaseKeepAwakeFunction : public UIThreadExtensionFunction {
 class PowerAPI : public BrowserContextKeyedAPI,
                  public extensions::ExtensionRegistryObserver {
  public:
-  typedef base::Callback<std::unique_ptr<device::PowerSaveBlocker>(
-      device::PowerSaveBlocker::PowerSaveBlockerType,
-      device::PowerSaveBlocker::Reason,
-      const std::string&,
-      scoped_refptr<base::SequencedTaskRunner> ui_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner)>
-      CreateBlockerFunction;
+  typedef base::Callback<void(device::mojom::WakeLockType)>
+      RequestWakeLockFunction;
+  typedef base::Callback<void()> CancelWakeLockFunction;
 
   static PowerAPI* Get(content::BrowserContext* context);
 
@@ -82,10 +78,11 @@ class PowerAPI : public BrowserContextKeyedAPI,
   // extension id without a lock will do nothing.
   void RemoveRequest(const std::string& extension_id);
 
-  // Replaces the function that will be called to create PowerSaveBlocker
-  // objects.  Passing an empty callback will revert to the default.
-  void SetCreateBlockerFunctionForTesting(
-      const CreateBlockerFunction& function);
+  // Replaces the functions that will be called to request and cancel wake lock.
+  // Passing empty callbacks will revert to the default.
+  void SetWakeLockFunctionsForTesting(
+      const RequestWakeLockFunction& request_function,
+      const CancelWakeLockFunction& cancel_function);
 
   // Overridden from extensions::ExtensionRegistryObserver.
   void OnExtensionUnloaded(content::BrowserContext* browser_context,
@@ -98,9 +95,9 @@ class PowerAPI : public BrowserContextKeyedAPI,
   explicit PowerAPI(content::BrowserContext* context);
   ~PowerAPI() override;
 
-  // Updates |power_save_blocker_| and |current_level_| after iterating
+  // Updates wake lock status and |current_level_| after iterating
   // over |extension_levels_|.
-  void UpdatePowerSaveBlocker();
+  void UpdateWakeLock();
 
   // BrowserContextKeyedAPI implementation.
   static const char* service_name() { return "PowerAPI"; }
@@ -108,17 +105,24 @@ class PowerAPI : public BrowserContextKeyedAPI,
   static const bool kServiceIsCreatedWithBrowserContext = false;
   void Shutdown() override;
 
+  // Creates a wake lock(used internally to override power management) with
+  // the type corresponding to |current_level_| by mojo.
+  device::mojom::WakeLock* GetWakeLock();
+  void RequestWakeLock(device::mojom::WakeLockType type);
+  void CancelWakeLock();
+
   content::BrowserContext* browser_context_;
 
-  // Function that should be called to create PowerSaveBlocker objects.
+  // Function that should be called to request and cancel the wake lock.
   // Tests can change this to record what would've been done instead of
   // actually changing the system power-saving settings.
-  CreateBlockerFunction create_blocker_function_;
+  RequestWakeLockFunction request_wake_lock_function_;
+  CancelWakeLockFunction cancel_wake_lock_function_;
 
-  std::unique_ptr<device::PowerSaveBlocker> power_save_blocker_;
+  device::mojom::WakeLockPtr wake_lock_;
+  bool has_wake_lock_;
 
-  // Current level used by |power_save_blocker_|.  Meaningless if
-  // |power_save_blocker_| is NULL.
+  // Current level used by |wake_lock_|.
   api::power::Level current_level_;
 
   // Outstanding requests.
