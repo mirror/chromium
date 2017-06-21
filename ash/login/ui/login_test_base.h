@@ -5,6 +5,7 @@
 #ifndef ASH_LOGIN_UI_LOGIN_TEST_BASE_H_
 #define ASH_LOGIN_UI_LOGIN_TEST_BASE_H_
 
+#include "ash/login/ui/login_data_source.h"
 #include "ash/public/interfaces/user_info.mojom.h"
 #include "ash/test/ash_test_base.h"
 #include "base/macros.h"
@@ -31,6 +32,13 @@ class LoginTestBase : public test::AshTestBase {
   // Utility method to create a new |mojom::UserInfoPtr| instance.
   mojom::UserInfoPtr CreateUser(const std::string& name) const;
 
+  // Changes the active number of users. Fires an event on |data_source()|.
+  void SetUserCount(size_t count);
+
+  const std::vector<ash::mojom::UserInfoPtr>& users() const { return users_; }
+
+  LoginDataSource* data_source() { return &data_source_; }
+
   // test::AshTestBase:
   void TearDown() override;
 
@@ -39,6 +47,10 @@ class LoginTestBase : public test::AshTestBase {
 
   views::Widget* widget_ = nullptr;
   std::unique_ptr<WidgetDelegate> delegate_;
+
+  std::vector<ash::mojom::UserInfoPtr> users_;
+
+  LoginDataSource data_source_;
 
   DISALLOW_COPY_AND_ASSIGN(LoginTestBase);
 };
