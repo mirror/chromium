@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c1244786_94a49179",
+        "filename": "chrome/browser/offline_pages/prefetch/offline_prefetch_download_client.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "You are right, this is just leaking files, right?  So probably should at least unlink the path.",
+      "parentUuid": "0e4fa5ce_9f9af84e",
+      "range": {
+        "startLine": 48,
+        "startChar": 4,
+        "endLine": 48,
+        "endChar": 31
+      },
+      "revId": "feb5f51558ca0f7d614405001e0c0a7fa2628344",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "6f10175e_e824658b",
         "filename": "components/offline_pages/core/prefetch/prefetch_downloader.cc",
         "patchSetId": 5

@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "775c1717_e197cc37",
+        "filename": "chrome/browser/resources/offline_pages/offline_internals_browser_proxy.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "What is in the string? File name? File size?",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9095625f_aba02d6b",
+        "filename": "components/offline_pages/core/prefetch/prefetch_server_urls.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "Please unit test this file.",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e5fb5b2_d4737d68",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "Please move this to its own file.",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e202fca6_3e276e11",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "Please just add the required methods to DownloadDelegate, then this is unnecessary.",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2fba4c46_afad0f73",
+        "filename": "components/offline_pages/core/prefetch/prefetch_service_impl.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T18:30:15Z",
+      "side": 1,
+      "message": "This should be set in the constructor.  If you need further initialization later, follow the pattern of SuggestedArticlesObserver which actually does nothing until it gets the ContentSuggestionsService*",
+      "revId": "7e70e41996ed378a71e83c530b6cb741117ceed2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
