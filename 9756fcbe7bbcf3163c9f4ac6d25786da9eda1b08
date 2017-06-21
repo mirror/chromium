@@ -16,6 +16,24 @@
       "revId": "9756fcbe7bbcf3163c9f4ac6d25786da9eda1b08",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a85af12d_f8e4f026",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutBoxModelObject.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 336,
+      "author": {
+        "id": 1111894
+      },
+      "writtenOn": "2017-06-21T08:41:07Z",
+      "side": 1,
+      "message": "That\u0027s an interesting thought. Let\u0027s find out! :) I filed https://chromium-review.googlesource.com/542915 for this.\n\nIt seems that it introduces test regressions, but that may just be because underlying problems get exposed.\n\nI did some local testing, and I found one test in fast/block/float/ that started acting up. Upon closer inspection, that test looks flaky even without my changes, but I\u0027ll get back to that.\n\nAlso, it seems that such a change causes regressions in LayoutNG (only tested fast/multicol/ locally)",
+      "parentUuid": "c3759e28_e7a14a45",
+      "revId": "9756fcbe7bbcf3163c9f4ac6d25786da9eda1b08",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
