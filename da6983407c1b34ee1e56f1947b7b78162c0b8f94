@@ -454,6 +454,24 @@
     },
     {
       "key": {
+        "uuid": "e07edc03_b31f9f10",
+        "filename": "base/android/jni_generator/jni_generator_helper.h",
+        "patchSetId": 16
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "There\u0027s an existing bug for this: crbug.com/664306. Maybe add a TODO mentioning the crbug and we can fix that in a follow up?",
+      "parentUuid": "c0702938_8d47b834",
+      "revId": "da6983407c1b34ee1e56f1947b7b78162c0b8f94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "904afc1a_c86fc58e",
         "filename": "base/android/jni_generator/jni_registration_generator.py",
         "patchSetId": 16

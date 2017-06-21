@@ -1,0 +1,142 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf5165ca_f412a5c5",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "nit: two empty lines between top level function defs.",
+      "range": {
+        "startLine": 415,
+        "startChar": 4,
+        "endLine": 415,
+        "endChar": 22
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "11a7b860_24491407",
+        "filename": "base/android/jni_generator/jni_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "nit: two empty lines between top level function defs.",
+      "range": {
+        "startLine": 419,
+        "startChar": 4,
+        "endLine": 419,
+        "endChar": 31
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c4cb2ef_079deea4",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "nit: order these alphabetically.",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 13
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cbb342b7_1f842d6e",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "nit: two empty lines between top level function defs.",
+      "range": {
+        "startLine": 20,
+        "startChar": 4,
+        "endLine": 20,
+        "endChar": 21
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a0e3b765_6994078f",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "super nit: dict() is a built-in function, use another name (registration_dict?).\n\nOr, better yet might be to move dict to be internal to HeaderGenerator and then make HeaderGenerator.GetContent() return the fully formed header file string. Your call.",
+      "range": {
+        "startLine": 32,
+        "startChar": 2,
+        "endLine": 32,
+        "endChar": 6
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b77fe2a2_bcc6ffba",
+        "filename": "base/android/jni_generator/jni_registration_generator.py",
+        "patchSetId": 20
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1178079
+      },
+      "writtenOn": "2017-06-21T00:18:51Z",
+      "side": 1,
+      "message": "nit: move all of these back a space.",
+      "range": {
+        "startLine": 159,
+        "startChar": 27,
+        "endLine": 159,
+        "endChar": 31
+      },
+      "revId": "c09fbc9ac39530c39c134d874605c2616b5e4b90",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
