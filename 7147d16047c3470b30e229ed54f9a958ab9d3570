@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "43398f20_c1abd545",
+        "filename": "components/ntp_snippets/remote/offline_pages_tracker.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 19,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T11:45:48Z",
+      "side": 1,
+      "message": "Done.\n\nThe function became PrefetchedOfflinePageExists, the interface is PrefetchedPagesTracker and the implementation is PrefetchedPagesTrackerImpl.",
+      "parentUuid": "008c0431_7581ffe8",
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f1a462b_2e640419",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
         "patchSetId": 1
@@ -54,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "1b51af81_5b0b5b5e",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T11:45:48Z",
+      "side": 1,
+      "message": "Done.\n\nNow the tracker calls clients\u0027 callbacks when initialized. The provider will be taking into account tracker initialization and wait (by providing a callback) if not.",
+      "parentUuid": "c5e65c17_2ace6f25",
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0b044f15_e7a2acc1",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
         "patchSetId": 1
@@ -77,6 +113,30 @@
     },
     {
       "key": {
+        "uuid": "3119c22e_c6b26804",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 89,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T11:45:48Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0b044f15_e7a2acc1",
+      "range": {
+        "startLine": 89,
+        "startChar": 2,
+        "endLine": 89,
+        "endChar": 40
+      },
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2cd193c9_8a74ef2d",
         "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
         "patchSetId": 1
@@ -97,6 +157,30 @@
       "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea2d6dbe_afde0e76",
+        "filename": "components/ntp_snippets/remote/prefetched_pages_tracker.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T11:45:48Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "2cd193c9_8a74ef2d",
+      "range": {
+        "startLine": 94,
+        "startChar": 33,
+        "endLine": 94,
+        "endChar": 69
+      },
+      "revId": "7147d16047c3470b30e229ed54f9a958ab9d3570",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
