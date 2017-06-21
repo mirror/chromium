@@ -26,6 +26,7 @@ class V4L2Webcam : public Webcam {
   bool GetWebcamParameter(int fd, uint32_t control_id, int* value);
 
   // Webcam:
+  void GetPtzRanges(const GetPTZRangesCompleteCallback& callback) override;
   void GetPan(const GetPTZCompleteCallback& callback) override;
   void GetTilt(const GetPTZCompleteCallback& callback) override;
   void GetZoom(const GetPTZCompleteCallback& callback) override;

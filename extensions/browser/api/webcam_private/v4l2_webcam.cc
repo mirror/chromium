@@ -87,6 +87,41 @@ bool V4L2Webcam::GetWebcamParameter(int fd, uint32_t control_id, int* value) {
   return true;
 }
 
+void V4L2Webcam::GetPtzRanges(const GetPTZRangesCompleteCallback& callback) {
+  struct v4l2_queryctrl v4l2_ctrl = {};
+  int min_pan;
+  int max_pan;
+  v4l2_ctrl.id = V4L2_CID_PAN_ABSOLUTE;
+  if (HANDLE_EINTR(ioctl(fd_.get(), VIDIOC_QUERYCTRL, &v4l2_ctrl))) {
+    min_pan = max_pan = 0;
+  } else {
+    min_pan = v4l2_ctrl.minimum;
+    max_pan = v4l2_ctrl.maximum;
+  }
+
+  int min_tilt;
+  int max_tilt;
+  v4l2_ctrl.id = V4L2_CID_TILT_ABSOLUTE;
+  if (HANDLE_EINTR(ioctl(fd_.get(), VIDIOC_QUERYCTRL, &v4l2_ctrl))) {
+    min_tilt = max_tilt = 0;
+  } else {
+    min_tilt = v4l2_ctrl.minimum;
+    max_tilt = v4l2_ctrl.maximum;
+  }
+
+  int min_zoom;
+  int max_zoom;
+  v4l2_ctrl.id = V4L2_CID_ZOOM_ABSOLUTE;
+  if (HANDLE_EINTR(ioctl(fd_.get(), VIDIOC_QUERYCTRL, &v4l2_ctrl))) {
+    min_zoom = max_zoom = 0;
+  } else {
+    min_zoom = v4l2_ctrl.minimum;
+    max_zoom = v4l2_ctrl.maximum;
+  }
+
+  callback.Run(min_pan, max_pan, min_tilt, max_tilt, min_zoom, max_zoom);
+}
+
 void V4L2Webcam::GetPan(const GetPTZCompleteCallback& callback) {
   int value = 0;
   bool success = GetWebcamParameter(fd_.get(), V4L2_CID_PAN_ABSOLUTE, &value);
