@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6ea59e9b_478c6a04",
+        "filename": "content/browser/accessibility/browser_accessibility_manager.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1000678
+      },
+      "writtenOn": "2017-06-21T00:22:34Z",
+      "side": 1,
+      "message": "If we\u0027re trying to improve this semantically,\nx11 feels wrong because the code doesn\u0027t care if it\u0027s x11, it\nreally just cares about ATK support for a desktop Linux distro.\n\nIn the spirit of \"test for feature\" this should really be use_atk, not use_x11. That\u0027d require making sure that build files only compile\nbrowser_accessibility_manager_auralinux when use_atk is true and not\njust when use_x11 is true.\n\nActually I seem to recall that this caused a problem with Chromecast\nbecause it runs on Linux and has libatk installed, but we have no need\nfor ATK support on that platform.\n\nI think we really do need some sort of \"is desktop Linux\" define.\nMaybe today that\u0027s the same as use_x11, but will it be several years\nfrom now? For example, what if we added Wayland support?",
+      "revId": "b4a44794c0a6276ffbe3a605c119a17d1b8d722c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
