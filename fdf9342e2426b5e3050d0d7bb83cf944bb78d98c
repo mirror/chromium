@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "aa843c09_68fdd50b",
+        "filename": "chrome/browser/resources/settings/people_page/setup_pin_dialog.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1160212
+      },
+      "writtenOn": "2017-06-21T18:32:42Z",
+      "side": 1,
+      "message": "dpapad@ - I know autofocus is preferred but we want to focus the input without bringing up the VK, so we need to wrap the focus call in a setTimeout.",
+      "range": {
+        "startLine": 106,
+        "startChar": 11,
+        "endLine": 106,
+        "endChar": 15
+      },
+      "revId": "fdf9342e2426b5e3050d0d7bb83cf944bb78d98c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
