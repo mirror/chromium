@@ -263,7 +263,7 @@ class InputEventFilterTest : public testing::Test,
                         HandledEventCallback callback) override {
     message_recorder_.AppendEvent(event);
     std::move(callback).Run(INPUT_EVENT_ACK_STATE_NOT_CONSUMED, latency,
-                            nullptr);
+                            nullptr, nullptr);
   }
 
   void SetNeedsMainFrame() override { event_recorder_->NeedsMainFrame(); }
