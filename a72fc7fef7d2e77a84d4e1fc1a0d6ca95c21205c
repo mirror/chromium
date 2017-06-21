@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ccef4c7e_aa6e4842",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-21T03:52:03Z",
+      "side": 1,
+      "message": "Why does the caller site need to specify AllocationMode when calling Free()? To specify AllocationMode, the caller site needs to keep track of whether it has touched the backing memory or not...",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5409b068_2e41f187",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-21T03:52:03Z",
+      "side": 1,
+      "message": "Why virtual?",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
