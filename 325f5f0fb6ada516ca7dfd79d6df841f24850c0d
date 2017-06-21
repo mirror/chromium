@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "894d986b_7a5124d8",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T19:34:34Z",
+      "side": 1,
+      "message": "This should work for now. |ozone_platform_x11| will be true for developer and trybot CrOS builds. |ozone_platform_x11| will also be false on CrOS device builds because they only turn on |ozone_platform_gbm|.\n\nI\u0027m assuming that CrOS devices don\u0027t have/want the swiftshader libraries?",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
