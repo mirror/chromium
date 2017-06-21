@@ -16,6 +16,23 @@
       "revId": "ddc3b8f3e67ed38244eb029901f38d824e618af7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d2f2868a_04f5a47a",
+        "filename": "chrome/browser/ui/android/content_settings/ads_blocked_infobar_delegate.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1115894
+      },
+      "writtenOn": "2017-06-21T17:07:13Z",
+      "side": 1,
+      "message": "If you want to avoid the dual state tracking, could you just call through to native only if the infobar is already expanded on the java side?",
+      "revId": "ddc3b8f3e67ed38244eb029901f38d824e618af7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
