@@ -78,7 +78,7 @@ ActiveProfilePrefService::GetPrefStoreConnector() {
   // |content::mojom::kBrowserServiceName|.
   if (context()->identity().user_id() == service_manager::mojom::kRootUserID) {
     content::BrowserContext::GetConnectorFor(
-        ProfileManager::GetActiveUserProfile()->GetOriginalProfile())
+        ProfileManager::GetActiveUserProfile())
         ->BindInterface(prefs::mojom::kForwarderServiceName, &connector_ptr_);
   } else if (!connector_ptr_) {
     context()->connector()->BindInterface(prefs::mojom::kServiceName,
