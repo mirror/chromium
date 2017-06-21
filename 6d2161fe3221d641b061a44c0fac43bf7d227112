@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "92d216b2_4b3b4223",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T10:38:35Z",
+      "side": 1,
+      "message": "Lol. Done.",
+      "parentUuid": "e69f5245_5cbe22df",
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1393b541_e1d134c8",
         "filename": "base/trace_event/memory_dump_manager.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "fb055f2e_f1893cd4",
+        "filename": "base/trace_event/memory_dump_manager.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 107,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T10:38:35Z",
+      "side": 1,
+      "message": "You are right, I just did a mess while splitting the original CL in two.\nThe confusing part is that dump_guid should not be a request argument and it is chosen by the service. I just screwed this up while handling the transition between CLs.\nFOr the moment passing a 0 here, and letting the coordinator pick the right, non-duplicated, value.",
+      "parentUuid": "1393b541_e1d134c8",
+      "range": {
+        "startLine": 107,
+        "startChar": 31,
+        "endLine": 107,
+        "endChar": 40
+      },
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "98e2c92e_8a6494a1",
         "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
         "patchSetId": 2
@@ -59,6 +101,24 @@
     },
     {
       "key": {
+        "uuid": "4b95492e_eaec6ff9",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 102,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T10:38:35Z",
+      "side": 1,
+      "message": "Yeah I know this is confusing, this is just the awkward transition while trying to get rid of this damn guid as input. T\n\nIn the long term: the guid should not be an in+out parameter but just out, the service should just pick one.\nUntil this CL: base::MDM was picking the guid, because the global dumps where starting from there.\n\nThis caused the necessity to have that dump_guid in the request args, so that MDM could say \"hey please do a global dump with this guid\".\nNow I am making it so that the service is the only one picking the GUID. In the meantime there are still code paths that need guid as an output argument (that\u0027s why I can\u0027t just delete it).\n\nSo in the meantime what I am doing is ensuring that *all* the clients are just passing 0 as input, where 0 means: \"you service pick one\".\nI guess my git stash issue above (mdm still passing a guid) did added further confusion to this cl",
+      "parentUuid": "98e2c92e_8a6494a1",
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e9ab0b07_6b0940d8",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
         "patchSetId": 2
@@ -70,6 +130,30 @@
       "writtenOn": "2017-06-16T23:14:50Z",
       "side": 1,
       "message": "can we have a dummy callback to record TRACE_EVENTs at start and end of dumps?\nI don\u0027t remember but it might be used in tracing benchmark to track the global dump duration.\nEven otherwise it is useful to see the duration in traces.\n\nThinking more, maybe this should be added to the coordinator_impl since we do not have protection against queuing here.",
+      "range": {
+        "startLine": 97,
+        "startChar": 32,
+        "endLine": 97,
+        "endChar": 63
+      },
+      "revId": "6d2161fe3221d641b061a44c0fac43bf7d227112",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b5cd3c1_db58d854",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/client_process_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T10:38:35Z",
+      "side": 1,
+      "message": "I re-added the tracing async events to the coordinator. No need to add a callback here, we can use the outer ones from the coordinator (similar to what we were doing here before).\n\n\u003e Thinking more, maybe this should be added to the coordinator_impl since we do not have protection against queuing here.\nYup precisely",
+      "parentUuid": "e9ab0b07_6b0940d8",
       "range": {
         "startLine": 97,
         "startChar": 32,
