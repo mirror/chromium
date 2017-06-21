@@ -34,6 +34,24 @@
       "revId": "9de88d0e22c5d417c0d433288659b09b5e7b9292",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "37cc6917_9758ba64",
+        "filename": "third_party/WebKit/Source/core/xmlhttprequest/XMLHttpRequest.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 676,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-21T04:17:23Z",
+      "side": 1,
+      "message": "Yeah, this seems like a good way to go.",
+      "parentUuid": "43c0fc4b_5b79f887",
+      "revId": "9de88d0e22c5d417c0d433288659b09b5e7b9292",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
