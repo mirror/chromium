@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c21ae283_f2dc5cea",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-21T16:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "471ebf99_969d52c3",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8941c48f_c8ac6034",
         "filename": "content/browser/frame_host/navigator_impl.cc",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T14:34:50Z",
       "side": 1,
       "message": "qq: did you see any case outside of unit_tests where we didn\u0027t have a pending NavigationEntry? Subframe navigations maybe?",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72fc2d95_9dc239aa",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-21T16:18:30Z",
+      "side": 1,
+      "message": "Correct - subframe doesn\u0027t.",
+      "parentUuid": "8941c48f_c8ac6034",
       "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e89c40db_1f754b3b",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1023,
+      "author": {
+        "id": 1149077
+      },
+      "writtenOn": "2017-06-21T16:18:30Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ab51726_58373c70",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
