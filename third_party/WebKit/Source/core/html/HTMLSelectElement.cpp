@@ -58,6 +58,7 @@
 #include "core/html/HTMLOptionElement.h"
 #include "core/html/forms/FormController.h"
 #include "core/html/forms/PopupMenu.h"
+#include "core/html/parser/HTMLParserIdioms.h"
 #include "core/input/EventHandler.h"
 #include "core/input/InputDeviceCapabilities.h"
 #include "core/inspector/ConsoleMessage.h"
@@ -297,15 +298,12 @@ void HTMLSelectElement::ParseAttribute(
     // Set the attribute value to a number.
     // This is important since the style rules for this attribute can
     // determine the appearance property.
-    unsigned size = params.new_value.GetString().ToUInt();
-    AtomicString attr_size = AtomicString::Number(size);
-    if (attr_size != params.new_value) {
-      // FIXME: This is horribly factored.
-      if (Attribute* size_attribute =
-              EnsureUniqueElementData().Attributes().Find(sizeAttr))
-        size_attribute->SetValue(attr_size);
-    }
-    size_ = size;
+    size_ = 0;
+    int value_as_integer;
+    if (!params.new_value.IsEmpty() &&
+        ParseHTMLInteger(params.new_value, value_as_integer) &&
+        value_as_integer > 0)
+      size_ = value_as_integer;
     SetNeedsValidityCheck();
     if (size_ != old_size) {
       if (InActiveDocument())
