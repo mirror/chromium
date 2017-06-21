@@ -4,6 +4,7 @@
 
 #import "ios/clean/chrome/browser/ui/settings/settings_coordinator.h"
 
+#include "ios/chrome/browser/browser_state/chrome_browser_state.h"
 #import "ios/chrome/browser/ui/settings/settings_navigation_controller.h"
 #import "ios/clean/chrome/browser/ui/commands/settings_commands.h"
 #import "ios/shared/chrome/browser/ui/browser_list/browser.h"
@@ -25,9 +26,9 @@
 
 - (void)start {
   self.viewController = [SettingsNavigationController
-      newSettingsMainControllerWithMainBrowserState:self.browser
-                                                        ->browser_state()
-                                           delegate:self];
+      newSettingsMainController:self.browser->browser_state()
+                                    ->GetOriginalChromeBrowserState()
+                       delegate:self];
   [super start];
 }
 
