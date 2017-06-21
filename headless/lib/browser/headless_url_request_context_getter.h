@@ -12,6 +12,7 @@
 #include "base/files/file_path.h"
 #include "base/macros.h"
 #include "base/memory/ref_counted.h"
+#include "base/sequenced_task_runner.h"
 #include "base/single_thread_task_runner.h"
 #include "content/public/browser/browser_context.h"
 #include "content/public/browser/content_browser_client.h"
@@ -32,7 +33,6 @@ class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
  public:
   HeadlessURLRequestContextGetter(
       scoped_refptr<base::SingleThreadTaskRunner> io_task_runner,
-      scoped_refptr<base::SingleThreadTaskRunner> file_task_runner,
       content::ProtocolHandlerMap* protocol_handlers,
       ProtocolHandlerMap context_protocol_handlers,
       content::URLRequestInterceptorScopedVector request_interceptors,
@@ -51,6 +51,8 @@ class HeadlessURLRequestContextGetter : public net::URLRequestContextGetter {
 
  private:
   scoped_refptr<base::SingleThreadTaskRunner> io_task_runner_;
+  // TODO(eseckler): This should become a SequencedTaskRunner once net:: APIs
+  // accept a SequencedTaskRunner, see https://crbug.com/735368.
   scoped_refptr<base::SingleThreadTaskRunner> file_task_runner_;
 
   // The |options| object given to the constructor is not guaranteed to outlive
