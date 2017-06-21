@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e8e5c8ba_3f78e64f",
+        "filename": "ui/keyboard/content/keyboard_ui_content.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 357,
+      "author": {
+        "id": 1000111
+      },
+      "writtenOn": "2017-06-21T18:01:45Z",
+      "side": 1,
+      "message": "This is called from WindowObserver callbacks. From what I can see, these should only be called when |keyboard_contents_| is non-null. Can you explain why these null checks are necessary?",
+      "revId": "1b7d85c9528eef195918568d9a453d0f4c33b75e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
