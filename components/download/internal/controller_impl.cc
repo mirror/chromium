@@ -402,14 +402,13 @@ void ControllerImpl::AttemptToFinalizeSetup() {
     return;
   }
 
+  initializing_internals_ = false;
+
   device_status_listener_->Start(this);
   PollActiveDriverDownloads();
   CancelOrphanedRequests();
   ResolveInitialRequestStates();
   NotifyClientsOfStartup();
-
-  initializing_internals_ = false;
-
   UpdateDriverStates();
   ProcessScheduledTasks();
 
