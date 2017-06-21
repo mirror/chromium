@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4123997d_ec7599a0",
+        "filename": "chrome/browser/notifications/notification_channels_provider_android_unittest.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 290,
+      "author": {
+        "id": 1000602
+      },
+      "writtenOn": "2017-06-21T00:16:12Z",
+      "side": 1,
+      "message": "Woah I\u0027ve never seen this type of thing before. I found it very hard to read and took quite some time but it may just be because I\u0027m not familiar with all the nuance of gtest/mock.\n\nIn my experience, tests are often clearer (easier to write, read, debug) if you just implement your own Mock/Fake subclasses that do whatever is needed. e.g. in this case it wouldn\u0027t have been hard to have the MockBridge just hold an instance variable of channels which could be modified by the test and returned (probably the same class could be used for all tests). \n\nSeparately, I also tend to prefer to use base::RunLoop+QuitClosure rather than RunUntilIdle equivalents because it makes the semantics more well-defined.\n\nBut with that said, I don\u0027t think it\u0027s necessary to rewrite this now, just something to keep in mind for the future.",
+      "revId": "7b9fe78b3bb2af3d4d95b97383aef8cc0ebfdcca",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
