@@ -17,7 +17,7 @@ TestPaymentRequestDelegate::TestPaymentRequestDelegate(
 TestPaymentRequestDelegate::~TestPaymentRequestDelegate() {}
 
 autofill::PersonalDataManager*
-TestPaymentRequestDelegate::GetPersonalDataManager() {
+TestPaymentRequestDelegate::GetPersonalDataManager() const {
   return personal_data_manager_;
 }
 
