@@ -52,6 +52,24 @@
       "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8564bdd_c3c71c0d",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-21T23:51:05Z",
+      "side": 1,
+      "message": "When we create a trace snapshot right now we serialize each individual op into an skpicture (https://cs.chromium.org/chromium/src/cc/paint/display_item_list.cc?l\u003d122). However, this causes us to write a single op like \"save\" or \"restore\" as an skp, which turns out to be not very useful, since it ends up being an empty trace (from what danakj@ tested).\n\nI had an idea of running through the pob in this manner (ie using the analyzer) and produce a string/set of string/base::Value that would be equivalent to something like\n\nsave\ntranslate 1 2\ndrawPaintOpBuffer\n  save\n  translate 11 12\n  drawRect 0,0 50x50\n  restore\nrestore\n\nI would add a ToString for each op. However, maybe we can add a ToString to PaintOpBuffer as well, but then it would have to iterate the list in maybe similar fashion.",
+      "parentUuid": "6f65c410_f5fe4bbc",
+      "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
