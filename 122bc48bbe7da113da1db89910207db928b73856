@@ -1,0 +1,119 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "93e7093e_4a198672",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T12:27:12Z",
+      "side": 1,
+      "message": "doesn\u0027t seem to be used",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 23
+      },
+      "revId": "122bc48bbe7da113da1db89910207db928b73856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "befd6ac8_e58a323a",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T12:27:12Z",
+      "side": 1,
+      "message": "This makes perfect sense, I\u0027d just not call this method run. when I Initially read your code I though you were overriding the actual Run method from base::Callback, and my reaction was (nonono, don\u0027t go there). But then I realized that\u0027s not the case.\nDunno, maybe MOCK_METHOD3(OnCall,...) or OnCallback ?",
+      "range": {
+        "startLine": 98,
+        "startChar": 15,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "122bc48bbe7da113da1db89910207db928b73856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7b026008_f91b1e1e",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 120,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T12:27:12Z",
+      "side": 1,
+      "message": "instead you could \"using\" this one (not strong on this, up to you, I just generally see people importing testing:: on the top and using without the namespace)",
+      "range": {
+        "startLine": 120,
+        "startChar": 43,
+        "endLine": 120,
+        "endChar": 52
+      },
+      "revId": "122bc48bbe7da113da1db89910207db928b73856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c7528302_509d7948",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T12:27:12Z",
+      "side": 1,
+      "message": "never been a huge fan of RunUntilIdle, because hides away what you are really waiting for.\nI\u0027d probably keep the RunLoop and then do somethign linke:\nEXPECT_CALL(callback, ...).WillOnce(Invoke(run_loop.QuitClosure))",
+      "range": {
+        "startLine": 139,
+        "startChar": 2,
+        "endLine": 139,
+        "endChar": 33
+      },
+      "revId": "122bc48bbe7da113da1db89910207db928b73856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b651b1e5_47598a93",
+        "filename": "services/resource_coordinator/memory_instrumentation/coordinator_impl_unittest.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T12:27:12Z",
+      "side": 1,
+      "message": "I never remember the casting rules here, there is a possibility that nullptr will just work here (if not, ignore this comment)",
+      "range": {
+        "startLine": 164,
+        "startChar": 25,
+        "endLine": 164,
+        "endChar": 57
+      },
+      "revId": "122bc48bbe7da113da1db89910207db928b73856",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
