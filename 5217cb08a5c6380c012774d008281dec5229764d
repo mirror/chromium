@@ -90,6 +90,24 @@
     },
     {
       "key": {
+        "uuid": "cfcb1fa6_a95a1581",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T21:16:44Z",
+      "side": 1,
+      "message": "Done in the class header.",
+      "parentUuid": "0f3867a8_963017af",
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e395b435_4c8eb029",
         "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
         "patchSetId": 1
@@ -149,6 +167,30 @@
       "side": 1,
       "message": "Right, but |this| is destroyed on the IO thread, as per the destructor DCHECK you added, while this call is posting a call to the observer on the UI thread - what makes that safe?",
       "parentUuid": "02aab1e7_013e5cbe",
+      "range": {
+        "startLine": 309,
+        "startChar": 38,
+        "endLine": 309,
+        "endChar": 39
+      },
+      "revId": "5217cb08a5c6380c012774d008281dec5229764d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fa324e94_bcb624ac",
+        "filename": "chrome/browser/safe_browsing/certificate_reporting_service_test_utils.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 309,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T21:16:44Z",
+      "side": 1,
+      "message": "The TestHelper blocks execution on the UI thread - and therefore postpones IO teardown - until the Observers\u0027 expected call counts are saturated.",
+      "parentUuid": "043ae475_3f44acd5",
       "range": {
         "startLine": 309,
         "startChar": 38,
