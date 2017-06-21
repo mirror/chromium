@@ -47,6 +47,7 @@
 #include "components/search_engines/template_url_service.h"
 #include "content/public/browser/navigation_controller.h"
 #include "content/public/browser/navigation_entry.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "extensions/common/constants.h"
 #include "net/traffic_annotation/network_traffic_annotation.h"
@@ -111,6 +112,9 @@ void AnswerImageObserver::OnImageChanged(
   DCHECK(!image.empty());
   callback_.Run(image);
 }
+
+void NoOpStartServiceWorkerCallback(
+    content::StartServiceWorkerForNavigationHintResult) {}
 
 }  // namespace
 
@@ -402,6 +406,16 @@ void ChromeOmniboxClient::OnTextChanged(const AutocompleteMatch& current_match,
     case AutocompleteActionPredictor::ACTION_NONE:
       break;
   }
+
+  if (current_match.destination_url != GetURL() &&
+      current_match.destination_url != GURL()) {
+    const int kStartServiceWorkerTimeMS = 500;
+    start_service_worker_timer_.Stop();
+    start_service_worker_timer_.Start(
+        FROM_HERE, base::TimeDelta::FromMilliseconds(kStartServiceWorkerTimeMS),
+        base::Bind(&ChromeOmniboxClient::StartServiceWorkerForURL,
+                   base::Unretained(this), current_match.destination_url));
+  }
 }
 
 void ChromeOmniboxClient::OnInputAccepted(const AutocompleteMatch& match) {
@@ -504,4 +518,16 @@ void ChromeOmniboxClient::OnBitmapFetched(const BitmapFetchedCallback& callback,
                                           const SkBitmap& bitmap) {
   request_id_ = BitmapFetcherService::REQUEST_ID_INVALID;
   callback.Run(bitmap);
+}
+
+void ChromeOmniboxClient::StartServiceWorkerForURL(const GURL& url) {
+  content::StoragePartition* partition =
+      content::BrowserContext::GetStoragePartitionForSite(profile_, url);
+  if (!partition)
+    return;
+  content::ServiceWorkerContext* context = partition->GetServiceWorkerContext();
+  if (!context)
+    return;
+  context->StartServiceWorkerForNavigationHint(
+      url, base::Bind(&NoOpStartServiceWorkerCallback));
 }
