@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bd4e8060_3f452e30",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T23:36:54Z",
+      "side": 1,
+      "message": "Nit: Since this is only governing the mode switch one direction, I might name it accordingly.  (ShouldDelayChangeToReloadState()?)",
+      "revId": "379b8ad9a4cac68c911c43e3f0ea980cabc0c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a9474ae8_e918d666",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T23:36:54Z",
+      "side": 1,
+      "message": "Tiny nit: Checking |visible_mode_| first would match the variable name, so maybe my brain wouldn\u0027t have thought \"wait, you got the conditional backwards\" :)",
+      "revId": "379b8ad9a4cac68c911c43e3f0ea980cabc0c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3677f2f5_4761f784",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T23:36:54Z",
+      "side": 1,
+      "message": "Why do this as a lambda?  Seems like we could just call these and put the result in a bool, if you felt that was clearer than inlining.",
+      "revId": "379b8ad9a4cac68c911c43e3f0ea980cabc0c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a62fbf33_bde11129",
+        "filename": "chrome/browser/ui/views/toolbar/reload_button.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T23:36:54Z",
+      "side": 1,
+      "message": "This sentence was hard for me to understand (I think it has a grammar error?).  Maybe split into two sentences like this:\n\n\"The initial change from reload to stop is internally delayed to avoid flicker for rapid page loads (as can happen when a page fetches additional resources).  The change from stop back to reload may be delayed if the user is hovering the button, to prevent mis-clicks.\"",
+      "revId": "379b8ad9a4cac68c911c43e3f0ea980cabc0c75a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
