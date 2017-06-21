@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "33177901_33cfe60d",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "sort",
+      "range": {
+        "startLine": 101,
+        "startChar": 20,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5764d8b_9f8e68e0",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "Have you considered changing this to \"breakingnews\"?",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "920ac433_c5e15d1b",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "So I would replace all ContentSuggestion mentions into Breaking News or Breaking News Content Suggestion.",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6bd2fe75_5f740948",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "Same as above.",
+      "range": {
+        "startLine": 164,
+        "startChar": 14,
+        "endLine": 164,
+        "endChar": 32
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a6278d43_23b1ddef",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "This is not about content suggestions in general anymore, but breaking news content suggestions. Please update the comment.",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4d577f6e_d853383a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "weak_ptr_factory_",
+      "range": {
+        "startLine": 100,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5571ad4f_801c6de6",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "update",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b38ef0e_752178cb",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "Please add \u003cmemory\u003e for the unique_ptr and \"base/callback_forward.h\" for the callback.\n\nNote, that this code may compile, because your include happens to include what you need. However, if they change something and remove includes you need, this will break you and they will have to edit your code.",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3b3c0990_35d6c27a",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "This interface does not specify the source. Please do not mention GCM.",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d4f58fb_57124745",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "What does this mean?",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b836b8ce_1b970b35",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "add \"via BreakingNewsListener\"",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "08dae7b3_b4be27a8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:04:02Z",
+      "side": 1,
+      "message": "This is an implementation detail. Note that people who read public interface of your class do not care about the callback and its registration. Instead you could say that this starts listening for breaking news via breaking_new_listener_.\n\nOr even name the method StartListening() and have no comment at all :)\n\nOr even inline this function into the constructor and have no method at all :D At least from the current use, I do not see why you need a separate function (you just Start right after creating the provider).",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
