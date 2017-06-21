@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b52be581_ee2b647d",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 101,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33177901_33cfe60d",
+      "range": {
+        "startLine": 101,
+        "startChar": 20,
+        "endLine": 101,
+        "endChar": 45
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "c5764d8b_9f8e68e0",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 2
@@ -45,6 +69,30 @@
       "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8326205d_8820fd85",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c5764d8b_9f8e68e0",
+      "range": {
+        "startLine": 18,
+        "startChar": 55,
+        "endLine": 18,
+        "endChar": 73
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "34f06ffa_b13e3fdc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "920ac433_c5e15d1b",
+      "range": {
+        "startLine": 23,
+        "startChar": 12,
+        "endLine": 23,
+        "endChar": 30
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6bd2fe75_5f740948",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
         "patchSetId": 2
@@ -91,6 +163,30 @@
       "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7f89cbff_4aa9e7a8",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 164,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6bd2fe75_5f740948",
+      "range": {
+        "startLine": 164,
+        "startChar": 14,
+        "endLine": 164,
+        "endChar": 32
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -117,6 +213,30 @@
     },
     {
       "key": {
+        "uuid": "892d730b_833785fc",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a6278d43_23b1ddef",
+      "range": {
+        "startLine": 28,
+        "startChar": 26,
+        "endLine": 28,
+        "endChar": 45
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d577f6e_d853383a",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
         "patchSetId": 2
@@ -137,6 +257,30 @@
       "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5e2f5d12_6a8961c1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 100,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4d577f6e_d853383a",
+      "range": {
+        "startLine": 100,
+        "startChar": 50,
+        "endLine": 100,
+        "endChar": 63
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -163,6 +307,30 @@
     },
     {
       "key": {
+        "uuid": "7f264485_a4b260df",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_gcm_app_handler.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5571ad4f_801c6de6",
+      "range": {
+        "startLine": 106,
+        "startChar": 49,
+        "endLine": 106,
+        "endChar": 68
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3b38ef0e_752178cb",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
         "patchSetId": 2
@@ -183,6 +351,30 @@
       "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f51ad348_783d27a4",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 8,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b38ef0e_752178cb",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 8,
+        "endChar": 24
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -232,6 +424,54 @@
     },
     {
       "key": {
+        "uuid": "9030ccca_fdcd4dd1",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3b3c0990_35d6c27a",
+      "range": {
+        "startLine": 17,
+        "startChar": 22,
+        "endLine": 17,
+        "endChar": 25
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "4f94c9f6_8a25799c",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_listener.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Subscription is required only once. I will rephrase.",
+      "parentUuid": "9d4f58fb_57124745",
+      "range": {
+        "startLine": 17,
+        "startChar": 34,
+        "endLine": 17,
+        "endChar": 46
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b836b8ce_1b970b35",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
         "patchSetId": 2
@@ -255,6 +495,30 @@
     },
     {
       "key": {
+        "uuid": "bea5781b_9859766d",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b836b8ce_1b970b35",
+      "range": {
+        "startLine": 23,
+        "startChar": 38,
+        "endLine": 23,
+        "endChar": 52
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "08dae7b3_b4be27a8",
         "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
         "patchSetId": 2
@@ -275,6 +539,30 @@
       "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6fd2b06e_43298651",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1218040
+      },
+      "writtenOn": "2017-06-21T17:18:35Z",
+      "side": 1,
+      "message": "Thank you very much for the informative comment. :-)\nI would go for inlining it in the constructor to match stopping in the desctructor.",
+      "parentUuid": "08dae7b3_b4be27a8",
+      "range": {
+        "startLine": 34,
+        "startChar": 2,
+        "endLine": 35,
+        "endChar": 14
+      },
+      "revId": "6771da7aeaabcf19428dc69e8c566f09db6c6e39",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
