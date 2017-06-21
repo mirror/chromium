@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "1a7e194a_7691e749",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-21T22:42:17Z",
+      "side": 1,
+      "message": "I\u0027m not amazingly keen on templated classes defined in a header that nothing else can use.  I think that pattern works when you have only a couple of types (e.g. Layer and LayerImpl) for a particular thing.  However, this looks a lot like it\u0027s trying to be extensible, but nothing else can use this code?\n\nIf there\u0027s only going to be one type of this, then maybe this all should merge together untemplated into SolidColorAnalyzer?\n\nOr, are there going to be other users?",
+      "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
