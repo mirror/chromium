@@ -22,6 +22,30 @@
       "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f5d1a869_7e72c0bc",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1106289
+      },
+      "writtenOn": "2017-06-21T21:17:23Z",
+      "side": 1,
+      "message": "The libraries haven\u0027t been added to chrome\\tools\\build\\chromeos\\FILES.cfg, so they won\u0027t end up getting shipped in an image package. Only local builds and trybots will have them.",
+      "parentUuid": "894d986b_7a5124d8",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
