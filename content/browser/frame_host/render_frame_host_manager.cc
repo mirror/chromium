@@ -40,17 +40,37 @@
 #include "content/common/frame_owner_properties.h"
 #include "content/common/site_isolation_policy.h"
 #include "content/common/view_messages.h"
+#include "content/public/browser/browser_context.h"
 #include "content/public/browser/child_process_security_policy.h"
 #include "content/public/browser/content_browser_client.h"
 #include "content/public/browser/render_process_host_observer.h"
 #include "content/public/browser/render_widget_host_iterator.h"
 #include "content/public/browser/render_widget_host_view.h"
+#include "content/public/browser/service_worker_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/common/browser_side_navigation_policy.h"
 #include "content/public/common/content_switches.h"
 #include "content/public/common/referrer.h"
 #include "content/public/common/url_constants.h"
 
 namespace content {
+
+namespace {
+
+bool IsRegisteredAsServiceWorkerCandidateSiteInstance(
+    BrowserContext* browser_context,
+    SiteInstance* site_instance) {
+  StoragePartition* partition =
+      BrowserContext::GetDefaultStoragePartition(browser_context);
+  if (!partition)
+    return false;
+  ServiceWorkerContext* context = partition->GetServiceWorkerContext();
+  if (!context)
+    return false;
+  return context->IsRegisteredAsCandidateSiteInstance(site_instance);
+}
+
+}  // namespace
 
 RenderFrameHostManager::RenderFrameHostManager(
     FrameTreeNode* frame_tree_node,
@@ -1345,7 +1365,9 @@ RenderFrameHostManager::DetermineSiteInstanceForURL(
   // for this entry.  We won't commit the SiteInstance to this site until the
   // navigation commits (in DidNavigate), unless the navigation entry was
   // restored or it's a Web UI as described below.
-  if (!current_instance_impl->HasSite()) {
+  if (!current_instance_impl->HasSite() &&
+      !IsRegisteredAsServiceWorkerCandidateSiteInstance(
+          browser_context, current_instance_impl)) {
     // If we've already created a SiteInstance for our destination, we don't
     // want to use this unused SiteInstance; use the existing one.  (We don't
     // do this check if the current_instance has a site, because for now, we
