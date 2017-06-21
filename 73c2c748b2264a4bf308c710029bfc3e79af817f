@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "65575b60_b5ba2026",
+        "filename": "content/public/test/navigation_simulator.h",
+        "patchSetId": 13
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1142059
+      },
+      "writtenOn": "2017-06-21T18:08:45Z",
+      "side": 1,
+      "message": "navigation request",
+      "range": {
+        "startLine": 155,
+        "startChar": 51,
+        "endLine": 155,
+        "endChar": 61
+      },
+      "revId": "73c2c748b2264a4bf308c710029bfc3e79af817f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
