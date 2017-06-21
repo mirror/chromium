@@ -20,6 +20,7 @@
 
 using ::testing::_;
 using ::testing::Invoke;
+using ::testing::Between;
 using ::testing::Return;
 
 namespace base {
@@ -356,16 +357,18 @@ TEST_F(MemoryPeakDetectorTest, StartStopQuickly) {
                     WaitableEvent::InitialState::NOT_SIGNALED);
   scoped_refptr<MemoryDumpProviderInfo> mdp = CreateMockDumpProvider();
   dump_providers_.push_back(mdp);
+  const uint32_t kQuickIterations = 5;
   const uint32_t kNumPolls = 20;
   uint32_t polls_done = 0;
   EXPECT_CALL(GetMockMDP(mdp), PollFastMemoryTotal(_))
+      .Times(Between(kNumPolls - kQuickIterations, kNumPolls))
       .WillRepeatedly(Invoke([&polls_done, &evt, kNumPolls](uint64_t*) {
         if (++polls_done == kNumPolls)
           evt.Signal();
       }));
 
   const TimeTicks tstart = TimeTicks::Now();
-  for (int i = 0; i < 5; i++) {
+  for (unsigned int i = 0; i < kQuickIterations; i++) {
     peak_detector_->Start(kConfigNoCallbacks);
     peak_detector_->Stop();
   }
@@ -374,7 +377,8 @@ TEST_F(MemoryPeakDetectorTest, StartStopQuickly) {
   evt.Wait();  // Wait for kNumPolls.
   const double time_ms = (TimeTicks::Now() - tstart).InMillisecondsF();
 
-  EXPECT_GE(time_ms, kNumPolls * kConfigNoCallbacks.polling_interval_ms);
+  EXPECT_GE(time_ms, (kNumPolls - kQuickIterations - 1) *
+                         kConfigNoCallbacks.polling_interval_ms);
   peak_detector_->Stop();
 }
 
