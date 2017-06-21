@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "302c2d04_72648ccf",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 114,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T01:01:35Z",
+      "side": 1,
+      "message": "Nit: \"invalidations\"",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c80b10c_810bed54",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T01:01:35Z",
+      "side": 1,
+      "message": "Ditto here and maybe elsewhere.",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef5f6d57_a90496d0",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 156,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T01:01:35Z",
+      "side": 1,
+      "message": "Should there be an invalidation for chunk 1 like this one?",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "be0fb6a6_b977cb14",
+        "filename": "third_party/WebKit/Source/platform/graphics/compositing/ContentLayerClientImplTest.cpp",
+        "patchSetId": 10
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T01:01:35Z",
+      "side": 1,
+      "message": "Here, and elsewhere: why don\u0027t you assert things about the first two\ninvalidations?",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "728a2b28_afa88f54",
+        "filename": "third_party/WebKit/Source/platform/graphics/paint/RasterInvalidationTracking.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T01:01:35Z",
+      "side": 1,
+      "message": "Delete the code similar to this in GraphicsLayer.cpp, and call this\nmethod instead.",
+      "revId": "4dfd2dedc5d120ff3885e34314bf518c79e53e18",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
