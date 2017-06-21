@@ -52,10 +52,8 @@ LayerImpl::LayerImpl(LayerTreeImpl* tree_impl, int id)
     : layer_id_(id),
       layer_tree_impl_(tree_impl),
       test_properties_(nullptr),
-      scroll_clip_layer_id_(Layer::INVALID_ID),
       main_thread_scrolling_reasons_(
           MainThreadScrollingReason::kNotScrollingOnMain),
-      scrollable_(false),
       should_flatten_transform_from_property_tree_(false),
       layer_property_changed_(false),
       may_contain_video_(false),
@@ -271,30 +269,20 @@ gfx::Vector2dF LayerImpl::ScrollBy(const gfx::Vector2dF& scroll) {
   return scroll_tree.ScrollBy(scroll_node, scroll, layer_tree_impl());
 }
 
-void LayerImpl::SetScrollClipLayer(int scroll_clip_layer_id) {
-  if (scroll_clip_layer_id_ == scroll_clip_layer_id)
+void LayerImpl::SetScrollContainerBounds(const gfx::Size& bounds) {
+  if (scroll_container_bounds_ == bounds)
     return;
-  scroll_clip_layer_id_ = scroll_clip_layer_id;
+  scroll_container_bounds_ = bounds;
 
-  // The scrolling bounds are determined from the scroll clip layer's bounds.
+  // Scrollbar positions depend on the bounds.
   layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
 
-  bool scrollable = scroll_clip_layer_id_ != Layer::INVALID_ID;
-  SetScrollable(scrollable);
-}
-
-LayerImpl* LayerImpl::scroll_clip_layer() const {
-  return layer_tree_impl()->LayerById(scroll_clip_layer_id_);
-}
-
-void LayerImpl::SetScrollable(bool scrollable) {
-  if (scrollable_ == scrollable)
-    return;
-  scrollable_ = scrollable;
-  if (scrollable && layer_tree_impl()->settings().scrollbar_animator ==
-                        LayerTreeSettings::AURA_OVERLAY) {
+  if (scrollable() && layer_tree_impl()->settings().scrollbar_animator ==
+                          LayerTreeSettings::AURA_OVERLAY) {
     set_needs_show_scrollbars(true);
   }
+
+  NoteLayerPropertyChanged();
 }
 
 std::unique_ptr<LayerImpl> LayerImpl::CreateLayerImpl(
@@ -344,8 +332,7 @@ void LayerImpl::PushPropertiesTo(LayerImpl* layer) {
   }
 
   layer->SetBounds(bounds_);
-  layer->SetScrollClipLayer(scroll_clip_layer_id_);
-  layer->SetScrollable(scrollable_);
+  layer->SetScrollContainerBounds(scroll_container_bounds_);
   layer->SetMutableProperties(mutable_properties_);
 
   // If the main thread commits multiple times before the impl thread actually
@@ -511,8 +498,9 @@ void LayerImpl::SetBounds(const gfx::Size& bounds) {
 
   bounds_ = bounds;
 
-  // Scrollbar positions depend on scrolling bounds and scroll clip bounds.
-  layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
+  // Scrollbar positions depend on the scrolling layer bounds.
+  if (scrollable())
+    layer_tree_impl()->SetScrollbarGeometriesNeedUpdate();
 
   NoteLayerPropertyChanged();
 }

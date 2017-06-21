@@ -2010,6 +2010,10 @@ bool LayerTreeHostImpl::HaveRootScrollLayer() const {
   return !!InnerViewportScrollLayer();
 }
 
+LayerImpl* LayerTreeHostImpl::InnerViewportContainerLayer() const {
+  return active_tree_->InnerViewportContainerLayer();
+}
+
 LayerImpl* LayerTreeHostImpl::InnerViewportScrollLayer() const {
   return active_tree_->InnerViewportScrollLayer();
 }
@@ -2020,6 +2024,10 @@ ScrollNode* LayerTreeHostImpl::InnerViewportScrollNode() const {
     return nullptr;
   ScrollTree& scroll_tree = active_tree_->property_trees()->scroll_tree;
   return scroll_tree.Node(inner_viewport_scroll_layer->scroll_tree_index());
+}
+
+LayerImpl* LayerTreeHostImpl::OuterViewportContainerLayer() const {
+  return active_tree_->OuterViewportContainerLayer();
 }
 
 LayerImpl* LayerTreeHostImpl::OuterViewportScrollLayer() const {
