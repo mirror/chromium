@@ -112,14 +112,12 @@ const SensorConfiguration* SensorProxy::DefaultConfig() const {
 
 void SensorProxy::UpdateSensorReading() {
   DCHECK(IsInitialized());
-  int read_attempts = 0;
-  const int kMaxReadAttemptsCount = 10;
   device::SensorReading reading_data;
-  while (!TryReadFromBuffer(reading_data)) {
-    if (++read_attempts == kMaxReadAttemptsCount) {
-      HandleSensorError();
-      return;
-    }
+  const auto* buffer = static_cast<const device::SensorReadingSharedBuffer*>(
+      shared_buffer_.get());
+  if (!buffer->GetReading(&reading_data)) {
+    HandleSensorError();
+    return;
   }
 
   if (reading_.timestamp != reading_data.timestamp) {
@@ -247,19 +245,6 @@ void SensorProxy::OnRemoveConfigurationCompleted(double frequency,
   }
 
   frequencies_used_.erase(index);
-}
-
-bool SensorProxy::TryReadFromBuffer(device::SensorReading& result) {
-  DCHECK(IsInitialized());
-  const ReadingBuffer* buffer =
-      static_cast<const ReadingBuffer*>(shared_buffer_.get());
-  const device::OneWriterSeqLock& seqlock = buffer->seqlock.value();
-  auto version = seqlock.ReadBegin();
-  auto reading_data = buffer->reading;
-  if (seqlock.ReadRetry(version))
-    return false;
-  result = reading_data;
-  return true;
 }
 
 void SensorProxy::OnPollingTimer(TimerBase*) {
