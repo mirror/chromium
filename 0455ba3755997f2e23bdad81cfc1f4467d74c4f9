@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a78bbcf_662c42af",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-21T14:14:02Z",
+      "side": 1,
+      "message": "is this needed if we also call it in wasShown?",
+      "revId": "0455ba3755997f2e23bdad81cfc1f4467d74c4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
