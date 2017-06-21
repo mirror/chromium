@@ -12,6 +12,7 @@
 #include "base/logging.h"
 #include "base/strings/string16.h"
 #include "base/strings/utf_string_conversions.h"
+#include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/arc/voice_interaction/arc_voice_interaction_framework_service.h"
 #include "chrome/browser/chromeos/first_run/first_run.h"
 #include "chrome/browser/ui/ash/launcher/chrome_launcher_controller.h"
@@ -126,6 +127,7 @@ void ArcVoiceInteractionArcHomeService::GetVoiceInteractionStructure(
 
 void ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete() {
   DCHECK_CURRENTLY_ON(content::BrowserThread::UI);
+  arc::ArcSessionManager::Get()->ReleasePAILock();
   chromeos::first_run::MaybeLaunchDialogImmediately();
 }
 

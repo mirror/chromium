@@ -204,6 +204,13 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   // This can be called only when ARC is running.
   void StopAndEnableArc();
 
+  // Locks PAI to be run on sign in completed.
+  void AcquirePAILock();
+
+  // Unlocks PAI to be run on sign in completed. If ARC is already signed in
+  // then PAI is started immediately.
+  void ReleasePAILock();
+
   ArcSupportHost* support_host() { return support_host_.get(); }
 
   // TODO(hidehiko): Get rid of the getter by migration between ArcAuthContext
@@ -242,6 +249,8 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
  private:
   // Reports statuses of OptIn flow to UMA.
   class ScopedOptInFlowTracker;
+  // PAI launcher.
+  class ScopedPaiLauncher;
 
   // RequestEnable() has a check in order not to trigger starting procedure
   // twice. This method can be called to bypass that check when restarting.
@@ -342,6 +351,7 @@ class ArcSessionManager : public ArcSessionRunner::Observer,
   std::unique_ptr<ArcAndroidManagementChecker> android_management_checker_;
 
   std::unique_ptr<ScopedOptInFlowTracker> scoped_opt_in_tracker_;
+  std::unique_ptr<ScopedPaiLauncher> scoped_pai_launcher_;
 
   // The time when the sign in process started.
   base::Time sign_in_start_time_;

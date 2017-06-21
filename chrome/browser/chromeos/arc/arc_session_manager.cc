@@ -133,6 +133,44 @@ class ArcSessionManager::ScopedOptInFlowTracker {
   DISALLOW_COPY_AND_ASSIGN(ScopedOptInFlowTracker);
 };
 
+// PAI flow launcher that is started when both conditions are true; ARC was
+// signed in and no lock to start PAI flow exists.
+class ArcSessionManager::ScopedPaiLauncher {
+ public:
+  ScopedPaiLauncher() = default;
+
+  ~ScopedPaiLauncher() = default;
+
+  void AcquireLock() { ++lock_count_; }
+
+  void ReleaseLock() {
+    DCHECK(lock_count_);
+    --lock_count_;
+    MaybeStart();
+  }
+
+  void OnReadyToStart() {
+    ready_to_start_ = true;
+
+    MaybeStart();
+  }
+
+ private:
+  void MaybeStart() {
+    if (!ready_to_start_ || lock_count_ || started_)
+      return;
+
+    StartPaiFlow();
+    started_ = true;
+  }
+
+  int lock_count_ = 0;
+  bool started_ = false;
+  bool ready_to_start_ = false;
+
+  DISALLOW_COPY_AND_ASSIGN(ScopedPaiLauncher);
+};
+
 ArcSessionManager::ArcSessionManager(
     std::unique_ptr<ArcSessionRunner> arc_session_runner)
     : arc_session_runner_(std::move(arc_session_runner)),
@@ -315,6 +353,9 @@ void ArcSessionManager::OnProvisioningFinished(ProvisioningResult result) {
       playstore_launcher_.reset(
           new ArcAppLauncher(profile_, kPlayStoreAppId, true, false));
     }
+
+    if (scoped_pai_launcher_)
+      scoped_pai_launcher_->OnReadyToStart();
 
     for (auto& observer : observer_list_)
       observer.OnArcInitialStart();
@@ -503,6 +544,16 @@ void ArcSessionManager::StopAndEnableArc() {
   StopArc();
 }
 
+void ArcSessionManager::AcquirePAILock() {
+  if (scoped_pai_launcher_)
+    scoped_pai_launcher_->AcquireLock();
+}
+
+void ArcSessionManager::ReleasePAILock() {
+  if (scoped_pai_launcher_)
+    scoped_pai_launcher_->ReleaseLock();
+}
+
 void ArcSessionManager::OnArcSignInTimeout() {
   LOG(ERROR) << "Timed out waiting for first sign in.";
   OnProvisioningFinished(ProvisioningResult::OVERALL_SIGN_IN_TIMEOUT);
@@ -679,9 +730,11 @@ void ArcSessionManager::MaybeStartTermsOfServiceNegotiation() {
   // is fixed.
   SetState(State::NEGOTIATING_TERMS_OF_SERVICE);
 
-  if (!scoped_opt_in_tracker_ &&
-      !profile_->GetPrefs()->GetBoolean(prefs::kArcSignedIn)) {
-    scoped_opt_in_tracker_ = base::MakeUnique<ScopedOptInFlowTracker>();
+  if (!profile_->GetPrefs()->GetBoolean(prefs::kArcSignedIn)) {
+    if (!scoped_opt_in_tracker_)
+      scoped_opt_in_tracker_ = base::MakeUnique<ScopedOptInFlowTracker>();
+    if (!scoped_pai_launcher_)
+      scoped_pai_launcher_ = base::MakeUnique<ScopedPaiLauncher>();
   }
 
   if (!IsArcTermsOfServiceNegotiationNeeded()) {

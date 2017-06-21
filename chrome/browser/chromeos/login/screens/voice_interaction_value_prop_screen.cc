@@ -4,6 +4,7 @@
 
 #include "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen.h"
 
+#include "chrome/browser/chromeos/arc/arc_session_manager.h"
 #include "chrome/browser/chromeos/login/screens/base_screen_delegate.h"
 #include "chrome/browser/chromeos/login/screens/voice_interaction_value_prop_screen_view.h"
 #include "chrome/browser/profiles/profile.h"
@@ -40,6 +41,8 @@ void VoiceInteractionValuePropScreen::Show() {
     return;
 
   view_->Show();
+
+  arc::ArcSessionManager::Get()->AcquirePAILock();
 }
 
 void VoiceInteractionValuePropScreen::Hide() {
@@ -64,10 +67,13 @@ void VoiceInteractionValuePropScreen::OnUserAction(
 }
 
 void VoiceInteractionValuePropScreen::OnNoThanksPressed() {
+  arc::ArcSessionManager::Get()->ReleasePAILock();
   Finish(ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_SKIPPED);
 }
 
 void VoiceInteractionValuePropScreen::OnContinuePressed() {
+  // Note! ReleasePAILock will be called at
+  // ArcVoiceInteractionArcHomeService::OnVoiceInteractionOobeSetupComplete.
   ProfileManager::GetActiveUserProfile()->GetPrefs()->SetBoolean(
       prefs::kArcVoiceInteractionValuePropAccepted, true);
   Finish(ScreenExitCode::VOICE_INTERACTION_VALUE_PROP_ACCEPTED);
