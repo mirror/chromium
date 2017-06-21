@@ -47,6 +47,7 @@ class UiSceneManager {
   void SetScreenCapturingIndicator(bool enabled);
   void SetAudioCapturingIndicator(bool enabled);
   void SetLocationAccessIndicator(bool enabled);
+  void SetBluetoothConnectedIndicator(bool enabled);
 
   // These methods are currently stubbed.
   void SetHistoryButtonsEnabled(bool can_go_back, bool can_go_forward);
@@ -98,6 +99,7 @@ class UiSceneManager {
   UiElement* exit_warning_ = nullptr;
   UiElement* main_content_ = nullptr;
   UiElement* audio_capture_indicator_ = nullptr;
+  UiElement* bluetooth_connected_indicator_ = nullptr;
   UiElement* video_capture_indicator_ = nullptr;
   UiElement* screen_capture_indicator_ = nullptr;
   UiElement* location_access_indicator_ = nullptr;
@@ -119,6 +121,7 @@ class UiSceneManager {
   bool video_capturing_ = false;
   bool screen_capturing_ = false;
   bool location_access_ = false;
+  bool bluetooth_connected_ = false;
 
   int next_available_id_ = 1;
 

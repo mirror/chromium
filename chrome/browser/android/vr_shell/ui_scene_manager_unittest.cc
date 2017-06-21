@@ -312,6 +312,7 @@ TEST_F(UiSceneManagerTest, UiUpdatesForWebVR) {
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
 
   // All elements should be hidden.
   VerifyElementsVisible("Elements hidden", std::set<UiElementDebugId>{});
@@ -323,6 +324,7 @@ TEST_F(UiSceneManagerTest, UiUpdateTransitionToWebVR) {
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
 
   // Transition to WebVR mode
   manager_->SetWebVrMode(true, false);
@@ -338,37 +340,44 @@ TEST_F(UiSceneManagerTest, CaptureIndicatorsVisibility) {
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
   EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
+  EXPECT_FALSE(IsVisible(kBluetoothConnectedIndicator));
 
   manager_->SetAudioCapturingIndicator(true);
   manager_->SetVideoCapturingIndicator(true);
   manager_->SetScreenCapturingIndicator(true);
   manager_->SetLocationAccessIndicator(true);
+  manager_->SetBluetoothConnectedIndicator(true);
 
   EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
   EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
   EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
   EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
+  EXPECT_TRUE(IsVisible(kBluetoothConnectedIndicator));
 
   manager_->SetWebVrMode(true, false);
   EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
   EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
+  EXPECT_FALSE(IsVisible(kBluetoothConnectedIndicator));
 
   manager_->SetWebVrMode(false, false);
   EXPECT_TRUE(IsVisible(kAudioCaptureIndicator));
   EXPECT_TRUE(IsVisible(kVideoCaptureIndicator));
   EXPECT_TRUE(IsVisible(kScreenCaptureIndicator));
   EXPECT_TRUE(IsVisible(kLocationAccessIndicator));
+  EXPECT_TRUE(IsVisible(kBluetoothConnectedIndicator));
 
   manager_->SetAudioCapturingIndicator(false);
   manager_->SetVideoCapturingIndicator(false);
   manager_->SetScreenCapturingIndicator(false);
   manager_->SetLocationAccessIndicator(false);
+  manager_->SetBluetoothConnectedIndicator(false);
 
   EXPECT_FALSE(IsVisible(kAudioCaptureIndicator));
   EXPECT_FALSE(IsVisible(kVideoCaptureIndicator));
   EXPECT_FALSE(IsVisible(kScreenCaptureIndicator));
   EXPECT_FALSE(IsVisible(kLocationAccessIndicator));
+  EXPECT_FALSE(IsVisible(kBluetoothConnectedIndicator));
 }
 }  // namespace vr_shell
