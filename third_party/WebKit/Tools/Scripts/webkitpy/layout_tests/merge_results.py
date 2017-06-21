@@ -230,7 +230,12 @@ class JSONMerger(Merger):
                 if match_func(obj, name):
                     return merge_func(objs, name=name)
 
-        return self.fallback_matcher(objs, name=name)
+        try:
+            return self.fallback_matcher(objs, name=name)
+        except MergeFailure as f:
+            # FIXME: temporary for testing
+            print 'CAUGHT MergeFailure:', f
+            return []
 
 
 # Classes for recursively merging a directory together.

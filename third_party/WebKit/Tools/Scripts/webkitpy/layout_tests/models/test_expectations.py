@@ -702,7 +702,11 @@ class TestExpectationsModel(object):
         if not self.has_test(test.name):
             return
         self._clear_expectations_for_test(test)
-        del self._test_to_expectation_line[test]
+        try:
+            del self._test_to_expectation_line[test]
+        except KeyError:
+            # FIXME(jeffcarp): Find root cause of this
+            print 'Test could not be removed from expectations:', test.name
 
     def add_expectation_line(self, expectation_line,
                              model_all_expectations=False):
