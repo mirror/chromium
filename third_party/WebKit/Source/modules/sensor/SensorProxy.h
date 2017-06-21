@@ -107,8 +107,6 @@ class SensorProxy final : public GarbageCollectedFinalized<SensorProxy>,
       bool result);
   void OnRemoveConfigurationCompleted(double frequency, bool result);
 
-  bool TryReadFromBuffer(device::SensorReading& result);
-
   void OnPollingTimer(TimerBase*);
   // Starts polling timer if needed (continuous reporting, initialized, not
   // suspended and has configurations added).
