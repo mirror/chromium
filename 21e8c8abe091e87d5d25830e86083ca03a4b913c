@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "889556a5_67738e4f",
+        "filename": "chromecast/browser/devtools/remote_debugging_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T23:15:40Z",
+      "side": 1,
+      "message": "Looks like |start_immediately| is getting dropped.",
+      "revId": "21e8c8abe091e87d5d25830e86083ca03a4b913c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2237880d_3e527236",
+        "filename": "chromecast/browser/devtools/remote_debugging_server.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T23:15:40Z",
+      "side": 1,
+      "message": "Tracing can start the server as well. Since we now unconditionally restart the server, tracing session is disconnected. This means that now I cannot trace load events. I used to start tracing and launch app, which is now broken.",
+      "revId": "21e8c8abe091e87d5d25830e86083ca03a4b913c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
