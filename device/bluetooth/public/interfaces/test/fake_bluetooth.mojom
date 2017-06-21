@@ -123,6 +123,15 @@ interface FakeCentral {
         string service_id,
         string peripheral_address) => (string? characteristic_id);
 
+  // Adds a fake GATT Descriptor with |descriptor_uuid| to be found when
+  // discovering the peripheral's GATT Attributes. Runs its callback with
+  // the fake descriptor's Id. Runs its callback with nullopt if it failed
+  // to add the fake descriptor.
+  AddFakeDescriptor(UUID descriptor_uuid,
+                    string characteristic_id,
+                    string service_id,
+                    string peripheral_address) => (string? descriptor_id);
+
   // Sets the next read response for characteristic with |characteristics_id|
   // in |service_id| and in |peripheral_address| to |code| and |value|.
   // |code| could be a GATT Error Response from

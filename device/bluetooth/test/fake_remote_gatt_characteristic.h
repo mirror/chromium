@@ -11,6 +11,7 @@
 #include "device/bluetooth/bluetooth_remote_gatt_characteristic.h"
 #include "device/bluetooth/bluetooth_uuid.h"
 #include "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.h"
+#include "device/bluetooth/test/fake_remote_gatt_descriptor.h"
 
 namespace device {
 class BluetoothRemoteGattService;
@@ -30,6 +31,10 @@ class FakeRemoteGattCharacteristic
                                mojom::CharacteristicPropertiesPtr properties,
                                device::BluetoothRemoteGattService* service);
   ~FakeRemoteGattCharacteristic() override;
+
+  // Adds a fake descriptor with |descriptor_uuid| to this characteristic.
+  // Returns the descriptor's Id.
+  std::string AddFakeDescriptor(const device::BluetoothUUID& descriptor_uuid);
 
   // If |gatt_code| is mojom::kGATTSuccess the next read request will call
   // its success callback with |value|. Otherwise it will call its error
@@ -91,6 +96,12 @@ class FakeRemoteGattCharacteristic
   // Used to decide which callback should be called when
   // ReadRemoteCharacteristic is called.
   base::Optional<ReadResponse> next_read_response_;
+
+  size_t last_descriptor_id_;
+
+  using FakeDescriptorMap =
+      std::map<std::string, std::unique_ptr<FakeRemoteGattDescriptor>>;
+  FakeDescriptorMap fake_descriptors_;
 
   base::WeakPtrFactory<FakeRemoteGattCharacteristic> weak_ptr_factory_;
 };
