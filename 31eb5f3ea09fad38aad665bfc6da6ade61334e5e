@@ -102,6 +102,24 @@
     },
     {
       "key": {
+        "uuid": "9fc30fe5_9ab7c17b",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T22:33:16Z",
+      "side": 1,
+      "message": "I\u0027ve renamed to LoginDataDispatcher and added some additional comments to the class.",
+      "parentUuid": "1715660f_d0315765",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "e3dc64ba_a781454d",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -161,6 +179,30 @@
       "side": 1,
       "message": "You are right. And new code is probably worse than push_back version.\n\nLet\u0027s either restore to push_back or change it to this:\n\n   users_.emplace_back(UserState{user-\u003eaccount_id});\n\u003d\u003e users_.emplace_back(user-\u003eaccount_id);",
       "parentUuid": "4da09a6e_36f57ba5",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "748aaada_59845f57",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T22:33:16Z",
+      "side": 1,
+      "message": "Reverted, I prefer the explicit UserState constructor call.",
+      "parentUuid": "aa960aba_9cfa46be",
       "range": {
         "startLine": 98,
         "startChar": 11,
