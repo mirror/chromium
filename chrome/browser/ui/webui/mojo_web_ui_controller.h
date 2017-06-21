@@ -13,9 +13,10 @@
 #include "chrome/browser/ui/webui/mojo_web_ui_handler.h"
 #include "content/public/browser/render_frame_host.h"
 #include "content/public/browser/render_view_host.h"
+#include "content/public/browser/web_contents.h"
+#include "content/public/browser/web_contents_observer.h"
 #include "content/public/browser/web_ui_controller.h"
 #include "mojo/public/cpp/system/core.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "services/service_manager/public/cpp/binder_registry.h"
 
 class MojoWebUIControllerBase : public content::WebUIController {
@@ -39,22 +40,30 @@ class MojoWebUIControllerBase : public content::WebUIController {
 // . Override BindUIHandler() to create and bind the implementation of the
 //   bindings.
 template <typename Interface>
-class MojoWebUIController : public MojoWebUIControllerBase {
+class MojoWebUIController : public MojoWebUIControllerBase,
+                            public content::WebContentsObserver {
  public:
   explicit MojoWebUIController(content::WebUI* contents)
-      : MojoWebUIControllerBase(contents), weak_factory_(this) {}
+      : MojoWebUIControllerBase(contents),
+        content::WebContentsObserver(contents->GetWebContents()),
+        weak_factory_(this) {
+    registry_.AddInterface<Interface>(base::Bind(
+        &MojoWebUIController::BindUIHandler, base::Unretained(this)));
+  }
   ~MojoWebUIController() override {}
 
-  void RenderFrameCreated(
-      content::RenderFrameHost* render_frame_host) override {
-    MojoWebUIControllerBase::RenderFrameCreated(render_frame_host);
-
-    // Right now, this is expected to be called only for main frames.
-    DCHECK(!render_frame_host->GetParent());
-    render_frame_host->GetInterfaceRegistry()->
-        AddInterface<Interface>(
-            base::Bind(&MojoWebUIController::BindUIHandler,
-                       weak_factory_.GetWeakPtr()));
+  // content::WebContentsObserver implementation.
+  void BindInterfaceRequestFromFrame(
+      content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override {
+    if (registry_.CanBindInterface(interface_name)) {
+      // Right now, this is expected to be called only for main frames.
+      DCHECK(!render_frame_host->GetParent());
+      registry_.BindInterface(source_info, interface_name,
+                              std::move(*interface_pipe));
+    }
   }
 
  protected:
@@ -63,6 +72,8 @@ class MojoWebUIController : public MojoWebUIControllerBase {
                              mojo::InterfaceRequest<Interface> request) = 0;
 
  private:
+  service_manager::BinderRegistry registry_;
+
   base::WeakPtrFactory<MojoWebUIController> weak_factory_;
 
   DISALLOW_COPY_AND_ASSIGN(MojoWebUIController);

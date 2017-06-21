@@ -175,14 +175,15 @@ void MimeHandlerViewGuest::CreateWebContents(
                                    guest_site_instance.get());
   params.guest_delegate = this;
   callback.Run(WebContents::Create(params));
+
+  registry_.AddInterface(
+      base::Bind(&MimeHandlerServiceImpl::Create, stream_->GetWeakPtr()));
 }
 
 void MimeHandlerViewGuest::DidAttachToEmbedder() {
   web_contents()->GetController().LoadURL(
       stream_->handler_url(), content::Referrer(),
       ui::PAGE_TRANSITION_AUTO_TOPLEVEL, std::string());
-  web_contents()->GetMainFrame()->GetInterfaceRegistry()->AddInterface(
-      base::Bind(&MimeHandlerServiceImpl::Create, stream_->GetWeakPtr()));
 }
 
 void MimeHandlerViewGuest::DidInitialize(
@@ -285,6 +286,17 @@ void MimeHandlerViewGuest::DocumentOnLoadCompletedInMainFrame() {
   if (auto* rwh = GetOwnerRenderWidgetHost()) {
     rwh->Send(new ExtensionsGuestViewMsg_MimeHandlerViewGuestOnLoadCompleted(
         element_instance_id()));
+  }
+}
+
+void MimeHandlerViewGuest::BindInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  if (registry_.CabBindInterface(interface_name)) {
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(*interface_pipe));
   }
 }
 
