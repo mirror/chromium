@@ -22,6 +22,30 @@
       "revId": "570738274aaff0667c8e332dfff1b6f23b1bd3c6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "71ce7c6a_72ac30b0",
+        "filename": "chrome/browser/android/chrome_entry_point.cc",
+        "patchSetId": 22
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1201959
+      },
+      "writtenOn": "2017-06-21T14:12:51Z",
+      "side": 1,
+      "message": "The old register functions (the ones created by previous jni_generator.py) now have empty bodies and always return true. We created a separate register function which sits at the same header file as the previous one but has a concrete body. This is the function called by our central header file. Since the previous ones are no-ops, we only register natives once.",
+      "parentUuid": "bd1d4824_7f2fe9e2",
+      "range": {
+        "startLine": 43,
+        "startChar": 16,
+        "endLine": 43,
+        "endChar": 38
+      },
+      "revId": "570738274aaff0667c8e332dfff1b6f23b1bd3c6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
