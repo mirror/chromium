@@ -16,6 +16,24 @@
       "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40be5884_13d0f2b5",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002513
+      },
+      "writtenOn": "2017-06-21T23:18:14Z",
+      "side": 1,
+      "message": "I was hoping to use it for discardable image gathering as as a way for us to dump a pob into tracing. However, khushalsagar@ mentioned that perhaps the image gathering should stay the same, and I don\u0027t know if tracing is a compelling enough case for keeping it separate. WDYT?",
+      "parentUuid": "1a7e194a_7691e749",
+      "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
