@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "53d43f92_150d0ed3",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T20:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "96f2e1b2_82953408",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "01324513_8c044c29",
         "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
         "patchSetId": 3
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-16T23:27:11Z",
       "side": 1,
       "message": "Why are these called on the UI thread? Aren\u0027t they IPC handlers?",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea33aa38_5eb29746",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 63,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T20:39:22Z",
+      "side": 1,
+      "message": "Yes, done.",
+      "parentUuid": "01324513_8c044c29",
       "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "017ec495_e3453964",
+        "filename": "chrome/browser/renderer_host/pepper/pepper_output_protection_message_filter.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1113499
+      },
+      "writtenOn": "2017-06-21T20:39:22Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c68cc773_49fcd1f2",
+      "revId": "c5403cebb24a497193222ead354a4125bdb4d008",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
