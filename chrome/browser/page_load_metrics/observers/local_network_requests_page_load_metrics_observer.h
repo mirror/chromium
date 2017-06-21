@@ -242,8 +242,7 @@ class LocalNetworkRequestsPageLoadMetricsObserver
 
   // Stores the counts of resource requests for each localhost port as
   // pairs of (successful, failed) request counts.
-  std::map < int, SuccessFao;
-  Cpimts > localhost_request_counts_;
+  std::map<int, SuccessFailCounts> localhost_request_counts_;
 
   // The page load type. This is used to determine what resource requests to
   // monitor while the page is committed and to determine the UMA histogram name

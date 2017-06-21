@@ -58,7 +58,7 @@ bool GetIPAndPort(
   // |extra_request_info|.
   bool ip_exists = net::ParseURLHostnameToAddress(
       extra_request_info.host_port_pair.host(), &resource_ip);
-  int resource_port = extra_request_info.host_port_pair.port();
+  resource_port = extra_request_info.host_port_pair.port();
 
   // If the request failed, it's possible we didn't receive the IP address,
   // possibly because domain resolution failed. As a backup, try getting the IP
@@ -66,7 +66,7 @@ bool GetIPAndPort(
   // itself as it might be an IP address if it is a local network request, which
   // is what we care about.
   if (!ip_exists && extra_request_info.url.is_valid()) {
-    if (net::IsLocalhost(extra_request_info.url.HostNoBrackets()) {
+    if (net::IsLocalhost(extra_request_info.url.HostNoBrackets())) {
       resource_ip = net::IPAddress::IPv4Localhost();
       ip_exists = true;
     }
