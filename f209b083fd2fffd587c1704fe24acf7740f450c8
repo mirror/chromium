@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "c63814e0_842d3da0",
+        "filename": "components/offline_pages/core/offline_page_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T20:34:22Z",
+      "side": 1,
+      "message": "SGTM",
+      "parentUuid": "44b6c692_840004a4",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fe2d37c9_8c36c4a0",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 6
