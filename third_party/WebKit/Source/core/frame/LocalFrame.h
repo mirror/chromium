@@ -413,9 +413,14 @@ class ScopedFrameBlamer {
 
  public:
   explicit ScopedFrameBlamer(LocalFrame*);
-  ~ScopedFrameBlamer();
+  ~ScopedFrameBlamer() {
+    if (UNLIKELY(frame_))
+      LeaveContext();
+  }
 
  private:
+  void LeaveContext();
+
   Member<LocalFrame> frame_;
 };
 
