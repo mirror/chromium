@@ -144,6 +144,7 @@ class ControllerImpl : public Controller,
 
   // Postable methods meant to just be pass throughs to Client APIs.  This is
   // meant to help prevent reentrancy.
+  void SendOnServiceUnavailable();
   void SendOnDownloadUpdated(DownloadClient client_id,
                              const std::string& guid,
                              uint64_t bytes_downloaded);
