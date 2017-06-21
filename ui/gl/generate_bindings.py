@@ -1990,6 +1990,25 @@ EGL_FUNCTIONS = [
   'arguments':
       'EGLDisplay dpy, EGLContext ctx, EGLint attribute, EGLint* value', },
 { 'return_type': 'EGLBoolean',
+  'versions': [{ 'name': 'eglQueryDmaBufFormatsEXT',
+                 'extensions':
+                     ['EGL_EXT_image_dma_buf_import_modifiers',
+                      'EGL_EXT_image_dma_buf_import',
+                      'EGL_KHR_image_base'] }],
+  'arguments':
+      'EGLDisplay dpy, EGLint max_formats, EGLint* formats,'
+      'EGLint* num_formats' },
+{ 'return_type': 'EGLBoolean',
+  'versions': [{ 'name': 'eglQueryDmaBufModifiersEXT',
+                 'extensions':
+                     ['EGL_EXT_image_dma_buf_import_modifiers',
+                      'EGL_EXT_image_dma_buf_import',
+                      'EGL_KHR_image_base'] }],
+  'arguments':
+      'EGLDisplay dpy, EGLint format, EGLint max_modifiers, '
+      'EGLuint64KHR* modifiers, EGLBoolean* external_only, '
+      'EGLint* num_modifiers' },
+{ 'return_type': 'EGLBoolean',
   'versions': [{ 'name': 'eglQueryStreamKHR',
                  'extensions': ['EGL_KHR_stream'] }],
   'arguments':
