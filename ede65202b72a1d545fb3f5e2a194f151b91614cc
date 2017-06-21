@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "58fbb3ef_61c3dc0f",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T05:08:23Z",
+      "side": 1,
+      "message": "Nit: please use write_without_response, etc naming",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "ede65202b72a1d545fb3f5e2a194f151b91614cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
