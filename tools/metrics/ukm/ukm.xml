@@ -442,6 +442,34 @@ be describing additional metrics about the same event.
   </metric>
 </event>
 
+<event name="PasswordForm">
+  <owner>battre@chromium.org</owner>
+  <summary>
+    Metrics about password forms on websites and the user's interactions with
+    them.
+  </summary>
+  <metric name="Submission.Observed">
+    <summary>
+      Records in the buckes 1 and 0 the occurreces of observed form submissions
+      and abandoned forms that were not submitted.
+    </summary>
+  </metric>
+  <metric name="Submission.SubmissionResult">
+    <summary>
+      Records in buckets numbered according to
+      PasswordFormMetricsRecorder::SubmitResult the outcome of submissions. Note
+      that no event is recorded for kSubmitResultNotSubmitted.
+    </summary>
+  </metric>
+  <metric name="Submission.SubmittedFormType">
+    <summary>
+      Records the classification of a form at submission time. The buckets
+      correspond to PasswordFormMetricsRecorder::SubmittedFormType. Note that no
+      event is recorded for kSubmittedFormTypeUnspecified.
+    </summary>
+  </metric>
+</event>
+
 <event name="PaymentRequest.CheckoutEvents">
   <owner>sebsg@chromium.org</owner>
   <metric name="CompletionsStatus">
