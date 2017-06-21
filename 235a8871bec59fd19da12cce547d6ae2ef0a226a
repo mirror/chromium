@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "1c75aca4_d32204fa",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 285,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T21:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "81f4f06b_1552aab5",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7d6b4688_3b5480a9",
         "filename": "ash/system/user/user_card_view.cc",
         "patchSetId": 1
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T21:10:44Z",
       "side": 1,
       "message": "nit: put 0 in a named constant",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8000cf4a_a4b1a48d",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 381,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T21:25:09Z",
+      "side": 1,
+      "message": "Changed to |user_index_| and added DCHECK_EQ(0, user_index_) with a comment.",
+      "parentUuid": "7d6b4688_3b5480a9",
       "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -50,6 +86,24 @@
       "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "04374e26_e2c9f35a",
+        "filename": "ash/system/user/user_card_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 387,
+      "author": {
+        "id": 1000101
+      },
+      "writtenOn": "2017-06-21T21:25:09Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "03ab0218_70b4eec2",
+      "revId": "235a8871bec59fd19da12cce547d6ae2ef0a226a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
