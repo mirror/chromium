@@ -501,6 +501,9 @@ void LocalStorageContextMojo::OnDirectoryOpened(
   // Default write_buffer_size is 4 MB but that might leave a 3.999
   // memory allocation in RAM from a log file recovery.
   options->write_buffer_size = 64 * 1024;
+  // Default block_cache_size is 8 MB, but we don't really want to cache that
+  // much data, so instead set it to 2 MB.
+  options->block_cache_size = 2 * 1024 * 1024;
   leveldb_service_->OpenWithOptions(
       std::move(options), std::move(directory_clone), "leveldb",
       memory_dump_id_, MakeRequest(&database_),
