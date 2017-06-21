@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8c9c9a26_f91d8903",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 79,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "The issue is that HostPortPair explicitly retains the brackets for IPv6 addresses in its internal string value for host, whereas net::IPAddress::ParseIPLiteralToBytes assumes (and doesn\u0027t check) that the address doesn\u0027t have them and adds them as part of the parsing process.\n\nIf HostPortPair had a HostNoBrackets() method like GURL, or if IsLocalHost didn\u0027t assume that IPv6 addresses would come without brackets, this check wouldn\u0027t be necessary. What would you recommend I do in this case?",
+      "parentUuid": "b4624dc1_7f689a1e",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b6bbdfeb_da698d1c",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "299e2aa9_7c461b91",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b6bbdfeb_da698d1c",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "071d152e_607114e6",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d0309019_aa2d35a7",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1ee72470_03997425",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-20T20:08:55Z",
       "side": 1,
       "message": "could we do this test first, before the net::IsLocalhost() call? e.g.\n\n// In cases where the page loaded was not a network resource...\nif (!parsed_successfully || !page_ip_address_.IsValid() || page_ip_address_.IsZero())\n  return STOP_OBSERVING;\n\nif (net::IsLocalhost(address.host()) || ...)",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6517f058_c5f17295",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "net::ParseURLHostnameToAddress checks IPAddress::IsValid before returning, so that check is superfluous, but I have made the rest of the change.",
+      "parentUuid": "1ee72470_03997425",
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "0e4ad0f5_c2ec3bea",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Sure, I will ask him. I explicitly chose this list as the subset of addresses from that table that we would actually see as the IP address of a page (e.g., not multicast or textbook example), so I would need him to expose a separate list from within ip_address.cc for my purposes or use my current code. I think for maintainability sake, having him expose it would definitely be preferred.",
+      "parentUuid": "a8d393df_cffa860d",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a12eb1fe_658ec2e8",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -101,6 +191,24 @@
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9fc3c24c_6aa53a58",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a12eb1fe_658ec2e8",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -121,6 +229,24 @@
     },
     {
       "key": {
+        "uuid": "7b8804ca_16d36b04",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "33d6c4be_170f87fb",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a0cebde0_3558013e",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -138,6 +264,24 @@
     },
     {
       "key": {
+        "uuid": "1d616f2a_8679b8f0",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a0cebde0_3558013e",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "23369899_d55bd832",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -149,6 +293,24 @@
       "writtenOn": "2017-06-20T20:08:55Z",
       "side": 1,
       "message": "the block of code from here to line 175 looks like a good candidate for factoring into a helper method: \n\nstd::pair\u003cnet::IPAddress, int\u003e GetIPAndPort(const page_load_metrics::ExtraRequestCompleteInfo\u0026 extra_request_info);",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d1c70fe_a2ed706a",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 149,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done.\n\nSince getting the IP and port may fail (one of my unit tests checks that scenario), I refactored to a method with the signature:\nbool GetIPAndPort(const page_load_metrics::ExtraRequestCompleteInfo\u0026 extra_request_info, net::IPAddress\u0026 resource_ip, int\u0026 resource_port);",
+      "parentUuid": "23369899_d55bd832",
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -172,6 +334,24 @@
     },
     {
       "key": {
+        "uuid": "550e1306_74064fd9",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b0d1ec58_2a942232",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed0ba488_9b92bf27",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
         "patchSetId": 8
@@ -186,6 +366,24 @@
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3d95bdb3_a78c4fb6",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed0ba488_9b92bf27",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -206,6 +404,24 @@
     },
     {
       "key": {
+        "uuid": "823387dc_30927f4c",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 231,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f490c8bf_ea5845c4",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "436c664b_79328245",
         "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
         "patchSetId": 8
@@ -220,6 +436,24 @@
       "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "57a84e52_657ef988",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 8
+      },
+      "lineNbr": 245,
+      "author": {
+        "id": 1215055
+      },
+      "writtenOn": "2017-06-21T06:08:41Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "436c664b_79328245",
+      "revId": "8466c270462e7d263ac99876aae0fd6d0026e984",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
