@@ -18,6 +18,8 @@ static_library("lib") {
     "leveldb_mojo_proxy.h",
     "leveldb_service_impl.cc",
     "leveldb_service_impl.h",
+    "reporting_cache_wrapper.cc",
+    "reporting_cache_wrapper.h",
   ]
 
   public_deps = [

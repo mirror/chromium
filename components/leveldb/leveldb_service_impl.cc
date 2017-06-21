@@ -11,6 +11,7 @@
 #include "components/leveldb/env_mojo.h"
 #include "components/leveldb/leveldb_database_impl.h"
 #include "components/leveldb/public/cpp/util.h"
+#include "components/leveldb/reporting_cache_wrapper.h"
 #include "mojo/public/cpp/bindings/strong_associated_binding.h"
 #include "third_party/leveldatabase/env_chromium.h"
 #include "third_party/leveldatabase/src/helpers/memenv/memenv.h"
@@ -64,8 +65,8 @@ void LevelDBServiceImpl::OpenWithOptions(
   std::unique_ptr<MojoEnv> env_mojo(new MojoEnv(thread_, dir));
   options.env = env_mojo.get();
 
-  std::unique_ptr<leveldb::Cache> cache(
-      leveldb::NewLRUCache(open_options->block_cache_size));
+  auto cache = base::MakeUnique<ReportingCacheWrapper>(
+      base::WrapUnique(leveldb::NewLRUCache(open_options->block_cache_size)));
   options.block_cache = cache.get();
 
   leveldb::DB* db = nullptr;
