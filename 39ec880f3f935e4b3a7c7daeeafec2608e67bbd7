@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "acaf3a16_2e1b0bd6",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-21T16:52:41Z",
+      "side": 1,
+      "message": "Please help update this, s/histograms.xml/enums.xml/",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7ef56d60_c60dce7b",
         "filename": "media/blink/cdm_result_promise_helper.h",
         "patchSetId": 2
@@ -31,6 +48,24 @@
       "side": 1,
       "message": "Please just mark the histogram as \u003cobsolete\u003e, unless there were literally no samples emitted to it, for any version of Chrome.  If the histogram literally never got any data that was uploaded to the server, then it\u0027s ok to delete the metadata from the XML files.  Otherwise, it\u0027s good to preserve that metadata, so that already-uploaded data is still viewable.\n\nIt\u0027s fine to delete this enum from the C++ code, though, if it is unused.",
       "parentUuid": "7ef56d60_c60dce7b",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72687e04_c1dfe4b8",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002182
+      },
+      "writtenOn": "2017-06-21T16:52:41Z",
+      "side": 1,
+      "message": "Sorry I wasn\u0027t clear in the original question. We are not removing the UMA and all the enums. Instead, we are removing 3 enums in the C++ code and AFAICT these values were pretty much never used.\n\nIn this case, can we update enums.xml and remove the unused enums? Basically removing value 5, 6 and 7 from the list: https://cs.chromium.org/chromium/src/tools/metrics/histograms/enums.xml?rcl\u003d98deed067c4ca1bcf28f34d9f784b576e5796c38\u0026l\u003d3919",
+      "parentUuid": "22eb3dc7_0c1c67f9",
       "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
