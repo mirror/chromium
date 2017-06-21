@@ -1,0 +1,72 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6c0f42a5_9b12c040",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/multi-layout-one-frame-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T21:12:54Z",
+      "side": 0,
+      "message": "I see no other invalidations with these bounds. Is that ok?",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4e587d54_ca8649e9",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/circle-move-invalidation-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T21:12:54Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c75bfbb4_5d3f6fb2",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/inner-svg-change-viewPort-relative-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T21:12:54Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3a5ccfb_059eb9c7",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/use-setAttribute-crash-expected.txt",
+        "patchSetId": 14
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T21:12:54Z",
+      "side": 0,
+      "message": "ditto",
+      "revId": "b9b3a7839426a9e943ff139c82c584fb6258c8d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
