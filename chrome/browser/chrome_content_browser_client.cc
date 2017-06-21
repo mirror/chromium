@@ -918,6 +918,12 @@ bool SecurityOriginHasExtensionBackgroundPermission(
 }
 #endif
 
+void InvokeCallbackOnIOThread(const base::Callback<void(bool)>& callback,
+                              bool result) {
+  content::BrowserThread::PostTask(content::BrowserThread::IO, FROM_HERE,
+                                   base::Bind(callback, result));
+}
+
 }  // namespace
 
 ChromeContentBrowserClient::ChromeContentBrowserClient()
@@ -2104,7 +2110,7 @@ void ChromeContentBrowserClient::GuestPermissionRequestHelper(
           it->first, it->second, url, allow,
           base::Bind(&ChromeContentBrowserClient::FileSystemAccessed,
                      weak_factory_.GetWeakPtr(), url, render_frames,
-                     callback)));
+                     base::Bind(&InvokeCallbackOnIOThread, callback))));
 }
 
 void ChromeContentBrowserClient::RequestFileSystemPermissionOnUIThread(
