@@ -1,0 +1,280 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "6d910385_48512e10",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "No need to use base::Optional.\n\nI think we can initialize this to kMaxNumDelayableRequestsPerClient in the constructor.\n\nThen, in OnNavigate(), recompute the value based on current BDP.\nA significant majority of the code in Lines 806-845 can move to OnNavigate(). This would also simplify the nesting in that code.",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 16
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a891a6fc_cadbce7e",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "s/max_delayable_requests_overridden_value_cached_/max_delayable_requests_overridden_count_/",
+      "range": {
+        "startLine": 1019,
+        "startChar": 25,
+        "endLine": 1019,
+        "endChar": 72
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3c7c835f_27054728",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Instead of storing a set, may be store a single value of ECT.\nThen, apply the experiment on all ECTs slower than that value of ECT.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 2,
+        "endLine": 1304,
+        "endChar": 26
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f8965c5a_caa116dd",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Use the existing method: GetEffectiveConnectionTypeForName();",
+      "range": {
+        "startLine": 1310,
+        "startChar": 15,
+        "endLine": 1310,
+        "endChar": 26
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd9ea2a_3613b477",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "s/const std::string/const char...[]/",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2442b3c0_4e68dd65",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "#include \u003cmap\u003e\n#include \u003cstring\u003e",
+      "range": {
+        "startLine": 269,
+        "startChar": 12,
+        "endLine": 269,
+        "endChar": 13
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2266b673_75d7f1c1",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Instead of 2, use one of the explicit names here:\nhttps://cs.chromium.org/chromium/src/net/nqe/effective_connection_type.cc?rcl\u003d54b956cfa0755b0e4777d1e422e3e560c00c6f92\u0026l\u003d17\n\nThen, the parsing code in resource_scheduler.cc should call GetEffectiveConnectionTypeForName().\n\nThis would make the experiment config more readable (no need to mentally map the integers to ECTs).",
+      "range": {
+        "startLine": 271,
+        "startChar": 17,
+        "endLine": 271,
+        "endChar": 50
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "43cc1f1c_cb86939d",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Merge this with the line up. No need for line breaks after sentence completion.\nHere, and below too.",
+      "range": {
+        "startLine": 1036,
+        "startChar": 5,
+        "endLine": 1036,
+        "endChar": 8
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ef47d214_c2e406f7",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "s/string/std::string/",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 10
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "bf5bed7f_3061a4ed",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Is it possible to combine this with the test above?\nOne option may be to add \n for (bool enable_experiment : {false, true}) {\n  // Common code, or code conditioned on |enable_experiment|.\n}\n\nThis has an advantage that it makes it clearer what\u0027s the difference between the two tests. It also makes it clear how the behavior of scheduler changes based on |enable_experiment|.",
+      "range": {
+        "startLine": 1097,
+        "startChar": 30,
+        "endLine": 1097,
+        "endChar": 64
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c5efb4a7_9d4b02e5",
+        "filename": "net/url_request/url_request_context_storage.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 36
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ab0053d4_2b8d0c88",
+        "filename": "net/url_request/url_request_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1127744
+      },
+      "writtenOn": "2017-06-21T16:30:00Z",
+      "side": 1,
+      "message": "Why is this needed?",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
