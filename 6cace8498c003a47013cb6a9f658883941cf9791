@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "277e994e_fd26ab74",
+        "filename": "third_party/WebKit/LayoutTests/flag-specific/enable-slimming-paint-v2/paint/invalidation/svg/resource-client-removal-expected.txt",
+        "patchSetId": 16
+      },
+      "lineNbr": 39,
+      "author": {
+        "id": 1115878
+      },
+      "writtenOn": "2017-06-21T23:26:58Z",
+      "side": 0,
+      "message": "What about the changes here?",
+      "revId": "6cace8498c003a47013cb6a9f658883941cf9791",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
