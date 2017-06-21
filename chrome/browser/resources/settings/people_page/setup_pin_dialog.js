@@ -101,6 +101,9 @@ Polymer({
   attached: function() {
     this.resetState_();
     this.$.dialog.showModal();
+    setTimeout(function() {
+      this.$.pinKeyboard.focus();
+    }.bind(this), 0);
   },
 
   close: function() {
