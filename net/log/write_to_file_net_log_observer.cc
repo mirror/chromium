@@ -96,6 +96,7 @@ void WriteToFileNetLogObserver::OnAddEntry(const NetLogEntry& entry) {
   std::string json;
   base::JSONWriter::Write(*value, &json);
   fprintf(file_.get(), "%s%s", (added_events_ ? ",\n" : ""), json.c_str());
+  fflush(file_.get());
   added_events_ = true;
 }
 
