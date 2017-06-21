@@ -2,6 +2,52 @@
   "comments": [
     {
       "key": {
+        "uuid": "74a577a9_e07edafd",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 225,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-21T15:27:50Z",
+      "side": 1,
+      "message": "nit: offset",
+      "range": {
+        "startLine": 225,
+        "startChar": 31,
+        "endLine": 225,
+        "endChar": 38
+      },
+      "revId": "03a67185c7f92eebc030ea32e626d94c588d856b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90abf651_9870ce30",
+        "filename": "chrome/browser/conflicts/module_info_util_win.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 318,
+      "author": {
+        "id": 1177549
+      },
+      "writtenOn": "2017-06-21T15:27:50Z",
+      "side": 1,
+      "message": "constexpr?",
+      "range": {
+        "startLine": 318,
+        "startChar": 2,
+        "endLine": 318,
+        "endChar": 8
+      },
+      "revId": "03a67185c7f92eebc030ea32e626d94c588d856b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "58fc5a79_209cf1f9",
         "filename": "chrome/browser/conflicts/module_info_win.cc",
         "patchSetId": 2
