@@ -62,6 +62,7 @@ class DownloadDriver {
   virtual void Start(
       const RequestParams& request_params,
       const std::string& guid,
+      const base::FilePath& target_file_path,
       const net::NetworkTrafficAnnotationTag& traffic_annotation) = 0;
 
   // Cancels an existing download, all data associated with this download should

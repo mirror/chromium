@@ -91,6 +91,7 @@ bool DownloadDriverImpl::IsReady() const {
 void DownloadDriverImpl::Start(
     const RequestParams& request_params,
     const std::string& guid,
+    const base::FilePath& target_file_path,
     const net::NetworkTrafficAnnotationTag& traffic_annotation) {
   DCHECK(!request_params.url.is_empty());
   DCHECK(!guid.empty());
@@ -116,7 +117,7 @@ void DownloadDriverImpl::Start(
   download_url_params->set_guid(guid);
   download_url_params->set_transient(true);
   download_url_params->set_method(request_params.method);
-  download_url_params->set_file_path(file_dir_.AppendASCII(guid));
+  download_url_params->set_file_path(target_file_path);
 
   download_manager_->DownloadUrl(std::move(download_url_params));
 }

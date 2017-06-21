@@ -639,7 +639,7 @@ void ControllerImpl::UpdateDriverState(const Entry& entry) {
     if (driver_entry.has_value()) {
       driver_->Resume(entry.guid);
     } else {
-      driver_->Start(entry.request_params, entry.guid,
+      driver_->Start(entry.request_params, entry.guid, entry.target_file_path,
                      NO_TRAFFIC_ANNOTATION_YET);
     }
   }
@@ -700,15 +700,14 @@ void ControllerImpl::HandleCompleteDownload(CompletionType type,
   if (type == CompletionType::SUCCEED) {
     auto driver_entry = driver_->Find(guid);
     DCHECK(driver_entry.has_value());
-    // TODO(dtrainor): Move the FilePath generation to the controller and store
-    // it in Entry.  Then pass it into the DownloadDriver.
-    entry->target_file_path = driver_entry->temporary_physical_file_path;
+    DCHECK_EQ(entry->target_file_path.value(),
+              driver_entry->temporary_physical_file_path.value());
     entry->completion_time = driver_entry->completion_time;
     base::ThreadTaskRunnerHandle::Get()->PostTask(
         FROM_HERE,
         base::Bind(&ControllerImpl::SendOnDownloadSucceeded,
                    weak_ptr_factory_.GetWeakPtr(), entry->client, guid,
-                   base::FilePath(), driver_entry->bytes_downloaded));
+                   entry->target_file_path, driver_entry->bytes_downloaded));
     TransitTo(entry, Entry::State::COMPLETE, model_.get());
     ScheduleCleanupTask();
   } else {
