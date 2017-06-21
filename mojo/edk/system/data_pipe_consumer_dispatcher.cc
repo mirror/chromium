@@ -519,11 +519,13 @@ void DataPipeConsumerDispatcher::OnPortStatusChanged() {
 void DataPipeConsumerDispatcher::UpdateSignalsStateNoLock() {
   lock_.AssertAcquired();
 
-  bool was_peer_closed = peer_closed_;
+  const bool was_peer_closed = peer_closed_;
+  const bool was_peer_remote = peer_remote_;
   size_t previous_bytes_available = bytes_available_;
 
   ports::PortStatus port_status;
   int rv = node_controller_->node()->GetStatus(control_port_, &port_status);
+  peer_remote_ = port_status.peer_remote;
   if (rv != ports::OK || !port_status.receiving_messages) {
     DVLOG(1) << "Data pipe consumer " << pipe_id_ << " is aware of peer closure"
              << " [control_port=" << control_port_.name() << "]";
@@ -571,8 +573,10 @@ void DataPipeConsumerDispatcher::UpdateSignalsStateNoLock() {
   if (has_new_data)
     new_data_available_ = true;
 
-  if (peer_closed_ != was_peer_closed || has_new_data)
+  if (peer_closed_ != was_peer_closed || has_new_data ||
+      peer_remote_ != was_peer_remote) {
     watchers_.NotifyState(GetHandleSignalsStateNoLock());
+  }
 }
 
 }  // namespace edk
