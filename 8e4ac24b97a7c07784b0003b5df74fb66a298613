@@ -2,6 +2,74 @@
   "comments": [
     {
       "key": {
+        "uuid": "3467f542_44c332d9",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 464,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Vaclav: I initially thought we wanted to use the same SourceID across same-document navigations (#ref, history.pushState, etc.), but now I realize that these might have special meaning for the password manager. WDYT?",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "7ac6b374_91a4f497",
+        "filename": "chrome/browser/password_manager/chrome_password_manager_client.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 223,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "optional nit: This together with the one below seem like an ideal candidate for base::Optional\u003cukm::SourceId\u003e.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f9c08151_e385f73b",
+        "filename": "components/password_manager/core/browser/password_form_manager.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 242,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "This is a pretty nice solution!",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73de844f_0d1ef200",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Move #include to header, which already uses `int64_t`.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a8d898a5_20127917",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 6
@@ -25,6 +93,23 @@
     },
     {
       "key": {
+        "uuid": "22d11442_f37d892c",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "nit: Mention here these are declared/defined here to be accessible in tests.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "b435aba3_e20dd7ef",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 6
@@ -41,6 +126,92 @@
         "startChar": 10,
         "endLine": 23,
         "endChar": 15
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "855ae156_e7908604",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "As per style guide, there should still be one definition in the CC for these constants even if they are not currently ODR used.\n\nhttps://groups.google.com/a/chromium.org/d/topic/chromium-dev/CpispDp7Lwk/discussion",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c14a4374_d66546aa",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 23,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "nit: A constexpr specifier used in an object declaration implies const. (3 times here + 1 in unittest)\n\nNote that, however: `constexpr char* foo` implies `char* const foo` and not `const char* foo`",
+      "range": {
+        "startLine": 23,
+        "startChar": 0,
+        "endLine": 23,
+        "endChar": 9
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "caa90cfd_220ad13f",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "nit: metric (once more below)",
+      "range": {
+        "startLine": 27,
+        "startChar": 16,
+        "endLine": 27,
+        "endChar": 21
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "24f14457_cb222706",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Phrasing nit: I find this kind of phrasing much more readable than the others before. WDYT about rephrasing those to be more like this?",
+      "range": {
+        "startLine": 30,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 68
       },
       "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -71,6 +242,115 @@
     },
     {
       "key": {
+        "uuid": "3c1fea23_7e3dad73",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "nit: blank line above",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c446ad28_55437755",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "phrasing nit: into which UKM metrics are recorded",
+      "range": {
+        "startLine": 43,
+        "startChar": 43,
+        "endLine": 43,
+        "endChar": 77
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9423d873_ab816d09",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "phrasing nit: s/reported/recorded/g\n\n(Not sure about UKM, but for histograms, if UMA is off, metrics are still _recorded_, but not _reported_.)",
+      "range": {
+        "startLine": 44,
+        "startChar": 57,
+        "endLine": 44,
+        "endChar": 65
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "76169c1f_41052944",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "phrasing nit: that can be used to record metrics into the",
+      "range": {
+        "startLine": 51,
+        "startChar": 31,
+        "endLine": 51,
+        "endChar": 70
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "218b63d5_e10e7945",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 194,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "phrasing nit: Records a metric into |ukm_entry_builder_| if it is not nullptr.",
+      "range": {
+        "startLine": 194,
+        "startChar": 67,
+        "endLine": 194,
+        "endChar": 71
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "244fee9f_6c6082c1",
         "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
         "patchSetId": 6
@@ -87,6 +367,29 @@
         "startChar": 48,
         "endLine": 195,
         "endChar": 55
+      },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1cb29c94_9055dceb",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "nit: on its destruction",
+      "range": {
+        "startLine": 219,
+        "startChar": 55,
+        "endLine": 219,
+        "endChar": 69
       },
       "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
@@ -117,6 +420,91 @@
     },
     {
       "key": {
+        "uuid": "b0a7edb2_b8daef76",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Suggested signature: void ExpectUkm(Metric)?{Value|Bucket|Sample}Count(..., {size_t|int64_t count})",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2cb6e5b1_bf808aa1",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "With the new signature, you can change these to ASSERT_NE, so if this test becomes flaky, we at least won\u0027t crash the entire unittest binary.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ba01d23_a00c5d00",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 42,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Same here.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9c31fea2_88fbb9f4",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Should ASSERT on entries_count \u003d\u003d 1.",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "727cc3ef_4066bd0b",
+        "filename": "components/password_manager/core/browser/password_form_metrics_recorder_unittest.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 247,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Can we pass nullptr here given no UKM metrics being recorded?",
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "13a99fe0_4f1c54c4",
         "filename": "components/password_manager/core/browser/password_manager_client.h",
         "patchSetId": 6
@@ -134,6 +522,23 @@
         "endLine": 220,
         "endChar": 48
       },
+      "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fdf739ce_0dc629c2",
+        "filename": "tools/metrics/ukm/ukm.xml",
+        "patchSetId": 6
+      },
+      "lineNbr": 448,
+      "author": {
+        "id": 1003152
+      },
+      "writtenOn": "2017-06-21T09:47:10Z",
+      "side": 1,
+      "message": "Mention that there is one event per form discovered on the page.",
       "revId": "8e4ac24b97a7c07784b0003b5df74fb66a298613",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
