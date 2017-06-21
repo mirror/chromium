@@ -75,6 +75,9 @@ class DrmThread : public base::Thread, public ozone::mojom::DeviceCursor {
 
   void GetScanoutFormats(gfx::AcceleratedWidget widget,
                          std::vector<gfx::BufferFormat>* scanout_formats);
+  void GetScanoutFormatsWithModifiers(
+      gfx::AcceleratedWidget widget,
+      gfx::GpuMemoryBufferAttribVector* scanout_combinations);
   void SchedulePageFlip(gfx::AcceleratedWidget widget,
                         const std::vector<OverlayPlane>& planes,
                         SwapCompletionOnceCallback callback);

@@ -481,7 +481,8 @@ gfx::BufferFormat GetBufferFormatFromFourCCFormat(int format) {
     case DRM_FORMAT_YVU420:
       return gfx::BufferFormat::YVU_420;
     default:
-      NOTREACHED();
+      // TODO(varad): need more gfx::BufferFormat tokens to handle the
+      // fourcc <-> gfx::BufferFormat namespace conversions accurately
       return gfx::BufferFormat::BGRA_8888;
   }
 }

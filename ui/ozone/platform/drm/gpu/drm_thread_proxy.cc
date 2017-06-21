@@ -63,6 +63,15 @@ void DrmThreadProxy::GetScanoutFormats(
                  widget, scanout_formats));
 }
 
+void DrmThreadProxy::GetScanoutFormatsWithModifiers(
+    gfx::AcceleratedWidget widget,
+    gfx::GpuMemoryBufferAttribVector* scanout_combinations) {
+  PostSyncTask(
+      drm_thread_.task_runner(),
+      base::Bind(&DrmThread::GetScanoutFormatsWithModifiers,
+                 base::Unretained(&drm_thread_), widget, scanout_combinations));
+}
+
 void DrmThreadProxy::AddBinding(ozone::mojom::DeviceCursorRequest request) {
   drm_thread_.task_runner()->PostTask(
       FROM_HERE,

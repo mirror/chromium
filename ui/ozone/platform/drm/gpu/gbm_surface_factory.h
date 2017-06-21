@@ -38,6 +38,8 @@ class GbmSurfaceFactory : public SurfaceFactoryOzone {
 
   std::vector<gfx::BufferFormat> GetScanoutFormats(
       gfx::AcceleratedWidget widget) override;
+  gfx::GpuMemoryBufferAttribVector GetScanoutFormatsWithModifiers(
+      gfx::AcceleratedWidget widget) override;
   std::unique_ptr<SurfaceOzoneCanvas> CreateCanvasForWidget(
       gfx::AcceleratedWidget widget) override;
   scoped_refptr<gfx::NativePixmap> CreateNativePixmap(

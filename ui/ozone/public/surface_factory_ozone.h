@@ -81,6 +81,12 @@ class OZONE_BASE_EXPORT SurfaceFactoryOzone {
   virtual std::vector<gfx::BufferFormat> GetScanoutFormats(
       gfx::AcceleratedWidget widget);
 
+  // Returns all scanout format-modifier pairs for a particular display
+  // controller connected to |widget|, or for all display controllers in case
+  // |widget| == kNullAcceleratedWidget.
+  virtual gfx::GpuMemoryBufferAttribVector GetScanoutFormatsWithModifiers(
+      gfx::AcceleratedWidget widget);
+
   // Create a single native buffer to be used for overlay planes or zero copy
   // for |widget| representing a particular display controller or default
   // display controller for kNullAcceleratedWidget.
