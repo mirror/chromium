@@ -462,10 +462,9 @@ TEST_P(WebViewTest, SetBaseBackgroundColorBeforeMainFrame) {
   web_view->SetBaseBackgroundColor(kBlue);
   EXPECT_EQ(kBlue, web_view->BackgroundColor());
   FrameTestHelpers::TestWebFrameClient web_frame_client;
-  WebLocalFrame* frame = WebLocalFrame::Create(
-      WebTreeScopeType::kDocument, &web_frame_client, nullptr, nullptr);
+  WebLocalFrame* frame = WebLocalFrame::CreateMainFrame(
+      web_view, &web_frame_client, nullptr, nullptr);
   web_frame_client.Bind(frame);
-  web_view->SetMainFrame(frame);
   web_view->Close();
 }
 
@@ -2060,10 +2059,9 @@ TEST_P(WebViewTest, ClientTapHandlingNullWebViewClient) {
       WebView::Create(nullptr, kWebPageVisibilityStateVisible));
   FrameTestHelpers::TestWebFrameClient web_frame_client;
   FrameTestHelpers::TestWebWidgetClient web_widget_client;
-  WebLocalFrame* local_frame = WebLocalFrame::Create(
-      WebTreeScopeType::kDocument, &web_frame_client, nullptr, nullptr);
+  WebLocalFrame* local_frame = WebLocalFrame::CreateMainFrame(
+      web_view, &web_frame_client, nullptr, nullptr);
   web_frame_client.Bind(local_frame);
-  web_view->SetMainFrame(local_frame);
   blink::WebFrameWidget::Create(&web_widget_client, local_frame);
 
   WebGestureEvent event(WebInputEvent::kGestureTap, WebInputEvent::kNoModifiers,

@@ -36,16 +36,32 @@
 namespace blink {
 
 WebRemoteFrame* WebRemoteFrame::Create(WebTreeScopeType scope,
-                                       WebRemoteFrameClient* client,
-                                       WebFrame* opener) {
-  return WebRemoteFrameImpl::Create(scope, client, opener);
+                                       WebRemoteFrameClient* client) {
+  return WebRemoteFrameImpl::Create(scope, client);
+}
+
+WebRemoteFrame* WebRemoteFrame::CreateMainFrame(WebView* web_view,
+                                                WebRemoteFrameClient* client,
+                                                WebFrame* opener) {
+  return WebRemoteFrameImpl::CreateMainFrame(web_view, client, opener);
 }
 
 WebRemoteFrameImpl* WebRemoteFrameImpl::Create(WebTreeScopeType scope,
-                                               WebRemoteFrameClient* client,
-                                               WebFrame* opener) {
+                                               WebRemoteFrameClient* client) {
   WebRemoteFrameImpl* frame = new WebRemoteFrameImpl(scope, client);
+  return frame;
+}
+
+WebRemoteFrameImpl* WebRemoteFrameImpl::CreateMainFrame(
+    WebView* web_view,
+    WebRemoteFrameClient* client,
+    WebFrame* opener) {
+  WebRemoteFrameImpl* frame =
+      new WebRemoteFrameImpl(WebTreeScopeType::kDocument, client);
   frame->SetOpener(opener);
+  Page& page = *static_cast<WebViewBase*>(web_view)->GetPage();
+  DCHECK(!page.MainFrame());
+  frame->InitializeCoreFrame(page, nullptr, g_null_atom);
   return frame;
 }
 
@@ -200,7 +216,8 @@ WebRemoteFrame* WebRemoteFrameImpl::CreateRemoteChild(
     const WebParsedFeaturePolicy& container_policy,
     WebRemoteFrameClient* client,
     WebFrame* opener) {
-  WebRemoteFrameImpl* child = WebRemoteFrameImpl::Create(scope, client, opener);
+  WebRemoteFrameImpl* child = WebRemoteFrameImpl::Create(scope, client);
+  child->SetOpener(opener);
   AppendChild(child);
   RemoteFrameOwner* owner =
       RemoteFrameOwner::Create(static_cast<SandboxFlags>(sandbox_flags),
