@@ -42,9 +42,6 @@ Options::Options(int argc, const char** argv)
 #if defined(USE_OZONE)
       // TODO(skyostil): Implement SwiftShader backend for headless ozone.
       gl_implementation("osmesa"),
-#elif defined(OS_WIN)
-      // TODO(skyostil): Enable SwiftShader on Windows (crbug.com/729961).
-      gl_implementation("osmesa"),
 #elif !defined(OS_MACOSX)
       gl_implementation("swiftshader-webgl"),
 #else
