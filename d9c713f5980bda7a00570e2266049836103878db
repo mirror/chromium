@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "dd048999_a2c84787",
+        "filename": "media/gpu/vaapi_wrapper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 241,
+      "author": {
+        "id": 1001849
+      },
+      "writtenOn": "2017-06-21T03:14:36Z",
+      "side": 1,
+      "message": "I\u0027m not sure whether this is good place to put VaapiWrapper. How about make VaapiWrapper itself a singleton?",
+      "revId": "d9c713f5980bda7a00570e2266049836103878db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
