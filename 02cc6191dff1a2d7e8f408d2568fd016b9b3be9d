@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "8aa62312_e2a2cbfc",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 310,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T17:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "71cf09d2_c25c0e1b",
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f365e988_683d8bc3",
         "filename": "components/metrics/net/network_metrics_provider.cc",
         "patchSetId": 2
@@ -42,6 +60,30 @@
     },
     {
       "key": {
+        "uuid": "6fb1d8a7_c1bc5090",
+        "filename": "components/metrics/net/network_metrics_provider.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T17:16:19Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f365e988_683d8bc3",
+      "range": {
+        "startLine": 313,
+        "startChar": 2,
+        "endLine": 313,
+        "endChar": 38
+      },
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "6809425b_b751a11d",
         "filename": "components/metrics/net/network_metrics_provider.h",
         "patchSetId": 2
@@ -56,6 +98,24 @@
       "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a5b23e26_a0837cb0",
+        "filename": "components/metrics/net/network_metrics_provider.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T17:16:19Z",
+      "side": 1,
+      "message": "Used default argument. ChromeMetricsServiceClient uses non-null param.",
+      "parentUuid": "6809425b_b751a11d",
+      "revId": "02cc6191dff1a2d7e8f408d2568fd016b9b3be9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
