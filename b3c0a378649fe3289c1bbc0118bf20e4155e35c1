@@ -1,0 +1,140 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4917ab5d_00cf5fbe",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "google c++ style convention uses const references for \u0027in\u0027 params, and non-const pointers for out params. this makes it easy for others to infer what\u0027s going on at the call sites, as long as they understand this convention. we don\u0027t use non-const references for out params, by convention. see: https://google.github.io/styleguide/cppguide.html#Reference_Arguments for more\n\nso this signature wants to be:\n\nbool GetIPAndPort(const page_load_metrics::ExtraRequestCompleteInfo\u0026 extra_request_info, net::IPAddress* resource_ip, int* resource_port);",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4c8467fe_530083b0",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 155,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "the parentheses here are typically placed around the boolean condition rather than the whole ternary - but i believe that\u0027s optional. that said i haven\u0027t seen code put parens around the whole ternary expression before, so i\u0027d suggest either:\nreturn (page_load_type_ \u003d\u003d DOMAIN_TYPE_LOCALHOST) ? ...\nor no parens at all:\nreturn page_load_type_ \u003d\u003d DOMAIN_TYPE_LOCALHOST ? ...",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d994fb8c_82b089fe",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 18,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "this should probably be defined in the context of the observer class, otherwise it becomes a global type",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "cf265151_8f1a3777",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "let\u0027s move the definitions of these methods to the cc files.",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ee560c06_b1eafa76",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "same",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3a284631_0849a007",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 183,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "these too should live in the .cc if they are only needed in the context of the implementation.",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4f0e4ef9_e58ca01b",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 216,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "looks like you can remove this declaration now that the impl moved to OnLoadedResource.",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "26975f9b_df7f625f",
+        "filename": "chrome/browser/page_load_metrics/observers/local_network_requests_page_load_metrics_observer_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1136769
+      },
+      "writtenOn": "2017-06-21T21:07:32Z",
+      "side": 1,
+      "message": "looks like you can remove these commented out includes",
+      "revId": "b3c0a378649fe3289c1bbc0118bf20e4155e35c1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
