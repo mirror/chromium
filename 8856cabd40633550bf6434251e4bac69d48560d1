@@ -22,6 +22,53 @@
       "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9aa663eb_3c414d55",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 84,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-21T23:03:21Z",
+      "side": 1,
+      "message": "What about ThreadSafeClientSideLockDiscardableTexture or ThreadSafeShallowLockDiscardableTexture?",
+      "parentUuid": "c00751cd_d0599068",
+      "range": {
+        "startLine": 84,
+        "startChar": 15,
+        "endLine": 84,
+        "endChar": 45
+      },
+      "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "73c63316_451a3eec",
+        "filename": "gpu/command_buffer/client/context_support.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 88,
+      "author": {
+        "id": 1003154
+      },
+      "writtenOn": "2017-06-21T23:03:21Z",
+      "side": 1,
+      "message": "nit: DiscardableTexture",
+      "range": {
+        "startLine": 88,
+        "startChar": 15,
+        "endLine": 88,
+        "endChar": 53
+      },
+      "revId": "8856cabd40633550bf6434251e4bac69d48560d1",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
