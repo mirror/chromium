@@ -87,8 +87,8 @@ void SyncConfirmationHandler::SetUserImageURL(const std::string& picture_url) {
   std::string picture_url_to_load;
   GURL url;
   if (picture_url != AccountTrackerService::kNoPictureURLFound &&
-      profiles::GetImageURLWithThumbnailSize(GURL(picture_url),
-                                             kProfileImageSize, &url)) {
+      profiles::GetImageURLWithOptions(GURL(picture_url), kProfileImageSize,
+                                       false /* no_silhouette */, &url)) {
     picture_url_to_load = url.spec();
   } else {
     // Use the placeholder avatar icon until the account picture URL is fetched.
