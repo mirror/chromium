@@ -22,6 +22,30 @@
       "revId": "7107a1498db40a8ae29e65de90111f52074807a3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "475c4762_f5996068",
+        "filename": "ui/base/ime/chromeos/character_composer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1109710
+      },
+      "writtenOn": "2017-06-21T14:04:44Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d19888cf_9172febd",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "7107a1498db40a8ae29e65de90111f52074807a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
