@@ -1,0 +1,89 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fef52a76_9499c049",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-21T00:17:47Z",
+      "side": 1,
+      "message": "nit: drop \"\u003d null\"? ;-)",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a4754b0e_2da65d7e",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-21T00:17:47Z",
+      "side": 1,
+      "message": "Unused by clients?",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e415b4d7_b168a1b4",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-21T00:17:47Z",
+      "side": 1,
+      "message": "nit:\nawait this._lastActionPromise;\nif (!this._tempFile)\n  return;\nthis._lastActionPromise \u003d this._tempFile.write(strings).then(size \u003d\u003e {\n    if (size \u003d\u003d\u003d -1)\n      this.remove();\n});",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9430740c_096f5122",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-21T00:17:47Z",
+      "side": 1,
+      "message": "this._tempFile.remove() first?",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f04d4ae7_3398b07c",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115876
+      },
+      "writtenOn": "2017-06-21T00:17:47Z",
+      "side": 1,
+      "message": "do we actually need this return value?",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
