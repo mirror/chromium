@@ -48,6 +48,30 @@
     },
     {
       "key": {
+        "uuid": "889ae6b4_5d38beb4",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1019,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "The problem with OnNavigate is we do not have the URLRequestContext over there. How do I get the network quality?",
+      "parentUuid": "6d910385_48512e10",
+      "range": {
+        "startLine": 1019,
+        "startChar": 8,
+        "endLine": 1019,
+        "endChar": 16
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "3c7c835f_27054728",
         "filename": "content/browser/loader/resource_scheduler.cc",
         "patchSetId": 9
@@ -59,6 +83,30 @@
       "writtenOn": "2017-06-21T16:30:00Z",
       "side": 1,
       "message": "Instead of storing a set, may be store a single value of ECT.\nThen, apply the experiment on all ECTs slower than that value of ECT.",
+      "range": {
+        "startLine": 1304,
+        "startChar": 2,
+        "endLine": 1304,
+        "endChar": 26
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aaf96fd6_13ad8da1",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1304,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "I think this keeps the experiment slightly flexible.",
+      "parentUuid": "3c7c835f_27054728",
       "range": {
         "startLine": 1304,
         "startChar": 2,
@@ -94,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "f0734e1b_0612222f",
+        "filename": "content/browser/loader/resource_scheduler.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1310,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "f8965c5a_caa116dd",
+      "range": {
+        "startLine": 1310,
+        "startChar": 15,
+        "endLine": 1310,
+        "endChar": 26
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "3fd9ea2a_3613b477",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 9
@@ -114,6 +186,30 @@
       "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6753d15e_91e71c9a",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "3fd9ea2a_3613b477",
+      "range": {
+        "startLine": 264,
+        "startChar": 4,
+        "endLine": 264,
+        "endChar": 21
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -140,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "1415d4f4_98bb1383",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 269,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2442b3c0_4e68dd65",
+      "range": {
+        "startLine": 269,
+        "startChar": 12,
+        "endLine": 269,
+        "endChar": 13
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2266b673_75d7f1c1",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 9
@@ -160,6 +280,30 @@
       "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "00cdbb00_480e14e8",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 271,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2266b673_75d7f1c1",
+      "range": {
+        "startLine": 271,
+        "startChar": 17,
+        "endLine": 271,
+        "endChar": 50
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -186,6 +330,30 @@
     },
     {
       "key": {
+        "uuid": "282201ac_3e0d1c86",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1036,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "43cc1f1c_cb86939d",
+      "range": {
+        "startLine": 1036,
+        "startChar": 5,
+        "endLine": 1036,
+        "endChar": 8
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ef47d214_c2e406f7",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 9
@@ -209,6 +377,30 @@
     },
     {
       "key": {
+        "uuid": "72468bc9_55e98c0f",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1066,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ef47d214_c2e406f7",
+      "range": {
+        "startLine": 1066,
+        "startChar": 4,
+        "endLine": 1066,
+        "endChar": 10
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "bf5bed7f_3061a4ed",
         "filename": "content/browser/loader/resource_scheduler_unittest.cc",
         "patchSetId": 9
@@ -220,6 +412,30 @@
       "writtenOn": "2017-06-21T16:30:00Z",
       "side": 1,
       "message": "Is it possible to combine this with the test above?\nOne option may be to add \n for (bool enable_experiment : {false, true}) {\n  // Common code, or code conditioned on |enable_experiment|.\n}\n\nThis has an advantage that it makes it clearer what\u0027s the difference between the two tests. It also makes it clear how the behavior of scheduler changes based on |enable_experiment|.",
+      "range": {
+        "startLine": 1097,
+        "startChar": 30,
+        "endLine": 1097,
+        "endChar": 64
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "21844779_aba1046e",
+        "filename": "content/browser/loader/resource_scheduler_unittest.cc",
+        "patchSetId": 9
+      },
+      "lineNbr": 1097,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "I am not sure what things get initialized automatically before the execution of every test. If the two code segments run sequentially, I can definitely combine them.",
+      "parentUuid": "bf5bed7f_3061a4ed",
       "range": {
         "startLine": 1097,
         "startChar": 30,
@@ -255,6 +471,30 @@
     },
     {
       "key": {
+        "uuid": "9fe8b5e4_c6293fea",
+        "filename": "net/url_request/url_request_context_storage.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "The context used for the tests needs the test implementation of the network quality estimator. Line 143 of resource_scheduler_unittest.cc",
+      "parentUuid": "c5efb4a7_9d4b02e5",
+      "range": {
+        "startLine": 85,
+        "startChar": 7,
+        "endLine": 85,
+        "endChar": 36
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ab0053d4_2b8d0c88",
         "filename": "net/url_request/url_request_test_util.h",
         "patchSetId": 9
@@ -266,6 +506,30 @@
       "writtenOn": "2017-06-21T16:30:00Z",
       "side": 1,
       "message": "Why is this needed?",
+      "range": {
+        "startLine": 99,
+        "startChar": 7,
+        "endLine": 99,
+        "endChar": 34
+      },
+      "revId": "187f5cd89d68612bc0bc97114a1370a16d1e3802",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e32dc402_52062d6b",
+        "filename": "net/url_request/url_request_test_util.h",
+        "patchSetId": 9
+      },
+      "lineNbr": 99,
+      "author": {
+        "id": 1222284
+      },
+      "writtenOn": "2017-06-21T16:56:14Z",
+      "side": 1,
+      "message": "The context used for the tests needs the test implementation of the network quality estimator. Line 143 of resource_scheduler_unittest.cc",
+      "parentUuid": "ab0053d4_2b8d0c88",
       "range": {
         "startLine": 99,
         "startChar": 7,
