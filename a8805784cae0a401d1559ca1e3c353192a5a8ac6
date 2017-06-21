@@ -107,6 +107,24 @@
     },
     {
       "key": {
+        "uuid": "97f55c20_d975b2a1",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 97,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-21T16:44:51Z",
+      "side": 1,
+      "message": "sg!",
+      "parentUuid": "5175aa7d_cd0a7971",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "377f7908_eb1cde1c",
         "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
         "patchSetId": 1
@@ -171,6 +189,24 @@
       "side": 1,
       "message": "I am not quite sure what you are saying here; but I have modified the recursion to pass the current flag set through the recursive call, so that the parent can remove flags added by the rules. Is this what you were looking at? Please comment again if this isn\u0027t the issue.",
       "parentUuid": "3282ae1f_c2fc92ff",
+      "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "7d2bb755_dafdadd2",
+        "filename": "base/test/android/javatests/src/org/chromium/base/test/util/CommandLineFlags.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-21T16:44:51Z",
+      "side": 1,
+      "message": "my bad, I got confused about this part earlier.",
+      "parentUuid": "28ef6c56_23ce969d",
       "revId": "a8805784cae0a401d1559ca1e3c353192a5a8ac6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false

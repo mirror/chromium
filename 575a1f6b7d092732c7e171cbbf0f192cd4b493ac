@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "682148a2_d0ce3aa3",
+        "filename": "testing/android/docs/junit4.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 147,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-21T16:44:51Z",
+      "side": 1,
+      "message": "nit: empty line above",
+      "revId": "575a1f6b7d092732c7e171cbbf0f192cd4b493ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b8e9c52b_d48af486",
+        "filename": "testing/android/docs/junit4.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 159,
+      "author": {
+        "id": 1140427
+      },
+      "writtenOn": "2017-06-21T16:44:51Z",
+      "side": 1,
+      "message": "nit: trailing space",
+      "revId": "575a1f6b7d092732c7e171cbbf0f192cd4b493ac",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
