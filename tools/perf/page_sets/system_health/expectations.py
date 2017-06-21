@@ -147,7 +147,7 @@ class SystemHealthMobileMemoryExpectations(expectations.StoryExpectations):
 
 
 # Should only include browse:*:* stories.
-class V8BrowsingDesktopExpecations(expectations.StoryExpectations):
+class V8BrowsingDesktopExpectations(expectations.StoryExpectations):
   def SetExpectations(self):
     self.DisableStory('browse:media:imgur',
                       [expectations.ALL_LINUX, expectations.ALL_WIN],
@@ -199,7 +199,7 @@ class V8BrowsingDesktopExpecations(expectations.StoryExpectations):
                       'crbug.com/728785')
 
 # Should only include browse:*:* stories.
-class V8BrowsingMobileExpecations(expectations.StoryExpectations):
+class V8BrowsingMobileExpectations(expectations.StoryExpectations):
   def SetExpectations(self):
     self.DisableStory('browse:shopping:flipkart', [expectations.ALL_ANDROID],
                       'crbug.com/708300')
