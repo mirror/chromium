@@ -7,6 +7,7 @@ package org.chromium.chrome.browser.omnibox;
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.StrictMode;
+import android.support.annotation.CallSuper;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.util.AttributeSet;
@@ -20,7 +21,10 @@ import android.widget.EditText;
 
 import org.chromium.base.Log;
 import org.chromium.base.VisibleForTesting;
+import org.chromium.chrome.browser.ChromeFeatureList;
 import org.chromium.chrome.browser.widget.VerticallyFixedEditText;
+
+import java.util.concurrent.Callable;
 
 /**
  * An {@link EditText} that shows autocomplete text at the end.
@@ -29,13 +33,19 @@ public class AutocompleteEditText
         extends VerticallyFixedEditText implements AutocompleteEditTextModelBase.Delegate {
     private static final String TAG = "cr_AutocompleteEdit";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private final AccessibilityManager mAccessibilityManager;
 
     // This contains most of the logic. Lazily initialized in ensureModel() because View constructor
     // may call its methods, so always call ensureModel() before accessing it.
     private AutocompleteEditTextModelBase mModel;
+
+    // Whether to use spannable model. The default value will soon be replaced in
+    // onNativeLibraryReady() anyways.
+    private boolean mUseSpannableModel = false;
+
+    private boolean mInputConnectionCreated;
 
     /**
      * Whether default TextView scrolling should be disabled because autocomplete has been added.
@@ -54,7 +64,22 @@ public class AutocompleteEditText
     private void ensureModel() {
         // Lazy initialization here to ensure that model methods get called even in View's
         // constructor.
-        if (mModel == null) mModel = new AutocompleteEditTextModel(this);
+        if (mModel == null) mModel = createModel();
+    }
+
+    private AutocompleteEditTextModelBase createModel() {
+        if (mUseSpannableModel) {
+            Log.i(TAG, "Using spannable model...");
+            return new SpannableAutocompleteEditTextModel(this);
+        } else {
+            Log.i(TAG, "Using non-spannable model...");
+            return new AutocompleteEditTextModel(this);
+        }
+    }
+
+    @VisibleForTesting
+    public boolean isUsingSpannableModel() {
+        return mUseSpannableModel;
     }
 
     /**
@@ -227,23 +252,43 @@ public class AutocompleteEditText
         mIgnoreImeForTest = ignore;
     }
 
-    @Override
-    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
-        return createInputConnection(super.onCreateInputConnection(outAttrs));
+    /** Called when native library is ready. */
+    @CallSuper
+    public void onNativeLibraryReady() {
+        if (DEBUG) Log.i(TAG, "onNativeLibraryReady");
+        boolean useSpannableModel =
+                ChromeFeatureList.isEnabled(ChromeFeatureList.SPANNABLE_INLINE_AUTOCOMPLETE);
+        if (mUseSpannableModel != useSpannableModel) {
+            if (mInputConnectionCreated) {
+                Log.w(TAG, "We cannot swap the model as InputConnection is already created.");
+                return;
+            }
+            mUseSpannableModel = useSpannableModel;
+            // It is assumed that model data is almost empty by now.
+            mModel = createModel();
+        }
     }
 
-    @VisibleForTesting
-    public InputConnection createInputConnection(InputConnection target) {
+    @Override
+    public InputConnection onCreateInputConnection(EditorInfo outAttrs) {
+        InputConnection target = super.onCreateInputConnection(outAttrs);
+        if (DEBUG) Log.i(TAG, "onCreateInputConnection: " + target);
         ensureModel();
+        if (target != null) mInputConnectionCreated = true;
         InputConnection retVal = mModel.onCreateInputConnection(target);
         if (mIgnoreImeForTest) return null;
         return retVal;
     }
 
     @Override
-    public boolean dispatchKeyEvent(KeyEvent event) {
+    public boolean dispatchKeyEvent(final KeyEvent event) {
         if (mIgnoreImeForTest) return true;
-        return super.dispatchKeyEvent(event);
+        return mModel.dispatchKeyEvent(event, new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return AutocompleteEditText.super.dispatchKeyEvent(event);
+            }
+        });
     }
 
     /**
@@ -280,4 +325,7 @@ public class AutocompleteEditText
             sendAccessibilityEventUnchecked(event);
         }
     }
+
+    @Override
+    public void onUpdateSelectionForTesting(int selStart, int selEnd) {}
 }

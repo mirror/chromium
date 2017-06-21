@@ -496,11 +496,9 @@ public class UrlBar extends AutocompleteEditText {
         mOmniboxLivenessListener = listener;
     }
 
-    /**
-     * Signal {@link OmniboxLivenessListener} that the omnibox is completely operational now.
-     */
-    @VisibleForTesting
-    public void onOmniboxFullyFunctional() {
+    @Override
+    public void onNativeLibraryReady() {
+        super.onNativeLibraryReady();
         if (mOmniboxLivenessListener != null) mOmniboxLivenessListener.onOmniboxFullyFunctional();
     }
 
