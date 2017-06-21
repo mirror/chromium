@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8e6d4869_36a82ec0",
+        "filename": "chrome/android/junit/src/org/chromium/chrome/browser/notifications/NotificationPlatformBridgeUnitTest.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 109,
+      "author": {
+        "id": 1002032
+      },
+      "writtenOn": "2017-06-21T14:48:54Z",
+      "side": 1,
+      "message": "Can we add a few tests for intents that contain the android.intent.extra.CHANNEL_ID extra?",
+      "revId": "40ecc85f74158abd30fffd901939f6223212089a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
