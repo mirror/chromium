@@ -140,6 +140,30 @@
       "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "acc24a5c_c05c605d",
+        "filename": "media/remoting/renderer_controller.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 163,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-21T04:19:04Z",
+      "side": 1,
+      "message": "This sgtm, since it sounds like you have a plan for simplifying once YT migrates to the Cast Web SDK. Is YT the only exception case?\n\nAdmittedly, I\u0027m lacking a lot of the context around why YT is special on Android (since I\u0027m mostly desktop-focused). I\u0027m assuming we don\u0027t have custom code in the browser to deal with YT specifically, right?",
+      "parentUuid": "566c3226_f06796e6",
+      "range": {
+        "startLine": 163,
+        "startChar": 2,
+        "endLine": 163,
+        "endChar": 34
+      },
+      "revId": "5bce971daa151f787f52e25fa426cd7993f4d627",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
