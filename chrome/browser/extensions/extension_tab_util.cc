@@ -139,7 +139,6 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   int window_id = extension_misc::kCurrentWindowId;
   if (params.window_id.get())
     window_id = *params.window_id;
-
   Browser* browser = GetBrowserFromWindowID(chrome_details, window_id, error);
   if (!browser) {
     if (!params.create_browser_if_needed) {
@@ -164,7 +163,7 @@ base::DictionaryValue* ExtensionTabUtil::OpenTab(
   WebContents* opener = NULL;
   if (params.opener_tab_id.get()) {
     int opener_id = *params.opener_tab_id;
-
+    // HOLD
     if (!ExtensionTabUtil::GetTabById(opener_id, profile,
                                       function->include_incognito(), NULL, NULL,
                                       &opener, NULL)) {

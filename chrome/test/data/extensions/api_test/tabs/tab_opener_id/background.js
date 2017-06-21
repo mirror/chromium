@@ -31,10 +31,11 @@ chrome.test.getConfig((config) => {
       chrome.test.assertTrue(!!secondWin);
       chrome.test.assertTrue(!!secondWin.tabs);
       chrome.test.assertEq(1, secondWin.tabs.length);
+      var tabIdSecondWin = secondWin.tabs[0].id;
 
       // Try to update the tab in the second window to have an opener of a tab
       // in the first window. This *should* fail.
-      chrome.tabs.update(secondWin.tabs[0].id, {openerTabId: openerId}, () => {
+      chrome.tabs.update(tabIdSecondWin, {openerTabId: openerId}, () => {
         chrome.test.assertLastError(
             'Tab opener must be in the same window as the updated tab.');
 
@@ -48,6 +49,13 @@ chrome.test.getConfig((config) => {
             chrome.test.succeed();
           });
         });
+      });
+
+      // Try to update the tab in the second window to have an opener of tab
+      // of itself. This *should* fail.
+      chrome.tabs.update(tabIdSecondWin, {openerTabId: tabIdSecondWin}, () => {
+        chrome.test.assertLastError(
+            'openerTabId cannot be the same as the opened tab\'s id.');
       });
     });
   });

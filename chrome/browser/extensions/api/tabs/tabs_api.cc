@@ -190,9 +190,8 @@ bool MatchesBool(bool* boolean, bool value) {
 template <typename T>
 void AssignOptionalValue(const std::unique_ptr<T>& source,
                          std::unique_ptr<T>& destination) {
-  if (source.get()) {
+  if (source.get())
     destination.reset(new T(*source));
-  }
 }
 
 void ReportRequestedWindowState(windows::WindowState state) {
@@ -1232,8 +1231,11 @@ bool TabsUpdateFunction::RunAsync() {
 
   if (params->update_properties.opener_tab_id.get()) {
     int opener_id = *params->update_properties.opener_tab_id;
-
     WebContents* opener_contents = NULL;
+    if (opener_id == tab_id) {
+      error_ = "openerTabId cannot be the same as the opened tab's id.";
+      return false;
+    }
     if (!ExtensionTabUtil::GetTabById(opener_id, browser_context(),
                                       include_incognito(), nullptr, nullptr,
                                       &opener_contents, nullptr))
