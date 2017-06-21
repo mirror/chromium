@@ -1150,7 +1150,7 @@ void HTMLMediaElement::LoadResource(const WebMediaPlayerSource& source,
     audio_source_node_->OnCurrentSrcChanged(current_src_);
   if (RuntimeEnabledFeatures::NewRemotePlaybackPipelineEnabled() &&
       RemotePlaybackClient()) {
-    RemotePlaybackClient()->SourceChanged(current_src_);
+    RemotePlaybackClient()->SourceChanged(current_src_, false);
   }
 
   BLINK_MEDIA_LOG << "loadResource(" << (void*)this << ") - current_src_ -> "
