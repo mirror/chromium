@@ -49,6 +49,30 @@
     },
     {
       "key": {
+        "uuid": "84009caf_03360798",
+        "filename": "media/filters/source_buffer_range.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 94,
+      "author": {
+        "id": 1002455
+      },
+      "writtenOn": "2017-06-21T19:29:12Z",
+      "side": 1,
+      "message": "Also, note the SourceBufferStreamTest.VideoRangeEndTimeCases contains a case corresponding to this scenario: {15, 3, 15, 20}\n\nAnd the audio unit test shows splice expectation in this scenario: {15, 3, 15, 18, true}",
+      "parentUuid": "935b226d_7e903f49",
+      "range": {
+        "startLine": 94,
+        "startChar": 7,
+        "endLine": 94,
+        "endChar": 39
+      },
+      "revId": "39ae401c80814b0d1fed2a2c03a1307e2d21e23b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "445bc001_c446b724",
         "filename": "media/filters/source_buffer_range.h",
         "patchSetId": 1
