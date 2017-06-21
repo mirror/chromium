@@ -168,18 +168,22 @@ class SubresourceIntegrityTest : public ::testing::Test {
     EXPECT_EQ(0u, metadata_set.size());
   }
 
-  enum CorsStatus { kWithCors, kNoCors };
+  enum CorsMode { kWithCors, kNoCors };
+
+  enum ServiceWorkerMode { kWithServiceWorker, kWithoutServiceWorker };
 
   void ExpectIntegrity(const char* integrity,
                        const char* script,
                        size_t size,
                        const KURL& url,
                        const KURL& requestor_url,
-                       CorsStatus cors_status = kWithCors) {
+                       ServiceWorkerMode service_worker_mode,
+                       CorsMode cors_mode = kWithCors) {
     script_element->setAttribute(HTMLNames::integrityAttr, integrity);
     EXPECT_TRUE(SubresourceIntegrity::CheckSubresourceIntegrity(
         String(integrity), script_element->GetDocument(), script, size, url,
-        *CreateTestResource(url, requestor_url, cors_status)));
+        *CreateTestResource(url, requestor_url, cors_mode,
+                            service_worker_mode)));
   }
 
   void ExpectIntegrityFailure(const char* integrity,
@@ -187,25 +191,50 @@ class SubresourceIntegrityTest : public ::testing::Test {
                               size_t size,
                               const KURL& url,
                               const KURL& requestor_url,
-                              CorsStatus cors_status = kWithCors) {
+                              ServiceWorkerMode service_worker_mode,
+                              CorsMode cors_mode = kWithCors) {
     script_element->setAttribute(HTMLNames::integrityAttr, integrity);
     EXPECT_FALSE(SubresourceIntegrity::CheckSubresourceIntegrity(
         String(integrity), script_element->GetDocument(), script, size, url,
-        *CreateTestResource(url, requestor_url, cors_status)));
+        *CreateTestResource(url, requestor_url, cors_mode,
+                            service_worker_mode)));
   }
 
   Resource* CreateTestResource(const KURL& url,
                                const KURL& allow_origin_url,
-                               CorsStatus cors_status) {
+                               CorsMode cors_mode,
+                               ServiceWorkerMode service_worker_mode) {
     ResourceResponse response;
     response.SetURL(url);
     response.SetHTTPStatusCode(200);
-    if (cors_status == kWithCors) {
+
+    bool same_origin = document->GetSecurityOrigin()->CanAccess(
+        SecurityOrigin::Create(url).Get());
+
+    if (service_worker_mode == kWithServiceWorker) {
+      response.SetWasFetchedViaServiceWorker(true);
+
+      if (same_origin) {
+        response.SetServiceWorkerResponseType(
+            WebServiceWorkerResponseType::kWebServiceWorkerResponseTypeDefault);
+      } else if (cors_mode == kWithCors) {
+        response.SetServiceWorkerResponseType(
+            WebServiceWorkerResponseType::kWebServiceWorkerResponseTypeCORS);
+      } else {
+        response.SetServiceWorkerResponseType(
+            WebServiceWorkerResponseType::kWebServiceWorkerResponseTypeOpaque);
+      }
+    } else if (cors_mode == kWithCors) {
+      // Only set CORS header when not simulating a service worker because we
+      // need to explicitly check Response::GetServiceWorkerResponseType instead
+      // of the response header in that case. Not setting the header makes sure
+      // tests fail if the service worker case is not considered.
       response.SetHTTPHeaderField(
           "access-control-allow-origin",
           SecurityOrigin::Create(allow_origin_url)->ToAtomicString());
       response.SetHTTPHeaderField("access-control-allow-credentials", "true");
     }
+
     Resource* resource =
         RawResource::CreateForTest(response.Url(), Resource::kRaw);
     resource->SetResponse(response);
@@ -220,6 +249,136 @@ class SubresourceIntegrityTest : public ::testing::Test {
   Persistent<Document> document;
   Persistent<HTMLScriptElement> script_element;
 };
+
+class SubresourceIntegrityOriginTest
+    : public SubresourceIntegrityTest,
+      public ::testing::WithParamInterface<int> {
+ public:
+  enum TestMode {
+    kFromSecureOriginWithServiceWorker,
+    kFromSecureOriginWithoutServiceWorker,
+    kFromInsecureOriginWithServiceWorker,
+    kFromInsecureOriginWithoutServiceWorker,
+    kLAST  // marks the end of the enum;
+  };
+};
+
+//
+// End-to-end tests of ::CheckSubresourceIntegrity.
+//
+
+TEST_P(SubresourceIntegrityOriginTest, OriginAndCORS) {
+  SubresourceIntegrityOriginTest::TestMode mode =
+      static_cast<SubresourceIntegrityOriginTest::TestMode>(GetParam());
+
+  ServiceWorkerMode service_worker_mode;
+  KURL* requestor_url;
+  CorsMode cors_mode;
+
+  bool is_secure_origin =
+      (mode == TestMode::kFromSecureOriginWithServiceWorker ||
+       mode == TestMode::kFromSecureOriginWithoutServiceWorker);
+
+  bool is_service_worker =
+      (mode == TestMode::kFromSecureOriginWithServiceWorker ||
+       mode == TestMode::kFromInsecureOriginWithServiceWorker);
+
+  // TestMode-dependent configuration:
+  if (is_secure_origin) {
+    document->UpdateSecurityOrigin(secure_origin->IsolatedCopy());
+    requestor_url = &secure_url;
+    cors_mode = kNoCors;
+  } else {
+    document->UpdateSecurityOrigin(insecure_origin->IsolatedCopy());
+    requestor_url = &insecure_url;
+    cors_mode = kWithCors;
+  }
+
+  if (is_service_worker) {
+    service_worker_mode = ServiceWorkerMode::kWithServiceWorker;
+  } else {
+    service_worker_mode = ServiceWorkerMode::kWithoutServiceWorker;
+  }
+
+  // Verify basic sha256, sha384, and sha512 integrity checks.
+  ExpectIntegrity(kSha256Integrity, kBasicScript, strlen(kBasicScript),
+                  secure_url, *requestor_url, service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha256IntegrityLenientSyntax, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha384Integrity, kBasicScript, strlen(kBasicScript),
+                  secure_url, *requestor_url, service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha512Integrity, kBasicScript, strlen(kBasicScript),
+                  secure_url, *requestor_url, service_worker_mode, cors_mode);
+
+  // Verify multiple hashes in an attribute.
+  ExpectIntegrity(kSha256AndSha384Integrities, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+  ExpectIntegrity(kBadSha256AndGoodSha384Integrities, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+
+  // The hash label must match the hash value.
+  ExpectIntegrityFailure(kSha384IntegrityLabeledAs256, kBasicScript,
+                         strlen(kBasicScript), secure_url, *requestor_url,
+                         service_worker_mode, cors_mode);
+
+  // With multiple values, at least one must match, and it must be the
+  // strongest hash algorithm.
+  ExpectIntegrityFailure(kGoodSha256AndBadSha384Integrities, kBasicScript,
+                         strlen(kBasicScript), secure_url, *requestor_url,
+                         service_worker_mode, cors_mode);
+  ExpectIntegrityFailure(kBadSha256AndBadSha384Integrities, kBasicScript,
+                         strlen(kBasicScript), secure_url, *requestor_url,
+                         service_worker_mode, cors_mode);
+
+  // Unsupported hash functions should succeed.
+  ExpectIntegrity(kUnsupportedHashFunctionIntegrity, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+
+  // All parameters are fine.
+  ExpectIntegrity(kSha256Integrity, kBasicScript, strlen(kBasicScript),
+                  secure_url, *requestor_url, service_worker_mode, cors_mode);
+
+  // Options should be ignored.
+  ExpectIntegrity(kSha256IntegrityWithEmptyOption, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha256IntegrityWithOption, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha256IntegrityWithOptions, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+  ExpectIntegrity(kSha256IntegrityWithMimeOption, kBasicScript,
+                  strlen(kBasicScript), secure_url, *requestor_url,
+                  service_worker_mode, cors_mode);
+
+  // Cross origin without cors is expected to fail.
+  if (!is_secure_origin) {
+    ExpectIntegrityFailure(kSha256IntegrityWithEmptyOption, kBasicScript,
+                           strlen(kBasicScript), secure_url, *requestor_url,
+                           service_worker_mode, kNoCors);
+    ExpectIntegrityFailure(kSha256IntegrityWithOption, kBasicScript,
+                           strlen(kBasicScript), secure_url, *requestor_url,
+                           service_worker_mode, kNoCors);
+    ExpectIntegrityFailure(kSha256IntegrityWithOptions, kBasicScript,
+                           strlen(kBasicScript), secure_url, *requestor_url,
+                           service_worker_mode, kNoCors);
+    ExpectIntegrityFailure(kSha256IntegrityWithMimeOption, kBasicScript,
+                           strlen(kBasicScript), secure_url, *requestor_url,
+                           service_worker_mode, kNoCors);
+  }
+}
+
+INSTANTIATE_TEST_CASE_P(
+    ,
+    SubresourceIntegrityOriginTest,
+    testing::Range<int>(SubresourceIntegrityOriginTest::TestMode::
+                            kFromSecureOriginWithServiceWorker,
+                        SubresourceIntegrityOriginTest::TestMode::kLAST));
 
 TEST_F(SubresourceIntegrityTest, Prioritization) {
   EXPECT_EQ(kHashAlgorithmSha256,
@@ -450,87 +609,5 @@ TEST_F(SubresourceIntegrityTest, ParsingBase64) {
       kHashAlgorithmSha384);
 }
 
-//
-// End-to-end tests of ::CheckSubresourceIntegrity.
-//
-
-TEST_F(SubresourceIntegrityTest, CheckSubresourceIntegrityInSecureOrigin) {
-  document->UpdateSecurityOrigin(secure_origin->IsolatedCopy());
-
-  // Verify basic sha256, sha384, and sha512 integrity checks.
-  ExpectIntegrity(kSha256Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, secure_url);
-  ExpectIntegrity(kSha256IntegrityLenientSyntax, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url);
-  ExpectIntegrity(kSha384Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, secure_url);
-  ExpectIntegrity(kSha512Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, secure_url);
-
-  // Verify multiple hashes in an attribute.
-  ExpectIntegrity(kSha256AndSha384Integrities, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url);
-  ExpectIntegrity(kBadSha256AndGoodSha384Integrities, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url);
-
-  // The hash label must match the hash value.
-  ExpectIntegrityFailure(kSha384IntegrityLabeledAs256, kBasicScript,
-                         strlen(kBasicScript), secure_url, secure_url);
-
-  // With multiple values, at least one must match, and it must be the
-  // strongest hash algorithm.
-  ExpectIntegrityFailure(kGoodSha256AndBadSha384Integrities, kBasicScript,
-                         strlen(kBasicScript), secure_url, secure_url);
-  ExpectIntegrityFailure(kBadSha256AndBadSha384Integrities, kBasicScript,
-                         strlen(kBasicScript), secure_url, secure_url);
-
-  // Unsupported hash functions should succeed.
-  ExpectIntegrity(kUnsupportedHashFunctionIntegrity, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url);
-
-  // All parameters are fine, and because this is not cross origin, CORS is
-  // not needed.
-  ExpectIntegrity(kSha256Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, secure_url, kNoCors);
-
-  // Options should be ignored
-  ExpectIntegrity(kSha256IntegrityWithEmptyOption, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url, kNoCors);
-  ExpectIntegrity(kSha256IntegrityWithOption, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url, kNoCors);
-  ExpectIntegrity(kSha256IntegrityWithOptions, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url, kNoCors);
-  ExpectIntegrity(kSha256IntegrityWithMimeOption, kBasicScript,
-                  strlen(kBasicScript), secure_url, secure_url, kNoCors);
-}
-
-TEST_F(SubresourceIntegrityTest, CheckSubresourceIntegrityInInsecureOrigin) {
-  // The same checks as CheckSubresourceIntegrityInSecureOrigin should pass
-  // here, with the expection of the NoCors check at the end.
-  document->UpdateSecurityOrigin(insecure_origin->IsolatedCopy());
-
-  ExpectIntegrity(kSha256Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, insecure_url);
-  ExpectIntegrity(kSha256IntegrityLenientSyntax, kBasicScript,
-                  strlen(kBasicScript), secure_url, insecure_url);
-  ExpectIntegrity(kSha384Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, insecure_url);
-  ExpectIntegrity(kSha512Integrity, kBasicScript, strlen(kBasicScript),
-                  secure_url, insecure_url);
-  ExpectIntegrityFailure(kSha384IntegrityLabeledAs256, kBasicScript,
-                         strlen(kBasicScript), secure_url, insecure_url);
-  ExpectIntegrity(kUnsupportedHashFunctionIntegrity, kBasicScript,
-                  strlen(kBasicScript), secure_url, insecure_url);
-
-  ExpectIntegrity(kSha256AndSha384Integrities, kBasicScript,
-                  strlen(kBasicScript), secure_url, insecure_url);
-  ExpectIntegrity(kBadSha256AndGoodSha384Integrities, kBasicScript,
-                  strlen(kBasicScript), secure_url, insecure_url);
-
-  ExpectIntegrityFailure(kSha256Integrity, kBasicScript, strlen(kBasicScript),
-                         secure_url, insecure_url, kNoCors);
-  ExpectIntegrityFailure(kGoodSha256AndBadSha384Integrities, kBasicScript,
-                         strlen(kBasicScript), secure_url, insecure_url);
-}
 
 }  // namespace blink
