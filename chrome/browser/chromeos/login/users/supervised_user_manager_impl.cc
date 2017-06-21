@@ -440,7 +440,7 @@ void SupervisedUserManagerImpl::RollbackUserCreationTransaction() {
     return;
   }
 
-  if (gaia::ExtractDomainName(user_id) != user_manager::kSupervisedUserDomain) {
+  if (!owner_->IsSupervisedAccountId(AccountId::FromUserEmail(user_id))) {
     LOG(WARNING) << "Clean up transaction for  non-supervised user found :"
                  << user_id << ", will not remove data";
     prefs->ClearPref(kSupervisedUserCreationTransactionDisplayName);

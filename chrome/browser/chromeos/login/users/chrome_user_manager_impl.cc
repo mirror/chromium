@@ -1335,6 +1335,10 @@ bool ChromeUserManagerImpl::IsStubAccountId(const AccountId& account_id) const {
 
 bool ChromeUserManagerImpl::IsSupervisedAccountId(
     const AccountId& account_id) const {
+  policy::BrowserPolicyConnectorChromeOS* connector =
+      g_browser_process->platform_part()->browser_policy_connector_chromeos();
+  if (connector->IsActiveDirectoryManaged())
+    return false;
   return gaia::ExtractDomainName(account_id.GetUserEmail()) ==
          user_manager::kSupervisedUserDomain;
 }
