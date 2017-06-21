@@ -35,13 +35,6 @@ class CORE_EXPORT PrePaintTreeWalk {
       const LayoutObject&,
       PrePaintTreeWalkContext&);
 
-  // Returns true if we should force checking subtree invalidation flags.
-  ALWAYS_INLINE bool InvalidatePaintLayerOptimizationsForFragment(
-      const LayoutObject&,
-      const PaintLayer* ancestor_transformed_or_root_paint_layer,
-      const PaintPropertyTreeBuilderFragmentContext&,
-      FragmentData&);
-
   // Returns the clip applied to children for the given containing block context
   // + effect, in the space of ancestorState adjusted by ancestorPaintOffset.
   ALWAYS_INLINE LayoutRect ComputeClipRectForContext(
