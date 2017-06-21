@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "347e2a70_dc13c21c",
+        "filename": "chrome/app/generated_resources.grd",
+        "patchSetId": 6
+      },
+      "lineNbr": 12327,
+      "author": {
+        "id": 1167294
+      },
+      "writtenOn": "2017-06-21T23:17:00Z",
+      "side": 1,
+      "message": "I think this change to the \"\u003c if expr\u003d\" is what caused the bug. It appears these resources are used in non-VR Android code (I\u0027ll paste the compile errors on crbug/735676). If these resources are really meant to be VR-only, then the other code probably shouldn\u0027t be running on non-VR android.",
+      "revId": "abfcb1b11521597250bf805e6ccd99c43b78cc9d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
