@@ -34,6 +34,24 @@
       "revId": "007254c81049c42fd769eb18e8a0b6e2aafda082",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "42933bf9_de62ae6f",
+        "filename": "components/leveldb/leveldb_database_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1110029
+      },
+      "writtenOn": "2017-06-21T22:05:35Z",
+      "side": 1,
+      "message": "Yes, approximate-memory-usage is effectively the sum of block-cache (read cache) and memtables (write cache). Having those two split out seems like it would make the reported data much more actionable.\n\nNot sure what the best way to report this is? Maybe with two separate allocations, one for cache_-\u003eTotalCharge() and one with memory_usage - cache_-\u003eTotalCharge()?",
+      "parentUuid": "a91bdb5b_b8270d02",
+      "revId": "007254c81049c42fd769eb18e8a0b6e2aafda082",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
