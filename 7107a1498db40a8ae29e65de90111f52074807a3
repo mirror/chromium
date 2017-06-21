@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d19888cf_9172febd",
+        "filename": "ui/base/ime/chromeos/character_composer_unittest.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 186,
+      "author": {
+        "id": 1003013
+      },
+      "writtenOn": "2017-06-21T00:41:25Z",
+      "side": 1,
+      "message": "Please add another test for Dead\u003c\u0027\u003e + Space -\u003e \u0027",
+      "range": {
+        "startLine": 186,
+        "startChar": 2,
+        "endLine": 186,
+        "endChar": 23
+      },
+      "revId": "7107a1498db40a8ae29e65de90111f52074807a3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
