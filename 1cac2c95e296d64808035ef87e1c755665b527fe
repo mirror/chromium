@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "18c3822d_f3b9f070",
+        "filename": "extensions/browser/extension_function.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 502,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-21T18:31:56Z",
+      "side": 1,
+      "message": "I had to add this, so that the lazy ref count isn\u0027t decreased in the access denied case. It\u0027s a bit clumsy to have to check it there, but I haven\u0027t found a better alternative.",
+      "range": {
+        "startLine": 502,
+        "startChar": 6,
+        "endLine": 502,
+        "endChar": 30
+      },
+      "revId": "1cac2c95e296d64808035ef87e1c755665b527fe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

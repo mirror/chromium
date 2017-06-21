@@ -16,6 +16,24 @@
       "revId": "7b817ded3d1d907cb8ee1423b67a0737c5f355fa",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "17baf2cf_ab5e2cb5",
+        "filename": "extensions/browser/extension_function_dispatcher.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 581,
+      "author": {
+        "id": 1126309
+      },
+      "writtenOn": "2017-06-21T18:31:56Z",
+      "side": 1,
+      "message": "Didn\u0027t know which option to choose, but your suggestion sounds reasonable.\nDone.",
+      "parentUuid": "18fd42d9_7c2b87b3",
+      "revId": "7b817ded3d1d907cb8ee1423b67a0737c5f355fa",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
