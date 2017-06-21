@@ -482,10 +482,9 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   }
 
   if (base::SysInfo::IsLowEndDevice()) {
-    // When running on a low end device, we limit cached bytes to 2MB.
-    // This allows a typical page to fit its images in cache, but prevents
-    // most long-term caching.
-    settings.decoded_image_cache_budget_bytes = 2 * 1024 * 1024;
+    // When running on a low end device, we limit the working set to 16MB,
+    // which is more than is needed for most workloads on low-res screens.
+    settings.decoded_image_working_set_budget_bytes = 16 * 1024 * 1024;
   }
 
   // TODO(danakj): Only do this on low end devices.
@@ -500,15 +499,13 @@ cc::LayerTreeSettings RenderWidgetCompositor::GenerateLayerTreeSettings(
   }
 
   // On desktop, if there's over 4GB of memory on the machine, increase the
-  // image decode budget to 256MB for both gpu and software.
+  // working set size to 256MB for both gpu and software.
   const int kImageDecodeMemoryThresholdMB = 4 * 1024;
   if (base::SysInfo::AmountOfPhysicalMemoryMB() >=
       kImageDecodeMemoryThresholdMB) {
-    settings.decoded_image_cache_budget_bytes = 256 * 1024 * 1024;
     settings.decoded_image_working_set_budget_bytes = 256 * 1024 * 1024;
   } else {
-    // These are the defaults, but recorded here as well.
-    settings.decoded_image_cache_budget_bytes = 128 * 1024 * 1024;
+    // This is the default, but recorded here as well.
     settings.decoded_image_working_set_budget_bytes = 128 * 1024 * 1024;
   }
 

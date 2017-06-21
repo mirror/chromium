@@ -7049,6 +7049,7 @@ void GLES2Implementation::ProgramPathFragmentInputGenCHROMIUM(
 
 void GLES2Implementation::InitializeDiscardableTextureCHROMIUM(
     GLuint texture_id) {
+      LOG(ERROR) << "INIT DISCO" << share_group()->discardable_manager();
   ClientDiscardableManager* manager = share_group()->discardable_manager();
   if (manager->TextureIsValid(texture_id)) {
     SetGLError(GL_INVALID_VALUE, "glInitializeDiscardableTextureCHROMIUM",
@@ -7072,19 +7073,24 @@ void GLES2Implementation::UnlockDiscardableTextureCHROMIUM(GLuint texture_id) {
 }
 
 bool GLES2Implementation::LockDiscardableTextureCHROMIUM(GLuint texture_id) {
+  LOG(ERROR) << "LOCK DISCO" << share_group()->discardable_manager();
   ClientDiscardableManager* manager = share_group()->discardable_manager();
+    LOG(ERROR) << "TRYING TO LOCK";
   if (!manager->TextureIsValid(texture_id)) {
+    LOG(ERROR) << "WAT";
     SetGLError(GL_INVALID_VALUE, "glLockDiscardableTextureCHROMIUM",
                "Texture ID not initialized");
     return false;
   }
   if (!manager->LockTexture(texture_id)) {
+    LOG(ERROR) << "CANT LOCK!!";
     // Failure to lock means that this texture has been deleted on the service
     // side. Delete it here as well.
     DeleteTexturesHelper(1, &texture_id);
     return false;
   }
   helper_->LockDiscardableTextureCHROMIUM(texture_id);
+  LOG(ERROR) << "LOCKED";
   return true;
 }
 

@@ -19735,7 +19735,7 @@ error::Error GLES2DecoderImpl::HandleUnlockDiscardableTextureCHROMIUM(
     LOCAL_SET_GL_ERROR(GL_INVALID_VALUE, "glUnlockDiscardableTextureCHROMIUM",
                        "Texture ID not initialized");
   }
-  if (texture_to_unbind)
+  if (texture_to_unbind) 
     UnbindTexture(texture_to_unbind, SupportsSeparateFramebufferBinds());
 
   return error::kNoError;

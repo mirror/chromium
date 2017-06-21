@@ -38,14 +38,13 @@ class ContextProvider;
 //
 // Decoded and Uploaded image data share a single cache entry. Depending on how
 // far we've progressed, this cache entry may contain CPU-side decoded data,
-// GPU-side uploaded data, or both. Because CPU-side decoded data is stored in
-// discardable memory, and is only locked for short periods of time (until the
-// upload completes), this memory is not counted against our sized cache
-// limits. Uploaded GPU memory, being non-discardable, always counts against
-// our limits.
+// GPU-side uploaded data, or both. CPU-side decoded data is stored in software
+// discardable memory and is only locked for short periods of time (until the
+// upload completes). Uploaded GPU data is stored in GPU discardable memory and
+// remmains locked for the duration of the raster tasks which depend on it.
 //
-// In cases where the number of images needed exceeds our cache limits, we
-// operate in an "at-raster" mode. In this mode, there are no decode/upload
+// In cases where the size of locked GPU images exceeds our working set limits,
+// we operate in an "at-raster" mode. In this mode, there are no decode/upload
 // tasks, and images are decoded/uploaded as needed, immediately before being
 // used in raster. Cache entries for at-raster tasks are marked as such, which
 // prevents future tasks from taking a dependency on them and extending their
@@ -101,10 +100,10 @@ class CC_EXPORT GpuImageDecodeCache
  public:
   enum class DecodeTaskType { PART_OF_UPLOAD_TASK, STAND_ALONE_DECODE_TASK };
 
-  explicit GpuImageDecodeCache(ContextProvider* context,
+  explicit GpuImageDecodeCache(ContextProvider* compositor_context,
+                               ContextProvider* worker_context,
                                ResourceFormat decode_format,
-                               size_t max_working_set_bytes,
-                               size_t max_cache_bytes);
+                               size_t max_working_set_bytes);
   ~GpuImageDecodeCache() override;
 
   // ImageDecodeCache overrides.
@@ -145,14 +144,14 @@ class CC_EXPORT GpuImageDecodeCache
   void OnImageUploadTaskCompleted(const DrawImage& image);
 
   // For testing only.
-  void SetAllByteLimitsForTesting(size_t limit) {
-    cached_bytes_limit_ = limit;
+  void SetWorkingSetLimitForTesting(size_t limit) {
     max_working_set_bytes_ = limit;
   }
-  size_t GetBytesUsedForTesting() const { return bytes_used_; }
+  size_t GetBytesLockedForTesting() const { return bytes_locked_; }
   size_t GetNumCacheEntriesForTesting() const {
     return persistent_cache_.size();
   }
+  size_t GetInUseCacheEntriesForTesting() const { return in_use_cache_.size(); }
   size_t GetDrawImageSizeForTesting(const DrawImage& image);
   void SetImageDecodingFailedForTesting(const DrawImage& image);
   bool DiscardableIsLockedForTesting(const DrawImage& image);
@@ -160,6 +159,25 @@ class CC_EXPORT GpuImageDecodeCache
 
  private:
   enum class DecodedDataMode { GPU, CPU };
+
+  // Stores stats tracked by both DecodedImageData and UploadedImageData.
+  // Stores stats tracked by both DecodedImageData and UploadedImageData.
+  struct UsageStats {
+    void OnSetLockedData(bool out_of_raster) {
+      DCHECK_EQ(lock_count, 1);
+      first_lock_out_of_raster = out_of_raster;
+    }
+    void OnLock() {++lock_count;}
+    void OnUnlock();
+    void OnUsed() { used = true; }
+
+    int State() const;
+
+    int lock_count = 1;
+    bool used = false;
+    bool first_lock_out_of_raster = false;
+    bool first_lock_wasted = false;
+  };
 
   // Stores the CPU-side decoded bits of an image and supporting fields.
   struct DecodedImageData {
@@ -169,29 +187,22 @@ class CC_EXPORT GpuImageDecodeCache
     bool is_locked() const { return is_locked_; }
     bool Lock();
     void Unlock();
+    void mark_used() { usage_stats_.OnUsed(); }
+    
     void SetLockedData(std::unique_ptr<base::DiscardableMemory> data,
                        bool out_of_raster);
     void ResetData();
     base::DiscardableMemory* data() const { return data_.get(); }
-    void mark_used() { usage_stats_.used = true; }
 
     uint32_t ref_count = 0;
-    // Set to true if the image was corrupt and could not be decoded.
     bool decode_failure = false;
-    // If non-null, this is the pending decode task for this image.
+    // If non-null, this is the pending task to populate this data.
     scoped_refptr<TileTask> task;
     // Similar to above, but only is generated if there is no associated upload
     // generated for this task (ie, this is an out-of-raster request for decode.
     scoped_refptr<TileTask> stand_alone_task;
 
    private:
-    struct UsageStats {
-      int lock_count = 1;
-      bool used = false;
-      bool first_lock_out_of_raster = false;
-      bool first_lock_wasted = false;
-    };
-
     void ReportUsageStats() const;
 
     std::unique_ptr<base::DiscardableMemory> data_;
@@ -204,32 +215,27 @@ class CC_EXPORT GpuImageDecodeCache
     UploadedImageData();
     ~UploadedImageData();
 
+    bool is_locked() const { return is_locked_; }
+    bool Lock(ContextProvider* context_provider);
+    void Unlock();
+    void mark_used() { usage_stats_.OnUsed(); }
+
     void SetImage(sk_sp<SkImage> image);
+    void ResetImage();
     const sk_sp<SkImage>& image() const { return image_; }
 
-    void mark_used() { usage_stats_.used = true; }
-    void notify_ref_reached_zero() {
-      if (++usage_stats_.ref_reached_zero_count == 1)
-        usage_stats_.first_ref_wasted = !usage_stats_.used;
-    }
-
-    // True if the image is counting against our memory limits.
-    bool budgeted = false;
     uint32_t ref_count = 0;
-    // If non-null, this is the pending upload task for this image.
+    // True if the image is counting against our working set limits.
+    bool budgeted = false;
+    // If non-null, this is the pending task to populate this data.
     scoped_refptr<TileTask> task;
 
    private:
-    struct UsageStats {
-      bool used = false;
-      bool first_ref_wasted = false;
-      int ref_reached_zero_count = 0;
-    };
-
     void ReportUsageStats() const;
 
     // May be null if image not yet uploaded / prepared.
     sk_sp<SkImage> image_;
+    bool is_locked_ = true;
     UsageStats usage_stats_;
   };
 
@@ -290,7 +296,7 @@ class CC_EXPORT GpuImageDecodeCache
   };
 
   // All private functions should only be called while holding |lock_|. Some
-  // functions also require the |context_| lock. These are indicated by
+  // functions also require the |worker_context_| lock. These are indicated by
   // additional comments.
 
   // Similar to GetTaskForImageAndRef, but gets the dependent decode task
@@ -320,7 +326,6 @@ class CC_EXPORT GpuImageDecodeCache
   // freeing unreferenced cache entries to make room.
   bool EnsureCapacity(size_t required_size);
   bool CanFitInWorkingSet(size_t size) const;
-  bool CanFitInCache(size_t size) const;
   bool ExceedsPreferredCount() const;
 
   void DecodeImageIfNecessary(const DrawImage& draw_image,
@@ -341,13 +346,21 @@ class CC_EXPORT GpuImageDecodeCache
   bool IsCompatible(const ImageData* image_data,
                     const DrawImage& draw_image) const;
 
-  // The following two functions also require the |context_| lock to be held.
+  // The following two functions also require the |worker_context_| lock to be
+  // held.
   void UploadImageIfNecessary(const DrawImage& draw_image,
                               ImageData* image_data);
   void DeletePendingImages();
 
+  // The following function requires that any necessary locks on
+  // |context_provider| are held.
+  bool TryLockImage(ContextProvider* context_provider,
+                    const DrawImage& draw_image,
+                    ImageData* data);
+
   const ResourceFormat format_;
-  ContextProvider* context_;
+  ContextProvider* compositor_context_;
+  ContextProvider* worker_context_;
   sk_sp<GrContextThreadSafeProxy> context_threadsafe_proxy_;
 
   // All members below this point must only be accessed while holding |lock_|.
@@ -367,15 +380,16 @@ class CC_EXPORT GpuImageDecodeCache
   InUseCache in_use_cache_;
 
   size_t max_working_set_bytes_;
-  const size_t normal_max_cache_bytes_;
-  size_t cached_bytes_limit_ = normal_max_cache_bytes_;
-  size_t bytes_used_ = 0;
+  size_t bytes_locked_ = 0;
   base::MemoryState memory_state_ = base::MemoryState::NORMAL;
+  bool aggressively_freeing_resources_ = false;
 
   // We can't release GPU backed SkImages without holding the context lock,
   // so we add them to this list and defer deletion until the next time the lock
   // is held.
   std::vector<sk_sp<SkImage>> images_pending_deletion_;
+  std::vector<sk_sp<SkImage>> images_pending_abandon_;
+  std::vector<sk_sp<SkImage>> images_pending_unlock_;
 };
 
 }  // namespace cc
