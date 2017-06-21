@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "f561854a_f4338284",
+        "filename": "chrome/browser/offline_pages/prefetch/prefetch_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "If you want single-threaded guarantees, you need a SingleThreadTaskRunner.",
+      "parentUuid": "b5e98632_3bf3e339",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "60906d09_c8b39bde",
         "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
         "patchSetId": 8
@@ -36,6 +54,23 @@
         "endLine": 66,
         "endChar": 23
       },
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba108182_96c03b9a",
+        "filename": "components/offline_pages/core/prefetch/add_unique_urls_task.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "I don\u0027t think OR IGNORE will do much here, since offline_id is the primary key (and the only way ALREADY_EXISTS would be triggered).",
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -87,6 +122,74 @@
       "writtenOn": "2017-06-21T20:25:45Z",
       "side": 1,
       "message": "Please add prefetch_store_ to this CHECK. It should include all subobjects to ensure correct usage of the Taco...",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ff9006f0_9b87130c",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 76,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "where do these magic numbers come from?",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "589c13f2_004b911a",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "I\u0027d rather you define Execute in the .h file than have to list each possible specialization here.",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b2f7aabd_3e62dc4d",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "maybe rename blocking_task_runner?",
+      "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5385adac_f6d4f8e9",
+        "filename": "components/offline_pages/core/prefetch/store/prefetch_store_sql.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 124,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T21:13:20Z",
+      "side": 1,
+      "message": "https://cs.chromium.org/chromium/src/base/sequenced_task_runner.h?rcl\u003dea56b8a8d17ddd1fc397c77988ac07f6affea27f\u0026l\u003d162\n\nLooks like you can configure std::unique_ptr to delete on the task runner.",
       "revId": "f09999fd15685cbfa1791eda52b950c4e716091f",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
