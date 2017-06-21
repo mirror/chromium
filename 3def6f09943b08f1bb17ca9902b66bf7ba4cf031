@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "b567018f_38e5937d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 487,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-21T16:29:50Z",
+      "side": 1,
+      "message": "It is, this was left over from debugging. Done.",
+      "parentUuid": "2b89ec05_18dab208",
+      "range": {
+        "startLine": 486,
+        "startChar": 56,
+        "endLine": 487,
+        "endChar": 53
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a34925f7_598f74b4",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T00:28:40Z",
       "side": 1,
       "message": "This is forcing the animation for the new layout tab that was created to finish?",
+      "range": {
+        "startLine": 508,
+        "startChar": 8,
+        "endLine": 508,
+        "endChar": 30
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b0cdd081_5d47e30f",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 508,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-21T16:29:50Z",
+      "side": 1,
+      "message": "Nope, any animation that was previously occuring. I removed this since the new animations should not affect the existing ones.",
+      "parentUuid": "a34925f7_598f74b4",
       "range": {
         "startLine": 508,
         "startChar": 8,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "247f7152_78efdd8e",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/StackLayout.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 512,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-21T16:29:50Z",
+      "side": 1,
+      "message": "Made this conditional.",
+      "parentUuid": "8538274b_b4fda2dc",
+      "range": {
+        "startLine": 512,
+        "startChar": 8,
+        "endLine": 512,
+        "endChar": 22
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ba1ccb46_4af0d72d",
         "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-21T00:28:40Z",
       "side": 1,
       "message": "nit: put this back on a single line",
+      "range": {
+        "startLine": 533,
+        "startChar": 16,
+        "endLine": 533,
+        "endChar": 30
+      },
+      "revId": "3def6f09943b08f1bb17ca9902b66bf7ba4cf031",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "1052b5db_60e065ad",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 533,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-21T16:29:50Z",
+      "side": 1,
+      "message": "Whoops, didn\u0027t upload my cleanup patch. Done.",
+      "parentUuid": "ba1ccb46_4af0d72d",
       "range": {
         "startLine": 533,
         "startChar": 16,

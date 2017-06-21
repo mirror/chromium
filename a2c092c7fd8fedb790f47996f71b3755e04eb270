@@ -22,6 +22,30 @@
       "revId": "a2c092c7fd8fedb790f47996f71b3755e04eb270",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "040235cb_7326d63d",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/compositor/layouts/phone/stack/Stack.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 404,
+      "author": {
+        "id": 1135279
+      },
+      "writtenOn": "2017-06-21T16:29:50Z",
+      "side": 0,
+      "message": "Removed the logic in StackLayout and made this conditional. Chrome Home\u0027s animation will be able to run with existing animations.",
+      "parentUuid": "306a276b_e130f29e",
+      "range": {
+        "startLine": 404,
+        "startChar": 0,
+        "endLine": 404,
+        "endChar": 30
+      },
+      "revId": "a2c092c7fd8fedb790f47996f71b3755e04eb270",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
