@@ -156,6 +156,26 @@ GpuMemoryBufferFactoryNativePixmap::CreateAnonymousImage(
   return image;
 }
 
+gfx::GpuMemoryBufferAttribVector
+GpuMemoryBufferFactoryNativePixmap::GetGpuMemoryBufferAttribsForImage() {
+  gfx::GpuMemoryBufferAttribVector drm_gmb_attrs =
+      ui::OzonePlatform::GetInstance()
+          ->GetSurfaceFactoryOzone()
+          ->GetScanoutFormatsWithModifiers(gfx::kNullAcceleratedWidget);
+  gfx::GpuMemoryBufferAttribVector egl_gmb_attrs =
+      gl::GLImageNativePixmap::QueryDmaBufFormatsAndModifiers();
+  gfx::GpuMemoryBufferAttribVector intersection;
+
+  std::sort(drm_gmb_attrs.begin(), drm_gmb_attrs.end());
+  std::sort(egl_gmb_attrs.begin(), egl_gmb_attrs.end());
+
+  std::set_intersection(drm_gmb_attrs.begin(), drm_gmb_attrs.end(),
+                        egl_gmb_attrs.begin(), egl_gmb_attrs.end(),
+                        std::back_inserter(intersection));
+
+  return intersection;
+}
+
 unsigned GpuMemoryBufferFactoryNativePixmap::RequiredTextureType() {
   return GL_TEXTURE_EXTERNAL_OES;
 }

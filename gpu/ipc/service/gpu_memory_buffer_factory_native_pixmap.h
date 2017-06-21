@@ -54,6 +54,7 @@ class GPU_EXPORT GpuMemoryBufferFactoryNativePixmap
       gfx::BufferFormat format,
       unsigned internalformat) override;
   unsigned RequiredTextureType() override;
+  gfx::GpuMemoryBufferAttribVector GetGpuMemoryBufferAttribsForImage() override;
 
  private:
   using NativePixmapMapKey = std::pair<int, int>;

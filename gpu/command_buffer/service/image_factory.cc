@@ -22,6 +22,12 @@ scoped_refptr<gl::GLImage> ImageFactory::CreateAnonymousImage(
   return nullptr;
 }
 
+gfx::GpuMemoryBufferAttribVector
+ImageFactory::GetGpuMemoryBufferAttribsForImage() {
+  NOTIMPLEMENTED();
+  return gfx::GpuMemoryBufferAttribVector();
+}
+
 unsigned ImageFactory::RequiredTextureType() {
   NOTIMPLEMENTED();
   return 0;
