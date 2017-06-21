@@ -896,26 +896,23 @@ void ParamTraits<base::ListValue>::Log(const param_type& p, std::string* l) {
 
 void ParamTraits<base::NullableString16>::GetSize(base::PickleSizer* sizer,
                                                   const param_type& p) {
-  GetParamSize(sizer, p.string());
-  GetParamSize(sizer, p.is_null());
+  return ParamTraits<base::Optional<base::string16>>::GetSize(
+      sizer, p.as_optional_string16());
 }
 
 void ParamTraits<base::NullableString16>::Write(base::Pickle* m,
                                                 const param_type& p) {
-  WriteParam(m, p.string());
-  WriteParam(m, p.is_null());
+  return ParamTraits<base::Optional<base::string16>>::Write(
+      m, p.as_optional_string16());
 }
 
 bool ParamTraits<base::NullableString16>::Read(const base::Pickle* m,
                                                base::PickleIterator* iter,
                                                param_type* r) {
-  base::string16 string;
+  base::Optional<base::string16> string;
   if (!ReadParam(m, iter, &string))
     return false;
-  bool is_null;
-  if (!ReadParam(m, iter, &is_null))
-    return false;
-  *r = base::NullableString16(string, is_null);
+  *r = base::NullableString16(string);
   return true;
 }
 

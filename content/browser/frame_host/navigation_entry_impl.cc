@@ -45,11 +45,15 @@ void RecursivelyGenerateFrameEntries(
     const std::vector<base::NullableString16>& referenced_files,
     NavigationEntryImpl::TreeNode* node) {
   node->frame_entry = new FrameNavigationEntry(
-      UTF16ToUTF8(state.target.string()), state.item_sequence_number,
-      state.document_sequence_number, nullptr, nullptr,
-      GURL(state.url_string.string()),
-      Referrer(GURL(state.referrer.string()), state.referrer_policy), "GET",
-      -1);
+      UTF16ToUTF8(
+          state.target.as_optional_string16().value_or(base::string16())),
+      state.item_sequence_number, state.document_sequence_number, nullptr,
+      nullptr,
+      GURL(state.url_string.as_optional_string16().value_or(base::string16())),
+      Referrer(GURL(state.referrer.as_optional_string16().value_or(
+                   base::string16())),
+               state.referrer_policy),
+      "GET", -1);
 
   // Set a single-frame PageState on the entry.
   ExplodedPageState page_state;
@@ -880,7 +884,8 @@ std::map<std::string, bool> NavigationEntryImpl::GetSubframeUniqueNames(
       if (DecodePageState(child->frame_entry->page_state().ToEncodedData(),
                           &exploded_page_state)) {
         ExplodedFrameState frame_state = exploded_page_state.top;
-        if (UTF16ToUTF8(frame_state.url_string.string()) == url::kAboutBlankURL)
+        if (UTF16ToUTF8(frame_state.url_string.as_optional_string16().value_or(
+                base::string16())) == url::kAboutBlankURL)
           is_about_blank = true;
       }
 

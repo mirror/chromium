@@ -63,10 +63,10 @@ WebVector<WebString> MockWebClipboardImpl::ReadAvailableTypes(
     bool* containsFilenames) {
   *containsFilenames = false;
   std::vector<WebString> results;
-  if (!m_plainText.string().empty()) {
+  if (!m_plainText.is_null() && !m_plainText.string().empty()) {
     results.push_back(WebString("text/plain"));
   }
-  if (!m_htmlText.string().empty()) {
+  if (!m_htmlText.is_null() && !m_htmlText.string().empty()) {
     results.push_back(WebString("text/html"));
   }
   if (!m_image.IsNull()) {
