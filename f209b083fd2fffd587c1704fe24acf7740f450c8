@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "3bf5d6c7_6298cea1",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T17:58:24Z",
+      "side": 1,
+      "message": "I discussed more with Filip, who explained to me the details here. Thanks for explanation, it LG for me now!",
+      "parentUuid": "807c1771_11eb15e1",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2ec8f3c7_ea7108b8",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
         "patchSetId": 6
