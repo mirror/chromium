@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cb601353_4debc066",
+        "filename": "chromecast/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 478,
+      "author": {
+        "id": 1216499
+      },
+      "writtenOn": "2017-06-21T17:23:32Z",
+      "side": 1,
+      "message": "I have not been following android-things implementation, so I may be missing context. My question is also not directly on this patch. I am wondering why we have the is_android_things gn flag. How is it different from the combination of os_android \u0026\u0026 is_cast_audio_only? We also used to have a disable_display flag that I cannot find atm.",
+      "revId": "88768db680fb9e3deff62101d3a374588d3ea547",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
