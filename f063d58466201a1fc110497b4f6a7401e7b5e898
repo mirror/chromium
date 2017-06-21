@@ -260,6 +260,30 @@
     },
     {
       "key": {
+        "uuid": "c7b00c4f_a05e1956",
+        "filename": "components/ntp_snippets/breaking_news/breaking_news_suggestions_provider.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 153,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T10:25:40Z",
+      "side": 1,
+      "message": "ACK.",
+      "parentUuid": "62d15820_71c143c1",
+      "range": {
+        "startLine": 153,
+        "startChar": 39,
+        "endLine": 153,
+        "endChar": 57
+      },
+      "revId": "f063d58466201a1fc110497b4f6a7401e7b5e898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "480ed0ad_e2d13e70",
         "filename": "components/ntp_snippets/ntp_snippets_constants.h",
         "patchSetId": 6
@@ -295,6 +319,30 @@
       "side": 1,
       "message": "The plan is to use the same DB for both types of suggestions.  Using an extra DB is just a temp solution.",
       "parentUuid": "480ed0ad_e2d13e70",
+      "range": {
+        "startLine": 15,
+        "startChar": 38,
+        "endLine": 15,
+        "endChar": 53
+      },
+      "revId": "f063d58466201a1fc110497b4f6a7401e7b5e898",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "178238e7_0ad4b053",
+        "filename": "components/ntp_snippets/ntp_snippets_constants.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T10:25:40Z",
+      "side": 1,
+      "message": "ACK.",
+      "parentUuid": "979987c8_bf802acb",
       "range": {
         "startLine": 15,
         "startChar": 38,

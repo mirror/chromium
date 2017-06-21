@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3acccdce_4d211cb8",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T10:25:40Z",
+      "side": 1,
+      "message": "remove?",
+      "range": {
+        "startLine": 411,
+        "startChar": 69,
+        "endLine": 411,
+        "endChar": 76
+      },
+      "revId": "652d732568971f68c5181c24e9e884ba20e82505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b030ed69_a9f2f0dd",
+        "filename": "chrome/browser/ntp_snippets/content_suggestions_service_factory.cc",
+        "patchSetId": 8
+      },
+      "lineNbr": 412,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T10:25:40Z",
+      "side": 1,
+      "message": "Please add crbug.com/\u003cnumber\u003e link to the bug you\u0027ve created for this.",
+      "range": {
+        "startLine": 412,
+        "startChar": 41,
+        "endLine": 412,
+        "endChar": 42
+      },
+      "revId": "652d732568971f68c5181c24e9e884ba20e82505",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
