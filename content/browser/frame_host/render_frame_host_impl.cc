@@ -3920,13 +3920,18 @@ void RenderFrameHostImpl::GetInterface(
     mojo::ScopedMessagePipeHandle interface_pipe) {
   service_manager::BindSourceInfo source_info(GetProcess()->GetChildIdentity(),
                                               service_manager::CapabilitySet());
+
   if (interface_registry_.get() &&
       interface_registry_->CanBindInterface(interface_name)) {
     interface_registry_->BindInterface(source_info, interface_name,
                                        std::move(interface_pipe));
   } else {
-    GetContentClient()->browser()->BindInterfaceRequestFromFrame(
-        this, source_info, interface_name, std::move(interface_pipe));
+    delegate_->OnInterfaceRequest(this, source_info, interface_name,
+                                  &interface_pipe);
+    if (interface_pipe->is_valid()) {
+      GetContentClient()->browser()->BindInterfaceRequestFromFrame(
+          this, source_info, interface_name, std::move(interface_pipe));
+    }
   }
 }
 

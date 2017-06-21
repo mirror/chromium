@@ -4367,6 +4367,19 @@ void WebContentsImpl::OnAssociatedInterfaceRequest(
     it->second->OnRequestForFrame(render_frame_host, std::move(handle));
 }
 
+void WebContentsImpl::OnInterfaceRequest(
+    RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  for (auto& observer : observers_) {
+    observer.BindInterfaceRequestFromFrame(render_frame_host, source_info,
+                                           interface_name, interface_pipe);
+    if (!interface_pipe->is_valid())
+      break;
+  }
+}
+
 const GURL& WebContentsImpl::GetMainFrameLastCommittedURL() const {
   return GetLastCommittedURL();
 }

@@ -35,10 +35,10 @@ class DistillerJavaScriptServiceImpl
 
 // static
 void CreateDistillerJavaScriptService(
-    content::RenderFrameHost* render_frame_host,
     DistillerUIHandle* distiller_ui_handle,
     const service_manager::BindSourceInfo& source_info,
-    mojom::DistillerJavaScriptServiceRequest request);
+    mojom::DistillerJavaScriptServiceRequest request,
+    content::RenderFrameHost* render_frame_host);
 
 }  // namespace dom_distiller
 

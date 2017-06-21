@@ -185,6 +185,11 @@ class PrerenderContents : public content::NotificationObserver,
       const content::ResourceRedirectDetails& details) override;
 
   void RenderProcessGone(base::TerminationStatus status) override;
+  void BindInterfaceRequestFromFrame(
+      content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override;
 
   // content::NotificationObserver
   void Observe(int type,
