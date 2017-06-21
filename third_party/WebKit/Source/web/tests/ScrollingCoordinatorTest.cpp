@@ -1123,11 +1123,6 @@ TEST_P(NonCompositedMainThreadScrollingReasonTest, BackgroundNotOpaqueTest) {
       MainThreadScrollingReason::kBackgroundNotOpaqueInRectAndLCDText);
 }
 
-TEST_P(NonCompositedMainThreadScrollingReasonTest, BorderRadiusTest) {
-  TestNonCompositedReasons("border-radius",
-                           MainThreadScrollingReason::kHasBorderRadius);
-}
-
 TEST_P(NonCompositedMainThreadScrollingReasonTest, ClipTest) {
   TestNonCompositedReasons("clip",
                            MainThreadScrollingReason::kHasClipRelatedProperty);
@@ -1183,9 +1178,8 @@ TEST_P(NonCompositedMainThreadScrollingReasonTest, ClipPathTest) {
 }
 
 TEST_P(NonCompositedMainThreadScrollingReasonTest, LCDTextEnabledTest) {
-  TestNonCompositedReasons("transparent border-radius",
-                           MainThreadScrollingReason::kHasOpacityAndLCDText |
-                               MainThreadScrollingReason::kHasBorderRadius);
+  TestNonCompositedReasons("transparent",
+                           MainThreadScrollingReason::kHasOpacityAndLCDText);
 }
 
 TEST_P(NonCompositedMainThreadScrollingReasonTest, BoxShadowTest) {
@@ -1250,8 +1244,7 @@ TEST_P(NonCompositedMainThreadScrollingReasonTest,
       ToLayoutBoxModelObject(container2->GetLayoutObject())
           ->GetScrollableArea();
   ASSERT_TRUE(scrollable_area2);
-  EXPECT_TRUE(scrollable_area2->GetNonCompositedMainThreadScrollingReasons() &
-              MainThreadScrollingReason::kHasBorderRadius);
+  ASSERT_TRUE(scrollable_area2->UsesCompositedScrolling());
 }
 
 }  // namespace blink
