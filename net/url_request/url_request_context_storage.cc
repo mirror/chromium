@@ -159,4 +159,10 @@ void URLRequestContextStorage::set_reporting_service(
   reporting_service_ = std::move(reporting_service);
 }
 
+void URLRequestContextStorage::set_network_quality_estimator(
+    std::unique_ptr<NetworkQualityEstimator> network_quality_estimator) {
+  context_->set_network_quality_estimator(network_quality_estimator.get());
+  network_quality_estimator_ = std::move(network_quality_estimator);
+}
+
 }  // namespace net
