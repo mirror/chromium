@@ -65,7 +65,7 @@ MailboxTextureHolder::MailboxTextureHolder(
   shared_gl->GenMailboxCHROMIUM(mailbox_.name);
   shared_gl->ProduceTextureCHROMIUM(GL_TEXTURE_2D, mailbox_.name);
   const GLuint64 fence_sync = shared_gl->InsertFenceSyncCHROMIUM();
-  shared_gl->Flush();
+  shared_gl->ShallowFlushCHROMIUM();
   shared_gl->GenSyncTokenCHROMIUM(fence_sync, sync_token_.GetData());
 
   shared_gl->BindTexture(GL_TEXTURE_2D, 0);

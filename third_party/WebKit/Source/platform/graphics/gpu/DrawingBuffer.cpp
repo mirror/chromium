@@ -384,7 +384,7 @@ bool DrawingBuffer::FinishPrepareTextureMailboxGpu(
 #if OS(MACOSX)
     gl_->DescheduleUntilFinishedCHROMIUM();
 #endif
-    gl_->Flush();
+    gl_->ShallowFlushCHROMIUM();
     gl_->GenSyncTokenCHROMIUM(
         fence_sync, color_buffer_for_mailbox->produce_sync_token.GetData());
   }
@@ -711,6 +711,8 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
 
   if (contents_changed_) {
     ResolveIfNeeded();
+    // TODO(crbug.com/735630): Is this flush really necessary? Document why or
+    // remove it.
     gl_->Flush();
   }
 
@@ -732,7 +734,7 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
     gl_->ProduceTextureDirectCHROMIUM(back_color_buffer_->texture_id, target,
                                       mailbox.name);
     const GLuint64 fence_sync = gl_->InsertFenceSyncCHROMIUM();
-    gl_->Flush();
+    gl_->ShallowFlushCHROMIUM();
     gl_->GenSyncTokenCHROMIUM(fence_sync, produce_sync_token.GetData());
   }
 
@@ -763,7 +765,7 @@ bool DrawingBuffer::CopyToPlatformTexture(gpu::gles2::GLES2Interface* gl,
 
   const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
 
-  gl->Flush();
+  gl->ShallowFlushCHROMIUM();
   gpu::SyncToken sync_token;
   gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
   gl_->WaitSyncTokenCHROMIUM(sync_token.GetData());
@@ -791,6 +793,8 @@ void DrawingBuffer::ClearPlatformLayer() {
   if (layer_)
     layer_->ClearTexture();
 
+  // TODO(crbug.com/735630): Is this flush really necessary? Document why, or
+  // remove it.
   gl_->Flush();
 }
 
