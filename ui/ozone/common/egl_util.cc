@@ -74,6 +74,7 @@ bool LoadDefaultEGLGLES2Bindings(gl::GLImplementation implementation) {
     glesv2_path = module_path.Append(kGLESv2SwiftShaderLibraryName);
     egl_path = module_path.Append(kEGLSwiftShaderLibraryName);
 #else
+    LOG(ERROR) << "SwiftShader GL is disabled, can't load EGL bindings";
     return false;
 #endif
   } else {
