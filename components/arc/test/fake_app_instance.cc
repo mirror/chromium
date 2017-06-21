@@ -267,6 +267,10 @@ void FakeAppInstance::InstallPackage(mojom::ArcPackageInfoPtr arcPackageInfo) {
   app_host_->OnPackageAdded(std::move(arcPackageInfo));
 }
 
+void FakeAppInstance::StartPaiFlow() {
+  ++start_pai_request_count_;
+}
+
 void FakeAppInstance::LaunchIntent(
     const std::string& intent_uri,
     const base::Optional<gfx::Rect>& dimension_on_screen) {
