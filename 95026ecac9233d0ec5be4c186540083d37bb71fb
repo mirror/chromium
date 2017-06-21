@@ -34,6 +34,24 @@
       "revId": "95026ecac9233d0ec5be4c186540083d37bb71fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "86de1b22_2a96a6f3",
+        "filename": "ui/ozone/common/gl_ozone_egl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T15:23:05Z",
+      "side": 1,
+      "message": "Ya, it seems to be intentional. I\u0027ll abandon this.",
+      "parentUuid": "0d572e8d_93c0ab1e",
+      "revId": "95026ecac9233d0ec5be4c186540083d37bb71fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
