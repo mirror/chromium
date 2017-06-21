@@ -67,7 +67,7 @@ const char kUkmFailedCountName[] = "Count.Failed";
 static const std::map<DomainType,
                       std::map<ResourceType, std::map<bool, std::string>>>&
 GetNonlocalhostHistogramNames() {
-  base::LazyInstance<std::map<
+  static base::LazyInstance<std::map<
       DomainType, std::map<ResourceType, std::map<bool, std::string>>>>::Leaky
       kNonlocalhostHistogramNames = LAZY_INSTANCE_INITIALIZER;
 
@@ -110,7 +110,7 @@ GetNonlocalhostHistogramNames() {
 static const std::map<DomainType,
                       std::map<PortType, std::map<bool, std::string>>>&
 GetLocalhostHistogramNames() {
-  base::LazyInstance<std::map<
+  static base::LazyInstance<std::map<
       DomainType, std::map<PortType, std::map<bool, std::string>>>>::Leaky
       kLocalhostHistogramNames = LAZY_INSTANCE_INITIALIZER;
 
