@@ -12,6 +12,7 @@
 #include "base/strings/string_split.h"
 #include "base/strings/stringprintf.h"
 #include "base/threading/thread_restrictions.h"
+#include "content/public/common/isolated_world_ids.h"
 #include "content/public/test/browser_test.h"
 #include "headless/grit/headless_browsertest_resources.h"
 #include "headless/public/devtools/domains/runtime.h"
@@ -50,10 +51,24 @@ class HeadlessJsBindingsTest
     headless_tab_socket_ = web_contents_->GetHeadlessTabSocket();
     DCHECK(headless_tab_socket_);
     headless_tab_socket_->SetListener(this);
-    PrepareToRunJsBindingsTest();
+
+    devtools_client_->GetPage()->Enable();
+    devtools_client_->GetPage()->GetExperimental()->GetResourceTree(
+        page::GetResourceTreeParams::Builder().Build(),
+        base::Bind(&HeadlessJsBindingsTest::OnResourceTree,
+                   base::Unretained(this)));
   }
 
-  void PrepareToRunJsBindingsTest() {
+  void OnResourceTree(std::unique_ptr<page::GetResourceTreeResult> result) {
+    main_frame_id_ = result->GetFrameTree()->GetFrame()->GetId();
+    web_contents_->InstallHeadlessTabSocketBindings(
+        main_frame_id_, content::ISOLATED_WORLD_ID_GLOBAL,
+        base::Bind(&HeadlessJsBindingsTest::OnInstalledHeadlessTabSocket,
+                   base::Unretained(this)));
+  }
+
+  void OnInstalledHeadlessTabSocket(bool success) {
+    ASSERT_TRUE(success);
     devtools_client_->GetRuntime()->Evaluate(
         ResourceBundle::GetSharedInstance()
             .GetRawDataResource(DEVTOOLS_BINDINGS_TEST)
@@ -88,7 +103,10 @@ class HeadlessJsBindingsTest
                    : "");
   }
 
-  void OnMessageFromTab(const std::string& json_message) override {
+  void OnMessageFromTab(const std::string& json_message,
+                        const std::string& devtools_frame_id,
+                        int world_id) override {
+    EXPECT_EQ(content::ISOLATED_WORLD_ID_GLOBAL, world_id);
     std::unique_ptr<base::Value> message =
         base::JSONReader::Read(json_message, base::JSON_PARSE_RFC);
     const base::DictionaryValue* message_dict;
@@ -115,9 +133,7 @@ class HeadlessJsBindingsTest
     devtools_client_->SendRawDevToolsMessage(json_message);
   }
 
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::MAIN_WORLD;
-  }
+  bool GetAllowTabSockets() override { return true; }
 
   bool OnProtocolMessage(const std::string& devtools_agent_host_id,
                          const std::string& json_message,
@@ -132,7 +148,8 @@ class HeadlessJsBindingsTest
       if ((id % 2) == 0)
         return false;
 
-      headless_tab_socket_->SendMessageToTab(json_message);
+      headless_tab_socket_->SendMessageToTab(json_message, main_frame_id_,
+                                             content::ISOLATED_WORLD_ID_GLOBAL);
       return true;
     }
 
@@ -140,7 +157,8 @@ class HeadlessJsBindingsTest
     if (!parsed_message.GetString("method", &method))
       return false;
 
-    headless_tab_socket_->SendMessageToTab(json_message);
+    headless_tab_socket_->SendMessageToTab(json_message, main_frame_id_,
+                                           content::ISOLATED_WORLD_ID_GLOBAL);
 
     // Check which domain the event belongs to, if it's the DOM domain then
     // assume js handled it.
@@ -150,6 +168,7 @@ class HeadlessJsBindingsTest
   }
 
  private:
+  std::string main_frame_id_;
   HeadlessTabSocket* headless_tab_socket_;
 };
 

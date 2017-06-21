@@ -8,8 +8,11 @@
 
 #include "base/base64.h"
 #include "base/json/json_writer.h"
+#include "base/strings/stringprintf.h"
+#include "content/public/common/isolated_world_ids.h"
 #include "content/public/test/browser_test.h"
 #include "headless/lib/browser/headless_web_contents_impl.h"
+#include "headless/public/devtools/domains/dom_snapshot.h"
 #include "headless/public/devtools/domains/page.h"
 #include "headless/public/devtools/domains/runtime.h"
 #include "headless/public/devtools/domains/security.h"
@@ -424,15 +427,15 @@ class GetHeadlessTabSocketButNoTabSocket
     FinishAsynchronousTest();
   }
 
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::NONE;
-  }
+  bool GetAllowTabSockets() override { return false; }
 };
 
 HEADLESS_ASYNC_DEVTOOLED_TEST_F(GetHeadlessTabSocketButNoTabSocket);
 
-class HeadlessMainWorldTabSocketTest : public HeadlessAsyncDevTooledBrowserTest,
-                                       public HeadlessTabSocket::Listener {
+class TabSocketTest : public HeadlessAsyncDevTooledBrowserTest,
+                      public headless::HeadlessTabSocket::Listener,
+                      public page::Observer,
+                      public runtime::Observer {
  public:
   void SetUp() override {
     options()->mojo_service_names.insert("headless::TabSocket");
@@ -440,24 +443,150 @@ class HeadlessMainWorldTabSocketTest : public HeadlessAsyncDevTooledBrowserTest,
   }
 
   void RunDevTooledTest() override {
+    // Note we must enable the page domain or the browser won't get told the
+    // devtools frame ids.
+    devtools_client_->GetPage()->AddObserver(this);
+    devtools_client_->GetPage()->Enable();
+    devtools_client_->GetRuntime()->AddObserver(this);
+    devtools_client_->GetRuntime()->Enable();
+
+    devtools_client_->GetPage()->GetExperimental()->GetResourceTree(
+        page::GetResourceTreeParams::Builder().Build(),
+        base::Bind(&TabSocketTest::OnResourceTree, base::Unretained(this)));
+  }
+
+  void OnResourceTree(std::unique_ptr<page::GetResourceTreeResult> result) {
+    main_frame_id_ = result->GetFrameTree()->GetFrame()->GetId();
+    RunTabSocketTest();
+  }
+
+  virtual void RunTabSocketTest() = 0;
+
+  void OnExecutionContextCreated(
+      const runtime::ExecutionContextCreatedParams& params) override {
+    const base::DictionaryValue* dictionary;
+    bool is_main_world;
+    if (params.GetContext()->HasAuxData() &&
+        params.GetContext()->GetAuxData()->GetAsDictionary(&dictionary) &&
+        dictionary->GetBoolean("isDefault", &is_main_world) && !is_main_world) {
+      isolated_world_name_to_context_id_[params.GetContext()->GetName()] =
+          params.GetContext()->GetId();
+    }
+  }
+
+  void ExpectJsException(std::unique_ptr<runtime::EvaluateResult> result) {
+    EXPECT_TRUE(result->HasExceptionDetails());
+    FinishAsynchronousTest();
+  }
+
+  void FailOnJsEvaluateException(
+      std::unique_ptr<runtime::EvaluateResult> result) {
+    if (!result->HasExceptionDetails())
+      return;
+
+    FinishAsynchronousTest();
+
+    const runtime::ExceptionDetails* exception_details =
+        result->GetExceptionDetails();
+    FAIL() << exception_details->GetText()
+           << (exception_details->HasException()
+                   ? exception_details->GetException()->GetDescription().c_str()
+                   : "");
+  }
+
+  bool GetAllowTabSockets() override { return true; }
+
+  int GetIsolatedWorldContextId(const std::string& name) {
+    const auto find_it = isolated_world_name_to_context_id_.find(name);
+    if (find_it == isolated_world_name_to_context_id_.end()) {
+      FinishAsynchronousTest();
+      CHECK(false) << "Unknown isolated world " << name;
+      return 0;
+    }
+    return find_it->second;
+  }
+
+  void CreateMainWorldTabSocket(base::Callback<void(bool)> callback) {
+    web_contents_->InstallHeadlessTabSocketBindings(
+        main_frame_id_, content::ISOLATED_WORLD_ID_GLOBAL, callback);
+  }
+
+  void CreateIsolatedWorldTabSocket(std::string isolated_world_name,
+                                    std::string devtools_frame_id,
+                                    base::Callback<void(int)> callback) {
+    devtools_client_->GetPage()->GetExperimental()->CreateIsolatedWorld(
+        page::CreateIsolatedWorldParams::Builder()
+            .SetFrameId(devtools_frame_id)
+            .SetWorldName(isolated_world_name)
+            .Build(),
+        base::Bind(&TabSocketTest::OnCreatedIsolatedWorld,
+                   base::Unretained(this), devtools_frame_id, callback));
+  }
+
+ protected:
+  std::string main_frame_id_;
+
+ private:
+  void OnCreatedIsolatedWorld(
+      std::string devtools_frame_id,
+      base::Callback<void(int)> callback,
+      std::unique_ptr<page::CreateIsolatedWorldResult> result) {
+    web_contents_->InstallHeadlessTabSocketBindings(
+        devtools_frame_id, result->GetWorldId(),
+        base::Bind(&TabSocketTest::OnInstalledHeadlessTabSocket,
+                   base::Unretained(this), callback, result->GetWorldId()));
+  }
+
+  void OnInstalledHeadlessTabSocket(base::Callback<void(int)> callback,
+                                    int world_id,
+                                    bool success) {
+    EXPECT_TRUE(success);
+    if (!success) {
+      FinishAsynchronousTest();
+    } else {
+      callback.Run(world_id);
+    }
+  }
+
+  std::map<std::string, int> isolated_world_name_to_context_id_;
+};
+
+class MainWorldHeadlessTabSocketTest : public TabSocketTest {
+ public:
+  void RunTabSocketTest() override {
+    CreateMainWorldTabSocket(base::Bind(
+        &MainWorldHeadlessTabSocketTest::OnInstalledHeadlessTabSocket,
+        base::Unretained(this)));
+  }
+
+  void OnInstalledHeadlessTabSocket(bool success) {
+    ASSERT_TRUE(success);
     devtools_client_->GetRuntime()->Evaluate(
         R"(window.TabSocket.onmessage =
             function(message) {
               window.TabSocket.send('Embedder sent us: ' + message);
             };
-          )");
+          )",
+        base::Bind(&MainWorldHeadlessTabSocketTest::FailOnJsEvaluateException,
+                   base::Unretained(this)));
 
     HeadlessTabSocket* headless_tab_socket =
         web_contents_->GetHeadlessTabSocket();
     DCHECK(headless_tab_socket);
 
-    headless_tab_socket->SendMessageToTab("One");
-    headless_tab_socket->SendMessageToTab("Two");
-    headless_tab_socket->SendMessageToTab("Three");
+    headless_tab_socket->SendMessageToTab("One", main_frame_id_,
+                                          content::ISOLATED_WORLD_ID_GLOBAL);
+    headless_tab_socket->SendMessageToTab("Two", main_frame_id_,
+                                          content::ISOLATED_WORLD_ID_GLOBAL);
+    headless_tab_socket->SendMessageToTab("Three", main_frame_id_,
+                                          content::ISOLATED_WORLD_ID_GLOBAL);
     headless_tab_socket->SetListener(this);
   }
 
-  void OnMessageFromTab(const std::string& message) override {
+  void OnMessageFromTab(const std::string& message,
+                        const std::string& devtools_frame_id,
+                        int world_id) override {
+    EXPECT_EQ(0, world_id);
     messages_.push_back(message);
     if (messages_.size() == 3u) {
       EXPECT_THAT(messages_,
@@ -467,31 +596,30 @@ class HeadlessMainWorldTabSocketTest : public HeadlessAsyncDevTooledBrowserTest,
     }
   }
 
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::MAIN_WORLD;
-  }
-
  private:
   std::vector<std::string> messages_;
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessMainWorldTabSocketTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(MainWorldHeadlessTabSocketTest);
 
-class HeadlessMainWorldTabSocketNotThereTest
-    : public HeadlessAsyncDevTooledBrowserTest,
-      public HeadlessTabSocket::Listener {
+class MainWorldHeadlessTabSocketBindingsNotInstalledTest
+    : public TabSocketTest {
  public:
-  void SetUp() override {
-    options()->mojo_service_names.insert("headless::TabSocket");
-    HeadlessAsyncDevTooledBrowserTest::SetUp();
+  void RunTabSocketTest() override {
+    CreateIsolatedWorldTabSocket(
+        "Test World", main_frame_id_,
+        base::Bind(&MainWorldHeadlessTabSocketBindingsNotInstalledTest::
+                       OnIsolatedWorldCreated,
+                   base::Unretained(this)));
   }
 
-  void RunDevTooledTest() override {
-    // We expect this to fail because the TabSocket is being injected into
-    // isolated worlds.
+  void OnIsolatedWorldCreated(int world_id) {
+    // We expect this to fail because TabSocket bindings where injected into the
+    // isolated world not the main world.
     devtools_client_->GetRuntime()->Evaluate(
         "window.TabSocket.send('This should not work!');",
-        base::Bind(&HeadlessMainWorldTabSocketNotThereTest::EvaluateResult,
+        base::Bind(&MainWorldHeadlessTabSocketBindingsNotInstalledTest::
+                       ExpectJsException,
                    base::Unretained(this)));
 
     HeadlessTabSocket* headless_tab_socket =
@@ -501,12 +629,7 @@ class HeadlessMainWorldTabSocketNotThereTest
     headless_tab_socket->SetListener(this);
   }
 
-  void EvaluateResult(std::unique_ptr<runtime::EvaluateResult> result) {
-    EXPECT_TRUE(result->HasExceptionDetails());
-    FinishAsynchronousTest();
-  }
-
-  void OnMessageFromTab(const std::string&) override {
+  void OnMessageFromTab(const std::string&, const std::string&, int) override {
 #ifdef OS_WIN
     FinishAsynchronousTest();
     FAIL() << "Should not receive a message from the tab!";
@@ -515,115 +638,61 @@ class HeadlessMainWorldTabSocketNotThereTest
     FinishAsynchronousTest();
 #endif
   }
-
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::ISOLATED_WORLD;
-  }
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessMainWorldTabSocketNotThereTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(
+    MainWorldHeadlessTabSocketBindingsNotInstalledTest);
 
-class HeadlessIsolatedWorldTabSocketTest
-    : public HeadlessAsyncDevTooledBrowserTest,
-      public HeadlessTabSocket::Listener,
-      public runtime::Observer {
+class IsolatedWorldHeadlessTabSocketTest : public TabSocketTest {
  public:
-  void SetUp() override {
-    options()->mojo_service_names.insert("headless::TabSocket");
-    HeadlessAsyncDevTooledBrowserTest::SetUp();
+  void RunTabSocketTest() override {
+    CreateIsolatedWorldTabSocket(
+        "Test World", main_frame_id_,
+        base::Bind(&IsolatedWorldHeadlessTabSocketTest::OnIsolatedWorldCreated,
+                   base::Unretained(this)));
   }
 
-  void RunDevTooledTest() override {
-    devtools_client_->GetRuntime()->AddObserver(this);
-    devtools_client_->GetRuntime()->Enable();
-
-    devtools_client_->GetPage()->GetExperimental()->GetResourceTree(
-        page::GetResourceTreeParams::Builder().Build(),
-        base::Bind(&HeadlessIsolatedWorldTabSocketTest::OnResourceTree,
-                   base::Unretained(this)));
-
+  void OnIsolatedWorldCreated(int world_id) {
     HeadlessTabSocket* headless_tab_socket =
         web_contents_->GetHeadlessTabSocket();
     DCHECK(headless_tab_socket);
-    headless_tab_socket->SendMessageToTab("Hello!!!");
+    headless_tab_socket->SendMessageToTab("Hello!!!", main_frame_id_, world_id);
     headless_tab_socket->SetListener(this);
+
+    devtools_client_->GetRuntime()->Evaluate(
+        runtime::EvaluateParams::Builder()
+            .SetExpression(
+                R"(window.TabSocket.onmessage =
+                    function(message) {
+                      TabSocket.send('Embedder sent us: ' + message);
+                    };
+                  )")
+            .SetContextId(GetIsolatedWorldContextId("Test World"))
+            .Build(),
+        base::Bind(
+            &IsolatedWorldHeadlessTabSocketTest::FailOnJsEvaluateException,
+            base::Unretained(this)));
+
+    isolated_world_id_ = world_id;
   }
 
-  void OnResourceTree(std::unique_ptr<page::GetResourceTreeResult> result) {
-    main_frame_id_ = result->GetFrameTree()->GetFrame()->GetId();
-    devtools_client_->GetPage()->GetExperimental()->CreateIsolatedWorld(
-        page::CreateIsolatedWorldParams::Builder()
-            .SetFrameId(main_frame_id_)
-            .Build());
-  }
-
-  void OnExecutionContextCreated(
-      const runtime::ExecutionContextCreatedParams& params) override {
-    const base::DictionaryValue* dictionary;
-    std::string frame_id;
-    bool is_main_world;
-    // If the isolated world was created then eval some script in it.
-    if (params.GetContext()->HasAuxData() &&
-        params.GetContext()->GetAuxData()->GetAsDictionary(&dictionary) &&
-        dictionary->GetString("frameId", &frame_id) &&
-        frame_id == main_frame_id_ &&
-        dictionary->GetBoolean("isDefault", &is_main_world) && !is_main_world) {
-      devtools_client_->GetRuntime()->Evaluate(
-          runtime::EvaluateParams::Builder()
-              .SetExpression(
-                  R"(window.TabSocket.onmessage =
-                      function(message) {
-                        TabSocket.send('Embedder sent us: ' + message);
-                      };
-                    )")
-              .SetContextId(params.GetContext()->GetId())
-              .Build());
-    }
-  }
-
-  void OnMessageFromTab(const std::string& message) override {
+  void OnMessageFromTab(const std::string& message,
+                        const std::string& devtools_frame_id,
+                        int world_id) override {
     EXPECT_EQ("Embedder sent us: Hello!!!", message);
+    EXPECT_EQ(*isolated_world_id_, world_id);
     FinishAsynchronousTest();
   }
 
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::ISOLATED_WORLD;
-  }
-
- private:
-  std::string main_frame_id_;
+  base::Optional<int> isolated_world_id_;
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessIsolatedWorldTabSocketTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(IsolatedWorldHeadlessTabSocketTest);
 
-class HeadlessIsolatedWorldTabSocketNotThereTest
-    : public HeadlessAsyncDevTooledBrowserTest,
-      public HeadlessTabSocket::Listener,
-      public runtime::Observer {
+class IsolatedWorldHeadlessTabSocketBindingsNotInstalled
+    : public TabSocketTest {
  public:
-  void SetUp() override {
-    options()->mojo_service_names.insert("headless::TabSocket");
-    HeadlessAsyncDevTooledBrowserTest::SetUp();
-  }
-
-  void RunDevTooledTest() override {
-    devtools_client_->GetRuntime()->AddObserver(this);
-    devtools_client_->GetRuntime()->Enable();
-
-    devtools_client_->GetPage()->GetExperimental()->GetResourceTree(
-        page::GetResourceTreeParams::Builder().Build(),
-        base::Bind(&HeadlessIsolatedWorldTabSocketNotThereTest::OnResourceTree,
-                   base::Unretained(this)));
-
-    HeadlessTabSocket* headless_tab_socket =
-        web_contents_->GetHeadlessTabSocket();
-    DCHECK(headless_tab_socket);
-    headless_tab_socket->SendMessageToTab("Hello!!!");
-    headless_tab_socket->SetListener(this);
-  }
-
-  void OnResourceTree(std::unique_ptr<page::GetResourceTreeResult> result) {
-    main_frame_id_ = result->GetFrameTree()->GetFrame()->GetId();
+  void RunTabSocketTest() override {
     devtools_client_->GetPage()->GetExperimental()->CreateIsolatedWorld(
         page::CreateIsolatedWorldParams::Builder()
             .SetFrameId(main_frame_id_)
@@ -648,18 +717,13 @@ class HeadlessIsolatedWorldTabSocketNotThereTest
               .SetExpression("window.TabSocket.send('This should not work!');")
               .SetContextId(params.GetContext()->GetId())
               .Build(),
-          base::Bind(
-              &HeadlessIsolatedWorldTabSocketNotThereTest::EvaluateResult,
-              base::Unretained(this)));
+          base::Bind(&IsolatedWorldHeadlessTabSocketBindingsNotInstalled::
+                         ExpectJsException,
+                     base::Unretained(this)));
     }
   }
 
-  void EvaluateResult(std::unique_ptr<runtime::EvaluateResult> result) {
-    EXPECT_TRUE(result->HasExceptionDetails());
-    FinishAsynchronousTest();
-  }
-
-  void OnMessageFromTab(const std::string&) override {
+  void OnMessageFromTab(const std::string&, const std::string&, int) override {
 #ifdef OS_WIN
     FinishAsynchronousTest();
     FAIL() << "Should not receive a message from the tab!";
@@ -668,15 +732,167 @@ class HeadlessIsolatedWorldTabSocketNotThereTest
     FinishAsynchronousTest();
 #endif
   }
-
-  HeadlessWebContents::Builder::TabSocketType GetTabSocketType() override {
-    return HeadlessWebContents::Builder::TabSocketType::MAIN_WORLD;
-  }
-
- private:
-  std::string main_frame_id_;
 };
 
-HEADLESS_ASYNC_DEVTOOLED_TEST_F(HeadlessIsolatedWorldTabSocketNotThereTest);
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(
+    IsolatedWorldHeadlessTabSocketBindingsNotInstalled);
+
+class MultipleIframesIsolatedWorldHeadlessTabSocketTest : public TabSocketTest {
+ public:
+  void RunTabSocketTest() override {
+    EXPECT_TRUE(embedded_test_server()->Start());
+    devtools_client_->GetPage()->Navigate(
+        embedded_test_server()->GetURL("/two_iframes.html").spec());
+  }
+
+  void OnLoadEventFired(const page::LoadEventFiredParams& params) override {
+    devtools_client_->GetPage()->Disable();
+    devtools_client_->GetPage()->RemoveObserver(this);
+    devtools_client_->GetDOMSnapshot()->GetExperimental()->GetSnapshot(
+        dom_snapshot::GetSnapshotParams::Builder()
+            .SetComputedStyleWhitelist(std::vector<std::string>())
+            .Build(),
+        base::Bind(
+            &MultipleIframesIsolatedWorldHeadlessTabSocketTest::OnSnapshot,
+            base::Unretained(this)));
+  }
+
+  void OnSnapshot(std::unique_ptr<dom_snapshot::GetSnapshotResult> result) {
+    bool seen_main_frame = false;
+    for (const auto& node : *result->GetDomNodes()) {
+      if (node->HasFrameId()) {
+        std::string frame_name;
+        if (node->GetNodeName() == "IFRAME") {
+          // Use the iframe id attribute for the name.
+          for (const auto& key_value : *node->GetAttributes()) {
+            if (key_value->GetName() == "id") {
+              frame_name = key_value->GetValue();
+            }
+          }
+          CHECK(!frame_name.empty());
+        } else {
+          if (seen_main_frame)
+            continue;
+          seen_main_frame = true;
+          frame_name = "main frame";
+        }
+        CreateIsolatedWorldTabSocket(
+            frame_name, node->GetFrameId(),
+            base::Bind(&MultipleIframesIsolatedWorldHeadlessTabSocketTest::
+                           OnIsolatedWorldCreated,
+                       base::Unretained(this), frame_name, node->GetFrameId()));
+      }
+    }
+  }
+
+  void OnIsolatedWorldCreated(std::string frame_name,
+                              std::string devtools_frame_id,
+                              int world_id) {
+    HeadlessTabSocket* headless_tab_socket =
+        web_contents_->GetHeadlessTabSocket();
+    DCHECK(headless_tab_socket);
+    headless_tab_socket->SendMessageToTab("Hello!!!", devtools_frame_id,
+                                          world_id);
+    headless_tab_socket->SetListener(this);
+
+    devtools_client_->GetRuntime()->Evaluate(
+        runtime::EvaluateParams::Builder()
+            .SetExpression(base::StringPrintf(
+                R"(window.TabSocket.onmessage =
+                    function(message) {
+                      TabSocket.send('Echo from %s: ' + message);
+                    };
+                  )",
+                frame_name.c_str()))
+            .SetContextId(GetIsolatedWorldContextId(frame_name))
+            .Build(),
+        base::Bind(&MultipleIframesIsolatedWorldHeadlessTabSocketTest::
+                       FailOnJsEvaluateException,
+                   base::Unretained(this)));
+  }
+
+  void OnMessageFromTab(const std::string& message,
+                        const std::string& devtools_frame_id,
+                        int world_id) override {
+    messages_.push_back(message);
+    if (messages_.size() < 3)
+      return;
+    EXPECT_THAT(messages_,
+                UnorderedElementsAre("Echo from main frame: Hello!!!",
+                                     "Echo from iframe1: Hello!!!",
+                                     "Echo from iframe2: Hello!!!"));
+    FinishAsynchronousTest();
+  }
+
+  std::vector<std::string> messages_;
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(
+    MultipleIframesIsolatedWorldHeadlessTabSocketTest);
+
+class SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest
+    : public TabSocketTest {
+ public:
+  void RunTabSocketTest() override {
+    CreateIsolatedWorldTabSocket(
+        "Isolated World 1", main_frame_id_,
+        base::Bind(&SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest::
+                       OnIsolatedWorldCreated,
+                   base::Unretained(this), "Isolated World 1"));
+
+    CreateIsolatedWorldTabSocket(
+        "Isolated World 2", main_frame_id_,
+        base::Bind(&SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest::
+                       OnIsolatedWorldCreated,
+                   base::Unretained(this), "Isolated World 2"));
+
+    CreateIsolatedWorldTabSocket(
+        "Isolated World 3", main_frame_id_,
+        base::Bind(&SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest::
+                       OnIsolatedWorldCreated,
+                   base::Unretained(this), "Isolated World 3"));
+  }
+
+  void OnIsolatedWorldCreated(std::string frame_name, int world_id) {
+    HeadlessTabSocket* headless_tab_socket =
+        web_contents_->GetHeadlessTabSocket();
+    DCHECK(headless_tab_socket);
+    headless_tab_socket->SendMessageToTab("Hello!!!", main_frame_id_, world_id);
+    headless_tab_socket->SetListener(this);
+
+    devtools_client_->GetRuntime()->Evaluate(
+        runtime::EvaluateParams::Builder()
+            .SetExpression(base::StringPrintf(
+                R"(window.TabSocket.onmessage =
+                    function(message) {
+                      TabSocket.send('Echo from %s: ' + message);
+                    };
+                  )",
+                frame_name.c_str()))
+            .SetContextId(GetIsolatedWorldContextId(frame_name))
+            .Build(),
+        base::Bind(&SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest::
+                       FailOnJsEvaluateException,
+                   base::Unretained(this)));
+  }
+
+  void OnMessageFromTab(const std::string& message,
+                        const std::string& devtools_frame_id,
+                        int world_id) override {
+    messages_.push_back(message);
+    if (messages_.size() < 3)
+      return;
+    EXPECT_THAT(messages_,
+                UnorderedElementsAre("Echo from Isolated World 1: Hello!!!",
+                                     "Echo from Isolated World 2: Hello!!!",
+                                     "Echo from Isolated World 3: Hello!!!"));
+    FinishAsynchronousTest();
+  }
+
+  std::vector<std::string> messages_;
+};
+
+HEADLESS_ASYNC_DEVTOOLED_TEST_F(
+    SingleTabMultipleIsolatedWorldsHeadlessTabSocketTest);
 
 }  // namespace headless
