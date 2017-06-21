@@ -1031,15 +1031,42 @@ bool ResourceFetcher::IsReusableAlsoForPreloading(const FetchParameters& params,
   //
   // TODO(tyoshino): Consider returning false when the credentials mode
   // differs.
-  if ((params.Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       params.GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS) ==
-      (existing_resource->Options().cors_handling_by_resource_fetcher ==
-           kEnableCORSHandlingByResourceFetcher &&
-       existing_resource->GetResourceRequest().GetFetchRequestMode() ==
-           WebURLRequest::kFetchRequestModeCORS))
-    return true;
+  switch (params.Options().cors_handling_by_resource_fetcher) {
+    case kDisableCORSHandlingByResourceFetcher:
+      switch (existing_resource->Options().cors_handling_by_resource_fetcher) {
+        case kDisableCORSHandlingByResourceFetcher:
+          return true;
+          break;
+        case kEnableCORSHandlingByResourceFetcher:
+          // Requests from the DocumentThreadableLoader whose mode is CORS are
+          // allowed to reuse an existing resources fetched with non-CORS mode
+          // and not using DocumentThreadableLoader for historical reason.
+          return existing_resource->GetResourceRequest()
+                     .GetFetchRequestMode() !=
+                 WebURLRequest::kFetchRequestModeCORS;
+          break;
+      }
+      break;
+
+    case kEnableCORSHandlingByResourceFetcher:
+      switch (existing_resource->Options().cors_handling_by_resource_fetcher) {
+        case kDisableCORSHandlingByResourceFetcher:
+          // Requests not from the DocumentThreadableLoader whose mode is CORS
+          // are allowed to reuse an existing resources fetched with non-CORS
+          // mode and using DocumentThreadableLoader for historical reason.
+          return params.GetResourceRequest().GetFetchRequestMode() !=
+                 WebURLRequest::kFetchRequestModeCORS;
+          break;
+        case kEnableCORSHandlingByResourceFetcher:
+          return (existing_resource->GetResourceRequest()
+                      .GetFetchRequestMode() ==
+                  WebURLRequest::kFetchRequestModeCORS) ==
+                 (params.GetResourceRequest().GetFetchRequestMode() ==
+                  WebURLRequest::kFetchRequestModeCORS);
+          break;
+      }
+      break;
+  }
 
   return false;
 }
