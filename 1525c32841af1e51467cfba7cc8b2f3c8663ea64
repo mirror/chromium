@@ -34,6 +34,24 @@
       "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6f65c410_f5fe4bbc",
+        "filename": "cc/paint/paint_op_buffer_analyzer.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115895
+      },
+      "writtenOn": "2017-06-21T23:44:51Z",
+      "side": 1,
+      "message": "What\u0027s the tracing use case?",
+      "parentUuid": "40be5884_13d0f2b5",
+      "revId": "1525c32841af1e51467cfba7cc8b2f3c8663ea64",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
