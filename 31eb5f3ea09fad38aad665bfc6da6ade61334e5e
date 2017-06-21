@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "c9cdcac4_2d60c6f5",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fbc1dfd3_1b4ddf61",
+      "range": {
+        "startLine": 21,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 5
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "b97a884b_a6c1556c",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -36,6 +60,24 @@
       "writtenOn": "2017-06-20T17:15:38Z",
       "side": 1,
       "message": "If not too much work, I would prefer to make |data_source_| host real data and provide access to the data. And here, we can update the view using the data after observing it to ensure consistent state.\n\nOtherwise, add a comment about why we don\u0027t need to update the view from |data_source_|.\n\ne.g.\n  // LockContentsView is created with an empty |data_source_|. So\n  // no need to update here.",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "448948cd_046056d4",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Conceptually LoginDataSource just holds a set of event listeners which define the API used by the embedder. Perhaps LoginEventSource is a better name?\n\nThe embedder is responsible for owning the data. This enables the debug UI (the next CL, https://chromium-review.googlesource.com/c/540078/). Here\u0027s a high level overview:\n- login/lock creators (ie, ash::LockScreen) provide a LoginDataSource instance\n- the debug UI intercepts this LoginDataSource and wraps it with a new LoginDataSource instance that has some custom logic. The debug UI fires events on the debug LoginDataSource. Events coming from the original LoginDataSource can still be handled as needed (ie, by forwarding them)\n- the views UI receives the debug LoginDataSource\n\nIn this scenario data ownership is not clear unless owned by the embedder. Since data is not owned by the LoginDataSource instance, a LoginDataSource cannot be empty. This is also why LoginDataSource does not have accessors - there is no data to access.\n\nI\u0027m happy to change the design if the alternative is simpler and easier to maintain.",
+      "parentUuid": "b97a884b_a6c1556c",
       "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -65,6 +107,30 @@
     },
     {
       "key": {
+        "uuid": "4da09a6e_36f57ba5",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 98,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done; I believe push_back with rvalue does not copy though.",
+      "parentUuid": "e3dc64ba_a781454d",
+      "range": {
+        "startLine": 98,
+        "startChar": 11,
+        "endLine": 98,
+        "endChar": 20
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "0a789647_da80c115",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -88,6 +154,30 @@
     },
     {
       "key": {
+        "uuid": "f5a72db7_4ec582f9",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 127,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0a789647_da80c115",
+      "range": {
+        "startLine": 120,
+        "startChar": 0,
+        "endLine": 127,
+        "endChar": 66
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1610a10f_11c227a8",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -105,6 +195,24 @@
     },
     {
       "key": {
+        "uuid": "b7c57105_e9dd80e2",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 190,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1610a10f_11c227a8",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9857de22_3db226c1",
         "filename": "ash/login/ui/lock_contents_view.cc",
         "patchSetId": 1
@@ -116,6 +224,30 @@
       "writtenOn": "2017-06-20T17:15:38Z",
       "side": 1,
       "message": "Should we use the passed in |user| to find? Or at least DCHECK to ensure the two are for the same user.",
+      "range": {
+        "startLine": 198,
+        "startChar": 23,
+        "endLine": 198,
+        "endChar": 53
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "41cef29c_c9aa434f",
+        "filename": "ash/login/ui/lock_contents_view.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Oops - that\u0027s a bug. We should be using |user| :)",
+      "parentUuid": "9857de22_3db226c1",
       "range": {
         "startLine": 198,
         "startChar": 23,
@@ -145,6 +277,24 @@
     },
     {
       "key": {
+        "uuid": "dfb8ff1a_80202e11",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 54,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "287b702e_1a1d77b5",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "8f71b552_0964b4be",
         "filename": "ash/login/ui/lock_contents_view.h",
         "patchSetId": 1
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "4b284575_e14891eb",
+        "filename": "ash/login/ui/lock_contents_view.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8f71b552_0964b4be",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "e23051f2_5df76110",
         "filename": "ash/login/ui/lock_screen.cc",
         "patchSetId": 1
@@ -173,6 +341,30 @@
       "writtenOn": "2017-06-20T17:15:38Z",
       "side": 1,
       "message": "Do we plan to have LoginDataSource hold real data? If so, maybe we should have a SetUsers methods and call it here. For now, it could be just a wrapper to call NotifyUsers.",
+      "range": {
+        "startLine": 47,
+        "startChar": 15,
+        "endLine": 47,
+        "endChar": 26
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "35ff9537_c38bb4b8",
+        "filename": "ash/login/ui/lock_screen.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "See comment above.",
+      "parentUuid": "e23051f2_5df76110",
       "range": {
         "startLine": 47,
         "startChar": 15,
@@ -202,6 +394,24 @@
     },
     {
       "key": {
+        "uuid": "8aeda265_2c872e3c",
+        "filename": "ash/login/ui/lock_window.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "73b7ea61_7fb09512",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1f13d48d_a6edcb9a",
         "filename": "ash/login/ui/login_data_source.h",
         "patchSetId": 1
@@ -216,6 +426,24 @@
       "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "09bef3d4_13961372",
+        "filename": "ash/login/ui/login_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 28,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done; I\u0027ve removed the DISALLOW_COPY_AND_ASSIGN as well (otherwise no ctor is generated).",
+      "parentUuid": "1f13d48d_a6edcb9a",
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -239,6 +467,30 @@
       "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c12e87b8_b7a49133",
+        "filename": "ash/login/ui/login_data_source.h",
+        "patchSetId": 1
+      },
+      "lineNbr": 37,
+      "author": {
+        "id": 1127641
+      },
+      "writtenOn": "2017-06-21T21:20:53Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "76beb317_7250550b",
+      "range": {
+        "startLine": 37,
+        "startChar": 17,
+        "endLine": 37,
+        "endChar": 37
+      },
+      "revId": "31eb5f3ea09fad38aad665bfc6da6ade61334e5e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
