@@ -16,6 +16,24 @@
       "revId": "ecb6094517bda4e1f7d7624153e4e73a6db06da2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "40750ce5_59dc2377",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1116026
+      },
+      "writtenOn": "2017-06-21T07:33:01Z",
+      "side": 1,
+      "message": "Naming is hard.\n\nPrefService is a C++ class that provides access to prefs. The pref service is a service (in the servicification sense) that acts as a backend for one or more PrefService instances. This moved where the backend lives.",
+      "parentUuid": "a491096d_43edb2fa",
+      "revId": "ecb6094517bda4e1f7d7624153e4e73a6db06da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
