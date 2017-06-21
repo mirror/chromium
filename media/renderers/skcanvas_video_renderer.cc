@@ -158,6 +158,12 @@ sk_sp<SkImage> NewSkImageFromVideoFrameYUVTextures(
   }
   for (size_t i = 0; i < media::VideoFrame::NumPlanes(video_frame->format());
        ++i) {
+    gl->BindTexture(source_textures[i].fTarget, source_textures[i].fID);
+    gl->TexParameteri(source_textures[i].fTarget, GL_TEXTURE_MIN_FILTER,
+                      GL_LINEAR);
+    gl->TexParameteri(source_textures[i].fTarget, GL_TEXTURE_MAG_FILTER,
+                      GL_LINEAR);
+
     gl->DeleteTextures(1, &source_textures[i].fID);
   }
   return img;
