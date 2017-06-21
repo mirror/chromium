@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "02567f01_ac604cc2",
+        "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
+        "patchSetId": 6
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1115974
+      },
+      "writtenOn": "2017-06-21T15:42:31Z",
+      "side": 1,
+      "message": "In that case, can you add assert_true(isControlsPanelVisible(video)); before and after the timer call so it\u0027s clear you are testing something?",
+      "parentUuid": "aca614c5_af9ce9dd",
+      "revId": "caf63d1a35b4bebb55692ee51a5e167c5eebf7c5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "5dec3edd_f19b5093",
         "filename": "third_party/WebKit/LayoutTests/media/video-controls-visibility-multimodal-mouse-after-touch.html",
         "patchSetId": 6
