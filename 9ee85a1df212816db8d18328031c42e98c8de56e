@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "21673d2f_a47d0a24",
+        "filename": "media/gpu/android_video_decode_accelerator.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 1261,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-21T00:46:38Z",
+      "side": 1,
+      "message": "can set this unconditionally",
+      "range": {
+        "startLine": 1261,
+        "startChar": 19,
+        "endLine": 1261,
+        "endChar": 32
+      },
+      "revId": "9ee85a1df212816db8d18328031c42e98c8de56e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5ea94061_35e8e342",
+        "filename": "media/gpu/android_video_surface_chooser_impl.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 24,
+      "author": {
+        "id": 1119171
+      },
+      "writtenOn": "2017-06-21T00:46:38Z",
+      "side": 1,
+      "message": "Can do this unconditionally",
+      "range": {
+        "startLine": 24,
+        "startChar": 4,
+        "endLine": 24,
+        "endChar": 20
+      },
+      "revId": "9ee85a1df212816db8d18328031c42e98c8de56e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
