@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "1e99ee5e_9c8743dc",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:08:16Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ed8febf1_d0a49f36",
+      "range": {
+        "startLine": 263,
+        "startChar": 5,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "2edc0dac_a0af5344",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 4
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "7363eac2_2ec16d3d",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:08:16Z",
+      "side": 1,
+      "message": "I have added a comment.",
+      "parentUuid": "2edc0dac_a0af5344",
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5192bd8f_fda0f0c3",
         "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
         "patchSetId": 4
@@ -56,6 +98,24 @@
       "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "3fd379aa_67253103",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1180589
+      },
+      "writtenOn": "2017-06-21T14:08:16Z",
+      "side": 1,
+      "message": "It was a tentative fix, but it should be the same. I have removed it.",
+      "parentUuid": "5192bd8f_fda0f0c3",
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
