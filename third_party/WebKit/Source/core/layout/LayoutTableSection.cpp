@@ -767,6 +767,13 @@ void LayoutTableSection::DistributeRowSpanHeightToRows(
   }
 }
 
+// Check whether row or row group has visibility:collapse.
+bool LayoutTableSection::HasVisibilityCollapse(unsigned row) {
+  return ((grid_[row].row &&
+           grid_[row].row->Style()->Visibility() == EVisibility::kCollapse) ||
+          Style()->Visibility() == EVisibility::kCollapse);
+}
+
 // Find out the baseline of the cell
 // If the cell's baseline is more than the row's baseline then the cell's
 // baseline become the row's baseline and if the row's baseline goes out of the
@@ -775,6 +782,10 @@ void LayoutTableSection::UpdateBaselineForCell(LayoutTableCell* cell,
                                                unsigned row,
                                                int& baseline_descent) {
   if (!cell->IsBaselineAligned())
+    return;
+
+  // Do not update for collapsed rows or sections.
+  if (HasVisibilityCollapse(row))
     return;
 
   // Ignoring the intrinsic padding as it depends on knowing the row's baseline,
@@ -882,9 +893,14 @@ int LayoutTableSection::CalcRowLogicalHeight() {
           cell->ForceChildLayout();
         }
 
-        if (cell->RowSpan() == 1)
-          row_pos_[r + 1] = std::max(
-              row_pos_[r + 1], row_pos_[r] + cell->LogicalHeightForRowSizing());
+        if (cell->RowSpan() == 1) {
+          // If the row or column is collapsed, ignore cell height.
+          row_pos_[r + 1] =
+              std::max(row_pos_[r + 1],
+                       row_pos_[r] + (HasVisibilityCollapse(r)
+                                          ? 0
+                                          : cell->LogicalHeightForRowSizing()));
+        }
 
         // Find out the baseline. The baseline is set on the first row in a
         // rowSpan.
@@ -899,8 +915,9 @@ int LayoutTableSection::CalcRowLogicalHeight() {
       row_pos_[r + 1] = row_pos_[r] + grid_[r].row->LogicalHeight().ToInt();
     }
 
-    // Add the border-spacing to our final position.
-    row_pos_[r + 1] += BorderSpacingForRow(r);
+    // Add the border-spacing to our final position if row or section is not
+    // collapsed.
+    row_pos_[r + 1] += (HasVisibilityCollapse(r)) ? 0 : BorderSpacingForRow(r);
     row_pos_[r + 1] = std::max(row_pos_[r + 1], row_pos_[r]);
   }
 
