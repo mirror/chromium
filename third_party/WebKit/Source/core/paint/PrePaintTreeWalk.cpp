@@ -155,115 +155,30 @@ void PrePaintTreeWalk::InvalidatePaintLayerOptimizationsIfNeeded(
     return;
 
   PaintLayer& paint_layer = *ToLayoutBoxModelObject(object).Layer();
+  const ClipPaintPropertyNode* ancestor_clip =
+      context.ancestor_transformed_or_root_paint_layer->GetLayoutObject()
+          .LocalBorderBoxProperties()
+          ->Clip();
+
+  for (auto& fragment : context.tree_builder_context->fragments) {
+    if (fragment.current.clip != ancestor_clip ||
+        fragment.absolute_position.clip != ancestor_clip ||
+        fragment.fixed_position.clip != ancestor_clip) {
+      paint_layer.SetNeedsRepaint();
+      paint_layer.SetPreviousPaintPhaseDescendantOutlinesEmpty(false);
+      paint_layer.SetPreviousPaintPhaseFloatEmpty(false);
+      paint_layer.SetPreviousPaintPhaseDescendantBlockBackgroundsEmpty(false);
+      context.paint_invalidator_context->subtree_flags |=
+          PaintInvalidatorContext::kSubtreeVisualRectUpdate;
+    }
+  }
+
   if (object.StyleRef().HasTransform() ||
       &object ==
           context.paint_invalidator_context->paint_invalidation_container) {
     context.ancestor_transformed_or_root_paint_layer = &paint_layer;
   }
 
-  // This code below checks whether any clips have changed that might:
-  // (a) invalidate optimizations made for a PaintLayer that supports
-  //     subsequence caching, or
-  // (b) impact clipping of descendant visual rects.
-  if (!paint_layer.SupportsSubsequenceCaching() &&
-      !paint_layer.GetLayoutObject().HasClipRelatedProperty())
-    return;
-
-  FragmentData* fragment_data =
-      &object.GetMutableForPainting().EnsureFirstFragment();
-  for (auto& fragment : context.tree_builder_context->fragments) {
-    DCHECK(fragment_data);
-    if (InvalidatePaintLayerOptimizationsForFragment(
-            object, context.ancestor_transformed_or_root_paint_layer, fragment,
-            *fragment_data)) {
-      context.paint_invalidator_context->subtree_flags |=
-          PaintInvalidatorContext::kSubtreeVisualRectUpdate;
-    }
-    fragment_data = fragment_data->NextFragment();
-  }
-}
-
-bool PrePaintTreeWalk::InvalidatePaintLayerOptimizationsForFragment(
-    const LayoutObject& object,
-    const PaintLayer* ancestor_transformed_or_root_paint_layer,
-    const PaintPropertyTreeBuilderFragmentContext& context,
-    FragmentData& fragment_data) {
-  PaintLayer& paint_layer = *ToLayoutBoxModelObject(object).Layer();
-
-  const auto& ancestor =
-      ancestor_transformed_or_root_paint_layer->GetLayoutObject();
-  PropertyTreeState ancestor_state = *ancestor.LocalBorderBoxProperties();
-
-#ifdef CHECK_CLIP_RECTS
-  auto respect_overflow_clip = kRespectOverflowClip;
-#endif
-  if (ancestor_transformed_or_root_paint_layer->GetCompositingState() ==
-      kPaintsIntoOwnBacking) {
-    const auto* ancestor_properties = ancestor.PaintProperties();
-    if (ancestor_properties && ancestor_properties->OverflowClip()) {
-      ancestor_state.SetClip(ancestor_properties->OverflowClip());
-#ifdef CHECK_CLIP_RECTS
-      respect_overflow_clip = kIgnoreOverflowClip;
-#endif
-    }
-  }
-
-#ifdef CHECK_CLIP_RECTS
-  const auto& old_clip_rects =
-      paint_layer.Clipper(PaintLayer::kDoNotUseGeometryMapper)
-          .PaintingClipRects(ancestor_transformed_or_root_paint_layer,
-                             respect_overflow_clip, LayoutSize());
-#endif
-
-  const LayoutPoint& ancestor_paint_offset =
-      ancestor_transformed_or_root_paint_layer->GetLayoutObject().PaintOffset();
-
-  // TODO(chrishtr): generalize this for multicol.
-  const auto* effect = context.current_effect;
-  auto overflow_clip_rect = ComputeClipRectForContext(
-      context.current, effect, ancestor_state, ancestor_paint_offset);
-#ifdef CHECK_CLIP_RECTS
-  CHECK(overflow_clip_rect == old_clip_rects.OverflowClipRect().Rect())
-      << " new=" << overflow_clip_rect.ToString()
-      << " old=" << old_clip_rects.OverflowClipRect().Rect().ToString();
-#endif
-
-  auto fixed_clip_rect = ComputeClipRectForContext(
-      context.fixed_position, effect, ancestor_state, ancestor_paint_offset);
-#ifdef CHECK_CLIP_RECTS
-  CHECK(fixed_clip_rect == old_clip_rects.FixedClipRect().Rect())
-      << " new=" << fixed_clip_rect.ToString()
-      << " old=" << old_clip_rects.FixedClipRect().Rect().ToString();
-#endif
-
-  auto pos_clip_rect = ComputeClipRectForContext(
-      context.absolute_position, effect, ancestor_state, ancestor_paint_offset);
-#ifdef CHECK_CLIP_RECTS
-  CHECK(pos_clip_rect == old_clip_rects.PosClipRect().Rect())
-      << " new=" << pos_clip_rect.ToString()
-      << " old=" << old_clip_rects.PosClipRect().Rect().ToString();
-#endif
-
-  const auto* previous_clip_rects = fragment_data.PreviousClipRects();
-  if (!previous_clip_rects ||
-      overflow_clip_rect != previous_clip_rects->OverflowClipRect().Rect() ||
-      fixed_clip_rect != previous_clip_rects->FixedClipRect().Rect() ||
-      pos_clip_rect != previous_clip_rects->PosClipRect().Rect()) {
-    RefPtr<ClipRects> clip_rects = ClipRects::Create();
-    clip_rects->SetOverflowClipRect(overflow_clip_rect);
-    clip_rects->SetFixedClipRect(fixed_clip_rect);
-    clip_rects->SetPosClipRect(pos_clip_rect);
-    fragment_data.SetPreviousClipRects(*clip_rects);
-
-    paint_layer.SetNeedsRepaint();
-    paint_layer.SetPreviousPaintPhaseDescendantOutlinesEmpty(false);
-    paint_layer.SetPreviousPaintPhaseFloatEmpty(false);
-    paint_layer.SetPreviousPaintPhaseDescendantBlockBackgroundsEmpty(false);
-    // All subsequences which are contained below this paintLayer must also
-    // be checked.
-    return true;
-  }
-  return false;
 }
 
 bool PrePaintTreeWalk::NeedsTreeBuilderContextUpdate(
