@@ -2588,13 +2588,13 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="4" label="Bad disable reasons"/>
 </enum>
 
-<enum name="BankNameDisplayedFormEvent" type="int">
+<enum name="BankNameDisplayedFormEvent">
   <int value="0" label="Suggestions shown with bank name available (once)"/>
   <int value="1"
       label="Server suggestion filled with bank name available (once)"/>
 </enum>
 
-<enum name="BaseRelocationType" type="int">
+<enum name="BaseRelocationType">
   <int value="0" label="IMAGE_REL_BASED_ABSOLUTE"/>
   <int value="1" label="IMAGE_REL_BASED_HIGH"/>
   <int value="2" label="IMAGE_REL_BASED_LOW"/>
@@ -15503,7 +15503,8 @@ uploading your change for review.  These are checked by presubmit scripts.
   <int value="2024" label="DeprecatedTimingFunctionStepMiddle"/>
   <int value="2025" label="DocumentDomainSetWithNonDefaultPort"/>
   <int value="2026" label="DocumentDomainSetWithDefaultPort"/>
-  <int value="2027" label="HTMLMediaElementPlayRejected"/>
+  <int value="2027" label="FeaturePolicyHeader"/>
+  <int value="2028" label="FeaturePolicyAllowAttribute"/>
 </enum>
 
 <enum name="FeedbackSource">
