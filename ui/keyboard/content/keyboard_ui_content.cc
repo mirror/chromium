@@ -301,20 +301,16 @@ void KeyboardUIContent::SetupWebContents(content::WebContents* contents) {
 void KeyboardUIContent::OnWindowBoundsChanged(aura::Window* window,
                                               const gfx::Rect& old_bounds,
                                               const gfx::Rect& new_bounds) {
-  if (!shadow_) {
-    shadow_.reset(new wm::Shadow());
-    shadow_->Init(wm::ShadowElevation::LARGE);
-    shadow_->layer()->SetVisible(true);
-    DCHECK(keyboard_contents_->GetNativeView()->parent());
-    keyboard_contents_->GetNativeView()->parent()->layer()->Add(
-        shadow_->layer());
-  }
-
-  shadow_->SetContentBounds(new_bounds);
+  SetShadowAroundKeyboard();
 }
 
 void KeyboardUIContent::OnWindowDestroyed(aura::Window* window) {
   window->RemoveObserver(this);
+}
+
+void KeyboardUIContent::OnWindowParentChanged(aura::Window* window,
+                                              aura::Window* parent) {
+  SetShadowAroundKeyboard();
 }
 
 const aura::Window* KeyboardUIContent::GetKeyboardRootWindow() const {
@@ -355,6 +351,22 @@ void KeyboardUIContent::AddBoundsChangedObserver(aura::Window* window) {
   aura::Window* target_window = window ? window->GetToplevelWindow() : nullptr;
   if (target_window)
     window_bounds_observer_->AddObservedWindow(target_window);
+}
+
+void KeyboardUIContent::SetShadowAroundKeyboard() {
+  if (!keyboard_contents_ || !keyboard_contents_->GetNativeView()->parent())
+    return;
+
+  aura::Window* contents_window = keyboard_contents_->GetNativeView();
+
+  if (!shadow_) {
+    shadow_.reset(new wm::Shadow());
+    shadow_->Init(wm::ShadowElevation::LARGE);
+    shadow_->layer()->SetVisible(true);
+    contents_window->parent()->layer()->Add(shadow_->layer());
+  }
+
+  shadow_->SetContentBounds(contents_window->bounds());
 }
 
 }  // namespace keyboard
