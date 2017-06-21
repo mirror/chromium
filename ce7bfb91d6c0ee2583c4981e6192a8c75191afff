@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "3c3dd3f5_165ecc28",
+        "filename": "third_party/WebKit/Source/core/exported/BUILD.gn",
+        "patchSetId": 1
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T04:23:22Z",
+      "side": 1,
+      "message": "I might be misunderstanding, but intuitively, I would have expected this to make it visible to all things in core?",
+      "range": {
+        "startLine": 9,
+        "startChar": 2,
+        "endLine": 9,
+        "endChar": 58
+      },
+      "revId": "ce7bfb91d6c0ee2583c4981e6192a8c75191afff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
