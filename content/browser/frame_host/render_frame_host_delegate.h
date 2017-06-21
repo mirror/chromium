@@ -21,6 +21,7 @@
 #include "device/wake_lock/public/interfaces/wake_lock.mojom.h"
 #include "mojo/public/cpp/bindings/scoped_interface_endpoint_handle.h"
 #include "net/http/http_response_headers.h"
+#include "services/service_manager/public/cpp/bind_source_info.h"
 #include "ui/base/window_open_disposition.h"
 
 #if defined(OS_WIN)
@@ -80,6 +81,13 @@ class CONTENT_EXPORT RenderFrameHostDelegate {
       RenderFrameHost* render_frame_host,
       const std::string& interface_name,
       mojo::ScopedInterfaceEndpointHandle handle) {}
+
+  // Allows the delegate to filter incoming interface requests.
+  virtual void OnInterfaceRequest(
+      RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) {}
 
   // Gets the last committed URL. See WebContents::GetLastCommittedURL for a
   // description of the semantics.

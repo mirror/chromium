@@ -19,6 +19,7 @@
 #include "headless/public/headless_devtools_target.h"
 #include "headless/public/headless_export.h"
 #include "headless/public/headless_web_contents.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 
 namespace content {
 class DevToolsAgentHost;
@@ -85,6 +86,11 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   void RenderFrameCreated(content::RenderFrameHost* render_frame_host) override;
   void RenderFrameDeleted(content::RenderFrameHost* render_frame_host) override;
   void RenderViewReady() override;
+  void BindInterfaceRequestFromFrame(
+      content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override;
 
   content::WebContents* web_contents() const;
   bool OpenURL(const GURL& url);
@@ -151,6 +157,8 @@ class HEADLESS_EXPORT HeadlessWebContentsImpl
   HeadlessRenderFrameControllerPtr render_frame_controller_;
 
   base::ObserverList<HeadlessWebContents::Observer> observers_;
+
+  service_manager::BinderRegistry registry_;
 
   base::WeakPtrFactory<HeadlessWebContentsImpl> weak_ptr_factory_;
 

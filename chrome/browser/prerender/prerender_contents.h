@@ -27,7 +27,7 @@
 #include "content/public/browser/web_contents_observer.h"
 #include "content/public/common/referrer.h"
 #include "mojo/public/cpp/bindings/binding.h"
-#include "services/service_manager/public/cpp/bind_source_info.h"
+#include "services/service_manager/public/cpp/binder_registry.h"
 #include "ui/gfx/geometry/rect.h"
 
 class Profile;
@@ -185,6 +185,11 @@ class PrerenderContents : public content::NotificationObserver,
       const content::ResourceRedirectDetails& details) override;
 
   void RenderProcessGone(base::TerminationStatus status) override;
+  void BindInterfaceRequestFromFrame(
+      content::RenderFrameHost* render_frame_host,
+      const service_manager::BindSourceInfo& source_info,
+      const std::string& interface_name,
+      mojo::ScopedMessagePipeHandle* interface_pipe) override;
 
   // content::NotificationObserver
   void Observe(int type,
@@ -387,6 +392,8 @@ class PrerenderContents : public content::NotificationObserver,
   // A running tally of the number of bytes this prerender has caused to be
   // transferred over the network for resources.  Updated with AddNetworkBytes.
   int64_t network_bytes_;
+
+  service_manager::BinderRegistry registry_;
 
   base::WeakPtrFactory<PrerenderContents> weak_factory_;
 

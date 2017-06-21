@@ -143,6 +143,15 @@ std::unique_ptr<HeadlessWebContentsImpl> HeadlessWebContentsImpl::Create(
   }
 
   headless_web_contents->mojo_services_ = std::move(builder->mojo_services_);
+  for (const MojoService& service : headless_web_contents->mojo_services_) {
+    headless_web_contents->registry_.AddInterface(
+        service.service_name,
+        base::Bind(&HeadlessWebContentsImpl::CreateMojoService,
+                   base::Unretained(headless_web_contents.get()),
+                   service.service_factory),
+        headless_web_contents->browser()->BrowserMainThread());
+  }
+
   headless_web_contents->InitializeWindow(gfx::Rect(builder->window_size_));
   if (!headless_web_contents->OpenURL(builder->initial_url_))
     return nullptr;
@@ -251,17 +260,6 @@ void HeadlessWebContentsImpl::RenderFrameCreated(
     MainFrameTabSocketSetupComplete();
   }
 
-  service_manager::BinderRegistry* interface_registry =
-      render_frame_host->GetInterfaceRegistry();
-
-  for (const MojoService& service : mojo_services_) {
-    interface_registry->AddInterface(
-        service.service_name,
-        base::Bind(&HeadlessWebContentsImpl::CreateMojoService,
-                   base::Unretained(this), service.service_factory),
-        browser()->BrowserMainThread());
-  }
-
   browser_context_->SetFrameTreeNodeId(render_frame_host->GetProcess()->GetID(),
                                        render_frame_host->GetRoutingID(),
                                        render_frame_host->GetFrameTreeNodeId());
@@ -278,6 +276,17 @@ void HeadlessWebContentsImpl::RenderViewReady() {
   DCHECK(web_contents()->GetMainFrame()->IsRenderFrameLive());
   render_view_ready_ = true;
   MaybeIssueDevToolsTargetReady();
+}
+
+void HeadlessWebContentsImpl::BindInterfaceRequestFromFrame(
+    content::RenderFrameHost* render_frame_host,
+    const service_manager::BindSourceInfo& source_info,
+    const std::string& interface_name,
+    mojo::ScopedMessagePipeHandle* interface_pipe) {
+  if (registry_.CanBindInterface(interface_name)) {
+    registry_.BindInterface(source_info, interface_name,
+                            std::move(*interface_pipe));
+  }
 }
 
 void HeadlessWebContentsImpl::MainFrameTabSocketSetupComplete() {
