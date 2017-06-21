@@ -8,7 +8,7 @@ import "components/autofill/content/common/autofill_types.mojom";
 import "mojo/common/string16.mojom";
 
 // There is one instance of this interface per render frame in the render
-// process.
+// process. All methods are called by browser on renderer.
 interface AutofillAgent {
   // Instructs the renderer to fill the active form with the given form data.
   // Please refer AutofillDriver.QueryFormFieldAutofill comments about the |id|.
@@ -51,6 +51,13 @@ interface AutofillAgent {
   // |key| is the unique id associated with the password form fill data.
   ShowInitialPasswordAccountSuggestions(int32 key,
                                         PasswordFormFillData form_data);
+
+  // Tells renderer to whether user gesture is required for notifying text
+  // field change, default is true, bypassing user gesture check should only
+  // be used in Android framework provided autofill which requires to be
+  // notified every change of text field and only sents field value to autofill
+  // service with user's consent.
+  SetUserGestureRequired(bool required);
 };
 
 // There is one instance of this interface per render frame in the render
