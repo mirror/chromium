@@ -15,6 +15,7 @@
 namespace content {
 
 class ServiceWorkerContextObserver;
+class SiteInstance;
 
 enum class ServiceWorkerCapability {
   NO_SERVICE_WORKER,
@@ -171,7 +172,10 @@ class ServiceWorkerContext {
   // |callback| will always be called on the UI thread.
   virtual void StartServiceWorkerForNavigationHint(
       const GURL& document_url,
+      SiteInstance* candidate_site_instance,
       const StartServiceWorkerForNavigationHintCallback& callback) = 0;
+  virtual bool IsRegisteredAsCandidateSiteInstance(
+      SiteInstance* site_instance) = 0;
 
  protected:
   ServiceWorkerContext() {}

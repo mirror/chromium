@@ -3239,6 +3239,9 @@ RenderProcessHost* RenderProcessHostImpl::GetProcessHostForSiteInstance(
 
   // Otherwise (or if that fails), create a new one.
   if (!render_process_host) {
+    TRACE_EVENT1("renderer_host", "RenderProcessHostImpl Create a new process",
+                 "url", site_url.spec());
+    // LOG(ERROR) << "RenderProcessHostImpl Create a new process: " << site_url;
     if (g_render_process_host_factory_) {
       render_process_host =
           g_render_process_host_factory_->CreateRenderProcessHost(

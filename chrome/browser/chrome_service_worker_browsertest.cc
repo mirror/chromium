@@ -613,7 +613,7 @@ class ChromeServiceWorkerNavigationHintTest : public ChromeServiceWorkerTest {
     base::HistogramTester histogram_tester;
     base::RunLoop run_loop;
     GetServiceWorkerContext()->StartServiceWorkerForNavigationHint(
-        embedded_test_server()->GetURL(scope),
+        embedded_test_server()->GetURL(scope), nullptr,
         base::Bind(&ExpectResultAndRun<
                        content::StartServiceWorkerForNavigationHintResult>,
                    expeced_requst, run_loop.QuitClosure()));
