@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "55cfe319_78494ae0",
+        "filename": "chrome/browser/profiles/profile.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 145,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-21T07:22:39Z",
+      "side": 1,
+      "message": "Do you want to move the other SB related prefs to safe_browsing::RegisterProfilePrefs as well?",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "a33f333a_d8ca340b",
         "filename": "chrome/browser/safe_browsing/ui_manager_unittest.cc",
         "patchSetId": 5
@@ -72,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "62c8aa35_60573151",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-21T07:22:39Z",
+      "side": 1,
+      "message": "Do you want to add \"This is exposed as a preference that can be overridden by enterprise policy.\"?",
+      "parentUuid": "75c49531_80368835",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "683b0dda_b3c72658",
         "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
         "patchSetId": 5
@@ -101,6 +136,24 @@
       "side": 1,
       "message": "I\u0027m inclined to leave as is, primarily because Scout is temporary while we transition to the new setting. After that point we\u0027ll return to having a single \"Extended Reporting\" setting. I expect that cleanup to happen next quarter.\n\nWDYT?",
       "parentUuid": "683b0dda_b3c72658",
+      "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
+        "uuid": "ed78eeea_db97bad8",
+        "filename": "components/safe_browsing/common/safe_browsing_prefs.h",
+        "patchSetId": 5
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-21T07:22:39Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "9ad7a0aa_77ffa686",
       "revId": "a72f00db29bdbe50baab63c12adde05dc62ed7d3",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": false
