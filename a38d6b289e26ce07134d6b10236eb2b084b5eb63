@@ -37,6 +37,24 @@
     },
     {
       "key": {
+        "uuid": "d9503b4f_983f0d18",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/ntp/NewTabPageView.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 279,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T08:51:36Z",
+      "side": 1,
+      "message": "Thanks!",
+      "parentUuid": "6e36f386_65c1687f",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7a96d789_968ba2f3",
         "filename": "chrome/browser/android/logo_service.cc",
         "patchSetId": 4
@@ -253,6 +271,24 @@
       "side": 1,
       "message": "Not really, I think...? The only other effect the expiration date has in production code is that we won\u0027t use the fingerprint of the cached logo for fetching the new one if it has expired. Also, bonus fact: can_show_after_expiration is set to true iff we don\u0027t get a TTL in the response, so effectively it\u0027s used to make the Doodle never expire :D",
       "parentUuid": "061d67f7_52ced3bb",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eeefbf58_a915fe2c",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T08:51:36Z",
+      "side": 1,
+      "message": "I just found the \"1 day\" a bit arbitrary. Maybe just add a comment on why it (mostly) doesn\u0027t matter?",
+      "parentUuid": "ba9f6605_9dcc3107",
       "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
