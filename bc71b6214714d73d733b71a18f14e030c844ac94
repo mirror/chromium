@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "180b9d16_853d47e3",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1107754
+      },
+      "writtenOn": "2017-06-21T05:32:28Z",
+      "side": 1,
+      "message": "A way around this is to make the initialize method not a class method.  Just make it an anonymous namespace method in this CC file and pass download_file_dir_ as a parameter.",
+      "range": {
+        "startLine": 30,
+        "startChar": 2,
+        "endLine": 34,
+        "endChar": 16
+      },
+      "revId": "bc71b6214714d73d733b71a18f14e030c844ac94",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
