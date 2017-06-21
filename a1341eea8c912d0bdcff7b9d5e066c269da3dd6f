@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "d302ed06_5256ceaa",
+        "filename": "third_party/WebKit/Source/core/layout/LayoutTableSection.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 900,
+      "author": {
+        "id": 1001706
+      },
+      "writtenOn": "2017-06-21T23:01:27Z",
+      "side": 1,
+      "message": "Instead of this, can you include the HasVisibilityCollapse logic in LayoutTableCell::LogicalHeightForRowSizing?",
+      "revId": "a1341eea8c912d0bdcff7b9d5e066c269da3dd6f",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
