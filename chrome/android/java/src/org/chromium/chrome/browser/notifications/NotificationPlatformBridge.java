@@ -268,8 +268,7 @@ public class NotificationPlatformBridge {
 
         // If we can read an origin from the intent, use it to open the settings screen for that
         // origin.
-        String origin = getOriginFromTag(
-                incomingIntent.getStringExtra(NotificationConstants.EXTRA_NOTIFICATION_TAG));
+        String origin = getOriginFromIntent(incomingIntent);
         boolean launchSingleWebsitePreferences = origin != null;
 
         String fragmentName = launchSingleWebsitePreferences
@@ -392,17 +391,44 @@ public class NotificationPlatformBridge {
     }
 
     /**
-     * Attempts to extract an origin from the tag extra in the given intent.
+     * Attempts to extract an origin from the tag extras in the given intent.
      *
-     * See {@link #makePlatformTag} for details about the format of the tag.
+     * There are two tags that are relevant, either or none of them may be set, but not both:
+     *   1. NotificationConstants.EXTRA_NOTIFICATION_TAG - set by us on web notification site
+     *      setting button intents.
+     *   2. Notification.EXTRA_CHANNEL_ID - set by Android on the 'Additional settings in the app'
+     *      button intent from individual channel settings screens.
      *
-     * @param tag The tag from the intent extra. May be null.
-     * @return The origin string. Returns null if there was no tag extra in the given intent, or if
-     *         the tag value did not match the expected format.
+     * See {@link #makePlatformTag} for details about the format of the EXTRA_NOTIFICATION tag.
+     *
+     * See {@link SiteChannelsManager#toChannelId} and {@link SiteChannelsManager#toSiteOrigin} for
+     * how we convert origins to and from channel ids.
+     *
+     * @param intent The incoming intent.
+     * @return The origin string. Returns null if there was no relevant tag extra in the given
+     * intent, or if a relevant tag value did not match the expected format.
      */
     @Nullable
     @VisibleForTesting
-    static String getOriginFromTag(@Nullable String tag) {
+    static String getOriginFromIntent(Intent intent) {
+        String originFromNotificationTag = getOriginFromNotificationTag(
+                intent.getStringExtra(NotificationConstants.EXTRA_NOTIFICATION_TAG));
+        if (originFromNotificationTag != null) {
+            return originFromNotificationTag;
+        }
+        // TODO(crbug.com/707804): Refer to this extra by name once we compile against O, i.e.:
+        // intent.getStringExtra(Notification.EXTRA_CHANNEL_ID);
+        String channelId = intent.getStringExtra("android.intent.extra.CHANNEL_ID");
+        if (channelId == null
+                || !channelId.startsWith(ChannelDefinitions.CHANNEL_ID_PREFIX_SITES)) {
+            return null;
+        }
+        return SiteChannelsManager.toSiteOrigin(channelId);
+    }
+
+    @Nullable
+    @VisibleForTesting
+    static String getOriginFromNotificationTag(String tag) {
         // If the user touched the settings cog on a flipped notification originating from this
         // class, there will be a notification tag extra in a specific format. From the tag we can
         // read the origin of the notification.
