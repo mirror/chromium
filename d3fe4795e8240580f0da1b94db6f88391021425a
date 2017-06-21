@@ -1,0 +1,73 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e600cdf5_7ebf6e44",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 157,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-21T18:23:01Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 157,
+        "startChar": 45,
+        "endLine": 157,
+        "endChar": 47
+      },
+      "revId": "d3fe4795e8240580f0da1b94db6f88391021425a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6da36b34_6421b54f",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 4
+      },
+      "lineNbr": 173,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-21T18:23:01Z",
+      "side": 1,
+      "message": "in",
+      "range": {
+        "startLine": 173,
+        "startChar": 45,
+        "endLine": 173,
+        "endChar": 47
+      },
+      "revId": "d3fe4795e8240580f0da1b94db6f88391021425a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ada779c4_08adeb90",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 4
+      },
+      "lineNbr": 319,
+      "author": {
+        "id": 1107759
+      },
+      "writtenOn": "2017-06-21T18:23:01Z",
+      "side": 1,
+      "message": "It\u0027s verbose, but I think we should expand to Client Characteristic Configuration Descriptor",
+      "range": {
+        "startLine": 319,
+        "startChar": 60,
+        "endLine": 319,
+        "endChar": 74
+      },
+      "revId": "d3fe4795e8240580f0da1b94db6f88391021425a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
