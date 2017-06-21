@@ -7,7 +7,7 @@
 
 #import <Foundation/Foundation.h>
 
-#import "ios/chrome/browser/ui/payments/cells/payments_has_accessory_type.h"
+#import "ios/chrome/browser/ui/payments/cells/payments_is_selectable.h"
 
 @class CollectionViewItem;
 
@@ -41,7 +41,7 @@ typedef NS_ENUM(NSUInteger, PaymentRequestSelectorState) {
 - (CollectionViewItem*)headerItem;
 
 // The selectable items to display in the collection.
-- (NSArray<CollectionViewItem<PaymentsHasAccessoryType>*>*)selectableItems;
+- (NSArray<CollectionViewItem<PaymentsIsSelectable>*>*)selectableItems;
 
 // The "Add" button item, if any.
 - (CollectionViewItem*)addButtonItem;
