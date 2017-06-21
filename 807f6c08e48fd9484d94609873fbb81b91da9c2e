@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "9b4dc94a_42b73445",
+        "filename": "device/wake_lock/public/interfaces/wake_lock.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 51,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b4b3b25f_d1fe4e8f",
+      "range": {
+        "startLine": 51,
+        "startChar": 22,
+        "endLine": 51,
+        "endChar": 29
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "4d58082b_5f6c3fe3",
         "filename": "extensions/browser/api/power/power_api.cc",
         "patchSetId": 6
@@ -42,6 +66,24 @@
     },
     {
       "key": {
+        "uuid": "1545f20f_c9c9aa68",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "In the unittest both the ServiceManagerConnection and the Device-Service is not initialized. It is not so straightforward to stub out the wake lock in unittest, as you see in the Power_api_unittest.cc the GetWakeLock() is not actually called. So I suggest keeping the current create/release functions injection.",
+      "parentUuid": "4d58082b_5f6c3fe3",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "be66b625_52726e55",
         "filename": "extensions/browser/api/power/power_api.cc",
         "patchSetId": 6
@@ -53,6 +95,24 @@
       "writtenOn": "2017-06-21T14:11:47Z",
       "side": 1,
       "message": "is it safe to call this before you check has_wake_lock_? if so, could you add a comment to the wake_lock_ member in the header file explaining when it\u0027s safe to use it? it\u0027s not super-obvious to me (as someone who knows fairly little about mojo interface pointers).",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8f1abfd9_43984270",
+        "filename": "extensions/browser/api/power/power_api.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 133,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Yes it is safe. I think we should add the comment in .mojom file to explain the ChangeType() can be called no matter the wake lock is active or not.",
+      "parentUuid": "be66b625_52726e55",
       "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -82,6 +142,30 @@
     },
     {
       "key": {
+        "uuid": "aba98dd0_d6359248",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fa622849_c7052c2e",
+      "range": {
+        "startLine": 81,
+        "startChar": 18,
+        "endLine": 81,
+        "endChar": 26
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "995fe653_7da09b73",
         "filename": "extensions/browser/api/power/power_api.h",
         "patchSetId": 6
@@ -102,6 +186,30 @@
       "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66a27a32_2dac84a3",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "995fe653_7da09b73",
+      "range": {
+        "startLine": 82,
+        "startChar": 13,
+        "endLine": 82,
+        "endChar": 30
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -128,6 +236,30 @@
     },
     {
       "key": {
+        "uuid": "94f574ea_38ec8d0b",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 83,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c9c3e27c_9f068296",
+      "range": {
+        "startLine": 83,
+        "startChar": 18,
+        "endLine": 83,
+        "endChar": 26
+      },
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ed721c7f_60978d73",
         "filename": "extensions/browser/api/power/power_api.h",
         "patchSetId": 6
@@ -142,6 +274,24 @@
       "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0508647d_40c57582",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Done.",
+      "parentUuid": "ed721c7f_60978d73",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -162,6 +312,24 @@
     },
     {
       "key": {
+        "uuid": "0a83ad3e_05b2fa37",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 121,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "Yes. The wake_lock_ is always not null after be bound, so we have to use this flag to record the active/inactive status of wakelock.",
+      "parentUuid": "b939c173_dfe9bfe4",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "7b807383_adf31377",
         "filename": "extensions/browser/api/power/power_api.h",
         "patchSetId": 6
@@ -173,6 +341,24 @@
       "writtenOn": "2017-06-21T14:11:47Z",
       "side": 1,
       "message": "if this is still meaningless when has_wake_lock_ is false, can you update the comment to retain that part?",
+      "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "f4dedf1d_fe2a7d87",
+        "filename": "extensions/browser/api/power/power_api.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 123,
+      "author": {
+        "id": 1177311
+      },
+      "writtenOn": "2017-06-21T15:46:36Z",
+      "side": 1,
+      "message": "The current_level_ is always meaningful now. The |current_level_| is used by |wake_lock_provider_| to GetWakeLockWithoutContext before RequestWakeLock().",
+      "parentUuid": "7b807383_adf31377",
       "revId": "807f6c08e48fd9484d94609873fbb81b91da9c2e",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
