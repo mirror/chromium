@@ -199,6 +199,7 @@ LayerTreeHostImpl::LayerTreeHostImpl(
       layer_tree_frame_sink_(nullptr),
       need_update_gpu_rasterization_status_(false),
       content_is_suitable_for_gpu_rasterization_(true),
+      requires_crisp_edges_(false),
       has_gpu_rasterization_trigger_(false),
       use_gpu_rasterization_(false),
       use_msaa_(false),
@@ -1813,6 +1814,13 @@ void LayerTreeHostImpl::SetContentIsSuitableForGpuRasterization(bool flag) {
   }
 }
 
+void LayerTreeHostImpl::SetRequiresCrispEdges(bool flag) {
+  if (requires_crisp_edges_ != flag) {
+    requires_crisp_edges_ = flag;
+    need_update_gpu_rasterization_status_ = true;
+  }
+}
+
 bool LayerTreeHostImpl::CanUseGpuRasterization() {
   if (!(layer_tree_frame_sink_ && layer_tree_frame_sink_->context_provider() &&
         layer_tree_frame_sink_->worker_context_provider()))
@@ -1840,17 +1848,21 @@ bool LayerTreeHostImpl::UpdateGpuRasterizationStatus() {
   ContextProvider* compositor_context_provider =
       layer_tree_frame_sink_->context_provider();
   bool gpu_rasterization_enabled = false;
+  bool supports_disable_msaa = false;
   if (compositor_context_provider) {
     const auto& caps = compositor_context_provider->ContextCapabilities();
     gpu_rasterization_enabled = caps.gpu_rasterization;
     if (!caps.msaa_is_slow)
       max_msaa_samples = caps.max_samples;
+    supports_disable_msaa = caps.multisample_compatibility;
   }
 
   bool use_gpu = false;
   bool use_msaa = false;
   bool using_msaa_for_complex_content =
-      requested_msaa_samples > 0 && max_msaa_samples >= requested_msaa_samples;
+      requested_msaa_samples > 0 &&
+      max_msaa_samples >= requested_msaa_samples &&
+      (!requires_crisp_edges_ || supports_disable_msaa);
   if (settings_.gpu_rasterization_forced) {
     use_gpu = true;
     gpu_rasterization_status_ = GpuRasterizationStatus::ON_FORCED;

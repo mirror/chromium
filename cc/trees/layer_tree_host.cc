@@ -734,19 +734,30 @@ bool LayerTreeHost::DoUpdateLayers(Layer* root_layer) {
   }
 
   bool content_is_suitable_for_gpu = true;
-  bool did_paint_content =
-      PaintContent(update_layer_list, &content_is_suitable_for_gpu);
+  bool requires_crisp_edges = false;
+  bool did_paint_content = PaintContent(
+      update_layer_list, &content_is_suitable_for_gpu, &requires_crisp_edges);
 
-  if (content_is_suitable_for_gpu) {
-    ++num_consecutive_frames_suitable_for_gpu_;
-    if (num_consecutive_frames_suitable_for_gpu_ >=
+  // |requires_crisp_edges| is a correctness (not performance) modifier, if
+  // it changes we immediately update.
+  requires_crisp_edges_ |= requires_crisp_edges;
+
+  // If we've mismatched our settings for the required number of frames, update
+  // them.
+  bool settings_mismatch =
+      requires_crisp_edges_ != requires_crisp_edges ||
+      content_is_suitable_for_gpu_rasterization_ != content_is_suitable_for_gpu;
+  if (settings_mismatch) {
+    ++num_consecutive_frames_with_gpu_settings_mismatch_;
+    if (num_consecutive_frames_with_gpu_settings_mismatch_ >=
         kNumFramesToConsiderBeforeGpuRasterization) {
-      content_is_suitable_for_gpu_rasterization_ = true;
+      requires_crisp_edges_ = requires_crisp_edges;
+      content_is_suitable_for_gpu_rasterization_ = content_is_suitable_for_gpu;
     }
   } else {
-    num_consecutive_frames_suitable_for_gpu_ = 0;
-    content_is_suitable_for_gpu_rasterization_ = false;
+    num_consecutive_frames_with_gpu_settings_mismatch_ = 0;
   }
+
   return did_paint_content;
 }
 
@@ -1094,12 +1105,14 @@ size_t LayerTreeHost::NumLayers() const {
 }
 
 bool LayerTreeHost::PaintContent(const LayerList& update_layer_list,
-                                 bool* content_is_suitable_for_gpu) {
+                                 bool* content_is_suitable_for_gpu,
+                                 bool* requires_crisp_edges) {
   base::AutoReset<bool> painting(&in_paint_layer_contents_, true);
   bool did_paint_content = false;
   for (const auto& layer : update_layer_list) {
     did_paint_content |= layer->Update();
     *content_is_suitable_for_gpu &= layer->IsSuitableForGpuRasterization();
+    *requires_crisp_edges |= layer->RequiresCrispEdges();
   }
   return did_paint_content;
 }
@@ -1272,6 +1285,7 @@ void LayerTreeHost::PushLayerTreeHostPropertiesTo(
   host_impl->SetHasGpuRasterizationTrigger(has_gpu_rasterization_trigger_);
   host_impl->SetContentIsSuitableForGpuRasterization(
       content_is_suitable_for_gpu_rasterization_);
+  host_impl->SetRequiresCrispEdges(requires_crisp_edges_);
   RecordGpuRasterizationHistogram(host_impl);
 
   host_impl->SetViewportSize(device_viewport_size_);

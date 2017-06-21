@@ -349,7 +349,8 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
 
   bool in_update_property_trees() const { return in_update_property_trees_; }
   bool PaintContent(const LayerList& update_layer_list,
-                    bool* content_is_suitable_for_gpu);
+                    bool* content_is_suitable_for_gpu,
+                    bool* requires_crisp_edges);
   bool in_paint_layer_contents() const { return in_paint_layer_contents_; }
 
   void SetHasCopyRequest(bool has_copy_request);
@@ -566,6 +567,7 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
 
   bool has_gpu_rasterization_trigger_ = false;
   bool content_is_suitable_for_gpu_rasterization_ = true;
+  bool requires_crisp_edges_ = false;
   bool gpu_rasterization_histogram_recorded_ = false;
 
   // If set, then page scale animation has completed, but the client hasn't been
@@ -582,7 +584,7 @@ class CC_EXPORT LayerTreeHost : public NON_EXPORTED_BASE(SurfaceReferenceOwner),
   TaskGraphRunner* task_graph_runner_;
 
   SurfaceSequenceGenerator surface_sequence_generator_;
-  uint32_t num_consecutive_frames_suitable_for_gpu_ = 0;
+  uint32_t num_consecutive_frames_with_gpu_settings_mismatch_ = 0;
 
   scoped_refptr<Layer> root_layer_;
 

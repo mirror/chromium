@@ -194,6 +194,11 @@ bool PictureLayer::IsSuitableForGpuRasterization() const {
              kMaxNumberOfSlowPathsBeforeVeto;
 }
 
+bool PictureLayer::RequiresCrispEdges() const {
+  return picture_layer_inputs_.display_list &&
+         picture_layer_inputs_.display_list->HasNonAAPaths();
+}
+
 void PictureLayer::ClearClient() {
   picture_layer_inputs_.client = nullptr;
   UpdateDrawsContent(HasDrawableContent());
