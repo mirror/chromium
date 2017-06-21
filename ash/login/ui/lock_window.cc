@@ -34,7 +34,12 @@ LockWindow::LockWindow() {
   SetVisibilityAnimationTransition(views::Widget::ANIMATE_NONE);
 }
 
-LockWindow::~LockWindow() {}
+LockWindow::~LockWindow() {
+  // We need to destroy the root view before destroying |data_source_| because
+  // lock screen destruction assumes it is alive. We could hand out
+  // base::WeakPtr<LoginDataSource> instances if needed instead.
+  delete views::Widget::GetContentsView();
+}
 
 views::Widget* LockWindow::GetWidget() {
   return this;
