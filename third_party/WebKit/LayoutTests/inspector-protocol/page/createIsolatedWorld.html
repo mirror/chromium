@@ -17,7 +17,6 @@ function test()
             InspectorTest.log("fail - main world created."); 
             InspectorTest.log(JSON.stringify(message.params)); 
         }
-        InspectorTest.completeTest();
     };
 
     InspectorTest.sendCommandOrDie("Runtime.enable", {}, runtimeAgentEnabled);
@@ -42,7 +41,13 @@ function test()
     function onMainFrameId(mainFrameId) {
         InspectorTest.log("Main Frame obtained");
         InspectorTest.sendCommandOrDie("Page.createIsolatedWorld", {
-            frameId: mainFrameId, worldName: "Test world"});
+            frameId: mainFrameId, worldName: "Test world"},
+            isolatedWorldCreated);
+    }
+
+    function isolatedWorldCreated(payload) {
+        InspectorTest.log("IsolatedWorld ID " + payload.worldId);
+        InspectorTest.completeTest();
     }
 }
 
