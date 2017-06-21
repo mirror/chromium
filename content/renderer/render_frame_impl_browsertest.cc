@@ -153,6 +153,9 @@ TEST_F(RenderFrameImplTest, FrameResize) {
   resize_params.screen_info = ScreenInfo();
   resize_params.new_size = size;
   resize_params.physical_backing_size = size;
+  // This test doesn't need to change the visible viewport.
+  resize_params.visible_viewport_size =
+      InitialSizeParams()->visible_viewport_size;
   resize_params.top_controls_height = 0.f;
   resize_params.browser_controls_shrink_blink_size = false;
   resize_params.is_fullscreen_granted = false;
