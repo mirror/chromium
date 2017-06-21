@@ -17,6 +17,7 @@
 #include "ash/shelf/shelf_widget.h"
 #include "ash/shell.h"
 #include "ash/shell_port.h"
+#include "ash/shutdown_reason.h"
 #include "ash/system/status_area_widget.h"
 #include "ash/system/tray/system_tray.h"
 #include "ash/system/tray/system_tray_item.h"
@@ -1634,7 +1635,7 @@ TEST_F(ShelfLayoutManagerTest, BackgroundTypeWhenLockingScreen) {
   EXPECT_EQ(SHELF_BACKGROUND_MAXIMIZED, GetShelfWidget()->GetBackgroundType());
 
   Shell::Get()->lock_state_controller()->StartLockAnimationAndLockImmediately(
-      false);
+      false, ShutdownReason::UNKNOWN);
   EXPECT_EQ(SHELF_BACKGROUND_DEFAULT, GetShelfWidget()->GetBackgroundType());
 }
 

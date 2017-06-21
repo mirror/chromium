@@ -9,6 +9,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/session/session_observer.h"
+#include "ash/shutdown_reason.h"
 #include "ash/wm/session_state_animator.h"
 #include "base/macros.h"
 #include "base/memory/weak_ptr.h"
@@ -57,16 +58,21 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
   // Starts locking (with slow animation) that can be cancelled.
   // After locking and |kLockToShutdownTimeoutMs| StartShutdownAnimation()
   // will be called unless CancelShutdownAnimation() is called, if
-  // |shutdown_after_lock| is true.
-  void StartLockAnimation(bool shutdown_after_lock);
+  // |shutdown_after_lock| is true. If |shutdown_after_lock| is true,
+  // |shutdown_reason| should specify the reason for shutdown.
+  void StartLockAnimation(bool shutdown_after_lock,
+                          ash::ShutdownReason shutdown_reason);
 
   // Starts shutting down (with slow animation) that can be cancelled.
-  void StartShutdownAnimation();
+  void StartShutdownAnimation(ash::ShutdownReason reason);
 
   // Starts usual lock animation, but locks immediately.  After locking and
   // |kLockToShutdownTimeoutMs| StartShutdownAnimation() will be called unless
   // CancelShutdownAnimation() is called, if  |shutdown_after_lock| is true.
-  void StartLockAnimationAndLockImmediately(bool shutdown_after_lock);
+  // If |shutdown_after_lock| is true, |shutdown_reason| should specify the
+  // reason for shutdown.
+  void StartLockAnimationAndLockImmediately(bool shutdown_after_lock,
+                                            ash::ShutdownReason shutdown_reason);
 
   // Returns true if we have requested system to lock, but haven't received
   // confirmation yet.
@@ -92,7 +98,7 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
 
   // Displays the shutdown animation and requests a system shutdown or system
   // restart depending on the the state of the |RebootOnShutdown| device policy.
-  void RequestShutdown();
+  void RequestShutdown(ash::ShutdownReason reason);
 
   // Called when ScreenLocker is ready to close, but not yet destroyed.
   // Can be used to display "hiding" animations on unlock.
@@ -187,6 +193,9 @@ class ASH_EXPORT LockStateController : public aura::WindowTreeHostObserver,
 
   // Are we in the process of shutting the machine down?
   bool shutting_down_ = false;
+
+  // The reason (e.g. user action) for a pending shutdown.
+  ash::ShutdownReason shutdown_reason = ash::ShutdownReason::UNKNOWN;
 
   // Indicates whether controller should proceed to (cancellable) shutdown after
   // locking.

@@ -7,6 +7,7 @@
 
 #include "ash/ash_export.h"
 #include "ash/public/interfaces/shutdown.mojom.h"
+#include "ash/shutdown_reason.h"
 #include "base/compiler_specific.h"
 #include "base/macros.h"
 #include "mojo/public/cpp/bindings/binding_set.h"
@@ -26,7 +27,7 @@ class ASH_EXPORT ShutdownController
   // Shuts down or reboots based on the current DeviceRebootOnShutdown policy.
   // Does not trigger the shutdown fade-out animation. For animated shutdown
   // use ShellPort::RequestShutdown(). Virtual for testing.
-  virtual void ShutDownOrReboot();
+  virtual void ShutDownOrReboot(ShutdownReason reason);
 
   // Binds the mojom::ShutdownController interface request to this object.
   void BindRequest(mojom::ShutdownControllerRequest request);
