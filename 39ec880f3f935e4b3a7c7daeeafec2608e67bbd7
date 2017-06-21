@@ -72,6 +72,24 @@
     },
     {
       "key": {
+        "uuid": "c86d0f66_7291b2e7",
+        "filename": "media/blink/cdm_result_promise_helper.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 29,
+      "author": {
+        "id": 1002410
+      },
+      "writtenOn": "2017-06-21T17:05:11Z",
+      "side": 1,
+      "message": "I see.  In that case, there is not much need to change enums.xml; you can add \" (deprecated)\" as a suffix for the entries if you\u0027d like to.\n\nNote that removing the items from the middle of the list would cause issues: in data from older versions, bucket 3 would mean one thing; in newer versions, it would mean a different things.  Because histogram data is persisted, it is important never to change the semantics of a given serialized value; otherwise deserialization becomes quite hard.  (We could instead version the serialized data, and deserialize according to version, but we do not do that, as it\u0027s more complex.)",
+      "parentUuid": "72687e04_c1dfe4b8",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "97cff61e_d314306c",
         "filename": "media/cdm/cdm_adapter.cc",
         "patchSetId": 2
