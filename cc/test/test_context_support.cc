@@ -101,4 +101,11 @@ void TestContextSupport::SetErrorMessageCallback(
 void TestContextSupport::AddLatencyInfo(
     const std::vector<ui::LatencyInfo>& latency_info) {}
 
+bool TestContextSupport::ThreadsafeBeginLockDiscardable(uint32_t texture_id) {
+  NOTIMPLEMENTED();
+  return false;
+}
+void TestContextSupport::CompleteLockDiscardableOnContextThread(
+    uint32_t texture_id) {}
+
 }  // namespace cc
