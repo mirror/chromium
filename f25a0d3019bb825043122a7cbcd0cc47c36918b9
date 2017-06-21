@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "20502d34_b09b6e3f",
+        "filename": "components/vector_icons/system_menu_bluetooth.icon",
+        "patchSetId": 2
+      },
+      "lineNbr": 5,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T20:28:37Z",
+      "side": 1,
+      "message": "This file should not be called system_menu_bluetooth since it has nothing to do with the system menu (AFAIK). Is this the icon you want?[1] If so, you should get the 48x48 version of that and derive the .icon from it.\n\nAlso, what size are you displaying this icon at?\n\n[1] https://icons.googleplex.com/#icon\u003dic_bluetooth",
+      "range": {
+        "startLine": 5,
+        "startChar": 0,
+        "endLine": 5,
+        "endChar": 17
+      },
+      "revId": "f25a0d3019bb825043122a7cbcd0cc47c36918b9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
