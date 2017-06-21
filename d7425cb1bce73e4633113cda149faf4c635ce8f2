@@ -46,6 +46,30 @@
       "revId": "d7425cb1bce73e4633113cda149faf4c635ce8f2",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "55eef43b_a7cd414c",
+        "filename": "chrome/android/java/src/org/chromium/chrome/browser/suggestions/TileGroupDelegateImpl.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 92,
+      "author": {
+        "id": 1115980
+      },
+      "writtenOn": "2017-06-21T13:34:58Z",
+      "side": 1,
+      "message": "I\u0027m not sure what you mean. This method, onLoadingComplete, is the line. It is never called in Chrome Home because it does not use NewTabPageView. You could also file a bug for me or Nicolas, we discussed it over lunch and either is fine.",
+      "parentUuid": "ea9cb9b2_cf738b46",
+      "range": {
+        "startLine": 92,
+        "startChar": 16,
+        "endLine": 92,
+        "endChar": 33
+      },
+      "revId": "d7425cb1bce73e4633113cda149faf4c635ce8f2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
