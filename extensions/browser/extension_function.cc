@@ -294,7 +294,8 @@ class UIThreadExtensionFunction::RenderFrameHostTracker
 };
 
 ExtensionFunction::ExtensionFunction()
-    : request_id_(-1),
+    : state_(State::kNotRun),
+      request_id_(-1),
       profile_id_(NULL),
       name_(""),
       has_callback_(false),
@@ -303,8 +304,7 @@ ExtensionFunction::ExtensionFunction()
       bad_message_(false),
       histogram_value_(extensions::functions::UNKNOWN),
       source_context_type_(Feature::UNSPECIFIED_CONTEXT),
-      source_process_id_(-1),
-      did_respond_(false) {}
+      source_process_id_(-1) {}
 
 ExtensionFunction::~ExtensionFunction() {
 }
@@ -317,11 +317,13 @@ IOThreadExtensionFunction* ExtensionFunction::AsIOThreadExtensionFunction() {
   return NULL;
 }
 
-bool ExtensionFunction::HasPermission() {
+bool ExtensionFunction::HasPermission(std::string* error_message) {
   Feature::Availability availability =
       ExtensionAPI::GetSharedInstance()->IsAvailable(
           name_, extension_.get(), source_context_type_, source_url(),
           extensions::CheckAliasStatus::ALLOWED);
+  if (!availability.is_available())
+    *error_message = availability.message();
   return availability.is_available();
 }
 
@@ -449,6 +451,8 @@ bool ExtensionFunction::PreRunValidation(std::string* error) {
 }
 
 ExtensionFunction::ResponseAction ExtensionFunction::RunWithValidation() {
+  DCHECK_EQ(State::kNotRun, state_);
+  state_ = State::kRunning;
   std::string error;
   if (!PreRunValidation(&error)) {
     DCHECK(!error.empty() || bad_message_);
@@ -467,9 +471,10 @@ bool ExtensionFunction::HasOptionalArgument(size_t index) {
 }
 
 void ExtensionFunction::SendResponseImpl(bool success) {
-  DCHECK(!response_callback_.is_null());
-  DCHECK(!did_respond_) << name_;
-  did_respond_ = true;
+  DCHECK(response_callback_);
+  DCHECK_EQ(State::kRunning, state_)
+      << "Attempting to send response from a wrong state: " << name_;
+  state_ = State::kResponded;
 
   ResponseType response = success ? SUCCEEDED : FAILED;
   if (bad_message_) {
@@ -494,9 +499,9 @@ UIThreadExtensionFunction::UIThreadExtensionFunction()
       service_worker_version_id_(extensions::kInvalidServiceWorkerVersionId) {}
 
 UIThreadExtensionFunction::~UIThreadExtensionFunction() {
-  if (dispatcher() && (render_frame_host() || is_from_service_worker())) {
-    dispatcher()->OnExtensionFunctionCompleted(extension(),
-                                               is_from_service_worker());
+  if (state_ != State::kNotRun && dispatcher() &&
+      (render_frame_host() || is_from_service_worker())) {
+    dispatcher()->OnExtensionFunctionCompleted(this);
   }
 
   // The extension function should always respond to avoid leaks in the
@@ -506,9 +511,10 @@ UIThreadExtensionFunction::~UIThreadExtensionFunction() {
   // tricky because checking IsShuttingDown has to be called from the UI thread.
   extensions::ExtensionsBrowserClient* browser_client =
       extensions::ExtensionsBrowserClient::Get();
-  DCHECK(!browser_client || browser_client->IsShuttingDown() || did_respond() ||
+  DCHECK(!browser_client || browser_client->IsShuttingDown() ||
+         state_ != State::kRunning ||
          ignore_all_did_respond_for_testing_do_not_use)
-      << name();
+      << "Function completed with no response: " << name();
 }
 
 UIThreadExtensionFunction*

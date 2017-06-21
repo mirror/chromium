@@ -112,6 +112,22 @@ void IOThreadResponseCallback(
                          results, error);
 }
 
+void RespondWithUnknownApiError(
+    const ExtensionFunction::ResponseCallback& callback) {
+  base::ListValue empty_list;
+  callback.Run(ExtensionFunction::FAILED, empty_list /* results */,
+               "Unknown Extension API." /* error */,
+               extensions::functions::UNKNOWN /* histogram_value */);
+}
+
+void RespondWithPermissionsDenied(
+    const ExtensionFunction::ResponseCallback& callback,
+    functions::HistogramValue histogram_value) {
+  base::ListValue empty_list;
+  callback.Run(ExtensionFunction::FAILED, empty_list /* results */,
+               "Access to Extension API denied." /* error */, histogram_value);
+}
+
 }  // namespace
 
 class ExtensionFunctionDispatcher::UIThreadResponseCallbackWrapper
@@ -523,15 +539,23 @@ void ExtensionFunctionDispatcher::RemoveWorkerCallbacksForProcess(
 }
 
 void ExtensionFunctionDispatcher::OnExtensionFunctionCompleted(
-    const Extension* extension,
-    bool is_from_service_worker) {
-  if (extension && !is_from_service_worker) {
-    // Decrement ref count for non-service worker extension API. Service
-    // worker extension API ref counts are handled separately on IO thread
-    // directly via IPC.
-    ProcessManager::Get(browser_context_)
-        ->DecrementLazyKeepaliveCount(extension);
-  }
+    ExtensionFunction* function) {
+  AdjustLazyKeepaliveCountAfterCompletion(function);
+}
+
+void ExtensionFunctionDispatcher::AdjustLazyKeepaliveCountAfterCompletion(
+    ExtensionFunction* function) {
+  if (!function->extension())
+    return;
+  // Service worker extension API ref counts are handled separately on IO thread
+  // directly via IPC.
+  const UIThreadExtensionFunction* function_ui =
+      function->AsUIThreadExtensionFunction();
+  if (function_ui && function_ui->is_from_service_worker())
+    return;
+
+  ProcessManager::Get(browser_context_)
+      ->DecrementLazyKeepaliveCount(function->extension());
 }
 
 WindowController*
@@ -555,9 +579,11 @@ bool ExtensionFunctionDispatcher::CheckPermissions(
     ExtensionFunction* function,
     const ExtensionHostMsg_Request_Params& params,
     const ExtensionFunction::ResponseCallback& callback) {
-  if (!function->HasPermission()) {
-    LOG(ERROR) << "Permission denied for " << params.name;
-    SendAccessDenied(callback, function->histogram_value());
+  std::string error_message;
+  if (!function->HasPermission(&error_message)) {
+    LOG(ERROR) << "Permissions denied for " << params.name << ": "
+               << error_message;
+    RespondWithPermissionsDenied(callback, function->histogram_value());
     return false;
   }
   return true;
@@ -576,7 +602,7 @@ ExtensionFunction* ExtensionFunctionDispatcher::CreateExtensionFunction(
       ExtensionFunctionRegistry::GetInstance()->NewFunction(params.name);
   if (!function) {
     LOG(ERROR) << "Unknown Extension API - " << params.name;
-    SendAccessDenied(callback, extensions::functions::UNKNOWN);
+    RespondWithUnknownApiError(callback);
     return NULL;
   }
 
@@ -593,15 +619,6 @@ ExtensionFunction* ExtensionFunctionDispatcher::CreateExtensionFunction(
   function->set_source_process_id(requesting_process_id);
 
   return function;
-}
-
-// static
-void ExtensionFunctionDispatcher::SendAccessDenied(
-    const ExtensionFunction::ResponseCallback& callback,
-    functions::HistogramValue histogram_value) {
-  base::ListValue empty_list;
-  callback.Run(ExtensionFunction::FAILED, empty_list,
-               "Access to extension API denied.", histogram_value);
 }
 
 }  // namespace extensions

@@ -152,7 +152,7 @@ RulesFunction::RulesFunction()
 
 RulesFunction::~RulesFunction() {}
 
-bool RulesFunction::HasPermission() {
+bool RulesFunction::HasPermission(std::string* error_message) {
   std::string event_name;
   EXTENSION_FUNCTION_VALIDATE(args_->GetString(0, &event_name));
   int web_view_instance_id = 0;
@@ -164,7 +164,7 @@ bool RulesFunction::HasPermission() {
       extension_->permissions_data()->HasAPIPermission(
           extensions::APIPermission::kWebView))
     return true;
-  return ExtensionFunction::HasPermission();
+  return ExtensionFunction::HasPermission(error_message);
 }
 
 bool RulesFunction::RunAsync() {

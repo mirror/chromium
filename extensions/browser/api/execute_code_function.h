@@ -25,7 +25,7 @@ class ExecuteCodeFunction : public AsyncExtensionFunction {
   ~ExecuteCodeFunction() override;
 
   // ExtensionFunction implementation.
-  bool HasPermission() override;
+  bool HasPermission(std::string* error_message) override;
   bool RunAsync() override;
 
   enum InitResult {

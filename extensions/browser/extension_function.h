@@ -127,14 +127,15 @@ class ExtensionFunction
   virtual UIThreadExtensionFunction* AsUIThreadExtensionFunction();
   virtual IOThreadExtensionFunction* AsIOThreadExtensionFunction();
 
-  // Returns true if the function has permission to run.
+  // Returns whether the function has permission to run.  If not,
+  // |error_message| will be populated with the error details.
   //
   // The default implementation is to check the Extension's permissions against
   // what this function requires to run, but some APIs may require finer
   // grained control, such as tabs.executeScript being allowed for active tabs.
   //
   // This will be run after the function has been set up but before Run().
-  virtual bool HasPermission();
+  virtual bool HasPermission(std::string* error_message);
 
   // The result of a function call.
   //
@@ -312,18 +313,24 @@ class ExtensionFunction
 
   ResponseType* response_type() const { return response_type_.get(); }
 
-  bool did_respond() const { return did_respond_; }
+  bool did_respond() const { return state_ == State::kResponded; }
 
-  // Sets did_respond_ to true so that the function won't DCHECK if it never
-  // sends a response. Typically, this shouldn't be used, even in testing. It's
-  // only for when you want to test functionality that doesn't exercise the
-  // Run() aspect of an extension function.
-  void ignore_did_respond_for_testing() { did_respond_ = true; }
-  // Same as above, but global. Yuck. Do not add any more uses of this.
+  // Global flag which, when set to true, makes the functions don't DCHECK if
+  // they never send a response after being run. Typically, this shouldn't be
+  // used, even in testing. It's only for when you want to test functionality
+  // that doesn't exercise the Run() aspect of an extension function.
+  // Do not add any more uses of this.
   static bool ignore_all_did_respond_for_testing_do_not_use;
 
  protected:
   friend struct ExtensionFunctionDeleteTraits;
+
+  // State of the function call object.
+  enum class State {
+    kNotRun,     // Has not been run yet. This is the initial state.
+    kRunning,    // Running has started.
+    kResponded,  // Running finished, and the reponse has been sent.
+  };
 
   // ResponseValues.
   //
@@ -424,11 +431,16 @@ class ExtensionFunction
   // is non-null.
   bool HasOptionalArgument(size_t index);
 
+  // State of the function call object.
+  State state_;
+
   // The extension that called this function.
   scoped_refptr<const extensions::Extension> extension_;
 
   // The arguments to the API. Only non-null if argument were specified.
   std::unique_ptr<base::ListValue> args_;
+
+  bool ignore_did_respond_for_testing_;
 
  private:
   friend class ResponseValueObject;
@@ -494,10 +506,6 @@ class ExtensionFunction
   // The response type of the function, if the response has been sent.
   std::unique_ptr<ResponseType> response_type_;
 
-  // Whether this function has responded.
-  // TODO(devlin): Replace this with response_type_ != null.
-  bool did_respond_;
-
   DISALLOW_COPY_AND_ASSIGN(ExtensionFunction);
 };
 
@@ -540,6 +548,11 @@ class UIThreadExtensionFunction : public ExtensionFunction {
     service_worker_version_id_ = version_id;
   }
 
+  bool is_from_service_worker() const {
+    return service_worker_version_id_ !=
+           extensions::kInvalidServiceWorkerVersionId;
+  }
+
   // Gets the "current" web contents if any. If there is no associated web
   // contents then defaults to the foremost one.
   // NOTE: "current" can mean different things in different contexts. You
@@ -574,11 +587,6 @@ class UIThreadExtensionFunction : public ExtensionFunction {
   class RenderFrameHostTracker;
 
   void Destruct() const override;
-
-  bool is_from_service_worker() const {
-    return service_worker_version_id_ !=
-           extensions::kInvalidServiceWorkerVersionId;
-  }
 
   // The dispatcher that will service this extension function call.
   base::WeakPtr<extensions::ExtensionFunctionDispatcher> dispatcher_;
