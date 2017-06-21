@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "471ebf99_969d52c3",
+        "filename": "content/browser/frame_host/navigation_request.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 277,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-21T14:34:50Z",
+      "side": 1,
+      "message": "nit: remove this TODO? It seems to me we\u0027ve addressed the issue of overriding the user agent with that patch.",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8941c48f_c8ac6034",
+        "filename": "content/browser/frame_host/navigator_impl.cc",
+        "patchSetId": 3
+      },
+      "lineNbr": 1021,
+      "author": {
+        "id": 1115881
+      },
+      "writtenOn": "2017-06-21T14:34:50Z",
+      "side": 1,
+      "message": "qq: did you see any case outside of unit_tests where we didn\u0027t have a pending NavigationEntry? Subframe navigations maybe?",
+      "revId": "051c93eef3a8a713fc5c9928ca6c6b5be798a900",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
