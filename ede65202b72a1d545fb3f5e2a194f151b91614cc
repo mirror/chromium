@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "3fc1c632_362cf463",
+        "filename": "device/bluetooth/public/interfaces/test/fake_bluetooth.mojom",
+        "patchSetId": 6
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T06:32:34Z",
+      "side": 1,
+      "message": "Done. Sad that we can\u0027t use the same names as the web type: https://webbluetoothcg.github.io/web-bluetooth/#characteristicproperties",
+      "parentUuid": "58fbb3ef_61c3dc0f",
+      "range": {
+        "startLine": 41,
+        "startChar": 7,
+        "endLine": 41,
+        "endChar": 27
+      },
+      "revId": "ede65202b72a1d545fb3f5e2a194f151b91614cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "1cc7d203_72de5121",
         "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
         "patchSetId": 6
@@ -39,6 +63,24 @@
       "revId": "ede65202b72a1d545fb3f5e2a194f151b91614cc",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "90bb958f_642e3377",
+        "filename": "third_party/WebKit/LayoutTests/resources/bluetooth/web-bluetooth-test.js",
+        "patchSetId": 6
+      },
+      "lineNbr": 230,
+      "author": {
+        "id": 1133035
+      },
+      "writtenOn": "2017-06-21T06:32:34Z",
+      "side": 1,
+      "message": "Not really. They are not attached to any browser-side state so they can be garbage collected without any problems. I thought I should just keep them around just in case.\n\nI removed both arrays.",
+      "parentUuid": "1cc7d203_72de5121",
+      "revId": "ede65202b72a1d545fb3f5e2a194f151b91614cc",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
