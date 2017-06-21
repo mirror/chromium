@@ -22,6 +22,30 @@
       "revId": "8e96dca813a4636216f1f6cee958eac226d03686",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "fe660ed8_94f9a5b0",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1209769
+      },
+      "writtenOn": "2017-06-21T17:50:43Z",
+      "side": 1,
+      "message": "I tried it and I didn\u0027t like the look of the result. It also breaks current ordering that nicely corresponds to old_url + params \u003d new_url. I\u0027d leave it as is, if you don\u0027t mind.",
+      "parentUuid": "ec121635_f77e9d4f",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "8e96dca813a4636216f1f6cee958eac226d03686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
