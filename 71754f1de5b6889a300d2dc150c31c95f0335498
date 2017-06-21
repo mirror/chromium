@@ -1,0 +1,61 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ed8febf1_d0a49f36",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 263,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-21T13:12:38Z",
+      "side": 1,
+      "message": "this comment is not valid",
+      "range": {
+        "startLine": 263,
+        "startChar": 5,
+        "endLine": 263,
+        "endChar": 15
+      },
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2edc0dac_a0af5344",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-21T13:12:38Z",
+      "side": 1,
+      "message": "why is this needed?",
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5192bd8f_fda0f0c3",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 4
+      },
+      "lineNbr": 1315,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-21T13:12:38Z",
+      "side": 1,
+      "message": "why is this different?",
+      "revId": "71754f1de5b6889a300d2dc150c31c95f0335498",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
