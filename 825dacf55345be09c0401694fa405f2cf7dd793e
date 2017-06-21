@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "229cf6cf_e2877fd8",
+        "filename": "third_party/WebKit/Source/core/DEPS",
+        "patchSetId": 1
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1115916
+      },
+      "writtenOn": "2017-06-21T05:00:38Z",
+      "side": 1,
+      "message": "Is this different from -core/exported?",
+      "revId": "825dacf55345be09c0401694fa405f2cf7dd793e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
