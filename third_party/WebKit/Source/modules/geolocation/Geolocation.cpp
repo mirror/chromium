@@ -224,7 +224,7 @@ void Geolocation::StartRequest(GeoNotifier* notifier) {
   }
 
   // Check whether permissions have already been denied. Note that if this is
-  // the case, the permission state can not change again in the lifetime of
+  // the case, the permission state cannot change again in the lifetime of
   // this page.
   if (IsDenied())
     notifier->SetFatalError(PositionError::Create(

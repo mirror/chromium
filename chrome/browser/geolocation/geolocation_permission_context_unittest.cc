@@ -678,8 +678,8 @@ TEST_P(GeolocationPermissionContextTests, SystemLocationOffLSDReject) {
                                true);
   ASSERT_TRUE(HasActivePrompt());
   AcceptPrompt();
-  CheckTabContentsState(requesting_frame, CONTENT_SETTING_BLOCK);
-  CheckPermissionMessageSent(0, false);
+  CheckTabContentsState(requesting_frame, CONTENT_SETTING_ALLOW);
+  CheckPermissionMessageSent(0, true);
   EXPECT_TRUE(MockLocationSettings::HasShownLocationSettingsDialog());
 
   tester.ExpectTotalCount("Geolocation.SettingsDialog.ShowEvent.NonDSE", 1);
