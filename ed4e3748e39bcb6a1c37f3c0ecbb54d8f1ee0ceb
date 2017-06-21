@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "cf8a0cc4_e1725efa",
+        "filename": "components/download/internal/file_monitor_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 33,
+      "author": {
+        "id": 1197289
+      },
+      "writtenOn": "2017-06-21T00:04:55Z",
+      "side": 1,
+      "message": "nit: Not sure, but shall we use the weak pointer? the task runner itself is in scoped ptr, so maybe we can do this.",
+      "range": {
+        "startLine": 33,
+        "startChar": 17,
+        "endLine": 33,
+        "endChar": 39
+      },
+      "revId": "ed4e3748e39bcb6a1c37f3c0ecbb54d8f1ee0ceb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
