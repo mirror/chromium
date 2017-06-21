@@ -2,6 +2,40 @@
   "comments": [
     {
       "key": {
+        "uuid": "41fe1abb_a2d79472",
+        "filename": "chrome/browser/about_flags.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 3103,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T02:46:09Z",
+      "side": 1,
+      "message": "The docs in feature_entry.h suggest using FEATURE_VALUE_TYPE for all new entries.  Any particular reason not to?\n\nI ask because we may want to Finch-control this to measure stats to make sure user behavior changes look like what we expect, and it seems like that will be easier if this uses a feature.",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a34fb3eb_b5c7db00",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T02:46:09Z",
+      "side": 1,
+      "message": "Nit: It might be nice if the flag name and the description text were in sync (e.g. by naming this kReduceStopReloadFlicker or something)",
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "90e03ee6_74a10c8f",
         "filename": "chrome/browser/flag_descriptions.cc",
         "patchSetId": 5
@@ -13,6 +47,30 @@
       "writtenOn": "2017-06-21T01:23:16Z",
       "side": 1,
       "message": "What\u0027s with the \u0027[x]\u0027?",
+      "range": {
+        "startLine": 344,
+        "startChar": 36,
+        "endLine": 344,
+        "endChar": 37
+      },
+      "revId": "6a1e467d072b94feaa2e3dde1832415cbb03c98a",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0659a7dd_de60a2c3",
+        "filename": "chrome/browser/flag_descriptions.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 344,
+      "author": {
+        "id": 1000805
+      },
+      "writtenOn": "2017-06-21T02:46:09Z",
+      "side": 1,
+      "message": "I think it\u0027s ASCII art for the stop button, but I\u0027d remove it as it looks more like a close button.",
+      "parentUuid": "90e03ee6_74a10c8f",
       "range": {
         "startLine": 344,
         "startChar": 36,
