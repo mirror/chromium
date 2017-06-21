@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "901207b4_85552d0d",
+        "filename": "testing/variations/fieldtrial_testing_config.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 1598,
+      "author": {
+        "id": 1116059
+      },
+      "writtenOn": "2017-06-21T10:02:09Z",
+      "side": 1,
+      "message": "So just to confirm: This is the \"main thing\" which we will launch (in most locales)?",
+      "range": {
+        "startLine": 1598,
+        "startChar": 75,
+        "endLine": 1598,
+        "endChar": 0
+      },
+      "revId": "5c8570d0472f5f07fd1b56933d288da792d0b8bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
