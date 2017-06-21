@@ -612,6 +612,7 @@ gin::ObjectTemplateBuilder WebAXObjectProxy::GetObjectTemplateBuilder(
       .SetProperty("hasPopup", &WebAXObjectProxy::HasPopup)
       .SetProperty("isValid", &WebAXObjectProxy::IsValid)
       .SetProperty("isReadOnly", &WebAXObjectProxy::IsReadOnly)
+      .SetProperty("controlMode", &WebAXObjectProxy::ControlMode)
       .SetProperty("backgroundColor", &WebAXObjectProxy::BackgroundColor)
       .SetProperty("color", &WebAXObjectProxy::Color)
       .SetProperty("colorValue", &WebAXObjectProxy::ColorValue)
@@ -973,7 +974,21 @@ bool WebAXObjectProxy::IsBusy() {
 
 bool WebAXObjectProxy::IsEnabled() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.IsEnabled();
+  return accessibility_object_.ControlMode() == blink::kWebAXControlModeEnabled;
+}
+
+std::string WebAXObjectProxy::ControlMode() {
+  accessibility_object_.UpdateLayoutAndCheckValidity();
+  switch (accessibility_object_.ControlMode()) {
+    case blink::kWebAXControlModeEnabled:
+      return "enabled";
+    case blink::kWebAXControlModeReadOnly:
+      return "readOnly";
+    case blink::kWebAXControlModeDisabled:
+      return "disabled";
+    default:
+      return "notAControl";
+  }
 }
 
 bool WebAXObjectProxy::IsRequired() {
@@ -1077,7 +1092,8 @@ bool WebAXObjectProxy::IsValid() {
 
 bool WebAXObjectProxy::IsReadOnly() {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  return accessibility_object_.IsReadOnly();
+  return accessibility_object_.ControlMode() ==
+         blink::kWebAXControlModeReadOnly;
 }
 
 unsigned int WebAXObjectProxy::BackgroundColor() {
@@ -1515,7 +1531,8 @@ void WebAXObjectProxy::Press() {
 
 bool WebAXObjectProxy::SetValue(const std::string& value) {
   accessibility_object_.UpdateLayoutAndCheckValidity();
-  if (!accessibility_object_.CanSetValueAttribute())
+  if (accessibility_object_.ControlMode() != blink::kWebAXControlModeEnabled ||
+      accessibility_object_.StringValue().IsEmpty())
     return false;
 
   accessibility_object_.SetValue(blink::WebString::FromUTF8(value));

@@ -488,10 +488,14 @@ bool DownloadItemView::GetTooltipText(const gfx::Point& p,
 void DownloadItemView::GetAccessibleNodeData(ui::AXNodeData* node_data) {
   node_data->SetName(accessible_name_);
   node_data->role = ui::AX_ROLE_BUTTON;
-  if (model_.IsDangerous())
-    node_data->AddState(ui::AX_STATE_DISABLED);
-  else
+  if (model_.IsDangerous()) {
+    node_data->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                               ui::AX_CONTROL_MODE_DISABLED);
+  } else {
+    node_data->AddIntAttribute(ui::AX_ATTR_CONTROL_MODE,
+                               ui::AX_CONTROL_MODE_ENABLED);
     node_data->AddState(ui::AX_STATE_HASPOPUP);
+  }
 }
 
 void DownloadItemView::OnThemeChanged() {

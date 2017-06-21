@@ -43,8 +43,8 @@ class MODULES_EXPORT AXMockObject : public AXObject {
   ~AXMockObject() override;
 
   // AXObject overrides.
-  AXObject* ComputeParent() const override { return parent_; }
-  bool IsEnabled() const override { return true; }
+  AXObjectImpl* ComputeParent() const override { return parent_; }
+  AXControlMode ControlMode() const override { return kEnabled; }
 
  private:
   bool IsMockObject() const final { return true; }
