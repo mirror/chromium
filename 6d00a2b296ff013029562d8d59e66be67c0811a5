@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "0abbf22a_baa98f7d",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 180,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-21T01:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "fef52a76_9499c049",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "a4754b0e_2da65d7e",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
         "patchSetId": 1
@@ -33,6 +51,24 @@
       "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "dec611d6_d6769a50",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 192,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-21T01:02:01Z",
+      "side": 1,
+      "message": "Used by BackingStorage below",
+      "parentUuid": "a4754b0e_2da65d7e",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "fcf452af_4569eba1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 198,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-21T01:02:01Z",
+      "side": 1,
+      "message": "Won\u0027t work because of finishWriting. It needs the real last writer.",
+      "parentUuid": "e415b4d7_b168a1b4",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9430740c_096f5122",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
         "patchSetId": 1
@@ -70,6 +124,24 @@
     },
     {
       "key": {
+        "uuid": "0525a406_f2037aa1",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 203,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-21T01:02:01Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9430740c_096f5122",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "f04d4ae7_3398b07c",
         "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
         "patchSetId": 1
@@ -84,6 +156,24 @@
       "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "66e1c458_9b5130d9",
+        "filename": "third_party/WebKit/Source/devtools/front_end/bindings/TempFile.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 211,
+      "author": {
+        "id": 1115861
+      },
+      "writtenOn": "2017-06-21T01:02:01Z",
+      "side": 1,
+      "message": "This is the way clients get access to the temp file. Not sure if they really need to though.",
+      "parentUuid": "f04d4ae7_3398b07c",
+      "revId": "6d00a2b296ff013029562d8d59e66be67c0811a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
