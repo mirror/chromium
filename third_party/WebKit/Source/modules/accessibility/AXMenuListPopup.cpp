@@ -47,11 +47,11 @@ bool AXMenuListPopup::IsOffScreen() const {
   return parent_->IsCollapsed();
 }
 
-bool AXMenuListPopup::IsEnabled() const {
+AXControlMode AXMenuListPopup::ControlMode() const {
   if (!parent_)
-    return false;
+    return kNotAControl;
 
-  return parent_->IsEnabled();
+  return parent_->ControlMode();
 }
 
 bool AXMenuListPopup::ComputeAccessibilityIsIgnored(

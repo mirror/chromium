@@ -518,7 +518,6 @@ TEST_F(LabelTest, Accessibility) {
   label()->GetAccessibleNodeData(&node_data);
   EXPECT_EQ(ui::AX_ROLE_STATIC_TEXT, node_data.role);
   EXPECT_EQ(label()->text(), node_data.GetString16Attribute(ui::AX_ATTR_NAME));
-  EXPECT_TRUE(node_data.HasState(ui::AX_STATE_READ_ONLY));
 }
 
 TEST_F(LabelTest, TextChangeWithoutLayout) {

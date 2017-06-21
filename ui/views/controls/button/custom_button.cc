@@ -374,17 +374,19 @@ void CustomButton::GetAccessibleNodeData(ui::AXNodeData* node_data) {
                                  ui::AX_CHECKED_STATE_TRUE);
       break;
     case STATE_DISABLED:
-      node_data->AddState(ui::AX_STATE_DISABLED);
-      break;
     case STATE_NORMAL:
     case STATE_COUNT:
       // No additional accessibility node_data set for this button node_data.
       break;
   }
-  if (enabled()) {
+  const bool is_enabled = enabled();
+  if (is_enabled) {
     node_data->AddIntAttribute(ui::AX_ATTR_DEFAULT_ACTION_VERB,
                                ui::AX_DEFAULT_ACTION_VERB_PRESS);
   }
+  node_data->AddIntAttribute(
+      ui::AX_ATTR_CONTROL_MODE,
+      is_enabled ? ui::AX_CONTROL_MODE_ENABLED : ui::AX_CONTROL_MODE_DISABLED);
 }
 
 void CustomButton::VisibilityChanged(View* starting_from, bool visible) {
