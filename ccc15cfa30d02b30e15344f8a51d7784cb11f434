@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "082454f8_10151014",
+        "filename": "testing/buildbot/gn_isolate_map.pyl",
+        "patchSetId": 3
+      },
+      "lineNbr": 1074,
+      "author": {
+        "id": 1000887
+      },
+      "writtenOn": "2017-06-21T19:49:56Z",
+      "side": 1,
+      "message": "console_test_launcher is enough here i think? i notice cc_unittests is windowed tho and I don\u0027t know why, so I may be misunderstanding something about its requirements.",
+      "revId": "ccc15cfa30d02b30e15344f8a51d7784cb11f434",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
