@@ -36,8 +36,7 @@ MemoryInstrumentation::MemoryInstrumentation(
     : connector_(connector),
       connector_task_runner_(base::ThreadTaskRunnerHandle::Get()),
       tls_coordinator_(&DestroyCoordinatorTLS),
-      service_name_(service_name),
-      dump_id_() {
+      service_name_(service_name) {
   DCHECK(connector_task_runner_);
 }
 
@@ -56,8 +55,7 @@ void MemoryInstrumentation::RequestGlobalDumpAndAppendToTrace(
     if (callback)
       callback.Run(success, dump_id);
   };
-  // TODO(primiano): get rid of dump_id. It should be a return-only argument.
-  base::trace_event::MemoryDumpRequestArgs args = {++dump_id_, dump_type,
+  base::trace_event::MemoryDumpRequestArgs args = {0, dump_type,
                                                    level_of_detail};
   coordinator->RequestGlobalMemoryDump(args,
                                        base::Bind(callback_adapter, callback));
