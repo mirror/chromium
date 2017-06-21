@@ -1,0 +1,113 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "57665f59_bb862c34",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/resources/tex-image-and-sub-image-image-bitmap-utils-resize.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:06:17Z",
+      "side": 1,
+      "message": "When alpha is 255, I would expect premul and unpremul representations to be identical.  Also, we seem to be missing test cases for alpha !\u003d 255",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "07ed9b1c_183bfccb",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/resources/tex-image-and-sub-image-image-bitmap-utils-resize.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:06:17Z",
+      "side": 1,
+      "message": "10 is a pretty big tolerance.  Do you have an explanation for it.  Should we perhaps file a crbug to follow-up on this?",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "6b115b66_df78adec",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/texImage-imageBitmap-from-blob-resize.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:06:17Z",
+      "side": 1,
+      "message": "Not new to this CL, but this part is hard to read with 80col wrapping. Same for the other similar tests",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 49
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0704ce5d_2f85f986",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:06:17Z",
+      "side": 1,
+      "message": "The default should be kSRGBCanvasColorSpace if color correct rendering is enabled.",
+      "range": {
+        "startLine": 86,
+        "startChar": 54,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "44c66446_39016967",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1115939
+      },
+      "writtenOn": "2017-06-21T19:06:17Z",
+      "side": 1,
+      "message": "It would be more readable if defined the lambda in a separate line of code.  something like:\nauto pixmapReleaseProc \u003d []...",
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
