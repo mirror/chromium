@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "d22c0182_858bcb1f",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 409,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-06-21T17:22:34Z",
+      "side": 1,
+      "message": "This change basically creates two kinds of array buffers. The first are the normal ones, which are allocated by the usual allocator, whether it be malloc or PartitionAlloc or something else.\n\nThe second are guarded array buffers, which are array buffers surrounded by guard regions. This requires the array buffer allocator to go directly to the OS to request pages and set their permissions, bypassing malloc or PartitionAlloc.\n\nSince these buffers are allocated differently, we need to remember which type they were and use the correct path to deallocate them.",
+      "parentUuid": "ccef4c7e_aa6e4842",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "83385380_50166e5a",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 8
@@ -33,6 +51,24 @@
       "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5b535664_05b5b658",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 411,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-06-21T17:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "83385380_50166e5a",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "f11e012a_8d3dfec2",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 419,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-06-21T17:22:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8b6fc0c5_f38f7d0c",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5409b068_2e41f187",
         "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
         "patchSetId": 8
@@ -64,6 +118,24 @@
       "writtenOn": "2017-06-21T03:52:03Z",
       "side": 1,
       "message": "Why virtual?",
+      "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5d971f81_5fbc8cb6",
+        "filename": "third_party/WebKit/Source/bindings/core/v8/V8Initializer.cpp",
+        "patchSetId": 8
+      },
+      "lineNbr": 422,
+      "author": {
+        "id": 1144619
+      },
+      "writtenOn": "2017-06-21T17:22:34Z",
+      "side": 1,
+      "message": "Old habits die hard, I guess. I changed it to override.",
+      "parentUuid": "5409b068_2e41f187",
       "revId": "a72fc7fef7d2e77a84d4e1fc1a0d6ca95c21205c",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
