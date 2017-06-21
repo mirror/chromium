@@ -41,6 +41,7 @@
 #include "core/workers/WorkerBackingThread.h"
 #include "core/workers/WorkerClients.h"
 #include "core/workers/WorkerGlobalScope.h"
+#include "core/workers/WorkerInstalledScriptsManager.h"
 #include "core/workers/WorkerReportingProxy.h"
 #include "core/workers/WorkerThreadStartupData.h"
 #include "platform/CrossThreadFunctional.h"
@@ -457,6 +458,14 @@ void WorkerThread::InitializeOnWorkerThread(
   bool allow_atomics_wait =
       startup_data->worker_v8_settings_.atomics_wait_mode_ ==
       WorkerV8Settings::AtomicsWaitMode::kAllow;
+
+  if (installed_scripts_manager()) {
+    auto script_data = installed_scripts_manager()->GetScriptData(script_url);
+    if (script_data) {
+      source_code = std::move(script_data->source_text);
+      cached_meta_data = std::move(script_data->meta_data);
+    }
+  }
 
   {
     MutexLocker lock(thread_state_mutex_);

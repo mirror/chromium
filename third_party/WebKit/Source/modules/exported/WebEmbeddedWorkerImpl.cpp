@@ -54,6 +54,7 @@
 #include "modules/serviceworkers/ServiceWorkerContainerClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeClient.h"
 #include "modules/serviceworkers/ServiceWorkerGlobalScopeProxy.h"
+#include "modules/serviceworkers/ServiceWorkerInstalledScriptsManager.h"
 #include "modules/serviceworkers/ServiceWorkerThread.h"
 #include "platform/Histogram.h"
 #include "platform/RuntimeEnabledFeatures.h"
@@ -83,10 +84,13 @@ namespace blink {
 template class MODULES_EXPORT WorkerClientsInitializer<WebEmbeddedWorkerImpl>;
 
 WebEmbeddedWorker* WebEmbeddedWorker::Create(
-    WebServiceWorkerContextClient* client,
-    WebContentSettingsClient* content_settings_client) {
-  return new WebEmbeddedWorkerImpl(WTF::WrapUnique(client),
-                                   WTF::WrapUnique(content_settings_client));
+    std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
+    std::unique_ptr<WebContentSettingsClient> content_settings_client) {
+  return new WebEmbeddedWorkerImpl(std::move(client),
+                                   std::move(installed_scripts_manager),
+                                   std::move(content_settings_client));
 }
 
 static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
@@ -96,8 +100,13 @@ static HashSet<WebEmbeddedWorkerImpl*>& RunningWorkerInstances() {
 
 WebEmbeddedWorkerImpl::WebEmbeddedWorkerImpl(
     std::unique_ptr<WebServiceWorkerContextClient> client,
+    std::unique_ptr<WebServiceWorkerInstalledScriptsManager>
+        installed_scripts_manager,
     std::unique_ptr<WebContentSettingsClient> content_settings_client)
     : worker_context_client_(std::move(client)),
+      installed_scripts_manager_(
+          WTF::MakeUnique<ServiceWorkerInstalledScriptsManager>(
+              std::move(installed_scripts_manager))),
       content_settings_client_(std::move(content_settings_client)),
       worker_inspector_proxy_(WorkerInspectorProxy::Create()),
       web_view_(nullptr),
@@ -329,6 +338,12 @@ void WebEmbeddedWorkerImpl::DidFinishDocumentLoad() {
   loading_shadow_page_ = false;
   main_frame_->DataSource()->SetServiceWorkerNetworkProvider(
       worker_context_client_->CreateServiceWorkerNetworkProvider());
+
+  if (installed_scripts_manager_) {
+    StartWorkerThread();
+    return;
+  }
+
   main_script_loader_ = WorkerScriptLoader::Create();
   main_script_loader_->SetRequestContext(
       WebURLRequest::kRequestContextServiceWorker);
@@ -465,7 +480,8 @@ void WebEmbeddedWorkerImpl::StartWorkerThread() {
   worker_global_scope_proxy_ =
       ServiceWorkerGlobalScopeProxy::Create(*this, *worker_context_client_);
   worker_thread_ = WTF::MakeUnique<ServiceWorkerThread>(
-      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_);
+      ThreadableLoadingContext::Create(*document), *worker_global_scope_proxy_,
+      std::move(installed_scripts_manager_));
 
   // We have a dummy document here for loading but it doesn't really represent
   // the document/frame of associated document(s) for this worker. Here we
