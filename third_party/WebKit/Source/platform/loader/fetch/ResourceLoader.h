@@ -31,6 +31,7 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/CrossOriginAccessControl.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -123,6 +124,15 @@ class PLATFORM_EXPORT ResourceLoader final
   FetchContext& Context() const;
   ResourceRequestBlockedReason CanAccessResponse(Resource*,
                                                  const ResourceResponse&) const;
+
+  // Determine CORS status and store result in the Resource
+  void DetermineCORSStatus(Resource*, const ResourceResponse&) const;
+
+  // Logs a CORS error to console
+  void LogCORSError(const SecurityOrigin*,
+                    const CrossOriginAccessControl::AccessStatus cors_status,
+                    const Resource&,
+                    const ResourceResponse&) const;
 
   void CancelForRedirectAccessCheckError(const KURL&,
                                          ResourceRequestBlockedReason);

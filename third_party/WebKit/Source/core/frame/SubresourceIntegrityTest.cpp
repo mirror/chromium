@@ -197,18 +197,15 @@ class SubresourceIntegrityTest : public ::testing::Test {
   Resource* CreateTestResource(const KURL& url,
                                const KURL& allow_origin_url,
                                CorsStatus cors_status) {
-    ResourceResponse response;
-    response.SetURL(url);
-    response.SetHTTPStatusCode(200);
-    if (cors_status == kWithCors) {
-      response.SetHTTPHeaderField(
-          "access-control-allow-origin",
-          SecurityOrigin::Create(allow_origin_url)->ToAtomicString());
-      response.SetHTTPHeaderField("access-control-allow-credentials", "true");
+    Resource* resource = RawResource::CreateForTest(url, Resource::kRaw);
+
+    if (cors_status == kWithCors ||
+        SecurityOrigin::AreSameSchemeHostPort(url, allow_origin_url)) {
+      resource->SetCORSStatus(Resource::CORSStatus::kSuccessful);
+    } else {
+      resource->SetCORSStatus(Resource::CORSStatus::kFailed);
     }
-    Resource* resource =
-        RawResource::CreateForTest(response.Url(), Resource::kRaw);
-    resource->SetResponse(response);
+
     return resource;
   }
 
