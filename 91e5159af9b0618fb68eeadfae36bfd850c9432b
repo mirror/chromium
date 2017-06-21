@@ -1,0 +1,106 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "e1fee7fa_daae26d0",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "add a comment to note that this is public just for testing.",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9f2998f9_87a07b76",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 313,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "SubresourceIntegrity::CheckSubresourceIntegrity() want to perform https://w3c.github.io/webappsec-subresource-integrity/#is-response-eligible. I.e. it wants to see the type of the response (tainting).\n\nI think the other two also want to do so.\n\nTo do what\u0027s equivalent to the spec,\n- For \"cors\" case, CheckSubresourceIntegrity() can check that by just looking at the CORSStatus.\n- For \"no-cors\" case, we want to see whether the redirect chain contained cross-origin navigation to see if the tainting has been set to opaque. But it\u0027s not correctly implemented now. My patch introduces some facility to do that https://chromium-review.googlesource.com/c/516925. So could be fixed later. Currently, the \"\"no-cors\" + the final URL is same-origin\" cases are taken care of by running CanRequest() at the users (which I suggested to remove in some of previous comments). Not to break them we really need to keep L308 for non cors_enabled\u003d\u003dtrue cases. I just noticed this, but you are already doing the right thing there :)\n- Currently, ResourceFetcher/ResourceLoader never handles \"same-origin\" directly (DocumentThreadableLoader may handle it), so no worry about that.\n\nSo, I think it\u0027s right to use kFailed here for now.",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9d76345d_f5904808",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 338,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "is ResourceLoader:: needed here?",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "a7febc51_9ef07ab6",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 14
+      },
+      "lineNbr": 340,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "fix indentation plz",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af98e04b_a8256e2f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "Determine -\u003e Determines\n\nPeriod at the end",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5da8d6c1_157a0b80",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.h",
+        "patchSetId": 14
+      },
+      "lineNbr": 131,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "Period at the end",
+      "revId": "91e5159af9b0618fb68eeadfae36bfd850c9432b",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}

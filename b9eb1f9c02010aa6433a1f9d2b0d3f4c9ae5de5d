@@ -245,6 +245,24 @@
       "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "d09e845b_0dc69475",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 6
+      },
+      "lineNbr": 415,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "I was partially wrong in this comment. See my reply to another thread. Thanks!",
+      "parentUuid": "b354b62a_322127af",
+      "revId": "b9eb1f9c02010aa6433a1f9d2b0d3f4c9ae5de5d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }

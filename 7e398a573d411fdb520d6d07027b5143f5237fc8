@@ -105,6 +105,24 @@
       "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0bb1abb9_52108958",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/ResourceLoader.cpp",
+        "patchSetId": 5
+      },
+      "lineNbr": 396,
+      "author": {
+        "id": 1002864
+      },
+      "writtenOn": "2017-06-21T07:30:45Z",
+      "side": 1,
+      "message": "We run CanAccessResponse() only when not fetched by SW because SW performs the CORS by itself.\n\nYou can see that ImageResource::IsAccessAllowed() and ScriptResource::CalculateAccessControlStatus() are looking at the response\u0027s type to see that it\u0027s not opaque which they shouldn\u0027t use. This is a result of CORS computation inside SW.\n\nI think Resource::IsEligibleForIntegrityCheck() should also see it. Maybe just a bug?",
+      "parentUuid": "cd4112e9_a170cdc4",
+      "revId": "7e398a573d411fdb520d6d07027b5143f5237fc8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
