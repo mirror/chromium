@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "ec121635_f77e9d4f",
+        "filename": "chrome/browser/profiles/profile_avatar_icon_util_unittest.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 116,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T17:16:34Z",
+      "side": 1,
+      "message": "I would even consider inlining these, so they\u0027ll show up in the failure message. And with clang formatting, it might not even look too horrible :) Up to you though.",
+      "range": {
+        "startLine": 116,
+        "startChar": 12,
+        "endLine": 116,
+        "endChar": 18
+      },
+      "revId": "8e96dca813a4636216f1f6cee958eac226d03686",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
