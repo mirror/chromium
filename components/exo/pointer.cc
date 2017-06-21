@@ -71,7 +71,8 @@ bool SameLocation(const ui::LocatedEvent* event, const gfx::PointF& location) {
 // Pointer, public:
 
 Pointer::Pointer(PointerDelegate* delegate)
-    : delegate_(delegate),
+    : SurfaceTreeHost(nullptr),
+      delegate_(delegate),
       cursor_(ui::CursorType::kNull),
       cursor_capture_source_id_(base::UnguessableToken::Create()),
       cursor_capture_weak_ptr_factory_(this) {
@@ -83,11 +84,9 @@ Pointer::Pointer(PointerDelegate* delegate)
 
 Pointer::~Pointer() {
   delegate_->OnPointerDestroying(this);
-  if (surface_)
-    surface_->RemoveSurfaceObserver(this);
-  if (focus_) {
-    focus_->RemoveSurfaceObserver(this);
-    focus_->UnregisterCursorProvider(this);
+  if (focus_surface_) {
+    focus_surface_->RemoveSurfaceObserver(this);
+    focus_surface_->UnregisterCursorProvider(this);
   }
   auto* helper = WMHelper::GetInstance();
   helper->RemoveDisplayConfigurationObserver(this);
@@ -97,7 +96,7 @@ Pointer::~Pointer() {
 
 void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
   // Early out if the pointer doesn't have a surface in focus.
-  if (!focus_)
+  if (!focus_surface_)
     return;
 
   // This is used to avoid unnecessary cursor changes.
@@ -124,8 +123,9 @@ void Pointer::SetCursor(Surface* surface, const gfx::Point& hotspot) {
     return;
   }
 
-  // If |surface_| is set then asynchronously capture a snapshot of cursor,
-  // otherwise cancel pending capture and immediately set the cursor to "none".
+  // If |SurfaceTreeHost::surface_| is set then asynchronously capture a
+  // snapshot of cursor, otherwise cancel pending capture and immediately set
+  // the cursor to "none".
   if (surface_) {
     CaptureCursor(hotspot);
   } else {
@@ -140,6 +140,17 @@ gfx::NativeCursor Pointer::GetCursor() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+// SurfaceTreeHostDelegate overrides:
+
+void Pointer::OnSurfaceTreeCommitted() {
+  // Capture new cursor to reflect result of commit.
+  if (focus_surface_)
+    CaptureCursor(hotspot_);
+}
+
+void Pointer::OnSurfaceDetached() {}
+
+////////////////////////////////////////////////////////////////////////////////
 // ui::EventHandler overrides:
 
 void Pointer::OnMouseEvent(ui::MouseEvent* event) {
@@ -147,15 +158,15 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
 
   // If target is different than the current pointer focus then we need to
   // generate enter and leave events.
-  if (target != focus_) {
+  if (target != focus_surface_) {
     // First generate a leave event if we currently have a target in focus.
-    if (focus_) {
-      delegate_->OnPointerLeave(focus_);
-      focus_->RemoveSurfaceObserver(this);
+    if (focus_surface_) {
+      delegate_->OnPointerLeave(focus_surface_);
+      focus_surface_->RemoveSurfaceObserver(this);
       // Require SetCursor() to be called and cursor to be re-defined in
       // response to each OnPointerEnter() call.
-      focus_->UnregisterCursorProvider(this);
-      focus_ = nullptr;
+      focus_surface_->UnregisterCursorProvider(this);
+      focus_surface_ = nullptr;
       cursor_ = ui::CursorType::kNull;
       cursor_capture_weak_ptr_factory_.InvalidateWeakPtrs();
     }
@@ -164,14 +175,14 @@ void Pointer::OnMouseEvent(ui::MouseEvent* event) {
       delegate_->OnPointerEnter(target, event->location_f(),
                                 event->button_flags());
       location_ = event->location_f();
-      focus_ = target;
-      focus_->AddSurfaceObserver(this);
-      focus_->RegisterCursorProvider(this);
+      focus_surface_ = target;
+      focus_surface_->AddSurfaceObserver(this);
+      focus_surface_->RegisterCursorProvider(this);
     }
     delegate_->OnPointerFrame();
   }
 
-  if (!focus_)
+  if (!focus_surface_)
     return;
 
   if (event->IsMouseEvent() && event->type() != ui::ET_MOUSE_EXITED) {
@@ -256,12 +267,12 @@ void Pointer::OnScrollEvent(ui::ScrollEvent* event) {
 // WMHelper::CursorObserver overrides:
 
 void Pointer::OnCursorSetChanged(ui::CursorSetType cursor_set) {
-  if (focus_)
+  if (focus_surface_)
     UpdateCursor();
 }
 
 void Pointer::OnCursorDisplayChanged(const display::Display& display) {
-  if (focus_)
+  if (focus_surface_)
     UpdateCursor();
 }
 
@@ -273,31 +284,15 @@ void Pointer::OnDisplayConfigurationChanged() {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-// SurfaceDelegate overrides:
-
-void Pointer::OnSurfaceCommit() {
-  surface_->CommitSurfaceHierarchy();
-
-  // Capture new cursor to reflect result of commit.
-  if (focus_)
-    CaptureCursor(hotspot_);
-}
-
-bool Pointer::IsSurfaceSynchronized() const {
-  // A pointer surface is always desynchronized.
-  return false;
-}
-
-////////////////////////////////////////////////////////////////////////////////
-// SurfaceObserver overrides:
+// SurfaceTreeHostDelegate overrides:
 
 void Pointer::OnSurfaceDestroying(Surface* surface) {
-  DCHECK(surface == surface_ || surface == focus_);
-  if (surface == surface_)
-    surface_ = nullptr;
-  if (surface == focus_)
-    focus_ = nullptr;
-  surface->RemoveSurfaceObserver(this);
+  if (surface == focus_surface_) {
+    focus_surface_ = nullptr;
+    surface->RemoveSurfaceObserver(this);
+    return;
+  }
+  SurfaceTreeHost::OnSurfaceDestroying(surface);
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -314,28 +309,25 @@ Surface* Pointer::GetEffectiveTargetForEvent(ui::Event* event) const {
 
 void Pointer::UpdatePointerSurface(Surface* surface) {
   if (surface_) {
-    surface_->window()->SetTransform(gfx::Transform());
-    if (surface_->window()->parent())
-      surface_->window()->parent()->RemoveChild(surface_->window());
-    surface_->SetSurfaceDelegate(nullptr);
-    surface_->RemoveSurfaceObserver(this);
+    window_->SetTransform(gfx::Transform());
+    if (window_->parent())
+      window_->parent()->RemoveChild(window_.get());
+    DetachSurface();
   }
-  surface_ = surface;
-  if (surface_) {
-    surface_->SetSurfaceDelegate(this);
-    surface_->AddSurfaceObserver(this);
+  if (surface) {
+    AttachSurface(surface);
     // Note: Surface window needs to be added to the tree so we can take a
     // snapshot. Where in the tree is not important but we might as well use
     // the cursor container.
     WMHelper::GetInstance()
         ->GetPrimaryDisplayContainer(ash::kShellWindowId_MouseCursorContainer)
-        ->AddChild(surface_->window());
+        ->AddChild(window_.get());
   }
 }
 
 void Pointer::CaptureCursor(const gfx::Point& hotspot) {
   DCHECK(surface_);
-  DCHECK(focus_);
+  DCHECK(focus_surface_);
 
   // Surface size is in DIPs, while layer size is in pseudo-DIP units that
   // depend on the DSF of the display mode. Scale the layer to capture the
@@ -345,7 +337,7 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
   auto* helper = WMHelper::GetInstance();
   float scale = helper->GetDisplayInfo(display.id()).GetEffectiveUIScale() *
                 kCursorCaptureScale / display.device_scale_factor();
-  surface_->window()->SetTransform(gfx::GetScaleTransform(gfx::Point(), scale));
+  window_->SetTransform(gfx::GetScaleTransform(gfx::Point(), scale));
 
   std::unique_ptr<cc::CopyOutputRequest> request =
       cc::CopyOutputRequest::CreateBitmapRequest(
@@ -353,12 +345,12 @@ void Pointer::CaptureCursor(const gfx::Point& hotspot) {
                      cursor_capture_weak_ptr_factory_.GetWeakPtr(), hotspot));
 
   request->set_source(cursor_capture_source_id_);
-  surface_->window()->layer()->RequestCopyOfOutput(std::move(request));
+  window_->layer()->RequestCopyOfOutput(std::move(request));
 }
 
 void Pointer::OnCursorCaptured(const gfx::Point& hotspot,
                                std::unique_ptr<cc::CopyOutputResult> result) {
-  if (!focus_)
+  if (!focus_surface_)
     return;
 
   if (result->IsEmpty()) {
@@ -373,7 +365,7 @@ void Pointer::OnCursorCaptured(const gfx::Point& hotspot,
 }
 
 void Pointer::UpdateCursor() {
-  DCHECK(focus_);
+  DCHECK(focus_surface_);
 
   if (cursor_bitmap_.drawsNothing()) {
     cursor_ = ui::CursorType::kNone;
@@ -412,7 +404,7 @@ void Pointer::UpdateCursor() {
 #endif
   }
 
-  aura::Window* root_window = focus_->window()->GetRootWindow();
+  aura::Window* root_window = focus_surface_->window()->GetRootWindow();
   if (!root_window)
     return;
 
