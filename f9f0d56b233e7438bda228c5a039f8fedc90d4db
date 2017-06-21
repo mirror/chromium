@@ -36,6 +36,24 @@
     },
     {
       "key": {
+        "uuid": "40abdca4_7352a620",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 68,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T09:34:34Z",
+      "side": 1,
+      "message": "Ah thanks, done.",
+      "parentUuid": "83075bab_a524fdf2",
+      "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "56c16c91_b1d2e880",
         "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
         "patchSetId": 4
@@ -47,6 +65,24 @@
       "writtenOn": "2017-06-16T05:39:43Z",
       "side": 1,
       "message": "nit: should this be a OnceCallback?",
+      "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "b894ebe2_c605efc0",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.h",
+        "patchSetId": 4
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1002871
+      },
+      "writtenOn": "2017-06-21T09:34:34Z",
+      "side": 1,
+      "message": "I\u0027d love to but can\u0027t do this right now.\nin order to do that I will have to remove that \"use_once_callback \u003d false\" in the BUILD.gn. because this callback wraps the mojom generate callback, and I cannot mix (Easily) a Once and Repeating callback. I plan to make everything a once callback (and remove that switch) soon in a separate refactoring.",
+      "parentUuid": "56c16c91_b1d2e880",
       "revId": "f9f0d56b233e7438bda228c5a039f8fedc90d4db",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
