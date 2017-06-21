@@ -43,6 +43,7 @@ import org.chromium.base.metrics.RecordHistogram;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.AppHooks;
 import org.chromium.chrome.browser.ChromeApplication;
+import org.chromium.chrome.browser.download.items.OfflineContentAggregatorFactory;
 import org.chromium.chrome.browser.download.items.OfflineContentAggregatorNotificationBridgeUiFactory;
 import org.chromium.chrome.browser.init.BrowserParts;
 import org.chromium.chrome.browser.init.ChromeBrowserInitializer;
@@ -52,11 +53,11 @@ import org.chromium.chrome.browser.notifications.NotificationBuilderFactory;
 import org.chromium.chrome.browser.notifications.NotificationConstants;
 import org.chromium.chrome.browser.notifications.NotificationUmaTracker;
 import org.chromium.chrome.browser.notifications.channels.ChannelDefinitions;
-import org.chromium.chrome.browser.offlinepages.downloads.OfflinePageDownloadBridge;
 import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.util.IntentUtils;
 import org.chromium.components.offline_items_collection.ContentId;
 import org.chromium.components.offline_items_collection.LegacyHelpers;
+import org.chromium.components.offline_items_collection.OfflineContentProvider;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.content.browser.BrowserStartupController;
 
@@ -1240,7 +1241,9 @@ public class DownloadNotificationService extends Service {
                 } else if (ACTION_DOWNLOAD_OPEN.equals(intent.getAction())) {
                     ContentId id = getContentIdFromIntent(intent);
                     if (LegacyHelpers.isLegacyOfflinePage(id)) {
-                        OfflinePageDownloadBridge.openDownloadedPage(id);
+                        OfflineContentAggregatorFactory
+                                .forProfile(Profile.getLastUsedProfile().getOriginalProfile())
+                                .openItem(id);
                     } else if (id != null) {
                         OfflineContentAggregatorNotificationBridgeUiFactory.instance().openItem(id);
                     }
@@ -1305,8 +1308,33 @@ public class DownloadNotificationService extends Service {
      */
     DownloadServiceDelegate getServiceDelegate(ContentId id) {
         if (LegacyHelpers.isLegacyOfflinePage(id)) {
-            return OfflinePageDownloadBridge.getDownloadServiceDelegate();
+            return new DownloadServiceDelegate() {
+                @Override
+                public void resumeDownload(
+                        ContentId id, DownloadItem item, boolean hasUserGesture) {
+                    getOfflineContentProvider().resumeDownload(id, hasUserGesture);
+                }
+
+                @Override
+                public void pauseDownload(ContentId id, boolean isOffTheRecord) {
+                    getOfflineContentProvider().pauseDownload(id);
+                }
+
+                @Override
+                public void destroyServiceDelegate() {}
+
+                @Override
+                public void cancelDownload(ContentId id, boolean isOffTheRecord) {
+                    getOfflineContentProvider().cancelDownload(id);
+                }
+
+                private OfflineContentProvider getOfflineContentProvider() {
+                    return OfflineContentAggregatorFactory.forProfile(
+                            Profile.getLastUsedProfile().getOriginalProfile());
+                }
+            };
         }
+
         if (LegacyHelpers.isLegacyDownload(id)) {
             return DownloadManagerService.getDownloadManagerService();
         }

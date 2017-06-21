@@ -45,10 +45,10 @@ public final class OfflineItemBridge {
             String nameSpace, String id, String title, String description,
             @OfflineItemFilter int filter, boolean isTransient, long totalSizeBytes,
             boolean externallyRemoved, long creationTimeMs, long lastAccessedTimeMs,
-            boolean isOpenable, String pageUrl, String originalUrl, boolean isOffTheRecord,
-            @OfflineItemState int state, boolean isResumable, boolean allowMetered,
-            long receivedBytes, long progressValue, long progressMax,
-            @OfflineItemProgressUnit int progressUnit, long timeRemainingMs) {
+            boolean isOpenable, String filePath, String mimeType, String pageUrl,
+            String originalUrl, boolean isOffTheRecord, @OfflineItemState int state,
+            boolean isResumable, boolean allowMetered, long receivedBytes, long progressValue,
+            long progressMax, @OfflineItemProgressUnit int progressUnit, long timeRemainingMs) {
         OfflineItem item = new OfflineItem();
         item.id.namespace = nameSpace;
         item.id.id = id;
@@ -61,6 +61,8 @@ public final class OfflineItemBridge {
         item.creationTimeMs = creationTimeMs;
         item.lastAccessedTimeMs = lastAccessedTimeMs;
         item.isOpenable = isOpenable;
+        item.filePath = filePath;
+        item.mimeType = mimeType;
         item.pageUrl = pageUrl;
         item.originalUrl = originalUrl;
         item.isOffTheRecord = isOffTheRecord;

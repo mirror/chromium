@@ -123,6 +123,12 @@ struct OfflineItem {
   // Whether or not this item can be opened after it is done being downloaded.
   bool is_openable;
 
+  // The target file path for this offline item (if any).
+  std::string file_path;
+
+  // The mime type for this offline item.
+  std::string mime_type;
+
   // Request Metadata.
   // ---------------------------------------------------------------------------
   // The URL of the top level frame at the time the content was offlined.

@@ -14,7 +14,10 @@ import org.chromium.base.metrics.RecordUserAction;
 import org.chromium.chrome.R;
 import org.chromium.chrome.browser.download.DownloadNotificationService;
 import org.chromium.chrome.browser.download.DownloadUtils;
+import org.chromium.chrome.browser.download.items.OfflineContentAggregatorFactory;
+import org.chromium.chrome.browser.profiles.Profile;
 import org.chromium.chrome.browser.widget.DateDividedAdapter.TimedItem;
+import org.chromium.components.offline_items_collection.OfflineContentProvider;
 import org.chromium.components.offline_items_collection.OfflineItem;
 import org.chromium.components.offline_items_collection.OfflineItem.Progress;
 import org.chromium.components.offline_items_collection.OfflineItemFilter;
@@ -260,10 +263,17 @@ public class DownloadHistoryItemWrapper extends TimedItem {
         return mItem.state == OfflineItemState.PAUSED;
     }
 
+    OfflineContentProvider getOfflineContentProvider() {
+        Profile profile = mItem.isOffTheRecord
+                ? Profile.getLastUsedProfile().getOffTheRecordProfile()
+                : Profile.getLastUsedProfile().getOriginalProfile();
+        return OfflineContentAggregatorFactory.forProfile(profile);
+    }
+
     /** Called when the user wants to open the file. */
     void open() {
         if (isOfflinePage()) {
-            mBackendProvider.getOfflinePageBridge().openItem(getId(), mComponentName);
+            getOfflineContentProvider().openItem(mItem.id);
             recordOpenSuccess();
         } else {
             Context context = ContextUtils.getApplicationContext();
@@ -286,7 +296,7 @@ public class DownloadHistoryItemWrapper extends TimedItem {
     /** Called when the user tries to cancel downloading the file. */
     void cancel() {
         if (isOfflinePage()) {
-            mBackendProvider.getOfflinePageBridge().cancelDownload(mItem.id.id);
+            getOfflineContentProvider().cancelDownload(mItem.id);
         } else {
             mBackendProvider.getDownloadDelegate().broadcastDownloadAction(
                     mItem, DownloadNotificationService.ACTION_DOWNLOAD_CANCEL);
@@ -296,7 +306,7 @@ public class DownloadHistoryItemWrapper extends TimedItem {
     /** Called when the user tries to pause downloading the file. */
     void pause() {
         if (isOfflinePage()) {
-            mBackendProvider.getOfflinePageBridge().pauseDownload(mItem.id.id);
+            getOfflineContentProvider().pauseDownload(mItem.id);
         } else {
             mBackendProvider.getDownloadDelegate().broadcastDownloadAction(
                     mItem, DownloadNotificationService.ACTION_DOWNLOAD_PAUSE);
@@ -306,7 +316,7 @@ public class DownloadHistoryItemWrapper extends TimedItem {
     /** Called when the user tries to resume downloading the file. */
     void resume() {
         if (isOfflinePage()) {
-            mBackendProvider.getOfflinePageBridge().resumeDownload(mItem.id.id);
+            getOfflineContentProvider().resumeDownload(mItem.id, true);
         } else {
             mBackendProvider.getDownloadDelegate().broadcastDownloadAction(
                     mItem, DownloadNotificationService.ACTION_DOWNLOAD_RESUME);
@@ -321,7 +331,7 @@ public class DownloadHistoryItemWrapper extends TimedItem {
      */
     boolean remove() {
         if (isOfflinePage()) {
-            mBackendProvider.getOfflinePageBridge().deleteItem(getId());
+            getOfflineContentProvider().removeItem(mItem.id);
             return true;
         } else {
             // Tell the DownloadManager to remove the file from history.
