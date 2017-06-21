@@ -2,6 +2,23 @@
   "comments": [
     {
       "key": {
+        "uuid": "0763b1ab_ba6d2da8",
+        "filename": "components/offline_pages/core/offline_page_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T17:28:42Z",
+      "side": 1,
+      "message": "Not a required change, as I\u0027m drawing a blank right now, but \"package\" is fairly Android-specific, while this code is ostensibly platform-independent.  Is there another name that might be generalizable?",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe2d37c9_8c36c4a0",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 6
@@ -49,6 +66,23 @@
       "side": 1,
       "message": "Found this:\nYou can not use the ALTER TABLE statement to drop a column in a table. Instead you will need to rename the table, create a new table, and copy the data into the new table.\n\nhttps://www.techonthenet.com/sqlite/tables/alter_table.php\n\nWhich is probably the reason for the original approach (As we were trying to drop some fields).",
       "parentUuid": "a1e868dc_477047e0",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "2ec8f3c7_ea7108b8",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1002700
+      },
+      "writtenOn": "2017-06-21T17:28:42Z",
+      "side": 1,
+      "message": "I don\u0027t think the upgrade sentence makes sense in this list, which just lists changes.  Perhaps a bullet like:\n* In M58-M60 there were no schema changes.",
       "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
