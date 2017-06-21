@@ -2,6 +2,29 @@
   "comments": [
     {
       "key": {
+        "uuid": "563e9ffc_7f3d389c",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1491,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "Should I TRACE_EVENT for config changes too? Not sure why this one is traced.",
+      "range": {
+        "startLine": 1491,
+        "startChar": 45,
+        "endLine": 1491,
+        "endChar": 69
+      },
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "de4a7a1c_633fa49d",
         "filename": "media/blink/webmediaplayer_impl.cc",
         "patchSetId": 1
@@ -16,6 +39,24 @@
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c8e46576_d63d1c19",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1539,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "de4a7a1c_633fa49d",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -36,6 +77,24 @@
     },
     {
       "key": {
+        "uuid": "a955838d_60f1adea",
+        "filename": "media/blink/webmediaplayer_impl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 1548,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "84200f55_9278c5b6",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9a6434e0_afed204b",
         "filename": "media/mojo/clients/mojo_renderer.cc",
         "patchSetId": 1
@@ -47,6 +106,30 @@
       "writtenOn": "2017-06-21T21:53:11Z",
       "side": 1,
       "message": "I\u0027m not really comfortable with the use of type converters for this. It looks like most of the fields are fixed enums (which is good), but it\u0027s not clear to me if the decoder config code is robust against \"strange\" values. Specifically:\n- what if |samples_per_second| is negative? or 0?\n- what can |extra_data| contain?\n- is it possible for |codec_delay| to be unreasonably large?",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 288,
+        "endChar": 44
+      },
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "72808cbd_8bed9daa",
+        "filename": "media/mojo/clients/mojo_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "I\u0027ll make a separate CL to establish typemap. Will make this CL depend on that one. I think these type converters have been around for a long time, we just haven\u0027t switched over using a typemap.\n\nhttps://bugs.chromium.org/p/chromium/issues/detail?id\u003d611224",
+      "parentUuid": "9a6434e0_afed204b",
       "range": {
         "startLine": 288,
         "startChar": 6,
@@ -82,6 +165,30 @@
     },
     {
       "key": {
+        "uuid": "a1c398cf_149178de",
+        "filename": "media/mojo/clients/mojo_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "442700ed_6406df8b",
+      "range": {
+        "startLine": 297,
+        "startChar": 6,
+        "endLine": 297,
+        "endChar": 44
+      },
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "ea61b609_59fd1153",
         "filename": "media/remoting/rpc.proto",
         "patchSetId": 1
@@ -93,6 +200,24 @@
       "writtenOn": "2017-06-21T17:25:38Z",
       "side": 1,
       "message": "The remoting receiver gets notified from sender through RPC messages when audio/video config changes. We may not need add RPC messages to send this back again. When config changes, DemuxerStreamAdapter sends the RPC message to receiver at here: https://cs.chromium.org/chromium/src/media/remoting/demuxer_stream_adapter.cc?rcl\u003d84dc05fd513e3c4e7aa64f5dba954f8d0a641939\u0026l\u003d382\nOne possible way is to add a callback to notify the CourierRenderer and the |client_| when config changes. WDYT?",
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "15fbf28b_72e986ac",
+        "filename": "media/remoting/rpc.proto",
+        "patchSetId": 1
+      },
+      "lineNbr": 484,
+      "author": {
+        "id": 1129179
+      },
+      "writtenOn": "2017-06-21T23:43:32Z",
+      "side": 1,
+      "message": "We chatted and decided to stick with the current approach to keep things decoupled. The worry is that the demuxer stream\u0027s signal of a config change may not necessarily be synced with the renderer\u0027s observing that config change (though they\u0027re likely to be fairly close as currently implemented)",
+      "parentUuid": "ea61b609_59fd1153",
       "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
