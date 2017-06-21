@@ -7,6 +7,7 @@
 
 #include "base/compiler_specific.h"
 #include "base/macros.h"
+#include "base/timer/timer.h"
 #include "chrome/browser/autocomplete/chrome_autocomplete_scheme_classifier.h"
 #include "chrome/browser/bitmap_fetcher/bitmap_fetcher_service.h"
 #include "chrome/common/search/instant_types.h"
@@ -82,10 +83,14 @@ class ChromeOmniboxClient : public OmniboxClient {
   void OnBitmapFetched(const BitmapFetchedCallback& callback,
                        const SkBitmap& bitmap);
 
+  void StartServiceWorkerForURL(const GURL& url);
+
   ChromeOmniboxEditController* controller_;
   Profile* profile_;
   ChromeAutocompleteSchemeClassifier scheme_classifier_;
   BitmapFetcherService::RequestId request_id_;
+
+  base::OneShotTimer start_service_worker_timer_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromeOmniboxClient);
 };

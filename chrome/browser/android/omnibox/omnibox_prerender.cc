@@ -13,6 +13,8 @@
 #include "chrome/browser/profiles/profile_android.h"
 #include "components/omnibox/browser/autocomplete_match.h"
 #include "components/omnibox/browser/autocomplete_result.h"
+#include "content/public/browser/service_worker_context.h"
+#include "content/public/browser/storage_partition.h"
 #include "content/public/browser/web_contents.h"
 #include "jni/OmniboxPrerender_jni.h"
 #include "url/gurl.h"
@@ -22,8 +24,7 @@ using predictors::AutocompleteActionPredictor;
 using predictors::AutocompleteActionPredictorFactory;
 
 OmniboxPrerender::OmniboxPrerender(JNIEnv* env, jobject obj)
-    : weak_java_omnibox_(env, obj) {
-}
+    : weak_java_omnibox_(env, obj), weak_ptr_factory_(this) {}
 
 OmniboxPrerender::~OmniboxPrerender() {
 }
@@ -101,6 +102,7 @@ void OmniboxPrerender::PrerenderMaybe(
       action_predictor->RecommendAction(url_string, *default_match);
 
   GURL current_url = GURL(current_url_string);
+
   switch (recommended_action) {
     case AutocompleteActionPredictor::ACTION_PRERENDER:
       // Ask for prerendering if the destination URL is different than the
@@ -121,6 +123,9 @@ void OmniboxPrerender::PrerenderMaybe(
       NOTREACHED();
       break;
   }
+  if (default_match->destination_url != current_url) {
+    StartServiceWorkerForURL(profile, default_match->destination_url);
+  }
 }
 
 void OmniboxPrerender::DoPrerender(const AutocompleteMatch& match,
@@ -138,4 +143,26 @@ void OmniboxPrerender::DoPrerender(const AutocompleteMatch& match,
           match.destination_url,
           web_contents->GetController().GetDefaultSessionStorageNamespace(),
           container_bounds.size());
+}
+
+void OmniboxPrerender::StartServiceWorkerForURL(Profile* profile,
+                                                const GURL& url) {
+  if (is_starting_service_worker_)
+    return;
+  content::StoragePartition* partition =
+      content::BrowserContext::GetStoragePartitionForSite(profile, url);
+  if (!partition)
+    return;
+  content::ServiceWorkerContext* context = partition->GetServiceWorkerContext();
+  if (!context)
+    return;
+  is_starting_service_worker_ = true;
+  context->StartServiceWorkerForNavigationHint(
+      url, base::Bind(&OmniboxPrerender::OnServiceWorkerCallback,
+                      weak_ptr_factory_.GetWeakPtr()));
+}
+
+void OmniboxPrerender::OnServiceWorkerCallback(
+    content::StartServiceWorkerForNavigationHintResult) {
+  is_starting_service_worker_ = false;
 }
