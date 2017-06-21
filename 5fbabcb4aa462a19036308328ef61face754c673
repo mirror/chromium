@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "a1b92517_778d5c60",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 3
+      },
+      "lineNbr": 294,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-06-21T20:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2043a0ab_5d22c879",
+      "range": {
+        "startLine": 293,
+        "startChar": 8,
+        "endLine": 294,
+        "endChar": 51
+      },
+      "revId": "5fbabcb4aa462a19036308328ef61face754c673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "5f508e3c_76619842",
         "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
         "patchSetId": 3
@@ -45,6 +69,30 @@
       "revId": "5fbabcb4aa462a19036308328ef61face754c673",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "c2c696f9_cfb14bbe",
+        "filename": "third_party/WebKit/Source/modules/sensor/SensorProxy.cpp",
+        "patchSetId": 3
+      },
+      "lineNbr": 299,
+      "author": {
+        "id": 1115688
+      },
+      "writtenOn": "2017-06-21T20:05:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5f508e3c_76619842",
+      "range": {
+        "startLine": 295,
+        "startChar": 0,
+        "endLine": 299,
+        "endChar": 3
+      },
+      "revId": "5fbabcb4aa462a19036308328ef61face754c673",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
