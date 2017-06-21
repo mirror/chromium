@@ -25,6 +25,30 @@
     },
     {
       "key": {
+        "uuid": "0e6a761c_cbe47780",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/resources/tex-image-and-sub-image-image-bitmap-utils-resize.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-21T21:05:55Z",
+      "side": 1,
+      "message": "The problem was that we had gl.colorMask(1, 1, 1, 0), which was hiding alpha values from output. This is now fixed.",
+      "parentUuid": "57665f59_bb862c34",
+      "range": {
+        "startLine": 7,
+        "startChar": 4,
+        "endLine": 7,
+        "endChar": 18
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "07ed9b1c_183bfccb",
         "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/resources/tex-image-and-sub-image-image-bitmap-utils-resize.js",
         "patchSetId": 1
@@ -36,6 +60,30 @@
       "writtenOn": "2017-06-21T19:06:17Z",
       "side": 1,
       "message": "10 is a pretty big tolerance.  Do you have an explanation for it.  Should we perhaps file a crbug to follow-up on this?",
+      "range": {
+        "startLine": 80,
+        "startChar": 46,
+        "endLine": 80,
+        "endChar": 48
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ebd792a_65841baf",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/resources/tex-image-and-sub-image-image-bitmap-utils-resize.js",
+        "patchSetId": 1
+      },
+      "lineNbr": 80,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-21T21:05:55Z",
+      "side": 1,
+      "message": "As we discussed earlier this is due to scaling error in Skia API. A bug has been filed for this (https://bugs.chromium.org/p/skia/issues/detail?id\u003d6775). I will file another canvas bug when this CL was landed to fix this later after Skia fixed their scaling algorithm.",
+      "parentUuid": "07ed9b1c_183bfccb",
       "range": {
         "startLine": 80,
         "startChar": 46,
@@ -71,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "e6691b71_f0ec3d99",
+        "filename": "third_party/WebKit/LayoutTests/fast/canvas/webgl/texImage-imageBitmap-from-blob-resize.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 34,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-21T21:05:55Z",
+      "side": 1,
+      "message": "Right. I fixed them for this CL. Should I file a general bug to take a look at all of canvas layout tests for \u003e80 column lines?",
+      "parentUuid": "6b115b66_df78adec",
+      "range": {
+        "startLine": 34,
+        "startChar": 38,
+        "endLine": 34,
+        "endChar": 49
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "0704ce5d_2f85f986",
         "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
         "patchSetId": 1
@@ -82,6 +154,30 @@
       "writtenOn": "2017-06-21T19:06:17Z",
       "side": 1,
       "message": "The default should be kSRGBCanvasColorSpace if color correct rendering is enabled.",
+      "range": {
+        "startLine": 86,
+        "startChar": 54,
+        "endLine": 86,
+        "endChar": 77
+      },
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "af31de47_ad243454",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 86,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-21T21:05:55Z",
+      "side": 1,
+      "message": "Correct, but this branch is checking for !parsed_options.color_canvas_extensions_enabled. The case where color correct rendering is enabled is addressed in the else statement.",
+      "parentUuid": "0704ce5d_2f85f986",
       "range": {
         "startLine": 86,
         "startChar": 54,
@@ -108,6 +204,24 @@
       "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "5aaa87f5_bab5798e",
+        "filename": "third_party/WebKit/Source/core/imagebitmap/ImageBitmap.cpp",
+        "patchSetId": 1
+      },
+      "lineNbr": 295,
+      "author": {
+        "id": 1203794
+      },
+      "writtenOn": "2017-06-21T21:05:55Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "44c66446_39016967",
+      "revId": "876dba13f9e1e4175c0f9b4e416fbe5fee0f1bb6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
