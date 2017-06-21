@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "fe2d37c9_8c36c4a0",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1115887
+      },
+      "writtenOn": "2017-06-21T00:04:14Z",
+      "side": 1,
+      "message": "Is there a reason we don\u0027t just do:\nALTER TABLE OFFLINE_PAGES_TABLE_NAME ADD COLUMN origin_package VARCHAR NOT NULL DEFAULT \u0027\u0027;\n?",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
