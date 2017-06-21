@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "249caad0_0e6330d5",
+        "filename": "ui/app_list/presenter/test/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a31ed5ef_964946af",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "fc220a6f_993272fd",
         "filename": "ui/app_list/presenter/test/run_all_unittests.cc",
         "patchSetId": 24
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T18:07:17Z",
       "side": 1,
       "message": "Should this happen before the TestSuite is created/initialized?",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "45df7e6a_91a9bd61",
+        "filename": "ui/app_list/presenter/test/run_all_unittests.cc",
+        "patchSetId": 24
+      },
+      "lineNbr": 48,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "I would imagine as long as the constructor of the TestSuite doesn\u0027t use Mojo then it doesn\u0027t matter? It seems like most of the existing calls are in this order:\n1. Create TestSuite object.\n2. Call mojo::edk::Init().\n3. Run tests.\n\nI\u0027d be happy to call mojo::edk::Init() first though if you feel that\u0027s better.",
+      "parentUuid": "fc220a6f_993272fd",
       "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
@@ -53,6 +89,24 @@
     },
     {
       "key": {
+        "uuid": "01a9d889_02474899",
+        "filename": "ui/app_list/test/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 6,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5ed6d149_f92465c3",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "9c62c8a8_ce87b74b",
         "filename": "ui/compositor/DEPS",
         "patchSetId": 24
@@ -67,6 +121,24 @@
       "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ba4131db_da3ec30e",
+        "filename": "ui/compositor/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "9c62c8a8_ce87b74b",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     },
     {
       "key": {
@@ -87,6 +159,24 @@
     },
     {
       "key": {
+        "uuid": "106ab0c7_fd4ea697",
+        "filename": "ui/views/BUILD.gn",
+        "patchSetId": 24
+      },
+      "lineNbr": 1060,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "Oh, nope. Done.",
+      "parentUuid": "03f29c43_106f7e02",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "7b8ed62b_df56a0a5",
         "filename": "ui/views/DEPS",
         "patchSetId": 24
@@ -101,6 +191,24 @@
       "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "aa9f650f_72e8e498",
+        "filename": "ui/views/DEPS",
+        "patchSetId": 24
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T18:44:28Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7b8ed62b_df56a0a5",
+      "revId": "43a0cd1fb1102a310a643185b9d403415ddad3bb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
