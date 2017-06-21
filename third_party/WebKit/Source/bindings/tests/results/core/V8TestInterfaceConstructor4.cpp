@@ -69,7 +69,7 @@ namespace TestInterfaceConstructor4V8Internal {
 
 static void constructor1(const v8::FunctionCallbackInfo<v8::Value>& info) {
   TestInterfaceConstructor4* testInterface4Arg;
-  testInterface4Arg = V8TestInterfaceConstructor4::toImplWithTypeCheck(info.GetIsolate(), info[0]);
+  testInterface4Arg = V8TestInterfaceConstructor4::ToImplWithTypeCheck(info.GetIsolate(), info[0]);
   if (!testInterface4Arg) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToConstruct("TestInterfaceConstructor4", "parameter 1 is not of type 'TestInterfaceConstructor4'."));
 
@@ -160,12 +160,12 @@ v8::Local<v8::Object> V8TestInterfaceConstructor4::findInstanceInPrototypeChain(
   return V8PerIsolateData::From(isolate)->FindInstanceInPrototypeChain(&wrapperTypeInfo, v8Value);
 }
 
-TestInterfaceConstructor4* V8TestInterfaceConstructor4::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
-  return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+TestInterfaceConstructor4* V8TestInterfaceConstructor4::ToImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  return hasInstance(value, isolate) ? ToImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
 TestInterfaceConstructor4* NativeValueTraits<TestInterfaceConstructor4>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  TestInterfaceConstructor4* nativeValue = V8TestInterfaceConstructor4::toImplWithTypeCheck(isolate, value);
+  TestInterfaceConstructor4* nativeValue = V8TestInterfaceConstructor4::ToImplWithTypeCheck(isolate, value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
         "TestInterfaceConstructor4"));

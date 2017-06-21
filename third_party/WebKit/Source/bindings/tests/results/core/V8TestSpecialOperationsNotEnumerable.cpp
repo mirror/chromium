@@ -66,7 +66,7 @@ static_assert(
 namespace TestSpecialOperationsNotEnumerableV8Internal {
 
 static void namedPropertyGetter(const AtomicString& name, const v8::PropertyCallbackInfo<v8::Value>& info) {
-  TestSpecialOperationsNotEnumerable* impl = V8TestSpecialOperationsNotEnumerable::toImpl(info.Holder());
+  TestSpecialOperationsNotEnumerable* impl = V8TestSpecialOperationsNotEnumerable::ToImpl(info.Holder());
   String result = impl->AnonymousNamedGetter(name);
   if (result.IsNull())
     return;
@@ -74,7 +74,7 @@ static void namedPropertyGetter(const AtomicString& name, const v8::PropertyCall
 }
 
 static void indexedPropertyGetter(uint32_t index, const v8::PropertyCallbackInfo<v8::Value>& info) {
-  TestSpecialOperationsNotEnumerable* impl = V8TestSpecialOperationsNotEnumerable::toImpl(info.Holder());
+  TestSpecialOperationsNotEnumerable* impl = V8TestSpecialOperationsNotEnumerable::ToImpl(info.Holder());
 
   // We assume that all the implementations support length() method, although
   // the spec doesn't require that length() must exist.  It's okay that
@@ -134,12 +134,12 @@ v8::Local<v8::Object> V8TestSpecialOperationsNotEnumerable::findInstanceInProtot
   return V8PerIsolateData::From(isolate)->FindInstanceInPrototypeChain(&wrapperTypeInfo, v8Value);
 }
 
-TestSpecialOperationsNotEnumerable* V8TestSpecialOperationsNotEnumerable::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
-  return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+TestSpecialOperationsNotEnumerable* V8TestSpecialOperationsNotEnumerable::ToImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  return hasInstance(value, isolate) ? ToImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
 TestSpecialOperationsNotEnumerable* NativeValueTraits<TestSpecialOperationsNotEnumerable>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  TestSpecialOperationsNotEnumerable* nativeValue = V8TestSpecialOperationsNotEnumerable::toImplWithTypeCheck(isolate, value);
+  TestSpecialOperationsNotEnumerable* nativeValue = V8TestSpecialOperationsNotEnumerable::ToImplWithTypeCheck(isolate, value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
         "TestSpecialOperationsNotEnumerable"));

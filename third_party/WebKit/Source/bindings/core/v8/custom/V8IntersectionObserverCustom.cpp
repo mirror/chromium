@@ -42,7 +42,7 @@ void V8IntersectionObserver::constructorCustom(
   }
 
   IntersectionObserverInit intersection_observer_init;
-  V8IntersectionObserverInit::toImpl(
+  V8IntersectionObserverInit::ToImpl(
       info.GetIsolate(), info[1], intersection_observer_init, exception_state);
   if (exception_state.HadException())
     return;

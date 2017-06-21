@@ -381,7 +381,7 @@ bool SerializedScriptValue::ExtractTransferables(
     }
     // Validation of Objects implementing an interface, per WebIDL spec 4.1.15.
     if (V8MessagePort::hasInstance(transferable_object, isolate)) {
-      MessagePort* port = V8MessagePort::toImpl(
+      MessagePort* port = V8MessagePort::ToImpl(
           v8::Local<v8::Object>::Cast(transferable_object));
       // Check for duplicate MessagePorts.
       if (transferables.message_ports.Contains(port)) {
@@ -392,7 +392,7 @@ bool SerializedScriptValue::ExtractTransferables(
       }
       transferables.message_ports.push_back(port);
     } else if (transferable_object->IsArrayBuffer()) {
-      DOMArrayBuffer* array_buffer = V8ArrayBuffer::toImpl(
+      DOMArrayBuffer* array_buffer = V8ArrayBuffer::ToImpl(
           v8::Local<v8::Object>::Cast(transferable_object));
       if (transferables.array_buffers.Contains(array_buffer)) {
         exception_state.ThrowDOMException(
@@ -402,7 +402,7 @@ bool SerializedScriptValue::ExtractTransferables(
       }
       transferables.array_buffers.push_back(array_buffer);
     } else if (transferable_object->IsSharedArrayBuffer()) {
-      DOMSharedArrayBuffer* shared_array_buffer = V8SharedArrayBuffer::toImpl(
+      DOMSharedArrayBuffer* shared_array_buffer = V8SharedArrayBuffer::ToImpl(
           v8::Local<v8::Object>::Cast(transferable_object));
       if (transferables.array_buffers.Contains(shared_array_buffer)) {
         exception_state.ThrowDOMException(
@@ -413,7 +413,7 @@ bool SerializedScriptValue::ExtractTransferables(
       }
       transferables.array_buffers.push_back(shared_array_buffer);
     } else if (V8ImageBitmap::hasInstance(transferable_object, isolate)) {
-      ImageBitmap* image_bitmap = V8ImageBitmap::toImpl(
+      ImageBitmap* image_bitmap = V8ImageBitmap::ToImpl(
           v8::Local<v8::Object>::Cast(transferable_object));
       if (transferables.image_bitmaps.Contains(image_bitmap)) {
         exception_state.ThrowDOMException(
@@ -423,7 +423,7 @@ bool SerializedScriptValue::ExtractTransferables(
       }
       transferables.image_bitmaps.push_back(image_bitmap);
     } else if (V8OffscreenCanvas::hasInstance(transferable_object, isolate)) {
-      OffscreenCanvas* offscreen_canvas = V8OffscreenCanvas::toImpl(
+      OffscreenCanvas* offscreen_canvas = V8OffscreenCanvas::ToImpl(
           v8::Local<v8::Object>::Cast(transferable_object));
       if (transferables.offscreen_canvases.Contains(offscreen_canvas)) {
         exception_state.ThrowDOMException(

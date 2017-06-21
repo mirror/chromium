@@ -72,7 +72,7 @@ namespace TestCallbackFunctionsV8Internal {
 static void voidCallbackFunctionAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(holder);
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
 
   V8SetReturnValueFast(info, impl->voidCallbackFunctionAttribute(), impl);
 }
@@ -84,7 +84,7 @@ static void voidCallbackFunctionAttributeAttributeSetter(v8::Local<v8::Value> v8
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
 
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(holder);
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
 
   // Prepare the value to be set.
   VoidCallbackFunction* cppValue = VoidCallbackFunction::Create(ScriptState::Current(info.GetIsolate()), v8Value);
@@ -95,7 +95,7 @@ static void voidCallbackFunctionAttributeAttributeSetter(v8::Local<v8::Value> v8
 static void anyCallbackFunctionOptionalAnyArgAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(holder);
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
 
   V8SetReturnValueFast(info, impl->anyCallbackFunctionOptionalAnyArgAttribute(), impl);
 }
@@ -107,7 +107,7 @@ static void anyCallbackFunctionOptionalAnyArgAttributeAttributeSetter(v8::Local<
   v8::Local<v8::Object> holder = info.Holder();
   ALLOW_UNUSED_LOCAL(holder);
 
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(holder);
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
 
   // Prepare the value to be set.
   AnyCallbackFunctionOptionalAnyArg* cppValue = AnyCallbackFunctionOptionalAnyArg::Create(ScriptState::Current(info.GetIsolate()), v8Value);
@@ -118,25 +118,25 @@ static void anyCallbackFunctionOptionalAnyArgAttributeAttributeSetter(v8::Local<
 static void customElementsCallbacksReadonlyAttributeAttributeGetter(const v8::FunctionCallbackInfo<v8::Value>& info) {
   v8::Local<v8::Object> holder = info.Holder();
 
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(holder);
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(holder);
 
   V8SetReturnValueInt(info, impl->customElementsCallbacksReadonlyAttribute());
 }
 
 static void returnCallbackFunctionMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   V8SetReturnValue(info, impl->returnCallbackFunctionMethod());
 }
 
 static void returnCallbackFunctionMethod2Method(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   V8SetReturnValue(info, impl->returnCallbackFunctionMethod2());
 }
 
 static void voidMethodCallbackFunctionInArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   if (UNLIKELY(info.Length() < 1)) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToExecute("voidMethodCallbackFunctionInArg", "TestCallbackFunctions", ExceptionMessages::NotEnoughArguments(1, info.Length())));
@@ -155,7 +155,7 @@ static void voidMethodCallbackFunctionInArgMethod(const v8::FunctionCallbackInfo
 }
 
 static void voidMethodCallbackFunctionInArg2Method(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   if (UNLIKELY(info.Length() < 1)) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToExecute("voidMethodCallbackFunctionInArg2", "TestCallbackFunctions", ExceptionMessages::NotEnoughArguments(1, info.Length())));
@@ -174,7 +174,7 @@ static void voidMethodCallbackFunctionInArg2Method(const v8::FunctionCallbackInf
 }
 
 static void voidMethodCallbackFunctionWithReturnValueInArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   if (UNLIKELY(info.Length() < 1)) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToExecute("voidMethodCallbackFunctionWithReturnValueInArg", "TestCallbackFunctions", ExceptionMessages::NotEnoughArguments(1, info.Length())));
@@ -193,7 +193,7 @@ static void voidMethodCallbackFunctionWithReturnValueInArgMethod(const v8::Funct
 }
 
 static void voidMethodOptionalCallbackFunctionInArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   VoidCallbackFunction* voidCallbackFunctionArg;
   int numArgsPassed = info.Length();
@@ -217,7 +217,7 @@ static void voidMethodOptionalCallbackFunctionInArgMethod(const v8::FunctionCall
 }
 
 static void voidMethodNullableCallbackFunctionInArgMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   if (UNLIKELY(info.Length() < 1)) {
     V8ThrowException::ThrowTypeError(info.GetIsolate(), ExceptionMessages::FailedToExecute("voidMethodNullableCallbackFunctionInArg", "TestCallbackFunctions", ExceptionMessages::NotEnoughArguments(1, info.Length())));
@@ -236,7 +236,7 @@ static void voidMethodNullableCallbackFunctionInArgMethod(const v8::FunctionCall
 }
 
 static void customElementCallbacksMethodMethod(const v8::FunctionCallbackInfo<v8::Value>& info) {
-  TestCallbackFunctions* impl = V8TestCallbackFunctions::toImpl(info.Holder());
+  TestCallbackFunctions* impl = V8TestCallbackFunctions::ToImpl(info.Holder());
 
   V0CustomElementProcessingStack::CallbackDeliveryScope deliveryScope;
 
@@ -348,12 +348,12 @@ v8::Local<v8::Object> V8TestCallbackFunctions::findInstanceInPrototypeChain(v8::
   return V8PerIsolateData::From(isolate)->FindInstanceInPrototypeChain(&wrapperTypeInfo, v8Value);
 }
 
-TestCallbackFunctions* V8TestCallbackFunctions::toImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
-  return hasInstance(value, isolate) ? toImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
+TestCallbackFunctions* V8TestCallbackFunctions::ToImplWithTypeCheck(v8::Isolate* isolate, v8::Local<v8::Value> value) {
+  return hasInstance(value, isolate) ? ToImpl(v8::Local<v8::Object>::Cast(value)) : nullptr;
 }
 
 TestCallbackFunctions* NativeValueTraits<TestCallbackFunctions>::NativeValue(v8::Isolate* isolate, v8::Local<v8::Value> value, ExceptionState& exceptionState) {
-  TestCallbackFunctions* nativeValue = V8TestCallbackFunctions::toImplWithTypeCheck(isolate, value);
+  TestCallbackFunctions* nativeValue = V8TestCallbackFunctions::ToImplWithTypeCheck(isolate, value);
   if (!nativeValue) {
     exceptionState.ThrowTypeError(ExceptionMessages::FailedToConvertJSValue(
         "TestCallbackFunctions"));

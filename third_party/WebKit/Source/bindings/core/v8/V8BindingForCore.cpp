@@ -676,7 +676,7 @@ XPathNSResolver* ToXPathNSResolver(ScriptState* script_state,
                                    v8::Local<v8::Value> value) {
   XPathNSResolver* resolver = nullptr;
   if (V8XPathNSResolver::hasInstance(value, script_state->GetIsolate())) {
-    resolver = V8XPathNSResolver::toImpl(v8::Local<v8::Object>::Cast(value));
+    resolver = V8XPathNSResolver::ToImpl(v8::Local<v8::Object>::Cast(value));
   } else if (value->IsObject()) {
     resolver =
         V8CustomXPathNSResolver::Create(script_state, value.As<v8::Object>());
@@ -691,7 +691,7 @@ DOMWindow* ToDOMWindow(v8::Isolate* isolate, v8::Local<v8::Value> value) {
   v8::Local<v8::Object> window_wrapper = V8Window::findInstanceInPrototypeChain(
       v8::Local<v8::Object>::Cast(value), isolate);
   if (!window_wrapper.IsEmpty())
-    return V8Window::toImpl(window_wrapper);
+    return V8Window::ToImpl(window_wrapper);
   return 0;
 }
 
@@ -720,17 +720,17 @@ ExecutionContext* ToExecutionContext(v8::Local<v8::Context> context) {
   v8::Local<v8::Object> window_wrapper =
       V8Window::findInstanceInPrototypeChain(global, context->GetIsolate());
   if (!window_wrapper.IsEmpty())
-    return V8Window::toImpl(window_wrapper)->GetExecutionContext();
+    return V8Window::ToImpl(window_wrapper)->GetExecutionContext();
   v8::Local<v8::Object> worker_wrapper =
       V8WorkerGlobalScope::findInstanceInPrototypeChain(global,
                                                         context->GetIsolate());
   if (!worker_wrapper.IsEmpty())
-    return V8WorkerGlobalScope::toImpl(worker_wrapper)->GetExecutionContext();
+    return V8WorkerGlobalScope::ToImpl(worker_wrapper)->GetExecutionContext();
   v8::Local<v8::Object> worklet_wrapper =
       V8WorkletGlobalScope::findInstanceInPrototypeChain(global,
                                                          context->GetIsolate());
   if (!worklet_wrapper.IsEmpty())
-    return V8WorkletGlobalScope::toImpl(worklet_wrapper);
+    return V8WorkletGlobalScope::ToImpl(worklet_wrapper);
   // FIXME: Is this line of code reachable?
   return nullptr;
 }
@@ -756,7 +756,7 @@ void ToFlexibleArrayBufferView(v8::Isolate* isolate,
   DCHECK(value->IsArrayBufferView());
   v8::Local<v8::ArrayBufferView> buffer = value.As<v8::ArrayBufferView>();
   if (!storage) {
-    result.SetFull(V8ArrayBufferView::toImpl(buffer));
+    result.SetFull(V8ArrayBufferView::ToImpl(buffer));
     return;
   }
   size_t length = buffer->ByteLength();

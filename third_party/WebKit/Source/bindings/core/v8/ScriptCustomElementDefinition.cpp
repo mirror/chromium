@@ -248,7 +248,7 @@ Element* ScriptCustomElementDefinition::CallConstructor() {
            .ToLocal(&result)) {
     return nullptr;
   }
-  return V8Element::toImplWithTypeCheck(isolate, result);
+  return V8Element::ToImplWithTypeCheck(isolate, result);
 }
 
 v8::Local<v8::Object> ScriptCustomElementDefinition::Constructor() const {
