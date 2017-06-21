@@ -15,8 +15,6 @@
 
 namespace bluetooth {
 
-class FakeRemoteGattCharacteristic;
-
 // Implementation of FakeCentral in
 // src/device/bluetooth/public/interfaces/test/fake_bluetooth.mojom.
 // Implemented on top of the C++ device/bluetooth API, mainly
@@ -48,13 +46,6 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
                              const std::string& service_id,
                              const std::string& peripheral_address,
                              AddFakeCharacteristicCallback callback) override;
-  void SetNextReadCharacteristicResponse(
-      uint16_t gatt_code,
-      const base::Optional<std::vector<uint8_t>>& value,
-      const std::string& characteristic_id,
-      const std::string& service_id,
-      const std::string& peripheral_address,
-      SetNextReadCharacteristicResponseCallback callback) override;
 
   // BluetoothAdapter overrides:
   std::string GetAddress() const override;
@@ -114,11 +105,6 @@ class FakeCentral : NON_EXPORTED_BASE(public mojom::FakeCentral),
 
  private:
   ~FakeCentral() override;
-
-  FakeRemoteGattCharacteristic* GetFakeRemoteGattCharacteristic(
-      const std::string& peripheral_address,
-      const std::string& service_id,
-      const std::string& characteristic_id) const;
 
   mojom::CentralState state_;
   mojo::Binding<mojom::FakeCentral> binding_;
