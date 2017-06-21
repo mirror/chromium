@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "44b6c692_840004a4",
+        "filename": "components/offline_pages/core/offline_page_item.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-21T18:42:34Z",
+      "side": 1,
+      "message": "How does request_origin sound?",
+      "parentUuid": "0763b1ab_ba6d2da8",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "fe2d37c9_8c36c4a0",
         "filename": "components/offline_pages/core/offline_page_metadata_store_sql.cc",
         "patchSetId": 6
@@ -104,6 +122,24 @@
       "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e9a47b72_752f8fc4",
+        "filename": "components/offline_pages/core/offline_page_metadata_store_sql.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1212384
+      },
+      "writtenOn": "2017-06-21T18:42:34Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2ec8f3c7_ea7108b8",
+      "revId": "f209b083fd2fffd587c1704fe24acf7740f450c8",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
     }
   ]
 }
