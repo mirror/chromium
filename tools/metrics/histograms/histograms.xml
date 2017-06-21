@@ -32582,6 +32582,13 @@ http://cs/file:chrome/histograms.xml - but prefer this file for new entries.
   </summary>
 </histogram>
 
+<histogram name="MojoLevelDBEnv.BlockCacheLookup" enum="BooleanCacheHit">
+  <owner>mek@chromium.org</owner>
+  <summary>
+    Report cache hit/miss for the leveldb block cache in the mojo leveldb service.
+  </summary>
+</histogram>
+
 <histogram name="MojoLevelDBEnv.IOError" enum="LevelDBIOErrorMethods">
   <owner>mek@chromium.org</owner>
   <summary>Methods where leveldb's Mojo environment has IO errors.</summary>
