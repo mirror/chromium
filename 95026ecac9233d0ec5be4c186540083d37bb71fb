@@ -16,6 +16,24 @@
       "revId": "95026ecac9233d0ec5be4c186540083d37bb71fb",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0d572e8d_93c0ab1e",
+        "filename": "ui/ozone/common/gl_ozone_egl.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 31,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T15:15:05Z",
+      "side": 1,
+      "message": "Hmm, good point. It seems to work but I do see one switch statement that might break:\n\nhttps://cs.chromium.org/chromium/src/gpu/command_buffer/service/texture_definition.cc?gsn\u003dSetGLImplementation\u0026l\u003d259\n\nLet me ask someone on the swiftshader team.",
+      "parentUuid": "06e40425_2534c06b",
+      "revId": "95026ecac9233d0ec5be4c186540083d37bb71fb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
