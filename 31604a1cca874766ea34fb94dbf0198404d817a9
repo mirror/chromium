@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "0ef9e66c_446ecb78",
+        "filename": "base/memory/shared_memory_tracker.cc",
+        "patchSetId": 11
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1115913
+      },
+      "writtenOn": "2017-06-21T08:13:52Z",
+      "side": 1,
+      "message": "Just FYI: I reconsider this logic and found that this was not wrong. When GetAllocatorDump returns a non-null dump, there are two possibilities (after this CL):\n\n1) ProcessMemoryDump::CreateSharedMemoryOwnershipEdge already created the dump. In this case, an edge between the local dump and the global dump is already created. As a result, we can skip creating an edge here.\n2) Single process mode. In this case, the dump would be duplicated so we need to skip creating an edge.\n\nSetting 2) aside, 1) is very confusing, this works correctly though. I\u0027ll refactor this later.",
+      "revId": "31604a1cca874766ea34fb94dbf0198404d817a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
