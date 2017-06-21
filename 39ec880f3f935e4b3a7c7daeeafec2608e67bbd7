@@ -85,6 +85,24 @@
       "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "eabdaa15_832a86ae",
+        "filename": "media/remoting/proto_enum_utils.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 485,
+      "author": {
+        "id": 1002076
+      },
+      "writtenOn": "2017-06-21T03:27:26Z",
+      "side": 1,
+      "message": "I think it\u0027d be sufficient to add the deprecated attribute on the enum values in the media/remoting/rpc.proto file. Meaning:\n\n  enum CdmException {\n    ...\n    INVALID_ACCESS_ERROR \u003d 2 [deprecated\u003dtrue];\n    ...\n    UNKNOWN_ERROR \u003d 4 [deprecated\u003dtrue];\n    ...and so on...\n  }\n\nThe protobuf documentation only discusses using the \"deprecated\" attribute on type fields, so I\u0027m not certain that the above will work. If you get a compile error, it would be sufficient to just add EOL comments instead, like:\n\n  enum CdmException {\n    ...\n    INVALID_ACCESS_ERROR \u003d 2;  // DEPRECATED\n    ...\n    UNKNOWN_ERROR \u003d 4;  // DEPRECATED\n    ...and so on...\n  }",
+      "parentUuid": "909c3fde_e37d4fff",
+      "revId": "39ec880f3f935e4b3a7c7daeeafec2608e67bbd7",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
