@@ -34,6 +34,24 @@
       "revId": "0455ba3755997f2e23bdad81cfc1f4467d74c4f9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "9200bf55_41930ebb",
+        "filename": "ios/chrome/browser/ui/ntp/google_landing_view_controller.mm",
+        "patchSetId": 5
+      },
+      "lineNbr": 264,
+      "author": {
+        "id": 1116294
+      },
+      "writtenOn": "2017-06-21T14:35:07Z",
+      "side": 1,
+      "message": "bleh, i\u0027m still getting used to new-gerrit.  I thought this was in -viewDidLoad.",
+      "parentUuid": "c202df14_07af6ebd",
+      "revId": "0455ba3755997f2e23bdad81cfc1f4467d74c4f9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
