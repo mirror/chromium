@@ -1,6 +1,8 @@
 // Copyright 2015 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+#include <stdint.h>
+#include <vector>
 
 #ifndef UI_GFX_BUFFER_TYPES_H_
 #define UI_GFX_BUFFER_TYPES_H_
@@ -49,6 +51,25 @@ enum class BufferUsage {
 
   LAST = GPU_READ_CPU_READ_WRITE_PERSISTENT
 };
+
+struct GpuMemoryBufferAttrib {
+  GpuMemoryBufferAttrib(int format, uint64_t modifier)
+      : format(format), modifier(modifier){};
+  GpuMemoryBufferAttrib(){};
+  ~GpuMemoryBufferAttrib(){};
+
+  bool operator<(GpuMemoryBufferAttrib const& rhs) const {
+    if (format == rhs.format)
+      return modifier < rhs.modifier;
+    else
+      return format < rhs.format;
+  }
+
+  int format;
+  uint64_t modifier;
+};
+
+using GpuMemoryBufferAttribVector = std::vector<GpuMemoryBufferAttrib>;
 
 }  // namespace gfx
 

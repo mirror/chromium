@@ -78,3 +78,9 @@ struct GpuMemoryBufferHandle {
   NativePixmapHandle? native_pixmap_handle;
   handle? mach_port;
 };
+
+// gfx::GpuMemoryBufferAttrib
+struct GpuMemoryBufferAttrib {
+  int32 format;
+  uint64 modifier;
+};

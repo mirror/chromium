@@ -131,4 +131,17 @@ bool StructTraits<gfx::mojom::GpuMemoryBufferHandleDataView,
   return true;
 }
 
+bool StructTraits<gfx::mojom::GpuMemoryBufferAttribDataView,
+                  gfx::GpuMemoryBufferAttrib>::
+    Read(gfx::mojom::GpuMemoryBufferAttribDataView attrib,
+         gfx::GpuMemoryBufferAttrib* out) {
+#if defined(OS_LINUX)
+  out->format = attrib.format();
+  out->modifier = attrib.modifier();
+  return true;
+#else
+  return false;
+#endif
+}
+
 }  // namespace mojo
