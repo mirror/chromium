@@ -140,6 +140,30 @@
     },
     {
       "key": {
+        "uuid": "ff86da1a_6a65f0c9",
+        "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 132,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T12:41:07Z",
+      "side": 1,
+      "message": "Ooh, we could even make EmbeddedTestServer derive from TestWatcher so you\u0027d just have to annotate the member with @Rule :)",
+      "parentUuid": "b802e0b0_828c32b0",
+      "range": {
+        "startLine": 132,
+        "startChar": 8,
+        "endLine": 132,
+        "endChar": 19
+      },
+      "revId": "611dab194f12db6f9615bd40987cd541c1d507db",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "39c5f931_6ad9a89e",
         "filename": "chrome/android/javatests/src/org/chromium/chrome/browser/ntp/NewTabPageUiCaptureTest.java",
         "patchSetId": 1
