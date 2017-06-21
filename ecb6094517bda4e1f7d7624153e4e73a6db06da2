@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "a491096d_43edb2fa",
+        "filename": "chrome/browser/profiles/profile.h",
+        "patchSetId": 12
+      },
+      "lineNbr": 306,
+      "author": {
+        "id": 1002543
+      },
+      "writtenOn": "2017-06-21T07:15:45Z",
+      "side": 1,
+      "message": "I have to say that I am puzzled a bit about this. The PrefService that I get from Profile::GetPrefService() runs on the UI thread (in the sense that this is where its Getters and Setters should be called in a synchronous fashion) but the CL description says \"Move the pref service from the IO thread to a task scheduler sequence.\"\nCould you explain this to me please? Thanks.",
+      "revId": "ecb6094517bda4e1f7d7624153e4e73a6db06da2",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
