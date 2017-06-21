@@ -73,6 +73,24 @@
     },
     {
       "key": {
+        "uuid": "6b5d8a7b_b8f7be7d",
+        "filename": "third_party/WebKit/LayoutTests/TestExpectations",
+        "patchSetId": 2
+      },
+      "lineNbr": 778,
+      "author": {
+        "id": 1002487
+      },
+      "writtenOn": "2017-06-21T17:00:47Z",
+      "side": 1,
+      "message": "I would prefer that you didn\u0027t comment out the bot in general. Makes it harder to find out whether patches break anything unexpected. You can update expectations based on the bot run, no?",
+      "parentUuid": "03a7f7cd_cb013de9",
+      "revId": "008046c97bb0aff85c1b2afc0c0d8807406a74ed",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "41af360c_c8aa930e",
         "filename": "third_party/WebKit/Source/core/layout/ng/ng_block_layout_algorithm.cc",
         "patchSetId": 2
