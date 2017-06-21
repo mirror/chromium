@@ -23,6 +23,10 @@ static bool IsOnBatteryPower() {
   return false;
 }
 
+template<typename T>
+void WatchTimeReporter::SubReporter::OnChange(T value) {
+}
+
 WatchTimeReporter::WatchTimeReporter(bool has_audio,
                                      bool has_video,
                                      bool is_mse,

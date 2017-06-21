@@ -404,10 +404,10 @@ class MediaInternals::MediaInternalsUMAHandler {
   }
 
   enum class FinalizeType {
-    EVERYTHING,
-    POWER_ONLY,
-    CONTROLS_ONLY,
-    DISPLAY_ONLY
+    kEverything,
+    kPowerOnly,
+    kControlsOnly,
+    kDisplayOnly,
   };
   void FinalizeWatchTime(bool has_video,
                          const GURL& url,
@@ -420,7 +420,7 @@ class MediaInternals::MediaInternalsUMAHandler {
       return;
 
     switch (finalize_type) {
-      case FinalizeType::EVERYTHING:
+      case FinalizeType::kEverything:
         // Check for watch times entries that have corresponding MTBR entries
         // and report the MTBR value using watch_time / |underflow_count|
         for (auto& mapping : rebuffer_keys_) {
@@ -438,14 +438,14 @@ class MediaInternals::MediaInternalsUMAHandler {
         RecordWatchTimeWithFilter(url, watch_time_info,
                                   base::flat_set<base::StringPiece>());
         break;
-      case FinalizeType::POWER_ONLY:
+      case FinalizeType::kPowerOnly:
         RecordWatchTimeWithFilter(url, watch_time_info, watch_time_power_keys_);
         break;
-      case FinalizeType::CONTROLS_ONLY:
+      case FinalizeType::kControlsOnly:
         RecordWatchTimeWithFilter(url, watch_time_info,
                                   watch_time_controls_keys_);
         break;
-      case FinalizeType::DISPLAY_ONLY:
+      case FinalizeType::kDisplayOnly:
         RecordWatchTimeWithFilter(url, watch_time_info,
                                   watch_time_display_keys_);
         break;
@@ -618,40 +618,29 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
         FinalizeWatchTime(player_info.has_video, player_info.origin_url,
                           &player_info.underflow_count,
                           &player_info.watch_time_info,
-                          FinalizeType::EVERYTHING);
+                          FinalizeType::kEverything);
       } else {
-        if (event.params.HasKey(media::kWatchTimeFinalizePower)) {
-          bool should_finalize;
-          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizePower,
-                                         &should_finalize) &&
-                 should_finalize);
-          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                            &player_info.underflow_count,
-                            &player_info.watch_time_info,
-                            FinalizeType::POWER_ONLY);
-        }
 
-        if (event.params.HasKey(media::kWatchTimeFinalizeControls)) {
-          bool should_finalize;
-          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizeControls,
-                                         &should_finalize) &&
-                 should_finalize);
-          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                            &player_info.underflow_count,
-                            &player_info.watch_time_info,
-                            FinalizeType::CONTROLS_ONLY);
-        }
+#define MAYBE_FINALIZE_WATCH_TIME(type)                                \
+  do {                                                                 \
+    if (event.params.HasKey(media::kWatchTimeFinalize##type)) {        \
+      bool should_finalize;                                            \
+      DCHECK(event.params.GetBoolean(media::kWatchTimeFinalize##type,  \
+                                     &should_finalize) &&              \
+             should_finalize);                                         \
+      FinalizeWatchTime(player_info.has_video, player_info.origin_url, \
+                        &player_info.underflow_count,                  \
+                        &player_info.watch_time_info,                  \
+                        FinalizeType::k##type##Only);                  \
+    }                                                                  \
+  } while (0)
 
-        if (event.params.HasKey(media::kWatchTimeFinalizeDisplay)) {
-          bool should_finalize;
-          DCHECK(event.params.GetBoolean(media::kWatchTimeFinalizeDisplay,
-                                         &should_finalize) &&
-                 should_finalize);
-          FinalizeWatchTime(player_info.has_video, player_info.origin_url,
-                            &player_info.underflow_count,
-                            &player_info.watch_time_info,
-                            FinalizeType::DISPLAY_ONLY);
-        }
+        MAYBE_FINALIZE_WATCH_TIME(Power);
+        MAYBE_FINALIZE_WATCH_TIME(Controls);
+        MAYBE_FINALIZE_WATCH_TIME(Display);
+
+#undef MAYBE_FINALIZE_WATCH_TIME
+
       }
       break;
     }
@@ -666,7 +655,7 @@ void MediaInternals::MediaInternalsUMAHandler::SavePlayerState(
       FinalizeWatchTime(it->second.has_video, it->second.origin_url,
                         &it->second.underflow_count,
                         &(it->second.watch_time_info),
-                        FinalizeType::EVERYTHING);
+                        FinalizeType::kEverything);
       player_info_map.erase(it);
     }
     default:
@@ -770,7 +759,7 @@ void MediaInternals::MediaInternalsUMAHandler::OnProcessTerminated(
     ReportUMAForPipelineStatus(it->second);
     FinalizeWatchTime(it->second.has_video, it->second.origin_url,
                       &it->second.underflow_count,
-                      &(it->second.watch_time_info), FinalizeType::EVERYTHING);
+                      &(it->second.watch_time_info), FinalizeType::kEverything);
     players_it->second.erase(it++);
   }
   renderer_info_.erase(players_it);

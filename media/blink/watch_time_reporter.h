@@ -143,6 +143,14 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
  private:
   friend class WatchTimeReporterTest;
 
+  class SubReporter {
+   public:
+    void OnChange(bool);
+
+   private:
+    bool value;
+  };
+
   // Internal constructor for marking background status.
   WatchTimeReporter(bool has_audio,
                     bool has_video,
@@ -227,6 +235,10 @@ class MEDIA_BLINK_EXPORT WatchTimeReporter : base::PowerObserver {
   // Special case reporter for handling background video watch time. Configured
   // as an audio only WatchTimeReporter with |is_background_| set to true.
   std::unique_ptr<WatchTimeReporter> background_reporter_;
+
+  std::unique_ptr<SubReporter<bool>> power_reporter_;
+  std::unique_ptr<SubReporter<bool>> controls_reporter_;
+  std::unique_ptr<SubReporter<blink::WebMediaPlayer::DisplayType>> display_reporter_;
 
   DISALLOW_COPY_AND_ASSIGN(WatchTimeReporter);
 };
