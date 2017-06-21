@@ -1439,6 +1439,15 @@ class CORE_EXPORT ComputedStyle : public ComputedStyleBase,
   CounterDirectiveMap& AccessCounterDirectives();
   const CounterDirectives GetCounterDirectives(
       const AtomicString& identifier) const;
+  bool CounterDirectivesEqual(const ComputedStyle& other) const {
+    // If the counter directives change, trigger a relayout to re-calculate
+    // counter values and rebuild the counter node tree.
+    const CounterDirectiveMap* map_a = CounterDirectivesInternal().get();
+    const CounterDirectiveMap* map_b = other.CounterDirectivesInternal().get();
+    if (map_a == map_b || (map_a && map_b && *map_a == *map_b))
+      return true;
+    return false;
+  }
   void ClearIncrementDirectives();
   void ClearResetDirectives();
 
