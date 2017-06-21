@@ -164,6 +164,30 @@
       "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "407bf239_08e28b44",
+        "filename": "third_party/WebKit/Source/core/inspector/browser_protocol.json",
+        "patchSetId": 1
+      },
+      "lineNbr": 544,
+      "author": {
+        "id": 1119250
+      },
+      "writtenOn": "2017-06-21T17:33:00Z",
+      "side": 1,
+      "message": "Alexi showed me v8_inspector::V8ContextInfo::executionContextId.  With luck we can drop this patch.",
+      "parentUuid": "9692465a_850b5025",
+      "range": {
+        "startLine": 544,
+        "startChar": 32,
+        "endLine": 544,
+        "endChar": 39
+      },
+      "revId": "401dc5431aef594b87bd29b380a45007e8a278bf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
