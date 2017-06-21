@@ -315,6 +315,14 @@ void ControllerImpl::OnDownloadFailed(const DriverEntry& download, int reason) {
   // TODO(dtrainor): Add retry logic here.  Connect to restart code for tracking
   // number of retries.
 
+  if (entry->num_retries < (int)config_->max_retry_count - 1) {
+    entry->num_retries++;
+    TransitTo(entry, Entry::State::AVAILABLE, model_.get());
+    driver_->Remove(entry->guid);
+    ActivateMoreDownloads();
+    return;
+  }
+
   // TODO(dtrainor, xingliu): We probably have to prevent cancel calls from
   // coming through here as we remove downloads (especially through
   // initialization).

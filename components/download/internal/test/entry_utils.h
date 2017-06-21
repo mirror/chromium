@@ -38,7 +38,8 @@ Entry BuildEntry(DownloadClient client,
                  Entry::State state,
                  const base::FilePath& file_path,
                  base::Time create_time,
-                 base::Time completion_time);
+                 base::Time completion_time,
+                 int num_retries);
 
 }  // namespace test
 }  // namespace download
