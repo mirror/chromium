@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "edb9c103_7a7accb6",
+        "filename": "third_party/WebKit/LayoutTests/external/wpt/mediacapture-streams/MediaDevices-IDL-all.html",
+        "patchSetId": 1
+      },
+      "lineNbr": 30,
+      "author": {
+        "id": 1113991
+      },
+      "writtenOn": "2017-06-21T20:48:37Z",
+      "side": 0,
+      "message": "yikes!",
+      "range": {
+        "startLine": 30,
+        "startChar": 22,
+        "endLine": 30,
+        "endChar": 30
+      },
+      "revId": "ff468d5a182bd31ea0c1bfa808a3858e213d88cf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
