@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "c6ddf278_ed01ce73",
+        "filename": "components/search_engines/template_url_data.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 82,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:02:15Z",
+      "side": 1,
+      "message": "True, it\u0027s neither optional in the schema nor in the override dictionary. Removed the \"optional\" from the comment.",
+      "parentUuid": "98230a01_7378cfc9",
+      "revId": "b80bb45ef39f422d7f2ae750971e4ebcf3b7b4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "25ad2df2_f2379042",
         "filename": "components/search_engines/template_url_data_util.cc",
         "patchSetId": 6
@@ -30,6 +48,24 @@
       "writtenOn": "2017-06-21T01:14:54Z",
       "side": 1,
       "message": "Nit: Seems like this should go last, based on the order in the MakeUnique call below.",
+      "revId": "b80bb45ef39f422d7f2ae750971e4ebcf3b7b4a5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ec037c16_1149f2bd",
+        "filename": "components/search_engines/template_url_data_util.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 220,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:02:15Z",
+      "side": 1,
+      "message": "Hm, yeah. I\u0027ve now tried to make things a bit more consistent by adding the logo_url at the end of a block of URLs.",
+      "parentUuid": "25ad2df2_f2379042",
       "revId": "b80bb45ef39f422d7f2ae750971e4ebcf3b7b4a5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true

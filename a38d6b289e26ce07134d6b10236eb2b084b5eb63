@@ -295,6 +295,24 @@
     },
     {
       "key": {
+        "uuid": "42f21e20_8f0abdde",
+        "filename": "components/search_provider_logos/fixed_logo_api.cc",
+        "patchSetId": 4
+      },
+      "lineNbr": 20,
+      "author": {
+        "id": 1001606
+      },
+      "writtenOn": "2017-06-21T14:02:15Z",
+      "side": 1,
+      "message": "Added a comment, but also used the kMaxTimeToLiveMS, just to be consistent with the google_logo_api implementation.",
+      "parentUuid": "eeefbf58_a915fe2c",
+      "revId": "a38d6b289e26ce07134d6b10236eb2b084b5eb63",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": false
+    },
+    {
+      "key": {
         "uuid": "34d0939c_4c48ae45",
         "filename": "components/search_provider_logos/fixed_logo_api.cc",
         "patchSetId": 4
