@@ -31,6 +31,8 @@
 
 #include <memory>
 #include "platform/PlatformExport.h"
+#include "platform/loader/fetch/CrossOriginAccessControl.h"
+#include "platform/loader/fetch/Resource.h"
 #include "platform/loader/fetch/ResourceLoaderOptions.h"
 #include "platform/loader/fetch/ResourceRequest.h"
 #include "platform/wtf/Forward.h"
@@ -40,7 +42,6 @@
 namespace blink {
 
 class FetchContext;
-class Resource;
 class ResourceError;
 class ResourceFetcher;
 
@@ -123,6 +124,13 @@ class PLATFORM_EXPORT ResourceLoader final
   FetchContext& Context() const;
   ResourceRequestBlockedReason CanAccessResponse(Resource*,
                                                  const ResourceResponse&) const;
+
+  Resource::CORSStatus DetermineCORSStatus(const ResourceResponse&) const;
+
+  // Logs a CORS error to console.
+  void LogCORSError(const SecurityOrigin*,
+                    const CrossOriginAccessControl::AccessStatus cors_status,
+                    const ResourceResponse&) const;
 
   void CancelForRedirectAccessCheckError(const KURL&,
                                          ResourceRequestBlockedReason);

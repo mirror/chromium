@@ -423,20 +423,8 @@ AtomicString Resource::HttpContentType() const {
   return GetResponse().HttpContentType();
 }
 
-bool Resource::PassesAccessControlCheck(
-    const SecurityOrigin* security_origin) const {
-  CrossOriginAccessControl::AccessStatus status =
-      CrossOriginAccessControl::CheckAccess(
-          GetResponse(), LastResourceRequest().GetFetchCredentialsMode(),
-          security_origin);
-
-  return status == CrossOriginAccessControl::kAccessAllowed;
-}
-
-bool Resource::IsEligibleForIntegrityCheck(
-    SecurityOrigin* security_origin) const {
-  return security_origin->CanRequest(GetResourceRequest().Url()) ||
-         PassesAccessControlCheck(security_origin);
+bool Resource::IsEligibleForIntegrityCheck() const {
+  return IsSameOriginOrCORSSuccessful();
 }
 
 void Resource::SetIntegrityDisposition(

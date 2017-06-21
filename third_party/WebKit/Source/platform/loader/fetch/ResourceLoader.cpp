@@ -197,7 +197,7 @@ bool ResourceLoader::WillFollowRedirect(
               source_origin, new_request, redirect_response,
               resource_->GetResourceRequest().GetFetchCredentialsMode(),
               resource_->MutableOptions(), error_message)) {
-        resource_->SetCORSFailed();
+        resource_->SetCORSStatus(Resource::CORSStatus::kFailed);
         Context().AddConsoleMessage(error_message);
         CancelForRedirectAccessCheckError(new_request.Url(),
                                           ResourceRequestBlockedReason::kOther);
@@ -291,46 +291,77 @@ ResourceRequestBlockedReason ResourceLoader::CanAccessResponse(
   if (blocked_reason != ResourceRequestBlockedReason::kNone)
     return blocked_reason;
 
-  SecurityOrigin* source_origin = resource->Options().security_origin.Get();
+  if (resource->IsSameOriginOrCORSSuccessful())
+    return ResourceRequestBlockedReason::kNone;
+
+  return ResourceRequestBlockedReason::kOther;
+}
+
+Resource::CORSStatus ResourceLoader::DetermineCORSStatus(
+    const ResourceResponse& response) const {
+  if (resource_->GetType() == Resource::Type::kMainResource)
+    return Resource::CORSStatus::kNotApplicable;
+
+  SecurityOrigin* source_origin = resource_->Options().security_origin.Get();
+
   if (!source_origin)
     source_origin = Context().GetSecurityOrigin();
 
+  DCHECK(source_origin);
+
   if (source_origin->CanRequestNoSuborigin(response.Url()))
-    return ResourceRequestBlockedReason::kNone;
+    return Resource::CORSStatus::kSameOrigin;
+
+  // TODO(hintzed): Is kFailed the right result or should it rather be kUnknown
+  // or something like kNoCORS?
+  if (resource_->Options().cors_handling_by_resource_fetcher !=
+          kEnableCORSHandlingByResourceFetcher ||
+      resource_->GetResourceRequest().GetFetchRequestMode() !=
+          WebURLRequest::kFetchRequestModeCORS)
+    return Resource::CORSStatus::kFailed;
 
   // Use the original response instead of the 304 response for a successful
-  // revaldiation.
+  // revalidation.
   const ResourceResponse& response_for_access_control =
-      (resource->IsCacheValidator() && response.HttpStatusCode() == 304)
-          ? resource->GetResponse()
+      (resource_->IsCacheValidator() && response.HttpStatusCode() == 304)
+          ? resource_->GetResponse()
           : response;
 
   CrossOriginAccessControl::AccessStatus cors_status =
       CrossOriginAccessControl::CheckAccess(
-          response_for_access_control,
-          resource->GetResourceRequest().GetFetchCredentialsMode(),
+          resource_->GetResponse(),
+          resource_->LastResourceRequest().GetFetchCredentialsMode(),
           source_origin);
-  if (cors_status != CrossOriginAccessControl::kAccessAllowed) {
-    resource->SetCORSFailed();
-    if (!unused_preload) {
-      String resource_type = Resource::ResourceTypeToString(
-          resource->GetType(), resource->Options().initiator_info.name);
-      StringBuilder builder;
-      builder.Append("Access to ");
-      builder.Append(resource_type);
-      builder.Append(" at '");
-      builder.Append(response.Url().GetString());
-      builder.Append("' from origin '");
-      builder.Append(source_origin->ToString());
-      builder.Append("' has been blocked by CORS policy: ");
-      CrossOriginAccessControl::AccessControlErrorString(
-          builder, cors_status, response_for_access_control, source_origin,
-          resource->LastResourceRequest().GetRequestContext());
-      Context().AddConsoleMessage(builder.ToString());
-    }
-    return ResourceRequestBlockedReason::kOther;
-  }
-  return ResourceRequestBlockedReason::kNone;
+
+  if (cors_status == CrossOriginAccessControl::AccessStatus::kAccessAllowed)
+    return Resource::CORSStatus::kSuccessful;
+
+  if (!resource_->IsUnusedPreload())
+    LogCORSError(source_origin, cors_status, response_for_access_control);
+
+  return Resource::CORSStatus::kFailed;
+}
+
+void ResourceLoader::LogCORSError(
+    const SecurityOrigin* source_origin,
+    const CrossOriginAccessControl::AccessStatus cors_status,
+    const ResourceResponse& response) const {
+  String resource_type = Resource::ResourceTypeToString(
+      resource_->GetType(), resource_->Options().initiator_info.name);
+  StringBuilder builder;
+  builder.Append("Access to ");
+  builder.Append(resource_type);
+  builder.Append(" at '");
+  builder.Append(response.Url().GetString());
+  builder.Append("' from origin '");
+  builder.Append(source_origin->ToString());
+  builder.Append("' has been blocked by CORS policy: ");
+
+  CrossOriginAccessControl::AccessControlErrorString(
+      builder, cors_status, response, source_origin,
+      resource_->LastResourceRequest().GetRequestContext());
+
+  Context().AddConsoleMessage(builder.ToString());
 }
 
 void ResourceLoader::DidReceiveResponse(
@@ -339,6 +370,10 @@ void ResourceLoader::DidReceiveResponse(
   DCHECK(!web_url_response.IsNull());
 
   const ResourceResponse& response = web_url_response.ToResourceResponse();
+
+  // Later, CORS results should already be in the response we get from the
+  // browser at this point.
+  resource_->SetCORSStatus(DetermineCORSStatus(response));
 
   if (response.WasFetchedViaServiceWorker()) {
     if (resource_->Options().cors_handling_by_resource_fetcher ==

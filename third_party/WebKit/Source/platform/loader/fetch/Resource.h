@@ -102,6 +102,14 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
     kReloadAlways,
   };
 
+  enum CORSStatus {
+    kUnknown,        // Status not determined - not supposed to be seen by users
+    kNotApplicable,  // E.g. for main resources
+    kSameOrigin,     // Request was same origin
+    kSuccessful,     // Request was cross origin and CORS checks passed
+    kFailed          // Request was cross origin and CORS checks failed
+  };
+
   virtual ~Resource();
 
   DECLARE_VIRTUAL_TRACE();
@@ -109,7 +117,6 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   virtual WTF::TextEncoding Encoding() const { return WTF::TextEncoding(); }
   virtual void AppendData(const char*, size_t);
   virtual void FinishAsError(const ResourceError&);
-  virtual void SetCORSFailed() {}
 
   void SetNeedsSynchronousCacheHit(bool needs_synchronous_cache_hit) {
     needs_synchronous_cache_hit_ = needs_synchronous_cache_hit;
@@ -271,7 +278,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool HasCacheControlNoStoreHeader() const;
   bool MustReloadDueToVaryHeader(const ResourceRequest& new_request) const;
 
-  bool IsEligibleForIntegrityCheck(SecurityOrigin*) const;
+  bool IsEligibleForIntegrityCheck() const;
 
   void SetIntegrityMetadata(const IntegrityMetadataSet& metadata) {
     integrity_metadata_ = metadata;
@@ -287,6 +294,19 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   bool MustRefetchDueToIntegrityMetadata(const FetchParameters&) const;
 
   bool IsAlive() const { return is_alive_; }
+
+  // Public for testing. Not intended to be called from classes other than
+  // blink::ResourceLoader.
+  void SetCORSStatus(const CORSStatus cors_status) {
+    cors_status_ = cors_status;
+  }
+
+  CORSStatus GetCORSStatus() const { return cors_status_; }
+
+  bool IsSameOriginOrCORSSuccessful() const {
+    return cors_status_ == CORSStatus::kSameOrigin ||
+           cors_status_ == CORSStatus::kSuccessful;
+  }
 
   void SetCacheIdentifier(const String& cache_identifier) {
     cache_identifier_ = cache_identifier;
@@ -439,6 +459,7 @@ class PLATFORM_EXPORT Resource : public GarbageCollectedFinalized<Resource>,
   PreloadResult preload_result_;
   Type type_;
   ResourceStatus status_;
+  CORSStatus cors_status_;
 
   Member<CachedMetadataHandlerImpl> cache_handler_;
   RefPtr<SecurityOrigin> fetcher_security_origin_;
