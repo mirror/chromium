@@ -255,7 +255,7 @@ bool ImageBuffer::CopyToPlatformTexture(SnapshotReason reason,
   shared_gl->ProduceTextureDirectCHROMIUM(texture_info->fID,
                                           texture_info->fTarget, mailbox.name);
   const GLuint64 shared_fence_sync = shared_gl->InsertFenceSyncCHROMIUM();
-  shared_gl->Flush();
+  shared_gl->ShallowFlushCHROMIUM();
 
   gpu::SyncToken produce_sync_token;
   shared_gl->GenSyncTokenCHROMIUM(shared_fence_sync,
@@ -281,7 +281,7 @@ bool ImageBuffer::CopyToPlatformTexture(SnapshotReason reason,
 
   const GLuint64 context_fence_sync = gl->InsertFenceSyncCHROMIUM();
 
-  gl->Flush();
+  gl->ShallowFlushCHROMIUM();
 
   gpu::SyncToken copy_sync_token;
   gl->GenSyncTokenCHROMIUM(context_fence_sync, copy_sync_token.GetData());
@@ -313,6 +313,8 @@ bool ImageBuffer::CopyRenderingResultsFromDrawingBuffer(
   if (!texture_id)
     return false;
 
+  // TODO(junov): Is this flush really needed? We should trust
+  // DrawingBuffer::CopyToPlatformTexture to flush if it really need to.
   gl->Flush();
 
   return drawing_buffer->CopyToPlatformTexture(

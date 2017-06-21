@@ -269,7 +269,7 @@ bool Canvas2DLayerBridge::PrepareIOSurfaceMailboxFromImage(
                                    mailbox.name);
 
   const GLuint64 fence_sync = gl->InsertFenceSyncCHROMIUM();
-  gl->Flush();
+  gl->ShallowFlushCHROMIUM();
   gpu::SyncToken sync_token;
   gl->GenSyncTokenCHROMIUM(fence_sync, sync_token.GetData());
 

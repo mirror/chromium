@@ -78,7 +78,7 @@ void SkiaTextureHolder::ReleaseImageThreadSafe() {
     gpu::gles2::GLES2Interface* shared_gl = SharedGpuContext::Gl();
     std::unique_ptr<gpu::SyncToken> release_sync_token(new gpu::SyncToken);
     const GLuint64 fence_sync = shared_gl->InsertFenceSyncCHROMIUM();
-    shared_gl->Flush();
+    shared_gl->ShallowFlushCHROMIUM();
     shared_gl->GenSyncTokenCHROMIUM(fence_sync, release_sync_token->GetData());
     TextureThreadTaskRunner()->PostTask(
         BLINK_FROM_HERE,
