@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "4f5577f0_6b2067e4",
+        "filename": "components/arc/DEPS",
+        "patchSetId": 10
+      },
+      "lineNbr": 4,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-21T04:19:27Z",
+      "side": 1,
+      "message": "This is not needed when you have the same thing in components/arc/volume_mounter/DEPS, and move volume_mounter_traits.cc to components/arc/volume_mounter",
+      "revId": "76614273722fbf046edbb2107f3dea130666dfa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "533c6040_bc1740aa",
+        "filename": "components/arc/common/volume_mounter_traits.h",
+        "patchSetId": 10
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1000169
+      },
+      "writtenOn": "2017-06-21T04:19:27Z",
+      "side": 1,
+      "message": "Shouldn\u0027t this file (and the .cc file) belong to components/arc/volume_mounter, instead of common?",
+      "revId": "76614273722fbf046edbb2107f3dea130666dfa6",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
