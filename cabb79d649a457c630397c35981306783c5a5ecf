@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "5a6d1d57_52de6e08",
+        "filename": "services/resource_coordinator/public/cpp/memory_instrumentation/memory_instrumentation.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1002808
+      },
+      "writtenOn": "2017-06-21T16:26:31Z",
+      "side": 1,
+      "message": "Nit: Perhaps this is a bit more detail than necessary here. I think it\u0027s sufficient to say that the the CoordinatorPtr is usable immediately.\n\nIn fact there is no flushing that happens - the queued requests are effectively owned by the ConnectorRequest and follow it as it travels to its destination to be bound. Alas, this is still probably more detail than belongs here.",
+      "revId": "cabb79d649a457c630397c35981306783c5a5ecf",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
