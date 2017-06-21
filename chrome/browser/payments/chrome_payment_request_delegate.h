@@ -29,7 +29,7 @@ class ChromePaymentRequestDelegate : public PaymentRequestDelegate {
   void ShowDialog(PaymentRequest* request) override;
   void CloseDialog() override;
   void ShowErrorMessage() override;
-  autofill::PersonalDataManager* GetPersonalDataManager() override;
+  autofill::PersonalDataManager* GetPersonalDataManager() const override;
   const std::string& GetApplicationLocale() const override;
   bool IsIncognito() const override;
   bool IsSslCertificateValid() override;
