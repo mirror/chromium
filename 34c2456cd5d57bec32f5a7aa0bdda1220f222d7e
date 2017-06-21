@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "9a38a63d_66ad2f03",
+        "filename": "chrome/browser/google/google_update_settings_posix.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 26,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T21:21:59Z",
+      "side": 1,
+      "message": "since SetMetricsReporting is called based on the result of running a task here, should these tasks run at a higher priority? i would think we\u0027d want to avoid SetMetricsReporting being stalled because SetGoogleUpdateSettings took a long time running at BG priority.",
+      "range": {
+        "startLine": 26,
+        "startChar": 45,
+        "endLine": 26,
+        "endChar": 55
+      },
+      "revId": "34c2456cd5d57bec32f5a7aa0bdda1220f222d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "4ff33cad_877339ba",
+        "filename": "chrome/browser/ui/views/session_crashed_bubble_view.cc",
+        "patchSetId": 6
+      },
+      "lineNbr": 125,
+      "author": {
+        "id": 1178124
+      },
+      "writtenOn": "2017-06-21T21:21:59Z",
+      "side": 1,
+      "message": "since this use of the runner blocks a task that interacts with the user, BACKGROUND priority seems wrong.",
+      "range": {
+        "startLine": 125,
+        "startChar": 46,
+        "endLine": 125,
+        "endChar": 57
+      },
+      "revId": "34c2456cd5d57bec32f5a7aa0bdda1220f222d7e",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
