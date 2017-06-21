@@ -46,6 +46,30 @@
       "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "453fbf92_0811b57e",
+        "filename": "ui/gl/BUILD.gn",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1146978
+      },
+      "writtenOn": "2017-06-21T21:53:51Z",
+      "side": 1,
+      "message": "Okay sgtm. If |ozone_platform_x11| is switched to |use_ozone| in the future, any idea if we need to have the board $GN_ARGS set |enable_swiftshader| to false?",
+      "parentUuid": "f5d1a869_7e72c0bc",
+      "range": {
+        "startLine": 14,
+        "startChar": 25,
+        "endLine": 14,
+        "endChar": 58
+      },
+      "revId": "325f5f0fb6ada516ca7dfd79d6df841f24850c0d",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
