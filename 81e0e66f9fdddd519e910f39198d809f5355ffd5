@@ -236,6 +236,30 @@
       "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "e3c6f8e1_a1298366",
+        "filename": "ash/system/power/power_status.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 217,
+      "author": {
+        "id": 1115907
+      },
+      "writtenOn": "2017-06-21T15:09:09Z",
+      "side": 1,
+      "message": "Wouldn\u0027t the wrong appearance bounds be 40-36 \u003d 4%? Between 25 and 35 you\u0027re drawing at the right height.",
+      "parentUuid": "5c38e3e8_89a241dd",
+      "range": {
+        "startLine": 217,
+        "startChar": 56,
+        "endLine": 217,
+        "endChar": 57
+      },
+      "revId": "81e0e66f9fdddd519e910f39198d809f5355ffd5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
