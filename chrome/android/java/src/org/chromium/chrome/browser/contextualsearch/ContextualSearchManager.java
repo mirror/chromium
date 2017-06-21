@@ -501,7 +501,7 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         if (baseWebContents == null) return null;
 
         try {
-            return new URL(baseWebContents.getUrl());
+            return new URL(baseWebContents.getVisibleUrl());
         } catch (MalformedURLException e) {
             return null;
         }
@@ -1170,8 +1170,8 @@ public class ContextualSearchManager implements ContextualSearchManagementDelega
         // not yet committed being processed. Otherwise, get the URL from the WebContents.
         NavigationEntry entry =
                 searchContentViewCore.getWebContents().getNavigationController().getPendingEntry();
-        String url =
-                entry != null ? entry.getUrl() : searchContentViewCore.getWebContents().getUrl();
+        String url = entry != null ? entry.getUrl()
+                                   : searchContentViewCore.getWebContents().getVisibleUrl();
         return url;
     }
 
