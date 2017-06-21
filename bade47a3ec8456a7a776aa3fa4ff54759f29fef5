@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "8395c5c7_df54bd96",
+        "filename": "device/generic_sensor/public/cpp/sensor_reading.h",
+        "patchSetId": 3
+      },
+      "lineNbr": 110,
+      "author": {
+        "id": 1113896
+      },
+      "writtenOn": "2017-06-21T00:28:40Z",
+      "side": 1,
+      "message": "nit: This method isn\u0027t called by any external code so it can be private.",
+      "range": {
+        "startLine": 110,
+        "startChar": 2,
+        "endLine": 110,
+        "endChar": 54
+      },
+      "revId": "bade47a3ec8456a7a776aa3fa4ff54759f29fef5",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
