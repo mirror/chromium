@@ -16,6 +16,24 @@
       "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "39905047_afeb79c2",
+        "filename": "ash/system/tray/tray_event_filter.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1163499
+      },
+      "writtenOn": "2017-06-21T13:44:10Z",
+      "side": 1,
+      "message": "Unfortunately, event.target() is not set here because it\u0027s cleared by copying in PointerWatcherAdapter (the caller of this method).",
+      "parentUuid": "da0cbee6_611230a3",
+      "revId": "b51033a23db1654f39f6fe203f6b0f2fb7bd8198",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
