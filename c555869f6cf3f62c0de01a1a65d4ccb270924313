@@ -1,0 +1,55 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "bb5a3dc1_e4b25aad",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 291,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-21T11:17:50Z",
+      "side": 1,
+      "message": "maybe return sensor.mockSensorProvider.getCreatedSensor() ...\ntestPromise is not used anywhere.",
+      "revId": "c555869f6cf3f62c0de01a1a65d4ccb270924313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "068581a2_cba0d7c1",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 292,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-21T11:17:50Z",
+      "side": 1,
+      "message": ".then(mockSensor \u003d\u003e mockSensor.setUpdateSensorReadingFunction(updateReading))",
+      "revId": "c555869f6cf3f62c0de01a1a65d4ccb270924313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ce2bbadc_3f876182",
+        "filename": "third_party/WebKit/LayoutTests/sensor/resources/generic-sensor-tests.js",
+        "patchSetId": 2
+      },
+      "lineNbr": 322,
+      "author": {
+        "id": 1182699
+      },
+      "writtenOn": "2017-06-21T11:17:50Z",
+      "side": 1,
+      "message": ".then(mockSensor \u003d\u003e mockSensor.removeConfigurationCalled()); wdyt?",
+      "revId": "c555869f6cf3f62c0de01a1a65d4ccb270924313",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
