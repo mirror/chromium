@@ -36,6 +36,52 @@
     },
     {
       "key": {
+        "uuid": "9a6434e0_afed204b",
+        "filename": "media/mojo/clients/mojo_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 288,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T21:53:11Z",
+      "side": 1,
+      "message": "I\u0027m not really comfortable with the use of type converters for this. It looks like most of the fields are fixed enums (which is good), but it\u0027s not clear to me if the decoder config code is robust against \"strange\" values. Specifically:\n- what if |samples_per_second| is negative? or 0?\n- what can |extra_data| contain?\n- is it possible for |codec_delay| to be unreasonably large?",
+      "range": {
+        "startLine": 288,
+        "startChar": 6,
+        "endLine": 288,
+        "endChar": 44
+      },
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "442700ed_6406df8b",
+        "filename": "media/mojo/clients/mojo_renderer.cc",
+        "patchSetId": 1
+      },
+      "lineNbr": 297,
+      "author": {
+        "id": 1001168
+      },
+      "writtenOn": "2017-06-21T21:53:11Z",
+      "side": 1,
+      "message": "Similar question here: there are three Size fields, it\u0027s not clear if they need to vaguely agree with each other, or if there is additional validation to perform on the various bits.\n\nCan we move both of these structs to a typemap before adding (not behind a flag) mojo ipcs that use it?",
+      "range": {
+        "startLine": 297,
+        "startChar": 6,
+        "endLine": 297,
+        "endChar": 44
+      },
+      "revId": "89e090349b524a34ecfd5a9ff153d14febb79ddb",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "ea61b609_59fd1153",
         "filename": "media/remoting/rpc.proto",
         "patchSetId": 1
