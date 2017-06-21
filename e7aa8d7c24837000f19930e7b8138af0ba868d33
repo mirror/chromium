@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "34acef57_1b079f77",
+        "filename": "components/ntp_snippets/content_suggestion.h",
+        "patchSetId": 2
+      },
+      "lineNbr": 144,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:46:22Z",
+      "side": 1,
+      "message": "Depending on your plans, it may be worth having a type ENUM and exposing it instead of multiple accessors.",
+      "range": {
+        "startLine": 144,
+        "startChar": 7,
+        "endLine": 144,
+        "endChar": 28
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "ea315d50_18619fc2",
+        "filename": "components/ntp_snippets/remote/remote_suggestion.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 282,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:46:22Z",
+      "side": 1,
+      "message": "No videos here?",
+      "range": {
+        "startLine": 282,
+        "startChar": 52,
+        "endLine": 282,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "259a40bc_80f0e10e",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1028,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:46:22Z",
+      "side": 1,
+      "message": "This can be broken down into at least 2 tests (e.g. ShouldTreatAbsentContent TypeAsNoType, ShouldTreatUnknownContentTypeAsNoType, ShouldHandleVideoContentType).",
+      "range": {
+        "startLine": 1028,
+        "startChar": 46,
+        "endLine": 1028,
+        "endChar": 67
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "549cbbed_d2a43397",
+        "filename": "components/ntp_snippets/remote/remote_suggestions_fetcher_impl_unittest.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 1042,
+      "author": {
+        "id": 1163944
+      },
+      "writtenOn": "2017-06-21T14:46:22Z",
+      "side": 1,
+      "message": "Are all of these really mandatory?",
+      "range": {
+        "startLine": 1034,
+        "startChar": 0,
+        "endLine": 1042,
+        "endChar": 50
+      },
+      "revId": "e7aa8d7c24837000f19930e7b8138af0ba868d33",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
