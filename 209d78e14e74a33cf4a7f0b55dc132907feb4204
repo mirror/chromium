@@ -119,6 +119,30 @@
     },
     {
       "key": {
+        "uuid": "4f7044a5_0b2efcd0",
+        "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
+        "patchSetId": 2
+      },
+      "lineNbr": 104,
+      "author": {
+        "id": 1115968
+      },
+      "writtenOn": "2017-06-21T16:58:30Z",
+      "side": 1,
+      "message": "I\u0027m not sure what that means.  It can include any data a webpage wants to include (Including data scraped from the browser, like grapbics card, resolution,windows size, etc), as well as any data a service worker wants to include, as well as standard headers chrome adds (Cookies, referrer, client hints, user agent, etc).",
+      "parentUuid": "c1d62557_39967604",
+      "range": {
+        "startLine": 104,
+        "startChar": 23,
+        "endLine": 104,
+        "endChar": 0
+      },
+      "revId": "209d78e14e74a33cf4a7f0b55dc132907feb4204",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "aa92942f_0116c5e1",
         "filename": "content/browser/loader/navigation_url_loader_network_service.cc",
         "patchSetId": 2
