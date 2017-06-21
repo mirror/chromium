@@ -46,6 +46,30 @@
       "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "97edbc5e_fb94a3da",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-21T09:42:41Z",
+      "side": 1,
+      "message": "It is failing on the line below: it waits for 3 tabs to open, but there are only two. I guess it\u0027s because this matcher matches on the first tab and doesn\u0027t really wait for the two others to open. So only the second has the time to open, not the third.\n\nI added a [[GREYUIThreadExecutor sharedInstance] drainUntilIdle]; and it fixes the test. See latest patch. The issue might just be this test that waits for something to appear that is similar to something already on screen.",
+      "parentUuid": "eeac6b75_d418fc62",
+      "range": {
+        "startLine": 233,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 56
+      },
+      "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
