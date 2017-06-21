@@ -20,7 +20,7 @@ class RulesFunction : public AsyncExtensionFunction {
   ~RulesFunction() override;
 
   // ExtensionFunction:
-  bool HasPermission() override;
+  bool HasPermission(std::string* error_message) override;
   bool RunAsync() override;
 
   // Concrete implementation of the RulesFunction that is being called
