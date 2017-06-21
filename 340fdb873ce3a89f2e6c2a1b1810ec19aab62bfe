@@ -1,0 +1,44 @@
+{
+  "comments": [
+    {
+      "key": {
+        "uuid": "62bc524f_dfc0ac37",
+        "filename": "components/payments/core/test_payment_request_delegate.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-21T20:24:13Z",
+      "side": 1,
+      "message": "need?",
+      "range": {
+        "startLine": 10,
+        "startChar": 35,
+        "endLine": 10,
+        "endChar": 64
+      },
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "0ce98cb5_34094a18",
+        "filename": "ios/chrome/browser/ui/payments/payment_request_coordinator.h",
+        "patchSetId": 6
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1003016
+      },
+      "writtenOn": "2017-06-21T20:24:13Z",
+      "side": 1,
+      "message": "This language is CC specific. Make more generic?",
+      "revId": "340fdb873ce3a89f2e6c2a1b1810ec19aab62bfe",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    }
+  ]
+}
