@@ -16,6 +16,24 @@
       "revId": "d0e5d3157bc182d47a6e21a7855e6e922ff854ad",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "8e879781_0308b35f",
+        "filename": "media/renderers/video_renderer_impl.cc",
+        "patchSetId": 5
+      },
+      "lineNbr": 578,
+      "author": {
+        "id": 1001250
+      },
+      "writtenOn": "2017-06-21T17:01:52Z",
+      "side": 1,
+      "message": "Because I made a mistake :)",
+      "parentUuid": "2c893f6c_7ab6f2e5",
+      "revId": "d0e5d3157bc182d47a6e21a7855e6e922ff854ad",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
