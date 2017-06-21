@@ -86,11 +86,16 @@ class CORE_EXPORT PendingScript
 
   // https://html.spec.whatwg.org/#the-script-is-ready
   virtual bool IsReady() const = 0;
-
   virtual bool IsExternal() const = 0;
   virtual bool ErrorOccurred() const = 0;
   virtual bool WasCanceled() const = 0;
-  virtual void StartStreamingIfPossible(Document*, ScriptStreamer::Type) = 0;
+
+  // Support for script streaming.
+  virtual bool StartStreamingIfPossible(Document*,
+                                        ScriptStreamer::Type,
+                                        std::unique_ptr<WTF::Closure>) = 0;
+  virtual bool HasStreamer() const = 0;
+  virtual bool IsCurrentlyStreaming() const = 0;
 
   // The following two methods are used for document.write() intervention and
   // have effects only for classic scripts.
