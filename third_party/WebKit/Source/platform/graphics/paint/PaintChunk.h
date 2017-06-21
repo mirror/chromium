@@ -104,9 +104,12 @@ struct PaintChunk {
 
   // SPv2 only. Rectangles that need to be re-rasterized in this chunk, in the
   // coordinate space of the containing transform node.
-  Vector<FloatRect> raster_invalidation_rects;
+  // TODO(wangxianzhu): 'mutable' for ContentLayerClientImpl to clear it, which
+  // will be unnecessary if we don't call PaintArtifactCompositor::Update()
+  // when paint artifact is unchanged.
+  mutable Vector<FloatRect> raster_invalidation_rects;
 
-  Vector<RasterInvalidationInfo> raster_invalidation_tracking;
+  mutable Vector<RasterInvalidationInfo> raster_invalidation_tracking;
 };
 
 inline bool operator==(const PaintChunk& a, const PaintChunk& b) {
