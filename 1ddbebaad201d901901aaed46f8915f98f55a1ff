@@ -94,6 +94,30 @@
       "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "320a984c_cd079516",
+        "filename": "ios/chrome/browser/metrics/tab_usage_recorder_egtest.mm",
+        "patchSetId": 1
+      },
+      "lineNbr": 233,
+      "author": {
+        "id": 1134915
+      },
+      "writtenOn": "2017-06-21T17:32:28Z",
+      "side": 1,
+      "message": "Actually, I don\u0027t find it cleaner. It relies on (and hides) the fact that AssertMainTabCount calls drainUntilIdle.\n\nI tried this approach:\n  chrome_test_util::OpenNewTab();\n  [ChromeEarlGrey loadURL:url1];\n  [ChromeEarlGrey waitForWebViewContainingText:kURL1FirstWord];\n  chrome_test_util::OpenNewTab();\n  [ChromeEarlGrey loadURL:url2];\n  [ChromeEarlGrey waitForWebViewContainingText:kURL2FirstWord];\n  chrome_test_util::OpenNewTab();\n  [ChromeEarlGrey loadURL:url3];\n  [ChromeEarlGrey waitForWebViewContainingText:kURL3FirstWord];\n  chrome_test_util::AssertMainTabCount(3);\n\nIt fails too at the AssertMainTabCount. The UI shows two tabs, so I don\u0027t understand how waitForWebViewContainingText:kURL3FirstWord passed. Maybe it\u0027s because chrome_test_util::GetCurrentWebState used in waitForWebViewContainingText points to the new webstate, but it\u0027s not yet displayed? But it seems like what the old code did.\n\nI am at a loss and not sure what to do next. Maybe the old code path starting at https://cs.chromium.org/chromium/src/ios/web/public/test/earl_grey/web_view_matchers.mm?type\u003dcs\u0026q\u003d%22DescribeToBlock+describe+%3D+%5E(id%3CGREYDescription%3E+description)+%7B%22\u0026sq\u003dpackage:chromium\u0026l\u003d111 did a drainUntilIdle at some point and made it work?",
+      "parentUuid": "0454ed53_4c4ecfe9",
+      "range": {
+        "startLine": 233,
+        "startChar": 15,
+        "endLine": 233,
+        "endChar": 56
+      },
+      "revId": "1ddbebaad201d901901aaed46f8915f98f55a1ff",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
     }
   ]
 }
