@@ -9,6 +9,7 @@
 #include "components/password_manager/core/browser/password_manager_client.h"
 #include "components/password_manager/core/browser/stub_credentials_filter.h"
 #include "components/password_manager/core/browser/stub_log_manager.h"
+#include "components/ukm/test_ukm_recorder.h"
 
 namespace password_manager {
 
@@ -19,6 +20,8 @@ class StubPasswordManagerClient : public PasswordManagerClient {
  public:
   StubPasswordManagerClient();
   ~StubPasswordManagerClient() override;
+
+  ukm::TestUkmRecorder* GetTestUkmRecorder();
 
   // PasswordManagerClient:
   bool PromptUserToSaveOrUpdatePassword(
@@ -51,10 +54,14 @@ class StubPasswordManagerClient : public PasswordManagerClient {
   void CheckProtectedPasswordEntry(const std::string& password_saved_domain,
                                    bool password_field_exists) override;
 #endif
+  ukm::UkmRecorder* GetUkmRecorder() override;
+  ukm::SourceId GetUkmSourceId() override;
 
  private:
   const StubCredentialsFilter credentials_filter_;
   StubLogManager log_manager_;
+  ukm::TestUkmRecorder ukm_recorder_;
+  ukm::SourceId ukm_source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(StubPasswordManagerClient);
 };

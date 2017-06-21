@@ -167,6 +167,7 @@ static_library("browser") {
     "//components/security_state/core",
     "//components/strings",
     "//components/sync",
+    "//components/ukm",
     "//components/url_formatter",
     "//components/variations",
     "//components/webdata/common",

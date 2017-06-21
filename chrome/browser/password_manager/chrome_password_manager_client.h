@@ -115,6 +115,9 @@ class ChromePasswordManagerClient
                                    bool password_field_exists) override;
 #endif
 
+  ukm::UkmRecorder* GetUkmRecorder() override;
+  ukm::SourceId GetUkmSourceId() override;
+
   static void CreateForWebContentsWithAutofillClient(
       content::WebContents* contents,
       autofill::AutofillClient* autofill_client);
@@ -214,6 +217,15 @@ class ChromePasswordManagerClient
   // Set during 'NotifyUserCouldBeAutoSignedIn' in order to store the
   // form for potential use during 'NotifySuccessfulLoginWithExistingPassword'.
   std::unique_ptr<autofill::PasswordForm> possible_auto_sign_in_;
+
+  // Whether the |ukm_source_id_| is valid and bound to the last committed
+  // navigation.
+  bool ukm_source_id_is_valid_;
+
+  // If |ukm_source_id_is_valid_| is true, this stores a ukm::SourceId that is
+  // bound to the last committed navigation of the tab owning this
+  // ChromePasswordManagerClient.
+  ukm::SourceId ukm_source_id_;
 
   DISALLOW_COPY_AND_ASSIGN(ChromePasswordManagerClient);
 };
