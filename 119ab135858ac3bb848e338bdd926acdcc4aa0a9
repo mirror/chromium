@@ -19,6 +19,24 @@
     },
     {
       "key": {
+        "uuid": "512a0198_8f8380ac",
+        "filename": "third_party/WebKit/Source/core/frame/SubresourceIntegrityTest.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 377,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:22:13Z",
+      "side": 1,
+      "message": "It sure looks odd, but the few places in chrome that I found using this macro called it like that (e.g. src/net/base/url_util_unittest.cc and src/ui/gfx/render_text_unittest.cc).",
+      "parentUuid": "570f3ef2_951c5fd8",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "65321e16_4439cd83",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 4
@@ -36,6 +54,24 @@
     },
     {
       "key": {
+        "uuid": "4ee8eec5_2f93712f",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 439,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:22:13Z",
+      "side": 1,
+      "message": "Right. Ouch! I\u0027ll fix it.",
+      "parentUuid": "65321e16_4439cd83",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
         "uuid": "05e68b69_9703661c",
         "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
         "patchSetId": 4
@@ -47,6 +83,24 @@
       "writtenOn": "2017-06-21T17:45:53Z",
       "side": 1,
       "message": "Do the tests you added actually exercise this check? I didn\u0027t see failures being expected for same-origin, opaque responses, for instance.",
+      "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
+      "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
+      "unresolved": true
+    },
+    {
+      "key": {
+        "uuid": "16f0560c_7b810d9b",
+        "filename": "third_party/WebKit/Source/platform/loader/fetch/Resource.cpp",
+        "patchSetId": 4
+      },
+      "lineNbr": 445,
+      "author": {
+        "id": 1217370
+      },
+      "writtenOn": "2017-06-21T19:22:13Z",
+      "side": 1,
+      "message": "The new tests do cross origin requests via service worker with and without cors, which should run into this check. However, same-origin opaque responses are indeed not tested at the moment (or else they should have found the bug just above. \n\nI\u0027ll add some more tests.",
+      "parentUuid": "05e68b69_9703661c",
       "revId": "119ab135858ac3bb848e338bdd926acdcc4aa0a9",
       "serverId": "3ce6091f-6c88-37e8-8c75-72f92ae8dfba",
       "unresolved": true
