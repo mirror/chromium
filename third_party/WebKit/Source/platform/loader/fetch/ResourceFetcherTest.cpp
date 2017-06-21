@@ -121,7 +121,7 @@ TEST_F(ResourceFetcherTest, StartLoadAfterFrameDetach) {
   EXPECT_TRUE(resource->GetResourceError().IsAccessCheck());
   EXPECT_FALSE(GetMemoryCache()->ResourceForURL(secure_url));
 
-  // Start by calling startLoad() directly, rather than via requestResource().
+  // Start by calling StartLoad() directly, rather than via RequestResource().
   // This shouldn't crash.
   fetcher->StartLoad(RawResource::CreateForTest(secure_url, Resource::kRaw));
 }
