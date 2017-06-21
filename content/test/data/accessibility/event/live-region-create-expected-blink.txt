@@ -1,0 +1,2 @@
+IA2_EVENT_TEXT_INSERTED on role=ROLE_SYSTEM_DOCUMENT value="http://127.0.0.1:50070/accessibility/event/live-region-create.html" FOCUSED,FOCUSABLE new_text={'<obj>' start=0 end=1}
+EVENT_OBJECT_SHOW on role=DIV
