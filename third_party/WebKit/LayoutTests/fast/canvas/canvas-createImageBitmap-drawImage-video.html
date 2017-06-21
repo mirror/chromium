@@ -167,17 +167,11 @@ function checkOverCrop(imageBitmap) {
 
     var ctx = canvas.getContext("2d");
     var ctx1 = canvas1.getContext("2d");
-    // should be drawn to (100, 100), (452, 388)
+    // should be drawn to (0, 0), (352, 288)
     clearContext(ctx, ctx1);
     ctx.drawImage(imageBitmap, 0, 0);
-    ctx1.drawImage(video, 100, 100, 352, 288);
+    ctx1.drawImage(video, 0, 0, 352, 288);
     compareTwoCanvases(0, 0, 500, 500, ctx, ctx1);
-
-    // should be drawn to (50, 50), (226, 194)
-    clearContext(ctx, ctx1);
-    ctx.drawImage(imageBitmap, 0, 0, 300, 300);
-    ctx1.drawImage(video, 0, 0, 352, 288, 50, 50, 176, 144);
-    compareTwoCanvases(0, 0, 300, 300, ctx, ctx1);
 }
 
 function checkOverCropRight(imageBitmap) {

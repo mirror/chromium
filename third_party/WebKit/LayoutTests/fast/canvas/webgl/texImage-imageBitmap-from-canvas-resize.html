@@ -3,7 +3,7 @@
 <head>
 <script src="./resources/webgl-test-utils-full.js"></script>
 <script src="./resources/tex-image-and-sub-image-utils.js"></script>
-<script src="./resources/tex-image-and-sub-image-image-bitmap-utils.js"></script>
+<script src="./resources/tex-image-and-sub-image-image-bitmap-utils-resize.js"></script>
 <script src="../../../resources/testharness.js"></script>
 <script src="../../../resources/testharnessreport.js"></script>
 <body>
@@ -14,15 +14,8 @@ var gl = null;
 var internalFormat = "RGBA";
 var pixelFormat = "RGBA";
 var pixelType = "UNSIGNED_BYTE";
-var redColor = [255, 0, 0];
-var greenColor = [0, 255, 0];
-var blackColor = [0, 0, 0];
-var darkRed = [26, 0, 0];
-var darkGreen = [0, 26, 0];
 
 function setCanvasToRedGreen(ctx) {
-    ctx.canvas.width = 16;
-    ctx.canvas.height = 16;
     var width = ctx.canvas.width;
     var halfWidth = Math.floor(width / 2);
     var height = ctx.canvas.height;
@@ -41,8 +34,8 @@ promise_test(function() {
     var bitmaps = [];
 
     var canvas = document.createElement('canvas');
-    canvas.width = 32;
-    canvas.height = 32;
+    canvas.width = 4;
+    canvas.height = 4;
     document.body.appendChild(canvas);
     gl = canvas.getContext("webgl");
 
@@ -50,6 +43,8 @@ promise_test(function() {
     gl.clearDepth(1);
 
     var testCanvas = document.createElement('canvas');
+    testCanvas.width = 2;
+    testCanvas.height = 2;
     var ctx = testCanvas.getContext("2d");
     setCanvasToRedGreen(ctx);
 
